@@ -35,7 +35,7 @@ import getParticipantsWhoHaveReadMessage from './utils/getParticipantsWhoHaveRea
 /* @conditional-compile-remove(file-sharing) */
 import { FileDownloadHandler } from './FileDownloadCards';
 /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { FileMetadata } from './FileDownloadCards';
+import { AttachmentMetadata } from './FileDownloadCards';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AttachmentDownloadResult } from './FileDownloadCards';
 import { useTheme } from '../theming';
@@ -340,7 +340,7 @@ export type UpdateMessageCallback = (
   options?: {
     /* @conditional-compile-remove(file-sharing) */
     metadata?: Record<string, string>;
-    attachedFilesMetadata?: FileMetadata[];
+    attachmentMetadata?: AttachmentMetadata[];
   }
 ) => Promise<void>;
 /**
@@ -450,17 +450,17 @@ export type MessageThreadProps = {
   onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
   /* @conditional-compile-remove(file-sharing) */
   /**
-   * Optional callback to render uploaded files in the message component.
+   * Optional callback to render attached files in the message component.
    * @beta
    */
   onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /**
    * Optional callback to retrieve the inline image in a message.
-   * @param attachment - FileMetadata object we want to render
+   * @param attachment - AttachmentMetadata object we want to render
    * @beta
    */
-  onFetchAttachments?: (attachments: FileMetadata[]) => Promise<AttachmentDownloadResult[]>;
+  onFetchAttachments?: (attachments: AttachmentMetadata[]) => Promise<AttachmentDownloadResult[]>;
   /**
    * Optional callback to edit a message.
    *
@@ -693,7 +693,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   const [inlineAttachments, setInlineAttachments] = useState<Record<string, Record<string, string>>>({});
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const onFetchInlineAttachment = useCallback(
-    async (attachments: FileMetadata[], messageId: string): Promise<void> => {
+    async (attachments: AttachmentMetadata[], messageId: string): Promise<void> => {
       if (!onFetchAttachments || attachments.length === 0) {
         return;
       }

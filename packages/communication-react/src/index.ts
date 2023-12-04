@@ -311,14 +311,13 @@ export type {
   FileDownloadError
 } from '../../react-components/src';
 /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-export type { FileMetadata } from '../../react-components/src';
+export type { AttachmentMetadata } from '../../react-components/src';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 export type {
-  BaseFileMetadata,
-  FileMetadataAttachmentType,
+  ChatAttachmentType,
   AttachmentDownloadResult,
-  FileSharingMetadata,
-  ImageFileMetadata
+  FileMetadata,
+  InlineImageMetadata
 } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonProps, HoldButtonStrings, VideoTileStrings } from '../../react-components/src';

@@ -1,17 +1,15 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { mergeStyles } from '@fluentui/react';
 import { _StarSurvey as StarSurveyComponent, useTheme } from '@internal/react-components';
 import { Canvas, Description, Heading, Props, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
-import React, { useState } from 'react';
+import React from 'react';
 import { COMPONENT_FOLDER_PREFIX } from '../../constants';
 import { hiddenControl } from '../../controlsUtils';
-import { CustomStarSurveyExample } from './snippets/CustomStarSurvey.snippet';
 import { StarSurveyExample } from './snippets/StarSurvey.snippet';
 
-const ExampleCustomSurveyText = require('!!raw-loader!./snippets/CustomStarSurvey.snippet.tsx').default;
 const ExampleSurveyText = require('!!raw-loader!./snippets/StarSurvey.snippet.tsx').default;
 
 const getDocs: () => JSX.Element = () => {
@@ -19,23 +17,13 @@ const getDocs: () => JSX.Element = () => {
   return (
     <>
       <Title>Star Survey</Title>
-      <Description>Component to render a modal containing a star survey scaling from 1 to 5</Description>
+      <Description>Component to render a star survey scaling from 1 to 5</Description>
 
       <Heading>Usage</Heading>
       <Description>Here is an example of how to use `StarSurvey`</Description>
       <Canvas mdxSource={ExampleSurveyText}>
         <StarSurveyExample />
       </Canvas>
-
-      <Heading>Custom icons</Heading>
-      <Description>
-        To customize the star survey icons, use the `selectedIcon` and `unSelectedIcon` property like in the example
-        below.
-      </Description>
-      <Canvas mdxSource={ExampleCustomSurveyText}>
-        <CustomStarSurveyExample />
-      </Canvas>
-
       <Heading>Props</Heading>
       <Props of={StarSurveyComponent} />
     </>
@@ -44,23 +32,14 @@ const getDocs: () => JSX.Element = () => {
 
 const StarSurveyStory = (args): JSX.Element => {
   const theme = useTheme();
-  const [showSurvey, setShowSurvey] = useState(true);
-
-  const onDismiss = (): void => {
-    setShowSurvey(false);
-  };
   const strings = {
-    starSurveyQuestion: 'How was your call today?',
-    starSurveyThankYouText: 'Thanks for letting us know.',
-    starSurveyHelperText: 'Your feedback will help us improve your experience.',
+    starSurveyHelperText: 'How was the quality of the call?',
     starSurveyOneStarText: 'The quality was bad.',
     starSurveyTwoStarText: 'The quality was poor.',
     starSurveyThreeStarText: 'The quality was good.',
     starSurveyFourStarText: 'The quality was great.',
     starSurveyFiveStarText: 'The quality was excellent.',
-    starSurveyConfirmButtonLabel: 'Confirm',
-    starRatingAriaLabel: 'Select {0} of {1} stars',
-    cancelButtonAriaLabel: 'Cancel'
+    starRatingAriaLabel: 'Select {0} of {1} stars'
   };
 
   return (
@@ -68,11 +47,11 @@ const StarSurveyStory = (args): JSX.Element => {
       className={mergeStyles({
         background: theme.palette.neutralLighterAlt,
         padding: '2em',
-        width: '75%',
+        width: '20%',
         height: '75%'
       })}
     >
-      {showSurvey && <StarSurveyComponent {...args} strings={strings} onDismissStarSurvey={onDismiss} />}
+      <StarSurveyComponent {...args} strings={strings} />
     </div>
   );
 };
@@ -86,9 +65,7 @@ export default {
   argTypes: {
     selectedIcon: hiddenControl,
     unselectedIcon: hiddenControl,
-    onSubmitSurvey: hiddenControl,
-    onConfirmStarSurvey: hiddenControl,
-    onDismissStarSurvey: hiddenControl,
+    onStarRatingSelected: hiddenControl,
     strings: hiddenControl
   },
   parameters: {

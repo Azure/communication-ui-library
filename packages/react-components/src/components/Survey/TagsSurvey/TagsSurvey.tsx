@@ -13,7 +13,7 @@ import {
   _ScreenshareIssue,
   _VideoIssue
 } from '../SurveyTypes';
-import { SurveyIssues } from '../../../types';
+import { SurveyCategories, SurveyIssues } from '../../../types';
 /**
  * Strings of {@link TagsSurvey} that can be overridden.
  *
@@ -31,11 +31,14 @@ export interface _TagsSurveyStrings {
 }
 
 /**
+ * Survey Issue categories
  *
  * @internal
  */
 export type _IssueCategory = 'overallRating' | 'audioRating' | 'videoRating' | 'screenshareRating';
+
 /**
+ * Key value pair of survey catogories and corresponding message/issue
  *
  * @internal
  */
@@ -56,6 +59,8 @@ export interface _TagsSurveyProps {
   issues: (_AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue)[];
   /** Mappings from call issues to tags displayed on the survey*/
   callIssuesToTag: SurveyIssues;
+  /** Mappings from issue category to categories displayed on survey*/
+  categoriesToHeader: SurveyCategories;
   /** Function to send TagsSurvey results*/
   onConfirm?: (selectedTags: _CallSurvey) => void;
   /** Tags survey strings */
@@ -68,7 +73,7 @@ export interface _TagsSurveyProps {
  * @internal
  */
 export const _TagsSurvey = (props: _TagsSurveyProps): JSX.Element => {
-  const { issues, callIssuesToTag, onConfirm, strings } = props;
+  const { issues, callIssuesToTag, categoriesToHeader, onConfirm, strings } = props;
 
   const [selectedTags, setSelectedTags] = useState({});
 
@@ -141,7 +146,7 @@ export const _TagsSurvey = (props: _TagsSurveyProps): JSX.Element => {
           return (
             <PivotItem
               key={`key-${i}`}
-              headerText={key}
+              headerText={categoriesToHeader[key]}
               headerButtonProps={{
                 'data-order': i,
                 'data-title': key

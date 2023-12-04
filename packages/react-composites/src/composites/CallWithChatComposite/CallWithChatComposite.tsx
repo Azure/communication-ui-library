@@ -520,9 +520,10 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       /* @conditional-compile-remove(end-of-call-survey) */
       surveyOptions: surveyOptions,
       /* @conditional-compile-remove(custom-branding) */
-      logo: props.logo,
-      /* @conditional-compile-remove(custom-branding) */
-      backgroundImage: props.backgroundImage
+      branding: {
+        logo: props.logo,
+        backgroundImage: props.backgroundImage
+      }
     }),
     [
       props.callControls,

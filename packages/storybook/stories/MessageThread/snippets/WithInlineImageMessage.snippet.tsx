@@ -2,7 +2,7 @@ import {
   FluentThemeProvider,
   MessageThread,
   Message,
-  FileMetadata,
+  AttachmentMetadata,
   AttachmentDownloadResult,
   ImageGalleryImageProps,
   ImageGallery,
@@ -14,7 +14,7 @@ import React, { useState } from 'react';
 export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
   const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps>>([]);
 
-  const onFetchAttachments = async (attachments: FileMetadata[]): Promise<AttachmentDownloadResult[]> => {
+  const onFetchAttachments = async (attachments: AttachmentMetadata[]): Promise<AttachmentDownloadResult[]> => {
     // * Your custom function to fetch image behind authenticated blob storage/server
     // const response = await fetchImage(attachment.previewUrl ?? '', token);
     // const blob = await response.blob();
@@ -38,16 +38,15 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
     }
     const chatMessage = filteredMessages[0] as ChatMessage;
 
-    const attachments = chatMessage.attachedFilesMetadata?.filter((attachment) => {
+    const specificImage = chatMessage.inlineImages?.filter((attachment) => {
       return attachment.id === attachmentId;
     });
 
-    if (!attachments || attachments.length <= 0) {
+    if (!specificImage || specificImage.length <= 0) {
       return Promise.reject(`Attachment not found with id ${attachmentId}`);
     }
 
-    const attachment = attachments[0];
-    attachment.name = chatMessage.senderDisplayName || '';
+    const attachment = specificImage[0];
     const title = 'Image';
     const titleIcon = (
       <Persona text={chatMessage.senderDisplayName} size={PersonaSize.size32} hidePersonaDetails={true} />
@@ -74,20 +73,16 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
       mine: false,
       attached: false,
       contentType: 'html',
-      attachedFilesMetadata: [
+      inlineImages: [
         {
           id: 'SomeImageId1',
-          name: 'SomeImageId1',
           attachmentType: 'inlineImage',
-          extension: 'png',
           url: 'images/inlineImageExample1.png',
           previewUrl: 'images/inlineImageExample1.png'
         },
         {
           id: 'SomeImageId2',
-          name: 'SomeImageId2',
           attachmentType: 'inlineImage',
-          extension: 'png',
           url: 'images/inlineImageExample2.png',
           previewUrl: 'images/inlineImageExample2.png'
         }
