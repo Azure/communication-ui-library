@@ -10,4 +10,4 @@ export * from './ParticipantListParticipant';
 export * from './OnRender';
 export * from './ReadReceiptsBySenderId';
 export * from './CaptionsAvailableLanguageStrings';
-export * from './SurveyIssues'
+export * from './SurveyIssues';

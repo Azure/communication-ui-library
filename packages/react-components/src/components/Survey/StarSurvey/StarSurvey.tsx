@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React, { useState, useCallback } from 'react';
 import { Text, useTheme, Stack, Modal, IconButton, PrimaryButton } from '@fluentui/react';
@@ -96,7 +96,7 @@ export interface _StarSurveyProps {
  * @internal
  */
 export const _StarSurvey = (props: _StarSurveyProps): JSX.Element => {
-  const { onSubmitSurvey, onDismissStarSurvey, selectedIcon, unselectedIcon, strings } = props;
+  const { selectedIcon, unselectedIcon, strings } = props;
 
   const [rating, setRating] = useState(0);
 
@@ -139,25 +139,8 @@ export const _StarSurvey = (props: _StarSurveyProps): JSX.Element => {
     ]
   );
 
-  const onDismiss = useCallback((): void => {
-    if (onDismissStarSurvey) {
-      onDismissStarSurvey();
-    }
-  }, [onDismissStarSurvey]);
-
-  const onConfirm = useCallback(async (): Promise<void> => {
-    if (onSubmitSurvey) {
-      await onSubmitSurvey({
-        overallRating: { score: rating }
-      })
-        .then(() => console.log('Survey Result submitted'))
-        .catch((e) => console.log(e));
-    }
-    onDismiss();
-  }, [onSubmitSurvey, rating, onDismiss]);
-
   return (
-    <Modal onDismissed={onDismiss} styles={modalStyles(theme)} isOpen>
+    <Modal styles={modalStyles(theme)} isOpen>
       <Stack verticalAlign="center">
         <Stack className={titleContainerClassName}>
           <Stack horizontal horizontalAlign="space-between" verticalAlign="center">
@@ -166,7 +149,6 @@ export const _StarSurvey = (props: _StarSurveyProps): JSX.Element => {
             </Text>
             <IconButton
               iconProps={{ iconName: 'Cancel' }}
-              onClick={onDismiss}
               ariaLabel={strings?.cancelButtonAriaLabel}
               style={{ color: theme.palette.black }}
             />
@@ -186,9 +168,7 @@ export const _StarSurvey = (props: _StarSurveyProps): JSX.Element => {
           ariaLabelFormat={strings?.starRatingAriaLabel}
         />
       </Stack>
-      <PrimaryButton className={confirmButtonClassName} onClick={() => onConfirm()}>
-        {strings?.starSurveyConfirmButtonLabel}
-      </PrimaryButton>
+      <PrimaryButton className={confirmButtonClassName}>{strings?.starSurveyConfirmButtonLabel}</PrimaryButton>
     </Modal>
   );
 };
