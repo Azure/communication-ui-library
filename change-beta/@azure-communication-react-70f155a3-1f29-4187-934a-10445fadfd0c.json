@@ -1,9 +1,9 @@
 {
   "type": "none",
-  "area": "improvement",
+  "area": "fix",
   "workstream": "Storybook",
-  "comment": "Update Custom Button Injection Storybook entries",
+  "comment": "Fix Inline Image Gallery",
   "packageName": "@azure/communication-react",
-  "email": "edwardlee@microsoft.com",
+  "email": "3941071+emlynmac@users.noreply.github.com",
   "dependentChangeType": "none"
 }

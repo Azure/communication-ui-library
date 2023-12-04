@@ -1,9 +1,9 @@
 {
-  "type": "prerelease",
+  "type": "none",
   "area": "improvement",
   "workstream": "Custom Branding",
-  "comment": "Add background image to configuration page on call composite and call with chat composite",
+  "comment": "add storybook documentation about custom branding in more places",
   "packageName": "@azure/communication-react",
   "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
+  "dependentChangeType": "none"
 }

@@ -153,7 +153,8 @@
     "downloadFile": "Download file",
     "blockedWarningText": "This message was deleted due to organizational policy.",
     "blockedWarningLinkText": "Details",
-    "fileCardGroupMessage": "The message has {fileCount} attachment"
+    "fileCardGroupMessage": "The message has {fileCount} attachment",
+    "messageDeletedAnnouncementAriaLabel": "The message is deleted"
   },
   "errorBar": {
     "unableToReachChatService": "You are offline",

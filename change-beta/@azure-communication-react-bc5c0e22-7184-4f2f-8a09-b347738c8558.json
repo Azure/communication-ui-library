@@ -1,8 +1,8 @@
 {
   "type": "none",
   "area": "improvement",
-  "workstream": "",
-  "comment": "Reduce console output noise in sample apps",
+  "workstream": "Custom Branding",
+  "comment": "add storybook documentation about custom branding in more places",
   "packageName": "@azure/communication-react",
   "email": "2684369+JamesBurnside@users.noreply.github.com",
   "dependentChangeType": "none"
