@@ -196,8 +196,7 @@ export class _MockCallAdapter implements CallAdapter {
   public updateSelectedVideoBackgroundEffect(): void {
     throw new Error('updateSelectedVideoBackgroundEffect not implemented.');
   }
-  /* @conditional-compile-remove(end-of-call-survey) */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  /* @conditional-compile-remove(end-of-call-survey) */ // eslint-disable-next-line @typescript-eslint/no-unused-vars
   submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined> {
     throw Error('submitStarSurvey not implemented');
   }
