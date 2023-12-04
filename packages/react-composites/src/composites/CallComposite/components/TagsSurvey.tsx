@@ -36,13 +36,13 @@ export const TagsSurvey = (props: {
   /* @conditional-compile-remove(end-of-call-survey) */
   const strings = useLocale().strings.call;
 
-  /* @conditional-compile-remove(end-of-call-survey) */
-  const TagsSurveyStrings: _TagsSurveyStrings = {
-    TagsSurveyQuestion: strings.TagsSurveyQuestion,
-    TagsSurveyConfirmButtonLabel: strings.TagsSurveyConfirmButtonLabel,
-    TagsSurveyCancelButtonLabel: strings.TagsSurveyCancelButtonLabel,
-    cancelButtonAriaLabel: strings.tagsSurveyCancelButtonAriaLabel
-  };
+  // /* @conditional-compile-remove(end-of-call-survey) */
+  // const TagsSurveyStrings: _TagsSurveyStrings = {
+  //   TagsSurveyQuestion: strings.TagsSurveyQuestion,
+  //   TagsSurveyConfirmButtonLabel: strings.TagsSurveyConfirmButtonLabel,
+  //   TagsSurveyCancelButtonLabel: strings.TagsSurveyCancelButtonLabel,
+  //   cancelButtonAriaLabel: strings.tagsSurveyCancelButtonAriaLabel
+  // };
 
   /* @conditional-compile-remove(end-of-call-survey) */
   const callIssuesToTag = strings.surveyIssues;
@@ -53,7 +53,7 @@ export const TagsSurvey = (props: {
       {showSurvey && (
         <_TagsSurvey
           onDismissTagsSurvey={onDismiss}
-          strings={TagsSurveyStrings}
+          // strings={TagsSurveyStrings}
           {...TagsSurveyHandler}
           callIssuesToTag={callIssuesToTag}
           issues={props.issues}
