@@ -14,14 +14,6 @@ import { _CallSurvey, _CallSurveyResponse } from './SurveyTypes';
  */
 export interface _StarSurveyStrings {
   /**
-   * Survey question
-   */
-  starSurveyQuestion?: string;
-  /**
-   * Text that's displayed after user select a star response
-   */
-  starSurveyThankYouText?: string;
-  /**
    * Helper text displayed below survey question before user choose a response
    */
   starSurveyHelperText?: string;
@@ -46,17 +38,9 @@ export interface _StarSurveyStrings {
    */
   starSurveyFiveStarText?: string;
   /**
-   * Confirm Button Label
-   */
-  starSurveyConfirmButtonLabel?: string;
-  /**
    * Aria Label for each individual star rating
    */
   starRatingAriaLabel?: string;
-  /**
-   * Aria Label for cancel button
-   */
-  cancelButtonAriaLabel?: string;
 }
 
 /**
@@ -147,7 +131,7 @@ export const _StarSurvey = (props: _StarSurveyProps): JSX.Element => {
         allowZeroStars
         rating={rating}
         onChange={onRatingChange}
-        styles={ratingStyles}
+        styles={ratingStyles(theme)}
         icon={selectedIcon ?? 'SurveyStarIconFilled'}
         unselectedIcon={unselectedIcon ?? 'SurveyStarIcon'}
         ariaLabelFormat={strings?.starRatingAriaLabel}

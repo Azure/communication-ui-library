@@ -19,7 +19,7 @@ export const helperTextStyle = (theme: Theme): string =>
 /**
  * @private
  */
-export const ratingStyles = (): Partial<IRatingStyles> => {
+export const ratingStyles = (theme: Theme): Partial<IRatingStyles> => {
   return {
     root: {
       marginBottom: _pxToRem(24),
@@ -28,6 +28,9 @@ export const ratingStyles = (): Partial<IRatingStyles> => {
     ratingStar: {
       fontSize: _pxToRem(35),
       margin: _pxToRem(5)
+    },
+    ratingStarFront: {
+      color: theme.palette.themePrimary
     }
   };
 };

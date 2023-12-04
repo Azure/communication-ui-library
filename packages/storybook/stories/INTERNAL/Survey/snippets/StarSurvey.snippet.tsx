@@ -1,34 +1,19 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { PrimaryButton } from '@fluentui/react';
 import { _StarSurvey as StarSurvey } from '@internal/react-components';
-import React, { useState } from 'react';
+import React from 'react';
 
 export const StarSurveyExample: () => JSX.Element = () => {
-  const [showSurvey, setShowSurvey] = useState(false);
-  const onDismiss = (): void => {
-    setShowSurvey(false);
-  };
-
   const strings = {
-    starSurveyQuestion: 'How was your call today?',
-    starSurveyThankYouText: 'Thanks for letting us know.',
-    starSurveyHelperText: 'Your feedback will help us improve your experience.',
+    starSurveyHelperText: 'How was the quality of the call?',
     starSurveyOneStarText: 'The quality was bad.',
     starSurveyTwoStarText: 'The quality was poor.',
     starSurveyThreeStarText: 'The quality was good.',
     starSurveyFourStarText: 'The quality was great.',
     starSurveyFiveStarText: 'The quality was excellent.',
-    starSurveyConfirmButtonLabel: 'Confirm',
-    starRatingAriaLabel: 'Select {0} of {1} stars',
-    cancelButtonAriaLabel: 'Cancel'
+    starRatingAriaLabel: 'Select {0} of {1} stars'
   };
 
-  return (
-    <>
-      <PrimaryButton onClick={() => setShowSurvey(true)}> Open Survey</PrimaryButton>
-      {showSurvey && <StarSurvey onDismissStarSurvey={onDismiss} strings={strings} />}
-    </>
-  );
+  return <StarSurvey strings={strings} />;
 };
