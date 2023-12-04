@@ -51,7 +51,7 @@
     "@microsoft/api-documenter": "~7.23.9",
     "@microsoft/api-extractor": "~7.38.0",
     "@types/jest": "^29.5.2",
-    "@types/react": "18.2.39",
+    "@types/react": "18.2.41",
     "@zerollup/ts-transform-paths": "^1.7.18",
     "copyfiles": "^2.4.1",
     "cpx": "^1.5.0",
