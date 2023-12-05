@@ -1,4 +1,4 @@
-import { RoomLocator } from '@azure/communication-calling';
+import { RoomCallLocator } from '@azure/communication-calling';
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { CallAdapter, CallComposite, useAzureCommunicationCallAdapter } from '@azure/communication-react';
 import React, { useMemo } from 'react';
@@ -8,7 +8,7 @@ export type ContainerProps = {
   token: string;
   locator: string;
   displayName: string;
-  roomLocator: RoomLocator;
+  roomLocator: RoomCallLocator;
 };
 
 export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
