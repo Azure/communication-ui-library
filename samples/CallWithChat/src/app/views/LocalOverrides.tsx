@@ -60,7 +60,7 @@ const localOverrideDefaults = {
   callTitle: 'Start a Call',
   callDescription: undefined,
   logo: 'acsLogo.svg',
-  logoShape: 'square'
+  logoShape: 'unset'
 };
 
 export const LocalOverrides = (props: {
@@ -131,7 +131,7 @@ export const LocalOverrides = (props: {
               onChange={(value) => {
                 setOverrides((overrides) => ({ ...overrides, logoShape: value }));
               }}
-              options={['circle', 'square']}
+              options={['unset', 'circle']}
             />
             <OverrideBooleanItem
               title="RTL"
