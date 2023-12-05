@@ -326,6 +326,7 @@ export const logoStyles = (shape: undefined | 'unset' | 'circle'): IImageStyles 
   image: {
     height: `${LOGO_HEIGHT_REM}rem`,
     borderRadius: shape === 'circle' ? '100%' : undefined,
-    aspectRatio: shape === 'circle' ? '1 / 1' : undefined
+    aspectRatio: shape === 'circle' ? '1 / 1' : undefined,
+    objectFit: shape === 'circle' ? 'cover' : undefined
   }
 });
