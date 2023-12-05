@@ -9,23 +9,23 @@ Azure Communication Services introduces the concept of rooms for developers secu
 Users must receive an invite to room in order to join the call for that room, offering a more secure alternative 
 compared to group calls.
 
-A user is invited to a room using the Rooms API as 1 of 3 following roles: 
+Users can be invited to a room as one of 3 roles which are:
 
 - Presenter
 - Attendee
 - Consumer
 
-The distinction between each role lies in the capabilities they possess during a room call when utilizing the
-CallComposite. The specific capabilities associated with each role are detailed [here](https://learn.microsoft.com/en-us/azure/communication-services/concepts/rooms/room-concept#predefined-participant-roles-and-permissions).
+To learn more about the Rooms, click [here](https://docs.microsoft.com/en-us/azure/communication-services/concepts/rooms/room-concept)
 
-The control of who can join calls, coupled with role-based capabilities, positions rooms as the ideal choice for
-the following call scenarios:
+## Examples
 
-- Virtual visits
-- Online classes
-- Presentations
-- Court trials
-- Debates
+The need for a secure ACS call and role based access control apply in many common communication scenarios such as:
+
+- virtual visits (1:1 interactions)
+- online classes (larger groups)
+- presentations
+- court trials
+- debates
 
 ## How does UI Library interact with Rooms
 
