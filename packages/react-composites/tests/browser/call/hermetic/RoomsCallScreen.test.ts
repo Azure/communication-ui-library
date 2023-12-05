@@ -3,15 +3,7 @@
 
 import { buildUrlWithMockAdapter, defaultMockCallAdapterState, defaultMockRemoteParticipant, test } from './fixture';
 import { expect, Page } from '@playwright/test';
-import {
-  dataUiId,
-  existsOnPage,
-  hidePiPiP,
-  isTestProfileMobile,
-  pageClick,
-  stableScreenshot,
-  waitForSelector
-} from '../../common/utils';
+import { dataUiId, existsOnPage, hidePiPiP, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
 import { IDS } from '../../common/constants';
 
 test.describe('Rooms DeviceButton tests for different roles', async () => {
@@ -56,7 +48,7 @@ test.describe('Rooms CallScreen tests for different roles', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-presenter.png');
-    if (isTestProfileMobile(testInfo)) {
+    if (await existsOnPage(page, dataUiId(IDS.moreButton))) {
       await pageClick(page, dataUiId(IDS.moreButton));
       expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-presenter-click-more-button.png');
     }
@@ -67,7 +59,7 @@ test.describe('Rooms CallScreen tests for different roles', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-attendee.png');
-    if (isTestProfileMobile(testInfo)) {
+    if (await existsOnPage(page, dataUiId(IDS.moreButton))) {
       await pageClick(page, dataUiId(IDS.moreButton));
       expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-attendee-click-more-button.png');
     }
@@ -84,7 +76,7 @@ test.describe('Rooms CallScreen tests for different roles', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-consumer-remote-participants.png');
-    if (isTestProfileMobile(testInfo)) {
+    if (await existsOnPage(page, dataUiId(IDS.moreButton))) {
       await pageClick(page, dataUiId(IDS.moreButton));
       expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-consumer-click-more-button.png');
     }

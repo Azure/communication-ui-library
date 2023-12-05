@@ -16,7 +16,6 @@ import { Camera } from './buttons/Camera';
 import { Devices } from './buttons/Devices';
 import { EndCall } from './buttons/EndCall';
 import { Microphone } from './buttons/Microphone';
-import { Participants } from './buttons/Participants';
 import { ScreenShare } from './buttons/ScreenShare';
 import { ContainerRectProps } from '../../common/ContainerRectProps';
 import { People } from './buttons/People';
@@ -149,7 +148,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   const moreButtonContextualMenuItems = (): IContextualMenuItem[] => {
     const items: IContextualMenuItem[] = [];
 
-    if (props.isMobile && props.onPeopleButtonClicked && isEnabled(options?.participantsButton)) {
+    if (!showParticipantsButtonInControlBar) {
       items.push({
         key: 'peopleButtonKey',
         text: localeStrings.component.strings.participantsButton.label,
@@ -386,27 +385,17 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
             />
           )}
           {showParticipantsButtonInControlBar && (
-              <Participants
-                option={options?.participantsButton}
-                callInvitationURL={props.callInvitationURL}
-                onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
-                displayType={options?.displayType}
-                increaseFlyoutItemSize={props.increaseFlyoutItemSize}
-                isMobile={props.isMobile}
-                disabled={isDisabled(options?.participantsButton)}
-              />
-            ) && (
-              <People
-                checked={props.peopleButtonChecked}
-                ariaLabel={peopleButtonStrings?.label}
-                showLabel={options?.displayType !== 'compact'}
-                onClick={props.onPeopleButtonClicked}
-                data-ui-id="call-composite-people-button"
-                strings={peopleButtonStrings}
-                disabled={isDisabled(options?.participantsButton)}
-                disableTooltip={props.isMobile}
-              />
-            )}
+            <People
+              checked={props.peopleButtonChecked}
+              ariaLabel={peopleButtonStrings?.label}
+              showLabel={options?.displayType !== 'compact'}
+              onClick={props.onPeopleButtonClicked}
+              data-ui-id="call-composite-people-button"
+              strings={peopleButtonStrings}
+              disabled={isDisabled(options?.participantsButton)}
+              disableTooltip={props.isMobile}
+            />
+          )}
           {showDevicesButtonInControlBar && (
             <Devices
               displayType={options?.displayType}
