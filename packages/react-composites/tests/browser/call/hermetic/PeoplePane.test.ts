@@ -23,7 +23,6 @@ import { IDS } from '../../common/constants';
 import type { MockCallAdapterState } from '../../../common';
 
 test.describe('Participant list side pane tests', () => {
-  
   test('participant list loads correctly', async ({ page, serverUrl }, testInfo) => {
     test.skip(!isTestProfileDesktop(testInfo));
     await page.goto(
