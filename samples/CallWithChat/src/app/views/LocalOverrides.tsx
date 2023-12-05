@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import React, { useEffect, useState } from 'react';
-import { Dropdown, IconButton, SpinButton, Stack, Text, TextField, Toggle } from '@fluentui/react';
+import { Dropdown, IconButton, Stack, Text, TextField, Toggle } from '@fluentui/react';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
 import { useIsMobile } from '../utils/useIsMobile';
 
@@ -194,30 +194,30 @@ const OverrideItem = (props: { title: string; children: JSX.Element }): JSX.Elem
   );
 };
 
-const OverrideSpinButtonItem = (props: {
-  title: string;
-  defaultValue: number;
-  onChange: (value: number) => void;
-  min?: number;
-  max?: number;
-  step?: number;
-}): JSX.Element => {
-  const { title, defaultValue, onChange, min, max, step } = props;
+// const OverrideSpinButtonItem = (props: {
+//   title: string;
+//   defaultValue: number;
+//   onChange: (value: number) => void;
+//   min?: number;
+//   max?: number;
+//   step?: number;
+// }): JSX.Element => {
+//   const { title, defaultValue, onChange, min, max, step } = props;
 
-  return (
-    <OverrideItem title={title}>
-      <SpinButton
-        defaultValue={defaultValue.toString()}
-        onChange={(e, newValue) => {
-          onChange(Number(newValue));
-        }}
-        min={min}
-        max={max}
-        step={step}
-      />
-    </OverrideItem>
-  );
-};
+//   return (
+//     <OverrideItem title={title}>
+//       <SpinButton
+//         defaultValue={defaultValue.toString()}
+//         onChange={(e, newValue) => {
+//           onChange(Number(newValue));
+//         }}
+//         min={min}
+//         max={max}
+//         step={step}
+//       />
+//     </OverrideItem>
+//   );
+// };
 
 const OverrideBooleanItem = (props: {
   title: string;

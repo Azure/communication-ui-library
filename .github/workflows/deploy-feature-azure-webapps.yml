@@ -30,8 +30,8 @@ jobs:
         run: npm install -g @microsoft/rush@5.112.1
       - name: Install dependencies
         run: rush install
-      - name: Switch flavor for beta release build
-        run: rush switch-flavor:beta-release
+      - name: Switch flavor for beta build
+        run: rush switch-flavor:beta
       - name: Build Communication-react
         run: rush build -t @azure/communication-react
       - name: Build Server
@@ -69,8 +69,8 @@ jobs:
         run: npm install -g @microsoft/rush@5.112.1
       - name: Install dependencies
         run: rush install
-      - name: Switch flavor for beta release build
-        run: rush switch-flavor:beta-release
+      - name: Switch flavor for beta build
+        run: rush switch-flavor:beta
       - name: Build Communication-react
         run: rush build -t @azure/communication-react
       - name: Build Server
@@ -108,8 +108,8 @@ jobs:
         run: npm install -g @microsoft/rush@5.112.1
       - name: Install dependencies
         run: rush install
-      - name: Switch flavor for beta release build
-        run: rush switch-flavor:beta-release
+      - name: Switch flavor for beta build
+        run: rush switch-flavor:beta
       - name: Build Communication-react
         run: rush build -t @azure/communication-react
       - name: Build Server
