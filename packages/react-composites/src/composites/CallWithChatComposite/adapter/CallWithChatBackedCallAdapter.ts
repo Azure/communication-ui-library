@@ -48,6 +48,9 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   constructor(callWithChatAdapter: CallWithChatAdapter) {
     this.callWithChatAdapter = callWithChatAdapter;
   }
+  onReactionClicked(emoji: string): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
 
   public on = (event: any, listener: any): void => {
     switch (event) {

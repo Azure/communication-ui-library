@@ -24,14 +24,14 @@ export const Reaction = (props: {
   styles?: ControlBarButtonStyles;
   disabled?: boolean;
 }): JSX.Element => {
-  const reactionButtonProps = usePropsFor(ReactionButton) as ReactionButtonProps;
+  const reactionButtonProps = usePropsFor(ReactionButton) as unknown as ReactionButtonProps;
   const callStatus = useSelector(getCallStatus);
   const styles = useMemo(() => concatButtonBaseStyles(props.styles ?? {}), [props.styles]);
 
-  let raiseHandButtonDisabled = isDisabled(props.option);
+  let reactionButtonDisabled = isDisabled(props.option);
 
   if (_isInLobbyOrConnecting(callStatus)) {
-    raiseHandButtonDisabled = true;
+    reactionButtonDisabled = true;
   }
 
   return (
@@ -39,7 +39,7 @@ export const Reaction = (props: {
       data-ui-id="call-composite-reaction-button"
       {...reactionButtonProps}
       showLabel={props.displayType !== 'compact'}
-      disabled={raiseHandButtonDisabled || props.disabled}
+      disabled={reactionButtonDisabled || props.disabled}
       styles={styles}
     />
   );
@@ -52,4 +52,3 @@ const isDisabled = (option?: boolean | { disabled: boolean }): boolean => {
   }
   return option.disabled;
 };
-

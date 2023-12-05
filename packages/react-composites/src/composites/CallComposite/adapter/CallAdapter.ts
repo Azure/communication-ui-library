@@ -502,6 +502,13 @@ export interface CallAdapterCallOperations {
    * @public
    */
   lowerHand(): Promise<void>;
+  /* @conditional-compile-remove(reaction) */
+  /**
+   * Send reaction emoji
+   *
+   * @public
+   */
+  onReactionClicked(emoji: string): Promise<void>;
   /**
    * Stop sharing the screen
    *

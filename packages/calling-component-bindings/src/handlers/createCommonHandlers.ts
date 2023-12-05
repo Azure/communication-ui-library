@@ -58,6 +58,8 @@ export interface CommonCallingHandlers {
   onLowerHand: () => Promise<void>;
   /* @conditional-compile-remove(raise-hand) */
   onToggleRaiseHand: () => Promise<void>;
+  /* @conditional-compile-remove(reactions) */
+  onReactionClicked: (emoji: string) => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   onToggleHold: () => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
@@ -311,6 +313,29 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         await raiseHandFeature?.lowerHand();
       } else {
         await raiseHandFeature?.raiseHand();
+      }
+    };
+
+    /* @conditional-compile-remove(reaction) */
+    const onReactionClicked = async (emoji: string): Promise<void> => {
+      switch (emoji) {
+        case 'like':
+          await call?.feature(Features.Reaction)?.sendReaction({ reactionType: 'like' });
+          break;
+        case 'heart':
+          await call?.feature(Features.Reaction)?.sendReaction({ reactionType: 'heart' });
+          break;
+        case 'laugh':
+          await call?.feature(Features.Reaction)?.sendReaction({ reactionType: 'laugh' });
+          break;
+        case 'applause':
+          await call?.feature(Features.Reaction)?.sendReaction({ reactionType: 'applause' });
+          break;
+        case 'surprised':
+          await call?.feature(Features.Reaction)?.sendReaction({ reactionType: 'surprised' });
+          break;
+        default:
+          break;
       }
     };
 
@@ -608,6 +633,8 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onLowerHand,
       /* @conditional-compile-remove(raise-hand) */
       onToggleRaiseHand,
+      /* @conditional-compile-remove(reaction) */
+      onReactionClicked,
       /* @conditional-compile-remove(PSTN-calls) */
       onAddParticipant: notImplemented,
       onRemoveParticipant: notImplemented,
