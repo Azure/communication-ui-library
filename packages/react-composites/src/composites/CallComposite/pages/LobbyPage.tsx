@@ -67,7 +67,11 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
       mobileView={props.mobileView}
       modalLayerHostId={props.modalLayerHostId}
       onRenderGalleryContent={() => (
-        <LobbyTile {...lobbyProps} overlayProps={overlayProps(strings, inLobby, Object.values(participants))} />
+        <LobbyTile
+          {...lobbyProps}
+          showLocalVideoCameraCycleButton={props.mobileView}
+          overlayProps={overlayProps(strings, inLobby, Object.values(participants))}
+        />
       )}
       dataUiId={'lobby-page'}
       updateSidePaneRenderer={props.updateSidePaneRenderer}

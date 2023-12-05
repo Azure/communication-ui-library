@@ -3,10 +3,12 @@
 
 import React from 'react';
 import { mergeStyles, Stack, Text } from '@fluentui/react';
-import { VideoGalleryStream, useTheme } from '@internal/react-components';
+import { LocalVideoCameraCycleButton, VideoGalleryStream, useTheme } from '@internal/react-components';
 import { moreDetailsStyle, overlayContainerStyle, titleStyle } from '../styles/LobbyTile.styles';
 import { ExpandedLocalVideoTile } from './ExpandedLocalVideoTile';
 import { useHandlers } from '../hooks/useHandlers';
+import { localVideoCameraCycleButtonSelector } from '../selectors/LocalVideoTileSelector';
+import { useSelector } from '../hooks/useSelector';
 
 /**
  * @private
@@ -23,6 +25,7 @@ export interface LobbyOverlayProps {
 export interface LobbyTileProps {
   localParticipantVideoStream: VideoGalleryStream;
   overlayProps: LobbyOverlayProps;
+  showLocalVideoCameraCycleButton?: boolean;
 }
 
 /**
@@ -31,6 +34,9 @@ export interface LobbyTileProps {
 export const LobbyTile = (props: LobbyTileProps): JSX.Element => {
   const videoStream = props.localParticipantVideoStream;
   const isVideoReady = videoStream?.isAvailable ?? false;
+
+  const cameraSwitcherCameras = useSelector(localVideoCameraCycleButtonSelector);
+  const cameraSwitcherCallback = useHandlers(LocalVideoCameraCycleButton);
 
   const palette = useTheme().palette;
   const handlers = useHandlers(ExpandedLocalVideoTile);
@@ -47,6 +53,11 @@ export const LobbyTile = (props: LobbyTileProps): JSX.Element => {
             className={mergeStyles(overlayContainerStyle)}
             aria-atomic
           >
+            <Stack.Item>
+              {props.showLocalVideoCameraCycleButton && (
+                <LocalVideoCameraCycleButton {...cameraSwitcherCallback} {...cameraSwitcherCameras} />
+              )}
+            </Stack.Item>
             <Stack.Item className={mergeStyles(titleStyle(palette, isVideoReady))}>
               {props.overlayProps.overlayIcon}
             </Stack.Item>
