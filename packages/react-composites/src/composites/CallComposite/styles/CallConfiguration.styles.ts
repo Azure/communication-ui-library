@@ -40,6 +40,13 @@ export const configurationStackTokensMobile: IStackTokens = {
   childrenGap: '0.5rem'
 };
 
+/**
+ * @private
+ */
+export const deviceConfigurationStackTokens: IStackTokens = {
+  childrenGap: '1.5rem'
+};
+
 /** @private */
 export const configurationContainerStyle = (desktop: boolean, backgroundImageUrl?: string): IStackStyles => ({
   root: {
@@ -117,7 +124,7 @@ export const selectionContainerStyle = (theme: ITheme): string =>
 export const titleContainerStyleDesktop = (theme: ITheme): string =>
   mergeStyles(
     {
-      fontSize: '1.3rem',
+      fontSize: '1.2rem',
       lineHeight: '1rem',
       fontWeight: 600
     },
@@ -130,7 +137,7 @@ export const titleContainerStyleDesktop = (theme: ITheme): string =>
 export const titleContainerStyleMobile = (theme: ITheme): string =>
   mergeStyles(
     {
-      fontSize: '1.3rem',
+      fontSize: '1.0625rem',
       lineHeight: '1.375rem',
       fontWeight: 600,
       textAlign: 'center'

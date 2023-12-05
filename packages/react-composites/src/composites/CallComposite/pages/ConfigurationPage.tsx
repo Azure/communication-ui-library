@@ -17,6 +17,7 @@ import {
   callDetailsContainerStyles,
   configurationCenteredContent,
   configurationSectionStyle,
+  deviceConfigurationStackTokens,
   fillWidth,
   logoStyles,
   panelFocusProps,
@@ -353,7 +354,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
             horizontal={!mobileWithPreview}
             horizontalAlign={mobileWithPreview ? 'stretch' : 'center'}
             verticalFill={mobileWithPreview}
-            tokens={configurationStackTokensMobile}
+            tokens={deviceConfigurationStackTokens}
           >
             {localPreviewTrampoline(
               mobileWithPreview,
