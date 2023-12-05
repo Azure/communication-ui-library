@@ -9,16 +9,22 @@ import {
   CallAndChatLocator,
   CallWithChatAdapterState,
   CallWithChatComposite,
-  CallWithChatAdapter
+  CallWithChatAdapter,
+  COMPOSITE_LOCALE_EN_US
 } from '@azure/communication-react';
 /* @conditional-compile-remove(video-background-effects) */
-import { onResolveVideoEffectDependencyLazy, AzureCommunicationCallAdapterOptions } from '@azure/communication-react';
+import {
+  onResolveVideoEffectDependencyLazy,
+  AzureCommunicationCallAdapterOptions,
+  CallWithChatCompositeOptions
+} from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
-import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { defaultThemes, useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/constants';
 import { useIsMobile } from '../utils/useIsMobile';
+import { LocalOverrides, SidePane } from './LocalOverrides';
 
 export interface CallScreenProps {
   token: string;
@@ -97,7 +103,22 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   }, []);
 
   const callIdRef = useRef<string>();
-  const { currentTheme, currentRtl } = useSwitchableFluentTheme();
+  const [overrides, setOverrides] = useState<LocalOverrides>({});
+  const { currentTheme, currentRtl, setCurrentTheme, setCurrentRtl } = useSwitchableFluentTheme();
+
+  const overrideTheme = overrides.theme;
+  useEffect(() => {
+    if (overrideTheme) {
+      setCurrentTheme(defaultThemes[overrideTheme]);
+    }
+  }, [overrideTheme, setCurrentTheme]);
+  const overrideRtl = overrides.rtl;
+  useEffect(() => {
+    if (overrideRtl !== undefined) {
+      setCurrentRtl(overrideRtl);
+    }
+  }, [overrideRtl, setCurrentRtl]);
+
   const isMobileSession = useIsMobile();
 
   const credential = useMemo(
@@ -153,18 +174,56 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     return () => window.removeEventListener('beforeunload', disposeAdapter);
   }, [adapter]);
 
+  const backgroundOverride = overrides.background;
+  const logoOverride = overrides.logo;
+  const logoShapeOverride = overrides.logoShape;
+  const options: CallWithChatCompositeOptions = useMemo(
+    () => ({
+      branding: {
+        backgroundImage:
+          backgroundOverride === 'None'
+            ? undefined
+            : {
+                url:
+                  backgroundOverride === 'Light'
+                    ? 'https://images.unsplash.com/reserve/aOcWqRTfQ12uwr3wWevA_14401305508_804b300054_o.jpg?q=80&w=2676&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+                    : backgroundOverride === 'Dark'
+                    ? 'https://images.unsplash.com/photo-1682686581427-7c80ab60e3f3?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+                    : 'assets/branding/' + backgroundOverride
+              },
+        logo:
+          logoOverride === 'None'
+            ? undefined
+            : {
+                url: 'assets/branding/' + logoOverride,
+                shape: logoShapeOverride === 'square' ? 'square' : 'circle'
+              }
+      }
+    }),
+    [backgroundOverride, logoOverride, logoShapeOverride]
+  );
+
   if (!adapter) {
     return <Spinner label={'Creating adapter'} ariaLive="assertive" labelPosition="top" />;
   }
 
+  const en_us = COMPOSITE_LOCALE_EN_US;
+  en_us.strings.call.configurationPageTitle = overrides?.callTitle ?? 'Joining an ACS Group Call';
+  en_us.strings.call.configurationPageCallDetails = overrides?.callDescription;
+
   return (
-    <CallWithChatComposite
-      adapter={adapter}
-      fluentTheme={currentTheme.theme}
-      rtl={currentRtl}
-      joinInvitationURL={window.location.href}
-      formFactor={isMobileSession ? 'mobile' : 'desktop'}
-    />
+    <>
+      <CallWithChatComposite
+        adapter={adapter}
+        fluentTheme={currentTheme.theme}
+        rtl={currentRtl}
+        joinInvitationURL={window.location.href}
+        formFactor={isMobileSession ? 'mobile' : 'desktop'}
+        options={options}
+        locale={en_us}
+      />
+      <SidePane onOverridesUpdated={setOverrides} />
+    </>
   );
 };
 
