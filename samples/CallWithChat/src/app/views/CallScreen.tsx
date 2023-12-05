@@ -196,7 +196,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
             ? undefined
             : {
                 url: 'assets/branding/' + logoOverride,
-                shape: logoShapeOverride === 'square' ? 'square' : 'circle'
+                shape: logoShapeOverride === 'unset' ? 'unset' : 'circle'
               }
       }
     }),
