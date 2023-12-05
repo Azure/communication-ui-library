@@ -207,9 +207,9 @@ export type CallWithChatCompositeOptions = {
       /**
        * The logo can be displayed as a circle or a square.
        *
-       * @defaultValue 'circle'
+       * @defaultValue 'unset'
        */
-      shape?: 'circle' | 'square';
+      shape?: 'unset' | 'circle';
     };
     /* @conditional-compile-remove(custom-branding) */
     /**

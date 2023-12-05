@@ -255,9 +255,9 @@ export type CallCompositeOptions = {
       /**
        * The logo can be displayed as a circle or a square.
        *
-       * @defaultValue 'circle'
+       * @defaultValue 'unset'
        */
-      shape?: 'circle' | 'square';
+      shape?: 'unset' | 'square';
     };
     /* @conditional-compile-remove(custom-branding) */
     /**
