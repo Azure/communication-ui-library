@@ -537,6 +537,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     /* @conditional-compile-remove(raise-hand) */
     this.raiseHand.bind(this);
     /* @conditional-compile-remove(raise-hand) */
+    this.onReactionClicked.bind(this);
     this.lowerHand.bind(this);
     this.removeParticipant.bind(this);
     this.createStreamView.bind(this);
@@ -852,6 +853,12 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   public async lowerHand(): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
       await this.handlers.onToggleRaiseHand();
+    });
+  }
+
+  public async onReactionClicked(emoji: string): Promise<void> {
+    return await this.asyncTeeErrorToEventEmitter(async () => {
+      await this.handlers.onReactionClicked(emoji);
     });
   }
 

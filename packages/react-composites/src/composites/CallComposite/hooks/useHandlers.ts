@@ -68,6 +68,9 @@ const createCompositeHandlers = memoizeOne(
         ? await adapter.lowerHand()
         : await adapter.raiseHand();
     },
+    onReactionClicked: async (emoji: string) => {
+      await adapter.onReactionClicked(emoji);
+    },
     onSelectCamera: async (deviceInfo, options) => {
       await adapter.setCamera(deviceInfo, options);
     },

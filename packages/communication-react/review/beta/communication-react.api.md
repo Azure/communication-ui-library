@@ -3664,6 +3664,16 @@ export type Reaction = {
 
 // @public
 export interface ReactionButtonProps extends ControlBarButtonProps {
+    // (undocumented)
+    onApplauseReactionClick?: () => Promise<void>;
+    // (undocumented)
+    onHeartReactionClick?: () => Promise<void>;
+    // (undocumented)
+    onLaughReactionClick?: () => Promise<void>;
+    // (undocumented)
+    onLikeReactionClick?: () => Promise<void>;
+    // (undocumented)
+    onSurprisedReactionClick?: () => Promise<void>;
     strings?: Partial<ReactionButtonStrings>;
 }
 
