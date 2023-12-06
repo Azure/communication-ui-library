@@ -9,7 +9,8 @@ import {
   CallAndChatLocator,
   CallWithChatAdapterState,
   CallWithChatComposite,
-  CallWithChatAdapter
+  CallWithChatAdapter,
+  CallWithChatCompositeOptions
 } from '@azure/communication-react';
 /* @conditional-compile-remove(video-background-effects) */
 import { onResolveVideoEffectDependencyLazy, AzureCommunicationCallAdapterOptions } from '@azure/communication-react';
@@ -19,6 +20,7 @@ import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvid
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/constants';
 import { useIsMobile } from '../utils/useIsMobile';
+import { isIOS } from 'app/utils/utils';
 
 export interface CallScreenProps {
   token: string;
@@ -144,6 +146,17 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     afterAdapterCreate
   );
 
+  const shouldDisableScreenShare = isIOS();
+
+  const options: CallWithChatCompositeOptions = useMemo(
+    () => ({
+      callControls: {
+        screenShareButton: !shouldDisableScreenShare
+      }
+    }),
+    [shouldDisableScreenShare]
+  );
+
   // Dispose of the adapter in the window's before unload event.
   // This ensures the service knows the user intentionally left the call if the user
   // closed the browser tab during an active call.
@@ -163,6 +176,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       fluentTheme={currentTheme.theme}
       rtl={currentRtl}
       joinInvitationURL={window.location.href}
+      options={options}
       formFactor={isMobileSession ? 'mobile' : 'desktop'}
     />
   );
