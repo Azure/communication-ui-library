@@ -139,11 +139,7 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     // (undocumented)
-    onDisposeLocalScreenShareStreamView: () => Promise<void>;
-    // @deprecated (undocumented)
     onDisposeLocalStreamView: () => Promise<void>;
-    // (undocumented)
-    onDisposeLocalVideoStreamView: () => Promise<void>;
     // (undocumented)
     onDisposeRemoteScreenShareStreamView: (userId: string) => Promise<void>;
     // @deprecated (undocumented)

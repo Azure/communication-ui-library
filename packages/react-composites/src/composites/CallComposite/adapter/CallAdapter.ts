@@ -572,12 +572,6 @@ export interface CallAdapterCallOperations {
    * @public
    */
   disposeLocalVideoStreamView(): Promise<void>;
-  /**
-   * Dispose the html view for a local screenshare stream
-   *
-   * @public
-   */
-  disposeLocalScreenShareStreamView(): Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Holds the call.

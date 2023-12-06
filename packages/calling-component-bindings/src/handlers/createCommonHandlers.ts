@@ -10,8 +10,7 @@ import {
   BackgroundBlurEffect,
   BackgroundReplacementEffect,
   BackgroundBlurConfig,
-  BackgroundReplacementConfig,
-  MediaStreamType
+  BackgroundReplacementConfig
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { DtmfTone, AddPhoneNumberOptions } from '@azure/communication-calling';
@@ -72,14 +71,9 @@ export interface CommonCallingHandlers {
    * @deprecated use {@link onDisposeRemoteVideoStreamView} and {@link onDisposeRemoteScreenShareStreamView} instead.
    */
   onDisposeRemoteStreamView: (userId: string) => Promise<void>;
-  /**
-   * @deprecated use {@link onDisposeLocalVideoStreamView} and {@link onDisposeLocalScreenShareStreamView} instead.
-   */
   onDisposeLocalStreamView: () => Promise<void>;
   onDisposeRemoteVideoStreamView: (userId: string) => Promise<void>;
   onDisposeRemoteScreenShareStreamView: (userId: string) => Promise<void>;
-  onDisposeLocalVideoStreamView: () => Promise<void>;
-  onDisposeLocalScreenShareStreamView: () => Promise<void>;
   /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
   onSendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
   onRemoveParticipant(userId: string): Promise<void>;
@@ -330,25 +324,13 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         return;
       }
 
-      // Find the first available stream, if there is none, then get the first stream
-      const localVideoStream = callState.localVideoStreams.find((item) => item.mediaStreamType === 'Video');
-      const screenShareStream = callState.localVideoStreams.find((item) => item.mediaStreamType === 'ScreenSharing');
-
-      let createViewResult: CreateViewResult | undefined = undefined;
-      if (localVideoStream && !localVideoStream.view) {
-        createViewResult = await callClient.createView(call.id, undefined, localVideoStream, options);
+      const localStream = callState.localVideoStreams.find((item) => item.mediaStreamType === 'Video');
+      if (!localStream) {
+        return;
       }
 
-      if (screenShareStream && !screenShareStream.view) {
-        // Hardcoded `scalingMode` since it is highly unlikely that CONTOSO would ever want to use a different scaling mode for screenshare.
-        // Using `Crop` would crop the contents of screenshare and `Stretch` would warp it.
-        // `Fit` is the only mode that maintains the integrity of the screen being shared.
-        createViewResult = await callClient.createView(call.id, undefined, screenShareStream, {
-          scalingMode: 'Fit'
-        });
-      }
-
-      return createViewResult?.view ? { view: createViewResult?.view } : undefined;
+      const { view } = (await callClient.createView(call.id, undefined, localStream, options)) ?? {};
+      return view ? { view } : undefined;
     };
 
     const onCreateRemoteStreamView = async (
@@ -476,26 +458,18 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
     };
 
-    const onDisposeLocalStreamView = async (mediaStreamType: MediaStreamType = 'Video'): Promise<void> => {
+    const onDisposeLocalStreamView = async (): Promise<void> => {
       // If the user is currently in a call, dispose of the local stream view attached to that call.
       const callState = call && callClient.getState().calls[call.id];
-      const localVideoStream = callState?.localVideoStreams.find((item) => item.mediaStreamType === mediaStreamType);
-      if (call && localVideoStream) {
-        callClient.disposeView(call.id, undefined, localVideoStream);
+      const localStream = callState?.localVideoStreams.find((item) => item.mediaStreamType === 'Video');
+      if (call && callState && localStream) {
+        callClient.disposeView(call.id, undefined, localStream);
       }
 
       // If the user is not in a call we currently assume any unparented view is a LocalPreview and stop all
       // since those are only used for LocalPreview currently.
       // TODO: we need to remember which LocalVideoStream was used for LocalPreview and dispose that one.
       await disposeAllLocalPreviewViews(callClient);
-    };
-
-    const onDisposeLocalVideoStreamView = async (): Promise<void> => {
-      return await onDisposeLocalStreamView('Video');
-    };
-
-    const onDisposeLocalScreenShareStreamView = async (): Promise<void> => {
-      return await onDisposeLocalStreamView('ScreenSharing');
     };
 
     /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
@@ -600,8 +574,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onStartLocalVideo,
       onDisposeRemoteStreamView,
       onDisposeLocalStreamView,
-      onDisposeLocalVideoStreamView,
-      onDisposeLocalScreenShareStreamView,
       onDisposeRemoteScreenShareStreamView,
       onDisposeRemoteVideoStreamView,
       /* @conditional-compile-remove(raise-hand) */

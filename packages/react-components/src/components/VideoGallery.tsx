@@ -202,16 +202,8 @@ export interface VideoGalleryProps {
   remoteVideoViewOptions?: VideoStreamOptions;
   /** Callback to create the local video stream view */
   onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
-  /**
-   * @deprecated use {@link onDisposeLocalVideoStreamView} and {@link onDisposeLocalScreenShareStreamView} instead
-   *
-   * Callback to dispose of the local video stream view
-   */
+  /** Callback to dispose of the local video stream view */
   onDisposeLocalStreamView?: () => void;
-  /** Callback to dispose a remote video stream view */
-  onDisposeLocalVideoStreamView?: () => Promise<void>;
-  /** Callback to dispose a remote screen share stream view */
-  onDisposeLocalScreenShareStreamView?: () => Promise<void>;
   /** Callback to render the local video tile*/
   onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
   /** Callback to create a remote video stream view */
@@ -339,10 +331,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onRenderRemoteVideoTile,
     onCreateLocalStreamView,
     onDisposeLocalStreamView,
-    onDisposeLocalVideoStreamView,
-    onDisposeLocalScreenShareStreamView,
     onCreateRemoteStreamView,
-    onDisposeRemoteStreamView,
     onDisposeRemoteScreenShareStreamView,
     onDisposeRemoteVideoStreamView,
     styles,
@@ -363,11 +352,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(rooms) */
     localVideoTileSize = 'followDeviceOrientation'
   } = props;
-
-  // Support deprecated APIs
-  const disposeLocalStreamVideoStreamVideo = onDisposeLocalVideoStreamView ?? onDisposeLocalStreamView;
-  const disposeRemoteStreamVideoStreamVideo = onDisposeRemoteVideoStreamView ?? onDisposeRemoteStreamView;
-  const disposeRemoteScreenShareStreamView = onDisposeRemoteScreenShareStreamView ?? onDisposeRemoteStreamView;
 
   const ids = useIdentifiers();
   const theme = useTheme();
@@ -464,7 +448,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         <_LocalVideoTile
           userId={localParticipant.userId}
           onCreateLocalStreamView={onCreateLocalStreamView}
-          onDisposeLocalStreamView={disposeLocalStreamVideoStreamVideo}
+          onDisposeLocalStreamView={onDisposeLocalStreamView}
           isAvailable={localParticipant?.videoStream?.isAvailable}
           isMuted={localParticipant.isMuted}
           renderElement={localParticipant?.videoStream?.renderElement}
@@ -496,7 +480,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     localVideoCameraCycleButtonProps,
     localVideoViewOptions,
     onCreateLocalStreamView,
-    disposeLocalStreamVideoStreamVideo,
+    onDisposeLocalStreamView,
     onRenderAvatar,
     onRenderLocalVideoTile,
     localTileNotInGrid,
@@ -586,7 +570,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           userId={participant.userId}
           remoteParticipant={participant}
           onCreateRemoteStreamView={isVideoParticipant ? onCreateRemoteStreamView : undefined}
-          onDisposeRemoteStreamView={isVideoParticipant ? disposeRemoteStreamVideoStreamVideo : undefined}
+          onDisposeRemoteStreamView={isVideoParticipant ? onDisposeRemoteVideoStreamView : undefined}
           isAvailable={isVideoParticipant ? remoteVideoStream?.isAvailable : false}
           isReceiving={isVideoParticipant ? remoteVideoStream?.isReceiving : false}
           renderElement={isVideoParticipant ? remoteVideoStream?.renderElement : undefined}
@@ -625,7 +609,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     },
     [
       onCreateRemoteStreamView,
-      disposeRemoteStreamVideoStreamVideo,
+      onDisposeRemoteVideoStreamView,
       remoteVideoViewOptions,
       localParticipant,
       onRenderAvatar,
@@ -644,20 +628,14 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
   const screenShareParticipant = remoteParticipants.find((participant) => participant.screenShareStream?.isAvailable);
 
-  const localScreenShareStreamComponent = (
-    <LocalScreenShare
-      localParticipant={localParticipant}
-      onCreateLocalStreamView={onCreateLocalStreamView}
-      onDisposeLocalStreamView={onDisposeLocalScreenShareStreamView}
-    />
-  );
+  const localScreenShareStreamComponent = <LocalScreenShare localParticipant={localParticipant} />;
 
   const remoteScreenShareComponent = screenShareParticipant && (
     <RemoteScreenShare
       {...screenShareParticipant}
       renderElement={screenShareParticipant.screenShareStream?.renderElement}
       onCreateRemoteStreamView={onCreateRemoteStreamView}
-      onDisposeRemoteStreamView={disposeRemoteScreenShareStreamView}
+      onDisposeRemoteStreamView={onDisposeRemoteScreenShareStreamView}
       isReceiving={screenShareParticipant.screenShareStream?.isReceiving}
     />
   );

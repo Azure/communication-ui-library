@@ -231,12 +231,6 @@ export interface CallWithChatAdapterManagement {
    */
   disposeLocalVideoStreamView(): Promise<void>;
   /**
-   * Dispose the html view for a local screenshare stream
-   *
-   * @public
-   */
-  disposeLocalScreenShareStreamView(): Promise<void>;
-  /**
    * Ask for permissions of devices.
    *
    * @remarks

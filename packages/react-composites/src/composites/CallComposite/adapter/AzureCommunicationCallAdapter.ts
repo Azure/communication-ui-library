@@ -717,11 +717,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   }
 
   public async disposeLocalVideoStreamView(): Promise<void> {
-    await this.handlers.onDisposeLocalVideoStreamView();
-  }
-
-  public async disposeLocalScreenShareStreamView(): Promise<void> {
-    await this.handlers.onDisposeLocalScreenShareStreamView();
+    await this.handlers.onDisposeLocalStreamView();
   }
 
   public async leaveCall(forEveryone?: boolean): Promise<void> {

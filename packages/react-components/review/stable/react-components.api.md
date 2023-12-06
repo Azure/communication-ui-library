@@ -1985,7 +1985,6 @@ export type VideoGalleryParticipant = {
     displayName?: string;
     videoStream?: VideoGalleryStream;
     isScreenSharingOn?: boolean;
-    screenShareStream?: VideoGalleryStream;
 };
 
 // @public
@@ -1998,10 +1997,7 @@ export interface VideoGalleryProps {
     maxRemoteVideoStreams?: number;
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
-    onDisposeLocalScreenShareStreamView?: () => Promise<void>;
-    // @deprecated (undocumented)
     onDisposeLocalStreamView?: () => void;
-    onDisposeLocalVideoStreamView?: () => Promise<void>;
     onDisposeRemoteScreenShareStreamView?: (userId: string) => Promise<void>;
     // @deprecated (undocumented)
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
@@ -2026,6 +2022,7 @@ export interface VideoGalleryProps {
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     isSpeaking?: boolean;
     raisedHand?: RaisedHand;
+    screenShareStream?: VideoGalleryStream;
 }
 
 // @public
