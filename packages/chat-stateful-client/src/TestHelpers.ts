@@ -91,7 +91,7 @@ export type ChatClientWithEventTrigger = ChatClient & {
  * @private
  */
 export function createMockChatClient(): ChatClientWithEventTrigger {
-  const mockEventHandlersRef = { value: {} };
+  const mockEventHandlersRef: { value: any } = { value: {} };
   const mockChatClient: ChatClientWithEventTrigger = {} as any;
 
   mockChatClient.createChatThread = async (request) => {

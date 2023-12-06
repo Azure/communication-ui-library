@@ -50,6 +50,7 @@ import {
   ChatMessageComponentWrapper,
   ChatMessageComponentWrapperProps
 } from './ChatMessage/ChatMessageComponentWrapper';
+import { Announcer } from './Announcer';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (
@@ -211,6 +212,8 @@ export interface MessageThreadStrings {
   editBoxSubmitButton: string;
   /** String for action menu indicating there are more options */
   actionMenuMoreOptions?: string;
+  /** Aria label to announce when a message is deleted */
+  messageDeletedAnnouncementAriaLabel: string;
   /* @conditional-compile-remove(file-sharing) */
   /** String for download file button in file card */
   downloadFile: string;
@@ -715,6 +718,33 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     [onFetchAttachments]
   );
 
+  const localeStrings = useLocale().strings.messageThread;
+  const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
+
+  // id for the latest deleted message
+  const [latestDeletedMessageId, setLatestDeletedMessageId] = useState<string | undefined>(undefined);
+  // this value is used to check if a message is deleted for the previous value of messages array
+  const previousMessagesRef = useRef<Message[]>([]);
+  // an aria label for Narrator to notify when a message is deleted
+  const [deletedMessageAriaLabel, setDeletedMessageAriaLabel] = useState<string | undefined>(undefined);
+
+  const onDeleteMessageCallback = useCallback(
+    async (messageId: string): Promise<void> => {
+      if (!onDeleteMessage) {
+        return;
+      }
+      try {
+        await onDeleteMessage(messageId);
+        // reset deleted message label in case if there was a value already (messages are deleted 1 after another)
+        setDeletedMessageAriaLabel(undefined);
+        setLatestDeletedMessageId(messageId);
+      } catch (e) {
+        console.log('onDeleteMessage failed: messageId', messageId, 'error', e);
+      }
+    },
+    [onDeleteMessage]
+  );
+
   const isAllChatMessagesLoadedRef = useRef(false);
   // isAllChatMessagesLoadedRef needs to be updated every time when a new adapter is set in order to display correct data
   // onLoadPreviousChatMessages is updated when a new adapter is set
@@ -740,6 +770,27 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   const messages = useMemo(() => {
     return newMessages;
   }, [newMessages]);
+
+  useEffect(() => {
+    if (latestDeletedMessageId === undefined) {
+      setDeletedMessageAriaLabel(undefined);
+    } else {
+      if (!previousMessagesRef.current.find((message) => message.messageId === latestDeletedMessageId)) {
+        // the message is deleted in previousMessagesRef
+        // no need to update deletedMessageAriaLabel
+        setDeletedMessageAriaLabel(undefined);
+      } else if (!messages.find((message) => message.messageId === latestDeletedMessageId)) {
+        // the message is deleted in messages array but still exists in previousMessagesRef
+        // update deletedMessageAriaLabel
+        setDeletedMessageAriaLabel(strings.messageDeletedAnnouncementAriaLabel);
+      } else {
+        // the message exists in both arrays
+        // no need to update deletedMessageAriaLabel
+        setDeletedMessageAriaLabel(undefined);
+      }
+    }
+    previousMessagesRef.current = messages;
+  }, [latestDeletedMessageId, messages, strings.messageDeletedAnnouncementAriaLabel]);
 
   const messagesRef = useRef(messages);
   const setMessagesRef = (messagesWithAttachedValue: Message[]): void => {
@@ -961,9 +1012,6 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     []
   );
 
-  const localeStrings = useLocale().strings.messageThread;
-  const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
-
   const defaultStatusRenderer = useCallback(
     (
       message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage,
@@ -1006,7 +1054,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
           index,
           onUpdateMessage,
           onCancelEditMessage,
-          onDeleteMessage,
+          onDeleteMessageCallback,
           onSendMessage,
           props.disableEditing,
           lastDeliveredChatMessage,
@@ -1021,7 +1069,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     lastSendingChatMessage,
     messages,
     onCancelEditMessage,
-    onDeleteMessage,
+    onDeleteMessageCallback,
     onSendMessage,
     onUpdateMessage,
     props.disableEditing,
@@ -1048,6 +1096,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
       )}
       <LiveAnnouncer>
         <FluentV9ThemeProvider v8Theme={theme}>
+          <Announcer announcementString={deletedMessageAriaLabel} ariaLive={'assertive'} />
           <Chat
             // styles?.chatContainer used in className and style prop as style prop can't handle CSS selectors
             className={mergeClasses(classes.root, mergeStyles(styles?.chatContainer))}
