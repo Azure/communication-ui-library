@@ -93,6 +93,12 @@ export type CallAdapterClientState = {
   userId: CommunicationIdentifierKind;
   displayName?: string;
   call?: CallState;
+  /* @conditional-compile-remove(calling-sounds) */
+  /**
+   * State to track who the original call went out to. will be undefined the call is not a outbound
+   * modality. This includes, groupCalls, Rooms calls, and Teams InteropMeetings.
+   */
+  targetCallees?: CommunicationIdentifier[];
   devices: DeviceManagerState;
   endedCall?: CallState;
   isTeamsCall: boolean;
@@ -284,11 +290,7 @@ export type SoundEffect = {
   /**
    * Path to sound effect
    */
-  path: string;
-  /**
-   * type of file format for the sound effect
-   */
-  fileType?: 'mp3' | 'wav' | 'ogg' | 'aac' | 'flac';
+  url: string;
 };
 
 /**
@@ -304,6 +306,10 @@ export type CallingSounds = {
    * Sound to be played when the call is ringing
    */
   callRinging?: SoundEffect;
+  /**
+   * Sound to be played when the call is rejected by the user being callede
+   */
+  callBusy?: SoundEffect;
 };
 
 /**
@@ -838,6 +844,11 @@ export interface CallAdapterSubscribers {
    * Subscribe function for 'capabilitiesChanged' event.
    */
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
+  /* @conditional-compile-remove(rooms) */
+  /**
+   * Subscribe function for 'roleChanged' event.
+   */
+  on(event: 'roleChanged', listener: PropertyChangedEvent): void;
 
   /**
    * Unsubscribe function for 'participantsJoined' event.
@@ -917,6 +928,11 @@ export interface CallAdapterSubscribers {
    * Unsubscribe function for 'capabilitiesChanged' event.
    */
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
+  /* @conditional-compile-remove(rooms) */
+  /**
+   * Unsubscribe function for 'roleChanged' event.
+   */
+  off(event: 'roleChanged', listener: PropertyChangedEvent): void;
 }
 
 // This type remains for non-breaking change reason

@@ -16,10 +16,22 @@ import { VideoBackgroundEffect } from '../adapter/CallAdapter';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoEffectProcessor } from '@azure/communication-calling';
+import { CompositeLocale } from '../../localization';
+import { CallCompositeIcons } from '../../common/icons';
 
 const ACCESS_DENIED_TEAMS_MEETING_SUB_CODE = 5854;
 const REMOTE_PSTN_USER_HUNG_UP = 560000;
 const REMOVED_FROM_CALL_SUB_CODES = [5000, 5300, REMOTE_PSTN_USER_HUNG_UP];
+/* @conditional-compile-remove(calling-sounds) */
+const CALL_REJECTED_CODE = 603;
+/* @conditional-compile-remove(rooms) */
+const ROOM_NOT_FOUND_SUB_CODE = 5732;
+/* @conditional-compile-remove(rooms) */
+const ROOM_NOT_VALID_SUB_CODE = 5829;
+/* @conditional-compile-remove(rooms) */
+const NOT_INVITED_TO_ROOM_SUB_CODE = 5828;
+/* @conditional-compile-remove(rooms) */
+const INVITE_TO_ROOM_REMOVED_SUB_CODE = 5317;
 
 /**
  * @private
@@ -68,11 +80,7 @@ export const reduceCallControlsForMobile = (
 enum CallEndReasons {
   LEFT_CALL,
   ACCESS_DENIED,
-  REMOVED_FROM_CALL,
-  ROOM_NOT_FOUND,
-  ROOM_NOT_VALID,
-  NO_PERMISSION_TO_JOIN_ROOM,
-  REMOVED_PERMISSION_TO_JOIN_ROOM
+  REMOVED_FROM_CALL
 }
 
 const getCallEndReason = (call: CallState): CallEndReasons => {
@@ -106,6 +114,98 @@ const getCallEndReason = (call: CallState): CallEndReasons => {
   }
 
   throw new Error('No matching call end reason');
+};
+
+/**
+ * Helper function for determine strings and icons for end call page
+ * @private
+ */
+export const getEndedCallPageProps = (
+  locale: CompositeLocale,
+  endedCall?: CallState
+): { title: string; moreDetails?: string; disableStartCallButton: boolean; iconName: keyof CallCompositeIcons } => {
+  let title = locale.strings.call.leftCallTitle;
+  let moreDetails = locale.strings.call.leftCallMoreDetails;
+  let disableStartCallButton = false;
+  let iconName: keyof CallCompositeIcons = 'NoticePageLeftCall';
+  /* @conditional-compile-remove(rooms) */
+  switch (endedCall?.callEndReason?.subCode) {
+    case ROOM_NOT_FOUND_SUB_CODE:
+      if (locale.strings.call.roomNotFoundTitle) {
+        title = locale.strings.call.roomNotFoundTitle;
+        moreDetails = locale.strings.call.roomNotFoundDetails;
+        disableStartCallButton = true;
+        iconName = 'NoticePageRoomNotFound';
+      }
+      break;
+    case ROOM_NOT_VALID_SUB_CODE:
+      if (locale.strings.call.roomNotValidTitle) {
+        title = locale.strings.call.roomNotValidTitle;
+        moreDetails = locale.strings.call.roomNotValidDetails;
+        disableStartCallButton = true;
+        iconName = 'NoticePageRoomNotValid';
+      }
+      break;
+    case NOT_INVITED_TO_ROOM_SUB_CODE:
+      if (locale.strings.call.notInvitedToRoomTitle) {
+        title = locale.strings.call.notInvitedToRoomTitle;
+        moreDetails = locale.strings.call.notInvitedToRoomDetails;
+        disableStartCallButton = true;
+        iconName = 'NoticePageNotInvitedToRoom';
+      }
+      break;
+    case INVITE_TO_ROOM_REMOVED_SUB_CODE:
+      if (locale.strings.call.inviteToRoomRemovedTitle) {
+        title = locale.strings.call.inviteToRoomRemovedTitle;
+        moreDetails = locale.strings.call.inviteToRoomRemovedDetails;
+        disableStartCallButton = true;
+        iconName = 'NoticePageInviteToRoomRemoved';
+      }
+      break;
+  }
+  /* @conditional-compile-remove(calling-sounds) */
+  switch (endedCall?.callEndReason?.code) {
+    case CALL_REJECTED_CODE:
+      if (locale.strings.call.callRejectedTitle) {
+        title = locale.strings.call.callRejectedTitle;
+        moreDetails = locale.strings.call.callRejectedMoreDetails;
+        disableStartCallButton = true;
+        iconName = 'NoticePageCallRejected';
+      }
+      break;
+  }
+  /* @conditional-compile-remove(teams-adhoc-call) */
+  switch (endedCall?.callEndReason?.subCode) {
+    case 10037:
+      if (locale.strings.call.participantCouldNotBeReachedTitle) {
+        title = locale.strings.call.participantCouldNotBeReachedTitle;
+        moreDetails = locale.strings.call.participantCouldNotBeReachedMoreDetails;
+        disableStartCallButton = true;
+      }
+      break;
+    case 10124:
+      if (locale.strings.call.permissionToReachTargetParticipantNotAllowedTitle) {
+        title = locale.strings.call.permissionToReachTargetParticipantNotAllowedTitle;
+        moreDetails = locale.strings.call.permissionToReachTargetParticipantNotAllowedMoreDetails;
+        disableStartCallButton = true;
+      }
+      break;
+    case 10119:
+      if (locale.strings.call.unableToResolveTenantTitle) {
+        title = locale.strings.call.unableToResolveTenantTitle;
+        moreDetails = locale.strings.call.unableToResolveTenantMoreDetails;
+        disableStartCallButton = true;
+      }
+      break;
+    case 10044:
+      if (locale.strings.call.participantIdIsMalformedTitle) {
+        title = locale.strings.call.participantIdIsMalformedTitle;
+        moreDetails = locale.strings.call.participantIdIsMalformedMoreDetails;
+        disableStartCallButton = true;
+      }
+      break;
+  }
+  return { title, moreDetails, disableStartCallButton, iconName };
 };
 
 /**

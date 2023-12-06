@@ -4,7 +4,7 @@
 /* @conditional-compile-remove(file-sharing) */
 import { ChatErrors, ChatThreadClientState } from '@internal/chat-stateful-client';
 /* @conditional-compile-remove(file-sharing) */
-import produce from 'immer';
+import { produce } from 'immer';
 /* @conditional-compile-remove(file-sharing) */
 import { v1 as generateGUID } from 'uuid';
 /* @conditional-compile-remove(file-sharing) */

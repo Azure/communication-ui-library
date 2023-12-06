@@ -150,6 +150,9 @@ export interface AttachmentDownloadResult {
     blobUrl: string;
 }
 
+// @beta
+export type AttachmentMetadata = FileMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ InlineImageMetadata;
+
 // @public
 export type AvatarPersonaData = {
     text?: string;
@@ -225,15 +228,6 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
 // @public
 export interface BaseCustomStyles {
     root?: IStyle;
-}
-
-// @beta
-export interface BaseFileMetadata {
-    attachmentType: FileMetadataAttachmentType;
-    extension: string;
-    id: string;
-    name: string;
-    url: string;
 }
 
 // @beta
@@ -375,6 +369,7 @@ export type CallAdapterClientState = {
     userId: CommunicationIdentifierKind;
     displayName?: string;
     call?: CallState;
+    targetCallees?: CommunicationIdentifier[];
     devices: DeviceManagerState;
     endedCall?: CallState;
     isTeamsCall: boolean;
@@ -428,6 +423,7 @@ export interface CallAdapterSubscribers {
     off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
     off(event: 'transferRequested', listener: TransferRequestedListener): void;
     off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
+    off(event: 'roleChanged', listener: PropertyChangedEvent): void;
     on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
     on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
     on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -446,6 +442,7 @@ export interface CallAdapterSubscribers {
     on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
     on(event: 'transferRequested', listener: TransferRequestedListener): void;
     on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
+    on(event: 'roleChanged', listener: PropertyChangedEvent): void;
 }
 
 // @public
@@ -557,6 +554,7 @@ export type CallCompositeIcons = {
     NoticePageJoinCallFailedDueToNoNetwork?: JSX.Element;
     NoticePageLeftCall?: JSX.Element;
     NoticePageRemovedFromCall?: JSX.Element;
+    NoticePageCallRejected?: JSX.Element;
     NoticePageNotInvitedToRoom?: JSX.Element;
     NoticePageRoomNotFound?: JSX.Element;
     NoticePageRoomNotValid?: JSX.Element;
@@ -601,13 +599,15 @@ export type CallCompositeOptions = {
     galleryOptions?: {
         layout?: VideoGalleryLayout;
     };
-    logo?: {
-        url: string;
-        alt?: string;
-        shape?: 'circle' | 'square';
-    };
-    backgroundImage?: {
-        url: string;
+    branding?: {
+        logo?: {
+            url: string;
+            alt?: string;
+            shape?: 'circle' | 'square';
+        };
+        backgroundImage?: {
+            url: string;
+        };
     };
 };
 
@@ -626,6 +626,8 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
 export interface CallCompositeStrings {
     blurBackgroundEffectButtonLabel?: string;
     blurBackgroundTooltip?: string;
+    callRejectedMoreDetails?: string;
+    callRejectedTitle: string;
     cameraLabel: string;
     cameraOffBackgroundEffectWarningText?: string;
     cameraPermissionDenied: string;
@@ -832,6 +834,7 @@ export type CallingReturnProps<Component extends (props: any) => JSX.Element> = 
 export type CallingSounds = {
     callEnded?: SoundEffect;
     callRinging?: SoundEffect;
+    callBusy?: SoundEffect;
 };
 
 // @public
@@ -949,7 +952,7 @@ export interface CallWithChatAdapterManagement {
     // @beta (undocumented)
     registerActiveFileUploads: (files: File[]) => FileUploadManager[];
     // @beta (undocumented)
-    registerCompletedFileUploads: (metadata: FileMetadata[]) => FileUploadManager[];
+    registerCompletedFileUploads: (metadata: AttachmentMetadata[]) => FileUploadManager[];
     removeParticipant(userId: string): Promise<void>;
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
@@ -981,7 +984,7 @@ export interface CallWithChatAdapterManagement {
     // @beta (undocumented)
     updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
     // @beta (undocumented)
-    updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
+    updateFileUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
     // @beta (undocumented)
     updateFileUploadProgress: (id: string, progress: number) => void;
     updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void>;
@@ -1103,7 +1106,6 @@ export interface CallWithChatClientState {
     displayName: string | undefined;
     environmentInfo?: EnvironmentInfo;
     hideAttendeeNames?: boolean;
-    isRoomsCall: boolean;
     isTeamsCall: boolean;
     latestCallErrors: AdapterErrors;
     latestChatErrors: AdapterErrors;
@@ -1206,13 +1208,15 @@ export type CallWithChatCompositeOptions = {
     galleryOptions?: {
         layout?: VideoGalleryLayout;
     };
-    logo?: {
-        url: string;
-        alt?: string;
-        shape?: 'circle' | 'square';
-    };
-    backgroundImage?: {
-        url: string;
+    branding?: {
+        logo?: {
+            url: string;
+            alt?: string;
+            shape?: 'circle' | 'square';
+        };
+        backgroundImage?: {
+            url: string;
+        };
     };
 };
 
@@ -1524,7 +1528,7 @@ export interface ChatAdapterThreadManagement {
     sendTypingIndicator(): Promise<void>;
     setTopic(topicName: string): Promise<void>;
     updateMessage(messageId: string, content: string, metadata?: Record<string, string>, options?: {
-        attachedFilesMetadata?: FileMetadata[];
+        attachmentMetadata?: AttachmentMetadata[];
     }): Promise<void>;
 }
 
@@ -1533,6 +1537,9 @@ export type ChatAdapterUiState = {
     error?: Error;
     fileUploads?: FileUploadsUiState;
 };
+
+// @beta
+export type ChatAttachmentType = 'file' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | 'unknown';
 
 // @public
 export type ChatBaseSelectorProps = {
@@ -1641,7 +1648,7 @@ export type ChatHandlers = {
     onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
     onUpdateMessage: (messageId: string, content: string, options?: {
         metadata?: Record<string, string>;
-        attachedFilesMetadata?: FileMetadata[];
+        attachmentMetadata?: AttachmentMetadata[];
     }) => Promise<void>;
     onDeleteMessage: (messageId: string) => Promise<void>;
 };
@@ -1650,8 +1657,6 @@ export type ChatHandlers = {
 export interface ChatMessage extends MessageCommon {
     // (undocumented)
     attached?: MessageAttachedStatus;
-    // @beta
-    attachedFilesMetadata?: FileMetadata[];
     // (undocumented)
     clientMessageId?: string;
     // (undocumented)
@@ -1664,6 +1669,10 @@ export interface ChatMessage extends MessageCommon {
     editedOn?: Date;
     // (undocumented)
     failureReason?: string;
+    // @beta
+    files?: FileMetadata[];
+    // @beta
+    inlineImages?: InlineImageMetadata[];
     // (undocumented)
     messageType: 'chat';
     metadata?: Record<string, string>;
@@ -1756,9 +1765,7 @@ export type CommonCallAdapterOptions = {
         onResolveDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     };
     onFetchProfile?: OnFetchProfileCallback;
-    soundOptions?: {
-        callingSounds?: CallingSounds;
-    };
+    callingSounds?: CallingSounds;
 };
 
 // @public
@@ -2411,6 +2418,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     NoticePageJoinCallFailedDueToNoNetwork?: JSX.Element | undefined;
     NoticePageLeftCall?: JSX.Element | undefined;
     NoticePageRemovedFromCall?: JSX.Element | undefined;
+    NoticePageCallRejected?: JSX.Element | undefined;
     NoticePageNotInvitedToRoom?: JSX.Element | undefined;
     NoticePageRoomNotFound?: JSX.Element | undefined;
     NoticePageRoomNotValid?: JSX.Element | undefined;
@@ -2694,20 +2702,18 @@ export interface FileDownloadError {
 }
 
 // @beta
-export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
+export type FileDownloadHandler = (userId: string, fileMetadata: AttachmentMetadata) => Promise<URL | FileDownloadError>;
 
 // @beta
-export type FileMetadata = FileSharingMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ ImageFileMetadata;
-
-// @beta (undocumented)
-export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | 'unknown';
-
-// @beta
-export interface FileSharingMetadata extends BaseFileMetadata {
+export interface FileMetadata {
     // (undocumented)
-    attachmentType: 'fileSharing';
+    attachmentType: 'file';
+    extension: string;
+    id: string;
+    name: string;
     // (undocumented)
     payload?: Record<string, string>;
+    url: string;
 }
 
 // @beta
@@ -2727,11 +2733,11 @@ export interface FileUploadAdapter {
     // (undocumented)
     registerActiveFileUploads: (files: File[]) => FileUploadManager[];
     // (undocumented)
-    registerCompletedFileUploads: (metadata: FileMetadata[]) => FileUploadManager[];
+    registerCompletedFileUploads: (metadata: AttachmentMetadata[]) => FileUploadManager[];
     // (undocumented)
     updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
     // (undocumented)
-    updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
+    updateFileUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
     // (undocumented)
     updateFileUploadProgress: (id: string, progress: number) => void;
 }
@@ -2749,7 +2755,7 @@ export type FileUploadHandler = (userId: string, fileUploads: FileUploadManager[
 export interface FileUploadManager {
     file?: File;
     id: string;
-    notifyUploadCompleted: (metadata: FileMetadata) => void;
+    notifyUploadCompleted: (metadata: AttachmentMetadata) => void;
     notifyUploadFailed: (message: string) => void;
     notifyUploadProgressChanged: (value: number) => void;
 }
@@ -2759,7 +2765,7 @@ export interface FileUploadState {
     error?: FileUploadError;
     filename: string;
     id: string;
-    metadata?: FileMetadata;
+    metadata?: AttachmentMetadata;
     progress: number;
 }
 
@@ -2869,14 +2875,6 @@ export interface _Identifiers {
 }
 
 // @beta
-export interface ImageFileMetadata extends BaseFileMetadata {
-    // (undocumented)
-    attachmentType: 'inlineImage';
-    // (undocumented)
-    previewUrl?: string;
-}
-
-// @beta
 export const ImageGallery: (props: ImageGalleryProps) => JSX.Element;
 
 // @beta
@@ -2916,6 +2914,16 @@ export interface IncomingCallState {
     endTime?: Date;
     id: string;
     startTime: Date;
+}
+
+// @beta
+export interface InlineImageMetadata {
+    // (undocumented)
+    attachmentType: 'inlineImage';
+    id: string;
+    // (undocumented)
+    previewUrl?: string;
+    url: string;
 }
 
 // @public
@@ -3147,7 +3155,7 @@ export type MessageThreadProps = {
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
     onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
-    onFetchAttachments?: (attachments: FileMetadata[]) => Promise<AttachmentDownloadResult[]>;
+    onFetchAttachments?: (attachments: AttachmentMetadata[]) => Promise<AttachmentDownloadResult[]>;
     onUpdateMessage?: UpdateMessageCallback;
     onCancelEditMessage?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
@@ -3185,6 +3193,7 @@ export interface MessageThreadStrings {
     liveAuthorIntro: string;
     messageContentAriaText: string;
     messageContentMineAriaText: string;
+    messageDeletedAnnouncementAriaLabel: string;
     messageReadCount?: string;
     monday: string;
     newMessagesIndicator: string;
@@ -3697,8 +3706,7 @@ export interface SitePermissionsStyles extends BaseCustomStyles {
 
 // @beta
 export type SoundEffect = {
-    path: string;
-    fileType?: 'mp3' | 'wav' | 'ogg' | 'aac' | 'flac';
+    url: string;
 };
 
 // @public
@@ -4000,7 +4008,7 @@ export interface UnsupportedOperatingSystemStrings {
 // @public
 export type UpdateMessageCallback = (messageId: string, content: string, options?: {
     metadata?: Record<string, string>;
-    attachedFilesMetadata?: FileMetadata[];
+    attachmentMetadata?: AttachmentMetadata[];
 }) => Promise<void>;
 
 // @public

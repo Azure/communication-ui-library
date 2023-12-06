@@ -8,6 +8,7 @@
 
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AttachmentDownloadResult } from '@internal/react-components';
+import { AttachmentMetadata } from '@internal/react-components';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import type { BackgroundBlurConfig } from '@azure/communication-calling';
 import type { BackgroundReplacementConfig } from '@azure/communication-calling';
@@ -33,7 +34,7 @@ import { DeviceManagerState } from '@internal/calling-stateful-client';
 import { DtmfTone } from '@azure/communication-calling';
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { FileDownloadHandler } from '@internal/react-components';
-import { FileMetadata } from '@internal/react-components';
+import type { FileMetadata } from '@internal/react-components';
 import { GroupCallLocator } from '@azure/communication-calling';
 import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { MessageProps } from '@internal/react-components';
@@ -60,6 +61,7 @@ import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { TeamsCall } from '@azure/communication-calling';
 import { TeamsCallAgent } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
+import { _TelemetryImplementationHint } from '@internal/acs-ui-common';
 import { Theme } from '@fluentui/react';
 import { TransferRequestedEventArgs } from '@azure/communication-calling';
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
@@ -230,6 +232,7 @@ export type CallAdapterClientState = {
     userId: CommunicationIdentifierKind;
     displayName?: string;
     call?: CallState;
+    targetCallees?: CommunicationIdentifier[];
     devices: DeviceManagerState;
     endedCall?: CallState;
     isTeamsCall: boolean;
@@ -283,6 +286,7 @@ export interface CallAdapterSubscribers {
     off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
     off(event: 'transferRequested', listener: TransferRequestedListener): void;
     off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
+    off(event: 'roleChanged', listener: PropertyChangedEvent): void;
     on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
     on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
     on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -301,6 +305,7 @@ export interface CallAdapterSubscribers {
     on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
     on(event: 'transferRequested', listener: TransferRequestedListener): void;
     on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
+    on(event: 'roleChanged', listener: PropertyChangedEvent): void;
 }
 
 // @public
@@ -363,6 +368,7 @@ export type CallCompositeIcons = {
     NoticePageJoinCallFailedDueToNoNetwork?: JSX.Element;
     NoticePageLeftCall?: JSX.Element;
     NoticePageRemovedFromCall?: JSX.Element;
+    NoticePageCallRejected?: JSX.Element;
     NoticePageNotInvitedToRoom?: JSX.Element;
     NoticePageRoomNotFound?: JSX.Element;
     NoticePageRoomNotValid?: JSX.Element;
@@ -407,13 +413,15 @@ export type CallCompositeOptions = {
     galleryOptions?: {
         layout?: VideoGalleryLayout;
     };
-    logo?: {
-        url: string;
-        alt?: string;
-        shape?: 'circle' | 'square';
-    };
-    backgroundImage?: {
-        url: string;
+    branding?: {
+        logo?: {
+            url: string;
+            alt?: string;
+            shape?: 'circle' | 'square';
+        };
+        backgroundImage?: {
+            url: string;
+        };
     };
 };
 
@@ -432,6 +440,8 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
 export interface CallCompositeStrings {
     blurBackgroundEffectButtonLabel?: string;
     blurBackgroundTooltip?: string;
+    callRejectedMoreDetails?: string;
+    callRejectedTitle: string;
     cameraLabel: string;
     cameraOffBackgroundEffectWarningText?: string;
     cameraPermissionDenied: string;
@@ -598,6 +608,7 @@ export type CallIdChangedListener = (event: {
 export type CallingSounds = {
     callEnded?: SoundEffect;
     callRinging?: SoundEffect;
+    callBusy?: SoundEffect;
 };
 
 // @beta
@@ -649,7 +660,7 @@ export interface CallWithChatAdapterManagement {
     // @beta (undocumented)
     registerActiveFileUploads: (files: File[]) => FileUploadManager[];
     // @beta (undocumented)
-    registerCompletedFileUploads: (metadata: FileMetadata[]) => FileUploadManager[];
+    registerCompletedFileUploads: (metadata: AttachmentMetadata[]) => FileUploadManager[];
     removeParticipant(userId: string): Promise<void>;
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
@@ -681,7 +692,7 @@ export interface CallWithChatAdapterManagement {
     // @beta (undocumented)
     updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
     // @beta (undocumented)
-    updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
+    updateFileUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
     // @beta (undocumented)
     updateFileUploadProgress: (id: string, progress: number) => void;
     updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void>;
@@ -803,7 +814,6 @@ export interface CallWithChatClientState {
     displayName: string | undefined;
     environmentInfo?: EnvironmentInfo;
     hideAttendeeNames?: boolean;
-    isRoomsCall: boolean;
     isTeamsCall: boolean;
     latestCallErrors: AdapterErrors;
     latestChatErrors: AdapterErrors;
@@ -906,13 +916,15 @@ export type CallWithChatCompositeOptions = {
     galleryOptions?: {
         layout?: VideoGalleryLayout;
     };
-    logo?: {
-        url: string;
-        alt?: string;
-        shape?: 'circle' | 'square';
-    };
-    backgroundImage?: {
-        url: string;
+    branding?: {
+        logo?: {
+            url: string;
+            alt?: string;
+            shape?: 'circle' | 'square';
+        };
+        backgroundImage?: {
+            url: string;
+        };
     };
 };
 
@@ -1039,7 +1051,7 @@ export interface ChatAdapterThreadManagement {
     sendTypingIndicator(): Promise<void>;
     setTopic(topicName: string): Promise<void>;
     updateMessage(messageId: string, content: string, metadata?: Record<string, string>, options?: {
-        attachedFilesMetadata?: FileMetadata[];
+        attachmentMetadata?: AttachmentMetadata[];
     }): Promise<void>;
 }
 
@@ -1125,9 +1137,7 @@ export type CommonCallAdapterOptions = {
         onResolveDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     };
     onFetchProfile?: OnFetchProfileCallback;
-    soundOptions?: {
-        callingSounds?: CallingSounds;
-    };
+    callingSounds?: CallingSounds;
 };
 
 // @public
@@ -1250,6 +1260,17 @@ export const createAzureCommunicationCallAdapter: ({ userId, displayName, creden
 // @public
 export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: CallAdapterLocator, options?: AzureCommunicationCallAdapterOptions) => Promise<CallAdapter>;
 
+// @internal
+export const _createAzureCommunicationCallAdapterInner: ({ userId, displayName, credential, locator, alternateCallerId, options, telemetryImplementationHint }: {
+    userId: CommunicationUserIdentifier;
+    displayName: string;
+    credential: CommunicationTokenCredential;
+    locator: CallAdapterLocator;
+    alternateCallerId?: string | undefined;
+    options?: CommonCallAdapterOptions | undefined;
+    telemetryImplementationHint?: _TelemetryImplementationHint | undefined;
+}) => Promise<CallAdapter>;
+
 // @public
 export const createAzureCommunicationCallWithChatAdapter: ({ userId, displayName, credential, endpoint, locator, alternateCallerId, callAdapterOptions }: AzureCommunicationCallWithChatAdapterArgs) => Promise<CallWithChatAdapter>;
 
@@ -1266,6 +1287,9 @@ export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, user
 export function createAzureCommunicationChatAdapterFromClient(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient, options?: {
     credential?: CommunicationTokenCredential;
 }): Promise<ChatAdapter>;
+
+// @internal
+export const _createAzureCommunicationChatAdapterInner: (endpoint: string, userId: CommunicationUserIdentifier, displayName: string, credential: CommunicationTokenCredential, threadId: string, telemetryImplementationHint?: _TelemetryImplementationHint) => Promise<ChatAdapter>;
 
 // @beta (undocumented)
 export const createTeamsCallAdapter: ({ userId, credential, locator, options }: TeamsCallAdapterArgs) => Promise<TeamsCallAdapter>;
@@ -1360,6 +1384,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     NoticePageJoinCallFailedDueToNoNetwork?: JSX.Element | undefined;
     NoticePageLeftCall?: JSX.Element | undefined;
     NoticePageRemovedFromCall?: JSX.Element | undefined;
+    NoticePageCallRejected?: JSX.Element | undefined;
     NoticePageNotInvitedToRoom?: JSX.Element | undefined;
     NoticePageRoomNotFound?: JSX.Element | undefined;
     NoticePageRoomNotValid?: JSX.Element | undefined;
@@ -1506,11 +1531,11 @@ export interface FileUploadAdapter {
     // (undocumented)
     registerActiveFileUploads: (files: File[]) => FileUploadManager[];
     // (undocumented)
-    registerCompletedFileUploads: (metadata: FileMetadata[]) => FileUploadManager[];
+    registerCompletedFileUploads: (metadata: AttachmentMetadata[]) => FileUploadManager[];
     // (undocumented)
     updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
     // (undocumented)
-    updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
+    updateFileUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
     // (undocumented)
     updateFileUploadProgress: (id: string, progress: number) => void;
 }
@@ -1528,7 +1553,7 @@ export type FileUploadHandler = (userId: string, fileUploads: FileUploadManager[
 export interface FileUploadManager {
     file?: File;
     id: string;
-    notifyUploadCompleted: (metadata: FileMetadata) => void;
+    notifyUploadCompleted: (metadata: AttachmentMetadata) => void;
     notifyUploadFailed: (message: string) => void;
     notifyUploadProgressChanged: (value: number) => void;
 }
@@ -1538,7 +1563,7 @@ export interface FileUploadState {
     error?: FileUploadError;
     filename: string;
     id: string;
-    metadata?: FileMetadata;
+    metadata?: AttachmentMetadata;
     progress: number;
 }
 
@@ -1765,8 +1790,7 @@ export interface RemoteVideoTileMenuOptions {
 
 // @beta
 export type SoundEffect = {
-    path: string;
-    fileType?: 'mp3' | 'wav' | 'ogg' | 'aac' | 'flac';
+    url: string;
 };
 
 // @public

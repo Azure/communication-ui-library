@@ -1,10 +1,13 @@
-import { Meta } from '@storybook/addon-docs';
+import { Meta, Source } from '@storybook/addon-docs';
 
 <Meta
   id="errorhandling"
   title="Concepts/Error Handling"
   parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }}
 />
+
+import ErrorHandlingAdapterSnippetText from '!!raw-loader!./snippets/ErrorHandlingAdapters.snippet.tsx';
+import ErrorHandlingClientSnippetText from '!!raw-loader!./snippets/ErrorHandlingStatefulClient.snippet.tsx';
 
 # Error handling
 
@@ -53,5 +56,19 @@ Applications that need more flexibility than what `ErrorBar` provides can levera
 Diagnostic events update corresponding parts of the state maintained by the stateful clients (used with UI Components) and adapters
 (used with UI Composites). e.g., Call diagnostics information is stored in the `diagnostics` field of the stateful calling client state.
 
+### Handling errors with the Stateful Client
+
+For the Stateful clients that power our UI components, we store in state the latest error that is returned from the SDK. This state is useful for having
+more information reported through means like our `ErrorBar` component. We can also however, track the state changes from the stateful client
+and see when new errors come in. If there is an error that a specific action should be taken on, we can use the `onStateChange` callback to track this. The following
+snippet demonstrates how to do this.
+
+<Source code={ErrorHandlingClientSnippetText} />
+
+### Handling errors with Composites
+
 Similarly, the latest error returned from Azure Communication Services API methods is stored in the `latestErrors` field of the state.
-In addition, adapters also generate an `'error'` event for each error encountered in an underlying API method invocation.
+In addition, adapters also generate an `'error'` event for each error encountered in an underlying API method invocation. The following snippet
+shows how to handle errors in a Composite.
+
+<Source code={ErrorHandlingAdapterSnippetText} />

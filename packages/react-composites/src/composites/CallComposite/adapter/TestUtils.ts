@@ -4,6 +4,7 @@
 
 import {
   CallCommon,
+  CallEndReason,
   CallFeature,
   CallFeatureFactory,
   CallState,
@@ -31,6 +32,7 @@ export interface MockCall extends Mutable<CallCommon>, MockEmitter {
   testHelperPushLocalVideoStream(stream: LocalVideoStream): void;
   testHelperPopLocalVideoStream(): LocalVideoStream;
   testHelperSetCallState(state: string): void;
+  testHelperSetCallEndReason(endReason: CallEndReason): void;
 }
 
 /**
@@ -74,6 +76,10 @@ export function createMockCall(mockCallId = 'defaultCallID'): MockCall {
     testHelperSetCallState(state: CallState): void {
       this.state = state;
       this.emit('stateChanged', { state: state });
+    },
+    testHelperSetCallEndReason(endReason: CallEndReason): void {
+      this.callEndReason = endReason;
+      this.emit('stateChanged', { state: 'Disconnected', callEndReason: endReason });
     }
   }) as MockCall;
 }
