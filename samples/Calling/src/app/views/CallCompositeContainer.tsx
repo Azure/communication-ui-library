@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { CommonCallAdapter, CallComposite } from '@azure/communication-react';
+import { CommonCallAdapter, CallComposite, CallAdapterLocator } from '@azure/communication-react';
 /* @conditional-compile-remove(call-readiness) */
 import { CallCompositeOptions } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
@@ -11,6 +11,7 @@ import React, { useEffect } from 'react';
 /* @conditional-compile-remove(call-readiness) */
 import { useMemo } from 'react';
 import { CallScreenProps } from './CallScreen';
+import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 
 export type CallCompositeContainerProps = CallScreenProps & { adapter?: CommonCallAdapter };
 
@@ -45,9 +46,8 @@ export const CallCompositeContainer = (props: CallCompositeContainerProps): JSX.
   }
 
   let callInvitationUrl: string | undefined = window.location.href;
-  /* @conditional-compile-remove(rooms) */
-  // If the call is a Rooms call we should not make call invitation link available
-  if (adapter.getState().isRoomsCall) {
+  // Only show the call invitation url if the call is a group call or Teams call, do not show for Rooms, 1:1 or 1:N calls
+  if (!isGroupCallLocator(props.callLocator) && !isTeamsMeetingLinkLocator(props.callLocator)) {
     callInvitationUrl = undefined;
   }
 
@@ -76,4 +76,12 @@ const onPermissionsTroubleshootingClick = (permissionState: {
 /* @conditional-compile-remove(call-readiness) */
 const onNetworkingTroubleShootingClick = (): void => {
   alert('network troubleshooting clicked');
+};
+
+const isTeamsMeetingLinkLocator = (locator: CallAdapterLocator): locator is TeamsMeetingLinkLocator => {
+  return 'meetingLink' in locator;
+};
+
+const isGroupCallLocator = (locator: CallAdapterLocator): locator is GroupCallLocator => {
+  return 'groupId' in locator;
 };
