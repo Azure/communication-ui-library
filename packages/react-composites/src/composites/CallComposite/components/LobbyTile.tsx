@@ -60,7 +60,11 @@ export const LobbyTile = (props: LobbyTileProps): JSX.Element => {
           >
             {props.showLocalVideoCameraCycleButton && (
               <Stack.Item styles={localCameraSwitcherContainerStyles}>
-                <LocalVideoCameraCycleButton {...cameraSwitcherCallback} {...cameraSwitcherCameras} />
+                <LocalVideoCameraCycleButton
+                  {...cameraSwitcherCallback}
+                  {...cameraSwitcherCameras}
+                  largeButton={true}
+                />
               </Stack.Item>
             )}
             <Stack.Item className={mergeStyles(titleStyle(palette, isVideoReady))}>

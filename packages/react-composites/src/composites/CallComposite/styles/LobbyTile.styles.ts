@@ -42,5 +42,5 @@ export const moreDetailsStyle = (palette: IPalette, isVideoReady: boolean): ISty
  * @private
  */
 export const localCameraSwitcherContainerStyles: IStackItemStyles = {
-  root: { transform: 'scale(1.25)', position: 'absolute', top: '0rem', right: '0rem' }
+  root: { position: 'absolute', top: '0rem', right: '0rem' }
 };

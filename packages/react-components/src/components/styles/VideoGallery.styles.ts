@@ -19,12 +19,12 @@ export const videoGalleryContainerStyle: IStackStyles = {
 /**
  * @private
  */
-export const localVideoCameraCycleButtonStyles = (theme: Theme): IButtonStyles => {
+export const localVideoCameraCycleButtonStyles = (theme: Theme, largeButton?: boolean): IButtonStyles => {
   return {
     root: {
       position: 'absolute',
-      width: _pxToRem(32),
-      height: _pxToRem(32),
+      width: largeButton ? _pxToRem(40) : _pxToRem(32),
+      height: largeButton ? _pxToRem(40) : _pxToRem(32),
       right: '0rem',
       top: '0rem',
       color: '#FFFFFF', // only shows up on running video feed to we want to force specific colours.
