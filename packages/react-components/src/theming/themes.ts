@@ -67,7 +67,8 @@ export const lightTheme: PartialTheme & CallingTheme & ChatTheme = {
     neutralPrimary: '#323130',
     neutralDark: '#201f1e',
     black: '#000000',
-    white: '#ffffff'
+    white: '#ffffff',
+    whiteTranslucent40: 'rgba(255, 255, 255, 0.4)'
   },
   callingPalette: {
     callRed: '#a42e43',
@@ -118,7 +119,8 @@ export const darkTheme: PartialTheme & CallingTheme & ChatTheme = {
     neutralPrimary: '#ffffff',
     neutralDark: '#f4f4f4',
     black: '#f8f8f8',
-    white: '#252423'
+    white: '#252423',
+    whiteTranslucent40: 'rgba(0, 0, 0, 0.4)'
   },
   callingPalette: {
     callRed: '#c4314b',
