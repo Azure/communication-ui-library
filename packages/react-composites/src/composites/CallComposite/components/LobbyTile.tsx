@@ -4,7 +4,12 @@
 import React from 'react';
 import { mergeStyles, Stack, Text } from '@fluentui/react';
 import { LocalVideoCameraCycleButton, VideoGalleryStream, useTheme } from '@internal/react-components';
-import { moreDetailsStyle, overlayContainerStyle, titleStyle } from '../styles/LobbyTile.styles';
+import {
+  localCameraSwitcherContainerStyles,
+  moreDetailsStyle,
+  overlayContainerStyle,
+  titleStyle
+} from '../styles/LobbyTile.styles';
 import { ExpandedLocalVideoTile } from './ExpandedLocalVideoTile';
 import { useHandlers } from '../hooks/useHandlers';
 import { localVideoCameraCycleButtonSelector } from '../selectors/LocalVideoTileSelector';
@@ -53,11 +58,11 @@ export const LobbyTile = (props: LobbyTileProps): JSX.Element => {
             className={mergeStyles(overlayContainerStyle)}
             aria-atomic
           >
-            <Stack.Item>
-              {props.showLocalVideoCameraCycleButton && (
+            {props.showLocalVideoCameraCycleButton && (
+              <Stack.Item styles={localCameraSwitcherContainerStyles}>
                 <LocalVideoCameraCycleButton {...cameraSwitcherCallback} {...cameraSwitcherCameras} />
-              )}
-            </Stack.Item>
+              </Stack.Item>
+            )}
             <Stack.Item className={mergeStyles(titleStyle(palette, isVideoReady))}>
               {props.overlayProps.overlayIcon}
             </Stack.Item>
