@@ -86,7 +86,7 @@ export interface ConfigurationPageProps {
   logo?: {
     url: string;
     alt?: string;
-    shape?: 'circle' | 'square';
+    shape?: 'unset' | 'circle';
   };
   /* @conditional-compile-remove(custom-branding) */
   backgroundImage?: {
@@ -445,9 +445,9 @@ const micPermissionGrantedTrampoline = (
   return microphonePermissionGranted;
 };
 
-const Logo = (props: { logo?: { url: string; alt?: string; shape?: 'circle' | 'square' } }): JSX.Element => {
+const Logo = (props: { logo?: { url: string; alt?: string; shape?: 'unset' | 'circle' } }): JSX.Element => {
   if (!props.logo) {
     return <></>;
   }
-  return <Image styles={logoStyles(props.logo.shape ?? 'circle')} src={props.logo.url} alt={props.logo.alt} />;
+  return <Image styles={logoStyles(props.logo.shape)} src={props.logo.url} alt={props.logo.alt} />;
 };
