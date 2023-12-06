@@ -1968,12 +1968,12 @@ export const DEFAULT_COMPOSITE_ICONS: {
     NoticePageNotInvitedToRoom?: JSX.Element | undefined;
     NoticePageRoomNotFound?: JSX.Element | undefined;
     NoticePageRoomNotValid?: JSX.Element | undefined;
-    OptionsCamera: JSX.Element | React_2.JSX.Element;
-    OptionsMic: JSX.Element | React_2.JSX.Element;
-    OptionsSpeaker: JSX.Element | React_2.JSX.Element;
-    ParticipantItemMicOff: JSX.Element | React_2.JSX.Element;
-    ParticipantItemScreenShareStart: JSX.Element | React_2.JSX.Element;
-    VideoTileMicOff: JSX.Element | React_2.JSX.Element;
+    OptionsCamera: JSX.Element;
+    OptionsMic: JSX.Element;
+    OptionsSpeaker: JSX.Element;
+    ParticipantItemMicOff: JSX.Element;
+    ParticipantItemScreenShareStart: JSX.Element;
+    VideoTileMicOff: JSX.Element;
     LocalCameraSwitch?: JSX.Element | undefined;
     NoticePageInviteToRoomRemoved?: JSX.Element | undefined;
     BlurVideoBackground?: JSX.Element | undefined;
