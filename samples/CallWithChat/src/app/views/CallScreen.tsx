@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
+import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   toFlatCommunicationIdentifier,
