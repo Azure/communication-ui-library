@@ -35,7 +35,7 @@ export const SidePane = (props: { onOverridesUpdated?: (overrides: LocalOverride
           top: isMobile ? '0' : undefined,
           right: isMobile ? '0' : undefined,
           background: currentTheme.theme.palette?.neutralLighter,
-          zIndex: isMobile ? 9999999 : undefined
+          zIndex: isMobile ? 1 : undefined
         }
       }}
     >
