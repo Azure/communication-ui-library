@@ -4,7 +4,7 @@
 import { AttachmentMetadata } from '@internal/react-components';
 import { FileUploadManager, FileUploadState } from '../file-sharing';
 /* @conditional-compile-remove(file-sharing) */
-import produce from 'immer';
+import { produce } from 'immer';
 /* @conditional-compile-remove(file-sharing) */
 import { FileSharingMetadata, FileUpload } from '../file-sharing';
 /* @conditional-compile-remove(file-sharing) */

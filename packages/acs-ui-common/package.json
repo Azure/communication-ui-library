@@ -44,7 +44,7 @@
     "@microsoft/api-documenter": "~7.23.9",
     "@microsoft/api-extractor": "~7.38.0",
     "@types/jest": "^29.5.2",
-    "@types/react": "18.2.39",
+    "@types/react": "18.2.41",
     "@typescript-eslint/eslint-plugin": "^4.12.0",
     "@typescript-eslint/parser": "^4.12.0",
     "@zerollup/ts-transform-paths": "^1.7.18",
