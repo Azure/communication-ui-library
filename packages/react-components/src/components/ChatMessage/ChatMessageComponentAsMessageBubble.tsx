@@ -36,8 +36,7 @@ import { mergeClasses } from '@fluentui/react-components';
 import {
   useChatMessageStyles,
   useChatMyMessageStyles,
-  useChatMessageCommonStyles,
-  useChatMessageImagePlaceholderStyles
+  useChatMessageCommonStyles
 } from '../styles/MessageThread.styles';
 
 type ChatMessageComponentAsMessageBubbleProps = {
@@ -296,11 +295,9 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
   const chatMessageCommonStyles = useChatMessageCommonStyles();
 
   const chatMessageStyles = useChatMessageStyles();
-  const imagePlaceholder = useChatMessageImagePlaceholderStyles(theme.palette.neutralQuaternaryAlt);
   const chatItemMessageContainerClassName = mergeClasses(
     // messageContainerStyle used in className and style prop as style prop can't handle CSS selectors
     chatMessageStyles.body,
-    mergeStyles(imagePlaceholder),
     isBlockedMessage
       ? chatMessageCommonStyles.blocked
       : props.message.status === 'failed'
