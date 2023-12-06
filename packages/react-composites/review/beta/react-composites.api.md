@@ -416,7 +416,7 @@ export type CallCompositeOptions = {
         logo?: {
             url: string;
             alt?: string;
-            shape?: 'circle' | 'square';
+            shape?: 'unset' | 'circle';
         };
         backgroundImage?: {
             url: string;
@@ -918,7 +918,7 @@ export type CallWithChatCompositeOptions = {
         logo?: {
             url: string;
             alt?: string;
-            shape?: 'circle' | 'square';
+            shape?: 'unset' | 'circle';
         };
         backgroundImage?: {
             url: string;
