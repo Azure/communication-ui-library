@@ -35,7 +35,7 @@ const customBrandingSnippet = `
   logo: {
     url: 'https://...',
     alt: 'My company logo',
-    shape: 'square'
+    shape: 'circle'
   },
   backgroundImage: {
     url: 'https://...'
