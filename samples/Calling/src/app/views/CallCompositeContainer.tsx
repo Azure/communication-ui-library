@@ -9,7 +9,7 @@ import { useIsMobile } from '../utils/useIsMobile';
 import React, { useEffect } from 'react';
 import { useMemo } from 'react';
 import { CallScreenProps } from './CallScreen';
-import { isIOS } from 'app/utils/utils';
+import { isIOS } from '../utils/utils';
 
 export type CallCompositeContainerProps = CallScreenProps & { adapter?: CommonCallAdapter };
 

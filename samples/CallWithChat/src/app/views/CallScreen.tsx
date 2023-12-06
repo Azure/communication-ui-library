@@ -20,7 +20,7 @@ import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvid
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/constants';
 import { useIsMobile } from '../utils/useIsMobile';
-import { isIOS } from 'app/utils/utils';
+import { isIOS } from '../utils/utils';
 
 export interface CallScreenProps {
   token: string;
