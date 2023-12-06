@@ -58,7 +58,7 @@ export const LobbyTile = (props: LobbyTileProps): JSX.Element => {
             className={mergeStyles(overlayContainerStyle)}
             aria-atomic
           >
-            {props.showLocalVideoCameraCycleButton && (
+            {props.showLocalVideoCameraCycleButton && isVideoReady && (
               <Stack.Item styles={localCameraSwitcherContainerStyles}>
                 <LocalVideoCameraCycleButton
                   {...cameraSwitcherCallback}
