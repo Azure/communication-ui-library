@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "area": "improvement",
+  "workstream": "TypeScript",
+  "comment": "Update to TypeScript 4.6.3 minimum",
+  "packageName": "@azure/communication-react",
+  "email": "3941071+emlynmac@users.noreply.github.com",
+  "dependentChangeType": "none"
+}
