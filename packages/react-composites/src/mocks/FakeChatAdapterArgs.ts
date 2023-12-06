@@ -74,7 +74,7 @@ export type _FakeChatAdapterArgs = {
    */
   showParticipantPane?: boolean;
   /**
-   * Array of chat participants for which hidden chat composites will be created for triggerring typing indicators and read receipts
+   * Array of chat participants for which hidden chat composites will be created for triggering typing indicators and read receipts
    */
   participantsWithHiddenComposites?: ChatParticipant[];
   /*
