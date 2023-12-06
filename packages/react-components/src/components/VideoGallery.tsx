@@ -461,7 +461,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
               (localTileNotInGrid && isNarrow) ||
               /*@conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ localVideoTileSize ===
                 '9:16'
-            ) || /* @conditional-compile-remove(gallery-layouts) */ layout === 'default'
+            ) || /* @conditional-compile-remove(gallery-layouts) */ layout === ('default' as VideoGalleryLayout)
           }
           showMuteIndicator={showMuteIndicator}
           showCameraSwitcherInLocalPreview={showCameraSwitcherInLocalPreview}
