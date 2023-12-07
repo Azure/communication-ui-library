@@ -199,7 +199,7 @@ const onRenderParticipantDefault = (
     userId?: string,
     options?: CustomAvatarOptions,
     defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element
-  ) =>
+  ): JSX.Element =>
     onRenderAvatar?.(
       userId,
       {
