@@ -45,6 +45,11 @@ export class CallingSoundSubscriber {
         this.soundsLoaded.callRingingSound.loop = false;
         this.soundsLoaded.callRingingSound.pause();
       }
+      if (this.call.state === 'Disconnecting') {
+        if (this.soundsLoaded?.callRingingSound) {
+          this.soundsLoaded.callRingingSound.pause();
+        }
+      }
       if (this.call.state === 'Disconnected') {
         if (this.soundsLoaded?.callBusySound && this.call.callEndReason?.code === CALL_REJECTED_CODE) {
           this.playSound(this.soundsLoaded.callBusySound);
