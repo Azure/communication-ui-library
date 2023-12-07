@@ -70,10 +70,14 @@ const onPermissionsTroubleshootingClick = (permissionState: {
   microphone: PermissionState;
 }): void => {
   console.log(permissionState);
-  alert('permission troubleshooting clicked');
+  alert(
+    'Troubleshooting clicked! This is just a sample. In your production application replace this with a link that opens a new tab to a troubleshooting guide.'
+  );
 };
 
 /* @conditional-compile-remove(call-readiness) */
 const onNetworkingTroubleShootingClick = (): void => {
-  alert('network troubleshooting clicked');
+  alert(
+    'Troubleshooting clicked! This is just a sample. In your production application replace this with a link that opens a new tab to a troubleshooting guide.'
+  );
 };

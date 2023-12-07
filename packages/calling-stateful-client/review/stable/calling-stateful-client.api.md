@@ -143,10 +143,10 @@ export interface CaptionsInfo {
 }
 
 // @public
-export const createStatefulCallClient: (args: StatefulCallClientArgs, options?: StatefulCallClientOptions | undefined) => StatefulCallClient;
+export const createStatefulCallClient: (args: StatefulCallClientArgs, options?: StatefulCallClientOptions) => StatefulCallClient;
 
 // @internal
-export const _createStatefulCallClientInner: (args: StatefulCallClientArgs, options?: StatefulCallClientOptions | undefined, telemetryImplementationHint?: _TelemetryImplementationHint) => StatefulCallClient;
+export const _createStatefulCallClientInner: (args: StatefulCallClientArgs, options?: StatefulCallClientOptions, telemetryImplementationHint?: _TelemetryImplementationHint) => StatefulCallClient;
 
 // @public
 export type CreateViewResult = {
@@ -251,6 +251,7 @@ export interface RemoteParticipantState {
     isMuted: boolean;
     isSpeaking: boolean;
     raisedHand?: RaisedHandState;
+    role?: ParticipantRole;
     state: RemoteParticipantState_2;
     videoStreams: {
         [key: number]: RemoteVideoStreamState;

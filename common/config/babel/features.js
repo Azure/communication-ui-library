@@ -37,8 +37,6 @@ module.exports = {
     "one-to-n-calling",
     // PSTN calls 
     "PSTN-calls",
-    // rooms
-    "rooms",
     // Adhoc calls to a Teams user.
     "teams-adhoc-call",
     // Joining calls using teams token
@@ -129,6 +127,8 @@ module.exports = {
     "vertical-gallery",
     // API for injecting custom buttons in he control bar for
     // `CallComposite` and `CallWithChatComposite`.
-    "control-bar-button-injection"
+    "control-bar-button-injection",
+    // rooms
+    "rooms",
   ]
 }
