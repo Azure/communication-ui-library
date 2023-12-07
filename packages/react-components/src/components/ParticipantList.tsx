@@ -24,9 +24,10 @@ import {
   BaseCustomStyles,
   CallParticipantListParticipant,
   OnRenderAvatarCallback,
-  ParticipantListParticipant,
-  CustomAvatarOptions
+  ParticipantListParticipant
 } from '../types';
+/* @conditional-compile-remove(raise-hand) */
+import { CustomAvatarOptions } from '../types';
 import { ParticipantItem, ParticipantItemStrings, ParticipantItemStyles } from './ParticipantItem';
 import { iconStyles, participantListItemStyle, participantListStyle } from './styles/ParticipantList.styles';
 import { _formatString } from '@internal/acs-ui-common';
@@ -195,7 +196,9 @@ const onRenderParticipantDefault = (
         )
       : () => null;
 
-  const onRenderAvatarWithRaiseHand = (
+  let onRenderAvatarWithRaiseHand = onRenderAvatar;
+  /* @conditional-compile-remove(raise-hand) */
+  onRenderAvatarWithRaiseHand = (
     userId?: string,
     options?: CustomAvatarOptions,
     defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element

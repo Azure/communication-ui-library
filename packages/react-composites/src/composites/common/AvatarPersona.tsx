@@ -95,6 +95,7 @@ export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
 
   /* @conditional-compile-remove(raise-hand) */
   let activePersona = '';
+  /* @conditional-compile-remove(raise-hand) */
   if (props.allowActiveBorder) {
     // Display a border for raised handed participants in participant list
     activePersona = mergeStyles({
