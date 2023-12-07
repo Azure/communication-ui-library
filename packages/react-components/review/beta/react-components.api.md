@@ -1368,7 +1368,7 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
     raisedHand?: RaisedHand | undefined;
 }) => React_2.JSX.Element>;
 
-// @beta
+// @public
 export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'followDeviceOrientation';
 
 // @beta

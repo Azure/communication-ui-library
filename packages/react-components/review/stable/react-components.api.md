@@ -1118,6 +1118,9 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
 }) => React_2.JSX.Element>;
 
 // @public
+export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'followDeviceOrientation';
+
+// @public
 export type Message = ChatMessage | SystemMessage | CustomMessage;
 
 // @public
@@ -1993,6 +1996,7 @@ export interface VideoGalleryProps {
     layout?: VideoGalleryLayout;
     localParticipant: VideoGalleryLocalParticipant;
     localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
+    localVideoTileSize?: LocalVideoTileSize;
     localVideoViewOptions?: VideoStreamOptions;
     maxRemoteVideoStreams?: number;
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
