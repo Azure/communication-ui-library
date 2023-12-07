@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "improvement",
+  "workstream": "",
+  "comment": "Refresh token in sample due to token being to large to pass through request parameters",
+  "packageName": "@azure/communication-react",
+  "email": "palatter@microsoft.com",
+  "dependentChangeType": "patch"
+}
