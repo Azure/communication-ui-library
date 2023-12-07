@@ -66,9 +66,14 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
   const onRenderPlaceholder = useCallback((): JSX.Element => {
     return (
       <Stack
-        className={mergeStyles({ width: '100%', height: '100%' })}
+        className={mergeStyles({
+          width: '100%',
+          height: '100%', // The text should be centered in the local preview with the camera icon
+          // appearing above the text. To compensate for the camera icon's height,
+          // we add a negative margin to the top of the container.
+          marginTop: '-0.8rem'
+        })}
         verticalAlign="center"
-        tokens={{ childrenGap: '0.25rem' }}
       >
         <Stack.Item align="center">
           <CallCompositeIcon
@@ -96,7 +101,7 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
   return (
     <Stack
       data-ui-id="call-composite-local-preview"
-      className={props.mobileView ? localPreviewContainerStyleMobile : localPreviewContainerStyleDesktop(theme)}
+      className={props.mobileView ? localPreviewContainerStyleMobile(theme) : localPreviewContainerStyleDesktop(theme)}
     >
       <VideoTile
         styles={localPreviewTileStyle}
