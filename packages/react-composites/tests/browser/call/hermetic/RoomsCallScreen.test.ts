@@ -2,12 +2,11 @@
 // Licensed under the MIT License.
 
 import { buildUrlWithMockAdapter, defaultMockCallAdapterState, defaultMockRemoteParticipant, test } from './fixture';
-import { expect, Page, TestInfo } from '@playwright/test';
+import { expect, Page } from '@playwright/test';
 import {
   dataUiId,
   existsOnPage,
   hidePiPiP,
-  isTestProfileDesktop,
   isTestProfileMobile,
   pageClick,
   stableScreenshot,
@@ -94,45 +93,52 @@ test.describe('Rooms CallScreen tests for different roles', async () => {
 
 /* @conditional-compile-remove(rooms) */
 test.describe('Rooms Participant RemoveButton tests for different roles', async () => {
-  test('Remove button is enabled for Presenter', async ({ page, serverUrl }, testInfo) => {
+  test('Remove button is enabled for Presenter', async ({ page, serverUrl }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const participants = [paul];
     const initialState = defaultMockCallAdapterState(participants, 'Presenter', true);
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
-    await openRemoveParticipantMenu(page, testInfo);
+    await openRemoveParticipantMenu(page);
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
       'rooms-call-remove-participant-presenter.png'
     );
   });
 
-  test('No ellipses button for remote participant items for Attendee', async ({ page, serverUrl }, testInfo) => {
+  test('No ellipses button for remote participant items for Attendee', async ({ page, serverUrl }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const participants = [paul];
     const initialState = defaultMockCallAdapterState(participants, 'Attendee', true);
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
-    await expectNoRemoveParticipantMenuItem(page, testInfo);
+    await expectNoRemoveParticipantMenuItem(page);
   });
 
-  test('No ellipses button for remote participant items for Consumer', async ({ page, serverUrl }, testInfo) => {
+  test('No ellipses button for remote participant items for Consumer', async ({ page, serverUrl }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const participants = [paul];
     const initialState = defaultMockCallAdapterState(participants, 'Consumer', true);
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
-    await expectNoRemoveParticipantMenuItem(page, testInfo);
+    await expectNoRemoveParticipantMenuItem(page);
   });
 });
 
-const openRemoveParticipantMenu = async (page: Page, testInfo: TestInfo): Promise<void> => {
+const openRemoveParticipantMenu = async (page: Page): Promise<void> => {
   await waitForSelector(page, dataUiId(IDS.videoGallery));
 
-  if (isTestProfileDesktop(testInfo)) {
-    await waitForSelector(page, dataUiId('call-composite-participants-button'));
+  if (await existsOnPage(page, dataUiId('call-composite-participants-button'))) {
+    // The control bar is legacy because it has the participant button
     await pageClick(page, dataUiId('call-composite-participants-button'));
+    // Look for a people menu item if there is one and click it to show flyout
+    // with participant list
+    if (await existsOnPage(page, dataUiId('participant-button-people-menu-item'))) {
+      await pageClick(page, dataUiId('participant-button-people-menu-item'));
+    }
     await page.hover(dataUiId('participant-item'));
     await waitForSelector(page, dataUiId('participant-item-menu-button'));
     await pageClick(page, dataUiId('participant-item-menu-button'));
     await waitForSelector(page, dataUiId('participant-list-remove-participant-button'));
   } else {
+    // Click the more button to show the people button on the new control bar
+    // in case we are on mobile
     await pageClick(page, dataUiId('common-call-composite-more-button'));
     await waitForSelector(page, dataUiId('call-composite-more-menu-people-button'));
     await pageClick(page, dataUiId('call-composite-more-menu-people-button'));
@@ -144,13 +150,23 @@ const openRemoveParticipantMenu = async (page: Page, testInfo: TestInfo): Promis
   }
 };
 
-const expectNoRemoveParticipantMenuItem = async (page: Page, testInfo: TestInfo): Promise<void> => {
+const expectNoRemoveParticipantMenuItem = async (page: Page): Promise<void> => {
   await waitForSelector(page, dataUiId(IDS.videoGallery));
 
-  if (isTestProfileDesktop(testInfo)) {
+  if (await existsOnPage(page, dataUiId('call-composite-participants-button'))) {
+    // The control bar is legacy because it has the participant button
+    await pageClick(page, dataUiId('call-composite-participants-button'));
+    // Look for a people menu item if there is one and click it to show flyout
+    // with participant list
+    if (await existsOnPage(page, dataUiId('participant-button-people-menu-item'))) {
+      await pageClick(page, dataUiId('participant-button-people-menu-item'));
+    }
+    await page.hover(dataUiId('participant-item'));
     const menuButton = await page.$$(dataUiId('participant-item-menu-button'));
     expect(menuButton.length).toBe(0);
   } else {
+    // Click the more button to show the people button on the new control bar
+    // in case we are on mobile
     await pageClick(page, dataUiId('common-call-composite-more-button'));
     await waitForSelector(page, dataUiId('call-composite-more-menu-people-button'));
     await pageClick(page, dataUiId('call-composite-more-menu-people-button'));

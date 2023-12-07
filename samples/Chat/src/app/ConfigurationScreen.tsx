@@ -37,11 +37,11 @@ import {
   getExistingDisplayNameFromURL,
   getExistingEndpointURLFromURL,
   getExistingThreadIdFromURL,
-  getExistingTokenFromURL,
   getExistingUserIdFromURL
 } from './utils/getParametersFromURL';
 import { joinThread } from './utils/joinThread';
 import { getEndpointUrl } from './utils/getEndpointUrl';
+import { refreshToken } from './utils/refreshToken';
 
 // These props are set by the caller of ConfigurationScreen in the JSX and not found in context
 export interface ConfigurationScreenProps {
@@ -151,12 +151,12 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
         }
         // Check if we have all the required parameters supplied as query search params.
         const threadId = getExistingThreadIdFromURL();
-        const token = getExistingTokenFromURL();
         const userId = getExistingUserIdFromURL();
         const displayName = getExistingDisplayNameFromURL();
         const endpointUrl = getExistingEndpointURLFromURL();
 
-        if (token && userId && displayName && threadId && endpointUrl) {
+        if (userId && displayName && threadId && endpointUrl) {
+          const token = await refreshToken(userId);
           joinChatThreadWithExistingUser(token, userId, displayName, threadId, endpointUrl);
           return;
         }

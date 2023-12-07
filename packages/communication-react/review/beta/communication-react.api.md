@@ -3008,7 +3008,7 @@ export interface LocalVideoTileOptions {
     position?: 'grid' | 'floating';
 }
 
-// @beta
+// @public
 export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'followDeviceOrientation';
 
 // @public
