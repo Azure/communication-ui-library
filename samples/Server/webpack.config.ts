@@ -12,6 +12,7 @@ const config = {
     path: path.join(__dirname, '/dist'),
     filename: 'server.js'
   },
+  mode: 'development',
   module: {
     rules: [
       {
