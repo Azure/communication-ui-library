@@ -125,8 +125,10 @@ const openRemoveParticipantMenu = async (page: Page): Promise<void> => {
   await waitForSelector(page, dataUiId(IDS.videoGallery));
 
   if (await existsOnPage(page, dataUiId('call-composite-participants-button'))) {
-    await waitForSelector(page, dataUiId('call-composite-participants-button'));
+    // The control bar is legacy because it has the participant button
     await pageClick(page, dataUiId('call-composite-participants-button'));
+    // Look for a people menu item if there is one and click it to show flyout
+    // with participant list
     if (await existsOnPage(page, dataUiId('participant-button-people-menu-item'))) {
       await pageClick(page, dataUiId('participant-button-people-menu-item'));
     }
@@ -135,7 +137,8 @@ const openRemoveParticipantMenu = async (page: Page): Promise<void> => {
     await pageClick(page, dataUiId('participant-item-menu-button'));
     await waitForSelector(page, dataUiId('participant-list-remove-participant-button'));
   } else {
-    await pageClick(page, dataUiId('common-call-composite-more-button'));
+    // Click the more button to show the people button on the new control bar
+    // in case we are on mobile
     await waitForSelector(page, dataUiId('call-composite-more-menu-people-button'));
     await pageClick(page, dataUiId('call-composite-more-menu-people-button'));
     await hidePiPiP(page);
@@ -150,8 +153,10 @@ const expectNoRemoveParticipantMenuItem = async (page: Page): Promise<void> => {
   await waitForSelector(page, dataUiId(IDS.videoGallery));
 
   if (await existsOnPage(page, dataUiId('call-composite-participants-button'))) {
-    await waitForSelector(page, dataUiId('call-composite-participants-button'));
+    // The control bar is legacy because it has the participant button
     await pageClick(page, dataUiId('call-composite-participants-button'));
+    // Look for a people menu item if there is one and click it to show flyout
+    // with participant list
     if (await existsOnPage(page, dataUiId('participant-button-people-menu-item'))) {
       await pageClick(page, dataUiId('participant-button-people-menu-item'));
     }
@@ -159,6 +164,8 @@ const expectNoRemoveParticipantMenuItem = async (page: Page): Promise<void> => {
     const menuButton = await page.$$(dataUiId('participant-item-menu-button'));
     expect(menuButton.length).toBe(0);
   } else {
+    // Click the more button to show the people button on the new control bar
+    // in case we are on mobile
     await pageClick(page, dataUiId('common-call-composite-more-button'));
     await waitForSelector(page, dataUiId('call-composite-more-menu-people-button'));
     await pageClick(page, dataUiId('call-composite-more-menu-people-button'));
