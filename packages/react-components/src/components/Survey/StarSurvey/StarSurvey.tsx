@@ -104,9 +104,7 @@ export const _StarSurvey = (props: _StarSurveyProps): JSX.Element => {
             break;
         }
 
-        if (onStarRatingSelected) {
-          onStarRatingSelected(rating);
-        }
+        onStarRatingSelected?.(rating);
       }
     },
     [

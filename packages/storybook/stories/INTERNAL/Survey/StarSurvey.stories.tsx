@@ -47,7 +47,7 @@ const StarSurveyStory = (args): JSX.Element => {
       className={mergeStyles({
         background: theme.palette.neutralLighterAlt,
         padding: '2em',
-        width: '20%',
+        width: '50%',
         height: '75%'
       })}
     >

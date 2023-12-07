@@ -30,6 +30,19 @@ options={{
 }} />
 `;
 
+const customBrandingSnippet = `
+<CallWithChatComposite options={{
+  logo: {
+    url: 'https://...',
+    alt: 'My company logo',
+    shape: 'square'
+  },
+  backgroundImage: {
+    url: 'https://...'
+  }
+}} />
+`;
+
 export const Docs: () => JSX.Element = () => {
   const refTeamsMeeting = useRef(null);
   const refFileSharing = useRef(null);
@@ -131,6 +144,29 @@ export const Docs: () => JSX.Element = () => {
         action or the [overall theming example](./?path=/docs/theming--page) to see how theming works for all the
         components in this UI library.
       </Description>
+
+      <Heading>Custom Branding</Heading>
+      <SingleLineBetaBanner version="1.12.0-beta.1" />
+      <Description>
+        Along with applying a Fluent Theme to style the composites, you can also inject your own custom branding. You
+        can inject a background and logo into the Composite configuration page to present to your users. This is done by
+        passing background and logo properties to the `options` of the Composite.
+      </Description>
+      <Description>
+        **Image recommendations.** The background image should be as simple and uncluttered as possible to avoid text
+        becoming unreadable against the background. The background image should have a minimum size of 576x576 pixels
+        and a maximum size of 2048x2048 pixels. The recommended size is 1280x720 pixels. The recommended size for the
+        logo image is 128x128 pixels.
+      </Description>
+      <Stack horizontalAlign="center">
+        <img
+          style={{ width: '100%', maxWidth: '50rem' }}
+          src="images/composite-logo-background.png"
+          alt="CallWithChatComposite with a logo and background applied"
+        />
+      </Stack>
+      <Source code={customBrandingSnippet} />
+
       <div ref={refTeamsMeeting}>
         <Heading>Joining a Teams Meeting</Heading>
         <Description>
