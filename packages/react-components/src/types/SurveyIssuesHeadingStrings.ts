@@ -5,7 +5,7 @@
  * @public
  * Corresponding texts to each call issue category
  */
-export interface SurveyCategories {
+export interface SurveyIssuesHeadingStrings {
   overallRating: string;
   audioRating: string;
   videoRating: string;

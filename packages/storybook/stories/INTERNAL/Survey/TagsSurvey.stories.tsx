@@ -85,7 +85,7 @@ const TagsSurveyStory = (): JSX.Element => {
     }
   };
 
-  const categoriesToHeader = {
+  const categoryHeadings = {
     overallRating: 'Overall',
     audioRating: 'Audio',
     videoRating: 'Video',
@@ -118,7 +118,7 @@ const TagsSurveyStory = (): JSX.Element => {
         strings={strings}
         issues={issues}
         callIssuesToTag={callIssuesToTag}
-        categoriesToHeader={categoriesToHeader}
+        categoryHeadings={categoryHeadings}
       />
     </div>
   );
@@ -133,7 +133,7 @@ export default {
   argTypes: {
     issues: hiddenControl,
     callIssuesToTag: hiddenControl,
-    categoriesToHeader: hiddenControl,
+    categoryHeadings: hiddenControl,
     onConfirm: hiddenControl,
     strings: hiddenControl
   },

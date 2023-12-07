@@ -2186,18 +2186,6 @@ export interface StreamMediaProps {
 }
 
 // @public
-export interface SurveyCategories {
-    // (undocumented)
-    audioRating: string;
-    // (undocumented)
-    overallRating: string;
-    // (undocumented)
-    screenshareRating: string;
-    // (undocumented)
-    videoRating: string;
-}
-
-// @public
 export interface SurveyIssues {
     // (undocumented)
     audioRating: {
@@ -2243,6 +2231,18 @@ export interface SurveyIssues {
     };
 }
 
+// @public
+export interface SurveyIssuesHeadingStrings {
+    // (undocumented)
+    audioRating: string;
+    // (undocumented)
+    overallRating: string;
+    // (undocumented)
+    screenshareRating: string;
+    // (undocumented)
+    videoRating: string;
+}
+
 // @internal
 export type _SurveyTag = {
     [issueCategory: string]: {
@@ -2268,7 +2268,7 @@ export const _TagsSurvey: (props: _TagsSurveyProps) => JSX.Element;
 // @internal
 export interface _TagsSurveyProps {
     callIssuesToTag: SurveyIssues;
-    categoriesToHeader: SurveyCategories;
+    categoryHeadings: SurveyIssuesHeadingStrings;
     issues: (_AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue)[];
     onConfirm?: (selectedTags: _CallSurvey) => void;
     strings?: _TagsSurveyStrings;
