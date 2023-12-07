@@ -409,6 +409,16 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
         this.context.setCurrentCallId(this.call.id);
       }
 
+      // if we have a call state we need to dispose of the unparented views
+      if (
+        (this.call?.state === 'InLobby' || this.call?.state === 'Connected') &&
+        this.callClient.getState().deviceManager.unparentedViews.length > 0
+      ) {
+        this.callClient.getState().deviceManager.unparentedViews.forEach((view) => {
+          this.callClient.disposeView(undefined, undefined, view);
+        });
+      }
+
       this.context.updateClientState(clientState);
 
       /* @conditional-compile-remove(call-transfer) */
