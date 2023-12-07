@@ -253,7 +253,8 @@ export const useChatMessageStyles = makeStyles({
     },
     '& img[src=""]': {
       display: 'block',
-      position: 'relative'
+      position: 'relative',
+      marginBottom: '5px'
     },
     '& img[src=""]:after': {
       backgroundColor: tokens.colorNeutralBackground1Selected,
