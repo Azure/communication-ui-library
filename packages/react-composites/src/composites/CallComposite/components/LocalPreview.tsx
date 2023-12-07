@@ -68,7 +68,8 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
       <Stack
         className={mergeStyles({
           width: '100%',
-          height: '100%', // The text should be centered in the local preview with the camera icon
+          height: '100%',
+          // The text should be centered in the local preview with the camera icon
           // appearing above the text. To compensate for the camera icon's height,
           // we add a negative margin to the top of the container.
           marginTop: '-0.8rem'
