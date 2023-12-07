@@ -52,6 +52,7 @@ import { VideoGalleryLayout } from '@internal/react-components';
 import { capabilitiesChangedInfoAndRoleSelector } from './selectors/capabilitiesChangedInfoAndRoleSelector';
 /* @conditional-compile-remove(capabilities) */
 import { useTrackedCapabilityChangedNotifications } from './utils/TrackCapabilityChangedNotifications';
+import { useConsoleErrors } from './utils/useConsoleErrors';
 
 /**
  * Props for {@link CallComposite}.
@@ -536,6 +537,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
       );
       break;
   }
+
+  useConsoleErrors(endedCall);
 
   /* @conditional-compile-remove(unsupported-browser) */
   switch (page) {
