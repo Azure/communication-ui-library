@@ -24,7 +24,8 @@ import {
   BaseCustomStyles,
   CallParticipantListParticipant,
   OnRenderAvatarCallback,
-  ParticipantListParticipant
+  ParticipantListParticipant,
+  CustomAvatarOptions
 } from '../types';
 import { ParticipantItem, ParticipantItemStrings, ParticipantItemStyles } from './ParticipantItem';
 import { iconStyles, participantListItemStyle, participantListStyle } from './styles/ParticipantList.styles';
@@ -194,6 +195,20 @@ const onRenderParticipantDefault = (
         )
       : () => null;
 
+  const onRenderAvatarWithRaiseHand = (
+    userId?: string,
+    options?: CustomAvatarOptions,
+    defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element
+  ) =>
+    onRenderAvatar?.(
+      userId,
+      {
+        ...options,
+        styles: { root: { borderColor: callingParticipant?.raisedHand ? callingPalette.raiseHandGold : 'transparent' } }
+      },
+      defaultOnRender
+    ) ?? <></>;
+
   return (
     <ParticipantItem
       styles={styles}
@@ -204,17 +219,13 @@ const onRenderParticipantDefault = (
       menuItems={menuItems}
       presence={presence}
       onRenderIcon={onRenderIcon}
-      onRenderAvatar={onRenderAvatar}
+      onRenderAvatar={onRenderAvatarWithRaiseHand}
       onClick={() => onParticipantClick?.(participant)}
       showParticipantOverflowTooltip={showParticipantOverflowTooltip}
       /* @conditional-compile-remove(one-to-n-calling) */
       /* @conditional-compile-remove(PSTN-calls) */
       participantState={callingParticipant.state}
       ariaLabelledBy={participantAriaLabelledBy}
-      /* @conditional-compile-remove(raise-hand) */
-      showCoinBorder={callingParticipant?.raisedHand ? true : false}
-      /* @conditional-compile-remove(raise-hand) */
-      coinBorderColor={callingPalette.raiseHandGold}
     />
   );
 };

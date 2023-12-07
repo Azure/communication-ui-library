@@ -131,12 +131,6 @@ export interface ParticipantItemProps {
    * Takes in a unique id value of the element you would like to be read before the ParticipantItem.
    */
   ariaLabelledBy?: string;
-  /* @conditional-compile-remove(raise-hand) */
-  /** Display border around persona coin */
-  showCoinBorder?: boolean;
-  /* @conditional-compile-remove(raise-hand) */
-  /** Display border around persona coin */
-  coinBorderColor?: string;
 }
 
 /**
@@ -179,11 +173,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     presence: presence,
     initialsTextColor: 'white',
     showOverflowTooltip: showParticipantOverflowTooltip,
-    showUnknownPersonaCoin: !me && (!displayName?.trim() || displayName === strings.displayNamePlaceholder),
-    /* @conditional-compile-remove(raise-hand) */
-    isActive: props.showCoinBorder,
-    /* @conditional-compile-remove(raise-hand) */
-    activeBorderColor: props.coinBorderColor
+    showUnknownPersonaCoin: !me && (!displayName?.trim() || displayName === strings.displayNamePlaceholder)
   };
 
   const avatar = onRenderAvatar ? (

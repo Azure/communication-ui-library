@@ -67,16 +67,6 @@ export interface AvatarPersonaProps extends IPersonaProps {
    */
   /* @conditional-compile-remove(raise-hand) */
   allowActiveBorder?: boolean;
-  /**
-   * If true, show the active border for persona coin.
-   */
-  /* @conditional-compile-remove(raise-hand) */
-  isActive?: boolean;
-  /**
-   * Color border for persona coin.
-   */
-  /* @conditional-compile-remove(raise-hand) */
-  activeBorderColor?: string;
 }
 
 /**
@@ -109,19 +99,21 @@ export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
     // Display a border for raised handed participants in participant list
     activePersona = mergeStyles({
       border: 'solid 2px',
-      borderColor: props.isActive ? props.activeBorderColor : 'transparent',
+      borderColor: 'transparent',
       borderRadius: '50%',
       padding: '2px',
       boxSizing: 'content-box',
       margin: '-4px'
     });
+
+    mergeStyles(activePersona, props.styles);
   }
 
   return (
     <Persona
       {...props}
       /* @conditional-compile-remove(raise-hand) */
-      className={props.allowActiveBorder ? activePersona : ''}
+      className={activePersona}
       text={data?.text ?? text}
       imageUrl={data?.imageUrl ?? imageUrl}
       imageInitials={data?.imageInitials ?? imageInitials}
