@@ -73,7 +73,7 @@
     "@types/dompurify": "^3.0.2",
     "@types/jest": "^29.5.2",
     "@types/json-stringify-safe": "^5.0.0",
-    "@types/node": "^16.11.7",
+    "@types/node": "^20.10.3",
     "@types/react-dom": "18.2.17",
     "@types/react-linkify": "^1.0.0",
     "@types/react": "18.2.41",
@@ -121,7 +121,7 @@
     "ts-jest": "^29.1.0",
     "ts-node": "^10.9.1",
     "type-fest": "^2.5.4",
-    "typescript": "4.3.5",
+    "typescript": "4.7.4",
     "webpack": "5.89.0",
     "jest-environment-jsdom": "^29.5.0"
   }
