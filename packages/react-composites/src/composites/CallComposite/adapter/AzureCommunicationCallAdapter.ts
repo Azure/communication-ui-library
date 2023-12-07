@@ -409,7 +409,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
         this.context.setCurrentCallId(this.call.id);
       }
 
-// If the call connects we need to clean up any previous unparentedViews
+      // If the call connects we need to clean up any previous unparentedViews
       if (
         (this.call?.state === 'InLobby' || this.call?.state === 'Connected') &&
         this.callClient.getState().deviceManager.unparentedViews.length > 0
