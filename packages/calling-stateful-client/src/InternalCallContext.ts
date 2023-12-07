@@ -1,7 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { LocalVideoStream, RemoteVideoStream, VideoStreamRenderer } from '@azure/communication-calling';
+import {
+  LocalVideoStream,
+  MediaStreamType,
+  RemoteVideoStream,
+  VideoStreamRenderer
+} from '@azure/communication-calling';
 import { LocalVideoStreamState } from './CallClientState';
 import type { CallContext } from './CallContext';
 import { CallIdHistory } from './CallIdHistory';
@@ -49,11 +54,10 @@ export class InternalCallContext {
   private _remoteRenderInfos = new Map<string, Map<string, Map<number, RemoteRenderInfo>>>();
 
   // <CallId, <MediaStreamType, LocalRenderInfo>>.
-  private _localRenderInfos = new Map<string, Map<string, LocalRenderInfo>>();
+  private _localRenderInfos = new Map<string, Map<MediaStreamType, LocalRenderInfo>>();
 
   // Used for keeping track of rendered LocalVideoStreams that are not part of a Call.
-  // The key is the stream ID. We assume each stream ID to only have one owning render info
-  private _unparentedRenderInfos = new Map<string, LocalRenderInfo>();
+  private _unparentedRenderInfos = new Map<MediaStreamType, LocalRenderInfo>();
   private _callIdHistory = new CallIdHistory();
 
   // Used for keeping track of video effects subscribers that are not part of a Call.
@@ -139,25 +143,25 @@ export class InternalCallContext {
 
   public setLocalRenderInfo(
     callId: string,
-    streamKey: string,
+    streamKey: MediaStreamType,
     stream: LocalVideoStream,
     status: RenderStatus,
     renderer: VideoStreamRenderer | undefined
   ): void {
     let localRenderInfosForCall = this._localRenderInfos.get(this._callIdHistory.latestCallId(callId));
     if (!localRenderInfosForCall) {
-      localRenderInfosForCall = new Map<string, LocalRenderInfo>();
+      localRenderInfosForCall = new Map<MediaStreamType, LocalRenderInfo>();
       this._localRenderInfos.set(this._callIdHistory.latestCallId(callId), localRenderInfosForCall);
     }
 
     localRenderInfosForCall.set(streamKey, { stream, status, renderer });
   }
 
-  public getLocalRenderInfosForCall(callId: string): Map<string, LocalRenderInfo> | undefined {
+  public getLocalRenderInfosForCall(callId: string): Map<MediaStreamType, LocalRenderInfo> | undefined {
     return this._localRenderInfos.get(this._callIdHistory.latestCallId(callId));
   }
 
-  public getLocalRenderInfo(callId: string, streamKey: string): LocalRenderInfo | undefined {
+  public getLocalRenderInfo(callId: string, streamKey: MediaStreamType): LocalRenderInfo | undefined {
     const localRenderInfosForCall = this._localRenderInfos.get(this._callIdHistory.latestCallId(callId));
     if (!localRenderInfosForCall) {
       return undefined;
@@ -166,7 +170,7 @@ export class InternalCallContext {
     return localRenderInfosForCall.get(streamKey);
   }
 
-  public deleteLocalRenderInfo(callId: string, streamKey: string): void {
+  public deleteLocalRenderInfo(callId: string, streamKey: MediaStreamType): void {
     const localRenderInfoForCall = this._localRenderInfos.get(this._callIdHistory.latestCallId(callId));
     if (!localRenderInfoForCall) {
       return;
