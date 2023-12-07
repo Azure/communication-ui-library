@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { IPalette, IStyle } from '@fluentui/react';
+import { IPalette, IStackItemStyles, IStyle } from '@fluentui/react';
 
 /**
  * @private
@@ -37,3 +37,10 @@ export const moreDetailsStyle = (palette: IPalette, isVideoReady: boolean): ISty
   color: isVideoReady ? 'white' : palette.themePrimary,
   textAlign: 'center'
 });
+
+/**
+ * @private
+ */
+export const localCameraSwitcherContainerStyles: IStackItemStyles = {
+  root: { position: 'absolute', top: '0rem', right: '0rem' }
+};
