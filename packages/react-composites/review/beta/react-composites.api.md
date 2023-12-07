@@ -416,7 +416,7 @@ export type CallCompositeOptions = {
         logo?: {
             url: string;
             alt?: string;
-            shape?: 'circle' | 'square';
+            shape?: 'unset' | 'circle';
         };
         backgroundImage?: {
             url: string;
@@ -616,7 +616,7 @@ export type CallParticipantsLocator = {
 };
 
 // @public
-export interface CallWithChatAdapter extends CallWithChatAdapterManagement, AdapterState<CallWithChatAdapterState>, Disposable, CallWithChatAdapterSubscriptions {
+export interface CallWithChatAdapter extends CallWithChatAdapterManagement, AdapterState<CallWithChatAdapterState>, Disposable_2, CallWithChatAdapterSubscriptions {
 }
 
 // @public
@@ -918,7 +918,7 @@ export type CallWithChatCompositeOptions = {
         logo?: {
             url: string;
             alt?: string;
-            shape?: 'circle' | 'square';
+            shape?: 'unset' | 'circle';
         };
         backgroundImage?: {
             url: string;
@@ -1011,7 +1011,7 @@ export type CaptionsReceivedListener = (event: {
 }) => void;
 
 // @public
-export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable & ChatAdapterSubscribers & FileUploadAdapter;
+export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable_2 & ChatAdapterSubscribers & FileUploadAdapter;
 
 // @public
 export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
@@ -1119,7 +1119,7 @@ export type _ChatThreadRestError = {
 };
 
 // @public
-export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallOperations, CallAdapterDeviceManagement, CallAdapterSubscribers {
+export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Disposable_2, CallAdapterCallOperations, CallAdapterDeviceManagement, CallAdapterSubscribers {
     // @deprecated
     joinCall(microphoneOn?: boolean): void;
     joinCall(options?: JoinCallOptions): void;
@@ -1293,7 +1293,7 @@ export const _createAzureCommunicationChatAdapterInner: (endpoint: string, userI
 export const createTeamsCallAdapter: ({ userId, credential, locator, options }: TeamsCallAdapterArgs) => Promise<TeamsCallAdapter>;
 
 // @beta
-export const createTeamsCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: TeamsCallAgent, locator: CallAdapterLocator, options?: CommonCallAdapterOptions | undefined) => Promise<TeamsCallAdapter>;
+export const createTeamsCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: TeamsCallAgent, locator: CallAdapterLocator, options?: TeamsAdapterOptions) => Promise<TeamsCallAdapter>;
 
 // @public
 export type CustomCallControlButtonCallback = (args: CustomCallControlButtonCallbackArgs) => CustomCallControlButtonProps;
@@ -1327,49 +1327,49 @@ export interface CustomCallControlButtonStrings {
 
 // @public
 export const DEFAULT_COMPOSITE_ICONS: {
-    EditBoxCancel: JSX.Element | React_2.JSX.Element;
-    EditBoxSubmit: JSX.Element | React_2.JSX.Element;
-    MessageDelivered: JSX.Element | React_2.JSX.Element;
-    MessageEdit: JSX.Element | React_2.JSX.Element;
-    MessageFailed: JSX.Element | React_2.JSX.Element;
-    MessageRemove: JSX.Element | React_2.JSX.Element;
-    MessageSeen: JSX.Element | React_2.JSX.Element;
-    MessageSending: JSX.Element | React_2.JSX.Element;
-    ParticipantItemOptions: JSX.Element | React_2.JSX.Element;
-    ParticipantItemOptionsHovered: JSX.Element | React_2.JSX.Element;
-    SendBoxSend: JSX.Element | React_2.JSX.Element;
-    SendBoxSendHovered: JSX.Element | React_2.JSX.Element;
+    EditBoxCancel: JSX.Element;
+    EditBoxSubmit: JSX.Element;
+    MessageDelivered: JSX.Element;
+    MessageEdit: JSX.Element;
+    MessageFailed: JSX.Element;
+    MessageRemove: JSX.Element;
+    MessageSeen: JSX.Element;
+    MessageSending: JSX.Element;
+    ParticipantItemOptions: JSX.Element;
+    ParticipantItemOptionsHovered: JSX.Element;
+    SendBoxSend: JSX.Element;
+    SendBoxSendHovered: JSX.Element;
     SendBoxAttachFile?: JSX.Element | undefined;
     ControlBarPeopleButton?: JSX.Element | undefined;
-    ControlButtonCameraOff: JSX.Element | React_2.JSX.Element;
-    ControlButtonCameraOn: JSX.Element | React_2.JSX.Element;
-    ControlButtonEndCall: JSX.Element | React_2.JSX.Element;
-    ControlButtonMicOff: JSX.Element | React_2.JSX.Element;
-    ControlButtonMicOn: JSX.Element | React_2.JSX.Element;
-    ControlButtonOptions: JSX.Element | React_2.JSX.Element;
-    ControlButtonParticipants: JSX.Element | React_2.JSX.Element;
-    ControlButtonScreenShareStart: JSX.Element | React_2.JSX.Element;
-    ControlButtonScreenShareStop: JSX.Element | React_2.JSX.Element;
+    ControlButtonCameraOff: JSX.Element;
+    ControlButtonCameraOn: JSX.Element;
+    ControlButtonEndCall: JSX.Element;
+    ControlButtonMicOff: JSX.Element;
+    ControlButtonMicOn: JSX.Element;
+    ControlButtonOptions: JSX.Element;
+    ControlButtonParticipants: JSX.Element;
+    ControlButtonScreenShareStart: JSX.Element;
+    ControlButtonScreenShareStop: JSX.Element;
     ControlButtonCameraProhibited?: JSX.Element | undefined;
     ControlButtonMicProhibited?: JSX.Element | undefined;
-    ControlButtonRaiseHand: JSX.Element | React_2.JSX.Element;
-    ControlButtonLowerHand: JSX.Element | React_2.JSX.Element;
-    RaiseHandContextualMenuItem: JSX.Element | React_2.JSX.Element;
-    LowerHandContextualMenuItem: JSX.Element | React_2.JSX.Element;
-    ErrorBarCallCameraAccessDenied: JSX.Element | React_2.JSX.Element;
-    ErrorBarCallCameraAlreadyInUse: JSX.Element | React_2.JSX.Element;
-    ErrorBarCallLocalVideoFreeze: JSX.Element | React_2.JSX.Element;
-    ErrorBarCallMacOsCameraAccessDenied: JSX.Element | React_2.JSX.Element;
-    ErrorBarCallMacOsMicrophoneAccessDenied: JSX.Element | React_2.JSX.Element;
-    ErrorBarCallMicrophoneAccessDenied: JSX.Element | React_2.JSX.Element;
-    ErrorBarCallMicrophoneMutedBySystem: JSX.Element | React_2.JSX.Element;
-    ErrorBarCallMicrophoneUnmutedBySystem: JSX.Element | React_2.JSX.Element;
-    ErrorBarCallNetworkQualityLow: JSX.Element | React_2.JSX.Element;
-    ErrorBarCallNoMicrophoneFound: JSX.Element | React_2.JSX.Element;
-    ErrorBarCallNoSpeakerFound: JSX.Element | React_2.JSX.Element;
-    ErrorBarClear: JSX.Element | React_2.JSX.Element;
-    HorizontalGalleryLeftButton: JSX.Element | React_2.JSX.Element;
-    HorizontalGalleryRightButton: JSX.Element | React_2.JSX.Element;
+    ControlButtonRaiseHand: JSX.Element;
+    ControlButtonLowerHand: JSX.Element;
+    RaiseHandContextualMenuItem: JSX.Element;
+    LowerHandContextualMenuItem: JSX.Element;
+    ErrorBarCallCameraAccessDenied: JSX.Element;
+    ErrorBarCallCameraAlreadyInUse: JSX.Element;
+    ErrorBarCallLocalVideoFreeze: JSX.Element;
+    ErrorBarCallMacOsCameraAccessDenied: JSX.Element;
+    ErrorBarCallMacOsMicrophoneAccessDenied: JSX.Element;
+    ErrorBarCallMicrophoneAccessDenied: JSX.Element;
+    ErrorBarCallMicrophoneMutedBySystem: JSX.Element;
+    ErrorBarCallMicrophoneUnmutedBySystem: JSX.Element;
+    ErrorBarCallNetworkQualityLow: JSX.Element;
+    ErrorBarCallNoMicrophoneFound: JSX.Element;
+    ErrorBarCallNoSpeakerFound: JSX.Element;
+    ErrorBarClear: JSX.Element;
+    HorizontalGalleryLeftButton: JSX.Element;
+    HorizontalGalleryRightButton: JSX.Element;
     LobbyScreenConnectingToCall?: JSX.Element | undefined;
     LobbyScreenWaitingToBeAdmitted?: JSX.Element | undefined;
     LocalDeviceSettingsCamera?: JSX.Element | undefined;
@@ -1386,12 +1386,12 @@ export const DEFAULT_COMPOSITE_ICONS: {
     NoticePageNotInvitedToRoom?: JSX.Element | undefined;
     NoticePageRoomNotFound?: JSX.Element | undefined;
     NoticePageRoomNotValid?: JSX.Element | undefined;
-    OptionsCamera: JSX.Element | React_2.JSX.Element;
-    OptionsMic: JSX.Element | React_2.JSX.Element;
-    OptionsSpeaker: JSX.Element | React_2.JSX.Element;
-    ParticipantItemMicOff: JSX.Element | React_2.JSX.Element;
-    ParticipantItemScreenShareStart: JSX.Element | React_2.JSX.Element;
-    VideoTileMicOff: JSX.Element | React_2.JSX.Element;
+    OptionsCamera: JSX.Element;
+    OptionsMic: JSX.Element;
+    OptionsSpeaker: JSX.Element;
+    ParticipantItemMicOff: JSX.Element;
+    ParticipantItemScreenShareStart: JSX.Element;
+    VideoTileMicOff: JSX.Element;
     LocalCameraSwitch?: JSX.Element | undefined;
     PeoplePaneAddPerson?: JSX.Element | undefined;
     PeoplePaneOpenDialpad?: JSX.Element | undefined;
@@ -1475,9 +1475,10 @@ export type DisplayNameChangedListener = (event: {
 }) => void;
 
 // @public
-export interface Disposable {
+interface Disposable_2 {
     dispose(): void;
 }
+export { Disposable_2 as Disposable }
 
 // @internal
 export type _FakeChatAdapterArgs = {

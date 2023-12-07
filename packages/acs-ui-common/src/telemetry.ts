@@ -59,7 +59,9 @@ const getTelemetryImplementationHint = (telemetryImplementationHint: _TelemetryI
  * @internal
  */
 export const _getApplicationId = (telemetryImplementationHint: _TelemetryImplementationHint): string => {
-  const highLevelArtifact = 0;
+  // We assume AzureCommunicationLibrary, as we don't currently have any public API to inject otherwise.
+  // This is consistent with the native iOS and Android implementations of telemetry.
+  const highLevelArtifact = 1;
   const specificImplementation = getTelemetryImplementationHint(telemetryImplementationHint);
   const implementationDetails = 0;
   const version = telemetryVersion['default'];
