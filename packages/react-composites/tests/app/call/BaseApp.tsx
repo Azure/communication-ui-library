@@ -107,7 +107,7 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
         logo: {
           url: '/images/acslogo.svg',
           alt: 'Contoso logo',
-          shape: 'square'
+          shape: 'unset'
         }
       }
     };
@@ -118,8 +118,8 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
       branding: {
         logo: {
           url: '/images/elephant.jpg',
-          alt: 'Contoso logo'
-          // shape: 'circle' - not needed, should default to circle
+          alt: 'Contoso logo',
+          shape: 'circle'
         }
       }
     };

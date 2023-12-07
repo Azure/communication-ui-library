@@ -25,7 +25,6 @@ export const CONFIGURATION_PAGE_SECTION_MAX_WIDTH_REM = 20.625;
 export const CONFIGURATION_PAGE_SECTION_HEIGHT_REM = 13.625;
 
 const LOGO_HEIGHT_REM = 3;
-const LOGO_MARGIN_BOTTOM_REM = 1;
 
 /**
  * @private
@@ -38,6 +37,13 @@ export const configurationStackTokensDesktop: IStackTokens = {
  * @private
  */
 export const configurationStackTokensMobile: IStackTokens = {
+  childrenGap: '0.5rem'
+};
+
+/**
+ * @private
+ */
+export const deviceConfigurationStackTokens: IStackTokens = {
   childrenGap: '1.5rem'
 };
 
@@ -46,7 +52,7 @@ export const configurationContainerStyle = (desktop: boolean, backgroundImageUrl
   root: {
     height: '100%',
     width: '100%',
-    padding: '2rem 1rem 2rem 1rem',
+    padding: desktop ? '2rem 1rem 2rem 1rem' : '1rem 1rem 2rem 1rem',
     minWidth: desktop
       ? '25rem' // sum of min-width from children + ChildrenGap * (nb of children - 1) + padding * 2 = (11 + 11) + (2 * 1) + 0.5 * 2
       : '16rem', // from LocalPreview: ControlBar width + 0.5 * 2 for spacing + padding * 2 = 14 + 0.5 * 2 + 0.5 * 2
@@ -115,21 +121,46 @@ export const selectionContainerStyle = (theme: ITheme): string =>
 /**
  * @private
  */
-export const titleContainerStyleDesktop = mergeStyles({
-  fontSize: '1.25rem',
-  lineHeight: '1.75rem',
-  fontWeight: 600
-});
+export const titleContainerStyleDesktop = (theme: ITheme): string =>
+  mergeStyles(
+    {
+      fontSize: '1.2rem',
+      lineHeight: '1rem',
+      fontWeight: 600
+    },
+    configurationPageTextDecoration(theme)
+  );
 
 /**
  * @private
  */
-export const titleContainerStyleMobile = mergeStyles({
-  fontSize: '1.0625rem',
-  lineHeight: '1.375rem',
-  fontWeight: 600,
-  textAlign: 'center'
-});
+export const titleContainerStyleMobile = (theme: ITheme): string =>
+  mergeStyles(
+    {
+      fontSize: '1.0625rem',
+      lineHeight: '1.375rem',
+      fontWeight: 600,
+      textAlign: 'center'
+    },
+    configurationPageTextDecoration(theme)
+  );
+
+/**
+ * Ensure configuration page text is legible on top of a background image.
+ * @private
+ */
+const configurationPageTextDecoration = (theme: ITheme): IStyle => {
+  return {
+    textShadow: `0px 0px 8px ${theme.palette.whiteTranslucent40}`,
+    fill: theme.semanticColors.bodyText,
+    stroke: theme.palette.whiteTranslucent40,
+    paintOrder: 'stroke fill',
+    strokeWidth: _pxToRem(1.5),
+    text: {
+      letterSpacing: '-0.02rem' // cope with extra width due to stroke width
+    }
+  };
+};
 
 /**
  * @private
@@ -144,8 +175,7 @@ export const callDetailsContainerStyles: IStackStyles = {
 
 const callDetailsStyle: IStyle = {
   fontSize: '0.9375',
-  lineHeight: '1.25rem',
-  marginTop: '0.25rem'
+  lineHeight: '1.25rem'
 };
 
 /**
@@ -160,6 +190,7 @@ export const callDetailsStyleDesktop = mergeStyles({
  */
 export const callDetailsStyleMobile = mergeStyles({
   ...callDetailsStyle,
+  marginBottom: '0.5rem',
   textAlign: 'center'
 });
 
@@ -257,7 +288,7 @@ export const configurationCenteredContent = (fillsHeight: boolean, hasLogo?: boo
     // in and not shift the content. To exclude the logo, we subtract the logo height
     // and margin from the actual height. This allows the flex box's natural centering
     // to appropriately center the content.
-    height: `calc(100% - ${!fillsHeight && hasLogo ? `${LOGO_HEIGHT_REM + LOGO_MARGIN_BOTTOM_REM}rem` : '0rem'})`
+    height: `calc(100% - ${!fillsHeight && hasLogo ? `${LOGO_HEIGHT_REM}rem` : '0rem'})`
   });
 
 /** @private */
@@ -286,16 +317,16 @@ export const panelFocusProps: IFocusTrapZoneProps = {
 /**
  * @private
  */
-export const logoStyles = (shape: 'circle' | 'square'): IImageStyles => ({
+export const logoStyles = (shape: undefined | 'unset' | 'circle'): IImageStyles => ({
   root: {
     overflow: 'initial', // prevent the image being clipped
     display: 'flex',
-    justifyContent: 'center',
-    marginBottom: `${LOGO_MARGIN_BOTTOM_REM}rem`
+    justifyContent: 'center'
   },
   image: {
-    borderRadius: shape === 'circle' ? '100%' : undefined,
     height: `${LOGO_HEIGHT_REM}rem`,
-    width: `${LOGO_HEIGHT_REM}rem` // width should match height
+    borderRadius: shape === 'circle' ? '100%' : undefined,
+    aspectRatio: shape === 'circle' ? '1 / 1' : undefined,
+    objectFit: shape === 'circle' ? 'cover' : undefined
   }
 });
