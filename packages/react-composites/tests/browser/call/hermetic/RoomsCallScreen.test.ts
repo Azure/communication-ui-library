@@ -139,6 +139,7 @@ const openRemoveParticipantMenu = async (page: Page): Promise<void> => {
   } else {
     // Click the more button to show the people button on the new control bar
     // in case we are on mobile
+    await pageClick(page, dataUiId('common-call-composite-more-button'));
     await waitForSelector(page, dataUiId('call-composite-more-menu-people-button'));
     await pageClick(page, dataUiId('call-composite-more-menu-people-button'));
     await hidePiPiP(page);
