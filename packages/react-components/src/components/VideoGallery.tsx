@@ -273,6 +273,12 @@ export interface VideoGalleryProps {
    * @defaultValue 'horizontalBottom'
    */
   overflowGalleryPosition?: OverflowGalleryPosition;
+  /**
+   * Determines if the overflowGallery is a scrollable container or paginated.
+   * @remarks for mobile devices, it is recommended to use 'infiniteScroll' to better serve touch screen users.
+   * @defaultValue 'paginated'
+   */
+  overflowGalleryScrollType?: 'paged' | 'scroll';
   /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
   /**
    * Determines the aspect ratio of local video tile in the video gallery.
@@ -349,6 +355,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     remoteVideoTileMenu = DEFAULT_REMOTE_VIDEO_TILE_MENU_OPTIONS,
     /* @conditional-compile-remove(vertical-gallery) */
     overflowGalleryPosition = 'horizontalBottom',
+    overflowGalleryScrollType = 'paged',
     /* @conditional-compile-remove(rooms) */
     localVideoTileSize = 'followDeviceOrientation'
   } = props;
@@ -659,6 +666,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       localVideoComponent: localVideoTile,
       parentWidth: containerWidth,
       parentHeight: containerHeight,
+      overflowGalleryScrollType,
       /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds: pinnedParticipants,
       /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
       /* @conditional-compile-remove(click-to-call) */ localVideoTileSize
@@ -676,6 +684,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       containerHeight,
       onRenderRemoteVideoTile,
       defaultOnRenderVideoTile,
+      overflowGalleryScrollType,
       /* @conditional-compile-remove(pinned-participants) */ pinnedParticipants,
       /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
       /* @conditional-compile-remove(click-to-call) */ localVideoTileSize

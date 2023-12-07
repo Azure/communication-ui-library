@@ -30,6 +30,8 @@ export const ScrollableHorizontalGallery = (props: {
   const ref = useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>;
   const { events: dragabbleEvents } = useDraggable(ref);
 
+  console.log('im horiztonal scrollable gallery');
+
   return (
     <div
       ref={ref}

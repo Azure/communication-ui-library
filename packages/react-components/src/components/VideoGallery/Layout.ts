@@ -51,4 +51,11 @@ export interface LayoutProps {
    * @defaultValue 'horizontalBottom'
    */
   overflowGalleryPosition?: OverflowGalleryPosition;
+  /* @conditional-compile-remove(vertical-gallery) */
+  /**
+   * Determines if the overflowGallery is a scrollable container or paginated.
+   * @remarks for mobile devices, it is recommended to use 'infiniteScroll' to better serve touch screen users.
+   * @defaultValue 'paginated'
+   */
+  overflowGalleryScrollType: 'paged' | 'scroll';
 }

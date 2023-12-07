@@ -70,6 +70,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     parentWidth,
     parentHeight,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'horizontalBottom',
+    overflowGalleryScrollType,
     pinnedParticipantUserIds = [],
     /* @conditional-compile-remove(click-to-call) */ localVideoTileSize
   } = props;
@@ -215,6 +216,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
         verticalGalleryStyles={styles?.verticalGallery}
         /* @conditional-compile-remove(vertical-gallery) */
         overflowGalleryPosition={overflowGalleryPosition}
+        overflowGalleryScrollType={overflowGalleryScrollType}
         onChildrenPerPageChange={(n: number) => {
           childrenPerPage.current = n;
         }}
@@ -227,6 +229,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     screenShareComponent,
     overflowGalleryTiles,
     styles?.horizontalGallery,
+    overflowGalleryScrollType,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
     setIndexesToRender,
     /* @conditional-compile-remove(vertical-gallery) */ styles?.verticalGallery,

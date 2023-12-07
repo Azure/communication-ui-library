@@ -44,6 +44,7 @@ export const OverflowGallery = (props: {
   verticalGalleryStyles?: VerticalGalleryStyles;
   /* @conditional-compile-remove(vertical-gallery) */
   overflowGalleryPosition?: OverflowGalleryPosition;
+  overflowGalleryScrollType: 'paged' | 'scroll';
   onChildrenPerPageChange?: (childrenPerPage: number) => void;
   parentWidth?: number;
 }): JSX.Element => {
@@ -119,8 +120,10 @@ export const OverflowGallery = (props: {
 
   SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM;
 
+  console.log('props.overflowGalleryScrollType', props.overflowGalleryScrollType);
+
   /* @conditional-compile-remove(pinned-participants) */
-  if (isNarrow) {
+  if (props.overflowGalleryScrollType === 'scroll') {
     // There are no pages for ScrollableHorizontalGallery so we will approximate the first 3 remote
     // participant tiles are visible
     onChildrenPerPageChange?.(3);

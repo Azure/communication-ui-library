@@ -40,6 +40,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     /* @conditional-compile-remove(vertical-gallery) */
     parentHeight,
     pinnedParticipantUserIds = [],
+    overflowGalleryScrollType,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'horizontalBottom'
   } = props;
 
@@ -114,6 +115,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
         verticalGalleryStyles={styles?.verticalGallery}
         /* @conditional-compile-remove(vertical-gallery) */
         overflowGalleryPosition={overflowGalleryPosition}
+        overflowGalleryScrollType={overflowGalleryScrollType}
         onFetchTilesToRender={setIndexesToRender}
         onChildrenPerPageChange={(n: number) => {
           childrenPerPage.current = n;
@@ -126,6 +128,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     /* @conditional-compile-remove(vertical-gallery) */ isShort,
     overflowGalleryTiles,
     styles?.horizontalGallery,
+    overflowGalleryScrollType,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
     setIndexesToRender,
     /* @conditional-compile-remove(vertical-gallery) */ styles?.verticalGallery,

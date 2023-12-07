@@ -65,6 +65,7 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
     parentWidth,
     /* @conditional-compile-remove(vertical-gallery) */ parentHeight,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'horizontalBottom',
+    overflowGalleryScrollType,
     pinnedParticipantUserIds = [],
     /* @conditional-compile-remove(click-to-call) */ localVideoTileSize
   } = props;
@@ -190,6 +191,7 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
         verticalGalleryStyles={styles?.verticalGallery}
         /* @conditional-compile-remove(vertical-gallery) */
         overflowGalleryPosition={overflowGalleryPosition}
+        overflowGalleryScrollType={overflowGalleryScrollType}
         onChildrenPerPageChange={(n: number) => {
           childrenPerPage.current = n;
         }}
@@ -202,6 +204,7 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
     screenShareComponent,
     overflowGalleryTiles,
     styles?.horizontalGallery,
+    overflowGalleryScrollType,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
     setIndexesToRender,
     /* @conditional-compile-remove(vertical-gallery) */ styles?.verticalGallery,

@@ -159,6 +159,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         remoteVideoTileMenu={remoteVideoTileMenuOptions}
         /* @conditional-compile-remove(vertical-gallery) */
         overflowGalleryPosition={overflowGalleryPosition}
+        overflowGalleryScrollType={props.isMobile ? 'scroll' : 'paged'}
         /* @conditional-compile-remove(rooms) */
         localVideoTileSize={
           props.localVideoTileOptions === false || userRole === 'Consumer' || (isRoomsCall && userRole === 'Unknown')
