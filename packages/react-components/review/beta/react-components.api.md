@@ -717,8 +717,6 @@ export type CustomAvatarOptions = {
     text?: string;
     participantState?: ParticipantState;
     showUnknownPersonaCoin?: boolean;
-    isActive?: boolean;
-    activeBorderColor?: string;
 };
 
 // @public
