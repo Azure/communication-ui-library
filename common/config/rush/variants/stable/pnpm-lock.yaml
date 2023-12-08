@@ -4596,32 +4596,38 @@ packages:
     resolution: {integrity: sha512-C16M+IYz0rgRhWZdCmK+h58JMv8vijAA61gmz2rspCSwKwzBebpdcsiUmwrtJRdphuY30i6BSLEOP8ppbNLyLg==}
     dev: false
 
-  /@rollup/plugin-commonjs@17.1.0(rollup@2.79.1):
-    resolution: {integrity: sha512-PoMdXCw0ZyvjpCMT5aV4nkL0QywxP29sODQsSGeDpr/oI49Qq9tRtAsb/LbYbDzFlOydVEqHmmZWFtXJEAX9ew==}
-    engines: {node: '>= 8.0.0'}
+  /@rollup/plugin-commonjs@25.0.7(rollup@4.7.0):
+    resolution: {integrity: sha512-nEvcR+LRjEjsaSsc4x3XZfCCvZIaSMenZu/OiwOKGN2UhQpAYI7ru7czFvyWbErlpoGjnSX3D5Ch5FcMA3kRWQ==}
+    engines: {node: '>=14.0.0'}
     peerDependencies:
-      rollup: ^2.30.0
+      rollup: ^2.68.0||^3.0.0||^4.0.0
+    peerDependenciesMeta:
+      rollup:
+        optional: true
     dependencies:
-      '@rollup/pluginutils': 3.1.0(rollup@2.79.1)
+      '@rollup/pluginutils': 5.1.0(rollup@4.7.0)
       commondir: 1.0.1
       estree-walker: 2.0.2
-      glob: 7.2.3
+      glob: 8.1.0
       is-reference: 1.2.1
-      magic-string: 0.25.9
-      resolve: 1.22.8
-      rollup: 2.79.1
+      magic-string: 0.30.5
+      rollup: 4.7.0
     dev: false
 
-  /@rollup/plugin-json@4.1.0(rollup@2.79.1):
-    resolution: {integrity: sha512-yfLbTdNS6amI/2OpmbiBoW12vngr5NW2jCJVZSBEz+H5KfUJZ2M7sDjk0U6GOOdCWFVScShte29o9NezJ53TPw==}
+  /@rollup/plugin-json@6.0.1(rollup@4.7.0):
+    resolution: {integrity: sha512-RgVfl5hWMkxN1h/uZj8FVESvPuBJ/uf6ly6GTj0GONnkfoBN5KC0MSz+PN2OLDgYXMhtG0mWpTrkiOjoxAIevw==}
+    engines: {node: '>=14.0.0'}
     peerDependencies:
-      rollup: ^1.20.0 || ^2.0.0
+      rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
+    peerDependenciesMeta:
+      rollup:
+        optional: true
     dependencies:
-      '@rollup/pluginutils': 3.1.0(rollup@2.79.1)
-      rollup: 2.79.1
+      '@rollup/pluginutils': 5.1.0(rollup@4.7.0)
+      rollup: 4.7.0
     dev: false
 
-  /@rollup/pluginutils@3.1.0(rollup@2.79.1):
+  /@rollup/pluginutils@3.1.0(rollup@4.7.0):
     resolution: {integrity: sha512-GksZ6pr6TpIjHm8h9lSQ8pi8BE9VeubNT0OMJ3B5uZJ8pz73NPiqOtCog/x2/QzM1ENChPKxMDhiQuRHsqc+lg==}
     engines: {node: '>= 8.0.0'}
     peerDependencies:
@@ -4630,8 +4636,127 @@ packages:
       '@types/estree': 0.0.39
       estree-walker: 1.0.1
       picomatch: 2.3.1
-      rollup: 2.79.1
+      rollup: 4.7.0
     dev: false
+
+  /@rollup/pluginutils@5.1.0(rollup@4.7.0):
+    resolution: {integrity: sha512-XTIWOPPcpvyKI6L1NHo0lFlCyznUEyPmPY1mc3KpPVDYulHSTvyeLNVW00QTLIAFNhR3kYnJTQHeGqU4M3n09g==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
+    peerDependenciesMeta:
+      rollup:
+        optional: true
+    dependencies:
+      '@types/estree': 1.0.3
+      estree-walker: 2.0.2
+      picomatch: 2.3.1
+      rollup: 4.7.0
+    dev: false
+
+  /@rollup/rollup-android-arm-eabi@4.7.0:
+    resolution: {integrity: sha512-rGku10pL1StFlFvXX5pEv88KdGW6DHUghsxyP/aRYb9eH+74jTGJ3U0S/rtlsQ4yYq1Hcc7AMkoJOb1xu29Fxw==}
+    cpu: [arm]
+    os: [android]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@rollup/rollup-android-arm64@4.7.0:
+    resolution: {integrity: sha512-/EBw0cuJ/KVHiU2qyVYUhogXz7W2vXxBzeE9xtVIMC+RyitlY2vvaoysMUqASpkUtoNIHlnKTu/l7mXOPgnKOA==}
+    cpu: [arm64]
+    os: [android]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@rollup/rollup-darwin-arm64@4.7.0:
+    resolution: {integrity: sha512-4VXG1bgvClJdbEYYjQ85RkOtwN8sqI3uCxH0HC5w9fKdqzRzgG39K7GAehATGS8jghA7zNoS5CjSKkDEqWmNZg==}
+    cpu: [arm64]
+    os: [darwin]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@rollup/rollup-darwin-x64@4.7.0:
+    resolution: {integrity: sha512-/ImhO+T/RWJ96hUbxiCn2yWI0/MeQZV/aeukQQfhxiSXuZJfyqtdHPUPrc84jxCfXTxbJLmg4q+GBETeb61aNw==}
+    cpu: [x64]
+    os: [darwin]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@rollup/rollup-linux-arm-gnueabihf@4.7.0:
+    resolution: {integrity: sha512-zhye8POvTyUXlKbfPBVqoHy3t43gIgffY+7qBFqFxNqVtltQLtWeHNAbrMnXiLIfYmxcoL/feuLDote2tx+Qbg==}
+    cpu: [arm]
+    os: [linux]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@rollup/rollup-linux-arm64-gnu@4.7.0:
+    resolution: {integrity: sha512-RAdr3OJnUum6Vs83cQmKjxdTg31zJnLLTkjhcFt0auxM6jw00GD6IPFF42uasYPr/wGC6TRm7FsQiJyk0qIEfg==}
+    cpu: [arm64]
+    os: [linux]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@rollup/rollup-linux-arm64-musl@4.7.0:
+    resolution: {integrity: sha512-nhWwYsiJwZGq7SyR3afS3EekEOsEAlrNMpPC4ZDKn5ooYSEjDLe9W/xGvoIV8/F/+HNIY6jY8lIdXjjxfxopXw==}
+    cpu: [arm64]
+    os: [linux]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@rollup/rollup-linux-riscv64-gnu@4.7.0:
+    resolution: {integrity: sha512-rlfy5RnQG1aop1BL/gjdH42M2geMUyVQqd52GJVirqYc787A/XVvl3kQ5NG/43KXgOgE9HXgCaEH05kzQ+hLoA==}
+    cpu: [riscv64]
+    os: [linux]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@rollup/rollup-linux-x64-gnu@4.7.0:
+    resolution: {integrity: sha512-cCkoGlGWfBobdDtiiypxf79q6k3/iRVGu1HVLbD92gWV5WZbmuWJCgRM4x2N6i7ljGn1cGytPn9ZAfS8UwF6vg==}
+    cpu: [x64]
+    os: [linux]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@rollup/rollup-linux-x64-musl@4.7.0:
+    resolution: {integrity: sha512-R2oBf2p/Arc1m+tWmiWbpHBjEcJnHVnv6bsypu4tcKdrYTpDfl1UT9qTyfkIL1iiii5D4WHxUHCg5X0pzqmxFg==}
+    cpu: [x64]
+    os: [linux]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@rollup/rollup-win32-arm64-msvc@4.7.0:
+    resolution: {integrity: sha512-CPtgaQL1aaPc80m8SCVEoxFGHxKYIt3zQYC3AccL/SqqiWXblo3pgToHuBwR8eCP2Toa+X1WmTR/QKFMykws7g==}
+    cpu: [arm64]
+    os: [win32]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@rollup/rollup-win32-ia32-msvc@4.7.0:
+    resolution: {integrity: sha512-pmioUlttNh9GXF5x2CzNa7Z8kmRTyhEzzAC+2WOOapjewMbl+3tGuAnxbwc5JyG8Jsz2+hf/QD/n5VjimOZ63g==}
+    cpu: [ia32]
+    os: [win32]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@rollup/rollup-win32-x64-msvc@4.7.0:
+    resolution: {integrity: sha512-SeZzC2QhhdBQUm3U0c8+c/P6UlRyBcLL2Xp5KX7z46WXZxzR8RJSIWL9wSUeBTgxog5LTPJuPj0WOT9lvrtP7Q==}
+    cpu: [x64]
+    os: [win32]
+    requiresBuild: true
+    dev: false
+    optional: true
 
   /@rushstack/node-core-library@3.61.0(@types/node@20.10.3):
     resolution: {integrity: sha512-tdOjdErme+/YOu4gPed3sFS72GhtWCgNV9oDsHDnoLY5oDfwjKUc9Z+JOZZ37uAxcm/OCahDHfuu2ugqrfWAVQ==}
@@ -11812,6 +11937,17 @@ packages:
       path-is-absolute: 1.0.1
     dev: false
 
+  /glob@8.1.0:
+    resolution: {integrity: sha512-r8hpEjiQEYlF2QU0df3dS+nxxSIreXQS1qRhMJM0Q5NDdR386C7jb7Hwwod8Fgiuex+k0GFjgft18yvxm5XoCQ==}
+    engines: {node: '>=12'}
+    dependencies:
+      fs.realpath: 1.0.0
+      inflight: 1.0.6
+      inherits: 2.0.4
+      minimatch: 5.1.6
+      once: 1.4.0
+    dev: false
+
   /global-dirs@3.0.1:
     resolution: {integrity: sha512-NBcGGFbBA9s1VzD41QXDG+3++t9Mn5t1FpLdhESY6oKY4gYTFpX4wO3sqGUa0Srjtbfj3szX0RnemmrVRUdULA==}
     engines: {node: '>=10'}
@@ -14233,10 +14369,11 @@ packages:
     hasBin: true
     dev: false
 
-  /magic-string@0.25.9:
-    resolution: {integrity: sha512-RmF0AsMzgt25qzqqLc1+MbHmhdx0ojF2Fvs4XnOqz2ZOBXzzkEwc/dJQZCYHAn7v1jbVOjAZfK8msRn4BxO4VQ==}
+  /magic-string@0.30.5:
+    resolution: {integrity: sha512-7xlpfBaQaP/T6Vh8MO/EqXSW5En6INHEvEXQiuff7Gku0PWjU3uf6w/j9o7O+SpB5fOAkrI5HeoNgwjEO0pFsA==}
+    engines: {node: '>=12'}
     dependencies:
-      sourcemap-codec: 1.4.8
+      '@jridgewell/sourcemap-codec': 1.4.15
     dev: false
 
   /make-dir@2.1.0:
@@ -16800,7 +16937,7 @@ packages:
       inherits: 2.0.4
     dev: false
 
-  /rollup-plugin-sourcemaps@0.6.3(@types/node@20.10.3)(rollup@2.79.1):
+  /rollup-plugin-sourcemaps@0.6.3(@types/node@20.10.3)(rollup@4.7.0):
     resolution: {integrity: sha512-paFu+nT1xvuO1tPFYXGe+XnQvg4Hjqv/eIhG8i5EspfYYPBKL57X7iVbfv55aNVASg3dzWvES9dmWsL2KhfByw==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
@@ -16810,9 +16947,9 @@ packages:
       '@types/node':
         optional: true
     dependencies:
-      '@rollup/pluginutils': 3.1.0(rollup@2.79.1)
+      '@rollup/pluginutils': 3.1.0(rollup@4.7.0)
       '@types/node': 20.10.3
-      rollup: 2.79.1
+      rollup: 4.7.0
       source-map-resolve: 0.6.0
     dev: false
 
@@ -16829,11 +16966,24 @@ packages:
       minimatch: 3.1.2
     dev: false
 
-  /rollup@2.79.1:
-    resolution: {integrity: sha512-uKxbd0IhMZOhjAiD5oAFp7BqvkA4Dv47qpOCtaNvng4HBwdbWtdOh8f5nZNuk2rp51PMGk3bzfWu5oayNEuYnw==}
-    engines: {node: '>=10.0.0'}
+  /rollup@4.7.0:
+    resolution: {integrity: sha512-7Kw0dUP4BWH78zaZCqF1rPyQ8D5DSU6URG45v1dqS/faNsx9WXyess00uTOZxKr7oR/4TOjO1CPudT8L1UsEgw==}
+    engines: {node: '>=18.0.0', npm: '>=8.0.0'}
     hasBin: true
     optionalDependencies:
+      '@rollup/rollup-android-arm-eabi': 4.7.0
+      '@rollup/rollup-android-arm64': 4.7.0
+      '@rollup/rollup-darwin-arm64': 4.7.0
+      '@rollup/rollup-darwin-x64': 4.7.0
+      '@rollup/rollup-linux-arm-gnueabihf': 4.7.0
+      '@rollup/rollup-linux-arm64-gnu': 4.7.0
+      '@rollup/rollup-linux-arm64-musl': 4.7.0
+      '@rollup/rollup-linux-riscv64-gnu': 4.7.0
+      '@rollup/rollup-linux-x64-gnu': 4.7.0
+      '@rollup/rollup-linux-x64-musl': 4.7.0
+      '@rollup/rollup-win32-arm64-msvc': 4.7.0
+      '@rollup/rollup-win32-ia32-msvc': 4.7.0
+      '@rollup/rollup-win32-x64-msvc': 4.7.0
       fsevents: 2.3.3
     dev: false
 
@@ -17360,11 +17510,6 @@ packages:
   /source-map@0.7.4:
     resolution: {integrity: sha512-l3BikUxvPOcn5E74dZiq5BGsTb5yEwhaTSzccU6t4sDOH8NWJCstKO5QT2CvtFoK6F0saL7p9xHAqHOlCPJygA==}
     engines: {node: '>= 8'}
-    dev: false
-
-  /sourcemap-codec@1.4.8:
-    resolution: {integrity: sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==}
-    deprecated: Please use @jridgewell/sourcemap-codec instead
     dev: false
 
   /space-separated-tokens@1.1.5:
@@ -19801,7 +19946,7 @@ packages:
     dev: false
 
   file:projects/acs-ui-common.tgz:
-    resolution: {integrity: sha512-SOkvpdc1M/byFfaORkfM+7mim1bMKof+lmRvGZMvyoQ3V8U7TEroiU4479VP9AiaXQCQ/BZqlCZH0e5zN43iPw==, tarball: file:projects/acs-ui-common.tgz}
+    resolution: {integrity: sha512-1g27fW26rS5rquyFadF3Md+5N533SrWP6fIMT2amqk4SU75wZ/KZMYWloSByJFYhOdgN9BlkzhXuYt6bbnulEg==, tarball: file:projects/acs-ui-common.tgz}
     name: '@rush-temp/acs-ui-common'
     version: 0.0.0
     dependencies:
@@ -19831,7 +19976,7 @@ packages:
       prettier: 2.3.1
       react: 18.2.0
       rimraf: 2.7.1
-      rollup: 2.79.1
+      rollup: 4.7.0
       ts-jest: 29.1.1(@babel/core@7.23.5)(babel-jest@29.7.0)(jest@29.7.0)(typescript@4.7.4)
       typescript: 4.7.4
     transitivePeerDependencies:
@@ -19846,7 +19991,7 @@ packages:
     dev: false
 
   file:projects/calling-component-bindings.tgz:
-    resolution: {integrity: sha512-7ZMNfmymJC2JPqXrO7gonbq2B7Kz2W52g/jytwiyaVKxa+5LixOx1Ju20MO1cjcVonfkVQXXzB7xBE7bOzbubQ==, tarball: file:projects/calling-component-bindings.tgz}
+    resolution: {integrity: sha512-B05fEMsuo9CxHMfrLW74A9+blREpqPcuocEGpSwS+DVtyvAAGSjySLx+F8yrZC3VBVfQvYy+CFpSVOaaw4QUMA==, tarball: file:projects/calling-component-bindings.tgz}
     name: '@rush-temp/calling-component-bindings'
     version: 0.0.0
     dependencies:
@@ -19879,7 +20024,7 @@ packages:
       react: 18.2.0
       reselect: 4.1.8
       rimraf: 2.7.1
-      rollup: 2.79.1
+      rollup: 4.7.0
       ts-jest: 29.1.1(@babel/core@7.23.5)(babel-jest@29.7.0)(jest@29.7.0)(typescript@4.7.4)
       typescript: 4.7.4
     transitivePeerDependencies:
@@ -19894,7 +20039,7 @@ packages:
     dev: false
 
   file:projects/calling-stateful-client.tgz:
-    resolution: {integrity: sha512-FqFGVTJArk8+3sIXOE97Cjv9E3WC9ay4S6qlvEL3sccsjoCdMf9uSEJF1aKvU8X9CyUGFYF36UsTjtFiv8YNMA==, tarball: file:projects/calling-stateful-client.tgz}
+    resolution: {integrity: sha512-BlmbuFtQECt5DYcyTbz5/17JOkOfZqM+0DJEX3b7wNKo84txu1z/Xvw8kMx6LDd1SZJVh5qGdwPXjkZxKJBmrw==, tarball: file:projects/calling-stateful-client.tgz}
     name: '@rush-temp/calling-stateful-client'
     version: 0.0.0
     dependencies:
@@ -19927,7 +20072,7 @@ packages:
       jest: 29.7.0(@types/node@20.10.3)(ts-node@10.9.1)
       prettier: 2.3.1
       rimraf: 2.7.1
-      rollup: 2.79.1
+      rollup: 4.7.0
       ts-jest: 29.1.1(@babel/core@7.23.5)(babel-jest@29.7.0)(jest@29.7.0)(typescript@4.7.4)
       typescript: 4.7.4
     transitivePeerDependencies:
@@ -20120,7 +20265,7 @@ packages:
     dev: false
 
   file:projects/chat-component-bindings.tgz:
-    resolution: {integrity: sha512-oPXBR+SCgw1FZkJyDDuzkLtm1nKtN69tWgncIOiPmUny+lDwf6JLk+g5rSLV12vP1um68PfQh+ckIsk0vFd49A==, tarball: file:projects/chat-component-bindings.tgz}
+    resolution: {integrity: sha512-C1PPZO26oqGL/uimFg8N1OaRnVX1G6QeW5WxcVlIg04UvfLCsXrUSx0NLgEPHOLXt0fCHp0thUdoKVwnJsX0FQ==, tarball: file:projects/chat-component-bindings.tgz}
     name: '@rush-temp/chat-component-bindings'
     version: 0.0.0
     dependencies:
@@ -20151,7 +20296,7 @@ packages:
       react: 18.2.0
       reselect: 4.1.8
       rimraf: 2.7.1
-      rollup: 2.79.1
+      rollup: 4.7.0
       typescript: 4.7.4
     transitivePeerDependencies:
       - '@types/node'
@@ -20163,7 +20308,7 @@ packages:
     dev: false
 
   file:projects/chat-stateful-client.tgz:
-    resolution: {integrity: sha512-GoKesSyig2GgZNLU36MNLmQX3CG7AA5G2wjb99d59/wmMrFEqk8LlhEGZSE6hiDdtSJiizXlso48TJ8GnJkyYA==, tarball: file:projects/chat-stateful-client.tgz}
+    resolution: {integrity: sha512-Ki3qBHB1T/Epk5Y+rW5HRaixzMXNDuzMK/DV6MNZp5Be/2MvSHRJcrcDEi2A+bBIxGvheylV7jb3+gtQMXGkTg==, tarball: file:projects/chat-stateful-client.tgz}
     name: '@rush-temp/chat-stateful-client'
     version: 0.0.0
     dependencies:
@@ -20198,7 +20343,7 @@ packages:
       nanoid: 3.3.6
       prettier: 2.3.1
       rimraf: 2.7.1
-      rollup: 2.79.1
+      rollup: 4.7.0
       ts-jest: 29.1.1(@babel/core@7.23.5)(babel-jest@29.7.0)(jest@29.7.0)(typescript@4.7.4)
       typescript: 4.7.4
     transitivePeerDependencies:
@@ -20341,7 +20486,7 @@ packages:
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-XKr5852NUvcuHDX/SN2dcbSXPiwn6ccSRvBLeB0Blqq1Lz+mBUlWUt9dBpZM0rAr4l9XkIVr45nMdTIVcnQa4A==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-ej1uZIP/AB6Atbm5yLSGK/QuMa1wtDY3PVNdbDdwtss9uRP/lekxHALl194l1S/0woy12F4uuPROVGViZez+aQ==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
@@ -20366,7 +20511,7 @@ packages:
       '@griffel/react': 1.5.19(react@18.2.0)
       '@microsoft/api-documenter': 7.23.9(@types/node@20.10.3)
       '@microsoft/api-extractor': 7.38.0(@types/node@20.10.3)
-      '@rollup/plugin-json': 4.1.0(rollup@2.79.1)
+      '@rollup/plugin-json': 6.0.1(rollup@4.7.0)
       '@testing-library/jest-dom': 5.17.0
       '@testing-library/react': 14.0.0(react-dom@18.2.0)(react@18.2.0)
       '@types/dompurify': 3.0.4
@@ -20415,7 +20560,7 @@ packages:
       renamer: 4.0.0
       reselect: 4.1.8
       rimraf: 2.7.1
-      rollup: 2.79.1
+      rollup: 4.7.0
       scheduler: 0.23.0
       source-map-explorer: 2.5.3
       styled-components: 5.3.11(@babel/core@7.23.5)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
@@ -20503,17 +20648,18 @@ packages:
     dev: false
 
   file:projects/config.tgz:
-    resolution: {integrity: sha512-+JMUa1tIPv7Rh9tZwToeRA/nqatocNCr/5kW7haVr6Gx4n8DHtRZ9LtZf0roly431EyxOhgy/MyeFMu1W+fFeg==, tarball: file:projects/config.tgz}
+    resolution: {integrity: sha512-qOi+4vGyqU6OySDWRAeWMUpi2ZxYLrPG2IsOwZXboFZM2sjL30i7CVEo3T6LkAGr9OPXLHN064uJNoI3sk+Zkg==, tarball: file:projects/config.tgz}
     name: '@rush-temp/config'
     version: 0.0.0
     dependencies:
       '@actions/core': 1.10.1
       '@octokit/rest': 19.0.13
-      '@rollup/plugin-commonjs': 17.1.0(rollup@2.79.1)
+      '@rollup/plugin-commonjs': 25.0.7(rollup@4.7.0)
+      '@rollup/plugin-json': 6.0.1(rollup@4.7.0)
       '@types/node': 20.10.3
       beachball: 2.31.13
-      rollup: 2.79.1
-      rollup-plugin-sourcemaps: 0.6.3(@types/node@20.10.3)(rollup@2.79.1)
+      rollup: 4.7.0
+      rollup-plugin-sourcemaps: 0.6.3(@types/node@20.10.3)(rollup@4.7.0)
       rollup-plugin-svg: 2.0.0
       ts-node: 10.9.1(@types/node@20.10.3)(typescript@4.7.4)
       typescript: 4.7.4
@@ -20524,7 +20670,7 @@ packages:
     dev: false
 
   file:projects/fake-backends.tgz:
-    resolution: {integrity: sha512-KCYMLb0iBTcxF4F+30eYb6tQYfzg8ZrlkCHjHIYpFDuWW1uyqnK46gugfxjqHCAk3N4Y7XqB/xG0gIom5YOu3A==, tarball: file:projects/fake-backends.tgz}
+    resolution: {integrity: sha512-S8lDXChqZTS6H1JOcI+j1QS2w82jKIrQRe48gOWWG9SiVB0cJZIZkz3c96iORAi50n1A1vD4y2JNG7k4GU6aaA==, tarball: file:projects/fake-backends.tgz}
     name: '@rush-temp/fake-backends'
     version: 0.0.0
     dependencies:
@@ -20558,7 +20704,7 @@ packages:
       nanoid: 3.3.6
       prettier: 2.3.1
       rimraf: 2.7.1
-      rollup: 2.79.1
+      rollup: 4.7.0
       ts-jest: 29.1.1(@babel/core@7.23.5)(babel-jest@29.7.0)(jest@29.7.0)(typescript@4.7.4)
       typescript: 4.7.4
       webpack: 5.89.0(webpack-cli@5.1.4)
@@ -20577,7 +20723,7 @@ packages:
     dev: false
 
   file:projects/react-components.tgz:
-    resolution: {integrity: sha512-iXTmRj62S2k9mviEMMVJOKae/g+diMtDXf6kSV9M4rGfFWY6X1PFW8zPwzXvoBNYC1xnS8ViGVpT+l3dDONloQ==, tarball: file:projects/react-components.tgz}
+    resolution: {integrity: sha512-2SObGNGisTSiJIxAo6m6SL3FcVOnRsILWct8FtWkyTHTp0zkyqqfsBnIg+LSJxDkp4lFv3RWZbI2CxRST7P46g==, tarball: file:projects/react-components.tgz}
     name: '@rush-temp/react-components'
     version: 0.0.0
     dependencies:
@@ -20594,7 +20740,7 @@ packages:
       '@griffel/react': 1.5.19(react@18.2.0)
       '@microsoft/api-documenter': 7.23.9(@types/node@20.10.3)
       '@microsoft/api-extractor': 7.38.0(@types/node@20.10.3)
-      '@rollup/plugin-json': 4.1.0(rollup@2.79.1)
+      '@rollup/plugin-json': 6.0.1(rollup@4.7.0)
       '@testing-library/dom': 9.3.3
       '@testing-library/jest-dom': 5.17.0
       '@testing-library/react': 14.0.0(react-dom@18.2.0)(react@18.2.0)
@@ -20649,7 +20795,7 @@ packages:
       react-use-draggable-scroll: 0.4.7(react@18.2.0)
       regenerator-runtime: 0.14.0
       rimraf: 2.7.1
-      rollup: 2.79.1
+      rollup: 4.7.0
       scheduler: 0.23.0
       source-map-explorer: 2.5.3
       styled-components: 5.3.11(@babel/core@7.23.5)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
@@ -20678,7 +20824,7 @@ packages:
     dev: false
 
   file:projects/react-composites.tgz:
-    resolution: {integrity: sha512-3CzVipKqGUsnIEk8dQ1zt3UCL8z9crJ4THfns3xGXhAJAXxHbv4Z3rUoNm56qMN+C6U391NK19eHX5tWjIH+vg==, tarball: file:projects/react-composites.tgz}
+    resolution: {integrity: sha512-mjTUyA6xuWecE5TmlLDM/Rn6v1hgiI4zwtiUJxAR6Or4X3z2ZXcdVLezjNde1U6lcQWD2zHsHjtJGwVFbZJb2g==, tarball: file:projects/react-composites.tgz}
     name: '@rush-temp/react-composites'
     version: 0.0.0
     dependencies:
@@ -20762,7 +20908,7 @@ packages:
       regenerator-runtime: 0.14.0
       reselect: 4.1.8
       rimraf: 2.7.1
-      rollup: 2.79.1
+      rollup: 4.7.0
       shell-quote: 1.8.1
       source-map-explorer: 2.5.3
       style-loader: 2.0.0(webpack@5.89.0)
