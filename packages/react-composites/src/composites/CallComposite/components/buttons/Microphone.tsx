@@ -41,8 +41,7 @@ export const Microphone = (props: {
    * When call is in Lobby, microphone button should be disabled.
    * This is due to to headless limitation where a call can not be muted/unmuted in lobby.
    */
-  if (_isInLobbyOrConnecting(callStatus)) {
-    microphoneButtonProps.disabled = true;
+  if (callStatus === 'Connecting') {
     // Lobby page should show the microphone status that was set on the local preview/configuration
     // page until the user successfully joins the call.
     microphoneButtonProps.checked = isLocalMicrophoneEnabled;
@@ -67,10 +66,9 @@ export const Microphone = (props: {
       {...microphoneButtonStrings}
       enableDeviceSelectionMenu={props.splitButtonsForDeviceSelection}
       disabled={
-        callStatus !== 'InLobby' &&
-        (microphoneButtonProps.disabled ||
-          props.disabled ||
-          /* @conditional-compile-remove(rooms) */ (isRoomsCall && adapter.getState().call?.role === 'Unknown'))
+        microphoneButtonProps.disabled ||
+        props.disabled ||
+        /* @conditional-compile-remove(rooms) */ (isRoomsCall && adapter.getState().call?.role === 'Unknown')
       }
       /* @conditional-compile-remove(capabilities) */
       onRenderOffIcon={
