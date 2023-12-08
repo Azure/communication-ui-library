@@ -56,7 +56,7 @@
   "devDependencies": {
     "@babel/core": "^7.23.5",
     "@babel/eslint-parser": "^7.22.15",
-    "@babel/preset-env": "7.23.2",
+    "@babel/preset-env": "7.23.5",
     "@types/jest": "^29.5.11",
     "@types/node": "^20.10.4",
     "@types/react": "18.2.42",
