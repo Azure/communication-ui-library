@@ -4596,7 +4596,7 @@ packages:
     resolution: {integrity: sha512-C16M+IYz0rgRhWZdCmK+h58JMv8vijAA61gmz2rspCSwKwzBebpdcsiUmwrtJRdphuY30i6BSLEOP8ppbNLyLg==}
     dev: false
 
-  /@rollup/plugin-commonjs@25.0.7(rollup@2.79.1):
+  /@rollup/plugin-commonjs@25.0.7(rollup@3.29.4):
     resolution: {integrity: sha512-nEvcR+LRjEjsaSsc4x3XZfCCvZIaSMenZu/OiwOKGN2UhQpAYI7ru7czFvyWbErlpoGjnSX3D5Ch5FcMA3kRWQ==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
@@ -4605,16 +4605,16 @@ packages:
       rollup:
         optional: true
     dependencies:
-      '@rollup/pluginutils': 5.1.0(rollup@2.79.1)
+      '@rollup/pluginutils': 5.1.0(rollup@3.29.4)
       commondir: 1.0.1
       estree-walker: 2.0.2
       glob: 8.1.0
       is-reference: 1.2.1
       magic-string: 0.30.5
-      rollup: 2.79.1
+      rollup: 3.29.4
     dev: false
 
-  /@rollup/plugin-json@6.0.1(rollup@2.79.1):
+  /@rollup/plugin-json@6.0.1(rollup@3.29.4):
     resolution: {integrity: sha512-RgVfl5hWMkxN1h/uZj8FVESvPuBJ/uf6ly6GTj0GONnkfoBN5KC0MSz+PN2OLDgYXMhtG0mWpTrkiOjoxAIevw==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
@@ -4623,11 +4623,11 @@ packages:
       rollup:
         optional: true
     dependencies:
-      '@rollup/pluginutils': 5.1.0(rollup@2.79.1)
-      rollup: 2.79.1
+      '@rollup/pluginutils': 5.1.0(rollup@3.29.4)
+      rollup: 3.29.4
     dev: false
 
-  /@rollup/pluginutils@3.1.0(rollup@2.79.1):
+  /@rollup/pluginutils@3.1.0(rollup@3.29.4):
     resolution: {integrity: sha512-GksZ6pr6TpIjHm8h9lSQ8pi8BE9VeubNT0OMJ3B5uZJ8pz73NPiqOtCog/x2/QzM1ENChPKxMDhiQuRHsqc+lg==}
     engines: {node: '>= 8.0.0'}
     peerDependencies:
@@ -4636,10 +4636,10 @@ packages:
       '@types/estree': 0.0.39
       estree-walker: 1.0.1
       picomatch: 2.3.1
-      rollup: 2.79.1
+      rollup: 3.29.4
     dev: false
 
-  /@rollup/pluginutils@5.1.0(rollup@2.79.1):
+  /@rollup/pluginutils@5.1.0(rollup@3.29.4):
     resolution: {integrity: sha512-XTIWOPPcpvyKI6L1NHo0lFlCyznUEyPmPY1mc3KpPVDYulHSTvyeLNVW00QTLIAFNhR3kYnJTQHeGqU4M3n09g==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
@@ -4651,7 +4651,7 @@ packages:
       '@types/estree': 1.0.3
       estree-walker: 2.0.2
       picomatch: 2.3.1
-      rollup: 2.79.1
+      rollup: 3.29.4
     dev: false
 
   /@rushstack/node-core-library@3.61.0(@types/node@20.10.3):
@@ -16833,7 +16833,7 @@ packages:
       inherits: 2.0.4
     dev: false
 
-  /rollup-plugin-sourcemaps@0.6.3(@types/node@20.10.3)(rollup@2.79.1):
+  /rollup-plugin-sourcemaps@0.6.3(@types/node@20.10.3)(rollup@3.29.4):
     resolution: {integrity: sha512-paFu+nT1xvuO1tPFYXGe+XnQvg4Hjqv/eIhG8i5EspfYYPBKL57X7iVbfv55aNVASg3dzWvES9dmWsL2KhfByw==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
@@ -16843,9 +16843,9 @@ packages:
       '@types/node':
         optional: true
     dependencies:
-      '@rollup/pluginutils': 3.1.0(rollup@2.79.1)
+      '@rollup/pluginutils': 3.1.0(rollup@3.29.4)
       '@types/node': 20.10.3
-      rollup: 2.79.1
+      rollup: 3.29.4
       source-map-resolve: 0.6.0
     dev: false
 
@@ -16862,9 +16862,9 @@ packages:
       minimatch: 3.1.2
     dev: false
 
-  /rollup@2.79.1:
-    resolution: {integrity: sha512-uKxbd0IhMZOhjAiD5oAFp7BqvkA4Dv47qpOCtaNvng4HBwdbWtdOh8f5nZNuk2rp51PMGk3bzfWu5oayNEuYnw==}
-    engines: {node: '>=10.0.0'}
+  /rollup@3.29.4:
+    resolution: {integrity: sha512-oWzmBZwvYrU0iJHtDmhsm662rC15FRXmcjCk1xD771dFDx5jJ02ufAQQTn0etB2emNk4J9EZg/yWKpsn9BWGRw==}
+    engines: {node: '>=14.18.0', npm: '>=8.0.0'}
     hasBin: true
     optionalDependencies:
       fsevents: 2.3.3
@@ -19829,7 +19829,7 @@ packages:
     dev: false
 
   file:projects/acs-ui-common.tgz:
-    resolution: {integrity: sha512-QMaanluBhdKAqc0T+CDErbWkmZ9Y1L6F0uoTX7RD3kXEvUSRmFHvgkT2FqcrXeiXu468E/kuiOJyfayZsY+rNw==, tarball: file:projects/acs-ui-common.tgz}
+    resolution: {integrity: sha512-vq+NN65JFrJOu0hNrXR7IKHcbQeydH7kX12ADr7ZRyOlsTmZllwXj6boFnxC4q2zy95+2odFCo7PaTRMMj5GZQ==, tarball: file:projects/acs-ui-common.tgz}
     name: '@rush-temp/acs-ui-common'
     version: 0.0.0
     dependencies:
@@ -19859,7 +19859,7 @@ packages:
       prettier: 2.3.1
       react: 18.2.0
       rimraf: 2.7.1
-      rollup: 2.79.1
+      rollup: 3.29.4
       ts-jest: 29.1.1(@babel/core@7.23.5)(babel-jest@29.7.0)(jest@29.7.0)(typescript@4.7.4)
       typescript: 4.7.4
     transitivePeerDependencies:
@@ -19874,7 +19874,7 @@ packages:
     dev: false
 
   file:projects/calling-component-bindings.tgz:
-    resolution: {integrity: sha512-pzzisQKC/pW7eSH7UlY55pujRaIPlWOb0LgfznaIDBnjvzItwLqZu0lxfqZMPcFVg7b9hdkdRvWqVJvvPnMZZw==, tarball: file:projects/calling-component-bindings.tgz}
+    resolution: {integrity: sha512-n/KsrIzQsChHum0KGnmBvlAWAZhLOXlcwen1jxVT7uUqyhlLvFRFFk7OqabHVI8VfCBpOJl4jU0tgcnuP/ffvw==, tarball: file:projects/calling-component-bindings.tgz}
     name: '@rush-temp/calling-component-bindings'
     version: 0.0.0
     dependencies:
@@ -19907,7 +19907,7 @@ packages:
       react: 18.2.0
       reselect: 4.1.8
       rimraf: 2.7.1
-      rollup: 2.79.1
+      rollup: 3.29.4
       ts-jest: 29.1.1(@babel/core@7.23.5)(babel-jest@29.7.0)(jest@29.7.0)(typescript@4.7.4)
       typescript: 4.7.4
     transitivePeerDependencies:
@@ -19922,7 +19922,7 @@ packages:
     dev: false
 
   file:projects/calling-stateful-client.tgz:
-    resolution: {integrity: sha512-RqODfPbKtdyw/hBLACZG274vsLyxWrUIaxUQWj0EVghkH12jz9ta7q54KyNzmvnpZ1bCbVGPTKpx7zMIgmOzxg==, tarball: file:projects/calling-stateful-client.tgz}
+    resolution: {integrity: sha512-Ozaf5lgKleyuf8NYxsnIVoKltdsg7DyD7CDw6bT9vusPQ5P+MaKMNfa43rsMm34Z1XaGK5v2AQZHvouf5aOkyg==, tarball: file:projects/calling-stateful-client.tgz}
     name: '@rush-temp/calling-stateful-client'
     version: 0.0.0
     dependencies:
@@ -19955,7 +19955,7 @@ packages:
       jest: 29.7.0(@types/node@20.10.3)(ts-node@10.9.1)
       prettier: 2.3.1
       rimraf: 2.7.1
-      rollup: 2.79.1
+      rollup: 3.29.4
       ts-jest: 29.1.1(@babel/core@7.23.5)(babel-jest@29.7.0)(jest@29.7.0)(typescript@4.7.4)
       typescript: 4.7.4
     transitivePeerDependencies:
@@ -20148,7 +20148,7 @@ packages:
     dev: false
 
   file:projects/chat-component-bindings.tgz:
-    resolution: {integrity: sha512-5oj4URWg4Jnre/vud3zJv0nSMhU+pGmXIwW2BdBgG3n6NR+Mq/0HJuES7hcLIkgQePRTf7p2vps1GHx9W3FExg==, tarball: file:projects/chat-component-bindings.tgz}
+    resolution: {integrity: sha512-EGL2M6LnQa8kVYEdxkkXcdX+3P/lbmcHQnIRfLskpWwzFfrNF7LIKBPvvPGhX4c75kRT9YdSIGdbk5V1X+g7bQ==, tarball: file:projects/chat-component-bindings.tgz}
     name: '@rush-temp/chat-component-bindings'
     version: 0.0.0
     dependencies:
@@ -20179,7 +20179,7 @@ packages:
       react: 18.2.0
       reselect: 4.1.8
       rimraf: 2.7.1
-      rollup: 2.79.1
+      rollup: 3.29.4
       typescript: 4.7.4
     transitivePeerDependencies:
       - '@types/node'
@@ -20191,7 +20191,7 @@ packages:
     dev: false
 
   file:projects/chat-stateful-client.tgz:
-    resolution: {integrity: sha512-vHOUb2t6/bSVraS8O1H2e0T1+3T2hyjiE9AOgBmdE06+KWn5kWi7KcBdB1Ds/mjAw3WL5WEblRH5zSXUMHOXfg==, tarball: file:projects/chat-stateful-client.tgz}
+    resolution: {integrity: sha512-Vjs7wli1Wd3cMxEF3uFAQggT2YNDJGRsdK2NAWT2gQ0/M2U64MdXcVNmiBVTvXGglugJ+/ahxaWiITE1mZ/NmQ==, tarball: file:projects/chat-stateful-client.tgz}
     name: '@rush-temp/chat-stateful-client'
     version: 0.0.0
     dependencies:
@@ -20226,7 +20226,7 @@ packages:
       nanoid: 3.3.6
       prettier: 2.3.1
       rimraf: 2.7.1
-      rollup: 2.79.1
+      rollup: 3.29.4
       ts-jest: 29.1.1(@babel/core@7.23.5)(babel-jest@29.7.0)(jest@29.7.0)(typescript@4.7.4)
       typescript: 4.7.4
     transitivePeerDependencies:
@@ -20369,7 +20369,7 @@ packages:
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-aU+lXYUG3zvnAYvth2vVizY7s+Gqle8iPw2a0mDBVbZjzOHY3sZPpBHPp4RsLsEqkFrZbRD8pPjiy1ubXYYoxw==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-9rFlIXlHUdeMBAahqdm9l4vrTVVRogkDL03UkEpNWFm9LlQ9iqx+R1y47yVw892VvZ813FhjivLy+sDlzgqpmg==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
@@ -20394,7 +20394,7 @@ packages:
       '@griffel/react': 1.5.19(react@18.2.0)
       '@microsoft/api-documenter': 7.23.9(@types/node@20.10.3)
       '@microsoft/api-extractor': 7.38.0(@types/node@20.10.3)
-      '@rollup/plugin-json': 6.0.1(rollup@2.79.1)
+      '@rollup/plugin-json': 6.0.1(rollup@3.29.4)
       '@testing-library/jest-dom': 5.17.0
       '@testing-library/react': 14.0.0(react-dom@18.2.0)(react@18.2.0)
       '@types/dompurify': 3.0.4
@@ -20443,7 +20443,7 @@ packages:
       renamer: 4.0.0
       reselect: 4.1.8
       rimraf: 2.7.1
-      rollup: 2.79.1
+      rollup: 3.29.4
       scheduler: 0.23.0
       source-map-explorer: 2.5.3
       styled-components: 5.3.11(@babel/core@7.23.5)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
@@ -20531,18 +20531,18 @@ packages:
     dev: false
 
   file:projects/config.tgz:
-    resolution: {integrity: sha512-on7r50XzWOrrwB8NIdRfGC9RffKyHCSBywuLvIv0u3Nd96xJ6tNAjGYPEG36kPF036d3dqwdXZxtwGeGaNXz9g==, tarball: file:projects/config.tgz}
+    resolution: {integrity: sha512-Fex/Ow3xwjmUs1yROtNkZRH29f7BCuuvqx4Qx1bGDus0jH0YqfHdJIBeGTtss/+dKcMr9bdrwX/yA6+MT3mRPw==, tarball: file:projects/config.tgz}
     name: '@rush-temp/config'
     version: 0.0.0
     dependencies:
       '@actions/core': 1.10.1
       '@octokit/rest': 19.0.13
-      '@rollup/plugin-commonjs': 25.0.7(rollup@2.79.1)
-      '@rollup/plugin-json': 6.0.1(rollup@2.79.1)
+      '@rollup/plugin-commonjs': 25.0.7(rollup@3.29.4)
+      '@rollup/plugin-json': 6.0.1(rollup@3.29.4)
       '@types/node': 20.10.3
       beachball: 2.31.13
-      rollup: 2.79.1
-      rollup-plugin-sourcemaps: 0.6.3(@types/node@20.10.3)(rollup@2.79.1)
+      rollup: 3.29.4
+      rollup-plugin-sourcemaps: 0.6.3(@types/node@20.10.3)(rollup@3.29.4)
       rollup-plugin-svg: 2.0.0
       ts-node: 10.9.1(@types/node@20.10.3)(typescript@4.7.4)
       typescript: 4.7.4
@@ -20553,7 +20553,7 @@ packages:
     dev: false
 
   file:projects/fake-backends.tgz:
-    resolution: {integrity: sha512-Q7MUZoafeTeK2sIrwbD0byJjPHNDtFyxuAph49k8wHaYITkJPs5FxfcQK1j9juGm93r4iRpH8kiTBPDkeUvKZA==, tarball: file:projects/fake-backends.tgz}
+    resolution: {integrity: sha512-qv5b8M3uID9HlffNvNy1ze49MvJR3ExT4mT9gkqwkIWgodmPFJ5OTAfLhe1KzyVlKx4IX60mCyQCc8zMLNR3VQ==, tarball: file:projects/fake-backends.tgz}
     name: '@rush-temp/fake-backends'
     version: 0.0.0
     dependencies:
@@ -20587,7 +20587,7 @@ packages:
       nanoid: 3.3.6
       prettier: 2.3.1
       rimraf: 2.7.1
-      rollup: 2.79.1
+      rollup: 3.29.4
       ts-jest: 29.1.1(@babel/core@7.23.5)(babel-jest@29.7.0)(jest@29.7.0)(typescript@4.7.4)
       typescript: 4.7.4
       webpack: 5.89.0(webpack-cli@5.1.4)
@@ -20606,7 +20606,7 @@ packages:
     dev: false
 
   file:projects/react-components.tgz:
-    resolution: {integrity: sha512-rrZYhRDGvo2WMOyZFS3+YF+CpvPxtJszcZnS4UFe4Z/vCVjP2+lwWis2AM0CcF3w5rIyZvNLhj15YV95DNIoAg==, tarball: file:projects/react-components.tgz}
+    resolution: {integrity: sha512-n+pHxEE7bcGl3/AAX3slYQLQIKzbl8r6Ewzvh1/nknlsBNXW92+HgCRDnvI6KVF0ZEx88fJ+Jsf/wmOeybkEeg==, tarball: file:projects/react-components.tgz}
     name: '@rush-temp/react-components'
     version: 0.0.0
     dependencies:
@@ -20623,7 +20623,7 @@ packages:
       '@griffel/react': 1.5.19(react@18.2.0)
       '@microsoft/api-documenter': 7.23.9(@types/node@20.10.3)
       '@microsoft/api-extractor': 7.38.0(@types/node@20.10.3)
-      '@rollup/plugin-json': 6.0.1(rollup@2.79.1)
+      '@rollup/plugin-json': 6.0.1(rollup@3.29.4)
       '@testing-library/dom': 9.3.3
       '@testing-library/jest-dom': 5.17.0
       '@testing-library/react': 14.0.0(react-dom@18.2.0)(react@18.2.0)
@@ -20678,7 +20678,7 @@ packages:
       react-use-draggable-scroll: 0.4.7(react@18.2.0)
       regenerator-runtime: 0.14.0
       rimraf: 2.7.1
-      rollup: 2.79.1
+      rollup: 3.29.4
       scheduler: 0.23.0
       source-map-explorer: 2.5.3
       styled-components: 5.3.11(@babel/core@7.23.5)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
@@ -20707,7 +20707,7 @@ packages:
     dev: false
 
   file:projects/react-composites.tgz:
-    resolution: {integrity: sha512-P82eLOQ4QUUISNdrwmXuyIB2n/qqbY1O6KiSuhFrlerR+nraWGqvomn7NmMmcuTgTlT+jfgL0mTLuHsTkeBbKQ==, tarball: file:projects/react-composites.tgz}
+    resolution: {integrity: sha512-tda3UiumedLixYXbs0BQcL+RWn0u+hF72XBXy6wxmrFP9C3p4PJJCaGaGMCSPi7QqlrbY4fwcLN2kD2kEosUgA==, tarball: file:projects/react-composites.tgz}
     name: '@rush-temp/react-composites'
     version: 0.0.0
     dependencies:
@@ -20791,7 +20791,7 @@ packages:
       regenerator-runtime: 0.14.0
       reselect: 4.1.8
       rimraf: 2.7.1
-      rollup: 2.79.1
+      rollup: 3.29.4
       shell-quote: 1.8.1
       source-map-explorer: 2.5.3
       style-loader: 2.0.0(webpack@5.89.0)
