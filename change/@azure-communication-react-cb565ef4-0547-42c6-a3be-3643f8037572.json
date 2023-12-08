@@ -2,7 +2,7 @@
   "type": "none",
   "area": "improvement",
   "workstream": "Dependency Updates",
-  "comment": "Update to rollup 3.29.4",
+  "comment": "Update to rollup 4.7.0",
   "packageName": "@azure/communication-react",
   "email": "3941071+emlynmac@users.noreply.github.com",
   "dependentChangeType": "none"
