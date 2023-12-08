@@ -4493,28 +4493,34 @@ packages:
     resolution: {integrity: sha512-C16M+IYz0rgRhWZdCmK+h58JMv8vijAA61gmz2rspCSwKwzBebpdcsiUmwrtJRdphuY30i6BSLEOP8ppbNLyLg==}
     dev: false
 
-  /@rollup/plugin-commonjs@17.1.0(rollup@2.79.1):
-    resolution: {integrity: sha512-PoMdXCw0ZyvjpCMT5aV4nkL0QywxP29sODQsSGeDpr/oI49Qq9tRtAsb/LbYbDzFlOydVEqHmmZWFtXJEAX9ew==}
-    engines: {node: '>= 8.0.0'}
+  /@rollup/plugin-commonjs@25.0.7(rollup@2.79.1):
+    resolution: {integrity: sha512-nEvcR+LRjEjsaSsc4x3XZfCCvZIaSMenZu/OiwOKGN2UhQpAYI7ru7czFvyWbErlpoGjnSX3D5Ch5FcMA3kRWQ==}
+    engines: {node: '>=14.0.0'}
     peerDependencies:
-      rollup: ^2.30.0
+      rollup: ^2.68.0||^3.0.0||^4.0.0
+    peerDependenciesMeta:
+      rollup:
+        optional: true
     dependencies:
-      '@rollup/pluginutils': 3.1.0(rollup@2.79.1)
+      '@rollup/pluginutils': 5.1.0(rollup@2.79.1)
       commondir: 1.0.1
       estree-walker: 2.0.2
-      glob: 7.2.3
+      glob: 8.1.0
       is-reference: 1.2.1
-      magic-string: 0.25.9
-      resolve: 1.22.8
+      magic-string: 0.30.5
       rollup: 2.79.1
     dev: false
 
-  /@rollup/plugin-json@4.1.0(rollup@2.79.1):
-    resolution: {integrity: sha512-yfLbTdNS6amI/2OpmbiBoW12vngr5NW2jCJVZSBEz+H5KfUJZ2M7sDjk0U6GOOdCWFVScShte29o9NezJ53TPw==}
+  /@rollup/plugin-json@6.0.1(rollup@2.79.1):
+    resolution: {integrity: sha512-RgVfl5hWMkxN1h/uZj8FVESvPuBJ/uf6ly6GTj0GONnkfoBN5KC0MSz+PN2OLDgYXMhtG0mWpTrkiOjoxAIevw==}
+    engines: {node: '>=14.0.0'}
     peerDependencies:
-      rollup: ^1.20.0 || ^2.0.0
+      rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
+    peerDependenciesMeta:
+      rollup:
+        optional: true
     dependencies:
-      '@rollup/pluginutils': 3.1.0(rollup@2.79.1)
+      '@rollup/pluginutils': 5.1.0(rollup@2.79.1)
       rollup: 2.79.1
     dev: false
 
@@ -4526,6 +4532,21 @@ packages:
     dependencies:
       '@types/estree': 0.0.39
       estree-walker: 1.0.1
+      picomatch: 2.3.1
+      rollup: 2.79.1
+    dev: false
+
+  /@rollup/pluginutils@5.1.0(rollup@2.79.1):
+    resolution: {integrity: sha512-XTIWOPPcpvyKI6L1NHo0lFlCyznUEyPmPY1mc3KpPVDYulHSTvyeLNVW00QTLIAFNhR3kYnJTQHeGqU4M3n09g==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
+    peerDependenciesMeta:
+      rollup:
+        optional: true
+    dependencies:
+      '@types/estree': 1.0.5
+      estree-walker: 2.0.2
       picomatch: 2.3.1
       rollup: 2.79.1
     dev: false
@@ -11722,6 +11743,17 @@ packages:
       path-is-absolute: 1.0.1
     dev: false
 
+  /glob@8.1.0:
+    resolution: {integrity: sha512-r8hpEjiQEYlF2QU0df3dS+nxxSIreXQS1qRhMJM0Q5NDdR386C7jb7Hwwod8Fgiuex+k0GFjgft18yvxm5XoCQ==}
+    engines: {node: '>=12'}
+    dependencies:
+      fs.realpath: 1.0.0
+      inflight: 1.0.6
+      inherits: 2.0.4
+      minimatch: 5.1.6
+      once: 1.4.0
+    dev: false
+
   /global-dirs@3.0.1:
     resolution: {integrity: sha512-NBcGGFbBA9s1VzD41QXDG+3++t9Mn5t1FpLdhESY6oKY4gYTFpX4wO3sqGUa0Srjtbfj3szX0RnemmrVRUdULA==}
     engines: {node: '>=10'}
@@ -14105,10 +14137,11 @@ packages:
     hasBin: true
     dev: false
 
-  /magic-string@0.25.9:
-    resolution: {integrity: sha512-RmF0AsMzgt25qzqqLc1+MbHmhdx0ojF2Fvs4XnOqz2ZOBXzzkEwc/dJQZCYHAn7v1jbVOjAZfK8msRn4BxO4VQ==}
+  /magic-string@0.30.5:
+    resolution: {integrity: sha512-7xlpfBaQaP/T6Vh8MO/EqXSW5En6INHEvEXQiuff7Gku0PWjU3uf6w/j9o7O+SpB5fOAkrI5HeoNgwjEO0pFsA==}
+    engines: {node: '>=12'}
     dependencies:
-      sourcemap-codec: 1.4.8
+      '@jridgewell/sourcemap-codec': 1.4.15
     dev: false
 
   /make-dir@2.1.0:
@@ -17251,11 +17284,6 @@ packages:
     engines: {node: '>= 8'}
     dev: false
 
-  /sourcemap-codec@1.4.8:
-    resolution: {integrity: sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==}
-    deprecated: Please use @jridgewell/sourcemap-codec instead
-    dev: false
-
   /space-separated-tokens@1.1.5:
     resolution: {integrity: sha512-q/JSVd1Lptzhf5bkYm4ob4iWPjx0KiRe3sRFBNrVqbJkFaBm5vbbowy1mymoPNLRa52+oadOhJ+K49wsSeSjTA==}
     dev: false
@@ -19682,7 +19710,7 @@ packages:
     dev: false
 
   file:projects/acs-ui-common.tgz:
-    resolution: {integrity: sha512-SOkvpdc1M/byFfaORkfM+7mim1bMKof+lmRvGZMvyoQ3V8U7TEroiU4479VP9AiaXQCQ/BZqlCZH0e5zN43iPw==, tarball: file:projects/acs-ui-common.tgz}
+    resolution: {integrity: sha512-QMaanluBhdKAqc0T+CDErbWkmZ9Y1L6F0uoTX7RD3kXEvUSRmFHvgkT2FqcrXeiXu468E/kuiOJyfayZsY+rNw==, tarball: file:projects/acs-ui-common.tgz}
     name: '@rush-temp/acs-ui-common'
     version: 0.0.0
     dependencies:
@@ -19692,6 +19720,7 @@ packages:
       '@babel/core': 7.23.5
       '@microsoft/api-documenter': 7.23.12(@types/node@20.10.3)
       '@microsoft/api-extractor': 7.38.3(@types/node@20.10.3)
+      '@rollup/plugin-json': 6.0.1(rollup@2.79.1)
       '@types/jest': 29.5.10
       '@types/react': 18.2.41
       '@typescript-eslint/eslint-plugin': 4.33.0(@typescript-eslint/parser@4.33.0)(eslint@7.32.0)(typescript@4.7.4)
@@ -19727,7 +19756,7 @@ packages:
     dev: false
 
   file:projects/calling-component-bindings.tgz:
-    resolution: {integrity: sha512-7ZMNfmymJC2JPqXrO7gonbq2B7Kz2W52g/jytwiyaVKxa+5LixOx1Ju20MO1cjcVonfkVQXXzB7xBE7bOzbubQ==, tarball: file:projects/calling-component-bindings.tgz}
+    resolution: {integrity: sha512-pzzisQKC/pW7eSH7UlY55pujRaIPlWOb0LgfznaIDBnjvzItwLqZu0lxfqZMPcFVg7b9hdkdRvWqVJvvPnMZZw==, tarball: file:projects/calling-component-bindings.tgz}
     name: '@rush-temp/calling-component-bindings'
     version: 0.0.0
     dependencies:
@@ -19738,6 +19767,7 @@ packages:
       '@babel/core': 7.23.5
       '@microsoft/api-documenter': 7.23.12(@types/node@20.10.3)
       '@microsoft/api-extractor': 7.38.3(@types/node@20.10.3)
+      '@rollup/plugin-json': 6.0.1(rollup@2.79.1)
       '@types/jest': 29.5.10
       '@types/react': 18.2.41
       '@typescript-eslint/eslint-plugin': 4.33.0(@typescript-eslint/parser@4.33.0)(eslint@7.32.0)(typescript@4.7.4)
@@ -19775,7 +19805,7 @@ packages:
     dev: false
 
   file:projects/calling-stateful-client.tgz:
-    resolution: {integrity: sha512-FqFGVTJArk8+3sIXOE97Cjv9E3WC9ay4S6qlvEL3sccsjoCdMf9uSEJF1aKvU8X9CyUGFYF36UsTjtFiv8YNMA==, tarball: file:projects/calling-stateful-client.tgz}
+    resolution: {integrity: sha512-RqODfPbKtdyw/hBLACZG274vsLyxWrUIaxUQWj0EVghkH12jz9ta7q54KyNzmvnpZ1bCbVGPTKpx7zMIgmOzxg==, tarball: file:projects/calling-stateful-client.tgz}
     name: '@rush-temp/calling-stateful-client'
     version: 0.0.0
     dependencies:
@@ -19787,6 +19817,7 @@ packages:
       '@babel/core': 7.23.5
       '@microsoft/api-documenter': 7.23.12(@types/node@20.10.3)
       '@microsoft/api-extractor': 7.38.3(@types/node@20.10.3)
+      '@rollup/plugin-json': 6.0.1(rollup@2.79.1)
       '@types/jest': 29.5.10
       '@types/react': 18.2.41
       '@typescript-eslint/eslint-plugin': 4.33.0(@typescript-eslint/parser@4.33.0)(eslint@7.32.0)(typescript@4.7.4)
@@ -20001,7 +20032,7 @@ packages:
     dev: false
 
   file:projects/chat-component-bindings.tgz:
-    resolution: {integrity: sha512-oPXBR+SCgw1FZkJyDDuzkLtm1nKtN69tWgncIOiPmUny+lDwf6JLk+g5rSLV12vP1um68PfQh+ckIsk0vFd49A==, tarball: file:projects/chat-component-bindings.tgz}
+    resolution: {integrity: sha512-5oj4URWg4Jnre/vud3zJv0nSMhU+pGmXIwW2BdBgG3n6NR+Mq/0HJuES7hcLIkgQePRTf7p2vps1GHx9W3FExg==, tarball: file:projects/chat-component-bindings.tgz}
     name: '@rush-temp/chat-component-bindings'
     version: 0.0.0
     dependencies:
@@ -20012,6 +20043,7 @@ packages:
       '@babel/core': 7.23.5
       '@microsoft/api-documenter': 7.23.12(@types/node@20.10.3)
       '@microsoft/api-extractor': 7.38.3(@types/node@20.10.3)
+      '@rollup/plugin-json': 6.0.1(rollup@2.79.1)
       '@types/jest': 29.5.10
       '@types/react': 18.2.41
       '@zerollup/ts-transform-paths': 1.7.18(typescript@4.7.4)
@@ -20044,7 +20076,7 @@ packages:
     dev: false
 
   file:projects/chat-stateful-client.tgz:
-    resolution: {integrity: sha512-GoKesSyig2GgZNLU36MNLmQX3CG7AA5G2wjb99d59/wmMrFEqk8LlhEGZSE6hiDdtSJiizXlso48TJ8GnJkyYA==, tarball: file:projects/chat-stateful-client.tgz}
+    resolution: {integrity: sha512-vHOUb2t6/bSVraS8O1H2e0T1+3T2hyjiE9AOgBmdE06+KWn5kWi7KcBdB1Ds/mjAw3WL5WEblRH5zSXUMHOXfg==, tarball: file:projects/chat-stateful-client.tgz}
     name: '@rush-temp/chat-stateful-client'
     version: 0.0.0
     dependencies:
@@ -20057,6 +20089,7 @@ packages:
       '@babel/core': 7.23.5
       '@microsoft/api-documenter': 7.23.12(@types/node@20.10.3)
       '@microsoft/api-extractor': 7.38.3(@types/node@20.10.3)
+      '@rollup/plugin-json': 6.0.1(rollup@2.79.1)
       '@types/jest': 29.5.10
       '@types/react': 18.2.41
       '@typescript-eslint/eslint-plugin': 4.33.0(@typescript-eslint/parser@4.33.0)(eslint@7.32.0)(typescript@4.7.4)
@@ -20222,7 +20255,7 @@ packages:
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-XKr5852NUvcuHDX/SN2dcbSXPiwn6ccSRvBLeB0Blqq1Lz+mBUlWUt9dBpZM0rAr4l9XkIVr45nMdTIVcnQa4A==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-aU+lXYUG3zvnAYvth2vVizY7s+Gqle8iPw2a0mDBVbZjzOHY3sZPpBHPp4RsLsEqkFrZbRD8pPjiy1ubXYYoxw==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
@@ -20247,7 +20280,7 @@ packages:
       '@griffel/react': 1.5.19(react@18.2.0)
       '@microsoft/api-documenter': 7.23.12(@types/node@20.10.3)
       '@microsoft/api-extractor': 7.38.3(@types/node@20.10.3)
-      '@rollup/plugin-json': 4.1.0(rollup@2.79.1)
+      '@rollup/plugin-json': 6.0.1(rollup@2.79.1)
       '@testing-library/jest-dom': 5.17.0
       '@testing-library/react': 14.1.2(react-dom@18.2.0)(react@18.2.0)
       '@types/dompurify': 3.0.5
@@ -20384,13 +20417,14 @@ packages:
     dev: false
 
   file:projects/config.tgz:
-    resolution: {integrity: sha512-+JMUa1tIPv7Rh9tZwToeRA/nqatocNCr/5kW7haVr6Gx4n8DHtRZ9LtZf0roly431EyxOhgy/MyeFMu1W+fFeg==, tarball: file:projects/config.tgz}
+    resolution: {integrity: sha512-on7r50XzWOrrwB8NIdRfGC9RffKyHCSBywuLvIv0u3Nd96xJ6tNAjGYPEG36kPF036d3dqwdXZxtwGeGaNXz9g==, tarball: file:projects/config.tgz}
     name: '@rush-temp/config'
     version: 0.0.0
     dependencies:
       '@actions/core': 1.10.1
       '@octokit/rest': 19.0.13
-      '@rollup/plugin-commonjs': 17.1.0(rollup@2.79.1)
+      '@rollup/plugin-commonjs': 25.0.7(rollup@2.79.1)
+      '@rollup/plugin-json': 6.0.1(rollup@2.79.1)
       '@types/node': 20.10.3
       beachball: 2.31.13
       rollup: 2.79.1
@@ -20405,7 +20439,7 @@ packages:
     dev: false
 
   file:projects/fake-backends.tgz:
-    resolution: {integrity: sha512-KCYMLb0iBTcxF4F+30eYb6tQYfzg8ZrlkCHjHIYpFDuWW1uyqnK46gugfxjqHCAk3N4Y7XqB/xG0gIom5YOu3A==, tarball: file:projects/fake-backends.tgz}
+    resolution: {integrity: sha512-Q7MUZoafeTeK2sIrwbD0byJjPHNDtFyxuAph49k8wHaYITkJPs5FxfcQK1j9juGm93r4iRpH8kiTBPDkeUvKZA==, tarball: file:projects/fake-backends.tgz}
     name: '@rush-temp/fake-backends'
     version: 0.0.0
     dependencies:
@@ -20417,6 +20451,7 @@ packages:
       '@babel/core': 7.23.5
       '@babel/preset-env': 7.23.2(@babel/core@7.23.5)
       '@microsoft/api-extractor': 7.38.3(@types/node@20.10.3)
+      '@rollup/plugin-json': 6.0.1(rollup@2.79.1)
       '@types/jest': 29.5.10
       '@typescript-eslint/eslint-plugin': 4.33.0(@typescript-eslint/parser@4.33.0)(eslint@7.32.0)(typescript@4.7.4)
       '@typescript-eslint/parser': 4.33.0(eslint@7.32.0)(typescript@4.7.4)
@@ -20458,7 +20493,7 @@ packages:
     dev: false
 
   file:projects/react-components.tgz:
-    resolution: {integrity: sha512-iXTmRj62S2k9mviEMMVJOKae/g+diMtDXf6kSV9M4rGfFWY6X1PFW8zPwzXvoBNYC1xnS8ViGVpT+l3dDONloQ==, tarball: file:projects/react-components.tgz}
+    resolution: {integrity: sha512-rrZYhRDGvo2WMOyZFS3+YF+CpvPxtJszcZnS4UFe4Z/vCVjP2+lwWis2AM0CcF3w5rIyZvNLhj15YV95DNIoAg==, tarball: file:projects/react-components.tgz}
     name: '@rush-temp/react-components'
     version: 0.0.0
     dependencies:
@@ -20475,7 +20510,7 @@ packages:
       '@griffel/react': 1.5.19(react@18.2.0)
       '@microsoft/api-documenter': 7.23.12(@types/node@20.10.3)
       '@microsoft/api-extractor': 7.38.3(@types/node@20.10.3)
-      '@rollup/plugin-json': 4.1.0(rollup@2.79.1)
+      '@rollup/plugin-json': 6.0.1(rollup@2.79.1)
       '@testing-library/dom': 9.3.3
       '@testing-library/jest-dom': 5.17.0
       '@testing-library/react': 14.1.2(react-dom@18.2.0)(react@18.2.0)
@@ -20559,7 +20594,7 @@ packages:
     dev: false
 
   file:projects/react-composites.tgz:
-    resolution: {integrity: sha512-3CzVipKqGUsnIEk8dQ1zt3UCL8z9crJ4THfns3xGXhAJAXxHbv4Z3rUoNm56qMN+C6U391NK19eHX5tWjIH+vg==, tarball: file:projects/react-composites.tgz}
+    resolution: {integrity: sha512-P82eLOQ4QUUISNdrwmXuyIB2n/qqbY1O6KiSuhFrlerR+nraWGqvomn7NmMmcuTgTlT+jfgL0mTLuHsTkeBbKQ==, tarball: file:projects/react-composites.tgz}
     name: '@rush-temp/react-composites'
     version: 0.0.0
     dependencies:
@@ -20582,6 +20617,7 @@ packages:
       '@microsoft/api-documenter': 7.23.12(@types/node@20.10.3)
       '@microsoft/api-extractor': 7.38.3(@types/node@20.10.3)
       '@playwright/test': 1.39.0
+      '@rollup/plugin-json': 6.0.1(rollup@2.79.1)
       '@testing-library/jest-dom': 5.17.0
       '@testing-library/react': 14.1.2(react-dom@18.2.0)(react@18.2.0)
       '@types/copy-webpack-plugin': 6.4.3
