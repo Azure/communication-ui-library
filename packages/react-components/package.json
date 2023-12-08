@@ -80,7 +80,7 @@
     "@types/uuid": "^9.0.6",
     "@typescript-eslint/eslint-plugin": "^4.12.0",
     "@typescript-eslint/parser": "^4.12.0",
-    "@zerollup/ts-transform-paths": "^1.7.18",
+
     "ajv": "^8.12.0",
     "babel-jest": "^29.5.0",
     "babel-loader": "8.1.0",
@@ -117,10 +117,9 @@
     "rollup": "^4.7.0",
     "scheduler": "^0.23.0",
     "source-map-explorer": "^2.5.0",
-    "styled-components": "^5.2.1",
     "ts-jest": "^29.1.0",
     "ts-node": "^10.9.2",
-    "type-fest": "^2.5.4",
+    "type-fest": "^3.13.1",
     "typescript": "4.7.4",
     "webpack": "5.89.0",
     "jest-environment-jsdom": "^29.5.0"

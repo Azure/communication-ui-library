@@ -4549,6 +4549,14 @@ packages:
       rollup: 4.7.0
     dev: false
 
+  /@rollup/pluginutils@4.2.1:
+    resolution: {integrity: sha512-iKnFXr7NkdZAIHiIWE+BX5ULi/ucVFYWD6TbAV+rZctiRTY2PL6tsIKhoIOaoskiWAkgu+VsbXgUVDNLHf+InQ==}
+    engines: {node: '>= 8.0.0'}
+    dependencies:
+      estree-walker: 2.0.2
+      picomatch: 2.3.1
+    dev: false
+
   /@rollup/pluginutils@5.1.0(rollup@2.79.1):
     resolution: {integrity: sha512-XTIWOPPcpvyKI6L1NHo0lFlCyznUEyPmPY1mc3KpPVDYulHSTvyeLNVW00QTLIAFNhR3kYnJTQHeGqU4M3n09g==}
     engines: {node: '>=14.0.0'}
@@ -7571,22 +7579,22 @@ packages:
     resolution: {integrity: sha512-GpSwvyXOcOOlV70vbnzjj4fW5xW/FdUF6nQEt1ENy7m4ZCczi1+/buVUPAqmGfqznsORNFzUMjctTIp8a9tuCQ==}
     dev: false
 
-  /@zerollup/ts-helpers@1.7.18(typescript@4.7.4):
+  /@zerollup/ts-helpers@1.7.18(typescript@4.9.4):
     resolution: {integrity: sha512-S9zN+y+i5yN/evfWquzSO3lubqPXIsPQf6p9OiPMpRxDx/0totPLF39XoRw48Dav5dSvbIE8D2eAPpXXJxvKwg==}
     peerDependencies:
       typescript: '>=3.7.2'
     dependencies:
       resolve: 1.22.8
-      typescript: 4.7.4
+      typescript: 4.9.4
     dev: false
 
-  /@zerollup/ts-transform-paths@1.7.18(typescript@4.7.4):
+  /@zerollup/ts-transform-paths@1.7.18(typescript@4.9.4):
     resolution: {integrity: sha512-YPVUxvWQVzRx1OBN0Pmkd58+R9FcfUJuwTaPUSoi5rKxuXMtxevTXdfi0w5mEaIH8b0DfL+wg0wFDHiJE+S2zA==}
     peerDependencies:
       typescript: '>=3.7.2'
     dependencies:
-      '@zerollup/ts-helpers': 1.7.18(typescript@4.7.4)
-      typescript: 4.7.4
+      '@zerollup/ts-helpers': 1.7.18(typescript@4.9.4)
+      typescript: 4.9.4
     dev: false
 
   /abab@2.0.6:
@@ -16865,6 +16873,21 @@ packages:
       rollup-pluginutils: 1.5.2
     dev: false
 
+  /rollup-plugin-typescript2@0.36.0(rollup@4.7.0)(typescript@4.7.4):
+    resolution: {integrity: sha512-NB2CSQDxSe9+Oe2ahZbf+B4bh7pHwjV5L+RSYpCu7Q5ROuN94F9b6ioWwKfz3ueL3KTtmX4o2MUH2cgHDIEUsw==}
+    peerDependencies:
+      rollup: '>=1.26.3'
+      typescript: '>=2.4.0'
+    dependencies:
+      '@rollup/pluginutils': 4.2.1
+      find-cache-dir: 3.3.2
+      fs-extra: 10.1.0
+      rollup: 4.7.0
+      semver: 7.5.4
+      tslib: 2.6.2
+      typescript: 4.7.4
+    dev: false
+
   /rollup-pluginutils@1.5.2:
     resolution: {integrity: sha512-SjdWWWO/CUoMpDy8RUbZ/pSpG68YHmhk5ROKNIoi2En9bJ8bTt3IhYi254RWiTclQmL7Awmrq+rZFOhZkJAHmQ==}
     dependencies:
@@ -18447,6 +18470,10 @@ packages:
       typescript: 4.7.4
     dev: false
 
+  /ts-transform-paths@3.0.0:
+    resolution: {integrity: sha512-6zaET4Gz6/65Zia2jzQkh2v4WJA1NK3IvxXP0GlFkfWL9rwnInIMzQbjDunJb+m22L9S9I4XZVgW6xC+fZ2n6g==}
+    dev: false
+
   /tsconfig-paths@3.14.2:
     resolution: {integrity: sha512-o/9iXgCYc5L/JxCHPe3Hvh8Q/2xm5Z+p18PESBU6Ff33695QnCHBEjcytY2q19ua7Mbl/DavtBOLq+oG0RCL+g==}
     dependencies:
@@ -18536,9 +18563,9 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
-  /type-fest@2.19.0:
-    resolution: {integrity: sha512-RAH822pAdBgcNMAfWnCBU3CFZcfZ/i1eZjwFU/dsLKumyuuP3niueg2UAukXYF0E2AAoc82ZSSf9J0WQBinzHA==}
-    engines: {node: '>=12.20'}
+  /type-fest@3.13.1:
+    resolution: {integrity: sha512-tLq3bSNx+xSpwvAJnzrK0Ep5CLNWjvFTOp71URMaAEWBfRb9nnJiBoUe0tF8bI4ZFO3omgBR6NvnbzVUT3Ly4g==}
+    engines: {node: '>=14.16'}
     dev: false
 
   /type-is@1.6.18:
@@ -18605,6 +18632,12 @@ packages:
 
   /typescript@4.7.4:
     resolution: {integrity: sha512-C0WQT0gezHuw6AdY1M2jxUO83Rjf0HP7Sk1DtXj6j1EwkQNZrHAg2XPWlq62oqEhYvONq5pkC2Y9oPljWToLmQ==}
+    engines: {node: '>=4.2.0'}
+    hasBin: true
+    dev: false
+
+  /typescript@4.9.4:
+    resolution: {integrity: sha512-Uz+dTXYzxXXbsFpM86Wh3dKCxrQqUcVMxwU54orwlJjOpO3ao8L7j5lH+dWfTwgCwIuM9GQ2kvVotzYJMXTBZg==}
     engines: {node: '>=4.2.0'}
     hasBin: true
     dev: false
@@ -19863,7 +19896,7 @@ packages:
     dev: false
 
   file:projects/acs-ui-common.tgz:
-    resolution: {integrity: sha512-zWKwtf4fBlBcSrlL037blH2LYXn+/QkfQZQutzsclxchsLqLfbjGYI1IYNW9jfDh4i101gmTBCK4Fb0+XpJ1TQ==, tarball: file:projects/acs-ui-common.tgz}
+    resolution: {integrity: sha512-dJ1NiXdLHT/owTb/2npZCPa51eIUFaZvzyGAl0vr74MiAy6OHTZUGw+zTZLK2Xvb3pLc+nsfG+M+4S4FWtbQvA==, tarball: file:projects/acs-ui-common.tgz}
     name: '@rush-temp/acs-ui-common'
     version: 0.0.0
     dependencies:
@@ -19878,7 +19911,7 @@ packages:
       '@types/react': 18.2.42
       '@typescript-eslint/eslint-plugin': 4.33.0(@typescript-eslint/parser@4.33.0)(eslint@7.32.0)(typescript@4.7.4)
       '@typescript-eslint/parser': 4.33.0(eslint@7.32.0)(typescript@4.7.4)
-      '@zerollup/ts-transform-paths': 1.7.18(typescript@4.7.4)
+      '@zerollup/ts-transform-paths': 1.7.18(typescript@4.9.4)
       copyfiles: 2.4.1
       cpx: 1.5.0
       cross-env: 7.0.3
@@ -19896,6 +19929,7 @@ packages:
       rimraf: 2.7.1
       rollup: 4.7.0
       ts-jest: 29.1.1(@babel/core@7.23.5)(babel-jest@29.7.0)(jest@29.7.0)(typescript@4.7.4)
+      ts-transform-paths: 3.0.0
       typescript: 4.7.4
     transitivePeerDependencies:
       - '@jest/types'
@@ -19909,7 +19943,7 @@ packages:
     dev: false
 
   file:projects/calling-component-bindings.tgz:
-    resolution: {integrity: sha512-01iK7mZVLmPWKDwYPfFhFBzJO8aWD2yaQ/M8w8bOmDhdA2JMkapw3qQPbBaWC8yA0Bm7d7bRawNg53Vr/9O/aQ==, tarball: file:projects/calling-component-bindings.tgz}
+    resolution: {integrity: sha512-Ghbc7zKvITciFiHAb60FXO5UxS1FllNFrq0/FWXcvOlE3YiA1JPWYHFL/Z/mpY/qLptrK0bqHKfHO9UNX67Ttg==, tarball: file:projects/calling-component-bindings.tgz}
     name: '@rush-temp/calling-component-bindings'
     version: 0.0.0
     dependencies:
@@ -19925,7 +19959,7 @@ packages:
       '@types/react': 18.2.42
       '@typescript-eslint/eslint-plugin': 4.33.0(@typescript-eslint/parser@4.33.0)(eslint@7.32.0)(typescript@4.7.4)
       '@typescript-eslint/parser': 4.33.0(eslint@7.32.0)(typescript@4.7.4)
-      '@zerollup/ts-transform-paths': 1.7.18(typescript@4.7.4)
+      '@zerollup/ts-transform-paths': 1.7.18(typescript@4.9.4)
       copyfiles: 2.4.1
       cpx: 1.5.0
       cross-env: 7.0.3
@@ -19945,6 +19979,7 @@ packages:
       rimraf: 2.7.1
       rollup: 4.7.0
       ts-jest: 29.1.1(@babel/core@7.23.5)(babel-jest@29.7.0)(jest@29.7.0)(typescript@4.7.4)
+      ts-transform-paths: 3.0.0
       typescript: 4.7.4
     transitivePeerDependencies:
       - '@jest/types'
@@ -19958,7 +19993,7 @@ packages:
     dev: false
 
   file:projects/calling-stateful-client.tgz:
-    resolution: {integrity: sha512-DIkoCNeSLmlZTVzjCPi2hTaIeLh9nBaasieDuAgiFYyrgwCJ4P2/3FFrGQZKZs+Pcp0nSQ+upT8T2spUwtf+Tw==, tarball: file:projects/calling-stateful-client.tgz}
+    resolution: {integrity: sha512-ZLnlQxtaFv9aG65xe4jY4sdh2Qdjsa1o6sxMDpS3Dd2I+CfyOP0IIV4TP42uTkTisxcQE2WqHKeuZX2BaFPdog==, tarball: file:projects/calling-stateful-client.tgz}
     name: '@rush-temp/calling-stateful-client'
     version: 0.0.0
     dependencies:
@@ -19975,7 +20010,7 @@ packages:
       '@types/react': 18.2.42
       '@typescript-eslint/eslint-plugin': 4.33.0(@typescript-eslint/parser@4.33.0)(eslint@7.32.0)(typescript@4.7.4)
       '@typescript-eslint/parser': 4.33.0(eslint@7.32.0)(typescript@4.7.4)
-      '@zerollup/ts-transform-paths': 1.7.18(typescript@4.7.4)
+      '@zerollup/ts-transform-paths': 1.7.18(typescript@4.9.4)
       copyfiles: 2.4.1
       cpx: 1.5.0
       cross-env: 7.0.3
@@ -19994,6 +20029,7 @@ packages:
       rimraf: 2.7.1
       rollup: 4.7.0
       ts-jest: 29.1.1(@babel/core@7.23.5)(babel-jest@29.7.0)(jest@29.7.0)(typescript@4.7.4)
+      ts-transform-paths: 3.0.0
       typescript: 4.7.4
     transitivePeerDependencies:
       - '@jest/types'
@@ -20185,7 +20221,7 @@ packages:
     dev: false
 
   file:projects/chat-component-bindings.tgz:
-    resolution: {integrity: sha512-DcmWnEsgX/n3EKE4ly9G+ORpGDfg3eWODBxN9QOxXrU7jZzQq/XMSaGn1VloPenoGZVfvWn3LpwlCZcmJkM0SA==, tarball: file:projects/chat-component-bindings.tgz}
+    resolution: {integrity: sha512-n/21K9RtCjddLLYq6Oxnzi1sLNwXg9vKnOYog76jdbEZTa3FSQ7ueXgQpCDlboEscvT+KUTgtMojloO5yZNTRA==, tarball: file:projects/chat-component-bindings.tgz}
     name: '@rush-temp/chat-component-bindings'
     version: 0.0.0
     dependencies:
@@ -20199,7 +20235,7 @@ packages:
       '@rollup/plugin-json': 6.0.1(rollup@2.79.1)
       '@types/jest': 29.5.11
       '@types/react': 18.2.42
-      '@zerollup/ts-transform-paths': 1.7.18(typescript@4.7.4)
+      '@zerollup/ts-transform-paths': 1.7.18(typescript@4.9.4)
       copyfiles: 2.4.1
       cpx: 1.5.0
       cross-env: 7.0.3
@@ -20218,6 +20254,7 @@ packages:
       reselect: 4.1.8
       rimraf: 2.7.1
       rollup: 4.7.0
+      ts-transform-paths: 3.0.0
       typescript: 4.7.4
     transitivePeerDependencies:
       - '@types/node'
@@ -20229,7 +20266,7 @@ packages:
     dev: false
 
   file:projects/chat-stateful-client.tgz:
-    resolution: {integrity: sha512-G4Nqqo60rWTw0WIAa1Gi6S+8LvX37PeAK8qmt80eCftfQUZ9dXE5QreBLkFhoiW/EXlvSdci/KFH9ED0ER1/AQ==, tarball: file:projects/chat-stateful-client.tgz}
+    resolution: {integrity: sha512-//L9FO8KTQoZMT+PJgSwPT2tuVi8MJxmoSuadXE4YHy4zIABqwI90Sc8uVXps8Hu/j1WLzQ0+tTJWvrTpyivDA==, tarball: file:projects/chat-stateful-client.tgz}
     name: '@rush-temp/chat-stateful-client'
     version: 0.0.0
     dependencies:
@@ -20247,7 +20284,7 @@ packages:
       '@types/react': 18.2.42
       '@typescript-eslint/eslint-plugin': 4.33.0(@typescript-eslint/parser@4.33.0)(eslint@7.32.0)(typescript@4.7.4)
       '@typescript-eslint/parser': 4.33.0(eslint@7.32.0)(typescript@4.7.4)
-      '@zerollup/ts-transform-paths': 1.7.18(typescript@4.7.4)
+      '@zerollup/ts-transform-paths': 1.7.18(typescript@4.9.4)
       copyfiles: 2.4.1
       cpx: 1.5.0
       cross-env: 7.0.3
@@ -20267,6 +20304,7 @@ packages:
       rimraf: 2.7.1
       rollup: 4.7.0
       ts-jest: 29.1.1(@babel/core@7.23.5)(babel-jest@29.7.0)(jest@29.7.0)(typescript@4.7.4)
+      ts-transform-paths: 3.0.0
       typescript: 4.7.4
     transitivePeerDependencies:
       - '@jest/types'
@@ -20408,7 +20446,7 @@ packages:
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-83MGvvc7KJlRV04hKPXL6wqc4mt8Cor3JFs29TXYvlA6Wfy4DFco95YXIPA224lygxwVVkMH9xD4se/yryLfww==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-UttsEbYBuSEt5BJGfuumvTt6anZaaWK+BYILgCQ/0/C1iMqWbMcPGad/nXyYFOCLSqwY374k29lHYhZWOK2csw==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
@@ -20446,7 +20484,7 @@ packages:
       '@types/uuid': 9.0.7
       '@typescript-eslint/eslint-plugin': 4.33.0(@typescript-eslint/parser@4.33.0)(eslint@7.32.0)(typescript@4.7.4)
       '@typescript-eslint/parser': 4.33.0(eslint@7.32.0)(typescript@4.7.4)
-      '@zerollup/ts-transform-paths': 1.7.18(typescript@4.7.4)
+      '@zerollup/ts-transform-paths': 1.7.18(typescript@4.9.4)
       ajv: 8.12.0
       copy-to-clipboard: 3.3.3
       copyfiles: 2.4.1
@@ -20483,14 +20521,16 @@ packages:
       reselect: 4.1.8
       rimraf: 2.7.1
       rollup: 4.7.0
+      rollup-plugin-typescript2: 0.36.0(rollup@4.7.0)(typescript@4.7.4)
       scheduler: 0.23.0
       source-map-explorer: 2.5.3
       styled-components: 5.3.11(@babel/core@7.23.5)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
       textarea-caret-ts: 4.1.1
       ts-jest: 29.1.1(@babel/core@7.23.5)(babel-jest@29.7.0)(jest@29.7.0)(typescript@4.7.4)
       ts-node: 10.9.2(@types/node@20.10.4)(typescript@4.7.4)
+      ts-transform-paths: 3.0.0
       ttypescript: 1.5.15(ts-node@10.9.2)(typescript@4.7.4)
-      type-fest: 2.19.0
+      type-fest: 3.13.1
       typescript: 4.7.4
       use-debounce: 9.0.4(react@18.2.0)
       uuid: 9.0.1
@@ -20646,7 +20686,7 @@ packages:
     dev: false
 
   file:projects/react-components.tgz:
-    resolution: {integrity: sha512-S4wYxCq8ByZ47FaZeKWJqhvcBNW7Tr/vSe8Q2Lpr3iOOEUeLR09dfmEYLWLU5WVgZ15WBnc8v/f+RXtI4yT97g==, tarball: file:projects/react-components.tgz}
+    resolution: {integrity: sha512-XYUsxvA/5docP8oLCra+xo0NIKBiBHJSz65w0hW7znpJ/HrqL++ItsZPHakSAxHDkuogybBQtV2dmpJG5AQGyQ==, tarball: file:projects/react-components.tgz}
     name: '@rush-temp/react-components'
     version: 0.0.0
     dependencies:
@@ -20678,7 +20718,7 @@ packages:
       '@types/uuid': 9.0.7
       '@typescript-eslint/eslint-plugin': 4.33.0(@typescript-eslint/parser@4.33.0)(eslint@7.32.0)(typescript@4.7.4)
       '@typescript-eslint/parser': 4.33.0(eslint@7.32.0)(typescript@4.7.4)
-      '@zerollup/ts-transform-paths': 1.7.18(typescript@4.7.4)
+      '@zerollup/ts-transform-paths': 1.7.18(typescript@4.9.4)
       ajv: 8.12.0
       babel-jest: 29.7.0(@babel/core@7.23.5)
       babel-loader: 8.1.0(@babel/core@7.23.5)(webpack@5.89.0)
@@ -20725,7 +20765,8 @@ packages:
       textarea-caret-ts: 4.1.1
       ts-jest: 29.1.1(@babel/core@7.23.5)(babel-jest@29.7.0)(jest@29.7.0)(typescript@4.7.4)
       ts-node: 10.9.2(@types/node@20.10.4)(typescript@4.7.4)
-      type-fest: 2.19.0
+      ts-transform-paths: 3.0.0
+      type-fest: 3.13.1
       typescript: 4.7.4
       use-debounce: 9.0.4(react@18.2.0)
       uuid: 9.0.1
@@ -20747,7 +20788,7 @@ packages:
     dev: false
 
   file:projects/react-composites.tgz:
-    resolution: {integrity: sha512-WUByNQ6A8abWLNjtiHnK0MUZCYcBLvzuZaM1DKl2NgflnQaFwi+701mSGFn6rRhtuOeU69K1wDyfBAgn3ACgkg==, tarball: file:projects/react-composites.tgz}
+    resolution: {integrity: sha512-064f9M3IsMqFKxiRXC4QI9k61LeQef0WZJkiPB27eYFS4tcjlbGee54DUQCYJtzibOYufzPVGgPl0XZXctCusw==, tarball: file:projects/react-composites.tgz}
     name: '@rush-temp/react-composites'
     version: 0.0.0
     dependencies:
@@ -20785,7 +20826,7 @@ packages:
       '@types/yargs': 17.0.32
       '@typescript-eslint/eslint-plugin': 4.33.0(@typescript-eslint/parser@4.33.0)(eslint@7.32.0)(typescript@4.7.4)
       '@typescript-eslint/parser': 4.33.0(eslint@7.32.0)(typescript@4.7.4)
-      '@zerollup/ts-transform-paths': 1.7.18(typescript@4.7.4)
+      '@zerollup/ts-transform-paths': 1.7.18(typescript@4.9.4)
       ajv: 8.12.0
       babel-jest: 29.7.0(@babel/core@7.23.5)
       babel-loader: 8.1.0(@babel/core@7.23.5)(webpack@5.89.0)
@@ -20840,7 +20881,8 @@ packages:
       ts-jest: 29.1.1(@babel/core@7.23.5)(babel-jest@29.7.0)(jest@29.7.0)(typescript@4.7.4)
       ts-loader: 8.4.0(typescript@4.7.4)(webpack@5.89.0)
       ts-node: 10.9.2(@types/node@20.10.4)(typescript@4.7.4)
-      type-fest: 2.19.0
+      ts-transform-paths: 3.0.0
+      type-fest: 3.13.1
       typescript: 4.7.4
       uuid: 9.0.1
       webpack: 5.89.0(webpack-cli@5.1.4)
