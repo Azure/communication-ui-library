@@ -12,6 +12,13 @@ import * as acs_ui_common from '@internal/acs-ui-common';
 import * as childrenCalculations from './VideoGallery/utils/OverflowGalleryUtils';
 import { render } from '@testing-library/react';
 
+jest.mock('@internal/acs-ui-common', () => {
+  return {
+    __esModule: true,
+    ...jest.requireActual('@internal/acs-ui-common')
+  };
+});
+
 registerIcons({
   icons: {
     horizontalgalleryleftbutton: <></>,

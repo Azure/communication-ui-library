@@ -14,6 +14,13 @@ import { HORIZONTAL_GALLERY_GAP } from './styles/HorizontalGallery.styles';
 import { VideoTile } from './VideoTile';
 import { render } from '@testing-library/react';
 
+jest.mock('@internal/acs-ui-common', () => {
+  return {
+    __esModule: true,
+    ...jest.requireActual('@internal/acs-ui-common')
+  };
+});
+
 describe('ResponsiveVerticalGallery tests', () => {
   beforeAll(() => {
     registerIcons({

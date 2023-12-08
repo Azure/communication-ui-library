@@ -148,7 +148,7 @@
     "react": "18.2.0",
     "regenerator-runtime": "^0.14.0",
     "rimraf": "^2.6.2",
-    "rollup": "^3.29.4",
+    "rollup": "^4.7.0",
     "shell-quote": "1.8.1",
     "source-map-explorer": "^2.5.0",
     "style-loader": "^2.0.0",
