@@ -56,7 +56,6 @@ export const Microphone = (props: {
       }
     : {};
   const styles = useMemo(() => concatButtonBaseStyles(props.styles ?? {}), [props.styles]);
-
   // tab focus on MicrophoneButton on page load
   return (
     <MicrophoneButton
@@ -68,9 +67,10 @@ export const Microphone = (props: {
       {...microphoneButtonStrings}
       enableDeviceSelectionMenu={props.splitButtonsForDeviceSelection}
       disabled={
-        microphoneButtonProps.disabled ||
-        props.disabled ||
-        /* @conditional-compile-remove(rooms) */ (isRoomsCall && adapter.getState().call?.role === 'Unknown')
+        callStatus !== 'InLobby' &&
+        (microphoneButtonProps.disabled ||
+          props.disabled ||
+          /* @conditional-compile-remove(rooms) */ (isRoomsCall && adapter.getState().call?.role === 'Unknown'))
       }
       /* @conditional-compile-remove(capabilities) */
       onRenderOffIcon={
