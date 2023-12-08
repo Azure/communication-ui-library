@@ -27,7 +27,7 @@
     "@azure/communication-common": "^2.3.0",
     "@azure/communication-calling": "1.20.1-beta.2 || ^1.19.1",
     "@azure/communication-chat": "1.4.0-beta.2 || ^1.4.0",
-    "@fluentui/react": "^8.110.4",
+    "@fluentui/react": "^8.112.9",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "uuid": "^9.0.0"
@@ -58,6 +58,6 @@
     "webpack-cli": "^5.1.4",
     "webpack-bundle-analyzer": "^4.5.0",
     "cpx": "^1.5.0",
-    "@babel/cli": "^7.16.0"
+    "@babel/cli": "^7.23.4"
   }
 }

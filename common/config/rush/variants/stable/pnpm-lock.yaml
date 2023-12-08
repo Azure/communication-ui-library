@@ -339,6 +339,22 @@ packages:
       - supports-color
     dev: false
 
+  /@azure/core-rest-pipeline@1.13.0:
+    resolution: {integrity: sha512-a62aP/wppgmnfIkJLfcB4ssPBcH94WzrzPVJ3tlJt050zX4lfmtnvy95D3igDo3f31StO+9BgPrzvkj4aOxnoA==}
+    engines: {node: '>=18.0.0'}
+    dependencies:
+      '@azure/abort-controller': 1.1.0
+      '@azure/core-auth': 1.5.0
+      '@azure/core-tracing': 1.0.1
+      '@azure/core-util': 1.5.0
+      '@azure/logger': 1.0.4
+      http-proxy-agent: 5.0.0
+      https-proxy-agent: 5.0.1
+      tslib: 2.6.2
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
   /@azure/core-tracing@1.0.0-preview.13:
     resolution: {integrity: sha512-KxDlhXyMlh2Jhj2ykX6vNEU0Vou4nHr025KoSEiz7cS3BNiHNaZcdECk/DmLkEB0as5T7b/TpRcehJ5yV6NeXQ==}
     engines: {node: '>=12.0.0'}
@@ -385,8 +401,8 @@ packages:
       - encoding
     dev: false
 
-  /@babel/cli@7.23.0(@babel/core@7.23.5):
-    resolution: {integrity: sha512-17E1oSkGk2IwNILM4jtfAvgjt+ohmpfBky8aLerUfYZhiPNg7ca+CRCxZn8QDxwNhV/upsc2VHBCqGFIR+iBfA==}
+  /@babel/cli@7.23.4(@babel/core@7.23.5):
+    resolution: {integrity: sha512-j3luA9xGKCXVyCa5R7lJvOMM+Kc2JEnAEIgz2ggtjQ/j5YUVgfsg/WsG95bbsgq7YLHuiCOzMnoSasuY16qiCw==}
     engines: {node: '>=6.9.0'}
     hasBin: true
     peerDependencies:
@@ -2288,7 +2304,7 @@ packages:
     resolution: {integrity: sha512-OfX7E2oUDYxtBvsuS4e/jSn4Q9Qb6DzgeYtsAdkPZ47znpoNsMgZw0+tVijiv3uGNR6dgNlty6r9rzIzHjtd/A==}
     dev: false
 
-  /@fluentui-contrib/react-chat@0.1.7(@fluentui/react-components@9.42.0)(@fluentui/react-icons@2.0.220)(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0):
+  /@fluentui-contrib/react-chat@0.1.7(@fluentui/react-components@9.42.0)(@fluentui/react-icons@2.0.223)(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-QzvDlgARmrWhQo4M+pZneW6vnBnPgdGuOle/SJE4a4rlXeBXgfq3IDfT4T9uhFDKmCy6Z3j9juPVGoBwtaPGXg==}
     peerDependencies:
       '@fluentui/react-components': '>=9.25.1 <10.0.0'
@@ -2299,7 +2315,7 @@ packages:
       react-dom: '>=16.8.0 <19.0.0'
     dependencies:
       '@fluentui/react-components': 9.42.0(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)
-      '@fluentui/react-icons': 2.0.220(react@18.2.0)
+      '@fluentui/react-icons': 2.0.223(react@18.2.0)
       '@swc/helpers': 0.5.3
       '@types/react': 18.2.42
       '@types/react-dom': 18.2.17
@@ -2307,22 +2323,8 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@fluentui/date-time-utilities@8.5.13:
-    resolution: {integrity: sha512-X3clbPKh0URkDj21QoARw6SNec7dWg7Gt7SkTlkVYFzmZUdC4ZIrYk3n36xKe3U1wcGp26EVmKjhAhB262ugpw==}
-    dependencies:
-      '@fluentui/set-version': 8.2.11
-      tslib: 2.6.2
-    dev: false
-
   /@fluentui/date-time-utilities@8.5.14:
     resolution: {integrity: sha512-Kc64ZBj0WiaSW/Bsh4fMy9oM2FIk1TgIqBV6+OgOtdKx9cXwLdmgGk8zuQTcuRnwv5WCk2M6wvW1M+eK3sNRGA==}
-    dependencies:
-      '@fluentui/set-version': 8.2.12
-      tslib: 2.6.2
-    dev: false
-
-  /@fluentui/dom-utilities@2.2.11:
-    resolution: {integrity: sha512-2tXfg7/9PXu9nfU72/P3o3waHEFEQtHUfQbVexUaYqNNAxMj6sOfsqpUx4vd5nPgO+grSWrl+spqlLN2yej51w==}
     dependencies:
       '@fluentui/set-version': 8.2.12
       tslib: 2.6.2
@@ -2335,18 +2337,6 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@fluentui/font-icons-mdl2@8.5.25(@types/react@18.2.42)(react@18.2.0):
-    resolution: {integrity: sha512-L14GBWeRmeVSO1hjollOye+Xl4ULR9yvltTJNkwoNFfrks0nf+HTAOje5QU5+bPCzjR0mCmp/VCArsTtDwL0Zw==}
-    dependencies:
-      '@fluentui/set-version': 8.2.11
-      '@fluentui/style-utilities': 8.9.18(@types/react@18.2.42)(react@18.2.0)
-      '@fluentui/utilities': 8.13.19(@types/react@18.2.42)(react@18.2.0)
-      tslib: 2.6.2
-    transitivePeerDependencies:
-      - '@types/react'
-      - react
-    dev: false
-
   /@fluentui/font-icons-mdl2@8.5.27(@types/react@18.2.42)(react@18.2.0):
     resolution: {integrity: sha512-u6J9SmdWsr3WjC7zog930IWWySA+mxLfIqfyux9oATJQPUs+76juYYbolDTJTvndVEmb+piA7qBhEubUoaXJjQ==}
     dependencies:
@@ -2357,21 +2347,6 @@ packages:
     transitivePeerDependencies:
       - '@types/react'
       - react
-    dev: false
-
-  /@fluentui/foundation-legacy@8.2.45(@types/react@18.2.42)(react@18.2.0):
-    resolution: {integrity: sha512-KVgWNEFIwEUEyoX2x1GBvczPPsi9/st+b2BhcwGR1W7+za7mKe+bYS5nkM2jA7BHV+E9V0rVPNw+jJil9jjT8Q==}
-    peerDependencies:
-      '@types/react': '>=16.8.0 <19.0.0'
-      react: '>=16.8.0 <19.0.0'
-    dependencies:
-      '@fluentui/merge-styles': 8.5.12
-      '@fluentui/set-version': 8.2.11
-      '@fluentui/style-utilities': 8.9.18(@types/react@18.2.42)(react@18.2.0)
-      '@fluentui/utilities': 8.13.19(@types/react@18.2.42)(react@18.2.0)
-      '@types/react': 18.2.42
-      react: 18.2.0
-      tslib: 2.6.2
     dev: false
 
   /@fluentui/foundation-legacy@8.2.47(@types/react@18.2.42)(react@18.2.0):
@@ -2389,12 +2364,6 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@fluentui/keyboard-key@0.4.11:
-    resolution: {integrity: sha512-TVB/EloWado9AVp1niChgcdDOQAHGP5B30Dinmtfe7zi8OnstwPoxwFP6dHJDdpLQ6ZEUTaEHViSzvewl7Chag==}
-    dependencies:
-      tslib: 2.6.2
-    dev: false
-
   /@fluentui/keyboard-key@0.4.12:
     resolution: {integrity: sha512-9nPglM58ThbOEQ88KijdYl64hiTAQQ0o60HRc0vboibmr41mJ322FoBz5Q5S5QLIEbBZajrAkrDMs3PKW4CCSw==}
     dependencies:
@@ -2405,13 +2374,6 @@ packages:
     resolution: {integrity: sha512-vaQ+lOveQTdoXJYqDQXWb30udSfTVcIuKk1rV0X0eGAgcHeSDeP1HxMy+OgHOQZH3OiBH4ZYeWxb+tmfiDiygQ==}
     dependencies:
       '@swc/helpers': 0.5.3
-    dev: false
-
-  /@fluentui/merge-styles@8.5.12:
-    resolution: {integrity: sha512-ZnUo0YuMP7AYi68dkknFqVxopIAgbrUnqR/MZlemmRvBYyy1SMj1WQeHcoiLFA8mF8YKn7B+jxQgJbN2bfcrRw==}
-    dependencies:
-      '@fluentui/set-version': 8.2.11
-      tslib: 2.6.2
     dev: false
 
   /@fluentui/merge-styles@8.5.13:
@@ -2438,7 +2400,7 @@ packages:
     dependencies:
       '@fluentui/react-aria': 9.4.0(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
       '@fluentui/react-context-selector': 9.1.42(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)
-      '@fluentui/react-icons': 2.0.220(react@18.2.0)
+      '@fluentui/react-icons': 2.0.223(react@18.2.0)
       '@fluentui/react-jsx-runtime': 9.0.20(@types/react@18.2.42)(react@18.2.0)
       '@fluentui/react-shared-contexts': 9.13.0(@types/react@18.2.42)(react@18.2.0)
       '@fluentui/react-tabster': 9.15.0(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
@@ -2463,7 +2425,7 @@ packages:
     dependencies:
       '@fluentui/react-avatar': 9.5.48(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)
       '@fluentui/react-button': 9.3.57(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
-      '@fluentui/react-icons': 2.0.220(react@18.2.0)
+      '@fluentui/react-icons': 2.0.223(react@18.2.0)
       '@fluentui/react-jsx-runtime': 9.0.20(@types/react@18.2.42)(react@18.2.0)
       '@fluentui/react-tabster': 9.15.0(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
       '@fluentui/react-theme': 9.1.16
@@ -2507,7 +2469,7 @@ packages:
     dependencies:
       '@fluentui/react-badge': 9.2.15(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
       '@fluentui/react-context-selector': 9.1.42(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)
-      '@fluentui/react-icons': 2.0.220(react@18.2.0)
+      '@fluentui/react-icons': 2.0.223(react@18.2.0)
       '@fluentui/react-jsx-runtime': 9.0.20(@types/react@18.2.42)(react@18.2.0)
       '@fluentui/react-popover': 9.8.23(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)
       '@fluentui/react-shared-contexts': 9.13.0(@types/react@18.2.42)(react@18.2.0)
@@ -2532,7 +2494,7 @@ packages:
       react: '>=16.14.0 <19.0.0'
       react-dom: '>=16.14.0 <19.0.0'
     dependencies:
-      '@fluentui/react-icons': 2.0.220(react@18.2.0)
+      '@fluentui/react-icons': 2.0.223(react@18.2.0)
       '@fluentui/react-jsx-runtime': 9.0.20(@types/react@18.2.42)(react@18.2.0)
       '@fluentui/react-shared-contexts': 9.13.0(@types/react@18.2.42)(react@18.2.0)
       '@fluentui/react-theme': 9.1.16
@@ -2555,7 +2517,7 @@ packages:
     dependencies:
       '@fluentui/react-aria': 9.4.0(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
       '@fluentui/react-button': 9.3.57(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
-      '@fluentui/react-icons': 2.0.220(react@18.2.0)
+      '@fluentui/react-icons': 2.0.223(react@18.2.0)
       '@fluentui/react-jsx-runtime': 9.0.20(@types/react@18.2.42)(react@18.2.0)
       '@fluentui/react-link': 9.2.0(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
       '@fluentui/react-shared-contexts': 9.13.0(@types/react@18.2.42)(react@18.2.0)
@@ -2580,7 +2542,7 @@ packages:
     dependencies:
       '@fluentui/keyboard-keys': 9.0.7
       '@fluentui/react-aria': 9.4.0(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
-      '@fluentui/react-icons': 2.0.220(react@18.2.0)
+      '@fluentui/react-icons': 2.0.223(react@18.2.0)
       '@fluentui/react-jsx-runtime': 9.0.20(@types/react@18.2.42)(react@18.2.0)
       '@fluentui/react-shared-contexts': 9.13.0(@types/react@18.2.42)(react@18.2.0)
       '@fluentui/react-tabster': 9.15.0(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
@@ -2624,7 +2586,7 @@ packages:
       react-dom: '>=16.14.0 <19.0.0'
     dependencies:
       '@fluentui/react-field': 9.1.43(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)
-      '@fluentui/react-icons': 2.0.220(react@18.2.0)
+      '@fluentui/react-icons': 2.0.223(react@18.2.0)
       '@fluentui/react-jsx-runtime': 9.0.20(@types/react@18.2.42)(react@18.2.0)
       '@fluentui/react-label': 9.1.51(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
       '@fluentui/react-shared-contexts': 9.13.0(@types/react@18.2.42)(react@18.2.0)
@@ -2653,7 +2615,7 @@ packages:
       '@fluentui/keyboard-keys': 9.0.7
       '@fluentui/react-context-selector': 9.1.42(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)
       '@fluentui/react-field': 9.1.43(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)
-      '@fluentui/react-icons': 2.0.220(react@18.2.0)
+      '@fluentui/react-icons': 2.0.223(react@18.2.0)
       '@fluentui/react-jsx-runtime': 9.0.20(@types/react@18.2.42)(react@18.2.0)
       '@fluentui/react-portal': 9.4.3(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
       '@fluentui/react-positioning': 9.10.2(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
@@ -2765,7 +2727,7 @@ packages:
       '@fluentui/keyboard-keys': 9.0.7
       '@fluentui/react-aria': 9.4.0(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
       '@fluentui/react-context-selector': 9.1.42(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)
-      '@fluentui/react-icons': 2.0.220(react@18.2.0)
+      '@fluentui/react-icons': 2.0.223(react@18.2.0)
       '@fluentui/react-jsx-runtime': 9.0.20(@types/react@18.2.42)(react@18.2.0)
       '@fluentui/react-portal': 9.4.3(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
       '@fluentui/react-shared-contexts': 9.13.0(@types/react@18.2.42)(react@18.2.0)
@@ -2837,7 +2799,7 @@ packages:
       react-dom: '>=16.14.0 <19.0.0'
     dependencies:
       '@fluentui/react-context-selector': 9.1.42(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)
-      '@fluentui/react-icons': 2.0.220(react@18.2.0)
+      '@fluentui/react-icons': 2.0.223(react@18.2.0)
       '@fluentui/react-jsx-runtime': 9.0.20(@types/react@18.2.42)(react@18.2.0)
       '@fluentui/react-label': 9.1.51(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
       '@fluentui/react-theme': 9.1.16
@@ -2865,22 +2827,6 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@fluentui/react-focus@8.8.32(@types/react@18.2.42)(react@18.2.0):
-    resolution: {integrity: sha512-ALYMkDRG8qKCRuf5f3w5suWLFBT/65e4vC2EXKhYTcb/AGAH4wGMdWC+b4ek12D4u6L6tOegTMqC64fLp/RT3Q==}
-    peerDependencies:
-      '@types/react': '>=16.8.0 <19.0.0'
-      react: '>=16.8.0 <19.0.0'
-    dependencies:
-      '@fluentui/keyboard-key': 0.4.11
-      '@fluentui/merge-styles': 8.5.12
-      '@fluentui/set-version': 8.2.11
-      '@fluentui/style-utilities': 8.9.18(@types/react@18.2.42)(react@18.2.0)
-      '@fluentui/utilities': 8.13.19(@types/react@18.2.42)(react@18.2.0)
-      '@types/react': 18.2.42
-      react: 18.2.0
-      tslib: 2.6.2
-    dev: false
-
   /@fluentui/react-focus@8.8.34(@types/react@18.2.42)(react@18.2.0):
     resolution: {integrity: sha512-GNi8MqQRdoIaYpiz5kWIQaX1mNzFz3X+UShezA3gohrXnkONUvrPBuFDyYgQXoqk67juEZ+oGxl2PpKjz08HCA==}
     peerDependencies:
@@ -2892,20 +2838,6 @@ packages:
       '@fluentui/set-version': 8.2.12
       '@fluentui/style-utilities': 8.9.20(@types/react@18.2.42)(react@18.2.0)
       '@fluentui/utilities': 8.13.21(@types/react@18.2.42)(react@18.2.0)
-      '@types/react': 18.2.42
-      react: 18.2.0
-      tslib: 2.6.2
-    dev: false
-
-  /@fluentui/react-hooks@8.6.30(@types/react@18.2.42)(react@18.2.0):
-    resolution: {integrity: sha512-+EhJY2+C7wbWP+36zM4llc1KGY4/XWu36BnDumoKLJdcrnGilJHHQJ3pXhvJPf2f2mc7LoasCtQDmCQ5Tfzi3A==}
-    peerDependencies:
-      '@types/react': '>=16.8.0 <19.0.0'
-      react: '>=16.8.0 <19.0.0'
-    dependencies:
-      '@fluentui/react-window-provider': 2.2.15(@types/react@18.2.42)(react@18.2.0)
-      '@fluentui/set-version': 8.2.11
-      '@fluentui/utilities': 8.13.19(@types/react@18.2.42)(react@18.2.0)
       '@types/react': 18.2.42
       react: 18.2.0
       tslib: 2.6.2
@@ -2925,12 +2857,12 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@fluentui/react-icons@2.0.220(react@18.2.0):
-    resolution: {integrity: sha512-AIe0y3QuG2dATGVlszyt/xCzVhyBcDulQnDepSLZvDXkuu8zL/zqQaSuiOizwZUVxxuF0SvePyf4zgi86zgtjg==}
+  /@fluentui/react-icons@2.0.223(react@18.2.0):
+    resolution: {integrity: sha512-nKE4y2e9DilNfly2Z5CSMBG2aOFZlGG9SJsw7UZmZu00acqWKEO09YAuHIDXlp6moYgCHF96MpZFDPU9sjbrwg==}
     peerDependencies:
       react: '>=16.8.0 <19.0.0'
     dependencies:
-      '@griffel/react': 1.5.16(react@18.2.0)
+      '@griffel/react': 1.5.19(react@18.2.0)
       react: 18.2.0
       tslib: 2.6.2
     dev: false
@@ -2963,7 +2895,7 @@ packages:
       react: '>=16.14.0 <19.0.0'
       react-dom: '>=16.14.0 <19.0.0'
     dependencies:
-      '@fluentui/react-icons': 2.0.220(react@18.2.0)
+      '@fluentui/react-icons': 2.0.223(react@18.2.0)
       '@fluentui/react-jsx-runtime': 9.0.20(@types/react@18.2.42)(react@18.2.0)
       '@fluentui/react-label': 9.1.51(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
       '@fluentui/react-popover': 9.8.23(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)
@@ -2988,7 +2920,7 @@ packages:
       react: '>=16.8.0 <19.0.0'
       react-dom: '>=16.8.0 <19.0.0'
     dependencies:
-      '@fluentui/react-icons': 2.0.220(react@18.2.0)
+      '@fluentui/react-icons': 2.0.223(react@18.2.0)
       '@fluentui/react-jsx-runtime': 9.0.20(@types/react@18.2.42)(react@18.2.0)
       '@fluentui/react-label': 9.1.51(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
       '@fluentui/react-popover': 9.8.23(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)
@@ -3095,7 +3027,7 @@ packages:
       '@fluentui/keyboard-keys': 9.0.7
       '@fluentui/react-aria': 9.4.0(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
       '@fluentui/react-context-selector': 9.1.42(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)
-      '@fluentui/react-icons': 2.0.220(react@18.2.0)
+      '@fluentui/react-icons': 2.0.223(react@18.2.0)
       '@fluentui/react-jsx-runtime': 9.0.20(@types/react@18.2.42)(react@18.2.0)
       '@fluentui/react-portal': 9.4.3(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
       '@fluentui/react-positioning': 9.10.2(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
@@ -3121,7 +3053,7 @@ packages:
       react-dom: '>=16.8.0 <19.0.0'
     dependencies:
       '@fluentui/react-button': 9.3.57(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
-      '@fluentui/react-icons': 2.0.220(react@18.2.0)
+      '@fluentui/react-icons': 2.0.223(react@18.2.0)
       '@fluentui/react-jsx-runtime': 9.0.20(@types/react@18.2.42)(react@18.2.0)
       '@fluentui/react-shared-contexts': 9.13.0(@types/react@18.2.42)(react@18.2.0)
       '@fluentui/react-theme': 9.1.16
@@ -3240,17 +3172,6 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@fluentui/react-portal-compat-context@9.0.9(@types/react@18.2.42)(react@18.2.0):
-    resolution: {integrity: sha512-Qt4zBJjBf3QihWqDNfZ4D9ha0QdcUvw4zIErp6IkT4uFIkV2VSgEjIKXm0h2iDEZZQtzbGlFG+9hPPhH13HaPQ==}
-    peerDependencies:
-      '@types/react': '>=16.14.0 <19.0.0'
-      react: '>=16.14.0 <19.0.0'
-    dependencies:
-      '@swc/helpers': 0.5.3
-      '@types/react': 18.2.42
-      react: 18.2.0
-    dev: false
-
   /@fluentui/react-portal@9.4.3(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-VR/vXUxHwWXDx/u7SbxFspikLR7LBRG5BEfQvyrQVnlYQ/GHRY/izia6ncdsIRBhg049xSaeIFQSYY0ng9mQ8g==}
     peerDependencies:
@@ -3323,7 +3244,7 @@ packages:
       react: '>=16.14.0 <19.0.0'
       react-dom: '>=16.14.0 <19.0.0'
     dependencies:
-      '@fluentui/react-icons': 2.0.220(react@18.2.0)
+      '@fluentui/react-icons': 2.0.223(react@18.2.0)
       '@fluentui/react-jsx-runtime': 9.0.20(@types/react@18.2.42)(react@18.2.0)
       '@fluentui/react-shared-contexts': 9.13.0(@types/react@18.2.42)(react@18.2.0)
       '@fluentui/react-tabster': 9.15.0(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
@@ -3348,7 +3269,7 @@ packages:
       scheduler: ^0.19.0 || ^0.20.0
     dependencies:
       '@fluentui/react-field': 9.1.43(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)
-      '@fluentui/react-icons': 2.0.220(react@18.2.0)
+      '@fluentui/react-icons': 2.0.223(react@18.2.0)
       '@fluentui/react-jsx-runtime': 9.0.20(@types/react@18.2.42)(react@18.2.0)
       '@fluentui/react-label': 9.1.51(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
       '@fluentui/react-shared-contexts': 9.13.0(@types/react@18.2.42)(react@18.2.0)
@@ -3373,7 +3294,7 @@ packages:
       react-dom: '>=16.14.0 <19.0.0'
     dependencies:
       '@fluentui/react-field': 9.1.43(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)
-      '@fluentui/react-icons': 2.0.220(react@18.2.0)
+      '@fluentui/react-icons': 2.0.223(react@18.2.0)
       '@fluentui/react-jsx-runtime': 9.0.20(@types/react@18.2.42)(react@18.2.0)
       '@fluentui/react-shared-contexts': 9.13.0(@types/react@18.2.42)(react@18.2.0)
       '@fluentui/react-theme': 9.1.16
@@ -3457,7 +3378,7 @@ packages:
     dependencies:
       '@fluentui/keyboard-keys': 9.0.7
       '@fluentui/react-field': 9.1.43(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)
-      '@fluentui/react-icons': 2.0.220(react@18.2.0)
+      '@fluentui/react-icons': 2.0.223(react@18.2.0)
       '@fluentui/react-jsx-runtime': 9.0.20(@types/react@18.2.42)(react@18.2.0)
       '@fluentui/react-shared-contexts': 9.13.0(@types/react@18.2.42)(react@18.2.0)
       '@fluentui/react-theme': 9.1.16
@@ -3502,7 +3423,7 @@ packages:
       react-dom: '>=16.14.0 <19.0.0'
     dependencies:
       '@fluentui/react-field': 9.1.43(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)
-      '@fluentui/react-icons': 2.0.220(react@18.2.0)
+      '@fluentui/react-icons': 2.0.223(react@18.2.0)
       '@fluentui/react-jsx-runtime': 9.0.20(@types/react@18.2.42)(react@18.2.0)
       '@fluentui/react-label': 9.1.51(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
       '@fluentui/react-shared-contexts': 9.13.0(@types/react@18.2.42)(react@18.2.0)
@@ -3532,7 +3453,7 @@ packages:
       '@fluentui/react-avatar': 9.5.48(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)
       '@fluentui/react-checkbox': 9.2.1(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)
       '@fluentui/react-context-selector': 9.1.42(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)
-      '@fluentui/react-icons': 2.0.220(react@18.2.0)
+      '@fluentui/react-icons': 2.0.223(react@18.2.0)
       '@fluentui/react-jsx-runtime': 9.0.20(@types/react@18.2.42)(react@18.2.0)
       '@fluentui/react-radio': 9.1.58(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)
       '@fluentui/react-shared-contexts': 9.13.0(@types/react@18.2.42)(react@18.2.0)
@@ -3605,7 +3526,7 @@ packages:
       '@fluentui/keyboard-keys': 9.0.7
       '@fluentui/react-aria': 9.4.0(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
       '@fluentui/react-avatar': 9.5.48(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)
-      '@fluentui/react-icons': 2.0.220(react@18.2.0)
+      '@fluentui/react-icons': 2.0.223(react@18.2.0)
       '@fluentui/react-jsx-runtime': 9.0.20(@types/react@18.2.42)(react@18.2.0)
       '@fluentui/react-shared-contexts': 9.13.0(@types/react@18.2.42)(react@18.2.0)
       '@fluentui/react-tabster': 9.15.0(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
@@ -3681,7 +3602,7 @@ packages:
     dependencies:
       '@fluentui/keyboard-keys': 9.0.7
       '@fluentui/react-aria': 9.4.0(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
-      '@fluentui/react-icons': 2.0.220(react@18.2.0)
+      '@fluentui/react-icons': 2.0.223(react@18.2.0)
       '@fluentui/react-jsx-runtime': 9.0.20(@types/react@18.2.42)(react@18.2.0)
       '@fluentui/react-portal': 9.4.3(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
       '@fluentui/react-shared-contexts': 9.13.0(@types/react@18.2.42)(react@18.2.0)
@@ -3762,7 +3683,7 @@ packages:
       '@fluentui/react-button': 9.3.57(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
       '@fluentui/react-checkbox': 9.2.1(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)
       '@fluentui/react-context-selector': 9.1.42(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)
-      '@fluentui/react-icons': 2.0.220(react@18.2.0)
+      '@fluentui/react-icons': 2.0.223(react@18.2.0)
       '@fluentui/react-jsx-runtime': 9.0.20(@types/react@18.2.42)(react@18.2.0)
       '@fluentui/react-radio': 9.1.58(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)
       '@fluentui/react-shared-contexts': 9.13.0(@types/react@18.2.42)(react@18.2.0)
@@ -3810,18 +3731,6 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@fluentui/react-window-provider@2.2.15(@types/react@18.2.42)(react@18.2.0):
-    resolution: {integrity: sha512-RraWvRe7wakpPJRBX2tlCV/cybOKiqLJ1UBLPNf5xq7ZIs0T0g/hh3G3Zb5teOeipjuRnl6srkdDUT9Dy9wrBg==}
-    peerDependencies:
-      '@types/react': '>=16.8.0 <19.0.0'
-      react: '>=16.8.0 <19.0.0'
-    dependencies:
-      '@fluentui/set-version': 8.2.11
-      '@types/react': 18.2.42
-      react: 18.2.0
-      tslib: 2.6.2
-    dev: false
-
   /@fluentui/react-window-provider@2.2.16(@types/react@18.2.42)(react@18.2.0):
     resolution: {integrity: sha512-4gkUMSAUjo3cgCGt+0VvTbMy9qbF6zo/cmmfYtfqbSFtXz16lKixSCMIf66gXdKjovqRGVFC/XibqfrXM2QLuw==}
     peerDependencies:
@@ -3831,34 +3740,6 @@ packages:
       '@fluentui/set-version': 8.2.12
       '@types/react': 18.2.42
       react: 18.2.0
-      tslib: 2.6.2
-    dev: false
-
-  /@fluentui/react@8.112.3(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-2yDtzw8AvSkSO1B//Lj+E6Wy0RrWV0ai2hXN3q0SRkFocudvek5riHHK89OJAcKaAxqe/VUg7OJQ9P+Bqd77fA==}
-    peerDependencies:
-      '@types/react': '>=16.8.0 <19.0.0'
-      '@types/react-dom': '>=16.8.0 <19.0.0'
-      react: '>=16.8.0 <19.0.0'
-      react-dom: '>=16.8.0 <19.0.0'
-    dependencies:
-      '@fluentui/date-time-utilities': 8.5.13
-      '@fluentui/font-icons-mdl2': 8.5.25(@types/react@18.2.42)(react@18.2.0)
-      '@fluentui/foundation-legacy': 8.2.45(@types/react@18.2.42)(react@18.2.0)
-      '@fluentui/merge-styles': 8.5.12
-      '@fluentui/react-focus': 8.8.32(@types/react@18.2.42)(react@18.2.0)
-      '@fluentui/react-hooks': 8.6.30(@types/react@18.2.42)(react@18.2.0)
-      '@fluentui/react-portal-compat-context': 9.0.9(@types/react@18.2.42)(react@18.2.0)
-      '@fluentui/react-window-provider': 2.2.15(@types/react@18.2.42)(react@18.2.0)
-      '@fluentui/set-version': 8.2.11
-      '@fluentui/style-utilities': 8.9.18(@types/react@18.2.42)(react@18.2.0)
-      '@fluentui/theme': 2.6.36(@types/react@18.2.42)(react@18.2.0)
-      '@fluentui/utilities': 8.13.19(@types/react@18.2.42)(react@18.2.0)
-      '@microsoft/load-themed-styles': 1.10.295
-      '@types/react': 18.2.42
-      '@types/react-dom': 18.2.17
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
       tslib: 2.6.2
     dev: false
 
@@ -3901,30 +3782,10 @@ packages:
       - react
     dev: false
 
-  /@fluentui/set-version@8.2.11:
-    resolution: {integrity: sha512-UI03tysau/adBO1a3q4uFZWQ3lfkiFcAWIFng4k5odWcCokfCm5IxA0urKqj5W5JRYdyoBUaq8QbcNGkFB4dCw==}
-    dependencies:
-      tslib: 2.6.2
-    dev: false
-
   /@fluentui/set-version@8.2.12:
     resolution: {integrity: sha512-I4uXIg9xkL2Heotf1+7CyGcHQskdtMSH0B5mSV0TL3w7WI2qpnzrpKuP2Kq6DHZN6Xrsg4ORFNJSjLxq/s9cUQ==}
     dependencies:
       tslib: 2.6.2
-    dev: false
-
-  /@fluentui/style-utilities@8.9.18(@types/react@18.2.42)(react@18.2.0):
-    resolution: {integrity: sha512-bWRcN8q2JDLZJOxJ3ov+2MLP+XqK3tHMGyLWjDAkUYUzgsM3ppA0HAroo/MLkn8vrFcoUYCuL/jtv7IXR6SZBw==}
-    dependencies:
-      '@fluentui/merge-styles': 8.5.12
-      '@fluentui/set-version': 8.2.11
-      '@fluentui/theme': 2.6.36(@types/react@18.2.42)(react@18.2.0)
-      '@fluentui/utilities': 8.13.19(@types/react@18.2.42)(react@18.2.0)
-      '@microsoft/load-themed-styles': 1.10.295
-      tslib: 2.6.2
-    transitivePeerDependencies:
-      - '@types/react'
-      - react
     dev: false
 
   /@fluentui/style-utilities@8.9.20(@types/react@18.2.42)(react@18.2.0):
@@ -3955,20 +3816,6 @@ packages:
       - react-dom
     dev: false
 
-  /@fluentui/theme@2.6.36(@types/react@18.2.42)(react@18.2.0):
-    resolution: {integrity: sha512-rSP+LNmOJ9woiZzicdgtKFHt8Tyq7Jqu4KpczW0zXOYR9orgwFecpiUwRpZs1zD6lb3pAUNw4oYrM1tc7FH5AA==}
-    peerDependencies:
-      '@types/react': '>=16.8.0 <19.0.0'
-      react: '>=16.8.0 <19.0.0'
-    dependencies:
-      '@fluentui/merge-styles': 8.5.12
-      '@fluentui/set-version': 8.2.11
-      '@fluentui/utilities': 8.13.19(@types/react@18.2.42)(react@18.2.0)
-      '@types/react': 18.2.42
-      react: 18.2.0
-      tslib: 2.6.2
-    dev: false
-
   /@fluentui/theme@2.6.38(@types/react@18.2.42)(react@18.2.0):
     resolution: {integrity: sha512-LObK/mZOQFb3aTcDlKBSLpPV0BOp5BOuNqg0Wps51b1RlisI6oS3STmw3BkcAe6jOi/p4cgLpwHMkYHh2o8PmQ==}
     peerDependencies:
@@ -3989,20 +3836,6 @@ packages:
       '@swc/helpers': 0.5.3
     dev: false
 
-  /@fluentui/utilities@8.13.19(@types/react@18.2.42)(react@18.2.0):
-    resolution: {integrity: sha512-v0WNV6NNQKi9nLttvc6btzxX3XOVRA817fZ7zBqsV6JWQGRfyrBwhskh6TUIgANJjPejz5nk05U6rvSWNUM+FQ==}
-    peerDependencies:
-      '@types/react': '>=16.8.0 <19.0.0'
-      react: '>=16.8.0 <19.0.0'
-    dependencies:
-      '@fluentui/dom-utilities': 2.2.11
-      '@fluentui/merge-styles': 8.5.12
-      '@fluentui/set-version': 8.2.11
-      '@types/react': 18.2.42
-      react: 18.2.0
-      tslib: 2.6.2
-    dev: false
-
   /@fluentui/utilities@8.13.21(@types/react@18.2.42)(react@18.2.0):
     resolution: {integrity: sha512-YPWsRAL1jgbPxf+wAY8p6LjIG4em0NReqgU8ZCFnQx9wpQbe/ZRjQcaU06pD1tYtRGvyCutwhnWDaQHDw843Xg==}
     peerDependencies:
@@ -4021,17 +3854,6 @@ packages:
     resolution: {integrity: sha512-k2Ty1JcVojjJFwrg/ThKi2ujJ7XNLYaFGNB/bWT9wGR+oSMJHMa5w+CUq6p/pVrKeNNgA7pCqEcjSnHVoqJQFw==}
     dev: false
 
-  /@griffel/core@1.14.3:
-    resolution: {integrity: sha512-d1QqS8mP1fzF8KLLN/nhxNUHguMM9I61Ckjnn5zNUqxUlRaebnhbpa2kLDVBdIy1k22+76+NTg+pIpXXjGf+vg==}
-    dependencies:
-      '@emotion/hash': 0.9.1
-      '@griffel/style-types': 1.0.2
-      csstype: 3.1.2
-      rtl-css-js: 1.16.1
-      stylis: 4.3.0
-      tslib: 2.6.2
-    dev: false
-
   /@griffel/core@1.15.1:
     resolution: {integrity: sha512-09w5axbOJuBzjTVFN5EycbAOIpCoxZeoJMZgT2fTrIl2GIxnTWpK3F2d63UzGBmQf1O+EgR6nK4FgMXFt1UFig==}
     dependencies:
@@ -4040,16 +3862,6 @@ packages:
       csstype: 3.1.2
       rtl-css-js: 1.16.1
       stylis: 4.3.0
-      tslib: 2.6.2
-    dev: false
-
-  /@griffel/react@1.5.16(react@18.2.0):
-    resolution: {integrity: sha512-F4Gj1B90c7i4rLZuSmo2HaLNFHfrwr1PBsMslWDaPw6wLbiFjqubSpSEPtcq/U8Co3vva4iAX4+hD/RXSA9W8Q==}
-    peerDependencies:
-      react: '>=16.8.0 <19.0.0'
-    dependencies:
-      '@griffel/core': 1.14.3
-      react: 18.2.0
       tslib: 2.6.2
     dev: false
 
@@ -6849,8 +6661,8 @@ packages:
       redent: 3.0.0
     dev: false
 
-  /@testing-library/react@14.0.0(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-S04gSNJbYE30TlIMLTzv6QCTzt9AqIF5y6s6SzVFILNcNvbV/jU96GeiTPillGQo+Ny64M/5PV7klNYYgv5Dfg==}
+  /@testing-library/react@14.1.2(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-z4p7DVBTPjKM5qDZ0t5ZjzkpSNb+fZy1u6bzO7kk8oeGagpPCAtgh4cx1syrfp7a+QWkM021jGqjJaxJJnXAZg==}
     engines: {node: '>=14'}
     peerDependencies:
       react: ^18.0.0
@@ -6978,8 +6790,8 @@ packages:
       '@types/node': 20.10.4
     dev: false
 
-  /@types/dompurify@3.0.4:
-    resolution: {integrity: sha512-1Jk8S/IRzNSbwQRbuGuLFHviwxQ8pX81ZEW3INY9432Cwb4VedkBYan8gSIXVLOLHBtimOmUTEYphjRVmo+30g==}
+  /@types/dompurify@3.0.5:
+    resolution: {integrity: sha512-1Wg0g3BtQF7sSb27fJQAKck1HECM6zV1EB66j8JH9i3LCjYabJa0FSdiSgsD5K/RbrsR0SiraKacLB+T8ZVYAg==}
     dependencies:
       '@types/trusted-types': 2.0.5
     dev: false
@@ -7128,8 +6940,8 @@ packages:
     resolution: {integrity: sha512-U3PUjAudAdJBeC2pgN8uTIKgxrb4nlDF3SF0++EldXQvQBGkpFZMSnwQiIoDU77tv45VgNkl/L4ouD+rEomujw==}
     dev: false
 
-  /@types/json-stringify-safe@5.0.2:
-    resolution: {integrity: sha512-NJdNTdatSiYvxdPLwgQImChxTfPECXYkdB6wC71dO3GCz2z/s/ZkkHXHaUlSVvnbsRUQg8Al3cT8Wp08wMF3zA==}
+  /@types/json-stringify-safe@5.0.3:
+    resolution: {integrity: sha512-oNOjRxLfPeYbBSQ60maucaFNqbslVOPU4WWs5t/sHvAh6tyo/CThXSG+E24tEzkgh/fzvxyDrYdOJufgeNy1sQ==}
     dev: false
 
   /@types/json5@0.0.29:
@@ -7242,8 +7054,8 @@ packages:
       '@types/react': 18.2.42
     dev: false
 
-  /@types/react-linkify@1.0.3:
-    resolution: {integrity: sha512-JX3BMlloFD4zjKLehZiio9NO+UNyTjseC6qIZYXpiTSOcFuxqBI+fcbnjf/Bpltex8DMnCaod9YK+ooDlOhg5A==}
+  /@types/react-linkify@1.0.4:
+    resolution: {integrity: sha512-NOMw4X3kjvjY0lT5kXQdxZCXpPNi2hOuuqG+Kz+5EOQpi9rDUJJDitdE1j2JRNmrTnNIjrLnYG0HKyuOWN/uKA==}
     dependencies:
       '@types/react': 18.2.42
     dev: false
@@ -7354,8 +7166,8 @@ packages:
     resolution: {integrity: sha512-zC0iXxAv1C1ERURduJueYzkzZ2zaGyc+P2c95hgkikHPr3z8EdUZOlgEQ5X0DRmwDZn+hekycQnoeiiRVrmilQ==}
     dev: false
 
-  /@types/uuid@9.0.6:
-    resolution: {integrity: sha512-BT2Krtx4xaO6iwzwMFUYvWBWkV2pr37zD68Vmp1CDV196MzczBRxuEpD6Pr395HAgebC/co7hOphs53r8V7jew==}
+  /@types/uuid@9.0.7:
+    resolution: {integrity: sha512-WUtIVRUZ9i5dYXefDEAI7sh9/O7jGvHg7Df/5O/gtH3Yabe5odI3UWopVR1qbPXQtvOxWu3mM4XxlYeZtMWF4g==}
     dev: false
 
   /@types/webpack-env@1.18.3:
@@ -8346,8 +8158,8 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: false
 
-  /ast-types-flow@0.0.7:
-    resolution: {integrity: sha512-eBvWn1lvIApYMhzQMsu9ciLfkBY499mFZlNqG+/9WR7PVlroQw0vG30cOQQbaKz3sCEc44TAOu2ykzqXSNnwag==}
+  /ast-types-flow@0.0.8:
+    resolution: {integrity: sha512-OH/2E5Fg20h2aPrbe+QL8JZQFko0YZaF+j4mnQ7BGhfavO7OpSLa8a0y9sBwomHdSbkhTS8TQNayBfnW5DwbvQ==}
     dev: false
 
   /ast-types@0.14.2:
@@ -8415,8 +8227,8 @@ packages:
     engines: {node: '>= 0.4'}
     dev: false
 
-  /axe-core@4.8.2:
-    resolution: {integrity: sha512-/dlp0fxyM3R8YW7MFzaHWXrf4zzbr0vaYb23VBFCl83R7nWNPg/yaQw2Dc8jzCMmDVLhSdzH8MjrsuIUuvX+6g==}
+  /axe-core@4.7.0:
+    resolution: {integrity: sha512-M0JtH+hlOL5pLQwHOLNYZaXuhqmvS8oExsqB1SBYgA4Dk7u/xx+YdGHXaK5pyUfed5mYXdlYiphWq3G8cRi5JQ==}
     engines: {node: '>=4'}
     dev: false
 
@@ -10810,7 +10622,7 @@ packages:
       get-stdin: 6.0.0
     dev: false
 
-  /eslint-config-react-app@6.0.0(@typescript-eslint/eslint-plugin@4.33.0)(@typescript-eslint/parser@4.33.0)(eslint-plugin-flowtype@5.10.0)(eslint-plugin-import@2.28.1)(eslint-plugin-jsx-a11y@6.7.1)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.33.2)(eslint@7.32.0):
+  /eslint-config-react-app@6.0.0(@typescript-eslint/eslint-plugin@4.33.0)(@typescript-eslint/parser@4.33.0)(eslint-plugin-flowtype@5.10.0)(eslint-plugin-import@2.29.0)(eslint-plugin-jsx-a11y@6.8.0)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.33.2)(eslint@7.32.0):
     resolution: {integrity: sha512-bpoAAC+YRfzq0dsTk+6v9aHm/uqnDwayNAXleMypGl6CpxI9oXXscVHo4fk3eJPIn+rsbtNetB4r/ZIidFIE8A==}
     engines: {node: ^10.12.0 || >=12.0.0}
     peerDependencies:
@@ -10836,8 +10648,8 @@ packages:
       confusing-browser-globals: 1.0.11
       eslint: 7.32.0
       eslint-plugin-flowtype: 5.10.0(eslint@7.32.0)
-      eslint-plugin-import: 2.28.1(eslint@7.32.0)
-      eslint-plugin-jsx-a11y: 6.7.1(eslint@7.32.0)
+      eslint-plugin-import: 2.29.0(eslint@7.32.0)
+      eslint-plugin-jsx-a11y: 6.8.0(eslint@7.32.0)
       eslint-plugin-react: 7.33.2(eslint@7.32.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@7.32.0)
     dev: false
@@ -10846,7 +10658,7 @@ packages:
     resolution: {integrity: sha512-WFj2isz22JahUv+B788TlO3N6zL3nNJGU8CcZbPZvVEkBPaJdCV4vy5wyghty5ROFbCRnm132v8BScu5/1BQ8g==}
     dependencies:
       debug: 3.2.7
-      is-core-module: 2.13.0
+      is-core-module: 2.13.1
       resolve: 1.22.8
     dev: false
 
@@ -10899,8 +10711,8 @@ packages:
       eslint: 7.32.0
     dev: false
 
-  /eslint-plugin-import@2.28.1(eslint@7.32.0):
-    resolution: {integrity: sha512-9I9hFlITvOV55alzoKBI+K9q74kv0iKMeY6av5+umsNwayt59fz692daGyjR+oStBQgx6nwR9rXldDev3Clw+A==}
+  /eslint-plugin-import@2.29.0(eslint@7.32.0):
+    resolution: {integrity: sha512-QPOO5NO6Odv5lpoTkddtutccQjysJuFxoPS7fAHO+9m9udNHvTCPSAMW9zGAYj8lAIdr40I8yPCdUYrncXtrwg==}
     engines: {node: '>=4'}
     peerDependencies:
       eslint: ^2 || ^3 || ^4 || ^5 || ^6 || ^7.2.0 || ^8
@@ -10914,8 +10726,8 @@ packages:
       eslint: 7.32.0
       eslint-import-resolver-node: 0.3.9
       eslint-module-utils: 2.8.0(eslint@7.32.0)
-      has: 1.0.4
-      is-core-module: 2.13.0
+      hasown: 2.0.0
+      is-core-module: 2.13.1
       is-glob: 4.0.3
       minimatch: 3.1.2
       object.fromentries: 2.0.7
@@ -10945,8 +10757,8 @@ packages:
       - supports-color
     dev: false
 
-  /eslint-plugin-jsx-a11y@6.7.1(eslint@7.32.0):
-    resolution: {integrity: sha512-63Bog4iIethyo8smBklORknVjB0T2dwB8Mr/hIC+fBS0uyHdYYpzM/Ed+YC8VxTjlXHEWFOdmgwcDn1U2L9VCA==}
+  /eslint-plugin-jsx-a11y@6.8.0(eslint@7.32.0):
+    resolution: {integrity: sha512-Hdh937BS3KdwwbBaKd5+PLCOmYY6U4f2h9Z2ktwtNKvIdIEu137rjYbcb9ApSbVJfWxANNuiKTD/9tOKjK9qOA==}
     engines: {node: '>=4.0'}
     peerDependencies:
       eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8
@@ -10955,19 +10767,19 @@ packages:
       aria-query: 5.3.0
       array-includes: 3.1.7
       array.prototype.flatmap: 1.3.2
-      ast-types-flow: 0.0.7
-      axe-core: 4.8.2
+      ast-types-flow: 0.0.8
+      axe-core: 4.7.0
       axobject-query: 3.2.1
       damerau-levenshtein: 1.0.8
       emoji-regex: 9.2.2
+      es-iterator-helpers: 1.0.15
       eslint: 7.32.0
-      has: 1.0.4
+      hasown: 2.0.0
       jsx-ast-utils: 3.3.5
-      language-tags: 1.0.5
+      language-tags: 1.0.9
       minimatch: 3.1.2
       object.entries: 1.1.7
       object.fromentries: 2.0.7
-      semver: 6.3.1
     dev: false
 
   /eslint-plugin-markdown@2.2.1(eslint@7.32.0):
@@ -12350,6 +12162,13 @@ packages:
       minimalistic-assert: 1.0.1
     dev: false
 
+  /hasown@2.0.0:
+    resolution: {integrity: sha512-vUptKVTpIJhcczKBbgnS+RtcuYMB8+oNzPK2/Hp3hanz8JmpATdmmgLgSaadVREkDm+e2giHwY3ZRkyjSIDDFA==}
+    engines: {node: '>= 0.4'}
+    dependencies:
+      function-bind: 1.1.2
+    dev: false
+
   /hast-to-hyperscript@9.0.1:
     resolution: {integrity: sha512-zQgLKqF+O2F72S1aa4y2ivxzSlko3MAvxkwG8ehGmNiqd98BIN3JM1rAJPmplEyLmGLO2QZYJtIneOSZ2YbJuA==}
     dependencies:
@@ -12987,6 +12806,12 @@ packages:
     resolution: {integrity: sha512-Z7dk6Qo8pOCp3l4tsX2C5ZVas4V+UxwQodwZhLopL91TX8UyyHEXafPcyoeeWuLrwzHcr3igO78wNLwHJHsMCQ==}
     dependencies:
       has: 1.0.4
+    dev: false
+
+  /is-core-module@2.13.1:
+    resolution: {integrity: sha512-hHrIjvZsftOsvKSn2TRYl63zvxsgE0K+0mYMoH6gD4omR5IWB2KynivBQczo3+wF1cCkjzvptnI9Q0sPU66ilw==}
+    dependencies:
+      hasown: 2.0.0
     dev: false
 
   /is-data-descriptor@0.1.4:
@@ -14349,8 +14174,9 @@ packages:
     resolution: {integrity: sha512-tN0MCzyWnoz/4nHS6uxdlFWoUZT7ABptwKPQ52Ea7URk6vll88bWBVhodtnlfEuCcKWNGoc+uGbw1cwa9IKh/w==}
     dev: false
 
-  /language-tags@1.0.5:
-    resolution: {integrity: sha512-qJhlO9cGXi6hBGKoxEG/sKZDAHD5Hnu9Hs4WbOY3pCWXDhw0N8x1NenNzm2EnNLkLkk7J2SdxAkDSbb6ftT+UQ==}
+  /language-tags@1.0.9:
+    resolution: {integrity: sha512-MbjN408fEndfiQXbFQ1vnd+1NoLDsnQW41410oQBXiyXDMYH5z505juWa4KUE1LqxRC7DgOgZDbKLxHIwm27hA==}
+    engines: {node: '>=0.10'}
     dependencies:
       language-subtag-registry: 0.3.22
     dev: false
@@ -20155,13 +19981,13 @@ packages:
     dev: false
 
   file:projects/acs-ui-common.tgz:
-    resolution: {integrity: sha512-dJ1NiXdLHT/owTb/2npZCPa51eIUFaZvzyGAl0vr74MiAy6OHTZUGw+zTZLK2Xvb3pLc+nsfG+M+4S4FWtbQvA==, tarball: file:projects/acs-ui-common.tgz}
+    resolution: {integrity: sha512-goiSdf09i9UruoMvDDQZrZxZ3XffOGoZFe/hF5IAt4dnf5O6/PctZC0KspeupkFyi7JNRi6ZEjImtDmhGDkdyA==, tarball: file:projects/acs-ui-common.tgz}
     name: '@rush-temp/acs-ui-common'
     version: 0.0.0
     dependencies:
       '@azure/communication-common': 2.3.0
       '@azure/logger': 1.0.4
-      '@babel/cli': 7.23.0(@babel/core@7.23.5)
+      '@babel/cli': 7.23.4(@babel/core@7.23.5)
       '@babel/core': 7.23.5
       '@microsoft/api-documenter': 7.23.14(@types/node@20.10.4)
       '@microsoft/api-extractor': 7.38.5(@types/node@20.10.4)
@@ -20177,7 +20003,7 @@ packages:
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0(eslint@7.32.0)
       eslint-plugin-header: 3.1.1(eslint@7.32.0)
-      eslint-plugin-import: 2.28.1(eslint@7.32.0)
+      eslint-plugin-import: 2.29.0(eslint@7.32.0)
       eslint-plugin-jsdoc: 36.1.1(eslint@7.32.0)
       eslint-plugin-prettier: 3.4.1(eslint-config-prettier@6.15.0)(eslint@7.32.0)(prettier@2.3.1)
       if-env: 1.0.4
@@ -20200,14 +20026,14 @@ packages:
     dev: false
 
   file:projects/calling-component-bindings.tgz:
-    resolution: {integrity: sha512-Ghbc7zKvITciFiHAb60FXO5UxS1FllNFrq0/FWXcvOlE3YiA1JPWYHFL/Z/mpY/qLptrK0bqHKfHO9UNX67Ttg==, tarball: file:projects/calling-component-bindings.tgz}
+    resolution: {integrity: sha512-3Lin7/SvcWAFDr4qENfcDhwIU797I8+SP4uG0vS8weIW8dRTnlYtdveLPIrUfPCbN0dEecq+oSO0v1UBwFZzfw==, tarball: file:projects/calling-component-bindings.tgz}
     name: '@rush-temp/calling-component-bindings'
     version: 0.0.0
     dependencies:
       '@azure/communication-calling': 1.19.1
       '@azure/communication-calling-effects': 1.0.1
       '@azure/communication-common': 2.3.0
-      '@babel/cli': 7.23.0(@babel/core@7.23.5)
+      '@babel/cli': 7.23.4(@babel/core@7.23.5)
       '@babel/core': 7.23.5
       '@microsoft/api-documenter': 7.23.14(@types/node@20.10.4)
       '@microsoft/api-extractor': 7.38.5(@types/node@20.10.4)
@@ -20223,7 +20049,7 @@ packages:
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0(eslint@7.32.0)
       eslint-plugin-header: 3.1.1(eslint@7.32.0)
-      eslint-plugin-import: 2.28.1(eslint@7.32.0)
+      eslint-plugin-import: 2.29.0(eslint@7.32.0)
       eslint-plugin-jsdoc: 36.1.1(eslint@7.32.0)
       eslint-plugin-prettier: 3.4.1(eslint-config-prettier@6.15.0)(eslint@7.32.0)(prettier@2.3.1)
       if-env: 1.0.4
@@ -20248,7 +20074,7 @@ packages:
     dev: false
 
   file:projects/calling-stateful-client.tgz:
-    resolution: {integrity: sha512-ZLnlQxtaFv9aG65xe4jY4sdh2Qdjsa1o6sxMDpS3Dd2I+CfyOP0IIV4TP42uTkTisxcQE2WqHKeuZX2BaFPdog==, tarball: file:projects/calling-stateful-client.tgz}
+    resolution: {integrity: sha512-hQDxOhJ8eIcHsY2wx6ZacZURrVG+1lJCriY/8IrlWZzkJiC7T6+rmR2du1UOtZSX788C4xZJO+chySFAzlnrxA==, tarball: file:projects/calling-stateful-client.tgz}
     name: '@rush-temp/calling-stateful-client'
     version: 0.0.0
     dependencies:
@@ -20256,7 +20082,7 @@ packages:
       '@azure/communication-common': 2.3.0
       '@azure/core-auth': 1.5.0
       '@azure/logger': 1.0.4
-      '@babel/cli': 7.23.0(@babel/core@7.23.5)
+      '@babel/cli': 7.23.4(@babel/core@7.23.5)
       '@babel/core': 7.23.5
       '@microsoft/api-documenter': 7.23.14(@types/node@20.10.4)
       '@microsoft/api-extractor': 7.38.5(@types/node@20.10.4)
@@ -20272,7 +20098,7 @@ packages:
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0(eslint@7.32.0)
       eslint-plugin-header: 3.1.1(eslint@7.32.0)
-      eslint-plugin-import: 2.28.1(eslint@7.32.0)
+      eslint-plugin-import: 2.29.0(eslint@7.32.0)
       eslint-plugin-jsdoc: 36.1.1(eslint@7.32.0)
       eslint-plugin-prettier: 3.4.1(eslint-config-prettier@6.15.0)(eslint@7.32.0)(prettier@2.3.1)
       events: 3.3.0
@@ -20296,7 +20122,7 @@ packages:
     dev: false
 
   file:projects/calling.tgz:
-    resolution: {integrity: sha512-clG3uz7AcvbOfoiEvsCFjoX2MPw5FroE0SsmhaY0mFQ64tF1Do8fDkNyQv0DoXUjvqB4fFfqS4jnuOBrxkdZBg==, tarball: file:projects/calling.tgz}
+    resolution: {integrity: sha512-Mod2MrycBR/RfHai5ZZtb/ez74Dsx1CupIY3gGC1OcQ50dR1876EmJBfL0NOpbIQZMBDcG9zdk1ksrmAlz/+yQ==, tarball: file:projects/calling.tgz}
     name: '@rush-temp/calling'
     version: 0.0.0
     dependencies:
@@ -20305,19 +20131,19 @@ packages:
       '@azure/communication-common': 2.3.0
       '@azure/communication-identity': 1.3.0
       '@azure/logger': 1.0.4
-      '@babel/cli': 7.23.0(@babel/core@7.23.5)
+      '@babel/cli': 7.23.4(@babel/core@7.23.5)
       '@babel/core': 7.23.5
       '@babel/eslint-parser': 7.22.15(@babel/core@7.23.5)(eslint@7.32.0)
       '@babel/preset-env': 7.23.5(@babel/core@7.23.5)
       '@babel/preset-react': 7.22.15(@babel/core@7.23.5)
-      '@fluentui/react': 8.112.3(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
-      '@fluentui/react-hooks': 8.6.30(@types/react@18.2.42)(react@18.2.0)
-      '@fluentui/react-icons': 2.0.220(react@18.2.0)
+      '@fluentui/react': 8.112.9(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
+      '@fluentui/react-hooks': 8.6.33(@types/react@18.2.42)(react@18.2.0)
+      '@fluentui/react-icons': 2.0.223(react@18.2.0)
       '@types/jest': 29.5.11
       '@types/node': 20.10.4
       '@types/react': 18.2.42
       '@types/react-dom': 18.2.17
-      '@types/uuid': 9.0.6
+      '@types/uuid': 9.0.7
       '@typescript-eslint/eslint-plugin': 4.33.0(@typescript-eslint/parser@4.33.0)(eslint@7.32.0)(typescript@4.7.4)
       '@typescript-eslint/parser': 4.33.0(eslint@7.32.0)(typescript@4.7.4)
       ajv: 8.12.0
@@ -20330,11 +20156,11 @@ packages:
       env-cmd: 10.1.0
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0(eslint@7.32.0)
-      eslint-config-react-app: 6.0.0(@typescript-eslint/eslint-plugin@4.33.0)(@typescript-eslint/parser@4.33.0)(eslint-plugin-flowtype@5.10.0)(eslint-plugin-import@2.28.1)(eslint-plugin-jsx-a11y@6.7.1)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.33.2)(eslint@7.32.0)
+      eslint-config-react-app: 6.0.0(@typescript-eslint/eslint-plugin@4.33.0)(@typescript-eslint/parser@4.33.0)(eslint-plugin-flowtype@5.10.0)(eslint-plugin-import@2.29.0)(eslint-plugin-jsx-a11y@6.8.0)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.33.2)(eslint@7.32.0)
       eslint-plugin-flowtype: 5.10.0(eslint@7.32.0)
       eslint-plugin-header: 3.1.1(eslint@7.32.0)
-      eslint-plugin-import: 2.28.1(eslint@7.32.0)
-      eslint-plugin-jsx-a11y: 6.7.1(eslint@7.32.0)
+      eslint-plugin-import: 2.29.0(eslint@7.32.0)
+      eslint-plugin-jsx-a11y: 6.8.0(eslint@7.32.0)
       eslint-plugin-prettier: 3.4.1(eslint-config-prettier@6.15.0)(eslint@7.32.0)(prettier@2.3.1)
       eslint-plugin-react: 7.33.2(eslint@7.32.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@7.32.0)
@@ -20386,7 +20212,7 @@ packages:
     dev: false
 
   file:projects/callwithchat.tgz:
-    resolution: {integrity: sha512-FFE7MvlpTdtyWfe6rs6hjA/rhIGUtv1aCj28+aP5nGk3QNvSpgRcAFOgnPVC/oc0QYhvCS+chuqx9g4iZHeYTw==, tarball: file:projects/callwithchat.tgz}
+    resolution: {integrity: sha512-WdW63Kqx6OSWSvaZphf7Y0XeEpwLdT78rbOVT+h4WOVeURsxoKmCjfUy2PGIqWY6Sh8Xc6Pudulw3WT4XOLJOQ==, tarball: file:projects/callwithchat.tgz}
     name: '@rush-temp/callwithchat'
     version: 0.0.0
     dependencies:
@@ -20396,18 +20222,18 @@ packages:
       '@azure/communication-common': 2.3.0
       '@azure/communication-identity': 1.3.0
       '@azure/logger': 1.0.4
-      '@babel/cli': 7.23.0(@babel/core@7.23.5)
+      '@babel/cli': 7.23.4(@babel/core@7.23.5)
       '@babel/core': 7.23.5
       '@babel/eslint-parser': 7.22.15(@babel/core@7.23.5)(eslint@7.32.0)
       '@babel/preset-env': 7.23.5(@babel/core@7.23.5)
       '@babel/preset-react': 7.22.15(@babel/core@7.23.5)
-      '@fluentui/react': 8.112.3(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
-      '@fluentui/react-icons': 2.0.220(react@18.2.0)
+      '@fluentui/react': 8.112.9(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
+      '@fluentui/react-icons': 2.0.223(react@18.2.0)
       '@types/jest': 29.5.11
       '@types/node': 20.10.4
       '@types/react': 18.2.42
       '@types/react-dom': 18.2.17
-      '@types/uuid': 9.0.6
+      '@types/uuid': 9.0.7
       '@typescript-eslint/eslint-plugin': 4.33.0(@typescript-eslint/parser@4.33.0)(eslint@7.32.0)(typescript@4.7.4)
       '@typescript-eslint/parser': 4.33.0(eslint@7.32.0)(typescript@4.7.4)
       ajv: 8.12.0
@@ -20421,11 +20247,11 @@ packages:
       env-cmd: 10.1.0
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0(eslint@7.32.0)
-      eslint-config-react-app: 6.0.0(@typescript-eslint/eslint-plugin@4.33.0)(@typescript-eslint/parser@4.33.0)(eslint-plugin-flowtype@5.10.0)(eslint-plugin-import@2.28.1)(eslint-plugin-jsx-a11y@6.7.1)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.33.2)(eslint@7.32.0)
+      eslint-config-react-app: 6.0.0(@typescript-eslint/eslint-plugin@4.33.0)(@typescript-eslint/parser@4.33.0)(eslint-plugin-flowtype@5.10.0)(eslint-plugin-import@2.29.0)(eslint-plugin-jsx-a11y@6.8.0)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.33.2)(eslint@7.32.0)
       eslint-plugin-flowtype: 5.10.0(eslint@7.32.0)
       eslint-plugin-header: 3.1.1(eslint@7.32.0)
-      eslint-plugin-import: 2.28.1(eslint@7.32.0)
-      eslint-plugin-jsx-a11y: 6.7.1(eslint@7.32.0)
+      eslint-plugin-import: 2.29.0(eslint@7.32.0)
+      eslint-plugin-jsx-a11y: 6.8.0(eslint@7.32.0)
       eslint-plugin-prettier: 3.4.1(eslint-config-prettier@6.15.0)(eslint@7.32.0)(prettier@2.3.1)
       eslint-plugin-react: 7.33.2(eslint@7.32.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@7.32.0)
@@ -20474,14 +20300,14 @@ packages:
     dev: false
 
   file:projects/chat-component-bindings.tgz:
-    resolution: {integrity: sha512-n/21K9RtCjddLLYq6Oxnzi1sLNwXg9vKnOYog76jdbEZTa3FSQ7ueXgQpCDlboEscvT+KUTgtMojloO5yZNTRA==, tarball: file:projects/chat-component-bindings.tgz}
+    resolution: {integrity: sha512-3AvTqIsmkrVBg2jg2UDCLQwKFO1p8fYlJxjmZdGoQlJRWmPk81EHaQLeE642YXFPgF53SHztsRUGCD7laNHUzQ==, tarball: file:projects/chat-component-bindings.tgz}
     name: '@rush-temp/chat-component-bindings'
     version: 0.0.0
     dependencies:
       '@azure/communication-chat': 1.4.0
       '@azure/communication-common': 2.3.0
       '@azure/core-paging': 1.5.0
-      '@babel/cli': 7.23.0(@babel/core@7.23.5)
+      '@babel/cli': 7.23.4(@babel/core@7.23.5)
       '@babel/core': 7.23.5
       '@microsoft/api-documenter': 7.23.14(@types/node@20.10.4)
       '@microsoft/api-extractor': 7.38.5(@types/node@20.10.4)
@@ -20495,7 +20321,7 @@ packages:
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0(eslint@7.32.0)
       eslint-plugin-header: 3.1.1(eslint@7.32.0)
-      eslint-plugin-import: 2.28.1(eslint@7.32.0)
+      eslint-plugin-import: 2.29.0(eslint@7.32.0)
       eslint-plugin-jsdoc: 36.1.1(eslint@7.32.0)
       eslint-plugin-prettier: 3.4.1(eslint-config-prettier@6.15.0)(eslint@7.32.0)(prettier@2.3.1)
       if-env: 1.0.4
@@ -20517,7 +20343,7 @@ packages:
     dev: false
 
   file:projects/chat-stateful-client.tgz:
-    resolution: {integrity: sha512-//L9FO8KTQoZMT+PJgSwPT2tuVi8MJxmoSuadXE4YHy4zIABqwI90Sc8uVXps8Hu/j1WLzQ0+tTJWvrTpyivDA==, tarball: file:projects/chat-stateful-client.tgz}
+    resolution: {integrity: sha512-p9Ge/G/MxQL0/xED//57Q0fWS+Ta92UW0lmBj/WVzSwAczA5x+vpd5lFr4Wv+50OyMCGJ4tGYYmlTzQv2Czrkg==, tarball: file:projects/chat-stateful-client.tgz}
     name: '@rush-temp/chat-stateful-client'
     version: 0.0.0
     dependencies:
@@ -20526,7 +20352,7 @@ packages:
       '@azure/communication-signaling': 1.0.0-beta.20
       '@azure/core-paging': 1.5.0
       '@azure/logger': 1.0.4
-      '@babel/cli': 7.23.0(@babel/core@7.23.5)
+      '@babel/cli': 7.23.4(@babel/core@7.23.5)
       '@babel/core': 7.23.5
       '@microsoft/api-documenter': 7.23.14(@types/node@20.10.4)
       '@microsoft/api-extractor': 7.38.5(@types/node@20.10.4)
@@ -20542,7 +20368,7 @@ packages:
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0(eslint@7.32.0)
       eslint-plugin-header: 3.1.1(eslint@7.32.0)
-      eslint-plugin-import: 2.28.1(eslint@7.32.0)
+      eslint-plugin-import: 2.29.0(eslint@7.32.0)
       eslint-plugin-jsdoc: 36.1.1(eslint@7.32.0)
       eslint-plugin-prettier: 3.4.1(eslint-config-prettier@6.15.0)(eslint@7.32.0)(prettier@2.3.1)
       events: 3.3.0
@@ -20568,7 +20394,7 @@ packages:
     dev: false
 
   file:projects/chat.tgz:
-    resolution: {integrity: sha512-EgOn7RkSvcqH+HRBfeVKSzQgU0bKfHk4OBC3fZH0khlcG1kUbMP3NU/9uOYP/su/pn4JNBrqvzq14wtwRrXDIw==, tarball: file:projects/chat.tgz}
+    resolution: {integrity: sha512-GHasau2jdICIRXYagBo43eQKFjfNXwE7bo+1Wk6onBJDpin43Qez4Us67lg407NF5TiXjMSDvGRFeseUUg3KbQ==, tarball: file:projects/chat.tgz}
     name: '@rush-temp/chat'
     version: 0.0.0
     dependencies:
@@ -20577,17 +20403,17 @@ packages:
       '@azure/communication-common': 2.3.0
       '@azure/communication-identity': 1.3.0
       '@azure/logger': 1.0.4
-      '@babel/cli': 7.23.0(@babel/core@7.23.5)
+      '@babel/cli': 7.23.4(@babel/core@7.23.5)
       '@babel/core': 7.23.5
       '@babel/eslint-parser': 7.22.15(@babel/core@7.23.5)(eslint@7.32.0)
-      '@fluentui/react': 8.112.3(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
+      '@fluentui/react': 8.112.9(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
       '@fluentui/react-file-type-icons': 8.10.4(@types/react@18.2.42)(react@18.2.0)
-      '@fluentui/react-icons': 2.0.220(react@18.2.0)
+      '@fluentui/react-icons': 2.0.223(react@18.2.0)
       '@types/jest': 29.5.11
-      '@types/json-stringify-safe': 5.0.2
+      '@types/json-stringify-safe': 5.0.3
       '@types/react': 18.2.42
       '@types/react-dom': 18.2.17
-      '@types/react-linkify': 1.0.3
+      '@types/react-linkify': 1.0.4
       '@typescript-eslint/eslint-plugin': 4.33.0(@typescript-eslint/parser@4.33.0)(eslint@7.32.0)(typescript@4.7.4)
       '@typescript-eslint/parser': 4.33.0(eslint@7.32.0)(typescript@4.7.4)
       babel-loader: 8.1.0(@babel/core@7.23.5)(webpack@5.89.0)
@@ -20598,11 +20424,11 @@ packages:
       env-cmd: 10.1.0
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0(eslint@7.32.0)
-      eslint-config-react-app: 6.0.0(@typescript-eslint/eslint-plugin@4.33.0)(@typescript-eslint/parser@4.33.0)(eslint-plugin-flowtype@5.10.0)(eslint-plugin-import@2.28.1)(eslint-plugin-jsx-a11y@6.7.1)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.33.2)(eslint@7.32.0)
+      eslint-config-react-app: 6.0.0(@typescript-eslint/eslint-plugin@4.33.0)(@typescript-eslint/parser@4.33.0)(eslint-plugin-flowtype@5.10.0)(eslint-plugin-import@2.29.0)(eslint-plugin-jsx-a11y@6.8.0)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.33.2)(eslint@7.32.0)
       eslint-plugin-flowtype: 5.10.0(eslint@7.32.0)
       eslint-plugin-header: 3.1.1(eslint@7.32.0)
-      eslint-plugin-import: 2.28.1(eslint@7.32.0)
-      eslint-plugin-jsx-a11y: 6.7.1(eslint@7.32.0)
+      eslint-plugin-import: 2.29.0(eslint@7.32.0)
+      eslint-plugin-jsx-a11y: 6.8.0(eslint@7.32.0)
       eslint-plugin-prettier: 3.4.1(eslint-config-prettier@6.15.0)(eslint@7.32.0)(prettier@2.3.1)
       eslint-plugin-react: 7.33.2(eslint@7.32.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@7.32.0)
@@ -20651,7 +20477,7 @@ packages:
     dev: false
 
   file:projects/check-treeshaking.tgz:
-    resolution: {integrity: sha512-5pELZskjJh21bxCTfNj72At3VPb+ZD+G9M7Esz4AMg6FQtuFLM1E8WRHVTDkDY2yzaeYRdP+T9ft/fascWKkog==, tarball: file:projects/check-treeshaking.tgz}
+    resolution: {integrity: sha512-PpRGMxvyLo1JPATzJCD7xH/ohuXqbVv9I6WFmnZA2kDggeL6KZ8nKhqVS0q1o3+IscwBeXtGfN/7pxXvbn08yg==, tarball: file:projects/check-treeshaking.tgz}
     name: '@rush-temp/check-treeshaking'
     version: 0.0.0
     dependencies:
@@ -20661,7 +20487,7 @@ packages:
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0(eslint@7.32.0)
       eslint-plugin-header: 3.1.1(eslint@7.32.0)
-      eslint-plugin-import: 2.28.1(eslint@7.32.0)
+      eslint-plugin-import: 2.29.0(eslint@7.32.0)
       eslint-plugin-prettier: 3.4.1(eslint-config-prettier@6.15.0)(eslint@7.32.0)(prettier@2.3.1)
       prettier: 2.3.1
       rimraf: 2.7.1
@@ -20678,14 +20504,14 @@ packages:
     dev: false
 
   file:projects/check-typescript-regression.tgz:
-    resolution: {integrity: sha512-zG7Lii7Sh9ZAIXXdrQZXv/4MAp9ujbjj69uu9oN2bzOyrQaoR4CWJgvOS1mMdT+ywVxvvlT/xjQumZzf+eP6NQ==, tarball: file:projects/check-typescript-regression.tgz}
+    resolution: {integrity: sha512-+RRnvucXRcHymdPtJPaCcHibt07CD33pW/nmRUG5X8sYkR4xNLkQ/AEYfvjSfjiWnN7Pu/wJ4rIqQ8QHJOjmnw==, tarball: file:projects/check-typescript-regression.tgz}
     name: '@rush-temp/check-typescript-regression'
     version: 0.0.0
     dependencies:
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0(eslint@7.32.0)
       eslint-plugin-header: 3.1.1(eslint@7.32.0)
-      eslint-plugin-import: 2.28.1(eslint@7.32.0)
+      eslint-plugin-import: 2.29.0(eslint@7.32.0)
       eslint-plugin-prettier: 3.4.1(eslint-config-prettier@6.15.0)(eslint@7.32.0)(prettier@2.3.1)
       prettier: 2.3.1
       rimraf: 2.7.1
@@ -20695,7 +20521,7 @@ packages:
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-koq/F06RJosOSDLiHq2rCOxgSOlb6Yv6y3P2GN6rWbhxqWGSZY/QTXlc5D45VtzmeVBnXpD/l8xP36VZmSkgYQ==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-duKaQ/a7ksFApcBgZMDCi3Rna0yqYFEhoHOio3wT4hSckrevXbIYTa0K9qnGBclA+GPP0Sq7bwuOlr1W/n8NiA==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
@@ -20706,31 +20532,31 @@ packages:
       '@azure/core-auth': 1.5.0
       '@azure/core-client': 1.7.3
       '@azure/core-paging': 1.5.0
-      '@azure/core-rest-pipeline': 1.12.1
+      '@azure/core-rest-pipeline': 1.13.0
       '@azure/logger': 1.0.4
-      '@babel/cli': 7.23.0(@babel/core@7.23.5)
+      '@babel/cli': 7.23.4(@babel/core@7.23.5)
       '@babel/core': 7.23.5
-      '@fluentui-contrib/react-chat': 0.1.7(@fluentui/react-components@9.42.0)(@fluentui/react-icons@2.0.220)(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
-      '@fluentui/react': 8.112.3(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
+      '@fluentui-contrib/react-chat': 0.1.7(@fluentui/react-components@9.42.0)(@fluentui/react-icons@2.0.223)(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
+      '@fluentui/react': 8.112.9(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
       '@fluentui/react-components': 9.42.0(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)
       '@fluentui/react-file-type-icons': 8.10.4(@types/react@18.2.42)(react@18.2.0)
-      '@fluentui/react-hooks': 8.6.30(@types/react@18.2.42)(react@18.2.0)
-      '@fluentui/react-icons': 2.0.220(react@18.2.0)
-      '@fluentui/react-window-provider': 2.2.15(@types/react@18.2.42)(react@18.2.0)
+      '@fluentui/react-hooks': 8.6.33(@types/react@18.2.42)(react@18.2.0)
+      '@fluentui/react-icons': 2.0.223(react@18.2.0)
+      '@fluentui/react-window-provider': 2.2.16(@types/react@18.2.42)(react@18.2.0)
       '@griffel/react': 1.5.19(react@18.2.0)
       '@microsoft/api-documenter': 7.23.14(@types/node@20.10.4)
       '@microsoft/api-extractor': 7.38.5(@types/node@20.10.4)
       '@rollup/plugin-json': 6.0.1(rollup@4.7.0)
       '@testing-library/jest-dom': 5.17.0
-      '@testing-library/react': 14.0.0(react-dom@18.2.0)(react@18.2.0)
-      '@types/dompurify': 3.0.4
+      '@testing-library/react': 14.1.2(react-dom@18.2.0)(react@18.2.0)
+      '@types/dompurify': 3.0.5
       '@types/jest': 29.5.11
-      '@types/json-stringify-safe': 5.0.2
+      '@types/json-stringify-safe': 5.0.3
       '@types/node': 20.10.4
       '@types/react': 18.2.42
       '@types/react-dom': 18.2.17
-      '@types/react-linkify': 1.0.3
-      '@types/uuid': 9.0.6
+      '@types/react-linkify': 1.0.4
+      '@types/uuid': 9.0.7
       '@typescript-eslint/eslint-plugin': 4.33.0(@typescript-eslint/parser@4.33.0)(eslint@7.32.0)(typescript@4.7.4)
       '@typescript-eslint/parser': 4.33.0(eslint@7.32.0)(typescript@4.7.4)
       '@zerollup/ts-transform-paths': 1.7.18(typescript@4.7.4)
@@ -20744,8 +20570,8 @@ packages:
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0(eslint@7.32.0)
       eslint-plugin-header: 3.1.1(eslint@7.32.0)
-      eslint-plugin-import: 2.28.1(eslint@7.32.0)
-      eslint-plugin-jsx-a11y: 6.7.1(eslint@7.32.0)
+      eslint-plugin-import: 2.29.0(eslint@7.32.0)
+      eslint-plugin-jsx-a11y: 6.8.0(eslint@7.32.0)
       eslint-plugin-prettier: 3.4.1(eslint-config-prettier@6.15.0)(eslint@7.32.0)(prettier@2.3.1)
       eslint-plugin-react: 7.33.2(eslint@7.32.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@7.32.0)
@@ -20794,7 +20620,7 @@ packages:
     dev: false
 
   file:projects/component-examples.tgz:
-    resolution: {integrity: sha512-trxRevm2XXRO+HP+QkVxM5/9JkhrD9HeURvDnoukeYTe6wpHzE8PFIJdhdnuo58BPvQizkWMoUDf13MDuhoqTg==, tarball: file:projects/component-examples.tgz}
+    resolution: {integrity: sha512-kSlxTGwmGo1XHr9G76N7jETq9gxxeuzcSgTeo+nz5twHs2pIi0KHukrjbjBis6TKmT873vRtFTmT2FAVUm/WtQ==, tarball: file:projects/component-examples.tgz}
     name: '@rush-temp/component-examples'
     version: 0.0.0
     dependencies:
@@ -20804,10 +20630,10 @@ packages:
       '@azure/communication-identity': 1.3.0
       '@babel/core': 7.23.5
       '@babel/eslint-parser': 7.22.15(@babel/core@7.23.5)(eslint@7.32.0)
-      '@fluentui/react': 8.112.3(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
+      '@fluentui/react': 8.112.9(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
       '@types/react': 18.2.42
       '@types/react-dom': 18.2.17
-      '@types/uuid': 9.0.6
+      '@types/uuid': 9.0.7
       '@typescript-eslint/eslint-plugin': 4.33.0(@typescript-eslint/parser@4.33.0)(eslint@7.32.0)(typescript@4.7.4)
       '@typescript-eslint/parser': 4.33.0(eslint@7.32.0)(typescript@4.7.4)
       babel-loader: 8.1.0(@babel/core@7.23.5)(webpack@5.89.0)
@@ -20817,11 +20643,11 @@ packages:
       env-cmd: 10.1.0
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0(eslint@7.32.0)
-      eslint-config-react-app: 6.0.0(@typescript-eslint/eslint-plugin@4.33.0)(@typescript-eslint/parser@4.33.0)(eslint-plugin-flowtype@5.10.0)(eslint-plugin-import@2.28.1)(eslint-plugin-jsx-a11y@6.7.1)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.33.2)(eslint@7.32.0)
+      eslint-config-react-app: 6.0.0(@typescript-eslint/eslint-plugin@4.33.0)(@typescript-eslint/parser@4.33.0)(eslint-plugin-flowtype@5.10.0)(eslint-plugin-import@2.29.0)(eslint-plugin-jsx-a11y@6.8.0)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.33.2)(eslint@7.32.0)
       eslint-plugin-flowtype: 5.10.0(eslint@7.32.0)
       eslint-plugin-header: 3.1.1(eslint@7.32.0)
-      eslint-plugin-import: 2.28.1(eslint@7.32.0)
-      eslint-plugin-jsx-a11y: 6.7.1(eslint@7.32.0)
+      eslint-plugin-import: 2.29.0(eslint@7.32.0)
+      eslint-plugin-jsx-a11y: 6.8.0(eslint@7.32.0)
       eslint-plugin-prettier: 3.4.1(eslint-config-prettier@6.15.0)(eslint@7.32.0)(prettier@2.3.1)
       eslint-plugin-react: 7.33.2(eslint@7.32.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@7.32.0)
@@ -20879,7 +20705,7 @@ packages:
     dev: false
 
   file:projects/fake-backends.tgz:
-    resolution: {integrity: sha512-ZvvHG5jscWsNV9/3t14eDGnKNlPSkUpYFiFjLgq7W4/p2SqKZbL0uXFMGP4zUkcyd8nQ4HTD1IM31svQJO0C7g==, tarball: file:projects/fake-backends.tgz}
+    resolution: {integrity: sha512-XFWM6raNs85WDH49SbmjX6sq6HYVWI+67DmW78p/Yejt3NrSPnVT4JRnPSxeJyEyx/AVGWXUTZLhqL54hCN3FA==, tarball: file:projects/fake-backends.tgz}
     name: '@rush-temp/fake-backends'
     version: 0.0.0
     dependencies:
@@ -20887,7 +20713,7 @@ packages:
       '@azure/communication-common': 2.3.0
       '@azure/communication-signaling': 1.0.0-beta.20
       '@azure/core-paging': 1.5.0
-      '@babel/cli': 7.23.0(@babel/core@7.23.5)
+      '@babel/cli': 7.23.4(@babel/core@7.23.5)
       '@babel/core': 7.23.5
       '@babel/preset-env': 7.23.5(@babel/core@7.23.5)
       '@microsoft/api-extractor': 7.38.5(@types/node@20.10.4)
@@ -20903,7 +20729,7 @@ packages:
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0(eslint@7.32.0)
       eslint-plugin-header: 3.1.1(eslint@7.32.0)
-      eslint-plugin-import: 2.28.1(eslint@7.32.0)
+      eslint-plugin-import: 2.29.0(eslint@7.32.0)
       eslint-plugin-jsdoc: 36.1.1(eslint@7.32.0)
       eslint-plugin-prettier: 3.4.1(eslint-config-prettier@6.15.0)(eslint@7.32.0)(prettier@2.3.1)
       events: 3.3.0
@@ -20932,36 +20758,36 @@ packages:
     dev: false
 
   file:projects/react-components.tgz:
-    resolution: {integrity: sha512-Bu+CGwo2xt5qnZ/D3EHDmWbVybbNU5roYJaDA2azheiYZxQzF4yWmnGyVsZNeMYy/qyItIqMl4MWt5LSwr//gw==, tarball: file:projects/react-components.tgz}
+    resolution: {integrity: sha512-WppSdfk5XWYAUsTaeo5DSxp5PUM8ShmIWv+WEfTcll7KwteZ2thvwg2SqvAcNzpJI5QJM8f/MYiR9OGJv0la3A==, tarball: file:projects/react-components.tgz}
     name: '@rush-temp/react-components'
     version: 0.0.0
     dependencies:
-      '@babel/cli': 7.23.0(@babel/core@7.23.5)
+      '@babel/cli': 7.23.4(@babel/core@7.23.5)
       '@babel/core': 7.23.5
       '@babel/preset-env': 7.23.5(@babel/core@7.23.5)
-      '@fluentui-contrib/react-chat': 0.1.7(@fluentui/react-components@9.42.0)(@fluentui/react-icons@2.0.220)(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
-      '@fluentui/react': 8.112.3(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
+      '@fluentui-contrib/react-chat': 0.1.7(@fluentui/react-components@9.42.0)(@fluentui/react-icons@2.0.223)(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
+      '@fluentui/react': 8.112.9(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
       '@fluentui/react-components': 9.42.0(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)
       '@fluentui/react-file-type-icons': 8.10.4(@types/react@18.2.42)(react@18.2.0)
-      '@fluentui/react-hooks': 8.6.30(@types/react@18.2.42)(react@18.2.0)
-      '@fluentui/react-icons': 2.0.220(react@18.2.0)
-      '@fluentui/react-window-provider': 2.2.15(@types/react@18.2.42)(react@18.2.0)
+      '@fluentui/react-hooks': 8.6.33(@types/react@18.2.42)(react@18.2.0)
+      '@fluentui/react-icons': 2.0.223(react@18.2.0)
+      '@fluentui/react-window-provider': 2.2.16(@types/react@18.2.42)(react@18.2.0)
       '@griffel/react': 1.5.19(react@18.2.0)
       '@microsoft/api-documenter': 7.23.14(@types/node@20.10.4)
       '@microsoft/api-extractor': 7.38.5(@types/node@20.10.4)
       '@rollup/plugin-json': 6.0.1(rollup@4.7.0)
       '@testing-library/dom': 9.3.3
       '@testing-library/jest-dom': 5.17.0
-      '@testing-library/react': 14.0.0(react-dom@18.2.0)(react@18.2.0)
+      '@testing-library/react': 14.1.2(react-dom@18.2.0)(react@18.2.0)
       '@testing-library/user-event': 14.4.3(@testing-library/dom@9.3.3)
-      '@types/dompurify': 3.0.4
+      '@types/dompurify': 3.0.5
       '@types/jest': 29.5.11
-      '@types/json-stringify-safe': 5.0.2
+      '@types/json-stringify-safe': 5.0.3
       '@types/node': 20.10.4
       '@types/react': 18.2.42
       '@types/react-dom': 18.2.17
-      '@types/react-linkify': 1.0.3
-      '@types/uuid': 9.0.6
+      '@types/react-linkify': 1.0.4
+      '@types/uuid': 9.0.7
       '@typescript-eslint/eslint-plugin': 4.33.0(@typescript-eslint/parser@4.33.0)(eslint@7.32.0)(typescript@4.7.4)
       '@typescript-eslint/parser': 4.33.0(eslint@7.32.0)(typescript@4.7.4)
       '@zerollup/ts-transform-paths': 1.7.18(typescript@4.7.4)
@@ -20979,9 +20805,9 @@ packages:
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0(eslint@7.32.0)
       eslint-plugin-header: 3.1.1(eslint@7.32.0)
-      eslint-plugin-import: 2.28.1(eslint@7.32.0)
+      eslint-plugin-import: 2.29.0(eslint@7.32.0)
       eslint-plugin-jsdoc: 36.1.1(eslint@7.32.0)
-      eslint-plugin-jsx-a11y: 6.7.1(eslint@7.32.0)
+      eslint-plugin-jsx-a11y: 6.8.0(eslint@7.32.0)
       eslint-plugin-prettier: 3.4.1(eslint-config-prettier@6.15.0)(eslint@7.32.0)(prettier@2.3.1)
       eslint-plugin-react: 7.33.2(eslint@7.32.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@7.32.0)
@@ -21033,7 +20859,7 @@ packages:
     dev: false
 
   file:projects/react-composites.tgz:
-    resolution: {integrity: sha512-ChS0rEXSw4qGi0UxoVJDlMSTRUnVFkfvG7aY+yQJKP0PJYQYevmjYV/8Lpx05XbqjTTmgTa32nqylVrAP/rAHg==, tarball: file:projects/react-composites.tgz}
+    resolution: {integrity: sha512-OYirwBngSHNf9qI76fj8dZsMbtUkxcMtiE73ju0b/2nlCTdqK927v19a0/CKVfvRTfoDLnZN5RINh/Q3XNcNCQ==, tarball: file:projects/react-composites.tgz}
     name: '@rush-temp/react-composites'
     version: 0.0.0
     dependencies:
@@ -21044,29 +20870,29 @@ packages:
       '@azure/communication-identity': 1.3.0
       '@azure/communication-signaling': 1.0.0-beta.20
       '@azure/core-paging': 1.5.0
-      '@azure/core-rest-pipeline': 1.12.1
+      '@azure/core-rest-pipeline': 1.13.0
       '@azure/logger': 1.0.4
-      '@babel/cli': 7.23.0(@babel/core@7.23.5)
+      '@babel/cli': 7.23.4(@babel/core@7.23.5)
       '@babel/core': 7.23.5
       '@babel/preset-env': 7.23.5(@babel/core@7.23.5)
-      '@fluentui/react': 8.112.3(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
+      '@fluentui/react': 8.112.9(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
       '@fluentui/react-file-type-icons': 8.10.4(@types/react@18.2.42)(react@18.2.0)
-      '@fluentui/react-hooks': 8.6.30(@types/react@18.2.42)(react@18.2.0)
-      '@fluentui/react-icons': 2.0.220(react@18.2.0)
+      '@fluentui/react-hooks': 8.6.33(@types/react@18.2.42)(react@18.2.0)
+      '@fluentui/react-icons': 2.0.223(react@18.2.0)
       '@microsoft/api-documenter': 7.23.14(@types/node@20.10.4)
       '@microsoft/api-extractor': 7.38.5(@types/node@20.10.4)
       '@playwright/test': 1.39.0
       '@testing-library/jest-dom': 5.17.0
-      '@testing-library/react': 14.0.0(react-dom@18.2.0)(react@18.2.0)
+      '@testing-library/react': 14.1.2(react-dom@18.2.0)(react@18.2.0)
       '@types/copy-webpack-plugin': 6.4.3
       '@types/express': 4.17.20
       '@types/jest': 29.5.11
-      '@types/json-stringify-safe': 5.0.2
+      '@types/json-stringify-safe': 5.0.3
       '@types/node': 20.10.4
       '@types/react': 18.2.42
       '@types/react-dom': 18.2.17
-      '@types/react-linkify': 1.0.3
-      '@types/uuid': 9.0.6
+      '@types/react-linkify': 1.0.4
+      '@types/uuid': 9.0.7
       '@types/yargs': 17.0.29
       '@typescript-eslint/eslint-plugin': 4.33.0(@typescript-eslint/parser@4.33.0)(eslint@7.32.0)(typescript@4.7.4)
       '@typescript-eslint/parser': 4.33.0(eslint@7.32.0)(typescript@4.7.4)
@@ -21087,9 +20913,9 @@ packages:
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0(eslint@7.32.0)
       eslint-plugin-header: 3.1.1(eslint@7.32.0)
-      eslint-plugin-import: 2.28.1(eslint@7.32.0)
+      eslint-plugin-import: 2.29.0(eslint@7.32.0)
       eslint-plugin-jsdoc: 36.1.1(eslint@7.32.0)
-      eslint-plugin-jsx-a11y: 6.7.1(eslint@7.32.0)
+      eslint-plugin-jsx-a11y: 6.8.0(eslint@7.32.0)
       eslint-plugin-prettier: 3.4.1(eslint-config-prettier@6.15.0)(eslint@7.32.0)(prettier@2.3.1)
       eslint-plugin-react: 7.33.2(eslint@7.32.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@7.32.0)
@@ -21175,7 +21001,7 @@ packages:
     dev: false
 
   file:projects/sample-static-html-composites.tgz:
-    resolution: {integrity: sha512-ZPfTbJsX+wpT1hmnztTjwI6v9G2o6DHwe04lB0J6gclA1cR7WufSKNfDyV6t7a/KgRmD4rkXHepwswTGLddOrQ==, tarball: file:projects/sample-static-html-composites.tgz}
+    resolution: {integrity: sha512-Pp0/60P4xcd/6gMM60A6d0YfDfkv7QFh9XUPI+r6GMcWDs7dgTcuYpxsNOdvGNHD37aVQf352cWGHNFnyNdxrA==, tarball: file:projects/sample-static-html-composites.tgz}
     name: '@rush-temp/sample-static-html-composites'
     version: 0.0.0
     dependencies:
@@ -21183,9 +21009,9 @@ packages:
       '@azure/communication-chat': 1.4.0
       '@azure/communication-common': 2.3.0
       '@azure/communication-identity': 1.3.0
-      '@babel/cli': 7.23.0(@babel/core@7.23.5)
+      '@babel/cli': 7.23.4(@babel/core@7.23.5)
       '@babel/core': 7.23.5
-      '@fluentui/react': 8.112.3(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
+      '@fluentui/react': 8.112.9(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
       '@playwright/test': 1.39.0
       '@types/copy-webpack-plugin': 6.4.3
       '@types/node': 20.10.4
@@ -21235,7 +21061,7 @@ packages:
     dev: false
 
   file:projects/server.tgz:
-    resolution: {integrity: sha512-cVobcILYkp9ZscnNCCXuCl4n9kfQtLefDpE0r8n4LAZFTxWy/hpaI1lqq0+Q99vUY+A8SxB2oa6c0kl/QSmBvQ==, tarball: file:projects/server.tgz}
+    resolution: {integrity: sha512-+COLS89nTZPDyWedIvpEN2W0jmTjXU/xYa+mVaT+6w3eqtiGXiYRdrMLEyNFKrzFS6JzBTKE0o99/iFUlYPmUw==, tarball: file:projects/server.tgz}
     name: '@rush-temp/server'
     version: 0.0.0
     dependencies:
@@ -21264,7 +21090,7 @@ packages:
       eslint-config-prettier: 6.15.0(eslint@7.32.0)
       eslint-plugin-flowtype: 5.10.0(eslint@7.32.0)
       eslint-plugin-header: 3.1.1(eslint@7.32.0)
-      eslint-plugin-import: 2.28.1(eslint@7.32.0)
+      eslint-plugin-import: 2.29.0(eslint@7.32.0)
       eslint-plugin-prettier: 3.4.1(eslint-config-prettier@6.15.0)(eslint@7.32.0)(prettier@2.3.1)
       express: 4.18.2
       http-errors: 1.8.1
@@ -21303,7 +21129,7 @@ packages:
     dev: false
 
   file:projects/storybook.tgz:
-    resolution: {integrity: sha512-nv7FwpOVBc9jRjN515Lk0h0I/RpT5IEVl8cSOtAo9LcCb5UCICgOyqPyGAhs3d6MizaIMOPdB4xRYtyngByBpg==, tarball: file:projects/storybook.tgz}
+    resolution: {integrity: sha512-n12YpLE/Kv2ape/eO0SIHGy2AFdG4/Op0ffRYeUTpmncCMwr+aVGLSENki+pCSQ6GyzUaHo+F0vkIpNPxOA00w==, tarball: file:projects/storybook.tgz}
     name: '@rush-temp/storybook'
     version: 0.0.0
     dependencies:
@@ -21313,11 +21139,11 @@ packages:
       '@azure/communication-identity': 1.3.0
       '@babel/core': 7.23.5
       '@babel/preset-env': 7.23.5(@babel/core@7.23.5)
-      '@fluentui/react': 8.112.3(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
+      '@fluentui/react': 8.112.9(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
       '@fluentui/react-components': 9.42.0(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)
       '@fluentui/react-file-type-icons': 8.10.4(@types/react@18.2.42)(react@18.2.0)
-      '@fluentui/react-hooks': 8.6.30(@types/react@18.2.42)(react@18.2.0)
-      '@fluentui/react-icons': 2.0.220(react@18.2.0)
+      '@fluentui/react-hooks': 8.6.33(@types/react@18.2.42)(react@18.2.0)
+      '@fluentui/react-icons': 2.0.223(react@18.2.0)
       '@fluentui/theme-samples': 8.7.123(@types/react-dom@18.2.17)(@types/react@18.2.42)(react-dom@18.2.0)(react@18.2.0)
       '@griffel/react': 1.5.19(react@18.2.0)
       '@mdx-js/react': 1.6.22(react@18.2.0)
@@ -21343,12 +21169,12 @@ packages:
       '@storybook/theming': 6.5.16(react-dom@18.2.0)(react@18.2.0)
       '@testing-library/jest-dom': 5.17.0
       '@types/jest': 29.5.11
-      '@types/json-stringify-safe': 5.0.2
+      '@types/json-stringify-safe': 5.0.3
       '@types/node': 20.10.4
       '@types/react': 18.2.42
       '@types/react-dom': 18.2.17
-      '@types/react-linkify': 1.0.3
-      '@types/uuid': 9.0.6
+      '@types/react-linkify': 1.0.4
+      '@types/uuid': 9.0.7
       '@typescript-eslint/eslint-plugin': 4.33.0(@typescript-eslint/parser@4.33.0)(eslint@7.32.0)(typescript@4.7.4)
       '@typescript-eslint/parser': 4.33.0(eslint@7.32.0)(typescript@4.7.4)
       ajv: 8.12.0
@@ -21362,8 +21188,8 @@ packages:
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0(eslint@7.32.0)
       eslint-plugin-header: 3.1.1(eslint@7.32.0)
-      eslint-plugin-import: 2.28.1(eslint@7.32.0)
-      eslint-plugin-jsx-a11y: 6.7.1(eslint@7.32.0)
+      eslint-plugin-import: 2.29.0(eslint@7.32.0)
+      eslint-plugin-jsx-a11y: 6.8.0(eslint@7.32.0)
       eslint-plugin-mdx: 1.16.0(eslint@7.32.0)
       eslint-plugin-prettier: 3.4.1(eslint-config-prettier@6.15.0)(eslint@7.32.0)(prettier@2.3.1)
       eslint-plugin-react: 7.33.2(eslint@7.32.0)
