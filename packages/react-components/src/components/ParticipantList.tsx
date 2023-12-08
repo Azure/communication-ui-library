@@ -196,21 +196,20 @@ const onRenderParticipantDefault = (
         )
       : () => null;
 
-  let onRenderAvatarWithRaiseHand = onRenderAvatar;
   /* @conditional-compile-remove(raise-hand) */
-  onRenderAvatarWithRaiseHand = (
-    userId?: string,
-    options?: CustomAvatarOptions,
-    defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element
-  ): JSX.Element =>
-    onRenderAvatar?.(
-      userId,
-      {
-        ...options,
-        styles: { root: { borderColor: callingParticipant?.raisedHand ? callingPalette.raiseHandGold : 'transparent' } }
-      },
-      defaultOnRender
-    ) ?? <></>;
+  const onRenderAvatarWithRaiseHand =
+    callingParticipant?.raisedHand && onRenderAvatar
+      ? (
+          userId?: string,
+          options?: CustomAvatarOptions,
+          defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element
+        ) =>
+          onRenderAvatar(
+            userId,
+            { ...options, styles: { root: { border: callingPalette.raiseHandGold } } },
+            defaultOnRender
+          )
+      : onRenderAvatar;
 
   return (
     <ParticipantItem
