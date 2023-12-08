@@ -37,7 +37,7 @@
     "@internal/acs-ui-common": "1.11.0-beta.1",
     "events": "^3.3.0",
     "immer": "10.0.3",
-    "nanoid": "3.3.6"
+    "nanoid": "5.0.4"
   },
   "peerDependencies": {
     "@azure/communication-chat": "1.4.0-beta.2 || >=1.4.0"

@@ -42,12 +42,12 @@
     "html-to-react": "1.5.1",
     "immer": "10.0.3",
     "memoize-one": "^5.2.1",
-    "nanoid": "3.3.6",
+    "nanoid": "5.0.4",
     "react-linkify": "^1.0.0-alpha",
     "react-use-draggable-scroll": "^0.4.7",
     "reselect": "^4.0.0",
     "textarea-caret-ts": "^4.1.1",
-    "use-debounce": "^9.0.4",
+    "use-debounce": "^10.0.0",
     "uuid": "^9.0.0"
   },
   "peerDependencies": {
@@ -108,7 +108,7 @@
     "@microsoft/api-documenter": "~7.23.14",
     "@microsoft/api-extractor": "~7.38.5",
     "@rollup/plugin-json": "^6.0.1",
-    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/jest-dom": "^6.1.5",
     "@testing-library/react": "^14.1.2",
     "@types/dompurify": "^3.0.5",
     "@types/jest": "^29.5.11",

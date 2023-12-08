@@ -6646,17 +6646,32 @@ packages:
       pretty-format: 27.5.1
     dev: false
 
-  /@testing-library/jest-dom@5.17.0:
-    resolution: {integrity: sha512-ynmNeT7asXyH3aSVv4vvX4Rb+0qjOhdNHnO/3vuZNqPmhDpV/+rCSGwQ7bLcmU2cJ4dvoheIO85LQj0IbJHEtg==}
-    engines: {node: '>=8', npm: '>=6', yarn: '>=1'}
+  /@testing-library/jest-dom@6.1.5(@types/jest@29.5.11)(jest@29.7.0):
+    resolution: {integrity: sha512-3y04JLW+EceVPy2Em3VwNr95dOKqA8DhR0RJHhHKDZNYXcVXnEK7WIrpj4eYU8SVt/qYZ2aRWt/WgQ+grNES8g==}
+    engines: {node: '>=14', npm: '>=6', yarn: '>=1'}
+    peerDependencies:
+      '@jest/globals': '>= 28'
+      '@types/jest': '>= 28'
+      jest: '>= 28'
+      vitest: '>= 0.32'
+    peerDependenciesMeta:
+      '@jest/globals':
+        optional: true
+      '@types/jest':
+        optional: true
+      jest:
+        optional: true
+      vitest:
+        optional: true
     dependencies:
       '@adobe/css-tools': 4.3.1
       '@babel/runtime': 7.23.2
-      '@types/testing-library__jest-dom': 5.14.9
+      '@types/jest': 29.5.11
       aria-query: 5.3.0
       chalk: 3.0.0
       css.escape: 1.5.1
       dom-accessibility-api: 0.5.16
+      jest: 29.7.0(@types/node@20.10.4)(ts-node@10.9.2)
       lodash: 4.17.21
       redent: 3.0.0
     dev: false
@@ -7134,12 +7149,6 @@ packages:
 
   /@types/tapable@1.0.10:
     resolution: {integrity: sha512-q8F20SdXG5fdVJQ5yxsVlH+f+oekP42QeHv4s5KlrxTMT0eopXn7ol1rhxMcksf8ph7XNv811iVDE2hOpUvEPg==}
-    dev: false
-
-  /@types/testing-library__jest-dom@5.14.9:
-    resolution: {integrity: sha512-FSYhIjFlfOpGSRyVoMBMuS3ws5ehFQODymf3vlI7U1K8c7PHwWwFY7VREfmsuzHSOnoKs/9/Y983ayOs7eRzqw==}
-    dependencies:
-      '@types/jest': 29.5.11
     dev: false
 
   /@types/tough-cookie@4.0.4:
@@ -14928,6 +14937,12 @@ packages:
     hasBin: true
     dev: false
 
+  /nanoid@5.0.4:
+    resolution: {integrity: sha512-vAjmBf13gsmhXSgBrtIclinISzFFy22WwCYoyilZlsrRXNIHSwgFQ1bEdjRwMT3aoadeIF6HMuDRlOxzfXV8ig==}
+    engines: {node: ^18 || >=20}
+    hasBin: true
+    dev: false
+
   /nanomatch@1.2.13:
     resolution: {integrity: sha512-fpoe2T0RbHwBTBUOftAfBPaDEi06ufaUai0mE6Yn1kacc3SnTErfb/h+X94VXzI64rKFHYImXSvdwGGCmwOqCA==}
     engines: {node: '>=0.10.0'}
@@ -19040,9 +19055,9 @@ packages:
       qs: 6.11.2
     dev: false
 
-  /use-debounce@9.0.4(react@18.2.0):
-    resolution: {integrity: sha512-6X8H/mikbrt0XE8e+JXRtZ8yYVvKkdYRfmIhWZYsP8rcNs9hk3APV8Ua2mFkKRLcJKVdnX2/Vwrmg2GWKUQEaQ==}
-    engines: {node: '>= 10.0.0'}
+  /use-debounce@10.0.0(react@18.2.0):
+    resolution: {integrity: sha512-XRjvlvCB46bah9IBXVnq/ACP2lxqXyZj0D9hj4K5OzNroMDpTEBg8Anuh1/UfRTRs7pLhQ+RiNxxwZu9+MVl1A==}
+    engines: {node: '>= 16.0.0'}
     peerDependencies:
       react: '>=16.8.0'
     dependencies:
@@ -20122,7 +20137,7 @@ packages:
     dev: false
 
   file:projects/calling.tgz:
-    resolution: {integrity: sha512-Mod2MrycBR/RfHai5ZZtb/ez74Dsx1CupIY3gGC1OcQ50dR1876EmJBfL0NOpbIQZMBDcG9zdk1ksrmAlz/+yQ==, tarball: file:projects/calling.tgz}
+    resolution: {integrity: sha512-l0oAF4AgMrvd66B2BtlVWeKq4GmUJX7YhjrHsLKVeUMuH2TC+Yu1PwGAKQ3YebjUz12Nq8KWQhsbfe7aT6fy/A==, tarball: file:projects/calling.tgz}
     name: '@rush-temp/calling'
     version: 0.0.0
     dependencies:
@@ -20172,7 +20187,7 @@ packages:
       jest-junit: 16.0.0
       merge: 2.1.1
       mobile-detect: 1.4.5
-      nanoid: 3.3.6
+      nanoid: 5.0.4
       node-fetch: 2.6.7
       prettier: 2.3.1
       pretty-quick: 3.1.3(prettier@2.3.1)
@@ -20343,7 +20358,7 @@ packages:
     dev: false
 
   file:projects/chat-stateful-client.tgz:
-    resolution: {integrity: sha512-p9Ge/G/MxQL0/xED//57Q0fWS+Ta92UW0lmBj/WVzSwAczA5x+vpd5lFr4Wv+50OyMCGJ4tGYYmlTzQv2Czrkg==, tarball: file:projects/chat-stateful-client.tgz}
+    resolution: {integrity: sha512-h6dbrfMHuR6SSD5mU3qW7A9s1w2H/ZPq96QY82yYQnAYzzVWsXYutbaifv+KEh/GOykLbnj8ooWNm0BH+BnvRw==, tarball: file:projects/chat-stateful-client.tgz}
     name: '@rush-temp/chat-stateful-client'
     version: 0.0.0
     dependencies:
@@ -20375,7 +20390,7 @@ packages:
       if-env: 1.0.4
       immer: 10.0.3
       jest: 29.7.0(@types/node@20.10.4)(ts-node@10.9.2)
-      nanoid: 3.3.6
+      nanoid: 5.0.4
       prettier: 2.3.1
       rimraf: 2.7.1
       rollup: 4.7.0
@@ -20521,7 +20536,7 @@ packages:
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-duKaQ/a7ksFApcBgZMDCi3Rna0yqYFEhoHOio3wT4hSckrevXbIYTa0K9qnGBclA+GPP0Sq7bwuOlr1W/n8NiA==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-mYVsPJ8MpQSKExBRzS2lsCVYCJ0hp1EZ2Gc23WQtZVKt+M4siqbTJM0m1JE/reVurhuwBKaTF4R6P2q2EDSMWQ==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
@@ -20547,7 +20562,7 @@ packages:
       '@microsoft/api-documenter': 7.23.14(@types/node@20.10.4)
       '@microsoft/api-extractor': 7.38.5(@types/node@20.10.4)
       '@rollup/plugin-json': 6.0.1(rollup@4.7.0)
-      '@testing-library/jest-dom': 5.17.0
+      '@testing-library/jest-dom': 6.1.5(@types/jest@29.5.11)(jest@29.7.0)
       '@testing-library/react': 14.1.2(react-dom@18.2.0)(react@18.2.0)
       '@types/dompurify': 3.0.5
       '@types/jest': 29.5.11
@@ -20582,7 +20597,7 @@ packages:
       jest: 29.7.0(@types/node@20.10.4)(ts-node@10.9.2)
       json-stringify-safe: 5.0.1
       memoize-one: 5.2.1
-      nanoid: 3.3.6
+      nanoid: 5.0.4
       node-forge: 1.3.1
       prettier: 2.3.1
       pretty-quick: 3.1.3(prettier@2.3.1)
@@ -20605,9 +20620,10 @@ packages:
       ttypescript: 1.5.15(ts-node@10.9.2)(typescript@4.7.4)
       type-fest: 3.13.1
       typescript: 4.7.4
-      use-debounce: 9.0.4(react@18.2.0)
+      use-debounce: 10.0.0(react@18.2.0)
       uuid: 9.0.1
     transitivePeerDependencies:
+      - '@jest/globals'
       - '@jest/types'
       - '@swc/core'
       - '@swc/wasm'
@@ -20617,6 +20633,7 @@ packages:
       - esbuild
       - node-notifier
       - supports-color
+      - vitest
     dev: false
 
   file:projects/component-examples.tgz:
@@ -20705,7 +20722,7 @@ packages:
     dev: false
 
   file:projects/fake-backends.tgz:
-    resolution: {integrity: sha512-XFWM6raNs85WDH49SbmjX6sq6HYVWI+67DmW78p/Yejt3NrSPnVT4JRnPSxeJyEyx/AVGWXUTZLhqL54hCN3FA==, tarball: file:projects/fake-backends.tgz}
+    resolution: {integrity: sha512-1IpKsjlwShc3gs+L9OQ2M42WVCFSe44/HH6w3NodQfZ3/MitUg6po9QMEgrgvO7qSPJWCSOZ3t08DUcq0fAkAw==, tarball: file:projects/fake-backends.tgz}
     name: '@rush-temp/fake-backends'
     version: 0.0.0
     dependencies:
@@ -20736,7 +20753,7 @@ packages:
       if-env: 1.0.4
       immer: 10.0.3
       jest: 29.7.0(@types/node@20.10.4)(ts-node@10.9.2)
-      nanoid: 3.3.6
+      nanoid: 5.0.4
       prettier: 2.3.1
       rimraf: 2.7.1
       rollup: 4.7.0
@@ -20758,7 +20775,7 @@ packages:
     dev: false
 
   file:projects/react-components.tgz:
-    resolution: {integrity: sha512-WppSdfk5XWYAUsTaeo5DSxp5PUM8ShmIWv+WEfTcll7KwteZ2thvwg2SqvAcNzpJI5QJM8f/MYiR9OGJv0la3A==, tarball: file:projects/react-components.tgz}
+    resolution: {integrity: sha512-J1eidT135B7rZIsTRgtHoQNwtUzpuj05tPibblm+Eo2pHmEL9SD9meoCpw/bDUuMPwIZPjBEr6aK9D1oyDtBgw==, tarball: file:projects/react-components.tgz}
     name: '@rush-temp/react-components'
     version: 0.0.0
     dependencies:
@@ -20777,7 +20794,7 @@ packages:
       '@microsoft/api-extractor': 7.38.5(@types/node@20.10.4)
       '@rollup/plugin-json': 6.0.1(rollup@4.7.0)
       '@testing-library/dom': 9.3.3
-      '@testing-library/jest-dom': 5.17.0
+      '@testing-library/jest-dom': 6.1.5(@types/jest@29.5.11)(jest@29.7.0)
       '@testing-library/react': 14.1.2(react-dom@18.2.0)(react@18.2.0)
       '@testing-library/user-event': 14.4.3(@testing-library/dom@9.3.3)
       '@types/dompurify': 3.0.5
@@ -20839,10 +20856,11 @@ packages:
       ts-node: 10.9.2(@types/node@20.10.4)(typescript@4.7.4)
       type-fest: 3.13.1
       typescript: 4.7.4
-      use-debounce: 9.0.4(react@18.2.0)
+      use-debounce: 10.0.0(react@18.2.0)
       uuid: 9.0.1
       webpack: 5.89.0(webpack-cli@5.1.4)
     transitivePeerDependencies:
+      - '@jest/globals'
       - '@jest/types'
       - '@swc/core'
       - '@swc/wasm'
@@ -20855,11 +20873,12 @@ packages:
       - supports-color
       - uglify-js
       - utf-8-validate
+      - vitest
       - webpack-cli
     dev: false
 
   file:projects/react-composites.tgz:
-    resolution: {integrity: sha512-OYirwBngSHNf9qI76fj8dZsMbtUkxcMtiE73ju0b/2nlCTdqK927v19a0/CKVfvRTfoDLnZN5RINh/Q3XNcNCQ==, tarball: file:projects/react-composites.tgz}
+    resolution: {integrity: sha512-Ygy4hWD9hnH35ZWhVnkx4CI1vR3STdlGz9mKJ5i6Rqj2VVE93YB+fHm/EyM+BM+ptQ/8qKSqBDsIyoG+2i4ahQ==, tarball: file:projects/react-composites.tgz}
     name: '@rush-temp/react-composites'
     version: 0.0.0
     dependencies:
@@ -20882,7 +20901,7 @@ packages:
       '@microsoft/api-documenter': 7.23.14(@types/node@20.10.4)
       '@microsoft/api-extractor': 7.38.5(@types/node@20.10.4)
       '@playwright/test': 1.39.0
-      '@testing-library/jest-dom': 5.17.0
+      '@testing-library/jest-dom': 6.1.5(@types/jest@29.5.11)(jest@29.7.0)
       '@testing-library/react': 14.1.2(react-dom@18.2.0)(react@18.2.0)
       '@types/copy-webpack-plugin': 6.4.3
       '@types/express': 4.17.20
@@ -20932,7 +20951,7 @@ packages:
       json-stringify-safe: 5.0.1
       memoize-one: 5.2.1
       nan: 2.18.0
-      nanoid: 3.3.6
+      nanoid: 5.0.4
       node-forge: 1.3.1
       prettier: 2.3.1
       pretty-quick: 3.1.3(prettier@2.3.1)
@@ -20959,6 +20978,7 @@ packages:
       webpack-dev-server: 4.15.1(webpack-cli@5.1.4)(webpack@5.89.0)
       yargs: 17.7.2
     transitivePeerDependencies:
+      - '@jest/globals'
       - '@jest/types'
       - '@swc/core'
       - '@swc/wasm'
@@ -20972,6 +20992,7 @@ packages:
       - supports-color
       - uglify-js
       - utf-8-validate
+      - vitest
       - webpack-bundle-analyzer
     dev: false
 
@@ -21129,7 +21150,7 @@ packages:
     dev: false
 
   file:projects/storybook.tgz:
-    resolution: {integrity: sha512-n12YpLE/Kv2ape/eO0SIHGy2AFdG4/Op0ffRYeUTpmncCMwr+aVGLSENki+pCSQ6GyzUaHo+F0vkIpNPxOA00w==, tarball: file:projects/storybook.tgz}
+    resolution: {integrity: sha512-n+65aeTsH0QWqnAzJGqoab3iLYcMeFYRH7XFj7SccVJVNdXZS7OMRo5k15c+lPZU2bwpy5bYcA6OOpKiLbS+iA==, tarball: file:projects/storybook.tgz}
     name: '@rush-temp/storybook'
     version: 0.0.0
     dependencies:
@@ -21167,7 +21188,7 @@ packages:
       '@storybook/react': 6.5.16(@babel/core@7.23.5)(@storybook/builder-webpack5@6.5.14)(@storybook/manager-webpack5@6.5.16)(eslint@7.32.0)(react-dom@18.2.0)(react@18.2.0)(require-from-string@2.0.2)(typescript@4.7.4)
       '@storybook/storybook-deployer': 2.8.16
       '@storybook/theming': 6.5.16(react-dom@18.2.0)(react@18.2.0)
-      '@testing-library/jest-dom': 5.17.0
+      '@testing-library/jest-dom': 6.1.5(@types/jest@29.5.11)(jest@29.7.0)
       '@types/jest': 29.5.11
       '@types/json-stringify-safe': 5.0.3
       '@types/node': 20.10.4
@@ -21225,6 +21246,7 @@ packages:
     transitivePeerDependencies:
       - '@angular/core'
       - '@angular/platform-browser-dynamic'
+      - '@jest/globals'
       - '@jest/types'
       - '@storybook/angular'
       - '@storybook/builder-manager4'
@@ -21257,6 +21279,7 @@ packages:
       - type-fest
       - uglify-js
       - utf-8-validate
+      - vitest
       - vue
       - vue-jest
       - vue-template-compiler
