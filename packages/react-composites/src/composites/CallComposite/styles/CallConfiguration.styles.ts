@@ -317,15 +317,16 @@ export const panelFocusProps: IFocusTrapZoneProps = {
 /**
  * @private
  */
-export const logoStyles = (shape: 'circle' | 'square'): IImageStyles => ({
+export const logoStyles = (shape: undefined | 'unset' | 'circle'): IImageStyles => ({
   root: {
     overflow: 'initial', // prevent the image being clipped
     display: 'flex',
     justifyContent: 'center'
   },
   image: {
-    borderRadius: shape === 'circle' ? '100%' : undefined,
     height: `${LOGO_HEIGHT_REM}rem`,
-    width: `${LOGO_HEIGHT_REM}rem` // width should match height
+    borderRadius: shape === 'circle' ? '100%' : undefined,
+    aspectRatio: shape === 'circle' ? '1 / 1' : undefined,
+    objectFit: shape === 'circle' ? 'cover' : undefined
   }
 });

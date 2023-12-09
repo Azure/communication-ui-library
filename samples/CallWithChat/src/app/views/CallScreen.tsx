@@ -170,13 +170,23 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     return <Spinner label={'Creating adapter'} ariaLive="assertive" labelPosition="top" />;
   }
 
+  let callInvitationUrl: string | undefined = window.location.href;
+  // Only show the call invitation url if the call is a group call or Teams call, do not show for Rooms, 1:1 or 1:N calls
+  if (!isGroupCallLocator(locator) && !isTeamsMeetingLinkLocator(locator)) {
+    callInvitationUrl = undefined;
+  }
+
   return (
     <CallWithChatComposite
       adapter={adapter}
       fluentTheme={currentTheme.theme}
       rtl={currentRtl}
+<<<<<<< HEAD
       joinInvitationURL={window.location.href}
       options={options}
+=======
+      joinInvitationURL={callInvitationUrl}
+>>>>>>> main
       formFactor={isMobileSession ? 'mobile' : 'desktop'}
     />
   );
@@ -193,4 +203,14 @@ const convertPageStateToString = (state: CallWithChatAdapterState): string => {
     default:
       return `${state.page}`;
   }
+};
+
+const isTeamsMeetingLinkLocator = (
+  locator: TeamsMeetingLinkLocator | CallAndChatLocator
+): locator is TeamsMeetingLinkLocator => {
+  return 'meetingLink' in locator;
+};
+
+const isGroupCallLocator = (locator: TeamsMeetingLinkLocator | CallAndChatLocator): boolean => {
+  return 'callLocator' in locator && 'groupId' in locator.callLocator;
 };

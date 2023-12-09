@@ -1,15 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { CommonCallAdapter, CallComposite } from '@azure/communication-react';
-import { CallCompositeOptions } from '@azure/communication-react';
+import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
+import { CallAdapterLocator, CallComposite, CallCompositeOptions, CommonCallAdapter } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
+import React, { useEffect, useMemo } from 'react';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
 import { useIsMobile } from '../utils/useIsMobile';
-import React, { useEffect } from 'react';
-import { useMemo } from 'react';
-import { CallScreenProps } from './CallScreen';
 import { isIOS } from '../utils/utils';
+import { CallScreenProps } from './CallScreen';
 
 export type CallCompositeContainerProps = CallScreenProps & { adapter?: CommonCallAdapter };
 
@@ -44,9 +43,8 @@ export const CallCompositeContainer = (props: CallCompositeContainerProps): JSX.
   }
 
   let callInvitationUrl: string | undefined = window.location.href;
-  /* @conditional-compile-remove(rooms) */
-  // If the call is a Rooms call we should not make call invitation link available
-  if (adapter.getState().isRoomsCall) {
+  // Only show the call invitation url if the call is a group call or Teams call, do not show for Rooms, 1:1 or 1:N calls
+  if (!isGroupCallLocator(props.callLocator) && !isTeamsMeetingLinkLocator(props.callLocator)) {
     callInvitationUrl = undefined;
   }
 
@@ -68,10 +66,22 @@ const onPermissionsTroubleshootingClick = (permissionState: {
   microphone: PermissionState;
 }): void => {
   console.log(permissionState);
-  alert('permission troubleshooting clicked');
+  alert(
+    'Troubleshooting clicked! This is just a sample. In your production application replace this with a link that opens a new tab to a troubleshooting guide.'
+  );
 };
 
 /* @conditional-compile-remove(call-readiness) */
 const onNetworkingTroubleShootingClick = (): void => {
-  alert('network troubleshooting clicked');
+  alert(
+    'Troubleshooting clicked! This is just a sample. In your production application replace this with a link that opens a new tab to a troubleshooting guide.'
+  );
+};
+
+const isTeamsMeetingLinkLocator = (locator: CallAdapterLocator): locator is TeamsMeetingLinkLocator => {
+  return 'meetingLink' in locator;
+};
+
+const isGroupCallLocator = (locator: CallAdapterLocator): locator is GroupCallLocator => {
+  return 'groupId' in locator;
 };

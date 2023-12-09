@@ -52,6 +52,7 @@ import { VideoGalleryLayout } from '@internal/react-components';
 import { capabilitiesChangedInfoAndRoleSelector } from './selectors/capabilitiesChangedInfoAndRoleSelector';
 /* @conditional-compile-remove(capabilities) */
 import { useTrackedCapabilityChangedNotifications } from './utils/TrackCapabilityChangedNotifications';
+import { useEndedCallConsoleErrors } from './utils/useConsoleErrors';
 
 /**
  * Props for {@link CallComposite}.
@@ -253,11 +254,11 @@ export type CallCompositeOptions = {
        */
       alt?: string;
       /**
-       * The logo can be displayed as a circle or a square.
+       * The logo can be displayed as a circle.
        *
-       * @defaultValue 'circle'
+       * @defaultValue 'unset'
        */
-      shape?: 'circle' | 'square';
+      shape?: 'unset' | 'circle';
     };
     /* @conditional-compile-remove(custom-branding) */
     /**
@@ -536,6 +537,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
       );
       break;
   }
+
+  useEndedCallConsoleErrors(endedCall);
 
   /* @conditional-compile-remove(unsupported-browser) */
   switch (page) {

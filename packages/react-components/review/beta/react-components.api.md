@@ -1343,6 +1343,7 @@ export interface LocalVideoCameraCycleButtonProps {
     label?: string;
     onSelectCamera?: (device: OptionsDevice) => Promise<void>;
     selectedCamera?: OptionsDevice;
+    size?: 'small' | 'large';
 }
 
 // @internal
@@ -1368,7 +1369,7 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
     raisedHand?: RaisedHand | undefined;
 }) => React_2.JSX.Element>;
 
-// @beta
+// @public
 export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'followDeviceOrientation';
 
 // @beta
