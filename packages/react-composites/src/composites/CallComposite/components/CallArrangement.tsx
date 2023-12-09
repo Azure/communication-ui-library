@@ -175,9 +175,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   useEffect(() => {
     if (isInLocalHold) {
       // close side pane on local hold
-      if (isPeoplePaneOpen) {
-        closePeoplePane();
-      }
       updateSidePaneRenderer(undefined);
     }
   }, [updateSidePaneRenderer, isInLocalHold, isPeoplePaneOpen, closePeoplePane]);
