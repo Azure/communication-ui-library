@@ -13,6 +13,7 @@ import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { MessageStatus } from '@internal/acs-ui-common';
+import { _TelemetryImplementationHint } from '@internal/acs-ui-common';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-chat';
 
 // @public
@@ -69,10 +70,13 @@ export type ChatThreadProperties = {
 };
 
 // @public
-export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: StatefulChatClientOptions | undefined) => StatefulChatClient;
+export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: StatefulChatClientOptions) => StatefulChatClient;
 
 // @internal
-export const _createStatefulChatClientWithDeps: (chatClient: ChatClient, args: StatefulChatClientArgs, options?: StatefulChatClientOptions | undefined) => StatefulChatClient;
+export const _createStatefulChatClientInner: (args: StatefulChatClientArgs, options?: StatefulChatClientOptions, telemetryImplementationHint?: _TelemetryImplementationHint) => StatefulChatClient;
+
+// @internal
+export const _createStatefulChatClientWithDeps: (chatClient: ChatClient, args: StatefulChatClientArgs, options?: StatefulChatClientOptions) => StatefulChatClient;
 
 // @public
 export interface StatefulChatClient extends ChatClient {
