@@ -116,6 +116,8 @@
     "captionsBannerMoreButtonCallingLabel": "Meer",
     "captionsBannerMoreButtonTooltip": "Meer opties",
     "dismissModalAriaLabel": "Lokale en externe afbeelding en afbeelding, druk op Enter om terug te keren naar het gesprek",
+    "callRejectedTitle": "De aanroep kan niet worden voltooid",
+    "callRejectedMoreDetails": "De persoon die u probeert te bereiken, is niet beschikbaar. Probeer het later opnieuw.",
     "spokenLanguageStrings": {
       "ar-ae": "Arabisch - Verenigde Arabische Emiraten",
       "ar-sa": "Arabisch - Saudi-Arabië",

@@ -1,17 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { CommonCallAdapter, CallComposite, CallAdapterLocator } from '@azure/communication-react';
-/* @conditional-compile-remove(call-readiness) */
-import { CallCompositeOptions } from '@azure/communication-react';
+import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
+import { CallAdapterLocator, CallComposite, CallCompositeOptions, CommonCallAdapter } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
+import React, { useEffect, useMemo } from 'react';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
 import { useIsMobile } from '../utils/useIsMobile';
-import React, { useEffect } from 'react';
-/* @conditional-compile-remove(call-readiness) */
-import { useMemo } from 'react';
+import { isIOS } from '../utils/utils';
 import { CallScreenProps } from './CallScreen';
-import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 
 export type CallCompositeContainerProps = CallScreenProps & { adapter?: CommonCallAdapter };
 
@@ -19,17 +16,17 @@ export const CallCompositeContainer = (props: CallCompositeContainerProps): JSX.
   const { adapter } = props;
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();
   const isMobileSession = useIsMobile();
+  const shouldDisableScreenShare = isIOS();
 
-  /* @conditional-compile-remove(call-readiness) */
   const options: CallCompositeOptions = useMemo(
     () => ({
-      onPermissionsTroubleshootingClick,
-      onNetworkingTroubleShootingClick,
+      /* @conditional-compile-remove(call-readiness) */ onPermissionsTroubleshootingClick,
+      /* @conditional-compile-remove(call-readiness) */ onNetworkingTroubleShootingClick,
       callControls: {
-        legacyControlBarExperience: false
+        screenShareButton: !shouldDisableScreenShare
       }
     }),
-    []
+    [shouldDisableScreenShare]
   );
 
   // Dispose of the adapter in the window's before unload event.
@@ -58,7 +55,6 @@ export const CallCompositeContainer = (props: CallCompositeContainerProps): JSX.
       rtl={currentRtl}
       callInvitationUrl={callInvitationUrl}
       formFactor={isMobileSession ? 'mobile' : 'desktop'}
-      /* @conditional-compile-remove(call-readiness) */
       options={options}
     />
   );
