@@ -153,7 +153,8 @@
     "downloadFile": "Last ned fil",
     "blockedWarningText": "Denne meldingen ble slettet på grunn av en organisasjonspolicy.",
     "blockedWarningLinkText": "Detaljer",
-    "fileCardGroupMessage": "Meldingen har {fileCount} vedlegg"
+    "fileCardGroupMessage": "Meldingen har {fileCount} vedlegg",
+    "messageDeletedAnnouncementAriaLabel": "Meldingen er slettet"
   },
   "errorBar": {
     "unableToReachChatService": "Du er frakoblet",
