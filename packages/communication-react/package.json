@@ -62,12 +62,14 @@
   "main": "./dist/dist-cjs/communication-react/index.js",
   "module": "./dist/dist-esm/communication-react/src/index.js",
   "scripts": {
+    "prepare": "ts-patch install -s",
     "copy-original": "cpx \"../*/src/**\" ./preprocess-dist && renamer --find src --replace preprocessed ./preprocess-dist/**/*",
     "preprocess": "babel ../*/src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative && rimraf ../preprocessed",
     "copy-preprocess": "cpx \"../*/preprocessed/**\" ./preprocess-dist && renamer --find preprocessed --replace src ./preprocess-dist/**/*",
+    "build:test": "tspc",
     "build": "rushx check-deps && rushx _by-flavor \"rushx _build:by-flavor\"",
     "build:cjs": "rollup -c --silent",
-    "build:esm": "npm run _if-preprocess && rushx copy-original && rushx preprocess && rushx copy-preprocess  && ttsc -project tsconfig.preprocess.json || (if-env COMMUNICATION_REACT_FLAVOR=beta && ttsc)",
+    "build:esm": "npm run _if-preprocess && rushx copy-original && rushx preprocess && rushx copy-preprocess  && tspc -project tsconfig.preprocess.json || (if-env COMMUNICATION_REACT_FLAVOR=beta && tspc)",
     "build:watch": "",
     "clean": "rimraf dist && rimraf ../**/preprocessed && rimraf ../**/preprocess-dist",
     "test": "",
@@ -120,7 +122,6 @@
     "@types/uuid": "^9.0.7",
     "@typescript-eslint/eslint-plugin": "^4.12.0",
     "@typescript-eslint/parser": "^4.12.0",
-    "@zerollup/ts-transform-paths": "^1.7.18",
     "ajv": "^8.12.0",
     "copyfiles": "^2.4.1",
     "cpx": "^1.5.0",
@@ -151,9 +152,10 @@
     "source-map-explorer": "^2.5.0",
     "ts-jest": "^29.1.0",
     "ts-node": "^10.9.2",
-    "ttypescript": "^1.5.12",
+    "ts-patch": "^3.1.1",
     "type-fest": "^3.13.1",
-    "typescript": "4.7.4" 
+    "typescript": "5.3.3",
+    "typescript-transform-paths": "^3.4.6"
   },
   "beachball": {
     "shouldPublish": false
