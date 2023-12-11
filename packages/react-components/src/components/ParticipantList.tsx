@@ -14,7 +14,7 @@ import {
 /* @conditional-compile-remove(total-participant-count) */ /* @conditional-compile-remove(raise-hand) */
 import { Text } from '@fluentui/react';
 /* @conditional-compile-remove(raise-hand) */
-import { useTheme } from '../theming';
+import { useTheme, CallingTheme } from '../theming';
 /* @conditional-compile-remove(raise-hand) */
 import { RaisedHandIcon } from './assets/RaisedHandIcon';
 import React, { useCallback, useMemo } from 'react';
@@ -26,6 +26,8 @@ import {
   OnRenderAvatarCallback,
   ParticipantListParticipant
 } from '../types';
+/* @conditional-compile-remove(raise-hand) */
+import { CustomAvatarOptions } from '../types';
 import { ParticipantItem, ParticipantItemStrings, ParticipantItemStyles } from './ParticipantItem';
 import { iconStyles, participantListItemStyle, participantListStyle } from './styles/ParticipantList.styles';
 import { _formatString } from '@internal/acs-ui-common';
@@ -148,6 +150,9 @@ const onRenderParticipantDefault = (
   /* @conditional-compile-remove(hide-attendee-name) */
   displayName = formatDisplayName();
 
+  /* @conditional-compile-remove(raise-hand) */
+  const callingPalette = (theme as unknown as CallingTheme).callingPalette;
+
   const onRenderIcon =
     callingParticipant?.isScreenSharing ||
     callingParticipant?.isMuted ||
@@ -191,6 +196,21 @@ const onRenderParticipantDefault = (
         )
       : () => null;
 
+  /* @conditional-compile-remove(raise-hand) */
+  const onRenderAvatarWithRaiseHand =
+    callingParticipant?.raisedHand && onRenderAvatar
+      ? (
+          userId?: string,
+          options?: CustomAvatarOptions,
+          defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element
+        ) =>
+          onRenderAvatar(
+            userId,
+            { ...options, styles: { root: { border: callingPalette.raiseHandGold } } },
+            defaultOnRender
+          )
+      : onRenderAvatar;
+
   return (
     <ParticipantItem
       styles={styles}
@@ -201,7 +221,7 @@ const onRenderParticipantDefault = (
       menuItems={menuItems}
       presence={presence}
       onRenderIcon={onRenderIcon}
-      onRenderAvatar={onRenderAvatar}
+      onRenderAvatar={onRenderAvatarWithRaiseHand}
       onClick={() => onParticipantClick?.(participant)}
       showParticipantOverflowTooltip={showParticipantOverflowTooltip}
       /* @conditional-compile-remove(one-to-n-calling) */
