@@ -38,11 +38,10 @@ export const Microphone = (props: {
   const unmuteMicCapability = adapter.getState().call?.capabilitiesFeature?.capabilities.unmuteMic;
 
   /**
-   * When call is in Lobby, microphone button should be disabled.
+   * When call is in connecting state, microphone button should be disabled.
    * This is due to to headless limitation where a call can not be muted/unmuted in lobby.
    */
-  if (_isInLobbyOrConnecting(callStatus)) {
-    microphoneButtonProps.disabled = true;
+  if (callStatus === 'Connecting') {
     // Lobby page should show the microphone status that was set on the local preview/configuration
     // page until the user successfully joins the call.
     microphoneButtonProps.checked = isLocalMicrophoneEnabled;
@@ -56,7 +55,6 @@ export const Microphone = (props: {
       }
     : {};
   const styles = useMemo(() => concatButtonBaseStyles(props.styles ?? {}), [props.styles]);
-
   // tab focus on MicrophoneButton on page load
   return (
     <MicrophoneButton
