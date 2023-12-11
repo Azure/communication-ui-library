@@ -209,6 +209,12 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     [theme.palette.neutralTertiary, styles?.iconContainer]
   );
 
+  const onDismissMenu = (): void => {
+    setItemHovered(false);
+    setItemFocused(false);
+    setMenuHidden(true);
+  };
+
   const menuButton = useMemo(
     () => (
       <Stack
@@ -228,12 +234,6 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     ),
     [strings.menuTitle, ids.participantItemMenuButton, itemHovered, itemFocused, menuHidden]
   );
-
-  const onDismissMenu = (): void => {
-    setItemHovered(false);
-    setItemFocused(false);
-    setMenuHidden(true);
-  };
 
   const participantStateString = participantStateStringTrampoline(props, strings);
   return (
@@ -256,8 +256,12 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
       onClick={() => {
         if (!participantStateString) {
           setItemHovered(true);
+          setItemFocused(false);
           setMenuHidden(false);
           onClick?.(props);
+        }
+        if (!menuHidden) {
+          onDismissMenu();
         }
       }}
       tabIndex={0}
