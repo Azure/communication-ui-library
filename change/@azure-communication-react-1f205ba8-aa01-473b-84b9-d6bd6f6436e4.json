@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "",
+  "comment": "Add border for avatar coin for raised hand",
+  "packageName": "@azure/communication-react",
+  "email": "ruslanzdor@microsoft.com",
+  "dependentChangeType": "patch"
+}

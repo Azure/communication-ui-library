@@ -9,7 +9,8 @@ import {
   CallAndChatLocator,
   CallWithChatAdapterState,
   CallWithChatComposite,
-  CallWithChatAdapter
+  CallWithChatAdapter,
+  CallWithChatCompositeOptions
 } from '@azure/communication-react';
 /* @conditional-compile-remove(video-background-effects) */
 import { onResolveVideoEffectDependencyLazy, AzureCommunicationCallAdapterOptions } from '@azure/communication-react';
@@ -19,6 +20,7 @@ import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvid
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/constants';
 import { useIsMobile } from '../utils/useIsMobile';
+import { isIOS } from '../utils/utils';
 
 export interface CallScreenProps {
   token: string;
@@ -144,6 +146,17 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     afterAdapterCreate
   );
 
+  const shouldDisableScreenShare = isIOS();
+
+  const options: CallWithChatCompositeOptions = useMemo(
+    () => ({
+      callControls: {
+        screenShareButton: !shouldDisableScreenShare
+      }
+    }),
+    [shouldDisableScreenShare]
+  );
+
   // Dispose of the adapter in the window's before unload event.
   // This ensures the service knows the user intentionally left the call if the user
   // closed the browser tab during an active call.
@@ -157,12 +170,19 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     return <Spinner label={'Creating adapter'} ariaLive="assertive" labelPosition="top" />;
   }
 
+  let callInvitationUrl: string | undefined = window.location.href;
+  // Only show the call invitation url if the call is a group call or Teams call, do not show for Rooms, 1:1 or 1:N calls
+  if (!isGroupCallLocator(locator) && !isTeamsMeetingLinkLocator(locator)) {
+    callInvitationUrl = undefined;
+  }
+
   return (
     <CallWithChatComposite
       adapter={adapter}
       fluentTheme={currentTheme.theme}
       rtl={currentRtl}
-      joinInvitationURL={window.location.href}
+      joinInvitationURL={callInvitationUrl}
+      options={options}
       formFactor={isMobileSession ? 'mobile' : 'desktop'}
     />
   );
@@ -179,4 +199,14 @@ const convertPageStateToString = (state: CallWithChatAdapterState): string => {
     default:
       return `${state.page}`;
   }
+};
+
+const isTeamsMeetingLinkLocator = (
+  locator: TeamsMeetingLinkLocator | CallAndChatLocator
+): locator is TeamsMeetingLinkLocator => {
+  return 'meetingLink' in locator;
+};
+
+const isGroupCallLocator = (locator: TeamsMeetingLinkLocator | CallAndChatLocator): boolean => {
+  return 'callLocator' in locator && 'groupId' in locator.callLocator;
 };

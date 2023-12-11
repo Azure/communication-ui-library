@@ -20,6 +20,8 @@ export interface LocalVideoCameraCycleButtonProps {
   label?: string;
   /** description for local video camera switcher */
   ariaDescription?: string;
+  /** control to enable large button mode */
+  size?: 'small' | 'large';
 }
 
 /**
@@ -27,13 +29,13 @@ export interface LocalVideoCameraCycleButtonProps {
  * @internal
  */
 export const LocalVideoCameraCycleButton = (props: LocalVideoCameraCycleButtonProps): JSX.Element => {
-  const { cameras, selectedCamera, onSelectCamera, label, ariaDescription } = props;
+  const { cameras, selectedCamera, onSelectCamera, label, ariaDescription, size } = props;
   const theme = useTheme();
 
   return (
     <IconButton
       data-ui-id={'local-camera-switcher-button'}
-      styles={localVideoCameraCycleButtonStyles(theme)}
+      styles={localVideoCameraCycleButtonStyles(theme, size)}
       iconProps={{ iconName: 'LocalCameraSwitch' }}
       ariaLabel={label}
       ariaDescription={ariaDescription}
