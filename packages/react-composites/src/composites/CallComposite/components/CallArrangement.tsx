@@ -137,13 +137,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const { updateSidePaneRenderer } = props;
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const isInLocalHold = useSelector(getPage) === 'hold';
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-  useEffect(() => {
-    if (isInLocalHold) {
-      // close side pane on local hold
-      updateSidePaneRenderer(undefined);
-    }
-  }, [updateSidePaneRenderer, isInLocalHold]);
 
   const adapter = useAdapter();
 
@@ -177,6 +170,14 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       openPeoplePane();
     }
   }, [closePeoplePane, isPeoplePaneOpen, openPeoplePane]);
+
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  useEffect(() => {
+    if (isInLocalHold) {
+      // close side pane on local hold
+      updateSidePaneRenderer(undefined);
+    }
+  }, [updateSidePaneRenderer, isInLocalHold, isPeoplePaneOpen, closePeoplePane]);
 
   const isSidePaneOpen = useIsSidePaneOpen();
 
