@@ -181,12 +181,8 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       adapter={adapter}
       fluentTheme={currentTheme.theme}
       rtl={currentRtl}
-<<<<<<< HEAD
-      joinInvitationURL={window.location.href}
-      options={options}
-=======
       joinInvitationURL={callInvitationUrl}
->>>>>>> main
+      options={options}
       formFactor={isMobileSession ? 'mobile' : 'desktop'}
     />
   );
