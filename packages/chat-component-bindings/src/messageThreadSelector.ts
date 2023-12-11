@@ -139,6 +139,7 @@ const generateImageAttachmentImgHtml = (attachment: ChatAttachment): string => {
   return `\r\n<p><img alt="image" src="" itemscope="${contentType}" id="${attachment.id}"></p>`;
 };
 
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 const extractAttachmentContentTypeFromName = (name?: string): string | undefined => {
   if (name === undefined) {
     return undefined;
