@@ -17,7 +17,7 @@ export const useIsMobile = (): boolean => {
     const updateIsMobile = (): void => {
       // The userAgent string is sometimes not updated synchronously when the `resize` event fires.
       setTimeout(() => {
-        setIsMobileSession(detectMobileSession() || isIOS());
+        setIsMobileSession(detectMobileSession());
       });
     };
     window.addEventListener('resize', updateIsMobile);
@@ -26,7 +26,3 @@ export const useIsMobile = (): boolean => {
 
   return isMobileSession;
 };
-
-function isIOS() {
-  return /iPad|iPhone|iPod/.test(navigator.platform) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-}
