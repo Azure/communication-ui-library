@@ -79,7 +79,7 @@ type BreakingChangeCallClientStateTest = CheckBreakingChanges<
 
 // Stateful client test start
 
-type StatefulClientTestFunction<Client extends any> = (client: NestedPartial<OmitState<Partial<Client>>>) => Client;
+type StatefulClientTestFunction<Client> = (client: NestedPartial<OmitState<Partial<Client>>>) => Client;
 
 type BreakingChangeStatefulCallClientTest = CheckBreakingChanges<
   StatefulClientTestFunction<import('./snapshots/communication-react').StatefulCallClient>,
