@@ -130,7 +130,6 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
   );
 };
 
-/* @conditional-compile-remove(reaction) */
 const reactionButtonStyles = (theme: Theme): IButtonStyles => ({
   rootChecked: {
     background: theme.palette.themePrimary,
