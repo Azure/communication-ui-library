@@ -40,7 +40,7 @@ import { fn } from '@internal/component-binding';
 
 Now if an external user was to consume this transpiled output from an npm package, their build system will try to import `fn` from `'@internal/component-binding'` - but that package doesn't exist as an npm package so their build system will break.
 
-To solve this issue we make use of [ts-transform-paths](../infrastructure/ttypescript-plugins#zerollupts-transform-paths).
+To solve this issue we make use of [typescript-transform-paths](../infrastructure/ts-patch-plugins#typescript-transform-paths).
 
 ### How this tool solves the issue
 
