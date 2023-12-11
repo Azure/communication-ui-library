@@ -159,7 +159,7 @@ export abstract class ProxyCallAgentCommon {
   protected getCommon<
     AgentType extends CallAgent | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent,
     P extends keyof CallAgent
-  >(target: AgentType, prop: P): any {
+  >(target: AgentType, prop: P | 'incomingCalls'): any {
     switch (prop) {
       case 'startCall': {
         return this._context.withErrorTeedToState((...args: Parameters<AgentType['startCall']>): CallCommon => {
