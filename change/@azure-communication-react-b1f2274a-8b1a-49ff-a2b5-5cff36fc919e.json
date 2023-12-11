@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "area": "feature",
-  "workstream": "Rooms",
-  "comment": "Promote rooms feature to GA",
-  "packageName": "@azure/communication-react",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "area": "improvement",
-  "workstream": "CI updates",
-  "comment": "Bump GitHub workflows to node v20",
-  "packageName": "@azure/communication-react",
-  "email": "3941071+emlynmac@users.noreply.github.com",
-  "dependentChangeType": "none"
-}
