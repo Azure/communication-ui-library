@@ -122,8 +122,9 @@ const processChatMessageContent = (message: ChatMessageWithStatus): string | und
   if (sanitizedMessageContentType(message.type).includes('html') && message.content?.attachments) {
     const attachments: ChatAttachment[] = message.content?.attachments;
     const teamsImageHtmlContent = attachments
-      .filter((attachment) => 
-        attachment.attachmentType === 'image' && !message.content?.message?.includes(attachment.id))
+      .filter(
+        (attachment) => attachment.attachmentType === 'image' && !message.content?.message?.includes(attachment.id)
+      )
       .map((attachment) => generateImageAttachmentImgHtml(attachment))
       .join('');
 
