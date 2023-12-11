@@ -116,6 +116,8 @@
     "captionsBannerMoreButtonCallingLabel": "المزيد",
     "captionsBannerMoreButtonTooltip": "خيارات إضافية",
     "dismissModalAriaLabel": "صورة وصورة محلية وبعيدة، اضغط على مفتاح الإدخال للعودة إلى المكالمة",
+    "callRejectedTitle": "إكمال المكالمة غير ممكن",
+    "callRejectedMoreDetails": "الشخص الذي تحاول الوصول إليه غير متوفر. الرجاء المحاولة مرة أخرى لاحقا.",
     "spokenLanguageStrings": {
       "ar-ae": "العربية - الإمارات العربية المتحدة",
       "ar-sa": "العربية - السعودية",

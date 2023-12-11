@@ -116,6 +116,8 @@
     "captionsBannerMoreButtonCallingLabel": "Diğer",
     "captionsBannerMoreButtonTooltip": "Diğer seçenekler",
     "dismissModalAriaLabel": "Yerel ve uzak resim ve resim, aramaya geri dönmek için Enter tuşuna basın",
+    "callRejectedTitle": "Arama tamamlanamadı",
+    "callRejectedMoreDetails": "Ulaşmaya çalıştığınız kişi kullanılamıyor. Lütfen daha sonra yeniden deneyin.",
     "spokenLanguageStrings": {
       "ar-ae": "Arapça - BAE",
       "ar-sa": "Arapça - Suudi Arabistan",
