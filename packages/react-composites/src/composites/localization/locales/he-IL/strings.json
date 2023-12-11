@@ -116,6 +116,8 @@
     "captionsBannerMoreButtonCallingLabel": "עוד",
     "captionsBannerMoreButtonTooltip": "אפשרויות נוספות",
     "dismissModalAriaLabel": "תמונה מקומית ותמונה מרוחקת, הקש על Enter כדי לחזור לשיחה.",
+    "callRejectedTitle": "לא הייתה אפשרות להשלים את השיחה.",
+    "callRejectedMoreDetails": "האדם שאליו אתה מנסה להגיע אינו זמין. נסה שוב מאוחר יותר.",
     "spokenLanguageStrings": {
       "ar-ae": "ערבית - איחוד האמירויות",
       "ar-sa": "ערבית - ערב הסעודית",

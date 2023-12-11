@@ -44,3 +44,9 @@ export const getBackgroundColor = (avatar: string): { backgroundColor: string } 
       };
   }
 };
+
+/**
+ * Function to detect iOS devices like IPhones, IPads, and IPods
+ */
+export const isIOS = (): boolean =>
+  /iPad|iPhone|iPod/.test(navigator.platform) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
