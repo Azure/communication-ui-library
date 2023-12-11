@@ -116,6 +116,8 @@
     "captionsBannerMoreButtonCallingLabel": "Mer",
     "captionsBannerMoreButtonTooltip": "Flere alternativer",
     "dismissModalAriaLabel": "Lokalt og eksternt bilde og bilde, trykk på Enter for å gå tilbake til samtalen",
+    "callRejectedTitle": "Kan ikke fullføre samtalen",
+    "callRejectedMoreDetails": "Personen du prøver å nå, er ikke tilgjengelig. Prøv på nytt senere.",
     "spokenLanguageStrings": {
       "ar-ae": "Arabisk – De forente arabiske emirater",
       "ar-sa": "Arabisk – Saudi-Arabia",

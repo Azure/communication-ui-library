@@ -116,6 +116,8 @@
     "captionsBannerMoreButtonCallingLabel": "Mais",
     "captionsBannerMoreButtonTooltip": "Mais opções",
     "dismissModalAriaLabel": "Imagem e imagem local e remota, pressione Enter para retornar à chamada",
+    "callRejectedTitle": "Não foi possível concluir a chamada",
+    "callRejectedMoreDetails": "A pessoa que você está tentando acessar não está disponível. Tente novamente mais tarde.",
     "spokenLanguageStrings": {
       "ar-ae": "Árabe - Emirados Árabes Unidos",
       "ar-sa": "Árabe - Arábia Saudita",

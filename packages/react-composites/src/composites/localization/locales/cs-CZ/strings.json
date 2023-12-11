@@ -116,6 +116,8 @@
     "captionsBannerMoreButtonCallingLabel": "Další",
     "captionsBannerMoreButtonTooltip": "Další možnosti",
     "dismissModalAriaLabel": "Místní a vzdálený obrázek a obrázek, stisknutím klávesy Enter se vrátíte k hovoru",
+    "callRejectedTitle": "Hovor nešlo spojit.",
+    "callRejectedMoreDetails": "Osoba, se kterou se pokoušíte spojit, není k dispozici. Zkuste to prosím znovu později.",
     "spokenLanguageStrings": {
       "ar-ae": "Arabština - Spojené arabské emiráty",
       "ar-sa": "Arabština - Saúdská Arábie",
