@@ -20,7 +20,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const headerTitle = 'Inbound Azure Communication User Sample';
 
   const [incomingCall, setIncomingCall] = useState<IncomingCall>();
-  const interval = useRef<NodeJS.Timer>();
+  const interval = useRef<NodeJS.Timeout>();
 
   // @TODO: Add a method in declarative callAgent to get a declarative Incoming Call Object. Use that object here.
   console.log('incoming calls', callState.incomingCalls);

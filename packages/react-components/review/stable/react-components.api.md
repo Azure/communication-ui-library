@@ -984,7 +984,7 @@ export interface FluentThemeProviderProps {
 }
 
 // @internal
-export const _generateDefaultDeviceMenuProps: (props: _DeviceMenuProps, strings: _DeviceMenuStrings, primaryActionItem?: IContextualMenuItem | undefined, isSelectCamAllowed?: boolean, isSelectMicAllowed?: boolean) => {
+export const _generateDefaultDeviceMenuProps: (props: _DeviceMenuProps, strings: _DeviceMenuStrings, primaryActionItem?: IContextualMenuItem, isSelectCamAllowed?: boolean, isSelectMicAllowed?: boolean) => {
     items: IContextualMenuItem[];
 } | undefined;
 
@@ -1092,12 +1092,13 @@ export interface LocalVideoCameraCycleButtonProps {
     label?: string;
     onSelectCamera?: (device: OptionsDevice) => Promise<void>;
     selectedCamera?: OptionsDevice;
+    size?: 'small' | 'large';
 }
 
 // @internal
 export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
     userId?: string | undefined;
-    onCreateLocalStreamView?: ((options?: VideoStreamOptions | undefined) => Promise<void | CreateVideoStreamViewResult>) | undefined;
+    onCreateLocalStreamView?: ((options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>) | undefined;
     onDisposeLocalStreamView?: (() => void) | undefined;
     isAvailable?: boolean | undefined;
     isMuted?: boolean | undefined;
@@ -1116,6 +1117,9 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
     personaMinSize?: number | undefined;
     raisedHand?: RaisedHand | undefined;
 }) => React_2.JSX.Element>;
+
+// @public
+export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'followDeviceOrientation';
 
 // @public
 export type Message = ChatMessage | SystemMessage | CustomMessage;
@@ -1515,7 +1519,7 @@ export type ReadReceiptsBySenderId = {
 export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     userId: string;
     remoteParticipant: VideoGalleryRemoteParticipant;
-    onCreateRemoteStreamView?: ((userId: string, options?: VideoStreamOptions | undefined) => Promise<void | CreateVideoStreamViewResult>) | undefined;
+    onCreateRemoteStreamView?: ((userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>) | undefined;
     onDisposeRemoteStreamView?: ((userId: string) => Promise<void>) | undefined;
     isAvailable?: boolean | undefined;
     isReceiving?: boolean | undefined;
@@ -1993,6 +1997,7 @@ export interface VideoGalleryProps {
     layout?: VideoGalleryLayout;
     localParticipant: VideoGalleryLocalParticipant;
     localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
+    localVideoTileSize?: LocalVideoTileSize;
     localVideoViewOptions?: VideoStreamOptions;
     maxRemoteVideoStreams?: number;
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;

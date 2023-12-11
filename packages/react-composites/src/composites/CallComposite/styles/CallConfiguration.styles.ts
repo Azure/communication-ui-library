@@ -30,7 +30,7 @@ const LOGO_HEIGHT_REM = 3;
  * @private
  */
 export const configurationStackTokensDesktop: IStackTokens = {
-  childrenGap: '1rem'
+  childrenGap: '1.5rem'
 };
 
 /**
@@ -98,6 +98,7 @@ export const selectionContainerStyle = (theme: ITheme): string =>
     padding: '1rem',
     borderRadius: theme.effects.roundedCorner6,
     border: `0.0625rem solid ${theme.palette.neutralLight}`,
+    overflow: 'hidden', // do not let child background overflow the curved corners
     boxShadow: theme.effects.elevation4,
     // Style the background of the container to have partial transparency.
     // Using `before:` pseudo-element to avoid having to wrap the content in an extra div.
@@ -113,8 +114,7 @@ export const selectionContainerStyle = (theme: ITheme): string =>
       right: 0,
       zIndex: 0,
       background: theme.palette.white,
-      opacity: 0.9,
-      borderRadius: theme.effects.roundedCorner4
+      opacity: 0.9
     }
   });
 
@@ -173,26 +173,26 @@ export const callDetailsContainerStyles: IStackStyles = {
   }
 };
 
-const callDetailsStyle: IStyle = {
+const callDetailsStyle = (theme: ITheme): IStyle => ({
   fontSize: '0.9375',
-  lineHeight: '1.25rem'
-};
-
-/**
- * @private
- */
-export const callDetailsStyleDesktop = mergeStyles({
-  ...callDetailsStyle
+  lineHeight: '1.25rem',
+  textShadow: `0px 0px 8px ${theme.palette.whiteTranslucent40}`,
+  marginTop: '-0.33rem' // compensate for extra padding around the CallTitle that avoids the SVG shadowing being cut off
 });
 
 /**
  * @private
  */
-export const callDetailsStyleMobile = mergeStyles({
-  ...callDetailsStyle,
-  marginBottom: '0.5rem',
-  textAlign: 'center'
-});
+export const callDetailsStyleDesktop = (theme: ITheme): string => mergeStyles(callDetailsStyle(theme));
+
+/**
+ * @private
+ */
+export const callDetailsStyleMobile = (theme: ITheme): string =>
+  mergeStyles(callDetailsStyle(theme), {
+    marginBottom: '0.5rem',
+    textAlign: 'center'
+  });
 
 /**
  * @private
@@ -317,15 +317,16 @@ export const panelFocusProps: IFocusTrapZoneProps = {
 /**
  * @private
  */
-export const logoStyles = (shape: 'circle' | 'square'): IImageStyles => ({
+export const logoStyles = (shape: undefined | 'unset' | 'circle'): IImageStyles => ({
   root: {
     overflow: 'initial', // prevent the image being clipped
     display: 'flex',
     justifyContent: 'center'
   },
   image: {
-    borderRadius: shape === 'circle' ? '100%' : undefined,
     height: `${LOGO_HEIGHT_REM}rem`,
-    width: `${LOGO_HEIGHT_REM}rem` // width should match height
+    borderRadius: shape === 'circle' ? '100%' : undefined,
+    aspectRatio: shape === 'circle' ? '1 / 1' : undefined,
+    objectFit: shape === 'circle' ? 'cover' : undefined
   }
 });
