@@ -1,4 +1,5 @@
 import {
+  ContextualMenuItemType,
   DefaultPalette,
   IButtonStyles,
   IContextualMenuItem,
@@ -8,10 +9,11 @@ import {
   Theme,
   useTheme
 } from '@fluentui/react';
-import React from 'react';
+import React, { useState } from 'react';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
 import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 import { useLocale } from '../localization';
+import { reactionEmoji } from './utils/videoTileStylesUtils';
 
 /* @conditional-compile-remove(reaction) */
 /**
@@ -69,35 +71,74 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
   const theme = useTheme();
   const styles = reactionButtonStyles(theme);
   const onRenderIcon = (): JSX.Element => <_HighContrastAwareIcon iconName="Emoji2" />;
+  //const myRef = React.createRef<IContextualMenuRenderItem>();
+
+  const [isHoveredMap, setIsHoveredMap] = useState(new Map());
+  const emojis = ['like', 'heart', 'laugh', 'applause', 'surprised'];
+
+  const renderEmoji = (item: IContextualMenuItem, dismissMenu: (ev?: any, dismissAll?: boolean) => void) => (
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+        width: '220px',
+        height: '42px'
+      }}
+    >
+      {emojis.map((emoji, index) => (
+        <div
+          key={index}
+          onClick={() => {
+            props.onReactionClicked(emoji);
+            setIsHoveredMap((prevMap) => {
+              return new Map(prevMap).set(emoji, false);
+            });
+            dismissMenu();
+          }}
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            height: '100%',
+            width: '100%',
+            backgroundImage: reactionEmoji.get(emoji),
+            animation: 'play 8.12s steps(102)',
+            animationPlayState: isHoveredMap.get(emoji) ? 'running' : 'paused',
+            animationIterationCount: 'infinite',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundPosition: 'center',
+            backgroundSize: `44px ${emoji === 'applause' ? 4284 : 2142}px`,
+            transition: 'opacity 2s',
+            backgroundColor: isHoveredMap.get(emoji) ? 'rgba(0, 0, 0, 0.2)' : 'transparent'
+          }}
+          onMouseEnter={() =>
+            setIsHoveredMap((prevMap) => {
+              return new Map(prevMap).set(emoji, true);
+            })
+          }
+          onMouseLeave={() =>
+            setIsHoveredMap((prevMap) => {
+              return new Map(prevMap).set(emoji, false);
+            })
+          }
+        />
+      ))}
+    </div>
+  );
 
   const emojiList: IContextualMenuItem[] = [
-    { key: 'like', text: '👍', itemProps: { style: { width: 20 } } },
-    { key: 'heart', text: '❤️', itemProps: { style: { width: 20 } } },
-    { key: 'laugh', text: '😂', itemProps: { style: { width: 20 } } },
-    { key: 'applause', text: '👏', itemProps: { style: { width: 20 } } },
-    { key: 'surprised', text: '😮', itemProps: { style: { width: 20 } } }
+    { key: 'reactions', itemType: ContextualMenuItemType.Normal, onRender: renderEmoji }
   ];
+
   return (
     <ControlBarButton
       {...props}
       className={mergeStyles(styles, props.styles)}
       menuProps={{
         shouldFocusOnMount: true,
-        items: emojiList.map((emoji) => ({
-          ...emoji,
-          onClick: () => {
-            props.onReactionClicked(emoji.key);
-          }
-        })),
-        styles: {
-          container: {
-            display: 'flex',
-            flexDirection: 'row'
-          },
-          root: {
-            padding: '10px'
-          }
-        }
+        items: emojiList
       }}
       onRenderIcon={props.onRenderIcon ?? onRenderIcon}
       strings={strings}
@@ -106,7 +147,6 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
   );
 };
 
-/* @conditional-compile-remove(reaction) */
 const reactionButtonStyles = (theme: Theme): IButtonStyles => ({
   rootChecked: {
     background: theme.palette.themePrimary,
