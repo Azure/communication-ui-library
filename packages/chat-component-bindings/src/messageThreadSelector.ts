@@ -80,7 +80,7 @@ const extractTeamsAttachmentsMetadata = (
   const inlineImages: InlineImageMetadata[] = [];
   attachments.forEach((attachment) => {
     const attachmentType = mapAttachmentType(attachment.attachmentType);
-    const contentType = extractAttachmentContentTypeFromName(attachment.name) ?? '';
+    const contentType = extractAttachmentContentTypeFromName(attachment.name);
     if (attachmentType === 'inlineImage') {
       inlineImages.push({
         attachmentType: attachmentType,
@@ -122,8 +122,8 @@ const processChatMessageContent = (message: ChatMessageWithStatus): string | und
   if (sanitizedMessageContentType(message.type).includes('html') && message.content?.attachments) {
     const attachments: ChatAttachment[] = message.content?.attachments;
     const teamsImageHtmlContent = attachments
-    .filter((attachment) => attachment.attachmentType === 'image' && !message.content?.message?.includes(attachment.id))
-    .map((attachment) => generateImageAttachmentImgHtml(attachment))
+      .filter((attachment) => attachment.attachmentType === 'image' && !message.content?.message?.includes(attachment.id))
+      .map((attachment) => generateImageAttachmentImgHtml(attachment))
       .join('');
 
     if (teamsImageHtmlContent) {
@@ -135,18 +135,18 @@ const processChatMessageContent = (message: ChatMessageWithStatus): string | und
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 const generateImageAttachmentImgHtml = (attachment: ChatAttachment): string => {
-  const contentType = extractAttachmentContentTypeFromName(attachment.name) ?? '';
+  const contentType = extractAttachmentContentTypeFromName(attachment.name);
   return `\r\n<p><img alt="image" src="" itemscope="${contentType}" id="${attachment.id}"></p>`;
 };
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-const extractAttachmentContentTypeFromName = (name?: string): string | undefined => {
+const extractAttachmentContentTypeFromName = (name?: string): string => {
   if (name === undefined) {
-    return undefined;
+    return '';
   }
   const indexOfLastDot = name.lastIndexOf('.');
   if (indexOfLastDot === undefined || indexOfLastDot < 0) {
-    return undefined;
+    return '';
   }
   const contentType = name.substring(indexOfLastDot + 1);
   return contentType;
