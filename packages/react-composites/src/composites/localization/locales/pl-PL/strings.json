@@ -116,6 +116,8 @@
     "captionsBannerMoreButtonCallingLabel": "Więcej",
     "captionsBannerMoreButtonTooltip": "Więcej opcji",
     "dismissModalAriaLabel": "Lokalny i zdalny obraz i obraz, naciśnij klawisz Enter, aby powrócić do rozmowy",
+    "callRejectedTitle": "Nie można zakończyć rozmowy",
+    "callRejectedMoreDetails": "Osoba, z którą próbujesz się skontaktować, jest niedostępna. Spróbuj ponownie później.",
     "spokenLanguageStrings": {
       "ar-ae": "arabski — Zjednoczone Emiraty Arabskie",
       "ar-sa": "arabski — Arabia Saudyjska",

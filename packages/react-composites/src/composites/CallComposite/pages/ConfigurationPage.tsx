@@ -184,7 +184,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
     );
 
   const callDescription = locale.strings.call.configurationPageCallDetails && (
-    <Stack.Item className={mobileView ? callDetailsStyleMobile : callDetailsStyleDesktop}>
+    <Stack.Item className={mobileView ? callDetailsStyleMobile(theme) : callDetailsStyleDesktop(theme)}>
       {locale.strings.call.configurationPageCallDetails}
     </Stack.Item>
   );

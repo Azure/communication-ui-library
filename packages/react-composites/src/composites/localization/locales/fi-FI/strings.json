@@ -116,6 +116,8 @@
     "captionsBannerMoreButtonCallingLabel": "Lisää",
     "captionsBannerMoreButtonTooltip": "Lisää vaihtoehtoja",
     "dismissModalAriaLabel": "Paikallinen kuva ja etäkuva, palaa puheluun painamalla Enter-näppäintä",
+    "callRejectedTitle": "Puhelua ei voitu soittaa",
+    "callRejectedMoreDetails": "Henkilö, jota yrität tavoittaa, ei ole tavoitettavissa. Yritä myöhemmin uudelleen.",
     "spokenLanguageStrings": {
       "ar-ae": "arabia – Arabiemiirikunnat",
       "ar-sa": "arabia – Saudi-Arabia",

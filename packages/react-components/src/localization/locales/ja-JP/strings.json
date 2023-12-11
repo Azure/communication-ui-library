@@ -153,7 +153,8 @@
     "downloadFile": "ファイルをダウンロード",
     "blockedWarningText": "組織のポリシーにより、このメッセージは削除されました。",
     "blockedWarningLinkText": "詳細",
-    "fileCardGroupMessage": "メッセージには {fileCount} 個の添付ファイルがあります"
+    "fileCardGroupMessage": "メッセージには {fileCount} 個の添付ファイルがあります",
+    "messageDeletedAnnouncementAriaLabel": "メッセージが削除されます"
   },
   "errorBar": {
     "unableToReachChatService": "オフラインです",

@@ -109,7 +109,7 @@ const constructTSpanLine = (line: string, lineHeightPx: number): SVGTSpanElement
   const tspan = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
   tspan.textContent = line;
   tspan.setAttribute('x', '50%');
-  tspan.setAttribute('dy', _pxToRem(lineHeightPx));
+  tspan.setAttribute('dy', `${lineHeightPx}px`);
   tspan.setAttribute('text-anchor', 'middle');
   return tspan;
 };
