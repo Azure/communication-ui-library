@@ -62,7 +62,6 @@
   "main": "./dist/dist-cjs/communication-react/index.js",
   "module": "./dist/dist-esm/communication-react/src/index.js",
   "scripts": {
-    "prepare": "ts-patch install -s",
     "copy-original": "cpx \"../*/src/**\" ./preprocess-dist && renamer --find src --replace preprocessed ./preprocess-dist/**/*",
     "preprocess": "babel ../*/src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative && rimraf ../preprocessed",
     "copy-preprocess": "cpx \"../*/preprocessed/**\" ./preprocess-dist && renamer --find preprocessed --replace src ./preprocess-dist/**/*",
