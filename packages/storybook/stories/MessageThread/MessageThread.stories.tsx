@@ -326,6 +326,7 @@ const Docs: () => JSX.Element = () => {
 
       <div ref={refDisplayInlineImages}>
         <Heading>Display Inline Image with Messages</Heading>
+        <SingleLineBetaBanner />
         <Description>
           MessageThread component provides UI for displaying inline image attachments in a message. If an image is
           protected by header-based authentication, developers can write there own HTTP call to get the image so you can
