@@ -79,8 +79,7 @@ const extractTeamsAttachmentsMetadata = (
   const inlineImages: InlineImageMetadata[] = [];
   attachments.forEach((attachment) => {
     const attachmentType = mapAttachmentType(attachment.attachmentType);
-    /* @conditional-compile-remove(file-sharing) */
-    const contentType = extractAttachmentContentTypeFromName(attachment.name) ?? '';
+    const contentType = extractAttachmentContentTypeFromName(attachment.name);
     if (attachmentType === 'inlineImage') {
       inlineImages.push({
         attachmentType: attachmentType,
@@ -95,7 +94,7 @@ const extractTeamsAttachmentsMetadata = (
         attachmentType: attachmentType,
         id: attachment.id,
         name: attachment.name ?? '',
-        extension: contentType,
+        extension: contentType ?? '',
         url: extractAttachmentUrl(attachment),
         payload: {
           teamsFileAttachment: 'true'
