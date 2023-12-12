@@ -28,11 +28,10 @@ import { ACSKnownMessageType } from './utils/constants';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { DEFAULT_DATA_LOSS_PREVENTION_POLICY_URL } from './utils/constants';
 import { updateMessagesWithAttached } from './utils/updateMessagesWithAttached';
-
 /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { FileMetadata, ChatAttachmentType, InlineImageMetadata } from '@internal/react-components';
+import { FileMetadata, ChatAttachmentType as AttachmentType, InlineImageMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { AttachmentType, ChatAttachment } from '@azure/communication-chat';
+import { ChatAttachmentType, ChatAttachment } from '@azure/communication-chat';
 
 const memoizedAllConvertChatMessage = memoizeFnAll(
   (
@@ -81,6 +80,7 @@ const extractTeamsAttachmentsMetadata = (
   const inlineImages: InlineImageMetadata[] = [];
   attachments.forEach((attachment) => {
     const attachmentType = mapAttachmentType(attachment.attachmentType);
+    const contentType = extractAttachmentContentTypeFromName(attachment.name);
     if (attachmentType === 'inlineImage') {
       inlineImages.push({
         attachmentType: attachmentType,
@@ -93,7 +93,7 @@ const extractTeamsAttachmentsMetadata = (
         attachmentType: attachmentType,
         id: attachment.id,
         name: attachment.name ?? '',
-        extension: attachment.contentType ?? '',
+        extension: contentType ?? '',
         url: extractAttachmentUrl(attachment),
         payload: { teamsFileAttachment: 'true' }
       });
@@ -103,8 +103,8 @@ const extractTeamsAttachmentsMetadata = (
 };
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-const mapAttachmentType = (attachmentType: AttachmentType): ChatAttachmentType => {
-  if (attachmentType === 'teamsImage' || attachmentType === 'teamsInlineImage') {
+const mapAttachmentType = (attachmentType: ChatAttachmentType): AttachmentType => {
+  if (attachmentType === 'image') {
     return 'inlineImage';
   } else if (attachmentType === 'file') {
     return 'file';
@@ -114,7 +114,7 @@ const mapAttachmentType = (attachmentType: AttachmentType): ChatAttachmentType =
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 const extractAttachmentUrl = (attachment: ChatAttachment): string => {
-  return attachment.attachmentType === 'file' && attachment.previewUrl ? attachment.previewUrl : attachment.url;
+  return attachment.attachmentType === 'file' && attachment.previewUrl ? attachment.previewUrl : attachment.url || '';
 };
 
 const processChatMessageContent = (message: ChatMessageWithStatus): string | undefined => {
@@ -122,7 +122,9 @@ const processChatMessageContent = (message: ChatMessageWithStatus): string | und
   if (sanitizedMessageContentType(message.type).includes('html') && message.content?.attachments) {
     const attachments: ChatAttachment[] = message.content?.attachments;
     const teamsImageHtmlContent = attachments
-      .filter((attachment) => attachment.attachmentType === 'teamsImage')
+      .filter(
+        (attachment) => attachment.attachmentType === 'image' && !message.content?.message?.includes(attachment.id)
+      )
       .map((attachment) => generateImageAttachmentImgHtml(attachment))
       .join('');
 
@@ -135,7 +137,21 @@ const processChatMessageContent = (message: ChatMessageWithStatus): string | und
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 const generateImageAttachmentImgHtml = (attachment: ChatAttachment): string => {
-  return `\r\n<p><img alt="image" src="" itemscope="${attachment.contentType}" id="${attachment.id}"></p>`;
+  const contentType = extractAttachmentContentTypeFromName(attachment.name);
+  return `\r\n<p><img alt="image" src="" itemscope="${contentType}" id="${attachment.id}"></p>`;
+};
+
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+const extractAttachmentContentTypeFromName = (name?: string): string => {
+  if (name === undefined) {
+    return '';
+  }
+  const indexOfLastDot = name.lastIndexOf('.');
+  if (indexOfLastDot === undefined || indexOfLastDot < 0) {
+    return '';
+  }
+  const contentType = name.substring(indexOfLastDot + 1);
+  return contentType;
 };
 
 /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing) */

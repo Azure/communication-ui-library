@@ -28,7 +28,7 @@
     "@azure/communication-calling": "^1.19.1",
     "@azure/communication-common": "2.3.0",
     "@azure/communication-chat": "^1.4.0",
-    "@azure/communication-signaling": "1.0.0-beta.20"
+    "@azure/communication-signaling": "1.0.0-beta.22"
   },
 
   /**
@@ -60,10 +60,10 @@
     "@azure/communication-calling": ["^1.19.1"],
     "@azure/communication-common": ["2.3.0"],
     "@azure/communication-chat": ["^1.4.0"],
-    "@azure/communication-signaling": ["1.0.0-beta.20"],
+    "@azure/communication-signaling": ["1.0.0-beta.22"],
     "typescript": [
       // All projects should use this version by default
-      "4.7.4",
+      "5.3.3",
 
       // Typescript check project's dependency -- this is our minimum supported typescript version of our npm package.
       "4.6.3"
