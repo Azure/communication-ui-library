@@ -26,7 +26,9 @@ import {
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '@internal/react-components';
 import { createSelector } from 'reselect';
-import { ACSKnownMessageType, DEFAULT_DATA_LOSS_PREVENTION_POLICY_URL } from './utils/constants';
+/* @conditional-compile-remove(data-loss-prevention) */
+import { DEFAULT_DATA_LOSS_PREVENTION_POLICY_URL } from './utils/constants';
+import { ACSKnownMessageType } from './utils/constants';
 import { updateMessagesWithAttached } from './utils/updateMessagesWithAttached';
 /* @conditional-compile-remove(file-sharing) */
 import { FileMetadata } from '@internal/react-components';
@@ -79,6 +81,7 @@ const extractTeamsAttachmentsMetadata = (
   const inlineImages: InlineImageMetadata[] = [];
   attachments.forEach((attachment) => {
     const attachmentType = mapAttachmentType(attachment.attachmentType);
+    /* @conditional-compile-remove(file-sharing) */
     const contentType = extractAttachmentContentTypeFromName(attachment.name);
     if (attachmentType === 'inlineImage') {
       inlineImages.push({
