@@ -1283,7 +1283,6 @@ export type MessageThreadProps = {
 // @public
 export interface MessageThreadStrings {
     actionMenuMoreOptions?: string;
-    downloadFile: string;
     editBoxCancelButton: string;
     editBoxPlaceholderText: string;
     editBoxSubmitButton: string;

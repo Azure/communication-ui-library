@@ -13,7 +13,8 @@ import { MessageThreadStrings } from '../MessageThread';
 import { useChatMyMessageStyles } from '../styles/MessageThread.styles';
 import { ChatMessage } from '../../types';
 import { _FileUploadCards } from '../FileUploadCards';
-import { AttachmentMetadata } from '../FileDownloadCards';
+/* @conditional-compile-remove(file-sharing) */
+import { FileMetadata } from '../FileDownloadCards';
 import {
   chatMessageFailedTagStyle,
   editChatMessageFailedTagStyle,
@@ -43,7 +44,8 @@ export type ChatMessageComponentAsEditBoxProps = {
     text: string,
     metadata?: Record<string, string>,
     options?: {
-      attachmentMetadata?: AttachmentMetadata[];
+      /* @conditional-compile-remove(file-sharing) */
+      attachmentMetadata?: FileMetadata[];
     }
   ) => void;
   message: ChatMessage;
@@ -63,13 +65,14 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
   const { mentionLookupOptions } = props;
 
   const [textValue, setTextValue] = useState<string>(message.content || '');
-
-  const [attachmentMetadata, /* @conditional-compile-remove(file-sharing) */ setAttachedFilesMetadata] = React.useState(
-    getMessageAttachedFilesMetadata(message)
-  );
+  /* @conditional-compile-remove(file-sharing) */
+  const [attachmentMetadata, setAttachedFilesMetadata] = React.useState(getMessageAttachedFilesMetadata(message));
   const editTextFieldRef = React.useRef<ITextField>(null);
   const theme = useTheme();
-  const messageState = getMessageState(textValue, attachmentMetadata ?? []);
+  const messageState = getMessageState(
+    textValue,
+    /* @conditional-compile-remove(file-sharing) */ attachmentMetadata ?? []
+  );
   const submitEnabled = messageState === 'OK';
 
   const editContainerStyles = useChatMessageEditContainerStyles();
@@ -140,9 +143,13 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
           }}
           onEnterKeyDown={() => {
             submitEnabled &&
-              onSubmit(textValue, message.metadata, {
-                attachmentMetadata
-              });
+              onSubmit(
+                textValue,
+                message.metadata,
+                /* @conditional-compile-remove(file-sharing) */ {
+                  attachmentMetadata
+                }
+              );
           }}
           supportNewline={false}
           maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
@@ -184,9 +191,13 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
               onRenderIcon={onRenderThemedSubmitIcon}
               onClick={(e) => {
                 submitEnabled &&
-                  onSubmit(textValue, message.metadata, {
-                    attachmentMetadata
-                  });
+                  onSubmit(
+                    textValue,
+                    message.metadata,
+                    /* @conditional-compile-remove(file-sharing) */ {
+                      attachmentMetadata
+                    }
+                  );
                 e.stopPropagation();
               }}
               id={'submitIconWrapper'}
@@ -217,14 +228,28 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
 };
 
 const isMessageTooLong = (messageText: string): boolean => messageText.length > MAXIMUM_LENGTH_OF_MESSAGE;
-const isMessageEmpty = (messageText: string, attachmentMetadata: AttachmentMetadata[]): boolean =>
-  messageText.trim().length === 0 && attachmentMetadata.length === 0;
-const getMessageState = (messageText: string, attachmentMetadata: AttachmentMetadata[]): MessageState =>
-  isMessageEmpty(messageText, attachmentMetadata) ? 'too short' : isMessageTooLong(messageText) ? 'too long' : 'OK';
-
-// @TODO: Remove when file-sharing feature becomes stable.
-const getMessageAttachedFilesMetadata = (message: ChatMessage): AttachmentMetadata[] | undefined => {
+function isMessageEmpty(
+  messageText: string,
   /* @conditional-compile-remove(file-sharing) */
+  attachmentMetadata?: FileMetadata[]
+): boolean {
+  /* @conditional-compile-remove(file-sharing) */
+  return messageText.trim().length === 0 && attachmentMetadata?.length === 0;
+  return messageText.trim().length === 0;
+}
+function getMessageState(
+  messageText: string,
+  /* @conditional-compile-remove(file-sharing) */ attachmentMetadata: FileMetadata[]
+): MessageState {
+  return isMessageEmpty(messageText, /* @conditional-compile-remove(file-sharing) */ attachmentMetadata)
+    ? 'too short'
+    : isMessageTooLong(messageText)
+    ? 'too long'
+    : 'OK';
+}
+
+/* @conditional-compile-remove(file-sharing) */
+// @TODO: Remove when file-sharing feature becomes stable.
+const getMessageAttachedFilesMetadata = (message: ChatMessage): FileMetadata[] | undefined => {
   return message.files;
-  return [];
 };

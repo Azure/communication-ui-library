@@ -74,8 +74,8 @@ export interface AttachmentDownloadResult {
     blobUrl: string;
 }
 
-// @beta
-export type AttachmentMetadata = FileMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ InlineImageMetadata;
+// @public
+export type AttachmentMetadata = InlineImageMetadata | /* @conditional-compile-remove(file-sharing) */ FileMetadata;
 
 // @public
 export interface BaseCustomStyles {
@@ -421,8 +421,8 @@ export interface _CaptionsSettingsModalStrings {
     captionsSettingsSpokenLanguageDropdownLabel?: string;
 }
 
-// @beta
-export type ChatAttachmentType = 'file' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | 'unknown';
+// @public
+export type ChatAttachmentType = 'file' | 'inlineImage' | 'unknown';
 
 // @public
 export interface ChatMessage extends MessageCommon {
@@ -442,7 +442,6 @@ export interface ChatMessage extends MessageCommon {
     failureReason?: string;
     // @beta
     files?: FileMetadata[];
-    // @beta
     inlineImages?: InlineImageMetadata[];
     // (undocumented)
     messageType: 'chat';
@@ -457,7 +456,7 @@ export interface ChatMessage extends MessageCommon {
     status?: MessageStatus;
 }
 
-// @beta
+// @public
 export interface ChatTheme {
     chatPalette: {
         modalOverlayBlack: string;
@@ -727,7 +726,7 @@ export interface CustomMessage extends MessageCommon {
 }
 
 // @public
-export const darkTheme: PartialTheme & CallingTheme &  ChatTheme;
+export const darkTheme: PartialTheme & CallingTheme & ChatTheme;
 
 // @public
 export const DEFAULT_COMPONENT_ICONS: {
@@ -1272,10 +1271,10 @@ export interface _Identifiers {
     videoTile: string;
 }
 
-// @beta
+// @public
 export const ImageGallery: (props: ImageGalleryProps) => JSX.Element;
 
-// @beta
+// @public
 export interface ImageGalleryImageProps {
     altText?: string;
     downloadFilename: string;
@@ -1284,7 +1283,7 @@ export interface ImageGalleryImageProps {
     titleIcon?: JSX.Element;
 }
 
-// @beta
+// @public
 export interface ImageGalleryProps {
     images: Array<ImageGalleryImageProps>;
     isOpen: boolean;
@@ -1294,13 +1293,13 @@ export interface ImageGalleryProps {
     startIndex?: number;
 }
 
-// @beta
+// @public
 export interface ImageGalleryStrings {
     dismissButtonAriaLabel: string;
     downloadButtonLabel: string;
 }
 
-// @beta
+// @public
 export interface InlineImageMetadata {
     // (undocumented)
     attachmentType: 'inlineImage';
@@ -1317,7 +1316,7 @@ export interface JumpToNewMessageButtonProps {
 }
 
 // @public
-export const lightTheme: PartialTheme & CallingTheme &  ChatTheme;
+export const lightTheme: PartialTheme & CallingTheme & ChatTheme;
 
 // @public
 export type LoadingState = 'loading' | 'none';

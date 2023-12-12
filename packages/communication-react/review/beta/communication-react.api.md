@@ -142,7 +142,7 @@ export type AreParamEqual<A extends (props: any) => JSX.Element | undefined, B e
 // @public
 export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
-// @beta
+// @public
 export interface AttachmentDownloadResult {
     // (undocumented)
     attachmentId: string;
@@ -151,7 +151,7 @@ export interface AttachmentDownloadResult {
 }
 
 // @public
-export type AttachmentMetadata = /* @conditional-compile-remove(file-sharing) */ FileMetadata | InlineImageMetadata;
+export type AttachmentMetadata = InlineImageMetadata | /* @conditional-compile-remove(file-sharing) */ FileMetadata;
 
 // @public
 export type AvatarPersonaData = {
@@ -210,7 +210,7 @@ export type AzureCommunicationChatAdapterArgs = {
     threadId: string;
 };
 
-// @beta
+// @public
 export type AzureCommunicationChatAdapterOptions = {
     credential?: CommunicationTokenCredential;
 };
@@ -1536,8 +1536,8 @@ export type ChatAdapterUiState = {
     fileUploads?: FileUploadsUiState;
 };
 
-// @beta
-export type ChatAttachmentType = 'file' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | 'unknown';
+// @public
+export type ChatAttachmentType = 'file' | 'inlineImage' | 'unknown';
 
 // @public
 export type ChatBaseSelectorProps = {
@@ -1669,7 +1669,6 @@ export interface ChatMessage extends MessageCommon {
     failureReason?: string;
     // @beta
     files?: FileMetadata[];
-    // @beta
     inlineImages?: InlineImageMetadata[];
     // (undocumented)
     messageType: 'chat';
@@ -1700,7 +1699,7 @@ export type ChatParticipantListSelector = (state: ChatClientState, props: ChatBa
 // @public
 export type ChatReturnProps<Component extends (props: any) => JSX.Element> = GetChatSelector<Component> extends (state: ChatClientState, props: any) => any ? ReturnType<GetChatSelector<Component>> & Common<ChatHandlers, Parameters<Component>[0]> : never;
 
-// @beta
+// @public
 export interface ChatTheme {
     chatPalette: {
         modalOverlayBlack: string;
@@ -2257,7 +2256,7 @@ export interface CustomMessage extends MessageCommon {
 }
 
 // @public
-export const darkTheme: PartialTheme & CallingTheme &  ChatTheme;
+export const darkTheme: PartialTheme & CallingTheme & ChatTheme;
 
 // @beta
 export type DeclarativeCallAgent = CallAgent & IncomingCallManagement;
@@ -2869,10 +2868,10 @@ export interface _Identifiers {
     videoTile: string;
 }
 
-// @beta
+// @public
 export const ImageGallery: (props: ImageGalleryProps) => JSX.Element;
 
-// @beta
+// @public
 export interface ImageGalleryImageProps {
     altText?: string;
     downloadFilename: string;
@@ -2881,7 +2880,7 @@ export interface ImageGalleryImageProps {
     titleIcon?: JSX.Element;
 }
 
-// @beta
+// @public
 export interface ImageGalleryProps {
     images: Array<ImageGalleryImageProps>;
     isOpen: boolean;
@@ -2891,7 +2890,7 @@ export interface ImageGalleryProps {
     startIndex?: number;
 }
 
-// @beta
+// @public
 export interface ImageGalleryStrings {
     dismissButtonAriaLabel: string;
     downloadButtonLabel: string;
@@ -2911,7 +2910,7 @@ export interface IncomingCallState {
     startTime: Date;
 }
 
-// @beta
+// @public
 export interface InlineImageMetadata {
     // (undocumented)
     attachmentType: 'inlineImage';
@@ -2966,7 +2965,7 @@ export interface JumpToNewMessageButtonProps {
 }
 
 // @public
-export const lightTheme: PartialTheme & CallingTheme &  ChatTheme;
+export const lightTheme: PartialTheme & CallingTheme & ChatTheme;
 
 // @public
 export type LoadingState = 'loading' | 'none';

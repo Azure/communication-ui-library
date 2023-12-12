@@ -94,7 +94,7 @@ const extractTeamsAttachmentsMetadata = (
         attachmentType: attachmentType,
         id: attachment.id,
         name: attachment.name ?? '',
-        extension: contentType ?? '',
+        extension: contentType,
         url: extractAttachmentUrl(attachment),
         payload: {
           teamsFileAttachment: 'true'
@@ -141,7 +141,7 @@ const mapAttachmentType = (attachmentType: ChatAttachmentType): AttachmentType =
 
 const extractAttachmentUrl = (attachment: ChatAttachment): string => {
   /* @conditional-compile-remove(file-sharing) */ 
-  return attachment.attachmentType === 'file' && attachment.previewUrl ? attachment.previewUrl : attachment.url;
+  return attachment.attachmentType === 'file' && attachment.previewUrl ? attachment.previewUrl : attachment.url || '';
   return attachment.url || '';
 };
 const processChatMessageContent = (message: ChatMessageWithStatus): string | undefined => {
@@ -159,17 +159,17 @@ const processChatMessageContent = (message: ChatMessageWithStatus): string | und
 };
 
 const generateImageAttachmentImgHtml = (attachment: ChatAttachment): string => {
-  const contentType = extractAttachmentContentTypeFromName(attachment.name) ?? '';
+  const contentType = extractAttachmentContentTypeFromName(attachment.name);
   return `\r\n<p><img alt="image" src="" itemscope="${contentType}" id="${attachment.id}"></p>`;
 };
 
-const extractAttachmentContentTypeFromName = (name?: string): string | undefined => {
+const extractAttachmentContentTypeFromName = (name?: string): string => {
   if (name === undefined) {
-    return undefined;
+    return '';
   }
   const indexOfLastDot = name.lastIndexOf('.');
   if (indexOfLastDot === undefined || indexOfLastDot < 0) {
-    return undefined;
+    return '';
   }
   const contentType = name.substring(indexOfLastDot + 1);
   return contentType;
