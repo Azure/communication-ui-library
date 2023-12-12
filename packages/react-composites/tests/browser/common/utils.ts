@@ -627,8 +627,7 @@ export const hidePiPiP = async (page: Page): Promise<void> => {
  */
 export const existsOnPage = async (page: Page, selector: string): Promise<boolean> => {
   try {
-    await page.waitForSelector(selector, { timeout: perStepLocalTimeout() });
-    return true;
+    return await page.isVisible(selector, { timeout: PER_STEP_TIMEOUT_MS });
   } catch (e) {
     return false;
   }

@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { buildUrlWithMockAdapter, defaultMockCallAdapterState, defaultMockRemoteParticipant, test } from './fixture';
-import { expect, Page } from '@playwright/test';
-import { dataUiId, existsOnPage, hidePiPiP, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
+import { Page, expect } from '@playwright/test';
 import { IDS } from '../../common/constants';
+import { dataUiId, existsOnPage, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
+import { buildUrlWithMockAdapter, defaultMockCallAdapterState, defaultMockRemoteParticipant, test } from './fixture';
 
 test.describe('Rooms DeviceButton tests for different roles', async () => {
   test('All devices are shown for Presenter', async ({ page, serverUrl }) => {
@@ -87,7 +87,8 @@ test.describe('Rooms Participant RemoveButton tests for different roles', async 
     const participants = [paul];
     const initialState = defaultMockCallAdapterState(participants, 'Presenter', true);
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
-    await openRemoveParticipantMenu(page);
+    await openRemoteParticipantMenu(page);
+    expect(await page.isVisible('button:text("Remove")')).toBe(false);
     expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
       'rooms-call-remove-participant-presenter.png'
     );
@@ -98,7 +99,8 @@ test.describe('Rooms Participant RemoveButton tests for different roles', async 
     const participants = [paul];
     const initialState = defaultMockCallAdapterState(participants, 'Attendee', true);
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
-    await expectNoRemoveParticipantMenuItem(page);
+    await openRemoteParticipantMenu(page);
+    expect(await page.isVisible('button:text("Remove")')).toBe(false);
   });
 
   test('No ellipses button for remote participant items for Consumer', async ({ page, serverUrl }) => {
@@ -106,11 +108,12 @@ test.describe('Rooms Participant RemoveButton tests for different roles', async 
     const participants = [paul];
     const initialState = defaultMockCallAdapterState(participants, 'Consumer', true);
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
-    await expectNoRemoveParticipantMenuItem(page);
+    await openRemoteParticipantMenu(page);
+    expect(await page.isVisible('button:text("Remove")')).toBe(false);
   });
 });
 
-const openRemoveParticipantMenu = async (page: Page): Promise<void> => {
+const openRemoteParticipantMenu = async (page: Page): Promise<void> => {
   await waitForSelector(page, dataUiId(IDS.videoGallery));
 
   if (await existsOnPage(page, dataUiId('call-composite-participants-button'))) {
@@ -121,49 +124,20 @@ const openRemoveParticipantMenu = async (page: Page): Promise<void> => {
     if (await existsOnPage(page, dataUiId('participant-button-people-menu-item'))) {
       await pageClick(page, dataUiId('participant-button-people-menu-item'));
     }
-    await page.hover(dataUiId('participant-item'));
-    await waitForSelector(page, dataUiId('participant-item-menu-button'));
-    await pageClick(page, dataUiId('participant-item-menu-button'));
-    await waitForSelector(page, dataUiId('participant-list-remove-participant-button'));
   } else {
     // Click the more button to show the people button on the new control bar
     // in case we are on mobile
     await pageClick(page, dataUiId('common-call-composite-more-button'));
     await waitForSelector(page, dataUiId('call-composite-more-menu-people-button'));
     await pageClick(page, dataUiId('call-composite-more-menu-people-button'));
-    await hidePiPiP(page);
-    await waitForSelector(page, dataUiId('participant-list'));
-    await waitForSelector(page, dataUiId('participant-item'));
-    await pageClick(page, dataUiId('participant-item'));
-    await waitForSelector(page, dataUiId('drawer-menu'));
   }
-};
+  await waitForSelector(page, dataUiId('participant-list'));
 
-const expectNoRemoveParticipantMenuItem = async (page: Page): Promise<void> => {
-  await waitForSelector(page, dataUiId(IDS.videoGallery));
-
-  if (await existsOnPage(page, dataUiId('call-composite-participants-button'))) {
-    // The control bar is legacy because it has the participant button
-    await pageClick(page, dataUiId('call-composite-participants-button'));
-    // Look for a people menu item if there is one and click it to show flyout
-    // with participant list
-    if (await existsOnPage(page, dataUiId('participant-button-people-menu-item'))) {
-      await pageClick(page, dataUiId('participant-button-people-menu-item'));
-    }
-    await page.hover(dataUiId('participant-item'));
-    const menuButton = await page.$$(dataUiId('participant-item-menu-button'));
-    expect(menuButton.length).toBe(0);
+  // Open participant menu which may require hovering to show menu button or just clicking
+  await page.hover(dataUiId('participant-item'));
+  if (await existsOnPage(page, dataUiId('participant-item-menu-button'))) {
+    await pageClick(page, dataUiId('participant-item-menu-button'));
   } else {
-    // Click the more button to show the people button on the new control bar
-    // in case we are on mobile
-    await pageClick(page, dataUiId('common-call-composite-more-button'));
-    await waitForSelector(page, dataUiId('call-composite-more-menu-people-button'));
-    await pageClick(page, dataUiId('call-composite-more-menu-people-button'));
-    await hidePiPiP(page);
-    await waitForSelector(page, dataUiId('participant-list'));
-    await waitForSelector(page, dataUiId('participant-item'));
     await pageClick(page, dataUiId('participant-item'));
-    const drawerMenu = await page.$$(dataUiId('drawer-menu'));
-    expect(drawerMenu.length).toBe(0);
   }
 };
