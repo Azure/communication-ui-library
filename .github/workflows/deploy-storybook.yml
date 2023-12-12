@@ -47,3 +47,4 @@ jobs:
         working-directory: ./packages/storybook
         env:
           GH_TOKEN: ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}
+          NODE_ENV: production
