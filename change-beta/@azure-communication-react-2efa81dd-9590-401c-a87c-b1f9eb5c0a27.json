@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "area": "improvement",
+  "workstream": "Dependency update",
+  "comment": "Update Chat SDK to 1.5.0-beta.1 and Signaling to beta 23 for beta and beta 22 for stable",
+  "packageName": "@azure/communication-react",
+  "email": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+  "dependentChangeType": "none"
+}
