@@ -2,6 +2,7 @@
   "extends": "../../common/config/tsc/tsconfig.json",
   "compilerOptions": {
     "baseUrl": "./preprocessed",
+    "noImplicitAny": false,
     "outDir": "./dist/dist-esm"
   },
   "typeRoots": ["./node_modules/@types"],

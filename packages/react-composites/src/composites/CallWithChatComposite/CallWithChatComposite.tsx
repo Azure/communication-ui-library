@@ -243,11 +243,11 @@ export type CallWithChatCompositeOptions = {
        */
       alt?: string;
       /**
-       * The logo can be displayed as a circle or a square.
+       * The logo can be displayed as a circle.
        *
-       * @defaultValue 'circle'
+       * @defaultValue 'unset'
        */
-      shape?: 'circle' | 'square';
+      shape?: 'unset' | 'circle';
     };
     /* @conditional-compile-remove(custom-branding) */
     /**
@@ -335,7 +335,7 @@ type CallWithChatScreenProps = {
   logo?: {
     url: string;
     alt?: string;
-    shape?: 'circle' | 'square';
+    shape?: 'unset' | 'circle';
   };
   /* @conditional-compile-remove(custom-branding) */
   backgroundImage?: {
