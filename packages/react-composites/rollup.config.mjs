@@ -9,5 +9,6 @@ const common = commonConfig(packageJson);
 
 export default {
   ...common,
+  input: './dist/dist-esm/index-public.js',
   external: [...(common.external || []), '@internal/fake-backends']
 };
