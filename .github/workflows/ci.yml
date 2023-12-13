@@ -240,6 +240,7 @@ jobs:
           rushx test:e2e:call
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+          PLAYWRIGHT_BROWSERS_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload playwright test results
         uses: actions/upload-artifact@v3
         if: ${{ always() }}
