@@ -774,9 +774,9 @@ export interface CallCompositeStrings {
     startCaptionsButtonTooltipOffContent?: string;
     startCaptionsButtonTooltipOnContent?: string;
     surveyCancelButtonAriaLabel: string;
-    surveyCategories: SurveyCategories;
     surveyConfirmButtonLabel: string;
     surveyIssues: SurveyIssues;
+    SurveyIssuesHeadingStrings: SurveyIssuesHeadingStrings;
     surveyQuestion: string;
     surveyTextboxDefaultText: string;
     tagsSurveyHelperText: string;
@@ -3897,18 +3897,6 @@ export interface StreamMediaProps {
 }
 
 // @beta
-export interface SurveyCategories {
-    // (undocumented)
-    audioRating: string;
-    // (undocumented)
-    overallRating: string;
-    // (undocumented)
-    screenshareRating: string;
-    // (undocumented)
-    videoRating: string;
-}
-
-// @beta
 export interface SurveyIssues {
     // (undocumented)
     audioRating: {
@@ -3952,6 +3940,18 @@ export interface SurveyIssues {
         audioVideoOutOfSync: string;
         otherIssues: string;
     };
+}
+
+// @beta
+export interface SurveyIssuesHeadingStrings {
+    // (undocumented)
+    audioRating: string;
+    // (undocumented)
+    overallRating: string;
+    // (undocumented)
+    screenshareRating: string;
+    // (undocumented)
+    videoRating: string;
 }
 
 // @public

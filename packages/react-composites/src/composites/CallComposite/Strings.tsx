@@ -4,7 +4,7 @@
 /* @conditional-compile-remove(close-captions) */
 import { SpokenLanguageStrings, CaptionLanguageStrings } from '@internal/react-components';
 /* @conditional-compile-remove(end-of-call-survey) */
-import { SurveyIssues, SurveyCategories } from '@internal/react-components';
+import { SurveyIssues, SurveyIssuesHeadingStrings } from '@internal/react-components';
 /* @conditional-compile-remove(capabilities) */
 import { CapabilityChangedNotificationStrings } from './components/CapabilitiesChangedNotificationBar';
 
@@ -735,7 +735,7 @@ export interface CallCompositeStrings {
   /**
    * Corresponding texts to each call category
    */
-  surveyCategories: SurveyCategories;
+  SurveyIssuesHeadingStrings: SurveyIssuesHeadingStrings;
   /**
    * String for the dismiss control on the local and remote PIP on mobile
    */

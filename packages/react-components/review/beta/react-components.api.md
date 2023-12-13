@@ -2187,18 +2187,6 @@ export interface StreamMediaProps {
 }
 
 // @beta
-export interface SurveyCategories {
-    // (undocumented)
-    audioRating: string;
-    // (undocumented)
-    overallRating: string;
-    // (undocumented)
-    screenshareRating: string;
-    // (undocumented)
-    videoRating: string;
-}
-
-// @beta
 export interface SurveyIssues {
     // (undocumented)
     audioRating: {
@@ -2244,7 +2232,7 @@ export interface SurveyIssues {
     };
 }
 
-// @public
+// @beta
 export interface SurveyIssuesHeadingStrings {
     // (undocumented)
     audioRating: string;

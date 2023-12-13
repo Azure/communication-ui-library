@@ -38,7 +38,7 @@ export const TagsSurvey = (
   return (
     <_TagsSurvey
       callIssuesToTag={strings.surveyIssues}
-      categoriesToHeader={strings.surveyCategories}
+      categoryHeadings={strings.SurveyIssuesHeadingStrings}
       issues={props.issues}
       onConfirm={props.onConfirm}
       strings={tagsSurveyStrings}

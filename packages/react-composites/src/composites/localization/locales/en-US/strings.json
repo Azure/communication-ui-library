@@ -236,17 +236,17 @@
     "starSurveyTwoStarText": "The quality was poor.",
     "starSurveyThreeStarText": "The quality was good.",
     "starSurveyFourStarText": "The quality was great.",
-    "starSurveyFiveStarText":"The quality was excellent.",
-    "surveyConfirmButtonLabel":"Send Feedback",
-    "starRatingAriaLabel":"Select {0} of {1} stars",
+    "starSurveyFiveStarText": "The quality was excellent.",
+    "surveyConfirmButtonLabel": "Send Feedback",
+    "starRatingAriaLabel": "Select {0} of {1} stars",
     "surveyCancelButtonAriaLabel": "Cancel",
     "tagsSurveyQuestion": "What could have been better?",
     "tagsSurveyHelperText": "Check any issues you experienced",
     "surveyTextboxDefaultText": "Other,please specify",
-    "surveyIssues":{
+    "surveyIssues": {
       "overallRating": {
         "callCannotJoin": "I could not join call",
-        "callCannotInvite":"I could not invite others into the call",
+        "callCannotInvite": "I could not invite others into the call",
         "hadToRejoin": "I had to rejoin the call",
         "callEndedUnexpectedly": "Call ended for me unexpectedly",
         "otherIssues": "I was having other issues with the call"
@@ -255,7 +255,7 @@
         "noLocalAudio": "The other side could not hear any sound",
         "noRemoteAudio": "I could not hear any sound",
         "echo": "I heard echos on the call",
-        "audioNoise":"I heard noise on the call",
+        "audioNoise": "I heard noise on the call",
         "lowVolume": "Volume was low",
         "audioStoppedUnexpectedly": "Audio stopped unexpectedly",
         "distortedSpeech": "Audio was distorted",
@@ -274,8 +274,8 @@
       },
       "screenshareRating": {
         "noContentLocal": "Other people could not see my screenshare",
-       "noContentRemote":"I could not see other people's screenshare",
-        "cannotPresent": "I could not present my screen", 
+        "noContentRemote": "I could not see other people's screenshare",
+        "cannotPresent": "I could not present my screen",
         "lowQuality": "Screen share quality was low",
         "freezes": "Screen share frozen",
         "stoppedUnexpectedly": "Screen share stopped unexpectedly",
@@ -283,7 +283,7 @@
         "otherIssues": "I was having other screen share issues in this call"
       }
     },
-    "surveyCategories": {
+    "SurveyIssuesHeadingStrings": {
       "overallRating": "Overall",
       "audioRating": "Audio",
       "videoRating": "Video",
