@@ -83,7 +83,6 @@ import { ScalingMode } from '@azure/communication-calling';
 import { SendMessageOptions } from '@azure/communication-chat';
 import { StartCallOptions } from '@azure/communication-calling';
 import { StartCaptionsOptions } from '@azure/communication-calling';
-import { SubmitSurveyOptions } from '@azure/communication-calling';
 import { SyntheticEvent } from 'react';
 import { TeamsCall } from '@azure/communication-calling';
 import { TeamsCallAgent } from '@azure/communication-calling';
@@ -362,7 +361,7 @@ export interface CallAdapterCallOperations {
     stopScreenShare(): Promise<void>;
     stopVideoBackgroundEffects(): Promise<void>;
     // @beta
-    submitSurvey(survey: CallSurvey, options?: SubmitSurveyOptions): Promise<CallSurveyResponse | undefined>;
+    submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
     unmute(): Promise<void>;
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
     updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
@@ -603,6 +602,15 @@ export type CallCompositeOptions = {
     galleryOptions?: {
         layout?: VideoGalleryLayout;
     };
+    surveyOptions?: {
+        hideSurvey?: boolean;
+        onSurveySubmitted?: (callId: string, surveyId: string,
+        submittedSurvey: CallSurvey,
+        improvementSuggestions: {
+            category: 'audio' | 'video' | 'screenshare';
+            suggestion: string;
+        }[]) => Promise<void>;
+    };
     branding?: {
         logo?: {
             url: string;
@@ -753,11 +761,26 @@ export interface CallCompositeStrings {
     selectedPeopleButtonLabel: string;
     soundLabel: string;
     spokenLanguageStrings?: SpokenLanguageStrings;
+    starRatingAriaLabel: string;
+    starSurveyFiveStarText: string;
+    starSurveyFourStarText: string;
+    starSurveyHelperText: string;
+    starSurveyOneStarText: string;
+    starSurveyThreeStarText: string;
+    starSurveyTwoStarText: string;
     startCallButtonLabel: string;
     startCaptionsButtonOffLabel?: string;
     startCaptionsButtonOnLabel?: string;
     startCaptionsButtonTooltipOffContent?: string;
     startCaptionsButtonTooltipOnContent?: string;
+    surveyCancelButtonAriaLabel: string;
+    surveyCategories: SurveyCategories;
+    surveyConfirmButtonLabel: string;
+    surveyIssues: SurveyIssues;
+    surveyQuestion: string;
+    surveyTextboxDefaultText: string;
+    tagsSurveyHelperText: string;
+    tagsSurveyQuestion: string;
     threeParticipantJoinedNoticeString: string;
     threeParticipantLeftNoticeString: string;
     transferPageNoticeString: string;
@@ -983,7 +1006,7 @@ export interface CallWithChatAdapterManagement {
     stopScreenShare(): Promise<void>;
     stopVideoBackgroundEffects(): Promise<void>;
     // @beta
-    submitSurvey(survey: CallSurvey, options?: SubmitSurveyOptions): Promise<CallSurveyResponse | undefined>;
+    submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
     unmute(): Promise<void>;
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
     // @beta (undocumented)
@@ -1212,6 +1235,15 @@ export type CallWithChatCompositeOptions = {
     localVideoTile?: boolean | LocalVideoTileOptions;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
+    };
+    surveyOptions?: {
+        hideSurvey?: boolean;
+        onSurveySubmitted?: (callId: string, surveyId: string,
+        submittedSurvey: CallSurvey,
+        improvementSuggestions: {
+            category: 'audio' | 'video' | 'screenshare';
+            suggestion: string;
+        }[]) => Promise<void>;
     };
     branding?: {
         logo?: {
@@ -1866,7 +1898,7 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onStopScreenShare: () => Promise<void>;
     // (undocumented)
-    onSubmitSurvey(survey: CallSurvey, options?: SubmitSurveyOptions): Promise<CallSurveyResponse | undefined>;
+    onSubmitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
     // (undocumented)
     onToggleCamera: (options?: VideoStreamOptions) => Promise<void>;
     // (undocumented)
@@ -3862,7 +3894,19 @@ export interface StreamMediaProps {
     videoStreamElement: HTMLElement | null;
 }
 
-// @public
+// @beta
+export interface SurveyCategories {
+    // (undocumented)
+    audioRating: string;
+    // (undocumented)
+    overallRating: string;
+    // (undocumented)
+    screenshareRating: string;
+    // (undocumented)
+    videoRating: string;
+}
+
+// @beta
 export interface SurveyIssues {
     // (undocumented)
     audioRating: {
