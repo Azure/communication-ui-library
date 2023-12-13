@@ -34,21 +34,13 @@ export class CallingSoundSubscriber {
 
   private onCallStateChanged = (): void => {
     this.call.on('stateChanged', () => {
-      if (isPSTNCall(this.call, this.callee) && this.soundsLoaded?.callRingingSound) {
+      if (shouldPlayRinging(this.call, this.callee) && this.soundsLoaded?.callRingingSound) {
         this.soundsLoaded.callRingingSound.loop = true;
         this.playSound(this.soundsLoaded.callRingingSound);
       }
-      if (
-        (this.call.state === 'Connected' || this.call.state === 'Disconnected') &&
-        this.soundsLoaded?.callRingingSound
-      ) {
+      if (!shouldPlayRinging(this.call, this.callee) && this.soundsLoaded?.callRingingSound) {
         this.soundsLoaded.callRingingSound.loop = false;
         this.soundsLoaded.callRingingSound.pause();
-      }
-      if (this.call.state === 'Disconnecting') {
-        if (this.soundsLoaded?.callRingingSound) {
-          this.soundsLoaded.callRingingSound.pause();
-        }
       }
       if (this.call.state === 'Disconnected') {
         if (this.soundsLoaded?.callBusySound && this.call.callEndReason?.code === CALL_REJECTED_CODE) {
@@ -105,7 +97,7 @@ export class CallingSoundSubscriber {
  * Helper function to allow the calling sound subscriber to determine when to play the ringing
  * sound when making an outbound call.
  */
-const isPSTNCall = (call: CallCommon, callee?: CommunicationIdentifier[]): boolean => {
+const shouldPlayRinging = (call: CallCommon, callee?: CommunicationIdentifier[]): boolean => {
   /* @conditional-compile-remove(calling-sounds) */
   if (
     callee &&
