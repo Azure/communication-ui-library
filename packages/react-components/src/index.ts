@@ -74,4 +74,4 @@ export type { BlockedMessage } from './types';
 /* @conditional-compile-remove(end-of-call-survey) */
 export type { SurveyIssues } from './types';
 /* @conditional-compile-remove(end-of-call-survey) */
-export type { SurveyCategories } from './types';
+export type { SurveyIssuesHeadingStrings } from './types';

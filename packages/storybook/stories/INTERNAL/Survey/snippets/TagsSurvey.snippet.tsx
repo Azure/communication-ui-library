@@ -71,7 +71,7 @@ export const TagsSurveyExample: () => JSX.Element = () => {
     'Echo',
     'Freezes'
   ];
-  const categoriesToHeader = {
+  const categoryHeadings = {
     overallRating: 'Overall',
     audioRating: 'Audio',
     videoRating: 'Video',
@@ -83,7 +83,7 @@ export const TagsSurveyExample: () => JSX.Element = () => {
       strings={strings}
       issues={issues}
       callIssuesToTag={callIssuesToTag}
-      categoriesToHeader={categoriesToHeader}
+      categoryHeadings={categoryHeadings}
     />
   );
 };

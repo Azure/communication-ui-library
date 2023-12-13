@@ -1563,6 +1563,7 @@ export interface MessageThreadStrings {
     liveAuthorIntro: string;
     messageContentAriaText: string;
     messageContentMineAriaText: string;
+    messageDeletedAnnouncementAriaLabel: string;
     messageReadCount?: string;
     monday: string;
     newMessagesIndicator: string;
@@ -2242,6 +2243,18 @@ export interface SurveyIssues {
     };
 }
 
+// @public
+export interface SurveyIssuesHeadingStrings {
+    // (undocumented)
+    audioRating: string;
+    // (undocumented)
+    overallRating: string;
+    // (undocumented)
+    screenshareRating: string;
+    // (undocumented)
+    videoRating: string;
+}
+
 // @internal
 export type _SurveyTag = {
     [issueCategory: string]: {
@@ -2267,7 +2280,7 @@ export const _TagsSurvey: (props: _TagsSurveyProps) => JSX.Element;
 // @internal
 export interface _TagsSurveyProps {
     callIssuesToTag: SurveyIssues;
-    categoriesToHeader: SurveyCategories;
+    categoryHeadings: SurveyIssuesHeadingStrings;
     issues: (_AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue)[];
     onConfirm?: (selectedTags: _CallSurvey) => void;
     strings?: _TagsSurveyStrings;

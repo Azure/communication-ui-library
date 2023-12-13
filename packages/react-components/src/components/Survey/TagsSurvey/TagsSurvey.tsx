@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Text, useTheme, Stack, Checkbox, Pivot, PivotItem } from '@fluentui/react';
 import { _formatString, _pxToRem } from '@internal/acs-ui-common';
 import { checkboxClassName, questionTextStyle, helperTextStyle } from './TagsSurvey.styles';
@@ -13,7 +13,7 @@ import {
   _ScreenshareIssue,
   _VideoIssue
 } from '../SurveyTypes';
-import { SurveyCategories, SurveyIssues } from '../../../types';
+import { SurveyIssuesHeadingStrings, SurveyIssues } from '../../../types';
 /**
  * Strings of {@link TagsSurvey} that can be overridden.
  *
@@ -25,7 +25,7 @@ export interface _TagsSurveyStrings {
    */
   tagsSurveyQuestion?: string;
   /**
-   * Confirm Button Label
+   * Helper text for tag survey explaining what the survey is for
    */
   tagsSurveyHelperText?: string;
 }
@@ -60,7 +60,7 @@ export interface _TagsSurveyProps {
   /** Mappings from call issues to tags displayed on the survey*/
   callIssuesToTag: SurveyIssues;
   /** Mappings from issue category to categories displayed on survey*/
-  categoriesToHeader: SurveyCategories;
+  categoryHeadings: SurveyIssuesHeadingStrings;
   /** Function to send TagsSurvey results*/
   onConfirm?: (selectedTags: _CallSurvey) => void;
   /** Tags survey strings */
@@ -73,32 +73,35 @@ export interface _TagsSurveyProps {
  * @internal
  */
 export const _TagsSurvey = (props: _TagsSurveyProps): JSX.Element => {
-  const { issues, callIssuesToTag, categoriesToHeader, onConfirm, strings } = props;
+  const { issues, callIssuesToTag, categoryHeadings, onConfirm, strings } = props;
 
   const [selectedTags, setSelectedTags] = useState({});
 
-  const tags: _SurveyTag[] = [];
-  issues.map((issue) => {
-    const issueCamelCase = issue?.charAt(0).toLowerCase() + issue?.slice(1);
-    const issueCategory = Object.keys(callIssuesToTag).find(
-      (key) => callIssuesToTag[key][issueCamelCase] !== undefined
-    );
-    if (issueCategory) {
-      if (tags[issueCategory]) {
-        tags[issueCategory].push({
-          message: callIssuesToTag[issueCategory][issueCamelCase],
-          issue: issue
-        });
-      } else {
-        tags[issueCategory] = [
-          {
+  const tags: _SurveyTag[] = useMemo(() => {
+    const tags: _SurveyTag[] = [];
+    issues.forEach((issue) => {
+      const issueCamelCase = issue?.charAt(0).toLowerCase() + issue?.slice(1);
+      const issueCategory = Object.keys(callIssuesToTag).find(
+        (key) => callIssuesToTag[key][issueCamelCase] !== undefined
+      );
+      if (issueCategory) {
+        if (tags[issueCategory]) {
+          tags[issueCategory].push({
             message: callIssuesToTag[issueCategory][issueCamelCase],
             issue: issue
-          }
-        ];
+          });
+        } else {
+          tags[issueCategory] = [
+            {
+              message: callIssuesToTag[issueCategory][issueCamelCase],
+              issue: issue
+            }
+          ];
+        }
       }
-    }
-  });
+    });
+    return tags;
+  }, [issues, callIssuesToTag]);
 
   const onChange = React.useCallback(
     (issue: string, issueCategory: string, checked: boolean): void => {
@@ -146,7 +149,7 @@ export const _TagsSurvey = (props: _TagsSurveyProps): JSX.Element => {
           return (
             <PivotItem
               key={`key-${i}`}
-              headerText={categoriesToHeader[key]}
+              headerText={categoryHeadings[key]}
               headerButtonProps={{
                 'data-order': i,
                 'data-title': key
