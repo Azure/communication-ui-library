@@ -4,7 +4,9 @@
 import React, { useCallback, useState, useMemo, useEffect, useRef } from 'react';
 import { mergeStyles, PartialTheme, Stack, Theme } from '@fluentui/react';
 import { CallCompositePage } from '../CallComposite';
-import { CallState, CallSurvey } from '@azure/communication-calling';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { CallSurvey } from '@azure/communication-calling';
+import { CallState } from '@azure/communication-calling';
 import { callCompositeContainerStyles, compositeOuterContainerStyles } from './styles/CallWithChatCompositeStyles';
 import { CallWithChatAdapter } from './adapter/CallWithChatAdapter';
 import { CallWithChatBackedCallAdapter } from './adapter/CallWithChatBackedCallAdapter';
@@ -191,7 +193,7 @@ export type CallWithChatCompositeOptions = {
   surveyOptions?: {
     /**
      * Hide call survey at the end of a call.
-     * @defaultValue true
+     * @defaultValue false
      */
     hideSurvey?: boolean;
     /**
@@ -300,7 +302,7 @@ type CallWithChatScreenProps = {
   surveyOptions?: {
     /**
      * Hide call survey at the end of a call.
-     * @defaultValue true
+     * @defaultValue false
      */
     hideSurvey?: boolean;
     /**

@@ -11,7 +11,9 @@ import { useLocale } from '../localization';
 
 /** @private */
 export const StarSurvey = (
-  /* @conditional-compile-remove(end-of-call-survey) */ props: { onStarRatingSelected: (ratings: number) => void }
+  /* @conditional-compile-remove(end-of-call-survey) */ props: {
+    /* @conditional-compile-remove(end-of-call-survey) */ onStarRatingSelected: (ratings: number) => void;
+  }
 ): JSX.Element => {
   /* @conditional-compile-remove(end-of-call-survey) */
   const { onStarRatingSelected } = props;

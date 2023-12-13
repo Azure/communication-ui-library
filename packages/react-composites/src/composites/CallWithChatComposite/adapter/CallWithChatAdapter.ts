@@ -467,7 +467,7 @@ export interface CallWithChatAdapterManagement {
   /**
    * Send the end of call survey result
    *
-   * @public
+   * @beta
    */
   submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
 }

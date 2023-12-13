@@ -2,22 +2,32 @@
 // Licensed under the MIT License.
 
 import React from 'react';
+/* @conditional-compile-remove(end-of-call-survey) */
 import { StarSurvey } from './StarSurvey';
+/* @conditional-compile-remove(end-of-call-survey) */
 import { TagsSurvey } from './TagsSurvey';
+/* @conditional-compile-remove(end-of-call-survey) */
 import { useState } from 'react';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { _AudioIssue, _OverallIssue, _ScreenshareIssue, _VideoIssue } from '@internal/react-components';
+/* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
+/* @conditional-compile-remove(end-of-call-survey) */
 import { PrimaryButton, Stack } from '@fluentui/react';
+/* @conditional-compile-remove(end-of-call-survey) */
 import { useLocale } from '../localization';
 
 /**
  * @private
  */
-export const SurveyPaneContent = (props: {
-  onSubmitSurvey?: (survey: CallSurvey) => Promise<CallSurveyResponse | undefined>;
-  onDismissSidePane?: () => void;
-}): JSX.Element => {
+export const SurveyPaneContent = (
+  /* @conditional-compile-remove(end-of-call-survey) */ props: {
+    /* @conditional-compile-remove(end-of-call-survey) */
+    onSubmitSurvey?: (survey: CallSurvey) => Promise<CallSurveyResponse | undefined>;
+    /* @conditional-compile-remove(end-of-call-survey) */
+    onDismissSidePane?: () => void;
+  }
+): JSX.Element => {
   /* @conditional-compile-remove(end-of-call-survey) */
   const [showTagsSurvey, setShowTagsSurvey] = useState(false);
   /* @conditional-compile-remove(end-of-call-survey) */
@@ -72,7 +82,7 @@ export const SurveyPaneContent = (props: {
     'HadToRejoin',
     'CallEndedUnexpectedly'
   ];
-
+  /* @conditional-compile-remove(end-of-call-survey) */
   return (
     <Stack verticalAlign="space-between">
       <Stack>
@@ -115,4 +125,6 @@ export const SurveyPaneContent = (props: {
       )}
     </Stack>
   );
+
+  return <></>;
 };

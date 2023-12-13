@@ -2184,7 +2184,7 @@ export interface StreamMediaProps {
     videoStreamElement: HTMLElement | null;
 }
 
-// @public
+// @beta
 export interface SurveyCategories {
     // (undocumented)
     audioRating: string;
@@ -2196,7 +2196,7 @@ export interface SurveyCategories {
     videoRating: string;
 }
 
-// @public
+// @beta
 export interface SurveyIssues {
     // (undocumented)
     audioRating: {

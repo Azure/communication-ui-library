@@ -18,12 +18,14 @@ import { _captionSettingsSelector } from '@internal/calling-component-bindings';
 import { useLocale } from '../localization';
 
 /** @private */
-export const TagsSurvey = (props: {
-  /* @conditional-compile-remove(end-of-call-survey) */
-  issues: (_AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue)[];
-  /* @conditional-compile-remove(end-of-call-survey) */
-  onConfirm?: (survey: _CallSurvey) => void;
-}): JSX.Element => {
+export const TagsSurvey = (
+  /* @conditional-compile-remove(end-of-call-survey) */ props: {
+    /* @conditional-compile-remove(end-of-call-survey) */
+    issues: (_AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue)[];
+    /* @conditional-compile-remove(end-of-call-survey) */
+    onConfirm?: (survey: _CallSurvey) => void;
+  }
+): JSX.Element => {
   /* @conditional-compile-remove(end-of-call-survey) */
   const strings = useLocale().strings.call;
   /* @conditional-compile-remove(end-of-call-survey) */

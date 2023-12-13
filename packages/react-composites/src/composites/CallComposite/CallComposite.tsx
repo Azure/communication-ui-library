@@ -32,7 +32,9 @@ import { useId } from '@fluentui/react-hooks';
 import { HoldPage } from './pages/HoldPage';
 /* @conditional-compile-remove(unsupported-browser) */
 import { UnsupportedBrowserPage } from './pages/UnsupportedBrowser';
-import { CallSurvey, PermissionConstraints } from '@azure/communication-calling';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { CallSurvey } from '@azure/communication-calling';
+import { PermissionConstraints } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
 import { ParticipantRole } from '@azure/communication-calling';
 import { MobileChatSidePaneTabHeaderProps } from '../common/TabHeader';
@@ -239,7 +241,7 @@ export type CallCompositeOptions = {
   surveyOptions?: {
     /**
      * Hide call survey at the end of a call.
-     * @defaultValue true
+     * @defaultValue false
      */
     hideSurvey?: boolean;
     /**

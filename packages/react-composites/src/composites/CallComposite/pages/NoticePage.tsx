@@ -37,7 +37,7 @@ export interface NoticePageProps {
   surveyOptions?: {
     /**
      * Hide call survey at the end of a call.
-     * @defaultValue true
+     * @defaultValue false
      */
     hideSurvey?: boolean;
     /**

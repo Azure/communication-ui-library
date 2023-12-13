@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 /**
- * @public
+ * @beta
  * Corresponding texts to each call issue
  */
 export interface SurveyIssues {
