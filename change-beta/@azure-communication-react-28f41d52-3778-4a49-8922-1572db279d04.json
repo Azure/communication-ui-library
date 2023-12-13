@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "improvement",
+  "workstream": "",
+  "comment": "Update inline image snippet to include note about gif limitation",
+  "packageName": "@azure/communication-react",
+  "email": "73612854+palatter@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
