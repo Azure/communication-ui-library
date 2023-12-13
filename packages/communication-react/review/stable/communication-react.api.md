@@ -3060,7 +3060,7 @@ export type StatefulChatClientOptions = {
 // @public
 export interface StatefulDeviceManager extends DeviceManager {
     getUnparentedVideoStreams: () => LocalVideoStream[];
-    selectCamera: (VideoDeviceInfo: any) => void;
+    selectCamera: (device: VideoDeviceInfo) => void;
 }
 
 // @public
