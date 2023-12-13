@@ -150,9 +150,11 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
 
   const options: CallWithChatCompositeOptions = useMemo(
     () => ({
-      callControls: {
-        screenShareButton: !shouldDisableScreenShare
-      }
+      callControls: shouldDisableScreenShare
+        ? {
+            screenShareButton: false
+          }
+        : undefined
     }),
     [shouldDisableScreenShare]
   );
