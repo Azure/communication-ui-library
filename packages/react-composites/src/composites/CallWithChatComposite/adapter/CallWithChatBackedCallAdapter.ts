@@ -28,7 +28,7 @@ import {
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { JoinCallOptions } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(end-of-call-survey) */
-import { CallSurvey, CallSurveyResponse, SubmitSurveyOptions } from '@azure/communication-calling';
+import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
@@ -222,11 +222,8 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     return this.callWithChatAdapter.updateSelectedVideoBackgroundEffect(selectedVideoBackground);
   }
   /* @conditional-compile-remove(end-of-call-survey) */
-  public async submitSurvey(
-    survey: CallSurvey,
-    options?: SubmitSurveyOptions
-  ): Promise<CallSurveyResponse | undefined> {
-    return this.callWithChatAdapter.submitSurvey(survey, options);
+  public async submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined> {
+    return this.callWithChatAdapter.submitSurvey(survey);
   }
 }
 

@@ -6,7 +6,7 @@ import { Text, useTheme, Stack } from '@fluentui/react';
 import { Rating, RatingSize } from '@fluentui/react';
 import { _formatString, _pxToRem } from '@internal/acs-ui-common';
 import { helperTextStyle, ratingStyles, titleContainerClassName } from './StarSurvey.styles';
-import { _CallSurvey, _CallSurveyResponse } from './SurveyTypes';
+import { _CallSurvey, _CallSurveyResponse } from '../SurveyTypes';
 /**
  * Strings of {@link StarSurvey} that can be overridden.
  *

@@ -3,6 +3,8 @@
 
 /* @conditional-compile-remove(close-captions) */
 import { SpokenLanguageStrings, CaptionLanguageStrings } from '@internal/react-components';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { SurveyIssues, SurveyCategories } from '@internal/react-components';
 /* @conditional-compile-remove(capabilities) */
 import { CapabilityChangedNotificationStrings } from './components/CapabilitiesChangedNotificationBar';
 
@@ -659,6 +661,81 @@ export interface CallCompositeStrings {
    * All strings for capability changed notification
    */
   capabilityChangedNotification?: CapabilityChangedNotificationStrings;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Question for the survey
+   */
+  surveyQuestion: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Helper text to explain what the survey is for
+   */
+  starSurveyHelperText: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Helper text displayed below survey question after user select one star
+   */
+  starSurveyOneStarText: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Helper text displayed below survey question after user select two star
+   */
+  starSurveyTwoStarText: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Helper text displayed below survey question after user select three star
+   */
+  starSurveyThreeStarText: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Helper text displayed below survey question after user select four star
+   */
+  starSurveyFourStarText: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Helper text displayed below survey question after user select five star
+   */
+  starSurveyFiveStarText: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Aria Label for each individual star rating
+   */
+  starRatingAriaLabel: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Tags Survey Question
+   */
+  tagsSurveyQuestion: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Tags Survey helper text
+   */
+  tagsSurveyHelperText: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Confirm button label for survey
+   */
+  surveyConfirmButtonLabel: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Aria Label for cancel button
+   */
+  surveyCancelButtonAriaLabel: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Default text for free form text box
+   */
+  surveyTextboxDefaultText: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Corresponding texts to each call issue
+   */
+  surveyIssues: SurveyIssues;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Corresponding texts to each call category
+   */
+  surveyCategories: SurveyCategories;
   /**
    * String for the dismiss control on the local and remote PIP on mobile
    */

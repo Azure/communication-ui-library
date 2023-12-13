@@ -1337,6 +1337,9 @@ export interface InlineImageMetadata {
     url: string;
 }
 
+// @internal
+export type _IssueCategory = 'overallRating' | 'audioRating' | 'videoRating' | 'screenshareRating';
+
 // @public
 export interface JumpToNewMessageButtonProps {
     onClick: () => void;
@@ -2182,6 +2185,84 @@ export interface StreamMediaProps {
     videoStreamElement: HTMLElement | null;
 }
 
+// @beta
+export interface SurveyCategories {
+    // (undocumented)
+    audioRating: string;
+    // (undocumented)
+    overallRating: string;
+    // (undocumented)
+    screenshareRating: string;
+    // (undocumented)
+    videoRating: string;
+}
+
+// @beta
+export interface SurveyIssues {
+    // (undocumented)
+    audioRating: {
+        noLocalAudio: string;
+        noRemoteAudio: string;
+        echo: string;
+        audioNoise: string;
+        lowVolume: string;
+        audioStoppedUnexpectedly: string;
+        distortedSpeech: string;
+        audioInterruption: string;
+        otherIssues: string;
+    };
+    // (undocumented)
+    overallRating: {
+        callCannotJoin: string;
+        callCannotInvite: string;
+        hadToRejoin: string;
+        callEndedUnexpectedly: string;
+        otherIssues: string;
+    };
+    // (undocumented)
+    screenshareRating: {
+        noContentLocal: string;
+        noContentRemote: string;
+        cannotPresent: string;
+        lowQuality: string;
+        freezes: string;
+        stoppedUnexpectedly: string;
+        largeDelay: string;
+        otherIssues: string;
+    };
+    // (undocumented)
+    videoRating: {
+        noVideoReceived: string;
+        noVideoSent: string;
+        lowQuality: string;
+        freezes: string;
+        stoppedUnexpectedly: string;
+        darkVideoReceived: string;
+        audioVideoOutOfSync: string;
+        otherIssues: string;
+    };
+}
+
+// @public
+export interface SurveyIssuesHeadingStrings {
+    // (undocumented)
+    audioRating: string;
+    // (undocumented)
+    overallRating: string;
+    // (undocumented)
+    screenshareRating: string;
+    // (undocumented)
+    videoRating: string;
+}
+
+// @internal
+export type _SurveyTag = {
+    [issueCategory: string]: {
+        message: string;
+        issue: _AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue;
+    }[];
+};
+
 // @public
 export type SystemMessage = ParticipantAddedSystemMessage | ParticipantRemovedSystemMessage | TopicUpdatedSystemMessage | ContentSystemMessage;
 
@@ -2191,6 +2272,24 @@ export interface SystemMessageCommon extends MessageCommon {
     iconName: string;
     // (undocumented)
     messageType: 'system';
+}
+
+// @internal
+export const _TagsSurvey: (props: _TagsSurveyProps) => JSX.Element;
+
+// @internal
+export interface _TagsSurveyProps {
+    callIssuesToTag: SurveyIssues;
+    categoryHeadings: SurveyIssuesHeadingStrings;
+    issues: (_AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue)[];
+    onConfirm?: (selectedTags: _CallSurvey) => void;
+    strings?: _TagsSurveyStrings;
+}
+
+// @internal
+export interface _TagsSurveyStrings {
+    tagsSurveyHelperText?: string;
+    tagsSurveyQuestion?: string;
 }
 
 // @internal (undocumented)

@@ -4,6 +4,8 @@
 import React, { useCallback, useState, useMemo, useEffect, useRef } from 'react';
 import { mergeStyles, PartialTheme, Stack, Theme } from '@fluentui/react';
 import { CallCompositePage } from '../CallComposite';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { CallSurvey } from '@azure/communication-calling';
 import { CallState } from '@azure/communication-calling';
 import { callCompositeContainerStyles, compositeOuterContainerStyles } from './styles/CallWithChatCompositeStyles';
 import { CallWithChatAdapter } from './adapter/CallWithChatAdapter';
@@ -184,6 +186,42 @@ export type CallWithChatCompositeOptions = {
      */
     layout?: VideoGalleryLayout;
   };
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Options for end of call survey
+   */
+  surveyOptions?: {
+    /**
+     * Hide call survey at the end of a call.
+     * @defaultValue false
+     */
+    hideSurvey?: boolean;
+    /**
+     * Optional callback to handle survey data including free form text response
+     * Note that free form text response survey option is only going to be enabled when this callback is provided
+     * User will need to handle all free form text response on their own
+     */
+    onSurveySubmitted?: (
+      callId: string,
+      surveyId: string,
+      /**
+       * This is the survey results containing star survey data and API tag survey data.
+       * This part of the result will always be send to calling sdk
+       * This callback provides user with the ability to gain access to survey data
+       */
+      submittedSurvey: CallSurvey,
+      /**
+       * This is the survey results containing free form text
+       * This part of the result will not be handled by composites
+       * User will need to collect and handle this information 100% on their own
+       * Free form text survey is not going to show in the UI if onSurveySubmitted is not populated
+       */
+      improvementSuggestions: {
+        category: 'audio' | 'video' | 'screenshare';
+        suggestion: string;
+      }[]
+    ) => Promise<void>;
+  };
   /* @conditional-compile-remove(custom-branding) */
   /**
    * Options for setting additional customizations related to personalized branding.
@@ -257,6 +295,42 @@ type CallWithChatScreenProps = {
   galleryOptions?: {
     layout?: VideoGalleryLayout;
   };
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Options for end of call survey
+   */
+  surveyOptions?: {
+    /**
+     * Hide call survey at the end of a call.
+     * @defaultValue false
+     */
+    hideSurvey?: boolean;
+    /**
+     * Optional callback to handle survey data including free form text response
+     * Note that free form text response survey option is only going to be enabled when this callback is provided
+     * User will need to handle all free form text response on their own
+     */
+    onSurveySubmitted?: (
+      callId: string,
+      surveyId: string,
+      /**
+       * This is the survey results containing star survey data and API tag survey data.
+       * This part of the result will always be send to calling sdk
+       * This callback provides user with the ability to gain access to survey data
+       */
+      submittedSurvey: CallSurvey,
+      /**
+       * This is the survey results containing free form text
+       * This part of the result will not be handled by composites
+       * User will need to collect and handle this information 100% on their own
+       * Free form text survey is not going to show in the UI if onSurveySubmitted is not populated
+       */
+      improvementSuggestions: {
+        category: 'audio' | 'video' | 'screenshare';
+        suggestion: string;
+      }[]
+    ) => Promise<void>;
+  };
   /* @conditional-compile-remove(custom-branding) */
   logo?: {
     url: string;
@@ -271,6 +345,8 @@ type CallWithChatScreenProps = {
 
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   const { callWithChatAdapter, fluentTheme, formFactor = 'desktop' } = props;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  const { surveyOptions } = props;
   const mobileView = formFactor === 'mobile';
 
   if (!callWithChatAdapter) {
@@ -443,6 +519,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       galleryOptions: props.galleryOptions,
       /* @conditional-compile-remove(click-to-call) */
       localVideoTile: props.localVideoTile,
+      /* @conditional-compile-remove(end-of-call-survey) */
+      surveyOptions: surveyOptions,
       /* @conditional-compile-remove(custom-branding) */
       branding: {
         logo: props.logo,
@@ -469,6 +547,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       props.localVideoTile,
       /* @conditional-compile-remove(pinned-participants) */
       props.remoteVideoTileMenuOptions,
+      /* @conditional-compile-remove(end-of-call-survey) */
+      surveyOptions,
       /* @conditional-compile-remove(custom-branding) */
       props.logo,
       /* @conditional-compile-remove(custom-branding) */
@@ -543,6 +623,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     },
     [closeChat]
   );
+
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)}>
       <Stack verticalFill grow styles={compositeOuterContainerStyles} id={compositeParentDivId}>
