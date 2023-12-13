@@ -331,6 +331,9 @@ const Docs: () => JSX.Element = () => {
           MessageThread component provides UI for displaying inline image attachments in a message. If an image is
           protected by header-based authentication, developers can write there own HTTP call to get the image so you can
           provide the applicable headers. By default the `previewUrl` is displayed in the message bubble.
+
+          Note that some GIF images fetched from `previewUrl` might not be animated, and a static preview image may be
+          returned instead. Developers are expected to use the `url` if the intention is to fetch animated images only.
         </Description>
         <Canvas mdxSource={MessageThreadWithInlineImageExampleText}>
           <MessageThreadWithInlineImageExample />
