@@ -146,15 +146,15 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     afterAdapterCreate
   );
 
-  const shouldDisableScreenShare = isIOS();
+  const shouldHideScreenShare = isMobileSession || isIOS();
 
   const options: CallWithChatCompositeOptions = useMemo(
     () => ({
       callControls: {
-        screenShareButton: !shouldDisableScreenShare
+        screenShareButton: shouldHideScreenShare ? false : undefined
       }
     }),
-    [shouldDisableScreenShare]
+    [shouldHideScreenShare]
   );
 
   // Dispose of the adapter in the window's before unload event.
