@@ -69,11 +69,31 @@ export type CallControlsProps = {
 // Enforce a background color on control bar to ensure it matches the composite background color.
 const controlBarStyles = memoizeFunction((background: string) => ({ root: { background: background } }));
 
+const inferCallControlOptions = (
+  mobileView: boolean,
+  callControlOptions?: boolean | CallControlOptions
+): CallControlOptions => {
+  if (callControlOptions === false) {
+    return {};
+  }
+
+  const options = callControlOptions === true || callControlOptions === undefined ? {} : callControlOptions;
+  if (mobileView) {
+    // Set options to always not show screen share button for mobile
+    options.screenShareButton = false;
+  }
+  return options;
+};
+
 /**
  * @private
  */
 export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX.Element => {
-  const options = useMemo(() => (typeof props.options === 'boolean' ? {} : props.options), [props.options]);
+  const options: CallControlOptions = useMemo(
+    () => inferCallControlOptions(!!props.isMobile, props.options),
+    [props.isMobile, props.options]
+  );
+
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(rooms) */
   const adapter = useAdapter();
 
