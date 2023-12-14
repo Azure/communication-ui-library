@@ -215,7 +215,7 @@ jobs:
       - uses: browser-actions/setup-chrome@v1
         id: setup-chrome
         with:
-          chrome-version: 120.0.6099
+          chrome-version: 119
       - name: Switch flavor for build
         id: switch-flavor
         if: ${{ matrix.flavor != 'beta' }}
