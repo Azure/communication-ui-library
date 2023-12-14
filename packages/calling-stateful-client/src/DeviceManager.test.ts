@@ -276,7 +276,7 @@ const createStatefulCallClientWithDeviceManager = (deviceManager: MockDeviceMana
 };
 
 interface MockDeviceManager extends Mutable<DeviceManager> {
-  emit(event: any, data?: any);
+  emit(eventName: string | symbol, ...args: any[]): boolean;
 }
 
 const createMockDeviceManagerWithCameras = (cameras: VideoDeviceInfo[]): MockDeviceManager => {
