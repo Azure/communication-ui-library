@@ -117,6 +117,8 @@ import { getBackgroundEffectFromSelectedEffect } from '../utils';
 import { getSelectedCameraFromAdapterState } from '../utils';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 /* @conditional-compile-remove(calling-sounds) */
 import { CallingSoundSubscriber } from './CallingSoundSubscriber';
 /* @conditional-compile-remove(calling-sounds) */
@@ -569,6 +571,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.stopVideoBackgroundEffects.bind(this);
     /* @conditional-compile-remove(video-background-effects) */
     this.updateBackgroundPickerImages.bind(this);
+    /* @conditional-compile-remove(end-of-call-survey) */
+    this.submitSurvey.bind(this);
   }
 
   public dispose(): void {
@@ -816,7 +820,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   public async unmute(): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
       this.context.setIsLocalMicrophoneEnabled(true);
-      if (_isInCall(this.call?.state) && this.call?.isMuted) {
+      if ((_isInCall(this.call?.state) || _isInLobbyOrConnecting(this.call?.state)) && this.call?.isMuted) {
         await this.handlers.onToggleMicrophone();
       }
     });
@@ -1012,6 +1016,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   /* @conditional-compile-remove(close-captions) */
   public async setSpokenLanguage(language: string): Promise<void> {
     this.handlers.onSetSpokenLanguage(language);
+  }
+  /* @conditional-compile-remove(end-of-call-survey) */
+  public async submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined> {
+    return this.handlers.onSubmitSurvey(survey);
   }
 
   public getState(): CallAdapterState {
