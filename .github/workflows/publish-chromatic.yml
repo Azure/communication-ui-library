@@ -47,13 +47,10 @@ jobs:
         uses: chromaui/action@v1
         with:
           workingDir: ./packages/storybook
-          buildScriptName: build
+          buildScriptName: build:dev
           token: ${{ secrets.GITHUB_TOKEN }}
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           allowConsoleErrors: true
-        env:
-          # Set the node_env to ensure Internal stories are published in chromatic builds
-          NODE_ENV: development
 
       - name: Format storybook URL
         id: storybook_url
