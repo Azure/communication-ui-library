@@ -12,6 +12,8 @@ import {
   BackgroundBlurConfig,
   BackgroundReplacementConfig
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { DtmfTone, AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
@@ -96,6 +98,8 @@ export interface CommonCallingHandlers {
   onSetSpokenLanguage: (language: string) => Promise<void>;
   /* @conditional-compile-remove(close-captions) */
   onSetCaptionLanguage: (language: string) => Promise<void>;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  onSubmitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
 }
 
 /**
@@ -567,6 +571,9 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       const captionsFeature = call?.feature(Features.Captions).captions as TeamsCaptions;
       await captionsFeature.setCaptionLanguage(language);
     };
+    /* @conditional-compile-remove(end-of-call-survey) */
+    const onSubmitSurvey = async (survey: CallSurvey): Promise<CallSurveyResponse | undefined> =>
+      await call?.feature(Features.CallSurvey).submitSurvey(survey, options);
 
     return {
       onHangUp,
@@ -613,7 +620,9 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       /* @conditional-compile-remove(close-captions) */
       onSetCaptionLanguage,
       /* @conditional-compile-remove(close-captions) */
-      onSetSpokenLanguage
+      onSetSpokenLanguage,
+      /* @conditional-compile-remove(end-of-call-survey) */
+      onSubmitSurvey
     };
   }
 );
