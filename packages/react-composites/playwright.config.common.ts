@@ -43,7 +43,11 @@ const chromeLaunchOptions = {
   ],
   ignoreDefaultArgs: [
     '--hide-scrollbars' // Don't hide scrollbars in headless mode.
-  ]
+  ],
+  // Use the CHROME_PATH environment variable if it's set, otherwise use the default installed browser by playwright.
+  // We use a pinned version in GitHub actions to ensure newer versions of Chrome don't suddenly impact our tests.
+  // For more information see: [Automated Tests - Pinned version of Chrome](../../docs/automated-tests.md#pinned-version-of-chrome)
+  executablePath: process.env.CHROME_PATH ? process.env.CHROME_PATH : undefined
 };
 
 const CI_REPORTERS: ReporterDescription[] = [['dot'], ['json', { outputFile: `${outputDir}/e2e-results.json` }]];
