@@ -26,6 +26,12 @@ Broswer tests come in two varieties:
 * *Live tests* load up a test application that works with actual Azure Communication Services backend services. These are slow to run, must be run serially (for throttling reasons),a nd tend to be flaky. But they test the UI against live services, giving us high confidence when they pass.
 * *Hermetic tests* fake out the backend Azure Communication Services API calls and drive the UI with faked out data. These are fast to run, can be run concurrently, and tend to be less flaky than live tests. The risk here is that the faked out services may not be faithful to the backend services, and the fakes are limited in their ability to mimick backend behavior for deep user journeys.
 
+#### Pinned version of Chrome
+
+Our UI tests that run inside GitHub actions use a pinned version of Chrome. This ensures the UI remains consistent when the GitHub runner images are updated with new versions of Chrome. To do this, the GitHub actions download a stable version of Chrome from [Chrome for Testing](https://developer.chrome.com/blog/chrome-for-testing/#versioned_browser_binaries), then sets the `CHROME_PATH` environment variable to tell playwright to use that version of Chrome.
+
+**Note**: This must be updated periodically as a seperate PR, updating snapshots as necessary, to keep up with the latest stable version of Chrome. Recommendation is to update this every 6 months.
+
 ### Storybook snapshots
 
 We also use [storybook snapshot tests](https://storybook.js.org/docs/react/writing-tests/snapshot-testing) to validate the rendered UI, especialy for the fine-grained UI components.
