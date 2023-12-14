@@ -80,7 +80,7 @@ export function convertSdkRemoteStreamToDeclarativeRemoteStream(
 export function convertSdkParticipantToDeclarativeParticipant(
   participant: SdkRemoteParticipant
 ): DeclarativeRemoteParticipant {
-  const declarativeVideoStreams = {};
+  const declarativeVideoStreams: { [key: number]: DeclarativeRemoteVideoStream } = {};
   for (const videoStream of participant.videoStreams) {
     declarativeVideoStreams[videoStream.id] = convertSdkRemoteStreamToDeclarativeRemoteStream(videoStream);
   }
@@ -105,7 +105,7 @@ export function convertSdkParticipantToDeclarativeParticipant(
  * Note at the time of writing only one LocalVideoStream is supported by the SDK.
  */
 export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
-  const declarativeRemoteParticipants = {};
+  const declarativeRemoteParticipants: { [key: string]: DeclarativeRemoteParticipant } = {};
   call.remoteParticipants.forEach((participant: SdkRemoteParticipant) => {
     declarativeRemoteParticipants[toFlatCommunicationIdentifier(participant.identifier)] =
       convertSdkParticipantToDeclarativeParticipant(participant);
