@@ -16,17 +16,15 @@ export const CallCompositeContainer = (props: CallCompositeContainerProps): JSX.
   const { adapter } = props;
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();
   const isMobileSession = useIsMobile();
-  const shouldDisableScreenShare = isIOS();
+  const shouldDisableScreenShare = isMobileSession || isIOS();
 
   const options: CallCompositeOptions = useMemo(
     () => ({
       /* @conditional-compile-remove(call-readiness) */ onPermissionsTroubleshootingClick,
       /* @conditional-compile-remove(call-readiness) */ onNetworkingTroubleShootingClick,
-      callControls: shouldDisableScreenShare
-        ? {
-            screenShareButton: false
-          }
-        : undefined
+      callControls: {
+        screenShareButton: shouldDisableScreenShare ? false : undefined
+      }
     }),
     [shouldDisableScreenShare]
   );
