@@ -292,7 +292,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     };
 
     const onToggleMicrophone = async (): Promise<void> => {
-      if (!call || !_isInCall(call.state)) {
+      if (!call || !(_isInCall(call.state) || _isInLobbyOrConnecting(call.state))) {
         throw new Error(`Please invoke onToggleMicrophone after call is started`);
       }
       return call.isMuted ? await call.unmute() : await call.mute();
