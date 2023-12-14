@@ -100,7 +100,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     const dominantSpeakerIds = _dominantSpeakersWithFlatId(dominantSpeakers);
     const dominantSpeakersMap: Record<string, number> = {};
     dominantSpeakerIds?.forEach((speaker, idx) => (dominantSpeakersMap[speaker] = idx));
-    const noRemoteParticipants = [];
+    const noRemoteParticipants: RemoteParticipantState[] = [];
 
     return {
       screenShareParticipant: screenShareRemoteParticipant
