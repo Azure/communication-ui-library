@@ -21246,7 +21246,7 @@ packages:
     dev: false
 
   file:projects/storybook.tgz:
-    resolution: {integrity: sha512-5S1TRXxCaq6E5iUfohhifSr6nj8N9UeXqjVOm2c4Z4nQtJenmEU5k3DIo8Dn8gAAIUDbwBaRgiOkYnhg7pOtZA==, tarball: file:projects/storybook.tgz}
+    resolution: {integrity: sha512-1p00i4bYVgykAqYw26Oa3/rBeuPwQZpv1GLKB8CKu2ggHLQc1cEJGnizL0dSBUFSkrO4CIhV0WZW5uo4mxfBrA==, tarball: file:projects/storybook.tgz}
     name: '@rush-temp/storybook'
     version: 0.0.0
     dependencies:
@@ -21302,6 +21302,7 @@ packages:
       copy-to-clipboard: 3.3.3
       copyfiles: 2.4.1
       core-js: 3.34.0
+      cross-env: 7.0.3
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0(eslint@7.32.0)
       eslint-plugin-header: 3.1.1(eslint@7.32.0)
