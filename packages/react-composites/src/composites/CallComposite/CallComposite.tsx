@@ -449,6 +449,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           title={locale.strings.call.failedToJoinTeamsMeetingReasonAccessDeniedTitle}
           moreDetails={locale.strings.call.failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails}
           dataUiId={'access-denied-teams-meeting-page'}
+          /* @conditional-compile-remove(end-of-call-survey) */
+          surveyOptions={{ hideSurvey: true }}
         />
       );
       break;
@@ -459,6 +461,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           title={locale.strings.call.removedFromCallTitle}
           moreDetails={locale.strings.call.removedFromCallMoreDetails}
           dataUiId={'removed-from-call-page'}
+          /* @conditional-compile-remove(end-of-call-survey) */
+          surveyOptions={{ hideSurvey: true }}
         />
       );
       break;
@@ -469,6 +473,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           title={locale.strings.call.failedToJoinCallDueToNoNetworkTitle}
           moreDetails={locale.strings.call.failedToJoinCallDueToNoNetworkMoreDetails}
           dataUiId={'join-call-failed-due-to-no-network-page'}
+          /* @conditional-compile-remove(end-of-call-survey) */
+          surveyOptions={{ hideSurvey: true }}
         />
       );
       break;
@@ -479,6 +485,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           dataUiId={'leaving-page'}
           pageStyle={leavePageStyle}
           disableStartCallButton={true}
+          /* @conditional-compile-remove(end-of-call-survey) */
+          surveyOptions={{ hideSurvey: true }}
         />
       );
       break;
