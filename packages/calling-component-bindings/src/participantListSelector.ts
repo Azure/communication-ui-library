@@ -36,8 +36,9 @@ const convertRemoteParticipantsToParticipantListParticipants = (
   isHideAttendeeNamesEnabled?: boolean,
   localUserRole?: ParticipantRole
 ): CallParticipantListParticipant[] => {
-  /* eslint-disable @typescript-eslint/explicit-function-return-type */
-  const conversionCallback = (memoizeFn) => {
+  const conversionCallback = (
+    memoizeFn: (...args: any[]) => CallParticipantListParticipant
+  ): CallParticipantListParticipant[] => {
     return (
       remoteParticipants
         // Filter out MicrosoftBot participants

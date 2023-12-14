@@ -153,7 +153,8 @@
     "downloadFile": "下载文件",
     "blockedWarningText": "由于组织策略，此消息已被删除。",
     "blockedWarningLinkText": "详细信息",
-    "fileCardGroupMessage": "该邮件包含 {fileCount} 个附件"
+    "fileCardGroupMessage": "该邮件包含 {fileCount} 个附件",
+    "messageDeletedAnnouncementAriaLabel": "邮件已删除"
   },
   "errorBar": {
     "unableToReachChatService": "你已脱机",

@@ -153,7 +153,8 @@
     "downloadFile": "Datei herunterladen",
     "blockedWarningText": "Diese Nachricht wurde aufgrund einer Organisationsrichtlinie gelöscht.",
     "blockedWarningLinkText": "Details",
-    "fileCardGroupMessage": "Die Nachricht weist eine {fileCount}-Anlage auf"
+    "fileCardGroupMessage": "Die Nachricht weist eine {fileCount}-Anlage auf",
+    "messageDeletedAnnouncementAriaLabel": "Die Nachricht wurde gelöscht"
   },
   "errorBar": {
     "unableToReachChatService": "Sie sind offline.",

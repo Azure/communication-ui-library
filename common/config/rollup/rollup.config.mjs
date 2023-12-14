@@ -8,7 +8,6 @@ import svg from 'rollup-plugin-svg';
 
 export default (packageJson) => ({
   context: 'window',
-  inlineDynamicImports: true,
   external: [
     ...(packageJson.dependencies ? Object.keys(packageJson.dependencies) : []),
     ...(packageJson.peerDependencies ? Object.keys(packageJson.peerDependencies) : [])
@@ -17,7 +16,9 @@ export default (packageJson) => ({
   output: {
     file: './dist/dist-cjs/index.js',
     format: 'cjs',
+    inlineDynamicImports: true,
     sourcemap: true
   },
-  plugins: [commonjs(), sourcemaps(), svg(), json({ compact: true })]
+  plugins: [commonjs(), sourcemaps(), svg(), json({ compact: true })],
+  strictDeprecations: true
 });

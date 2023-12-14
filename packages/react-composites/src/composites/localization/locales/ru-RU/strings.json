@@ -116,6 +116,8 @@
     "captionsBannerMoreButtonCallingLabel": "Дополнительно",
     "captionsBannerMoreButtonTooltip": "Дополнительные параметры",
     "dismissModalAriaLabel": "Локальное и удаленное изображение. Нажмите клавишу ВВОД, чтобы вернуться к звонку.",
+    "callRejectedTitle": "Не удалось совершить звонок",
+    "callRejectedMoreDetails": "Пользователь, с которым вы пытаетесь связаться, недоступен. Повторите попытку позже.",
     "spokenLanguageStrings": {
       "ar-ae": "Арабский (ОАЭ)",
       "ar-sa": "Арабский (Саудовская Аравия)",

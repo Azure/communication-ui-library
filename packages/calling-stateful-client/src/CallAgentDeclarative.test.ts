@@ -20,6 +20,7 @@ import {
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(calling-beta-sdk) */
 import {
+  CallAgentFeature,
   MeetingLocator,
   GroupChatCallLocator,
   PushNotificationData,
@@ -78,7 +79,10 @@ class MockCallAgent implements CallAgent {
   connectionState = 'Disconnected' as ConnectionState;
   kind = 'CallAgent' as CallAgentKind;
   emitter = new EventEmitter();
-  feature;
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  feature<TFeature extends CallAgentFeature>(): TFeature {
+    throw new Error('Method not implemented.');
+  }
   startCall(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],
