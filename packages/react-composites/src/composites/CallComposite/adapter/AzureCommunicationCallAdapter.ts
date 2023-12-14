@@ -816,7 +816,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   public async unmute(): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
       this.context.setIsLocalMicrophoneEnabled(true);
-      if (_isInCall(this.call?.state) && this.call?.isMuted) {
+      if ((_isInCall(this.call?.state) || _isInLobbyOrConnecting(this.call?.state)) && this.call?.isMuted) {
         await this.handlers.onToggleMicrophone();
       }
     });
