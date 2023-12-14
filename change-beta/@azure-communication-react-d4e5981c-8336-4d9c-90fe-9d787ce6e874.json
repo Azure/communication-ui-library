@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "BugFix",
+  "comment": "Fix issues with turning camera off and on when joining a call, as well fix microphone button to unmute and mute when joining",
+  "packageName": "@azure/communication-react",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
