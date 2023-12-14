@@ -89,11 +89,8 @@ const inferCommonCallControlOptions = (
   if (mobileView) {
     // Set to compressed mode when composite is optimized for mobile
     options.displayType = 'compact';
-    // Do not show screen share button when composite is optimized for mobile unless the developer
-    // has explicitly opted in.
-    if (options.screenShareButton !== true) {
-      options.screenShareButton = false;
-    }
+    // Set options to always not show screen share button for mobile
+    options.screenShareButton = false;
   }
   return options;
 };
