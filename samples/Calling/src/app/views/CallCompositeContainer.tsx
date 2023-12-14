@@ -16,17 +16,17 @@ export const CallCompositeContainer = (props: CallCompositeContainerProps): JSX.
   const { adapter } = props;
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();
   const isMobileSession = useIsMobile();
-  const shouldDisableScreenShare = isMobileSession || isIOS();
+  const shouldHideScreenShare = isMobileSession || isIOS();
 
   const options: CallCompositeOptions = useMemo(
     () => ({
       /* @conditional-compile-remove(call-readiness) */ onPermissionsTroubleshootingClick,
       /* @conditional-compile-remove(call-readiness) */ onNetworkingTroubleShootingClick,
       callControls: {
-        screenShareButton: shouldDisableScreenShare ? false : undefined
+        screenShareButton: shouldHideScreenShare ? false : undefined
       }
     }),
-    [shouldDisableScreenShare]
+    [shouldHideScreenShare]
   );
 
   // Dispose of the adapter in the window's before unload event.
