@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import * as telemetryVersion from './telemetryVersion';
+import telemetryVersion from './telemetryVersion';
 
 /**
  * @private
@@ -64,6 +64,6 @@ export const _getApplicationId = (telemetryImplementationHint: _TelemetryImpleme
   const highLevelArtifact = 1;
   const specificImplementation = getTelemetryImplementationHint(telemetryImplementationHint);
   const implementationDetails = 0;
-  const version = telemetryVersion['default'];
+  const version = telemetryVersion;
   return sanitize(`acr${highLevelArtifact}${specificImplementation}${implementationDetails}/${version}`);
 };
