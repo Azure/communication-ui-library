@@ -18,7 +18,7 @@ export interface StatefulDeviceManager extends DeviceManager {
    * any way to {@link @azure/communication-calling#DeviceManager}. It is entirely contained in
    * {@link StatefulDeviceManager}. See also {@link DeviceManagerState.selectedCamera}.
    */
-  selectCamera: (VideoDeviceInfo) => void;
+  selectCamera: (device: VideoDeviceInfo) => void;
 
   /* @conditional-compile-remove(video-background-effects) */
   /**
