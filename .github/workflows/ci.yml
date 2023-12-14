@@ -210,27 +210,21 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
         run: npm install -g @microsoft/rush@5.112.1
+      - name: Install dependencies
+        run: rush install --max-install-attempts 3
       - uses: browser-actions/setup-chrome@v1
         id: setup-chrome
         with:
           chrome-version: 120.0.6099
-      - name: Install dependencies
-        run: rush install --max-install-attempts 3
-        env:
-          PLAYWRIGHT_BROWSERS_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Switch flavor for build
         id: switch-flavor
         if: ${{ matrix.flavor != 'beta' }}
         run: |
           rush switch-flavor:${{ matrix.flavor }}
           node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
-        env:
-          PLAYWRIGHT_BROWSERS_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Run dependency update for stable
         if: ${{ matrix.flavor == 'stable' }}
         run: rush update:stable
-        env:
-          PLAYWRIGHT_BROWSERS_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Build Call Composite Test App
         run: |
           cd packages/react-composites
@@ -246,7 +240,7 @@ jobs:
           rushx test:e2e:call
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
-          PLAYWRIGHT_BROWSERS_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
+          CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload playwright test results
         uses: actions/upload-artifact@v3
         if: ${{ always() }}
