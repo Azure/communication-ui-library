@@ -33,7 +33,7 @@ import { CallContext } from './CallContext';
 import { InternalCallContext } from './InternalCallContext';
 import { createStatefulCallClientWithDeps, StatefulCallClient } from './StatefulCallClient';
 
-let backupFreezeFunction;
+let backupFreezeFunction: typeof Object.freeze;
 
 /**
  * @private
@@ -41,7 +41,7 @@ let backupFreezeFunction;
 export function mockoutObjectFreeze(): void {
   beforeEach(() => {
     backupFreezeFunction = Object.freeze;
-    Object.freeze = function (obj) {
+    Object.freeze = function <T>(obj: T): T {
       return obj;
     };
   });
@@ -56,7 +56,7 @@ export function mockoutObjectFreeze(): void {
  */
 export interface MockEmitter {
   emitter: EventEmitter;
-  emit(event: any, data?: any);
+  emit(eventName: string | symbol, ...args: any[]): boolean;
 }
 
 /**
@@ -95,7 +95,7 @@ export const stubCommunicationTokenCredential = (): CommunicationTokenCredential
 export class MockRecordingCallFeatureImpl implements RecordingCallFeature {
   public name = 'Recording';
   public isRecordingActive = false;
-  public recordings;
+  public recordings: RecordingInfo[] = [];
   public emitter = new EventEmitter();
   on(event: 'isRecordingActiveChanged', listener: PropertyChangedEvent): void;
   on(event: 'recordingsUpdated', listener: CollectionUpdatedEvent<RecordingInfo>): void;
@@ -240,7 +240,7 @@ export function addMockEmitter(object: any): any {
  * @private
  */
 export interface MockCall extends Mutable<Call>, MockEmitter {
-  testHelperPushRemoteParticipant(participant: RemoteParticipant);
+  testHelperPushRemoteParticipant(participant: RemoteParticipant): void;
   testHelperPopRemoteParticipant(): RemoteParticipant;
   testHelperPushLocalVideoStream(stream: LocalVideoStream): void;
   testHelperPopLocalVideoStream(): LocalVideoStream;
@@ -290,7 +290,7 @@ export function createMockCall(mockCallId = 'defaultCallID'): MockCall {
  * @private
  */
 export interface MockRemoteParticipant extends Mutable<RemoteParticipant> {
-  emit(event: string, data?: any);
+  emit(eventName: string | symbol, ...args: any[]): boolean;
   testHelperPushVideoStream(stream: RemoteVideoStream): void;
   testHelperPopVideoStream(): RemoteVideoStream;
 }
