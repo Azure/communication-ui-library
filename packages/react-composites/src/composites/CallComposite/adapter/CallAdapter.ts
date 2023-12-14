@@ -41,6 +41,8 @@ import type {
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 
 /**
  * Major UI screens shown in the {@link CallComposite}.
@@ -660,6 +662,13 @@ export interface CallAdapterCallOperations {
    * @public
    */
   updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Send the end of call survey result
+   *
+   * @beta
+   */
+  submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
 }
 
 /**
