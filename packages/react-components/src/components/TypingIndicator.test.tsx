@@ -5,6 +5,7 @@ import React from 'react';
 import { TypingIndicator } from './TypingIndicator';
 import { renderWithLocalization, createTestLocale } from './utils/testUtils';
 import { screen } from '@testing-library/react';
+import renderer from 'react-test-renderer';
 
 const testLocale = createTestLocale({
   typingIndicator: {
@@ -13,6 +14,41 @@ const testLocale = createTestLocale({
     multipleUsersAbbreviateOne: '{users} and 1 other are typing',
     multipleUsersAbbreviateMany: '{users} and {numOthers} others are typing'
   }
+});
+
+describe.only('Component is shown correctly', () => {
+  test('One user case', async () => {
+    const tree = renderer
+      .create(<TypingIndicator typingUsers={[{ userId: 'user1', displayName: 'Claire' }]} />)
+      .toJSON();
+    expect(tree).toMatchInlineSnapshot(`
+      <div
+        className="ms-Stack css-111"
+      >
+        <div
+          aria-label="Claire is typing"
+          className="css-110"
+          data-ui-id="typing-indicator"
+          role="status"
+        >
+          <span
+            className="css-112"
+          >
+            <span
+              className="css-112"
+            >
+              Claire
+            </span>
+          </span>
+          <span
+            className="css-112"
+          >
+             is typing
+          </span>
+        </div>
+      </div>
+    `);
+  });
 });
 
 describe('TypingIndicator should format string correctly', () => {

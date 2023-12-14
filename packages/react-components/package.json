@@ -32,7 +32,8 @@
     "_build:by-flavor": "rushx clean && rushx build:esm && rushx build:cjs && rushx _api-extractor:by-flavor",
     "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell",
     "_current-flavor": "echo You are running under COMMUNICATION_REACT_FLAVOR: && env-cmd -f ../../common/config/env/.env node -p process.env.COMMUNICATION_REACT_FLAVOR",
-    "_test:by-flavor": "(npm run _if-preprocess && rushx preprocess || if-env COMMUNICATION_REACT_FLAVOR=beta && echo \"skip preprocess\") && jest"
+    "_test:by-flavor": "(npm run _if-preprocess && rushx preprocess || if-env COMMUNICATION_REACT_FLAVOR=beta && echo \"skip preprocess\") && jest",
+    "test-ct": "playwright test -c playwright-ct.config.ts"
   },
   "dependencies": {
     "@fluentui/react": "^8.112.9",
@@ -80,7 +81,7 @@
     "@types/uuid": "^9.0.7",
     "@typescript-eslint/eslint-plugin": "^6.13.2",
     "@typescript-eslint/parser": "^6.13.2",
-
+    "@types/react-test-renderer": "^18.0.7",
     "ajv": "^8.12.0",
     "babel-jest": "^29.5.0",
     "babel-loader": "8.1.0",
@@ -111,6 +112,7 @@
     "pretty-quick": "^3.1.0",
     "react-dom": "18.2.0",
     "react-is": "^18.2.0",
+    "react-test-renderer": "^18.2.0",
     "react": "18.2.0",
     "regenerator-runtime": "^0.14.0",
     "rimraf": "^2.6.2",
@@ -122,6 +124,7 @@
     "type-fest": "^3.13.1",
     "typescript": "5.3.3",
     "webpack": "5.89.0",
-    "jest-environment-jsdom": "^29.5.0"
+    "jest-environment-jsdom": "^29.5.0",
+    "@playwright/experimental-ct-react": "^1.40.1"
   }
 }

@@ -111,3 +111,8 @@ test-results/
 change-stable/
 
 apis/
+
+**/test-results/
+**/playwright-report/
+**/blob-report/
+**/playwright/.cache/

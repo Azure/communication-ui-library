@@ -27,6 +27,7 @@ import { fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 /* @conditional-compile-remove(mention) */
 import { Mention } from './MentionPopover';
+import renderer from 'react-test-renderer';
 
 const twentyFourHoursAgo = (): Date => {
   const date = new Date();
@@ -57,6 +58,244 @@ const onDisplayDateTimeString = (messageDate: Date): string => {
     return ' ';
   }
 };
+
+describe.only('Component is shown correctly', () => {
+  test('One user case', async () => {
+    const sampleMessage: ChatMessage = {
+      messageType: 'chat',
+
+      senderId: 'user3',
+      senderDisplayName: 'Sam Fisher',
+      messageId: Math.random().toString(),
+      content: 'Thanks for making my job easier.',
+      createdOn: twentyFourHoursAgo(),
+      mine: false,
+      attached: false,
+      contentType: 'text'
+    };
+    const tree = renderer
+      .create(
+        <MessageThread
+          userId="user1"
+          messages={[sampleMessage]}
+          onDisplayDateTimeString={() => {
+            return 'Timestamp';
+          }}
+        />
+        // {
+        //   createNodeMock: (element) => {
+        //     console.log(element);
+        //     if (element.type === 'span' && element.props['data-ui-id'] === 'message-timestamp') {
+        // element.this.props.value = 'Timestamp';
+        //     }
+        //     return element;
+        //   }
+        // }
+      )
+      .toJSON();
+    expect(tree).toMatchInlineSnapshot(`
+      <div
+        className="css-111"
+      >
+        <div
+          className="fui-FluentProvider fui-FluentProviderr0 ___1bg6ih0_1q4sksb f19n0e5 fxugw4r f1o700av fk6fouc fkhj508 figsok6 f1i3iumi f1l02sjl f1hu3pq6 f11qmguv f19f4twv f1tyq0we f1p9o1ba f1sil6mw f1g0x7ka fhxju0i f1qch9an f1cnd47f fly5x3f"
+          dir="ltr"
+        >
+          <div
+            className="css-112"
+          >
+            <div
+              className="fui-FluentProvider fui-FluentProviderr1 ___1bg6ih0_1q4sksb f19n0e5 fxugw4r f1o700av fk6fouc fkhj508 figsok6 f1i3iumi f1l02sjl f1hu3pq6 f11qmguv f19f4twv f1tyq0we f1p9o1ba f1sil6mw f1g0x7ka fhxju0i f1qch9an f1cnd47f fly5x3f"
+              dir="ltr"
+            >
+              <div
+                aria-live="assertive"
+                className="ms-Stack css-143"
+              />
+              <div
+                className="fui-Chat ___7v22vn0_1qhxi98 f22iagw f1vx9l62 ftrb29c fly5x3f f1oy3dpc f5zp4f f5ublx3 f2mnhzf fgr6219 f1ujusj6 f10jk5vf fcgxt0o f1u4y9u9 f1aszuxk f1doa1ug f1ern45e f1n71otn f1h8hb77 f1deefiw f1l02sjl f1ildqnq f5wtxwc fpfzlst"
+                data-tabster="{"mover":{"cyclic":false,"direction":1,"hasDefault":true}}"
+                style={{}}
+              >
+                <div>
+                  <div
+                    className="fui-ChatMessage ___x2pur10_8nfaps0 f22iagw f4px1ci f1g0x7ka fhxju0i f1qch9an f1cnd47f f1hu3pq6 f11qmguv f19f4twv f1tyq0we f6dzj5z fh0h8b7 f1e2ae29"
+                  >
+                    <div
+                      className="fui-ChatMessage__avatar ___1qar6e0_o4jn4j0 fwbmr0d"
+                    >
+                      <div
+                        className="css-145"
+                      >
+                        <div
+                          className="ms-Persona ms-Persona--size32 root-146"
+                        >
+                          <div
+                            className="ms-Persona-coin ms-Persona--size32 coin-153"
+                            role="presentation"
+                          >
+                            <div
+                              className="ms-Persona-imageArea imageArea-155"
+                              role="presentation"
+                            >
+                              <div
+                                aria-hidden="true"
+                                className="ms-Persona-initials initials-158"
+                              >
+                                <span>
+                                  SF
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      className="fui-ChatMessage__body ___mekeox0_1iymccz f10pi13n ftqa4ok f2hkw1w f8hki3x f1d2448m f1bjia2o ffh67wi f15bsgw9 f14e48fq f18yb2kv fd6o370 fh1cnn4 fy7oxxb fpukqih f184ne2d frrh606 f1v5zibi ful5kiu fo2hd23 f1jqcqds ftffrms f2e7qr6 fsr1zz6 f1dvezut fd0oaoj fjvm52t f1cwg4i8 f57olzd f4stah7 f480a47 fs1por5 fk6fouc figsok6 fkhj508 f1i3iumi f19n0e5 f9ijwd5 fff7au0 f1bjk9e1 fwsfkhu f8wkphi f1g0x7ka fhxju0i f1qch9an f1cnd47f f6dzj5z f3rmtva f11qmguv f19f4twv fh0h8b7 f1tyq0we f1pe6x04 f18xc7ee"
+                      data-tabster="{"groupper":{"tabbability":2},"focusable":{}}"
+                      onMouseEnter={[Function]}
+                      onMouseLeave={[Function]}
+                      role="none"
+                      style={{}}
+                      tabIndex={-1}
+                    >
+                      <div
+                        className="___n0qxz70_0000000 f22iagw f4akndk f1ugzwwg f104wqfl f11d4kpn f122n59"
+                      />
+                      <div>
+                        <div
+                          className="fui-ChatMessage ___exgpue0_jm0kqy0 f22iagw f4px1ci f1g0x7ka f38x3r3 f1e2ae29"
+                          role="none"
+                          tabIndex={-1}
+                        >
+                          <div
+                            className="fui-ChatMessage__body ___15yx0ki_1poe6pc f10pi13n ftqa4ok f2hkw1w f8hki3x f1d2448m f1bjia2o ffh67wi f15bsgw9 f14e48fq f18yb2kv fd6o370 fh1cnn4 fy7oxxb fpukqih f184ne2d frrh606 f1v5zibi ful5kiu fo2hd23 f1jqcqds ftffrms f2e7qr6 fsr1zz6 f1dvezut fd0oaoj fjvm52t f1cwg4i8 f57olzd f4stah7 f480a47 fs1por5 fk6fouc figsok6 fkhj508 f1i3iumi f19n0e5 f9ijwd5 fff7au0 f1bjk9e1 fwsfkhu f8wkphi fp9bwmr f1gbmcue f1fow5ox f1rh9g5y f6dzj5z f16xq7d1 fh0h8b7 frdrv4j f19g0ac f5ogflp f1hqa2wf f1f09k3d finvdd3 fzkkow9 fcdblym fg706s2 fjik90z f1p3nwhy f11589ue f1q5o8ev f1pdflbu f7scgs1 f1nxyauu fkxd2qb fvf8iow f6tsq6u fpyqgh4 f1p0w8e0 f1agfj95 f1x2rkqv flvn62s fyl1vau f1n4zj0u flq5vdr f1h726rq fommez fu82bjs f1dafprv f1vwp8i5 f1xp186h feyps7n f2qtxeu fyhlx6i fgoz3dl f1vbfobf f6e0e65 f1sjmu34 fa9an96 fbrvnvw f1w6aheg fhdq93o f1equ8jp fi1mqd9 fezso71 f8447en f15373qv fhh847g f1m17j8g frqzv44 f881ije f1jmtuus f79epyk f1lr4nfy f5zfpvi f1biw00e fgu8x5g fexf3cn fg02k11 f1pkr665 ftvnkt2 fvirl94 f1vuhjv6 ftv2ff6 fmp557l f1aw43al f9wff0k f7epl8d fzropca f10c1wva f13cjinm f176sqit f1u7keeb f1yom5gn f1v9amb fzv3gja f182z69d f12ngtd f1ysiqfm fu0lzf8 f1p41ht8 fbn0nte f13uvz14 fe5fyn f1yywaza fqn1ibi"
+                            data-tabster="{"groupper":{"tabbability":2},"focusable":{}}"
+                            data-ui-id="chat-composite-message"
+                            onMouseEnter={[Function]}
+                            onMouseLeave={[Function]}
+                            style={{}}
+                            tabIndex={0}
+                          >
+                            <div
+                              className="___n0qxz70_0000000 f22iagw f4akndk f1ugzwwg f104wqfl f11d4kpn f122n59"
+                            >
+                              <div
+                                className="fui-ChatMessage__author"
+                              >
+                                <span
+                                  className="css-161"
+                                >
+                                  Sam Fisher
+                                </span>
+                              </div>
+                              <span
+                                className="fui-ChatMessage__timestamp"
+                              >
+                                <span
+                                  className="css-162"
+                                  data-ui-id="message-timestamp"
+                                >
+                                  Timestamp
+                                </span>
+                              </span>
+                            </div>
+                            <div
+                              className="ui-chat__message__content"
+                              tabIndex={0}
+                            >
+                              <div
+                                aria-label="Sam Fisher said Thanks for making my job easier."
+                                role="text"
+                              >
+                                Thanks for making my job easier.
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div
+                aria-live="assertive"
+                role="log"
+                style={
+                  {
+                    "border": 0,
+                    "clip": "rect(0 0 0 0)",
+                    "height": "1px",
+                    "margin": "-1px",
+                    "overflow": "hidden",
+                    "padding": 0,
+                    "position": "absolute",
+                    "whiteSpace": "nowrap",
+                    "width": "1px",
+                  }
+                }
+              />
+              <div
+                aria-live="assertive"
+                role="log"
+                style={
+                  {
+                    "border": 0,
+                    "clip": "rect(0 0 0 0)",
+                    "height": "1px",
+                    "margin": "-1px",
+                    "overflow": "hidden",
+                    "padding": 0,
+                    "position": "absolute",
+                    "whiteSpace": "nowrap",
+                    "width": "1px",
+                  }
+                }
+              />
+              <div
+                aria-live="polite"
+                role="log"
+                style={
+                  {
+                    "border": 0,
+                    "clip": "rect(0 0 0 0)",
+                    "height": "1px",
+                    "margin": "-1px",
+                    "overflow": "hidden",
+                    "padding": 0,
+                    "position": "absolute",
+                    "whiteSpace": "nowrap",
+                    "width": "1px",
+                  }
+                }
+              />
+              <div
+                aria-live="polite"
+                role="log"
+                style={
+                  {
+                    "border": 0,
+                    "clip": "rect(0 0 0 0)",
+                    "height": "1px",
+                    "margin": "-1px",
+                    "overflow": "hidden",
+                    "padding": 0,
+                    "position": "absolute",
+                    "whiteSpace": "nowrap",
+                    "width": "1px",
+                  }
+                }
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    `);
+  });
+});
 
 describe('Message date should be formatted correctly', () => {
   test('Should locale string for "Yesterday"', async () => {
