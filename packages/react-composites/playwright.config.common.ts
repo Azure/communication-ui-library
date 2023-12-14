@@ -44,7 +44,7 @@ const chromeLaunchOptions = {
   ignoreDefaultArgs: [
     '--hide-scrollbars' // Don't hide scrollbars in headless mode.
   ],
-  executablePath: process.env.CHROME_PATH
+  executablePath: process.env.CHROME_PATH ? process.env.CHROME_PATH : undefined
 };
 
 const CI_REPORTERS: ReporterDescription[] = [['dot'], ['json', { outputFile: `${outputDir}/e2e-results.json` }]];
