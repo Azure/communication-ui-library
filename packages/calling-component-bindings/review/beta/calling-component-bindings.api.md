@@ -19,6 +19,8 @@ import { CallAgent } from '@azure/communication-calling';
 import { CallClientState } from '@internal/calling-stateful-client';
 import { CallParticipantListParticipant } from '@internal/react-components';
 import { CallState } from '@azure/communication-calling';
+import { CallSurvey } from '@azure/communication-calling';
+import { CallSurveyResponse } from '@azure/communication-calling';
 import { CameraButton } from '@internal/react-components';
 import { _CaptionsInfo } from '@internal/react-components';
 import { Common } from '@internal/acs-ui-common';
@@ -201,6 +203,8 @@ export interface CommonCallingHandlers {
     onStopCaptions: () => Promise<void>;
     // (undocumented)
     onStopScreenShare: () => Promise<void>;
+    // (undocumented)
+    onSubmitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
     // (undocumented)
     onToggleCamera: (options?: VideoStreamOptions) => Promise<void>;
     // (undocumented)
