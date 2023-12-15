@@ -352,7 +352,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   return (
     <Stack
       data-ui-id={ids.videoTile}
-      className={mergeStyles(
+      className={`ACS-VideoTile ${mergeStyles(
         rootStyles,
         {
           background: theme.palette.neutralLighter,
@@ -370,17 +370,17 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           }
         },
         styles?.root
-      )}
+      )}`}
       {...longPressHandlersTrampoline}
     >
       <div ref={videoTileRef} style={{ width: '100%', height: '100%' }} {...hoverHandlers} data-is-focusable={true}>
         {isVideoRendered ? (
           <Stack
-            className={mergeStyles(
+            className={`ACS-VideoTile ${mergeStyles(
               videoContainerStyles,
               isMirrored && { transform: 'scaleX(-1)' },
               styles?.videoContainer
-            )}
+            )}`}
           >
             {renderElement}
           </Stack>

@@ -30,3 +30,34 @@ body {
 .ui-provider {
   height: 0;
 }
+
+@keyframes rotateAnimation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.ACS-VideoTile {
+  width: 100%;
+  height: 100%;
+  border-radius: 25%;
+  background-color: cadetblue;
+  overflow: hidden;
+  /* Set initial styles */
+  transform-origin: center;
+  animation: rotateAnimation 2s linear infinite; /* 2s duration, linear timing function, infinite loop */
+}
+
+.ACS-VideoGallery-LocalVideoTile {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.ACS-VideoGallery-Container {
+  width: 100%;
+  height: 100%;
+}

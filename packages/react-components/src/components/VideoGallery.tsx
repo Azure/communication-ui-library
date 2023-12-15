@@ -449,6 +449,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         tabIndex={0}
         aria-label={strings.localVideoMovementLabel}
         role={'dialog'}
+        className={'ACS-VideoGallery-LocalVideoTile'}
       >
         <_LocalVideoTile
           userId={localParticipant.userId}
@@ -708,7 +709,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       id={drawerMenuHostIdFromProp ? undefined : drawerMenuHostId}
       data-ui-id={ids.videoGallery}
       ref={containerRef}
-      className={mergeStyles(videoGalleryOuterDivStyle, styles?.root, unselectable)}
+      className={`ACS-VideoGallery-Container ${mergeStyles(videoGalleryOuterDivStyle, styles?.root, unselectable)}`}
     >
       {videoGalleryLayout}
       {
