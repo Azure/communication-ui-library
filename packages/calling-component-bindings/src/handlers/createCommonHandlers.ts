@@ -28,7 +28,7 @@ import { disposeAllLocalPreviewViews, _isInCall, _isInLobbyOrConnecting, _isPrev
 /* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(video-background-effects) */ /* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(raise-hand) */
+/* @conditional-compile-remove(video-background-effects) */ /* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(raise-hand) */ /* @conditional-compile-remove(end-of-call-survey) */
 import { Features } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptions } from '@azure/communication-calling';
