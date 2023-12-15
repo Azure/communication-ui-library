@@ -10,7 +10,8 @@ Mon, 11 Dec 2023 21:24:49 GMT
 [Compare changes](https://github.com/azure/communication-ui-library/compare/1.10.0...1.11.0)
 
 ### Rooms - General Availability
-ACS Web UI Library now supports the concept of a Rooms for developers. On the server-side, developers use Rooms Client from the Calling SDK to create rooms and add users with assigned roles to these rooms. The ACS Web UI Library, in turn, now allows the users to join a room through the CallComposite and managing their capabilities during the call based on their role. 
+
+ACS Web UI Library now supports the concept of a Rooms for developers. On the server-side, developers use Rooms Client from the Calling SDK to create rooms and add users with assigned roles to these rooms. The ACS Web UI Library, in turn, now allows the users to join a room through the CallComposite and managing their capabilities during the call based on their role.
 
 ### Features
 - Promote rooms feature to GA ([PR #3841](https://github.com/azure/communication-ui-library/pull/3841) by miguelgamis@microsoft.com)
@@ -57,6 +58,9 @@ ACS Web UI Library now supports the concept of a Rooms for developers. On the se
 - Improve sample troubleshooting message ([PR #3870](https://github.com/azure/communication-ui-library/pull/3870) by 2684369+JamesBurnside@users.noreply.github.com)
 - Fix alpha release build poll script ([PR #3858](https://github.com/azure/communication-ui-library/pull/3858) by 3941071+emlynmac@users.noreply.github.com)
 - Move noImplicitAny overrides to packlets ([PR #3855](https://github.com/azure/communication-ui-library/pull/3855) by 3941071+emlynmac@users.noreply.github.com)
+- Fix for image placeholder issue for GA release ([PR #3911](https://github.com/Azure/communication-ui-library/pull/3911) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Fix issues with turning camera off and on and microphone button to unmute and mute when joining a call ([PR #3917](https://github.com/Azure/communication-ui-library/pull/3917) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Prevent showing screen share button when formFactor is set to mobile ([PR #3915](https://github.com/Azure/communication-ui-library/pull/3915) by 79475487+mgamis-msft@users.noreply.github.com)
 
 
 ## [1.10.0](https://github.com/azure/communication-ui-library/tree/1.10.0)
