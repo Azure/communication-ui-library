@@ -134,7 +134,9 @@ const handleFileUploads = (adapter: ChatAdapter, fileUploads: _MockFileUpload[])
         name: file.name,
         extension: file.extension,
         url: file.url,
+        /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
         attachmentType: 'file',
+        /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
         id: file.id
       });
     } else if (file.error) {
@@ -195,8 +197,7 @@ const sendRemoteInlineImageMessage = (
       attachments: [
         {
           id: 'SomeImageId1',
-          attachmentType: 'teamsInlineImage',
-          contentType: 'png',
+          attachmentType: 'image',
           name: '',
           url: inlineImageUrl || 'images/inlineImageExample1.png',
           previewUrl: 'images/inlineImageExample1.png'

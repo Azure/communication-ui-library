@@ -251,22 +251,6 @@ export const useChatMessageStyles = makeStyles({
       color: tokens.colorStatusWarningBackground3,
       fontWeight: tokens.fontWeightSemibold
     },
-    '& img[src=""]': {
-      display: 'block',
-      position: 'relative',
-      marginBottom: '5px'
-    },
-    '& img[src=""]:after': {
-      backgroundColor: tokens.colorNeutralBackground1Selected,
-      content: `url("data:image/gif;base64,R0lGODlhAQABAAAAACw=")`,
-      backgroundSize: 'center',
-      position: 'absolute',
-      width: '100%',
-      height: '100%',
-      top: '0',
-      left: '0',
-      display: 'block'
-    },
     '& img': {
       maxWidth: '100% !important', // Add !important to make sure it won't be overridden by style defined in element
       height: 'auto !important'
@@ -316,6 +300,24 @@ export const useChatMessageStyles = makeStyles({
           paddingRight: '5px'
         }
       }
+    }
+  },
+  bodyWithPlaceholderImage: {
+    '& img[src=""]': {
+      display: 'block',
+      position: 'relative',
+      marginBottom: '5px'
+    },
+    '& img[src=""]:after': {
+      backgroundColor: tokens.colorNeutralBackground1Selected,
+      content: `url("data:image/gif;base64,R0lGODlhAQABAAAAACw=")`,
+      backgroundSize: 'center',
+      position: 'absolute',
+      width: '100%',
+      height: '100%',
+      top: '0',
+      left: '0',
+      display: 'block'
     }
   },
   bodyWithoutAvatar: {
