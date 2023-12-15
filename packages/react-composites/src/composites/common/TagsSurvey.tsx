@@ -10,7 +10,8 @@ import {
   _OverallIssue,
   _ScreenshareIssue,
   _VideoIssue,
-  _CallSurvey
+  _CallSurvey,
+  CallSurveyImprovementSuggestions
 } from '@internal/react-components';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { _captionSettingsSelector } from '@internal/calling-component-bindings';
@@ -21,9 +22,9 @@ import { useLocale } from '../localization';
 export const TagsSurvey = (
   /* @conditional-compile-remove(end-of-call-survey) */ props: {
     /* @conditional-compile-remove(end-of-call-survey) */
-    issues: (_AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue)[];
+    onConfirm?: (survey: _CallSurvey, improvementSuggestions?: CallSurveyImprovementSuggestions) => void;
     /* @conditional-compile-remove(end-of-call-survey) */
-    onConfirm?: (survey: _CallSurvey) => void;
+    showFreeFormTextField?: boolean;
   }
 ): JSX.Element => {
   /* @conditional-compile-remove(end-of-call-survey) */
@@ -31,7 +32,8 @@ export const TagsSurvey = (
   /* @conditional-compile-remove(end-of-call-survey) */
   const tagsSurveyStrings: _TagsSurveyStrings = {
     tagsSurveyQuestion: strings.tagsSurveyQuestion,
-    tagsSurveyHelperText: strings.tagsSurveyHelperText
+    tagsSurveyHelperText: strings.tagsSurveyHelperText,
+    tagsSurveyTextFieldDefaultText: strings.tagsSurveyTextFieldDefaultText
   };
 
   /* @conditional-compile-remove(end-of-call-survey) */
@@ -39,9 +41,9 @@ export const TagsSurvey = (
     <_TagsSurvey
       callIssuesToTag={strings.surveyIssues}
       categoryHeadings={strings.SurveyIssuesHeadingStrings}
-      issues={props.issues}
       onConfirm={props.onConfirm}
       strings={tagsSurveyStrings}
+      showFreeFormTextField={props.showFreeFormTextField}
     />
   );
 

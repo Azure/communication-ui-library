@@ -3,6 +3,8 @@
 
 import { _isInCall } from '@internal/calling-component-bindings';
 import { ActiveErrorMessage, ErrorBar, ParticipantMenuItemsCallback, useTheme } from '@internal/react-components';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { CallSurveyImprovementSuggestions } from '@internal/react-components';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
@@ -265,10 +267,7 @@ export type CallCompositeOptions = {
        * User will need to collect and handle this information 100% on their own
        * Free form text survey is not going to show in the UI if onSurveySubmitted is not populated
        */
-      improvementSuggestions: {
-        category: 'audio' | 'video' | 'screenshare';
-        suggestion: string;
-      }[]
+      improvementSuggestions: CallSurveyImprovementSuggestions
     ) => Promise<void>;
   };
   /* @conditional-compile-remove(custom-branding) */
@@ -410,7 +409,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const locale = useLocale();
   const palette = useTheme().palette;
   const leavePageStyle = useMemo(() => leavingPageStyle(palette), [palette]);
-
   let pageElement: JSX.Element | undefined;
   switch (page) {
     case 'configuration':

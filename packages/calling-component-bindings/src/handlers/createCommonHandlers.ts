@@ -573,7 +573,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     };
     /* @conditional-compile-remove(end-of-call-survey) */
     const onSubmitSurvey = async (survey: CallSurvey): Promise<CallSurveyResponse | undefined> =>
-      await call?.feature(Features.CallSurvey).submitSurvey(survey, options);
+      await call?.feature(Features.CallSurvey).submitSurvey(survey);
 
     return {
       onHangUp,

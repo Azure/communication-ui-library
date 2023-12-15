@@ -741,7 +741,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       this.callClient,
       this.callAgent,
       this.deviceManager,
-      undefined,
+      this.call,
       /* @conditional-compile-remove(video-background-effects) */ {
         onResolveVideoBackgroundEffectsDependency: this.onResolveVideoBackgroundEffectsDependency
       }

@@ -241,6 +241,7 @@
     "starRatingAriaLabel": "Select {0} of {1} stars",
     "surveyCancelButtonAriaLabel": "Cancel",
     "tagsSurveyQuestion": "What could have been better?",
+    "tagsSurveyTextFieldDefaultText": "Other, please specify",
     "tagsSurveyHelperText": "Check any issues you experienced",
     "surveyTextboxDefaultText": "Other,please specify",
     "surveyIssues": {

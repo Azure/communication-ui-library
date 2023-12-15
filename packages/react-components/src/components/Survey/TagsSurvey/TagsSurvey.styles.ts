@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Theme, mergeStyles } from '@fluentui/react';
+import { ICheckboxStyles, Theme, mergeStyles } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
 
 /**
@@ -31,5 +31,29 @@ export const helperTextStyle = (theme: Theme): string =>
  * @private
  */
 export const checkboxClassName = mergeStyles({
-  padding: _pxToRem(8)
+  padding: _pxToRem(8),
+  paddingLeft: 0
+});
+
+/**
+ * @private
+ */
+export const freeFormTextCheckboxStyles = (): Partial<ICheckboxStyles> => {
+  return {
+    root: {
+      padding: _pxToRem(8),
+      paddingLeft: 0,
+      width: '100%'
+    },
+    label: {
+      width: '100%'
+    }
+  };
+};
+
+/**
+ * @private
+ */
+export const freeFormTextFieldClassName = mergeStyles({
+  width: '100%'
 });
