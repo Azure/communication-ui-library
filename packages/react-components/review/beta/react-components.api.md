@@ -77,6 +77,9 @@ export interface AttachmentDownloadResult {
 // @public
 export type AttachmentMetadata = InlineImageMetadata | /* @conditional-compile-remove(file-sharing) */ FileMetadata;
 
+// @internal
+export type _AudioIssue = 'NoLocalAudio' | 'NoRemoteAudio' | 'Echo' | 'AudioNoise' | 'LowVolume' | 'AudioStoppedUnexpectedly' | 'DistortedSpeech' | 'AudioInterruption' | 'OtherIssues';
+
 // @public
 export interface BaseCustomStyles {
     root?: IStyle;
@@ -175,6 +178,28 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     isSpeaking?: boolean;
     raisedHand?: RaisedHand;
 };
+
+// @internal
+export interface _CallRating<TIssue extends _AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue> {
+    issues?: TIssue[];
+    scale?: _RatingScale;
+    score: number;
+}
+
+// @internal
+export interface _CallSurvey {
+    audioRating?: _CallRating<_AudioIssue>;
+    overallRating?: _CallRating<_OverallIssue>;
+    screenshareRating?: _CallRating<_ScreenshareIssue>;
+    videoRating?: _CallRating<_VideoIssue>;
+}
+
+// @internal
+export interface _CallSurveyResponse extends _CallSurvey {
+    readonly callId: string;
+    readonly id: string;
+    readonly localParticipantId: string;
+}
 
 // @beta
 export const CameraAndMicrophoneSitePermissions: (props: CameraAndMicrophoneSitePermissionsProps) => JSX.Element;
@@ -816,6 +841,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     ContextMenuCameraIcon: React_2.JSX.Element;
     ContextMenuMicIcon: React_2.JSX.Element;
     ContextMenuSpeakerIcon: React_2.JSX.Element;
+    SurveyStarIcon: React_2.JSX.Element;
+    SurveyStarIconFilled: React_2.JSX.Element;
 };
 
 // @internal
@@ -1309,6 +1336,9 @@ export interface InlineImageMetadata {
     url: string;
 }
 
+// @internal
+export type _IssueCategory = 'overallRating' | 'audioRating' | 'videoRating' | 'screenshareRating';
+
 // @public
 export interface JumpToNewMessageButtonProps {
     onClick: () => void;
@@ -1639,6 +1669,9 @@ export interface OptionsDevice {
     name: string;
 }
 
+// @internal
+export type _OverallIssue = 'CallCannotJoin' | 'CallCannotInvite' | 'HadToRejoin' | 'CallEndedUnexpectedly' | 'OtherIssues';
+
 // @public
 export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | /* @conditional-compile-remove(gallery-layouts) */ 'horizontalTop';
 
@@ -1839,6 +1872,13 @@ export interface RaiseHandButtonStrings {
     tooltipOnContent?: string;
 }
 
+// @internal
+export interface _RatingScale {
+    lowerBound: number;
+    lowScoreThreshold: number;
+    upperBound: number;
+}
+
 // @public
 export type ReadReceiptsBySenderId = {
     [key: string]: {
@@ -1891,6 +1931,9 @@ export interface ScreenShareButtonStrings {
     tooltipOffContent?: string;
     tooltipOnContent?: string;
 }
+
+// @internal
+export type _ScreenshareIssue = 'NoContentLocal' | 'NoContentRemote' | 'CannotPresent' | 'LowQuality' | 'Freezes' | 'StoppedUnexpectedly' | 'LargeDelay' | 'OtherIssues';
 
 // @public
 export const SendBox: (props: SendBoxProps) => JSX.Element;
@@ -2090,6 +2133,28 @@ export const _spokenLanguageToCaptionLanguage: {
 };
 
 // @internal
+export const _StarSurvey: (props: _StarSurveyProps) => JSX.Element;
+
+// @internal
+export interface _StarSurveyProps {
+    onStarRatingSelected?: (ratings: number) => void;
+    selectedIcon?: string;
+    strings?: _StarSurveyStrings;
+    unselectedIcon?: string;
+}
+
+// @internal
+export interface _StarSurveyStrings {
+    starRatingAriaLabel?: string;
+    starSurveyFiveStarText?: string;
+    starSurveyFourStarText?: string;
+    starSurveyHelperText?: string;
+    starSurveyOneStarText?: string;
+    starSurveyThreeStarText?: string;
+    starSurveyTwoStarText?: string;
+}
+
+// @internal
 export const _StartCaptionsButton: (props: _StartCaptionsButtonProps) => JSX.Element;
 
 // @internal (undocumented)
@@ -2120,6 +2185,72 @@ export interface StreamMediaProps {
     videoStreamElement: HTMLElement | null;
 }
 
+// @beta
+export interface SurveyIssues {
+    // (undocumented)
+    audioRating: {
+        noLocalAudio: string;
+        noRemoteAudio: string;
+        echo: string;
+        audioNoise: string;
+        lowVolume: string;
+        audioStoppedUnexpectedly: string;
+        distortedSpeech: string;
+        audioInterruption: string;
+        otherIssues: string;
+    };
+    // (undocumented)
+    overallRating: {
+        callCannotJoin: string;
+        callCannotInvite: string;
+        hadToRejoin: string;
+        callEndedUnexpectedly: string;
+        otherIssues: string;
+    };
+    // (undocumented)
+    screenshareRating: {
+        noContentLocal: string;
+        noContentRemote: string;
+        cannotPresent: string;
+        lowQuality: string;
+        freezes: string;
+        stoppedUnexpectedly: string;
+        largeDelay: string;
+        otherIssues: string;
+    };
+    // (undocumented)
+    videoRating: {
+        noVideoReceived: string;
+        noVideoSent: string;
+        lowQuality: string;
+        freezes: string;
+        stoppedUnexpectedly: string;
+        darkVideoReceived: string;
+        audioVideoOutOfSync: string;
+        otherIssues: string;
+    };
+}
+
+// @beta
+export interface SurveyIssuesHeadingStrings {
+    // (undocumented)
+    audioRating: string;
+    // (undocumented)
+    overallRating: string;
+    // (undocumented)
+    screenshareRating: string;
+    // (undocumented)
+    videoRating: string;
+}
+
+// @internal
+export type _SurveyTag = {
+    [issueCategory: string]: {
+        message: string;
+        issue: _AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue;
+    }[];
+};
+
 // @public
 export type SystemMessage = ParticipantAddedSystemMessage | ParticipantRemovedSystemMessage | TopicUpdatedSystemMessage | ContentSystemMessage;
 
@@ -2129,6 +2260,24 @@ export interface SystemMessageCommon extends MessageCommon {
     iconName: string;
     // (undocumented)
     messageType: 'system';
+}
+
+// @internal
+export const _TagsSurvey: (props: _TagsSurveyProps) => JSX.Element;
+
+// @internal
+export interface _TagsSurveyProps {
+    callIssuesToTag: SurveyIssues;
+    categoryHeadings: SurveyIssuesHeadingStrings;
+    issues: (_AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue)[];
+    onConfirm?: (selectedTags: _CallSurvey) => void;
+    strings?: _TagsSurveyStrings;
+}
+
+// @internal
+export interface _TagsSurveyStrings {
+    tagsSurveyHelperText?: string;
+    tagsSurveyQuestion?: string;
 }
 
 // @internal (undocumented)
@@ -2440,6 +2589,9 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
     localVideo?: IStyle;
     verticalGallery?: VerticalGalleryStyles;
 }
+
+// @internal
+export type _VideoIssue = 'NoVideoReceived' | 'NoVideoSent' | 'LowQuality' | 'Freezes' | 'StoppedUnexpectedly' | 'DarkVideoReceived' | 'AudioVideoOutOfSync' | 'OtherIssues';
 
 // @public
 export interface VideoStreamOptions {

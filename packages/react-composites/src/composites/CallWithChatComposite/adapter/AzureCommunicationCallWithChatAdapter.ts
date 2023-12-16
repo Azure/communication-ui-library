@@ -96,6 +96,8 @@ import {
 import { CapabilitiesChangedListener } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 
 type CallWithChatAdapterStateChangedHandler = (newState: CallWithChatAdapterState) => void;
 
@@ -532,6 +534,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   /* @conditional-compile-remove(video-background-effects) */
   public updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void {
     return this.callAdapter.updateSelectedVideoBackgroundEffect(selectedVideoBackground);
+  }
+  /* @conditional-compile-remove(end-of-call-survey) */
+  public async submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined> {
+    return this.callAdapter.submitSurvey(survey);
   }
 
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;

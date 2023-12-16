@@ -287,6 +287,9 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
   const chatItemMessageContainerClassName = mergeClasses(
     // messageContainerStyle used in className and style prop as style prop can't handle CSS selectors
     chatMessageStyles.body,
+    // disable placeholder functionality for GA releases as it might confuse users
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    chatMessageStyles.bodyWithPlaceholderImage,
     isBlockedMessage
       ? chatMessageCommonStyles.blocked
       : props.message.status === 'failed'
