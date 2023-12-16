@@ -674,6 +674,7 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         logo={options?.branding?.logo}
         /* @conditional-compile-remove(custom-branding) */
         backgroundImage={options?.branding?.backgroundImage}
+        /* @conditional-compile-remove(end-of-call-survey) */
         surveyOptions={options?.surveyOptions}
       />
     </BaseProvider>
