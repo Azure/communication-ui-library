@@ -59,7 +59,7 @@ const onDisplayDateTimeString = (messageDate: Date): string => {
   }
 };
 
-describe.only('Component is shown correctly', () => {
+describe('Component is shown correctly', () => {
   test('One user case', async () => {
     const sampleMessage: ChatMessage = {
       messageType: 'chat',
