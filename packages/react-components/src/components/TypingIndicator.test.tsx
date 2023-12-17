@@ -16,7 +16,7 @@ const testLocale = createTestLocale({
   }
 });
 
-describe.only('Component is shown correctly', () => {
+describe('Component is shown correctly', () => {
   test('One user case', async () => {
     const tree = renderer
       .create(<TypingIndicator typingUsers={[{ userId: 'user1', displayName: 'Claire' }]} />)
