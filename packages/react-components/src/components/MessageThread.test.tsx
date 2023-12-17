@@ -233,9 +233,11 @@ describe('Message should display image and attachment correctly', () => {
   test('Message richtext/html fileSharing and inline image attachment should display correctly', async () => {
     /* @conditional-compile-remove(file-sharing) */
     const fildId1 = 'SomeFileId1';
+    /* @conditional-compile-remove(file-sharing) */
     const fildName1 = 'SomeFileId1.txt';
     /* @conditional-compile-remove(file-sharing) */
     const fildId2 = 'SomeFileId2';
+    /* @conditional-compile-remove(file-sharing) */
     const fildName2 = 'SomeFileId2.pdf';
     /* @conditional-compile-remove(file-sharing) */
     const expectedFileSrc1 = 'http://localhost/someFileSrcUrl1';
@@ -300,15 +302,21 @@ describe('Message should display image and attachment correctly', () => {
     );
 
     await waitFor(async () => {
+      /* @conditional-compile-remove(file-sharing) */
       const DownloadFileIconName = 'DownloadFile';
+      /* @conditional-compile-remove(file-sharing) */
       const fileDownloadCards = container.querySelector('[data-ui-id="file-download-card-group"]')?.firstElementChild;
 
+      /* @conditional-compile-remove(file-sharing) */
       // First attachment: previewUrl !== undefined, will not show DownloadFile Icon
       expect(fileDownloadCards?.children[0].innerHTML).not.toContain(DownloadFileIconName);
+      /* @conditional-compile-remove(file-sharing) */
       expect(fileDownloadCards?.children[0].children[0].textContent).toEqual(fildName1);
 
+      /* @conditional-compile-remove(file-sharing) */
       // Second attachment: id === undefined, will show DownloadFile Icon
       expect(fileDownloadCards?.children[1].innerHTML).toContain(DownloadFileIconName);
+      /* @conditional-compile-remove(file-sharing) */
       expect(fileDownloadCards?.children[1].children[0].textContent).toEqual(fildName2);
 
       // Inline Image attachment
