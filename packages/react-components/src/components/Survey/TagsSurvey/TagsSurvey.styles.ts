@@ -38,17 +38,15 @@ export const checkboxClassName = mergeStyles({
 /**
  * @private
  */
-export const freeFormTextCheckboxStyles = (): Partial<ICheckboxStyles> => {
-  return {
-    root: {
-      padding: _pxToRem(8),
-      paddingLeft: 0,
-      width: '100%'
-    },
-    label: {
-      width: '100%'
-    }
-  };
+export const freeFormTextCheckboxStyles: Partial<ICheckboxStyles> = {
+  root: {
+    padding: _pxToRem(8),
+    paddingLeft: 0,
+    width: '100%'
+  },
+  label: {
+    width: '100%'
+  }
 };
 
 /**

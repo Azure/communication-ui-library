@@ -257,7 +257,7 @@ export type CallCompositeOptions = {
       surveyId: string,
       /**
        * This is the survey results containing star survey data and API tag survey data.
-       * This part of the result will always be send to calling sdk
+       * This part of the result will always be sent to the calling sdk
        * This callback provides user with the ability to gain access to survey data
        */
       submittedSurvey: CallSurvey,
