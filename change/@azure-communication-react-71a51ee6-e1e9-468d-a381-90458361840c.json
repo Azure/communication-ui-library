@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "area": "fix",
-  "workstream": "",
-  "comment": "Improve sample troubleshooting message",
-  "packageName": "@azure/communication-react",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

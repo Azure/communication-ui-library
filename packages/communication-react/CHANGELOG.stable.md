@@ -1,8 +1,67 @@
 # Change Log - @azure/communication-react
 
-This log was last generated on Mon, 06 Nov 2023 16:44:11 GMT and should not be manually modified.
+This log was last generated on Mon, 11 Dec 2023 21:24:49 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.11.0](https://github.com/azure/communication-ui-library/tree/1.11.0)
+
+Mon, 11 Dec 2023 21:24:49 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.10.0...1.11.0)
+
+### Rooms - General Availability
+
+ACS Web UI Library now supports the concept of a Rooms for developers. On the server-side, developers use Rooms Client from the Calling SDK to create rooms and add users with assigned roles to these rooms. The ACS Web UI Library, in turn, now allows the users to join a room through the CallComposite and managing their capabilities during the call based on their role.
+
+### Features
+- Promote rooms feature to GA ([PR #3841](https://github.com/azure/communication-ui-library/pull/3841) by miguelgamis@microsoft.com)
+- Add roleChanged event for CallAdapter ([PR #3826](https://github.com/azure/communication-ui-library/pull/3826) by 79475487+mgamis-msft@users.noreply.github.com)
+- Make configuration page text stand out against a noisy background ([PR #3842](https://github.com/azure/communication-ui-library/pull/3842) by 2684369+JamesBurnside@users.noreply.github.com)
+- Generate theme from single accent color ([PR #3797](https://github.com/azure/communication-ui-library/pull/3797) by 2684369+JamesBurnside@users.noreply.github.com)
+### Improvements
+- Improve configuration page styling in the Call Composites ([PR #3741](https://github.com/azure/communication-ui-library/pull/3741) by 2684369+JamesBurnside@users.noreply.github.com)
+- Rename inlineImage / file card types as per internal reviews ([PR #3846](https://github.com/azure/communication-ui-library/pull/3846) by 3941071+emlynmac@users.noreply.github.com)
+- Updating the API for onUpdateMessage ([PR #3760](https://github.com/azure/communication-ui-library/pull/3760) by 9044372+JoshuaLai@users.noreply.github.com)
+- Collapsing other identifiers to just CommunicationIdentifierKind ([PR #3761](https://github.com/azure/communication-ui-library/pull/3761) by alkwa@microsoft.com)
+- Increase margin between the control bar buttons and their tooltips ([PR #3872](https://github.com/azure/communication-ui-library/pull/3872) by 2684369+JamesBurnside@users.noreply.github.com)
+- MessageThread performance improvements ([PR #3809](https://github.com/azure/communication-ui-library/pull/3809) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Update TypeScript used for building the package to 5.3.3 ([PR #3900](https://github.com/azure/communication-ui-library/pull/3900) by 2684369+JamesBurnside@users.noreply.github.com)
+- Add additional telemetry to userAgent that indicates either Chat Composite, Call Composite, Call with Chat composite or Stateful components.  ([PR #3481](https://github.com/azure/communication-ui-library/pull/3481, https://github.com/azure/communication-ui-library/pull/3779) by 73612854+palatter@users.noreply.github.com)
+- Update Calling dependency to use the latest version 1.19.1 ([PR #3831](https://github.com/azure/communication-ui-library/pull/3831) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Patch updates to dependencies ([PR #3847](https://github.com/azure/communication-ui-library/pull/3847) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Add console errors for ended call scenarios for Rooms in CallComposite ([PR #3874](https://github.com/azure/communication-ui-library/pull/3874) by 79475487+mgamis-msft@users.noreply.github.com)
+- Update communication-chat stable to 1.4.0 ([PR #3866](https://github.com/azure/communication-ui-library/pull/3866) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
+- Update Immer to v10 and other packages ([PR #3854](https://github.com/azure/communication-ui-library/pull/3854) by 3941071+emlynmac@users.noreply.github.com)
+- Update to type-fest 3.x and clean up unnecessary dependencies ([PR #3895](https://github.com/azure/communication-ui-library/pull/3895) by 3941071+emlynmac@users.noreply.github.com)
+- Add image placeholder for interop chat messages ([PR #3861](https://github.com/azure/communication-ui-library/pull/3861) by 109105353+jpeng-ms@users.noreply.github.com)
+- Add support for local screenshare streams in Calling Stateful Client ([PR #3865](https://github.com/azure/communication-ui-library/pull/3865) by 2684369+JamesBurnside@users.noreply.github.com)
+### Bug Fixes
+- Filter out consumers from remote participant list ([PR #3821](https://github.com/azure/communication-ui-library/pull/3821) by 79475487+mgamis-msft@users.noreply.github.com)
+- Stop camera when capability to turn video on is no longer present and lower hand when role is changed to Consumer ([PR #3820](https://github.com/azure/communication-ui-library/pull/3820) by 79475487+mgamis-msft@users.noreply.github.com)
+- Update @azure/communication-chat peerDependency to match devDependency ([PR #3774](https://github.com/azure/communication-ui-library/pull/3774) by 73612854+palatter@users.noreply.github.com)
+- Update hook logic in call arrangement to close people pane appropriately when user goes on hold ([PR #3898](https://github.com/azure/communication-ui-library/pull/3898) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Fix lobby page text using incorrect theme token value. ([PR #3797](https://github.com/azure/communication-ui-library/pull/3797) by 2684369+JamesBurnside@users.noreply.github.com)
+- Add border for avatar coin for raised hand ([PR #3793](https://github.com/azure/communication-ui-library/pull/3793) by ruslanzdor@microsoft.com)
+- Participant pane dismiss the participant options menu on second click ([PR #3897](https://github.com/azure/communication-ui-library/pull/3897) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Adjust padding in participant item so that the state string is not so far away from the other icons ([PR #3849](https://github.com/azure/communication-ui-library/pull/3849) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Update lobby screen camera controls and behavior ([PR #3863](https://github.com/azure/communication-ui-library/pull/3863) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Visual alignment improvements to the CallComposite configuration page ([PR #3875](https://github.com/azure/communication-ui-library/pull/3875) by 2684369+JamesBurnside@users.noreply.github.com)
+- Dispose of the unparented views when call is starting ([PR #3876](https://github.com/azure/communication-ui-library/pull/3876) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Fix overflow gallery to use all available space when there is no local video ([PR #3825](https://github.com/azure/communication-ui-library/pull/3825) by 79475487+mgamis-msft@users.noreply.github.com)
+- Add a Narrator announcement when a message is deleted ([PR #3844](https://github.com/azure/communication-ui-library/pull/3844) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Add handlers for Enter and Space keys for message menu button ([PR #3755](https://github.com/azure/communication-ui-library/pull/3755) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Allow mic to be active in the lobby screen ([PR #3896](https://github.com/azure/communication-ui-library/pull/3896) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Fix local video stream rendering when camera is turned on while screensharing is active ([PR #3779](https://github.com/azure/communication-ui-library/pull/3779) by 79475487+mgamis-msft@users.noreply.github.com)
+- Add ability start captions on mobile with keyboard with toggle on toplevel menu item and not secondary component ([PR #3801](https://github.com/azure/communication-ui-library/pull/3801) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Fix artifacting when hovering on background picker ([PR #3808](https://github.com/azure/communication-ui-library/pull/3808) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Render gallery content only when people pane screens on mobile aren't present ([PR #3754](https://github.com/azure/communication-ui-library/pull/3754) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Improve sample troubleshooting message ([PR #3870](https://github.com/azure/communication-ui-library/pull/3870) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix alpha release build poll script ([PR #3858](https://github.com/azure/communication-ui-library/pull/3858) by 3941071+emlynmac@users.noreply.github.com)
+- Move noImplicitAny overrides to packlets ([PR #3855](https://github.com/azure/communication-ui-library/pull/3855) by 3941071+emlynmac@users.noreply.github.com)
+- Fix for image placeholder issue for GA release ([PR #3911](https://github.com/Azure/communication-ui-library/pull/3911) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Fix issues with turning camera off and on and microphone button to unmute and mute when joining a call ([PR #3917](https://github.com/Azure/communication-ui-library/pull/3917) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Prevent showing screen share button when formFactor is set to mobile ([PR #3915](https://github.com/Azure/communication-ui-library/pull/3915) by 79475487+mgamis-msft@users.noreply.github.com)
+
 
 ## [1.10.0](https://github.com/azure/communication-ui-library/tree/1.10.0)
 
