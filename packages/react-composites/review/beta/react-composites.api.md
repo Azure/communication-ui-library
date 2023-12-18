@@ -377,6 +377,7 @@ export type CallCompositeIcons = {
     NoticePageNotInvitedToRoom?: JSX.Element;
     NoticePageRoomNotFound?: JSX.Element;
     NoticePageRoomNotValid?: JSX.Element;
+    NoticePageCallTimeout?: JSX.Element;
     OptionsCamera?: JSX.Element;
     OptionsMic?: JSX.Element;
     OptionsSpeaker?: JSX.Element;
@@ -456,6 +457,8 @@ export interface CallCompositeStrings {
     blurBackgroundTooltip?: string;
     callRejectedMoreDetails?: string;
     callRejectedTitle: string;
+    callTimeoutDetails?: string;
+    callTimeoutTitle?: string;
     cameraLabel: string;
     cameraOffBackgroundEffectWarningText?: string;
     cameraPermissionDenied: string;
@@ -1427,6 +1430,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     NoticePageNotInvitedToRoom?: JSX.Element | undefined;
     NoticePageRoomNotFound?: JSX.Element | undefined;
     NoticePageRoomNotValid?: JSX.Element | undefined;
+    NoticePageCallTimeout?: JSX.Element | undefined;
     OptionsCamera: JSX.Element;
     OptionsMic: JSX.Element;
     OptionsSpeaker: JSX.Element;
