@@ -708,6 +708,11 @@ export interface CallCompositeStrings {
   tagsSurveyQuestion: string;
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
+   * Default text for free form text field inside tags survey
+   */
+  tagsSurveyTextFieldDefaultText: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
    * Tags Survey helper text
    */
   tagsSurveyHelperText: string;

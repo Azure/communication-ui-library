@@ -19,6 +19,8 @@ import { CallSurvey } from '@azure/communication-calling';
 import { useHandlers } from '../hooks/useHandlers';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { SurveyPane } from '../../common/SurveyPane';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { CallSurveyImprovementSuggestions } from '@internal/react-components';
 
 /**
  * @private
@@ -50,7 +52,7 @@ export interface NoticePageProps {
       surveyId: string,
       /**
        * This is the survey results containing star survey data and API tag survey data.
-       * This part of the result will always be send to calling sdk
+       * This part of the result will always be sent to the calling sdk
        * This callback provides user with the ability to gain access to survey data
        */
       submittedSurvey: CallSurvey,
@@ -60,10 +62,7 @@ export interface NoticePageProps {
        * User will need to collect and handle this information 100% on their own
        * Free form text survey is not going to show in the UI if onSurveySubmitted is not populated
        */
-      improvementSuggestions: {
-        category: 'audio' | 'video' | 'screenshare';
-        suggestion: string;
-      }[]
+      improvementSuggestions: CallSurveyImprovementSuggestions
     ) => Promise<void>;
   };
 }
@@ -104,7 +103,7 @@ export function NoticePage(props: NoticePageProps): JSX.Element {
       </Stack>
       {
         /* @conditional-compile-remove(end-of-call-survey) */ !props.surveyOptions?.hideSurvey && (
-          <SurveyPane {...handlers} />
+          <SurveyPane {...handlers} onSurveySubmittedCustom={props.surveyOptions?.onSurveySubmitted} />
         )
       }
     </Stack>

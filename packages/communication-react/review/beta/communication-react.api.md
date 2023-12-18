@@ -607,10 +607,7 @@ export type CallCompositeOptions = {
         hideSurvey?: boolean;
         onSurveySubmitted?: (callId: string, surveyId: string,
         submittedSurvey: CallSurvey,
-        improvementSuggestions: {
-            category: 'audio' | 'video' | 'screenshare';
-            suggestion: string;
-        }[]) => Promise<void>;
+        improvementSuggestions: CallSurveyImprovementSuggestions) => Promise<void>;
     };
     branding?: {
         logo?: {
@@ -784,6 +781,7 @@ export interface CallCompositeStrings {
     surveyTextboxDefaultText: string;
     tagsSurveyHelperText: string;
     tagsSurveyQuestion: string;
+    tagsSurveyTextFieldDefaultText: string;
     threeParticipantJoinedNoticeString: string;
     threeParticipantLeftNoticeString: string;
     transferPageNoticeString: string;
@@ -936,6 +934,14 @@ export interface CallState {
     totalParticipantCount?: number;
     transcription: TranscriptionCallFeature;
     transfer: TransferFeature;
+}
+
+// @beta
+export interface CallSurveyImprovementSuggestions {
+    audio?: string;
+    overall?: string;
+    screenshare?: string;
+    video?: string;
 }
 
 // @public
@@ -1243,10 +1249,7 @@ export type CallWithChatCompositeOptions = {
         hideSurvey?: boolean;
         onSurveySubmitted?: (callId: string, surveyId: string,
         submittedSurvey: CallSurvey,
-        improvementSuggestions: {
-            category: 'audio' | 'video' | 'screenshare';
-            suggestion: string;
-        }[]) => Promise<void>;
+        improvementSuggestions: CallSurveyImprovementSuggestions) => Promise<void>;
     };
     branding?: {
         logo?: {
