@@ -39,45 +39,19 @@ export const videoEffectsItemContainerStyles = (args: {
       cursor: args.disabled ? 'default' : 'pointer',
       height: VideoEffectsItemContainerHeight,
       width: VideoEffectsItemContainerWidth,
-      border: args.isSelected
+      outlineOffset: '-1px',
+      outline: args.isSelected
         ? `${borderActiveThickness} solid ${args.theme.palette.themePrimary}`
         : `${borderDefaultThickness} solid ${args.theme.palette.neutralQuaternaryAlt}`,
-      // Use :after to display a border element. This is used to prevent the background image
-      // resizing when the border thichkness is changed. We also want the border to be inside
-      // the frame of the container, i.e. we want it to expand inwards and not outwards when
-      // border thickness changes from hover/selection.
-      ':after': {
-        content: '""',
-        boxSizing: 'border-box',
-        height: VideoEffectsItemContainerBorderHeight,
-        width: VideoEffectsItemContainerBorderWidth,
-        borderRadius: '0.25rem',
-        transform: 'translate(-1rem, -3.3rem)',
-        display: 'flex'
-      },
       ':hover': {
-        ':after': {
-          border:
-            args.disabled && !args.isSelected
-              ? `${borderDefaultThickness} solid ${args.theme.palette.neutralQuaternaryAlt}`
-              : `${borderActiveThickness} solid ${args.theme.palette.themePrimary}`,
-          transform: 'translate(-1rem, -3.3rem)'
-        }
-      },
-      ':focus': {
-        ':after': {
-          outline: 'none',
-          transform: 'translate(-0.1rem, -0.2rem)',
-          ':hover': {
-            transform: 'translate(-0.1rem, -0.2rem)'
-          }
-        }
-      },
-      ':active': {
-        ':after': {
-          outline: 'none',
-          transform: 'translate(-1rem, -3.3rem)'
-        }
+        boxSizing: 'border-box',
+        width: VideoEffectsItemContainerBorderWidth,
+        height: VideoEffectsItemContainerBorderHeight,
+        outlineOffset: '-1px',
+        outline:
+          args.disabled && !args.isSelected
+            ? `${borderDefaultThickness} solid ${args.theme.palette.neutralQuaternaryAlt}`
+            : `${borderActiveThickness} solid ${args.theme.palette.themePrimary}`
       }
     }
   };
