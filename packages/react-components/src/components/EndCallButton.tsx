@@ -80,7 +80,8 @@ const darkThemeCallButtonStyles = {
     color: darkTheme.callingPalette.iconWhite,
     background: darkTheme.callingPalette.callRed,
     '@media (forced-colors: active)': {
-      forcedColorAdjust: 'none'
+      forcedColorAdjust: 'auto',
+      border: `1px ${lightTheme.palette?.neutralQuaternaryAlt} solid`
     },
     ':focus::after': { outlineColor: `${darkTheme.callingPalette.iconWhite} !important` } // added !important to avoid override by FluentUI button styles
   },
@@ -88,14 +89,14 @@ const darkThemeCallButtonStyles = {
     color: darkTheme.callingPalette.iconWhite,
     background: darkTheme.callingPalette.callRed,
     '@media (forced-colors: active)': {
-      forcedColorAdjust: 'none'
+      forcedColorAdjust: 'auto'
     }
   },
   rootPressed: {
     color: darkTheme.callingPalette.iconWhite,
     background: darkTheme.callingPalette.callRed,
     '@media (forced-colors: active)': {
-      forcedColorAdjust: 'none'
+      forcedColorAdjust: 'auto'
     }
   },
   label: {
@@ -108,7 +109,8 @@ const lightThemeCallButtonStyles = {
     color: lightTheme.callingPalette.iconWhite,
     background: lightTheme.callingPalette.callRed,
     '@media (forced-colors: active)': {
-      forcedColorAdjust: 'none'
+      forcedColorAdjust: 'auto',
+      border: `1px ${lightTheme.palette?.neutralQuaternaryAlt} solid`
     },
     ':focus::after': { outlineColor: `${lightTheme.callingPalette.iconWhite} !important` } // added !important to avoid override by FluentUI button styles
   },
@@ -116,14 +118,14 @@ const lightThemeCallButtonStyles = {
     color: lightTheme.callingPalette.iconWhite,
     background: lightTheme.callingPalette.callRed,
     '@media (forced-colors: active)': {
-      forcedColorAdjust: 'none'
+      forcedColorAdjust: 'auto'
     }
   },
   rootPressed: {
     color: lightTheme.callingPalette.iconWhite,
     background: lightTheme.callingPalette.callRed,
     '@media (forced-colors: active)': {
-      forcedColorAdjust: 'none'
+      forcedColorAdjust: 'auto'
     }
   },
   label: {
