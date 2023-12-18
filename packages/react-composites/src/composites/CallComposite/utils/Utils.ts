@@ -36,6 +36,10 @@ export const NOT_INVITED_TO_ROOM_SUB_CODE = 5828;
 /* @conditional-compile-remove(rooms) */
 /** @private */
 export const INVITE_TO_ROOM_REMOVED_SUB_CODE = 5317;
+/** @private */
+export const CALL_TIMEOUT_SUB_CODE = 10004;
+/** @private */
+export const CALL_TIMEOUT_CODE = 487;
 
 /**
  * @private
@@ -166,6 +170,13 @@ export const getEndedCallPageProps = (
         iconName = 'NoticePageInviteToRoomRemoved';
       }
       break;
+    case CALL_TIMEOUT_SUB_CODE:
+      if (endedCall?.callEndReason?.code === CALL_TIMEOUT_CODE && locale.strings.call.callTimeoutTitle) {
+        title = locale.strings.call.callTimeoutTitle;
+        moreDetails = locale.strings.call.callTimeoutDetails;
+        disableStartCallButton = true;
+        iconName = 'NoticePageCallTimeout';
+      }
   }
   /* @conditional-compile-remove(calling-sounds) */
   switch (endedCall?.callEndReason?.code) {

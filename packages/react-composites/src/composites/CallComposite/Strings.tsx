@@ -755,4 +755,12 @@ export interface CallCompositeStrings {
    * String for more details when the call is rejected by the callee
    */
   callRejectedMoreDetails?: string;
+  /**
+   * String for title when the call times out because the remote user does not answer
+   */
+  callTimeoutTitle?: string;
+  /**
+   * String for more details when the call times out because the remote user does not answer
+   */
+  callTimeoutDetails?: string;
 }
