@@ -1,8 +1,8 @@
 {
   "type": "none",
   "area": "improvement",
-  "workstream": "Storybook",
-  "comment": "Update Rooms page in storybook",
+  "workstream": "Changelog grooming",
+  "comment": "Groom stable changelog",
   "packageName": "@azure/communication-react",
   "email": "miguelgamis@microsoft.com",
   "dependentChangeType": "none"
