@@ -19,15 +19,27 @@ export const helperTextStyle = (theme: Theme): string =>
 /**
  * @private
  */
+export const ratingHelperTextStyle = (theme: Theme): string =>
+  mergeStyles({
+    fontWeight: 400,
+    fontSize: _pxToRem(12),
+    lineHeight: _pxToRem(12),
+    color: theme.palette.themePrimary,
+    marginBottom: _pxToRem(24),
+    marginTop: _pxToRem(10),
+    textAlign: 'center'
+  });
+
+/**
+ * @private
+ */
 export const ratingStyles = (theme: Theme): Partial<IRatingStyles> => {
   return {
     root: {
-      marginBottom: _pxToRem(24),
       textAlign: 'center'
     },
     ratingStar: {
-      fontSize: _pxToRem(35),
-      margin: _pxToRem(5)
+      transform: 'scale(1.15)'
     },
     ratingStarFront: {
       color: theme.palette.themePrimary
