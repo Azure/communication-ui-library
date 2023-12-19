@@ -45,7 +45,7 @@ export const SidePaneHeader = (props: {
 
   return (
     <Stack horizontal horizontalAlign="space-between" styles={sidePaneHeaderContainerStyles} verticalAlign="center">
-      <Stack.Item styles={sidePaneHeaderStyles}>{props.headingText}</Stack.Item>
+      <Stack.Item role="heading" styles={sidePaneHeaderStyles}>{props.headingText}</Stack.Item>
       <Stack.Item>
         <CommandBarButton
           ariaLabel={props.dismissSidePaneButtonAriaLabel}
