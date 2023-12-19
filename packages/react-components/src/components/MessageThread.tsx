@@ -60,7 +60,7 @@ const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
     JSON.stringify(first.createdOn) === JSON.stringify(second.createdOn) &&
     first.senderId === second.senderId &&
     first.senderDisplayName === second.senderDisplayName &&
-    JSON.stringify(first.editedOn) === JSON.stringify(second.editedOn)
+    first.status === second.status
   );
 };
 
@@ -674,7 +674,6 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     /* @conditional-compile-remove(file-sharing) */
     onRenderFileDownloads
   } = props;
-
   // We need this state to wait for one tick and scroll to bottom after messages have been initialized.
   // Otherwise chatScrollDivRef.current.clientHeight is wrong if we scroll to bottom before messages are initialized.
   const [chatMessagesInitialized, setChatMessagesInitialized] = useState<boolean>(false);
