@@ -318,9 +318,6 @@ test.describe('Inline Image Message Thread', async () => {
         sendRemoteInlineImageMessage: true
       })
     );
-    // wait for the animation to end
-    // can be removed when Chrome version is updated
-    await waitForAnimationEnd(page, '.fui-Chat');
 
     expect(
       await stableScreenshot(page, {
@@ -373,9 +370,3 @@ test.describe('Filesharing Edit Message', async () => {
     ).toMatchSnapshot('filesharing-file-upload-card-while-editing-message.png');
   });
 });
-
-const waitForAnimationEnd = (page: Page, selector: string): Promise<unknown> => {
-  return page
-    .locator(selector)
-    .evaluate((element) => Promise.all(element.getAnimations().map((animation) => animation.finished)));
-};
