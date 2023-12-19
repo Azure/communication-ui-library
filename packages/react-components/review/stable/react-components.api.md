@@ -313,7 +313,7 @@ export interface _CaptionsSettingsModalStrings {
 }
 
 // @public
-export type ChatAttachmentType = 'file' | 'inlineImage' | 'unknown';
+export type ChatAttachmentType = 'inlineImage' | 'unknown';
 
 // @public
 export interface ChatMessage extends MessageCommon {

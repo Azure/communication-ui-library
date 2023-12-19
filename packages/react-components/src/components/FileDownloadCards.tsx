@@ -14,7 +14,7 @@ import { _formatString } from '@internal/acs-ui-common';
  * Represents the type of attachment
  * @public
  */
-export type ChatAttachmentType = 'file' | 'inlineImage' | 'unknown';
+export type ChatAttachmentType = 'inlineImage' | /* @conditional-compile-remove(file-sharing) */ 'file' | 'unknown';
 
 /**
  * Metadata containing basic information about the uploaded file.
