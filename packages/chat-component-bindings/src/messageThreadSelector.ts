@@ -61,7 +61,7 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
 
 /* @conditional-compile-remove(file-sharing) */
 const extractAttachedFilesMetadata = (metadata: Record<string, string>): FileMetadata[] => {
-  const fileMetadata = metadata['fileSharingMetadata'];
+  const fileMetadata = metadata.fileSharingMetadata;
   if (!fileMetadata) {
     return [];
   }
@@ -355,7 +355,7 @@ const isMessageValidToRender = (message: ChatMessageWithStatus): boolean => {
   if (message.deletedOn) {
     return false;
   }
-  if (message.metadata?.['fileSharingMetadata'] || message.content?.attachments) {
+  if (message.metadata?.fileSharingMetadata || message.content?.attachments) {
     return true;
   }
   /* @conditional-compile-remove(data-loss-prevention) */
