@@ -58,9 +58,7 @@ export type AnnouncerProps = {
 
 // @public
 export interface AttachmentDownloadResult {
-    // (undocumented)
     attachmentId: string;
-    // (undocumented)
     blobUrl: string;
 }
 

@@ -82,7 +82,13 @@ export type AttachmentMetadata = InlineImageMetadata | /* @conditional-compile-r
  * @public
  */
 export interface AttachmentDownloadResult {
+  /**
+   * Unique ID of the attachment.
+   */
   attachmentId: string;
+  /**
+   * Blob URL for the attachment.
+   */
   blobUrl: string;
 }
 
