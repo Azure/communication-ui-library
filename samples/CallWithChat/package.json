@@ -51,7 +51,8 @@
     "react-router-dom": "^5.1.2",
     "reselect": "^4.0.0",
     "shake.js": "1.2.2",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "@fluentui/react-file-type-icons": "8.10.4"
   },
   "devDependencies": {
     "@babel/core": "^7.23.5",
