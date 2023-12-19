@@ -43,8 +43,6 @@ import { FluentV9ThemeProvider } from './../theming/FluentV9ThemeProvider';
 import LiveAnnouncer from './Announcer/LiveAnnouncer';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from './MentionPopover';
-// /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-// import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 import { createStyleFromV8Style } from './styles/v8StyleShim';
 import {
   ChatMessageComponentWrapper,
@@ -753,11 +751,6 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
       isAllChatMessagesLoadedRef.current = false;
     }
   }, [onLoadPreviousChatMessages]);
-
-  // /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  // useEffect(() => {
-  //   initializeFileTypeIcons();
-  // }, []);
 
   const previousTopRef = useRef<number>(-1);
   const previousHeightRef = useRef<number>(-1);
