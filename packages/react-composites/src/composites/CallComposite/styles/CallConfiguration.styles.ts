@@ -158,6 +158,12 @@ const configurationPageTextDecoration = (theme: ITheme): IStyle => {
     strokeWidth: _pxToRem(1.5),
     text: {
       letterSpacing: '-0.02rem' // cope with extra width due to stroke width
+    },
+    '@media (forced-colors: active)': {
+      forcedColorAdjust: 'auto',
+      fill: theme.palette.neutralQuaternaryAlt,
+      textShadow: 'none',
+      stroke: 'none'
     }
   };
 };
