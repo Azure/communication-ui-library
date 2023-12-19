@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { expect } from '@playwright/test';
+import { expect, Page } from '@playwright/test';
 import { sendMessage, waitForMessageDelivered } from '../../common/chatTestHelpers';
 import { dataUiId, stableScreenshot, waitForSelector } from '../../common/utils';
 import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, test, TEST_PARTICIPANTS } from './fixture';
@@ -318,6 +318,10 @@ test.describe('Inline Image Message Thread', async () => {
         sendRemoteInlineImageMessage: true
       })
     );
+    // wait for the animation to end
+    // can be removed when Chrome version is updated
+    await waitForAnimationEnd(page, '.fui-Chat');
+
     expect(
       await stableScreenshot(page, {
         stubMessageTimestamps: true,
@@ -369,3 +373,9 @@ test.describe('Filesharing Edit Message', async () => {
     ).toMatchSnapshot('filesharing-file-upload-card-while-editing-message.png');
   });
 });
+
+const waitForAnimationEnd = (page: Page, selector: string): Promise<unknown> => {
+  return page
+    .locator(selector)
+    .evaluate((element) => Promise.all(element.getAnimations().map((animation) => animation.finished)));
+};
