@@ -741,7 +741,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       this.callClient,
       this.callAgent,
       this.deviceManager,
-      undefined,
+      this.call,
       /* @conditional-compile-remove(video-background-effects) */ {
         onResolveVideoBackgroundEffectsDependency: this.onResolveVideoBackgroundEffectsDependency
       }
@@ -978,7 +978,13 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   /* @conditional-compile-remove(PSTN-calls) */
   public async holdCall(): Promise<void> {
     if (this.call?.state !== 'LocalHold') {
-      this.handlers.onToggleHold();
+      if (this.call?.isLocalVideoStarted) {
+        this.stopCamera().then(() => {
+          this.handlers.onToggleHold();
+        });
+      } else {
+        this.handlers.onToggleHold();
+      }
     }
   }
 

@@ -118,6 +118,8 @@
     "dismissModalAriaLabel": "Local and remote picture and picture, press enter to return to call",
     "callRejectedTitle": "The call could not be completed",
     "callRejectedMoreDetails": "The person you are trying to reach is unavailable. Please try again later.",
+    "callTimeoutTitle": "The call could not be completed",
+    "callTimeoutDetails": "The person you are trying to reach is unavailable. Please try again later.",
     "spokenLanguageStrings": {
       "ar-ae": "Arabic - U.A.E.",
       "ar-sa": "Arabic - Saudi Arabia",
@@ -241,8 +243,9 @@
     "starRatingAriaLabel": "Select {0} of {1} stars",
     "surveyCancelButtonAriaLabel": "Cancel",
     "tagsSurveyQuestion": "What could have been better?",
+    "tagsSurveyTextFieldDefaultText": "Other, please specify",
     "tagsSurveyHelperText": "Check any issues you experienced",
-    "surveyTextboxDefaultText": "Other,please specify",
+    "surveyTextboxDefaultText": "Other, please specify",
     "surveyIssues": {
       "overallRating": {
         "callCannotJoin": "I could not join call",

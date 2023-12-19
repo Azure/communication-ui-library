@@ -14,6 +14,7 @@ import React from 'react';
 export const TagsSurveyExample: () => JSX.Element = () => {
   const strings = {
     tagsSurveyQuestion: 'What could have been better?',
+    tagsSurveyTextFieldDefaultText: 'Other, please specify',
     tagsSurveyHelperText: 'Check any issues you experienced'
   };
 
@@ -58,19 +59,6 @@ export const TagsSurveyExample: () => JSX.Element = () => {
     }
   };
 
-  const issues: (_AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue)[] = [
-    'AudioInterruption',
-    'AudioNoise',
-    'AudioStoppedUnexpectedly',
-    'CallCannotInvite',
-    'CallCannotJoin',
-    'CallEndedUnexpectedly',
-    'CannotPresent',
-    'DarkVideoReceived',
-    'DistortedSpeech',
-    'Echo',
-    'Freezes'
-  ];
   const categoryHeadings = {
     overallRating: 'Overall',
     audioRating: 'Audio',
@@ -78,12 +66,5 @@ export const TagsSurveyExample: () => JSX.Element = () => {
     screenshareRating: 'Presenting'
   };
 
-  return (
-    <TagsSurvey
-      strings={strings}
-      issues={issues}
-      callIssuesToTag={callIssuesToTag}
-      categoryHeadings={categoryHeadings}
-    />
-  );
+  return <TagsSurvey strings={strings} callIssuesToTag={callIssuesToTag} categoryHeadings={categoryHeadings} />;
 };

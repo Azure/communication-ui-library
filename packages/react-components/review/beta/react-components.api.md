@@ -194,6 +194,14 @@ export interface _CallSurvey {
     videoRating?: _CallRating<_VideoIssue>;
 }
 
+// @beta
+export interface CallSurveyImprovementSuggestions {
+    audio?: string;
+    overall?: string;
+    screenshare?: string;
+    video?: string;
+}
+
 // @internal
 export interface _CallSurveyResponse extends _CallSurvey {
     readonly callId: string;
@@ -2269,8 +2277,8 @@ export const _TagsSurvey: (props: _TagsSurveyProps) => JSX.Element;
 export interface _TagsSurveyProps {
     callIssuesToTag: SurveyIssues;
     categoryHeadings: SurveyIssuesHeadingStrings;
-    issues: (_AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue)[];
-    onConfirm?: (selectedTags: _CallSurvey) => void;
+    onConfirm?: (selectedTags: _CallSurvey, improvementSuggestions?: CallSurveyImprovementSuggestions) => void;
+    showFreeFormTextField?: boolean;
     strings?: _TagsSurveyStrings;
 }
 
@@ -2278,6 +2286,7 @@ export interface _TagsSurveyProps {
 export interface _TagsSurveyStrings {
     tagsSurveyHelperText?: string;
     tagsSurveyQuestion?: string;
+    tagsSurveyTextFieldDefaultText?: string;
 }
 
 // @internal (undocumented)

@@ -708,6 +708,11 @@ export interface CallCompositeStrings {
   tagsSurveyQuestion: string;
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
+   * Default text for free form text field inside tags survey
+   */
+  tagsSurveyTextFieldDefaultText: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
    * Tags Survey helper text
    */
   tagsSurveyHelperText: string;
@@ -750,4 +755,12 @@ export interface CallCompositeStrings {
    * String for more details when the call is rejected by the callee
    */
   callRejectedMoreDetails?: string;
+  /**
+   * String for title when the call times out because the remote user does not answer
+   */
+  callTimeoutTitle?: string;
+  /**
+   * String for more details when the call times out because the remote user does not answer
+   */
+  callTimeoutDetails?: string;
 }
