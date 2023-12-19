@@ -60,7 +60,7 @@ const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
     JSON.stringify(first.createdOn) === JSON.stringify(second.createdOn) &&
     first.senderId === second.senderId &&
     first.senderDisplayName === second.senderDisplayName &&
-    first.status === second.status
+    JSON.stringify(first.editedOn) === JSON.stringify(second.editedOn)
   );
 };
 
