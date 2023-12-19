@@ -318,11 +318,12 @@ test.describe('Inline Image Message Thread', async () => {
         sendRemoteInlineImageMessage: true
       })
     );
-    await page.waitForSelector(dataUiId('SomeImageId1'));
     expect(
       await stableScreenshot(page, {
         stubMessageTimestamps: true,
-        dismissChatMessageActions: true
+        dismissChatMessageActions: true,
+        //test is flaky without this await as the screenshot can be taken before the messageThread is scrolled to the bottom
+        awaitFileTypeIcon: true
       })
     ).toMatchSnapshot('inline-image-in-received-messages.png');
   });
