@@ -68,9 +68,7 @@ export type AnnouncerProps = {
 
 // @public
 export interface AttachmentDownloadResult {
-    // (undocumented)
     attachmentId: string;
-    // (undocumented)
     blobUrl: string;
 }
 
@@ -447,7 +445,7 @@ export interface _CaptionsSettingsModalStrings {
 }
 
 // @public
-export type ChatAttachmentType = 'file' | 'inlineImage' | 'unknown';
+export type ChatAttachmentType = 'inlineImage' | /* @conditional-compile-remove(file-sharing) */ 'file' | 'unknown';
 
 // @public
 export interface ChatMessage extends MessageCommon {

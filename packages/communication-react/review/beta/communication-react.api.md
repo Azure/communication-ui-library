@@ -146,9 +146,7 @@ export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : fa
 
 // @public
 export interface AttachmentDownloadResult {
-    // (undocumented)
     attachmentId: string;
-    // (undocumented)
     blobUrl: string;
 }
 
@@ -1576,7 +1574,7 @@ export type ChatAdapterUiState = {
 };
 
 // @public
-export type ChatAttachmentType = 'file' | 'inlineImage' | 'unknown';
+export type ChatAttachmentType = 'inlineImage' | /* @conditional-compile-remove(file-sharing) */ 'file' | 'unknown';
 
 // @public
 export type ChatBaseSelectorProps = {
