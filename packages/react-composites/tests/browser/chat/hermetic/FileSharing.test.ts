@@ -318,7 +318,7 @@ test.describe('Inline Image Message Thread', async () => {
         sendRemoteInlineImageMessage: true
       })
     );
-
+    await page.waitForSelector(dataUiId('SomeImageId1'));
     expect(
       await stableScreenshot(page, {
         stubMessageTimestamps: true,

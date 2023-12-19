@@ -754,10 +754,10 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     }
   }, [onLoadPreviousChatMessages]);
 
-  /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  useEffect(() => {
-    initializeFileTypeIcons();
-  }, []);
+  // /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  // useEffect(() => {
+  //   initializeFileTypeIcons();
+  // }, []);
 
   const previousTopRef = useRef<number>(-1);
   const previousHeightRef = useRef<number>(-1);
