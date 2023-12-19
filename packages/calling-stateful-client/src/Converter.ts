@@ -5,7 +5,7 @@ import {
   RemoteParticipant as SdkRemoteParticipant,
   RemoteVideoStream as SdkRemoteVideoStream,
   LocalVideoStream as SdkLocalVideoStream,
-  VideoStreamRendererView,
+  VideoStreamRendererView
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
@@ -18,7 +18,7 @@ import {
   RemoteVideoStreamState as DeclarativeRemoteVideoStream,
   LocalVideoStreamState as DeclarativeLocalVideoStream,
   IncomingCallState as DeclarativeIncomingCall,
-  VideoStreamRendererViewState as DeclarativeVideoStreamRendererView,
+  VideoStreamRendererViewState as DeclarativeVideoStreamRendererView
 } from './CallClientState';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from './CallClientState';
@@ -37,8 +37,6 @@ import { LocalVideoStreamVideoEffectsState } from './CallClientState';
 import { RaisedHand } from '@azure/communication-calling';
 /* @conditional-compile-remove(raise-hand) */
 import { RaisedHandState } from './CallClientState';
-/* @conditional-compile-remove(reaction) */
-import { ReactionState } from './CallClientState';
 
 /**
  * @private
@@ -137,7 +135,7 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     /* @conditional-compile-remove(raise-hand) */
     raiseHand: { raisedHands: [] },
     /* @conditional-compile-remove(reaction) */
-    reaction: { isEnable: false, localParticipantReactionPayload: undefined }, 
+    localParticipantReactionState: { reactionState: undefined },
     transcription: { isTranscriptionActive: false },
     screenShareRemoteParticipant: undefined,
     startTime: new Date(),
@@ -221,25 +219,4 @@ export function convertFromSDKToRaisedHandState(raisedHand: RaisedHand): RaisedH
   return {
     raisedHandOrderPosition: raisedHand.order
   };
-}
-
-/* @conditional-compile-remove(reaction) */
-/**
- * @private
- */
-export function convertFromSDKToReactionState(reactionType: string): ReactionState {
-  // Preferebly we should configure this baseTimeStamp for reaction with ECS.
-  let baseTimeStamp = new Date();
-  baseTimeStamp.setMonth(0);
-  baseTimeStamp.setDate(1);
-  baseTimeStamp.setHours(0, 0, 0, 0);
-
-  let baseUnixTimestamp = Math.floor(baseTimeStamp.getTime() / 1000);
-  let currentUnitTimestamp = Math.floor(new Date().getTime() / 1000) - baseUnixTimestamp;
-
-  return {
-    shouldRender: true,
-    reactionType: reactionType,
-    receivedTimeStamp: currentUnitTimestamp
-  }
 }

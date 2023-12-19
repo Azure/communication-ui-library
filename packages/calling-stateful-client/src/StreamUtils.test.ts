@@ -89,7 +89,7 @@ function createMockCall(mockCallId: string): CallState {
     /* @conditional-compile-remove(raise-hand) */
     raiseHand: { raisedHands: [] },
     /* @conditional-compile-remove(reaction) */
-    reaction: { isEnable: true, localParticipantReactionPayload: undefined },
+    localParticipantReactionState: { reactionState: undefined },
     transcription: { isTranscriptionActive: false },
     screenShareRemoteParticipant: undefined,
     startTime: new Date(),

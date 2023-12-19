@@ -54,8 +54,6 @@ import { LocalVideoStreamVideoEffectsState } from './CallClientState';
 import { convertFromSDKToCaptionInfoState } from './Converter';
 /* @conditional-compile-remove(raise-hand) */
 import { convertFromSDKToRaisedHandState } from './Converter';
-/* @conditional-compile-remove(reaction) */
-import { convertFromSDKToReactionState } from './Converter';
 
 enableMapSet();
 // Needed to generate state diff for verbose logging.
@@ -405,51 +403,60 @@ export class CallContext {
   }
 
   /* @conditional-compile-remove(reaction) */
-  public setReceivedReactionFromParticipant(callId: string, participantKey: string, reactionMessage: ReactionMessage | null): void {
-    let baseTimeStamp = new Date();
-    baseTimeStamp.setMonth(0);
-    baseTimeStamp.setDate(1);
-    baseTimeStamp.setHours(0, 0, 0, 0);
-  
-    let baseUnixTimestamp = Math.floor(baseTimeStamp.getTime() / 1000);
-    let currentUnixTimestamp = Math.floor(new Date().getTime() / 1000) - baseUnixTimestamp;
+  public setReceivedReactionFromParticipant(
+    callId: string,
+    participantKey: string,
+    reactionMessage: ReactionMessage | null
+  ): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
-      if(call) {
-        const participant = call.remoteParticipants[participantKey];
-        // We might see concurrency issue here.
-        if(participant) {
 
-          if(reactionMessage == null) {
-            participant.reaction = { shouldRender: false, reactionType: '', receivedTimeStamp: 0};
+      if (call) {
+        const participant = call.remoteParticipants[participantKey];
+
+        if (participant) {
+          if (reactionMessage == null) {
+            participant.reactionState = undefined;
           } else {
-            if(participant.reaction?.shouldRender && (currentUnixTimestamp - participant.reaction?.receivedTimeStamp) < 3000) {
-              participant.reaction = { shouldRender: false, reactionType: '', receivedTimeStamp: 0};
+            if (
+              call.capabilitiesFeature?.capabilities.reaction &&
+              isReactionBeingPlayedNow(participant.reactionState?.receivedAt)
+            ) {
+              participant.reactionState = undefined;
               clearTimeout(this._timeOutId[participantKey]);
             }
-  
-            participant.reaction = reactionMessage ? convertFromSDKToReactionState(reactionMessage.reactionType) : { shouldRender: false, reactionType: '', receivedTimeStamp: 0};
-            
+
+            // if(participant.reaction?.isAllowedByPolicy && (currentUnixTimestamp - participant.reaction?.receivedAt) < 3000) {
+            //   participant.reaction = { isAllowedByPolicy: false, reactionMessage: '', receivedAt: 0};
+            //   clearTimeout(this._timeOutId[participantKey]);
+            // }
+
+            participant.reactionState = reactionMessage
+              ? { reactionMessage: reactionMessage, receivedAt: new Date() }
+              : undefined;
             this._timeOutId[participantKey] = setTimeout(() => {
               clearParticipantReactionState(this, callId, participantKey);
             }, 2170);
           }
         } else if (participantKey === toFlatCommunicationIdentifier(this._state.userId)) {
-
-          if(reactionMessage == null) {
-            call.reaction.localParticipantReactionPayload = { shouldRender: false, reactionType: '', receivedTimeStamp: 0};
+          if (reactionMessage == null) {
+            call.localParticipantReactionState.reactionState = undefined;
           } else {
-            if(call.reaction.localParticipantReactionPayload?.shouldRender && (currentUnixTimestamp - call.reaction?.localParticipantReactionPayload.receivedTimeStamp) < 3000) {
-                clearParticipantReactionState(this, callId, participantKey);
-                clearTimeout(this._timeOutId[participantKey]);
-              }
-          call.reaction.localParticipantReactionPayload = reactionMessage ? convertFromSDKToReactionState(reactionMessage.reactionType) : { shouldRender: false, reactionType: '', receivedTimeStamp: 0};
-          this._timeOutId[participantKey] = setTimeout( () => {
-            clearParticipantReactionState(this, callId, participantKey);
-          }, 2170);
+            if (
+              call.capabilitiesFeature?.capabilities.reaction &&
+              isReactionBeingPlayedNow(call.localParticipantReactionState.reactionState?.receivedAt)
+            ) {
+              clearParticipantReactionState(this, callId, participantKey);
+              clearTimeout(this._timeOutId[participantKey]);
+            }
+            call.localParticipantReactionState.reactionState = reactionMessage
+              ? { reactionMessage: reactionMessage, receivedAt: new Date() }
+              : undefined;
+            this._timeOutId[participantKey] = setTimeout(() => {
+              clearParticipantReactionState(this, callId, participantKey);
+            }, 2170);
           }
- 
-        } 
+        }
       }
     });
   }
@@ -1078,7 +1085,17 @@ const findOldestCallEnded = (calls: { [key: string]: { endTime?: Date } }): stri
 };
 
 /* @conditional-compile-remove(reaction) */
-function clearParticipantReactionState(arg0: CallContext, callId: string, participantKey: string) {
-  arg0.setReceivedReactionFromParticipant(callId, participantKey, null);
+function clearParticipantReactionState(callContext: CallContext, callId: string, participantKey: string) {
+  callContext.setReceivedReactionFromParticipant(callId, participantKey, null);
 }
 
+function isReactionBeingPlayedNow(receivedAt: Date | undefined) {
+  if (receivedAt == undefined) {
+    return false;
+  }
+  const currentTimeStamp = new Date();
+  const unixBasedCurrentTimeStamp = Math.floor(currentTimeStamp.getTime() / 1000);
+  const unixBasedReceivedTimeStamp = Math.floor(receivedAt?.getTime() / 1000);
+
+  return receivedAt != undefined && unixBasedCurrentTimeStamp - unixBasedReceivedTimeStamp < 3000;
+}

@@ -35,6 +35,7 @@ import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { ParticipantCapabilities } from '@azure/communication-calling';
 import { ParticipantRole } from '@azure/communication-calling';
+import { ReactionMessage } from '@azure/communication-calling';
 import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/communication-calling';
 import { ScalingMode } from '@azure/communication-calling';
 import { TeamsCall as TeamsCall_2 } from '@azure/communication-calling';
@@ -115,10 +116,10 @@ export interface CallState {
     isMuted: boolean;
     isScreenSharingOn: boolean;
     kind: CallKind;
+    localParticipantReactionState: LocalParticipantReactionState;
     localVideoStreams: LocalVideoStreamState[];
     optimalVideoCount: OptimalVideoCountFeatureState;
     raiseHand: RaiseHandCallFeature;
-    reaction: ReactionCallFeatureState;
     recording: RecordingCallFeature;
     remoteParticipants: {
         [keys: string]: RemoteParticipantState;
@@ -230,6 +231,11 @@ export const _isTeamsCall: (call: CallCommon) => call is TeamsCall_2;
 export const _isTeamsCallAgent: (callAgent: CallAgentCommon) => callAgent is TeamsCallAgent_2;
 
 // @public
+export interface LocalParticipantReactionState {
+    reactionState?: ReactionState;
+}
+
+// @public
 export interface LocalVideoStreamState {
     mediaStreamType: MediaStreamType;
     source: VideoDeviceInfo;
@@ -271,18 +277,9 @@ export interface RaiseHandCallFeature {
 }
 
 // @public
-export interface ReactionCallFeatureState {
-    // (undocumented)
-    isEnable: boolean;
-    // (undocumented)
-    localParticipantReactionPayload?: ReactionState;
-}
-
-// @public
 export type ReactionState = {
-    shouldRender: boolean;
-    reactionType: string;
-    receivedTimeStamp: number;
+    reactionMessage: ReactionMessage | undefined;
+    receivedAt: Date;
 };
 
 // @public
@@ -298,7 +295,7 @@ export interface RemoteParticipantState {
     isMuted: boolean;
     isSpeaking: boolean;
     raisedHand?: RaisedHandState;
-    reaction?: ReactionState;
+    reactionState?: ReactionState;
     role?: ParticipantRole;
     state: RemoteParticipantState_2;
     videoStreams: {

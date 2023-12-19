@@ -28,9 +28,9 @@ import { CallKind } from '@azure/communication-calling';
 import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
 import { ParticipantRole } from '@azure/communication-calling';
-import {
-  CommunicationIdentifierKind
-} from '@azure/communication-common';
+import { CommunicationIdentifierKind } from '@azure/communication-common';
+/* @conditional-compile-remove(reaction) */
+import { ReactionMessage } from '@azure/communication-calling';
 
 /**
  * State only version of {@link @azure/communication-calling#CallAgent} except calls is moved to be a child directly of
@@ -193,26 +193,33 @@ export type RaisedHandState = {
 /**
  * State only version of {@link @azure/communication-calling#ReactionCallFeature}. {@link StatefulCallClient} will
  * automatically listen for reaction on the call and update the state exposed by {@link StatefulCallClient} accordingly.
- * 
+ *
  * @public
  */
-export interface ReactionCallFeatureState {
-  isEnable: boolean;
-  localParticipantReactionPayload?: ReactionState;
+export interface LocalParticipantReactionState {
+  /**
+   * Local participant's reaction state.
+   */
+  reactionState?: ReactionState;
 }
 
 /* @conditional-compile-remove(reaction) */
 /**
- * State only version of {@link @azure/communication-calling#Call.Reaction.ReactionEventPayload} with UI helper props.
+ * State only version of {@link @azure/communication-calling#Call.ReactionEventPayload} with UI helper props.
  * Reation state with a comparative timestamp which helps UI to decide to render the reaction accordingly.
- * 
+ *
  * @public
  */
 export type ReactionState = {
-  shouldRender: boolean;
-  reactionType: string;
-  receivedTimeStamp: number;
-}
+  /**
+   * Reaction message from the meeting {@link @azure/communication-calling#ReactionMessage}
+   */
+  reactionMessage: ReactionMessage | undefined;
+  /**
+   * Received timestamp of the reaction message in a meeting.
+   */
+  receivedAt: Date;
+};
 
 /**
  * State only version of {@link @azure/communication-calling#LocalVideoStream}.
@@ -376,7 +383,7 @@ export interface RemoteParticipantState {
   /**
    * Proxy of {@link @azure/communication-calling#Call.Reaction.ReactionEventPayload}.
    */
-  reaction?: ReactionState;
+  reactionState?: ReactionState;
 }
 
 /**
@@ -468,7 +475,7 @@ export interface CallState {
   /**
    * Proxy of {@link @azure/communication-calling#ReactionCallFeature}.
    */
-  reaction: ReactionCallFeatureState;
+  localParticipantReactionState: LocalParticipantReactionState;
   /**
    * Stores the currently active screenshare participant's key. If there is no screenshare active, then this will be
    * undefined. You can use this key to access the remoteParticipant data in {@link CallState.remoteParticipants} object.
