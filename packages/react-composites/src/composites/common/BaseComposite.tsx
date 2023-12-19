@@ -80,6 +80,7 @@ export const BaseProvider = (
   const { fluentTheme, rtl, locale } = props;
 
   const globalLayerHostId = useId('composite-global-hostId');
+
   /**
    * Pass only the children if we previously registered icons, and have previously wrapped the children in
    * FluentThemeProvider and LocalizationProvider
