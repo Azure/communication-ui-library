@@ -321,9 +321,7 @@ test.describe('Inline Image Message Thread', async () => {
     expect(
       await stableScreenshot(page, {
         stubMessageTimestamps: true,
-        dismissChatMessageActions: true,
-        //test is flaky without this await as the screenshot can be taken before the messageThread is scrolled to the bottom
-        awaitFileTypeIcon: true
+        dismissChatMessageActions: true
       })
     ).toMatchSnapshot('inline-image-in-received-messages.png');
   });
