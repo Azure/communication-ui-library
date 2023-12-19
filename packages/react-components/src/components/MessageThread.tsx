@@ -762,7 +762,6 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   const isLoadingChatMessagesRef = useRef(false);
 
   const messages = useMemo(() => {
-    console.log('useMemo newMessages', newMessages);
     return newMessages;
   }, [newMessages]);
 
@@ -977,7 +976,6 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
    * This needs to run after messages are rendered so we can manipulate the scroll bar.
    */
   useEffect(() => {
-    console.log('useEffect messages', messages);
     // If user just sent the latest message then we assume we can move user to bottom of scroll.
     if (
       isThereNewMessageNotFromCurrentUser(userId, latestPreviousChatMessage, latestCurrentChatMessage) &&
