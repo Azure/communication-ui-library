@@ -43,8 +43,8 @@ import { FluentV9ThemeProvider } from './../theming/FluentV9ThemeProvider';
 import LiveAnnouncer from './Announcer/LiveAnnouncer';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from './MentionPopover';
-/* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
+// /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+// import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 import { createStyleFromV8Style } from './styles/v8StyleShim';
 import {
   ChatMessageComponentWrapper,
