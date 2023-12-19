@@ -41,6 +41,7 @@ const getDocs: () => JSX.Element = () => {
 const TagsSurveyStory = (): JSX.Element => {
   const strings = {
     tagsSurveyQuestion: 'What could have been better?',
+    tagsSurveyTextFieldDefaultText: 'Other, please specify',
     tagsSurveyHelperText: 'Check any issues you experienced'
   };
 
@@ -92,20 +93,6 @@ const TagsSurveyStory = (): JSX.Element => {
     screenshareRating: 'Presenting'
   };
 
-  const issues: (_AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue)[] = [
-    'AudioInterruption',
-    'AudioNoise',
-    'AudioStoppedUnexpectedly',
-    'CallCannotInvite',
-    'CallCannotJoin',
-    'CallEndedUnexpectedly',
-    'CannotPresent',
-    'DarkVideoReceived',
-    'DistortedSpeech',
-    'Echo',
-    'Freezes'
-  ];
-
   return (
     <div
       className={mergeStyles({
@@ -114,12 +101,7 @@ const TagsSurveyStory = (): JSX.Element => {
         height: '75%'
       })}
     >
-      <TagsSurveyComponent
-        strings={strings}
-        issues={issues}
-        callIssuesToTag={callIssuesToTag}
-        categoryHeadings={categoryHeadings}
-      />
+      <TagsSurveyComponent strings={strings} callIssuesToTag={callIssuesToTag} categoryHeadings={categoryHeadings} />
     </div>
   );
 };
@@ -131,7 +113,6 @@ export default {
   title: `${COMPONENT_FOLDER_PREFIX}/Internal/Survey/Tags Survey`,
   component: TagsSurveyComponent,
   argTypes: {
-    issues: hiddenControl,
     callIssuesToTag: hiddenControl,
     categoryHeadings: hiddenControl,
     onConfirm: hiddenControl,

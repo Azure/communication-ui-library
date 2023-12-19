@@ -12,3 +12,4 @@ export * from './ReadReceiptsBySenderId';
 export * from './CaptionsAvailableLanguageStrings';
 export * from './SurveyIssues';
 export * from './SurveyIssuesHeadingStrings';
+export * from './CallSurveyImprovementSuggestions';
