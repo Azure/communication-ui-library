@@ -10,6 +10,7 @@ export type ContainerProps = {
   displayName: string;
   topic: string;
   fluentTheme?: PartialTheme | Theme;
+  rtl?: boolean;
   errorBar?: boolean;
   showParticipants?: boolean;
   showTopic?: boolean;
@@ -50,6 +51,7 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
         <ChatComposite
           adapter={fakeAdapter.local}
           fluentTheme={props.fluentTheme}
+          rtl={props.rtl ?? false}
           options={{
             topic: props.showTopic,
             participantPane: props.showParticipants

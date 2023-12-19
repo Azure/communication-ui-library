@@ -43,11 +43,16 @@ const TryChatCompositeStory = (args: ArgsFrom<typeof storyControls>, context): J
     });
   }, [args.displayName, args.topic]);
 
+  console.log('rtl', context.rtl);
+  console.log('theme', context.theme);
+  console.log('globals', context.globals);
+
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
       {containerProps && (
         <ContosoChatContainer
           fluentTheme={context.theme}
+          rtl={context.globals.rtl === 'rtl'}
           {...containerProps}
           locale={compositeLocale(locale)}
           showParticipants={args.showParticipants}

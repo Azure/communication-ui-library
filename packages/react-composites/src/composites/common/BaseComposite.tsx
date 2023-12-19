@@ -81,6 +81,8 @@ export const BaseProvider = (
 
   const globalLayerHostId = useId('composite-global-hostId');
 
+  console.log('BaseProvider: rtl: ', rtl);
+
   /**
    * Pass only the children if we previously registered icons, and have previously wrapped the children in
    * FluentThemeProvider and LocalizationProvider

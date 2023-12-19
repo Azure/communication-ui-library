@@ -69,6 +69,7 @@ const BasicStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Element 
       {containerProps ? (
         <ContosoChatContainer
           fluentTheme={context.theme}
+          rtl={context.globals.rtl === 'rtl'}
           {...containerProps}
           locale={compositeLocale(locale)}
           errorBar={args.showErrorBar}
