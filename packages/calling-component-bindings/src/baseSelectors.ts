@@ -13,7 +13,7 @@ import {
   RemoteParticipantState,
   LocalVideoStreamState,
   CallErrors,
-  DiagnosticsCallFeatureState,
+  DiagnosticsCallFeatureState
 } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(reaction) */
 import { ReactionState } from '@internal/calling-stateful-client';
@@ -106,11 +106,11 @@ export const getLocalParticipantRaisedHand = (
 /**
  * @private
  */
-export const getLocalParticipantReaction = (
+export const getLocalParticipantReactionState = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ): ReactionState | undefined => {
-  return state.calls[props.callId]?.reaction?.localParticipantReactionPayload;
+  return state.calls[props.callId]?.localParticipantReactionState?.reactionState;
 };
 
 /**

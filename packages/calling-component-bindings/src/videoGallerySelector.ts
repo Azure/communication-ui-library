@@ -33,7 +33,7 @@ import {
 import { getLocalParticipantRaisedHand } from './baseSelectors';
 import { getRemoteParticipantsExcludingConsumers } from './getRemoteParticipantsExcludingConsumers';
 /* @conditional-compile-remove(reaction) */
-import { getLocalParticipantReaction } from './baseSelectors';
+import { getLocalParticipantReactionState } from './baseSelectors';
 
 /**
  * Selector type for {@link VideoGallery} component.
@@ -75,7 +75,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     /* @conditional-compile-remove(hide-attendee-name) */
     isHideAttendeeNamesEnabled,
     /* @conditional-compile-remove(reaction) */
-    getLocalParticipantReaction,
+    getLocalParticipantReactionState
   ],
   (
     screenShareRemoteParticipantId,
@@ -95,7 +95,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     /* @conditional-compile-remove(hide-attendee-name) */
     isHideAttendeeNamesEnabled,
     /* @conditional-compile-remove(reaction) */
-    reaction,
+    localParticipantReactionState
   ) => {
     const screenShareRemoteParticipant =
       screenShareRemoteParticipantId && remoteParticipants
@@ -107,6 +107,14 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     const dominantSpeakersMap: Record<string, number> = {};
     dominantSpeakerIds?.forEach((speaker, idx) => (dominantSpeakersMap[speaker] = idx));
     const noRemoteParticipants: RemoteParticipantState[] = [];
+    const localParticipantReaction =
+      localParticipantReactionState && localParticipantReactionState.reactionMessage
+        ? {
+            shouldRender: true,
+            reactionType: localParticipantReactionState.reactionMessage.reactionType,
+            receivedAt: localParticipantReactionState.receivedAt
+          }
+        : undefined;
 
     return {
       screenShareParticipant: screenShareRemoteParticipant
@@ -132,7 +140,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
         /* @conditional-compile-remove(raise-hand) */
         raisedHand,
         /* @conditional-compile-remove(reaction) */
-        reaction
+        localParticipantReaction
       ),
       remoteParticipants: _videoGalleryRemoteParticipantsMemo(
         updateUserDisplayNamesTrampoline(remoteParticipants ? Object.values(remoteParticipants) : noRemoteParticipants),

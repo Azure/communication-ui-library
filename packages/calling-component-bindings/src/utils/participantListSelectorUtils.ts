@@ -7,7 +7,8 @@ import { fromFlatCommunicationIdentifier, memoizeFnAll } from '@internal/acs-ui-
 import { CallParticipantListParticipant } from '@internal/react-components';
 /* @conditional-compile-remove(raise-hand) */
 import { RaisedHandState } from '@internal/calling-stateful-client';
-import { ReactionState } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(reaction) */
+import { Reaction } from '@internal/react-components';
 
 /**
  * @private
@@ -100,7 +101,7 @@ export const memoizedConvertAllremoteParticipantsBeta = memoizeFnAll(
     isSpeaking: boolean,
     raisedHand: RaisedHandState | undefined,
     localUserCanRemoveOthers: boolean,
-    reaction: ReactionState | undefined,
+    reaction: Reaction | undefined
   ): CallParticipantListParticipant => {
     return convertRemoteParticipantToParticipantListParticipantBeta(
       userId,
@@ -149,7 +150,7 @@ const convertRemoteParticipantToParticipantListParticipantBeta = (
   isSpeaking: boolean,
   raisedHand: RaisedHandState | undefined,
   localUserCanRemoveOthers: boolean,
-  reaction: ReactionState | undefined,
+  reaction: Reaction | undefined
 ): CallParticipantListParticipant => {
   return {
     ...convertRemoteParticipantToParticipantListParticipant(

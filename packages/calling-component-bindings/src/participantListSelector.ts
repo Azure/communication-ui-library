@@ -8,7 +8,7 @@ import {
   getDisplayName,
   getIsScreenSharingOn,
   getIsMuted,
-  CallingBaseSelectorProps,
+  CallingBaseSelectorProps
 } from './baseSelectors';
 import { getRole } from './baseSelectors';
 /* @conditional-compile-remove(hide-attendee-name) */
@@ -23,7 +23,7 @@ import { memoizedConvertAllremoteParticipantsBeta } from './utils/participantLis
 /* @conditional-compile-remove(raise-hand) */
 import { getLocalParticipantRaisedHand } from './baseSelectors';
 /* @conditional-compile-remove(reaction) */
-import { getLocalParticipantReaction } from './baseSelectors';
+import { getLocalParticipantReactionState } from './baseSelectors';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { getParticipantCount } from './baseSelectors';
 import { isMicrosoftTeamsAppIdentifier, isPhoneNumberIdentifier } from '@azure/communication-common';
@@ -75,6 +75,14 @@ const convertRemoteParticipantsToParticipantListParticipants = (
             participant.role,
             isHideAttendeeNamesEnabled
           );
+          let remoteParticipantReaction =
+            participant.reactionState && participant.reactionState.reactionMessage
+              ? {
+                  shouldRender: true,
+                  reactionType: participant.reactionState.reactionMessage.reactionType,
+                  receivedAt: participant.reactionState.receivedAt
+                }
+              : undefined;
           return memoizeFn(
             toFlatCommunicationIdentifier(participant.identifier),
             displayName,
@@ -86,7 +94,7 @@ const convertRemoteParticipantsToParticipantListParticipants = (
             participant.raisedHand,
             localUserCanRemoveOthers,
             /* @conditional-compile-remove(reaction) */
-            participant.reaction,
+            remoteParticipantReaction
           );
         })
         .sort((a, b) => {
@@ -142,7 +150,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     /* @conditional-compile-remove(hide-attendee-name) */
     isHideAttendeeNamesEnabled,
     /* @conditional-compile-remove(reaction) */
-    getLocalParticipantReaction
+    getLocalParticipantReactionState
   ],
   (
     userId,
@@ -157,7 +165,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     /* @conditional-compile-remove(hide-attendee-name) */
     isHideAttendeeNamesEnabled,
     /* @conditional-compile-remove(reaction) */
-    reaction
+    localParticipantReactionState
   ): {
     participants: CallParticipantListParticipant[];
     myUserId: string;
@@ -174,6 +182,14 @@ export const participantListSelector: ParticipantListSelector = createSelector(
           role
         )
       : [];
+    const localParticipantReaction =
+      localParticipantReactionState && localParticipantReactionState.reactionMessage
+        ? {
+            shouldRender: true,
+            reactionType: localParticipantReactionState.reactionMessage.reactionType,
+            receivedAt: localParticipantReactionState.receivedAt
+          }
+        : undefined;
     participants.push({
       userId: userId,
       displayName: displayName,
@@ -185,7 +201,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
       // Local participant can never remove themselves.
       isRemovable: false,
       /* @conditional-compile-remove(reaction) */
-      reaction: reaction,
+      reaction: localParticipantReaction
     });
     /* @conditional-compile-remove(total-participant-count) */
     const totalParticipantCount = partitipantCount;
