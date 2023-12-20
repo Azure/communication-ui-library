@@ -99,7 +99,7 @@ jobs:
       - uses: browser-actions/setup-chrome@v1
         id: setup-chrome
         with:
-          chrome-version: 119.0.6045
+          chrome-version: 120.0.6099
       - name: Switch flavor for build
         if: ${{ matrix.flavor != 'beta' }}
         run: rush switch-flavor:${{ matrix.flavor }}
@@ -194,7 +194,7 @@ jobs:
       - uses: browser-actions/setup-chrome@v1
         id: setup-chrome
         with:
-          chrome-version: 119.0.6045
+          chrome-version: 120.0.6099
       - name: Switch flavor for build
         if: ${{ matrix.flavor != 'beta' }}
         run: rush switch-flavor:${{ matrix.flavor }}
@@ -289,7 +289,7 @@ jobs:
       - uses: browser-actions/setup-chrome@v1
         id: setup-chrome
         with:
-          chrome-version: 119.0.6045
+          chrome-version: 120.0.6099
       - name: Switch flavor for build
         if: ${{ matrix.flavor != 'beta' }}
         run: rush switch-flavor:${{ matrix.flavor }}
@@ -384,7 +384,7 @@ jobs:
       - uses: browser-actions/setup-chrome@v1
         id: setup-chrome
         with:
-          chrome-version: 119.0.6045
+          chrome-version: 120.0.6099
       - name: Switch flavor for build
         if: ${{ matrix.flavor != 'beta' }}
         run: rush switch-flavor:${{ matrix.flavor }}
@@ -479,7 +479,7 @@ jobs:
       - uses: browser-actions/setup-chrome@v1
         id: setup-chrome
         with:
-          chrome-version: 119.0.6045
+          chrome-version: 120.0.6099
       - name: Switch flavor for build
         if: ${{ matrix.flavor != 'beta' }}
         run: rush switch-flavor:${{ matrix.flavor }}
