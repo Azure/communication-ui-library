@@ -33,7 +33,7 @@ import {
 } from './styles/VideoTile.styles';
 import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
 /* @conditional-compile-remove(reaction) */
-import { reactionEmoji, getCurrentRelativeUnixTime } from './utils/videoTileStylesUtils';
+import { reactionEmoji } from './utils/videoTileStylesUtils';
 /* @conditional-compile-remove(pinned-participants) */
 import { pinIconStyle } from './styles/VideoTile.styles';
 /* @conditional-compile-remove(pinned-participants) */
@@ -373,7 +373,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   raisedHandBackgroundColor = callingPalette.raiseHandGold;
 
   /* @conditional-compile-remove(reaction) */
-  let urlPath = (reaction != undefined)?reactionEmoji.get(reaction?.reactionType): '';
+  let urlPath = reaction != undefined ? reactionEmoji.get(reaction?.reactionType) : '';
   /* @conditional-compile-remove(reaction) */
   let reactionAnimationStyle = {
     height: '84px',
@@ -384,9 +384,12 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     animation: 'play 5.12s steps(102)',
     animationPlayState: 'running',
     animationIterationCount: 'infinite'
-  }
+  };
   /* @conditional-compile-remove(reaction) */
-  let currentUnitTimestamp = getCurrentRelativeUnixTime();
+  let currentTimestamp = new Date();
+  let currentUnixTimeStamp = Math.floor(currentTimestamp.getTime() / 1000);
+  let receivedUnixTimestamp = reaction ? Math.floor(reaction.receivedAt.getTime() / 1000) : undefined;
+  let canRenderReaction = receivedUnixTimestamp ? currentUnixTimeStamp - receivedUnixTimestamp < 3000 : false;
 
   return (
     <Stack
@@ -440,22 +443,22 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
             )}
           </Stack>
         )}
-        
-        { /* @conditional-compile-remove(reaction) */
-        reaction?.shouldRender && (currentUnitTimestamp - reaction.receivedTimeStamp) < 3000 && (
-            <Stack 
-              className={mergeStyles(
-                videoContainerStyles, 
-                {
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  backgroundColor: reaction ? 'rgba(0, 0, 0, 0.5)' : 'transparent'
-                }
-              )} >
+
+        {
+          /* @conditional-compile-remove(reaction) */
+          canRenderReaction && (
+            <Stack
+              className={mergeStyles(videoContainerStyles, {
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: reaction ? 'rgba(0, 0, 0, 0.5)' : 'transparent'
+              })}
+            >
               <div style={reactionAnimationStyle} />
             </Stack>
-        )}
+          )
+        }
         {(canShowLabel || participantStateString) && (
           <Stack horizontal className={tileInfoContainerStyle} tokens={tileInfoContainerTokens}>
             <Stack horizontal className={tileInfoStyle}>

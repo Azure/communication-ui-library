@@ -38,7 +38,7 @@ export type RaisedHand = {
 /* @conditional-compile-remove(reaction) */
 /**
  * Reaction state with reaction type to render
- * 
+ *
  * @public
  */
 export type Reaction = {
@@ -47,14 +47,14 @@ export type Reaction = {
    */
   shouldRender: boolean;
   /**
-   * Specifies the type of reaction videoTile should render
+   * Specifies the type of reaction videoTile should render i.e. like, heart etc.
    */
   reactionType: string;
   /**
    * Received timestamp relative to 01-01-2020 0:0:0 hours
    */
-  receivedTimeStamp: number;
-}
+  receivedAt: Date;
+};
 
 /**
  * Participants displayed in a {@link ParticipantList}.

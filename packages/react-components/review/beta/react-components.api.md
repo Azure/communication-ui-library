@@ -1892,7 +1892,7 @@ export interface _RatingScale {
 export type Reaction = {
     shouldRender: boolean;
     reactionType: string;
-    receivedTimeStamp: number;
+    receivedAt: Date;
 };
 
 // @public
