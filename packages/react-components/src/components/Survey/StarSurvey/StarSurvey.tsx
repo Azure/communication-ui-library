@@ -5,7 +5,7 @@ import React, { useState, useCallback } from 'react';
 import { Text, useTheme, Stack } from '@fluentui/react';
 import { Rating, RatingSize } from '@fluentui/react';
 import { _formatString, _pxToRem } from '@internal/acs-ui-common';
-import { helperTextStyle, ratingStyles, titleContainerClassName } from './StarSurvey.styles';
+import { helperTextStyle, ratingHelperTextStyle, ratingStyles, titleContainerClassName } from './StarSurvey.styles';
 import { _CallSurvey, _CallSurveyResponse } from '../SurveyTypes';
 /**
  * Strings of {@link StarSurvey} that can be overridden.
@@ -18,23 +18,23 @@ export interface _StarSurveyStrings {
    */
   starSurveyHelperText?: string;
   /**
-   * Helper text displayed below survey question after user select one star
+   * Helper text displayed below survey stars after user select one star
    */
   starSurveyOneStarText?: string;
   /**
-   * Helper text displayed below survey question after user select two star
+   * Helper text displayed below survey stars after user select two star
    */
   starSurveyTwoStarText?: string;
   /**
-   * Helper text displayed below survey question after user select three star
+   * Helper text displayed below survey stars after user select three star
    */
   starSurveyThreeStarText?: string;
   /**
-   * Helper text displayed below survey question after user select four star
+   * Helper text displayed below survey stars after user select four star
    */
   starSurveyFourStarText?: string;
   /**
-   * Helper text displayed below survey question after user select five star
+   * Helper text displayed below survey stars after user select five star
    */
   starSurveyFiveStarText?: string;
   /**
@@ -75,7 +75,7 @@ export const _StarSurvey = (props: _StarSurveyProps): JSX.Element => {
 
   const [rating, setRating] = useState(0);
 
-  const [helperText, setHelperText] = useState(strings?.starSurveyHelperText);
+  const [ratingHelperText, setRatingHelperText] = useState<string | undefined>('');
 
   const theme = useTheme();
 
@@ -86,19 +86,19 @@ export const _StarSurvey = (props: _StarSurveyProps): JSX.Element => {
 
         switch (rating) {
           case 1:
-            setHelperText(strings?.starSurveyOneStarText);
+            setRatingHelperText(strings?.starSurveyOneStarText);
             break;
           case 2:
-            setHelperText(strings?.starSurveyTwoStarText);
+            setRatingHelperText(strings?.starSurveyTwoStarText);
             break;
           case 3:
-            setHelperText(strings?.starSurveyThreeStarText);
+            setRatingHelperText(strings?.starSurveyThreeStarText);
             break;
           case 4:
-            setHelperText(strings?.starSurveyFourStarText);
+            setRatingHelperText(strings?.starSurveyFourStarText);
             break;
           case 5:
-            setHelperText(strings?.starSurveyFiveStarText);
+            setRatingHelperText(strings?.starSurveyFiveStarText);
             break;
           default:
             break;
@@ -120,7 +120,7 @@ export const _StarSurvey = (props: _StarSurveyProps): JSX.Element => {
   return (
     <Stack verticalAlign="center">
       <Stack className={titleContainerClassName}>
-        <Text className={helperTextStyle(theme)}>{helperText}</Text>
+        <Text className={helperTextStyle(theme)}>{strings?.starSurveyHelperText}</Text>
       </Stack>
       <Rating
         max={5}
@@ -134,6 +134,7 @@ export const _StarSurvey = (props: _StarSurveyProps): JSX.Element => {
         unselectedIcon={unselectedIcon ?? 'SurveyStarIcon'}
         ariaLabelFormat={strings?.starRatingAriaLabel}
       />
+      <Text className={ratingHelperTextStyle(theme)}>{ratingHelperText}</Text>
     </Stack>
   );
 };
