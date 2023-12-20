@@ -1,10 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useMemo, useState } from 'react';
-import { Text, useTheme, Stack, Checkbox, Pivot, PivotItem } from '@fluentui/react';
+import React, { useCallback, useMemo, useState } from 'react';
+import { Text, useTheme, Stack, Checkbox, Pivot, PivotItem, TextField } from '@fluentui/react';
 import { _formatString, _pxToRem } from '@internal/acs-ui-common';
-import { checkboxClassName, questionTextStyle, helperTextStyle } from './TagsSurvey.styles';
+import {
+  checkboxClassName,
+  questionTextStyle,
+  helperTextStyle,
+  freeFormTextFieldClassName,
+  freeFormTextCheckboxStyles
+} from './TagsSurvey.styles';
 import {
   _AudioIssue,
   _CallSurvey,
@@ -13,7 +19,7 @@ import {
   _ScreenshareIssue,
   _VideoIssue
 } from '../SurveyTypes';
-import { SurveyIssuesHeadingStrings, SurveyIssues } from '../../../types';
+import { SurveyIssuesHeadingStrings, SurveyIssues, CallSurveyImprovementSuggestions } from '../../../types';
 /**
  * Strings of {@link TagsSurvey} that can be overridden.
  *
@@ -28,6 +34,10 @@ export interface _TagsSurveyStrings {
    * Helper text for tag survey explaining what the survey is for
    */
   tagsSurveyHelperText?: string;
+  /**
+   * Default text for free form text field inside tags survey
+   */
+  tagsSurveyTextFieldDefaultText?: string;
 }
 
 /**
@@ -55,14 +65,14 @@ export type _SurveyTag = {
  * @internal
  */
 export interface _TagsSurveyProps {
-  /** Issues included in the survey */
-  issues: (_AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue)[];
   /** Mappings from call issues to tags displayed on the survey*/
   callIssuesToTag: SurveyIssues;
   /** Mappings from issue category to categories displayed on survey*/
   categoryHeadings: SurveyIssuesHeadingStrings;
   /** Function to send TagsSurvey results*/
-  onConfirm?: (selectedTags: _CallSurvey) => void;
+  onConfirm?: (selectedTags: _CallSurvey, improvementSuggestions?: CallSurveyImprovementSuggestions) => void;
+  /** show the text field for more info*/
+  showFreeFormTextField?: boolean;
   /** Tags survey strings */
   strings?: _TagsSurveyStrings;
 }
@@ -73,69 +83,114 @@ export interface _TagsSurveyProps {
  * @internal
  */
 export const _TagsSurvey = (props: _TagsSurveyProps): JSX.Element => {
-  const { issues, callIssuesToTag, categoryHeadings, onConfirm, strings } = props;
+  const { callIssuesToTag, categoryHeadings, onConfirm, strings, showFreeFormTextField } = props;
 
   const [selectedTags, setSelectedTags] = useState({});
 
+  const [textResponse, setTextResponse] = useState<CallSurveyImprovementSuggestions>({});
+
+  const [selectedTextResponse, setSelectedTextResponse] = useState<CallSurveyImprovementSuggestions>({});
+
   const tags: _SurveyTag[] = useMemo(() => {
     const tags: _SurveyTag[] = [];
-    issues.forEach((issue) => {
-      const issueCamelCase = issue?.charAt(0).toLowerCase() + issue?.slice(1);
-      const issueCategory = Object.keys(callIssuesToTag).find(
-        (key) => callIssuesToTag[key][issueCamelCase] !== undefined
-      );
-      if (issueCategory) {
+    Object.keys(callIssuesToTag).forEach((issueCategory) => {
+      Object.keys(callIssuesToTag[issueCategory]).map((issue) => {
+        const issueCapitalized = issue?.charAt(0).toUpperCase() + issue?.slice(1);
+
         if (tags[issueCategory]) {
           tags[issueCategory].push({
-            message: callIssuesToTag[issueCategory][issueCamelCase],
-            issue: issue
+            message: callIssuesToTag[issueCategory][issue],
+            issue: issueCapitalized
           });
         } else {
           tags[issueCategory] = [
             {
-              message: callIssuesToTag[issueCategory][issueCamelCase],
-              issue: issue
+              message: callIssuesToTag[issueCategory][issue],
+              issue: issueCapitalized
             }
           ];
         }
-      }
+      });
     });
     return tags;
-  }, [issues, callIssuesToTag]);
+  }, [callIssuesToTag]);
 
   const onChange = React.useCallback(
-    (issue: string, issueCategory: string, checked: boolean): void => {
+    (issueCategory: string, checked: boolean, issue?: string): void => {
       if (checked) {
-        setSelectedTags((prevState) => {
-          if (prevState[issueCategory]) {
-            prevState[issueCategory].issues.push(issue);
-          } else {
-            prevState[issueCategory] = { score: 1, issues: [issue] };
-          }
-          return prevState;
-        });
-      } else {
-        setSelectedTags((prevState) => {
-          if (prevState[issueCategory]) {
-            prevState[issueCategory].issues = prevState[issueCategory].issues.filter(function (value) {
-              return value !== issue;
-            });
-            if (prevState[issueCategory].issues.length === 0) {
-              delete prevState[issueCategory];
+        if (issue) {
+          setSelectedTags((prevState) => {
+            if (prevState[issueCategory]) {
+              prevState[issueCategory].issues.push(issue);
+            } else {
+              prevState[issueCategory] = { score: 1, issues: [issue] };
             }
-          }
-          return prevState;
-        });
+            return prevState;
+          });
+        } else {
+          setSelectedTextResponse((prevState) => {
+            prevState[issueCategory] = textResponse[issueCategory];
+            return prevState;
+          });
+        }
+      } else {
+        if (issue) {
+          setSelectedTags((prevState) => {
+            if (prevState[issueCategory]) {
+              prevState[issueCategory].issues = prevState[issueCategory].issues.filter(function (value) {
+                return value !== issue;
+              });
+              if (prevState[issueCategory].issues.length === 0) {
+                delete prevState[issueCategory];
+              }
+            }
+            return prevState;
+          });
+        } else {
+          setSelectedTextResponse((prevState) => {
+            delete prevState[issueCategory];
+            return prevState;
+          });
+        }
       }
 
       if (onConfirm) {
-        onConfirm(selectedTags);
+        onConfirm(selectedTags, selectedTextResponse);
       }
     },
-    [onConfirm, selectedTags]
+    [onConfirm, selectedTags, selectedTextResponse, textResponse]
   );
 
   const theme = useTheme();
+
+  const onRenderLabel = useCallback(
+    (issueCategory) => {
+      return (
+        <TextField
+          key={issueCategory}
+          className={freeFormTextFieldClassName}
+          underlined
+          placeholder={strings?.tagsSurveyTextFieldDefaultText}
+          onChange={(e, v) => {
+            if (v) {
+              setTextResponse((prevState) => {
+                prevState[issueCategory] = v;
+                return prevState;
+              });
+
+              setSelectedTextResponse((prevState) => {
+                if (Object.keys(prevState).includes(issueCategory)) {
+                  prevState[issueCategory] = v;
+                }
+                return prevState;
+              });
+            }
+          }}
+        />
+      );
+    },
+    [strings?.tagsSurveyTextFieldDefaultText]
+  );
 
   return (
     <>
@@ -162,10 +217,19 @@ export const _TagsSurvey = (props: _TagsSurveyProps): JSX.Element => {
                     className={checkboxClassName}
                     key={`checkBox_${i}`}
                     label={t.message}
-                    onChange={(ev, checked) => onChange(t.issue, key, checked ?? false)}
+                    onChange={(ev, checked) => onChange(key, checked ?? false, t.issue)}
                   />
                 );
               })}
+              {showFreeFormTextField && (
+                <Checkbox
+                  styles={freeFormTextCheckboxStyles}
+                  onChange={(ev, checked) => onChange(key, checked ?? false)}
+                  onRenderLabel={() => {
+                    return onRenderLabel(key);
+                  }}
+                />
+              )}
             </PivotItem>
           );
         })}

@@ -17,6 +17,8 @@ import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { CallWithChatCompositeIcons } from '../common/icons';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { CallWithChatAdapterState } from './state/CallWithChatAdapterState';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { CallSurveyImprovementSuggestions } from '@internal/react-components';
 import {
   ParticipantMenuItemsCallback,
   _useContainerHeight,
@@ -206,7 +208,7 @@ export type CallWithChatCompositeOptions = {
       surveyId: string,
       /**
        * This is the survey results containing star survey data and API tag survey data.
-       * This part of the result will always be send to calling sdk
+       * This part of the result will always be sent to the calling sdk
        * This callback provides user with the ability to gain access to survey data
        */
       submittedSurvey: CallSurvey,
@@ -216,10 +218,7 @@ export type CallWithChatCompositeOptions = {
        * User will need to collect and handle this information 100% on their own
        * Free form text survey is not going to show in the UI if onSurveySubmitted is not populated
        */
-      improvementSuggestions: {
-        category: 'audio' | 'video' | 'screenshare';
-        suggestion: string;
-      }[]
+      improvementSuggestions: CallSurveyImprovementSuggestions
     ) => Promise<void>;
   };
   /* @conditional-compile-remove(custom-branding) */
@@ -315,7 +314,7 @@ type CallWithChatScreenProps = {
       surveyId: string,
       /**
        * This is the survey results containing star survey data and API tag survey data.
-       * This part of the result will always be send to calling sdk
+       * This part of the result will always be sent to the calling sdk
        * This callback provides user with the ability to gain access to survey data
        */
       submittedSurvey: CallSurvey,
@@ -325,10 +324,7 @@ type CallWithChatScreenProps = {
        * User will need to collect and handle this information 100% on their own
        * Free form text survey is not going to show in the UI if onSurveySubmitted is not populated
        */
-      improvementSuggestions: {
-        category: 'audio' | 'video' | 'screenshare';
-        suggestion: string;
-      }[]
+      improvementSuggestions: CallSurveyImprovementSuggestions
     ) => Promise<void>;
   };
   /* @conditional-compile-remove(custom-branding) */
@@ -678,6 +674,8 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         logo={options?.branding?.logo}
         /* @conditional-compile-remove(custom-branding) */
         backgroundImage={options?.branding?.backgroundImage}
+        /* @conditional-compile-remove(end-of-call-survey) */
+        surveyOptions={options?.surveyOptions}
       />
     </BaseProvider>
   );

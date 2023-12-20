@@ -160,15 +160,6 @@ export const _VideoEffectsItem = (props: _VideoEffectsItemProps): JSX.Element =>
           onClick={disabled ? undefined : () => props.onSelect?.(props.itemKey)}
           componentRef={componentRef}
           autoFocus={props.focusOnMount}
-          onKeyDown={
-            disabled
-              ? undefined
-              : (e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    props.onSelect?.(props.itemKey);
-                  }
-                }
-          }
         >
           <Stack horizontalAlign={'center'} tokens={{ childrenGap: '0.15rem' }}>
             {props.iconProps && (

@@ -16,6 +16,7 @@ import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallState } from '@internal/calling-stateful-client';
 import { CallSurvey } from '@azure/communication-calling';
+import { CallSurveyImprovementSuggestions } from '@internal/react-components';
 import { CallSurveyResponse } from '@azure/communication-calling';
 import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
 import { CaptionLanguageStrings } from '@internal/react-components';
@@ -423,10 +424,7 @@ export type CallCompositeOptions = {
         hideSurvey?: boolean;
         onSurveySubmitted?: (callId: string, surveyId: string,
         submittedSurvey: CallSurvey,
-        improvementSuggestions: {
-            category: 'audio' | 'video' | 'screenshare';
-            suggestion: string;
-        }[]) => Promise<void>;
+        improvementSuggestions: CallSurveyImprovementSuggestions) => Promise<void>;
     };
     branding?: {
         logo?: {
@@ -600,6 +598,7 @@ export interface CallCompositeStrings {
     surveyTextboxDefaultText: string;
     tagsSurveyHelperText: string;
     tagsSurveyQuestion: string;
+    tagsSurveyTextFieldDefaultText: string;
     threeParticipantJoinedNoticeString: string;
     threeParticipantLeftNoticeString: string;
     transferPageNoticeString: string;
@@ -953,10 +952,7 @@ export type CallWithChatCompositeOptions = {
         hideSurvey?: boolean;
         onSurveySubmitted?: (callId: string, surveyId: string,
         submittedSurvey: CallSurvey,
-        improvementSuggestions: {
-            category: 'audio' | 'video' | 'screenshare';
-            suggestion: string;
-        }[]) => Promise<void>;
+        improvementSuggestions: CallSurveyImprovementSuggestions) => Promise<void>;
     };
     branding?: {
         logo?: {
