@@ -68,7 +68,6 @@ export const _videoGalleryRemoteParticipantsMemo: (
           let remoteParticipantReaction =
             participant.reactionState && participant.reactionState.reactionMessage
               ? {
-                  shouldRender: true,
                   reactionType: participant.reactionState.reactionMessage.reactionType,
                   receivedAt: participant.reactionState.receivedAt
                 }

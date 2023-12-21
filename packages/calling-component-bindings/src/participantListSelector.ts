@@ -78,7 +78,6 @@ const convertRemoteParticipantsToParticipantListParticipants = (
           let remoteParticipantReaction =
             participant.reactionState && participant.reactionState.reactionMessage
               ? {
-                  shouldRender: true,
                   reactionType: participant.reactionState.reactionMessage.reactionType,
                   receivedAt: participant.reactionState.receivedAt
                 }
@@ -185,7 +184,6 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     const localParticipantReaction =
       localParticipantReactionState && localParticipantReactionState.reactionMessage
         ? {
-            shouldRender: true,
             reactionType: localParticipantReactionState.reactionMessage.reactionType,
             receivedAt: localParticipantReactionState.receivedAt
           }

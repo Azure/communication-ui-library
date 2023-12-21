@@ -110,7 +110,6 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     const localParticipantReaction =
       localParticipantReactionState && localParticipantReactionState.reactionMessage
         ? {
-            shouldRender: true,
             reactionType: localParticipantReactionState.reactionMessage.reactionType,
             receivedAt: localParticipantReactionState.receivedAt
           }
