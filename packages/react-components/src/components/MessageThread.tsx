@@ -710,7 +710,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
 
   const localeStrings = useLocale().strings.messageThread;
   const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
-
+  // it is required to use useState here as it used in the scrolling logic
   const [messages, setMessages] = useState<Message[]>([]);
 
   // id for the latest deleted message
