@@ -318,13 +318,14 @@ test.describe('Inline Image Message Thread', async () => {
       })
     );
     // wait for the to be loaded before comparing the snapshots
-    await page.evaluate(() => document.fonts.ready);
-    await page.waitForTimeout(1000);
+    // await page.evaluate(() => document.fonts.ready);
+    // await page.waitForTimeout(5000);
 
     expect(
       await stableScreenshot(page, {
         stubMessageTimestamps: true,
-        dismissChatMessageActions: true
+        dismissChatMessageActions: true,
+        awaitFileTypeIcon: true
       })
     ).toMatchSnapshot('inline-image-in-received-messages.png');
   });
