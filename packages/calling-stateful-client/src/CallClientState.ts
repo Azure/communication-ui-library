@@ -771,7 +771,7 @@ export type CallErrorTarget =
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.rejectParticipant'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteAllRemoteParticipants'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.setConstraints';
+  | 'Call.setConstraints';
 
 /**
  * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.
