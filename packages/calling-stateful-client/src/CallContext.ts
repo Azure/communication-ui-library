@@ -425,12 +425,6 @@ export class CallContext {
               participant.reactionState = undefined;
               clearTimeout(this._timeOutId[participantKey]);
             }
-
-            // if(participant.reaction?.isAllowedByPolicy && (currentUnixTimestamp - participant.reaction?.receivedAt) < 3000) {
-            //   participant.reaction = { isAllowedByPolicy: false, reactionMessage: '', receivedAt: 0};
-            //   clearTimeout(this._timeOutId[participantKey]);
-            // }
-
             participant.reactionState = reactionMessage
               ? { reactionMessage: reactionMessage, receivedAt: new Date() }
               : undefined;
