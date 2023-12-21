@@ -17,7 +17,6 @@ import { useTheme } from '../../theming';
 import { ChatMessageActionFlyout } from './ChatMessageActionsFlyout';
 import { ChatMessageContent } from './ChatMessageContent';
 import { ChatMessage } from '../../types/ChatMessage';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AttachmentMetadata } from '../FileDownloadCards';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessageContent } from './ChatMessageContent';
@@ -26,7 +25,9 @@ import { BlockedMessage } from '../../types/ChatMessage';
 import { MessageThreadStrings } from '../MessageThread';
 import { chatMessageActionMenuProps } from './ChatMessageActionMenu';
 import { ComponentSlotStyle, OnRenderAvatarCallback } from '../../types';
-import { _FileDownloadCards, FileDownloadHandler } from '../FileDownloadCards';
+/* @conditional-compile-remove(file-sharing) */
+import { FileDownloadHandler } from '../FileDownloadCards';
+import { _FileDownloadCards } from '../FileDownloadCards';
 import { ComponentLocale, useLocale } from '../../localization';
 /* @conditional-compile-remove(mention) */
 import { MentionDisplayOptions } from '../MentionPopover';
@@ -65,6 +66,7 @@ type ChatMessageComponentAsMessageBubbleProps = {
    * Optional callback to render uploaded files in the message component.
    */
   onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+  /* @conditional-compile-remove(file-sharing) */
   /**
    * Optional function called when someone clicks on the file download icon.
    */
@@ -92,18 +94,15 @@ type ChatMessageComponentAsMessageBubbleProps = {
    * @internal
    */
   mentionDisplayOptions?: MentionDisplayOptions;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /**
    * Optional function to fetch attachments.
    */
   onFetchAttachments?: (attachment: AttachmentMetadata[], messageId: string) => Promise<void>;
-  /* @conditional-compile-remove(image-gallery) */
   /**
    * Optional callback called when an inline image is clicked.
-   * @beta
+   * @public
    */
   onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /**
    * Optional map of attachment ids to blob urls.
    */
@@ -157,8 +156,8 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     onRenderAvatar,
     showMessageStatus,
     messageStatus,
+    /* @conditional-compile-remove(file-sharing) */
     fileDownloadHandler,
-    /* @conditional-compile-remove(image-gallery) */
     onInlineImageClicked,
     shouldOverlapAvatarAndMessage
   } = props;
@@ -213,22 +212,24 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
   }, [setChatMessageActionFlyoutTarget]);
 
   const defaultOnRenderFileDownloads = useCallback(() => {
+    /* @conditional-compile-remove(file-sharing) */
     return (
       <_FileDownloadCards
         userId={userId}
-        /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
+        /* @conditional-compile-remove(file-sharing) */
         fileMetadata={(message as ChatMessage).files || []}
+        /* @conditional-compile-remove(file-sharing) */
         downloadHandler={fileDownloadHandler}
-        /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
         strings={{ downloadFile: strings.downloadFile, fileCardGroupMessage: strings.fileCardGroupMessage }}
       />
     );
+    return <></>;
   }, [
     userId,
     message,
-    /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
+    /* @conditional-compile-remove(file-sharing) */
     strings,
-    /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
+    /* @conditional-compile-remove(file-sharing) */
     fileDownloadHandler
   ]);
 
@@ -242,7 +243,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     return undefined;
   }, [editedOn, message.messageType, messageStatus, strings.editedTag, strings.failToSendTag, theme]);
 
-  /* @conditional-compile-remove(image-gallery) */
   const handleOnInlineImageClicked = useCallback(
     async (attachmentId: string): Promise<void> => {
       if (onInlineImageClicked === undefined) {
@@ -267,27 +267,16 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
         <ChatMessageContent
           message={message}
           strings={strings}
-          /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
           onFetchAttachments={props.onFetchAttachments}
-          /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
           attachmentsMap={props.attachmentsMap}
           /* @conditional-compile-remove(mention) */
           mentionDisplayOptions={props.mentionDisplayOptions}
-          /* @conditional-compile-remove(image-gallery) */
           onInlineImageClicked={handleOnInlineImageClicked}
         />
         {props.onRenderFileDownloads ? props.onRenderFileDownloads(userId, message) : defaultOnRenderFileDownloads()}
       </div>
     );
-  }, [
-    defaultOnRenderFileDownloads,
-    message,
-    props,
-    strings,
-    userId,
-    /* @conditional-compile-remove(image-gallery) */
-    handleOnInlineImageClicked
-  ]);
+  }, [defaultOnRenderFileDownloads, message, props, strings, userId, handleOnInlineImageClicked]);
 
   const isBlockedMessage =
     false || /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked';
@@ -298,8 +287,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
   const chatItemMessageContainerClassName = mergeClasses(
     // messageContainerStyle used in className and style prop as style prop can't handle CSS selectors
     chatMessageStyles.body,
-    // disable placeholder functionality for GA releases as it might confuse users
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     chatMessageStyles.bodyWithPlaceholderImage,
     isBlockedMessage
       ? chatMessageCommonStyles.blocked

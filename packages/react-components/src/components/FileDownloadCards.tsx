@@ -4,22 +4,17 @@
 import { Icon, IconButton, Spinner, SpinnerSize, TooltipHost } from '@fluentui/react';
 import React, { useCallback, useState } from 'react';
 import { useMemo } from 'react';
-/* @conditional-compile-remove(file-sharing) */
 import { useLocale } from '../localization';
 import { _FileCard } from './FileCard';
 import { _FileCardGroup } from './FileCardGroup';
 import { iconButtonClassName } from './styles/IconButton.styles';
 import { _formatString } from '@internal/acs-ui-common';
 
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * Represents the type of attachment
- * @beta
+ * @public
  */
-export type ChatAttachmentType =
-  | 'file'
-  | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage'
-  | 'unknown';
+export type ChatAttachmentType = 'inlineImage' | /* @conditional-compile-remove(file-sharing) */ 'file' | 'unknown';
 
 /**
  * Metadata containing basic information about the uploaded file.
@@ -27,7 +22,6 @@ export type ChatAttachmentType =
  * @beta
  */
 export interface FileMetadata {
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   attachmentType: 'file';
   /**
    * Extension hint, useful for rendering a specific icon.
@@ -38,7 +32,6 @@ export interface FileMetadata {
   /**
    * Unique ID of the file.
    */
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   id: string;
   /**
    * File name to be displayed.
@@ -48,18 +41,16 @@ export interface FileMetadata {
    * Download URL for the file.
    */
   url: string;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /*
    * Optional dictionary of meta data associated with the file.
    */
   payload?: Record<string, string>;
 }
 
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * Metadata for rendering images inline with a message.
  * This does not include images attached as files.
- * @beta
+ * @public
  */
 export interface InlineImageMetadata {
   /*
@@ -82,19 +73,22 @@ export interface InlineImageMetadata {
 
 /**
  * Metadata containing information about the uploaded file.
- * @beta
+ * @public
  */
-export type AttachmentMetadata =
-  | FileMetadata
-  | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ InlineImageMetadata;
+export type AttachmentMetadata = InlineImageMetadata | /* @conditional-compile-remove(file-sharing) */ FileMetadata;
 
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * Metadata of the attachment object returned by the ACS SDK.
- * @beta
+ * @public
  */
 export interface AttachmentDownloadResult {
+  /**
+   * Unique ID of the attachment.
+   */
   attachmentId: string;
+  /**
+   * Blob URL for the attachment.
+   */
   blobUrl: string;
 }
 
@@ -204,14 +198,13 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
   );
 
   const isFileSharingAttachment = useCallback((attachment: AttachmentMetadata): boolean => {
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    /* @conditional-compile-remove(file-sharing) */
     return attachment.attachmentType === 'file';
     return false;
   }, []);
 
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const isShowDownloadIcon = useCallback((attachment: AttachmentMetadata): boolean => {
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    /* @conditional-compile-remove(file-sharing) */
     return attachment.attachmentType === 'file' && attachment.payload?.teamsFileAttachment !== 'true';
     return true;
   }, []);
@@ -219,7 +212,7 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
   const fileCardGroupDescription = useMemo(
     () => () => {
       const fileGroupLocaleString = props.strings?.fileCardGroupMessage ?? localeStrings.fileCardGroupMessage;
-      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+      /* @conditional-compile-remove(file-sharing) */
       return _formatString(fileGroupLocaleString, {
         fileCount: `${fileMetadata?.filter(isFileSharingAttachment).length ?? 0}`
       });
@@ -251,11 +244,7 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
     },
     [props]
   );
-  if (
-    !fileMetadata ||
-    fileMetadata.length === 0 ||
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ !fileMetadata.some(isFileSharingAttachment)
-  ) {
+  if (!fileMetadata || fileMetadata.length === 0 || !fileMetadata.some(isFileSharingAttachment)) {
     return <></>;
   }
 
@@ -265,11 +254,11 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
         {fileMetadata &&
           fileMetadata
             .filter((attachment) => {
-              /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+              /* @conditional-compile-remove(file-sharing) */
               return isFileSharingAttachment(attachment);
               return true;
             })
-            .map((file) => file as FileMetadata)
+            .map((file) => file as unknown as FileMetadata)
             .map((file) => (
               <TooltipHost content={downloadFileButtonString()} key={file.name}>
                 <_FileCard
@@ -279,15 +268,13 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
                   actionIcon={
                     showSpinner ? (
                       <Spinner size={SpinnerSize.medium} aria-live={'polite'} role={'status'} />
-                    ) : true &&
-                      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-                      isShowDownloadIcon(file) ? (
+                    ) : true && isShowDownloadIcon(file as unknown as AttachmentMetadata) ? (
                       <IconButton className={iconButtonClassName} ariaLabel={downloadFileButtonString()}>
                         <DownloadIconTrampoline />
                       </IconButton>
                     ) : undefined
                   }
-                  actionHandler={() => fileDownloadHandler(userId, file)}
+                  actionHandler={() => fileDownloadHandler(userId, file as unknown as AttachmentMetadata)}
                 />
               </TooltipHost>
             ))}
@@ -307,7 +294,7 @@ const DownloadIconTrampoline = (): JSX.Element => {
 };
 
 const useLocaleStringsTrampoline = (): _FileDownloadCardsStrings => {
-  /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
+  // @conditional-compile-remove(file-sharing)
   return useLocale().strings.messageThread;
-  return { downloadFile: '', fileCardGroupMessage: '' };
+  return { downloadFile: '', fileCardGroupMessage: useLocale().strings.messageThread.fileCardGroupMessage };
 };
