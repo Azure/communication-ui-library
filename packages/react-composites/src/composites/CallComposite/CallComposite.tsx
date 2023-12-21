@@ -386,6 +386,17 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     onSidePaneIdChange?.(sidePaneRenderer?.id);
   }, [sidePaneRenderer?.id, onSidePaneIdChange]);
 
+  // When the call ends ensure the side pane is set to closed to prevent the side pane being open if the call is re-joined.
+  useEffect(() => {
+    const closeSidePane = (): void => {
+      setSidePaneRenderer(undefined);
+    };
+    adapter.on('callEnded', closeSidePane);
+    return () => {
+      adapter.off('callEnded', closeSidePane);
+    };
+  }, [adapter]);
+
   /* @conditional-compile-remove(capabilities) */
   const capabilitiesChangedInfoAndRole = useSelector(capabilitiesChangedInfoAndRoleSelector);
 

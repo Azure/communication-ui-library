@@ -611,7 +611,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   );
 
   const onSidePaneIdChange = useCallback(
-    (sidePaneId) => {
+    (sidePaneId: string | undefined) => {
       // If the pane is switched to something other than chat, removing rendering chat.
       if (sidePaneId && sidePaneId !== 'chat') {
         closeChat();
@@ -619,6 +619,14 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     },
     [closeChat]
   );
+
+  // When the call ends ensure the side pane is set to closed to prevent the side pane being open if the call is re-joined.
+  useEffect(() => {
+    callAdapter.on('callEnded', closeChat);
+    return () => {
+      callAdapter.off('callEnded', closeChat);
+    };
+  }, [callAdapter, closeChat]);
 
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)}>
