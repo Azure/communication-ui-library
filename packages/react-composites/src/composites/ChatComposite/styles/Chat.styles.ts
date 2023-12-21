@@ -3,8 +3,10 @@
 
 import { IStyle, memoizeFunction, mergeStyles } from '@fluentui/react';
 import { MessageThreadStyles } from '@internal/react-components';
+import { CHAT_CONTAINER_MIN_WIDTH_REM } from '../../common/constants';
 
-const MESSAGE_THREAD_WIDTH = '41.25rem';
+const CHAT_CONTAINER_MAX_WIDTH_REM = 41.25;
+const CHAT_CONTAINER_MIN_HEIGHT_REM = 13;
 
 /**
  * @private
@@ -18,8 +20,8 @@ export const CHAT_CONTAINER_ZINDEX = 1;
 export const chatScreenContainerStyle = mergeStyles({
   height: '100%',
   width: '100%',
-  minHeight: '13rem',
-  minWidth: '17.5rem'
+  minHeight: `${CHAT_CONTAINER_MIN_HEIGHT_REM}rem`,
+  minWidth: `${CHAT_CONTAINER_MIN_WIDTH_REM}rem`
 });
 
 /**
@@ -95,7 +97,7 @@ export const topicNameLabelStyle = mergeStyles({
  */
 export const messageThreadChatCompositeStyles = memoizeFunction(
   (background: string): MessageThreadStyles => ({
-    root: { maxWidth: MESSAGE_THREAD_WIDTH },
+    root: { maxWidth: `${CHAT_CONTAINER_MAX_WIDTH_REM}rem` },
     chatContainer: { background: background }
   })
 );
@@ -111,7 +113,7 @@ export const typingIndicatorContainerStyles: IStyle = {
  * @private
  */
 export const sendboxContainerStyles: IStyle = {
-  maxWidth: MESSAGE_THREAD_WIDTH,
+  maxWidth: `${CHAT_CONTAINER_MAX_WIDTH_REM}rem`,
   width: '100%',
   alignSelf: 'center'
 };

@@ -2,6 +2,9 @@
 // Licensed under the MIT License.
 
 import { concatStyleSets, IButtonStyles, IStackStyles, IStackTokens } from '@fluentui/react';
+import { CHAT_CONTAINER_MIN_WIDTH_REM } from '../constants';
+
+const SIDE_PANE_PADDING_LR_REM = 0.25;
 
 /**
  * @private
@@ -72,12 +75,13 @@ export const hiddenStyles: IStackStyles = {
 /**
  * @private
  */
-export const sidePaneStyles = (maxWidth?: string): IStackStyles => ({
+export const sidePaneStyles = (maxWidth?: string, minWidth?: string): IStackStyles => ({
   root: {
     height: 'auto',
     width: '100%',
-    padding: '0.5rem 0.25rem',
-    maxWidth: maxWidth ?? '21.5rem'
+    padding: `0.5rem ${SIDE_PANE_PADDING_LR_REM}rem`,
+    maxWidth: maxWidth ?? '21.5rem',
+    minWidth: minWidth ?? `${CHAT_CONTAINER_MIN_WIDTH_REM + SIDE_PANE_PADDING_LR_REM * 2}rem`
   }
 });
 
