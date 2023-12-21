@@ -58,7 +58,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       # Install dependencies
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.1
+        run: npm install -g @microsoft/rush@5.112.2
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       # Switch flavor if necessary
@@ -158,7 +158,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       # Install dependencies
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.1
+        run: npm install -g @microsoft/rush@5.112.2
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       # Switch flavor if necessary
@@ -209,13 +209,13 @@ jobs:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.1
+        run: npm install -g @microsoft/rush@5.112.2
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - uses: browser-actions/setup-chrome@v1
         id: setup-chrome
         with:
-          chrome-version: 119.0.6045
+          chrome-version: 120.0.6099
       - name: Switch flavor for build
         id: switch-flavor
         if: ${{ matrix.flavor != 'beta' }}
@@ -287,13 +287,13 @@ jobs:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.1
+        run: npm install -g @microsoft/rush@5.112.2
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - uses: browser-actions/setup-chrome@v1
         id: setup-chrome
         with:
-          chrome-version: 119.0.6045
+          chrome-version: 120.0.6099
       - name: Switch flavor for build
         id: switch-flavor
         if: ${{ matrix.flavor != 'beta' }}
@@ -365,13 +365,13 @@ jobs:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.1
+        run: npm install -g @microsoft/rush@5.112.2
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - uses: browser-actions/setup-chrome@v1
         id: setup-chrome
         with:
-          chrome-version: 119.0.6045
+          chrome-version: 120.0.6099
       - name: Switch flavor for build
         id: switch-flavor
         if: ${{ matrix.flavor != 'beta' }}
@@ -440,7 +440,7 @@ jobs:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.1
+        run: npm install -g @microsoft/rush@5.112.2
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - name: Build
@@ -469,7 +469,7 @@ jobs:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.1
+        run: npm install -g @microsoft/rush@5.112.2
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       # Switch flavor if necessary
@@ -515,7 +515,7 @@ jobs:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.1
+        run: npm install -g @microsoft/rush@5.112.2
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       # Switch flavor if necessary
@@ -561,7 +561,7 @@ jobs:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.1
+        run: npm install -g @microsoft/rush@5.112.2
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       # Switch flavor if necessary
@@ -602,13 +602,13 @@ jobs:
         with:
           node-version: '20.x'
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.1
+        run: npm install -g @microsoft/rush@5.112.2
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - uses: browser-actions/setup-chrome@v1
         id: setup-chrome
         with:
-          chrome-version: 119.0.6045
+          chrome-version: 120.0.6099
       # Switch flavor if necessary
       - name: Switch flavor for build
         id: switch-flavor
@@ -664,13 +664,13 @@ jobs:
         with:
           node-version: '20.x'
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.1
+        run: npm install -g @microsoft/rush@5.112.2
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - uses: browser-actions/setup-chrome@v1
         id: setup-chrome
         with:
-          chrome-version: 119.0.6045
+          chrome-version: 120.0.6099
       # Switch flavor when necessary
       - name: Switch flavor for build
         id: switch-flavor
@@ -741,7 +741,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       # Install dependencies in order to use script
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.1
+        run: npm install -g @microsoft/rush@5.112.2
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - name: Get jest tests coverage of main from gist
