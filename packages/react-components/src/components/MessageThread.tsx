@@ -711,6 +711,8 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   const localeStrings = useLocale().strings.messageThread;
   const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
 
+  const [messages, setMessages] = useState<Message[]>([]);
+
   // id for the latest deleted message
   const [latestDeletedMessageId, setLatestDeletedMessageId] = useState<string | undefined>(undefined);
   // this value is used to check if a message is deleted for the previous value of messages array
@@ -752,9 +754,45 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   const chatScrollDivRef = useRef<HTMLDivElement>(null);
   const isLoadingChatMessagesRef = useRef(false);
 
-  const messages = useMemo(() => {
-    return newMessages;
+  // The below 2 of useEffects are design for fixing infinite scrolling problem
+  // Scrolling element will behave differently when scrollTop = 0(it sticks at the top)
+  // we need to get previousTop before it prepend contents
+  // Execute order [newMessage useEffect] => get previousTop => dom update => [messages useEffect]
+  useEffect(() => {
+    if (!chatScrollDivRef.current) {
+      return;
+    }
+    console.log(
+      'useEffect',
+      'newMessages',
+      newMessages,
+      'chatScrollDivRef.current.scrollTop',
+      chatScrollDivRef.current.scrollTop,
+      'chatScrollDivRef.current.scrollHeight',
+      chatScrollDivRef.current.scrollHeight
+    );
+    previousTopRef.current = chatScrollDivRef.current.scrollTop;
+    previousHeightRef.current = chatScrollDivRef.current.scrollHeight;
   }, [newMessages]);
+
+  useEffect(() => {
+    if (!chatScrollDivRef.current) {
+      return;
+    }
+    console.log(
+      'useEffect',
+      'messages',
+      messages,
+      'previousTopRef.current',
+      previousTopRef.current,
+      'previousHeightRef.current',
+      previousHeightRef.current,
+      'chatScrollDivRef.current.scrollHeight',
+      chatScrollDivRef.current.scrollHeight
+    );
+    chatScrollDivRef.current.scrollTop =
+      chatScrollDivRef.current.scrollHeight - (previousHeightRef.current - previousTopRef.current);
+  }, [messages]);
 
   useEffect(() => {
     if (latestDeletedMessageId === undefined) {
@@ -780,6 +818,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   const messagesRef = useRef(messages);
   const setMessagesRef = (messagesWithAttachedValue: Message[]): void => {
     messagesRef.current = messagesWithAttachedValue;
+    setMessages(messagesWithAttachedValue);
   };
 
   const isAtBottomOfScrollRef = useRef(isAtBottomOfScroll);
@@ -880,6 +919,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
             chatScrollDivRef.current &&
             chatScrollDivRef.current.scrollTop <= 500
           ) {
+            console.log('chatScrollDivRef.current.scrollTop', chatScrollDivRef.current.scrollTop);
             isAllChatMessagesLoadedRef.current = await onLoadPreviousChatMessages(numberOfChatMessagesToReload);
             await delay(200);
           }
@@ -890,26 +930,6 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
       }
     }
   }, [numberOfChatMessagesToReload, onLoadPreviousChatMessages]);
-
-  // The below 2 of useEffects are design for fixing infinite scrolling problem
-  // Scrolling element will behave differently when scrollTop = 0(it sticks at the top)
-  // we need to get previousTop before it prepend contents
-  // Execute order [newMessage useEffect] => get previousTop => dom update => [messages useEffect]
-  useEffect(() => {
-    if (!chatScrollDivRef.current) {
-      return;
-    }
-    previousTopRef.current = chatScrollDivRef.current.scrollTop;
-    previousHeightRef.current = chatScrollDivRef.current.scrollHeight;
-  }, [newMessages]);
-
-  useEffect(() => {
-    if (!chatScrollDivRef.current) {
-      return;
-    }
-    chatScrollDivRef.current.scrollTop =
-      chatScrollDivRef.current.scrollHeight - (previousHeightRef.current - previousTopRef.current);
-  }, [messages]);
 
   // Fetch more messages to make the scroll bar appear, infinity scroll is then handled in the handleScroll function.
   useEffect(() => {
