@@ -31,11 +31,11 @@ export interface ChatTheme {
    * @public
    */
   chatPalette: {
-    modalOverlayBlack: string;
-    modalTitleWhite: string;
-    modalButtonBackground: string;
-    modalButtonBackgroundHover: string;
-    modalButtonBackgroundActive: string;
+    imageGalleryOverlayBlack: string;
+    imageGalleryTitleWhite: string;
+    imageGalleryDefaultButtonBackground: string;
+    imageGalleryButtonBackgroundHover: string;
+    imageGalleryButtonBackgroundActive: string;
   };
 }
 
@@ -80,11 +80,11 @@ export const lightTheme: PartialTheme & CallingTheme & ChatTheme = {
   },
 
   chatPalette: {
-    modalOverlayBlack: '#000000',
-    modalTitleWhite: '#ffffff',
-    modalButtonBackground: '#1b1a19',
-    modalButtonBackgroundHover: '#252423',
-    modalButtonBackgroundActive: '#292827'
+    imageGalleryOverlayBlack: '#000000',
+    imageGalleryTitleWhite: '#ffffff',
+    imageGalleryDefaultButtonBackground: '#1b1a19',
+    imageGalleryButtonBackgroundHover: '#252423',
+    imageGalleryButtonBackgroundActive: '#292827'
   },
   semanticColors: {
     errorText: '#a80000'
@@ -131,11 +131,11 @@ export const darkTheme: PartialTheme & CallingTheme & ChatTheme = {
     raiseHandGold: '#eaa300'
   },
   chatPalette: {
-    modalOverlayBlack: '#000000',
-    modalTitleWhite: '#ffffff',
-    modalButtonBackground: '#1b1a19',
-    modalButtonBackgroundHover: '#252423',
-    modalButtonBackgroundActive: '#292827'
+    imageGalleryOverlayBlack: '#000000',
+    imageGalleryTitleWhite: '#ffffff',
+    imageGalleryDefaultButtonBackground: '#1b1a19',
+    imageGalleryButtonBackgroundHover: '#252423',
+    imageGalleryButtonBackgroundActive: '#292827'
   },
   semanticColors: {
     errorText: '#f1707b'

@@ -23,7 +23,7 @@ export const downloadIcon: IIconProps = {
 export const overlayStyles = (theme: ChatTheme): IOverlayStyles => {
   return {
     root: {
-      background: theme.chatPalette.modalOverlayBlack,
+      background: theme.chatPalette.imageGalleryOverlayBlack,
       opacity: '0.85'
     }
   };
@@ -84,7 +84,7 @@ export const titleBarContainerStyle: IStyle = {
 export const titleStyle = (theme: ChatTheme): IStyle => {
   return {
     paddingLeft: '0.5rem',
-    color: theme.chatPalette.modalTitleWhite,
+    color: theme.chatPalette.imageGalleryTitleWhite,
     fontFamily: 'inherit',
     fontSize: '0.875rem',
     fontStyle: 'normal',
@@ -142,7 +142,7 @@ export const normalImageStyle: IStyle = {
  */
 export const brokenImageStyle = (theme: ChatTheme): IStyle => {
   return {
-    color: theme.chatPalette.modalTitleWhite
+    color: theme.chatPalette.imageGalleryTitleWhite
   };
 };
 
@@ -151,14 +151,14 @@ export const brokenImageStyle = (theme: ChatTheme): IStyle => {
  */
 export const closeButtonStyles = (theme: ChatTheme): IStyle => {
   return {
-    color: theme.chatPalette.modalTitleWhite,
+    color: theme.chatPalette.imageGalleryTitleWhite,
     ':hover': {
-      color: theme.chatPalette.modalTitleWhite,
-      backgroundColor: theme.chatPalette.modalButtonBackgroundHover
+      color: theme.chatPalette.imageGalleryTitleWhite,
+      backgroundColor: theme.chatPalette.imageGalleryButtonBackgroundHover
     },
     ':active': {
-      color: theme.chatPalette.modalTitleWhite,
-      backgroundColor: theme.chatPalette.modalButtonBackgroundActive
+      color: theme.chatPalette.imageGalleryTitleWhite,
+      backgroundColor: theme.chatPalette.imageGalleryButtonBackgroundActive
     }
   };
 };
@@ -175,16 +175,16 @@ export const downloadButtonStyle = (theme: ChatTheme): IStyle => {
     fontWeight: 600,
     padding: '0.38rem 0.75rem',
     borderRadius: '4px',
-    backgroundColor: theme.chatPalette.modalButtonBackground,
-    color: theme.chatPalette.modalTitleWhite,
+    backgroundColor: theme.chatPalette.imageGalleryDefaultButtonBackground,
+    color: theme.chatPalette.imageGalleryTitleWhite,
     whiteSpace: 'nowrap',
     ':hover': {
-      color: theme.chatPalette.modalTitleWhite,
-      backgroundColor: theme.chatPalette.modalButtonBackgroundHover
+      color: theme.chatPalette.imageGalleryTitleWhite,
+      backgroundColor: theme.chatPalette.imageGalleryButtonBackgroundHover
     },
     ':active': {
-      color: theme.chatPalette.modalTitleWhite,
-      backgroundColor: theme.chatPalette.modalButtonBackgroundActive
+      color: theme.chatPalette.imageGalleryTitleWhite,
+      backgroundColor: theme.chatPalette.imageGalleryButtonBackgroundActive
     },
     '@media (max-width: 25rem)': {
       display: 'none'
@@ -198,15 +198,15 @@ export const downloadButtonStyle = (theme: ChatTheme): IStyle => {
 export const smallDownloadButtonContainerStyle = (theme: ChatTheme): IStyle => {
   return {
     marginRight: '0.5rem',
-    color: theme.chatPalette.modalTitleWhite,
+    color: theme.chatPalette.imageGalleryTitleWhite,
     whiteSpace: 'nowrap',
     ':hover': {
-      color: theme.chatPalette.modalTitleWhite,
-      backgroundColor: theme.chatPalette.modalButtonBackgroundHover
+      color: theme.chatPalette.imageGalleryTitleWhite,
+      backgroundColor: theme.chatPalette.imageGalleryButtonBackgroundHover
     },
     ':active': {
-      color: theme.chatPalette.modalTitleWhite,
-      backgroundColor: theme.chatPalette.modalButtonBackgroundActive
+      color: theme.chatPalette.imageGalleryTitleWhite,
+      backgroundColor: theme.chatPalette.imageGalleryButtonBackgroundActive
     },
     '@media (min-width: 25rem)': {
       display: 'none'
