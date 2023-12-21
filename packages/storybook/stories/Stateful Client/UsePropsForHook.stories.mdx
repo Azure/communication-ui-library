@@ -12,7 +12,7 @@ If you are using React Component from our communication-react components, `usePr
 It provides all the required props to power a feature component.
 It subscribes to state changes of stateful clients, gets props designed for your component, and triggers a re-render whenever the props change.
 
-To see a full end-to-end example using usePropsFor, see [Getting Started with StatefulClient](./?path=/docs/quickstarts-statefulclient--page)
+To see a full end-to-end example using usePropsFor, see Getting Started with [Call Stateful Client](./?path=/docs/quickstarts-statefulcallclient--page) or [Chat Stateful Client](./?path=/docs/quickstarts-statefulchatclient--page).
 
 ## _usePropsFor_ Calling App Example
 
@@ -59,7 +59,7 @@ _Calling_
 
 ## Choose your target
 
-`usePropsFor()` is context-aware. It picks out props from the relevant Provider for the component. One exception is `ParticipantList` -- a component applicable to both chat and calling settings. Thus, `ChatClientProvider` and `CallingClientProvider` both provide props for this component\*. Thus, `usePropsFor()` can not determine which provider should be used to satisfy the props. You must explicitly set the target to use:
+`usePropsFor()` is context-aware. It picks out props from the relevant Provider for the component. One exception is `ParticipantList` - a component applicable to both chat and calling settings. Thus, `ChatClientProvider` and `CallingClientProvider` both provide props for this component\*. Thus, `usePropsFor()` can not determine which provider should be used to satisfy the props. You must explicitly set the target to use:
 
 _\*only ParticipantList component is shared by both chat and calling_
 
