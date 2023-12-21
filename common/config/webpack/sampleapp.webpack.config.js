@@ -77,7 +77,7 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
         patterns: [
           { from: path.resolve(sampleAppDir, "public/manifest.json"), to: "manifest.json" },
           { from: path.resolve(sampleAppDir, "public/backgrounds"), to: "backgrounds",  noErrorOnMissing: true },
-          { from: path.resolve(sampleAppDir, "public/assets"), to: "assets",  noErrorOnMissing: true },
+          { from: path.resolve(sampleAppDir, "public/assets/reactions"), to: "assets/reactions",  noErrorOnMissing: true },
         ]
       })
     ],
