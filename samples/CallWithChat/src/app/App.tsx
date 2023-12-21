@@ -31,12 +31,10 @@ import { getExistingThreadIdFromURL } from './utils/getThreadId';
 import { WEB_APP_TITLE } from './utils/constants';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CallParticipantsLocator } from '@azure/communication-react';
-/* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 
 setLogLevel('error');
 initializeIcons();
-/* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 initializeFileTypeIcons();
 
 interface Credentials {
