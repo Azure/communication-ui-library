@@ -298,8 +298,5 @@ const DownloadIconTrampoline = (): JSX.Element => {
 const useLocaleStringsTrampoline = (): _FileDownloadCardsStrings => {
   /* @conditional-compile-remove(file-sharing) */
   return useLocale().strings.messageThread;
-  let msg = '' 
-  /* @conditional-compile-remove(file-sharing) */ 
-  msg = useLocale().strings.messageThread.fileCardGroupMessage
-  return { downloadFile: '', fileCardGroupMessage: msg };
+  return { downloadFile: '', fileCardGroupMessage: '' };
 };
