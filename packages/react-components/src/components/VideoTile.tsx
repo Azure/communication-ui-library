@@ -38,6 +38,8 @@ import { DirectionalHint, IContextualMenuProps } from '@fluentui/react';
 import useLongPress from './utils/useLongPress';
 /* @conditional-compile-remove(pinned-participants) */
 import { moreButtonStyles } from './styles/VideoTile.styles';
+/* @conditional-compile-remove(raise-hand) */
+import { raiseHandContainerStyles } from './styles/VideoTile.styles';
 
 /**
  * Strings of {@link VideoTile} that can be overridden.
@@ -448,20 +450,11 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           <Stack className={mergeStyles(overlayContainerStyles, styles?.overlayContainer)}>{children}</Stack>
         )}
         {
-          /* @conditional-compile-remove(raise-hand) */ raisedHand && canShowLabel && (
+          /* @conditional-compile-remove(raise-hand) */ raisedHand && (
             <Stack
               horizontal={true}
               tokens={{ childrenGap: '0.2rem' }}
-              style={{
-                alignItems: 'center',
-                padding: '0.2rem 0.3rem',
-                backgroundColor: theme.palette.white,
-                opacity: 0.9,
-                borderRadius: '1rem',
-                margin: '0.5rem',
-                width: 'fit-content',
-                position: 'absolute'
-              }}
+              className={raiseHandContainerStyles(theme, !canShowLabel)}
             >
               <Stack.Item>
                 <Text>{raisedHand.raisedHandOrderPosition}</Text>
