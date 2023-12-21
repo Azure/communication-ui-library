@@ -23,16 +23,16 @@ export const getCurrentRelativeUnixTime = () => {
 
   let baseUnixTimestamp = Math.floor(baseTimeStamp.getTime() / 1000);
   return Math.floor(new Date().getTime() / 1000) - baseUnixTimestamp;
-}
+};
 
 /* @conditional-compile-remove(reaction) */
 /**
  * @private
  */
-export const reactionEmoji = new Map<string, string> ([
-  ['like',`url('/assets/likeEmoji.png')`],
-  ['applause',`url('/assets/clapEmoji.png')`],
-  ['heart',`url('/assets/heartEmoji.png')`],
-  ['laugh',`url('/assets/laughEmoji.png')`],
+export const reactionEmoji = new Map<string, string>([
+  ['like', `url('/assets/reactions/likeEmoji.png')`],
+  ['applause', `url('/assets/clapEmoji.png')`],
+  ['heart', `url('/assets/heartEmoji.png')`],
+  ['laugh', `url('/assets/laughEmoji.png')`],
   ['surprised', `url('/assets/surprisedEmoji.png')`]
-])
+]);

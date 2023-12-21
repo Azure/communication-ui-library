@@ -43,10 +43,6 @@ export type RaisedHand = {
  */
 export type Reaction = {
   /**
-   * Dictates if reaction should start animating or not
-   */
-  shouldRender: boolean;
-  /**
    * Specifies the type of reaction videoTile should render i.e. like, heart etc.
    */
   reactionType: string;
