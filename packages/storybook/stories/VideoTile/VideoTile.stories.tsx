@@ -10,7 +10,6 @@ import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { controlsToAdd, hiddenControl } from '../controlsUtils';
 import { VideoTileExample as VideoTileStylineExample } from '../Styling/snippets/StylingVideoTile.snippet';
 import { useVideoStreams } from '../utils';
-import { ReactionAnimationVideoTile } from './snippets/ReactionAnimationVideoTile.snippet';
 import { VideoTileExample } from './snippets/VideoTile.snippet';
 import { VideoTileMenuItemsExample } from './snippets/VideoTileMenuItems.snippet';
 import { VideoTilePlaceholderExample } from './snippets/VideoTilePlaceholder.snippet';
