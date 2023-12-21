@@ -23,7 +23,6 @@ import {
   IDropdownOption
 } from '@fluentui/react';
 import { Divider } from '@fluentui/react-components';
-import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useEffect, useRef, useState } from 'react';
@@ -60,8 +59,6 @@ import { MessageWithFile } from './snippets/MessageWithFile.snippet';
 import { MessageThreadWithSystemMessagesExample } from './snippets/SystemMessages.snippet';
 import { MessageThreadWithInlineImageExample } from './snippets/WithInlineImageMessage.snippet';
 import { MessageThreadWithMessageDateExample } from './snippets/WithMessageDate.snippet';
-
-initializeFileTypeIcons();
 
 const MessageThreadWithBlockedMessagesExampleText =
   require('!!raw-loader!./snippets/BlockedMessages.snippet.tsx').default;
@@ -347,7 +344,8 @@ const Docs: () => JSX.Element = () => {
           MessageThread component provides UI for displaying file attachments in a message. This allows developers to
           implement a file sharing feature using the pure UI component with minimal effort. Developers can write their
           own file download logic and utilize the UI provided by MessageThread. Clicking on the file attachment opens it
-          in a new browser tab. Developers can override this behavior as well using MessageThread props.
+          in a new browser tab. Developers can override this behavior as well using MessageThread props. [The file types
+          icons](./?path=/docs/icons--page) should be initialized before rendering MessageThread component.
         </Description>
         <Canvas mdxSource={MessageWithFileText}>
           <MessageWithFile />
