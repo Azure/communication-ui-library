@@ -74,7 +74,7 @@ export class CallContext {
   private _emitter: EventEmitter;
   private _atomicId: number;
   private _callIdHistory: CallIdHistory = new CallIdHistory();
-  private _timeOutId: Map<string, any> = new Map<string, any>();
+  private _timeOutId: { [key: string]: any } = {};
 
   constructor(
     userId: CommunicationIdentifierKind,
