@@ -93,7 +93,7 @@ jobs:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.1
+        run: npm install -g @microsoft/rush@5.112.2
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - uses: browser-actions/setup-chrome@v1
@@ -188,7 +188,7 @@ jobs:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.1
+        run: npm install -g @microsoft/rush@5.112.2
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - uses: browser-actions/setup-chrome@v1
@@ -283,7 +283,7 @@ jobs:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.1
+        run: npm install -g @microsoft/rush@5.112.2
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - uses: browser-actions/setup-chrome@v1
@@ -378,7 +378,7 @@ jobs:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.1
+        run: npm install -g @microsoft/rush@5.112.2
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - uses: browser-actions/setup-chrome@v1
@@ -473,7 +473,7 @@ jobs:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.1
+        run: npm install -g @microsoft/rush@5.112.2
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - uses: browser-actions/setup-chrome@v1
