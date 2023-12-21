@@ -346,11 +346,11 @@ export interface ChatMessage extends MessageCommon {
 // @public
 export interface ChatTheme {
     chatPalette: {
-        modalOverlayBlack: string;
-        modalTitleWhite: string;
-        modalButtonBackground: string;
-        modalButtonBackgroundHover: string;
-        modalButtonBackgroundActive: string;
+        imageGalleryOverlayBlack: string;
+        imageGalleryTitleWhite: string;
+        imageGalleryDefaultButtonBackground: string;
+        imageGalleryButtonBackgroundHover: string;
+        imageGalleryButtonBackgroundActive: string;
     };
 }
 
