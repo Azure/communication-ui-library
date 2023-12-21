@@ -1,10 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(image-gallery) */
 import { isIOS } from '@fluentui/react';
 import { mergeStyles, Stack } from '@fluentui/react';
-/* @conditional-compile-remove(image-gallery) */
 import { PersonaSize } from '@fluentui/react';
 import {
   CommunicationParticipant,
@@ -20,15 +18,10 @@ import {
   TypingIndicatorStylesProps,
   useTheme
 } from '@internal/react-components';
-/* @conditional-compile-remove(image-gallery) */
 import { ChatMessage } from '@internal/react-components';
-
 import React, { useCallback, useEffect, useMemo } from 'react';
-/* @conditional-compile-remove(image-gallery) */
 import { useState } from 'react';
-
 import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPersona';
-
 import { useAdapter } from './adapter/ChatAdapterProvider';
 import { ChatCompositeOptions } from './ChatComposite';
 import { ChatHeader, getHeaderProps } from './ChatHeader';
@@ -57,9 +50,7 @@ import { useSelector } from './hooks/useSelector';
 import { FileDownloadErrorBar } from './FileDownloadErrorBar';
 /* @conditional-compile-remove(file-sharing) */
 import { _FileDownloadCards } from '@internal/react-components';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AttachmentDownloadResult, AttachmentMetadata } from '@internal/react-components';
-/* @conditional-compile-remove(image-gallery) */
 import { ImageGallery, ImageGalleryImageProps } from '@internal/react-components';
 
 /**
@@ -135,11 +126,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const defaultNumberOfChatMessagesToReload = 5;
   /* @conditional-compile-remove(file-sharing) */
   const [downloadErrorMessage, setDownloadErrorMessage] = React.useState('');
-  /* @conditional-compile-remove(image-gallery) */
   const [fullSizeAttachments, setFullSizeAttachments] = useState<Record<string, string>>({});
-  /* @conditional-compile-remove(image-gallery) */
   const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps>>([]);
-  /* @conditional-compile-remove(image-gallery) */
   const [isImageGalleryOpen, setIsImageGalleryOpen] = useState<boolean>(false);
 
   const adapter = useAdapter();
@@ -221,7 +209,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [fileSharing?.downloadHandler]
   );
 
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const onRenderInlineAttachment = useCallback(
     async (attachment: AttachmentMetadata[]): Promise<AttachmentDownloadResult[]> => {
       const entry: Record<string, string> = {};
@@ -237,7 +224,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [adapter]
   );
 
-  /* @conditional-compile-remove(image-gallery) */
   const onInlineImageClicked = useCallback(
     async (attachmentId: string, messageId: string): Promise<void> => {
       const messages = messageThreadProps.messages?.filter((message) => {
@@ -300,7 +286,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [adapter, fullSizeAttachments, messageThreadProps.messages, onRenderAvatarCallback]
   );
 
-  /* @conditional-compile-remove(image-gallery) */
   const onImageDownloadButtonClicked = useCallback((imageUrl: string, downloadFilename: string): void => {
     if (imageUrl === '') {
       return;
@@ -356,9 +341,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             onRenderMessage={onRenderMessage}
             /* @conditional-compile-remove(file-sharing) */
             onRenderFileDownloads={onRenderFileDownloads}
-            /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
             onFetchAttachments={onRenderInlineAttachment}
-            /* @conditional-compile-remove(image-gallery) */
             onInlineImageClicked={onInlineImageClicked}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
@@ -404,7 +387,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         }
       </Stack>
       {
-        /* @conditional-compile-remove(image-gallery) */
         <ImageGallery
           isOpen={isImageGalleryOpen}
           images={galleryImages}
