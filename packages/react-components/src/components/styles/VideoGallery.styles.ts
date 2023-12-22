@@ -38,7 +38,7 @@ export const localVideoCameraCycleButtonStyles = (theme: Theme, size?: 'small' |
       background: 'rgba(0,0,0,0.4)' // sets opacity of background to be visible on all backdrops in video stream.
     },
     rootDisabled: {
-      // In the disabled state, the fluent sets the position to relative. We need to override this to keep the button correctly positioned.
+      // In the disabled state, FluentUI sets the position to relative. We need to override this to keep the button correctly positioned.
       position: 'absolute'
     },
     icon: {
