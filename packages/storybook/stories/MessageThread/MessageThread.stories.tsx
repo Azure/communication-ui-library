@@ -344,7 +344,8 @@ const Docs: () => JSX.Element = () => {
           MessageThread component provides UI for displaying file attachments in a message. This allows developers to
           implement a file sharing feature using the pure UI component with minimal effort. Developers can write their
           own file download logic and utilize the UI provided by MessageThread. Clicking on the file attachment opens it
-          in a new browser tab. Developers can override this behavior as well using MessageThread props.
+          in a new browser tab. Developers can override this behavior as well using MessageThread props. [The file types
+          icons](./?path=/docs/icons--page) should be initialized before rendering MessageThread component.
         </Description>
         <Canvas mdxSource={MessageWithFileText}>
           <MessageWithFile />
