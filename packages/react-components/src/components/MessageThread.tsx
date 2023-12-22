@@ -711,6 +711,9 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
 
   const localeStrings = useLocale().strings.messageThread;
   const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
+  // it is required to use useState for messages
+  // as the scrolling logic requires re - render at a specific point in time
+  const [messages, setMessages] = useState<Message[]>([]);
 
   // id for the latest deleted message
   const [latestDeletedMessageId, setLatestDeletedMessageId] = useState<string | undefined>(undefined);
@@ -753,10 +756,6 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   const chatScrollDivRef = useRef<HTMLDivElement>(null);
   const isLoadingChatMessagesRef = useRef(false);
 
-  const messages = useMemo(() => {
-    return newMessages;
-  }, [newMessages]);
-
   useEffect(() => {
     if (latestDeletedMessageId === undefined) {
       setDeletedMessageAriaLabel(undefined);
@@ -781,6 +780,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   const messagesRef = useRef(messages);
   const setMessagesRef = (messagesWithAttachedValue: Message[]): void => {
     messagesRef.current = messagesWithAttachedValue;
+    setMessages(messagesWithAttachedValue);
   };
 
   const isAtBottomOfScrollRef = useRef(isAtBottomOfScroll);
