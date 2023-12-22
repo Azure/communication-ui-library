@@ -44,6 +44,7 @@ const CustomDataModelStory = (args: ArgsFrom<typeof storyControls>, context): JS
       {containerProps ? (
         <CustomDataModelExampleContainer
           fluentTheme={context.theme}
+          rtl={context.globals.rtl === 'rtl'}
           displayName={args.displayName}
           avatarInitials={args.avatarInitials}
           {...containerProps}
