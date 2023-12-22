@@ -27,6 +27,15 @@ const __dirname = dirname(__filename);
 
 const destinationDir = path.join(__dirname, '../../apis');
 
+// This process runs the build and api generate commands locally.
+// So this process backs up the files that will be modified by the build process
+// and restores them after the build process is complete.
+const filesToBackup = [
+  path.join(__dirname, '../../packages/communication-react/review/beta/communication-react.api.md'),
+  path.join(__dirname, '../../packages/communication-react/review/stable/communication-react.api.md'),
+  path.join(__dirname, '../config/babel/features.js')
+]
+
 async function main() {
   // Clean any existing results first
   if (fs.existsSync(destinationDir)) {
@@ -49,9 +58,7 @@ async function main() {
     exit(-1);
   }
 
-  // before making changes to the feature definitions file, make a copy of it
-  const featureDefinitionsFile = path.join(__dirname, '../config/babel/features.js');
-  fs.copyFileSync(featureDefinitionsFile, `${featureDefinitionsFile}.bak`);
+  backupFiles(filesToBackup);
 
   const isAlphaFeature = inProgressFeatures.includes(feature);
 
@@ -61,7 +68,6 @@ async function main() {
     await exec('rush switch-flavor:stable');
   }
 
-
   modifyFeatureDefinitionsFile(feature, isAlphaFeature ? 'alphaToBeta' : 'betaToStable');
   console.log(`Generating baseline.api.json file`);
   const baselineFilePath = await generateApiFile(false);
@@ -70,9 +76,7 @@ async function main() {
   console.log(`Generating feature.api.json file`);
   const featureFilePath = await generateApiFile(true);
 
-  // restore the feature definitions file
-  fs.copyFileSync(`${featureDefinitionsFile}.bak`, featureDefinitionsFile);
-  fs.rmSync(`${featureDefinitionsFile}.bak`);
+  restoreFiles(filesToBackup);
 
   // restore the flavor
   await exec(`rush switch-flavor:${initialDevelopmentFlavor}`);
@@ -147,6 +151,21 @@ async function generateApiFile(isBaseline) {
   );
 
   return destinationFile;
+}
+
+/** Backup the files that will be modified by the build process */
+function backupFiles(filepaths) {
+  filepaths.forEach((file) => {
+    fs.copyFileSync(file, `${file}.bak`);
+  });
+}
+
+/** Restore the files that were modified by the build process */
+function restoreFiles(filepaths) {
+  filepaths.forEach((file) => {
+    fs.copyFileSync(`${file}.bak`, file);
+    fs.rmSync(`${file}.bak`);
+  });
 }
 
 function parseArgs(argv) {
