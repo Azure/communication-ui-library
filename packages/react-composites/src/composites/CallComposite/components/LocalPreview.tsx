@@ -149,7 +149,7 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
               data-ui-id="call-composite-local-device-settings-options-button"
               {...devicesButtonProps}
               // disable button whilst all other buttons are disabled
-              disabled={!microphonePermissionGranted || !cameraPermissionGranted || hasNoDevices}
+              disabled={(!microphonePermissionGranted && !cameraPermissionGranted) || hasNoDevices}
               showLabel={true}
               // disable tooltip as it obscures list of devices on mobile
               strings={props.mobileView ? { tooltipContent: '' } : {}}
