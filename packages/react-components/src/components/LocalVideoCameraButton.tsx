@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { IconButton, useTheme } from '@fluentui/react';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { OptionsDevice } from './DevicesButton';
 import { localVideoCameraCycleButtonStyles } from './styles/VideoGallery.styles';
 import { useLocale } from '../localization';
