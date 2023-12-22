@@ -69,7 +69,7 @@ async function cleanup() {
 }
 
 /**
- * Main entry point for the script.
+ * Generate the baseline.api.json and feature.api.json files.
  */
 async function generateApiJsons() {
   // Store the active development flavor to restore to once the cmd finishes
