@@ -115,7 +115,6 @@ async function generateApiJsons() {
   console.log(`Please upload these files to apiview.dev for review.`);
 }
 
-
 /**
  * Modify the babelrc file to enable/disable beta features.
  *
