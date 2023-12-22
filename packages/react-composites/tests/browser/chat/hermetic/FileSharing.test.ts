@@ -317,9 +317,6 @@ test.describe('Inline Image Message Thread', async () => {
         sendRemoteInlineImageMessage: true
       })
     );
-    // wait for the to be loaded before comparing the snapshots
-    await page.evaluate(() => document.fonts.ready);
-    await page.waitForTimeout(1000);
 
     expect(
       await stableScreenshot(page, {
