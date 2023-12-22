@@ -37,11 +37,41 @@ const filesToBackup = [
 ]
 
 async function main() {
+  let wasSuccessful = true;
+  await setup();
+  try {
+    await generateApiJsons();
+  } catch (e) {
+    wasSuccessful = false;
+    console.error(e);
+  } finally {
+    await cleanup();
+  }
+
+  if (!wasSuccessful) {
+    exit(-1);
+  }
+}
+
+/** To be called at the beginning of the script to backup the files that will be modified by the build process */
+async function setup() {
   // Clean any existing results first
   if (fs.existsSync(destinationDir)) {
     fs.rmSync(destinationDir, { recursive: true });
   }
 
+  backupFiles(filesToBackup);
+}
+
+/** To be called at the end of the script to restore the files that were modified by the build process */
+async function cleanup() {
+  restoreFiles(filesToBackup);
+}
+
+/**
+ * Main entry point for the script.
+ */
+async function generateApiJsons() {
   // Store the active development flavor to restore to once the cmd finishes
   const initialDevelopmentFlavor = getBuildFlavor();
 
@@ -76,8 +106,6 @@ async function main() {
   console.log(`Generating feature.api.json file`);
   const featureFilePath = await generateApiFile(true);
 
-  restoreFiles(filesToBackup);
-
   // restore the flavor
   await exec(`rush switch-flavor:${initialDevelopmentFlavor}`);
 
@@ -86,6 +114,7 @@ async function main() {
   console.log(`  - ${featureFilePath}`);
   console.log(`Please upload these files to apiview.dev for review.`);
 }
+
 
 /**
  * Modify the babelrc file to enable/disable beta features.
