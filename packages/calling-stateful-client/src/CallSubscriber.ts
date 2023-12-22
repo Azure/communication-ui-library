@@ -92,7 +92,7 @@ export class CallSubscriber {
       this._callIdRef,
       this._context,
       this._call.feature(Features.Reaction)
-    )
+    );
     /* @conditional-compile-remove(optimal-video-count) */
     this._optimalVideoCountSubscriber = new OptimalVideoCountSubscriber({
       callIdRef: this._callIdRef,

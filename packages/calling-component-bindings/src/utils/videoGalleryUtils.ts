@@ -65,7 +65,7 @@ export const _videoGalleryRemoteParticipantsMemo: (
             participant.role,
             isHideAttendeeNamesEnabled
           );
-          let remoteParticipantReaction =
+          const remoteParticipantReaction: Reaction | undefined =
             participant.reactionState && participant.reactionState.reactionMessage
               ? {
                   reactionType: participant.reactionState.reactionMessage.reactionType,

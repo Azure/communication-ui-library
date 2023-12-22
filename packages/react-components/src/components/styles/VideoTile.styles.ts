@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { IButtonStyles, IStyle, ITheme, mergeStyles, Theme } from '@fluentui/react';
+import { IButtonStyles, IStyle, keyframes, memoizeFunction, mergeStyles, Theme, ITheme } from '@fluentui/react';
 
 /**
  * @private
@@ -173,3 +173,17 @@ export const raiseHandLimitedSpaceStyles: IStyle = {
   // position at the bottom
   bottom: 0
 };
+/* @conditional-compile-remove(reaction) */
+/**
+ * @private
+ */
+export const playFrames = memoizeFunction(() =>
+  keyframes({
+    from: {
+      backgroundPosition: '0px 8668px'
+    },
+    to: {
+      backgroundPosition: '0px 0px'
+    }
+  })
+);

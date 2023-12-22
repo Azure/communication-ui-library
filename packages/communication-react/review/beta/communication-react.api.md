@@ -917,7 +917,7 @@ export interface CallState {
     isMuted: boolean;
     isScreenSharingOn: boolean;
     kind: CallKind;
-    localParticipantReactionState: LocalParticipantReactionState;
+    localParticipantReactionState?: ReactionState;
     localVideoStreams: LocalVideoStreamState[];
     optimalVideoCount: OptimalVideoCountFeatureState;
     raiseHand: RaiseHandCallFeature;
@@ -3033,11 +3033,6 @@ export type LocalizationProviderProps = {
     children: React_2.ReactNode;
 };
 
-// @public
-export interface LocalParticipantReactionState {
-    reactionState?: ReactionState;
-}
-
 // @public (undocumented)
 export interface LocalVideoCameraCycleButtonProps {
     ariaDescription?: string;
@@ -3614,14 +3609,13 @@ export interface RaiseHandCallFeature {
 
 // @public
 export type Reaction = {
-    shouldRender: boolean;
     reactionType: string;
     receivedAt: Date;
 };
 
 // @public
 export type ReactionState = {
-    reactionMessage: ReactionMessage | undefined;
+    reactionMessage: ReactionMessage;
     receivedAt: Date;
 };
 

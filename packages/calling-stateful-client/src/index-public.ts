@@ -43,4 +43,4 @@ export type { AcceptedTransfer, TransferFeatureState as TransferFeature } from '
 /* @conditional-compile-remove(optimal-video-count) */
 export type { OptimalVideoCountFeatureState } from './CallClientState';
 /* @conditional-compile-remove(reaction) */
-export type { LocalParticipantReactionState, ReactionState } from './CallClientState';
+export type { ReactionState } from './CallClientState';

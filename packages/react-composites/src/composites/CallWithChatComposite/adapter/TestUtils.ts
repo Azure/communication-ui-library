@@ -243,7 +243,7 @@ function createMockCall(mockCallId: string): CallState {
     /* @conditional-compile-remove(raise-hand) */
     raiseHand: { raisedHands: [] },
     /* @conditional-compile-remove(reaction) */
-    localParticipantReactionState: { reactionState: undefined },
+    localParticipantReactionState: undefined,
     /* @conditional-compile-remove(close-captions) */
     captionsFeature: {
       captions: [],

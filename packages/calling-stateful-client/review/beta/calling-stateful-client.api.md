@@ -116,7 +116,7 @@ export interface CallState {
     isMuted: boolean;
     isScreenSharingOn: boolean;
     kind: CallKind;
-    localParticipantReactionState: LocalParticipantReactionState;
+    localParticipantReactionState?: ReactionState;
     localVideoStreams: LocalVideoStreamState[];
     optimalVideoCount: OptimalVideoCountFeatureState;
     raiseHand: RaiseHandCallFeature;
@@ -231,11 +231,6 @@ export const _isTeamsCall: (call: CallCommon) => call is TeamsCall_2;
 export const _isTeamsCallAgent: (callAgent: CallAgentCommon) => callAgent is TeamsCallAgent_2;
 
 // @public
-export interface LocalParticipantReactionState {
-    reactionState?: ReactionState;
-}
-
-// @public
 export interface LocalVideoStreamState {
     mediaStreamType: MediaStreamType;
     source: VideoDeviceInfo;
@@ -278,7 +273,7 @@ export interface RaiseHandCallFeature {
 
 // @public
 export type ReactionState = {
-    reactionMessage: ReactionMessage | undefined;
+    reactionMessage: ReactionMessage;
     receivedAt: Date;
 };
 

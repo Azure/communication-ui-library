@@ -415,7 +415,7 @@ export class CallContext {
         const participant = call.remoteParticipants[participantKey];
 
         if (participant) {
-          if (reactionMessage == null) {
+          if (reactionMessage === null) {
             participant.reactionState = undefined;
           } else {
             if (
@@ -430,25 +430,25 @@ export class CallContext {
               : undefined;
             this._timeOutId[participantKey] = setTimeout(() => {
               clearParticipantReactionState(this, callId, participantKey);
-            }, 2170);
+            }, 5120);
           }
         } else if (participantKey === toFlatCommunicationIdentifier(this._state.userId)) {
-          if (reactionMessage == null) {
-            call.localParticipantReactionState.reactionState = undefined;
+          if (reactionMessage === null) {
+            call.localParticipantReactionState = undefined;
           } else {
             if (
               call.capabilitiesFeature?.capabilities.reaction &&
-              isReactionBeingPlayedNow(call.localParticipantReactionState.reactionState?.receivedAt)
+              isReactionBeingPlayedNow(call.localParticipantReactionState?.receivedAt)
             ) {
               clearParticipantReactionState(this, callId, participantKey);
               clearTimeout(this._timeOutId[participantKey]);
             }
-            call.localParticipantReactionState.reactionState = reactionMessage
+            call.localParticipantReactionState = reactionMessage
               ? { reactionMessage: reactionMessage, receivedAt: new Date() }
               : undefined;
             this._timeOutId[participantKey] = setTimeout(() => {
               clearParticipantReactionState(this, callId, participantKey);
-            }, 2170);
+            }, 5120);
           }
         }
       }
@@ -1084,12 +1084,12 @@ function clearParticipantReactionState(callContext: CallContext, callId: string,
 }
 
 function isReactionBeingPlayedNow(receivedAt: Date | undefined) {
-  if (receivedAt == undefined) {
+  if (receivedAt === undefined) {
     return false;
   }
   const currentTimeStamp = new Date();
   const unixBasedCurrentTimeStamp = Math.floor(currentTimeStamp.getTime() / 1000);
   const unixBasedReceivedTimeStamp = Math.floor(receivedAt?.getTime() / 1000);
 
-  return receivedAt != undefined && unixBasedCurrentTimeStamp - unixBasedReceivedTimeStamp < 3000;
+  return unixBasedCurrentTimeStamp - unixBasedReceivedTimeStamp < 3000;
 }

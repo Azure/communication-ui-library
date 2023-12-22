@@ -75,7 +75,8 @@ const convertRemoteParticipantsToParticipantListParticipants = (
             participant.role,
             isHideAttendeeNamesEnabled
           );
-          let remoteParticipantReaction =
+          /* @conditional-compile-remove(reaction) */
+          const remoteParticipantReaction =
             participant.reactionState && participant.reactionState.reactionMessage
               ? {
                   reactionType: participant.reactionState.reactionMessage.reactionType,
@@ -181,6 +182,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
           role
         )
       : [];
+    /* @conditional-compile-remove(reaction) */
     const localParticipantReaction =
       localParticipantReactionState && localParticipantReactionState.reactionMessage
         ? {

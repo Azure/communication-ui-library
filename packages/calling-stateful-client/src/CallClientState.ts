@@ -191,30 +191,16 @@ export type RaisedHandState = {
 
 /* @conditional-compile-remove(reaction) */
 /**
- * State only version of {@link @azure/communication-calling#ReactionCallFeature}. {@link StatefulCallClient} will
- * automatically listen for reaction on the call and update the state exposed by {@link StatefulCallClient} accordingly.
- *
- * @public
- */
-export interface LocalParticipantReactionState {
-  /**
-   * Local participant's reaction state.
-   */
-  reactionState?: ReactionState;
-}
-
-/* @conditional-compile-remove(reaction) */
-/**
- * State only version of {@link @azure/communication-calling#Call.ReactionEventPayload} with UI helper props.
- * Reation state with a comparative timestamp which helps UI to decide to render the reaction accordingly.
+ * State only version of {@link @azure/communication-calling#Call.ReactionMessage} with UI helper props receivedAt.
+ * Reaction state with a timestamp which helps UI to decide to render the reaction accordingly.
  *
  * @public
  */
 export type ReactionState = {
   /**
-   * Reaction message from the meeting {@link @azure/communication-calling#ReactionMessage}
+   * Reaction message from the meeting {@link @azure/communication-calling#Call.ReactionMessage}
    */
-  reactionMessage: ReactionMessage | undefined;
+  reactionMessage: ReactionMessage;
   /**
    * Received timestamp of the reaction message in a meeting.
    */
@@ -372,16 +358,15 @@ export interface RemoteParticipantState {
    * Proxy of {@link @azure/communication-calling#RemoteParticipant.role}.
    */
   role?: ParticipantRole;
-
   /* @conditional-compile-remove(raise-hand) */
   /**
    * Proxy of {@link @azure/communication-calling#Call.RaisedHand.raisedHands}.
    */
   raisedHand?: RaisedHandState;
-
   /* @conditional-compile-remove(reaction) */
   /**
-   * Proxy of {@link @azure/communication-calling#Call.Reaction.ReactionEventPayload}.
+   * Proxy of {@link @azure/communication-calling#Call.ReactionMessage} with
+   * UI helper props receivedAt which indicates the timestamp when the message was received.
    */
   reactionState?: ReactionState;
 }
@@ -473,9 +458,10 @@ export interface CallState {
   raiseHand: RaiseHandCallFeatureState;
   /* @conditional-compile-remove(reaction) */
   /**
-   * Proxy of {@link @azure/communication-calling#ReactionCallFeature}.
+   * Proxy of {@link @azure/communication-calling#Call.ReactionMessage} with
+   * UI helper props receivedAt which indicates the timestamp when the message was received.
    */
-  localParticipantReactionState: LocalParticipantReactionState;
+  localParticipantReactionState?: ReactionState;
   /**
    * Stores the currently active screenshare participant's key. If there is no screenshare active, then this will be
    * undefined. You can use this key to access the remoteParticipant data in {@link CallState.remoteParticipants} object.

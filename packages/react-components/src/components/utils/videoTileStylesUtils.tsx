@@ -13,20 +13,7 @@ export const getVideoTileOverrideColor = (isVideoRendered: boolean, theme: Theme
 
 /* @conditional-compile-remove(reaction) */
 /**
- * @private
- */
-export const getCurrentRelativeUnixTime = () => {
-  let baseTimeStamp = new Date();
-  baseTimeStamp.setMonth(0);
-  baseTimeStamp.setDate(1);
-  baseTimeStamp.setHours(0, 0, 0, 0);
-
-  let baseUnixTimestamp = Math.floor(baseTimeStamp.getTime() / 1000);
-  return Math.floor(new Date().getTime() / 1000) - baseUnixTimestamp;
-};
-
-/* @conditional-compile-remove(reaction) */
-/**
+ * Temporary mapping of paths for the reaction emoji resources.
  * @private
  */
 export const reactionEmoji = new Map<string, string>([

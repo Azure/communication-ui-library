@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(reaction) */
-import { ReactionCallFeature, ReactionEventPayload } from '@azure/communication-calling';
-/* @conditional-compile-remove(reaction) */
-import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { ReactionCallFeature } from '@azure/communication-calling';
 /* @conditional-compile-remove(reaction) */
 import { CallContext } from './CallContext';
 /* @conditional-compile-remove(reaction) */
@@ -34,11 +32,7 @@ export class ReactionSubscriber {
     this._reaction.off('reaction', this.onReactionEvent);
   };
 
-  private onReactionEvent = (event: ReactionEventPayload): void => {
-    this._context.setReceivedReactionFromParticipant(
-      this._callIdRef.callId,
-      toFlatCommunicationIdentifier(event.identifier),
-      event.reactionMessage
-    );
+  private onReactionEvent = (event: any): void => {
+    this._context.setReceivedReactionFromParticipant(this._callIdRef.callId, event.identifier, event.reactionMessage);
   };
 }

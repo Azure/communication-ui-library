@@ -29,7 +29,8 @@ import {
   videoContainerStyles,
   videoHint,
   tileInfoContainerStyle,
-  participantStateStringStyles
+  participantStateStringStyles,
+  playFrames
 } from './styles/VideoTile.styles';
 import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
 /* @conditional-compile-remove(reaction) */
@@ -231,16 +232,6 @@ const VideoTileMoreOptionsButton = (props: {
   );
 };
 
-/* @conditional-compile-remove(reaction) */
-const styleSheet = document.styleSheets[0];
-/* @conditional-compile-remove(reaction) */
-const keyframes1 = `@keyframes play {
-  from { background-position-y: 8568px; }
-  to { background-position-y: 0px; }
-}`;
-/* @conditional-compile-remove(reaction) */
-styleSheet.insertRule(keyframes1, styleSheet.cssRules.length);
-
 /**
  * A component to render the video stream for a single call participant.
  *
@@ -373,23 +364,15 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   raisedHandBackgroundColor = callingPalette.raiseHandGold;
 
   /* @conditional-compile-remove(reaction) */
-  let urlPath = reaction != undefined ? reactionEmoji.get(reaction?.reactionType) : '';
+  const urlPath = reaction !== undefined ? reactionEmoji.get(reaction?.reactionType) : '';
   /* @conditional-compile-remove(reaction) */
-  let reactionAnimationStyle = {
-    height: '84px',
-    width: '84px',
-    animationName: 'play',
-    backgroundImage: urlPath,
-    overflow: 'hidden',
-    animation: 'play 5.12s steps(102)',
-    animationPlayState: 'running',
-    animationIterationCount: 'infinite'
-  };
+  const currentTimestamp = new Date();
   /* @conditional-compile-remove(reaction) */
-  let currentTimestamp = new Date();
-  let currentUnixTimeStamp = Math.floor(currentTimestamp.getTime() / 1000);
-  let receivedUnixTimestamp = reaction ? Math.floor(reaction.receivedAt.getTime() / 1000) : undefined;
-  let canRenderReaction = receivedUnixTimestamp ? currentUnixTimeStamp - receivedUnixTimestamp < 3000 : false;
+  const currentUnixTimeStamp = Math.floor(currentTimestamp.getTime() / 1000);
+  /* @conditional-compile-remove(reaction) */
+  const receivedUnixTimestamp = reaction ? Math.floor(reaction.receivedAt.getTime() / 1000) : undefined;
+  /* @conditional-compile-remove(reaction) */
+  const canRenderReaction = receivedUnixTimestamp ? currentUnixTimeStamp - receivedUnixTimestamp < 3000 : false;
 
   return (
     <Stack
@@ -455,7 +438,26 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
                 backgroundColor: reaction ? 'rgba(0, 0, 0, 0.5)' : 'transparent'
               })}
             >
-              <div style={reactionAnimationStyle} />
+              <div style={{ height: '33.33%' }}></div>
+              <div style={{ height: '84px', width: '84px' }}>
+                <div
+                  className={mergeStyles({
+                    height: '100%',
+                    width: '100%',
+                    backgroundImage: urlPath,
+                    overflow: 'hidden',
+                    animationName: playFrames(),
+                    animationDuration: '2.61s',
+                    animationTimingFunction: `steps(102)`,
+                    backgroundSize: `cover`,
+                    animationPlayState: 'running',
+                    animationIterationCount: 'infinite',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundPosition: `center`
+                  })}
+                />
+              </div>
             </Stack>
           )
         }

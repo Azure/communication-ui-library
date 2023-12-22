@@ -47,7 +47,7 @@ export type Reaction = {
    */
   reactionType: string;
   /**
-   * Received timestamp relative to 01-01-2020 0:0:0 hours
+   * Received timestamp for the message as default Date format.
    */
   receivedAt: Date;
 };
