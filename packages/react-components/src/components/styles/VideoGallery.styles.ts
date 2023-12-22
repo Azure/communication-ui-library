@@ -37,6 +37,9 @@ export const localVideoCameraCycleButtonStyles = (theme: Theme, size?: 'small' |
       color: '#FFFFFF',
       background: 'rgba(0,0,0,0.4)' // sets opacity of background to be visible on all backdrops in video stream.
     },
+    rootDisabled: {
+      position: 'absolute'
+    },
     icon: {
       paddingLeft: _pxToRem(3),
       paddingRight: _pxToRem(3),

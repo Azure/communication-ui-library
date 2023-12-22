@@ -294,9 +294,9 @@ export const generateDefaultDeviceMenuProps = (
                 },
                 canCheck: true,
                 isChecked: camera.id === selectedCamera?.id,
-                onClick: () => {
+                onClick: async () => {
                   if (camera.id !== selectedCamera?.id) {
-                    onSelectCamera(camera);
+                    await onSelectCamera(camera);
                   }
                 }
               }))
