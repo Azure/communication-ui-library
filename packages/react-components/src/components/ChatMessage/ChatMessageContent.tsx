@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { useEffect } from 'react';
 import { _formatString } from '@internal/acs-ui-common';
 import { Parser, ProcessNodeDefinitions, IsValidNodeDefinitions, ProcessingInstructionType } from 'html-to-react';
@@ -18,7 +17,6 @@ import { MentionDisplayOptions, Mention } from '../MentionPopover';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { FontIcon, Stack } from '@fluentui/react';
 import { MessageThreadStrings } from '../MessageThread';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AttachmentMetadata, InlineImageMetadata } from '../FileDownloadCards';
 import LiveMessage from '../Announcer/LiveMessage';
 /* @conditional-compile-remove(mention) */
@@ -30,11 +28,8 @@ type ChatMessageContentProps = {
   strings: MessageThreadStrings;
   /* @conditional-compile-remove(mention) */
   mentionDisplayOptions?: MentionDisplayOptions;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   attachmentsMap?: Record<string, string>;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   onFetchAttachments?: (attachments: AttachmentMetadata[], messageId: string) => Promise<void>;
-  /* @conditional-compile-remove(image-gallery) */
   onInlineImageClicked?: (attachmentId: string) => void;
 };
 
@@ -76,16 +71,7 @@ const MessageContentWithLiveAria = (props: MessageContentWithLiveAriaProps): JSX
 };
 
 const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Element => {
-  const {
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-    // message is used only in useEffect that is under teams-inline-images-and-file-sharing cc
-    message,
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-    attachmentsMap,
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-    onFetchAttachments
-  } = props;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  const { message, attachmentsMap, onFetchAttachments } = props;
   useEffect(() => {
     if (!attachmentsMap || !onFetchAttachments) {
       return;
@@ -200,7 +186,6 @@ const messageContentAriaText = (props: ChatMessageContentProps): string | undefi
 const processNodeDefinitions = ProcessNodeDefinitions();
 const htmlToReactParser = Parser();
 
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 const processInlineImage = (props: ChatMessageContentProps): ProcessingInstructionType => ({
   // Custom <img> processing
   shouldProcessNode: (node): boolean => {
@@ -223,11 +208,10 @@ const processInlineImage = (props: ChatMessageContentProps): ProcessingInstructi
     if (props.attachmentsMap && node.attribs.id in props.attachmentsMap) {
       node.attribs = { ...node.attribs, src: props.attachmentsMap[node.attribs.id] };
     }
-    /* @conditional-compile-remove(image-gallery) */
     const handleOnClick = (): void => {
       props.onInlineImageClicked && props.onInlineImageClicked(node.attribs.id);
     };
-    /* @conditional-compile-remove(image-gallery) */
+
     return (
       <span
         data-ui-id={node.attribs.id}
@@ -274,7 +258,6 @@ const processMention = (props: ChatMessageContentProps): ProcessingInstructionTy
 
 const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
   const steps: ProcessingInstructionType[] = [
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     processInlineImage(props),
     /* @conditional-compile-remove(mention) */
     processMention(props),
