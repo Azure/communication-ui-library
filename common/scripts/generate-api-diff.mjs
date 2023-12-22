@@ -88,8 +88,6 @@ async function generateApiJsons() {
     exit(-1);
   }
 
-  backupFiles(filesToBackup);
-
   const isAlphaFeature = inProgressFeatures.includes(feature);
 
   if (isAlphaFeature) {
