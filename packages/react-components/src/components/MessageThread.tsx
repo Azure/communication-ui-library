@@ -728,10 +728,10 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
         return;
       }
       try {
-        await onDeleteMessage(messageId);
         // reset deleted message label in case if there was a value already (messages are deleted 1 after another)
         setDeletedMessageAriaLabel(undefined);
         setLatestDeletedMessageId(messageId);
+        await onDeleteMessage(messageId);
       } catch (e) {
         console.log('onDeleteMessage failed: messageId', messageId, 'error', e);
       }
