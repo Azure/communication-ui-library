@@ -32,6 +32,7 @@ const JoinExistingChatThreadStory = (args: ArgsFrom<typeof storyControls>, conte
       {areAllControlsSet ? (
         <ContosoChatContainer
           fluentTheme={context.theme}
+          rtl={context.globals.rtl === 'rtl'}
           endpointUrl={args.endpointUrl}
           threadId={args.threadId}
           userIdentifier={args.userId}
