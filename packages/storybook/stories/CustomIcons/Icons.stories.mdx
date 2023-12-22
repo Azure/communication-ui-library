@@ -15,6 +15,8 @@ To initialize these icons you must call `initializeIcons`. This should be called
 **All the default icons can be replaced with a custom icon by providing a custom JSX element.**
 The method for providing custom icons differs between composites and components. Please read below for more details about each.
 
+Icons that are used to display file attachments in messages come from the Fluent UI `react-file-type-icons` library. To initialize these icons you must call `initializeFileTypeIcons`. This should be called once in your application.
+
 ## Composites
 
 To ensure the base set of Fluent CDN icons are initialized, you must call `initializeIcons` before rendering any composites. This should be called once in your application.
@@ -97,3 +99,12 @@ Below is a list of all the default icons you can override in Components with the
 <Canvas withSource="none">
   <IconGridWithSearch icons={DEFAULT_COMPONENT_ICONS} />
 </Canvas>
+
+## File types icons
+
+To ensure the set of Fluent file types icons is initialized, you must call `initializeFileTypeIcons` before rendering ChatComposite, CallWithChatComposite or MessageThread component. This should be called once in your application.
+
+```tsx
+import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
+initializeFileTypeIcons();
+```
