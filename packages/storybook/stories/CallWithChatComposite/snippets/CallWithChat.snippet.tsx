@@ -32,6 +32,7 @@ export type CallWithChatExampleProps = {
 
   // Props to customize the CallWithChatComposite experience
   fluentTheme?: PartialTheme | Theme;
+  rtl?: boolean;
   compositeOptions?: CallWithChatCompositeOptions;
   callInvitationURL?: string;
   formFactor?: 'desktop' | 'mobile';
@@ -62,6 +63,7 @@ export const CallWithChatExperience = (props: CallWithChatExampleProps): JSX.Ele
     <CallWithChatComposite
       adapter={adapter}
       fluentTheme={props.fluentTheme}
+      rtl={props.rtl}
       formFactor={props.formFactor}
       joinInvitationURL={props.callInvitationURL}
       options={props.compositeOptions}

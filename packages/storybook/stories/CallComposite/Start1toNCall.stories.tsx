@@ -34,6 +34,7 @@ const Start1toNCallStory = (args: ArgsFrom<typeof storyControls>, context): JSX.
           <div style={args.calleeToken ? { width: '65%' } : { width: '100%' }}>
             <ContosoCallContainer1toN
               fluentTheme={context.theme}
+              rtl={context.globals.rtl === 'rtl'}
               locator={[args.calleeUserId]}
               userId={{ communicationUserId: args.userId }}
               token={args.token}
@@ -46,6 +47,7 @@ const Start1toNCallStory = (args: ArgsFrom<typeof storyControls>, context): JSX.
             <div style={{ width: '35%' }}>
               <ContosoCallContainer1toNInbound
                 fluentTheme={context.theme}
+                rtl={context.globals.rtl === 'rtl'}
                 userId={{ communicationUserId: args.calleeUserId }}
                 token={args.calleeToken}
                 locale={compositeLocale(locale)}
