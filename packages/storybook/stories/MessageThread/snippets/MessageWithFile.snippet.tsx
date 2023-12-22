@@ -1,5 +1,8 @@
 import { FluentThemeProvider, MessageStatus, MessageThread } from '@azure/communication-react';
+import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 import React from 'react';
+
+initializeFileTypeIcons();
 
 export const MessageWithFile: () => JSX.Element = () => {
   return (

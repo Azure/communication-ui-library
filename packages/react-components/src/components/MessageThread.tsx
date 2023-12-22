@@ -41,7 +41,6 @@ import { FluentV9ThemeProvider } from './../theming/FluentV9ThemeProvider';
 import LiveAnnouncer from './Announcer/LiveAnnouncer';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from './MentionPopover';
-import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 import { createStyleFromV8Style } from './styles/v8StyleShim';
 import {
   ChatMessageComponentWrapper,
@@ -712,6 +711,9 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
 
   const localeStrings = useLocale().strings.messageThread;
   const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
+  // it is required to use useState for messages
+  // as the scrolling logic requires re - render at a specific point in time
+  const [messages, setMessages] = useState<Message[]>([]);
 
   // id for the latest deleted message
   const [latestDeletedMessageId, setLatestDeletedMessageId] = useState<string | undefined>(undefined);
@@ -746,10 +748,6 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     }
   }, [onLoadPreviousChatMessages]);
 
-  useEffect(() => {
-    initializeFileTypeIcons();
-  }, []);
-
   const previousTopRef = useRef<number>(-1);
   const previousHeightRef = useRef<number>(-1);
 
@@ -757,10 +755,6 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
 
   const chatScrollDivRef = useRef<HTMLDivElement>(null);
   const isLoadingChatMessagesRef = useRef(false);
-
-  const messages = useMemo(() => {
-    return newMessages;
-  }, [newMessages]);
 
   useEffect(() => {
     if (latestDeletedMessageId === undefined) {
@@ -786,6 +780,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   const messagesRef = useRef(messages);
   const setMessagesRef = (messagesWithAttachedValue: Message[]): void => {
     messagesRef.current = messagesWithAttachedValue;
+    setMessages(messagesWithAttachedValue);
   };
 
   const isAtBottomOfScrollRef = useRef(isAtBottomOfScroll);
