@@ -1888,7 +1888,7 @@ export interface _RatingScale {
     upperBound: number;
 }
 
-// @public
+// @beta
 export type Reaction = {
     reactionType: string;
     receivedAt: Date;

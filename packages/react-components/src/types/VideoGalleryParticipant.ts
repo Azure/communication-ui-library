@@ -99,7 +99,11 @@ export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
   /** Whether local participant is raised a hand */
   raisedHand?: RaisedHand;
   /* @conditional-compile-remove(reaction) */
-  /** Whether local participant has reacted */
+  /**
+   * Whether local participant has reacted
+   *
+   * @beta
+   * */
   reaction?: Reaction;
 }
 
@@ -124,6 +128,10 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
   /** Whether participant is raised a hand */
   raisedHand?: RaisedHand;
   /* @conditional-compile-remove(reaction) */
-  /** Whether participant has reacted */
+  /**
+   * Whether participant has reacted
+   *
+   * @beta
+   * */
   reaction?: Reaction;
 }

@@ -3607,13 +3607,13 @@ export interface RaiseHandCallFeature {
     raisedHands: RaisedHandState[];
 }
 
-// @public
+// @beta
 export type Reaction = {
     reactionType: string;
     receivedAt: Date;
 };
 
-// @public
+// @beta
 export type ReactionState = {
     reactionMessage: ReactionMessage;
     receivedAt: Date;

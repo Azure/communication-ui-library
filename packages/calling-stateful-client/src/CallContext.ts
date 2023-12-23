@@ -422,7 +422,7 @@ export class CallContext {
               call.capabilitiesFeature?.capabilities.reaction &&
               isReactionBeingPlayedNow(participant.reactionState?.receivedAt)
             ) {
-              participant.reactionState = undefined;
+              clearParticipantReactionState(this, callId, participantKey);
               clearTimeout(this._timeOutId[participantKey]);
             }
             participant.reactionState = reactionMessage
