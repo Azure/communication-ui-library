@@ -20,6 +20,7 @@ export interface CustomDataModelExampleContainerProps {
   botUserId: string;
   botAvatar: string;
   fluentTheme?: PartialTheme | Theme;
+  rtl?: boolean;
   locale?: CompositeLocale;
 }
 
@@ -80,6 +81,7 @@ export const CustomDataModelExampleContainer = (props: CustomDataModelExampleCon
       {adapter ? (
         <ChatComposite
           fluentTheme={props.fluentTheme}
+          rtl={props.rtl ?? false}
           adapter={adapter}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}

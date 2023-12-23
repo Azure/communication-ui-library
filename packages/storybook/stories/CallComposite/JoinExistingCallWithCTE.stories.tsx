@@ -31,6 +31,7 @@ const JoinExistingCallAsTeamsUserStory = (args: ArgsFrom<typeof storyControls>, 
       {areAllKnobsSet ? (
         <ContosoCTECallContainer
           fluentTheme={context.theme}
+          rtl={context.globals.rtl === 'rtl'}
           locator={args.callLocator}
           userId={{ microsoftTeamsUserId: args.userId }}
           token={args.token}

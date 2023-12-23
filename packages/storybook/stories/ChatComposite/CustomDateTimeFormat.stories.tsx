@@ -73,6 +73,7 @@ const CustomDateTimeFormatStory = (args: ArgsFrom<typeof storyControls>, context
       {containerProps ? (
         <ContosoChatContainer
           fluentTheme={context.theme}
+          rtl={context.globals.rtl === 'rtl'}
           {...containerProps}
           locale={{
             component: { strings, onDisplayDateTimeString },
