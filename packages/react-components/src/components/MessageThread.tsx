@@ -728,10 +728,12 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
         return;
       }
       try {
-        await onDeleteMessage(messageId);
         // reset deleted message label in case if there was a value already (messages are deleted 1 after another)
         setDeletedMessageAriaLabel(undefined);
         setLatestDeletedMessageId(messageId);
+        // we should set up latestDeletedMessageId before the onDeleteMessage call
+        // as otherwise in very rare cases the messages array can be updated before latestDeletedMessageId
+        await onDeleteMessage(messageId);
       } catch (e) {
         console.log('onDeleteMessage failed: messageId', messageId, 'error', e);
       }

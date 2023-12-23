@@ -150,10 +150,10 @@ export class _MockCallAdapter implements CallAdapter {
     throw Error('sendDtmfTone not implemented');
   }
   on(): void {
-    throw Error('on not implemented');
+    return;
   }
   off(): void {
-    throw Error('off not implemented');
+    return;
   }
   /* @conditional-compile-remove(PSTN-calls) */
   getEnvironmentInfo(): Promise<EnvironmentInfo> {

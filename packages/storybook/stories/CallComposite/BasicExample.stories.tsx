@@ -44,6 +44,7 @@ const BasicStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Element 
       {containerProps ? (
         <ContosoCallContainer
           fluentTheme={context.theme}
+          rtl={context.globals.rtl === 'rtl'}
           displayName={args.displayName}
           {...containerProps}
           callInvitationURL={args.callInvitationURL}
