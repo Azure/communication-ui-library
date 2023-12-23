@@ -54,6 +54,7 @@ const ThemeExampleStory = (args: ArgsFrom<typeof storyControls>, context): JSX.E
         <ContosoCallContainer
           displayName={args.displayName}
           fluentTheme={theme}
+          rtl={context.globals.rtl === 'rtl'}
           {...containerProps}
           callInvitationURL={args.callInvitationURL}
           locale={compositeLocale(locale)}

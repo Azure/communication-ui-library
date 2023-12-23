@@ -32,6 +32,7 @@ const JoinExistingCallStory = (args: ArgsFrom<typeof storyControls>, context): J
       {areAllKnobsSet ? (
         <ContosoCallContainer
           fluentTheme={context.theme}
+          rtl={context.globals.rtl === 'rtl'}
           locator={args.callLocator}
           userId={{ communicationUserId: args.userId }}
           token={args.token}
