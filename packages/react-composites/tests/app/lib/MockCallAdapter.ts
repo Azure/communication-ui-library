@@ -155,10 +155,10 @@ export class MockCallAdapter implements CallAdapter {
     });
   }
   on(): void {
-    throw Error('on not implemented');
+    return;
   }
   off(): void {
-    throw Error('off not implemented');
+    return;
   }
 
   private modifyState(modifier: (draft: CallAdapterState) => void): void {

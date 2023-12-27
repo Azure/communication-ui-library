@@ -410,7 +410,12 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           /* @conditional-compile-remove(video-background-effects) */
           customWidth={`${VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM}rem`}
         >
-          <SidePane mobileView={props.mobileView} updateSidePaneRenderer={props.updateSidePaneRenderer} />
+          <SidePane
+            mobileView={props.mobileView}
+            updateSidePaneRenderer={props.updateSidePaneRenderer}
+            maxWidth={`${VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM}rem`}
+            minWidth={`${VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM}rem`}
+          />
         </Panel>
       </Stack>
     </Stack>
