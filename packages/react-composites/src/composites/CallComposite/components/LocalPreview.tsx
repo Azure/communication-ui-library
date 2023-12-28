@@ -54,6 +54,7 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
     isLocalMicrophoneEnabled ? adapter.mute() : adapter.unmute();
   }, [adapter, isLocalMicrophoneEnabled]);
 
+  const hasNoSpeakers = !devicesButtonProps.speakers.length;
   const hasNoDevices =
     devicesButtonProps.cameras.length === 0 &&
     devicesButtonProps.microphones.length === 0 &&
@@ -149,7 +150,7 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
               data-ui-id="call-composite-local-device-settings-options-button"
               {...devicesButtonProps}
               // disable button whilst all other buttons are disabled
-              disabled={!microphonePermissionGranted || !cameraPermissionGranted || hasNoDevices}
+              disabled={(!microphonePermissionGranted && !cameraPermissionGranted && hasNoSpeakers) || hasNoDevices}
               showLabel={true}
               // disable tooltip as it obscures list of devices on mobile
               strings={props.mobileView ? { tooltipContent: '' } : {}}
