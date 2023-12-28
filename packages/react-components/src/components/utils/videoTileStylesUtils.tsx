@@ -18,8 +18,8 @@ export const getVideoTileOverrideColor = (isVideoRendered: boolean, theme: Theme
  */
 export const reactionEmoji = new Map<string, string>([
   ['like', `url('/assets/reactions/likeEmoji.png')`],
-  ['applause', `url('/assets/clapEmoji.png')`],
-  ['heart', `url('/assets/heartEmoji.png')`],
-  ['laugh', `url('/assets/laughEmoji.png')`],
-  ['surprised', `url('/assets/surprisedEmoji.png')`]
+  ['applause', `url('/assets/reactions/clapEmoji.png')`],
+  ['heart', `url('/assets/reactions/heartEmoji.png')`],
+  ['laugh', `url('/assets/reactions/laughEmoji.png')`],
+  ['surprised', `url('/assets/reactions/surprisedEmoji.png')`]
 ]);

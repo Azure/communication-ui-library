@@ -180,7 +180,7 @@ export const raiseHandLimitedSpaceStyles: IStyle = {
 export const playFrames = memoizeFunction(() =>
   keyframes({
     from: {
-      backgroundPosition: '0px 8668px'
+      backgroundPosition: '0px 8568px'
     },
     to: {
       backgroundPosition: '0px 0px'

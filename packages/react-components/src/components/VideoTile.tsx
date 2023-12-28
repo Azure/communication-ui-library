@@ -444,17 +444,18 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
                   className={mergeStyles({
                     height: '100%',
                     width: '100%',
-                    backgroundImage: urlPath,
                     overflow: 'hidden',
                     animationName: playFrames(),
-                    animationDuration: '2.61s',
+                    backgroundImage: urlPath,
+                    animationDuration: '5.12s',
                     animationTimingFunction: `steps(102)`,
                     backgroundSize: `cover`,
                     animationPlayState: 'running',
                     animationIterationCount: 'infinite',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    backgroundPosition: `center`
+                    backgroundPosition: `center`,
+                    transform: `scale(${84 < personaSize ? 84 / personaSize : personaSize / 84})`
                   })}
                 />
               </div>
