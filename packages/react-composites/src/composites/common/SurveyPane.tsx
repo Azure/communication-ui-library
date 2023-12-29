@@ -57,7 +57,7 @@ export const SurveyPane = (props: {
     () => (
       <>
         {showSubmitFeedbackButton && (
-          <Stack style={{ borderTop: 'solid', borderTopColor: 'lightgrey' }} horizontalAlign="end">
+          <Stack horizontalAlign="end">
             <PrimaryButton
               style={{ marginTop: '1rem' }}
               onClick={() => {
