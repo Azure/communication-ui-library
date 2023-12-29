@@ -1,0 +1,73 @@
+import { Stack } from '@fluentui/react';
+import { Meta } from '@storybook/addon-docs';
+import { DetailedBetaBanner } from './BetaBanners/DetailedBetaBanner';
+
+<Meta
+  id="endofcallsurvey"
+  title="Concepts/End of Call Survey"
+  parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }}
+/>
+
+## End of Call Survey
+
+<DetailedBetaBanner version={'1.11.0-beta.2'} />
+
+Azure Communication Services UI Library is adding support for End of Call Survey.
+With this new feature, users can display star surveys and checkbox surveys at the end of the call to gather feedback on call quality/experience.
+Enable this feature to listen to the end users and improve calling experience. Results from end of call survey is also very helpful for Azure Communication Services to diagose potential calling issues and improve overall calling experience.
+
+### Handling Survey Results
+
+Survey feedbacks are automatically sent to calling diagnostics.
+Contoso can gain access to the survey results by passing in a custom function utilizing the onSurveySubmitted prop inside surveyOptions.
+With onSurveySubmitted populated, a free form text survey is available to the call users at end of call to gather more detailed feedback.
+
+- Note that results from the free form text survey will not be sent to Calling Diagnostics. Text results are accessible through improvementSuggestions prop from onSurveySubmitted and need to be collected and handled by Contoso.
+
+### Enable free form text survey and gain access to survey data
+
+<Stack tokens={{ childrenGap: '3rem' }}>
+  <Stack.Item align="center">
+    <img src="images/enableFreeFormText.png" alt="example of enabling free form text survey and using survey data" />
+  </Stack.Item>
+</Stack>
+
+### Incorporating End of Call Survey into your experience
+
+The UI Library enables users to display surveys at end of call by providing the option to use end of call survey within the CallComposite and CallWithChat experiences.
+End of Call Survey can be enabled both in Mobile Web sessions and in Desktop Web sessions.
+End of Call Survey is enabled by default and are automatically included within the CallComposite and CallWithChatComposite experiences.
+
+### End of Call Survey Flow
+
+Upon clicking on end call, user will see star survey shown in a side pane
+
+<Stack tokens={{ childrenGap: '3rem' }}>
+  <Stack.Item align="center">
+    <img src="images/starSurvey.png" alt="example of star survey" />
+  </Stack.Item>
+</Stack>
+
+Upon selecting <= 2 stars, user will see checkbox surveys
+
+<Stack tokens={{ childrenGap: '3rem' }}>
+  <Stack.Item align="center">
+    <img src="images/tagSurveyNoFreeFormText.png" alt="example of checkbox survey without free form text field" />
+  </Stack.Item>
+</Stack>
+
+Checkbox surveys will include free form text option if it is enabled by Contoso
+
+<Stack tokens={{ childrenGap: '3rem' }}>
+  <Stack.Item align="center">
+    <img src="images/tagSurvey.png" alt="example of checkbox survey with free form text field" />
+  </Stack.Item>
+</Stack>
+
+### Disable End of Call survey
+
+<Stack tokens={{ childrenGap: '3rem' }}>
+  <Stack.Item align="center">
+    <img src="images/disableEndOfCallSurvey.png" alt="example of disabling end of call survey" />
+  </Stack.Item>
+</Stack>
