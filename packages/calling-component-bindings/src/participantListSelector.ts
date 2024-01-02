@@ -18,7 +18,7 @@ import { _isRingingPSTNParticipant, _updateUserDisplayNames } from './utils/call
 import { memoizedConvertAllremoteParticipants } from './utils/participantListSelectorUtils';
 /* @conditional-compile-remove(rooms) */
 import { memoizedConvertAllremoteParticipantsBetaRelease } from './utils/participantListSelectorUtils';
-/* @conditional-compile-remove(raise-hand) */
+/* @conditional-compile-remove(reaction) */
 import { memoizedConvertAllremoteParticipantsBeta } from './utils/participantListSelectorUtils';
 /* @conditional-compile-remove(raise-hand) */
 import { getLocalParticipantRaisedHand } from './baseSelectors';
@@ -110,7 +110,7 @@ const convertRemoteParticipantsToParticipantListParticipants = (
         })
     );
   };
-  /* @conditional-compile-remove(raise-hand) */
+  /* @conditional-compile-remove(reaction) */
   return memoizedConvertAllremoteParticipantsBeta(conversionCallback);
   /* @conditional-compile-remove(rooms) */
   return memoizedConvertAllremoteParticipantsBetaRelease(conversionCallback);

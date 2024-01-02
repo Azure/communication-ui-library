@@ -107,6 +107,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     const dominantSpeakersMap: Record<string, number> = {};
     dominantSpeakerIds?.forEach((speaker, idx) => (dominantSpeakersMap[speaker] = idx));
     const noRemoteParticipants: RemoteParticipantState[] = [];
+    /* @conditional-compile-remove(reaction) */
     const localParticipantReaction =
       localParticipantReactionState && localParticipantReactionState.reactionMessage
         ? {

@@ -6,7 +6,6 @@ import {
   AudioDeviceInfo,
   DeviceAccess,
   DominantSpeakersInfo,
-  ReactionMessage,
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
@@ -54,6 +53,8 @@ import { LocalVideoStreamVideoEffectsState } from './CallClientState';
 import { convertFromSDKToCaptionInfoState } from './Converter';
 /* @conditional-compile-remove(raise-hand) */
 import { convertFromSDKToRaisedHandState } from './Converter';
+/* @conditional-compile-remove(reaction) */
+import { ReactionMessage } from '@azure/communication-calling';
 
 enableMapSet();
 // Needed to generate state diff for verbose logging.
@@ -74,6 +75,7 @@ export class CallContext {
   private _emitter: EventEmitter;
   private _atomicId: number;
   private _callIdHistory: CallIdHistory = new CallIdHistory();
+  /* @conditional-compile-remove(reaction) */
   private _timeOutId: { [key: string]: any } = {};
 
   constructor(

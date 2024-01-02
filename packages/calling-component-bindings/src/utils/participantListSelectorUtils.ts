@@ -21,6 +21,7 @@ export const memoizedConvertAllremoteParticipants = memoizeFnAll(
     isMuted: boolean,
     isScreenSharing: boolean,
     isSpeaking: boolean,
+    raisedHand: RaisedHandState | undefined,
     localUserCanRemoveOthers: boolean
   ): CallParticipantListParticipant => {
     return convertRemoteParticipantToParticipantListParticipant(
@@ -30,6 +31,7 @@ export const memoizedConvertAllremoteParticipants = memoizeFnAll(
       isMuted,
       isScreenSharing,
       isSpeaking,
+      raisedHand,
       localUserCanRemoveOthers
     );
   }
@@ -42,6 +44,7 @@ const convertRemoteParticipantToParticipantListParticipant = (
   isMuted: boolean,
   isScreenSharing: boolean,
   isSpeaking: boolean,
+  raisedHand: RaisedHandState | undefined,
   localUserCanRemoveOthers: boolean
 ): CallParticipantListParticipant => {
   const identifier = fromFlatCommunicationIdentifier(userId);
@@ -73,6 +76,7 @@ export const memoizedConvertAllremoteParticipantsBetaRelease = memoizeFnAll(
     isMuted: boolean,
     isScreenSharing: boolean,
     isSpeaking: boolean,
+    raisedHand: RaisedHandState | undefined,
     localUserCanRemoveOthers: boolean
   ): CallParticipantListParticipant => {
     return convertRemoteParticipantToParticipantListParticipantBetaRelease(
@@ -82,12 +86,13 @@ export const memoizedConvertAllremoteParticipantsBetaRelease = memoizeFnAll(
       isMuted,
       isScreenSharing,
       isSpeaking,
+      raisedHand,
       localUserCanRemoveOthers
     );
   }
 );
 
-/* @conditional-compile-remove(raise-hand) */
+/* @conditional-compile-remove(reaction) */
 /**
  * @private
  */
@@ -125,6 +130,7 @@ const convertRemoteParticipantToParticipantListParticipantBetaRelease = (
   isMuted: boolean,
   isScreenSharing: boolean,
   isSpeaking: boolean,
+  raisedHand: RaisedHandState | undefined,
   localUserCanRemoveOthers: boolean
 ): CallParticipantListParticipant => {
   return {
@@ -135,12 +141,13 @@ const convertRemoteParticipantToParticipantListParticipantBetaRelease = (
       isMuted,
       isScreenSharing,
       isSpeaking,
+      raisedHand,
       localUserCanRemoveOthers
     )
   };
 };
 
-/* @conditional-compile-remove(raise-hand) */
+/* @conditional-compile-remove(reaction) */
 const convertRemoteParticipantToParticipantListParticipantBeta = (
   userId: string,
   displayName: string | undefined,
@@ -160,9 +167,9 @@ const convertRemoteParticipantToParticipantListParticipantBeta = (
       isMuted,
       isScreenSharing,
       isSpeaking,
+      raisedHand,
       localUserCanRemoveOthers
     ),
-    raisedHand,
     reaction
   };
 };

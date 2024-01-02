@@ -29,9 +29,10 @@ import {
   videoContainerStyles,
   videoHint,
   tileInfoContainerStyle,
-  participantStateStringStyles,
-  playFrames
+  participantStateStringStyles
 } from './styles/VideoTile.styles';
+/* @conditional-compile-remove(reaction) */
+import { playFrames } from './styles/VideoTile.styles';
 import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
 /* @conditional-compile-remove(reaction) */
 import { reactionEmoji } from './utils/videoTileStylesUtils';

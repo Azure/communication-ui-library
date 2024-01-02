@@ -65,6 +65,7 @@ export const _videoGalleryRemoteParticipantsMemo: (
             participant.role,
             isHideAttendeeNamesEnabled
           );
+          /* @conditional-compile-remove(reaction) */
           const remoteParticipantReaction: Reaction | undefined =
             participant.reactionState && participant.reactionState.reactionMessage
               ? {
@@ -100,7 +101,7 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     /* @conditional-compile-remove(raise-hand) */
     raisedHand?: unknown, // temp unknown type to build stable
     /* @conditional-compile-remove(reaction) */
-    reaction?: Reaction
+    reaction?: unknown // temp unknown type to build stable
   ): VideoGalleryRemoteParticipant => {
     return convertRemoteParticipantToVideoGalleryRemoteParticipant(
       userId,
@@ -112,7 +113,7 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
       /* @conditional-compile-remove(raise-hand) */
       raisedHand as RaisedHandState,
       /* @conditional-compile-remove(reaction) */
-      reaction
+      reaction as Reaction
     );
   }
 );
@@ -128,7 +129,7 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   /* @conditional-compile-remove(raise-hand) */
   raisedHand?: unknown, // temp unknown type to build stable
   /* @conditional-compile-remove(reaction) */
-  reaction?: Reaction // temp unknown type to build stable
+  reaction?: unknown // temp unknown type to build stable
 ): VideoGalleryRemoteParticipant => {
   const rawVideoStreamsArray = Object.values(videoStreams);
   let videoStream: VideoGalleryStream | undefined = undefined;
@@ -162,7 +163,8 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     state,
     /* @conditional-compile-remove(raise-hand) */
     raisedHand: raisedHand as RaisedHandState,
-    reaction: reaction
+    /* @conditional-compile-remove(reaction) */
+    reaction: reaction as Reaction
   };
 };
 
