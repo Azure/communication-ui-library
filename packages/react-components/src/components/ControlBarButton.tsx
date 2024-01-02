@@ -153,6 +153,7 @@ export const ControlBarButton = (props: ControlBarButtonProps): JSX.Element => {
         allowDisabledFocus={props.allowDisabledFocus ?? true}
         menuTriggerKeyCode={KeyCodes.down} // explicitly sets the keypress to activiate the split button drop down.
         text={undefined} // this is handled as a child of the button, without this the `showLabel` prop may be ignored.
+        toggle={props.toggle ?? (props['aria-pressed'] as boolean | undefined)} // Fluent handles aria-pressed with the toggle field: https://github.com/microsoft/fluentui/issues/6353
       >
         {props.showLabel ? labelText : <></>}
       </DefaultButton>
