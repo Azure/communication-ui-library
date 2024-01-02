@@ -1060,6 +1060,6 @@ const findOldestCallEnded = (calls: { [key: string]: { endTime?: Date } }): stri
 };
 
 /* @conditional-compile-remove(reaction) */
-function clearParticipantReactionState(callContext: CallContext, callId: string, participantKey: string) {
+function clearParticipantReactionState(callContext: CallContext, callId: string, participantKey: string): void {
   callContext.setReceivedReactionFromParticipant(callId, participantKey, null);
 }
