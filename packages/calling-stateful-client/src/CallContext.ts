@@ -1063,14 +1063,3 @@ const findOldestCallEnded = (calls: { [key: string]: { endTime?: Date } }): stri
 function clearParticipantReactionState(callContext: CallContext, callId: string, participantKey: string) {
   callContext.setReceivedReactionFromParticipant(callId, participantKey, null);
 }
-
-function isReactionBeingPlayedNow(receivedAt: Date | undefined) {
-  if (receivedAt === undefined) {
-    return false;
-  }
-  const currentTimeStamp = new Date();
-  const unixBasedCurrentTimeStamp = Math.floor(currentTimeStamp.getTime() / 1000);
-  const unixBasedReceivedTimeStamp = Math.floor(receivedAt?.getTime() / 1000);
-
-  return unixBasedCurrentTimeStamp - unixBasedReceivedTimeStamp < 3000;
-}

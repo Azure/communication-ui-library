@@ -917,6 +917,7 @@ export interface CallState {
     isMuted: boolean;
     isScreenSharingOn: boolean;
     kind: CallKind;
+    // @beta
     localParticipantReactionState?: ReactionState;
     localVideoStreams: LocalVideoStreamState[];
     optimalVideoCount: OptimalVideoCountFeatureState;
@@ -3640,6 +3641,7 @@ export interface RemoteParticipantState {
     isMuted: boolean;
     isSpeaking: boolean;
     raisedHand?: RaisedHandState;
+    // @beta
     reactionState?: ReactionState;
     role?: ParticipantRole;
     state: RemoteParticipantState_2;
@@ -4236,6 +4238,7 @@ export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | /* @conditio
 // @public
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
     raisedHand?: RaisedHand;
+    // @beta
     reaction?: Reaction;
 }
 
@@ -4284,6 +4287,7 @@ export interface VideoGalleryProps {
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     isSpeaking?: boolean;
     raisedHand?: RaisedHand;
+    // @beta
     reaction?: Reaction;
     screenShareStream?: VideoGalleryStream;
     // @beta

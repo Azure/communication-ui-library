@@ -2513,6 +2513,7 @@ export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | /* @conditio
 // @public
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
     raisedHand?: RaisedHand;
+    // @beta
     reaction?: Reaction;
 }
 
@@ -2561,6 +2562,7 @@ export interface VideoGalleryProps {
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     isSpeaking?: boolean;
     raisedHand?: RaisedHand;
+    // @beta
     reaction?: Reaction;
     screenShareStream?: VideoGalleryStream;
     // @beta

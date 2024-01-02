@@ -116,6 +116,7 @@ export interface CallState {
     isMuted: boolean;
     isScreenSharingOn: boolean;
     kind: CallKind;
+    // @beta
     localParticipantReactionState?: ReactionState;
     localVideoStreams: LocalVideoStreamState[];
     optimalVideoCount: OptimalVideoCountFeatureState;
@@ -290,6 +291,7 @@ export interface RemoteParticipantState {
     isMuted: boolean;
     isSpeaking: boolean;
     raisedHand?: RaisedHandState;
+    // @beta
     reactionState?: ReactionState;
     role?: ParticipantRole;
     state: RemoteParticipantState_2;
