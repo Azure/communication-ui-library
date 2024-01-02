@@ -36,6 +36,7 @@ export const People = (props: ControlBarButtonProps): JSX.Element => {
     <ControlBarButton
       {...props}
       data-ui-id="call-composite-participants-button"
+      aria-pressed={props.checked}
       strings={strings}
       labelKey={'peopleButtonLabelKey'}
       onRenderOnIcon={onRenderOnIcon ?? icon}

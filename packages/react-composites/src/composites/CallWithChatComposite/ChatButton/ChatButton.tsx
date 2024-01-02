@@ -26,6 +26,7 @@ export const ChatButton = (props: ControlBarButtonProps): JSX.Element => {
   return (
     <ControlBarButton
       {...props}
+      aria-pressed={props.checked}
       labelKey={'chatButtonLabelKey'}
       strings={strings}
       onClick={props.onClick}

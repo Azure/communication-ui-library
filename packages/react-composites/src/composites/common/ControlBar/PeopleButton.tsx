@@ -30,6 +30,7 @@ export const PeopleButton = (props: ControlBarButtonProps): JSX.Element => {
   return (
     <ControlBarButton
       {...props}
+      aria-pressed={props.checked}
       strings={strings}
       labelKey={'peopleButtonLabelKey'}
       onRenderOnIcon={onRenderOnIcon ?? icon}
