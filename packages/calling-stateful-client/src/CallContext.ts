@@ -411,46 +411,27 @@ export class CallContext {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
 
-      if (call) {
-        const participant = call.remoteParticipants[participantKey];
+      if (!call) {
+        return;
+      }
 
-        if (participant) {
-          if (reactionMessage === null) {
-            participant.reactionState = undefined;
-          } else {
-            if (
-              call.capabilitiesFeature?.capabilities.reaction &&
-              isReactionBeingPlayedNow(participant.reactionState?.receivedAt)
-            ) {
-              clearParticipantReactionState(this, callId, participantKey);
-              clearTimeout(this._timeOutId[participantKey]);
-            }
-            participant.reactionState = reactionMessage
-              ? { reactionMessage: reactionMessage, receivedAt: new Date() }
-              : undefined;
-            this._timeOutId[participantKey] = setTimeout(() => {
-              clearParticipantReactionState(this, callId, participantKey);
-            }, 5120);
-          }
-        } else if (participantKey === toFlatCommunicationIdentifier(this._state.userId)) {
-          if (reactionMessage === null) {
-            call.localParticipantReactionState = undefined;
-          } else {
-            if (
-              call.capabilitiesFeature?.capabilities.reaction &&
-              isReactionBeingPlayedNow(call.localParticipantReactionState?.receivedAt)
-            ) {
-              clearParticipantReactionState(this, callId, participantKey);
-              clearTimeout(this._timeOutId[participantKey]);
-            }
-            call.localParticipantReactionState = reactionMessage
-              ? { reactionMessage: reactionMessage, receivedAt: new Date() }
-              : undefined;
-            this._timeOutId[participantKey] = setTimeout(() => {
-              clearParticipantReactionState(this, callId, participantKey);
-            }, 5120);
-          }
-        }
+      clearTimeout(this._timeOutId[participantKey]);
+
+      const participant = call.remoteParticipants[participantKey];
+      const newReactionState = reactionMessage
+        ? { reactionMessage: reactionMessage, receivedAt: new Date() }
+        : undefined;
+
+      if (participantKey === toFlatCommunicationIdentifier(this._state.userId)) {
+        call.localParticipantReactionState = newReactionState;
+      } else {
+        participant.reactionState = newReactionState;
+      }
+
+      if (reactionMessage) {
+        this._timeOutId[participantKey] = setTimeout(() => {
+          clearParticipantReactionState(this, callId, participantKey);
+        }, 5120);
       }
     });
   }
