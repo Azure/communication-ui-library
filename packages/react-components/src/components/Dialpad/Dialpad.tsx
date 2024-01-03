@@ -1,9 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useEffect } from 'react';
-/* @conditional-compile-remove(dtmf-dialer) */
-import { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { IStyle, IButtonStyles, ITextFieldStyles } from '@fluentui/react';
 
 import { IconButton } from '@fluentui/react';
@@ -255,15 +253,18 @@ const DialpadContainer = (props: {
     isMobile = false
   } = props;
 
-  const [plainTextValue, setPlainTextValue] = useState(textFieldValue ?? '');
   /* @conditional-compile-remove(dtmf-dialer) */
   const dtmfToneAudioContext = useRef(new AudioContext());
 
+  const [plainTextValue, setPlainTextValue] = useState(textFieldValue ?? '');
+  const plainTextValuePreviousRenderValue = useRef(plainTextValue);
+
   useEffect(() => {
-    if (onChange) {
+    if (onChange && plainTextValuePreviousRenderValue.current !== plainTextValue) {
+      plainTextValuePreviousRenderValue.current = plainTextValue;
       onChange(plainTextValue);
     }
-  }, [plainTextValue, onChange]);
+  }, [plainTextValuePreviousRenderValue, plainTextValue, onChange]);
 
   useEffect(() => {
     setText(textFieldValue ?? '');
