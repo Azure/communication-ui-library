@@ -10,25 +10,14 @@ export class Tone {
   private context: AudioContext;
   private frequency1: number;
   private frequency2: number;
-  private oscillatorNode1: OscillatorNode;
-  private oscillatorNode2: OscillatorNode;
+  private oscillatorNode1?: OscillatorNode;
+  private oscillatorNode2?: OscillatorNode;
   private isPlaying: boolean = false;
 
   constructor(context: AudioContext, frequency1: number, frequency2: number) {
     this.context = context;
     this.frequency1 = frequency1;
     this.frequency2 = frequency2;
-    const gainNode = this.context.createGain();
-    gainNode.gain.value = 0.1;
-    gainNode.connect(this.context.destination);
-
-    this.oscillatorNode1 = this.context.createOscillator();
-    this.oscillatorNode1.frequency.value = this.frequency1;
-    this.oscillatorNode1.connect(gainNode);
-
-    this.oscillatorNode2 = this.context.createOscillator();
-    this.oscillatorNode2.frequency.value = this.frequency2;
-    this.oscillatorNode2.connect(gainNode);
   }
 
   /**
@@ -59,11 +48,13 @@ export class Tone {
    * Function to stop the tone.
    */
   public stop = (): void => {
-    this.oscillatorNode1.stop();
-    this.oscillatorNode2.stop();
-    this.oscillatorNode1.disconnect();
-    this.oscillatorNode2.disconnect();
-    this.isPlaying = false;
+    if (this.oscillatorNode1 && this.oscillatorNode2) {
+      this.oscillatorNode1.stop();
+      this.oscillatorNode2.stop();
+      this.oscillatorNode1.disconnect();
+      this.oscillatorNode2.disconnect();
+      this.isPlaying = false;
+    }
   };
 }
 
