@@ -33,7 +33,7 @@ import { useLocale } from '../localization/LocalizationProvider';
 import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
 import getParticipantsWhoHaveReadMessage from './utils/getParticipantsWhoHaveReadMessage';
 /* @conditional-compile-remove(file-sharing) */
-import { FileDownloadHandler } from './FileDownloadCards';
+import { FileDownloadHandler, AttachmentMetadata } from './FileDownloadCards';
 import { InlineImageMetadata } from './FileDownloadCards';
 import { InlineImageSourceResult } from './FileDownloadCards';
 import { useTheme } from '../theming';
