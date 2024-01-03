@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { DtmfTone } from '../..';
-
 /**
  * Class for playing individual DTMF Tones.
  *
@@ -14,6 +12,7 @@ export class Tone {
   private frequency2: number;
   private oscillatorNode1: OscillatorNode;
   private oscillatorNode2: OscillatorNode;
+  private isPlaying: boolean = false;
 
   constructor(context: AudioContext, frequency1: number, frequency2: number) {
     this.context = context;
@@ -37,6 +36,9 @@ export class Tone {
    * new ones every time we play a tone.
    */
   public play = (): void => {
+    if (this.isPlaying) {
+      return;
+    }
     const gainNode = this.context.createGain();
     gainNode.gain.value = 0.1;
     gainNode.connect(this.context.destination);
@@ -50,6 +52,7 @@ export class Tone {
     this.oscillatorNode2.connect(gainNode);
     this.oscillatorNode1.start();
     this.oscillatorNode2.start();
+    this.isPlaying = true;
   };
 
   /**
@@ -60,109 +63,7 @@ export class Tone {
     this.oscillatorNode2.stop();
     this.oscillatorNode1.disconnect();
     this.oscillatorNode2.disconnect();
-  };
-}
-
-/**
- * Tone generator for playing all the DTMF tones.
- *
- * @internal
- */
-export class DTMFToneGenerator {
-  private tones: Tone[];
-
-  constructor(context: AudioContext) {
-    this.tones = [];
-    for (const key in dtmfFrequencies) {
-      const frequencies = dtmfFrequencies[key];
-      this.tones.push(new Tone(context, frequencies.f1, frequencies.f2));
-    }
-  }
-
-  public playTone = (tone: DtmfTone): void => {
-    switch (tone) {
-      case 'Num1':
-        this.tones[0].play();
-        break;
-      case 'Num2':
-        this.tones[1].play();
-        break;
-      case 'Num3':
-        this.tones[2].play();
-        break;
-      case 'Num4':
-        this.tones[3].play();
-        break;
-      case 'Num5':
-        this.tones[4].play();
-        break;
-      case 'Num6':
-        this.tones[5].play();
-        break;
-      case 'Num7':
-        this.tones[6].play();
-        break;
-      case 'Num8':
-        this.tones[7].play();
-        break;
-      case 'Num9':
-        this.tones[8].play();
-        break;
-      case 'Star':
-        this.tones[9].play();
-        break;
-      case 'Num0':
-        this.tones[10].play();
-        break;
-      case 'Pound':
-        this.tones[11].play();
-        break;
-      default:
-        break;
-    }
-  };
-
-  public stopTone = (tone: DtmfTone): void => {
-    switch (tone) {
-      case 'Num1':
-        this.tones[0].stop();
-        break;
-      case 'Num2':
-        this.tones[1].stop();
-        break;
-      case 'Num3':
-        this.tones[2].stop();
-        break;
-      case 'Num4':
-        this.tones[3].stop();
-        break;
-      case 'Num5':
-        this.tones[4].stop();
-        break;
-      case 'Num6':
-        this.tones[5].stop();
-        break;
-      case 'Num7':
-        this.tones[6].stop();
-        break;
-      case 'Num8':
-        this.tones[7].stop();
-        break;
-      case 'Num9':
-        this.tones[8].stop();
-        break;
-      case 'Star':
-        this.tones[9].stop();
-        break;
-      case 'Num0':
-        this.tones[10].stop();
-        break;
-      case 'Pound':
-        this.tones[11].stop();
-        break;
-      default:
-        break;
-    }
+    this.isPlaying = false;
   };
 }
 

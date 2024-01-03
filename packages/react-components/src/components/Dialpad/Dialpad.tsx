@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { IStyle, IButtonStyles, ITextFieldStyles } from '@fluentui/react';
 
 import { IconButton } from '@fluentui/react';
@@ -29,6 +29,7 @@ import {
 } from '../styles/Dialpad.styles';
 import { formatPhoneNumber } from '../utils/formatPhoneNumber';
 import useLongPress from '../utils/useLongPress';
+import { dtmfFrequencies, Tone } from './DTMFToneGenerator';
 
 /**
  * Strings of {@link Dialpad} that can be overridden.
@@ -145,10 +146,17 @@ const DialpadButton = (props: {
   onClick: (input: string, index: number) => void;
   onLongPress: (input: string, index: number) => void;
   isMobile?: boolean;
+  dtmfToneAudioContext: AudioContext;
 }): JSX.Element => {
   const theme = useTheme();
 
-  const { digit, index, onClick, onLongPress, isMobile = false } = props;
+  const { digit, index, onClick, onLongPress, isMobile = false, dtmfToneAudioContext } = props;
+
+  const [buttonPressed, setButtonPressed] = useState(false);
+
+  const dtmfToneSound = useRef<Tone>(
+    new Tone(dtmfToneAudioContext, dtmfFrequencies[digit].f1, dtmfFrequencies[digit].f2)
+  );
 
   const useLongPressProps = React.useMemo(
     () => ({
@@ -170,6 +178,28 @@ const DialpadButton = (props: {
       data-test-id={`dialpad-button-${props.index}`}
       styles={concatStyleSets(buttonStyles(theme), props.styles?.button)}
       {...longPressHandlers}
+      onKeyDown={(e) => {
+        if ((e.key === 'Enter' || e.key === ' ') && !buttonPressed) {
+          dtmfToneSound.current.play();
+          longPressHandlers.onKeyDown();
+          setButtonPressed(true);
+        }
+      }}
+      onKeyUp={(e) => {
+        if ((e.key === 'Enter' || e.key === ' ') && buttonPressed) {
+          dtmfToneSound.current.stop();
+          longPressHandlers.onKeyUp();
+          setButtonPressed(false);
+        }
+      }}
+      onMouseDown={() => {
+        dtmfToneSound.current.play();
+        longPressHandlers.onMouseDown();
+      }}
+      onMouseUp={() => {
+        dtmfToneSound.current.stop();
+        longPressHandlers.onMouseUp();
+      }}
     >
       <Stack>
         <Text className={mergeStyles(digitStyles(theme), props.styles?.digit)}>{props.digit}</Text>
@@ -207,6 +237,7 @@ const DialpadContainer = (props: {
   } = props;
 
   const [plainTextValue, setPlainTextValue] = useState(textFieldValue ?? '');
+  const dtmfToneAudioContext = useRef(new AudioContext());
 
   useEffect(() => {
     if (onChange) {
@@ -322,6 +353,7 @@ const DialpadContainer = (props: {
                   onClick={onClickDialpad}
                   onLongPress={onLongPressDialpad}
                   isMobile={isMobile}
+                  dtmfToneAudioContext={dtmfToneAudioContext.current}
                 />
               ))}
             </Stack>
