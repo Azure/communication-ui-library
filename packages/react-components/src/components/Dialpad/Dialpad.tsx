@@ -229,6 +229,22 @@ const DialpadButton = (props: {
         dtmfToneSound.current.stop();
         longPressHandlers.onMouseUp();
       }}
+      onMouseLeave={() => {
+        /* @conditional-compile-remove(dtmf-dialer) */
+        dtmfToneSound.current.stop();
+      }}
+      onTouchStart={() => {
+        /* @conditional-compile-remove(dtmf-dialer) */
+        if (!disableDtmfPlayback) {
+          dtmfToneSound.current.play();
+        }
+        longPressHandlers.onTouchStart();
+      }}
+      onTouchEnd={() => {
+        /* @conditional-compile-remove(dtmf-dialer) */
+        dtmfToneSound.current.stop();
+        longPressHandlers.onTouchEnd();
+      }}
     >
       <Stack>
         <Text className={mergeStyles(digitStyles(theme), props.styles?.digit)}>{props.digit}</Text>
@@ -329,15 +345,6 @@ const DialpadContainer = (props: {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onChange={(e: any) => {
           setText(e.target.value);
-        }}
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        onClick={(e: any) => {
-          const input = e.target;
-          const end = input.value.length;
-
-          // Move focus to end of input field
-          input.setSelectionRange(end, end);
-          input.focus();
         }}
         placeholder={props.strings.placeholderText}
         data-test-id="dialpad-input"
