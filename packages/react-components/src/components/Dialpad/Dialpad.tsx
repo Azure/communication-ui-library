@@ -260,10 +260,10 @@ const DialpadContainer = (props: {
   const plainTextValuePreviousRenderValue = useRef(plainTextValue);
 
   useEffect(() => {
-    if (onChange && plainTextValuePreviousRenderValue.current !== plainTextValue) {
-      plainTextValuePreviousRenderValue.current = plainTextValue;
-      onChange(plainTextValue);
+    if (plainTextValuePreviousRenderValue.current !== plainTextValue) {
+      onChange?.(plainTextValue);
     }
+    plainTextValuePreviousRenderValue.current = plainTextValue;
   }, [plainTextValuePreviousRenderValue, plainTextValue, onChange]);
 
   useEffect(() => {
