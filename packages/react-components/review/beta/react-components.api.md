@@ -67,12 +67,6 @@ export type AnnouncerProps = {
 };
 
 // @public
-export interface AttachmentDownloadResult {
-    attachmentId: string;
-    blobUrl: string;
-}
-
-// @public
 export type AttachmentMetadata = InlineImageMetadata | /* @conditional-compile-remove(file-sharing) */ FileMetadata;
 
 // @internal
@@ -1342,6 +1336,11 @@ export interface InlineImageMetadata {
     url: string;
 }
 
+// @public
+export interface InlineImageSourceResult {
+    blobUrl: string;
+}
+
 // @internal
 export type _IssueCategory = 'overallRating' | 'audioRating' | 'videoRating' | 'screenshareRating';
 
@@ -1538,7 +1537,7 @@ export type MessageThreadProps = {
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
     onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
-    onFetchAttachments?: (attachments: AttachmentMetadata[]) => Promise<AttachmentDownloadResult[]>;
+    onFetchInlineImageSource?: (attachment: InlineImageMetadata) => Promise<InlineImageSourceResult>;
     onUpdateMessage?: UpdateMessageCallback;
     onCancelEditMessage?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;

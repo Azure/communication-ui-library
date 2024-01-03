@@ -20,7 +20,7 @@ import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
-import { AttachmentDownloadResult } from '@internal/react-components';
+import { InlineImageSourceResult } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { AttachmentMetadata } from '@internal/react-components';
 import {
@@ -459,7 +459,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   public updateFileUploadMetadata = (id: string, metadata: AttachmentMetadata): void => {
     this.chatAdapter.updateFileUploadMetadata(id, metadata);
   };
-  async downloadAttachments(options: { attachmentUrls: Record<string, string> }): Promise<AttachmentDownloadResult[]> {
+  async downloadAttachments(options: { attachmentUrl: string }): Promise<InlineImageSourceResult> {
     return await this.chatAdapter.downloadAttachments(options);
   }
   /* @conditional-compile-remove(PSTN-calls) */

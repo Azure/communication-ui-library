@@ -312,9 +312,9 @@ export type {
 export type { FileMetadata } from '../../react-components/src';
 export type {
   ChatAttachmentType,
-  AttachmentDownloadResult,
   AttachmentMetadata,
-  InlineImageMetadata
+  InlineImageMetadata,
+  InlineImageSourceResult
 } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonProps, HoldButtonStrings, VideoTileStrings } from '../../react-components/src';

@@ -145,12 +145,6 @@ export type AreParamEqual<A extends (props: any) => JSX.Element | undefined, B e
 export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
 // @public
-export interface AttachmentDownloadResult {
-    attachmentId: string;
-    blobUrl: string;
-}
-
-// @public
 export type AttachmentMetadata = InlineImageMetadata | /* @conditional-compile-remove(file-sharing) */ FileMetadata;
 
 // @public
@@ -966,8 +960,8 @@ export interface CallWithChatAdapterManagement {
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // (undocumented)
     downloadAttachments: (options: {
-        attachmentUrls: Record<string, string>;
-    }) => Promise<AttachmentDownloadResult[]>;
+        attachmentUrl: string;
+    }) => Promise<InlineImageSourceResult>;
     fetchInitialData(): Promise<void>;
     // @beta
     holdCall: () => Promise<void>;
@@ -1559,8 +1553,8 @@ export interface ChatAdapterThreadManagement {
     deleteMessage(messageId: string): Promise<void>;
     // (undocumented)
     downloadAttachments: (options: {
-        attachmentUrls: Record<string, string>;
-    }) => Promise<AttachmentDownloadResult[]>;
+        attachmentUrl: string;
+    }) => Promise<InlineImageSourceResult>;
     fetchInitialData(): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     removeParticipant(userId: string): Promise<void>;
@@ -2971,6 +2965,11 @@ export interface InlineImageMetadata {
 }
 
 // @public
+export interface InlineImageSourceResult {
+    blobUrl: string;
+}
+
+// @public
 export type IsCaptionLanguageChangedListener = (event: {
     activeCaptionLanguage: string;
 }) => void;
@@ -3200,7 +3199,7 @@ export type MessageThreadProps = {
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
     onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
-    onFetchAttachments?: (attachments: AttachmentMetadata[]) => Promise<AttachmentDownloadResult[]>;
+    onFetchInlineImageSource?: (attachment: InlineImageMetadata) => Promise<InlineImageSourceResult>;
     onUpdateMessage?: UpdateMessageCallback;
     onCancelEditMessage?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;

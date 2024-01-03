@@ -33,9 +33,9 @@ import { useLocale } from '../localization/LocalizationProvider';
 import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
 import getParticipantsWhoHaveReadMessage from './utils/getParticipantsWhoHaveReadMessage';
 /* @conditional-compile-remove(file-sharing) */
-import { FileDownloadHandler } from './FileDownloadCards';
+import { FileDownloadHandler, InlineImageMetadata } from './FileDownloadCards';
 import { AttachmentMetadata } from './FileDownloadCards';
-import { AttachmentDownloadResult } from './FileDownloadCards';
+import { InlineImageSourceResult } from './FileDownloadCards';
 import { useTheme } from '../theming';
 import { FluentV9ThemeProvider } from './../theming/FluentV9ThemeProvider';
 import LiveAnnouncer from './Announcer/LiveAnnouncer';
@@ -455,10 +455,10 @@ export type MessageThreadProps = {
   onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
   /**
    * Optional callback to retrieve the inline image in a message.
-   * @param attachment - AttachmentMetadata object we want to render
+   * @param attachment - InlineImageMetadata object we want to render
    * @public
    */
-  onFetchAttachments?: (attachments: AttachmentMetadata[]) => Promise<AttachmentDownloadResult[]>;
+  onFetchInlineImageSource?: (attachment: InlineImageMetadata) => Promise<InlineImageSourceResult>;
   /**
    * Optional callback to edit a message.
    *
@@ -659,7 +659,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     onSendMessage,
     /* @conditional-compile-remove(date-time-customization) */
     onDisplayDateTimeString,
-    onFetchAttachments,
+    onFetchInlineImageSource,
     /* @conditional-compile-remove(mention) */
     mentionOptions,
     onInlineImageClicked,
@@ -684,29 +684,17 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   // readCount and participantCount will only need to be updated on-fly when user hover on an indicator
   const [readCountForHoveredIndicator, setReadCountForHoveredIndicator] = useState<number | undefined>(undefined);
 
-  const [inlineAttachments, setInlineAttachments] = useState<Record<string, Record<string, string>>>({});
+  const [inlineImageSources, setInlineImageSources] = useState<Record<string, string>>({});
 
   const onFetchInlineAttachment = useCallback(
-    async (attachments: AttachmentMetadata[], messageId: string): Promise<void> => {
-      if (!onFetchAttachments || attachments.length === 0) {
+    async (attachment: InlineImageMetadata): Promise<void> => {
+      if (!onFetchInlineImageSource) {
         return;
       }
-      const attachmentDownloadResult = await onFetchAttachments(attachments);
-
-      if (attachmentDownloadResult.length > 0) {
-        setInlineAttachments((prev) => {
-          // The new state should always be based on the previous one
-          // otherwise there can be issues with renders
-          const listOfAttachments = prev[messageId] ?? {};
-          for (const result of attachmentDownloadResult) {
-            const { attachmentId, blobUrl } = result;
-            listOfAttachments[attachmentId] = blobUrl;
-          }
-          return { ...prev, [messageId]: listOfAttachments };
-        });
-      }
+      const imageSourceResult = await onFetchInlineImageSource(attachment);
+      setInlineImageSources((prev) => ({ ...prev, [attachment.id]: imageSourceResult.blobUrl }));
     },
-    [onFetchAttachments]
+    [onFetchInlineImageSource]
   );
 
   const localeStrings = useLocale().strings.messageThread;
@@ -1109,8 +1097,8 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
                   participantCount={participantCount}
                   /* @conditional-compile-remove(file-sharing) */
                   fileDownloadHandler={props.fileDownloadHandler}
-                  onFetchInlineAttachment={onFetchInlineAttachment}
-                  inlineAttachments={inlineAttachments}
+                  onFetchInlineImageSource={onFetchInlineAttachment}
+                  inlineImageSources={inlineImageSources}
                   onInlineImageClicked={onInlineImageClicked}
                   /* @conditional-compile-remove(date-time-customization) */
                   onDisplayDateTimeString={onDisplayDateTimeString}

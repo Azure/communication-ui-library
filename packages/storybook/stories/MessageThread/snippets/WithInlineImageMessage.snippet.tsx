@@ -2,11 +2,11 @@ import {
   FluentThemeProvider,
   MessageThread,
   Message,
-  AttachmentMetadata,
-  AttachmentDownloadResult,
+  InlineImageSourceResult,
   ImageGalleryImageProps,
   ImageGallery,
-  ChatMessage
+  ChatMessage,
+  InlineImageMetadata
 } from '@azure/communication-react';
 import { Persona, PersonaSize } from '@fluentui/react';
 import React, { useState } from 'react';
@@ -14,19 +14,16 @@ import React, { useState } from 'react';
 export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
   const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps>>([]);
 
-  const onFetchAttachments = async (attachments: AttachmentMetadata[]): Promise<AttachmentDownloadResult[]> => {
+  const onFetchInlineImageSource = async (attachments: InlineImageMetadata): Promise<InlineImageSourceResult> => {
     // * Your custom function to fetch image behind authenticated blob storage/server
     // const response = await fetchImage(attachment.previewUrl ?? '', token);
     // const blob = await response.blob();
 
     // * Create a blob url as <img> src
-    return [
-      {
-        attachmentId: attachments[0].id,
-        // blobUrl: URL.createObjectURL(blob);
-        blobUrl: attachments[0].attachmentType === 'inlineImage' ? attachments[0].previewUrl ?? '' : ''
-      }
-    ];
+    return {
+      // blobUrl: URL.createObjectURL(blob);
+      blobUrl: attachments.previewUrl ?? ''
+    };
   };
 
   const onInlineImageClicked = (attachmentId: string, messageId: string): Promise<void> => {
@@ -105,7 +102,7 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
       <MessageThread
         userId={'1'}
         messages={messages}
-        onFetchAttachments={onFetchAttachments}
+        onFetchInlineImageSource={onFetchInlineImageSource}
         onInlineImageClicked={onInlineImageClicked}
       />
       {

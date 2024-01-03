@@ -50,8 +50,9 @@ import { useSelector } from './hooks/useSelector';
 import { FileDownloadErrorBar } from './FileDownloadErrorBar';
 /* @conditional-compile-remove(file-sharing) */
 import { _FileDownloadCards } from '@internal/react-components';
-import { AttachmentDownloadResult, AttachmentMetadata } from '@internal/react-components';
+import { InlineImageSourceResult } from '@internal/react-components';
 import { ImageGallery, ImageGalleryImageProps } from '@internal/react-components';
+import { InlineImageMetadata } from '@internal/react-components';
 
 /**
  * @private
@@ -209,16 +210,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [fileSharing?.downloadHandler]
   );
 
-  const onRenderInlineAttachment = useCallback(
-    async (attachment: AttachmentMetadata[]): Promise<AttachmentDownloadResult[]> => {
-      const entry: Record<string, string> = {};
-      attachment.forEach((target) => {
-        if (target.attachmentType === 'inlineImage' && target.previewUrl) {
-          entry[target.id] = target.previewUrl;
-        }
-      });
-
-      const blob = await adapter.downloadAttachments({ attachmentUrls: entry });
+  const onRenderInlineImage = useCallback(
+    async (attachment: InlineImageMetadata): Promise<InlineImageSourceResult> => {
+      const blob = await adapter.downloadAttachments({ attachmentUrl: attachment.previewUrl ?? '' });
       return blob;
     },
     [adapter]
@@ -270,9 +264,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       }
 
       if (attachment.attachmentType === 'inlineImage' && attachment.url) {
-        const blob = await adapter.downloadAttachments({ attachmentUrls: { [attachment.id]: attachment.url } });
-        if (blob[0]) {
-          const blobUrl = blob[0].blobUrl;
+        const blob = await adapter.downloadAttachments({ attachmentUrl: attachment.url });
+        if (blob) {
+          const blobUrl = blob.blobUrl;
           setFullSizeAttachments((prev) => ({ ...prev, [attachment.id]: blobUrl }));
           setGalleryImages([
             {
@@ -341,7 +335,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             onRenderMessage={onRenderMessage}
             /* @conditional-compile-remove(file-sharing) */
             onRenderFileDownloads={onRenderFileDownloads}
-            onFetchAttachments={onRenderInlineAttachment}
+            onFetchInlineImageSource={onRenderInlineImage}
             onInlineImageClicked={onInlineImageClicked}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}

@@ -17,7 +17,7 @@ import { MentionDisplayOptions, Mention } from '../MentionPopover';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { FontIcon, Stack } from '@fluentui/react';
 import { MessageThreadStrings } from '../MessageThread';
-import { AttachmentMetadata, InlineImageMetadata } from '../FileDownloadCards';
+import { InlineImageMetadata } from '../FileDownloadCards';
 import LiveMessage from '../Announcer/LiveMessage';
 /* @conditional-compile-remove(mention) */
 import { defaultOnMentionRender } from './MentionRenderer';
@@ -28,8 +28,8 @@ type ChatMessageContentProps = {
   strings: MessageThreadStrings;
   /* @conditional-compile-remove(mention) */
   mentionDisplayOptions?: MentionDisplayOptions;
-  attachmentsMap?: Record<string, string>;
-  onFetchAttachments?: (attachments: AttachmentMetadata[], messageId: string) => Promise<void>;
+  inlineImageSourceMap?: Record<string, string>;
+  onFetchInlineImageSource?: (attachments: InlineImageMetadata) => Promise<void>;
   onInlineImageClicked?: (attachmentId: string) => void;
 };
 
@@ -71,18 +71,20 @@ const MessageContentWithLiveAria = (props: MessageContentWithLiveAriaProps): JSX
 };
 
 const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Element => {
-  const { message, attachmentsMap, onFetchAttachments } = props;
+  const { message, inlineImageSourceMap, onFetchInlineImageSource } = props;
   useEffect(() => {
-    if (!attachmentsMap || !onFetchAttachments) {
+    if (!inlineImageSourceMap || !onFetchInlineImageSource) {
       return;
     }
     const attachments = message.inlineImages?.filter((inlinedImages) => {
-      return attachmentsMap[inlinedImages.id] === undefined;
+      return inlineImageSourceMap[inlinedImages.id] === undefined;
     });
-    if (attachments && attachments.length > 0) {
-      onFetchAttachments(attachments, message.messageId);
+    if (attachments) {
+      for (const attachment of attachments) {
+        onFetchInlineImageSource(attachment);
+      }
     }
-  }, [message.inlineImages, message.messageId, onFetchAttachments, attachmentsMap]);
+  }, [message.inlineImages, message.messageId, onFetchInlineImageSource, inlineImageSourceMap]);
 
   return (
     <MessageContentWithLiveAria
@@ -205,8 +207,8 @@ const processInlineImage = (props: ChatMessageContentProps): ProcessingInstructi
   processNode: (node, children, index): JSX.Element => {
     node.attribs = { ...node.attribs, 'aria-label': node.attribs.name };
     // logic to check id in map/list
-    if (props.attachmentsMap && node.attribs.id in props.attachmentsMap) {
-      node.attribs = { ...node.attribs, src: props.attachmentsMap[node.attribs.id] };
+    if (props.inlineImageSourceMap && node.attribs.id in props.inlineImageSourceMap) {
+      node.attribs = { ...node.attribs, src: props.inlineImageSourceMap[node.attribs.id] };
     }
     const handleOnClick = (): void => {
       props.onInlineImageClicked && props.onInlineImageClicked(node.attribs.id);

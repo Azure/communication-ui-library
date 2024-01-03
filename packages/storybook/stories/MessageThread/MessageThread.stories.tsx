@@ -8,10 +8,10 @@ import {
   CustomMessage,
   SystemMessage,
   MessageRenderer,
-  AttachmentMetadata,
-  AttachmentDownloadResult,
+  InlineImageSourceResult,
   ImageGalleryImageProps,
-  ImageGallery
+  ImageGallery,
+  InlineImageMetadata
 } from '@azure/communication-react';
 import {
   Persona,
@@ -451,16 +451,11 @@ const MessageThreadStory = (args): JSX.Element => {
     return Promise.resolve();
   };
 
-  const onFetchAttachments = async (attachments: AttachmentMetadata[]): Promise<AttachmentDownloadResult[]> => {
+  const onFetchInlineImageSource = async (attachments: InlineImageMetadata): Promise<InlineImageSourceResult> => {
     // Mocking promise
     const delay = (): Promise<void> => new Promise((resolve) => setTimeout(resolve, 3000));
     return await delay().then(() => {
-      return [
-        {
-          attachmentId: attachments[0].id,
-          blobUrl: attachments[0].previewUrl ?? ''
-        }
-      ];
+      return { blobUrl: attachments[0].previewUrl ?? '' };
     });
   };
   const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps>>([]);
@@ -531,7 +526,7 @@ const MessageThreadStory = (args): JSX.Element => {
         disableJumpToNewMessageButton={!args.enableJumpToNewMessageButton}
         onLoadPreviousChatMessages={onLoadPreviousMessages}
         onRenderMessage={onRenderMessage}
-        onFetchAttachments={onFetchAttachments}
+        onFetchInlineImageSource={onFetchInlineImageSource}
         onInlineImageClicked={onInlineImageClicked}
         onUpdateMessage={onUpdateMessageCallback}
         onRenderAvatar={(userId?: string) => {

@@ -7,7 +7,6 @@
 /// <reference types="react" />
 
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
-import { AttachmentDownloadResult } from '@internal/react-components';
 import { AttachmentMetadata } from '@internal/react-components';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import type { BackgroundBlurConfig } from '@azure/communication-calling';
@@ -39,6 +38,7 @@ import { EnvironmentInfo } from '@azure/communication-calling';
 import { FileDownloadHandler } from '@internal/react-components';
 import type { FileMetadata } from '@internal/react-components';
 import { GroupCallLocator } from '@azure/communication-calling';
+import { InlineImageSourceResult } from '@internal/react-components';
 import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { MessageProps } from '@internal/react-components';
 import { MessageRenderer } from '@internal/react-components';
@@ -671,8 +671,8 @@ export interface CallWithChatAdapterManagement {
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // (undocumented)
     downloadAttachments: (options: {
-        attachmentUrls: Record<string, string>;
-    }) => Promise<AttachmentDownloadResult[]>;
+        attachmentUrl: string;
+    }) => Promise<InlineImageSourceResult>;
     fetchInitialData(): Promise<void>;
     // @beta
     holdCall: () => Promise<void>;
@@ -1079,8 +1079,8 @@ export interface ChatAdapterThreadManagement {
     deleteMessage(messageId: string): Promise<void>;
     // (undocumented)
     downloadAttachments: (options: {
-        attachmentUrls: Record<string, string>;
-    }) => Promise<AttachmentDownloadResult[]>;
+        attachmentUrl: string;
+    }) => Promise<InlineImageSourceResult>;
     fetchInitialData(): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     removeParticipant(userId: string): Promise<void>;

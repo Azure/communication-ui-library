@@ -82,11 +82,7 @@ export type AttachmentMetadata = InlineImageMetadata | /* @conditional-compile-r
  * Metadata of the attachment object returned by the ACS SDK.
  * @public
  */
-export interface AttachmentDownloadResult {
-  /**
-   * Unique ID of the attachment.
-   */
-  attachmentId: string;
+export interface InlineImageSourceResult {
   /**
    * Blob URL for the attachment.
    */

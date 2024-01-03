@@ -163,7 +163,7 @@ describe('Error is reflected in state and events', () => {
     const adapter = await createChatAdapterWithStubs(new StubChatClient(threadClient));
     const errorListener = new ErrorListener(adapter);
 
-    await expect(adapter.downloadAttachments({ attachmentUrls: { ['somefakeid']: 'somefakeurl' } })).rejects.toThrow();
+    await expect(adapter.downloadAttachments({ attachmentUrl: 'somefakeurl' })).rejects.toThrow();
     expect(errorListener.errors.length).toBe(1);
     expect(errorListener.errors[0].target).toBe('ChatThreadClient.getMessage');
     expect(errorListener.errors[0].innerError.message).toBe('AccessToken is null');
@@ -184,9 +184,7 @@ describe('Error is reflected in state and events', () => {
     const adapter = await createChatAdapterWithStubs(new StubChatClient(threadClient), fakeToken);
     const errorListener = new ErrorListener(adapter);
     {
-      await expect(
-        adapter.downloadAttachments({ attachmentUrls: { ['somefakeid']: 'somefakeurl' } })
-      ).rejects.toThrow();
+      await expect(adapter.downloadAttachments({ attachmentUrl: 'somefakeurl' })).rejects.toThrow();
       expect(errorListener.errors.length).toBe(1);
       expect(errorListener.errors[0].target).toBe('ChatThreadClient.getMessage');
       expect(errorListener.errors[0].innerError.message).toBe('fetch is not defined');

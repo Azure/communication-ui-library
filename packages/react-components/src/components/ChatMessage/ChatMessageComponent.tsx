@@ -9,7 +9,7 @@ import { ChatMessage, ComponentSlotStyle, OnRenderAvatarCallback } from '../../t
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types';
 import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMessageBubble';
-import { FileDownloadHandler, AttachmentMetadata } from '../FileDownloadCards';
+import { FileDownloadHandler, AttachmentMetadata, InlineImageMetadata } from '../FileDownloadCards';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from '../MentionPopover';
 
@@ -87,7 +87,7 @@ type ChatMessageComponentProps = {
    * Optional function to fetch attachments.
    * @beta
    */
-  onFetchAttachments?: (attachment: AttachmentMetadata[], messageId: string) => Promise<void>;
+  onFetchInlineImageSource?: (attachment: InlineImageMetadata) => Promise<void>;
   /**
    * Optional callback called when an inline image is clicked.
    * @public
@@ -96,7 +96,7 @@ type ChatMessageComponentProps = {
   /**
    * Optional map of attachment ids to blob urls.
    */
-  attachmentsMap?: Record<string, string>;
+  inlineImageSourceMap?: Record<string, string>;
 };
 
 /**
@@ -154,9 +154,9 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
         /* @conditional-compile-remove(date-time-customization) */
         onDisplayDateTimeString={props.onDisplayDateTimeString}
         strings={props.strings}
-        onFetchAttachments={props.onFetchAttachments}
+        onFetchInlineImageSource={props.onFetchInlineImageSource}
         onInlineImageClicked={props.onInlineImageClicked}
-        attachmentsMap={props.attachmentsMap}
+        inlineImageSourceMap={props.inlineImageSourceMap}
         /* @conditional-compile-remove(mention) */
         mentionDisplayOptions={props.mentionOptions?.displayOptions}
       />

@@ -35,7 +35,7 @@ import { FileUploadAdapter, convertFileUploadsUiStateToMessageMetadata } from '.
 import { AzureCommunicationFileUploadAdapter } from './AzureCommunicationFileUploadAdapter';
 import { useEffect, useRef, useState } from 'react';
 import { _isValidIdentifier } from '@internal/acs-ui-common';
-import { AttachmentDownloadResult } from '@internal/react-components';
+import { InlineImageSourceResult } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { AttachmentMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
@@ -325,7 +325,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.fileUploadAdapter.updateFileUploadMetadata(id, metadata);
   }
 
-  async downloadAttachments(options: { attachmentUrls: Record<string, string> }): Promise<AttachmentDownloadResult[]> {
+  async downloadAttachments(options: { attachmentUrl: string }): Promise<InlineImageSourceResult> {
     return this.asyncTeeErrorToEventEmitter(async () => {
       if (this.credential === undefined) {
         const e = new Error();
@@ -347,8 +347,8 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
 
   private async downloadAuthenticatedFile(
     accessToken: string,
-    options: { attachmentUrls: Record<string, string> }
-  ): Promise<AttachmentDownloadResult[]> {
+    options: { attachmentUrl: string }
+  ): Promise<InlineImageSourceResult> {
     async function fetchWithAuthentication(url: string, token: string): Promise<Response> {
       const headers = new Headers();
       headers.append('Authorization', `Bearer ${token}`);
@@ -362,14 +362,9 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
       }
     }
 
-    const attachmentDownloadResults: AttachmentDownloadResult[] = [];
-    for (const id in options.attachmentUrls) {
-      const response = await fetchWithAuthentication(options.attachmentUrls[id], accessToken);
-      const blob = await response.blob();
-      attachmentDownloadResults.push({ attachmentId: id, blobUrl: URL.createObjectURL(blob) });
-    }
-
-    return attachmentDownloadResults;
+    const response = await fetchWithAuthentication(options.attachmentUrl, accessToken);
+    const blob = await response.blob();
+    return { blobUrl: URL.createObjectURL(blob) };
   }
 
   private messageReceivedListener(event: ChatMessageReceivedEvent): void {
