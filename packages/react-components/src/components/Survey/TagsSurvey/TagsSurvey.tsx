@@ -196,7 +196,6 @@ export const _TagsSurvey = (props: _TagsSurveyProps): JSX.Element => {
     <>
       <Stack verticalAlign="center">
         <Text className={questionTextStyle(theme)}>{strings?.tagsSurveyQuestion}</Text>
-        <Text className={helperTextStyle(theme)}>{strings?.tagsSurveyHelperText}</Text>
       </Stack>
 
       <Pivot>
@@ -234,6 +233,8 @@ export const _TagsSurvey = (props: _TagsSurveyProps): JSX.Element => {
           );
         })}
       </Pivot>
+
+      <Text className={helperTextStyle(theme)}>{strings?.tagsSurveyHelperText}</Text>
     </>
   );
 };

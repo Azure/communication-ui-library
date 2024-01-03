@@ -10,7 +10,7 @@ import { _pxToRem } from '@internal/acs-ui-common';
 export const helperTextStyle = (theme: Theme): string =>
   mergeStyles({
     fontWeight: 600,
-    fontSize: _pxToRem(14),
+    fontSize: _pxToRem(16),
     lineHeight: _pxToRem(20),
     color: theme.palette.neutralPrimary,
     paddingTop: _pxToRem(20)
@@ -36,10 +36,18 @@ export const ratingHelperTextStyle = (theme: Theme): string =>
 export const ratingStyles = (theme: Theme): Partial<IRatingStyles> => {
   return {
     root: {
-      textAlign: 'center'
+      textAlign: 'center',
+      height: 'auto',
+      marginTop: _pxToRem(8)
+    },
+    ratingStarIsLarge: {
+      height: 'auto',
+      padding: 0
     },
     ratingStar: {
-      transform: 'scale(1.15)'
+      transform: 'scale(1.2)',
+      margin: _pxToRem(6),
+      height: 'auto'
     },
     ratingStarFront: {
       color: theme.palette.themePrimary
