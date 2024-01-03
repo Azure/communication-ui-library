@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
+/* @conditional-compile-remove(dtmf-dialer) */
+import { useRef } from 'react';
 import { IStyle, IButtonStyles, ITextFieldStyles } from '@fluentui/react';
 
 import { IconButton } from '@fluentui/react';
@@ -29,6 +31,7 @@ import {
 } from '../styles/Dialpad.styles';
 import { formatPhoneNumber } from '../utils/formatPhoneNumber';
 import useLongPress from '../utils/useLongPress';
+/* @conditional-compile-remove(dtmf-dialer) */
 import { dtmfFrequencies, Tone } from './DTMFToneGenerator';
 
 /**
@@ -151,7 +154,14 @@ const DialpadButton = (props: {
 }): JSX.Element => {
   const theme = useTheme();
 
-  const { digit, index, onClick, onLongPress, isMobile = false, dtmfToneAudioContext } = props;
+  const {
+    digit,
+    index,
+    onClick,
+    onLongPress,
+    isMobile = false,
+    /* @conditional-compile-remove(dtmf-dialer) */ dtmfToneAudioContext
+  } = props;
   /* @conditional-compile-remove(dtmf-dialer) */
   const [buttonPressed, setButtonPressed] = useState(false);
 
@@ -246,6 +256,7 @@ const DialpadContainer = (props: {
   } = props;
 
   const [plainTextValue, setPlainTextValue] = useState(textFieldValue ?? '');
+  /* @conditional-compile-remove(dtmf-dialer) */
   const dtmfToneAudioContext = useRef(new AudioContext());
 
   useEffect(() => {
