@@ -55,7 +55,9 @@ export const useSuggestionListStyle = makeStyles({
  */
 export const suggestionItemWrapperStyle = (theme: Theme): string => {
   return mergeStyles({
-    padding: '0.0625rem 0',
+    margin: '0.0625rem 0',
+    'scroll-margin-top': '0.0625rem',
+    'scroll-margin-bottom': '0.0625rem',
     '&:focus-visible': {
       outline: `${theme.palette.black} solid 0.1rem`
     }
