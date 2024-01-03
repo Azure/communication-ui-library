@@ -33,8 +33,8 @@ import { useLocale } from '../localization/LocalizationProvider';
 import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
 import getParticipantsWhoHaveReadMessage from './utils/getParticipantsWhoHaveReadMessage';
 /* @conditional-compile-remove(file-sharing) */
-import { FileDownloadHandler, InlineImageMetadata } from './FileDownloadCards';
-import { AttachmentMetadata } from './FileDownloadCards';
+import { FileDownloadHandler } from './FileDownloadCards';
+import { InlineImageMetadata } from './FileDownloadCards';
 import { InlineImageSourceResult } from './FileDownloadCards';
 import { useTheme } from '../theming';
 import { FluentV9ThemeProvider } from './../theming/FluentV9ThemeProvider';

@@ -57,12 +57,6 @@ export type AnnouncerProps = {
 };
 
 // @public
-export interface AttachmentDownloadResult {
-    attachmentId: string;
-    blobUrl: string;
-}
-
-// @public
 export type AttachmentMetadata = InlineImageMetadata;
 
 // @public
@@ -1126,6 +1120,11 @@ export interface InlineImageMetadata {
 }
 
 // @public
+export interface InlineImageSourceResult {
+    blobUrl: string;
+}
+
+// @public
 export interface JumpToNewMessageButtonProps {
     onClick: () => void;
     text: string;
@@ -1268,7 +1267,7 @@ export type MessageThreadProps = {
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
-    onFetchAttachments?: (attachments: AttachmentMetadata[]) => Promise<AttachmentDownloadResult[]>;
+    onFetchInlineImageSource?: (attachment: InlineImageMetadata) => Promise<InlineImageSourceResult>;
     onUpdateMessage?: UpdateMessageCallback;
     onCancelEditMessage?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
