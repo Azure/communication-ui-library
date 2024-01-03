@@ -117,6 +117,8 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
 
   const cameraPermissionGranted = props.cameraPermissionGranted;
   const micPermissionGranted = props.microphonePermissionGranted;
+  const isSafariBrowser = adapter.getState().environmentInfo?.environment.browser.toLowerCase() === 'safari';
+
   let roleCanUseCamera = true;
   let roleCanUseMic = true;
 
@@ -262,22 +264,24 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
             /* @conditional-compile-remove(call-readiness) */
             onClickEnableDevicePermission={props.onClickEnableDevicePermission}
           />
-          <Dropdown
-            aria-labelledby={'call-composite-local-sound-settings-label'}
-            placeholder={hasSpeakers ? defaultPlaceHolder : noSpeakersLabel}
-            styles={dropDownStyles(theme)}
-            disabled={props.speakers.length === 0}
-            options={getDropDownList(props.speakers)}
-            defaultSelectedKey={props.selectedSpeaker ? props.selectedSpeaker.id : defaultDeviceId(props.speakers)}
-            onChange={(
-              event: React.FormEvent<HTMLDivElement>,
-              option?: IDropdownOption | undefined,
-              index?: number | undefined
-            ) => {
-              props.onSelectSpeaker(props.speakers[index ?? 0]);
-            }}
-            onRenderTitle={(props?: IDropdownOption[]) => onRenderTitle('Speaker', props)}
-          />
+          {(!isSafariBrowser) && 
+            <Dropdown
+              aria-labelledby={'call-composite-local-sound-settings-label'}
+              placeholder={hasSpeakers ? defaultPlaceHolder : noSpeakersLabel}
+              styles={dropDownStyles(theme)}
+              disabled={props.speakers.length === 0}
+              options={getDropDownList(props.speakers)}
+              defaultSelectedKey={props.selectedSpeaker ? props.selectedSpeaker.id : defaultDeviceId(props.speakers)}
+              onChange={(
+                event: React.FormEvent<HTMLDivElement>,
+                option?: IDropdownOption | undefined,
+                index?: number | undefined
+              ) => {
+                props.onSelectSpeaker(props.speakers[index ?? 0]);
+              }}
+              onRenderTitle={(props?: IDropdownOption[]) => onRenderTitle('Speaker', props)}
+            />
+          }
         </Stack>
       </Stack>
     </Stack>
