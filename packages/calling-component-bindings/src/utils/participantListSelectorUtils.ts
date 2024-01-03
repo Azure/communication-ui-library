@@ -126,6 +126,9 @@ export const memoizedConvertAllremoteParticipantsBeta = memoizeFnAll(
 );
 
 /* @conditional-compile-remove(reaction) */
+/**
+ * @private
+ */
 export const memoizedConvertToVideoTileReaction = memoizeOne(
   (reactionState: ReactionState | undefined): Reaction | undefined => {
     return reactionState && reactionState.reactionMessage
