@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import { IStackStyles, mergeStyles, Theme } from '@fluentui/react';
+import { makeStyles, shorthands } from '@fluentui/react-components';
 
 /**
  * @private
@@ -41,10 +42,12 @@ export const suggestionListContainerStyle = mergeStyles({
 /**
  * @private
  */
-export const suggestionListStyle = mergeStyles({
-  padding: '0.25rem 0rem 0',
-  overflow: 'visible',
-  overflowY: 'scroll'
+export const useSuggestionListStyle = makeStyles({
+  root: {
+    ...shorthands.padding('0.25rem', '0rem', '0rem'),
+    ...shorthands.overflow('visible'),
+    overflowY: 'scroll'
+  }
 });
 
 /**
@@ -52,7 +55,7 @@ export const suggestionListStyle = mergeStyles({
  */
 export const suggestionItemWrapperStyle = (theme: Theme): string => {
   return mergeStyles({
-    margin: '0.05rem 0',
+    padding: '0.0625rem 0',
     '&:focus-visible': {
       outline: `${theme.palette.black} solid 0.1rem`
     }
