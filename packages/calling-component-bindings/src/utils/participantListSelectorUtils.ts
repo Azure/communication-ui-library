@@ -8,7 +8,10 @@ import { CallParticipantListParticipant } from '@internal/react-components';
 /* @conditional-compile-remove(raise-hand) */
 import { RaisedHandState } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(reaction) */
+import { ReactionState } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(reaction) */
 import { Reaction } from '@internal/react-components';
+import memoizeOne from 'memoize-one';
 
 /**
  * @private
@@ -119,6 +122,18 @@ export const memoizedConvertAllremoteParticipantsBeta = memoizeFnAll(
       localUserCanRemoveOthers,
       reaction
     );
+  }
+);
+
+/* @conditional-compile-remove(reaction) */
+export const memoizedConvertToVideoTileReaction = memoizeOne(
+  (reactionState: ReactionState | undefined): Reaction | undefined => {
+    return reactionState && reactionState.reactionMessage
+      ? {
+          reactionType: reactionState.reactionMessage.reactionType,
+          receivedAt: reactionState.receivedAt
+        }
+      : undefined;
   }
 );
 

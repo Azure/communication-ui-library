@@ -15,7 +15,10 @@ import { getRole } from './baseSelectors';
 import { isHideAttendeeNamesEnabled } from './baseSelectors';
 import { CallParticipantListParticipant } from '@internal/react-components';
 import { _isRingingPSTNParticipant, _updateUserDisplayNames } from './utils/callUtils';
-import { memoizedConvertAllremoteParticipants } from './utils/participantListSelectorUtils';
+import {
+  memoizedConvertAllremoteParticipants,
+  memoizedConvertToVideoTileReaction
+} from './utils/participantListSelectorUtils';
 /* @conditional-compile-remove(rooms) */
 import { memoizedConvertAllremoteParticipantsBetaRelease } from './utils/participantListSelectorUtils';
 /* @conditional-compile-remove(reaction) */
@@ -76,13 +79,7 @@ const convertRemoteParticipantsToParticipantListParticipants = (
             isHideAttendeeNamesEnabled
           );
           /* @conditional-compile-remove(reaction) */
-          const remoteParticipantReaction =
-            participant.reactionState && participant.reactionState.reactionMessage
-              ? {
-                  reactionType: participant.reactionState.reactionMessage.reactionType,
-                  receivedAt: participant.reactionState.receivedAt
-                }
-              : undefined;
+          const remoteParticipantReaction = memoizedConvertToVideoTileReaction(participant.reactionState);
           return memoizeFn(
             toFlatCommunicationIdentifier(participant.identifier),
             displayName,
@@ -183,13 +180,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
         )
       : [];
     /* @conditional-compile-remove(reaction) */
-    const localParticipantReaction =
-      localParticipantReactionState && localParticipantReactionState.reactionMessage
-        ? {
-            reactionType: localParticipantReactionState.reactionMessage.reactionType,
-            receivedAt: localParticipantReactionState.receivedAt
-          }
-        : undefined;
+    const localParticipantReaction = memoizedConvertToVideoTileReaction(localParticipantReactionState);
     participants.push({
       userId: userId,
       displayName: displayName,
