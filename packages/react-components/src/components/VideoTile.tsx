@@ -4,7 +4,7 @@
 import { Icon, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
 /* @conditional-compile-remove(pinned-participants) */
 import { IconButton } from '@fluentui/react';
-import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { ComponentLocale, useLocale } from '../localization';
 import { useTheme } from '../theming';
@@ -29,10 +29,9 @@ import {
   videoContainerStyles,
   videoHint,
   tileInfoContainerStyle,
-  participantStateStringStyles
+  participantStateStringStyles,
+  reactionRenderingStyle
 } from './styles/VideoTile.styles';
-/* @conditional-compile-remove(reaction) */
-import { playFrames } from './styles/VideoTile.styles';
 import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
 /* @conditional-compile-remove(reaction) */
 import { reactionEmoji } from './utils/videoTileStylesUtils';
@@ -365,7 +364,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   raisedHandBackgroundColor = callingPalette.raiseHandGold;
 
   /* @conditional-compile-remove(reaction) */
-  const urlPath = reaction !== undefined ? reactionEmoji.get(reaction?.reactionType) : '';
+  const backgroundImageUrl = reaction !== undefined ? reactionEmoji.get(reaction?.reactionType) : '';
   /* @conditional-compile-remove(reaction) */
   const currentTimestamp = new Date();
   /* @conditional-compile-remove(reaction) */
@@ -374,6 +373,15 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const receivedUnixTimestamp = reaction ? Math.floor(reaction.receivedAt.getTime() / 1000) : undefined;
   /* @conditional-compile-remove(reaction) */
   const canRenderReaction = receivedUnixTimestamp ? currentUnixTimeStamp - receivedUnixTimestamp < 3000 : false;
+  /* @conditional-compile-remove(reaction) */
+  const reactionContainerStyles = useCallback(
+    () =>
+      reactionRenderingStyle({
+        backgroundImageUrl,
+        personaSize
+      }),
+    [backgroundImageUrl, personaSize]
+  );
 
   return (
     <Stack
@@ -441,24 +449,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
             >
               <div style={{ height: '33.33%' }}></div>
               <div style={{ height: '84px', width: '84px' }}>
-                <div
-                  className={mergeStyles({
-                    height: '100%',
-                    width: '100%',
-                    overflow: 'hidden',
-                    animationName: playFrames(),
-                    backgroundImage: urlPath,
-                    animationDuration: '5.12s',
-                    animationTimingFunction: `steps(102)`,
-                    backgroundSize: `cover`,
-                    animationPlayState: 'running',
-                    animationIterationCount: 'infinite',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    backgroundPosition: `center`,
-                    transform: `scale(${84 < personaSize ? 84 / personaSize : personaSize / 84})`
-                  })}
-                />
+                <div className={reactionContainerStyles()} />
               </div>
             </Stack>
           )

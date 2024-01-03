@@ -187,3 +187,24 @@ export const playFrames = memoizeFunction(() =>
     }
   })
 );
+/* @conditional-compile-remove(reaction) */
+/**
+ * @private
+ */
+export const reactionRenderingStyle = (args: { backgroundImageUrl?: string; personaSize: number }): string =>
+  mergeStyles({
+    height: '100%',
+    width: '100%',
+    overflow: 'hidden',
+    animationName: playFrames(),
+    backgroundImage: args.backgroundImageUrl,
+    animationDuration: '5.12s',
+    animationTimingFunction: `steps(102)`,
+    backgroundSize: `cover`,
+    animationPlayState: 'running',
+    animationIterationCount: 'infinite',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundPosition: `center`,
+    transform: `scale(${84 < args.personaSize ? 84 / args.personaSize : args.personaSize / 84})`
+  });
