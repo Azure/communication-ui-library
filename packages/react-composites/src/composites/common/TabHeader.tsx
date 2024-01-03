@@ -1,11 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { concatStyleSets, DefaultButton, Stack } from '@fluentui/react';
+import { concatStyleSets, DefaultButton, FocusZone, FocusZoneDirection, mergeStyles, Stack } from '@fluentui/react';
 import { useTheme } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { CallWithChatCompositeIcon } from '../common/icons';
 import {
+  availableSpaceStyles,
   mobilePaneBackButtonStyles,
   mobilePaneButtonStyles,
   mobilePaneControlBarStyle,
@@ -74,33 +75,39 @@ export const PeopleAndChatHeader = (props: PeopleAndChatHeaderProps): JSX.Elemen
         onRenderIcon={() => <CallWithChatCompositeIcon iconName="ChevronLeft" />}
         autoFocus
       ></DefaultButton>
-      <Stack.Item grow>
-        {onChatButtonClicked && (
-          <DefaultButton
-            onClick={onChatButtonClicked}
-            styles={mobilePaneButtonStylesThemed}
-            checked={activeTab === 'chat'}
-            aria-selected={activeTab === 'chat'}
-            role={'tab'}
-            disabled={props.disableChatButton}
-          >
-            {strings.chatButtonLabel}
-          </DefaultButton>
-        )}
-      </Stack.Item>
-      <Stack.Item grow>
-        {onPeopleButtonClicked && (
-          <DefaultButton
-            onClick={onPeopleButtonClicked}
-            styles={mobilePaneButtonStylesThemed}
-            checked={activeTab === 'people'}
-            aria-selected={activeTab === 'people'}
-            role={'tab'}
-            disabled={props.disablePeopleButton}
-          >
-            {strings.peopleButtonLabel}
-          </DefaultButton>
-        )}
+      <Stack.Item grow role="tablist">
+        <FocusZone direction={FocusZoneDirection.horizontal} className={mergeStyles(availableSpaceStyles.root)}>
+          <Stack horizontal styles={availableSpaceStyles}>
+            <Stack.Item grow>
+              {onChatButtonClicked && (
+                <DefaultButton
+                  onClick={onChatButtonClicked}
+                  styles={mobilePaneButtonStylesThemed}
+                  checked={activeTab === 'chat'}
+                  aria-selected={activeTab === 'chat'}
+                  role={'tab'}
+                  disabled={props.disableChatButton}
+                >
+                  {strings.chatButtonLabel}
+                </DefaultButton>
+              )}
+            </Stack.Item>
+            <Stack.Item grow>
+              {onPeopleButtonClicked && (
+                <DefaultButton
+                  onClick={onPeopleButtonClicked}
+                  styles={mobilePaneButtonStylesThemed}
+                  checked={activeTab === 'people'}
+                  aria-selected={activeTab === 'people'}
+                  role={'tab'}
+                  disabled={props.disablePeopleButton}
+                >
+                  {strings.peopleButtonLabel}
+                </DefaultButton>
+              )}
+            </Stack.Item>
+          </Stack>
+        </FocusZone>
       </Stack.Item>
       {/* Hidden icon to take the same space as the actual back button on the left. */}
       <DefaultButton
