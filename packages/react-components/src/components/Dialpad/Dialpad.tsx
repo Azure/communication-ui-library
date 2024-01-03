@@ -103,7 +103,8 @@ export interface DialpadProps {
   isMobile?: boolean;
   styles?: DialpadStyles;
   /* @conditional-compile-remove(dtmf-dialer) */
-  disableDtmfSounds?: boolean;
+  /** Disables DTMF sounds when dialpad buttons are pressed. the actual tones are still sent to the call. */
+  disableDtmfPlayback?: boolean;
 }
 
 type DialpadButtonContent = {
@@ -154,7 +155,7 @@ const DialpadButton = (props: {
   /* @conditional-compile-remove(dtmf-dialer) */
   dtmfToneAudioContext: AudioContext;
   /* @conditional-compile-remove(dtmf-dialer) */
-  disableDtmfSounds?: boolean;
+  disableDtmfPlayback?: boolean;
 }): JSX.Element => {
   const theme = useTheme();
 
@@ -165,7 +166,7 @@ const DialpadButton = (props: {
     onLongPress,
     isMobile = false,
     /* @conditional-compile-remove(dtmf-dialer) */ dtmfToneAudioContext,
-    /* @conditional-compile-remove(dtmf-dialer) */ disableDtmfSounds
+    /* @conditional-compile-remove(dtmf-dialer) */ disableDtmfPlayback
   } = props;
   /* @conditional-compile-remove(dtmf-dialer) */
   const [buttonPressed, setButtonPressed] = useState(false);
@@ -198,7 +199,7 @@ const DialpadButton = (props: {
       onKeyDown={(e) => {
         /* @conditional-compile-remove(dtmf-dialer) */
         if ((e.key === 'Enter' || e.key === ' ') && !buttonPressed) {
-          if (!disableDtmfSounds) {
+          if (!disableDtmfPlayback) {
             dtmfToneSound.current.play();
           }
           longPressHandlers.onKeyDown();
@@ -218,7 +219,7 @@ const DialpadButton = (props: {
       }}
       onMouseDown={() => {
         /* @conditional-compile-remove(dtmf-dialer) */
-        if (!disableDtmfSounds) {
+        if (!disableDtmfPlayback) {
           dtmfToneSound.current.play();
         }
         longPressHandlers.onMouseDown();
@@ -253,7 +254,7 @@ const DialpadContainer = (props: {
   isMobile?: boolean;
   styles?: DialpadStyles;
   /* @conditional-compile-remove(dtmf-dialer) */
-  disableDtmfSounds?: boolean;
+  disableDtmfPlayback?: boolean;
 }): JSX.Element => {
   const theme = useTheme();
 
@@ -387,7 +388,7 @@ const DialpadContainer = (props: {
                   /* @conditional-compile-remove(dtmf-dialer) */
                   dtmfToneAudioContext={dtmfToneAudioContext.current}
                   /* @conditional-compile-remove(dtmf-dialer) */
-                  disableDtmfSounds={props.disableDtmfSounds}
+                  disableDtmfPlayback={props.disableDtmfPlayback}
                 />
               ))}
             </Stack>

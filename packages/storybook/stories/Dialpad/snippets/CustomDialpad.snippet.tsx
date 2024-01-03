@@ -53,7 +53,7 @@ export const CustomDialpadExample: () => JSX.Element = () => {
           textFieldValue={textFieldValue}
           onClickDialpadButton={onClickDialpadButton}
           onChange={onChange}
-          disableDtmfSounds={true}
+          disableDtmfPlayback={true}
         />
       </Stack>
     </FluentThemeProvider>
