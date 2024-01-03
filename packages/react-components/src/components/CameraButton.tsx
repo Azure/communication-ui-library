@@ -168,7 +168,7 @@ export interface CameraButtonProps extends ControlBarButtonProps {
  * @public
  */
 export const CameraButton = (props: CameraButtonProps): JSX.Element => {
-  const { localVideoViewOptions, onToggleCamera } = props;
+  const { localVideoViewOptions, onToggleCamera, onSelectCamera } = props;
   const [waitForCamera, setWaitForCamera] = useState(false);
   const localeStrings = useLocale().strings.cameraButton;
   const strings = { ...localeStrings, ...props.strings };
@@ -211,6 +211,21 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
       }
     }
   }, [cameraOn, localVideoViewOptions, onToggleCamera, toggleAnnouncerString]);
+
+  const onChangeCameraClick = useCallback(
+    async (device: OptionsDevice) => {
+      // Throttle changing camera to prevent too many callbacks
+      if (onSelectCamera) {
+        setWaitForCamera(true);
+        try {
+          await onSelectCamera(device);
+        } finally {
+          setWaitForCamera(false);
+        }
+      }
+    },
+    [onSelectCamera]
+  );
 
   const splitButtonMenuItems: IContextualMenuItem[] = [];
   /* @conditional-compile-remove(video-background-effects) */
@@ -273,7 +288,7 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
           props.menuProps ??
           (props.enableDeviceSelectionMenu
             ? generateDefaultDeviceMenuProps(
-                { ...props, styles: props.styles?.menuStyles },
+                { ...props, onSelectCamera: onChangeCameraClick, styles: props.styles?.menuStyles },
                 strings,
                 splitButtonPrimaryAction
               )
