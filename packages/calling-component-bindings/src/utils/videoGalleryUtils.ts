@@ -20,6 +20,7 @@ import { isPhoneNumberIdentifier } from '@azure/communication-common';
 import { RaisedHandState } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(reaction) */
 import { Reaction } from '@internal/react-components';
+import { memoizedConvertToVideoTileReaction } from './participantListSelectorUtils';
 
 /** @internal */
 export const _dominantSpeakersWithFlatId = (dominantSpeakers?: DominantSpeakersInfo): undefined | string[] => {
@@ -66,13 +67,7 @@ export const _videoGalleryRemoteParticipantsMemo: (
             isHideAttendeeNamesEnabled
           );
           /* @conditional-compile-remove(reaction) */
-          const remoteParticipantReaction: Reaction | undefined =
-            participant.reactionState && participant.reactionState.reactionMessage
-              ? {
-                  reactionType: participant.reactionState.reactionMessage.reactionType,
-                  receivedAt: participant.reactionState.receivedAt
-                }
-              : undefined;
+          const remoteParticipantReaction = memoizedConvertToVideoTileReaction(participant.reactionState);
           return memoizedFn(
             toFlatCommunicationIdentifier(participant.identifier),
             participant.isMuted,

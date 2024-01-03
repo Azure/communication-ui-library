@@ -34,6 +34,7 @@ import { getLocalParticipantRaisedHand } from './baseSelectors';
 import { getRemoteParticipantsExcludingConsumers } from './getRemoteParticipantsExcludingConsumers';
 /* @conditional-compile-remove(reaction) */
 import { getLocalParticipantReactionState } from './baseSelectors';
+import { memoizedConvertToVideoTileReaction } from './utils/participantListSelectorUtils';
 
 /**
  * Selector type for {@link VideoGallery} component.
@@ -95,7 +96,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     /* @conditional-compile-remove(hide-attendee-name) */
     isHideAttendeeNamesEnabled,
     /* @conditional-compile-remove(reaction) */
-    localParticipantReactionState
+    localParticipantReaction
   ) => {
     const screenShareRemoteParticipant =
       screenShareRemoteParticipantId && remoteParticipants
@@ -108,13 +109,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     dominantSpeakerIds?.forEach((speaker, idx) => (dominantSpeakersMap[speaker] = idx));
     const noRemoteParticipants: RemoteParticipantState[] = [];
     /* @conditional-compile-remove(reaction) */
-    const localParticipantReaction =
-      localParticipantReactionState && localParticipantReactionState.reactionMessage
-        ? {
-            reactionType: localParticipantReactionState.reactionMessage.reactionType,
-            receivedAt: localParticipantReactionState.receivedAt
-          }
-        : undefined;
+    const localParticipantReactionState = memoizedConvertToVideoTileReaction(localParticipantReaction);
 
     return {
       screenShareParticipant: screenShareRemoteParticipant
@@ -140,7 +135,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
         /* @conditional-compile-remove(raise-hand) */
         raisedHand,
         /* @conditional-compile-remove(reaction) */
-        localParticipantReaction
+        localParticipantReactionState
       ),
       remoteParticipants: _videoGalleryRemoteParticipantsMemo(
         updateUserDisplayNamesTrampoline(remoteParticipants ? Object.values(remoteParticipants) : noRemoteParticipants),
