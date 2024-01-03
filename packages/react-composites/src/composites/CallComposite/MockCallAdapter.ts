@@ -230,7 +230,7 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
       /* @conditional-compile-remove(raise-hand) */
       raiseHand: { raisedHands: [] },
       /* @conditional-compile-remove(reaction) */
-      localParticipantReactionState: undefined,
+      localParticipantReaction: undefined,
       /* @conditional-compile-remove(rooms) */
       role,
       /* @conditional-compile-remove(close-captions) */

@@ -918,7 +918,7 @@ export interface CallState {
     isScreenSharingOn: boolean;
     kind: CallKind;
     // @beta
-    localParticipantReactionState?: ReactionState;
+    localParticipantReaction?: ReactionState;
     localVideoStreams: LocalVideoStreamState[];
     optimalVideoCount: OptimalVideoCountFeatureState;
     raiseHand: RaiseHandCallFeature;

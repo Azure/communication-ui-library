@@ -465,7 +465,7 @@ export interface CallState {
    *
    * @beta
    */
-  localParticipantReactionState?: ReactionState;
+  localParticipantReaction?: ReactionState;
   /**
    * Stores the currently active screenshare participant's key. If there is no screenshare active, then this will be
    * undefined. You can use this key to access the remoteParticipant data in {@link CallState.remoteParticipants} object.

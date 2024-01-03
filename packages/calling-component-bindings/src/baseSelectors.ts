@@ -110,7 +110,7 @@ export const getLocalParticipantReactionState = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ): ReactionState | undefined => {
-  return state.calls[props.callId]?.localParticipantReactionState;
+  return state.calls[props.callId]?.localParticipantReaction;
 };
 
 /**

@@ -425,7 +425,7 @@ export class CallContext {
         : undefined;
 
       if (participantKey === toFlatCommunicationIdentifier(this._state.userId)) {
-        call.localParticipantReactionState = newReactionState;
+        call.localParticipantReaction = newReactionState;
       } else {
         participant.reactionState = newReactionState;
       }
