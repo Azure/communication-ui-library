@@ -146,14 +146,16 @@ const DialpadButton = (props: {
   onClick: (input: string, index: number) => void;
   onLongPress: (input: string, index: number) => void;
   isMobile?: boolean;
+  /* @conditional-compile-remove(dtmf-dialer) */
   dtmfToneAudioContext: AudioContext;
 }): JSX.Element => {
   const theme = useTheme();
 
   const { digit, index, onClick, onLongPress, isMobile = false, dtmfToneAudioContext } = props;
-
+  /* @conditional-compile-remove(dtmf-dialer) */
   const [buttonPressed, setButtonPressed] = useState(false);
 
+  /* @conditional-compile-remove(dtmf-dialer) */
   const dtmfToneSound = useRef<Tone>(
     new Tone(dtmfToneAudioContext, dtmfFrequencies[digit].f1, dtmfFrequencies[digit].f2)
   );
@@ -179,24 +181,31 @@ const DialpadButton = (props: {
       styles={concatStyleSets(buttonStyles(theme), props.styles?.button)}
       {...longPressHandlers}
       onKeyDown={(e) => {
+        /* @conditional-compile-remove(dtmf-dialer) */
         if ((e.key === 'Enter' || e.key === ' ') && !buttonPressed) {
           dtmfToneSound.current.play();
           longPressHandlers.onKeyDown();
           setButtonPressed(true);
+          return;
         }
+        longPressHandlers.onKeyDown();
       }}
       onKeyUp={(e) => {
+        /* @conditional-compile-remove(dtmf-dialer) */
         if ((e.key === 'Enter' || e.key === ' ') && buttonPressed) {
           dtmfToneSound.current.stop();
           longPressHandlers.onKeyUp();
           setButtonPressed(false);
         }
+        longPressHandlers.onKeyUp();
       }}
       onMouseDown={() => {
+        /* @conditional-compile-remove(dtmf-dialer) */
         dtmfToneSound.current.play();
         longPressHandlers.onMouseDown();
       }}
       onMouseUp={() => {
+        /* @conditional-compile-remove(dtmf-dialer) */
         dtmfToneSound.current.stop();
         longPressHandlers.onMouseUp();
       }}
@@ -353,6 +362,7 @@ const DialpadContainer = (props: {
                   onClick={onClickDialpad}
                   onLongPress={onLongPressDialpad}
                   isMobile={isMobile}
+                  /* @conditional-compile-remove(dtmf-dialer) */
                   dtmfToneAudioContext={dtmfToneAudioContext.current}
                 />
               ))}
