@@ -181,7 +181,7 @@ describe('Message should display image and attachment correctly', () => {
     const imgId2 = 'SomeImageId2';
     const expectedImgSrc1 = 'http://localhost/someImgSrcUrl1';
     const expectedImgSrc2 = 'http://localhost/someImgSrcUrl2';
-    const expectedOnFetchAttachmentsCount = 1;
+    const expectedOnFetchAttachmentsCount = 2;
     let onFetchAttachmentsCount = 0;
     const sampleMessage: ChatMessage = {
       messageType: 'chat',
@@ -282,7 +282,7 @@ describe('Message should display image and attachment correctly', () => {
     };
     const onFetchAttachments = async (attachments: InlineImageMetadata): Promise<InlineImageSourceResult> => {
       onFetchAttachmentCount++;
-      const url = attachments[0].attachmentType === 'inlineImage' ? attachments[0].previewUrl ?? '' : '';
+      const url = attachments.attachmentType === 'inlineImage' ? attachments.previewUrl ?? '' : '';
       return { blobUrl: url };
     };
 
