@@ -635,7 +635,7 @@ export type CallIdChangedListener = (event: {
     callId: string;
 }) => void;
 
-// @beta
+// @public
 export type CallingSounds = {
     callEnded?: SoundEffect;
     callRinging?: SoundEffect;
@@ -1830,7 +1830,7 @@ export interface RemoteVideoTileMenuOptions {
     isHidden?: boolean;
 }
 
-// @beta
+// @public
 export type SoundEffect = {
     url: string;
 };
