@@ -18,6 +18,10 @@ import { checkIsSpeaking } from './SelectorUtils';
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(raise-hand) */
 import { RaisedHandState } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(reaction) */
+import { Reaction } from '@internal/react-components';
+/* @conditional-compile-remove(reaction) */
+import { memoizedConvertToVideoTileReaction } from './participantListSelectorUtils';
 
 /** @internal */
 export const _dominantSpeakersWithFlatId = (dominantSpeakers?: DominantSpeakersInfo): undefined | string[] => {
@@ -63,6 +67,8 @@ export const _videoGalleryRemoteParticipantsMemo: (
             participant.role,
             isHideAttendeeNamesEnabled
           );
+          /* @conditional-compile-remove(reaction) */
+          const remoteParticipantReaction = memoizedConvertToVideoTileReaction(participant.reactionState);
           return memoizedFn(
             toFlatCommunicationIdentifier(participant.identifier),
             participant.isMuted,
@@ -71,7 +77,9 @@ export const _videoGalleryRemoteParticipantsMemo: (
             state,
             displayName,
             /* @conditional-compile-remove(raise-hand) */
-            participant.raisedHand
+            participant.raisedHand,
+            /* @conditional-compile-remove(reaction) */
+            remoteParticipantReaction
           );
         })
     );
@@ -87,7 +95,9 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     state: RemoteParticipantConnectionState,
     displayName?: string,
     /* @conditional-compile-remove(raise-hand) */
-    raisedHand?: unknown // temp unknown type to build stable
+    raisedHand?: unknown, // temp unknown type to build stable
+    /* @conditional-compile-remove(reaction) */
+    reaction?: unknown // temp unknown type to build stable
   ): VideoGalleryRemoteParticipant => {
     return convertRemoteParticipantToVideoGalleryRemoteParticipant(
       userId,
@@ -97,7 +107,9 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
       state,
       displayName,
       /* @conditional-compile-remove(raise-hand) */
-      raisedHand as RaisedHandState
+      raisedHand as RaisedHandState,
+      /* @conditional-compile-remove(reaction) */
+      reaction as Reaction
     );
   }
 );
@@ -111,7 +123,9 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   state: RemoteParticipantConnectionState,
   displayName?: string,
   /* @conditional-compile-remove(raise-hand) */
-  raisedHand?: unknown // temp unknown type to build stable
+  raisedHand?: unknown, // temp unknown type to build stable
+  /* @conditional-compile-remove(reaction) */
+  reaction?: unknown // temp unknown type to build stable
 ): VideoGalleryRemoteParticipant => {
   const rawVideoStreamsArray = Object.values(videoStreams);
   let videoStream: VideoGalleryStream | undefined = undefined;
@@ -144,7 +158,9 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     /* @conditional-compile-remove(PSTN-calls) */
     state,
     /* @conditional-compile-remove(raise-hand) */
-    raisedHand: raisedHand as RaisedHandState
+    raisedHand: raisedHand as RaisedHandState,
+    /* @conditional-compile-remove(reaction) */
+    reaction: reaction as Reaction
   };
 };
 
@@ -172,7 +188,8 @@ export const memoizeLocalParticipant = memoizeOne(
     isScreenSharingOn,
     localVideoStream,
     /* @conditional-compile-remove(rooms) */ role,
-    /* @conditional-compile-remove(raise-hand) */ raisedHand
+    /* @conditional-compile-remove(raise-hand) */ raisedHand,
+    /* @conditional-compile-remove(reaction) */ reaction
   ) => ({
     userId: identifier,
     displayName: displayName ?? '',
@@ -186,6 +203,8 @@ export const memoizeLocalParticipant = memoizeOne(
     /* @conditional-compile-remove(rooms) */
     role,
     /* @conditional-compile-remove(raise-hand) */
-    raisedHand: raisedHand
+    raisedHand: raisedHand,
+    /* @conditional-compile-remove(reaction) */
+    reaction: reaction
   })
 );
