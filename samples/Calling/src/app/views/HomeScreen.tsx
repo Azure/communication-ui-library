@@ -197,6 +197,8 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 required={true}
                 onChange={(_, option) => {
                   option && setChosenCallOption(option);
+                  /* @conditional-compile-remove(teams-adhoc-call) */
+                  /* @conditional-compile-remove(teams-identity-support) */
                   setTeamsIdFormatError(false);
                 }}
               />
