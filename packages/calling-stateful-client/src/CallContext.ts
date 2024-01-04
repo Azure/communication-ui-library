@@ -259,8 +259,6 @@ export class CallContext {
         addRemoteParticipant.forEach((participant: RemoteParticipantState) => {
           call.remoteParticipants[toFlatCommunicationIdentifier(participant.identifier)] = participant;
         });
-        // add the fake logic.
-        call.htmlShareRemoteParticipant = toFlatCommunicationIdentifier(addRemoteParticipant[0].identifier);
       }
     });
   }

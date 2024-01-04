@@ -26,12 +26,6 @@ export class PPTLiveSubscriber {
     this._pptLive = call.feature(Features.PPTLive);
     this._call = call;
 
-    // If pptlive as already started when we joined the call, make sure it is reflected in state as there may not
-    // be an event for it.
-    if (this._pptLive) {
-      this._context.setCallPPTLiveActive(this._callIdRef.callId, this._pptLive.isActive);
-    }
-
     this.subscribe();
   }
 
