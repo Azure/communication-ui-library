@@ -11,6 +11,7 @@ import { RaisedHandState } from '@internal/calling-stateful-client';
 import { ReactionState } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(reaction) */
 import { Reaction } from '@internal/react-components';
+/* @conditional-compile-remove(reaction) */
 import memoizeOne from 'memoize-one';
 
 /**

@@ -15,10 +15,9 @@ import { getRole } from './baseSelectors';
 import { isHideAttendeeNamesEnabled } from './baseSelectors';
 import { CallParticipantListParticipant } from '@internal/react-components';
 import { _isRingingPSTNParticipant, _updateUserDisplayNames } from './utils/callUtils';
-import {
-  memoizedConvertAllremoteParticipants,
-  memoizedConvertToVideoTileReaction
-} from './utils/participantListSelectorUtils';
+import { memoizedConvertAllremoteParticipants } from './utils/participantListSelectorUtils';
+/* @conditional-compile-remove(reaction) */
+import { memoizedConvertToVideoTileReaction } from './utils/participantListSelectorUtils';
 /* @conditional-compile-remove(rooms) */
 import { memoizedConvertAllremoteParticipantsBetaRelease } from './utils/participantListSelectorUtils';
 /* @conditional-compile-remove(reaction) */
