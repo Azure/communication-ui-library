@@ -117,7 +117,6 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
 
   const cameraPermissionGranted = props.cameraPermissionGranted;
   const micPermissionGranted = props.microphonePermissionGranted;
-  const isSafariBrowser = adapter.getState().environmentInfo?.environment.browser.toLowerCase() === 'safari';
 
   let roleCanUseCamera = true;
   let roleCanUseMic = true;
@@ -147,6 +146,8 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
   const hasCameras = props.cameras.length > 0;
   const hasMicrophones = props.microphones.length > 0;
   const hasSpeakers = props.speakers.length > 0;
+  const isSafariWithNoSpeakers = adapter.getState().environmentInfo?.environment.browser.toLowerCase() === 'safari' && !hasSpeakers;
+
 
   const cameraGrantedDropdown = (
     <Dropdown
@@ -264,7 +265,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
             /* @conditional-compile-remove(call-readiness) */
             onClickEnableDevicePermission={props.onClickEnableDevicePermission}
           />
-          {!isSafariBrowser && (
+          {!isSafariWithNoSpeakers && (
             <Dropdown
               aria-labelledby={'call-composite-local-sound-settings-label'}
               placeholder={hasSpeakers ? defaultPlaceHolder : noSpeakersLabel}

@@ -91,10 +91,10 @@ export const configurationSectionStyle: IStackStyles = {
 /**
  * @private
  */
-export const selectionContainerStyle = (theme: ITheme, browser?: string): string =>
+export const selectionContainerStyle = (theme: ITheme, noSpeakerDropdownShown?: boolean): string =>
   mergeStyles({
     width: '100%',
-    height: browser !== 'safari' ? `${CONFIGURATION_PAGE_SECTION_HEIGHT_REM}rem` : 'auto',
+    height: noSpeakerDropdownShown ? 'auto' : `${CONFIGURATION_PAGE_SECTION_HEIGHT_REM}rem`,
     padding: '1rem',
     borderRadius: theme.effects.roundedCorner6,
     border: `0.0625rem solid ${theme.palette.neutralLight}`,

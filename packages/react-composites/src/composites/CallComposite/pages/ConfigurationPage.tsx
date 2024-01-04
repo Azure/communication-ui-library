@@ -366,7 +366,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
                   className={
                     mobileView
                       ? undefined
-                      : selectionContainerStyle(theme, environmentInfo?.environment.browser.toLowerCase())
+                      : selectionContainerStyle(theme, environmentInfo?.environment.browser.toLowerCase() === 'safari')
                   }
                 >
                   <LocalDeviceSettings
