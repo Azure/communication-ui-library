@@ -307,7 +307,6 @@ export const Docs: () => JSX.Element = () => {
         local video tile and some of the other options we have for the local video tile when just using the components.
       </Description>
       <Heading>Customizing the default Gallery Layout</Heading>
-      <SingleLineBetaBanner />
       <Description>
         We allow for the customization of the starting layout of the gallery. The layout can be changed by the user
         though the gallery options menu found in the more button of the call controls.
