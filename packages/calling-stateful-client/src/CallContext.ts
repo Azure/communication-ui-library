@@ -165,8 +165,6 @@ export class CallContext {
         existingCall.recording.isRecordingActive = call.recording.isRecordingActive;
         /* @conditional-compile-remove(ppt-live) */
         existingCall.pptLive.isActive = call.pptLive.isActive;
-        /* @conditional-compile-remove(ppt-live) */
-        existingCall.pptLive.target = call.pptLive.target;
         /* @conditional-compile-remove(raise-hand) */
         existingCall.raiseHand.raisedHands = call.raiseHand.raisedHands;
         /* @conditional-compile-remove(raise-hand) */

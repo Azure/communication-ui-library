@@ -171,10 +171,6 @@ export interface PPTLiveCallFeatureState {
    * Proxy of {@link @azure/communication-calling#PPTLiveCallFeature.isActive}.
    */
   isActive: boolean;
-  /**
-   * Proxy of {@link @azure/communication-calling#PPTLiveCallFeature.target}.
-   */
-  target: HTMLElement | undefined;
 }
 
 /* @conditional-compile-remove(raise-hand) */

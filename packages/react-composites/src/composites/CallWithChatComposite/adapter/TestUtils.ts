@@ -243,7 +243,7 @@ function createMockCall(mockCallId: string): CallState {
     /* @conditional-compile-remove(raise-hand) */
     raiseHand: { raisedHands: [] },
     /* @conditional-compile-remove(ppt-live) */
-    pptLive: { isActive: false, target: undefined },
+    pptLive: { isActive: false },
     /* @conditional-compile-remove(close-captions) */
     captionsFeature: {
       captions: [],

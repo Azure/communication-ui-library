@@ -3503,7 +3503,6 @@ export type ParticipantState = 'Idle' | 'Connecting' | 'Ringing' | 'Connected' |
 // @public
 export interface PPTLiveCallFeatureState {
     isActive: boolean;
-    target: HTMLElement | undefined;
 }
 
 // @beta
