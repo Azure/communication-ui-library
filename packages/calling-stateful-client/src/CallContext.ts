@@ -76,7 +76,7 @@ export class CallContext {
   private _atomicId: number;
   private _callIdHistory: CallIdHistory = new CallIdHistory();
   /* @conditional-compile-remove(reaction) */
-  private _timeOutId: { [key: string]: any } = {};
+  private _timeOutId: { [key: string]: NodeJS.Timeout } = {};
 
   constructor(
     userId: CommunicationIdentifierKind,
