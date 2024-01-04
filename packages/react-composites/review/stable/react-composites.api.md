@@ -20,6 +20,7 @@ import type { ChatMessage } from '@azure/communication-chat';
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
+import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { CommunicationParticipant } from '@internal/react-components';
 import { CommunicationTokenCredential } from '@azure/communication-common';
@@ -201,6 +202,7 @@ export type CallAdapterClientState = {
     userId: CommunicationIdentifierKind;
     displayName?: string;
     call?: CallState;
+    targetCallees?: CommunicationIdentifier[];
     devices: DeviceManagerState;
     endedCall?: CallState;
     isTeamsCall: boolean;
@@ -210,6 +212,7 @@ export type CallAdapterClientState = {
     videoBackgroundImages?: VideoBackgroundImage[];
     onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
+    sounds?: CallingSounds;
 };
 
 // @public
@@ -328,6 +331,7 @@ export type CallCompositeIcons = {
     NoticePageJoinCallFailedDueToNoNetwork?: JSX.Element;
     NoticePageLeftCall?: JSX.Element;
     NoticePageRemovedFromCall?: JSX.Element;
+    NoticePageCallRejected?: JSX.Element;
     NoticePageNotInvitedToRoom?: JSX.Element;
     NoticePageRoomNotFound?: JSX.Element;
     NoticePageRoomNotValid?: JSX.Element;
@@ -379,6 +383,8 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
 export interface CallCompositeStrings {
     blurBackgroundEffectButtonLabel?: string;
     blurBackgroundTooltip?: string;
+    callRejectedMoreDetails?: string;
+    callRejectedTitle: string;
     callTimeoutDetails?: string;
     callTimeoutTitle?: string;
     cameraLabel: string;
@@ -510,6 +516,13 @@ export type CallEndedListener = (event: CallAdapterCallEndedEvent) => void;
 export type CallIdChangedListener = (event: {
     callId: string;
 }) => void;
+
+// @public
+export type CallingSounds = {
+    callEnded?: SoundEffect;
+    callRinging?: SoundEffect;
+    callBusy?: SoundEffect;
+};
 
 // @public
 export interface CallWithChatAdapter extends CallWithChatAdapterManagement, AdapterState<CallWithChatAdapterState>, Disposable_2, CallWithChatAdapterSubscriptions {
@@ -952,6 +965,7 @@ export type CommonCallAdapterOptions = {
         videoBackgroundImages?: VideoBackgroundImage[];
         onResolveDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     };
+    callingSounds?: CallingSounds;
 };
 
 // @public
@@ -1086,7 +1100,7 @@ export const createAzureCommunicationCallWithChatAdapterFromClients: ({ callClie
 export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
 
 // @public
-export function createAzureCommunicationChatAdapterFromClient(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient,  options?: {
+export function createAzureCommunicationChatAdapterFromClient(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient, options?: {
     credential?: CommunicationTokenCredential;
 }): Promise<ChatAdapter>;
 
@@ -1179,6 +1193,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     NoticePageJoinCallFailedDueToNoNetwork?: JSX.Element | undefined;
     NoticePageLeftCall?: JSX.Element | undefined;
     NoticePageRemovedFromCall?: JSX.Element | undefined;
+    NoticePageCallRejected?: JSX.Element | undefined;
     NoticePageNotInvitedToRoom?: JSX.Element | undefined;
     NoticePageRoomNotFound?: JSX.Element | undefined;
     NoticePageRoomNotValid?: JSX.Element | undefined;
@@ -1487,6 +1502,11 @@ export type ParticipantsRemovedListener = (event: {
 export interface RemoteVideoTileMenuOptions {
     isHidden?: boolean;
 }
+
+// @public
+export type SoundEffect = {
+    url: string;
+};
 
 // @public
 export type TeamsAdapterOptions = CommonCallAdapterOptions;
