@@ -19,6 +19,8 @@ import { InternalCallContext } from './InternalCallContext';
 import { LocalVideoStreamVideoEffectsSubscriber } from './LocalVideoStreamVideoEffectsSubscriber';
 import { ParticipantSubscriber } from './ParticipantSubscriber';
 import { RecordingSubscriber } from './RecordingSubscriber';
+/* @conditional-compile-remove(ppt-live) */
+import { PPTLiveSubscriber } from './PPTLiveSubscriber';
 import { disposeView } from './StreamUtils';
 import { TranscriptionSubscriber } from './TranscriptionSubscriber';
 import { UserFacingDiagnosticsSubscriber } from './UserFacingDiagnosticsSubscriber';
@@ -44,6 +46,8 @@ export class CallSubscriber {
   private _participantSubscribers: Map<string, ParticipantSubscriber>;
   private _recordingSubscriber: RecordingSubscriber;
   private _transcriptionSubscriber: TranscriptionSubscriber;
+  /* @conditional-compile-remove(ppt-live) */
+  private _pptLiveSubscriber: PPTLiveSubscriber;
   /* @conditional-compile-remove(optimal-video-count) */
   private _optimalVideoCountSubscriber: OptimalVideoCountSubscriber;
   /* @conditional-compile-remove(close-captions) */
@@ -72,6 +76,8 @@ export class CallSubscriber {
       this._context,
       this._call.feature(Features.Recording)
     );
+    /* @conditional-compile-remove(ppt-live) */
+    this._pptLiveSubscriber = new PPTLiveSubscriber(this._callIdRef, this._context, this._call);
     this._transcriptionSubscriber = new TranscriptionSubscriber(
       this._callIdRef,
       this._context,
@@ -178,6 +184,8 @@ export class CallSubscriber {
     this._transcriptionSubscriber.unsubscribe();
     /* @conditional-compile-remove(optimal-video-count) */
     this._optimalVideoCountSubscriber.unsubscribe();
+    /* @conditional-compile-remove(ppt-live) */
+    this._pptLiveSubscriber.unsubscribe();
     /* @conditional-compile-remove(close-captions) */
     this._captionsSubscriber?.unsubscribe();
     /* @conditional-compile-remove(raise-hand) */

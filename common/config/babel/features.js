@@ -104,7 +104,9 @@ module.exports = {
     // Feature for end of call survey
     'end-of-call-survey',
     // Feature for the DTMF dialer for Teams voice apps
-    'dtmf-dialer'
+    'dtmf-dialer',
+    // Feature for PPT Live for teams meeting
+    'ppt-live'
   ],
   // A list of stabilized features.
   // These features can be listed in the conditional compilation directives without

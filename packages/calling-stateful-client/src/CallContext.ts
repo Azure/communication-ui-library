@@ -165,6 +165,8 @@ export class CallContext {
         existingCall.recording.isRecordingActive = call.recording.isRecordingActive;
         /* @conditional-compile-remove(raise-hand) */
         existingCall.raiseHand.raisedHands = call.raiseHand.raisedHands;
+        /* @conditional-compile-remove(ppt-live) */
+        existingCall.pptLive.isActive = call.pptLive.isActive;
         /* @conditional-compile-remove(raise-hand) */
         existingCall.raiseHand.localParticipantRaisedHand = call.raiseHand.localParticipantRaisedHand;
         /* @conditional-compile-remove(rooms) */
@@ -257,6 +259,8 @@ export class CallContext {
         addRemoteParticipant.forEach((participant: RemoteParticipantState) => {
           call.remoteParticipants[toFlatCommunicationIdentifier(participant.identifier)] = participant;
         });
+        // add the fake logic.
+        call.htmlShareRemoteParticipant = toFlatCommunicationIdentifier(addRemoteParticipant[0].identifier);
       }
     });
   }
@@ -362,6 +366,30 @@ export class CallContext {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         call.recording.isRecordingActive = isRecordingActive;
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(ppt-live) */
+  public setCallPPTLiveActive(callId: string, isActive: boolean): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.pptLive.isActive = isActive;
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(ppt-live) */
+  public setCallParticipantPPTLive(callId: string, target: HTMLElement | undefined): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      const participantKey = call.htmlShareRemoteParticipant;
+      if (call && participantKey) {
+        const participant = call.remoteParticipants[participantKey];
+        if (participant) {
+          participant.htmlStream = target;
+        }
       }
     });
   }
