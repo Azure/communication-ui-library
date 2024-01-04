@@ -4,7 +4,9 @@
 import { Icon, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
 /* @conditional-compile-remove(pinned-participants) */
 import { IconButton } from '@fluentui/react';
-import React, { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
+/* @conditional-compile-remove(reaction) */
+import { useCallback } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { ComponentLocale, useLocale } from '../localization';
 import { useTheme } from '../theming';
@@ -29,9 +31,10 @@ import {
   videoContainerStyles,
   videoHint,
   tileInfoContainerStyle,
-  participantStateStringStyles,
-  reactionRenderingStyle
+  participantStateStringStyles
 } from './styles/VideoTile.styles';
+/* @conditional-compile-remove(reaction) */
+import { reactionRenderingStyle } from './styles/VideoTile.styles';
 import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
 /* @conditional-compile-remove(reaction) */
 import { reactionEmoji } from './utils/videoTileStylesUtils';
