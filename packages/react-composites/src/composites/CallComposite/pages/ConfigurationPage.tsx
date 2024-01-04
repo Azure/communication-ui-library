@@ -362,7 +362,13 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
             )}
             <Stack styles={mobileView ? undefined : configurationSectionStyle}>
               {!mobileWithPreview && (
-                <Stack className={mobileView ? undefined : selectionContainerStyle(theme)}>
+                <Stack
+                  className={
+                    mobileView
+                      ? undefined
+                      : selectionContainerStyle(theme, environmentInfo?.environment.browser.toLowerCase())
+                  }
+                >
                   <LocalDeviceSettings
                     {...options}
                     {...localDeviceSettingsHandlers}

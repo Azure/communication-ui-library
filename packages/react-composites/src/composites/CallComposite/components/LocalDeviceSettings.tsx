@@ -264,7 +264,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
             /* @conditional-compile-remove(call-readiness) */
             onClickEnableDevicePermission={props.onClickEnableDevicePermission}
           />
-          {(!isSafariBrowser) && 
+          {!isSafariBrowser && (
             <Dropdown
               aria-labelledby={'call-composite-local-sound-settings-label'}
               placeholder={hasSpeakers ? defaultPlaceHolder : noSpeakersLabel}
@@ -281,7 +281,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
               }}
               onRenderTitle={(props?: IDropdownOption[]) => onRenderTitle('Speaker', props)}
             />
-          }
+          )}
         </Stack>
       </Stack>
     </Stack>
