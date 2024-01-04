@@ -116,6 +116,8 @@
     "captionsBannerMoreButtonCallingLabel": "その他",
     "captionsBannerMoreButtonTooltip": "その他のオプション",
     "dismissModalAriaLabel": "ローカルとリモートの画像と画像。通話に戻るには Enter キーを押します",
+    "callRejectedTitle": "通話を完了できませんでした",
+    "callRejectedMoreDetails": "連絡を取ろうとしているユーザーは利用できません。後でもう一度お試しください。",
     "spokenLanguageStrings": {
       "ar-ae": "アラビア語 - U.A.E.",
       "ar-sa": "アラビア語 - サウジアラビア",

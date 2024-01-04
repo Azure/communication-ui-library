@@ -4,17 +4,21 @@
 import React, { useCallback, useState, useMemo, useEffect, useRef } from 'react';
 import { mergeStyles, PartialTheme, Stack, Theme } from '@fluentui/react';
 import { CallCompositePage } from '../CallComposite';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { CallSurvey } from '@azure/communication-calling';
 import { CallState } from '@azure/communication-calling';
 import { callCompositeContainerStyles, compositeOuterContainerStyles } from './styles/CallWithChatCompositeStyles';
 import { CallWithChatAdapter } from './adapter/CallWithChatAdapter';
 import { CallWithChatBackedCallAdapter } from './adapter/CallWithChatBackedCallAdapter';
 import { CallWithChatBackedChatAdapter } from './adapter/CallWithChatBackedChatAdapter';
 import { CallAdapter } from '../CallComposite';
-import { ChatComposite, ChatCompositeProps } from '../ChatComposite';
+import { ChatComposite, ChatAdapter } from '../ChatComposite';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { CallWithChatCompositeIcons } from '../common/icons';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { CallWithChatAdapterState } from './state/CallWithChatAdapterState';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { CallSurveyImprovementSuggestions } from '@internal/react-components';
 import {
   ParticipantMenuItemsCallback,
   _useContainerHeight,
@@ -184,41 +188,79 @@ export type CallWithChatCompositeOptions = {
      */
     layout?: VideoGalleryLayout;
   };
-  /* @conditional-compile-remove(custom-branding) */
+  /* @conditional-compile-remove(end-of-call-survey) */
   /**
-   * Logo displayed on the configuration page.
+   * Options for end of call survey
    */
-  logo?: {
+  surveyOptions?: {
     /**
-     * URL for the logo image.
-     *
-     * @remarks
-     * Recommended size is 80x80 pixels.
+     * Hide call survey at the end of a call.
+     * @defaultValue false
      */
-    url: string;
+    hideSurvey?: boolean;
     /**
-     * Alt text for the logo image.
+     * Optional callback to handle survey data including free form text response
+     * Note that free form text response survey option is only going to be enabled when this callback is provided
+     * User will need to handle all free form text response on their own
      */
-    alt?: string;
-    /**
-     * The logo can be displayed as a circle or a square.
-     *
-     * @defaultValue 'circle'
-     */
-    shape?: 'circle' | 'square';
+    onSurveySubmitted?: (
+      callId: string,
+      surveyId: string,
+      /**
+       * This is the survey results containing star survey data and API tag survey data.
+       * This part of the result will always be sent to the calling sdk
+       * This callback provides user with the ability to gain access to survey data
+       */
+      submittedSurvey: CallSurvey,
+      /**
+       * This is the survey results containing free form text
+       * This part of the result will not be handled by composites
+       * User will need to collect and handle this information 100% on their own
+       * Free form text survey is not going to show in the UI if onSurveySubmitted is not populated
+       */
+      improvementSuggestions: CallSurveyImprovementSuggestions
+    ) => Promise<void>;
   };
   /* @conditional-compile-remove(custom-branding) */
   /**
-   * Background image displayed on the configuration page.
+   * Options for setting additional customizations related to personalized branding.
    */
-  backgroundImage?: {
+  branding?: {
     /**
-     * URL for the background image.
-     *
-     * @remarks
-     * Background image should be larger than 576x567 pixels and smaller than 2048x2048 pixels pixels.
+     * Logo displayed on the configuration page.
      */
-    url: string;
+    logo?: {
+      /**
+       * URL for the logo image.
+       *
+       * @remarks
+       * Recommended size is 80x80 pixels.
+       */
+      url: string;
+      /**
+       * Alt text for the logo image.
+       */
+      alt?: string;
+      /**
+       * The logo can be displayed as a circle.
+       *
+       * @defaultValue 'unset'
+       */
+      shape?: 'unset' | 'circle';
+    };
+    /* @conditional-compile-remove(custom-branding) */
+    /**
+     * Background image displayed on the configuration page.
+     */
+    backgroundImage?: {
+      /**
+       * URL for the background image.
+       *
+       * @remarks
+       * Background image should be larger than 576x567 pixels and smaller than 2048x2048 pixels pixels.
+       */
+      url: string;
+    };
   };
 };
 
@@ -252,11 +294,44 @@ type CallWithChatScreenProps = {
   galleryOptions?: {
     layout?: VideoGalleryLayout;
   };
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Options for end of call survey
+   */
+  surveyOptions?: {
+    /**
+     * Hide call survey at the end of a call.
+     * @defaultValue false
+     */
+    hideSurvey?: boolean;
+    /**
+     * Optional callback to handle survey data including free form text response
+     * Note that free form text response survey option is only going to be enabled when this callback is provided
+     * User will need to handle all free form text response on their own
+     */
+    onSurveySubmitted?: (
+      callId: string,
+      surveyId: string,
+      /**
+       * This is the survey results containing star survey data and API tag survey data.
+       * This part of the result will always be sent to the calling sdk
+       * This callback provides user with the ability to gain access to survey data
+       */
+      submittedSurvey: CallSurvey,
+      /**
+       * This is the survey results containing free form text
+       * This part of the result will not be handled by composites
+       * User will need to collect and handle this information 100% on their own
+       * Free form text survey is not going to show in the UI if onSurveySubmitted is not populated
+       */
+      improvementSuggestions: CallSurveyImprovementSuggestions
+    ) => Promise<void>;
+  };
   /* @conditional-compile-remove(custom-branding) */
   logo?: {
     url: string;
     alt?: string;
-    shape?: 'circle' | 'square';
+    shape?: 'unset' | 'circle';
   };
   /* @conditional-compile-remove(custom-branding) */
   backgroundImage?: {
@@ -266,6 +341,8 @@ type CallWithChatScreenProps = {
 
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   const { callWithChatAdapter, fluentTheme, formFactor = 'desktop' } = props;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  const { surveyOptions } = props;
   const mobileView = formFactor === 'mobile';
 
   if (!callWithChatAdapter) {
@@ -295,10 +372,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     };
   }, [callWithChatAdapter]);
 
-  const chatProps: ChatCompositeProps = useMemo(() => {
-    return {
-      adapter: new CallWithChatBackedChatAdapter(callWithChatAdapter)
-    };
+  const chatAdapter: ChatAdapter = useMemo(() => {
+    return new CallWithChatBackedChatAdapter(callWithChatAdapter);
   }, [callWithChatAdapter]);
 
   /** Constant setting of id for the parent stack of the composite */
@@ -365,7 +440,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     [chatButtonDisabled, mobileView, toggleChat, showChatButton]
   );
 
-  const unreadChatMessagesCount = useUnreadMessagesTracker(chatProps.adapter, isChatOpen);
+  const unreadChatMessagesCount = useUnreadMessagesTracker(chatAdapter, isChatOpen);
 
   const customChatButton: CustomCallControlButtonCallback = useCallback(
     (args: CustomCallControlButtonCallbackArgs) => ({
@@ -440,10 +515,13 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       galleryOptions: props.galleryOptions,
       /* @conditional-compile-remove(click-to-call) */
       localVideoTile: props.localVideoTile,
+      /* @conditional-compile-remove(end-of-call-survey) */
+      surveyOptions: surveyOptions,
       /* @conditional-compile-remove(custom-branding) */
-      logo: props.logo,
-      /* @conditional-compile-remove(custom-branding) */
-      backgroundImage: props.backgroundImage
+      branding: {
+        logo: props.logo,
+        backgroundImage: props.backgroundImage
+      }
     }),
     [
       props.callControls,
@@ -465,6 +543,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       props.localVideoTile,
       /* @conditional-compile-remove(pinned-participants) */
       props.remoteVideoTileMenuOptions,
+      /* @conditional-compile-remove(end-of-call-survey) */
+      surveyOptions,
       /* @conditional-compile-remove(custom-branding) */
       props.logo,
       /* @conditional-compile-remove(custom-branding) */
@@ -475,7 +555,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   const onRenderChatContent = useCallback(
     (): JSX.Element => (
       <ChatComposite
-        {...chatProps}
+        adapter={chatAdapter}
         fluentTheme={theme}
         options={{
           topic: false,
@@ -488,7 +568,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       />
     ),
     [
-      chatProps,
+      chatAdapter,
       /* @conditional-compile-remove(file-sharing) */ props.fileSharing,
       props.onFetchAvatarPersonaData,
       theme
@@ -531,7 +611,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   );
 
   const onSidePaneIdChange = useCallback(
-    (sidePaneId) => {
+    (sidePaneId: string | undefined) => {
       // If the pane is switched to something other than chat, removing rendering chat.
       if (sidePaneId && sidePaneId !== 'chat') {
         closeChat();
@@ -539,6 +619,15 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     },
     [closeChat]
   );
+
+  // When the call ends ensure the side pane is set to closed to prevent the side pane being open if the call is re-joined.
+  useEffect(() => {
+    callAdapter.on('callEnded', closeChat);
+    return () => {
+      callAdapter.off('callEnded', closeChat);
+    };
+  }, [callAdapter, closeChat]);
+
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)}>
       <Stack verticalFill grow styles={compositeOuterContainerStyles} id={compositeParentDivId}>
@@ -590,9 +679,11 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         /* @conditional-compile-remove(gallery-layouts) */
         galleryOptions={options?.galleryOptions}
         /* @conditional-compile-remove(custom-branding) */
-        logo={options?.logo}
+        logo={options?.branding?.logo}
         /* @conditional-compile-remove(custom-branding) */
-        backgroundImage={options?.backgroundImage}
+        backgroundImage={options?.branding?.backgroundImage}
+        /* @conditional-compile-remove(end-of-call-survey) */
+        surveyOptions={options?.surveyOptions}
       />
     </BaseProvider>
   );

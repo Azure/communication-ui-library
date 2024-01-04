@@ -153,7 +153,6 @@ export {
   COMPONENT_LOCALE_ZH_CN,
   COMPONENT_LOCALE_ZH_TW
 } from '../../react-components/src';
-/* @conditional-compile-remove(image-gallery) */
 export { ImageGallery } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export { HoldButton } from '../../react-components/src';
@@ -297,7 +296,6 @@ export type {
 } from '../../react-components/src';
 /* @conditional-compile-remove(raise-hand) */
 export type { RaiseHandButtonProps, RaiseHandButtonStrings, RaisedHand } from '../../react-components/src';
-/* @conditional-compile-remove(image-gallery) */
 export type { ImageGalleryProps, ImageGalleryImageProps, ImageGalleryStrings } from '../../react-components/src';
 /* @conditional-compile-remove(data-loss-prevention) */
 export type { BlockedMessage } from '../../react-components/src';
@@ -310,15 +308,13 @@ export type {
   FileDownloadHandler,
   FileDownloadError
 } from '../../react-components/src';
-/* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/* @conditional-compile-remove(file-sharing) */
 export type { FileMetadata } from '../../react-components/src';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 export type {
-  BaseFileMetadata,
-  FileMetadataAttachmentType,
+  ChatAttachmentType,
   AttachmentDownloadResult,
-  FileSharingMetadata,
-  ImageFileMetadata
+  AttachmentMetadata,
+  InlineImageMetadata
 } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonProps, HoldButtonStrings, VideoTileStrings } from '../../react-components/src';
@@ -377,3 +373,9 @@ export type {
 } from '../../react-components/src';
 /* @conditional-compile-remove(close-captions) */
 export type { SpokenLanguageStrings, CaptionLanguageStrings } from '../../react-components/src';
+/* @conditional-compile-remove(end-of-call-survey) */
+export type { SurveyIssues } from '../../react-components/src';
+/* @conditional-compile-remove(end-of-call-survey) */
+export type { SurveyIssuesHeadingStrings } from '../../react-components/src';
+/* @conditional-compile-remove(end-of-call-survey) */
+export type { CallSurveyImprovementSuggestions } from '../../react-components/src';

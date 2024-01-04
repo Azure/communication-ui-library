@@ -27,10 +27,10 @@ jobs:
         with:
           fetch-depth: 0
       # Ensure node version is great enough
-      - name: Use Node.js v18.x
+      - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       - id: get-matrix
         run: echo "matrix=$(node ./common/scripts/workflow-read-matrix.mjs)" >> $GITHUB_OUTPUT
 
@@ -46,10 +46,10 @@ jobs:
         with:
           fetch-depth: 0
       # Ensure node version is great enough
-      - name: Use Node.js v18.x
+      - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       # Try get node_modules from cache
       - name: Restore node_modules from cache
         uses: actions/cache@v3
@@ -58,7 +58,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       # Install dependencies
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.100.1
+        run: npm install -g @microsoft/rush@5.112.2
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       # Switch flavor if necessary
@@ -146,10 +146,10 @@ jobs:
         with:
           fetch-depth: 0
       # Ensure node version is great enough
-      - name: Use Node.js v18.x
+      - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       # Try get node_modules from cache
       - name: Restore node_modules from cache
         uses: actions/cache@v3
@@ -158,7 +158,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       # Install dependencies
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.100.1
+        run: npm install -g @microsoft/rush@5.112.2
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       # Switch flavor if necessary
@@ -199,19 +199,23 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v18.x
+      - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.100.1
+        run: npm install -g @microsoft/rush@5.112.2
       - name: Install dependencies
         run: rush install --max-install-attempts 3
+      - uses: browser-actions/setup-chrome@v1
+        id: setup-chrome
+        with:
+          chrome-version: 120.0.6099
       - name: Switch flavor for build
         id: switch-flavor
         if: ${{ matrix.flavor != 'beta' }}
@@ -236,6 +240,7 @@ jobs:
           rushx test:e2e:call
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+          CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload playwright test results
         uses: actions/upload-artifact@v3
         if: ${{ always() }}
@@ -272,19 +277,23 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v18.x
+      - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.100.1
+        run: npm install -g @microsoft/rush@5.112.2
       - name: Install dependencies
         run: rush install --max-install-attempts 3
+      - uses: browser-actions/setup-chrome@v1
+        id: setup-chrome
+        with:
+          chrome-version: 120.0.6099
       - name: Switch flavor for build
         id: switch-flavor
         if: ${{ matrix.flavor != 'beta' }}
@@ -309,6 +318,7 @@ jobs:
           rushx test:e2e:chat
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+          CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload playwright test results
         uses: actions/upload-artifact@v3
         if: ${{ always() }}
@@ -345,19 +355,23 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v18.x
+      - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.100.1
+        run: npm install -g @microsoft/rush@5.112.2
       - name: Install dependencies
         run: rush install --max-install-attempts 3
+      - uses: browser-actions/setup-chrome@v1
+        id: setup-chrome
+        with:
+          chrome-version: 120.0.6099
       - name: Switch flavor for build
         id: switch-flavor
         if: ${{ matrix.flavor != 'beta' }}
@@ -382,6 +396,7 @@ jobs:
           rushx test:e2e:callwithchat
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+          CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload playwright test results
         uses: actions/upload-artifact@v3
         if: ${{ always() }}
@@ -415,17 +430,17 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v18.x
+      - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.100.1
+        run: npm install -g @microsoft/rush@5.112.2
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - name: Build
@@ -444,17 +459,17 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v18.x
+      - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.100.1
+        run: npm install -g @microsoft/rush@5.112.2
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       # Switch flavor if necessary
@@ -490,17 +505,17 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v18.x
+      - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.100.1
+        run: npm install -g @microsoft/rush@5.112.2
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       # Switch flavor if necessary
@@ -536,17 +551,17 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v18.x
+      - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.100.1
+        run: npm install -g @microsoft/rush@5.112.2
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       # Switch flavor if necessary
@@ -582,14 +597,18 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v18.x
+      - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.100.1
+        run: npm install -g @microsoft/rush@5.112.2
       - name: Install dependencies
         run: rush install --max-install-attempts 3
+      - uses: browser-actions/setup-chrome@v1
+        id: setup-chrome
+        with:
+          chrome-version: 120.0.6099
       # Switch flavor if necessary
       - name: Switch flavor for build
         id: switch-flavor
@@ -610,6 +629,7 @@ jobs:
           rushx test:e2e:bundle
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+          CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload snapshot diff
         if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
         uses: actions/upload-artifact@v3
@@ -639,14 +659,18 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v18.x
+      - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.100.1
+        run: npm install -g @microsoft/rush@5.112.2
       - name: Install dependencies
         run: rush install --max-install-attempts 3
+      - uses: browser-actions/setup-chrome@v1
+        id: setup-chrome
+        with:
+          chrome-version: 120.0.6099
       # Switch flavor when necessary
       - name: Switch flavor for build
         id: switch-flavor
@@ -667,6 +691,7 @@ jobs:
           rushx test:e2e:examples
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+          CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload snapshot diff
         if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
         uses: actions/upload-artifact@v3
@@ -704,10 +729,10 @@ jobs:
         with:
           fetch-depth: 0
       # Ensure node version is great enough
-      - name: Use Node.js v18.x
+      - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       # Try get node_modules from cache
       - name: Restore node_modules from cache
         uses: actions/cache@v3
@@ -716,7 +741,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       # Install dependencies in order to use script
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.100.1
+        run: npm install -g @microsoft/rush@5.112.2
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - name: Get jest tests coverage of main from gist
@@ -808,10 +833,10 @@ jobs:
         with:
           path: current
           name: ${{ matrix.app }}-report
-      - name: Use Node.js v18.x
+      - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       - name: Calculate size change
         id: bundles
         run: |

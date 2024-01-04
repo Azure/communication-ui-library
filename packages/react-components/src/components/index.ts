@@ -14,9 +14,7 @@ export { SendBox } from './SendBox';
 /* @conditional-compile-remove(mention) */
 export { _MentionPopover } from './MentionPopover';
 
-/* @conditional-compile-remove(image-gallery) */
 export { ImageGallery } from './ImageGallery';
-/* @conditional-compile-remove(image-gallery) */
 export type { ImageGalleryStrings } from './ImageGallery';
 
 export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox';
@@ -31,7 +29,6 @@ export type {
   MentionPopoverStrings
 } from './MentionPopover';
 
-/* @conditional-compile-remove(image-gallery) */
 export type { ImageGalleryProps, ImageGalleryImageProps } from './ImageGallery';
 
 /* @conditional-compile-remove(file-sharing) */
@@ -203,7 +200,16 @@ export { _ComplianceBanner } from './ComplianceBanner';
 export type { _ComplianceBannerProps, _ComplianceBannerStrings } from './ComplianceBanner';
 export { Dialpad } from './Dialpad/Dialpad';
 export type { DialpadProps, DialpadStrings, DialpadStyles, DtmfTone } from './Dialpad/Dialpad';
-
+/* @conditional-compile-remove(end-of-call-survey) */
+export { _StarSurvey } from './Survey/StarSurvey/StarSurvey';
+/* @conditional-compile-remove(end-of-call-survey) */
+export type { _StarSurveyProps, _StarSurveyStrings } from './Survey/StarSurvey/StarSurvey';
+/* @conditional-compile-remove(end-of-call-survey) */
+export * from './Survey/SurveyTypes';
+/* @conditional-compile-remove(end-of-call-survey) */
+export { _TagsSurvey } from './Survey/TagsSurvey/TagsSurvey';
+/* @conditional-compile-remove(end-of-call-survey) */
+export type { _TagsSurveyProps, _TagsSurveyStrings, _IssueCategory, _SurveyTag } from './Survey/TagsSurvey/TagsSurvey';
 /* @conditional-compile-remove(PSTN-calls) */
 export { HoldButton } from './HoldButton';
 /* @conditional-compile-remove(PSTN-calls) */

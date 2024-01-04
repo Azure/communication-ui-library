@@ -1,5 +1,8 @@
 import { FluentThemeProvider, MessageStatus, MessageThread } from '@azure/communication-react';
+import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 import React from 'react';
+
+initializeFileTypeIcons();
 
 export const MessageWithFile: () => JSX.Element = () => {
   return (
@@ -19,13 +22,13 @@ export const MessageWithFile: () => JSX.Element = () => {
             attached: false,
             status: 'seen' as MessageStatus,
             contentType: 'text',
-            attachedFilesMetadata: [
+            files: [
               {
                 id: 'SomeUniqueId1',
                 name: 'RouterConfig.xlsx',
                 extension: 'xlsx',
                 url: 'https://www.example.com/files/RouterConfig.xlsx',
-                attachmentType: 'fileSharing'
+                attachmentType: 'file'
               }
             ]
           },

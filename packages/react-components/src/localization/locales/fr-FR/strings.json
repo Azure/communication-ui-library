@@ -153,7 +153,8 @@
     "downloadFile": "Télécharger un fichier",
     "blockedWarningText": "Ce message a été supprimé en raison d’une stratégie de l’organisation.",
     "blockedWarningLinkText": "Détails",
-    "fileCardGroupMessage": "Le message a {fileCount} pièce jointe"
+    "fileCardGroupMessage": "Le message a {fileCount} pièce jointe",
+    "messageDeletedAnnouncementAriaLabel": "Le message est supprimé"
   },
   "errorBar": {
     "unableToReachChatService": "Vous êtes hors connexion",

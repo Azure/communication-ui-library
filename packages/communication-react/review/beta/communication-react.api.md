@@ -21,6 +21,8 @@ import { CallEndReason } from '@azure/communication-calling';
 import { CallerInfo } from '@azure/communication-calling';
 import { CallKind } from '@azure/communication-calling';
 import { CallState as CallState_2 } from '@azure/communication-calling';
+import { CallSurvey } from '@azure/communication-calling';
+import { CallSurveyResponse } from '@azure/communication-calling';
 import { CapabilitiesChangeInfo } from '@azure/communication-calling';
 import { CaptionsResultType } from '@azure/communication-calling';
 import { ChatClient } from '@azure/communication-chat';
@@ -142,13 +144,14 @@ export type AreParamEqual<A extends (props: any) => JSX.Element | undefined, B e
 // @public
 export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
-// @beta
+// @public
 export interface AttachmentDownloadResult {
-    // (undocumented)
     attachmentId: string;
-    // (undocumented)
     blobUrl: string;
 }
+
+// @public
+export type AttachmentMetadata = InlineImageMetadata | /* @conditional-compile-remove(file-sharing) */ FileMetadata;
 
 // @public
 export type AvatarPersonaData = {
@@ -207,7 +210,7 @@ export type AzureCommunicationChatAdapterArgs = {
     threadId: string;
 };
 
-// @beta
+// @public
 export type AzureCommunicationChatAdapterOptions = {
     credential?: CommunicationTokenCredential;
 };
@@ -225,15 +228,6 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
 // @public
 export interface BaseCustomStyles {
     root?: IStyle;
-}
-
-// @beta
-export interface BaseFileMetadata {
-    attachmentType: FileMetadataAttachmentType;
-    extension: string;
-    id: string;
-    name: string;
-    url: string;
 }
 
 // @beta
@@ -364,6 +358,8 @@ export interface CallAdapterCallOperations {
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
     stopVideoBackgroundEffects(): Promise<void>;
+    // @beta
+    submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
     unmute(): Promise<void>;
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
     updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
@@ -374,6 +370,7 @@ export type CallAdapterClientState = {
     userId: CommunicationIdentifierKind;
     displayName?: string;
     call?: CallState;
+    targetCallees?: CommunicationIdentifier[];
     devices: DeviceManagerState;
     endedCall?: CallState;
     isTeamsCall: boolean;
@@ -427,6 +424,7 @@ export interface CallAdapterSubscribers {
     off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
     off(event: 'transferRequested', listener: TransferRequestedListener): void;
     off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
+    off(event: 'roleChanged', listener: PropertyChangedEvent): void;
     on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
     on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
     on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -445,6 +443,7 @@ export interface CallAdapterSubscribers {
     on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
     on(event: 'transferRequested', listener: TransferRequestedListener): void;
     on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
+    on(event: 'roleChanged', listener: PropertyChangedEvent): void;
 }
 
 // @public
@@ -556,9 +555,11 @@ export type CallCompositeIcons = {
     NoticePageJoinCallFailedDueToNoNetwork?: JSX.Element;
     NoticePageLeftCall?: JSX.Element;
     NoticePageRemovedFromCall?: JSX.Element;
+    NoticePageCallRejected?: JSX.Element;
     NoticePageNotInvitedToRoom?: JSX.Element;
     NoticePageRoomNotFound?: JSX.Element;
     NoticePageRoomNotValid?: JSX.Element;
+    NoticePageCallTimeout?: JSX.Element;
     OptionsCamera?: JSX.Element;
     OptionsMic?: JSX.Element;
     OptionsSpeaker?: JSX.Element;
@@ -600,13 +601,21 @@ export type CallCompositeOptions = {
     galleryOptions?: {
         layout?: VideoGalleryLayout;
     };
-    logo?: {
-        url: string;
-        alt?: string;
-        shape?: 'circle' | 'square';
+    surveyOptions?: {
+        hideSurvey?: boolean;
+        onSurveySubmitted?: (callId: string, surveyId: string,
+        submittedSurvey: CallSurvey,
+        improvementSuggestions: CallSurveyImprovementSuggestions) => Promise<void>;
     };
-    backgroundImage?: {
-        url: string;
+    branding?: {
+        logo?: {
+            url: string;
+            alt?: string;
+            shape?: 'unset' | 'circle';
+        };
+        backgroundImage?: {
+            url: string;
+        };
     };
 };
 
@@ -625,6 +634,10 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
 export interface CallCompositeStrings {
     blurBackgroundEffectButtonLabel?: string;
     blurBackgroundTooltip?: string;
+    callRejectedMoreDetails?: string;
+    callRejectedTitle: string;
+    callTimeoutDetails?: string;
+    callTimeoutTitle?: string;
     cameraLabel: string;
     cameraOffBackgroundEffectWarningText?: string;
     cameraPermissionDenied: string;
@@ -746,11 +759,27 @@ export interface CallCompositeStrings {
     selectedPeopleButtonLabel: string;
     soundLabel: string;
     spokenLanguageStrings?: SpokenLanguageStrings;
+    starRatingAriaLabel: string;
+    starSurveyFiveStarText: string;
+    starSurveyFourStarText: string;
+    starSurveyHelperText: string;
+    starSurveyOneStarText: string;
+    starSurveyThreeStarText: string;
+    starSurveyTwoStarText: string;
     startCallButtonLabel: string;
     startCaptionsButtonOffLabel?: string;
     startCaptionsButtonOnLabel?: string;
     startCaptionsButtonTooltipOffContent?: string;
     startCaptionsButtonTooltipOnContent?: string;
+    surveyCancelButtonAriaLabel: string;
+    surveyConfirmButtonLabel: string;
+    surveyIssues: SurveyIssues;
+    SurveyIssuesHeadingStrings: SurveyIssuesHeadingStrings;
+    surveyQuestion: string;
+    surveyTextboxDefaultText: string;
+    tagsSurveyHelperText: string;
+    tagsSurveyQuestion: string;
+    tagsSurveyTextFieldDefaultText: string;
     threeParticipantJoinedNoticeString: string;
     threeParticipantLeftNoticeString: string;
     transferPageNoticeString: string;
@@ -801,7 +830,7 @@ export type CallErrors = {
 };
 
 // @public
-export type CallErrorTarget = 'Call.addParticipant' | 'Call.dispose' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | 'Call.muteIncomingAudio' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | 'Call.startAudio' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | 'Call.stopAudio' | 'Call.stopVideo' | 'Call.unmute' | 'Call.unmuteIncomingAudio' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.createTeamsCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.getEnvironmentInfo' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject' | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant' | 'VideoEffectsFeature.startEffects' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallAgent.handlePushNotification' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admit' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.rejectParticipant' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteAllRemoteParticipants' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.setConstraints';
+export type CallErrorTarget = 'Call.addParticipant' | 'Call.dispose' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | 'Call.muteIncomingAudio' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | 'Call.startAudio' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | 'Call.stopAudio' | 'Call.stopVideo' | 'Call.unmute' | 'Call.unmuteIncomingAudio' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.createTeamsCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.getEnvironmentInfo' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject' | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant' | 'VideoEffectsFeature.startEffects' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallAgent.handlePushNotification' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admit' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.rejectParticipant' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteAllRemoteParticipants' | 'Call.setConstraints';
 
 // @public
 export type CallIdChangedListener = (event: {
@@ -907,8 +936,16 @@ export interface CallState {
     transfer: TransferFeature;
 }
 
+// @beta
+export interface CallSurveyImprovementSuggestions {
+    audio?: string;
+    overall?: string;
+    screenshare?: string;
+    video?: string;
+}
+
 // @public
-export interface CallWithChatAdapter extends CallWithChatAdapterManagement, AdapterState<CallWithChatAdapterState>, Disposable, CallWithChatAdapterSubscriptions {
+export interface CallWithChatAdapter extends CallWithChatAdapterManagement, AdapterState<CallWithChatAdapterState>, Disposable_2, CallWithChatAdapterSubscriptions {
 }
 
 // @public
@@ -950,7 +987,7 @@ export interface CallWithChatAdapterManagement {
     // @beta (undocumented)
     registerActiveFileUploads: (files: File[]) => FileUploadManager[];
     // @beta (undocumented)
-    registerCompletedFileUploads: (metadata: FileMetadata[]) => FileUploadManager[];
+    registerCompletedFileUploads: (metadata: AttachmentMetadata[]) => FileUploadManager[];
     removeParticipant(userId: string): Promise<void>;
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
@@ -977,12 +1014,14 @@ export interface CallWithChatAdapterManagement {
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
     stopVideoBackgroundEffects(): Promise<void>;
+    // @beta
+    submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
     unmute(): Promise<void>;
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
     // @beta (undocumented)
     updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
     // @beta (undocumented)
-    updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
+    updateFileUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
     // @beta (undocumented)
     updateFileUploadProgress: (id: string, progress: number) => void;
     updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void>;
@@ -1206,13 +1245,21 @@ export type CallWithChatCompositeOptions = {
     galleryOptions?: {
         layout?: VideoGalleryLayout;
     };
-    logo?: {
-        url: string;
-        alt?: string;
-        shape?: 'circle' | 'square';
+    surveyOptions?: {
+        hideSurvey?: boolean;
+        onSurveySubmitted?: (callId: string, surveyId: string,
+        submittedSurvey: CallSurvey,
+        improvementSuggestions: CallSurveyImprovementSuggestions) => Promise<void>;
     };
-    backgroundImage?: {
-        url: string;
+    branding?: {
+        logo?: {
+            url: string;
+            alt?: string;
+            shape?: 'unset' | 'circle';
+        };
+        backgroundImage?: {
+            url: string;
+        };
     };
 };
 
@@ -1486,7 +1533,7 @@ export type CaptionsReceivedListener = (event: {
 }) => void;
 
 // @public
-export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable & ChatAdapterSubscribers & FileUploadAdapter;
+export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable_2 & ChatAdapterSubscribers & FileUploadAdapter;
 
 // @public
 export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
@@ -1524,7 +1571,7 @@ export interface ChatAdapterThreadManagement {
     sendTypingIndicator(): Promise<void>;
     setTopic(topicName: string): Promise<void>;
     updateMessage(messageId: string, content: string, metadata?: Record<string, string>, options?: {
-        attachedFilesMetadata?: FileMetadata[];
+        attachmentMetadata?: AttachmentMetadata[];
     }): Promise<void>;
 }
 
@@ -1533,6 +1580,9 @@ export type ChatAdapterUiState = {
     error?: Error;
     fileUploads?: FileUploadsUiState;
 };
+
+// @public
+export type ChatAttachmentType = 'inlineImage' | /* @conditional-compile-remove(file-sharing) */ 'file' | 'unknown';
 
 // @public
 export type ChatBaseSelectorProps = {
@@ -1641,7 +1691,7 @@ export type ChatHandlers = {
     onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
     onUpdateMessage: (messageId: string, content: string, options?: {
         metadata?: Record<string, string>;
-        attachedFilesMetadata?: FileMetadata[];
+        attachmentMetadata?: AttachmentMetadata[];
     }) => Promise<void>;
     onDeleteMessage: (messageId: string) => Promise<void>;
 };
@@ -1650,8 +1700,6 @@ export type ChatHandlers = {
 export interface ChatMessage extends MessageCommon {
     // (undocumented)
     attached?: MessageAttachedStatus;
-    // @beta
-    attachedFilesMetadata?: FileMetadata[];
     // (undocumented)
     clientMessageId?: string;
     // (undocumented)
@@ -1664,6 +1712,9 @@ export interface ChatMessage extends MessageCommon {
     editedOn?: Date;
     // (undocumented)
     failureReason?: string;
+    // @beta
+    files?: FileMetadata[];
+    inlineImages?: InlineImageMetadata[];
     // (undocumented)
     messageType: 'chat';
     metadata?: Record<string, string>;
@@ -1693,14 +1744,14 @@ export type ChatParticipantListSelector = (state: ChatClientState, props: ChatBa
 // @public
 export type ChatReturnProps<Component extends (props: any) => JSX.Element> = GetChatSelector<Component> extends (state: ChatClientState, props: any) => any ? ReturnType<GetChatSelector<Component>> & Common<ChatHandlers, Parameters<Component>[0]> : never;
 
-// @beta
+// @public
 export interface ChatTheme {
     chatPalette: {
-        modalOverlayBlack: string;
-        modalTitleWhite: string;
-        modalButtonBackground: string;
-        modalButtonBackgroundHover: string;
-        modalButtonBackgroundActive: string;
+        imageGalleryOverlayBlack: string;
+        imageGalleryTitleWhite: string;
+        imageGalleryDefaultButtonBackground: string;
+        imageGalleryButtonBackgroundHover: string;
+        imageGalleryButtonBackgroundActive: string;
     };
 }
 
@@ -1740,7 +1791,7 @@ export type ClientState = CallClientState & ChatClientState;
 export type Common<A, B> = Pick<A, CommonProperties<A, B>>;
 
 // @public
-export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallOperations, CallAdapterDeviceManagement, CallAdapterSubscribers {
+export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Disposable_2, CallAdapterCallOperations, CallAdapterDeviceManagement, CallAdapterSubscribers {
     // @deprecated
     joinCall(microphoneOn?: boolean): void;
     joinCall(options?: JoinCallOptions): void;
@@ -1756,9 +1807,7 @@ export type CommonCallAdapterOptions = {
         onResolveDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     };
     onFetchProfile?: OnFetchProfileCallback;
-    soundOptions?: {
-        callingSounds?: CallingSounds;
-    };
+    callingSounds?: CallingSounds;
 };
 
 // @public
@@ -1853,6 +1902,8 @@ export interface CommonCallingHandlers {
     onStopCaptions: () => Promise<void>;
     // (undocumented)
     onStopScreenShare: () => Promise<void>;
+    // (undocumented)
+    onSubmitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
     // (undocumented)
     onToggleCamera: (options?: VideoStreamOptions) => Promise<void>;
     // (undocumented)
@@ -2171,20 +2222,20 @@ export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThr
 
 // @beta
 export const createDefaultTeamsCallingHandlers: (callClient: StatefulCallClient, callAgent: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent, deviceManager: StatefulDeviceManager | undefined, call: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall, options?: {
-    onResolveVideoBackgroundEffectsDependency?: (() => Promise<VideoBackgroundEffectsDependency>) | undefined;
-} | undefined) => never | TeamsCallingHandlers;
+    onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
+}) => never | TeamsCallingHandlers;
 
 // @public
-export const createStatefulCallClient: (args: StatefulCallClientArgs, options?: StatefulCallClientOptions | undefined) => StatefulCallClient;
+export const createStatefulCallClient: (args: StatefulCallClientArgs, options?: StatefulCallClientOptions) => StatefulCallClient;
 
 // @public
-export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: StatefulChatClientOptions | undefined) => StatefulChatClient;
+export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: StatefulChatClientOptions) => StatefulChatClient;
 
 // @beta (undocumented)
 export const createTeamsCallAdapter: ({ userId, credential, locator, options }: TeamsCallAdapterArgs) => Promise<TeamsCallAdapter>;
 
 // @beta
-export const createTeamsCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: TeamsCallAgent, locator: CallAdapterLocator, options?: CommonCallAdapterOptions | undefined) => Promise<TeamsCallAdapter>;
+export const createTeamsCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: TeamsCallAgent, locator: CallAdapterLocator, options?: TeamsAdapterOptions) => Promise<TeamsCallAdapter>;
 
 // @public
 export interface CreateVideoStreamViewResult {
@@ -2252,7 +2303,7 @@ export interface CustomMessage extends MessageCommon {
 }
 
 // @public
-export const darkTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-gallery) */ ChatTheme;
+export const darkTheme: PartialTheme & CallingTheme & ChatTheme;
 
 // @beta
 export type DeclarativeCallAgent = CallAgent & IncomingCallManagement;
@@ -2348,53 +2399,55 @@ export const DEFAULT_COMPONENT_ICONS: {
     ContextMenuCameraIcon: React_2.JSX.Element;
     ContextMenuMicIcon: React_2.JSX.Element;
     ContextMenuSpeakerIcon: React_2.JSX.Element;
+    SurveyStarIcon: React_2.JSX.Element;
+    SurveyStarIconFilled: React_2.JSX.Element;
 };
 
 // @public
 export const DEFAULT_COMPOSITE_ICONS: {
-    EditBoxCancel: JSX.Element | React_2.JSX.Element;
-    EditBoxSubmit: JSX.Element | React_2.JSX.Element;
-    MessageDelivered: JSX.Element | React_2.JSX.Element;
-    MessageEdit: JSX.Element | React_2.JSX.Element;
-    MessageFailed: JSX.Element | React_2.JSX.Element;
-    MessageRemove: JSX.Element | React_2.JSX.Element;
-    MessageSeen: JSX.Element | React_2.JSX.Element;
-    MessageSending: JSX.Element | React_2.JSX.Element;
-    ParticipantItemOptions: JSX.Element | React_2.JSX.Element;
-    ParticipantItemOptionsHovered: JSX.Element | React_2.JSX.Element;
-    SendBoxSend: JSX.Element | React_2.JSX.Element;
-    SendBoxSendHovered: JSX.Element | React_2.JSX.Element;
+    EditBoxCancel: JSX.Element;
+    EditBoxSubmit: JSX.Element;
+    MessageDelivered: JSX.Element;
+    MessageEdit: JSX.Element;
+    MessageFailed: JSX.Element;
+    MessageRemove: JSX.Element;
+    MessageSeen: JSX.Element;
+    MessageSending: JSX.Element;
+    ParticipantItemOptions: JSX.Element;
+    ParticipantItemOptionsHovered: JSX.Element;
+    SendBoxSend: JSX.Element;
+    SendBoxSendHovered: JSX.Element;
     SendBoxAttachFile?: JSX.Element | undefined;
     ControlBarPeopleButton?: JSX.Element | undefined;
-    ControlButtonCameraOff: JSX.Element | React_2.JSX.Element;
-    ControlButtonCameraOn: JSX.Element | React_2.JSX.Element;
-    ControlButtonEndCall: JSX.Element | React_2.JSX.Element;
-    ControlButtonMicOff: JSX.Element | React_2.JSX.Element;
-    ControlButtonMicOn: JSX.Element | React_2.JSX.Element;
-    ControlButtonOptions: JSX.Element | React_2.JSX.Element;
-    ControlButtonParticipants: JSX.Element | React_2.JSX.Element;
-    ControlButtonScreenShareStart: JSX.Element | React_2.JSX.Element;
-    ControlButtonScreenShareStop: JSX.Element | React_2.JSX.Element;
+    ControlButtonCameraOff: JSX.Element;
+    ControlButtonCameraOn: JSX.Element;
+    ControlButtonEndCall: JSX.Element;
+    ControlButtonMicOff: JSX.Element;
+    ControlButtonMicOn: JSX.Element;
+    ControlButtonOptions: JSX.Element;
+    ControlButtonParticipants: JSX.Element;
+    ControlButtonScreenShareStart: JSX.Element;
+    ControlButtonScreenShareStop: JSX.Element;
     ControlButtonCameraProhibited?: JSX.Element | undefined;
     ControlButtonMicProhibited?: JSX.Element | undefined;
-    ControlButtonRaiseHand: JSX.Element | React_2.JSX.Element;
-    ControlButtonLowerHand: JSX.Element | React_2.JSX.Element;
-    RaiseHandContextualMenuItem: JSX.Element | React_2.JSX.Element;
-    LowerHandContextualMenuItem: JSX.Element | React_2.JSX.Element;
-    ErrorBarCallCameraAccessDenied: JSX.Element | React_2.JSX.Element;
-    ErrorBarCallCameraAlreadyInUse: JSX.Element | React_2.JSX.Element;
-    ErrorBarCallLocalVideoFreeze: JSX.Element | React_2.JSX.Element;
-    ErrorBarCallMacOsCameraAccessDenied: JSX.Element | React_2.JSX.Element;
-    ErrorBarCallMacOsMicrophoneAccessDenied: JSX.Element | React_2.JSX.Element;
-    ErrorBarCallMicrophoneAccessDenied: JSX.Element | React_2.JSX.Element;
-    ErrorBarCallMicrophoneMutedBySystem: JSX.Element | React_2.JSX.Element;
-    ErrorBarCallMicrophoneUnmutedBySystem: JSX.Element | React_2.JSX.Element;
-    ErrorBarCallNetworkQualityLow: JSX.Element | React_2.JSX.Element;
-    ErrorBarCallNoMicrophoneFound: JSX.Element | React_2.JSX.Element;
-    ErrorBarCallNoSpeakerFound: JSX.Element | React_2.JSX.Element;
-    ErrorBarClear: JSX.Element | React_2.JSX.Element;
-    HorizontalGalleryLeftButton: JSX.Element | React_2.JSX.Element;
-    HorizontalGalleryRightButton: JSX.Element | React_2.JSX.Element;
+    ControlButtonRaiseHand: JSX.Element;
+    ControlButtonLowerHand: JSX.Element;
+    RaiseHandContextualMenuItem: JSX.Element;
+    LowerHandContextualMenuItem: JSX.Element;
+    ErrorBarCallCameraAccessDenied: JSX.Element;
+    ErrorBarCallCameraAlreadyInUse: JSX.Element;
+    ErrorBarCallLocalVideoFreeze: JSX.Element;
+    ErrorBarCallMacOsCameraAccessDenied: JSX.Element;
+    ErrorBarCallMacOsMicrophoneAccessDenied: JSX.Element;
+    ErrorBarCallMicrophoneAccessDenied: JSX.Element;
+    ErrorBarCallMicrophoneMutedBySystem: JSX.Element;
+    ErrorBarCallMicrophoneUnmutedBySystem: JSX.Element;
+    ErrorBarCallNetworkQualityLow: JSX.Element;
+    ErrorBarCallNoMicrophoneFound: JSX.Element;
+    ErrorBarCallNoSpeakerFound: JSX.Element;
+    ErrorBarClear: JSX.Element;
+    HorizontalGalleryLeftButton: JSX.Element;
+    HorizontalGalleryRightButton: JSX.Element;
     LobbyScreenConnectingToCall?: JSX.Element | undefined;
     LobbyScreenWaitingToBeAdmitted?: JSX.Element | undefined;
     LocalDeviceSettingsCamera?: JSX.Element | undefined;
@@ -2407,15 +2460,17 @@ export const DEFAULT_COMPOSITE_ICONS: {
     NoticePageJoinCallFailedDueToNoNetwork?: JSX.Element | undefined;
     NoticePageLeftCall?: JSX.Element | undefined;
     NoticePageRemovedFromCall?: JSX.Element | undefined;
+    NoticePageCallRejected?: JSX.Element | undefined;
     NoticePageNotInvitedToRoom?: JSX.Element | undefined;
     NoticePageRoomNotFound?: JSX.Element | undefined;
     NoticePageRoomNotValid?: JSX.Element | undefined;
-    OptionsCamera: JSX.Element | React_2.JSX.Element;
-    OptionsMic: JSX.Element | React_2.JSX.Element;
-    OptionsSpeaker: JSX.Element | React_2.JSX.Element;
-    ParticipantItemMicOff: JSX.Element | React_2.JSX.Element;
-    ParticipantItemScreenShareStart: JSX.Element | React_2.JSX.Element;
-    VideoTileMicOff: JSX.Element | React_2.JSX.Element;
+    NoticePageCallTimeout?: JSX.Element | undefined;
+    OptionsCamera: JSX.Element;
+    OptionsMic: JSX.Element;
+    OptionsSpeaker: JSX.Element;
+    ParticipantItemMicOff: JSX.Element;
+    ParticipantItemScreenShareStart: JSX.Element;
+    VideoTileMicOff: JSX.Element;
     LocalCameraSwitch?: JSX.Element | undefined;
     PeoplePaneAddPerson?: JSX.Element | undefined;
     PeoplePaneOpenDialpad?: JSX.Element | undefined;
@@ -2481,6 +2536,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ContextMenuCameraIcon: React_2.JSX.Element;
     ContextMenuMicIcon: React_2.JSX.Element;
     ContextMenuSpeakerIcon: React_2.JSX.Element;
+    SurveyStarIcon: React_2.JSX.Element;
+    SurveyStarIconFilled: React_2.JSX.Element;
 };
 
 // @beta
@@ -2566,6 +2623,7 @@ export const Dialpad: (props: DialpadProps) => JSX.Element;
 
 // @beta
 export interface DialpadProps {
+    disableDtmfPlayback?: boolean;
     isMobile?: boolean;
     onChange?: (input: string) => void;
     onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
@@ -2609,9 +2667,10 @@ export type DisplayNameChangedListener = (event: {
 }) => void;
 
 // @public
-export interface Disposable {
+interface Disposable_2 {
     dispose(): void;
 }
+export { Disposable_2 as Disposable }
 
 // @beta
 export type DtmfTone = 'A' | 'B' | 'C' | 'D' | 'Flash' | 'Num0' | 'Num1' | 'Num2' | 'Num3' | 'Num4' | 'Num5' | 'Num6' | 'Num7' | 'Num8' | 'Num9' | 'Pound' | 'Star';
@@ -2690,20 +2749,18 @@ export interface FileDownloadError {
 }
 
 // @beta
-export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
+export type FileDownloadHandler = (userId: string, fileMetadata: AttachmentMetadata) => Promise<URL | FileDownloadError>;
 
 // @beta
-export type FileMetadata = FileSharingMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ ImageFileMetadata;
-
-// @beta (undocumented)
-export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | 'unknown';
-
-// @beta
-export interface FileSharingMetadata extends BaseFileMetadata {
+export interface FileMetadata {
     // (undocumented)
-    attachmentType: 'fileSharing';
+    attachmentType: 'file';
+    extension: string;
+    id: string;
+    name: string;
     // (undocumented)
     payload?: Record<string, string>;
+    url: string;
 }
 
 // @beta
@@ -2723,11 +2780,11 @@ export interface FileUploadAdapter {
     // (undocumented)
     registerActiveFileUploads: (files: File[]) => FileUploadManager[];
     // (undocumented)
-    registerCompletedFileUploads: (metadata: FileMetadata[]) => FileUploadManager[];
+    registerCompletedFileUploads: (metadata: AttachmentMetadata[]) => FileUploadManager[];
     // (undocumented)
     updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
     // (undocumented)
-    updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
+    updateFileUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
     // (undocumented)
     updateFileUploadProgress: (id: string, progress: number) => void;
 }
@@ -2745,7 +2802,7 @@ export type FileUploadHandler = (userId: string, fileUploads: FileUploadManager[
 export interface FileUploadManager {
     file?: File;
     id: string;
-    notifyUploadCompleted: (metadata: FileMetadata) => void;
+    notifyUploadCompleted: (metadata: AttachmentMetadata) => void;
     notifyUploadFailed: (message: string) => void;
     notifyUploadProgressChanged: (value: number) => void;
 }
@@ -2755,7 +2812,7 @@ export interface FileUploadState {
     error?: FileUploadError;
     filename: string;
     id: string;
-    metadata?: FileMetadata;
+    metadata?: AttachmentMetadata;
     progress: number;
 }
 
@@ -2864,18 +2921,10 @@ export interface _Identifiers {
     videoTile: string;
 }
 
-// @beta
-export interface ImageFileMetadata extends BaseFileMetadata {
-    // (undocumented)
-    attachmentType: 'inlineImage';
-    // (undocumented)
-    previewUrl?: string;
-}
-
-// @beta
+// @public
 export const ImageGallery: (props: ImageGalleryProps) => JSX.Element;
 
-// @beta
+// @public
 export interface ImageGalleryImageProps {
     altText?: string;
     downloadFilename: string;
@@ -2884,7 +2933,7 @@ export interface ImageGalleryImageProps {
     titleIcon?: JSX.Element;
 }
 
-// @beta
+// @public
 export interface ImageGalleryProps {
     images: Array<ImageGalleryImageProps>;
     isOpen: boolean;
@@ -2894,7 +2943,7 @@ export interface ImageGalleryProps {
     startIndex?: number;
 }
 
-// @beta
+// @public
 export interface ImageGalleryStrings {
     dismissButtonAriaLabel: string;
     downloadButtonLabel: string;
@@ -2912,6 +2961,16 @@ export interface IncomingCallState {
     endTime?: Date;
     id: string;
     startTime: Date;
+}
+
+// @public
+export interface InlineImageMetadata {
+    // (undocumented)
+    attachmentType: 'inlineImage';
+    id: string;
+    // (undocumented)
+    previewUrl?: string;
+    url: string;
 }
 
 // @public
@@ -2959,7 +3018,7 @@ export interface JumpToNewMessageButtonProps {
 }
 
 // @public
-export const lightTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-gallery) */ ChatTheme;
+export const lightTheme: PartialTheme & CallingTheme & ChatTheme;
 
 // @public
 export type LoadingState = 'loading' | 'none';
@@ -2980,6 +3039,7 @@ export interface LocalVideoCameraCycleButtonProps {
     label?: string;
     onSelectCamera?: (device: OptionsDevice) => Promise<void>;
     selectedCamera?: OptionsDevice;
+    size?: 'small' | 'large';
 }
 
 // @public
@@ -3000,7 +3060,7 @@ export interface LocalVideoTileOptions {
     position?: 'grid' | 'floating';
 }
 
-// @beta
+// @public
 export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'followDeviceOrientation';
 
 // @public
@@ -3143,7 +3203,7 @@ export type MessageThreadProps = {
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
     onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
-    onFetchAttachments?: (attachments: FileMetadata[]) => Promise<AttachmentDownloadResult[]>;
+    onFetchAttachments?: (attachments: AttachmentMetadata[]) => Promise<AttachmentDownloadResult[]>;
     onUpdateMessage?: UpdateMessageCallback;
     onCancelEditMessage?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
@@ -3181,6 +3241,7 @@ export interface MessageThreadStrings {
     liveAuthorIntro: string;
     messageContentAriaText: string;
     messageContentMineAriaText: string;
+    messageDeletedAnnouncementAriaLabel: string;
     messageReadCount?: string;
     monday: string;
     newMessagesIndicator: string;
@@ -3699,8 +3760,7 @@ export interface SitePermissionsStyles extends BaseCustomStyles {
 
 // @beta
 export type SoundEffect = {
-    path: string;
-    fileType?: 'mp3' | 'wav' | 'ogg' | 'aac' | 'flac';
+    url: string;
 };
 
 // @public
@@ -3835,7 +3895,7 @@ export type StatefulChatClientOptions = {
 // @public
 export interface StatefulDeviceManager extends DeviceManager {
     getUnparentedVideoStreams: () => LocalVideoStream[];
-    selectCamera: (VideoDeviceInfo: any) => void;
+    selectCamera: (device: VideoDeviceInfo) => void;
 }
 
 // @public
@@ -3847,6 +3907,64 @@ export interface StreamMediaProps {
     loadingState?: LoadingState;
     styles?: BaseCustomStyles;
     videoStreamElement: HTMLElement | null;
+}
+
+// @beta
+export interface SurveyIssues {
+    // (undocumented)
+    audioRating: {
+        noLocalAudio: string;
+        noRemoteAudio: string;
+        echo: string;
+        audioNoise: string;
+        lowVolume: string;
+        audioStoppedUnexpectedly: string;
+        distortedSpeech: string;
+        audioInterruption: string;
+        otherIssues: string;
+    };
+    // (undocumented)
+    overallRating: {
+        callCannotJoin: string;
+        callCannotInvite: string;
+        hadToRejoin: string;
+        callEndedUnexpectedly: string;
+        otherIssues: string;
+    };
+    // (undocumented)
+    screenshareRating: {
+        noContentLocal: string;
+        noContentRemote: string;
+        cannotPresent: string;
+        lowQuality: string;
+        freezes: string;
+        stoppedUnexpectedly: string;
+        largeDelay: string;
+        otherIssues: string;
+    };
+    // (undocumented)
+    videoRating: {
+        noVideoReceived: string;
+        noVideoSent: string;
+        lowQuality: string;
+        freezes: string;
+        stoppedUnexpectedly: string;
+        darkVideoReceived: string;
+        audioVideoOutOfSync: string;
+        otherIssues: string;
+    };
+}
+
+// @beta
+export interface SurveyIssuesHeadingStrings {
+    // (undocumented)
+    audioRating: string;
+    // (undocumented)
+    overallRating: string;
+    // (undocumented)
+    screenshareRating: string;
+    // (undocumented)
+    videoRating: string;
 }
 
 // @public
@@ -4002,7 +4120,7 @@ export interface UnsupportedOperatingSystemStrings {
 // @public
 export type UpdateMessageCallback = (messageId: string, content: string, options?: {
     metadata?: Record<string, string>;
-    attachedFilesMetadata?: FileMetadata[];
+    attachmentMetadata?: AttachmentMetadata[];
 }) => Promise<void>;
 
 // @public
@@ -4033,10 +4151,10 @@ export const useChatThreadClient: () => ChatThreadClient;
 export const useDeviceManager: () => StatefulDeviceManager | undefined;
 
 // @public
-export const usePropsFor: <Component extends (props: any) => JSX.Element>(component: Component, type?: "chat" | "calling" | undefined) => ComponentProps<Component>;
+export const usePropsFor: <Component extends (props: any) => JSX.Element>(component: Component, type?: 'calling' | 'chat') => ComponentProps<Component>;
 
 // @public
-export const useSelector: <ParamT extends Selector | undefined>(selector: ParamT, selectorProps?: (ParamT extends Selector ? Parameters<ParamT>[1] : undefined) | undefined, type?: "chat" | "calling" | undefined) => ParamT extends Selector ? ReturnType<ParamT> : undefined;
+export const useSelector: <ParamT extends Selector | undefined>(selector: ParamT, selectorProps?: (ParamT extends Selector ? Parameters<ParamT>[1] : undefined) | undefined, type?: 'calling' | 'chat') => ParamT extends Selector ? ReturnType<ParamT> : undefined;
 
 // @beta
 export const useTeamsCall: () => undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;

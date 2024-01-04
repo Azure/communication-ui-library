@@ -2,6 +2,7 @@
   "extends": "../../common/config/tsc/tsconfig.json",
   "compilerOptions": {
     "baseUrl": "./src",
+    "noImplicitAny": false,
     "outDir": "./dist/dist-esm",
     "paths": {
       "@internal/chat-component-bindings": ["../../chat-component-bindings/src"],
@@ -13,9 +14,8 @@
       "@internal/react-composites": ["../../react-composites/src"]
     },
     "plugins": [
-      {
-        "transform": "@zerollup/ts-transform-paths"
-      }
+      { "transform": "typescript-transform-paths" },
+      { "transform": "typescript-transform-paths", "afterDeclarations": true }
     ]
   },
   "typeRoots": ["./node_modules/@types"],

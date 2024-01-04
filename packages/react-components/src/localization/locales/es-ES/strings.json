@@ -153,7 +153,8 @@
     "downloadFile": "Descargar archivo",
     "blockedWarningText": "Este mensaje se eliminó debido a la directiva de la organización.",
     "blockedWarningLinkText": "Detalles",
-    "fileCardGroupMessage": "El mensaje tiene {fileCount} datos adjuntos"
+    "fileCardGroupMessage": "El mensaje tiene {fileCount} datos adjuntos",
+    "messageDeletedAnnouncementAriaLabel": "El mensaje se ha eliminado"
   },
   "errorBar": {
     "unableToReachChatService": "Sin conexión",

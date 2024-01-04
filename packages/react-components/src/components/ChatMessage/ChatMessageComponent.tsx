@@ -9,7 +9,7 @@ import { ChatMessage, ComponentSlotStyle, OnRenderAvatarCallback } from '../../t
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types';
 import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMessageBubble';
-import { FileDownloadHandler, FileMetadata } from '../FileDownloadCards';
+import { FileDownloadHandler, AttachmentMetadata } from '../FileDownloadCards';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from '../MentionPopover';
 
@@ -24,7 +24,7 @@ type ChatMessageComponentProps = {
     content: string,
     metadata?: Record<string, string>,
     options?: {
-      attachedFilesMetadata?: FileMetadata[];
+      attachmentMetadata?: AttachmentMetadata[];
     }
   ) => Promise<void>;
   onCancelEditMessage?: (messageId: string) => void;
@@ -71,7 +71,7 @@ type ChatMessageComponentProps = {
    * @param userId - user Id
    */
   onRenderAvatar?: OnRenderAvatarCallback;
-
+  /* @conditional-compile-remove(date-time-customization) */
   /**
    * Optional function to provide customized date format.
    * @beta
@@ -83,19 +83,16 @@ type ChatMessageComponentProps = {
    * @beta
    */
   mentionOptions?: MentionOptions;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /**
    * Optional function to fetch attachments.
    * @beta
    */
-  onFetchAttachments?: (attachment: FileMetadata[], messageId: string) => Promise<void>;
-  /* @conditional-compile-remove(image-gallery) */
+  onFetchAttachments?: (attachment: AttachmentMetadata[], messageId: string) => Promise<void>;
   /**
    * Optional callback called when an inline image is clicked.
-   * @beta
+   * @public
    */
   onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /**
    * Optional map of attachment ids to blob urls.
    */
@@ -106,11 +103,11 @@ type ChatMessageComponentProps = {
  * @private
  */
 export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Element => {
+  const { onDeleteMessage, onSendMessage, message } = props;
   const [isEditing, setIsEditing] = useState(false);
 
   const onEditClick = useCallback(() => setIsEditing(true), [setIsEditing]);
 
-  const { onDeleteMessage, onSendMessage, message } = props;
   const clientMessageId = 'clientMessageId' in message ? message.clientMessageId : undefined;
   const content = 'content' in message ? message.content : undefined;
   const onRemoveClick = useCallback(() => {
@@ -157,11 +154,8 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
         /* @conditional-compile-remove(date-time-customization) */
         onDisplayDateTimeString={props.onDisplayDateTimeString}
         strings={props.strings}
-        /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
         onFetchAttachments={props.onFetchAttachments}
-        /* @conditional-compile-remove(image-gallery) */
         onInlineImageClicked={props.onInlineImageClicked}
-        /* @conditional-compile-remove(image-gallery) */
         attachmentsMap={props.attachmentsMap}
         /* @conditional-compile-remove(mention) */
         mentionDisplayOptions={props.mentionOptions?.displayOptions}

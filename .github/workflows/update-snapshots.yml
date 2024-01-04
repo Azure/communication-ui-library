@@ -50,10 +50,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v18.x
+      - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       - id: get-matrix
         run: echo "matrix=$(node ./common/scripts/workflow-read-matrix.mjs)" >> $GITHUB_OUTPUT
 
@@ -83,19 +83,23 @@ jobs:
         run: |
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
-      - name: Use Node.js v18.x
+      - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.100.1
+        run: npm install -g @microsoft/rush@5.112.2
       - name: Install dependencies
         run: rush install --max-install-attempts 3
+      - uses: browser-actions/setup-chrome@v1
+        id: setup-chrome
+        with:
+          chrome-version: 120.0.6099
       - name: Switch flavor for build
         if: ${{ matrix.flavor != 'beta' }}
         run: rush switch-flavor:${{ matrix.flavor }}
@@ -111,6 +115,7 @@ jobs:
           rushx update:snapshot:examples
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+          CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload test results on failure
         if: ${{ always() && steps.updatesnapshots.outcome == 'failure' }}
         uses: actions/upload-artifact@v3
@@ -173,19 +178,23 @@ jobs:
         run: |
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
-      - name: Use Node.js v18.x
+      - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.100.1
+        run: npm install -g @microsoft/rush@5.112.2
       - name: Install dependencies
         run: rush install --max-install-attempts 3
+      - uses: browser-actions/setup-chrome@v1
+        id: setup-chrome
+        with:
+          chrome-version: 120.0.6099
       - name: Switch flavor for build
         if: ${{ matrix.flavor != 'beta' }}
         run: rush switch-flavor:${{ matrix.flavor }}
@@ -201,6 +210,7 @@ jobs:
           rushx update:snapshot:bundle
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+          CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload snapshot diff
         if: ${{ always() && steps.updatesnapshots.outcome == 'failure' }}
         uses: actions/upload-artifact@v3
@@ -263,19 +273,23 @@ jobs:
         run: |
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
-      - name: Use Node.js v18.x
+      - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.100.1
+        run: npm install -g @microsoft/rush@5.112.2
       - name: Install dependencies
         run: rush install --max-install-attempts 3
+      - uses: browser-actions/setup-chrome@v1
+        id: setup-chrome
+        with:
+          chrome-version: 120.0.6099
       - name: Switch flavor for build
         if: ${{ matrix.flavor != 'beta' }}
         run: rush switch-flavor:${{ matrix.flavor }}
@@ -292,6 +306,7 @@ jobs:
         working-directory: ./packages/react-composites
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+          CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload snapshot diff
         if: ${{ always() && steps.update-call-snapshots.outcome == 'failure' }}
         uses: actions/upload-artifact@v3
@@ -353,19 +368,23 @@ jobs:
         run: |
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
-      - name: Use Node.js v18.x
+      - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.100.1
+        run: npm install -g @microsoft/rush@5.112.2
       - name: Install dependencies
         run: rush install --max-install-attempts 3
+      - uses: browser-actions/setup-chrome@v1
+        id: setup-chrome
+        with:
+          chrome-version: 120.0.6099
       - name: Switch flavor for build
         if: ${{ matrix.flavor != 'beta' }}
         run: rush switch-flavor:${{ matrix.flavor }}
@@ -382,6 +401,7 @@ jobs:
         working-directory: ./packages/react-composites
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+          CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload snapshot diff
         if: ${{ always() && steps.update-chat-snapshots.outcome == 'failure' }}
         uses: actions/upload-artifact@v3
@@ -443,19 +463,23 @@ jobs:
         run: |
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
-      - name: Use Node.js v18.x
+      - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.100.1
+        run: npm install -g @microsoft/rush@5.112.2
       - name: Install dependencies
         run: rush install --max-install-attempts 3
+      - uses: browser-actions/setup-chrome@v1
+        id: setup-chrome
+        with:
+          chrome-version: 120.0.6099
       - name: Switch flavor for build
         if: ${{ matrix.flavor != 'beta' }}
         run: rush switch-flavor:${{ matrix.flavor }}
@@ -472,6 +496,7 @@ jobs:
         working-directory: ./packages/react-composites
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+          CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload snapshot diff
         if: ${{ always() && steps.update-call-with-chat-snapshots.outcome == 'failure' }}
         uses: actions/upload-artifact@v3

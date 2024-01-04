@@ -170,11 +170,17 @@ function addSdkRemoteStream(
 }
 
 function addMockLocalStream(call: CallState): void {
-  call.localVideoStreams.push({} as LocalVideoStreamState);
+  call.localVideoStreams.push({ mediaStreamType: 'Video' } as LocalVideoStreamState);
 }
 
 function addSdkLocalStream(internalContext: InternalCallContext, callId: string): void {
-  internalContext.setLocalRenderInfo(callId, new SdkLocalVideoStream({} as VideoDeviceInfo), 'NotRendered', undefined);
+  internalContext.setLocalRenderInfo(
+    callId,
+    'Video',
+    new SdkLocalVideoStream({} as VideoDeviceInfo),
+    'NotRendered',
+    undefined
+  );
 }
 
 describe('stream utils', () => {
@@ -216,12 +222,14 @@ describe('stream utils', () => {
 
     // participantId is undefined since when createView is invoked without a participant Id
     // it is supposed to be creating the view for the local participant.
-    await createView(context, internalContext, mockCallId, undefined, {} as LocalVideoStreamState);
+    await createView(context, internalContext, mockCallId, undefined, {
+      mediaStreamType: 'Video'
+    } as LocalVideoStreamState);
 
-    expect(internalContext.getLocalRenderInfo(mockCallId)).toBeDefined();
-    expect(internalContext.getLocalRenderInfo(mockCallId)?.stream).toBeDefined();
-    expect(internalContext.getLocalRenderInfo(mockCallId)?.renderer).toBeDefined();
-    expect(internalContext.getLocalRenderInfo(mockCallId)?.status).toBe('Rendered');
+    expect(internalContext.getLocalRenderInfo(mockCallId, 'Video')).toBeDefined();
+    expect(internalContext.getLocalRenderInfo(mockCallId, 'Video')?.stream).toBeDefined();
+    expect(internalContext.getLocalRenderInfo(mockCallId, 'Video')?.renderer).toBeDefined();
+    expect(internalContext.getLocalRenderInfo(mockCallId, 'Video')?.status).toBe('Rendered');
     expect(context.getState().calls[mockCallId]?.localVideoStreams[0].view).toBeDefined();
   });
 
@@ -475,7 +483,7 @@ describe('stream utils', () => {
     } as LocalVideoStreamState;
     const incorrectVideoStream = {
       source: { name: 'b', id: 'b', deviceType: 'Unknown' },
-      mediaStreamType: 'Video'
+      mediaStreamType: 'ScreenSharing'
     } as LocalVideoStreamState;
 
     await createView(context, internalContext, undefined, undefined, localVideoStream);

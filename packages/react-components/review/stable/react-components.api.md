@@ -34,6 +34,7 @@ import { PropsWithChildren } from 'react';
 import { default as React_2 } from 'react';
 import * as React_3 from 'react';
 import { RefObject } from 'react';
+import { SyntheticEvent } from 'react';
 import { Theme } from '@fluentui/react';
 
 // @public
@@ -56,15 +57,17 @@ export type AnnouncerProps = {
 };
 
 // @public
-export interface BaseCustomStyles {
-    root?: IStyle;
+export interface AttachmentDownloadResult {
+    attachmentId: string;
+    blobUrl: string;
 }
 
-// @beta
-export interface BaseFileMetadata {
-    extension: string;
-    name: string;
-    url: string;
+// @public
+export type AttachmentMetadata = InlineImageMetadata;
+
+// @public
+export interface BaseCustomStyles {
+    root?: IStyle;
 }
 
 // @public
@@ -308,6 +311,9 @@ export interface _CaptionsSettingsModalStrings {
 }
 
 // @public
+export type ChatAttachmentType = 'inlineImage' | 'unknown';
+
+// @public
 export interface ChatMessage extends MessageCommon {
     // (undocumented)
     attached?: MessageAttachedStatus;
@@ -323,6 +329,7 @@ export interface ChatMessage extends MessageCommon {
     editedOn?: Date;
     // (undocumented)
     failureReason?: string;
+    inlineImages?: InlineImageMetadata[];
     // (undocumented)
     messageType: 'chat';
     metadata?: Record<string, string>;
@@ -334,6 +341,17 @@ export interface ChatMessage extends MessageCommon {
     senderId?: string;
     // (undocumented)
     status?: MessageStatus;
+}
+
+// @public
+export interface ChatTheme {
+    chatPalette: {
+        imageGalleryOverlayBlack: string;
+        imageGalleryTitleWhite: string;
+        imageGalleryDefaultButtonBackground: string;
+        imageGalleryButtonBackgroundHover: string;
+        imageGalleryButtonBackgroundActive: string;
+    };
 }
 
 // @public
@@ -466,6 +484,7 @@ export interface ComponentStrings {
     devicesButton: DevicesButtonStrings;
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
+    imageGallery: ImageGalleryStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
     microphoneButton: MicrophoneButtonStrings;
@@ -557,7 +576,7 @@ export interface CustomMessage extends MessageCommon {
 }
 
 // @public
-export const darkTheme: PartialTheme & CallingTheme;
+export const darkTheme: PartialTheme & CallingTheme & ChatTheme;
 
 // @public
 export const DEFAULT_COMPONENT_ICONS: {
@@ -937,16 +956,16 @@ export interface _FileCardProps {
 }
 
 // @internal (undocumented)
-export interface _FileDownloadCards {
+export const _FileDownloadCards: (props: _FileDownloadCardsProps) => JSX.Element;
+
+// @internal (undocumented)
+export interface _FileDownloadCardsProps {
     downloadHandler?: FileDownloadHandler;
-    fileMetadata: FileMetadata[];
+    fileMetadata?: AttachmentMetadata[];
     onDownloadErrorMessage?: (errMsg: string) => void;
     strings?: _FileDownloadCardsStrings;
     userId: string;
 }
-
-// @internal (undocumented)
-export const _FileDownloadCards: (props: _FileDownloadCards) => JSX.Element;
 
 // @internal
 export interface _FileDownloadCardsStrings {
@@ -961,13 +980,18 @@ export interface FileDownloadError {
 }
 
 // @beta
-export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
+export type FileDownloadHandler = (userId: string, fileMetadata: AttachmentMetadata) => Promise<URL | FileDownloadError>;
 
 // @beta
-export type FileMetadata = FileSharingMetadata;
-
-// @beta
-export interface FileSharingMetadata extends BaseFileMetadata {
+export interface FileMetadata {
+    // (undocumented)
+    attachmentType: 'file';
+    extension: string;
+    id: string;
+    name: string;
+    // (undocumented)
+    payload?: Record<string, string>;
+    url: string;
 }
 
 // @internal
@@ -988,7 +1012,7 @@ export interface FluentThemeProviderProps {
 }
 
 // @internal
-export const _generateDefaultDeviceMenuProps: (props: _DeviceMenuProps, strings: _DeviceMenuStrings, primaryActionItem?: IContextualMenuItem | undefined, isSelectCamAllowed?: boolean, isSelectMicAllowed?: boolean) => {
+export const _generateDefaultDeviceMenuProps: (props: _DeviceMenuProps, strings: _DeviceMenuStrings, primaryActionItem?: IContextualMenuItem, isSelectCamAllowed?: boolean, isSelectMicAllowed?: boolean) => {
     items: IContextualMenuItem[];
 } | undefined;
 
@@ -1064,13 +1088,51 @@ export interface _Identifiers {
 }
 
 // @public
+export const ImageGallery: (props: ImageGalleryProps) => JSX.Element;
+
+// @public
+export interface ImageGalleryImageProps {
+    altText?: string;
+    downloadFilename: string;
+    imageUrl: string;
+    title?: string;
+    titleIcon?: JSX.Element;
+}
+
+// @public
+export interface ImageGalleryProps {
+    images: Array<ImageGalleryImageProps>;
+    isOpen: boolean;
+    onDismiss: () => void;
+    onError?: (event: SyntheticEvent<HTMLImageElement, Event>) => void;
+    onImageDownloadButtonClicked: (imageUrl: string, downloadFilename: string) => void;
+    startIndex?: number;
+}
+
+// @public
+export interface ImageGalleryStrings {
+    dismissButtonAriaLabel: string;
+    downloadButtonLabel: string;
+}
+
+// @public
+export interface InlineImageMetadata {
+    // (undocumented)
+    attachmentType: 'inlineImage';
+    id: string;
+    // (undocumented)
+    previewUrl?: string;
+    url: string;
+}
+
+// @public
 export interface JumpToNewMessageButtonProps {
     onClick: () => void;
     text: string;
 }
 
 // @public
-export const lightTheme: PartialTheme & CallingTheme;
+export const lightTheme: PartialTheme & CallingTheme & ChatTheme;
 
 // @public
 export type LoadingState = 'loading' | 'none';
@@ -1096,12 +1158,13 @@ export interface LocalVideoCameraCycleButtonProps {
     label?: string;
     onSelectCamera?: (device: OptionsDevice) => Promise<void>;
     selectedCamera?: OptionsDevice;
+    size?: 'small' | 'large';
 }
 
 // @internal
 export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
     userId?: string | undefined;
-    onCreateLocalStreamView?: ((options?: VideoStreamOptions | undefined) => Promise<void | CreateVideoStreamViewResult>) | undefined;
+    onCreateLocalStreamView?: ((options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>) | undefined;
     onDisposeLocalStreamView?: (() => void) | undefined;
     isAvailable?: boolean | undefined;
     isMuted?: boolean | undefined;
@@ -1120,6 +1183,9 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
     personaMinSize?: number | undefined;
     raisedHand?: RaisedHand | undefined;
 }) => React_2.JSX.Element>;
+
+// @public
+export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'followDeviceOrientation';
 
 // @public
 export type Message = ChatMessage | SystemMessage | CustomMessage;
@@ -1202,12 +1268,14 @@ export type MessageThreadProps = {
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
+    onFetchAttachments?: (attachments: AttachmentMetadata[]) => Promise<AttachmentDownloadResult[]>;
     onUpdateMessage?: UpdateMessageCallback;
     onCancelEditMessage?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (content: string) => Promise<void>;
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
+    onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
 };
 
 // @public
@@ -1224,6 +1292,7 @@ export interface MessageThreadStrings {
     liveAuthorIntro: string;
     messageContentAriaText: string;
     messageContentMineAriaText: string;
+    messageDeletedAnnouncementAriaLabel: string;
     messageReadCount?: string;
     monday: string;
     newMessagesIndicator: string;
@@ -1518,7 +1587,7 @@ export type ReadReceiptsBySenderId = {
 export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     userId: string;
     remoteParticipant: VideoGalleryRemoteParticipant;
-    onCreateRemoteStreamView?: ((userId: string, options?: VideoStreamOptions | undefined) => Promise<void | CreateVideoStreamViewResult>) | undefined;
+    onCreateRemoteStreamView?: ((userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>) | undefined;
     onDisposeRemoteStreamView?: ((userId: string) => Promise<void>) | undefined;
     isAvailable?: boolean | undefined;
     isReceiving?: boolean | undefined;
@@ -1996,6 +2065,7 @@ export interface VideoGalleryProps {
     layout?: VideoGalleryLayout;
     localParticipant: VideoGalleryLocalParticipant;
     localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
+    localVideoTileSize?: LocalVideoTileSize;
     localVideoViewOptions?: VideoStreamOptions;
     maxRemoteVideoStreams?: number;
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;

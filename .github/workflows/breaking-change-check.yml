@@ -28,10 +28,10 @@ jobs:
         with:
           fetch-depth: 0
       # Ensure node version is great enough
-      - name: Use Node.js v18.x
+      - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       - id: get-matrix
         run: echo "matrix=$(node ./common/scripts/workflow-read-matrix.mjs)" >> $GITHUB_OUTPUT
 
@@ -48,11 +48,11 @@ jobs:
         with:
           fetch-depth: 0
       # Ensure node version is great enough
-      - name: Use Node.js v18.x
+      - name: Use Node.js
         if: ${{ github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       # Try get node_modules from cache
       - name: Restore node_modules from cache
         if: ${{ github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}
@@ -63,7 +63,7 @@ jobs:
       # Install rush
       - name: Install rush
         if: ${{ github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}
-        run: npm install -g @microsoft/rush@5.100.1
+        run: npm install -g @microsoft/rush@5.112.2
       # Checkout the branch to be merged into in PR
       - name: Checkout base branch
         if: ${{ github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}
@@ -72,6 +72,9 @@ jobs:
       - name: Install beta dependencies
         if: ${{ matrix.flavor == 'beta' && github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}
         run: rush switch-flavor:beta
+      - name: Install beta-release dependencies
+        if: ${{ matrix.flavor == 'beta-release' && github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}
+        run: rush switch-flavor:beta-release
       - name: Install stable dependencies
         if: ${{ matrix.flavor == 'stable' && github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}
         run: rush switch-flavor:stable

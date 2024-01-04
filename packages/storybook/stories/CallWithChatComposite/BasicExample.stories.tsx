@@ -64,7 +64,11 @@ const BasicStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Element 
     <>
       <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
         {callWithChatProps ? (
-          <CallWithChatExperienceWithErrorChecks fluentTheme={context.theme} {...callWithChatProps} />
+          <CallWithChatExperienceWithErrorChecks
+            fluentTheme={context.theme}
+            rtl={context.globals.rtl === 'rtl'}
+            {...callWithChatProps}
+          />
         ) : (
           <ConfigHintBanner />
         )}

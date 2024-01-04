@@ -7,7 +7,7 @@ import {
   ChatMessage,
   CustomMessage,
   SystemMessage,
-  FileMetadata
+  InlineImageMetadata
 } from '@azure/communication-react';
 
 export const MessageThreadStoryContainerStyles = {
@@ -77,12 +77,12 @@ export const GenerateMockNewChatMessageWithInlineImage = (): ChatMessage => {
     ...UserThree,
     messageId: Math.random().toString(),
     content:
-      '<p>Check out this image:&nbsp;</p>\r\n<p><img alt="image" src="" itemscope="png" width="250" height="250" id="SomeImageId" style="vertical-align:bottom"></p><p>&nbsp;</p>\r\n',
+      '<p>Check out this image:&nbsp;</p>\r\n<p><img alt="image" src="" itemscope="png" width="250" height="375" id="SomeImageId" style="vertical-align:bottom"></p><p>&nbsp;</p>\r\n',
     createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
     mine: false,
     attached: false,
     contentType: 'html',
-    attachedFilesMetadata: GenerateMockMessageAttachments()
+    inlineImages: GenerateMockMessageAttachments()
   };
 };
 
@@ -100,15 +100,13 @@ export const GenerateMockNewChatMessageWithMention = (): ChatMessage => {
   };
 };
 
-const GenerateMockMessageAttachments = (): FileMetadata[] => {
+const GenerateMockMessageAttachments = (): InlineImageMetadata[] => {
   return [
     {
       id: 'SomeImageId',
-      name: 'SomeImageId',
       attachmentType: 'inlineImage',
-      extension: 'png',
-      url: 'images/github.png',
-      previewUrl: 'images/github.png'
+      url: 'images/inlineImageExample1.png',
+      previewUrl: 'images/inlineImageExample1.png'
     }
   ];
 };

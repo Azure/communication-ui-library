@@ -54,6 +54,7 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
     isLocalMicrophoneEnabled ? adapter.mute() : adapter.unmute();
   }, [adapter, isLocalMicrophoneEnabled]);
 
+  const hasNoSpeakers = !devicesButtonProps.speakers.length;
   const hasNoDevices =
     devicesButtonProps.cameras.length === 0 &&
     devicesButtonProps.microphones.length === 0 &&
@@ -66,9 +67,15 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
   const onRenderPlaceholder = useCallback((): JSX.Element => {
     return (
       <Stack
-        className={mergeStyles({ width: '100%', height: '100%' })}
+        className={mergeStyles({
+          width: '100%',
+          height: '100%',
+          // The text should be centered in the local preview with the camera icon
+          // appearing above the text. To compensate for the camera icon's height,
+          // we add a negative margin to the top of the container.
+          marginTop: '-0.8rem'
+        })}
         verticalAlign="center"
-        tokens={{ childrenGap: '0.25rem' }}
       >
         <Stack.Item align="center">
           <CallCompositeIcon
@@ -96,7 +103,7 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
   return (
     <Stack
       data-ui-id="call-composite-local-preview"
-      className={props.mobileView ? localPreviewContainerStyleMobile : localPreviewContainerStyleDesktop(theme)}
+      className={props.mobileView ? localPreviewContainerStyleMobile(theme) : localPreviewContainerStyleDesktop(theme)}
     >
       <VideoTile
         styles={localPreviewTileStyle}
@@ -143,7 +150,7 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
               data-ui-id="call-composite-local-device-settings-options-button"
               {...devicesButtonProps}
               // disable button whilst all other buttons are disabled
-              disabled={!microphonePermissionGranted || !cameraPermissionGranted || hasNoDevices}
+              disabled={(!microphonePermissionGranted && !cameraPermissionGranted && hasNoSpeakers) || hasNoDevices}
               showLabel={true}
               // disable tooltip as it obscures list of devices on mobile
               strings={props.mobileView ? { tooltipContent: '' } : {}}

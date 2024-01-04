@@ -66,26 +66,21 @@ export type AnnouncerProps = {
     ariaLive: 'off' | 'polite' | 'assertive' | undefined;
 };
 
-// @beta
+// @public
 export interface AttachmentDownloadResult {
-    // (undocumented)
     attachmentId: string;
-    // (undocumented)
     blobUrl: string;
 }
 
 // @public
+export type AttachmentMetadata = InlineImageMetadata | /* @conditional-compile-remove(file-sharing) */ FileMetadata;
+
+// @internal
+export type _AudioIssue = 'NoLocalAudio' | 'NoRemoteAudio' | 'Echo' | 'AudioNoise' | 'LowVolume' | 'AudioStoppedUnexpectedly' | 'DistortedSpeech' | 'AudioInterruption' | 'OtherIssues';
+
+// @public
 export interface BaseCustomStyles {
     root?: IStyle;
-}
-
-// @beta
-export interface BaseFileMetadata {
-    attachmentType: FileMetadataAttachmentType;
-    extension: string;
-    id: string;
-    name: string;
-    url: string;
 }
 
 // @beta
@@ -181,6 +176,36 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     isSpeaking?: boolean;
     raisedHand?: RaisedHand;
 };
+
+// @internal
+export interface _CallRating<TIssue extends _AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue> {
+    issues?: TIssue[];
+    scale?: _RatingScale;
+    score: number;
+}
+
+// @internal
+export interface _CallSurvey {
+    audioRating?: _CallRating<_AudioIssue>;
+    overallRating?: _CallRating<_OverallIssue>;
+    screenshareRating?: _CallRating<_ScreenshareIssue>;
+    videoRating?: _CallRating<_VideoIssue>;
+}
+
+// @beta
+export interface CallSurveyImprovementSuggestions {
+    audio?: string;
+    overall?: string;
+    screenshare?: string;
+    video?: string;
+}
+
+// @internal
+export interface _CallSurveyResponse extends _CallSurvey {
+    readonly callId: string;
+    readonly id: string;
+    readonly localParticipantId: string;
+}
 
 // @beta
 export const CameraAndMicrophoneSitePermissions: (props: CameraAndMicrophoneSitePermissionsProps) => JSX.Element;
@@ -428,11 +453,12 @@ export interface _CaptionsSettingsModalStrings {
 }
 
 // @public
+export type ChatAttachmentType = 'inlineImage' | /* @conditional-compile-remove(file-sharing) */ 'file' | 'unknown';
+
+// @public
 export interface ChatMessage extends MessageCommon {
     // (undocumented)
     attached?: MessageAttachedStatus;
-    // @beta
-    attachedFilesMetadata?: FileMetadata[];
     // (undocumented)
     clientMessageId?: string;
     // (undocumented)
@@ -445,6 +471,9 @@ export interface ChatMessage extends MessageCommon {
     editedOn?: Date;
     // (undocumented)
     failureReason?: string;
+    // @beta
+    files?: FileMetadata[];
+    inlineImages?: InlineImageMetadata[];
     // (undocumented)
     messageType: 'chat';
     metadata?: Record<string, string>;
@@ -458,14 +487,14 @@ export interface ChatMessage extends MessageCommon {
     status?: MessageStatus;
 }
 
-// @beta
+// @public
 export interface ChatTheme {
     chatPalette: {
-        modalOverlayBlack: string;
-        modalTitleWhite: string;
-        modalButtonBackground: string;
-        modalButtonBackgroundHover: string;
-        modalButtonBackgroundActive: string;
+        imageGalleryOverlayBlack: string;
+        imageGalleryTitleWhite: string;
+        imageGalleryDefaultButtonBackground: string;
+        imageGalleryButtonBackgroundHover: string;
+        imageGalleryButtonBackgroundActive: string;
     };
 }
 
@@ -728,7 +757,7 @@ export interface CustomMessage extends MessageCommon {
 }
 
 // @public
-export const darkTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-gallery) */ ChatTheme;
+export const darkTheme: PartialTheme & CallingTheme & ChatTheme;
 
 // @public
 export const DEFAULT_COMPONENT_ICONS: {
@@ -818,6 +847,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     ContextMenuCameraIcon: React_2.JSX.Element;
     ContextMenuMicIcon: React_2.JSX.Element;
     ContextMenuSpeakerIcon: React_2.JSX.Element;
+    SurveyStarIcon: React_2.JSX.Element;
+    SurveyStarIconFilled: React_2.JSX.Element;
 };
 
 // @internal
@@ -928,6 +959,7 @@ export const Dialpad: (props: DialpadProps) => JSX.Element;
 
 // @beta
 export interface DialpadProps {
+    disableDtmfPlayback?: boolean;
     isMobile?: boolean;
     onChange?: (input: string) => void;
     onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
@@ -1123,16 +1155,16 @@ export interface _FileCardProps {
 }
 
 // @internal (undocumented)
-export interface _FileDownloadCards {
+export const _FileDownloadCards: (props: _FileDownloadCardsProps) => JSX.Element;
+
+// @internal (undocumented)
+export interface _FileDownloadCardsProps {
     downloadHandler?: FileDownloadHandler;
-    fileMetadata: FileMetadata[];
+    fileMetadata?: AttachmentMetadata[];
     onDownloadErrorMessage?: (errMsg: string) => void;
     strings?: _FileDownloadCardsStrings;
     userId: string;
 }
-
-// @internal (undocumented)
-export const _FileDownloadCards: (props: _FileDownloadCards) => JSX.Element;
 
 // @internal
 export interface _FileDownloadCardsStrings {
@@ -1147,20 +1179,18 @@ export interface FileDownloadError {
 }
 
 // @beta
-export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
+export type FileDownloadHandler = (userId: string, fileMetadata: AttachmentMetadata) => Promise<URL | FileDownloadError>;
 
 // @beta
-export type FileMetadata = FileSharingMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ ImageFileMetadata;
-
-// @beta (undocumented)
-export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | 'unknown';
-
-// @beta
-export interface FileSharingMetadata extends BaseFileMetadata {
+export interface FileMetadata {
     // (undocumented)
-    attachmentType: 'fileSharing';
+    attachmentType: 'file';
+    extension: string;
+    id: string;
+    name: string;
     // (undocumented)
     payload?: Record<string, string>;
+    url: string;
 }
 
 // @internal
@@ -1181,7 +1211,7 @@ export interface FluentThemeProviderProps {
 }
 
 // @internal
-export const _generateDefaultDeviceMenuProps: (props: _DeviceMenuProps, strings: _DeviceMenuStrings, primaryActionItem?: IContextualMenuItem | undefined, isSelectCamAllowed?: boolean, isSelectMicAllowed?: boolean) => {
+export const _generateDefaultDeviceMenuProps: (props: _DeviceMenuProps, strings: _DeviceMenuStrings, primaryActionItem?: IContextualMenuItem, isSelectCamAllowed?: boolean, isSelectMicAllowed?: boolean) => {
     items: IContextualMenuItem[];
 } | undefined;
 
@@ -1275,18 +1305,10 @@ export interface _Identifiers {
     videoTile: string;
 }
 
-// @beta
-export interface ImageFileMetadata extends BaseFileMetadata {
-    // (undocumented)
-    attachmentType: 'inlineImage';
-    // (undocumented)
-    previewUrl?: string;
-}
-
-// @beta
+// @public
 export const ImageGallery: (props: ImageGalleryProps) => JSX.Element;
 
-// @beta
+// @public
 export interface ImageGalleryImageProps {
     altText?: string;
     downloadFilename: string;
@@ -1295,7 +1317,7 @@ export interface ImageGalleryImageProps {
     titleIcon?: JSX.Element;
 }
 
-// @beta
+// @public
 export interface ImageGalleryProps {
     images: Array<ImageGalleryImageProps>;
     isOpen: boolean;
@@ -1305,11 +1327,24 @@ export interface ImageGalleryProps {
     startIndex?: number;
 }
 
-// @beta
+// @public
 export interface ImageGalleryStrings {
     dismissButtonAriaLabel: string;
     downloadButtonLabel: string;
 }
+
+// @public
+export interface InlineImageMetadata {
+    // (undocumented)
+    attachmentType: 'inlineImage';
+    id: string;
+    // (undocumented)
+    previewUrl?: string;
+    url: string;
+}
+
+// @internal
+export type _IssueCategory = 'overallRating' | 'audioRating' | 'videoRating' | 'screenshareRating';
 
 // @public
 export interface JumpToNewMessageButtonProps {
@@ -1318,7 +1353,7 @@ export interface JumpToNewMessageButtonProps {
 }
 
 // @public
-export const lightTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-gallery) */ ChatTheme;
+export const lightTheme: PartialTheme & CallingTheme & ChatTheme;
 
 // @public
 export type LoadingState = 'loading' | 'none';
@@ -1344,12 +1379,13 @@ export interface LocalVideoCameraCycleButtonProps {
     label?: string;
     onSelectCamera?: (device: OptionsDevice) => Promise<void>;
     selectedCamera?: OptionsDevice;
+    size?: 'small' | 'large';
 }
 
 // @internal
 export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
     userId?: string | undefined;
-    onCreateLocalStreamView?: ((options?: VideoStreamOptions | undefined) => Promise<void | CreateVideoStreamViewResult>) | undefined;
+    onCreateLocalStreamView?: ((options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>) | undefined;
     onDisposeLocalStreamView?: (() => void) | undefined;
     isAvailable?: boolean | undefined;
     isMuted?: boolean | undefined;
@@ -1369,7 +1405,7 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
     raisedHand?: RaisedHand | undefined;
 }) => React_2.JSX.Element>;
 
-// @beta
+// @public
 export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'followDeviceOrientation';
 
 // @beta
@@ -1503,7 +1539,7 @@ export type MessageThreadProps = {
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
     onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
-    onFetchAttachments?: (attachments: FileMetadata[]) => Promise<AttachmentDownloadResult[]>;
+    onFetchAttachments?: (attachments: AttachmentMetadata[]) => Promise<AttachmentDownloadResult[]>;
     onUpdateMessage?: UpdateMessageCallback;
     onCancelEditMessage?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
@@ -1534,6 +1570,7 @@ export interface MessageThreadStrings {
     liveAuthorIntro: string;
     messageContentAriaText: string;
     messageContentMineAriaText: string;
+    messageDeletedAnnouncementAriaLabel: string;
     messageReadCount?: string;
     monday: string;
     newMessagesIndicator: string;
@@ -1638,6 +1675,9 @@ export interface OptionsDevice {
     id: string;
     name: string;
 }
+
+// @internal
+export type _OverallIssue = 'CallCannotJoin' | 'CallCannotInvite' | 'HadToRejoin' | 'CallEndedUnexpectedly' | 'OtherIssues';
 
 // @public
 export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | /* @conditional-compile-remove(gallery-layouts) */ 'horizontalTop';
@@ -1839,6 +1879,13 @@ export interface RaiseHandButtonStrings {
     tooltipOnContent?: string;
 }
 
+// @internal
+export interface _RatingScale {
+    lowerBound: number;
+    lowScoreThreshold: number;
+    upperBound: number;
+}
+
 // @public
 export type ReadReceiptsBySenderId = {
     [key: string]: {
@@ -1851,7 +1898,7 @@ export type ReadReceiptsBySenderId = {
 export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     userId: string;
     remoteParticipant: VideoGalleryRemoteParticipant;
-    onCreateRemoteStreamView?: ((userId: string, options?: VideoStreamOptions | undefined) => Promise<void | CreateVideoStreamViewResult>) | undefined;
+    onCreateRemoteStreamView?: ((userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>) | undefined;
     onDisposeRemoteStreamView?: ((userId: string) => Promise<void>) | undefined;
     isAvailable?: boolean | undefined;
     isReceiving?: boolean | undefined;
@@ -1891,6 +1938,9 @@ export interface ScreenShareButtonStrings {
     tooltipOffContent?: string;
     tooltipOnContent?: string;
 }
+
+// @internal
+export type _ScreenshareIssue = 'NoContentLocal' | 'NoContentRemote' | 'CannotPresent' | 'LowQuality' | 'Freezes' | 'StoppedUnexpectedly' | 'LargeDelay' | 'OtherIssues';
 
 // @public
 export const SendBox: (props: SendBoxProps) => JSX.Element;
@@ -2090,6 +2140,28 @@ export const _spokenLanguageToCaptionLanguage: {
 };
 
 // @internal
+export const _StarSurvey: (props: _StarSurveyProps) => JSX.Element;
+
+// @internal
+export interface _StarSurveyProps {
+    onStarRatingSelected?: (ratings: number) => void;
+    selectedIcon?: string;
+    strings?: _StarSurveyStrings;
+    unselectedIcon?: string;
+}
+
+// @internal
+export interface _StarSurveyStrings {
+    starRatingAriaLabel?: string;
+    starSurveyFiveStarText?: string;
+    starSurveyFourStarText?: string;
+    starSurveyHelperText?: string;
+    starSurveyOneStarText?: string;
+    starSurveyThreeStarText?: string;
+    starSurveyTwoStarText?: string;
+}
+
+// @internal
 export const _StartCaptionsButton: (props: _StartCaptionsButtonProps) => JSX.Element;
 
 // @internal (undocumented)
@@ -2120,6 +2192,72 @@ export interface StreamMediaProps {
     videoStreamElement: HTMLElement | null;
 }
 
+// @beta
+export interface SurveyIssues {
+    // (undocumented)
+    audioRating: {
+        noLocalAudio: string;
+        noRemoteAudio: string;
+        echo: string;
+        audioNoise: string;
+        lowVolume: string;
+        audioStoppedUnexpectedly: string;
+        distortedSpeech: string;
+        audioInterruption: string;
+        otherIssues: string;
+    };
+    // (undocumented)
+    overallRating: {
+        callCannotJoin: string;
+        callCannotInvite: string;
+        hadToRejoin: string;
+        callEndedUnexpectedly: string;
+        otherIssues: string;
+    };
+    // (undocumented)
+    screenshareRating: {
+        noContentLocal: string;
+        noContentRemote: string;
+        cannotPresent: string;
+        lowQuality: string;
+        freezes: string;
+        stoppedUnexpectedly: string;
+        largeDelay: string;
+        otherIssues: string;
+    };
+    // (undocumented)
+    videoRating: {
+        noVideoReceived: string;
+        noVideoSent: string;
+        lowQuality: string;
+        freezes: string;
+        stoppedUnexpectedly: string;
+        darkVideoReceived: string;
+        audioVideoOutOfSync: string;
+        otherIssues: string;
+    };
+}
+
+// @beta
+export interface SurveyIssuesHeadingStrings {
+    // (undocumented)
+    audioRating: string;
+    // (undocumented)
+    overallRating: string;
+    // (undocumented)
+    screenshareRating: string;
+    // (undocumented)
+    videoRating: string;
+}
+
+// @internal
+export type _SurveyTag = {
+    [issueCategory: string]: {
+        message: string;
+        issue: _AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue;
+    }[];
+};
+
 // @public
 export type SystemMessage = ParticipantAddedSystemMessage | ParticipantRemovedSystemMessage | TopicUpdatedSystemMessage | ContentSystemMessage;
 
@@ -2129,6 +2267,25 @@ export interface SystemMessageCommon extends MessageCommon {
     iconName: string;
     // (undocumented)
     messageType: 'system';
+}
+
+// @internal
+export const _TagsSurvey: (props: _TagsSurveyProps) => JSX.Element;
+
+// @internal
+export interface _TagsSurveyProps {
+    callIssuesToTag: SurveyIssues;
+    categoryHeadings: SurveyIssuesHeadingStrings;
+    onConfirm?: (selectedTags: _CallSurvey, improvementSuggestions?: CallSurveyImprovementSuggestions) => void;
+    showFreeFormTextField?: boolean;
+    strings?: _TagsSurveyStrings;
+}
+
+// @internal
+export interface _TagsSurveyStrings {
+    tagsSurveyHelperText?: string;
+    tagsSurveyQuestion?: string;
+    tagsSurveyTextFieldDefaultText?: string;
 }
 
 // @internal (undocumented)
@@ -2248,7 +2405,7 @@ export interface UnsupportedOperatingSystemStrings {
 // @public
 export type UpdateMessageCallback = (messageId: string, content: string, options?: {
     metadata?: Record<string, string>;
-    attachedFilesMetadata?: FileMetadata[];
+    attachmentMetadata?: AttachmentMetadata[];
 }) => Promise<void>;
 
 // @internal
@@ -2441,6 +2598,9 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
     localVideo?: IStyle;
     verticalGallery?: VerticalGalleryStyles;
 }
+
+// @internal
+export type _VideoIssue = 'NoVideoReceived' | 'NoVideoSent' | 'LowQuality' | 'Freezes' | 'StoppedUnexpectedly' | 'DarkVideoReceived' | 'AudioVideoOutOfSync' | 'OtherIssues';
 
 // @public
 export interface VideoStreamOptions {

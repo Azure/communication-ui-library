@@ -6,11 +6,12 @@ import type { CommunicationIdentifierKind, CommunicationUserKind } from '@azure/
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import type { AdapterError, AdapterErrors, AdapterState, Disposable } from '../../common/adapters';
 /* @conditional-compile-remove(file-sharing) */
-import { FileUploadAdapter, FileUploadsUiState } from './AzureCommunicationFileUploadAdapter';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { FileUploadAdapter } from './AzureCommunicationFileUploadAdapter';
+/* @conditional-compile-remove(file-sharing) */
+import { FileUploadsUiState } from './AzureCommunicationFileUploadAdapter';
 import { AttachmentDownloadResult } from '@internal/react-components';
-/* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { FileMetadata } from '@internal/react-components';
+/* @conditional-compile-remove(file-sharing) */
+import { AttachmentMetadata } from '@internal/react-components';
 
 /**
  * {@link ChatAdapter} state for pure UI purposes.
@@ -94,7 +95,7 @@ export interface ChatAdapterThreadManagement {
     metadata?: Record<string, string>,
     /* @conditional-compile-remove(file-sharing) */
     options?: {
-      attachedFilesMetadata?: FileMetadata[];
+      attachmentMetadata?: AttachmentMetadata[];
     }
   ): Promise<void>;
   /**
@@ -109,7 +110,6 @@ export interface ChatAdapterThreadManagement {
    *
    */
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   downloadAttachments: (options: { attachmentUrls: Record<string, string> }) => Promise<AttachmentDownloadResult[]>;
 }
 

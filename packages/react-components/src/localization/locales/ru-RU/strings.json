@@ -153,7 +153,8 @@
     "downloadFile": "Скачать файл",
     "blockedWarningText": "Это сообщение было удалено политикой организации.",
     "blockedWarningLinkText": "Сведения",
-    "fileCardGroupMessage": "Сообщение содержит {fileCount} вложение"
+    "fileCardGroupMessage": "Сообщение содержит {fileCount} вложение",
+    "messageDeletedAnnouncementAriaLabel": "Сообщение удалено"
   },
   "errorBar": {
     "unableToReachChatService": "Вы не в сети",

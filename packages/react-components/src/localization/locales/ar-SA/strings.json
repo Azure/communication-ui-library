@@ -153,7 +153,8 @@
     "downloadFile": "تنزيل ملف",
     "blockedWarningText": "تم حذف هذه الرسالة بسبب نهج تنظيمي.",
     "blockedWarningLinkText": "تفاصيل",
-    "fileCardGroupMessage": "تحتوي الرسالة على مرفق {fileCount}"
+    "fileCardGroupMessage": "تحتوي الرسالة على مرفق {fileCount}",
+    "messageDeletedAnnouncementAriaLabel": "تم حذف الرسالة"
   },
   "errorBar": {
     "unableToReachChatService": "أنت غير متصل",

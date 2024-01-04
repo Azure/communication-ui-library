@@ -6,6 +6,8 @@ import type { CallAdapter, CallAdapterState, VideoBackgroundEffect } from '../..
 import type { MockCallAdapterState } from '../../common';
 import { produce } from 'immer';
 import EventEmitter from 'events';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 
 /**
  * Mock class that implements CallAdapter interface for UI snapshot tests. The handler implementation is currently limited so
@@ -153,10 +155,10 @@ export class MockCallAdapter implements CallAdapter {
     });
   }
   on(): void {
-    throw Error('on not implemented');
+    return;
   }
   off(): void {
-    throw Error('off not implemented');
+    return;
   }
 
   private modifyState(modifier: (draft: CallAdapterState) => void): void {
@@ -216,6 +218,11 @@ export class MockCallAdapter implements CallAdapter {
     this.modifyState((draft: CallAdapterState) => {
       draft.selectedVideoBackgroundEffect = selectedVideoBackground;
     });
+  }
+
+  /* @conditional-compile-remove(end-of-call-survey) */ // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined> {
+    throw Error('submitStarSurvey not implemented');
   }
 }
 

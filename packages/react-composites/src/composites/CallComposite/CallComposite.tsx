@@ -3,11 +3,13 @@
 
 import { _isInCall } from '@internal/calling-component-bindings';
 import { ActiveErrorMessage, ErrorBar, ParticipantMenuItemsCallback, useTheme } from '@internal/react-components';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { CallSurveyImprovementSuggestions } from '@internal/react-components';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons } from '../common/icons';
-import { CompositeLocale, useLocale } from '../localization';
+import { useLocale } from '../localization';
 import { CommonCallAdapter } from './adapter/CallAdapter';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
 import { CallPage } from './pages/CallPage';
@@ -32,13 +34,19 @@ import { useId } from '@fluentui/react-hooks';
 import { HoldPage } from './pages/HoldPage';
 /* @conditional-compile-remove(unsupported-browser) */
 import { UnsupportedBrowserPage } from './pages/UnsupportedBrowser';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { CallSurvey } from '@azure/communication-calling';
 import { PermissionConstraints } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
 import { ParticipantRole } from '@azure/communication-calling';
 import { MobileChatSidePaneTabHeaderProps } from '../common/TabHeader';
 import { InjectedSidePaneProps, SidePaneProvider, SidePaneRenderer } from './components/SidePane/SidePaneProvider';
-import { CallState } from '@internal/calling-stateful-client';
-import { filterLatestErrors, trackErrorAsDismissed, updateTrackedErrorsWithActiveErrors } from './utils';
+import {
+  filterLatestErrors,
+  getEndedCallPageProps,
+  trackErrorAsDismissed,
+  updateTrackedErrorsWithActiveErrors
+} from './utils';
 import { TrackedErrors } from './types/ErrorTracking';
 import { usePropsFor } from './hooks/usePropsFor';
 import { deviceCountSelector } from './selectors/deviceCountSelector';
@@ -48,6 +56,7 @@ import { VideoGalleryLayout } from '@internal/react-components';
 import { capabilitiesChangedInfoAndRoleSelector } from './selectors/capabilitiesChangedInfoAndRoleSelector';
 /* @conditional-compile-remove(capabilities) */
 import { useTrackedCapabilityChangedNotifications } from './utils/TrackCapabilityChangedNotifications';
+import { useEndedCallConsoleErrors } from './utils/useConsoleErrors';
 
 /**
  * Props for {@link CallComposite}.
@@ -228,41 +237,79 @@ export type CallCompositeOptions = {
      */
     layout?: VideoGalleryLayout;
   };
-  /* @conditional-compile-remove(custom-branding) */
+  /* @conditional-compile-remove(end-of-call-survey) */
   /**
-   * Logo displayed on the configuration page.
+   * Options for end of call survey
    */
-  logo?: {
+  surveyOptions?: {
     /**
-     * URL for the logo image.
-     *
-     * @remarks
-     * Recommended size is 80x80 pixels.
+     * Hide call survey at the end of a call.
+     * @defaultValue false
      */
-    url: string;
+    hideSurvey?: boolean;
     /**
-     * Alt text for the logo image.
+     * Optional callback to handle survey data including free form text response
+     * Note that free form text response survey option is only going to be enabled when this callback is provided
+     * User will need to handle all free form text response on their own
      */
-    alt?: string;
-    /**
-     * The logo can be displayed as a circle or a square.
-     *
-     * @defaultValue 'circle'
-     */
-    shape?: 'circle' | 'square';
+    onSurveySubmitted?: (
+      callId: string,
+      surveyId: string,
+      /**
+       * This is the survey results containing star survey data and API tag survey data.
+       * This part of the result will always be sent to the calling sdk
+       * This callback provides user with the ability to gain access to survey data
+       */
+      submittedSurvey: CallSurvey,
+      /**
+       * This is the survey results containing free form text
+       * This part of the result will not be handled by composites
+       * User will need to collect and handle this information 100% on their own
+       * Free form text survey is not going to show in the UI if onSurveySubmitted is not populated
+       */
+      improvementSuggestions: CallSurveyImprovementSuggestions
+    ) => Promise<void>;
   };
   /* @conditional-compile-remove(custom-branding) */
   /**
-   * Background image displayed on the configuration page.
+   * Options for setting additional customizations related to personalized branding.
    */
-  backgroundImage?: {
+  branding?: {
     /**
-     * URL for the background image.
-     *
-     * @remarks
-     * Background image should be larger than 576x567 pixels and smaller than 2048x2048 pixels pixels.
+     * Logo displayed on the configuration page.
      */
-    url: string;
+    logo?: {
+      /**
+       * URL for the logo image.
+       *
+       * @remarks
+       * Recommended size is 80x80 pixels.
+       */
+      url: string;
+      /**
+       * Alt text for the logo image.
+       */
+      alt?: string;
+      /**
+       * The logo can be displayed as a circle.
+       *
+       * @defaultValue 'unset'
+       */
+      shape?: 'unset' | 'circle';
+    };
+    /* @conditional-compile-remove(custom-branding) */
+    /**
+     * Background image displayed on the configuration page.
+     */
+    backgroundImage?: {
+      /**
+       * URL for the background image.
+       *
+       * @remarks
+       * Background image should be larger than 576x567 pixels and smaller than 2048x2048 pixels pixels.
+       */
+      url: string;
+    };
   };
 };
 
@@ -339,6 +386,17 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     onSidePaneIdChange?.(sidePaneRenderer?.id);
   }, [sidePaneRenderer?.id, onSidePaneIdChange]);
 
+  // When the call ends ensure the side pane is set to closed to prevent the side pane being open if the call is re-joined.
+  useEffect(() => {
+    const closeSidePane = (): void => {
+      setSidePaneRenderer(undefined);
+    };
+    adapter.on('callEnded', closeSidePane);
+    return () => {
+      adapter.off('callEnded', closeSidePane);
+    };
+  }, [adapter]);
+
   /* @conditional-compile-remove(capabilities) */
   const capabilitiesChangedInfoAndRole = useSelector(capabilitiesChangedInfoAndRoleSelector);
 
@@ -362,7 +420,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const locale = useLocale();
   const palette = useTheme().palette;
   const leavePageStyle = useMemo(() => leavingPageStyle(palette), [palette]);
-
   let pageElement: JSX.Element | undefined;
   switch (page) {
     case 'configuration':
@@ -388,9 +445,9 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           /* @conditional-compile-remove(capabilities) */
           capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
           /* @conditional-compile-remove(custom-branding) */
-          logo={props.options?.logo}
+          logo={props.options?.branding?.logo}
           /* @conditional-compile-remove(custom-branding) */
-          backgroundImage={props.options?.backgroundImage}
+          backgroundImage={props.options?.branding?.backgroundImage}
         />
       );
       break;
@@ -401,6 +458,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           title={locale.strings.call.failedToJoinTeamsMeetingReasonAccessDeniedTitle}
           moreDetails={locale.strings.call.failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails}
           dataUiId={'access-denied-teams-meeting-page'}
+          /* @conditional-compile-remove(end-of-call-survey) */
+          surveyOptions={{ hideSurvey: true }}
         />
       );
       break;
@@ -411,6 +470,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           title={locale.strings.call.removedFromCallTitle}
           moreDetails={locale.strings.call.removedFromCallMoreDetails}
           dataUiId={'removed-from-call-page'}
+          /* @conditional-compile-remove(end-of-call-survey) */
+          surveyOptions={{ hideSurvey: true }}
         />
       );
       break;
@@ -421,6 +482,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           title={locale.strings.call.failedToJoinCallDueToNoNetworkTitle}
           moreDetails={locale.strings.call.failedToJoinCallDueToNoNetworkMoreDetails}
           dataUiId={'join-call-failed-due-to-no-network-page'}
+          /* @conditional-compile-remove(end-of-call-survey) */
+          surveyOptions={{ hideSurvey: true }}
         />
       );
       break;
@@ -431,6 +494,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           dataUiId={'leaving-page'}
           pageStyle={leavePageStyle}
           disableStartCallButton={true}
+          /* @conditional-compile-remove(end-of-call-survey) */
+          surveyOptions={{ hideSurvey: true }}
         />
       );
       break;
@@ -443,6 +508,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           moreDetails={moreDetails}
           dataUiId={'left-call-page'}
           disableStartCallButton={disableStartCallButton}
+          /* @conditional-compile-remove(end-of-call-survey) */
+          surveyOptions={props.options?.surveyOptions}
         />
       );
       break;
@@ -527,6 +594,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
       );
       break;
   }
+
+  useEndedCallConsoleErrors(endedCall);
 
   /* @conditional-compile-remove(unsupported-browser) */
   switch (page) {
@@ -640,90 +709,4 @@ const getQueryOptions = (options: {
     };
   }
   return { video: true, audio: true };
-};
-
-/* @conditional-compile-remove(rooms) */
-const ROOM_NOT_FOUND_SUB_CODE = 5732;
-/* @conditional-compile-remove(rooms) */
-const ROOM_NOT_VALID_SUB_CODE = 5829;
-/* @conditional-compile-remove(rooms) */
-const NOT_INVITED_TO_ROOM_SUB_CODE = 5828;
-/* @conditional-compile-remove(rooms) */
-const INVITE_TO_ROOM_REMOVED_SUB_CODE = 5317;
-
-const getEndedCallPageProps = (
-  locale: CompositeLocale,
-  endedCall?: CallState
-): { title: string; moreDetails?: string; disableStartCallButton: boolean; iconName: keyof CallCompositeIcons } => {
-  let title = locale.strings.call.leftCallTitle;
-  let moreDetails = locale.strings.call.leftCallMoreDetails;
-  let disableStartCallButton = false;
-  let iconName: keyof CallCompositeIcons = 'NoticePageLeftCall';
-  /* @conditional-compile-remove(rooms) */
-  switch (endedCall?.callEndReason?.subCode) {
-    case ROOM_NOT_FOUND_SUB_CODE:
-      if (locale.strings.call.roomNotFoundTitle) {
-        title = locale.strings.call.roomNotFoundTitle;
-        moreDetails = locale.strings.call.roomNotFoundDetails;
-        disableStartCallButton = true;
-        iconName = 'NoticePageRoomNotFound';
-      }
-      break;
-    case ROOM_NOT_VALID_SUB_CODE:
-      if (locale.strings.call.roomNotValidTitle) {
-        title = locale.strings.call.roomNotValidTitle;
-        moreDetails = locale.strings.call.roomNotValidDetails;
-        disableStartCallButton = true;
-        iconName = 'NoticePageRoomNotValid';
-      }
-      break;
-    case NOT_INVITED_TO_ROOM_SUB_CODE:
-      if (locale.strings.call.notInvitedToRoomTitle) {
-        title = locale.strings.call.notInvitedToRoomTitle;
-        moreDetails = locale.strings.call.notInvitedToRoomDetails;
-        disableStartCallButton = true;
-        iconName = 'NoticePageNotInvitedToRoom';
-      }
-      break;
-    case INVITE_TO_ROOM_REMOVED_SUB_CODE:
-      if (locale.strings.call.inviteToRoomRemovedTitle) {
-        title = locale.strings.call.inviteToRoomRemovedTitle;
-        moreDetails = locale.strings.call.inviteToRoomRemovedDetails;
-        disableStartCallButton = true;
-        iconName = 'NoticePageInviteToRoomRemoved';
-      }
-      break;
-  }
-  /* @conditional-compile-remove(teams-adhoc-call) */
-  switch (endedCall?.callEndReason?.subCode) {
-    case 10037:
-      if (locale.strings.call.participantCouldNotBeReachedTitle) {
-        title = locale.strings.call.participantCouldNotBeReachedTitle;
-        moreDetails = locale.strings.call.participantCouldNotBeReachedMoreDetails;
-        disableStartCallButton = true;
-      }
-      break;
-    case 10124:
-      if (locale.strings.call.permissionToReachTargetParticipantNotAllowedTitle) {
-        title = locale.strings.call.permissionToReachTargetParticipantNotAllowedTitle;
-        moreDetails = locale.strings.call.permissionToReachTargetParticipantNotAllowedMoreDetails;
-        disableStartCallButton = true;
-      }
-      break;
-    case 10119:
-      if (locale.strings.call.unableToResolveTenantTitle) {
-        title = locale.strings.call.unableToResolveTenantTitle;
-        moreDetails = locale.strings.call.unableToResolveTenantMoreDetails;
-        disableStartCallButton = true;
-      }
-      break;
-    case 10044:
-      if (locale.strings.call.participantIdIsMalformedTitle) {
-        title = locale.strings.call.participantIdIsMalformedTitle;
-        moreDetails = locale.strings.call.participantIdIsMalformedMoreDetails;
-        disableStartCallButton = true;
-      }
-      break;
-  }
-  return { title, moreDetails, disableStartCallButton, iconName };
 };

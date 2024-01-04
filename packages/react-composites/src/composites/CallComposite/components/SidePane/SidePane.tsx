@@ -19,6 +19,7 @@ export interface SidePaneProps {
   updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
   mobileView?: boolean;
   maxWidth?: string;
+  minWidth?: string;
 
   // legacy arguments to be removed in breaking change
   disablePeopleButton?: boolean;
@@ -36,12 +37,15 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
     !overrideSidePane.isActive;
   const renderingOnlyHiddenContent = renderingHiddenOverrideContent && !sidePaneRenderer;
 
-  const maxWidthStyles = useMemo(() => sidePaneStyles(props.maxWidth), [props.maxWidth]);
+  const widthConstrainedStyles = useMemo(
+    () => sidePaneStyles(props.maxWidth, props.minWidth),
+    [props.maxWidth, props.minWidth]
+  );
   const paneStyles = renderingOnlyHiddenContent
     ? hiddenStyles
     : props.mobileView
     ? availableSpaceStyles
-    : maxWidthStyles;
+    : widthConstrainedStyles;
 
   const Header =
     (overrideSidePane?.isActive ? overrideSidePane.renderer.headerRenderer : sidePaneRenderer?.headerRenderer) ??
@@ -75,7 +79,7 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
     props.onPeopleButtonClicked,
     props.disablePeopleButton,
     props.disableChatButton,
-    sidePaneRenderer,
+    sidePaneRenderer?.id,
     closePane
   ]);
 

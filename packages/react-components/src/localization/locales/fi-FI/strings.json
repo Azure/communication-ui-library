@@ -153,7 +153,8 @@
     "downloadFile": "Lataa tiedosto",
     "blockedWarningText": "Tämä viesti poistettiin organisaation käytännön vuoksi.",
     "blockedWarningLinkText": "Lisätiedot",
-    "fileCardGroupMessage": "Viestissä on {fileCount} liite"
+    "fileCardGroupMessage": "Viestissä on {fileCount} liite",
+    "messageDeletedAnnouncementAriaLabel": "Viesti on poistettu"
   },
   "errorBar": {
     "unableToReachChatService": "Olet offline-tilassa",

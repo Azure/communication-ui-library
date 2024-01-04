@@ -19,6 +19,8 @@ import { CallAgent } from '@azure/communication-calling';
 import { CallClientState } from '@internal/calling-stateful-client';
 import { CallParticipantListParticipant } from '@internal/react-components';
 import { CallState } from '@azure/communication-calling';
+import { CallSurvey } from '@azure/communication-calling';
+import { CallSurveyResponse } from '@azure/communication-calling';
 import { CameraButton } from '@internal/react-components';
 import { _CaptionsInfo } from '@internal/react-components';
 import { Common } from '@internal/acs-ui-common';
@@ -202,6 +204,8 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onStopScreenShare: () => Promise<void>;
     // (undocumented)
+    onSubmitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
+    // (undocumented)
     onToggleCamera: (options?: VideoStreamOptions) => Promise<void>;
     // (undocumented)
     onToggleHold: () => Promise<void>;
@@ -221,8 +225,8 @@ export const createDefaultCallingHandlers: CreateDefaultCallingHandlers;
 
 // @beta
 export const createDefaultTeamsCallingHandlers: (callClient: StatefulCallClient, callAgent: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent, deviceManager: StatefulDeviceManager | undefined, call: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall, options?: {
-    onResolveVideoBackgroundEffectsDependency?: (() => Promise<VideoBackgroundEffectsDependency>) | undefined;
-} | undefined) => never | TeamsCallingHandlers;
+    onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
+}) => never | TeamsCallingHandlers;
 
 // @public
 export type DevicesButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
@@ -238,7 +242,7 @@ export type DevicesButtonSelector = (state: CallClientState, props: CallingBaseS
 export const devicesButtonSelector: DevicesButtonSelector;
 
 // @internal (undocumented)
-export const _dominantSpeakersWithFlatId: (dominantSpeakers?: DominantSpeakersInfo | undefined) => undefined | string[];
+export const _dominantSpeakersWithFlatId: (dominantSpeakers?: DominantSpeakersInfo) => undefined | string[];
 
 // @public
 export type EmptySelector = () => Record<string, never>;
@@ -266,7 +270,7 @@ export type HoldButtonSelector = (state: CallClientState, props: CallingBaseSele
 export const holdButtonSelector: HoldButtonSelector;
 
 // @internal
-export const _isInCall: (callStatus?: CallState | undefined) => boolean;
+export const _isInCall: (callStatus?: CallState) => boolean;
 
 // @internal
 export const _isInLobbyOrConnecting: (callStatus: CallState | undefined) => boolean;

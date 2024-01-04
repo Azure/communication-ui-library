@@ -29,6 +29,7 @@ export const RemoteScreenShare = React.memo(
     isMuted?: boolean;
     isSpeaking?: boolean;
     renderElement?: HTMLElement;
+    participantVideoScalingMode?: VideoStreamOptions;
   }) => {
     const {
       userId,
@@ -37,12 +38,21 @@ export const RemoteScreenShare = React.memo(
       renderElement,
       onCreateRemoteStreamView,
       onDisposeRemoteStreamView,
-      isReceiving
+      isReceiving,
+      participantVideoScalingMode
     } = props;
     const locale = useLocale();
 
     if (!renderElement) {
-      onCreateRemoteStreamView && onCreateRemoteStreamView(userId);
+      /**
+       * TODO: We need to pass in the scaling mode of the screen share participant to this function because when we
+       * call this it will recreate both streams (video and screen share) and we need to make sure that the scaling
+       * mode is the same as before we started the screen share.
+       *
+       * We should deprecate the current function and replace it with a
+       * createRemoteScreenShareStreamView and createRemoteVideoStreamView.
+       */
+      onCreateRemoteStreamView && onCreateRemoteStreamView(userId, participantVideoScalingMode);
     }
 
     useEffect(() => {

@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import EventEmitter from 'events';
-import produce, { enableMapSet, enablePatches, Patch } from 'immer';
+import { enableMapSet, enablePatches, produce, Patch } from 'immer';
 import {
   ChatClientState,
   ChatErrors,

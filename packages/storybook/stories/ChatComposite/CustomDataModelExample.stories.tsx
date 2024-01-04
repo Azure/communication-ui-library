@@ -77,6 +77,7 @@ const CustomDataModelStory = (args: ArgsFrom<typeof storyControls>, context): JS
       {containerProps ? (
         <CustomDataModelExampleContainer
           fluentTheme={context.theme}
+          rtl={context.globals.rtl === 'rtl'}
           locale={compositeLocale(locale)}
           {...containerProps}
           botAvatar={getControlledBotAvatarSymbol(args.avatar)}

@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 import { Stack, PrimaryButton, Image, ChoiceGroup, IChoiceGroupOption, Text, TextField } from '@fluentui/react';
 /* @conditional-compile-remove(teams-adhoc-call) */
-import { IButtonStyles, IStackStyles, IStackTokens, ITextFieldProps, IconButton } from '@fluentui/react';
+import { Label, IButtonStyles, IStackStyles, IStackTokens, ITextFieldProps, IconButton } from '@fluentui/react';
 /* @conditional-compile-remove(PSTN-calls) */
 import { registerIcons, Callout, mergeStyles, Link } from '@fluentui/react';
 import heroSVG from '../../assets/hero.svg';
@@ -203,6 +203,8 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
               <TextField
                 className={teamsItemStyle}
                 iconProps={{ iconName: 'Link' }}
+                label={'Meeting Link'}
+                required
                 placeholder={'Enter a Teams meeting link'}
                 onChange={(_, newValue) => newValue && setCallLocator({ meetingLink: newValue })}
               />
@@ -214,6 +216,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                   <TextField
                     className={teamsItemStyle}
                     label={teamsTokenLabel}
+                    required
                     placeholder={'Enter a Teams Token'}
                     onChange={(_, newValue) => setTeamsToken(newValue)}
                   />
@@ -227,6 +230,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                   <TextField
                     className={teamsItemStyle}
                     label={teamsIdLabel}
+                    required
                     placeholder={'Enter a Teams id'}
                     onChange={(_, newValue) => setTeamsId(`8:orgid:${newValue}`)}
                   />
@@ -239,6 +243,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                   <TextField
                     className={teamsItemStyle}
                     label={roomIdLabel}
+                    required
                     placeholder={'Enter a room ID'}
                     onChange={(_, newValue) => setCallLocator(newValue ? { roomId: newValue } : undefined)}
                   />
@@ -264,6 +269,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                   <TextField
                     className={outboundTextField}
                     label={'Participants'}
+                    required
                     placeholder={"Comma seperated ACS user ID's"}
                     onChange={(_, newValue) => setOutboundParticipants(newValue)}
                   />
@@ -276,6 +282,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                   <TextField
                     className={outboundTextField}
                     label={'Teams user ID'}
+                    required
                     placeholder={'Enter a Teams user ID'}
                     onChange={(_, newValue) => setOutboundTeamsUsers(newValue)}
                     onRenderLabel={(props?: ITextFieldProps) => (
@@ -288,7 +295,9 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
             {
               /* @conditional-compile-remove(PSTN-calls) */ pstnCallChosen && (
                 <Stack>
-                  <Text style={{ paddingBottom: '0.5rem' }}>Please dial the number you wish to call.</Text>
+                  <Label required style={{ paddingBottom: '0.5rem' }}>
+                    Please dial the number you wish to call.
+                  </Label>
                   <Stack styles={dialpadOptionStyles}>
                     <Dialpad
                       isMobile={isMobileSession}
@@ -416,12 +425,20 @@ const TeamsUserIdsTextFieldLabel = (props: ITextFieldProps): JSX.Element => {
   return (
     <>
       <Stack horizontal verticalAlign="center">
-        <label
-          className={mergeStyles({ fontWeight: 600, paddingTop: '0.3125rem', paddingBottom: '0.3125rem' })}
+        <Label
+          className={mergeStyles({
+            fontWeight: 600,
+            paddingTop: '0.3125rem',
+            paddingBottom: '0.3125rem',
+            '::after': {
+              paddingRight: '0px'
+            }
+          })}
           id={props.id}
+          required={props.required}
         >
           {props.label}
-        </label>
+        </Label>
         <IconButton
           id={iconButtonId}
           iconProps={iconProps}

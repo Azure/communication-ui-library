@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import * as telemetryVersion from './telemetryVersion';
+import telemetryVersion from './telemetryVersion';
 
 /**
  * @private
@@ -14,6 +14,33 @@ export const sanitize = (version: string): string => {
     return version.substring(0, alphaIndex + 5);
   }
   return version;
+};
+
+/**
+ * Indicates the type of implementation for the UILibrary.
+ *
+ * @internal
+ */
+export type _TelemetryImplementationHint = 'Call' | 'Chat' | 'CallWithChat' | 'StatefulComponents';
+
+/**
+ * Takes a telemetry implementation hint and returns the numerical value.
+ *
+ * @private
+ */
+const getTelemetryImplementationHint = (telemetryImplementationHint: _TelemetryImplementationHint): number => {
+  switch (telemetryImplementationHint) {
+    case 'Call':
+      return 1;
+    case 'Chat':
+      return 2;
+    case 'CallWithChat':
+      return 3;
+    case 'StatefulComponents':
+      return 4;
+    default:
+      return 0;
+  }
 };
 
 /**
@@ -31,7 +58,12 @@ export const sanitize = (version: string): string => {
  *
  * @internal
  */
-export const _getApplicationId = (): string => {
-  const version = telemetryVersion['default'];
-  return sanitize(`acr/${version}`);
+export const _getApplicationId = (telemetryImplementationHint: _TelemetryImplementationHint): string => {
+  // We assume AzureCommunicationLibrary, as we don't currently have any public API to inject otherwise.
+  // This is consistent with the native iOS and Android implementations of telemetry.
+  const highLevelArtifact = 1;
+  const specificImplementation = getTelemetryImplementationHint(telemetryImplementationHint);
+  const implementationDetails = 0;
+  const version = telemetryVersion;
+  return sanitize(`acr${highLevelArtifact}${specificImplementation}${implementationDetails}/${version}`);
 };

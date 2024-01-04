@@ -17,6 +17,7 @@ import {
   callDetailsContainerStyles,
   configurationCenteredContent,
   configurationSectionStyle,
+  deviceConfigurationStackTokens,
   fillWidth,
   logoStyles,
   panelFocusProps,
@@ -58,6 +59,7 @@ import { useIsParticularSidePaneOpen } from '../components/SidePane/SidePaneProv
 import { localVideoSelector } from '../../CallComposite/selectors/localVideoStreamSelector';
 /* @conditional-compile-remove(capabilities) */
 import { CapabilitiesChangeNotificationBarProps } from '../components/CapabilitiesChangedNotificationBar';
+import { SvgWithWordWrapping } from '../components/SvgWithWordWrapping';
 
 /**
  * @private
@@ -84,7 +86,7 @@ export interface ConfigurationPageProps {
   logo?: {
     url: string;
     alt?: string;
-    shape?: 'circle' | 'square';
+    shape?: 'unset' | 'circle';
   };
   /* @conditional-compile-remove(custom-branding) */
   backgroundImage?: {
@@ -167,18 +169,22 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   }
 
   const locale = useLocale();
-  const title = (
-    <Stack.Item
-      className={mobileView ? titleContainerStyleMobile : titleContainerStyleDesktop}
-      role="heading"
-      aria-level={1}
-    >
-      {locale.strings.call.configurationPageTitle}
-    </Stack.Item>
-  );
+  const title =
+    locale.strings.call.configurationPageTitle.length > 0 ? (
+      <Stack.Item className={mobileView ? titleContainerStyleMobile(theme) : titleContainerStyleDesktop(theme)}>
+        <SvgWithWordWrapping
+          width={mobileView ? 325 : 445}
+          lineHeightPx={16 * 1.5}
+          bufferHeightPx={16}
+          text={locale.strings.call.configurationPageTitle}
+        />
+      </Stack.Item>
+    ) : (
+      <></>
+    );
 
   const callDescription = locale.strings.call.configurationPageCallDetails && (
-    <Stack.Item className={mobileView ? callDetailsStyleMobile : callDetailsStyleDesktop}>
+    <Stack.Item className={mobileView ? callDetailsStyleMobile(theme) : callDetailsStyleDesktop(theme)}>
       {locale.strings.call.configurationPageCallDetails}
     </Stack.Item>
   );
@@ -348,7 +354,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
             horizontal={!mobileWithPreview}
             horizontalAlign={mobileWithPreview ? 'stretch' : 'center'}
             verticalFill={mobileWithPreview}
-            tokens={configurationStackTokensMobile}
+            tokens={deviceConfigurationStackTokens}
           >
             {localPreviewTrampoline(
               mobileWithPreview,
@@ -404,7 +410,12 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           /* @conditional-compile-remove(video-background-effects) */
           customWidth={`${VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM}rem`}
         >
-          <SidePane mobileView={props.mobileView} updateSidePaneRenderer={props.updateSidePaneRenderer} />
+          <SidePane
+            mobileView={props.mobileView}
+            updateSidePaneRenderer={props.updateSidePaneRenderer}
+            maxWidth={`${VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM}rem`}
+            minWidth={`${VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM}rem`}
+          />
         </Panel>
       </Stack>
     </Stack>
@@ -439,9 +450,9 @@ const micPermissionGrantedTrampoline = (
   return microphonePermissionGranted;
 };
 
-const Logo = (props: { logo?: { url: string; alt?: string; shape?: 'circle' | 'square' } }): JSX.Element => {
+const Logo = (props: { logo?: { url: string; alt?: string; shape?: 'unset' | 'circle' } }): JSX.Element => {
   if (!props.logo) {
     return <></>;
   }
-  return <Image styles={logoStyles(props.logo.shape ?? 'circle')} src={props.logo.url} alt={props.logo.alt} />;
+  return <Image styles={logoStyles(props.logo.shape)} src={props.logo.url} alt={props.logo.alt} />;
 };

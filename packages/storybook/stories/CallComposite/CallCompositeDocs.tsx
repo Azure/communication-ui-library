@@ -33,6 +33,19 @@ const callParticipantsLocatorSnippet = `
 { participantsIDs: ["<phone #>", "<phone #>", "<ACS userId>", ...] }
 `;
 
+const customBrandingSnippet = `
+<CallComposite options={{
+  logo: {
+    url: 'https://...',
+    alt: 'My company logo',
+    shape: 'circle'
+  },
+  backgroundImage: {
+    url: 'https://...'
+  }
+}} />
+`;
+
 export const Docs: () => JSX.Element = () => {
   const refCustomDataModel = useRef(null);
   const refCustomDateTimeFormat = useRef(null);
@@ -176,8 +189,8 @@ export const Docs: () => JSX.Element = () => {
         </Description>
       </div>
 
-      <Heading>Applying Custom Branding to the Composites</Heading>
-      <SingleLineBetaBanner version="1.11.0-beta.1" />
+      <Heading>Custom Branding</Heading>
+      <SingleLineBetaBanner version="1.12.0-beta.1" />
       <Description>
         Along with applying a Fluent Theme to style the composites, you can also inject your own custom branding. You
         can inject a background and logo into the Composite configuration page to present to your users. This is done by
@@ -196,7 +209,7 @@ export const Docs: () => JSX.Element = () => {
           alt="CallComposite with a logo and background applied"
         />
       </Stack>
-      <Source code="<CallComposite options={{ logo: { url: 'https://...', alt: 'My company logo', shape: 'square' }, backgroundImage: { url: 'https://...' }}} />" />
+      <Source code={customBrandingSnippet} />
 
       <div ref={refCustomDataModel}>
         <Heading>Custom Data Model</Heading>
@@ -294,7 +307,6 @@ export const Docs: () => JSX.Element = () => {
         local video tile and some of the other options we have for the local video tile when just using the components.
       </Description>
       <Heading>Customizing the default Gallery Layout</Heading>
-      <SingleLineBetaBanner />
       <Description>
         We allow for the customization of the starting layout of the gallery. The layout can be changed by the user
         though the gallery options menu found in the more button of the call controls.

@@ -41,8 +41,7 @@ export const participantStateStringStyles: IStyle = {
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
   lineHeight: 'normal',
-  paddingLeft: '1rem',
-  marginLeft: 'auto',
+  marginLeft: '0.5rem',
   marginRight: 0
 };
 

@@ -16,6 +16,7 @@ export type CallWithChatExampleProps = {
   endpointUrl: string;
   locator: TeamsMeetingLinkLocator | CallAndChatLocator;
   fluentTheme?: PartialTheme | Theme;
+  rtl?: boolean;
   compositeOptions?: CallWithChatCompositeOptions;
   callInvitationURL?: string;
   formFactor?: 'desktop' | 'mobile';
@@ -50,6 +51,7 @@ export const CallWithChatExperienceWithErrorChecks = (props: CallWithChatExample
     <CallWithChatComposite
       adapter={adapter}
       fluentTheme={props.fluentTheme}
+      rtl={props.rtl}
       formFactor={props.formFactor}
       joinInvitationURL={props.callInvitationURL}
       options={props.compositeOptions}

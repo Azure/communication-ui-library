@@ -12,6 +12,8 @@ import {
   BackgroundBlurConfig,
   BackgroundReplacementConfig
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { DtmfTone, AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
@@ -26,7 +28,7 @@ import { disposeAllLocalPreviewViews, _isInCall, _isInLobbyOrConnecting, _isPrev
 /* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(video-background-effects) */ /* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(raise-hand) */
+/* @conditional-compile-remove(video-background-effects) */ /* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(raise-hand) */ /* @conditional-compile-remove(end-of-call-survey) */
 import { Features } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptions } from '@azure/communication-calling';
@@ -96,6 +98,8 @@ export interface CommonCallingHandlers {
   onSetSpokenLanguage: (language: string) => Promise<void>;
   /* @conditional-compile-remove(close-captions) */
   onSetCaptionLanguage: (language: string) => Promise<void>;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  onSubmitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
 }
 
 /**
@@ -173,37 +177,48 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     const onToggleCamera = async (options?: VideoStreamOptions): Promise<void> => {
       const previewOn = _isPreviewOn(callClient.getState().deviceManager);
 
-      if (previewOn && call && call.state === 'Connecting') {
-        // This is to workaround: https://skype.visualstudio.com/SPOOL/_workitems/edit/3030558.
-        // The root cause of the issue is caused by never transitioning the unparented view to the
-        // call object when going from configuration page (disconnected call state) to connecting.
-        //
-        // Currently the only time the local video stream is moved from unparented view to the call
-        // object is when we transition from connecting -> call state. If the camera was on,
-        // inside the MediaGallery we trigger toggleCamera. This triggers onStartLocalVideo which
-        // destroys the unparentedView and creates a new stream in the call - so all looks well.
-        //
-        // However, if someone turns off their camera during the lobbyOrConnecting screen, the
-        // call.localVideoStreams will be empty (as the stream is currently stored in the unparented
-        // views and was never transitioned to the call object) and thus we incorrectly try to create
-        // a new video stream for the call object, instead of only stopping the unparented view.
-        //
-        // The correct fix for this is to ensure that callAgent.onStartCall is called with the
-        // localvideostream as a videoOption. That will mean call.onLocalVideoStreamsUpdated will
-        // be triggered when the call is in connecting state, which we can then transition the
-        // local video stream to the stateful call client and get into a clean state.
-        await onDisposeLocalStreamView();
-        return;
-      }
+      // the disposal of the unparented views is to workaround: https://skype.visualstudio.com/SPOOL/_workitems/edit/3030558.
+      // The root cause of the issue is caused by never transitioning the unparented view to the
+      // call object when going from configuration page (disconnected call state) to connecting.
+      //
+      // Currently the only time the local video stream is moved from unparented view to the call
+      // object is when we transition from connecting -> call state. If the camera was on,
+      // inside the MediaGallery we trigger toggleCamera. This triggers onStartLocalVideo which
+      // destroys the unparentedView and creates a new stream in the call - so all looks well.
+      //
+      // However, if someone turns off their camera during the lobbyOrConnecting screen, the
+      // call.localVideoStreams will be empty (as the stream is currently stored in the unparented
+      // views and was never transitioned to the call object) and thus we incorrectly try to create
+      // a new video stream for the call object, instead of only stopping the unparented view.
+      //
+      // The correct fix for this is to ensure that callAgent.onStartCall is called with the
+      // localvideostream as a videoOption. That will mean call.onLocalVideoStreamsUpdated will
+      // be triggered when the call is in connecting state, which we can then transition the
+      // local video stream to the stateful call client and get into a clean state.
 
       if (call && (_isInCall(call.state) || _isInLobbyOrConnecting(call.state))) {
         const stream = call.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
-        if (stream) {
-          await onStopLocalVideo(stream);
+        const unparentedViews = callClient.getState().deviceManager.unparentedViews;
+        if (stream || unparentedViews.length > 0) {
+          unparentedViews &&
+            (await unparentedViews.forEach(
+              (view) => view.mediaStreamType === 'Video' && callClient.disposeView(undefined, undefined, view)
+            ));
+          stream && (await onStopLocalVideo(stream));
         } else {
           await onStartLocalVideo();
         }
       } else {
+        /**
+         * This will create a unparented view to be used on the configuration page and the connecting screen
+         *
+         * If the device that the stream will come from is not on from permissions checks, then it will take time
+         * to create the stream since device is off. If we are turn the camera on immedietly on the configuration page we see it is
+         * fast but that is because the device is already primed to return a stream.
+         *
+         * On the connecting page the device has already turned off and the connecting window is so small we do not see the resulting
+         * unparented view from the code below.
+         */
         const selectedCamera = callClient.getState().deviceManager.selectedCamera;
         if (selectedCamera) {
           if (previewOn) {
@@ -244,7 +259,15 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       if (call && _isInCall(call.state)) {
         deviceManager.selectCamera(device);
         const stream = call.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
-        return stream?.switchSource(device);
+        await stream?.switchSource(device);
+
+        /// TODO: TEMPORARY SOLUTION
+        /// The Calling SDK needs to wait until the stream is ready before resolving the switchSource promise.
+        /// This is a temporary solution to wait for the stream to be ready before resolving the promise.
+        /// This allows the onSelectCamera to be throttled to prevent the streams from getting in to a frozen state
+        /// if the user switches cameras too rapidly.
+        /// This is to be removed once the Calling SDK has issued a fix.
+        await stream?.getMediaStream();
       } else {
         const previewOn = _isPreviewOn(callClient.getState().deviceManager);
 
@@ -292,7 +315,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     };
 
     const onToggleMicrophone = async (): Promise<void> => {
-      if (!call || !_isInCall(call.state)) {
+      if (!call || !(_isInCall(call.state) || _isInLobbyOrConnecting(call.state))) {
         throw new Error(`Please invoke onToggleMicrophone after call is started`);
       }
       return call.isMuted ? await call.unmute() : await call.mute();
@@ -556,6 +579,9 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       const captionsFeature = call?.feature(Features.Captions).captions as TeamsCaptions;
       await captionsFeature.setCaptionLanguage(language);
     };
+    /* @conditional-compile-remove(end-of-call-survey) */
+    const onSubmitSurvey = async (survey: CallSurvey): Promise<CallSurveyResponse | undefined> =>
+      await call?.feature(Features.CallSurvey).submitSurvey(survey);
 
     return {
       onHangUp,
@@ -602,7 +628,9 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       /* @conditional-compile-remove(close-captions) */
       onSetCaptionLanguage,
       /* @conditional-compile-remove(close-captions) */
-      onSetSpokenLanguage
+      onSetSpokenLanguage,
+      /* @conditional-compile-remove(end-of-call-survey) */
+      onSubmitSurvey
     };
   }
 );

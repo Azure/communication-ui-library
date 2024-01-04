@@ -31,9 +31,11 @@ import { getExistingThreadIdFromURL } from './utils/getThreadId';
 import { WEB_APP_TITLE } from './utils/constants';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CallParticipantsLocator } from '@azure/communication-react';
+import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 
 setLogLevel('error');
 initializeIcons();
+initializeFileTypeIcons();
 
 interface Credentials {
   userId: CommunicationUserIdentifier;

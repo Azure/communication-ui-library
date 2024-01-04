@@ -116,6 +116,8 @@
     "captionsBannerMoreButtonCallingLabel": "其他",
     "captionsBannerMoreButtonTooltip": "更多選項",
     "dismissModalAriaLabel": "本機和遠端圖片，按 Enter 以返回通話",
+    "callRejectedTitle": "無法完成通話",
+    "callRejectedMoreDetails": "您嘗試連絡的人員無法使用。請稍後再試。",
     "spokenLanguageStrings": {
       "ar-ae": "阿拉伯文 - 阿拉伯聯合大公國",
       "ar-sa": "阿拉伯文 - 沙烏地阿拉伯",

@@ -8,7 +8,7 @@ import {
   CustomMessage,
   SystemMessage,
   MessageRenderer,
-  FileMetadata,
+  AttachmentMetadata,
   AttachmentDownloadResult,
   ImageGalleryImageProps,
   ImageGallery
@@ -344,7 +344,8 @@ const Docs: () => JSX.Element = () => {
           MessageThread component provides UI for displaying file attachments in a message. This allows developers to
           implement a file sharing feature using the pure UI component with minimal effort. Developers can write their
           own file download logic and utilize the UI provided by MessageThread. Clicking on the file attachment opens it
-          in a new browser tab. Developers can override this behavior as well using MessageThread props.
+          in a new browser tab. Developers can override this behavior as well using MessageThread props. [The file types
+          icons](./?path=/docs/icons--page) should be initialized before rendering MessageThread component.
         </Description>
         <Canvas mdxSource={MessageWithFileText}>
           <MessageWithFile />
@@ -450,14 +451,14 @@ const MessageThreadStory = (args): JSX.Element => {
     return Promise.resolve();
   };
 
-  const onFetchAttachment = async (attachment: FileMetadata): Promise<AttachmentDownloadResult[]> => {
+  const onFetchAttachments = async (attachments: AttachmentMetadata[]): Promise<AttachmentDownloadResult[]> => {
     // Mocking promise
     const delay = (): Promise<void> => new Promise((resolve) => setTimeout(resolve, 3000));
     return await delay().then(() => {
       return [
         {
-          attachmentId: attachment.id,
-          blobUrl: attachment.previewUrl ?? ''
+          attachmentId: attachments[0].id,
+          blobUrl: attachments[0].previewUrl ?? ''
         }
       ];
     });
@@ -473,7 +474,7 @@ const MessageThreadStory = (args): JSX.Element => {
     }
     const chatMessage = messages[0] as ChatMessage;
 
-    const attachments = chatMessage.attachedFilesMetadata?.filter((attachment) => {
+    const attachments = chatMessage.inlineImages?.filter((attachment) => {
       return attachment.id === attachmentId;
     });
 
@@ -482,7 +483,6 @@ const MessageThreadStory = (args): JSX.Element => {
     }
 
     const attachment = attachments[0];
-    attachment.name = chatMessage.senderDisplayName || '';
     const title = 'Message Thread Image';
     const titleIcon = (
       <Persona text={chatMessage.senderDisplayName} size={PersonaSize.size32} hidePersonaDetails={true} />
@@ -531,7 +531,7 @@ const MessageThreadStory = (args): JSX.Element => {
         disableJumpToNewMessageButton={!args.enableJumpToNewMessageButton}
         onLoadPreviousChatMessages={onLoadPreviousMessages}
         onRenderMessage={onRenderMessage}
-        onFetchAttachments={onFetchAttachment}
+        onFetchAttachments={onFetchAttachments}
         onInlineImageClicked={onInlineImageClicked}
         onUpdateMessage={onUpdateMessageCallback}
         onRenderAvatar={(userId?: string) => {

@@ -116,6 +116,8 @@
     "captionsBannerMoreButtonCallingLabel": "Mehr",
     "captionsBannerMoreButtonTooltip": "Weitere Optionen",
     "dismissModalAriaLabel": "Lokales Bild und Remotebild. Drücken Sie die EINGABETASTE, um zum Anruf zurückzukehren.",
+    "callRejectedTitle": "Der Anruf konnte nicht ausgeführt werden.",
+    "callRejectedMoreDetails": "Die Person, die Sie erreichen möchten, ist nicht verfügbar. Versuchen Sie es später noch mal.",
     "spokenLanguageStrings": {
       "ar-ae": "Arabisch – Vereinigte Arabische Emirate",
       "ar-sa": "Arabisch – Saudi-Arabien",

@@ -2,9 +2,10 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-import { FileMetadata, _FileDownloadCards, FileSharingMetadata } from './FileDownloadCards';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { ImageFileMetadata } from './FileDownloadCards';
+/* @conditional-compile-remove(file-sharing) */
+import { FileMetadata } from './FileDownloadCards';
+import { AttachmentMetadata, _FileDownloadCards } from './FileDownloadCards';
+import { InlineImageMetadata } from './FileDownloadCards';
 import { render, screen } from '@testing-library/react';
 import { registerIcons } from '@fluentui/react';
 
@@ -19,14 +20,15 @@ describe('FileDownloadCards should be rendered properly', () => {
     });
   });
 
+  /* @conditional-compile-remove(file-sharing) */
   it('should render if it is FileSharingMetadata', async () => {
     const metadata = {
       name: 'MockFileCard',
       extension: 'docx',
       url: 'mockUrl',
       id: 'mockId',
-      attachmentType: 'fileSharing'
-    } as FileSharingMetadata;
+      attachmentType: 'file'
+    } as FileMetadata;
 
     const props = {
       userId: 'MockUserId',
@@ -37,16 +39,13 @@ describe('FileDownloadCards should be rendered properly', () => {
     expect(card).toBeDefined();
   });
 
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   it('should not render if it is ImageFileMetadata', async () => {
     const metadata = {
-      name: 'MockImageFileCard',
-      extension: 'png',
       url: 'mockUrl',
       id: 'mockId',
       attachmentType: 'inlineImage',
       previewUrl: 'mockPreviewUrl'
-    } as ImageFileMetadata;
+    } as InlineImageMetadata;
 
     const props = {
       userId: 'MockUserId',
@@ -64,5 +63,5 @@ const renderFileDownloadCardsWithDefaults = (props: MockDownloadCardProps): void
 
 interface MockDownloadCardProps {
   userId: string;
-  fileMetadata: FileMetadata[];
+  fileMetadata: AttachmentMetadata[];
 }
