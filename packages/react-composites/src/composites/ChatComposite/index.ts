@@ -22,6 +22,8 @@ export type {
   MessageReadListener,
   MessageReceivedListener,
   MessageSentListener,
+  MessageEditedListener,
+  MessageDeletedListener,
   ParticipantsAddedListener,
   ParticipantsRemovedListener,
   TopicChangedListener

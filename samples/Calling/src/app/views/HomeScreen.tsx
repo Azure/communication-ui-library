@@ -48,12 +48,21 @@ import { Backspace20Regular } from '@fluentui/react-icons';
 import { useIsMobile } from '../utils/useIsMobile';
 import { CallAdapterLocator } from '@azure/communication-react';
 
+export type CallOption =
+  | 'ACSCall'
+  | 'TeamsMeeting'
+  | /* @conditional-compile-remove(rooms) */ 'Rooms'
+  | /* @conditional-compile-remove(rooms) */ 'StartRooms'
+  | /* @conditional-compile-remove(teams-identity-support) */ 'TeamsIdentity'
+  | /* @conditional-compile-remove(one-to-n-calling) */ '1:N'
+  | /* @conditional-compile-remove(PSTN-calls) */ 'PSTN'
+  | /* @conditional-compile-remove(teams-adhoc-call) */ 'TeamsAdhoc';
+
 export interface HomeScreenProps {
   startCallHandler(callDetails: {
     displayName: string;
     callLocator?: CallAdapterLocator | TeamsMeetingLinkLocator | /* @conditional-compile-remove(rooms) */ RoomLocator;
-    /* @conditional-compile-remove(rooms) */
-    option?: string;
+    option?: CallOption;
     /* @conditional-compile-remove(rooms) */
     role?: string;
     /* @conditional-compile-remove(PSTN-calls) */
@@ -70,12 +79,14 @@ export interface HomeScreenProps {
   joiningExistingCall: boolean;
 }
 
+type ICallChoiceGroupOption = IChoiceGroupOption & { key: CallOption };
+
 export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const imageProps = { src: heroSVG.toString() };
   const headerTitle = props.joiningExistingCall ? 'Join Call' : 'Start or join a call';
   const callOptionsGroupLabel = 'Select a call option';
   const buttonText = 'Next';
-  const callOptions: IChoiceGroupOption[] = [
+  const callOptions: ICallChoiceGroupOption[] = [
     { key: 'ACSCall', text: 'Start a call' },
     /* @conditional-compile-remove(rooms) */
     { key: 'StartRooms', text: 'Start a Rooms call' },
@@ -110,7 +121,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const defaultDisplayName = localStorageAvailable ? getDisplayNameFromLocalStorage() : null;
   const [displayName, setDisplayName] = useState<string | undefined>(defaultDisplayName ?? undefined);
 
-  const [chosenCallOption, setChosenCallOption] = useState<IChoiceGroupOption>(callOptions[0]);
+  const [chosenCallOption, setChosenCallOption] = useState<ICallChoiceGroupOption>(callOptions[0]);
   const [callLocator, setCallLocator] = useState<
     TeamsMeetingLinkLocator | /* @conditional-compile-remove(rooms) */ RoomLocator
   >();
@@ -196,7 +207,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 options={callOptions}
                 required={true}
                 onChange={(_, option) => {
-                  option && setChosenCallOption(option);
+                  option && setChosenCallOption(option as ICallChoiceGroupOption);
                   /* @conditional-compile-remove(teams-adhoc-call) */
                   /* @conditional-compile-remove(teams-identity-support) */
                   setTeamsIdFormatError(false);
