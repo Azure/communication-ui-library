@@ -82,6 +82,8 @@ module.exports = {
     'dtmf-dialer',
     // Feature for meeting reactions
     'reaction',
+    // Feature for Rich Text Editor support
+    'rte',
   ],
   // A list of in progress beta feature.
   // These features are still beta feature but "in progress"
