@@ -265,7 +265,7 @@ export interface OptimalVideoCountFeatureState {
 
 // @beta
 export interface PPTLiveCallFeatureState {
-    isActive: boolean;
+    isActivated: boolean;
 }
 
 // @public
