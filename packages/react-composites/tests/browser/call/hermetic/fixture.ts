@@ -93,7 +93,7 @@ export function defaultMockCallAdapterState(
       /** @conditional-compile-remove(raise-hand) */
       raiseHand: { raisedHands: [] },
       /** @conditional-compile-remove(ppt-live) */
-      pptLive: { isActive: false },
+      pptLive: { isActivated: false },
       role: role ?? 'Unknown',
       dominantSpeakers: dominantSpeakers,
       totalParticipantCount:
@@ -434,7 +434,7 @@ const defaultEndedCallState: CallState = {
   /** @conditional-compile-remove(raise-hand) */
   raiseHand: { raisedHands: [] },
   /** @conditional-compile-remove(ppt-live) */
-  pptLive: { isActive: false },
+  pptLive: { isActivated: false },
   captionsFeature: {
     captions: [],
     supportedSpokenLanguages: [],
