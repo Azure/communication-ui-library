@@ -16,12 +16,16 @@ import { isHideAttendeeNamesEnabled } from './baseSelectors';
 import { CallParticipantListParticipant } from '@internal/react-components';
 import { _isRingingPSTNParticipant, _updateUserDisplayNames } from './utils/callUtils';
 import { memoizedConvertAllremoteParticipants } from './utils/participantListSelectorUtils';
+/* @conditional-compile-remove(reaction) */
+import { memoizedConvertToVideoTileReaction } from './utils/participantListSelectorUtils';
 /* @conditional-compile-remove(rooms) */
 import { memoizedConvertAllremoteParticipantsBetaRelease } from './utils/participantListSelectorUtils';
-/* @conditional-compile-remove(raise-hand) */
+/* @conditional-compile-remove(reaction) */
 import { memoizedConvertAllremoteParticipantsBeta } from './utils/participantListSelectorUtils';
 /* @conditional-compile-remove(raise-hand) */
 import { getLocalParticipantRaisedHand } from './baseSelectors';
+/* @conditional-compile-remove(reaction) */
+import { getLocalParticipantReactionState } from './baseSelectors';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { getParticipantCount } from './baseSelectors';
 import { isMicrosoftTeamsAppIdentifier, isPhoneNumberIdentifier } from '@azure/communication-common';
@@ -73,6 +77,8 @@ const convertRemoteParticipantsToParticipantListParticipants = (
             participant.role,
             isHideAttendeeNamesEnabled
           );
+          /* @conditional-compile-remove(reaction) */
+          const remoteParticipantReaction = memoizedConvertToVideoTileReaction(participant.reactionState);
           return memoizeFn(
             toFlatCommunicationIdentifier(participant.identifier),
             displayName,
@@ -82,7 +88,9 @@ const convertRemoteParticipantsToParticipantListParticipants = (
             participant.isSpeaking,
             /* @conditional-compile-remove(raise-hand) */
             participant.raisedHand,
-            localUserCanRemoveOthers
+            localUserCanRemoveOthers,
+            /* @conditional-compile-remove(reaction) */
+            remoteParticipantReaction
           );
         })
         .sort((a, b) => {
@@ -98,7 +106,7 @@ const convertRemoteParticipantsToParticipantListParticipants = (
         })
     );
   };
-  /* @conditional-compile-remove(raise-hand) */
+  /* @conditional-compile-remove(reaction) */
   return memoizedConvertAllremoteParticipantsBeta(conversionCallback);
   /* @conditional-compile-remove(rooms) */
   return memoizedConvertAllremoteParticipantsBetaRelease(conversionCallback);
@@ -136,7 +144,9 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     getRole,
     getParticipantCount,
     /* @conditional-compile-remove(hide-attendee-name) */
-    isHideAttendeeNamesEnabled
+    isHideAttendeeNamesEnabled,
+    /* @conditional-compile-remove(reaction) */
+    getLocalParticipantReactionState
   ],
   (
     userId,
@@ -149,7 +159,9 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     role,
     partitipantCount,
     /* @conditional-compile-remove(hide-attendee-name) */
-    isHideAttendeeNamesEnabled
+    isHideAttendeeNamesEnabled,
+    /* @conditional-compile-remove(reaction) */
+    localParticipantReactionState
   ): {
     participants: CallParticipantListParticipant[];
     myUserId: string;
@@ -166,6 +178,8 @@ export const participantListSelector: ParticipantListSelector = createSelector(
           role
         )
       : [];
+    /* @conditional-compile-remove(reaction) */
+    const localParticipantReaction = memoizedConvertToVideoTileReaction(localParticipantReactionState);
     participants.push({
       userId: userId,
       displayName: displayName,
@@ -175,7 +189,9 @@ export const participantListSelector: ParticipantListSelector = createSelector(
       raisedHand: raisedHand,
       state: 'Connected',
       // Local participant can never remove themselves.
-      isRemovable: false
+      isRemovable: false,
+      /* @conditional-compile-remove(reaction) */
+      reaction: localParticipantReaction
     });
     /* @conditional-compile-remove(total-participant-count) */
     const totalParticipantCount = partitipantCount;

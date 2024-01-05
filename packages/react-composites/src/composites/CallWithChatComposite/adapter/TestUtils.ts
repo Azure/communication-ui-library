@@ -242,6 +242,8 @@ function createMockCall(mockCallId: string): CallState {
     dominantSpeakers: undefined,
     /* @conditional-compile-remove(raise-hand) */
     raiseHand: { raisedHands: [] },
+    /* @conditional-compile-remove(reaction) */
+    localParticipantReaction: undefined,
     /* @conditional-compile-remove(close-captions) */
     captionsFeature: {
       captions: [],
