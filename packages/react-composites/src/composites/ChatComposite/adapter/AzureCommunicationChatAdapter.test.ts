@@ -158,18 +158,18 @@ describe('Error is reflected in state and events', () => {
     expect(errorListener.errors[0].target).toBe('ChatThreadClient.sendTypingNotification');
   });
 
-  it('when downloadAttachments with no access token fails', async () => {
+  it('when downloadAttachment with no access token fails', async () => {
     const threadClient = new StubChatThreadClient();
     const adapter = await createChatAdapterWithStubs(new StubChatClient(threadClient));
     const errorListener = new ErrorListener(adapter);
 
-    await expect(adapter.downloadAttachments({ attachmentUrl: 'somefakeurl' })).rejects.toThrow();
+    await expect(adapter.downloadAttachment({ attachmentUrl: 'somefakeurl' })).rejects.toThrow();
     expect(errorListener.errors.length).toBe(1);
     expect(errorListener.errors[0].target).toBe('ChatThreadClient.getMessage');
     expect(errorListener.errors[0].innerError.message).toBe('AccessToken is null');
   });
 
-  it('when downloadAttachments fails with bad respnse', async () => {
+  it('when downloadAttachment fails with bad respnse', async () => {
     const threadClient = new StubChatThreadClient();
     const fakeToken: CommunicationTokenCredential = {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -184,7 +184,7 @@ describe('Error is reflected in state and events', () => {
     const adapter = await createChatAdapterWithStubs(new StubChatClient(threadClient), fakeToken);
     const errorListener = new ErrorListener(adapter);
     {
-      await expect(adapter.downloadAttachments({ attachmentUrl: 'somefakeurl' })).rejects.toThrow();
+      await expect(adapter.downloadAttachment({ attachmentUrl: 'somefakeurl' })).rejects.toThrow();
       expect(errorListener.errors.length).toBe(1);
       expect(errorListener.errors[0].target).toBe('ChatThreadClient.getMessage');
       expect(errorListener.errors[0].innerError.message).toBe('fetch is not defined');

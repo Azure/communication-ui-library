@@ -9,7 +9,6 @@ import type { AdapterError, AdapterErrors, AdapterState, Disposable } from '../.
 import { FileUploadAdapter } from './AzureCommunicationFileUploadAdapter';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadsUiState } from './AzureCommunicationFileUploadAdapter';
-import { InlineImageSourceResult } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { AttachmentMetadata } from '@internal/react-components';
 
@@ -110,7 +109,7 @@ export interface ChatAdapterThreadManagement {
    *
    */
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
-  downloadAttachments: (options: { attachmentUrl: string }) => Promise<InlineImageSourceResult>;
+  downloadAttachment: (options: { attachmentUrl: string }) => Promise<{ blobUrl: string }>;
 }
 
 /**

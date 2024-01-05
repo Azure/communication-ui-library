@@ -8,7 +8,7 @@ import {
   CustomMessage,
   SystemMessage,
   MessageRenderer,
-  InlineImageSourceResult,
+  InlineImageProps,
   ImageGalleryImageProps,
   ImageGallery,
   InlineImageMetadata
@@ -451,7 +451,7 @@ const MessageThreadStory = (args): JSX.Element => {
     return Promise.resolve();
   };
 
-  const onFetchInlineImageSource = async (attachments: InlineImageMetadata): Promise<InlineImageSourceResult> => {
+  const onRenderInlineImage = async (attachments: InlineImageMetadata): Promise<InlineImageProps> => {
     // Mocking promise
     const delay = (): Promise<void> => new Promise((resolve) => setTimeout(resolve, 3000));
     return await delay().then(() => {
@@ -526,7 +526,7 @@ const MessageThreadStory = (args): JSX.Element => {
         disableJumpToNewMessageButton={!args.enableJumpToNewMessageButton}
         onLoadPreviousChatMessages={onLoadPreviousMessages}
         onRenderMessage={onRenderMessage}
-        onFetchInlineImageSource={onFetchInlineImageSource}
+        onRenderInlineImage={onRenderInlineImage}
         onInlineImageClicked={onInlineImageClicked}
         onUpdateMessage={onUpdateMessageCallback}
         onRenderAvatar={(userId?: string) => {

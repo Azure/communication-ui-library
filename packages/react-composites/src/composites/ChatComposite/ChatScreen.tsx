@@ -50,9 +50,9 @@ import { useSelector } from './hooks/useSelector';
 import { FileDownloadErrorBar } from './FileDownloadErrorBar';
 /* @conditional-compile-remove(file-sharing) */
 import { _FileDownloadCards } from '@internal/react-components';
-import { InlineImageSourceResult } from '@internal/react-components';
 import { ImageGallery, ImageGalleryImageProps } from '@internal/react-components';
 import { InlineImageMetadata } from '@internal/react-components';
+import { InlineImageProps } from '@internal/react-components';
 
 /**
  * @private
@@ -211,9 +211,10 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   );
 
   const onRenderInlineImage = useCallback(
-    async (attachment: InlineImageMetadata): Promise<InlineImageSourceResult> => {
-      const blob = await adapter.downloadAttachments({ attachmentUrl: attachment.previewUrl ?? '' });
-      return blob;
+    async (attachment: InlineImageMetadata): Promise<InlineImageProps> => {
+      const blob = await adapter.downloadAttachment({ attachmentUrl: attachment.previewUrl ?? '' });
+      const inlineImageProps: InlineImageProps = { src: blob.blobUrl };
+      return inlineImageProps;
     },
     [adapter]
   );
@@ -264,7 +265,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       }
 
       if (attachment.attachmentType === 'inlineImage' && attachment.url) {
-        const blob = await adapter.downloadAttachments({ attachmentUrl: attachment.url });
+        const blob = await adapter.downloadAttachment({ attachmentUrl: attachment.url });
         if (blob) {
           const blobUrl = blob.blobUrl;
           setFullSizeAttachments((prev) => ({ ...prev, [attachment.id]: blobUrl }));
@@ -335,7 +336,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             onRenderMessage={onRenderMessage}
             /* @conditional-compile-remove(file-sharing) */
             onRenderFileDownloads={onRenderFileDownloads}
-            onFetchInlineImageSource={onRenderInlineImage}
+            onRenderInlineImage={onRenderInlineImage}
             onInlineImageClicked={onInlineImageClicked}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}

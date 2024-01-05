@@ -8,7 +8,7 @@ import { ChatMessage, OnRenderAvatarCallback } from '../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types';
 /* @conditional-compile-remove(file-sharing) */
-import { FileDownloadHandler } from '../FileDownloadCards';
+import { FileDownloadHandler, InlineImageProps } from '../FileDownloadCards';
 import { InlineImageMetadata } from '../FileDownloadCards';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from '../MentionPopover';
@@ -55,9 +55,9 @@ export type ChatMessageComponentWrapperProps = _ChatMessageProps & {
   fileDownloadHandler?: FileDownloadHandler;
   /* @conditional-compile-remove(date-time-customization) */
   onDisplayDateTimeString?: (messageDate: Date) => string;
-  onFetchInlineImageSource: (attachment: InlineImageMetadata) => Promise<void>;
+  onRenderInlineImage: (attachment: InlineImageMetadata) => Promise<void>;
   onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
-  inlineImageSources: Record<string, string>;
+  inlineImageSources: Record<string, InlineImageProps>;
   /* @conditional-compile-remove(mention) */
   mentionOptions?: MentionOptions;
 };

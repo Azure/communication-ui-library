@@ -314,7 +314,7 @@ export type {
   ChatAttachmentType,
   AttachmentMetadata,
   InlineImageMetadata,
-  InlineImageSourceResult
+  InlineImageProps
 } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonProps, HoldButtonStrings, VideoTileStrings } from '../../react-components/src';

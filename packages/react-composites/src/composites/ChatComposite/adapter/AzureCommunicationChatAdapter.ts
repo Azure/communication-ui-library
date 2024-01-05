@@ -35,7 +35,6 @@ import { FileUploadAdapter, convertFileUploadsUiStateToMessageMetadata } from '.
 import { AzureCommunicationFileUploadAdapter } from './AzureCommunicationFileUploadAdapter';
 import { useEffect, useRef, useState } from 'react';
 import { _isValidIdentifier } from '@internal/acs-ui-common';
-import { InlineImageSourceResult } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { AttachmentMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
@@ -182,7 +181,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.updateFileUploadErrorMessage = this.updateFileUploadErrorMessage.bind(this);
     /* @conditional-compile-remove(file-sharing) */
     this.updateFileUploadMetadata = this.updateFileUploadMetadata.bind(this);
-    this.downloadAttachments = this.downloadAttachments.bind(this);
+    this.downloadAttachment = this.downloadAttachment.bind(this);
   }
 
   dispose(): void {
@@ -325,7 +324,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.fileUploadAdapter.updateFileUploadMetadata(id, metadata);
   }
 
-  async downloadAttachments(options: { attachmentUrl: string }): Promise<InlineImageSourceResult> {
+  async downloadAttachment(options: { attachmentUrl: string }): Promise<{ blobUrl: string }> {
     return this.asyncTeeErrorToEventEmitter(async () => {
       if (this.credential === undefined) {
         const e = new Error();
@@ -348,7 +347,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   private async downloadAuthenticatedFile(
     accessToken: string,
     options: { attachmentUrl: string }
-  ): Promise<InlineImageSourceResult> {
+  ): Promise<{ blobUrl: string }> {
     async function fetchWithAuthentication(url: string, token: string): Promise<Response> {
       const headers = new Headers();
       headers.append('Authorization', `Bearer ${token}`);

@@ -35,7 +35,7 @@ import getParticipantsWhoHaveReadMessage from './utils/getParticipantsWhoHaveRea
 /* @conditional-compile-remove(file-sharing) */
 import { FileDownloadHandler, AttachmentMetadata } from './FileDownloadCards';
 import { InlineImageMetadata } from './FileDownloadCards';
-import { InlineImageSourceResult } from './FileDownloadCards';
+import { InlineImageProps } from './FileDownloadCards';
 import { useTheme } from '../theming';
 import { FluentV9ThemeProvider } from './../theming/FluentV9ThemeProvider';
 import LiveAnnouncer from './Announcer/LiveAnnouncer';
@@ -458,7 +458,7 @@ export type MessageThreadProps = {
    * @param attachment - InlineImageMetadata object we want to render
    * @public
    */
-  onFetchInlineImageSource?: (attachment: InlineImageMetadata) => Promise<InlineImageSourceResult>;
+  onRenderInlineImage?: (attachment: InlineImageMetadata) => Promise<InlineImageProps>;
   /**
    * Optional callback to edit a message.
    *
@@ -659,7 +659,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     onSendMessage,
     /* @conditional-compile-remove(date-time-customization) */
     onDisplayDateTimeString,
-    onFetchInlineImageSource,
+    onRenderInlineImage,
     /* @conditional-compile-remove(mention) */
     mentionOptions,
     onInlineImageClicked,
@@ -684,17 +684,17 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   // readCount and participantCount will only need to be updated on-fly when user hover on an indicator
   const [readCountForHoveredIndicator, setReadCountForHoveredIndicator] = useState<number | undefined>(undefined);
 
-  const [inlineImageSources, setInlineImageSources] = useState<Record<string, string>>({});
+  const [inlineImageSources, setInlineImageSources] = useState<Record<string, InlineImageProps>>({});
 
   const onFetchInlineAttachment = useCallback(
     async (attachment: InlineImageMetadata): Promise<void> => {
-      if (!onFetchInlineImageSource) {
+      if (!onRenderInlineImage) {
         return;
       }
-      const imageSourceResult = await onFetchInlineImageSource(attachment);
-      setInlineImageSources((prev) => ({ ...prev, [attachment.id]: imageSourceResult.blobUrl }));
+      const imageSourceResult = await onRenderInlineImage(attachment);
+      setInlineImageSources((prev) => ({ ...prev, [attachment.id]: imageSourceResult }));
     },
-    [onFetchInlineImageSource]
+    [onRenderInlineImage]
   );
 
   const localeStrings = useLocale().strings.messageThread;
@@ -1097,7 +1097,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
                   participantCount={participantCount}
                   /* @conditional-compile-remove(file-sharing) */
                   fileDownloadHandler={props.fileDownloadHandler}
-                  onFetchInlineImageSource={onFetchInlineAttachment}
+                  onRenderInlineImage={onFetchInlineAttachment}
                   inlineImageSources={inlineImageSources}
                   onInlineImageClicked={onInlineImageClicked}
                   /* @conditional-compile-remove(date-time-customization) */

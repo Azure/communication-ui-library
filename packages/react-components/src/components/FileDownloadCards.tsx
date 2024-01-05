@@ -82,11 +82,11 @@ export type AttachmentMetadata = InlineImageMetadata | /* @conditional-compile-r
  * Metadata of the attachment object returned by the ACS SDK.
  * @public
  */
-export interface InlineImageSourceResult {
+export interface InlineImageProps {
   /**
-   * Blob URL for the attachment.
+   * src property to be injected into an inline images.
    */
-  blobUrl: string;
+  src: string;
 }
 
 /**

@@ -8,7 +8,7 @@ import { MessageThread } from './MessageThread';
 import { ChatMessage } from '../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../types';
-import { InlineImageSourceResult, InlineImageMetadata } from './FileDownloadCards';
+import { InlineImageProps, InlineImageMetadata } from './FileDownloadCards';
 import { createTestLocale, renderWithLocalization } from './utils/testUtils';
 /* @conditional-compile-remove(date-time-customization) @conditional-compile-remove(data-loss-prevention) */
 import { COMPONENT_LOCALE_EN_US } from '../localization/locales';
@@ -208,13 +208,13 @@ describe('Message should display image and attachment correctly', () => {
         }
       ]
     };
-    const onFetchAttachments = async (attachment: InlineImageMetadata): Promise<InlineImageSourceResult> => {
+    const onFetchAttachments = async (attachment: InlineImageMetadata): Promise<InlineImageProps> => {
       onFetchAttachmentsCount++;
-      return attachment.attachmentType === 'inlineImage' ? { blobUrl: attachment.previewUrl ?? '' } : { blobUrl: '' };
+      return { src: attachment.previewUrl ?? '' };
     };
 
     const { container } = render(
-      <MessageThread userId="user1" messages={[sampleMessage]} onFetchInlineImageSource={onFetchAttachments} />
+      <MessageThread userId="user1" messages={[sampleMessage]} onRenderInlineImage={onFetchAttachments} />
     );
 
     await waitFor(async () => {
@@ -280,14 +280,14 @@ describe('Message should display image and attachment correctly', () => {
         }
       ]
     };
-    const onFetchAttachments = async (attachments: InlineImageMetadata): Promise<InlineImageSourceResult> => {
+    const onFetchAttachments = async (attachments: InlineImageMetadata): Promise<InlineImageProps> => {
       onFetchAttachmentCount++;
-      const url = attachments.attachmentType === 'inlineImage' ? attachments.previewUrl ?? '' : '';
-      return { blobUrl: url };
+      const url = attachments.previewUrl ?? '';
+      return { src: url };
     };
 
     const { container } = render(
-      <MessageThread userId="user1" messages={[sampleMessage]} onFetchInlineImageSource={onFetchAttachments} />
+      <MessageThread userId="user1" messages={[sampleMessage]} onRenderInlineImage={onFetchAttachments} />
     );
 
     await waitFor(async () => {

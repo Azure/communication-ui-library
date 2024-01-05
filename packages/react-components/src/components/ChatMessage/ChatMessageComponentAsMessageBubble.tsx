@@ -17,7 +17,7 @@ import { useTheme } from '../../theming';
 import { ChatMessageActionFlyout } from './ChatMessageActionsFlyout';
 import { ChatMessageContent } from './ChatMessageContent';
 import { ChatMessage } from '../../types/ChatMessage';
-import { InlineImageMetadata } from '../FileDownloadCards';
+import { InlineImageMetadata, InlineImageProps } from '../FileDownloadCards';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessageContent } from './ChatMessageContent';
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -97,7 +97,7 @@ type ChatMessageComponentAsMessageBubbleProps = {
   /**
    * Optional function to fetch attachments.
    */
-  onFetchInlineImageSource?: (attachment: InlineImageMetadata) => Promise<void>;
+  onRenderInlineImage?: (attachment: InlineImageMetadata) => Promise<void>;
   /**
    * Optional callback called when an inline image is clicked.
    * @public
@@ -106,7 +106,7 @@ type ChatMessageComponentAsMessageBubbleProps = {
   /**
    * Optional map of attachment ids to blob urls.
    */
-  inlineImageSourceMap?: Record<string, string>;
+  inlineImageSourceMap?: Record<string, InlineImageProps>;
 };
 
 const generateDefaultTimestamp = (
@@ -267,7 +267,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
         <ChatMessageContent
           message={message}
           strings={strings}
-          onFetchInlineImageSource={props.onFetchInlineImageSource}
+          onRenderInlineImage={props.onRenderInlineImage}
           inlineImageSourceMap={props.inlineImageSourceMap}
           /* @conditional-compile-remove(mention) */
           mentionDisplayOptions={props.mentionDisplayOptions}
