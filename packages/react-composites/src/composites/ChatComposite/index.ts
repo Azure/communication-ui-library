@@ -19,7 +19,6 @@ export type {
   ChatCompositeClientState,
   ChatAdapterState,
   ChatAdapterUiState,
-  DeletedChatMessage,
   MessageReadListener,
   MessageReceivedListener,
   MessageSentListener,

@@ -1251,9 +1251,6 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ContextMenuSpeakerIcon: React_2.JSX.Element;
 };
 
-// @public (undocumented)
-export type DeletedChatMessage = Omit<ChatMessage, 'message' | 'metadata'>;
-
 // @public
 export type DiagnosticChangedEventListner = (event: MediaDiagnosticChangedEvent | NetworkDiagnosticChangedEvent) => void;
 
@@ -1346,16 +1343,10 @@ export type MediaDiagnosticChangedEvent = MediaDiagnosticChangedEventArgs & {
 };
 
 // @public
-export type MessageDeletedListener = (event: {
-    message: DeletedChatMessage;
-    deletedOn: Date;
-}) => void;
+export type MessageDeletedListener = MessageReceivedListener;
 
 // @public
-export type MessageEditedListener = (event: {
-    message: ChatMessage;
-    editedOn: Date;
-}) => void;
+export type MessageEditedListener = MessageReceivedListener;
 
 // @public
 export type MessageReadListener = (event: {

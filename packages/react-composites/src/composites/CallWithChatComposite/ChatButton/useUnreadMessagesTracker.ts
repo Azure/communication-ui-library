@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { useEffect, useState } from 'react';
-import { ChatAdapter, DeletedChatMessage } from '../../ChatComposite/adapter/ChatAdapter';
+import { ChatAdapter } from '../../ChatComposite/adapter/ChatAdapter';
 import { ChatMessage } from '@azure/communication-chat';
 
 /**
@@ -32,7 +32,7 @@ export const useUnreadMessagesTracker = (chatAdapter: ChatAdapter, isChatPaneVis
     };
 
     // Decrement unread messages when a message is deleted and the chat pane is closed
-    const decrementUnreadChatMessagesCount = (event: { message: DeletedChatMessage }): void => {
+    const decrementUnreadChatMessagesCount = (event: { message: ChatMessage }): void => {
       if (!isChatPaneVisible) {
         setUnreadChatMessages((prevUnreadChatMessages) => {
           const newUnreadChatMessages = new Set(prevUnreadChatMessages);

@@ -1514,9 +1514,6 @@ export const DEFAULT_COMPOSITE_ICONS: {
     SurveyStarIconFilled: React_2.JSX.Element;
 };
 
-// @public (undocumented)
-export type DeletedChatMessage = Omit<ChatMessage, 'message' | 'metadata'>;
-
 // @beta
 export interface DeviceCheckOptions {
     camera: 'required' | 'optional' | 'doNotPrompt';
@@ -1676,16 +1673,10 @@ export type MediaDiagnosticChangedEvent = MediaDiagnosticChangedEventArgs & {
 };
 
 // @public
-export type MessageDeletedListener = (event: {
-    message: DeletedChatMessage;
-    deletedOn: Date;
-}) => void;
+export type MessageDeletedListener = MessageReceivedListener;
 
 // @public
-export type MessageEditedListener = (event: {
-    message: ChatMessage;
-    editedOn: Date;
-}) => void;
+export type MessageEditedListener = MessageReceivedListener;
 
 // @public
 export type MessageReadListener = (event: {

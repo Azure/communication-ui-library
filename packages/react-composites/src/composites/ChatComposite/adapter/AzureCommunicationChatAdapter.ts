@@ -24,7 +24,6 @@ import EventEmitter from 'events';
 import {
   ChatAdapter,
   ChatAdapterState,
-  DeletedChatMessage,
   MessageDeletedListener,
   MessageEditedListener,
   MessageReadListener,
@@ -409,8 +408,8 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
       return;
     }
 
-    const message = convertEventToDeletedChatMessage(event);
-    this.emitter.emit('messageDeleted', { message, deletedOn: event.deletedOn });
+    const message = convertEventToChatMessage(event);
+    this.emitter.emit('messageDeleted', { message });
   }
 
   private messageReadListener({ chatMessageId, recipient }: ReadReceiptReceivedEvent): void {
@@ -496,30 +495,33 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 }
 
-const convertEventToChatMessage = (event: ChatMessageReceivedEvent): ChatMessage => {
+const convertEventToChatMessage = (
+  event: ChatMessageReceivedEvent | ChatMessageEditedEvent | ChatMessageDeletedEvent
+): ChatMessage => {
   return {
     id: event.id,
     version: event.version,
-    content: { message: event.message },
-    type: convertEventType(event.type),
-    sender: event.sender,
-    senderDisplayName: event.senderDisplayName,
-    sequenceId: '',
-    createdOn: new Date(event.createdOn)
-  };
-};
-
-const convertEventToDeletedChatMessage = (event: ChatMessageDeletedEvent): DeletedChatMessage => {
-  return {
-    id: event.id,
-    version: event.version,
+    content: isChatMessageDeletedEvent(event) ? undefined : { message: event.message },
     type: convertEventType(event.type),
     sender: event.sender,
     senderDisplayName: event.senderDisplayName,
     sequenceId: '',
     createdOn: new Date(event.createdOn),
-    deletedOn: event.deletedOn
+    editedOn: isChatMessageEditedEvent(event) ? event.editedOn : undefined,
+    deletedOn: isChatMessageDeletedEvent(event) ? event.deletedOn : undefined
   };
+};
+
+const isChatMessageEditedEvent = (
+  event: ChatMessageReceivedEvent | ChatMessageEditedEvent | ChatMessageDeletedEvent
+): event is ChatMessageEditedEvent => {
+  return event['editedOn'] !== undefined;
+};
+
+const isChatMessageDeletedEvent = (
+  event: ChatMessageReceivedEvent | ChatMessageEditedEvent | ChatMessageDeletedEvent
+): event is ChatMessageDeletedEvent => {
+  return event['deletedOn'] !== undefined;
 };
 
 // only text/html message type will be received from event

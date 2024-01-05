@@ -225,19 +225,14 @@ export type MessageSentListener = MessageReceivedListener;
  *
  * @public
  */
-export type MessageEditedListener = (event: { message: ChatMessage; editedOn: Date }) => void;
-
-/**
- * @public
- */
-export type DeletedChatMessage = Omit<ChatMessage, 'message' | 'metadata'>;
+export type MessageEditedListener = MessageReceivedListener;
 
 /**
  * Callback for {@link ChatAdapterSubscribers} 'messageDeleted' event.
  *
  * @public
  */
-export type MessageDeletedListener = (event: { message: DeletedChatMessage; deletedOn: Date }) => void;
+export type MessageDeletedListener = MessageReceivedListener;
 
 /**
  * Callback for {@link ChatAdapterSubscribers} 'messageRead' event.
