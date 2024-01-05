@@ -15,9 +15,35 @@ const onSendDtmfTone = (dtmfTone: DtmfTone): Promise<void> => {
   return Promise.resolve();
 };
 
-window.AudioContext = jest.fn().mockImplementation(() => {
-  return {};
-});
+const oscillatorNodeMocks = {
+  OscillatorNode: {
+    start: jest.fn(),
+    stop: jest.fn(),
+    disconnect: jest.fn(),
+    connect: jest.fn()
+  }
+};
+
+const audioContextMocks = {
+  AudioContext: {
+    createOscillator: jest.fn().mockImplementation(() => {
+      return oscillatorNodeMocks.OscillatorNode;
+    }),
+    createGain: jest.fn().mockImplementation(() => {
+      return {
+        gain: {
+          value: 0.1
+        },
+        connect: jest.fn()
+      };
+    })
+  }
+};
+
+global.AudioContext = jest.fn().mockImplementation(() => ({
+  createOscillator: audioContextMocks.AudioContext.createOscillator,
+  createGain: audioContextMocks.AudioContext.createGain
+}));
 
 describe('Dialpad tests', () => {
   beforeAll(() => {
@@ -139,6 +165,15 @@ describe('Dialpad tests', () => {
     });
 
     expect(screen.getByRole('textbox').getAttribute('value')).toBe('23456789000');
+  });
+
+  test('pressing the Dialpad buttons should trigger the DTMF sounds', async () => {
+    render(<Dialpad />);
+    const button = screen.getByRole('button', { name: '9WXYZ' });
+    fireEvent.click(button);
+
+    // expect(audioContextMocks.AudioContext.OscillatorNode.connect).toHaveBeenCalled();
+    expect(audioContextMocks.AudioContext.createGain).toHaveBeenCalled();
   });
 });
 
