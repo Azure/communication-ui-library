@@ -4,11 +4,10 @@
 import { RTESendBox as RTESendBoxComponent } from '@internal/react-components';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
+import { COMPONENT_FOLDER_PREFIX } from '../../constants';
 
 const RTESendBoxStory = (args): JSX.Element => {
-  return (
-    <RTESendBoxComponent valueToDisplay={args.valueToDisplay}/>
-  );
+  return <RTESendBoxComponent valueToDisplay={args.valueToDisplay} />;
 };
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
@@ -18,7 +17,7 @@ export const RTESendBox = RTESendBoxStory.bind({});
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-internal-rtesendbox`,
   title: `${COMPONENT_FOLDER_PREFIX}/Internal/RTESendBox`,
-  component: RTESendBox,
+  component: RTESendBoxComponent,
   argTypes: {
     valueToDisplay: { control: 'text', defaultValue: 'Hello World!' }
   }
