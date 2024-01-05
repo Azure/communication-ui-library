@@ -1338,6 +1338,7 @@ export interface InlineImageMetadata {
 
 // @public
 export interface InlineImageProps {
+    onClick?: (attachmentId: string, messageId: string) => Promise<void>;
     src: string;
 }
 
@@ -1547,7 +1548,6 @@ export type MessageThreadProps = {
     fileDownloadHandler?: FileDownloadHandler;
     onDisplayDateTimeString?: (messageDate: Date) => string;
     mentionOptions?: MentionOptions;
-    onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
 };
 
 // @public

@@ -526,11 +526,6 @@ export type MessageThreadProps = {
    * @beta
    */
   mentionOptions?: MentionOptions;
-  /**
-   * Optional callback called when an inline image is clicked.
-   * @public
-   */
-  onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
 };
 
 /**
@@ -662,7 +657,6 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     onRenderInlineImage,
     /* @conditional-compile-remove(mention) */
     mentionOptions,
-    onInlineImageClicked,
     /* @conditional-compile-remove(file-sharing) */
     onRenderFileDownloads
   } = props;
@@ -1099,7 +1093,6 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
                   fileDownloadHandler={props.fileDownloadHandler}
                   onRenderInlineImage={onFetchInlineAttachment}
                   inlineImageSources={inlineImageSources}
-                  onInlineImageClicked={onInlineImageClicked}
                   /* @conditional-compile-remove(date-time-customization) */
                   onDisplayDateTimeString={onDisplayDateTimeString}
                   /* @conditional-compile-remove(mention) */

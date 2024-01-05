@@ -455,7 +455,7 @@ const MessageThreadStory = (args): JSX.Element => {
     // Mocking promise
     const delay = (): Promise<void> => new Promise((resolve) => setTimeout(resolve, 3000));
     return await delay().then(() => {
-      return { blobUrl: attachments[0].previewUrl ?? '' };
+      return { src: attachments[0].previewUrl ?? '' };
     });
   };
   const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps>>([]);
@@ -527,7 +527,6 @@ const MessageThreadStory = (args): JSX.Element => {
         onLoadPreviousChatMessages={onLoadPreviousMessages}
         onRenderMessage={onRenderMessage}
         onRenderInlineImage={onRenderInlineImage}
-        onInlineImageClicked={onInlineImageClicked}
         onUpdateMessage={onUpdateMessageCallback}
         onRenderAvatar={(userId?: string) => {
           return (

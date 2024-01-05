@@ -99,11 +99,6 @@ type ChatMessageComponentAsMessageBubbleProps = {
    */
   onRenderInlineImage?: (attachment: InlineImageMetadata) => Promise<void>;
   /**
-   * Optional callback called when an inline image is clicked.
-   * @public
-   */
-  onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
-  /**
    * Optional map of attachment ids to blob urls.
    */
   inlineImageSourceMap?: Record<string, InlineImageProps>;
@@ -158,7 +153,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     messageStatus,
     /* @conditional-compile-remove(file-sharing) */
     fileDownloadHandler,
-    onInlineImageClicked,
     shouldOverlapAvatarAndMessage
   } = props;
 
@@ -243,16 +237,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     return undefined;
   }, [editedOn, message.messageType, messageStatus, strings.editedTag, strings.failToSendTag, theme]);
 
-  const handleOnInlineImageClicked = useCallback(
-    async (attachmentId: string): Promise<void> => {
-      if (onInlineImageClicked === undefined) {
-        return;
-      }
-      await onInlineImageClicked(attachmentId, message.messageId);
-    },
-    [message, onInlineImageClicked]
-  );
-
   const getContent = useCallback(() => {
     /* @conditional-compile-remove(data-loss-prevention) */
     if (message.messageType === 'blocked') {
@@ -271,12 +255,11 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           inlineImageSourceMap={props.inlineImageSourceMap}
           /* @conditional-compile-remove(mention) */
           mentionDisplayOptions={props.mentionDisplayOptions}
-          onInlineImageClicked={handleOnInlineImageClicked}
         />
         {props.onRenderFileDownloads ? props.onRenderFileDownloads(userId, message) : defaultOnRenderFileDownloads()}
       </div>
     );
-  }, [defaultOnRenderFileDownloads, message, props, strings, userId, handleOnInlineImageClicked]);
+  }, [defaultOnRenderFileDownloads, message, props, strings, userId]);
 
   const isBlockedMessage =
     false || /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked';

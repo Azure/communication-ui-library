@@ -56,7 +56,6 @@ export type ChatMessageComponentWrapperProps = _ChatMessageProps & {
   /* @conditional-compile-remove(date-time-customization) */
   onDisplayDateTimeString?: (messageDate: Date) => string;
   onRenderInlineImage: (attachment: InlineImageMetadata) => Promise<void>;
-  onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
   inlineImageSources: Record<string, InlineImageProps>;
   /* @conditional-compile-remove(mention) */
   mentionOptions?: MentionOptions;

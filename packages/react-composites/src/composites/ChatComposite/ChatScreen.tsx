@@ -210,15 +210,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [fileSharing?.downloadHandler]
   );
 
-  const onRenderInlineImage = useCallback(
-    async (attachment: InlineImageMetadata): Promise<InlineImageProps> => {
-      const blob = await adapter.downloadAttachment({ attachmentUrl: attachment.previewUrl ?? '' });
-      const inlineImageProps: InlineImageProps = { src: blob.blobUrl };
-      return inlineImageProps;
-    },
-    [adapter]
-  );
-
   const onInlineImageClicked = useCallback(
     async (attachmentId: string, messageId: string): Promise<void> => {
       const messages = messageThreadProps.messages?.filter((message) => {
@@ -315,6 +306,19 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       />
     );
   }, [fileSharing?.accept, fileSharing?.multiple, fileSharing?.uploadHandler, fileUploadButtonOnChange]);
+
+  const onRenderInlineImage = useCallback(
+    async (attachment: InlineImageMetadata): Promise<InlineImageProps> => {
+      const blob = await adapter.downloadAttachment({ attachmentUrl: attachment.previewUrl ?? '' });
+      const inlineImageProps: InlineImageProps = {
+        src: blob.blobUrl,
+        onClick: onInlineImageClicked
+      };
+      return inlineImageProps;
+    },
+    [adapter, onInlineImageClicked]
+  );
+
   return (
     <Stack className={chatContainer} grow>
       {options?.topic !== false && <ChatHeader {...headerProps} />}
@@ -337,7 +341,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             /* @conditional-compile-remove(file-sharing) */
             onRenderFileDownloads={onRenderFileDownloads}
             onRenderInlineImage={onRenderInlineImage}
-            onInlineImageClicked={onInlineImageClicked}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
           />

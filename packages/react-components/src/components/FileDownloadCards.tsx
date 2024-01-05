@@ -87,6 +87,10 @@ export interface InlineImageProps {
    * src property to be injected into an inline images.
    */
   src: string;
+  /**
+   * onClick event handler called when an inline image is clicked.
+   */
+  onClick?: (attachmentId: string, messageId: string) => Promise<void>;
 }
 
 /**

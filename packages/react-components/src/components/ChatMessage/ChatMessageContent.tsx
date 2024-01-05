@@ -30,7 +30,6 @@ type ChatMessageContentProps = {
   mentionDisplayOptions?: MentionDisplayOptions;
   inlineImageSourceMap?: Record<string, InlineImageProps>;
   onRenderInlineImage?: (attachments: InlineImageMetadata) => Promise<void>;
-  onInlineImageClicked?: (attachmentId: string) => void;
 };
 
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -212,7 +211,10 @@ const processInlineImage = (props: ChatMessageContentProps): ProcessingInstructi
       node.attribs = { ...node.attribs, src: imageProps.src };
     }
     const handleOnClick = (): void => {
-      props.onInlineImageClicked && props.onInlineImageClicked(node.attribs.id);
+      if (props.inlineImageSourceMap && node.attribs.id in props.inlineImageSourceMap) {
+        const imageProps = props.inlineImageSourceMap[node.attribs.id];
+        imageProps.onClick && imageProps.onClick(node.attribs.id, props.message.messageId);
+      }
     };
 
     return (

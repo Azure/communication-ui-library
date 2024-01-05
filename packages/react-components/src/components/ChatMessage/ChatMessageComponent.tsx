@@ -89,11 +89,6 @@ type ChatMessageComponentProps = {
    */
   onRenderInlineImage?: (attachment: InlineImageMetadata) => Promise<void>;
   /**
-   * Optional callback called when an inline image is clicked.
-   * @public
-   */
-  onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
-  /**
    * Optional map of attachment ids to blob urls.
    */
   inlineImageSourceMap?: Record<string, InlineImageProps>;
@@ -155,7 +150,6 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
         onDisplayDateTimeString={props.onDisplayDateTimeString}
         strings={props.strings}
         onRenderInlineImage={props.onRenderInlineImage}
-        onInlineImageClicked={props.onInlineImageClicked}
         inlineImageSourceMap={props.inlineImageSourceMap}
         /* @conditional-compile-remove(mention) */
         mentionDisplayOptions={props.mentionOptions?.displayOptions}

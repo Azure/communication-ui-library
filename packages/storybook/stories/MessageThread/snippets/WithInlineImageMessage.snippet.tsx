@@ -14,15 +14,14 @@ import React, { useState } from 'react';
 export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
   const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps>>([]);
 
-  const onRenderInlineImage = async (attachments: InlineImageMetadata): Promise<InlineImageProps> => {
+  const onRenderInlineImage = async (attachment: InlineImageMetadata): Promise<InlineImageProps> => {
     // * Your custom function to fetch image behind authenticated blob storage/server
     // const response = await fetchImage(attachment.previewUrl ?? '', token);
     // const blob = await response.blob();
 
     // * Create a blob url as <img> src
     return {
-      // blobUrl: URL.createObjectURL(blob);
-      blobUrl: attachments.previewUrl ?? ''
+      src: attachment.previewUrl ?? ''
     };
   };
 
@@ -99,12 +98,7 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
   ];
   return (
     <FluentThemeProvider>
-      <MessageThread
-        userId={'1'}
-        messages={messages}
-        onRenderInlineImage={onRenderInlineImage}
-        onInlineImageClicked={onInlineImageClicked}
-      />
+      <MessageThread userId={'1'} messages={messages} onRenderInlineImage={onRenderInlineImage} />
       {
         <ImageGallery
           isOpen={galleryImages.length > 0}
