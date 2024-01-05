@@ -246,7 +246,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                     className={teamsItemStyle}
                     label={teamsIdLabel}
                     required
-                    placeholder={'Enter a Teams id'}
+                    placeholder={'Enter a Teams user ID (8:orgid:<UUID>)'}
                     errorMessage={
                       teamsIdFormatError ? `Teams user ID should be in the format '8:orgid:<UUID>'` : undefined
                     }
@@ -312,7 +312,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                     className={outboundTextField}
                     label={'Teams user ID'}
                     required
-                    placeholder={'Enter a Teams user ID'}
+                    placeholder={'Enter a Teams user ID (8:orgid:<UUID>)'}
                     errorMessage={
                       teamsIdFormatError ? `Teams user ID should be in the format '8:orgid:<UUID>'` : undefined
                     }
