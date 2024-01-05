@@ -517,7 +517,8 @@ const convertEventToDeletedChatMessage = (event: ChatMessageDeletedEvent): Delet
     sender: event.sender,
     senderDisplayName: event.senderDisplayName,
     sequenceId: '',
-    createdOn: new Date(event.createdOn)
+    createdOn: new Date(event.createdOn),
+    deletedOn: event.deletedOn
   };
 };
 
