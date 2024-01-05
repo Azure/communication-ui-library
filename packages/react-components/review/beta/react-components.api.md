@@ -1896,13 +1896,6 @@ export type Reaction = {
 };
 
 // @public
-export type Reaction = {
-    shouldRender: boolean;
-    reactionType: string;
-    receivedTimeStamp: number;
-};
-
-// @public
 export const ReactionButton: (props: ReactionButtonProps) => JSX.Element;
 
 // @public

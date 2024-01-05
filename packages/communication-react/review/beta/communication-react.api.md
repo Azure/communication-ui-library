@@ -924,7 +924,6 @@ export interface CallState {
     localVideoStreams: LocalVideoStreamState[];
     optimalVideoCount: OptimalVideoCountFeatureState;
     raiseHand: RaiseHandCallFeature;
-    reaction: ReactionCallFeatureState;
     recording: RecordingCallFeature;
     remoteParticipants: {
         [keys: string]: RemoteParticipantState;
@@ -3639,25 +3638,6 @@ export type Reaction = {
     receivedAt: Date;
 };
 
-// @beta
-export type ReactionState = {
-    reactionMessage: ReactionMessage;
-    receivedAt: Date;
-};
-
-// @public
-export type Reaction = {
-    shouldRender: boolean;
-    reactionType: string;
-    receivedTimeStamp: number;
-};
-
-// @public
-export interface ReactionButtonProps extends ControlBarButtonProps {
-    onReactionClicked: (emoji: string) => Promise<void>;
-    strings?: Partial<ReactionButtonStrings>;
-}
-
 // @public
 export interface ReactionButtonStrings {
     label: string;
@@ -3665,19 +3645,10 @@ export interface ReactionButtonStrings {
     tooltipDisabledContent?: string;
 }
 
-// @public
-export interface ReactionCallFeatureState {
-    // (undocumented)
-    isEnable: boolean;
-    // (undocumented)
-    localParticipantReactionPayload?: ReactionState;
-}
-
-// @public
+// @beta
 export type ReactionState = {
-    shouldRender: boolean;
-    reactionType: string;
-    receivedTimeStamp: number;
+    reactionMessage: ReactionMessage;
+    receivedAt: Date;
 };
 
 // @public
