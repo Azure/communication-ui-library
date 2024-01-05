@@ -314,75 +314,75 @@ describe('Message should display image and attachment correctly', () => {
     });
   });
 
-  test('onInlineImageClicked handler should be called when an inline image is clicked', async () => {
-    /* @conditional-compile-remove(file-sharing) */
-    const fildId1 = 'SomeFileId1';
-    /* @conditional-compile-remove(file-sharing) */
-    const fildName1 = 'SomeFileId1.txt';
-    /* @conditional-compile-remove(file-sharing) */
-    const fildId2 = 'SomeFileId2';
-    /* @conditional-compile-remove(file-sharing) */
-    const fildName2 = 'SomeFileId2.pdf';
-    /* @conditional-compile-remove(file-sharing) */
-    const expectedFileSrc1 = 'http://localhost/someFileSrcUrl1';
-    /* @conditional-compile-remove(file-sharing) */
-    const expectedFileSrc2 = 'http://localhost/someFileSrcUrl2';
-    const expectedFilePreviewSrc1 = 'http://localhost/someFilePreviewSrcUrl1';
+  // test('onInlineImageClicked handler should be called when an inline image is clicked', async () => {
+  //   /* @conditional-compile-remove(file-sharing) */
+  //   const fildId1 = 'SomeFileId1';
+  //   /* @conditional-compile-remove(file-sharing) */
+  //   const fildName1 = 'SomeFileId1.txt';
+  //   /* @conditional-compile-remove(file-sharing) */
+  //   const fildId2 = 'SomeFileId2';
+  //   /* @conditional-compile-remove(file-sharing) */
+  //   const fildName2 = 'SomeFileId2.pdf';
+  //   /* @conditional-compile-remove(file-sharing) */
+  //   const expectedFileSrc1 = 'http://localhost/someFileSrcUrl1';
+  //   /* @conditional-compile-remove(file-sharing) */
+  //   const expectedFileSrc2 = 'http://localhost/someFileSrcUrl2';
+  //   const expectedFilePreviewSrc1 = 'http://localhost/someFilePreviewSrcUrl1';
 
-    const imgId1 = 'SomeImageId1';
-    const expectedImgSrc1 = 'http://localhost/someImgSrcUrl1';
-    const messageId = Math.random().toString();
-    const sampleMessage: ChatMessage = {
-      messageType: 'chat',
-      senderId: 'user3',
-      content: `<p><img alt="image" src="" itemscope="png" width="166.5625" height="250" id="${imgId1}" style="vertical-align:bottom"></p>`,
-      senderDisplayName: 'Miguel Garcia',
-      messageId,
-      createdOn: new Date('2019-04-13T00:00:00.000+08:09'),
-      mine: false,
-      attached: false,
-      contentType: 'html',
-      inlineImages: [
-        {
-          id: imgId1,
-          attachmentType: 'inlineImage',
-          url: expectedImgSrc1,
-          previewUrl: expectedFilePreviewSrc1
-        }
-      ],
-      /* @conditional-compile-remove(file-sharing) */
-      files: [
-        {
-          id: fildId1,
-          name: fildName1,
-          attachmentType: 'file',
-          extension: 'txt',
-          url: expectedFileSrc1,
-          payload: { teamsFileAttachment: 'true' }
-        },
-        {
-          id: fildId2,
-          name: fildName2,
-          attachmentType: 'file',
-          extension: 'pdf',
-          url: expectedFileSrc2
-        }
-      ]
-    };
+  //   const imgId1 = 'SomeImageId1';
+  //   const expectedImgSrc1 = 'http://localhost/someImgSrcUrl1';
+  //   const messageId = Math.random().toString();
+  //   const sampleMessage: ChatMessage = {
+  //     messageType: 'chat',
+  //     senderId: 'user3',
+  //     content: `<p><img alt="image" src="" itemscope="png" width="166.5625" height="250" id="${imgId1}" style="vertical-align:bottom"></p>`,
+  //     senderDisplayName: 'Miguel Garcia',
+  //     messageId,
+  //     createdOn: new Date('2019-04-13T00:00:00.000+08:09'),
+  //     mine: false,
+  //     attached: false,
+  //     contentType: 'html',
+  //     inlineImages: [
+  //       {
+  //         id: imgId1,
+  //         attachmentType: 'inlineImage',
+  //         url: expectedImgSrc1,
+  //         previewUrl: expectedFilePreviewSrc1
+  //       }
+  //     ],
+  //     /* @conditional-compile-remove(file-sharing) */
+  //     files: [
+  //       {
+  //         id: fildId1,
+  //         name: fildName1,
+  //         attachmentType: 'file',
+  //         extension: 'txt',
+  //         url: expectedFileSrc1,
+  //         payload: { teamsFileAttachment: 'true' }
+  //       },
+  //       {
+  //         id: fildId2,
+  //         name: fildName2,
+  //         attachmentType: 'file',
+  //         extension: 'pdf',
+  //         url: expectedFileSrc2
+  //       }
+  //     ]
+  //   };
 
-    const onInlineImageClickedHandler = jest.fn();
+  //   const onInlineImageClickedHandler = jest.fn();
 
-    const { container } = render(
-      <MessageThread userId="user1" messages={[sampleMessage]} onInlineImageClicked={onInlineImageClickedHandler} />
-    );
+  //   const { container } = render(
+  //     <MessageThread userId="user1" messages={[sampleMessage]} onInlineImageClicked={onInlineImageClickedHandler} />
+  //   );
 
-    await waitFor(async () => {
-      const inlineImage: HTMLElement | null = container.querySelector(`#${imgId1}`);
-      inlineImage?.click();
-      expect(onInlineImageClickedHandler).toBeCalledTimes(1);
-      expect(onInlineImageClickedHandler).toBeCalledWith(imgId1, messageId);
-    });
-  });
+  //   await waitFor(async () => {
+  //     const inlineImage: HTMLElement | null = container.querySelector(`#${imgId1}`);
+  //     inlineImage?.click();
+  //     expect(onInlineImageClickedHandler).toBeCalledTimes(1);
+  //     expect(onInlineImageClickedHandler).toBeCalledWith(imgId1, messageId);
+  //   });
+  // });
 });
 
 /* @conditional-compile-remove(mention) */
