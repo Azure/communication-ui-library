@@ -470,6 +470,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           styles={localVideoTileStyles}
           /* @conditional-compile-remove(raise-hand) */
           raisedHand={localParticipant.raisedHand}
+          /* @conditional-compile-remove(reaction) */
+          reaction={localParticipant.reaction}
         />
       </Stack>
     );
@@ -544,7 +546,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       const remoteVideoStream = participant.videoStream;
       /* @conditional-compile-remove(pinned-participants) */
       const selectedScalingMode = remoteVideoStream ? selectedScalingModeState[participant.userId] : undefined;
-
       /* @conditional-compile-remove(pinned-participants) */
       const isPinned = pinnedParticipants?.includes(participant.userId);
 
@@ -574,7 +575,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           isAvailable={isVideoParticipant ? remoteVideoStream?.isAvailable : false}
           isReceiving={isVideoParticipant ? remoteVideoStream?.isReceiving : false}
           renderElement={isVideoParticipant ? remoteVideoStream?.renderElement : undefined}
-          remoteVideoViewOptions={isVideoParticipant && createViewOptions() ? createViewOptions() : undefined}
+          remoteVideoViewOptions={createViewOptions()}
           onRenderAvatar={onRenderAvatar}
           showMuteIndicator={showMuteIndicator}
           strings={strings}
@@ -637,6 +638,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       onCreateRemoteStreamView={onCreateRemoteStreamView}
       onDisposeRemoteStreamView={onDisposeRemoteScreenShareStreamView}
       isReceiving={screenShareParticipant.screenShareStream?.isReceiving}
+      participantVideoScalingMode={selectedScalingModeState[screenShareParticipant.userId]}
     />
   );
 

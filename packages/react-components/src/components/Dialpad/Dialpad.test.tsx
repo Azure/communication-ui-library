@@ -15,6 +15,10 @@ const onSendDtmfTone = (dtmfTone: DtmfTone): Promise<void> => {
   return Promise.resolve();
 };
 
+window.AudioContext = jest.fn().mockImplementation(() => {
+  return {};
+});
+
 describe('Dialpad tests', () => {
   beforeAll(() => {
     registerIcons({

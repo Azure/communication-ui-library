@@ -77,7 +77,11 @@ module.exports = {
     // Feature for sounds during different calling events
     "calling-sounds",
     // Feature for end of call survey
-    'end-of-call-survey'
+    'end-of-call-survey',
+    // Feature for the DTMF dialer for Teams voice apps
+    'dtmf-dialer',
+    // Feature for meeting reactions
+    'reaction',
   ],
   // A list of in progress beta feature.
   // These features are still beta feature but "in progress"
@@ -100,7 +104,11 @@ module.exports = {
     // Feature for sounds during different calling events
     "calling-sounds",
     // Feature for end of call survey
-    'end-of-call-survey'
+    'end-of-call-survey',
+    // Feature for the DTMF dialer for Teams voice apps
+    'dtmf-dialer',
+    // Feature for meeting reactions
+    'reaction',
   ],
   // A list of stabilized features.
   // These features can be listed in the conditional compilation directives without

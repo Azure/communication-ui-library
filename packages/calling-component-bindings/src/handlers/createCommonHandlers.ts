@@ -259,7 +259,15 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       if (call && _isInCall(call.state)) {
         deviceManager.selectCamera(device);
         const stream = call.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
-        return stream?.switchSource(device);
+        await stream?.switchSource(device);
+
+        /// TODO: TEMPORARY SOLUTION
+        /// The Calling SDK needs to wait until the stream is ready before resolving the switchSource promise.
+        /// This is a temporary solution to wait for the stream to be ready before resolving the promise.
+        /// This allows the onSelectCamera to be throttled to prevent the streams from getting in to a frozen state
+        /// if the user switches cameras too rapidly.
+        /// This is to be removed once the Calling SDK has issued a fix.
+        await stream?.getMediaStream();
       } else {
         const previewOn = _isPreviewOn(callClient.getState().deviceManager);
 
