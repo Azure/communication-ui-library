@@ -124,6 +124,14 @@ export interface ChatAdapterSubscribers {
    */
   on(event: 'messageReceived', listener: MessageReceivedListener): void;
   /**
+   * Subscribe function for 'messageEdited' event.
+   */
+  on(event: 'messageEdited', listener: MessageEditedListener): void;
+  /**
+   * Subscribe function for 'messageDeleted' event.
+   */
+  on(event: 'messageDeleted', listener: MessageDeletedListener): void;
+  /**
    * Subscribe function for 'messageSent' event.
    */
   on(event: 'messageSent', listener: MessageSentListener): void;
@@ -152,6 +160,14 @@ export interface ChatAdapterSubscribers {
    * Unsubscribe function for 'messageReceived' event.
    */
   off(event: 'messageReceived', listener: MessageReceivedListener): void;
+  /**
+   * Unsubscribe function for 'messageEdited' event.
+   */
+  off(event: 'messageEdited', listener: MessageEditedListener): void;
+  /**
+   * Unsubscribe function for 'messageDeleted' event.
+   */
+  off(event: 'messageDeleted', listener: MessageDeletedListener): void;
   /**
    * Unsubscribe function for 'messageSent' event.
    */
@@ -203,6 +219,25 @@ export type MessageReceivedListener = (event: { message: ChatMessage }) => void;
  * @public
  */
 export type MessageSentListener = MessageReceivedListener;
+
+/**
+ * Callback for {@link ChatAdapterSubscribers} 'messageEdited' event.
+ *
+ * @public
+ */
+export type MessageEditedListener = (event: { message: ChatMessage; editedOn: Date }) => void;
+
+/**
+ * @public
+ */
+export type DeletedChatMessage = Omit<ChatMessage, 'message' | 'metadata'>;
+
+/**
+ * Callback for {@link ChatAdapterSubscribers} 'messageDeleted' event.
+ *
+ * @public
+ */
+export type MessageDeletedListener = (event: { message: DeletedChatMessage; deletedOn: Date }) => void;
 
 /**
  * Callback for {@link ChatAdapterSubscribers} 'messageRead' event.

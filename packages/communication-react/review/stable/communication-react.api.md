@@ -805,6 +805,10 @@ export interface CallWithChatAdapterSubscriptions {
     // (undocumented)
     off(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
+    off(event: 'messageEdited', listener: MessageEditedListener): void;
+    // (undocumented)
+    off(event: 'messageDeleted', listener: MessageDeletedListener): void;
+    // (undocumented)
     off(event: 'messageSent', listener: MessageSentListener): void;
     // (undocumented)
     off(event: 'messageRead', listener: MessageReadListener): void;
@@ -848,6 +852,10 @@ export interface CallWithChatAdapterSubscriptions {
     on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     // (undocumented)
     on(event: 'messageReceived', listener: MessageReceivedListener): void;
+    // (undocumented)
+    on(event: 'messageEdited', listener: MessageEditedListener): void;
+    // (undocumented)
+    on(event: 'messageDeleted', listener: MessageDeletedListener): void;
     // (undocumented)
     on(event: 'messageSent', listener: MessageSentListener): void;
     // (undocumented)
@@ -1012,7 +1020,7 @@ export interface CallWithChatControlOptions extends CommonCallControlOptions {
 }
 
 // @public
-export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | /* @conditional-compile-remove(close-captions) */ 'isCaptionsActiveChanged' | /* @conditional-compile-remove(close-captions) */ 'captionsReceived' | /* @conditional-compile-remove(close-captions) */ 'isCaptionLanguageChanged' | /* @conditional-compile-remove(close-captions) */ 'isSpokenLanguageChanged' | /* @conditional-compile-remove(capabilities) */ 'capabilitiesChanged' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
+export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | /* @conditional-compile-remove(close-captions) */ 'isCaptionsActiveChanged' | /* @conditional-compile-remove(close-captions) */ 'captionsReceived' | /* @conditional-compile-remove(close-captions) */ 'isCaptionLanguageChanged' | /* @conditional-compile-remove(close-captions) */ 'isSpokenLanguageChanged' | /* @conditional-compile-remove(capabilities) */ 'capabilitiesChanged' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
 
 // @public
 export const CameraButton: (props: CameraButtonProps) => JSX.Element;
@@ -1206,6 +1214,8 @@ export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
 // @public
 export interface ChatAdapterSubscribers {
     off(event: 'messageReceived', listener: MessageReceivedListener): void;
+    off(event: 'messageEdited', listener: MessageEditedListener): void;
+    off(event: 'messageDeleted', listener: MessageDeletedListener): void;
     off(event: 'messageSent', listener: MessageSentListener): void;
     off(event: 'messageRead', listener: MessageReadListener): void;
     off(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
@@ -1213,6 +1223,8 @@ export interface ChatAdapterSubscribers {
     off(event: 'topicChanged', listener: TopicChangedListener): void;
     off(event: 'error', listener: (e: AdapterError) => void): void;
     on(event: 'messageReceived', listener: MessageReceivedListener): void;
+    on(event: 'messageEdited', listener: MessageEditedListener): void;
+    on(event: 'messageDeleted', listener: MessageDeletedListener): void;
     on(event: 'messageSent', listener: MessageSentListener): void;
     on(event: 'messageRead', listener: MessageReadListener): void;
     on(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
@@ -2070,6 +2082,9 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ContextMenuSpeakerIcon: React_2.JSX.Element;
 };
 
+// @public (undocumented)
+export type DeletedChatMessage = Omit<ChatMessage_2, 'message' | 'metadata'>;
+
 // @public
 export type DeviceManagerState = {
     isSpeakerSelectionAvailable: boolean;
@@ -2459,6 +2474,18 @@ export interface MessageCommon {
 
 // @public
 export type MessageContentType = 'text' | 'html' | 'richtext/html' | 'unknown';
+
+// @public
+export type MessageDeletedListener = (event: {
+    message: DeletedChatMessage;
+    deletedOn: Date;
+}) => void;
+
+// @public
+export type MessageEditedListener = (event: {
+    message: ChatMessage_2;
+    editedOn: Date;
+}) => void;
 
 // @public
 export type MessageProps = {

@@ -11,6 +11,8 @@ import { ChatHandlers, createDefaultChatHandlers } from '@internal/chat-componen
 import { ChatMessage, ChatMessageType, ChatThreadClient, SendMessageOptions } from '@azure/communication-chat';
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import type {
+  ChatMessageDeletedEvent,
+  ChatMessageEditedEvent,
   ChatMessageReceivedEvent,
   ChatThreadPropertiesUpdatedEvent,
   ParticipantsAddedEvent,
@@ -22,6 +24,9 @@ import EventEmitter from 'events';
 import {
   ChatAdapter,
   ChatAdapterState,
+  DeletedChatMessage,
+  MessageDeletedListener,
+  MessageEditedListener,
   MessageReadListener,
   MessageReceivedListener,
   ParticipantsAddedListener,
@@ -388,6 +393,26 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     }
   }
 
+  private messageEditedListener(event: ChatMessageEditedEvent): void {
+    const isCurrentChatAdapterThread = event.threadId === this.chatThreadClient.threadId;
+    if (!isCurrentChatAdapterThread) {
+      return;
+    }
+
+    const message = convertEventToChatMessage(event);
+    this.emitter.emit('messageEdited', { message, editedOn: event.editedOn });
+  }
+
+  private messageDeletedListener(event: ChatMessageDeletedEvent): void {
+    const isCurrentChatAdapterThread = event.threadId === this.chatThreadClient.threadId;
+    if (!isCurrentChatAdapterThread) {
+      return;
+    }
+
+    const message = convertEventToDeletedChatMessage(event);
+    this.emitter.emit('messageDeleted', { message, deletedOn: event.deletedOn });
+  }
+
   private messageReadListener({ chatMessageId, recipient }: ReadReceiptReceivedEvent): void {
     const message = this.getState().thread.chatMessages[chatMessageId];
     if (message) {
@@ -412,6 +437,8 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.chatClient.on('participantsAdded', this.participantsAddedListener.bind(this));
     this.chatClient.on('participantsRemoved', this.participantsRemovedListener.bind(this));
     this.chatClient.on('chatMessageReceived', this.messageReceivedListener.bind(this));
+    this.chatClient.on('chatMessageEdited', this.messageEditedListener.bind(this));
+    this.chatClient.on('chatMessageDeleted', this.messageDeletedListener.bind(this));
     this.chatClient.on('readReceiptReceived', this.messageReadListener.bind(this));
     this.chatClient.on('participantsRemoved', this.participantsRemovedListener.bind(this));
   }
@@ -421,11 +448,15 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.chatClient.off('participantsAdded', this.participantsAddedListener.bind(this));
     this.chatClient.off('participantsRemoved', this.participantsRemovedListener.bind(this));
     this.chatClient.off('chatMessageReceived', this.messageReceivedListener.bind(this));
+    this.chatClient.off('chatMessageEdited', this.messageEditedListener.bind(this));
+    this.chatClient.off('chatMessageDeleted', this.messageDeletedListener.bind(this));
     this.chatClient.off('readReceiptReceived', this.messageReadListener.bind(this));
     this.chatClient.off('participantsRemoved', this.participantsRemovedListener.bind(this));
   }
 
   on(event: 'messageReceived', listener: MessageReceivedListener): void;
+  on(event: 'messageEdited', listener: MessageEditedListener): void;
+  on(event: 'messageDeleted', listener: MessageDeletedListener): void;
   on(event: 'messageSent', listener: MessageReceivedListener): void;
   on(event: 'messageRead', listener: MessageReadListener): void;
   on(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
@@ -439,6 +470,8 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   off(event: 'messageReceived', listener: MessageReceivedListener): void;
+  off(event: 'messageEdited', listener: MessageEditedListener): void;
+  off(event: 'messageDeleted', listener: MessageDeletedListener): void;
   off(event: 'messageSent', listener: MessageReceivedListener): void;
   off(event: 'messageRead', listener: MessageReadListener): void;
   off(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
@@ -468,6 +501,18 @@ const convertEventToChatMessage = (event: ChatMessageReceivedEvent): ChatMessage
     id: event.id,
     version: event.version,
     content: { message: event.message },
+    type: convertEventType(event.type),
+    sender: event.sender,
+    senderDisplayName: event.senderDisplayName,
+    sequenceId: '',
+    createdOn: new Date(event.createdOn)
+  };
+};
+
+const convertEventToDeletedChatMessage = (event: ChatMessageDeletedEvent): DeletedChatMessage => {
+  return {
+    id: event.id,
+    version: event.version,
     type: convertEventType(event.type),
     sender: event.sender,
     senderDisplayName: event.senderDisplayName,
