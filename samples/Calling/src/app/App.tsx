@@ -110,18 +110,22 @@ const App = (): JSX.Element => {
             /* @conditional-compile-remove(PSTN-calls) */
             setAlternateCallerId(callDetails.alternateCallerId);
             let callLocator: CallAdapterLocator | undefined =
-              callDetails.callLocator || getTeamsLinkFromUrl() || getGroupIdFromUrl();
+              callDetails.callLocator || getTeamsLinkFromUrl() || getGroupIdFromUrl() || createGroupId();
 
             /* @conditional-compile-remove(rooms) */
-            callLocator = callLocator || getRoomIdFromUrl();
+            if (callDetails.option === 'Rooms') {
+              callLocator = getRoomIdFromUrl() || callDetails.callLocator;
+            }
 
             /* @conditional-compile-remove(PSTN-calls) */
-            callLocator = callLocator || getOutboundParticipants(callDetails.outboundParticipants);
+            if (callDetails.option === '1:N' || callDetails.option === 'PSTN') {
+              callLocator = getOutboundParticipants(callDetails.outboundParticipants);
+            }
 
             /* @conditional-compile-remove(teams-adhoc-call) */
-            callLocator = callLocator || getOutboundParticipants(callDetails.outboundTeamsUsers);
-
-            callLocator = callLocator || createGroupId();
+            if (callDetails.option === 'TeamsAdhoc') {
+              callLocator = getOutboundParticipants(callDetails.outboundTeamsUsers);
+            }
 
             /* @conditional-compile-remove(rooms) */
             // There is an API call involved with creating a room so lets only create one if we know we have to
@@ -136,6 +140,10 @@ const App = (): JSX.Element => {
               callLocator = { roomId: roomId };
             }
 
+            if (!callLocator) {
+              throw new Error('Invalid call locator', callLocator);
+            }
+
             /* @conditional-compile-remove(rooms) */
             if ('roomId' in callLocator) {
               if (userId && 'communicationUserId' in userId) {
@@ -148,6 +156,7 @@ const App = (): JSX.Element => {
                 throw 'Invalid userId!';
               }
             }
+
             setCallLocator(callLocator);
 
             // Update window URL to have a joinable link
