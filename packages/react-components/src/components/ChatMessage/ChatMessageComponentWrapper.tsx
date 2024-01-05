@@ -8,8 +8,8 @@ import { ChatMessage, OnRenderAvatarCallback } from '../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types';
 /* @conditional-compile-remove(file-sharing) */
-import { FileDownloadHandler, InlineImageProps } from '../FileDownloadCards';
-import { InlineImageMetadata } from '../FileDownloadCards';
+import { FileDownloadHandler } from '../FileDownloadCards';
+import { InlineImageMetadata, InlineImageProps } from '../FileDownloadCards';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from '../MentionPopover';
 import { MessageStatusIndicatorProps } from '../MessageStatusIndicator';
