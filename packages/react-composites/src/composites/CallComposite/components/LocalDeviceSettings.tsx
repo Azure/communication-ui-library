@@ -146,6 +146,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
   const hasCameras = props.cameras.length > 0;
   const hasMicrophones = props.microphones.length > 0;
   const hasSpeakers = props.speakers.length > 0;
+  /* @conditional-compile-remove(unsupported-browser) */
   const isSafariWithNoSpeakers =
     adapter.getState().environmentInfo?.environment.browser.toLowerCase() === 'safari' && !hasSpeakers;
 
@@ -212,6 +213,33 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
     </>
   );
 
+  const speakerDropdown = (
+    <Dropdown
+      aria-labelledby={'call-composite-local-sound-settings-label'}
+      placeholder={hasSpeakers ? defaultPlaceHolder : noSpeakersLabel}
+      styles={dropDownStyles(theme)}
+      disabled={props.speakers.length === 0}
+      options={getDropDownList(props.speakers)}
+      defaultSelectedKey={props.selectedSpeaker ? props.selectedSpeaker.id : defaultDeviceId(props.speakers)}
+      onChange={(
+        event: React.FormEvent<HTMLDivElement>,
+        option?: IDropdownOption | undefined,
+        index?: number | undefined
+      ) => {
+        props.onSelectSpeaker(props.speakers[index ?? 0]);
+      }}
+      onRenderTitle={(props?: IDropdownOption[]) => onRenderTitle('Speaker', props)}
+    />
+  );
+
+  const SafariBrowserSpeakerDropdownTrampoline = (): JSX.Element => {
+    /* @conditional-compile-remove(unsupported-browser) */
+    if (isSafariWithNoSpeakers) {
+      return <></>;
+    }
+    return speakerDropdown;
+  };
+
   return (
     <Stack data-ui-id="call-composite-device-settings" tokens={mainStackTokens}>
       {roleCanUseCamera && (
@@ -265,24 +293,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
             /* @conditional-compile-remove(call-readiness) */
             onClickEnableDevicePermission={props.onClickEnableDevicePermission}
           />
-          {!isSafariWithNoSpeakers && (
-            <Dropdown
-              aria-labelledby={'call-composite-local-sound-settings-label'}
-              placeholder={hasSpeakers ? defaultPlaceHolder : noSpeakersLabel}
-              styles={dropDownStyles(theme)}
-              disabled={props.speakers.length === 0}
-              options={getDropDownList(props.speakers)}
-              defaultSelectedKey={props.selectedSpeaker ? props.selectedSpeaker.id : defaultDeviceId(props.speakers)}
-              onChange={(
-                event: React.FormEvent<HTMLDivElement>,
-                option?: IDropdownOption | undefined,
-                index?: number | undefined
-              ) => {
-                props.onSelectSpeaker(props.speakers[index ?? 0]);
-              }}
-              onRenderTitle={(props?: IDropdownOption[]) => onRenderTitle('Speaker', props)}
-            />
-          )}
+          <SafariBrowserSpeakerDropdownTrampoline />
         </Stack>
       </Stack>
     </Stack>
