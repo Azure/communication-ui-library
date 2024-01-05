@@ -44,3 +44,5 @@ export type { AcceptedTransfer, TransferFeatureState as TransferFeature } from '
 export type { OptimalVideoCountFeatureState } from './CallClientState';
 /* @conditional-compile-remove(ppt-live) */
 export type { PPTLiveCallFeatureState } from './CallClientState';
+/* @conditional-compile-remove(reaction) */
+export type { ReactionState } from './CallClientState';

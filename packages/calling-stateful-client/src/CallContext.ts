@@ -53,6 +53,8 @@ import { LocalVideoStreamVideoEffectsState } from './CallClientState';
 import { convertFromSDKToCaptionInfoState } from './Converter';
 /* @conditional-compile-remove(raise-hand) */
 import { convertFromSDKToRaisedHandState } from './Converter';
+/* @conditional-compile-remove(reaction) */
+import { ReactionMessage } from '@azure/communication-calling';
 
 enableMapSet();
 // Needed to generate state diff for verbose logging.
@@ -73,6 +75,8 @@ export class CallContext {
   private _emitter: EventEmitter;
   private _atomicId: number;
   private _callIdHistory: CallIdHistory = new CallIdHistory();
+  /* @conditional-compile-remove(reaction) */
+  private _timeOutId: { [key: string]: NodeJS.Timeout } = {};
 
   constructor(
     userId: CommunicationIdentifierKind,
@@ -422,6 +426,40 @@ export class CallContext {
         if (participant) {
           participant.raisedHand = raisedHand ? convertFromSDKToRaisedHandState(raisedHand) : raisedHand;
         }
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(reaction) */
+  public setReceivedReactionFromParticipant(
+    callId: string,
+    participantKey: string,
+    reactionMessage: ReactionMessage | null
+  ): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+
+      if (!call) {
+        return;
+      }
+
+      clearTimeout(this._timeOutId[participantKey]);
+
+      const participant = call.remoteParticipants[participantKey];
+      const newReactionState = reactionMessage
+        ? { reactionMessage: reactionMessage, receivedAt: new Date() }
+        : undefined;
+
+      if (participantKey === toFlatCommunicationIdentifier(this._state.userId)) {
+        call.localParticipantReaction = newReactionState;
+      } else {
+        participant.reactionState = newReactionState;
+      }
+
+      if (reactionMessage) {
+        this._timeOutId[participantKey] = setTimeout(() => {
+          clearParticipantReactionState(this, callId, participantKey);
+        }, 5120);
       }
     });
   }
@@ -1048,3 +1086,8 @@ const findOldestCallEnded = (calls: { [key: string]: { endTime?: Date } }): stri
   }
   return oldestCallId;
 };
+
+/* @conditional-compile-remove(reaction) */
+function clearParticipantReactionState(callContext: CallContext, callId: string, participantKey: string): void {
+  callContext.setReceivedReactionFromParticipant(callId, participantKey, null);
+}

@@ -81,7 +81,9 @@ module.exports = {
     // Feature for the DTMF dialer for Teams voice apps
     'dtmf-dialer',
     // Feature for PPT Live for teams meeting
-    'ppt-live'
+    'ppt-live',
+    // Feature for meeting reactions
+    'reaction'
   ],
   // A list of in progress beta feature.
   // These features are still beta feature but "in progress"
@@ -108,7 +110,9 @@ module.exports = {
     // Feature for the DTMF dialer for Teams voice apps
     'dtmf-dialer',
     // Feature for PPT Live for teams meeting
-    'ppt-live'
+    'ppt-live',
+    // Feature for meeting reactions
+    'reaction'
   ],
   // A list of stabilized features.
   // These features can be listed in the conditional compilation directives without

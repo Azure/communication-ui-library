@@ -35,6 +35,7 @@ import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { ParticipantCapabilities } from '@azure/communication-calling';
 import { ParticipantRole } from '@azure/communication-calling';
+import { ReactionMessage } from '@azure/communication-calling';
 import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/communication-calling';
 import { ScalingMode } from '@azure/communication-calling';
 import { TeamsCall as TeamsCall_2 } from '@azure/communication-calling';
@@ -116,6 +117,8 @@ export interface CallState {
     isMuted: boolean;
     isScreenSharingOn: boolean;
     kind: CallKind;
+    // @beta
+    localParticipantReaction?: ReactionState;
     localVideoStreams: LocalVideoStreamState[];
     optimalVideoCount: OptimalVideoCountFeatureState;
     pptLive: PPTLiveCallFeatureState;
@@ -276,6 +279,12 @@ export interface RaiseHandCallFeature {
     raisedHands: RaisedHandState[];
 }
 
+// @beta
+export type ReactionState = {
+    reactionMessage: ReactionMessage;
+    receivedAt: Date;
+};
+
 // @public
 export interface RecordingCallFeature {
     isRecordingActive: boolean;
@@ -290,6 +299,8 @@ export interface RemoteParticipantState {
     isMuted: boolean;
     isSpeaking: boolean;
     raisedHand?: RaisedHandState;
+    // @beta
+    reactionState?: ReactionState;
     role?: ParticipantRole;
     state: RemoteParticipantState_2;
     videoStreams: {

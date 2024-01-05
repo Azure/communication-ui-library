@@ -15,6 +15,8 @@ import {
   CallErrors,
   DiagnosticsCallFeatureState
 } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(reaction) */
+import { ReactionState } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(raise-hand) */
@@ -98,6 +100,17 @@ export const getLocalParticipantRaisedHand = (
   props: CallingBaseSelectorProps
 ): RaisedHandState | undefined => {
   return state.calls[props.callId]?.raiseHand?.localParticipantRaisedHand;
+};
+
+/* @conditional-compile-remove(reaction) */
+/**
+ * @private
+ */
+export const getLocalParticipantReactionState = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): ReactionState | undefined => {
+  return state.calls[props.callId]?.localParticipantReaction;
 };
 
 /**

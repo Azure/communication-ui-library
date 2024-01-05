@@ -30,6 +30,8 @@ import { RaiseHandSubscriber } from './RaiseHandSubscriber';
 import { OptimalVideoCountSubscriber } from './OptimalVideoCountSubscriber';
 /* @conditional-compile-remove(capabilities) */
 import { CapabilitiesSubscriber } from './CapabilitiesSubscriber';
+/* @conditional-compile-remove(reaction) */
+import { ReactionSubscriber } from './ReactionSubscriber';
 
 /**
  * Keeps track of the listeners assigned to a particular call because when we get an event from SDK, it doesn't tell us
@@ -54,6 +56,8 @@ export class CallSubscriber {
   private _captionsSubscriber?: CaptionsSubscriber;
   /* @conditional-compile-remove(raise-hand) */
   private _raiseHandSubscriber?: RaiseHandSubscriber;
+  /* @conditional-compile-remove(reaction) */
+  private _reactionSubscriber?: ReactionSubscriber;
   /* @conditional-compile-remove(video-background-effects) */
   private _localVideoStreamVideoEffectsSubscribers: Map<string, LocalVideoStreamVideoEffectsSubscriber>;
   /* @conditional-compile-remove(capabilities) */
@@ -92,6 +96,12 @@ export class CallSubscriber {
       this._callIdRef,
       this._context,
       this._call.feature(Features.RaiseHand)
+    );
+    /* @conditional-compile-remove(reaction) */
+    this._reactionSubscriber = new ReactionSubscriber(
+      this._callIdRef,
+      this._context,
+      this._call.feature(Features.Reaction)
     );
     /* @conditional-compile-remove(optimal-video-count) */
     this._optimalVideoCountSubscriber = new OptimalVideoCountSubscriber({
@@ -196,6 +206,8 @@ export class CallSubscriber {
     this._raiseHandSubscriber?.unsubscribe();
     /* @conditional-compile-remove(capabilities) */
     this._capabilitiesSubscriber.unsubscribe();
+    /* @conditional-compile-remove(reaction) */
+    this._reactionSubscriber?.unsubscribe();
   };
 
   private addParticipantListener(participant: RemoteParticipant): void {
