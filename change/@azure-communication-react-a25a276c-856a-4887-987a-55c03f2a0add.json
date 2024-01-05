@@ -1,7 +1,7 @@
 {
-  "type": "minor",
-  "area": "feature",
-  "workstream": "3314131",
+  "type": "prerelease",
+  "area": "Feature",
+  "workstream": "",
   "comment": "stateful client",
   "packageName": "@azure/communication-react",
   "email": "93549644+ShaunaSong@users.noreply.github.com",

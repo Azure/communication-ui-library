@@ -260,7 +260,7 @@ export interface OptimalVideoCountFeatureState {
     maxRemoteVideoStreams: number;
 }
 
-// @public
+// @beta
 export interface PPTLiveCallFeatureState {
     isActive: boolean;
 }
