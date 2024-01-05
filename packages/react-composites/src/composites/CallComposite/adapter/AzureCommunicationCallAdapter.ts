@@ -98,14 +98,12 @@ import {
   CommunicationTokenCredential,
   CommunicationUserIdentifier,
   CommunicationIdentifier,
-  MicrosoftTeamsUserIdentifier
+  MicrosoftTeamsUserIdentifier,
+  isMicrosoftTeamsUserIdentifier,
+  isCommunicationUserIdentifier
 } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
-import {
-  isCommunicationUserIdentifier,
-  isPhoneNumberIdentifier,
-  PhoneNumberIdentifier
-} from '@azure/communication-common';
+import { isPhoneNumberIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
 import { DiagnosticsForwarder } from './DiagnosticsForwarder';
@@ -1452,6 +1450,11 @@ export const createAzureCommunicationCallAdapter = async ({
   /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
   /* @conditional-compile-remove(video-background-effects) */ options
 }: AzureCommunicationCallAdapterArgs): Promise<CallAdapter> => {
+  if (isMicrosoftTeamsUserIdentifier(userId)) {
+    throw new Error(
+      'Microsoft Teams user identifier is not supported by AzureCommunicationCallAdapter, please use our TeamsCallAdapter.'
+    );
+  }
   return _createAzureCommunicationCallAdapterInner({
     userId,
     displayName,
@@ -1521,6 +1524,11 @@ export const createTeamsCallAdapter = async ({
   locator,
   options
 }: TeamsCallAdapterArgs): Promise<TeamsCallAdapter> => {
+  if (isCommunicationUserIdentifier(userId)) {
+    throw new Error(
+      'Communication User identifier is not supported by TeamsCallAdapter, please use our AzureCommunicationCallAdapter.'
+    );
+  }
   const callClient = _createStatefulCallClientInner(
     {
       userId
