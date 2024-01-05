@@ -99,9 +99,10 @@ import {
   CommunicationUserIdentifier,
   CommunicationIdentifier,
   MicrosoftTeamsUserIdentifier,
-  isMicrosoftTeamsUserIdentifier,
-  isCommunicationUserIdentifier
+  isMicrosoftTeamsUserIdentifier
 } from '@azure/communication-common';
+/* @conditional-compile-remove(teams-identity-support) */ /* @conditional-compile-remove(PSTN-calls) */
+import { isCommunicationUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { isPhoneNumberIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
