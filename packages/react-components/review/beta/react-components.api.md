@@ -1930,6 +1930,15 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
 }) => React_2.JSX.Element>;
 
 // @public
+export const RTESendBox: (props: RTESendBoxProps) => JSX.Element;
+
+// @public
+export interface RTESendBoxProps {
+    // (undocumented)
+    valueToDisplay?: string;
+}
+
+// @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
 
 // @public

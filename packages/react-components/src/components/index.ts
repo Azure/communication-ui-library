@@ -19,6 +19,11 @@ export type { ImageGalleryStrings } from './ImageGallery';
 
 export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox';
 
+/* @conditional-compile-remove(rte) */
+export { RTESendBox } from './RTE/RTESendBox';
+/* @conditional-compile-remove(rte) */
+export type { RTESendBoxProps } from './RTE/RTESendBox';
+
 /* @conditional-compile-remove(mention) */
 export type {
   _MentionPopoverProps,
