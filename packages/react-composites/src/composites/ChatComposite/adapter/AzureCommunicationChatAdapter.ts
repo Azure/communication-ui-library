@@ -399,7 +399,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     }
 
     const message = convertEventToChatMessage(event);
-    this.emitter.emit('messageEdited', { message, editedOn: event.editedOn });
+    this.emitter.emit('messageEdited', { message });
   }
 
   private messageDeletedListener(event: ChatMessageDeletedEvent): void {
