@@ -10,7 +10,7 @@ import {
   getDeviceManager,
   getIsMuted,
   getIsScreenSharingOn,
-  getLocalParticipantReaction,
+  getLocalParticipantReactionState,
   getLocalVideoStreams
 } from './baseSelectors';
 /* @conditional-compile-remove(capabilities) */
@@ -175,7 +175,7 @@ export const raiseHandButtonSelector: RaiseHandButtonSelector = reselect.createS
  *
  * @public
  */
- export type ReactionButtonSelector = (
+export type ReactionButtonSelector = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ) => {
@@ -183,15 +183,14 @@ export const raiseHandButtonSelector: RaiseHandButtonSelector = reselect.createS
   disabled?: boolean;
 };
 
-
 /* @conditional-compile-remove(reaction) */
 /**
  * Selector for {@link ReactionButton} component.
  *
  * @public
  */
- export const reactionButtonSelector: ReactionButtonSelector = reselect.createSelector(
-  [getLocalParticipantReaction, getCallState],
+export const reactionButtonSelector: ReactionButtonSelector = reselect.createSelector(
+  [getLocalParticipantReactionState, getCallState],
   (reaction, callState) => {
     return {
       checked: reaction ? true : false,

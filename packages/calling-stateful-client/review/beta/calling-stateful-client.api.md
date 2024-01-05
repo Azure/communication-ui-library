@@ -121,7 +121,6 @@ export interface CallState {
     localVideoStreams: LocalVideoStreamState[];
     optimalVideoCount: OptimalVideoCountFeatureState;
     raiseHand: RaiseHandCallFeature;
-    reaction: ReactionCallFeatureState;
     recording: RecordingCallFeature;
     remoteParticipants: {
         [keys: string]: RemoteParticipantState;
@@ -277,21 +276,6 @@ export interface RaiseHandCallFeature {
 export type ReactionState = {
     reactionMessage: ReactionMessage;
     receivedAt: Date;
-};
-
-// @public
-export interface ReactionCallFeatureState {
-    // (undocumented)
-    isEnable: boolean;
-    // (undocumented)
-    localParticipantReactionPayload?: ReactionState;
-}
-
-// @public
-export type ReactionState = {
-    shouldRender: boolean;
-    reactionType: string;
-    receivedTimeStamp: number;
 };
 
 // @public

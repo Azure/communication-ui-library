@@ -5,7 +5,7 @@ import {
   RemoteParticipant as SdkRemoteParticipant,
   RemoteVideoStream as SdkRemoteVideoStream,
   LocalVideoStream as SdkLocalVideoStream,
-  VideoStreamRendererView,
+  VideoStreamRendererView
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
@@ -18,7 +18,7 @@ import {
   RemoteVideoStreamState as DeclarativeRemoteVideoStream,
   LocalVideoStreamState as DeclarativeLocalVideoStream,
   IncomingCallState as DeclarativeIncomingCall,
-  VideoStreamRendererViewState as DeclarativeVideoStreamRendererView,
+  VideoStreamRendererViewState as DeclarativeVideoStreamRendererView
 } from './CallClientState';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from './CallClientState';
@@ -37,8 +37,6 @@ import { LocalVideoStreamVideoEffectsState } from './CallClientState';
 import { RaisedHand } from '@azure/communication-calling';
 /* @conditional-compile-remove(raise-hand) */
 import { RaisedHandState } from './CallClientState';
-/* @conditional-compile-remove(reaction) */
-import { ReactionState } from './CallClientState';
 
 /**
  * @private
@@ -222,4 +220,3 @@ export function convertFromSDKToRaisedHandState(raisedHand: RaisedHand): RaisedH
     raisedHandOrderPosition: raisedHand.order
   };
 }
-
