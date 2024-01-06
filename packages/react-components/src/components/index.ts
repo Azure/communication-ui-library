@@ -19,9 +19,9 @@ export type { ImageGalleryStrings } from './ImageGallery';
 
 export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox';
 
-/* @conditional-compile-remove(rte) */
+/* @conditional-compile-remove(rich-text-editor) */
 export { RTESendBox } from './RTE/RTESendBox';
-/* @conditional-compile-remove(rte) */
+/* @conditional-compile-remove(rich-text-editor) */
 export type { RTESendBoxProps } from './RTE/RTESendBox';
 
 /* @conditional-compile-remove(mention) */
