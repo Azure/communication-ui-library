@@ -1929,6 +1929,15 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     toggleAnnouncerString?: ((announcerString: string) => void) | undefined;
 }) => React_2.JSX.Element>;
 
+// @beta
+export const RTESendBox: (props: RTESendBoxProps) => JSX.Element;
+
+// @beta
+export interface RTESendBoxProps {
+    // (undocumented)
+    valueToDisplay?: string;
+}
+
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
 
