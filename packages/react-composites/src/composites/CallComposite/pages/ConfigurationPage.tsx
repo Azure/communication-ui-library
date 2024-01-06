@@ -60,6 +60,7 @@ import { localVideoSelector } from '../../CallComposite/selectors/localVideoStre
 /* @conditional-compile-remove(capabilities) */
 import { CapabilitiesChangeNotificationBarProps } from '../components/CapabilitiesChangedNotificationBar';
 import { SvgWithWordWrapping } from '../components/SvgWithWordWrapping';
+import { EnvironmentInfo } from '@azure/communication-calling';
 
 /**
  * @private
@@ -362,7 +363,18 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
             )}
             <Stack styles={mobileView ? undefined : configurationSectionStyle}>
               {!mobileWithPreview && (
-                <Stack className={mobileView ? undefined : selectionContainerStyle(theme)}>
+                <Stack
+                  className={
+                    mobileView
+                      ? undefined
+                      : selectionContainerStyle(
+                          theme,
+                          isSafariBrowserEnvironmentTrampoline(
+                            /* @conditional-compile-remove(unsupported-browser) */ environmentInfo
+                          )
+                        )
+                  }
+                >
                   <LocalDeviceSettings
                     {...options}
                     {...localDeviceSettingsHandlers}
@@ -455,4 +467,11 @@ const Logo = (props: { logo?: { url: string; alt?: string; shape?: 'unset' | 'ci
     return <></>;
   }
   return <Image styles={logoStyles(props.logo.shape)} src={props.logo.url} alt={props.logo.alt} />;
+};
+
+const isSafariBrowserEnvironmentTrampoline = (environmentInfo?: EnvironmentInfo): boolean | undefined => {
+  /* @conditional-compile-remove(unsupported-browser) */
+  return environmentInfo && environmentInfo?.environment.browser.toLowerCase() === 'safari';
+
+  return false;
 };

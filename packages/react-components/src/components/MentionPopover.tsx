@@ -3,16 +3,18 @@
 
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { Persona, PersonaSize, Stack, mergeStyles, useTheme } from '@fluentui/react';
+import { mergeClasses } from '@fluentui/react-components';
 import {
   mentionPopoverContainerStyle,
   headerStyleThemed,
-  suggestionListStyle,
   suggestionItemStackStyle,
-  suggestionItemWrapperStyle
+  suggestionItemWrapperStyle,
+  useSuggestionListStyle
 } from './styles/MentionPopover.style';
 /* @conditional-compile-remove(mention) */
 import { useIdentifiers } from '../identifiers';
 import { useLocale } from '../localization';
+import { useDefaultStackStyles } from './styles/Stack.style';
 
 /**
  * Props for {@link _MentionPopover}.
@@ -165,10 +167,13 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
   const ids = useIdentifiers();
   const localeStrings = useLocale().strings;
   const popoverRef = useRef() as React.MutableRefObject<HTMLDivElement>;
+  const suggestionsListRef = useRef<HTMLDivElement>(null);
 
   const [position, setPosition] = useState<Position | undefined>();
   const [hoveredSuggestion, setHoveredSuggestion] = useState<Mention | undefined>(undefined);
-  const [changedSelection, setChangedSelection] = useState<boolean | undefined>(undefined); // Selection UI as per teams
+
+  const suggestionListStyle = useSuggestionListStyle();
+  const defaultStackStyles = useDefaultStackStyles();
 
   const dismissPopoverWhenClickingOutside = useCallback(
     (e: MouseEvent) => {
@@ -181,12 +186,13 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
   );
 
   useEffect(() => {
-    if (changedSelection === undefined) {
-      setChangedSelection(false);
-    } else if (changedSelection === false) {
-      setChangedSelection(true);
+    if (suggestionsListRef.current && activeSuggestionIndex !== undefined && activeSuggestionIndex >= 0) {
+      const selectedItem = suggestionsListRef.current.children[activeSuggestionIndex];
+      if (selectedItem) {
+        selectedItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
     }
-  }, [activeSuggestionIndex, changedSelection]);
+  }, [activeSuggestionIndex]);
 
   useEffect(() => {
     window && window.addEventListener('click', dismissPopoverWhenClickingOutside);
@@ -266,11 +272,7 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
         >
           <Stack
             horizontal
-            className={suggestionItemStackStyle(
-              theme,
-              hoveredSuggestion?.id === suggestion.id,
-              (changedSelection ?? false) && active
-            )}
+            className={suggestionItemStackStyle(theme, hoveredSuggestion?.id === suggestion.id, active)}
           >
             {personaRenderer(suggestion.displayText)}
           </Stack>
@@ -283,7 +285,6 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
       /* @conditional-compile-remove(mention) */
       ids,
       hoveredSuggestion,
-      changedSelection,
       personaRenderer
     ]
   );
@@ -317,10 +318,12 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
           <Stack.Item styles={headerStyleThemed(theme)} aria-label={title}>
             {getHeaderTitle()}
           </Stack.Item>
-          <Stack
+          {/* FluentUI v9 approach is used here instead of Stack because Stack doesn't have ref prop */}
+          <div
+            className={mergeClasses(defaultStackStyles.root, suggestionListStyle.root)}
             /* @conditional-compile-remove(mention) */
             data-ui-id={ids.mentionSuggestionList}
-            className={suggestionListStyle}
+            ref={suggestionsListRef}
           >
             {suggestions.map((suggestion, index) => {
               const active = index === activeSuggestionIndex;
@@ -328,7 +331,7 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
                 ? onRenderSuggestionItem(suggestion, onSuggestionSelected, active)
                 : defaultOnRenderSuggestionItem(suggestion, onSuggestionSelected, active);
             })}
-          </Stack>
+          </div>
         </Stack>
       )}
     </div>
