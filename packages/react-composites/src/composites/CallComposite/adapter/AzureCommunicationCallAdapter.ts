@@ -1453,7 +1453,7 @@ export const createAzureCommunicationCallAdapter = async ({
 }: AzureCommunicationCallAdapterArgs): Promise<CallAdapter> => {
   if (isMicrosoftTeamsUserIdentifier(userId)) {
     throw new Error(
-      'Microsoft Teams user identifier is not supported by AzureCommunicationCallAdapter, please use our TeamsCallAdapter.'
+      'Microsoft Teams user identifier is not supported by AzureCommunicationCallAdapter. Instead use TeamsCallAdapter.'
     );
   }
   return _createAzureCommunicationCallAdapterInner({
