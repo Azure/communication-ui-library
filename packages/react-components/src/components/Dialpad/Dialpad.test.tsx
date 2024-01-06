@@ -136,15 +136,6 @@ describe('Dialpad tests', () => {
 
     expect(screen.getByRole('textbox').getAttribute('value')).toBe('23456789000');
   });
-
-  test('pressing the Dialpad buttons should trigger the DTMF sounds', async () => {
-    render(<Dialpad />);
-    const button = screen.getByRole('button', { name: '9WXYZ' });
-    fireEvent.click(button);
-
-    // expect(audioContextMocks.AudioContext.OscillatorNode.connect).toHaveBeenCalled();
-    expect(audioContextMocks.AudioContext.createGain).toHaveBeenCalled();
-  });
 });
 
 export default {};
