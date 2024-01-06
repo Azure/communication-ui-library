@@ -35,13 +35,15 @@ const callParticipantsLocatorSnippet = `
 
 const customBrandingSnippet = `
 <CallComposite options={{
-  logo: {
-    url: 'https://...',
-    alt: 'My company logo',
-    shape: 'circle'
-  },
-  backgroundImage: {
-    url: 'https://...'
+  branding: {
+    logo: {
+      url: 'https://...',
+      alt: 'My company logo',
+      shape: 'circle'
+    },
+    backgroundImage: {
+      url: 'https://...'
+    }
   }
 }} />
 `;
@@ -190,7 +192,7 @@ export const Docs: () => JSX.Element = () => {
       </div>
 
       <Heading>Custom Branding</Heading>
-      <SingleLineBetaBanner version="1.12.0-beta.1" />
+      <SingleLineBetaBanner version="1.13.0-beta.1" />
       <Description>
         Along with applying a Fluent Theme to style the composites, you can also inject your own custom branding. You
         can inject a background and logo into the Composite configuration page to present to your users. This is done by
@@ -307,7 +309,6 @@ export const Docs: () => JSX.Element = () => {
         local video tile and some of the other options we have for the local video tile when just using the components.
       </Description>
       <Heading>Customizing the default Gallery Layout</Heading>
-      <SingleLineBetaBanner />
       <Description>
         We allow for the customization of the starting layout of the gallery. The layout can be changed by the user
         though the gallery options menu found in the more button of the call controls.

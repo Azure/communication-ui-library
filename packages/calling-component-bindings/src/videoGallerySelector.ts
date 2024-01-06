@@ -3,7 +3,7 @@
 
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CallClientState, RemoteParticipantState } from '@internal/calling-stateful-client';
-import { VideoGalleryLocalParticipant, VideoGalleryRemoteParticipant } from '@internal/react-components';
+import { VideoGalleryRemoteParticipant, VideoGalleryLocalParticipant } from '@internal/react-components';
 import { createSelector } from 'reselect';
 import {
   CallingBaseSelectorProps,
@@ -32,6 +32,10 @@ import {
 /* @conditional-compile-remove(raise-hand) */
 import { getLocalParticipantRaisedHand } from './baseSelectors';
 import { getRemoteParticipantsExcludingConsumers } from './getRemoteParticipantsExcludingConsumers';
+/* @conditional-compile-remove(reaction) */
+import { getLocalParticipantReactionState } from './baseSelectors';
+/* @conditional-compile-remove(reaction) */
+import { memoizedConvertToVideoTileReaction } from './utils/participantListSelectorUtils';
 
 /**
  * Selector type for {@link VideoGallery} component.
@@ -71,7 +75,9 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     /* @conditional-compile-remove(raise-hand) */
     getLocalParticipantRaisedHand,
     /* @conditional-compile-remove(hide-attendee-name) */
-    isHideAttendeeNamesEnabled
+    isHideAttendeeNamesEnabled,
+    /* @conditional-compile-remove(reaction) */
+    getLocalParticipantReactionState
   ],
   (
     screenShareRemoteParticipantId,
@@ -89,7 +95,9 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     /* @conditional-compile-remove(raise-hand) */
     raisedHand,
     /* @conditional-compile-remove(hide-attendee-name) */
-    isHideAttendeeNamesEnabled
+    isHideAttendeeNamesEnabled,
+    /* @conditional-compile-remove(reaction) */
+    localParticipantReaction
   ) => {
     const screenShareRemoteParticipant =
       screenShareRemoteParticipantId && remoteParticipants
@@ -101,6 +109,8 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     const dominantSpeakersMap: Record<string, number> = {};
     dominantSpeakerIds?.forEach((speaker, idx) => (dominantSpeakersMap[speaker] = idx));
     const noRemoteParticipants: RemoteParticipantState[] = [];
+    /* @conditional-compile-remove(reaction) */
+    const localParticipantReactionState = memoizedConvertToVideoTileReaction(localParticipantReaction);
 
     return {
       screenShareParticipant: screenShareRemoteParticipant
@@ -124,7 +134,9 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
         /* @conditional-compile-remove(rooms) */
         role,
         /* @conditional-compile-remove(raise-hand) */
-        raisedHand
+        raisedHand,
+        /* @conditional-compile-remove(reaction) */
+        localParticipantReactionState
       ),
       remoteParticipants: _videoGalleryRemoteParticipantsMemo(
         updateUserDisplayNamesTrampoline(remoteParticipants ? Object.values(remoteParticipants) : noRemoteParticipants),

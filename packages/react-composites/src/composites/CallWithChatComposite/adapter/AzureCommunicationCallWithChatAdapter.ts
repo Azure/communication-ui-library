@@ -40,7 +40,9 @@ import {
   ChatAdapter,
   ChatAdapterState,
   ParticipantsRemovedListener,
-  ParticipantsAddedListener
+  ParticipantsAddedListener,
+  MessageEditedListener,
+  MessageDeletedListener
 } from '../../ChatComposite';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadManager } from '../../ChatComposite';
@@ -549,6 +551,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   on(event: 'displayNameChanged', listener: DisplayNameChangedListener): void;
   on(event: 'isSpeakingChanged', listener: IsSpeakingChangedListener): void;
   on(event: 'messageReceived', listener: MessageReceivedListener): void;
+  on(event: 'messageEdited', listener: MessageEditedListener): void;
+  on(event: 'messageDeleted', listener: MessageDeletedListener): void;
   on(event: 'messageSent', listener: MessageReceivedListener): void;
   on(event: 'messageRead', listener: MessageReadListener): void;
   on(event: 'chatParticipantsAdded', listener: ParticipantsAddedListener): void;
@@ -619,6 +623,12 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
       case 'messageReceived':
         this.chatAdapter.on('messageReceived', listener);
         break;
+      case 'messageEdited':
+        this.chatAdapter.on('messageEdited', listener);
+        break;
+      case 'messageDeleted':
+        this.chatAdapter.on('messageDeleted', listener);
+        break;
       case 'messageSent':
         this.chatAdapter.on('messageSent', listener);
         break;
@@ -655,6 +665,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   off(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
   off(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   off(event: 'messageReceived', listener: MessageReceivedListener): void;
+  off(event: 'messageEdited', listener: MessageEditedListener): void;
+  off(event: 'messageDeleted', listener: MessageDeletedListener): void;
   off(event: 'messageSent', listener: MessageReceivedListener): void;
   off(event: 'messageRead', listener: MessageReadListener): void;
   off(event: 'chatParticipantsAdded', listener: ParticipantsAddedListener): void;
@@ -722,6 +734,12 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         break;
       case 'messageReceived':
         this.chatAdapter.off('messageReceived', listener);
+        break;
+      case 'messageEdited':
+        this.chatAdapter.off('messageEdited', listener);
+        break;
+      case 'messageDeleted':
+        this.chatAdapter.off('messageDeleted', listener);
         break;
       case 'messageSent':
         this.chatAdapter.off('messageSent', listener);
