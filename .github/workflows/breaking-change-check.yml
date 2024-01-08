@@ -72,6 +72,9 @@ jobs:
       - name: Install beta dependencies
         if: ${{ matrix.flavor == 'beta' && github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}
         run: rush switch-flavor:beta
+      - name: Install beta-release dependencies
+        if: ${{ matrix.flavor == 'beta-release' && github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}
+        run: rush switch-flavor:beta-release
       - name: Install stable dependencies
         if: ${{ matrix.flavor == 'stable' && github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}
         run: rush switch-flavor:stable
