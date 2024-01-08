@@ -29,6 +29,10 @@ jobs:
         run: npm install -g @microsoft/rush@5.100.1
       - name: Install dependencies
         run: rush install --max-install-attempts 3
+      - uses: browser-actions/setup-chrome@v1
+        id: setup-chrome
+        with:
+          chrome-version: 119.0.6045
       - name: Build Test
         run: |
           cd packages/react-composites
@@ -43,6 +47,7 @@ jobs:
           rushx test:e2e -s 7
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+          CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload snapshot diff
         if: ${{ failure() }}
         uses: actions/upload-artifact@v3
