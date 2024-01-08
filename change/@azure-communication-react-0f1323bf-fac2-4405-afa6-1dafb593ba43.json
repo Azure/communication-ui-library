@@ -1,0 +1,9 @@
+{
+  "type": "minor",
+  "area": "feature",
+  "workstream": "",
+  "comment": "Initial the Rich Text Editor component",
+  "packageName": "@azure/communication-react",
+  "email": "longamy@microsoft.com",
+  "dependentChangeType": "patch"
+}
