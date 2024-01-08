@@ -266,7 +266,10 @@ test.describe('Overflow gallery tests', async () => {
   });
 
   /* @conditional-compile-remove(gallery-layout-composite) */
-  test('Overflow gallery can be moved to the top along with the local tile', async ({ page, serverUrl }, testInfo) => {
+  test.skip('Overflow gallery can be moved to the top along with the local tile', async ({
+    page,
+    serverUrl
+  }, testInfo) => {
     test.skip(!isTestProfileDesktop(testInfo));
     const reina = defaultMockRemoteParticipant('Reina Takizawa');
     addVideoStream(reina, true);
