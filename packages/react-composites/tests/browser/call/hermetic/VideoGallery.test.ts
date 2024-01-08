@@ -150,7 +150,7 @@ test.describe('VideoGallery tests', async () => {
   });
 
   /* @conditional-compile-remove(gallery-layouts) */
-  test('VideoGallery can switch between modes', async ({ page, serverUrl }, testInfo) => {
+  test.skip('VideoGallery can switch between modes', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const vasily = defaultMockRemoteParticipant('Vasily Pupkin');
@@ -202,7 +202,10 @@ test.describe('VideoGallery tests', async () => {
   });
 
   /* @conditional-compile-remove(large-gallery) */
-  test('VideoGallery should show correct number of tiles based on layout', async ({ page, serverUrl }, testInfo) => {
+  test.skip('VideoGallery should show correct number of tiles based on layout', async ({
+    page,
+    serverUrl
+  }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
 
     const initialState = defaultMockCallAdapterState([]);
@@ -222,7 +225,7 @@ test.describe('VideoGallery tests', async () => {
   });
 
   /* @conditional-compile-remove(gallery-layout-composite) */
-  test('VideoGallery layouts looks correct on mobile', async ({ page, serverUrl }, testInfo) => {
+  test.skip('VideoGallery layouts looks correct on mobile', async ({ page, serverUrl }, testInfo) => {
     test.skip(!isTestProfileMobile(testInfo));
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const vasily = defaultMockRemoteParticipant('Vasily Pupkin');

@@ -96,6 +96,10 @@ jobs:
         run: npm install -g @microsoft/rush@5.100.1
       - name: Install dependencies
         run: rush install --max-install-attempts 3
+      - uses: browser-actions/setup-chrome@v1
+        id: setup-chrome
+        with:
+          chrome-version: 119.0.6045
       - name: Switch flavor for build
         if: ${{ matrix.flavor != 'beta' }}
         run: rush switch-flavor:${{ matrix.flavor }}
@@ -111,6 +115,7 @@ jobs:
           rushx update:snapshot:examples
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+          CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload test results on failure
         if: ${{ always() && steps.updatesnapshots.outcome == 'failure' }}
         uses: actions/upload-artifact@v3
@@ -186,6 +191,10 @@ jobs:
         run: npm install -g @microsoft/rush@5.100.1
       - name: Install dependencies
         run: rush install --max-install-attempts 3
+      - uses: browser-actions/setup-chrome@v1
+        id: setup-chrome
+        with:
+          chrome-version: 119.0.6045
       - name: Switch flavor for build
         if: ${{ matrix.flavor != 'beta' }}
         run: rush switch-flavor:${{ matrix.flavor }}
@@ -201,6 +210,7 @@ jobs:
           rushx update:snapshot:bundle
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+          CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload snapshot diff
         if: ${{ always() && steps.updatesnapshots.outcome == 'failure' }}
         uses: actions/upload-artifact@v3
@@ -276,6 +286,10 @@ jobs:
         run: npm install -g @microsoft/rush@5.100.1
       - name: Install dependencies
         run: rush install --max-install-attempts 3
+      - uses: browser-actions/setup-chrome@v1
+        id: setup-chrome
+        with:
+          chrome-version: 119.0.6045
       - name: Switch flavor for build
         if: ${{ matrix.flavor != 'beta' }}
         run: rush switch-flavor:${{ matrix.flavor }}
@@ -292,6 +306,7 @@ jobs:
         working-directory: ./packages/react-composites
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+          CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload snapshot diff
         if: ${{ always() && steps.update-call-snapshots.outcome == 'failure' }}
         uses: actions/upload-artifact@v3
@@ -366,6 +381,10 @@ jobs:
         run: npm install -g @microsoft/rush@5.100.1
       - name: Install dependencies
         run: rush install --max-install-attempts 3
+      - uses: browser-actions/setup-chrome@v1
+        id: setup-chrome
+        with:
+          chrome-version: 119.0.6045
       - name: Switch flavor for build
         if: ${{ matrix.flavor != 'beta' }}
         run: rush switch-flavor:${{ matrix.flavor }}
@@ -382,6 +401,7 @@ jobs:
         working-directory: ./packages/react-composites
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+          CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload snapshot diff
         if: ${{ always() && steps.update-chat-snapshots.outcome == 'failure' }}
         uses: actions/upload-artifact@v3
@@ -456,6 +476,10 @@ jobs:
         run: npm install -g @microsoft/rush@5.100.1
       - name: Install dependencies
         run: rush install --max-install-attempts 3
+      - uses: browser-actions/setup-chrome@v1
+        id: setup-chrome
+        with:
+          chrome-version: 119.0.6045
       - name: Switch flavor for build
         if: ${{ matrix.flavor != 'beta' }}
         run: rush switch-flavor:${{ matrix.flavor }}
@@ -472,6 +496,7 @@ jobs:
         working-directory: ./packages/react-composites
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+          CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload snapshot diff
         if: ${{ always() && steps.update-call-with-chat-snapshots.outcome == 'failure' }}
         uses: actions/upload-artifact@v3
