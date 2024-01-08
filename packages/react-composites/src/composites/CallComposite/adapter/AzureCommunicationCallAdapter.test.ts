@@ -19,7 +19,7 @@ describe('Adapter is created as expected', () => {
     const mockCallClient = new MockCallClient() as unknown as StatefulCallClient;
 
     const mockCallAgent = new MockCallAgent();
-    const locator = { participantIds: ['some user id'] };
+    const locator = { groupId: 'some group id' };
 
     const adapter = await createAzureCommunicationCallAdapterFromClient(mockCallClient, mockCallAgent, locator);
     expect(adapter).toBeDefined();
@@ -30,7 +30,7 @@ describe('Adapter is created as expected', () => {
     const mockCallClient = new MockCallClient() as unknown as StatefulCallClient;
 
     const mockCallAgent = new MockCallAgent();
-    const locator = { participantIds: ['some user id'] };
+    const locator = { groupId: 'some group id' };
     const options: CommonCallAdapterOptions = {
       callingSounds: {
         callEnded: { url: 'test/url/ended' },
@@ -59,7 +59,7 @@ describe('Adapter is created as expected', () => {
     const mockCallClient = new MockCallClient() as unknown as StatefulCallClient;
 
     const mockCallAgent = new MockCallAgent();
-    const locator = { participantIds: ['some user id'] };
+    const locator = { groupId: 'some group id' };
     const options: CommonCallAdapterOptions = {
       callingSounds: {
         callEnded: { url: 'test/url/ended' }
