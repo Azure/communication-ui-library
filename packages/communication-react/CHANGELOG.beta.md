@@ -1,8 +1,18 @@
 # Change Log - @azure/communication-react
 
-This log was last generated on Mon, 20 Nov 2023 21:42:07 GMT and should not be manually modified.
+This log was last generated on Mon, 08 Jan 2024 18:42:07 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.11.0-beta.2](https://github.com/azure/communication-ui-library/tree/1.11.0-beta.2)
+
+Mon, 08 Jan 2024 18:42:07 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.11.0-beta.2...1.11.0-beta.1)
+
+### Hotfix
+
+- Update `@azure/communication-calling` to 1.19.2-beta.1 to fix [Issue #3695](https://github.com/Azure/communication-ui-library/issues/3695)
+
 
 ## [1.11.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.11.0-beta.1)
 
