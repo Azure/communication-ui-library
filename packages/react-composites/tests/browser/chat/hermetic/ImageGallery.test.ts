@@ -33,6 +33,7 @@ test.describe('ImageGallery Modal tests', () => {
         inlineImageUrl: 'images/inlineImage-broken.png'
       })
     );
+    await page.waitForResponse((response) => response.status() === 404);
 
     await page.locator(dataUiId('SomeImageId1')).click();
     expect(await stableScreenshot(page)).toMatchSnapshot(`inline-image-gallery-modal-broken-link.png`);
