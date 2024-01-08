@@ -101,8 +101,8 @@ module.exports = {
     "gallery-layout-composite",
     // feature for hiding attendee name in the teams meeting
     "hide-attendee-name",
-    // Feature for sounds during different calling events
-    "calling-sounds",
+    // custom branding for the composites
+    "custom-branding",
     // Feature for end of call survey
     'end-of-call-survey',
     // Feature for the DTMF dialer for Teams voice apps
@@ -140,5 +140,7 @@ module.exports = {
     "control-bar-button-injection",
     // rooms
     "rooms",
+    // feature for calling sounds
+    "calling-sounds",
   ]
 }
