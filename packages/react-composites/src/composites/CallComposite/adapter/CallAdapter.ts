@@ -31,13 +31,9 @@ import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react
 import type { CommunicationIdentifierKind } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
-
+import { CommunicationIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
-import type {
-  CommunicationIdentifier,
-  CommunicationUserIdentifier,
-  PhoneNumberIdentifier
-} from '@azure/communication-common';
+import type { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
@@ -285,7 +281,7 @@ export interface VideoBackgroundImage {
 }
 
 /**
- * @beta
+ * @public
  * Type for representing a custom sound to use for a calling event
  */
 export type SoundEffect = {
@@ -296,7 +292,7 @@ export type SoundEffect = {
 };
 
 /**
- * @beta
+ * @public
  * Type for representing a set of sounds to use for different calling events
  */
 export type CallingSounds = {
