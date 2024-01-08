@@ -901,7 +901,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
         backendId = _toCommunicationIdentifier(participant);
       }
 
-      if ((backendId as CommunicationIdentifier).phoneNumber) {
+      if (backendId.phoneNumber) {
         if (options?.alternateCallerId === undefined) {
           throw new Error('Unable to start call, PSTN user present with no alternateCallerId.');
         }

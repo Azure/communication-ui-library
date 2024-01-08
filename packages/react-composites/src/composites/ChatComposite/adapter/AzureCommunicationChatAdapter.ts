@@ -506,13 +506,13 @@ const convertEventToChatMessage = (
 const isChatMessageEditedEvent = (
   event: ChatMessageReceivedEvent | ChatMessageEditedEvent | ChatMessageDeletedEvent
 ): event is ChatMessageEditedEvent => {
-  return 'editedOn' in event && event['editedOn'] !== undefined;
+  return 'editedOn' in event;
 };
 
 const isChatMessageDeletedEvent = (
   event: ChatMessageReceivedEvent | ChatMessageEditedEvent | ChatMessageDeletedEvent
 ): event is ChatMessageDeletedEvent => {
-  return 'deletedOn' in event && event['deletedOn'] !== undefined;
+  return 'deletedOn' in event;
 };
 
 // only text/html message type will be received from event
