@@ -10,7 +10,7 @@ import { _pxToRem } from '@internal/acs-ui-common';
 export const questionTextStyle = (theme: Theme): string =>
   mergeStyles({
     fontWeight: 600,
-    fontSize: _pxToRem(14),
+    fontSize: _pxToRem(16),
     lineHeight: _pxToRem(20),
     color: theme.palette.neutralPrimary,
     paddingTop: _pxToRem(20)
@@ -24,7 +24,7 @@ export const helperTextStyle = (theme: Theme): string =>
     fontWeight: 400,
     fontSize: _pxToRem(12),
     lineHeight: _pxToRem(16),
-    color: theme.palette.neutralPrimary
+    color: theme.palette.neutralSecondary
   });
 
 /**
@@ -40,8 +40,7 @@ export const checkboxClassName = mergeStyles({
  */
 export const freeFormTextCheckboxStyles: Partial<ICheckboxStyles> = {
   root: {
-    padding: _pxToRem(8),
-    paddingLeft: 0,
+    paddingBottom: _pxToRem(8),
     width: '100%'
   },
   label: {
@@ -53,5 +52,9 @@ export const freeFormTextCheckboxStyles: Partial<ICheckboxStyles> = {
  * @private
  */
 export const freeFormTextFieldClassName = mergeStyles({
-  width: '100%'
+  width: '100%',
+  marginLeft: _pxToRem(4),
+  input: {
+    padding: 0
+  }
 });

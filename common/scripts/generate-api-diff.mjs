@@ -27,12 +27,51 @@ const __dirname = dirname(__filename);
 
 const destinationDir = path.join(__dirname, '../../apis');
 
+// This process runs the build and api generate commands locally.
+// So this process backs up the files that will be modified by the build process
+// and restores them after the build process is complete.
+const filesToBackup = [
+  path.join(__dirname, '../../packages/communication-react/review/beta/communication-react.api.md'),
+  path.join(__dirname, '../../packages/communication-react/review/stable/communication-react.api.md'),
+  path.join(__dirname, '../config/babel/features.js')
+]
+
 async function main() {
+  let wasSuccessful = true;
+  await setup();
+  try {
+    await generateApiJsons();
+  } catch (e) {
+    wasSuccessful = false;
+    console.error(e);
+  } finally {
+    await cleanup();
+  }
+
+  if (!wasSuccessful) {
+    exit(-1);
+  }
+}
+
+/** To be called at the beginning of the script to backup the files that will be modified by the build process */
+async function setup() {
   // Clean any existing results first
   if (fs.existsSync(destinationDir)) {
     fs.rmSync(destinationDir, { recursive: true });
   }
 
+  backupFiles(filesToBackup);
+}
+
+/** To be called at the end of the script to restore the files that were modified by the build process */
+async function cleanup() {
+  restoreFiles(filesToBackup);
+}
+
+/**
+ * Generate the baseline.api.json and feature.api.json files.
+ */
+async function generateApiJsons() {
   // Store the active development flavor to restore to once the cmd finishes
   const initialDevelopmentFlavor = getBuildFlavor();
 
@@ -49,10 +88,6 @@ async function main() {
     exit(-1);
   }
 
-  // before making changes to the feature definitions file, make a copy of it
-  const featureDefinitionsFile = path.join(__dirname, '../config/babel/features.js');
-  fs.copyFileSync(featureDefinitionsFile, `${featureDefinitionsFile}.bak`);
-
   const isAlphaFeature = inProgressFeatures.includes(feature);
 
   if (isAlphaFeature) {
@@ -61,7 +96,6 @@ async function main() {
     await exec('rush switch-flavor:stable');
   }
 
-
   modifyFeatureDefinitionsFile(feature, isAlphaFeature ? 'alphaToBeta' : 'betaToStable');
   console.log(`Generating baseline.api.json file`);
   const baselineFilePath = await generateApiFile(false);
@@ -69,10 +103,6 @@ async function main() {
   modifyFeatureDefinitionsFile(feature, isAlphaFeature ? 'betaToAlpha' : 'stableToBeta');
   console.log(`Generating feature.api.json file`);
   const featureFilePath = await generateApiFile(true);
-
-  // restore the feature definitions file
-  fs.copyFileSync(`${featureDefinitionsFile}.bak`, featureDefinitionsFile);
-  fs.rmSync(`${featureDefinitionsFile}.bak`);
 
   // restore the flavor
   await exec(`rush switch-flavor:${initialDevelopmentFlavor}`);
@@ -147,6 +177,21 @@ async function generateApiFile(isBaseline) {
   );
 
   return destinationFile;
+}
+
+/** Backup the files that will be modified by the build process */
+function backupFiles(filepaths) {
+  filepaths.forEach((file) => {
+    fs.copyFileSync(file, `${file}.bak`);
+  });
+}
+
+/** Restore the files that were modified by the build process */
+function restoreFiles(filepaths) {
+  filepaths.forEach((file) => {
+    fs.copyFileSync(`${file}.bak`, file);
+    fs.rmSync(`${file}.bak`);
+  });
 }
 
 function parseArgs(argv) {

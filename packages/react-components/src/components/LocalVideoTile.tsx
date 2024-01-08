@@ -5,6 +5,8 @@ import { Stack } from '@fluentui/react';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useMemo } from 'react';
 import { OnRenderAvatarCallback, VideoStreamOptions, CreateVideoStreamViewResult } from '../types';
+/* @conditional-compile-remove(reaction) */
+import { Reaction } from '../types';
 import { LocalVideoCameraCycleButton, LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
 import { StreamMedia } from './StreamMedia';
 import {
@@ -41,6 +43,8 @@ export const _LocalVideoTile = React.memo(
     personaMinSize?: number;
     /* @conditional-compile-remove(raise-hand) */
     raisedHand?: RaisedHand;
+    /* @conditional-compile-remove(reaction) */
+    reaction?: Reaction;
   }) => {
     const {
       isAvailable,
@@ -61,7 +65,9 @@ export const _LocalVideoTile = React.memo(
       localVideoCameraSwitcherLabel,
       localVideoSelectedDescription,
       /* @conditional-compile-remove(raise-hand) */
-      raisedHand
+      raisedHand,
+      /* @conditional-compile-remove(reaction) */
+      reaction
     } = props;
 
     const localVideoStreamProps: LocalVideoStreamLifecycleMaintainerProps = useMemo(
@@ -128,6 +134,8 @@ export const _LocalVideoTile = React.memo(
         personaMinSize={props.personaMinSize}
         /* @conditional-compile-remove(raise-hand) */
         raisedHand={raisedHand}
+        /* @conditional-compile-remove(reaction) */
+        reaction={reaction}
       />
     );
   }
