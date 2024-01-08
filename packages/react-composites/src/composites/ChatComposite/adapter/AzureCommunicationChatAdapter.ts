@@ -332,17 +332,11 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   async downloadAttachments(options: { attachmentUrls: Record<string, string> }): Promise<AttachmentDownloadResult[]> {
     return this.asyncTeeErrorToEventEmitter(async () => {
       if (this.credential === undefined) {
-        const e = new Error();
-        e['target'] = 'ChatThreadClient.getMessage';
-        e['innerError'] = new Error('AccessToken is null');
-        throw e;
+        throw new ChatError('ChatThreadClient.getMessage', new Error('AccessToken is null'));
       }
       const accessToken = await this.credential.getToken();
       if (!accessToken) {
-        const e = new Error();
-        e['target'] = 'ChatThreadClient.getMessage';
-        e['innerError'] = new Error('AccessToken is null');
-        throw e;
+        throw new ChatError('ChatThreadClient.getMessage', new Error('AccessToken is null'));
       }
 
       return this.downloadAuthenticatedFile(accessToken.token, options);
@@ -359,10 +353,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
       try {
         return await fetch(url, { headers });
       } catch (err) {
-        const e = new Error();
-        e['target'] = 'ChatThreadClient.getMessage';
-        e['innerError'] = err;
-        throw e;
+        throw new ChatError('ChatThreadClient.getMessage', err as Error);
       }
     }
 
@@ -515,13 +506,13 @@ const convertEventToChatMessage = (
 const isChatMessageEditedEvent = (
   event: ChatMessageReceivedEvent | ChatMessageEditedEvent | ChatMessageDeletedEvent
 ): event is ChatMessageEditedEvent => {
-  return event['editedOn'] !== undefined;
+  return 'editedOn' in event && event['editedOn'] !== undefined;
 };
 
 const isChatMessageDeletedEvent = (
   event: ChatMessageReceivedEvent | ChatMessageEditedEvent | ChatMessageDeletedEvent
 ): event is ChatMessageDeletedEvent => {
-  return event['deletedOn'] !== undefined;
+  return 'deletedOn' in event && event['deletedOn'] !== undefined;
 };
 
 // only text/html message type will be received from event
@@ -734,5 +725,5 @@ export async function createAzureCommunicationChatAdapterFromClient(
 }
 
 const isChatError = (e: Error): e is ChatError => {
-  return e['target'] !== undefined && e['innerError'] !== undefined;
+  return 'target' in e && e['target'] !== undefined && 'innerError' in e && e['innerError'] !== undefined;
 };
