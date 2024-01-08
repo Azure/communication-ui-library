@@ -83,7 +83,9 @@ module.exports = {
     // Feature for PPT Live for teams meeting
     'ppt-live',
     // Feature for meeting reactions
-    'reaction'
+    'reaction',
+    // Feature for Rich Text Editor (RTE) support
+    'rich-text-editor',
   ],
   // A list of in progress beta feature.
   // These features are still beta feature but "in progress"
@@ -101,8 +103,6 @@ module.exports = {
     "gallery-layout-composite",
     // feature for hiding attendee name in the teams meeting
     "hide-attendee-name",
-    // custom branding for the composites
-    "custom-branding",
     // Feature for sounds during different calling events
     "calling-sounds",
     // Feature for end of call survey
@@ -112,7 +112,9 @@ module.exports = {
     // Feature for PPT Live for teams meeting
     'ppt-live',
     // Feature for meeting reactions
-    'reaction'
+    'reaction',
+    // Feature for Rich Text Editor (RTE) support
+    'rich-text-editor',
   ],
   // A list of stabilized features.
   // These features can be listed in the conditional compilation directives without

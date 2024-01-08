@@ -220,7 +220,7 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
       if (isEnterKeyEventFromCompositionSession(ev)) {
         return;
       }
-
+      let isActiveSuggestionIndexUpdated = false;
       if (mentionSuggestions.length > 0) {
         if (ev.key === 'ArrowUp') {
           ev.preventDefault();
@@ -229,6 +229,7 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
               ? mentionSuggestions.length - 1
               : Math.max(activeSuggestionIndex - 1, 0);
           setActiveSuggestionIndex(newActiveIndex);
+          isActiveSuggestionIndexUpdated = true;
         } else if (ev.key === 'ArrowDown') {
           ev.preventDefault();
           const newActiveIndex =
@@ -236,8 +237,12 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
               ? 0
               : Math.min(activeSuggestionIndex + 1, mentionSuggestions.length - 1);
           setActiveSuggestionIndex(newActiveIndex);
+          isActiveSuggestionIndexUpdated = true;
         } else if (ev.key === 'Escape') {
           updateMentionSuggestions([]);
+          // reset active suggestion index when suggestions are closed
+          setActiveSuggestionIndex(undefined);
+          isActiveSuggestionIndexUpdated = true;
         }
       }
       if (ev.key === 'Enter' && (ev.shiftKey === false || !supportNewline)) {
@@ -253,6 +258,10 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
         }
 
         onEnterKeyDown && onEnterKeyDown();
+      } else if (!isActiveSuggestionIndexUpdated) {
+        // Update the active suggestion index if the user is typing,
+        // otherwise the focus will be lost
+        setActiveSuggestionIndex(undefined);
       }
       onKeyDown && onKeyDown(ev);
     },
