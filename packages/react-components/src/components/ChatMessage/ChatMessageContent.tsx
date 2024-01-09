@@ -4,7 +4,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { _formatString } from '@internal/acs-ui-common';
-import { Parser, ProcessNodeDefinitions, IsValidNodeDefinitions, ProcessingInstructionType } from 'html-to-react';
+import { Parser, ProcessNodeDefinitions, IsValidNodeDefinitions } from 'html-to-react';
 
 import Linkify from 'react-linkify';
 import { ChatMessage } from '../../types/ChatMessage';
@@ -37,6 +37,14 @@ type ChatMessageContentProps = {
 type BlockedMessageContentProps = {
   message: BlockedMessage;
   strings: MessageThreadStrings;
+};
+
+// Missing from html-to-react.
+type ProcessingInstructionType = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  shouldProcessNode: (node: any) => boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  processNode: (node: any, children: any, index: number) => unknown;
 };
 
 type MessageContentWithLiveAriaProps = {

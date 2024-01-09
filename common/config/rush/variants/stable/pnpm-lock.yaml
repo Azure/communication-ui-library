@@ -12121,11 +12121,13 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
-  /html-to-react@1.5.1:
-    resolution: {integrity: sha512-dFLZRBjpMk89Ukwa6Fq7oApinn3TEZD0gGFUkmI9DqNQxTjN7gF9owhyu+t8h+bpEZrX2DMxZLYjEfw0C/iL7A==}
+  /html-to-react@1.7.0(react@18.2.0):
+    resolution: {integrity: sha512-b5HTNaTGyOj5GGIMiWVr1k57egAZ/vGy0GGefnCQ1VW5hu9+eku8AXHtf2/DeD95cj/FKBKYa1J7SWBOX41yUQ==}
+    peerDependencies:
+      react: ^0.13.0 || ^0.14.0 || >=15
     dependencies:
       domhandler: 5.0.3
-      htmlparser2: 8.0.2
+      htmlparser2: 9.1.0
       lodash.camelcase: 4.3.0
       react: 18.2.0
     dev: false
@@ -12181,8 +12183,8 @@ packages:
       entities: 2.2.0
     dev: false
 
-  /htmlparser2@8.0.2:
-    resolution: {integrity: sha512-GYdjWKDkbRLkZ5geuHs5NY1puJ+PXwP7+fHPRz06Eirsb9ugf6d8kkXav6ADhcODhFFPMIXyxkxSuMf3D6NCFA==}
+  /htmlparser2@9.1.0:
+    resolution: {integrity: sha512-5zfg6mHUoaer/97TxnGpxmbR7zJtPwIYFMZ/H5ucTlPZhKvtum05yiPK3Mgai3a0DyVxv7qYqoweaEd2nrYQzQ==}
     dependencies:
       domelementtype: 2.3.0
       domhandler: 5.0.3
@@ -20242,7 +20244,7 @@ packages:
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-gmDA3a/6HH42e3tuSOHCNckL4aoDSlyqr2mQHYuho0wF46qsp4jva31g8dUETurBENz/DQQV60hdoBGeLYeViA==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-eBabYQZQgw/C6YAMrfMWLdKFLLwDyB6pv0d7vmeaaT4XM6OwqE1jgKIG2KbhP/8rTbQNPg4i6Mh+YQrrPrPxPw==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
@@ -20296,7 +20298,7 @@ packages:
       eslint-plugin-react: 7.33.2(eslint@7.32.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@7.32.0)
       events: 3.3.0
-      html-to-react: 1.5.1
+      html-to-react: 1.7.0(react@18.2.0)
       if-env: 1.0.4
       immer: 10.0.3
       jest: 29.7.0(@types/node@20.10.5)(ts-node@10.9.2)
@@ -20481,7 +20483,7 @@ packages:
     dev: false
 
   file:projects/react-components.tgz:
-    resolution: {integrity: sha512-2I4+CLDopnXz3TDS9Vfv4e46xIaygq9JVnyOl3cCgRrnwA6PXmgkherU5RhlX4+NWtlszEh1E/5m2wbfg+XL0g==, tarball: file:projects/react-components.tgz}
+    resolution: {integrity: sha512-xB3foPSxlBsSqVn+oOm8amD3MetD5jdJSIJIO/oPyJUyzKOY6gM75hTeSQ4ZO3DBe5MndH/DE/UrIPC21Y4pJQ==, tarball: file:projects/react-components.tgz}
     name: '@rush-temp/react-components'
     version: 0.0.0
     dependencies:
@@ -20533,7 +20535,7 @@ packages:
       eslint-plugin-prettier: 3.4.1(eslint-config-prettier@6.15.0)(eslint@7.32.0)(prettier@2.3.1)
       eslint-plugin-react: 7.33.2(eslint@7.32.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@7.32.0)
-      html-to-react: 1.5.1
+      html-to-react: 1.7.0(react@18.2.0)
       husky: 8.0.3
       if-env: 1.0.4
       jest: 29.7.0(@types/node@20.10.5)(ts-node@10.9.2)
