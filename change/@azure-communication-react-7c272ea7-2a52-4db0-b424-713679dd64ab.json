@@ -1,7 +1,7 @@
 {
   "type": "none",
   "area": "feature",
-  "workstream": "",
+  "workstream": "RTE",
   "comment": "Initial the Rich Text Editor component",
   "packageName": "@azure/communication-react",
   "email": "longamy@microsoft.com",
