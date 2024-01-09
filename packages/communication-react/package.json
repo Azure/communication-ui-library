@@ -46,13 +46,13 @@
     "react-linkify": "^1.0.0-alpha",
     "react-use-draggable-scroll": "^0.4.7",
     "reselect": "^4.0.0",
-    "textarea-caret-ts": "^4.1.1",
-    "use-debounce": "^10.0.0",
-    "uuid": "^9.0.0",
     "roosterjs-editor-core": "^8.54.0",
     "roosterjs-editor-plugins": "^8.54.0",
     "roosterjs-editor-types": "^8.54.0",
-    "roosterjs-react": "^8.54.0"
+    "roosterjs-react": "^8.54.0",
+    "textarea-caret-ts": "^4.1.1",
+    "use-debounce": "^10.0.0",
+    "uuid": "^9.0.0"
   },
   "peerDependencies": {
     "@azure/communication-calling": "1.20.1-beta.2 || ^1.20.1",

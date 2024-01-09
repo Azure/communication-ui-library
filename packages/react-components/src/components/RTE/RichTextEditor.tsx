@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-import * as React from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { ContentEdit, Watermark } from 'roosterjs-editor-plugins';
 import { Editor } from 'roosterjs-editor-core';
 import { EditorOptions, IEditor } from 'roosterjs-editor-types';
@@ -33,12 +33,12 @@ export interface RichTextEditorProps {
  *
  * @beta
  */
-export const RichTextEditor: React.FC<RichTextEditorProps> = (props) => {
+export const RichTextEditor = (props: RichTextEditorProps): JSX.Element => {
   const { content, onChange, children, placeholderText } = props;
-  const editor = React.useRef<IEditor | null>(null);
-  const ribbonPlugin = React.useMemo(() => createRibbonPlugin(), []);
+  const editor = useRef<IEditor | null>(null);
+  const ribbonPlugin = useMemo(() => createRibbonPlugin(), []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (content !== editor.current?.getContent()) {
       editor.current?.setContent(content || '');
     }
@@ -64,28 +64,25 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = (props) => {
   };
 
   const editorCreator = React.useMemo(() => {
-    return (div: HTMLDivElement) => defaultEditorCreator(div, onChange);
-  }, [onChange]);
+    return (div: HTMLDivElement) => {
+      const contentEdit = new ContentEdit();
+      const placeholderPlugin = new Watermark(placeholderText || '');
+      const updateContentPlugin = createUpdateContentPlugin(
+        UpdateMode.OnContentChangedEvent | UpdateMode.OnUserInput,
+        (content: string) => {
+          onChange && onChange(content);
+        }
+      );
 
-  const defaultEditorCreator = function (div: HTMLDivElement, onChange?: (newValue: string) => void): IEditor {
-    const contentEdit = new ContentEdit();
-    const placeholderPlugin = new Watermark(placeholderText || '');
-    const updateContentPlugin = createUpdateContentPlugin(
-      UpdateMode.OnContentChangedEvent | UpdateMode.OnUserInput,
-      (content: string) => {
-        onChange && onChange(content);
-        console.log('content update::', content);
-      }
-    );
+      const options: EditorOptions = {
+        plugins: [ribbonPlugin, placeholderPlugin, contentEdit, updateContentPlugin],
+        imageSelectionBorderColor: 'blue'
+      };
 
-    const options: EditorOptions = {
-      plugins: [ribbonPlugin, placeholderPlugin, contentEdit, updateContentPlugin],
-      imageSelectionBorderColor: 'blue'
+      editor.current = new Editor(div, options);
+      return editor.current;
     };
-
-    editor.current = new Editor(div, options);
-    return editor.current;
-  };
+  }, [onChange, placeholderText, ribbonPlugin]);
 
   return (
     <div>
