@@ -4,18 +4,8 @@ import React, { useEffect, useMemo, useRef } from 'react';
 import { ContentEdit, Watermark } from 'roosterjs-editor-plugins';
 import { Editor } from 'roosterjs-editor-core';
 import { EditorOptions, IEditor } from 'roosterjs-editor-types';
-import {
-  Rooster,
-  createRibbonPlugin,
-  createUpdateContentPlugin,
-  Ribbon,
-  getButtons,
-  RibbonButton,
-  KnownRibbonButtonKey,
-  UpdateMode
-} from 'roosterjs-react';
+import { Rooster, createUpdateContentPlugin, UpdateMode } from 'roosterjs-react';
 import { richTextEditorStyle } from '../styles/RichTextEditor.styles';
-
 /**
  * Props for {@link RichTextEditor}.
  *
@@ -24,7 +14,6 @@ import { richTextEditorStyle } from '../styles/RichTextEditor.styles';
 export interface RichTextEditorProps {
   content?: string;
   onChange: (newValue?: string) => void;
-  children: React.ReactNode;
   placeholderText?: string;
 }
 
@@ -34,9 +23,8 @@ export interface RichTextEditorProps {
  * @beta
  */
 export const RichTextEditor = (props: RichTextEditorProps): JSX.Element => {
-  const { content, onChange, children, placeholderText } = props;
+  const { content, onChange, placeholderText } = props;
   const editor = useRef<IEditor | null>(null);
-  const ribbonPlugin = useMemo(() => createRibbonPlugin(), []);
 
   useEffect(() => {
     if (content !== editor.current?.getContent()) {
@@ -44,26 +32,7 @@ export const RichTextEditor = (props: RichTextEditorProps): JSX.Element => {
     }
   }, [content]);
 
-  const onRenderRibbon = function (): JSX.Element {
-    const buttons = getButtons([
-      KnownRibbonButtonKey.Bold,
-      KnownRibbonButtonKey.Italic,
-      KnownRibbonButtonKey.BulletedList,
-      KnownRibbonButtonKey.TextColor,
-      KnownRibbonButtonKey.FontSize,
-      KnownRibbonButtonKey.InsertLink
-    ]);
-
-    return (
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Ribbon buttons={buttons as RibbonButton<string>[]} plugin={ribbonPlugin} />
-        <div style={{ flex: 1 }} />
-        {children}
-      </div>
-    );
-  };
-
-  const editorCreator = React.useMemo(() => {
+  const editorCreator = useMemo(() => {
     return (div: HTMLDivElement) => {
       const contentEdit = new ContentEdit();
       const placeholderPlugin = new Watermark(placeholderText || '');
@@ -75,19 +44,18 @@ export const RichTextEditor = (props: RichTextEditorProps): JSX.Element => {
       );
 
       const options: EditorOptions = {
-        plugins: [ribbonPlugin, placeholderPlugin, contentEdit, updateContentPlugin],
+        plugins: [placeholderPlugin, contentEdit, updateContentPlugin],
         imageSelectionBorderColor: 'blue'
       };
 
       editor.current = new Editor(div, options);
       return editor.current;
     };
-  }, [onChange, placeholderText, ribbonPlugin]);
+  }, [onChange, placeholderText]);
 
   return (
     <div>
-      <Rooster plugins={[ribbonPlugin]} style={richTextEditorStyle} editorCreator={editorCreator} />
-      {onRenderRibbon()}
+      <Rooster className={richTextEditorStyle} editorCreator={editorCreator} />
     </div>
   );
 };
