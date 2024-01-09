@@ -109,9 +109,10 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
             justifyContent: 'center',
             alignItems: 'center',
             backgroundPosition: 'center',
-            backgroundSize: `44px ${emoji === 'applause' ? 4284 : 2142}px`,
+            backgroundSize: `44px 2142px`,
             transition: 'opacity 2s',
-            backgroundColor: isHoveredMap.get(emoji) ? 'rgba(0, 0, 0, 0.2)' : 'transparent'
+            backgroundColor: 'transparent',
+            transform: `scale(0.6)`
           }}
           onMouseEnter={() =>
             setIsHoveredMap((prevMap) => {
