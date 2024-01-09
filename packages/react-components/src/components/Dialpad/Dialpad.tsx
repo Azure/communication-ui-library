@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useEffect } from 'react';
+import React, { Component, useEffect } from 'react';
 /* @conditional-compile-remove(dtmf-dialer) */
 import { useRef } from 'react';
 import { IStyle, IButtonStyles, ITextFieldStyles, ITextField } from '@fluentui/react';
@@ -316,7 +316,6 @@ const DialpadContainer = (props: {
   } = props;
 
   const [plainTextValue, setPlainTextValue] = useState(textFieldValue ?? '');
-  const [currentSelection, setCurrentSelection] = useState<number>();
   const inputBoxReference = useRef<ITextField>(null);
   /* @conditional-compile-remove(dtmf-dialer) */
   const dtmfToneAudioContext = useRef(new AudioContext());
@@ -325,30 +324,7 @@ const DialpadContainer = (props: {
     if (onChange) {
       onChange(plainTextValue);
     }
-    /**
-     * This is to advance the current selection of the user to where they would be editing
-     * next in the input box after editing the value manually
-     */
-    if (
-      inputBoxReference.current &&
-      currentSelection &&
-      inputBoxReference.current.selectionStart !== currentSelection
-    ) {
-      if (
-        inputBoxReference.current.value &&
-        (inputBoxReference.current.value[currentSelection] === ' ' ||
-          inputBoxReference.current.value[currentSelection] === '(')
-      ) {
-        console.log(inputBoxReference.current?.value[currentSelection]);
-        if (inputBoxReference.current.value[currentSelection] === ')') {
-          setCurrentSelection(currentSelection + 2);
-        } else {
-          setCurrentSelection(currentSelection + 1);
-        }
-      }
-      inputBoxReference.current.setSelectionRange(currentSelection, currentSelection);
-    }
-  }, [plainTextValue, onChange, currentSelection]);
+  }, [plainTextValue, onChange]);
 
   useEffect(() => {
     setText(textFieldValue ?? '');
@@ -404,11 +380,12 @@ const DialpadContainer = (props: {
         }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onChange={(e: any) => {
-          const input = e.target;
           if (enableInputEditing) {
-            setCurrentSelection(input.selectionStart);
             setText(e.target.value);
-          } else {
+          }
+        }}
+        onClick={(e) => {
+          if (!enableInputEditing) {
             e.preventDefault();
           }
         }}
