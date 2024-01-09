@@ -118,7 +118,7 @@ export type Mutable<T> = {
 
 interface MockDeviceManager extends Mutable<DeviceManager> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  emit(event: any, data?: any);
+  emit(event: any, data?: any): any;
 }
 
 const createMockDeviceManager = (): MockDeviceManager => {
