@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "area": "fix",
+  "workstream": "",
+  "comment": "Update `@azure/communication-calling` to 1.19.2-beta.2 to fix [Issue #3695](https://github.com/Azure/communication-ui-library/issues/3695)",
+  "packageName": "@azure/communication-react",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "none"
+}
