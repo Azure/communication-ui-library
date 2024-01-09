@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { Component, useEffect } from 'react';
+import React, { useEffect } from 'react';
 /* @conditional-compile-remove(dtmf-dialer) */
 import { useRef } from 'react';
-import { IStyle, IButtonStyles, ITextFieldStyles, ITextField } from '@fluentui/react';
+import { IStyle, IButtonStyles, ITextFieldStyles } from '@fluentui/react';
 
 import { IconButton } from '@fluentui/react';
 import {
@@ -316,7 +316,6 @@ const DialpadContainer = (props: {
   } = props;
 
   const [plainTextValue, setPlainTextValue] = useState(textFieldValue ?? '');
-  const inputBoxReference = useRef<ITextField>(null);
   /* @conditional-compile-remove(dtmf-dialer) */
   const dtmfToneAudioContext = useRef(new AudioContext());
 
@@ -374,7 +373,6 @@ const DialpadContainer = (props: {
     >
       <TextField
         styles={concatStyleSets(textFieldStyles(theme), props.styles?.textField)}
-        componentRef={inputBoxReference}
         value={
           textFieldValue ? textFieldValue : enableInputEditing ? formatPhoneNumber(plainTextValue) : plainTextValue
         }
