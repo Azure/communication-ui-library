@@ -93,7 +93,7 @@ export const BaseProvider = (
   /**
    * Before registering fluent icons, we should check DEFAULT_COMPOSITE_ICONS and strip out the key value pairs where value is undefined
    */
-  const iconsToRegister = {};
+  const iconsToRegister: { [key: string]: JSX.Element } = {};
   Object.entries(DEFAULT_COMPOSITE_ICONS).forEach(([key, value]) => {
     if (value) {
       iconsToRegister[key] = value;
