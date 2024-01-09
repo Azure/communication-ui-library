@@ -252,6 +252,7 @@ export type CallAdapterClientState = {
     userId: CommunicationIdentifierKind;
     displayName?: string;
     call?: CallState;
+    targetCallees?: CommunicationIdentifier[];
     devices: DeviceManagerState;
     endedCall?: CallState;
     isTeamsCall: boolean;
@@ -261,6 +262,7 @@ export type CallAdapterClientState = {
     videoBackgroundImages?: VideoBackgroundImage[];
     onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
+    sounds?: CallingSounds;
 };
 
 // @public
@@ -426,6 +428,7 @@ export type CallCompositeIcons = {
     NoticePageJoinCallFailedDueToNoNetwork?: JSX.Element;
     NoticePageLeftCall?: JSX.Element;
     NoticePageRemovedFromCall?: JSX.Element;
+    NoticePageCallRejected?: JSX.Element;
     NoticePageNotInvitedToRoom?: JSX.Element;
     NoticePageRoomNotFound?: JSX.Element;
     NoticePageRoomNotValid?: JSX.Element;
@@ -477,6 +480,8 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
 export interface CallCompositeStrings {
     blurBackgroundEffectButtonLabel?: string;
     blurBackgroundTooltip?: string;
+    callRejectedMoreDetails?: string;
+    callRejectedTitle?: string;
     callTimeoutDetails?: string;
     callTimeoutTitle?: string;
     cameraLabel: string;
@@ -650,6 +655,13 @@ export type CallingHandlersOptions = {
 export type CallingReturnProps<Component extends (props: any) => JSX.Element> = GetCallingSelector<Component> extends (state: CallClientState, props: any) => any ? ReturnType<GetCallingSelector<Component>> & Common<CallingHandlers, Parameters<Component>[0]> : never;
 
 // @public
+export type CallingSounds = {
+    callEnded?: SoundEffect;
+    callRinging?: SoundEffect;
+    callBusy?: SoundEffect;
+};
+
+// @public
 export interface CallingTheme {
     // (undocumented)
     callingPalette: {
@@ -805,6 +817,10 @@ export interface CallWithChatAdapterSubscriptions {
     // (undocumented)
     off(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
+    off(event: 'messageEdited', listener: MessageEditedListener): void;
+    // (undocumented)
+    off(event: 'messageDeleted', listener: MessageDeletedListener): void;
+    // (undocumented)
     off(event: 'messageSent', listener: MessageSentListener): void;
     // (undocumented)
     off(event: 'messageRead', listener: MessageReadListener): void;
@@ -848,6 +864,10 @@ export interface CallWithChatAdapterSubscriptions {
     on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     // (undocumented)
     on(event: 'messageReceived', listener: MessageReceivedListener): void;
+    // (undocumented)
+    on(event: 'messageEdited', listener: MessageEditedListener): void;
+    // (undocumented)
+    on(event: 'messageDeleted', listener: MessageDeletedListener): void;
     // (undocumented)
     on(event: 'messageSent', listener: MessageSentListener): void;
     // (undocumented)
@@ -1012,7 +1032,7 @@ export interface CallWithChatControlOptions extends CommonCallControlOptions {
 }
 
 // @public
-export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | /* @conditional-compile-remove(close-captions) */ 'isCaptionsActiveChanged' | /* @conditional-compile-remove(close-captions) */ 'captionsReceived' | /* @conditional-compile-remove(close-captions) */ 'isCaptionLanguageChanged' | /* @conditional-compile-remove(close-captions) */ 'isSpokenLanguageChanged' | /* @conditional-compile-remove(capabilities) */ 'capabilitiesChanged' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
+export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | /* @conditional-compile-remove(close-captions) */ 'isCaptionsActiveChanged' | /* @conditional-compile-remove(close-captions) */ 'captionsReceived' | /* @conditional-compile-remove(close-captions) */ 'isCaptionLanguageChanged' | /* @conditional-compile-remove(close-captions) */ 'isSpokenLanguageChanged' | /* @conditional-compile-remove(capabilities) */ 'capabilitiesChanged' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
 
 // @public
 export const CameraButton: (props: CameraButtonProps) => JSX.Element;
@@ -1206,6 +1226,8 @@ export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
 // @public
 export interface ChatAdapterSubscribers {
     off(event: 'messageReceived', listener: MessageReceivedListener): void;
+    off(event: 'messageEdited', listener: MessageEditedListener): void;
+    off(event: 'messageDeleted', listener: MessageDeletedListener): void;
     off(event: 'messageSent', listener: MessageSentListener): void;
     off(event: 'messageRead', listener: MessageReadListener): void;
     off(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
@@ -1213,6 +1235,8 @@ export interface ChatAdapterSubscribers {
     off(event: 'topicChanged', listener: TopicChangedListener): void;
     off(event: 'error', listener: (e: AdapterError) => void): void;
     on(event: 'messageReceived', listener: MessageReceivedListener): void;
+    on(event: 'messageEdited', listener: MessageEditedListener): void;
+    on(event: 'messageDeleted', listener: MessageDeletedListener): void;
     on(event: 'messageSent', listener: MessageSentListener): void;
     on(event: 'messageRead', listener: MessageReadListener): void;
     on(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
@@ -1455,6 +1479,7 @@ export type CommonCallAdapterOptions = {
         videoBackgroundImages?: VideoBackgroundImage[];
         onResolveDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     };
+    callingSounds?: CallingSounds;
 };
 
 // @public
@@ -2010,6 +2035,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     NoticePageJoinCallFailedDueToNoNetwork?: JSX.Element | undefined;
     NoticePageLeftCall?: JSX.Element | undefined;
     NoticePageRemovedFromCall?: JSX.Element | undefined;
+    NoticePageCallRejected?: JSX.Element | undefined;
     NoticePageNotInvitedToRoom?: JSX.Element | undefined;
     NoticePageRoomNotFound?: JSX.Element | undefined;
     NoticePageRoomNotValid?: JSX.Element | undefined;
@@ -2459,6 +2485,12 @@ export interface MessageCommon {
 
 // @public
 export type MessageContentType = 'text' | 'html' | 'richtext/html' | 'unknown';
+
+// @public
+export type MessageDeletedListener = MessageReceivedListener;
+
+// @public
+export type MessageEditedListener = MessageReceivedListener;
 
 // @public
 export type MessageProps = {
@@ -3015,6 +3047,11 @@ export interface SendBoxStylesProps extends BaseCustomStyles {
     textField?: IStyle;
     textFieldContainer?: IStyle;
 }
+
+// @public
+export type SoundEffect = {
+    url: string;
+};
 
 // @public
 export interface SpokenLanguageStrings {

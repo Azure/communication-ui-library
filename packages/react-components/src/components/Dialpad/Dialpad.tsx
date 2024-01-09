@@ -100,6 +100,9 @@ export interface DialpadProps {
   /**  boolean input to determine if dialpad is in mobile view, default false */
   isMobile?: boolean;
   styles?: DialpadStyles;
+  /* @conditional-compile-remove(dtmf-dialer) */
+  /** Disables DTMF sounds when dialpad buttons are pressed. the actual tones are still sent to the call. */
+  disableDtmfPlayback?: boolean;
 }
 
 type DialpadButtonContent = {
@@ -149,6 +152,8 @@ const DialpadButton = (props: {
   isMobile?: boolean;
   /* @conditional-compile-remove(dtmf-dialer) */
   dtmfToneAudioContext: AudioContext;
+  /* @conditional-compile-remove(dtmf-dialer) */
+  disableDtmfPlayback?: boolean;
 }): JSX.Element => {
   const theme = useTheme();
 
@@ -158,7 +163,8 @@ const DialpadButton = (props: {
     onClick,
     onLongPress,
     isMobile = false,
-    /* @conditional-compile-remove(dtmf-dialer) */ dtmfToneAudioContext
+    /* @conditional-compile-remove(dtmf-dialer) */ dtmfToneAudioContext,
+    /* @conditional-compile-remove(dtmf-dialer) */ disableDtmfPlayback
   } = props;
   /* @conditional-compile-remove(dtmf-dialer) */
   const [buttonPressed, setButtonPressed] = useState(false);
@@ -191,7 +197,9 @@ const DialpadButton = (props: {
       onKeyDown={(e) => {
         /* @conditional-compile-remove(dtmf-dialer) */
         if ((e.key === 'Enter' || e.key === ' ') && !buttonPressed) {
-          dtmfToneSound.current.play();
+          if (!disableDtmfPlayback) {
+            dtmfToneSound.current.play();
+          }
           longPressHandlers.onKeyDown();
           setButtonPressed(true);
           return;
@@ -209,13 +217,31 @@ const DialpadButton = (props: {
       }}
       onMouseDown={() => {
         /* @conditional-compile-remove(dtmf-dialer) */
-        dtmfToneSound.current.play();
+        if (!disableDtmfPlayback) {
+          dtmfToneSound.current.play();
+        }
         longPressHandlers.onMouseDown();
       }}
       onMouseUp={() => {
         /* @conditional-compile-remove(dtmf-dialer) */
         dtmfToneSound.current.stop();
         longPressHandlers.onMouseUp();
+      }}
+      onMouseLeave={() => {
+        /* @conditional-compile-remove(dtmf-dialer) */
+        dtmfToneSound.current.stop();
+      }}
+      onTouchStart={() => {
+        /* @conditional-compile-remove(dtmf-dialer) */
+        if (!disableDtmfPlayback) {
+          dtmfToneSound.current.play();
+        }
+        longPressHandlers.onTouchStart();
+      }}
+      onTouchEnd={() => {
+        /* @conditional-compile-remove(dtmf-dialer) */
+        dtmfToneSound.current.stop();
+        longPressHandlers.onTouchEnd();
       }}
     >
       <Stack>
@@ -241,6 +267,8 @@ const DialpadContainer = (props: {
   /**  boolean input to determine if dialpad is in mobile view, default false */
   isMobile?: boolean;
   styles?: DialpadStyles;
+  /* @conditional-compile-remove(dtmf-dialer) */
+  disableDtmfPlayback?: boolean;
 }): JSX.Element => {
   const theme = useTheme();
 
@@ -376,6 +404,8 @@ const DialpadContainer = (props: {
                   isMobile={isMobile}
                   /* @conditional-compile-remove(dtmf-dialer) */
                   dtmfToneAudioContext={dtmfToneAudioContext.current}
+                  /* @conditional-compile-remove(dtmf-dialer) */
+                  disableDtmfPlayback={props.disableDtmfPlayback}
                 />
               ))}
             </Stack>

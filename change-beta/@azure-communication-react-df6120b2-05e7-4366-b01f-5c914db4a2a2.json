@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "area": "fix",
+  "workstream": "",
+  "comment": "Fix sample appl issue where after selecting pstn call then switching to start group call, the calls fails trying to make a PSTN call",
+  "packageName": "@azure/communication-react",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "none"
+}

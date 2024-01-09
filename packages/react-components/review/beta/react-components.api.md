@@ -175,6 +175,7 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     isMuted?: boolean;
     isSpeaking?: boolean;
     raisedHand?: RaisedHand;
+    reaction?: Reaction;
 };
 
 // @internal
@@ -959,6 +960,7 @@ export const Dialpad: (props: DialpadProps) => JSX.Element;
 
 // @beta
 export interface DialpadProps {
+    disableDtmfPlayback?: boolean;
     isMobile?: boolean;
     onChange?: (input: string) => void;
     onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
@@ -1402,6 +1404,7 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
     styles?: VideoTileStylesProps | undefined;
     personaMinSize?: number | undefined;
     raisedHand?: RaisedHand | undefined;
+    reaction?: Reaction | undefined;
 }) => React_2.JSX.Element>;
 
 // @public
@@ -1885,6 +1888,12 @@ export interface _RatingScale {
     upperBound: number;
 }
 
+// @beta
+export type Reaction = {
+    reactionType: string;
+    receivedAt: Date;
+};
+
 // @public
 export type ReadReceiptsBySenderId = {
     [key: string]: {
@@ -1919,6 +1928,15 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     disablePinMenuItem?: boolean | undefined;
     toggleAnnouncerString?: ((announcerString: string) => void) | undefined;
 }) => React_2.JSX.Element>;
+
+// @beta
+export const RTESendBox: (props: RTESendBoxProps) => JSX.Element;
+
+// @beta
+export interface RTESendBoxProps {
+    // (undocumented)
+    valueToDisplay?: string;
+}
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
@@ -2504,6 +2522,8 @@ export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | /* @conditio
 // @public
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
     raisedHand?: RaisedHand;
+    // @beta
+    reaction?: Reaction;
 }
 
 // @public
@@ -2551,6 +2571,8 @@ export interface VideoGalleryProps {
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     isSpeaking?: boolean;
     raisedHand?: RaisedHand;
+    // @beta
+    reaction?: Reaction;
     screenShareStream?: VideoGalleryStream;
     // @beta
     state?: ParticipantState;
@@ -2637,6 +2659,7 @@ export interface VideoTileProps {
     personaMaxSize?: number;
     personaMinSize?: number;
     raisedHand?: RaisedHand;
+    reaction?: Reaction;
     renderElement?: JSX.Element | null;
     showLabel?: boolean;
     showMuteIndicator?: boolean;

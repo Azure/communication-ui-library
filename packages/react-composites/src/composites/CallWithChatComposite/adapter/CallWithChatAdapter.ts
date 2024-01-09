@@ -15,6 +15,8 @@ import {
   CallEndedListener
 } from '../../CallComposite';
 import {
+  MessageDeletedListener,
+  MessageEditedListener,
   MessageReadListener,
   MessageReceivedListener,
   MessageSentListener,
@@ -522,6 +524,8 @@ export interface CallWithChatAdapterSubscriptions {
 
   // Chat subscriptions
   on(event: 'messageReceived', listener: MessageReceivedListener): void;
+  on(event: 'messageEdited', listener: MessageEditedListener): void;
+  on(event: 'messageDeleted', listener: MessageDeletedListener): void;
   on(event: 'messageSent', listener: MessageSentListener): void;
   on(event: 'messageRead', listener: MessageReadListener): void;
   on(event: 'chatParticipantsAdded', listener: ParticipantsAddedListener): void;
@@ -529,6 +533,8 @@ export interface CallWithChatAdapterSubscriptions {
   on(event: 'chatError', listener: (e: AdapterError) => void): void;
 
   off(event: 'messageReceived', listener: MessageReceivedListener): void;
+  off(event: 'messageEdited', listener: MessageEditedListener): void;
+  off(event: 'messageDeleted', listener: MessageDeletedListener): void;
   off(event: 'messageSent', listener: MessageSentListener): void;
   off(event: 'messageRead', listener: MessageReadListener): void;
   off(event: 'chatParticipantsAdded', listener: ParticipantsAddedListener): void;
@@ -571,6 +577,8 @@ export type CallWithChatEvent =
   | /* @conditional-compile-remove(close-captions) */ 'isSpokenLanguageChanged'
   | /* @conditional-compile-remove(capabilities) */ 'capabilitiesChanged'
   | 'messageReceived'
+  | 'messageEdited'
+  | 'messageDeleted'
   | 'messageSent'
   | 'messageRead'
   | 'chatParticipantsAdded'
