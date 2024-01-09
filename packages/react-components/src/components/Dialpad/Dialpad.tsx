@@ -4,7 +4,7 @@
 import React, { useEffect } from 'react';
 /* @conditional-compile-remove(dtmf-dialer) */
 import { useRef } from 'react';
-import { IStyle, IButtonStyles, ITextFieldStyles } from '@fluentui/react';
+import { IStyle, IButtonStyles, ITextFieldStyles, ITextField } from '@fluentui/react';
 
 import { IconButton } from '@fluentui/react';
 import {
@@ -89,22 +89,48 @@ export type DtmfTone =
  */
 export interface DialpadProps {
   strings?: DialpadStrings;
-  /**  function to send dtmf tones on button click */
+  /**
+   * function to send dtmf tones on button click
+   */
   onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
-  /**  Callback for dialpad button behavior*/
+  /**
+   * Callback for dialpad button behavior
+   */
   onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
-  /** set dialpad textfield content */
+  /**
+   * set dialpad textfield content
+   */
   textFieldValue?: string;
-  /**  on change function for text field, provides an unformatted plain text*/
+  /**
+   * on change function for text field, provides an unformatted plain text
+   */
   onChange?: (input: string) => void;
-  /**  boolean input to determine when to show/hide delete button, default true */
+  /**
+   * flag to determine when to show/hide delete button, default true
+   */
   showDeleteButton?: boolean;
-  /**  boolean input to determine if dialpad is in mobile view, default false */
+  /**
+   * flag to determine if dialpad is in mobile view, default false
+   */
   isMobile?: boolean;
+  /**
+   * Styles for customizing the dialpad component
+   */
   styles?: DialpadStyles;
   /* @conditional-compile-remove(dtmf-dialer) */
-  /** Disables DTMF sounds when dialpad buttons are pressed. the actual tones are still sent to the call. */
+  /**
+   * Disables DTMF sounds when dialpad buttons are pressed. the actual
+   * tones are still sent to the call.
+   */
   disableDtmfPlayback?: boolean;
+  /* @conditional-compile-remove(dtmf-dialer) */
+  /**
+   * Enable the ability to edit the number in the text box.
+   * This mode is for when dailing someone to call to that the user can edit the number before calling if needed.
+   * @default false
+   *
+   */
+  enableInputEditing?: boolean;
 }
 
 type DialpadButtonContent = {
@@ -271,6 +297,8 @@ const DialpadContainer = (props: {
   styles?: DialpadStyles;
   /* @conditional-compile-remove(dtmf-dialer) */
   disableDtmfPlayback?: boolean;
+  /* @conditional-compile-remove(dtmf-dialer) */
+  enableInputEditing?: boolean;
 }): JSX.Element => {
   const theme = useTheme();
 
@@ -280,10 +308,16 @@ const DialpadContainer = (props: {
     textFieldValue,
     onChange,
     showDeleteButton = true,
-    isMobile = false
+    isMobile = false,
+    /* @conditional-compile-remove(dtmf-dialer) */
+    disableDtmfPlayback,
+    /* @conditional-compile-remove(dtmf-dialer) */
+    enableInputEditing
   } = props;
 
   const [plainTextValue, setPlainTextValue] = useState(textFieldValue ?? '');
+  const [currentSelection, setCurrentSelection] = useState<number>();
+  const inputBoxReference = useRef<ITextField>(null);
   /* @conditional-compile-remove(dtmf-dialer) */
   const dtmfToneAudioContext = useRef(new AudioContext());
 
@@ -291,7 +325,30 @@ const DialpadContainer = (props: {
     if (onChange) {
       onChange(plainTextValue);
     }
-  }, [plainTextValue, onChange]);
+    /**
+     * This is to advance the current selection of the user to where they would be editing
+     * next in the input box after editing the value manually
+     */
+    if (
+      inputBoxReference.current &&
+      currentSelection &&
+      inputBoxReference.current.selectionStart !== currentSelection
+    ) {
+      if (
+        inputBoxReference.current.value &&
+        (inputBoxReference.current.value[currentSelection] === ' ' ||
+          inputBoxReference.current.value[currentSelection] === '(')
+      ) {
+        console.log(inputBoxReference.current?.value[currentSelection]);
+        if (inputBoxReference.current.value[currentSelection] === ')') {
+          setCurrentSelection(currentSelection + 2);
+        } else {
+          setCurrentSelection(currentSelection + 1);
+        }
+      }
+      inputBoxReference.current.setSelectionRange(currentSelection, currentSelection);
+    }
+  }, [plainTextValue, onChange, currentSelection]);
 
   useEffect(() => {
     setText(textFieldValue ?? '');
@@ -341,10 +398,19 @@ const DialpadContainer = (props: {
     >
       <TextField
         styles={concatStyleSets(textFieldStyles(theme), props.styles?.textField)}
-        value={textFieldValue ? textFieldValue : formatPhoneNumber(plainTextValue)}
+        componentRef={inputBoxReference}
+        value={
+          textFieldValue ? textFieldValue : enableInputEditing ? formatPhoneNumber(plainTextValue) : plainTextValue
+        }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onChange={(e: any) => {
-          setText(e.target.value);
+          const input = e.target;
+          if (enableInputEditing) {
+            setCurrentSelection(input.selectionStart);
+            setText(e.target.value);
+          } else {
+            e.preventDefault();
+          }
         }}
         placeholder={props.strings.placeholderText}
         data-test-id="dialpad-input"
@@ -395,7 +461,7 @@ const DialpadContainer = (props: {
                   /* @conditional-compile-remove(dtmf-dialer) */
                   dtmfToneAudioContext={dtmfToneAudioContext.current}
                   /* @conditional-compile-remove(dtmf-dialer) */
-                  disableDtmfPlayback={props.disableDtmfPlayback}
+                  disableDtmfPlayback={disableDtmfPlayback}
                 />
               ))}
             </Stack>
