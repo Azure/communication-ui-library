@@ -11,7 +11,7 @@ Mon, 08 Jan 2024 18:42:07 GMT
 
 ### Hotfix
 
-- Update `@azure/communication-calling` to 1.19.2-beta.1 to fix [Issue #3695](https://github.com/Azure/communication-ui-library/issues/3695)
+- Update `@azure/communication-calling` to 1.19.2-beta.2 to fix [Issue #3695](https://github.com/Azure/communication-ui-library/issues/3695)
 
 
 ## [1.11.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.11.0-beta.1)
