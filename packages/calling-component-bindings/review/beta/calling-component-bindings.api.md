@@ -172,6 +172,8 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onRaiseHand: () => Promise<void>;
     // (undocumented)
+    onReactionClicked: (emoji: string) => Promise<void>;
+    // (undocumented)
     onRemoveParticipant(userId: string): Promise<void>;
     // (undocumented)
     onRemoveParticipant(participant: CommunicationIdentifier): Promise<void>;
@@ -312,6 +314,15 @@ export type RaiseHandButtonSelector = (state: CallClientState, props: CallingBas
 
 // @public
 export const raiseHandButtonSelector: RaiseHandButtonSelector;
+
+// @public
+export type ReactionButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
+    checked?: boolean;
+    disabled?: boolean;
+};
+
+// @public
+export const reactionButtonSelector: ReactionButtonSelector;
 
 // @public
 export type ScreenShareButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
