@@ -25,6 +25,8 @@ export const containerStyles = (theme: Theme): IStyle => {
 export const buttonStyles = (theme: Theme): IButtonStyles => ({
   root: {
     background: 'none',
+    fontWeight: 600,
+    fontSize: `${_pxToRem(20)}`,
     border: 'none',
     borderRadius: 0,
     width: '3rem',
@@ -54,11 +56,12 @@ export const textFieldStyles = (theme: Theme): Partial<ITextFieldStyles> => ({
     padding: 0,
     textAlign: 'center',
     fontSize: `${_pxToRem(20)}`,
-    paddingLeft: '0.5rem',
+    fontWeight: 400,
     width: `${_pxToRem(208)}`,
     height: '3rem',
     borderRadius: '0.5rem',
-    position: 'relative'
+    position: 'relative',
+    overflowX: 'auto'
   },
   root: {
     backgroundColor: `${theme.palette.neutralLighter}`,
@@ -83,7 +86,8 @@ export const textFieldStyles = (theme: Theme): Partial<ITextFieldStyles> => ({
     position: 'absolute',
     right: '0.25rem',
     top: '0.55rem',
-    transform: 'scale(1.15)'
+    transform: 'scale(1.15)',
+    background: 'unset'
   }
 });
 
@@ -107,10 +111,12 @@ export const iconButtonStyles = (theme: Theme): IButtonStyles => {
   return {
     root: {
       color: `${theme.palette.black}`,
-      padding: 0
+      padding: 0,
+      background: 'transparent'
     },
     icon: {
       height: 'auto',
+      background: 'transparent',
       // Needed to keep the icon vertically centered.
       '> span': {
         display: 'flex'
