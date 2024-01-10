@@ -962,6 +962,7 @@ export const Dialpad: (props: DialpadProps) => JSX.Element;
 // @beta
 export interface DialpadProps {
     disableDtmfPlayback?: boolean;
+    enableInputEditing?: boolean;
     isMobile?: boolean;
     onChange?: (input: string) => void;
     onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
@@ -969,7 +970,6 @@ export interface DialpadProps {
     showDeleteButton?: boolean;
     // (undocumented)
     strings?: DialpadStrings;
-    // (undocumented)
     styles?: DialpadStyles;
     textFieldValue?: string;
 }
@@ -1945,6 +1945,15 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     disablePinMenuItem?: boolean | undefined;
     toggleAnnouncerString?: ((announcerString: string) => void) | undefined;
 }) => React_2.JSX.Element>;
+
+// @beta
+export const RTESendBox: (props: RTESendBoxProps) => JSX.Element;
+
+// @beta
+export interface RTESendBoxProps {
+    // (undocumented)
+    valueToDisplay?: string;
+}
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;

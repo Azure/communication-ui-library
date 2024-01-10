@@ -26,10 +26,12 @@ Both hermetic and live tests use [playwright](https://playwright.dev/) test fram
 
 ## Setup
 * Create `.env` file under `packages/react-composites/tests/browser` and in this file, make sure you have defined:
-     *  CONNECTION_STRING
-     *  TEST_DIR
-     *  SNAPSHOT_DIR
-     *  PLAYWRIGHT_OUTPUT_DIR
+```bash
+CONNECTION_STRING = "<INSERT CONNECTION STRING HERE>"
+TEST_DIR = "tests"
+SNAPSHOT_DIR = "tests/app/browser/snapshots"
+PLAYWRIGHT_OUTPUT_DIR = "temp"
+```
 * Build all dependencies. Inside `packages/react-composite`, run
   ```sh
   rush update; rush build -t .
