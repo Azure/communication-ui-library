@@ -82,6 +82,7 @@ import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/commu
 import { RoomCallLocator } from '@azure/communication-calling';
 import { ScalingMode } from '@azure/communication-calling';
 import { SendMessageOptions } from '@azure/communication-chat';
+import { SpotlightedParticipant } from '@azure/communication-calling';
 import { StartCallOptions } from '@azure/communication-calling';
 import { StartCaptionsOptions } from '@azure/communication-calling';
 import { SyntheticEvent } from 'react';
@@ -931,6 +932,7 @@ export interface CallState {
     };
     role?: ParticipantRole;
     screenShareRemoteParticipant?: string;
+    spotlight?: SpotlightCallFeatureState;
     startTime: Date;
     state: CallState_2;
     totalParticipantCount?: number;
@@ -3662,6 +3664,7 @@ export interface RemoteParticipantState {
     // @beta
     reactionState?: ReactionState;
     role?: ParticipantRole;
+    spotlighted?: SpotlightState;
     state: RemoteParticipantState_2;
     videoStreams: {
         [key: number]: RemoteVideoStreamState;
@@ -3875,6 +3878,18 @@ export interface SpokenLanguageStrings {
     'zh-hk': string;
     // (undocumented)
     'zh-tw': string;
+}
+
+// @beta (undocumented)
+export interface SpotlightCallFeatureState {
+    // (undocumented)
+    spotlightedParticipants: SpotlightedParticipant[];
+}
+
+// @beta (undocumented)
+export interface SpotlightState {
+    // (undocumented)
+    spotlightedOrderPosition?: number;
 }
 
 // @public
