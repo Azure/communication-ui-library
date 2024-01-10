@@ -385,7 +385,7 @@ const DialpadContainer = (props: {
       <FocusZone>
         {dialPadButtonsDefault.map((rows, rowIndex) => {
           return (
-            <Stack horizontal key={`row_${rowIndex}`} horizontalAlign="stretch" tokens={{ childrenGap: '2rem' }}>
+            <Stack horizontal key={`row_${rowIndex}`} horizontalAlign="stretch" tokens={{ childrenGap: '1rem' }}>
               {rows.map((button, columnIndex) => (
                 <DialpadButton
                   key={`button_${columnIndex}`}

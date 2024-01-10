@@ -55,9 +55,9 @@ export const textFieldStyles = (theme: Theme): Partial<ITextFieldStyles> => ({
   field: {
     padding: 0,
     textAlign: 'center',
-    fontSize: `${_pxToRem(20)}`,
+    fontSize: `${_pxToRem(18)}`,
     fontWeight: 400,
-    width: `${_pxToRem(208)}`,
+    width: `${_pxToRem(192)}`,
     height: '3rem',
     borderRadius: '0.5rem',
     position: 'relative',
