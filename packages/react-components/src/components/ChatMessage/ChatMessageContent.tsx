@@ -4,7 +4,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { _formatString } from '@internal/acs-ui-common';
-import { Parser, ProcessNodeDefinitions, IsValidNodeDefinitions } from 'html-to-react';
+import parse, { HTMLReactParserOptions, Element as DOMElement, attributesToProps } from 'html-react-parser';
 
 import Linkify from 'react-linkify';
 import { ChatMessage } from '../../types/ChatMessage';
@@ -17,7 +17,7 @@ import { MentionDisplayOptions, Mention } from '../MentionPopover';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { FontIcon, Stack } from '@fluentui/react';
 import { MessageThreadStrings } from '../MessageThread';
-import { AttachmentMetadata, InlineImageMetadata } from '../FileDownloadCards';
+import { AttachmentMetadata } from '../FileDownloadCards';
 import LiveMessage from '../Announcer/LiveMessage';
 /* @conditional-compile-remove(mention) */
 import { defaultOnMentionRender } from './MentionRenderer';
@@ -37,14 +37,6 @@ type ChatMessageContentProps = {
 type BlockedMessageContentProps = {
   message: BlockedMessage;
   strings: MessageThreadStrings;
-};
-
-// Missing from html-to-react.
-type ProcessingInstructionType = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  shouldProcessNode: (node: any) => boolean;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  processNode: (node: any, children: any, index: number) => unknown;
 };
 
 type MessageContentWithLiveAriaProps = {
@@ -191,94 +183,63 @@ const messageContentAriaText = (props: ChatMessageContentProps): string | undefi
     : undefined;
 };
 
-const processNodeDefinitions = ProcessNodeDefinitions();
-const htmlToReactParser = Parser();
-
-const processInlineImage = (props: ChatMessageContentProps): ProcessingInstructionType => ({
-  // Custom <img> processing
-  shouldProcessNode: (node): boolean => {
-    function matchingImageNode(imageMetadata: InlineImageMetadata): boolean {
-      return imageMetadata.id === node.attribs.id;
-    }
-
-    // Process img node with id in attachments list
-    return (
-      node.name &&
-      node.name === 'img' &&
-      node.attribs &&
-      node.attribs.id &&
-      props.message.inlineImages?.find(matchingImageNode)
-    );
-  },
-  processNode: (node, children, index): JSX.Element => {
-    node.attribs = { ...node.attribs, 'aria-label': node.attribs.name };
-    // logic to check id in map/list
-    if (props.attachmentsMap && node.attribs.id in props.attachmentsMap) {
-      node.attribs = { ...node.attribs, src: props.attachmentsMap[node.attribs.id] };
-    }
-    const handleOnClick = (): void => {
-      props.onInlineImageClicked && props.onInlineImageClicked(node.attribs.id);
-    };
-
-    return (
-      <span
-        data-ui-id={node.attribs.id}
-        onClick={handleOnClick}
-        tabIndex={0}
-        role="button"
-        style={{
-          cursor: 'pointer'
-        }}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            handleOnClick();
-          }
-        }}
-      >
-        {processNodeDefinitions.processDefaultNode(node, children, index)}
-      </span>
-    );
-    return processNodeDefinitions.processDefaultNode(node, children, index);
-  }
-});
-
-/* @conditional-compile-remove(mention) */
-const processMention = (props: ChatMessageContentProps): ProcessingInstructionType => ({
-  shouldProcessNode: (node) => {
-    if (props.mentionDisplayOptions?.onRenderMention) {
-      // Override the handling of the <msft-mention> tag in the HTML if there's a custom renderer
-      return node.name === 'msft-mention';
-    }
-    return false;
-  },
-  processNode: (node) => {
-    if (props.mentionDisplayOptions?.onRenderMention) {
-      const { id } = node.attribs;
-      const mention: Mention = {
-        id: id,
-        displayText: node.children[0]?.data ?? ''
-      };
-      return props.mentionDisplayOptions.onRenderMention(mention, defaultOnMentionRender);
-    }
-    return processNodeDefinitions.processDefaultNode;
-  }
-});
-
 const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
-  const steps: ProcessingInstructionType[] = [
-    processInlineImage(props),
-    /* @conditional-compile-remove(mention) */
-    processMention(props),
-    {
-      // Process everything else in the default way
-      shouldProcessNode: IsValidNodeDefinitions.alwaysValid,
-      processNode: processNodeDefinitions.processDefaultNode
-    }
-  ];
+  const options: HTMLReactParserOptions = {
+    transform(reactNode, domNode) {
+      if (domNode instanceof DOMElement && domNode.attribs) {
+        // Transform custom rendering of mentions
+        /* @conditional-compile-remove(mention) */
+        if (props.mentionDisplayOptions?.onRenderMention && domNode.name === 'msft-mention') {
+          const { id } = domNode.attribs;
+          const mention: Mention = {
+            id: id,
+            displayText: (domNode.children[0] as unknown as Text).nodeValue ?? ''
+          };
+          return props.mentionDisplayOptions.onRenderMention(mention, defaultOnMentionRender);
+        }
 
-  return htmlToReactParser.parseWithInstructions(
-    props.message.content ?? '',
-    IsValidNodeDefinitions.alwaysValid,
-    steps
-  );
+        // Transform inline images
+        if (
+          domNode.name &&
+          domNode.name === 'img' &&
+          domNode.attribs &&
+          domNode.attribs.id &&
+          props.message.inlineImages?.find((metadata) => {
+            return metadata.id === domNode.attribs.id;
+          })
+        ) {
+          domNode.attribs['aria-label'] = domNode.attribs.name;
+          // logic to check id in map/list
+          if (props.attachmentsMap && domNode.attribs.id in props.attachmentsMap) {
+            domNode.attribs.src = props.attachmentsMap[domNode.attribs.id];
+          }
+          const handleOnClick = (): void => {
+            props.onInlineImageClicked && props.onInlineImageClicked(domNode.attribs.id);
+          };
+          const imgProps = attributesToProps(domNode.attribs);
+          return (
+            <span
+              data-ui-id={domNode.attribs.id}
+              onClick={handleOnClick}
+              tabIndex={0}
+              role="button"
+              style={{
+                cursor: 'pointer'
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleOnClick();
+                }
+              }}
+            >
+              <img {...imgProps} />
+            </span>
+          );
+        }
+      }
+      // Pass through the original node
+      return reactNode as unknown as JSX.Element;
+    }
+  };
+  return <>{parse(props.message.content ?? '', options)}</>;
 };
