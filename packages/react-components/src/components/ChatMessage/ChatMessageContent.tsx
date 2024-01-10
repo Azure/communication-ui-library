@@ -237,7 +237,8 @@ const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
           );
         }
       }
-      return <>{reactNode}</>;
+      // Pass through the original node
+      return reactNode as unknown as JSX.Element;
     }
   };
   return <>{parse(props.message.content ?? '', options)}</>;
