@@ -47,7 +47,7 @@ import { ParticipantListStrings } from '../components/ParticipantList';
 import { MentionPopoverStrings } from '../components/MentionPopover';
 import { ImageGalleryStrings } from '../components/ImageGallery';
 /* @conditional-compile-remove(reaction) */
-import { ReactionButtonStrings } from '../components/ReactionButton';
+import { ReactionButtonStrings } from '../components';
 
 /**
  * Locale information for all components exported from this library.
