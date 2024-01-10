@@ -81,8 +81,7 @@ export const memoizedConvertAllremoteParticipantsBetaRelease = memoizeFnAll(
     isScreenSharing: boolean,
     isSpeaking: boolean,
     raisedHand: RaisedHandState | undefined,
-    localUserCanRemoveOthers: boolean,
-    reaction: ReactionState | undefined
+    localUserCanRemoveOthers: boolean
   ): CallParticipantListParticipant => {
     return convertRemoteParticipantToParticipantListParticipantBetaRelease(
       userId,
@@ -92,8 +91,7 @@ export const memoizedConvertAllremoteParticipantsBetaRelease = memoizeFnAll(
       isScreenSharing,
       isSpeaking,
       raisedHand,
-      localUserCanRemoveOthers,
-      reaction
+      localUserCanRemoveOthers
     );
   }
 );
@@ -152,8 +150,7 @@ const convertRemoteParticipantToParticipantListParticipantBetaRelease = (
   isScreenSharing: boolean,
   isSpeaking: boolean,
   raisedHand: RaisedHandState | undefined,
-  localUserCanRemoveOthers: boolean,
-  reaction: ReactionState | undefined
+  localUserCanRemoveOthers: boolean
 ): CallParticipantListParticipant => {
   return {
     ...convertRemoteParticipantToParticipantListParticipant(

@@ -189,7 +189,9 @@ const findConditionalCompiledSelector = (component: (props: any) => JSX.Element 
     case RaiseHandButton:
       /* @conditional-compile-remove(raise-hand) */
       return raiseHandButtonSelector;
+    /* @conditional-compile-remove(reaction) */
     case ReactionButton:
+      /* @conditional-compile-remove(reaction) */
       return reactionButtonSelector;
   }
 };
