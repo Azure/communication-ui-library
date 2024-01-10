@@ -667,6 +667,7 @@ export interface ComponentStrings {
     ParticipantList: ParticipantListStrings;
     participantsButton: ParticipantsButtonStrings;
     raiseHandButton: RaiseHandButtonStrings;
+    reactionButton: ReactionButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
@@ -1893,6 +1894,22 @@ export type Reaction = {
     reactionType: string;
     receivedAt: Date;
 };
+
+// @public
+export const ReactionButton: (props: ReactionButtonProps) => JSX.Element;
+
+// @public
+export interface ReactionButtonProps extends ControlBarButtonProps {
+    onReactionClicked: (emoji: string) => Promise<void>;
+    strings?: Partial<ReactionButtonStrings>;
+}
+
+// @public
+export interface ReactionButtonStrings {
+    label: string;
+    tooltipContent?: string;
+    tooltipDisabledContent?: string;
+}
 
 // @public
 export type ReadReceiptsBySenderId = {
