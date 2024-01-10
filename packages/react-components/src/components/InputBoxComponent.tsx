@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useState, ReactNode, FormEvent, useCallback } from 'react';
+import React, { useState, ReactNode, FormEvent } from 'react';
 
 import {
   Stack,
-  TextField,
   mergeStyles,
   IStyle,
   ITextField,
@@ -16,7 +15,6 @@ import {
   ITextFieldProps
 } from '@fluentui/react';
 import { BaseCustomStyles } from '../types';
-import { isEnterKeyEventFromCompositionSession } from './utils';
 
 import {
   inputBoxStyle,
@@ -104,20 +102,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     }
   });
 
-  const onTextFieldKeyDown = useCallback(
-    (ev: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      if (isEnterKeyEventFromCompositionSession(ev)) {
-        return;
-      }
-      if (ev.key === 'Enter' && (ev.shiftKey === false || !supportNewline)) {
-        ev.preventDefault();
-        onEnterKeyDown && onEnterKeyDown();
-      }
-      onKeyDown && onKeyDown(ev);
-    },
-    [onEnterKeyDown, onKeyDown, supportNewline]
-  );
-
   const onRenderChildren = (): JSX.Element => {
     return <>{children}</>;
   };
@@ -158,7 +142,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     }
     return (
       <div style={textFieldProps.errorMessage ? { padding: '0 0 5px 5px' } : undefined}>
-        <RichTextEditor />
+        <RichTextEditor onChange={() => {}} />
       </div>
     );
   };
