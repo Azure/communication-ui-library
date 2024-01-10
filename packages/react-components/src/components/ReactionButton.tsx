@@ -7,8 +7,6 @@ import {
   DefaultPalette,
   IButtonStyles,
   IContextualMenuItem,
-  IContextualMenuItemStyles,
-  IContextualMenuStyles,
   mergeStyles,
   Theme,
   useTheme
@@ -23,12 +21,14 @@ import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 import { useLocale } from '../localization';
 /* @conditional-compile-remove(reaction) */
 import { reactionEmoji } from './utils/videoTileStylesUtils';
+/* @conditional-compile-remove(reaction) */
+import { emojiStyle } from './styles/ReactionButton.styles';
 
 /* @conditional-compile-remove(reaction) */
 /**
  * Props for {@link ReactionButton}.
  *
- * @public
+ * @beta
  */
 export interface ReactionButtonProps extends ControlBarButtonProps {
   /**
@@ -45,7 +45,7 @@ export interface ReactionButtonProps extends ControlBarButtonProps {
 /**
  * Strings of {@link ReactionButton} that can be overridden.
  *
- * @public
+ * @beta
  */
 export interface ReactionButtonStrings {
   /** Label of the button. */
@@ -58,21 +58,11 @@ export interface ReactionButtonStrings {
 
 /* @conditional-compile-remove(reaction) */
 /**
- * Styles for flyouts used by various buttons for device selection flyouts.
- *
- * @internal
- */
-export interface ReactionMenuStyles extends IContextualMenuStyles {
-  menuItemStyles?: IContextualMenuItemStyles;
-}
-
-/* @conditional-compile-remove(reaction) */
-/**
  * A button to send reactions.
  *
  * Can be used with {@link ControlBar}.
  *
- * @public
+ * @beta
  */
 export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
   const localeStrings = useLocale().strings.reactionButton;
@@ -80,12 +70,11 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
   const theme = useTheme();
   const styles = reactionButtonStyles(theme);
   const onRenderIcon = (): JSX.Element => <_HighContrastAwareIcon iconName="Emoji2" />;
-  //const myRef = React.createRef<IContextualMenuRenderItem>();
 
   const [isHoveredMap, setIsHoveredMap] = useState(new Map());
   const emojis = ['like', 'heart', 'laugh', 'applause', 'surprised'];
 
-  const renderEmoji = (item: IContextualMenuItem, dismissMenu: (ev?: any, dismissAll?: boolean) => void) => (
+  const renderEmoji = (item: IContextualMenuItem, dismissMenu: () => void) => (
     <div
       style={{
         display: 'flex',
@@ -106,23 +95,7 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
             });
             dismissMenu();
           }}
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            height: '100%',
-            width: '100%',
-            backgroundImage: reactionEmoji.get(emoji),
-            animation: 'play 8.12s steps(102)',
-            animationPlayState: isHoveredMap.get(emoji) ? 'running' : 'paused',
-            animationIterationCount: 'infinite',
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundPosition: 'center',
-            backgroundSize: `44px 2142px`,
-            transition: 'opacity 2s',
-            backgroundColor: 'transparent',
-            transform: `scale(0.6)`
-          }}
+          style={emojiStyle(reactionEmoji.get(emoji), isHoveredMap.get(emoji) ? 'running' : 'paused')}
           onMouseEnter={() =>
             setIsHoveredMap((prevMap) => {
               return new Map(prevMap).set(emoji, true);

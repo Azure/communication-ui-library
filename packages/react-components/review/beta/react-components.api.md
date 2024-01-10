@@ -1895,16 +1895,16 @@ export type Reaction = {
     receivedAt: Date;
 };
 
-// @public
+// @beta
 export const ReactionButton: (props: ReactionButtonProps) => JSX.Element;
 
-// @public
+// @beta
 export interface ReactionButtonProps extends ControlBarButtonProps {
     onReactionClicked: (emoji: string) => Promise<void>;
     strings?: Partial<ReactionButtonStrings>;
 }
 
-// @public
+// @beta
 export interface ReactionButtonStrings {
     label: string;
     tooltipContent?: string;
