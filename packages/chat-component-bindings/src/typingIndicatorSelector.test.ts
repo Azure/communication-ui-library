@@ -206,7 +206,7 @@ describe('typingIndicatorSelector tests', () => {
         receivedOn: new Date()
       }
     ];
-    const participants = {};
+    const participants: { [key: number]: {} } = {};
     Array.from(Array(20).keys()).forEach(
       (num) => (participants[`${num}`] = { id: `${num}`, displayName: `User${num}` })
     );
