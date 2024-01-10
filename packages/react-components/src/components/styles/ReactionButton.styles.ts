@@ -5,6 +5,12 @@
 import React from 'react';
 
 /* @conditional-compile-remove(reaction) */
+/**
+ * @param backgroundImage - the uri for the reaction emoji resource
+ * @param animationPLayState - the value is either 'running' or 'paused' based on the mouse hover event
+ *
+ * @private
+ */
 export const emojiStyle = (backgroundImage?: string, animationPLayState?: string): React.CSSProperties => {
   return {
     display: 'flex',
