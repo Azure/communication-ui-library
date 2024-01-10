@@ -9,11 +9,7 @@ import { richTextEditorStyle } from '../styles/RichTextEditor.styles';
 /**
  * Props for {@link RichTextEditor}.
  *
-<<<<<<< HEAD
  * @public
-=======
- * @beta
->>>>>>> feature/richTextEditor
  */
 export interface RichTextEditorProps {
   content?: string;
@@ -24,11 +20,7 @@ export interface RichTextEditorProps {
 /**
  * A component to wrap RoosterJS Rich Text Editor.
  *
-<<<<<<< HEAD
  * @public
-=======
- * @beta
->>>>>>> feature/richTextEditor
  */
 export const RichTextEditor = (props: RichTextEditorProps): JSX.Element => {
   const { content, onChange, placeholderText } = props;
