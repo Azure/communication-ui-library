@@ -34,6 +34,7 @@ import { useTheme } from '../theming';
 import { MentionLookupOptions } from './MentionPopover';
 /* @conditional-compile-remove(mention) */
 import { TextFieldWithMention, TextFieldWithMentionProps } from './TextFieldWithMention/TextFieldWithMention';
+import { RichTextEditor } from './RTE/RichTextEditor';
 
 /**
  * @private
@@ -157,19 +158,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     }
     return (
       <div style={textFieldProps.errorMessage ? { padding: '0 0 5px 5px' } : undefined}>
-        <TextField
-          {...textFieldProps}
-          data-ui-id={dataUiId}
-          value={textValue}
-          onChange={onChange}
-          onKeyDown={onTextFieldKeyDown}
-          onFocus={(e) => {
-            // Fix for setting the cursor to the correct position when multiline is true
-            // This approach should be reviewed during migration to FluentUI v9
-            e.currentTarget.value = '';
-            e.currentTarget.value = textValue;
-          }}
-        />
+        <RichTextEditor />
       </div>
     );
   };
