@@ -74,7 +74,7 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
   const [isHoveredMap, setIsHoveredMap] = useState(new Map());
   const emojis = ['like', 'heart', 'laugh', 'applause', 'surprised'];
 
-  const renderEmoji = (item: IContextualMenuItem, dismissMenu: () => void) => (
+  const renderEmoji = (item: IContextualMenuItem, dismissMenu: () => void): React.JSX.Element => (
     <div
       style={{
         display: 'flex',
