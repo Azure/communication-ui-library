@@ -1,9 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useEffect } from 'react';
-
-import { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { IStyle, IButtonStyles, ITextFieldStyles } from '@fluentui/react';
 
 import { IconButton } from '@fluentui/react';
@@ -294,15 +292,17 @@ const DialpadContainer = (props: {
     enableInputEditing
   } = props;
 
-  const [plainTextValue, setPlainTextValue] = useState(textFieldValue ?? '');
-
   const dtmfToneAudioContext = useRef(new AudioContext());
 
+  const [plainTextValue, setPlainTextValue] = useState(textFieldValue ?? '');
+  const plainTextValuePreviousRenderValue = useRef(plainTextValue);
+
   useEffect(() => {
-    if (onChange) {
-      onChange(plainTextValue);
+    if (plainTextValuePreviousRenderValue.current !== plainTextValue) {
+      onChange?.(plainTextValue);
     }
-  }, [plainTextValue, onChange]);
+    plainTextValuePreviousRenderValue.current = plainTextValue;
+  }, [plainTextValuePreviousRenderValue, plainTextValue, onChange]);
 
   useEffect(() => {
     setText(textFieldValue ?? '');
@@ -345,10 +345,11 @@ const DialpadContainer = (props: {
   };
 
   return (
-    <div
+    <Stack
       className={mergeStyles(containerStyles(theme), props.styles?.root)}
       data-test-id="dialpadContainer"
       data-ui-id="dialpadContainer"
+      horizontalAlign={'center'}
     >
       <TextField
         styles={concatStyleSets(textFieldStyles(theme), props.styles?.textField)}
@@ -384,7 +385,7 @@ const DialpadContainer = (props: {
       <FocusZone>
         {dialPadButtonsDefault.map((rows, rowIndex) => {
           return (
-            <Stack horizontal key={`row_${rowIndex}`} horizontalAlign="stretch">
+            <Stack horizontal key={`row_${rowIndex}`} horizontalAlign="stretch" tokens={{ childrenGap: '1rem' }}>
               {rows.map((button, columnIndex) => (
                 <DialpadButton
                   key={`button_${columnIndex}`}
@@ -420,7 +421,7 @@ const DialpadContainer = (props: {
           );
         })}
       </FocusZone>
-    </div>
+    </Stack>
   );
 };
 
