@@ -292,7 +292,6 @@ const DialpadContainer = (props: {
     enableInputEditing
   } = props;
 
-  /* @conditional-compile-remove(dtmf-dialer) */
   const dtmfToneAudioContext = useRef(new AudioContext());
 
   const [plainTextValue, setPlainTextValue] = useState(textFieldValue ?? '');
