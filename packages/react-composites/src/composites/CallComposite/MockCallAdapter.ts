@@ -200,6 +200,14 @@ export class _MockCallAdapter implements CallAdapter {
   submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined> {
     throw Error('submitStarSurvey not implemented');
   }
+  /* @conditional-compile-remove(spotlight) */ // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  onStartSpotlight(userId: string): Promise<void> {
+    throw Error('onStartSpotlight not implemented');
+  }
+  /* @conditional-compile-remove(spotlight) */ // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  onStopSpotlight(userId: string): Promise<void> {
+    throw Error('onStopSpotlight not implemented');
+  }
 }
 
 /**

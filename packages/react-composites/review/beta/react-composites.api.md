@@ -208,6 +208,10 @@ export interface CallAdapterCallOperations {
     leaveCall(forEveryone?: boolean): Promise<void>;
     lowerHand(): Promise<void>;
     mute(): Promise<void>;
+    // @beta
+    onStartSpotlight(userId: string): Promise<void>;
+    // @beta
+    onStopSpotlight(userId: string): Promise<void>;
     raiseHand(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
     // @beta
@@ -683,6 +687,10 @@ export interface CallWithChatAdapterManagement {
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     lowerHand(): Promise<void>;
     mute(): Promise<void>;
+    // @beta
+    onStartSpotlight(userId: string): Promise<void>;
+    // @beta
+    onStopSpotlight(userId: string): Promise<void>;
     queryCameras(): Promise<VideoDeviceInfo[]>;
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
     querySpeakers(): Promise<AudioDeviceInfo[]>;
@@ -1737,7 +1745,11 @@ export class _MockCallAdapter implements CallAdapter {
     // (undocumented)
     on(): void;
     // (undocumented)
+    onStartSpotlight(userId: string): Promise<void>;
+    // (undocumented)
     onStateChange(handler: (state: CallAdapterState) => void): void;
+    // (undocumented)
+    onStopSpotlight(userId: string): Promise<void>;
     // (undocumented)
     queryCameras(): Promise<VideoDeviceInfo[]>;
     // (undocumented)

@@ -36,6 +36,10 @@ import { getRemoteParticipantsExcludingConsumers } from './getRemoteParticipants
 import { getLocalParticipantReactionState } from './baseSelectors';
 /* @conditional-compile-remove(reaction) */
 import { memoizedConvertToVideoTileReaction } from './utils/participantListSelectorUtils';
+/* @conditional-compile-remove(spotlight) */
+import { getSpotlightedParticipants } from './baseSelectors';
+/* @conditional-compile-remove(spotlight) */
+import { SpotlightedParticipant } from '@azure/communication-calling';
 
 /**
  * Selector type for {@link VideoGallery} component.
@@ -52,6 +56,8 @@ export type VideoGallerySelector = (
   dominantSpeakers?: string[];
   /* @conditional-compile-remove(optimal-video-count) */
   optimalVideoCount?: number;
+  /* @conditional-compile-remove(spotlight) */
+  spotlightedParticipants?: string[];
 };
 
 /**
@@ -77,7 +83,9 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     /* @conditional-compile-remove(hide-attendee-name) */
     isHideAttendeeNamesEnabled,
     /* @conditional-compile-remove(reaction) */
-    getLocalParticipantReactionState
+    getLocalParticipantReactionState,
+    /* @conditional-compile-remove(spotlight) */
+    getSpotlightedParticipants
   ],
   (
     screenShareRemoteParticipantId,
@@ -97,7 +105,9 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     /* @conditional-compile-remove(hide-attendee-name) */
     isHideAttendeeNamesEnabled,
     /* @conditional-compile-remove(reaction) */
-    localParticipantReaction
+    localParticipantReaction,
+    /* @conditional-compile-remove(spotlight) */
+    spotlightedParticipants
   ) => {
     const screenShareRemoteParticipant =
       screenShareRemoteParticipantId && remoteParticipants
@@ -147,7 +157,11 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
       ),
       dominantSpeakers: dominantSpeakerIds,
       /* @conditional-compile-remove(optimal-video-count) */
-      maxRemoteVideoStreams: optimalVideoCount
+      maxRemoteVideoStreams: optimalVideoCount,
+      /* @conditional-compile-remove(spotlight) */
+      spotlightedParticipants: spotlightedParticipants
+        ? spotlightedParticipants.map((p: SpotlightedParticipant) => toFlatCommunicationIdentifier(p.identifier))
+        : []
     };
   }
 );

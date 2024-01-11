@@ -665,6 +665,20 @@ export interface CallAdapterCallOperations {
    * @beta
    */
   submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Start spotlight
+   *
+   * @beta
+   */
+  onStartSpotlight(userId: string): Promise<void>;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Stop spotlight
+   *
+   * @beta
+   */
+  onStopSpotlight(userId: string): Promise<void>;
 }
 
 /**

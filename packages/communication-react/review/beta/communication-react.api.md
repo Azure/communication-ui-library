@@ -342,6 +342,10 @@ export interface CallAdapterCallOperations {
     leaveCall(forEveryone?: boolean): Promise<void>;
     lowerHand(): Promise<void>;
     mute(): Promise<void>;
+    // @beta
+    onStartSpotlight(userId: string): Promise<void>;
+    // @beta
+    onStopSpotlight(userId: string): Promise<void>;
     raiseHand(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
     // @beta
@@ -984,6 +988,10 @@ export interface CallWithChatAdapterManagement {
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     lowerHand(): Promise<void>;
     mute(): Promise<void>;
+    // @beta
+    onStartSpotlight(userId: string): Promise<void>;
+    // @beta
+    onStopSpotlight(userId: string): Promise<void>;
     queryCameras(): Promise<VideoDeviceInfo[]>;
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
     querySpeakers(): Promise<AudioDeviceInfo[]>;
@@ -1915,9 +1923,13 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onStartScreenShare: () => Promise<void>;
     // (undocumented)
+    onStartSpotlight: (userId: string) => Promise<void>;
+    // (undocumented)
     onStopCaptions: () => Promise<void>;
     // (undocumented)
     onStopScreenShare: () => Promise<void>;
+    // (undocumented)
+    onStopSpotlight: (userId: string) => Promise<void>;
     // (undocumented)
     onSubmitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
     // (undocumented)
@@ -4334,6 +4346,7 @@ export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSe
     remoteParticipants: VideoGalleryRemoteParticipant[];
     dominantSpeakers?: string[];
     optimalVideoCount?: number;
+    spotlightedParticipants?: string[];
 };
 
 // @public

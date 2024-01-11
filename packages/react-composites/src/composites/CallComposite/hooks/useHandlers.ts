@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { CommonCallingHandlers } from '@internal/calling-component-bindings';
-import { CommonProperties, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { CommonProperties, _toCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { ReactElement } from 'react';
 import memoizeOne from 'memoize-one';
 import { CommonCallAdapter } from '..';
@@ -158,6 +158,14 @@ const createCompositeHandlers = memoizeOne(
     /* @conditional-compile-remove(end-of-call-survey) */
     onSubmitSurvey: async (survey: CallSurvey): Promise<CallSurveyResponse | undefined> => {
       return await adapter.submitSurvey(survey);
+    },
+    /* @conditional-compile-remove(spotlight) */
+    onStartSpotlight: async (userId: string): Promise<void> => {
+      await adapter.onStartSpotlight(userId);
+    },
+    /* @conditional-compile-remove(spotlight) */
+    onStopSpotlight: async (userId: string): Promise<void> => {
+      await adapter.onStopSpotlight(userId);
     }
   })
 );
