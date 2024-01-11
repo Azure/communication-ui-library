@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { ReactNode, useEffect, useMemo, useRef } from 'react';
 import { ContentEdit, Watermark } from 'roosterjs-editor-plugins';
 import { Editor } from 'roosterjs-editor-core';
 import { EditorOptions, IEditor } from 'roosterjs-editor-types';
@@ -15,6 +15,7 @@ export interface RichTextEditorProps {
   content?: string;
   onChange: (newValue?: string) => void;
   placeholderText?: string;
+  children: ReactNode;
 }
 
 /**
