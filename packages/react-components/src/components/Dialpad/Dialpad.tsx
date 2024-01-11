@@ -345,10 +345,11 @@ const DialpadContainer = (props: {
   };
 
   return (
-    <div
+    <Stack
       className={mergeStyles(containerStyles(theme), props.styles?.root)}
       data-test-id="dialpadContainer"
       data-ui-id="dialpadContainer"
+      horizontalAlign={'center'}
     >
       <TextField
         styles={concatStyleSets(textFieldStyles(theme), props.styles?.textField)}
@@ -384,7 +385,7 @@ const DialpadContainer = (props: {
       <FocusZone>
         {dialPadButtonsDefault.map((rows, rowIndex) => {
           return (
-            <Stack horizontal key={`row_${rowIndex}`} horizontalAlign="stretch">
+            <Stack horizontal key={`row_${rowIndex}`} horizontalAlign="stretch" tokens={{ childrenGap: '1rem' }}>
               {rows.map((button, columnIndex) => (
                 <DialpadButton
                   key={`button_${columnIndex}`}
@@ -420,7 +421,7 @@ const DialpadContainer = (props: {
           );
         })}
       </FocusZone>
-    </div>
+    </Stack>
   );
 };
 
