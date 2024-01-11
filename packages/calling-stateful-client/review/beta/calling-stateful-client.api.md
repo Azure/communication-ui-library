@@ -317,13 +317,13 @@ export interface RemoteVideoStreamState {
     view?: VideoStreamRendererViewState;
 }
 
-// @beta (undocumented)
+// @beta
 export interface SpotlightCallFeatureState {
     // (undocumented)
     spotlightedParticipants: SpotlightedParticipant[];
 }
 
-// @beta (undocumented)
+// @beta
 export interface SpotlightState {
     // (undocumented)
     spotlightedOrderPosition?: number;

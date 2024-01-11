@@ -3880,13 +3880,13 @@ export interface SpokenLanguageStrings {
     'zh-tw': string;
 }
 
-// @beta (undocumented)
+// @beta
 export interface SpotlightCallFeatureState {
     // (undocumented)
     spotlightedParticipants: SpotlightedParticipant[];
 }
 
-// @beta (undocumented)
+// @beta
 export interface SpotlightState {
     // (undocumented)
     spotlightedOrderPosition?: number;
