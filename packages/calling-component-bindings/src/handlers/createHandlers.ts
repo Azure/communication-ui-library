@@ -11,8 +11,6 @@ import {
   isMicrosoftTeamsUserIdentifier,
   isPhoneNumberIdentifier
 } from '@azure/communication-common';
-/* @conditional-compile-remove(spotlight) */
-import { Features } from '@azure/communication-calling';
 import { CommunicationIdentifier } from '@azure/communication-common';
 
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
@@ -107,16 +105,6 @@ export const createDefaultCallingHandlers: CreateDefaultCallingHandlers = memoiz
     ): Promise<void> => {
       const participant = _toCommunicationIdentifier(userId);
       await call?.removeParticipant(participant);
-    },
-    /* @conditional-compile-remove(spotlight) */
-    onStartSpotlight: async (userId: string): Promise<void> => {
-      const participant = _toCommunicationIdentifier(userId);
-      await call?.feature(Features.Spotlight).startSpotlight([participant]);
-    },
-    /* @conditional-compile-remove(spotlight) */
-    onStopSpotlight: async (userId: string): Promise<void> => {
-      const participant = _toCommunicationIdentifier(userId);
-      await call?.feature(Features.Spotlight).stopSpotlight([participant]);
     }
   };
 });
