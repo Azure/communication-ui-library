@@ -315,13 +315,13 @@ export type RaiseHandButtonSelector = (state: CallClientState, props: CallingBas
 // @public
 export const raiseHandButtonSelector: RaiseHandButtonSelector;
 
-// @public
+// @beta
 export type ReactionButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     checked?: boolean;
     disabled?: boolean;
 };
 
-// @public
+// @beta
 export const reactionButtonSelector: ReactionButtonSelector;
 
 // @public
