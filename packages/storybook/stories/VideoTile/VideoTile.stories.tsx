@@ -98,7 +98,7 @@ const VideoTileStory = (args): JSX.Element => {
       showMuteIndicator={args.showMuteIndicator}
       showLabel={args.showLabel}
       isMirrored={args.isMirrored}
-      isMuted={true}
+      isMuted={args.isMuted}
       isSpeaking={args.isSpeaking}
       styles={videoTileStyles}
     />
