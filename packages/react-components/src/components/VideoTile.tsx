@@ -235,16 +235,6 @@ const VideoTileMoreOptionsButton = (props: {
   );
 };
 
-/* @conditional-compile-remove(reaction) */
-const styleSheet = document.styleSheets[0];
-/* @conditional-compile-remove(reaction) */
-const keyframes1 = `@keyframes play {
-  from { background-position-y: 8568px; }
-  to { background-position-y: 0px; }
-}`;
-/* @conditional-compile-remove(reaction) */
-styleSheet.insertRule(keyframes1, styleSheet.cssRules.length);
-
 /**
  * A component to render the video stream for a single call participant.
  *
