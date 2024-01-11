@@ -211,6 +211,7 @@ export const memoizeLocalParticipant = memoizeOne(
   })
 );
 
+/* @conditional-compile-remove(spotlight) */
 /** @private */
 export const memoizeSpotlightedParticipantIds = memoizeOne((spotlightedParticipants) =>
   spotlightedParticipants?.map((p: SpotlightedParticipant) => toFlatCommunicationIdentifier(p.identifier))
