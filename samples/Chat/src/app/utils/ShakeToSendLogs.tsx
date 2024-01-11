@@ -35,12 +35,14 @@ const storeLog = (logType: string, log: string | undefined): void => {
   log && logs.push(`${logType} ${new Date().toISOString()} ${log}`.slice(0, logLineCharacterLimit));
 };
 
+type ConsoleLogFuncType = 'log' | 'warn' | 'error' | 'info' | 'debug';
+
 /**
  * Track console logs for pushing to a debug location.
  * This is particularly useful on mobile devices where the console is not easily accessible.
  */
 const startRecordingLogs = (): void => {
-  function hookLogType(logType: string, outputToConsole: boolean): (...args: unknown[]) => void {
+  function hookLogType(logType: ConsoleLogFuncType, outputToConsole: boolean): (...args: unknown[]) => void {
     const original = console[logType].bind(console);
     return function (...args: unknown[]) {
       storeLog(logType, safeJSONStringify(args));
