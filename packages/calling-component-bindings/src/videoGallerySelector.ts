@@ -29,6 +29,8 @@ import {
   convertRemoteParticipantToVideoGalleryRemoteParticipant,
   memoizeLocalParticipant
 } from './utils/videoGalleryUtils';
+/* @conditional-compile-remove(spotlight) */
+import { memoizeSpotlightedParticipantIds } from './utils/videoGalleryUtils';
 /* @conditional-compile-remove(raise-hand) */
 import { getLocalParticipantRaisedHand } from './baseSelectors';
 import { getRemoteParticipantsExcludingConsumers } from './getRemoteParticipantsExcludingConsumers';
@@ -38,8 +40,6 @@ import { getLocalParticipantReactionState } from './baseSelectors';
 import { memoizedConvertToVideoTileReaction } from './utils/participantListSelectorUtils';
 /* @conditional-compile-remove(spotlight) */
 import { getSpotlightedParticipants } from './baseSelectors';
-/* @conditional-compile-remove(spotlight) */
-import { SpotlightedParticipant } from '@azure/communication-calling';
 
 /**
  * Selector type for {@link VideoGallery} component.
@@ -121,6 +121,8 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     const noRemoteParticipants: RemoteParticipantState[] = [];
     /* @conditional-compile-remove(reaction) */
     const localParticipantReactionState = memoizedConvertToVideoTileReaction(localParticipantReaction);
+    /* @conditional-compile-remove(spotlight) */
+    const spotlightedParticipantIds = memoizeSpotlightedParticipantIds(spotlightedParticipants);
 
     return {
       screenShareParticipant: screenShareRemoteParticipant
@@ -159,9 +161,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
       /* @conditional-compile-remove(optimal-video-count) */
       maxRemoteVideoStreams: optimalVideoCount,
       /* @conditional-compile-remove(spotlight) */
-      spotlightedParticipants: spotlightedParticipants
-        ? spotlightedParticipants.map((p: SpotlightedParticipant) => toFlatCommunicationIdentifier(p.identifier))
-        : []
+      spotlightedParticipants: spotlightedParticipantIds
     };
   }
 );

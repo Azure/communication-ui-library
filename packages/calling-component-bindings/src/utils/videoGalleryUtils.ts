@@ -5,6 +5,8 @@ import {
   DominantSpeakersInfo,
   RemoteParticipantState as RemoteParticipantConnectionState
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(spotlight) */
+import { SpotlightedParticipant } from '@azure/communication-calling';
 /* @conditional-compile-remove(hide-attendee-name) */
 import { ParticipantRole } from '@azure/communication-calling';
 import { memoizeFnAll, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
@@ -207,4 +209,9 @@ export const memoizeLocalParticipant = memoizeOne(
     /* @conditional-compile-remove(reaction) */
     reaction: reaction
   })
+);
+
+/** @private */
+export const memoizeSpotlightedParticipantIds = memoizeOne((spotlightedParticipants) =>
+  spotlightedParticipants?.map((p: SpotlightedParticipant) => toFlatCommunicationIdentifier(p.identifier))
 );
