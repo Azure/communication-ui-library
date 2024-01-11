@@ -10,7 +10,6 @@ import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { controlsToAdd, hiddenControl } from '../controlsUtils';
 import { VideoTileExample as VideoTileStylineExample } from '../Styling/snippets/StylingVideoTile.snippet';
 import { useVideoStreams } from '../utils';
-import { ReactionAnimationVideoTile } from './snippets/ReactionAnimationVideoTile.snippet';
 import { VideoTileExample } from './snippets/VideoTile.snippet';
 import { VideoTileMenuItemsExample } from './snippets/VideoTileMenuItems.snippet';
 import { VideoTilePlaceholderExample } from './snippets/VideoTilePlaceholder.snippet';
@@ -71,16 +70,6 @@ const getDocs: () => JSX.Element = () => {
       <Canvas mdxSource={VideoTileMenuItemsExampleText}>
         <VideoTileMenuItemsExample />
       </Canvas>
-
-      <Heading>Reaction Animation for Video Tile</Heading>
-      <Description>
-        A video tile component that is used in the video gallery, represents each user in the meeting. If that particular participant 
-        sends a reaction in the meeting, the reaction is supposed to float on the video tile. 
-      </Description>
-      <Canvas>
-        <ReactionAnimationVideoTile />
-      </Canvas>
-
 
       <Heading>Props</Heading>
       <Props of={VideoTileComponent} />
