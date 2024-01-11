@@ -49,7 +49,7 @@ export interface TextFieldWithMentionProps {
   textFieldProps: ITextFieldProps;
   dataUiId?: string;
   textValue: string; // This could be plain text or HTML.
-  onChange: (event?: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => void;
+  onChange: (newValue?: string) => void; // (event?: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => void;
   onKeyDown?: (ev: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onEnterKeyDown?: () => void;
   textFieldRef?: React.RefObject<ITextField>;
@@ -192,7 +192,7 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
       // set focus back to text field
       textFieldRef?.current?.focus();
       setActiveSuggestionIndex(undefined);
-      onChange && onChange(undefined, updatedContent.updatedHTML);
+      onChange && onChange(updatedContent.updatedHTML);
     },
     [
       textFieldRef,
@@ -637,7 +637,7 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
         setSelectionStartValue(updatedContent.updatedSelectionIndex);
       }
 
-      onChange && onChange(event, updatedContent.updatedHTML);
+      onChange && onChange(updatedContent.updatedHTML);
     },
     [debouncedQueryUpdate, mentionLookupOptions, onChange, updateMentionSuggestions]
   );
