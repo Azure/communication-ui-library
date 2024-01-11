@@ -3,6 +3,8 @@
 
 import React from 'react';
 import { RTEInputBoxComponent } from './RTEInputBoxComponent';
+import { Stack, mergeStyles, useTheme } from '@fluentui/react';
+import { borderAndBoxShadowStyle } from '../styles/RTESendBox.styles';
 
 /**
  * Props for {@link RTESendBox}.
@@ -10,6 +12,12 @@ import { RTEInputBoxComponent } from './RTEInputBoxComponent';
  * @beta
  */
 export interface RTESendBoxProps {
+  /**
+   * Optional boolean to disable text box
+   * @defaultValue false
+   */
+  disabled?: boolean;
+
   // just a value to be displayed for now but it should be deleted when the component development starts
   valueToDisplay?: string;
 }
@@ -20,11 +28,22 @@ export interface RTESendBoxProps {
  * @beta
  */
 export const RTESendBox = (props: RTESendBoxProps): JSX.Element => {
-  const { valueToDisplay = 'Enter a message' } = props;
+  const { disabled, valueToDisplay = 'Enter a message' } = props;
+
+  const theme = useTheme();
+  const errorMessage = ''; // TODO: add error message
 
   return (
-    <div>
+    <Stack
+      className={mergeStyles(
+        borderAndBoxShadowStyle({
+          theme,
+          hasErrorMessage: !!errorMessage,
+          disabled: !!disabled
+        })
+      )}
+    >
       <RTEInputBoxComponent textValue={valueToDisplay} />
-    </div>
+    </Stack>
   );
 };
