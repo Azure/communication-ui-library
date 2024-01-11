@@ -124,7 +124,7 @@
     "tooltipOffContent": "Raise Hand"
   },
   "reactionButton": {
-    "label": "React",
+    "label": "Send a reaction",
     "tooltipDisabledContent": "Reaction action is disabled",
     "tooltipContent": "Send a reaction"
   },
