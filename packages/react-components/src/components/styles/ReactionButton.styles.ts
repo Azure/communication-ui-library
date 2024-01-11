@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(reaction) */
-import React from 'react';
+import { IStackItemStyles, IStackStyles } from '@fluentui/react';
 
 /* @conditional-compile-remove(reaction) */
 /**
@@ -11,23 +11,25 @@ import React from 'react';
  *
  * @private
  */
-export const emojiStyles = (backgroundImage?: string, animationPLayState?: string): React.CSSProperties => {
+export const emojiStyles = (backgroundImage?: string, animationPLayState?: string): IStackItemStyles => {
   return {
-    display: 'flex',
-    flexDirection: 'column',
-    height: '100%',
-    width: '100%',
-    backgroundImage: backgroundImage,
-    animation: 'play 8.12s steps(102)',
-    animationPlayState: animationPLayState,
-    animationIterationCount: 'infinite',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundPosition: 'center',
-    backgroundSize: `44px 2142px`,
-    transition: 'opacity 2s',
-    backgroundColor: 'transparent',
-    transform: `scale(0.6)`
+    root: {
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100%',
+      width: '100%',
+      backgroundImage: backgroundImage,
+      animation: 'play 8.12s steps(102)',
+      animationPlayState: animationPLayState,
+      animationIterationCount: 'infinite',
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundPosition: 'center',
+      backgroundSize: `44px 2142px`,
+      transition: 'opacity 2s',
+      backgroundColor: 'transparent',
+      transform: `scale(0.6)`
+    }
   };
 };
 
@@ -36,13 +38,15 @@ export const emojiStyles = (backgroundImage?: string, animationPLayState?: strin
  *
  * @private
  */
-export const reactionEmojiMenuStyles = (): React.CSSProperties => {
+export const reactionEmojiMenuStyles = (): IStackStyles => {
   return {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-    width: '220px',
-    height: '42px'
+    root: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      flexDirection: 'row',
+      width: '220px',
+      height: '42px'
+    }
   };
 };

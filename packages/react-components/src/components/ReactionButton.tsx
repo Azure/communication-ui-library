@@ -8,6 +8,7 @@ import {
   IButtonStyles,
   IContextualMenuItem,
   mergeStyles,
+  Stack,
   Theme,
   useTheme
 } from '@fluentui/react';
@@ -75,9 +76,9 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
   const emojis = ['like', 'heart', 'laugh', 'applause', 'surprised'];
 
   const renderEmoji = (item: IContextualMenuItem, dismissMenu: () => void): React.JSX.Element => (
-    <div style={reactionEmojiMenuStyles()}>
+    <Stack styles={reactionEmojiMenuStyles()}>
       {emojis.map((emoji, index) => (
-        <div
+        <Stack.Item
           key={index}
           onClick={() => {
             props.onReactionClicked(emoji);
@@ -86,7 +87,7 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
             });
             dismissMenu();
           }}
-          style={emojiStyles(reactionEmoji.get(emoji), isHoveredMap.get(emoji) ? 'running' : 'paused')}
+          styles={emojiStyles(reactionEmoji.get(emoji), isHoveredMap.get(emoji) ? 'running' : 'paused')}
           onMouseEnter={() =>
             setIsHoveredMap((prevMap) => {
               return new Map(prevMap).set(emoji, true);
@@ -99,7 +100,7 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
           }
         />
       ))}
-    </div>
+    </Stack>
   );
 
   const emojiList: IContextualMenuItem[] = [
@@ -125,13 +126,11 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
 const reactionButtonStyles = (theme: Theme): IButtonStyles => ({
   rootChecked: {
     background: theme.palette.themePrimary,
-    color: DefaultPalette.white,
-    ':focus::after': { outlineColor: `${DefaultPalette.white}` }
+    color: DefaultPalette.white
   },
   rootCheckedHovered: {
     background: theme.palette.themePrimary,
-    color: DefaultPalette.white,
-    ':focus::after': { outlineColor: `${DefaultPalette.white}` }
+    color: DefaultPalette.white
   },
   labelChecked: { color: DefaultPalette.white }
 });
