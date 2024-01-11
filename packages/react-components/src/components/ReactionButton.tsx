@@ -8,7 +8,6 @@ import {
   IButtonStyles,
   IContextualMenuItem,
   mergeStyles,
-  Stack,
   Theme,
   useTheme
 } from '@fluentui/react';
