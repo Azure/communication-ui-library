@@ -13,7 +13,7 @@ import {
   RemoteParticipantState,
   LocalVideoStreamState,
   CallErrors,
-  DiagnosticsCallFeatureState,
+  DiagnosticsCallFeatureState
 } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(reaction) */
 import { ReactionState } from '@internal/calling-stateful-client';

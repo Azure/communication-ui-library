@@ -49,7 +49,7 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     this.callWithChatAdapter = callWithChatAdapter;
   }
   onReactionClicked(emoji: string): Promise<void> {
-    throw new Error('Method not implemented.');
+    throw new Error(`Reaction of type ${emoji} send not successful.`);
   }
 
   public on = (event: any, listener: any): void => {

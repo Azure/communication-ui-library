@@ -8,7 +8,7 @@ import {
   getDisplayName,
   getIsScreenSharingOn,
   getIsMuted,
-  CallingBaseSelectorProps,
+  CallingBaseSelectorProps
 } from './baseSelectors';
 import { getRole } from './baseSelectors';
 /* @conditional-compile-remove(hide-attendee-name) */
