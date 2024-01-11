@@ -68,6 +68,7 @@ const createCompositeHandlers = memoizeOne(
         ? await adapter.lowerHand()
         : await adapter.raiseHand();
     },
+    /* @conditional-compile-remove(reaction) */
     onReactionClicked: async (emoji: string) => {
       await adapter.onReactionClicked(emoji);
     },

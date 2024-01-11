@@ -47,6 +47,7 @@ import {
   generateCustomCallDesktopOverflowButtons,
   onFetchCustomButtonPropsTrampoline
 } from '../../common/ControlBar/CustomButton';
+/* @conditional-compile-remove(reaction) */
 import { Reaction } from './buttons/Reaction';
 /**
  * @private
@@ -403,6 +404,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
               )
           }
           {
+            /* @conditional-compile-remove(reaction) */
             <Reaction displayType={options?.displayType} />
           }
           {screenShareButtonIsEnabled && (

@@ -10,9 +10,10 @@ import {
   getDeviceManager,
   getIsMuted,
   getIsScreenSharingOn,
-  getLocalParticipantReactionState,
   getLocalVideoStreams
 } from './baseSelectors';
+/* @conditional-compile-remove(reaction) */
+import { getLocalParticipantReactionState } from './baseSelectors';
 /* @conditional-compile-remove(capabilities) */
 import { getCapabilites, getRole } from './baseSelectors';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(raise-hand) */
