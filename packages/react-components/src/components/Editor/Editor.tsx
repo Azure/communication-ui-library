@@ -19,7 +19,7 @@ import KeyDownPlugin from './Plugins/customizedPlugins';
 import { MentionLookupOptions, _MentionPopover } from '../MentionPopover';
 import MentionPlugin from './Plugins/MentionPlugin';
 
-export interface RichTextEditorProps extends EditorOptions, React.HTMLAttributes<HTMLDivElement> {
+export interface RichTextEditorProps {
   content?: string;
   'data-ui-id'?: string;
   onChange: (newValue?: string) => void;
@@ -30,9 +30,8 @@ export interface RichTextEditorProps extends EditorOptions, React.HTMLAttributes
   disabled?: boolean;
   autoFocus?: boolean;
 }
-const RichTextEditor: React.FC<RichTextEditorProps> = (props) => {
+const RichTextEditor = (props: RichTextEditorProps): JSX.Element => {
   const { content, onChange, mentionLookupOptions, children, placeholderText, disabled, autoFocus, onKeyDown } = props;
-  const editorDiv = React.useRef<HTMLDivElement>(null);
   const editor = React.useRef<IEditor | null>(null);
   const ribbonPlugin = React.useMemo(() => createRibbonPlugin(), []);
   const editorRef = React.useRef<HTMLInputElement>(null);
