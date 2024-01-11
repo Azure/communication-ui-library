@@ -34,6 +34,7 @@ import { useTheme } from '../theming';
 import { MentionLookupOptions } from './MentionPopover';
 /* @conditional-compile-remove(mention) */
 import { TextFieldWithMention, TextFieldWithMentionProps } from './TextFieldWithMention/TextFieldWithMention';
+import { RichTextEditor } from './RTE/RichTextEditor';
 
 /**
  * @private
@@ -54,7 +55,7 @@ type InputBoxComponentProps = {
   'data-ui-id'?: string;
   id?: string;
   textValue: string; // This could be plain text or HTML.
-  onChange: (event?: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => void;
+  onChange: (newValue?: string) => void; // (event?: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => void;
   textFieldRef?: React.RefObject<ITextField>;
   inputClassName?: string;
   placeholderText?: string;
@@ -157,7 +158,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     }
     return (
       <div style={textFieldProps.errorMessage ? { padding: '0 0 5px 5px' } : undefined}>
-        <TextField
+        {/* <TextField
           {...textFieldProps}
           data-ui-id={dataUiId}
           value={textValue}
@@ -169,7 +170,10 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             e.currentTarget.value = '';
             e.currentTarget.value = textValue;
           }}
-        />
+        /> */}
+        <RichTextEditor content={textValue} onChange={onChange} placeholderText={placeholderText}>
+          {onRenderChildren}
+        </RichTextEditor>
       </div>
     );
   };
