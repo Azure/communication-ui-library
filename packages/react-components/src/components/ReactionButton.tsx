@@ -76,9 +76,9 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
   const emojis = ['like', 'heart', 'laugh', 'applause', 'surprised'];
 
   const renderEmoji = (item: IContextualMenuItem, dismissMenu: () => void): React.JSX.Element => (
-    <Stack styles={reactionEmojiMenuStyles()}>
+    <div style={reactionEmojiMenuStyles()}>
       {emojis.map((emoji, index) => (
-        <Stack.Item
+        <div
           key={index}
           onClick={() => {
             props.onReactionClicked(emoji);
@@ -87,7 +87,7 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
             });
             dismissMenu();
           }}
-          styles={emojiStyles(reactionEmoji.get(emoji), isHoveredMap.get(emoji) ? 'running' : 'paused')}
+          style={emojiStyles(reactionEmoji.get(emoji), isHoveredMap.get(emoji) ? 'running' : 'paused')}
           onMouseEnter={() =>
             setIsHoveredMap((prevMap) => {
               return new Map(prevMap).set(emoji, true);
@@ -100,7 +100,7 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
           }
         />
       ))}
-    </Stack>
+    </div>
   );
 
   const emojiList: IContextualMenuItem[] = [
