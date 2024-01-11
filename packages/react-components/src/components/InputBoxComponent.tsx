@@ -156,6 +156,8 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     if (props.mentionLookupOptions) {
       return <TextFieldWithMention {...textFieldWithMentionProps} />;
     }
+
+    const condition = false;
     return (
       <div style={textFieldProps.errorMessage ? { padding: '0 0 5px 5px' } : undefined}>
         <TextField
@@ -171,7 +173,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             e.currentTarget.value = textValue;
           }}
         />
-        <RichTextEditor onChange={() => {}} />
+        {condition && <RichTextEditor onChange={() => {}} />}
       </div>
     );
   };
