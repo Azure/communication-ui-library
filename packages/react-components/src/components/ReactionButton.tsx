@@ -22,7 +22,7 @@ import { useLocale } from '../localization';
 /* @conditional-compile-remove(reaction) */
 import { reactionEmoji } from './utils/videoTileStylesUtils';
 /* @conditional-compile-remove(reaction) */
-import { emojiStyle } from './styles/ReactionButton.styles';
+import { emojiStyles, reactionEmojiMenuStyles } from './styles/ReactionButton.styles';
 
 /* @conditional-compile-remove(reaction) */
 /**
@@ -69,22 +69,13 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
   const strings = { ...localeStrings, ...props.strings };
   const theme = useTheme();
   const styles = reactionButtonStyles(theme);
-  const onRenderIcon = (): JSX.Element => <_HighContrastAwareIcon iconName="Emoji2" />;
+  const onRenderIcon = (): JSX.Element => <_HighContrastAwareIcon iconName="ReactionButtonIcon" />;
 
   const [isHoveredMap, setIsHoveredMap] = useState(new Map());
   const emojis = ['like', 'heart', 'laugh', 'applause', 'surprised'];
 
   const renderEmoji = (item: IContextualMenuItem, dismissMenu: () => void): React.JSX.Element => (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'row',
-        width: '220px',
-        height: '42px'
-      }}
-    >
+    <div style={reactionEmojiMenuStyles()}>
       {emojis.map((emoji, index) => (
         <div
           key={index}
@@ -95,7 +86,7 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
             });
             dismissMenu();
           }}
-          style={emojiStyle(reactionEmoji.get(emoji), isHoveredMap.get(emoji) ? 'running' : 'paused')}
+          style={emojiStyles(reactionEmoji.get(emoji), isHoveredMap.get(emoji) ? 'running' : 'paused')}
           onMouseEnter={() =>
             setIsHoveredMap((prevMap) => {
               return new Map(prevMap).set(emoji, true);

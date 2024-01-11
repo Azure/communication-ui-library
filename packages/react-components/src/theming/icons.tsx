@@ -42,6 +42,8 @@ import {
   MicProhibited16Filled,
   VideoProhibited16Filled
 } from '@fluentui/react-icons';
+/* @conditional-compile-remove(reaction) */
+import { Emoji20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { Star28Regular, Star28Filled } from '@fluentui/react-icons';
 /* @conditional-compile-remove(raise-hand) */
@@ -253,6 +255,8 @@ export const DEFAULT_COMPONENT_ICONS = {
   RaiseHandContextualMenuItem: <HandRight20Regular />,
   /* @conditional-compile-remove(raise-hand) */
   LowerHandContextualMenuItem: <HandRightOff20Regular />,
+  /* @conditional-compile-remove(reaction) */
+  ReactionButtonIcon: <Emoji20Regular />,
   /* @conditional-compile-remove(file-sharing) */
   CancelFileUpload: <Dismiss16Regular />,
   /* @conditional-compile-remove(file-sharing) */

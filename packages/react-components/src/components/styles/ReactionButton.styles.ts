@@ -11,7 +11,7 @@ import React from 'react';
  *
  * @private
  */
-export const emojiStyle = (backgroundImage?: string, animationPLayState?: string): React.CSSProperties => {
+export const emojiStyles = (backgroundImage?: string, animationPLayState?: string): React.CSSProperties => {
   return {
     display: 'flex',
     flexDirection: 'column',
@@ -28,5 +28,21 @@ export const emojiStyle = (backgroundImage?: string, animationPLayState?: string
     transition: 'opacity 2s',
     backgroundColor: 'transparent',
     transform: `scale(0.6)`
+  };
+};
+
+/* @conditional-compile-remove(reaction) */
+/**
+ *
+ * @private
+ */
+export const reactionEmojiMenuStyles = (): React.CSSProperties => {
+  return {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    width: '220px',
+    height: '42px'
   };
 };
