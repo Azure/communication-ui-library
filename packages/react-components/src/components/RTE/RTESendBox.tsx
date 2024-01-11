@@ -20,7 +20,7 @@ export interface RTESendBoxProps {
  * @beta
  */
 export const RTESendBox = (props: RTESendBoxProps): JSX.Element => {
-  const { valueToDisplay = 'Hello World!' } = props;
+  const { valueToDisplay = 'Enter a message' } = props;
 
   return (
     <div>

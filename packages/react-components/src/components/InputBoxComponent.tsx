@@ -155,7 +155,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     if (props.mentionLookupOptions) {
       return <TextFieldWithMention {...textFieldWithMentionProps} />;
     }
-    f(
+    return (
       <div style={textFieldProps.errorMessage ? { padding: '0 0 5px 5px' } : undefined}>
         <TextField
           {...textFieldProps}
