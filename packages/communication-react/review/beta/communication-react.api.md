@@ -342,10 +342,6 @@ export interface CallAdapterCallOperations {
     leaveCall(forEveryone?: boolean): Promise<void>;
     lowerHand(): Promise<void>;
     mute(): Promise<void>;
-    // @beta
-    onStartSpotlight(userId: string): Promise<void>;
-    // @beta
-    onStopSpotlight(userId: string): Promise<void>;
     raiseHand(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
     // @beta
@@ -359,10 +355,14 @@ export interface CallAdapterCallOperations {
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startCaptions(options?: StartCaptionsOptions): Promise<void>;
     startScreenShare(): Promise<void>;
+    // @beta
+    startSpotlight(userId: string): Promise<void>;
     startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
     stopCamera(): Promise<void>;
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
+    // @beta
+    stopSpotlight(userId: string): Promise<void>;
     stopVideoBackgroundEffects(): Promise<void>;
     // @beta
     submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
@@ -988,10 +988,6 @@ export interface CallWithChatAdapterManagement {
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     lowerHand(): Promise<void>;
     mute(): Promise<void>;
-    // @beta
-    onStartSpotlight(userId: string): Promise<void>;
-    // @beta
-    onStopSpotlight(userId: string): Promise<void>;
     queryCameras(): Promise<VideoDeviceInfo[]>;
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
     querySpeakers(): Promise<AudioDeviceInfo[]>;
@@ -1021,10 +1017,14 @@ export interface CallWithChatAdapterManagement {
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startCaptions(options?: StartCaptionsOptions): Promise<void>;
     startScreenShare(): Promise<void>;
+    // @beta
+    startSpotlight(userId: string): Promise<void>;
     startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
     stopCamera(): Promise<void>;
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
+    // @beta
+    stopSpotlight(userId: string): Promise<void>;
     stopVideoBackgroundEffects(): Promise<void>;
     // @beta
     submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;

@@ -161,11 +161,11 @@ const createCompositeHandlers = memoizeOne(
     },
     /* @conditional-compile-remove(spotlight) */
     onStartSpotlight: async (userId: string): Promise<void> => {
-      await adapter.onStartSpotlight(userId);
+      await adapter.startSpotlight(userId);
     },
     /* @conditional-compile-remove(spotlight) */
     onStopSpotlight: async (userId: string): Promise<void> => {
-      await adapter.onStopSpotlight(userId);
+      await adapter.stopSpotlight(userId);
     }
   })
 );

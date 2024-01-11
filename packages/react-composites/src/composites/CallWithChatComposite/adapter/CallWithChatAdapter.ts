@@ -476,14 +476,14 @@ export interface CallWithChatAdapterManagement {
    *
    * @beta
    */
-  onStartSpotlight(userId: string): Promise<void>;
+  startSpotlight(userId: string): Promise<void>;
   /* @conditional-compile-remove(spotlight) */
   /**
    * Stop spotlight
    *
    * @beta
    */
-  onStopSpotlight(userId: string): Promise<void>;
+  stopSpotlight(userId: string): Promise<void>;
 }
 
 /**
