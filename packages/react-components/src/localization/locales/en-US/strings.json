@@ -124,9 +124,9 @@
     "tooltipOffContent": "Raise Hand"
   },
   "reactionButton": {
-    "label": "Send a reaction",
+    "label": "React",
     "tooltipDisabledContent": "Reaction action is disabled",
-    "tooltipContent": "Reaction action"
+    "tooltipContent": "Send a reaction"
   },
   "messageThread": {
     "yesterday": "Yesterday",

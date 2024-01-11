@@ -125,13 +125,11 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
 const reactionButtonStyles = (theme: Theme): IButtonStyles => ({
   rootChecked: {
     background: theme.palette.themePrimary,
-    color: DefaultPalette.white,
-    ':focus::after': { outlineColor: `${DefaultPalette.white}` }
+    color: DefaultPalette.white
   },
   rootCheckedHovered: {
     background: theme.palette.themePrimary,
-    color: DefaultPalette.white,
-    ':focus::after': { outlineColor: `${DefaultPalette.white}` }
+    color: DefaultPalette.white
   },
   labelChecked: { color: DefaultPalette.white }
 });
