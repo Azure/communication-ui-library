@@ -226,7 +226,7 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
   );
 
   const fileDownloadHandler = useCallback(
-    async (userId, file: AttachmentMetadata) => {
+    async (userId: string, file: AttachmentMetadata) => {
       if (!props.downloadHandler) {
         window.open(file.url, '_blank', 'noopener,noreferrer');
       } else {
