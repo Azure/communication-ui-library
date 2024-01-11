@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import React from 'react';
+import { RTEInputBoxComponent } from './RTEInputBoxComponent';
 
 /**
  * Props for {@link RTESendBox}.
@@ -20,5 +21,10 @@ export interface RTESendBoxProps {
  */
 export const RTESendBox = (props: RTESendBoxProps): JSX.Element => {
   const { valueToDisplay = 'Hello World!' } = props;
-  return <div>{valueToDisplay}</div>;
+
+  return (
+    <div>
+      <RTEInputBoxComponent textValue={valueToDisplay} />
+    </div>
+  );
 };

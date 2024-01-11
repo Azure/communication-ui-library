@@ -3,6 +3,7 @@
 
 import React from 'react';
 import { BaseCustomStyles } from '../../types';
+import { RichTextEditor } from './RichTextEditor';
 
 /**
  * @private
@@ -12,17 +13,21 @@ export interface RTEInputBoxComponentStylesProps extends BaseCustomStyles {}
 /**
  * @private
  */
-export interface RTEInputBoxComponentProps {}
+export interface RTEInputBoxComponentProps {
+  textValue: string;
+}
 
 /**
  * @private
  */
 export const RTEInputBoxComponent = (props: RTEInputBoxComponentProps): JSX.Element => {
-  const {} = props;
+  const { textValue } = props;
 
   return (
     <div>
-      <div>TODO: RTEInputBoxComponent</div>
+      <RichTextEditor content={textValue} onChange={() => {}}>
+        <div>Children</div>
+      </RichTextEditor>
     </div>
   );
 };
