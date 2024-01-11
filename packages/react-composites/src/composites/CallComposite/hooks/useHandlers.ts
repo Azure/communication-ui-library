@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { CommonCallingHandlers } from '@internal/calling-component-bindings';
-import { CommonProperties, _toCommunicationIdentifier, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { CommonProperties, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { ReactElement } from 'react';
 import memoizeOne from 'memoize-one';
 import { CommonCallAdapter } from '..';
