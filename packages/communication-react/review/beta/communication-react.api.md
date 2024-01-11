@@ -530,6 +530,7 @@ export type CallCompositeIcons = {
     ControlButtonLowerHand?: JSX.Element;
     RaiseHandContextualMenuItem?: JSX.Element;
     LowerHandContextualMenuItem?: JSX.Element;
+    ReactionButtonIcon?: JSX.Element;
     ErrorBarCallCameraAccessDenied?: JSX.Element;
     ErrorBarCallCameraAlreadyInUse?: JSX.Element;
     ErrorBarCallLocalVideoFreeze?: JSX.Element;
@@ -2062,6 +2063,7 @@ export interface ComponentStrings {
     ParticipantList: ParticipantListStrings;
     participantsButton: ParticipantsButtonStrings;
     raiseHandButton: RaiseHandButtonStrings;
+    reactionButton: ReactionButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
@@ -2342,6 +2344,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     ControlButtonLowerHand: React_2.JSX.Element;
     RaiseHandContextualMenuItem: React_2.JSX.Element;
     LowerHandContextualMenuItem: React_2.JSX.Element;
+    ReactionButtonIcon: React_2.JSX.Element;
     CancelFileUpload: React_2.JSX.Element;
     DownloadFile: React_2.JSX.Element;
     DataLossPreventionProhibited: React_2.JSX.Element;
@@ -2448,6 +2451,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ControlButtonLowerHand: JSX.Element;
     RaiseHandContextualMenuItem: JSX.Element;
     LowerHandContextualMenuItem: JSX.Element;
+    ReactionButtonIcon: JSX.Element;
     ErrorBarCallCameraAccessDenied: JSX.Element;
     ErrorBarCallCameraAlreadyInUse: JSX.Element;
     ErrorBarCallLocalVideoFreeze: JSX.Element;
@@ -3631,6 +3635,19 @@ export type Reaction = {
     reactionType: string;
     receivedAt: Date;
 };
+
+// @beta
+export interface ReactionButtonProps extends ControlBarButtonProps {
+    onReactionClicked: (emoji: string) => Promise<void>;
+    strings?: Partial<ReactionButtonStrings>;
+}
+
+// @beta
+export interface ReactionButtonStrings {
+    label: string;
+    tooltipContent?: string;
+    tooltipDisabledContent?: string;
+}
 
 // @beta
 export type ReactionState = {

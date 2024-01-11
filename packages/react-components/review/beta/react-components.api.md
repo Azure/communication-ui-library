@@ -667,6 +667,7 @@ export interface ComponentStrings {
     ParticipantList: ParticipantListStrings;
     participantsButton: ParticipantsButtonStrings;
     raiseHandButton: RaiseHandButtonStrings;
+    reactionButton: ReactionButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
@@ -777,6 +778,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     ControlButtonLowerHand: React_2.JSX.Element;
     RaiseHandContextualMenuItem: React_2.JSX.Element;
     LowerHandContextualMenuItem: React_2.JSX.Element;
+    ReactionButtonIcon: React_2.JSX.Element;
     CancelFileUpload: React_2.JSX.Element;
     DownloadFile: React_2.JSX.Element;
     DataLossPreventionProhibited: React_2.JSX.Element;
@@ -1893,6 +1895,22 @@ export type Reaction = {
     reactionType: string;
     receivedAt: Date;
 };
+
+// @beta
+export const ReactionButton: (props: ReactionButtonProps) => JSX.Element;
+
+// @beta
+export interface ReactionButtonProps extends ControlBarButtonProps {
+    onReactionClicked: (emoji: string) => Promise<void>;
+    strings?: Partial<ReactionButtonStrings>;
+}
+
+// @beta
+export interface ReactionButtonStrings {
+    label: string;
+    tooltipContent?: string;
+    tooltipDisabledContent?: string;
+}
 
 // @public
 export type ReadReceiptsBySenderId = {
