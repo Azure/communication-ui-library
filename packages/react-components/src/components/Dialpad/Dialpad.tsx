@@ -1,9 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useEffect } from 'react';
-
-import { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { IStyle, IButtonStyles, ITextFieldStyles } from '@fluentui/react';
 
 import { IconButton } from '@fluentui/react';
@@ -294,15 +292,17 @@ const DialpadContainer = (props: {
     enableInputEditing
   } = props;
 
-  const [plainTextValue, setPlainTextValue] = useState(textFieldValue ?? '');
-
   const dtmfToneAudioContext = useRef(new AudioContext());
 
+  const [plainTextValue, setPlainTextValue] = useState(textFieldValue ?? '');
+  const plainTextValuePreviousRenderValue = useRef(plainTextValue);
+
   useEffect(() => {
-    if (onChange) {
-      onChange(plainTextValue);
+    if (plainTextValuePreviousRenderValue.current !== plainTextValue) {
+      onChange?.(plainTextValue);
     }
-  }, [plainTextValue, onChange]);
+    plainTextValuePreviousRenderValue.current = plainTextValue;
+  }, [plainTextValuePreviousRenderValue, plainTextValue, onChange]);
 
   useEffect(() => {
     setText(textFieldValue ?? '');
