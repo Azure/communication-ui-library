@@ -24,11 +24,11 @@ export const playFrames = memoizeFunction(() =>
 /* @conditional-compile-remove(reaction) */
 /**
  * @param backgroundImage - the uri for the reaction emoji resource
- * @param animationPLayState - the value is either 'running' or 'paused' based on the mouse hover event
+ * @param animationPlayState - the value is either 'running' or 'paused' based on the mouse hover event
  *
  * @private
  */
-export const emojiStyles = (backgroundImage?: string, animationPLayState?: string): React.CSSProperties => {
+export const emojiStyles = (backgroundImage?: string, animationPlayState?: string): React.CSSProperties => {
   return {
     display: 'flex',
     flexDirection: 'column',
@@ -38,7 +38,7 @@ export const emojiStyles = (backgroundImage?: string, animationPLayState?: strin
     animationName: playFrames(),
     animationDuration: '8.12s',
     animationTimingFunction: `steps(102)`,
-    animationPlayState: animationPLayState,
+    animationPlayState: animationPlayState,
     animationIterationCount: 'infinite',
     justifyContent: 'center',
     alignItems: 'center',
@@ -62,6 +62,7 @@ export const reactionEmojiMenuStyles = (): React.CSSProperties => {
     alignItems: 'center',
     flexDirection: 'row',
     width: '220px',
-    height: '42px'
+    height: '42px',
+    borderRadius: '8px'
   };
 };

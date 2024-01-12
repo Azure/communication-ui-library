@@ -1221,7 +1221,7 @@ export type CommonCallControlOptions = {
         disabled: boolean;
     };
     reactionButton?: boolean | {
-        disables: boolean;
+        disabled: boolean;
     };
     onFetchCustomButtonProps?: CustomCallControlButtonCallback[];
     holdButton?: boolean | {

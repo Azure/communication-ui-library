@@ -172,7 +172,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   }
 
   /* @conditional-compile-remove(reaction) */
-  const showReactionButtonInControlBar = isEnabled(options?.reactionButton);
+  const showReactionButtonInControlBar = isEnabled(options?.reactionButton) && !props.isMobile;
   /* @conditional-compile-remove(reaction) */
   if (showReactionButtonInControlBar) {
     numberOfButtons++;
@@ -405,14 +405,14 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
             <Camera displayType={options?.displayType} disabled={isDisabled(options?.cameraButton)} />
           )}
           {
+            /* @conditional-compile-remove(reaction) */
+            showReactionButtonInControlBar && <Reaction displayType={options?.displayType} />
+          }
+          {
             /* @conditional-compile-remove(raise-hand) */ showRaiseHandButtonInControlBar &&
               /* @conditional-compile-remove(rooms) */ !hideRaiseHandButtonInRoomsCall && (
                 <RaiseHand displayType={options?.displayType} />
               )
-          }
-          {
-            /* @conditional-compile-remove(reaction) */
-            showReactionButtonInControlBar && <Reaction displayType={options?.displayType} />
           }
           {screenShareButtonIsEnabled && (
             <ScreenShare
