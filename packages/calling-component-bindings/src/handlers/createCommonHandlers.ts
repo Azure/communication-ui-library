@@ -32,6 +32,7 @@ import { CommunicationIdentifier } from '@azure/communication-common';
 import { Features } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptions } from '@azure/communication-calling';
+import { Reaction } from '@azure/communication-calling';
 
 /**
  * Object containing all the handlers required for calling components.
@@ -59,7 +60,7 @@ export interface CommonCallingHandlers {
   /* @conditional-compile-remove(raise-hand) */
   onToggleRaiseHand: () => Promise<void>;
   /* @conditional-compile-remove(reaction) */
-  onReactionClicked: (emoji: string) => Promise<void>;
+  onReactionClicked: (reaction: Reaction) => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   onToggleHold: () => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
@@ -317,26 +318,19 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     };
 
     /* @conditional-compile-remove(reaction) */
-    const onReactionClicked = async (emoji: string): Promise<void> => {
-      switch (emoji) {
-        case 'like':
-          await call?.feature(Features.Reaction)?.sendReaction({ reactionType: 'like' });
-          break;
-        case 'heart':
-          await call?.feature(Features.Reaction)?.sendReaction({ reactionType: 'heart' });
-          break;
-        case 'laugh':
-          await call?.feature(Features.Reaction)?.sendReaction({ reactionType: 'laugh' });
-          break;
-        case 'applause':
-          await call?.feature(Features.Reaction)?.sendReaction({ reactionType: 'applause' });
-          break;
-        case 'surprised':
-          await call?.feature(Features.Reaction)?.sendReaction({ reactionType: 'surprised' });
-          break;
-        default:
-          break;
+    const onReactionClicked = async (reaction: Reaction): Promise<void> => {
+      if (
+        reaction === 'like' ||
+        reaction === 'applause' ||
+        reaction === 'heart' ||
+        reaction === 'laugh' ||
+        reaction === 'surprised'
+      ) {
+        await call?.feature(Features.Reaction)?.sendReaction({ reactionType: reaction });
+      } else {
+        console.warn(`Can not recognize ${reaction} as meeting reaction`);
       }
+      return;
     };
 
     const onToggleMicrophone = async (): Promise<void> => {

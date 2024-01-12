@@ -44,6 +44,7 @@ import { PermissionConstraints } from '@azure/communication-calling';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
+import { Reaction } from '@azure/communication-calling';
 import { RemoteParticipantState } from '@internal/calling-stateful-client';
 import { ScreenShareButton } from '@internal/react-components';
 import { StartCallOptions } from '@azure/communication-calling';
@@ -172,7 +173,7 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onRaiseHand: () => Promise<void>;
     // (undocumented)
-    onReactionClicked: (emoji: string) => Promise<void>;
+    onReactionClicked: (reaction: Reaction) => Promise<void>;
     // (undocumented)
     onRemoveParticipant(userId: string): Promise<void>;
     // (undocumented)

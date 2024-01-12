@@ -196,7 +196,7 @@ export const reactionButtonSelector: ReactionButtonSelector = reselect.createSel
   (reaction, callState) => {
     return {
       checked: reaction ? true : false,
-      disabled: callState === 'InLobby' ? true : callState === 'Connecting' ?? false
+      disabled: callState === 'Connected' ? true : false
     };
   }
 );
