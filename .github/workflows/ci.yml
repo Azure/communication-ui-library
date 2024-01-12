@@ -53,7 +53,7 @@ jobs:
       - name: Install rush
         run: npm install -g @microsoft/rush
       - name: Install dependencies
-        run: rush install --max-install-attempts 3
+        run: rush install
 
       - name: Switch flavor for build
         id: switch-flavor
@@ -78,13 +78,13 @@ jobs:
       - name: Run linter
         run: rush lint
 
-      - name: Cache workspace
-        id: cache-workspace
-        uses: actions/cache/save@v3
-        with:
-          path: |
-            ${{ github.workspace }}
-          key: ${{ github.workflow }}-${{ github.sha }}-${{ matrix.flavor }}
+      # - name: Cache workspace
+      #   id: cache-workspace
+      #   uses: actions/cache/save@v3
+      #   with:
+      #     path: |
+      #       ${{ github.workspace }}
+      #     key: ${{ github.workflow }}-${{ github.sha }}-${{ matrix.flavor }}
 
   # Build the packages for all matrix flavours
   build_packages:
@@ -94,63 +94,45 @@ jobs:
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      # Grab the
-      # # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
-      # - uses: actions/checkout@v4
-      #   with:
-      #     fetch-depth: 0
-      # # Ensure node version is great enough
-      # - name: Use Node.js
-      #   uses: actions/setup-node@v4
-      #   with:
-      #     node-version: 'lts/*'
-      # # Try get node_modules from cache
-      # - name: Restore node_modules from cache
-      #   uses: actions/cache@v3
-      #   with:
-      #     path: common/temp/pnpm-store
-      #     key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      # # Install dependencies
-      # - name: Install rush
-      #   run: npm install -g @microsoft/rush
-      # - name: Install dependencies
-      #   run: rush install --max-install-attempts 3
-      # # Switch flavor if necessary
-      # - name: Switch flavor for build
-      #   id: switch-flavor
-      #   if: ${{ matrix.flavor != 'beta' }}
-      #   run: |
-      #     rush switch-flavor:${{ matrix.flavor }}
-      #     node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
-      # - name: Run dependency update for stable
-      #   if: ${{ matrix.flavor == 'stable' }}
-      #   run: rush update:stable
-      # - name: Check result of flavor switch
-      #   if: ${{ always() && steps.switch-flavor.outcome == 'failure' }}
-      #   run: echo "Failed to switch to stable flavor, please make sure you run 'rush update:stable' if dependencies were updated." && exit 1
-
-      # - name: Check the necessary change file has been submitted
-      #   if: ${{ github.event_name == 'pull_request' }}
-      #   # GitHub provides remote branch names as refs.
-      #   run: node common/scripts/changelog/check.mjs origin/${{ github.base_ref }} origin/${{ github.head_ref }}
-
-      - name: Restore workspace
-        id: restore-workspace
-        uses: actions/cache/restore@v3
+      - uses: actions/checkout@v4
         with:
-          path: |
-            ${{ github.workspace }}
-          key: ${{ github.workflow }}-${{ github.sha }}-${{ matrix.flavor }}
+          fetch-depth: 0
 
-      - name: Use Node.js
+      - name: Use Node.js LTS
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
 
+      - name: Restore node_modules from cache
+        uses: actions/cache@v3
+        with:
+          path: common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+
       - name: Install rush
         run: npm install -g @microsoft/rush
+
       - name: Install dependencies
         run: rush install --max-install-attempts 3
+
+      - name: Switch flavor for build
+        id: switch-flavor
+        if: ${{ matrix.flavor != 'beta' }}
+        run: |
+          rush switch-flavor:${{ matrix.flavor }}
+          node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
+
+      - name: Check result of flavor switch
+        if: ${{ always() && steps.switch-flavor.outcome == 'failure' }}
+        run: echo "Failed to switch to ${{ matrix.flavor }} flavor, please make sure you run 'rush update:${{ matrix.flavor }}' if dependencies were updated." && exit 1
+
+      # - name: Restore workspace
+      #   id: restore-workspace
+      #   uses: actions/cache/restore@v3
+      #   with:
+      #     path: |
+      #       ${{ github.workspace }}
+      #     key: ${{ github.workflow }}-${{ github.sha }}-${{ matrix.flavor }}
 
       - name: Build Packages
         run: rush build -t @azure/communication-react
@@ -208,13 +190,13 @@ jobs:
           path: |
             packages/communication-react/temp/communication-react.api.json
 
-      - name: Update workspace cache
-        id: cache-workspace
-        uses: actions/cache/save@v3
-        with:
-          path: |
-            ${{ github.workspace }}
-          key: ${{ github.workflow }}-${{ github.ref }}-${{ matrix.flavor }}
+      # - name: Update workspace cache
+      #   id: cache-workspace
+      #   uses: actions/cache/save@v3
+      #   with:
+      #     path: |
+      #       ${{ github.workspace }}
+      #     key: ${{ github.workflow }}-${{ github.ref }}-${{ matrix.flavor }}
 
   in-progress-feature-validation:
     needs: [build_packages, get_matrix]
