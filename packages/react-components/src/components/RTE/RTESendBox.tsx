@@ -6,17 +6,7 @@ import { RTEInputBoxComponent } from './RTEInputBoxComponent';
 import { Stack, useTheme } from '@fluentui/react';
 import { sendBoxStyle } from '../styles/RTESendBox.styles';
 import { useLocale } from '../../localization';
-
-// Should we combine this with the SendBoxStrings interface in InputBoxComponent.tsx?
-/**
- * @beta
- */
-export interface RTESendBoxStrings {
-  /**
-   * Placeholder text in SendBox when there is no user input
-   */
-  placeholderText: string;
-}
+import { SendBoxStrings } from '../SendBox'; // Should we move this to a shared location?
 
 /**
  * Props for {@link RTESendBox}.
@@ -32,7 +22,7 @@ export interface RTESendBoxProps {
   /**
    * Optional strings to override in component
    */
-  strings?: Partial<RTESendBoxStrings>;
+  strings?: Partial<SendBoxStrings>;
 }
 
 /**
@@ -47,7 +37,7 @@ export const RTESendBox = (props: RTESendBoxProps): JSX.Element => {
   const localeStrings = useLocale().strings.sendBox;
   const strings = { ...localeStrings, ...props.strings };
 
-  const [textValue, setTextValue] = useState('');
+  const [textValue] = useState('');
 
   const errorMessage = ''; // TODO: add error message
 

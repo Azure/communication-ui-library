@@ -7,7 +7,7 @@ import React from 'react';
 import { COMPONENT_FOLDER_PREFIX } from '../../constants';
 
 const RTESendBoxStory = (args): JSX.Element => {
-  return <RTESendBoxComponent valueToDisplay={args.valueToDisplay} />;
+  return <RTESendBoxComponent />;
 };
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.

@@ -17,9 +17,9 @@ import { fileUploadCardsStyles } from './styles/SendBox.styles';
 import { SendBoxErrorBarError } from './SendBoxErrorBar';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from './MentionPopover';
-import { sanitizeText } from './utils/SendBoxUtils';
 
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
+const EMPTY_MESSAGE_REGEX = /^\s*$/;
 
 /**
  * Fluent styles for {@link Sendbox}.
@@ -408,6 +408,16 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       </Stack>
     </Stack>
   );
+};
+/**
+ * @private
+ */
+export const sanitizeText = (message: string): string => {
+  if (EMPTY_MESSAGE_REGEX.test(message)) {
+    return '';
+  } else {
+    return message;
+  }
 };
 
 /**
