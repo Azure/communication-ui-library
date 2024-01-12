@@ -198,6 +198,11 @@ export type CallWithChatCompositeOptions = {
      * @defaultValue false
      */
     hideSurvey?: boolean;
+    /* @conditional-compile-remove(end-of-call-survey-self-host) */
+    /**
+     * Optional callback to add extra logic when survey is dismissed. For self-host only
+     */
+    onSurveyDismissed?: () => void;
     /**
      * Optional callback to handle survey data including free form text response
      * Note that free form text response survey option is only going to be enabled when this callback is provided
@@ -304,6 +309,11 @@ type CallWithChatScreenProps = {
      * @defaultValue false
      */
     hideSurvey?: boolean;
+    /* @conditional-compile-remove(end-of-call-survey-self-host) */
+    /**
+     * Optional callback to add extra logic when survey is dismissed. For self-host only
+     */
+    onSurveyDismissed?: () => void;
     /**
      * Optional callback to handle survey data including free form text response
      * Note that free form text response survey option is only going to be enabled when this callback is provided
