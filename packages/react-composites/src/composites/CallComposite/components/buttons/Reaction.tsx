@@ -11,8 +11,6 @@ import { CallControlDisplayType } from '../../../common/types/CommonCallControlO
 import { usePropsFor } from '../../hooks/usePropsFor';
 /* @conditional-compile-remove(reaction) */
 import { concatButtonBaseStyles } from '../../styles/Buttons.styles';
-/* @conditional-compile-remove(reaction) */
-import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 
 /* @conditional-compile-remove(reaction) */
 /** @private */
@@ -26,7 +24,7 @@ export const Reaction = (props: {
   const reactionButtonProps = usePropsFor(ReactionButton) as unknown as ReactionButtonProps;
   const styles = useMemo(() => concatButtonBaseStyles(props.styles ?? {}), [props.styles]);
 
-  let reactionButtonDisabled = isDisabled(props.option);
+  const reactionButtonDisabled = isDisabled(props.option);
 
   return (
     <ReactionButton
