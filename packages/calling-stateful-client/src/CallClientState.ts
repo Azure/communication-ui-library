@@ -157,6 +157,9 @@ export interface CapabilitiesFeatureState {
  * @beta
  */
 export interface SpotlightCallFeatureState {
+  /**
+   * Ordered array of spotlighted participants in call
+   */
   spotlightedParticipants: SpotlightedParticipant[];
 }
 
@@ -167,6 +170,9 @@ export interface SpotlightCallFeatureState {
  * @beta
  */
 export interface SpotlightState {
+  /**
+   * Order position of spotlight in call
+   */
   spotlightedOrderPosition?: number;
 }
 

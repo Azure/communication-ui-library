@@ -46,6 +46,8 @@ import { ParticipantListStrings } from '../components/ParticipantList';
 /* @conditional-compile-remove(mention) */
 import { MentionPopoverStrings } from '../components/MentionPopover';
 import { ImageGalleryStrings } from '../components/ImageGallery';
+/* @conditional-compile-remove(reaction) */
+import { ReactionButtonStrings } from '../components';
 
 /**
  * Locale information for all components exported from this library.
@@ -88,6 +90,9 @@ export interface ComponentStrings {
   /* @conditional-compile-remove(raise-hand) */
   /** Strings for RaiseHandButton */
   raiseHandButton: RaiseHandButtonStrings;
+  /* @conditional-compile-remove(reaction) */
+  /** Strings for ReactionButton */
+  reactionButton: ReactionButtonStrings;
   /** Strings for TypingIndicator */
   typingIndicator: TypingIndicatorStrings;
   /** Strings for SendBox */
