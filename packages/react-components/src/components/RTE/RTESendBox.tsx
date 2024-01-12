@@ -3,8 +3,19 @@
 
 import React from 'react';
 import { RTEInputBoxComponent } from './RTEInputBoxComponent';
-import { Stack, mergeStyles, useTheme } from '@fluentui/react';
+import { Stack, useTheme } from '@fluentui/react';
 import { sendBoxStyle } from '../styles/RTESendBox.styles';
+
+// Should we combine this with the SendBoxStrings interface in InputBoxComponent.tsx?
+/**
+ * @public
+ */
+export interface RTESendBoxStrings {
+  /**
+   * Placeholder text in SendBox when there is no user input
+   */
+  placeholderText: string;
+}
 
 /**
  * Props for {@link RTESendBox}.

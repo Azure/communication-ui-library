@@ -17,6 +17,9 @@ import { fileUploadCardsStyles } from './styles/SendBox.styles';
 import { SendBoxErrorBarError } from './SendBoxErrorBar';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from './MentionPopover';
+import { sanitizeText } from './utils/SendBoxUtils';
+
+const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
 
 /**
  * Fluent styles for {@link Sendbox}.
