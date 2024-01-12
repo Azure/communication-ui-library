@@ -38,7 +38,7 @@ export interface ReactionButtonProps extends ControlBarButtonProps {
   /**
    * Click event to send reaction to meeting
    */
-  onReactionClicked: (emoji: string) => Promise<void>;
+  onReactionClicked: (reaction: string) => Promise<void>;
 }
 
 /* @conditional-compile-remove(reaction) */
@@ -82,7 +82,7 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
           onClick={() => {
             props.onReactionClicked(emoji);
             setIsHoveredMap((prevMap) => {
-              return new Map(prevMap).set(emoji, false);
+              return new Map(prevMap).set(emoji, true);
             });
             dismissMenu();
           }}
@@ -94,7 +94,7 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
           }
           onMouseLeave={() =>
             setIsHoveredMap((prevMap) => {
-              return new Map(prevMap).set(emoji, false);
+              return new Map(prevMap).set(emoji, true);
             })
           }
         />

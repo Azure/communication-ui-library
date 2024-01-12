@@ -174,6 +174,7 @@ export const raiseHandLimitedSpaceStyles: IStyle = {
   bottom: 0
 };
 
+/* @conditional-compile-remove(reaction) */
 /**
  * @private
  */

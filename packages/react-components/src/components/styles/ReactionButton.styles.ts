@@ -2,7 +2,24 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(reaction) */
+import { keyframes, memoizeFunction } from '@fluentui/react';
+/* @conditional-compile-remove(reaction) */
 import React from 'react';
+
+/* @conditional-compile-remove(reaction) */
+/**
+ * @private
+ */
+export const playFrames = memoizeFunction(() =>
+  keyframes({
+    from: {
+      backgroundPosition: '0px 8568px'
+    },
+    to: {
+      backgroundPosition: '0px 0px'
+    }
+  })
+);
 
 /* @conditional-compile-remove(reaction) */
 /**
@@ -18,7 +35,9 @@ export const emojiStyles = (backgroundImage?: string, animationPLayState?: strin
     height: '100%',
     width: '100%',
     backgroundImage: backgroundImage,
-    animation: 'play 8.12s steps(102)',
+    animationName: playFrames(),
+    animationDuration: '8.12s',
+    animationTimingFunction: `steps(102)`,
     animationPlayState: animationPLayState,
     animationIterationCount: 'infinite',
     justifyContent: 'center',
