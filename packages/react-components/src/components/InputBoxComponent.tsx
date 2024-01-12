@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useState, ReactNode, FormEvent, useCallback } from 'react';
+import React, { ReactNode, FormEvent, useCallback } from 'react';
 
 import { Stack, TextField, mergeStyles, IStyle, ITextField, concatStyleSets, ITextFieldProps } from '@fluentui/react';
 import { BaseCustomStyles } from '../types';
