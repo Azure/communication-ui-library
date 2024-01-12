@@ -158,7 +158,7 @@ export interface CapabilitiesFeatureState {
  */
 export interface SpotlightCallFeatureState {
   /**
-   * Ordered array of spotlighted participant in call
+   * Ordered array of spotlighted participants in call
    */
   spotlightedParticipants: SpotlightedParticipant[];
 }
