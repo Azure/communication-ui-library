@@ -139,6 +139,7 @@ jobs:
             packages/communication-react/temp/communication-react.api.json
 
   in-progress-feature-validation:
+    needs: build_packages
     name: Check if in progress feature can be removed separately
     runs-on: ubuntu-latest
     steps:
@@ -191,7 +192,7 @@ jobs:
             packages/communication-react/temp/communication-react.api.json
 
   call_composite_automation_test:
-    needs: get_matrix
+    needs: [get_matrix, build_packages]
     name: Call Composite automation test
     runs-on: ubuntu-latest
     strategy:
@@ -243,7 +244,7 @@ jobs:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
           CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload playwright test results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: ${{ always() }}
         with:
           name: e2e-results-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.flavor }}-call.json
@@ -251,7 +252,7 @@ jobs:
           if-no-files-found: error
       - name: Upload snapshot diff
         if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: snapshots
           path: packages/react-composites/test-results
@@ -269,13 +270,13 @@ jobs:
             })
 
   chat_composite_automation_test:
-    needs: get_matrix
+    needs: [get_matrix, build_packages]
     name: Chat Composite automation test
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Use Node.js
@@ -321,7 +322,7 @@ jobs:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
           CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload playwright test results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: ${{ always() }}
         with:
           name: e2e-results-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.flavor }}-chat.json
@@ -329,7 +330,7 @@ jobs:
           if-no-files-found: error
       - name: Upload snapshot diff
         if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: snapshots
           path: packages/react-composites/test-results
@@ -347,13 +348,13 @@ jobs:
             })
 
   call_with_chat_composite_automation_test:
-    needs: get_matrix
+    needs: [get_matrix, build_packages]
     name: Call With Chat Composite automation test
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Use Node.js
@@ -399,7 +400,7 @@ jobs:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
           CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload playwright test results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: ${{ always() }}
         with:
           name: e2e-results-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.flavor }}-callwithchat.json
@@ -407,7 +408,7 @@ jobs:
           if-no-files-found: error
       - name: Upload snapshot diff
         if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: snapshots
           path: packages/react-composites/test-results
@@ -425,10 +426,11 @@ jobs:
             })
 
   build_storybook:
+    needs: build_packages
     name: Build Storybook
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Use Node.js
@@ -451,13 +453,13 @@ jobs:
         working-directory: packages/storybook
 
   build_calling_sample:
-    needs: get_matrix
+    needs: [get_matrix, build_packages]
     name: Build Calling Sample
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Use Node.js
@@ -490,20 +492,20 @@ jobs:
       - name: Tests
         run: rush test -o calling
       # upload bundle stats.json which will be consumed later
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: ${{ matrix.flavor == 'beta'}}
         with:
           name: Calling-report
           path: samples/Calling/dist/build/report.json
 
   build_chat_sample:
-    needs: get_matrix
+    needs: [get_matrix, build_packages]
     name: Build Chat Sample
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Use Node.js
@@ -536,20 +538,20 @@ jobs:
       - name: Tests
         run: rush test -o chat
       # upload bundle stats.json which will be consumed later
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: ${{ matrix.flavor == 'beta'}}
         with:
           name: Chat-report
           path: samples/Chat/dist/build/report.json
 
   build_call_with_chat_sample:
-    needs: get_matrix
+    needs: [get_matrix, build_packages]
     name: Build CallWithChat Sample
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Use Node.js
@@ -582,20 +584,20 @@ jobs:
       - name: Tests
         run: rush test -o callwithchat
       # upload bundle stats.json which will be consumed later
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: ${{ matrix.flavor == 'beta'}}
         with:
           name: CallWithChat-report
           path: samples/CallWithChat/dist/build/report.json
 
   build_static_html_composites_sample:
-    needs: get_matrix
+    needs: [get_matrix, build_packages]
     name: Build And Test Static HTML Composites Sample
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Use Node.js
@@ -633,7 +635,7 @@ jobs:
           CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload snapshot diff
         if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: snapshots
           path: samples/tests/test-results/ # or path/to/artifact
@@ -651,13 +653,13 @@ jobs:
             })
 
   build_component_examples:
-    needs: get_matrix
+    needs: [get_matrix, build_packages]
     name: Build And Test Component+Binding Examples
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Use Node.js
@@ -695,7 +697,7 @@ jobs:
           CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload snapshot diff
         if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: snapshots
           path: samples/tests/test-results/ # or path/to/artifact
@@ -713,10 +715,10 @@ jobs:
             })
 
   compare_jest_tests_coverage:
+    needs: [get_matrix, build_packages]
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'pull_request' }}
     name: Compare unit tests coverage from pr head ref to base ref (${{ matrix.flavor }})
-    needs: build_packages
     strategy:
       matrix:
         include:
@@ -726,7 +728,7 @@ jobs:
             gist_id: 67224b1799c92f0e1cd2da24798e4dd5
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       # Ensure node version is great enough
@@ -785,9 +787,9 @@ jobs:
           edit-mode: replace
 
   update_jest_coverage_report:
+    needs: [get_matrix, build_packages]
     runs-on: ubuntu-latest
     name: Upload jest coverage report to gist (${{ matrix.flavor }})
-    needs: build_packages
     if: github.ref == 'refs/heads/main'
     strategy:
       matrix:
