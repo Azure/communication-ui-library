@@ -4,7 +4,6 @@
 import { Icon, IconButton, Spinner, SpinnerSize, TooltipHost } from '@fluentui/react';
 import React, { useCallback, useState } from 'react';
 import { useMemo } from 'react';
-/* @conditional-compile-remove(file-sharing) */
 import { useLocale } from '../localization';
 import { _FileCard } from './FileCard';
 import { _FileCardGroup } from './FileCardGroup';
@@ -210,7 +209,6 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
     return true;
   }, []);
 
-  /* @conditional-compile-remove(file-sharing) */
   const fileCardGroupDescription = useMemo(
     () => () => {
       const fileGroupLocaleString = props.strings?.fileCardGroupMessage ?? localeStrings.fileCardGroupMessage;
@@ -252,7 +250,7 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
 
   return (
     <div style={fileDownloadCardsStyle} data-ui-id="file-download-card-group">
-      <_FileCardGroup /* @conditional-compile-remove(file-sharing) */ ariaLabel={fileCardGroupDescription()}>
+      <_FileCardGroup ariaLabel={fileCardGroupDescription()}>
         {fileMetadata &&
           fileMetadata
             .filter((attachment) => {
@@ -296,7 +294,7 @@ const DownloadIconTrampoline = (): JSX.Element => {
 };
 
 const useLocaleStringsTrampoline = (): _FileDownloadCardsStrings => {
-  /* @conditional-compile-remove(file-sharing) */
+  // @conditional-compile-remove(file-sharing)
   return useLocale().strings.messageThread;
-  return { downloadFile: '', fileCardGroupMessage: '' };
+  return { downloadFile: '', fileCardGroupMessage: useLocale().strings.messageThread.fileCardGroupMessage };
 };
