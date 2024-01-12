@@ -491,11 +491,11 @@ export interface ChatMessage extends MessageCommon {
 // @public
 export interface ChatTheme {
     chatPalette: {
-        imageGalleryOverlayBlack: string;
-        imageGalleryTitleWhite: string;
-        imageGalleryDefaultButtonBackground: string;
-        imageGalleryButtonBackgroundHover: string;
-        imageGalleryButtonBackgroundActive: string;
+        modalOverlayBlack: string;
+        modalTitleWhite: string;
+        modalButtonBackground: string;
+        modalButtonBackgroundHover: string;
+        modalButtonBackgroundActive: string;
     };
 }
 

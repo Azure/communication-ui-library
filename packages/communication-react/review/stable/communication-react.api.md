@@ -1422,11 +1422,11 @@ export type ChatReturnProps<Component extends (props: any) => JSX.Element> = Get
 // @public
 export interface ChatTheme {
     chatPalette: {
-        imageGalleryOverlayBlack: string;
-        imageGalleryTitleWhite: string;
-        imageGalleryDefaultButtonBackground: string;
-        imageGalleryButtonBackgroundHover: string;
-        imageGalleryButtonBackgroundActive: string;
+        modalOverlayBlack: string;
+        modalTitleWhite: string;
+        modalButtonBackground: string;
+        modalButtonBackgroundHover: string;
+        modalButtonBackgroundActive: string;
     };
 }
 
