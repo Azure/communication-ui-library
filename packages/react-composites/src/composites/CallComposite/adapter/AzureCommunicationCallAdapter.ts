@@ -36,6 +36,8 @@ import {
   VideoOptions,
   Call
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(reaction) */
+import { Reaction } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(call-transfer) */
@@ -857,9 +859,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   }
 
   /* @conditional-compile-remove(reaction) */
-  public async onReactionClicked(emoji: string): Promise<void> {
+  public async onReactionClicked(reaction: Reaction): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      await this.handlers.onReactionClicked(emoji);
+      await this.handlers.onReactionClicked(reaction);
     });
   }
 

@@ -27,10 +27,7 @@ import { FileUploadAdapter } from '../../ChatComposite';
 
 /// CallWithChatAdapterManagement
 
-type CallWithChatAdapterManagementInternal = Omit<
-  CallAdapterCallManagement,
-  'removeParticipant' | 'onReactionClicked'
-> &
+type CallWithChatAdapterManagementInternal = Omit<CallAdapterCallManagement, 'removeParticipant'> &
   CallAdapterDeviceManagement &
   Omit<ChatAdapterThreadManagement, 'removeParticipant' | 'setTopic'> &
   /* @conditional-compile-remove(file-sharing) */

@@ -13,10 +13,6 @@ import { usePropsFor } from '../../hooks/usePropsFor';
 import { concatButtonBaseStyles } from '../../styles/Buttons.styles';
 /* @conditional-compile-remove(reaction) */
 import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
-/* @conditional-compile-remove(reaction) */
-import { getCallStatus } from '../../selectors/baseSelectors';
-/* @conditional-compile-remove(reaction) */
-import { useSelector } from '../../hooks/useSelector';
 
 /* @conditional-compile-remove(reaction) */
 /** @private */
@@ -28,14 +24,9 @@ export const Reaction = (props: {
   disabled?: boolean;
 }): JSX.Element => {
   const reactionButtonProps = usePropsFor(ReactionButton) as unknown as ReactionButtonProps;
-  const callStatus = useSelector(getCallStatus);
   const styles = useMemo(() => concatButtonBaseStyles(props.styles ?? {}), [props.styles]);
 
   let reactionButtonDisabled = isDisabled(props.option);
-
-  if (_isInLobbyOrConnecting(callStatus)) {
-    reactionButtonDisabled = true;
-  }
 
   return (
     <ReactionButton

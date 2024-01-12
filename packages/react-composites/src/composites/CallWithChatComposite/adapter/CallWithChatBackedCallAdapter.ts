@@ -13,6 +13,8 @@ import {
   PermissionConstraints,
   StartCallOptions
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(reaction) */
+import { Reaction } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -47,9 +49,6 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
 
   constructor(callWithChatAdapter: CallWithChatAdapter) {
     this.callWithChatAdapter = callWithChatAdapter;
-  }
-  onReactionClicked(emoji: string): Promise<void> {
-    throw new Error(`Reaction of type ${emoji} send not successful.`);
   }
 
   public on = (event: any, listener: any): void => {
@@ -130,6 +129,9 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public raiseHand = async (): Promise<void> => await this.callWithChatAdapter.raiseHand();
   /* @conditional-compile-remove(raise-hand) */
   public lowerHand = async (): Promise<void> => await this.callWithChatAdapter.lowerHand();
+  /* @conditional-compile-remove(reaction) */
+  public onReactionClicked = async (reaction: Reaction): Promise<void> =>
+    await this.callWithChatAdapter.onReactionClicked(reaction);
   public removeParticipant = async (
     userId: string | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier
   ): Promise<void> => {

@@ -6,6 +6,8 @@ import { CallState, DeviceManagerState } from '@internal/calling-stateful-client
 import { CaptionsInfo } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(video-background-effects) */
 import type { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
+/* @conditional-compile-remove(reaction) */
+import { Reaction } from '@azure/communication-calling';
 /* @conditional-compile-remove(capabilities) */
 import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
@@ -502,9 +504,9 @@ export interface CallAdapterCallOperations {
   /**
    * Send reaction emoji
    *
-   * @public
+   * @beta
    */
-  onReactionClicked(emoji: string): Promise<void>;
+  onReactionClicked(reaction: Reaction): Promise<void>;
   /**
    * Stop sharing the screen
    *

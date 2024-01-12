@@ -171,6 +171,13 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     numberOfButtons++;
   }
 
+  /* @conditional-compile-remove(reaction) */
+  const showReactionButtonInControlBar = isEnabled(options?.reactionButton);
+  /* @conditional-compile-remove(reaction) */
+  if (showReactionButtonInControlBar) {
+    numberOfButtons++;
+  }
+
   const moreButtonContextualMenuItems = (): IContextualMenuItem[] => {
     const items: IContextualMenuItem[] = [];
 
@@ -405,7 +412,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
           }
           {
             /* @conditional-compile-remove(reaction) */
-            <Reaction displayType={options?.displayType} />
+            showReactionButtonInControlBar && <Reaction displayType={options?.displayType} />
           }
           {screenShareButtonIsEnabled && (
             <ScreenShare
