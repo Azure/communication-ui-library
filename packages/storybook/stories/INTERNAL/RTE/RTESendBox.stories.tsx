@@ -18,8 +18,5 @@ export default {
   id: `${COMPONENT_FOLDER_PREFIX}-internal-rtesendbox`,
   title: `${COMPONENT_FOLDER_PREFIX}/Internal/RTESendBox`,
   component: RTESendBoxComponent,
-  argTypes: {
-    // just a value to be displayed for now but it should be deleted when the component development starts
-    valueToDisplay: { control: 'text', defaultValue: 'Enter a message' }
-  }
+  argTypes: {}
 } as Meta;
