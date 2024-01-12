@@ -351,7 +351,7 @@ const consumerCapabilitiesInRoomsCall: ParticipantCapabilities = {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   },
-  reaction: {
+  useReactions: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   }
@@ -379,7 +379,7 @@ const attendeeCapabilitiesInRoomsCall: ParticipantCapabilities = {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   },
-  reaction: {
+  useReactions: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   }
@@ -407,7 +407,7 @@ const presenterCapabilitiesInRoomsCall: ParticipantCapabilities = {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   },
-  reaction: {
+  useReactions: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   }
