@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { IStyle, Theme } from '@fluentui/react';
+import { Theme, mergeStyles } from '@fluentui/react';
 
 /**
  * @private
@@ -15,19 +15,22 @@ export const defaultSendBoxActiveBorderThicknessREM = 0.125;
 /**
  * @private
  */
-export const borderAndBoxShadowStyle = (props: {
+export const sendBoxStyle = ({
+  theme,
+  hasErrorMessage,
+  disabled
+}: {
   theme: Theme;
   hasErrorMessage: boolean;
   disabled: boolean;
-}): IStyle => {
-  const { theme, hasErrorMessage, disabled } = props;
+}): string => {
   const borderColor = hasErrorMessage ? theme.semanticColors.errorText : theme.palette.neutralSecondary;
   const borderColorActive = hasErrorMessage ? theme.semanticColors.errorText : theme.palette.themePrimary;
 
   const borderThickness = disabled ? 0 : defaultSendBoxInactiveBorderThicknessREM;
   const borderActiveThickness = disabled ? 0 : defaultSendBoxActiveBorderThicknessREM;
 
-  return {
+  return mergeStyles({
     borderRadius: theme.effects.roundedCorner4,
     border: `${borderThickness}rem solid ${borderColor}`,
 
@@ -39,5 +42,5 @@ export const borderAndBoxShadowStyle = (props: {
       border: `${borderActiveThickness}rem solid ${borderColorActive}`,
       margin: `${defaultSendBoxActiveBorderThicknessREM - borderActiveThickness}rem`
     }
-  };
+  });
 };

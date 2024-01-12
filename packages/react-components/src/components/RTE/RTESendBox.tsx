@@ -4,7 +4,7 @@
 import React from 'react';
 import { RTEInputBoxComponent } from './RTEInputBoxComponent';
 import { Stack, mergeStyles, useTheme } from '@fluentui/react';
-import { borderAndBoxShadowStyle } from '../styles/RTESendBox.styles';
+import { sendBoxStyle } from '../styles/RTESendBox.styles';
 
 /**
  * Props for {@link RTESendBox}.
@@ -35,13 +35,11 @@ export const RTESendBox = (props: RTESendBoxProps): JSX.Element => {
 
   return (
     <Stack
-      className={mergeStyles(
-        borderAndBoxShadowStyle({
-          theme,
-          hasErrorMessage: !!errorMessage,
-          disabled: !!disabled
-        })
-      )}
+      className={sendBoxStyle({
+        theme: theme,
+        hasErrorMessage: !!errorMessage,
+        disabled: !!disabled
+      })}
     >
       <RTEInputBoxComponent textValue={valueToDisplay} />
     </Stack>

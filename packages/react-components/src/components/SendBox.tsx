@@ -18,9 +18,6 @@ import { SendBoxErrorBarError } from './SendBoxErrorBar';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from './MentionPopover';
 
-const EMPTY_MESSAGE_REGEX = /^\s*$/;
-const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
-
 /**
  * Fluent styles for {@link Sendbox}.
  *
@@ -425,14 +422,6 @@ const hasFile = (props: SendBoxProps): boolean => {
   const activeFileUploads = activeFileUploadsTrampoline(props);
   return !!activeFileUploads?.find((file) => !file.error);
   return false;
-};
-
-const sanitizeText = (message: string): string => {
-  if (EMPTY_MESSAGE_REGEX.test(message)) {
-    return '';
-  } else {
-    return message;
-  }
 };
 
 const activeFileUploadsTrampoline = (props: SendBoxProps): ActiveFileUpload[] | undefined => {

@@ -20,6 +20,6 @@ export default {
   component: RTESendBoxComponent,
   argTypes: {
     // just a value to be displayed for now but it should be deleted when the component development starts
-    valueToDisplay: { control: 'text', defaultValue: 'Hello World!' }
+    valueToDisplay: { control: 'text', defaultValue: 'Enter a message' }
   }
 } as Meta;
