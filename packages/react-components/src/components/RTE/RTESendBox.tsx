@@ -1,10 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React from 'react';
+import React, { useState } from 'react';
 import { RTEInputBoxComponent } from './RTEInputBoxComponent';
 import { Stack, useTheme } from '@fluentui/react';
 import { sendBoxStyle } from '../styles/RTESendBox.styles';
+import { useLocale } from '../../localization';
 
 // Should we combine this with the SendBoxStrings interface in InputBoxComponent.tsx?
 /**
@@ -28,9 +29,10 @@ export interface RTESendBoxProps {
    * @defaultValue false
    */
   disabled?: boolean;
-
-  // just a value to be displayed for now but it should be deleted when the component development starts
-  valueToDisplay?: string;
+  /**
+   * Optional strings to override in component
+   */
+  strings?: Partial<RTESendBoxStrings>;
 }
 
 /**
@@ -39,9 +41,14 @@ export interface RTESendBoxProps {
  * @beta
  */
 export const RTESendBox = (props: RTESendBoxProps): JSX.Element => {
-  const { disabled, valueToDisplay = 'Enter a message' } = props;
+  const { disabled } = props;
 
   const theme = useTheme();
+  const localeStrings = useLocale().strings.sendBox;
+  const strings = { ...localeStrings, ...props.strings };
+
+  const [textValue, setTextValue] = useState('');
+
   const errorMessage = ''; // TODO: add error message
 
   return (
@@ -52,7 +59,7 @@ export const RTESendBox = (props: RTESendBoxProps): JSX.Element => {
         disabled: !!disabled
       })}
     >
-      <RTEInputBoxComponent textValue={valueToDisplay} />
+      <RTEInputBoxComponent placeholderText={strings.placeholderText} textValue={textValue} />
     </Stack>
   );
 };

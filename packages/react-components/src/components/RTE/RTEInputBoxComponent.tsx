@@ -26,7 +26,7 @@ export const RTEInputBoxComponent = (props: RTEInputBoxComponentProps): JSX.Elem
 
   return (
     <div>
-      <RichTextEditor placeholderText={placeholderText} onChange={() => {}}>
+      <RichTextEditor content={textValue} placeholderText={placeholderText} onChange={() => {}}>
         <div>Children</div>
       </RichTextEditor>
     </div>
