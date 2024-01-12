@@ -32,6 +32,7 @@ import { CommunicationIdentifier } from '@azure/communication-common';
 import { Features } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptions } from '@azure/communication-calling';
+/* @conditional-compile-remove(reaction) */
 import { Reaction } from '@azure/communication-calling';
 
 /**
