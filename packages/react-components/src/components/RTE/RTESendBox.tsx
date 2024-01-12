@@ -8,7 +8,7 @@ import { sendBoxStyle } from '../styles/RTESendBox.styles';
 
 // Should we combine this with the SendBoxStrings interface in InputBoxComponent.tsx?
 /**
- * @public
+ * @beta
  */
 export interface RTESendBoxStrings {
   /**
