@@ -82,7 +82,7 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
           onClick={() => {
             props.onReactionClicked(emoji);
             setIsHoveredMap((prevMap) => {
-              return new Map(prevMap).set(emoji, true);
+              return new Map(prevMap).set(emoji, false);
             });
             dismissMenu();
           }}
@@ -94,7 +94,7 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
           }
           onMouseLeave={() =>
             setIsHoveredMap((prevMap) => {
-              return new Map(prevMap).set(emoji, true);
+              return new Map(prevMap).set(emoji, false);
             })
           }
         />
