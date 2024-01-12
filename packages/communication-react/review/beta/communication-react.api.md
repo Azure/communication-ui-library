@@ -3899,13 +3899,11 @@ export interface SpokenLanguageStrings {
 
 // @beta
 export interface SpotlightCallFeatureState {
-    // (undocumented)
     spotlightedParticipants: SpotlightedParticipant[];
 }
 
 // @beta
 export interface SpotlightState {
-    // (undocumented)
     spotlightedOrderPosition?: number;
 }
 
