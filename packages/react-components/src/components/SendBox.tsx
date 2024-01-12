@@ -409,10 +409,11 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     </Stack>
   );
 };
+
 /**
  * @private
  */
-export const sanitizeText = (message: string): string => {
+const sanitizeText = (message: string): string => {
   if (EMPTY_MESSAGE_REGEX.test(message)) {
     return '';
   } else {
@@ -420,9 +421,6 @@ export const sanitizeText = (message: string): string => {
   }
 };
 
-/**
- * @private
- */
 const hasIncompleteFileUploads = (props: SendBoxProps): boolean => {
   const activeFileUploads = activeFileUploadsTrampoline(props);
   return !!(
