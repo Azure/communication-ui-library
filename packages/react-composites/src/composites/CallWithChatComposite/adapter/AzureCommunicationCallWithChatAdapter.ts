@@ -542,6 +542,16 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return this.callAdapter.submitSurvey(survey);
   }
 
+  /* @conditional-compile-remove(spotlight) */
+  public async startSpotlight(userId: string): Promise<void> {
+    return this.callAdapter.startSpotlight(userId);
+  }
+
+  /* @conditional-compile-remove(spotlight) */
+  public async stopSpotlight(userId: string): Promise<void> {
+    return this.callAdapter.stopSpotlight(userId);
+  }
+
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
   on(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
   on(event: 'callEnded', listener: CallEndedListener): void;

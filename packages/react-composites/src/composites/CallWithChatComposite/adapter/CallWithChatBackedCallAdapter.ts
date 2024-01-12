@@ -225,6 +225,15 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public async submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined> {
     return this.callWithChatAdapter.submitSurvey(survey);
   }
+  /* @conditional-compile-remove(spotlight) */
+  public async startSpotlight(userId: string): Promise<void> {
+    return this.callWithChatAdapter.startSpotlight(userId);
+  }
+
+  /* @conditional-compile-remove(spotlight) */
+  public async stopSpotlight(userId: string): Promise<void> {
+    return this.callWithChatAdapter.stopSpotlight(userId);
+  }
 }
 
 function callAdapterStateFromCallWithChatAdapterState(
