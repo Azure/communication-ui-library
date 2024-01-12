@@ -480,6 +480,20 @@ export interface CallWithChatAdapterManagement {
    * @beta
    */
   submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Start spotlight
+   *
+   * @beta
+   */
+  startSpotlight(userId: string): Promise<void>;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Stop spotlight
+   *
+   * @beta
+   */
+  stopSpotlight(userId: string): Promise<void>;
 }
 
 /**
