@@ -84,7 +84,7 @@ jobs:
         with:
           path: |
             ${{ github.workspace }}
-          key: ${{ github.workflow }}-${{ github.ref }}-${{ matrix.flavor }}
+          key: ${{ github.workflow }}-${{ github.sha }}-${{ matrix.flavor }}
 
   # Build the packages for all matrix flavours
   build_packages:
@@ -140,7 +140,7 @@ jobs:
         with:
           path: |
             ${{ github.workspace }}
-          key: ${{ github.workflow }}-${{ github.ref }}-${{ matrix.flavor }}
+          key: ${{ github.workflow }}-${{ github.sha }}-${{ matrix.flavor }}
 
       - name: Use Node.js
         uses: actions/setup-node@v4
