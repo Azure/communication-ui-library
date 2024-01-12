@@ -121,7 +121,8 @@ export function defaultMockCallAdapterState(
           ...defaultEndedCallState,
           callEndReason: {
             code: 0,
-            subCode: callEndReasonSubCode
+            subCode: callEndReasonSubCode,
+            /* @conditional-compile-remove(calling-beta-sdk) */ resultCategories: []
           }
         }
       : undefined,
