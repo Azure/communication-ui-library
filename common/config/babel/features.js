@@ -84,6 +84,8 @@ module.exports = {
     'reaction',
     // Feature for Rich Text Editor (RTE) support
     'rich-text-editor',
+    // Feature for spotlight
+    'spotlight'
   ],
   // A list of in progress beta feature.
   // These features are still beta feature but "in progress"
@@ -111,6 +113,8 @@ module.exports = {
     'reaction',
     // Feature for Rich Text Editor (RTE) support
     'rich-text-editor',
+    // Feature for spotlight
+    'spotlight'
   ],
   // A list of stabilized features.
   // These features can be listed in the conditional compilation directives without
