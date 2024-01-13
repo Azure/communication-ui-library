@@ -158,6 +158,14 @@ const createCompositeHandlers = memoizeOne(
     /* @conditional-compile-remove(end-of-call-survey) */
     onSubmitSurvey: async (survey: CallSurvey): Promise<CallSurveyResponse | undefined> => {
       return await adapter.submitSurvey(survey);
+    },
+    /* @conditional-compile-remove(spotlight) */
+    onStartSpotlight: async (userId: string): Promise<void> => {
+      await adapter.startSpotlight(userId);
+    },
+    /* @conditional-compile-remove(spotlight) */
+    onStopSpotlight: async (userId: string): Promise<void> => {
+      await adapter.stopSpotlight(userId);
     }
   })
 );

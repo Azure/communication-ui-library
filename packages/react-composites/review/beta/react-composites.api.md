@@ -221,10 +221,14 @@ export interface CallAdapterCallOperations {
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startCaptions(options?: StartCaptionsOptions): Promise<void>;
     startScreenShare(): Promise<void>;
+    // @beta
+    startSpotlight(userId: string): Promise<void>;
     startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
     stopCamera(): Promise<void>;
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
+    // @beta
+    stopSpotlight(userId: string): Promise<void>;
     stopVideoBackgroundEffects(): Promise<void>;
     // @beta
     submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
@@ -713,10 +717,14 @@ export interface CallWithChatAdapterManagement {
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startCaptions(options?: StartCaptionsOptions): Promise<void>;
     startScreenShare(): Promise<void>;
+    // @beta
+    startSpotlight(userId: string): Promise<void>;
     startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
     stopCamera(): Promise<void>;
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
+    // @beta
+    stopSpotlight(userId: string): Promise<void>;
     stopVideoBackgroundEffects(): Promise<void>;
     // @beta
     submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
@@ -1775,6 +1783,8 @@ export class _MockCallAdapter implements CallAdapter {
     // (undocumented)
     startScreenShare(): Promise<void>;
     // (undocumented)
+    startSpotlight(userId: string): Promise<void>;
+    // (undocumented)
     startVideoBackgroundEffect(): Promise<void>;
     // (undocumented)
     state: CallAdapterState;
@@ -1784,6 +1794,8 @@ export class _MockCallAdapter implements CallAdapter {
     stopCaptions(): Promise<void>;
     // (undocumented)
     stopScreenShare(): Promise<void>;
+    // (undocumented)
+    stopSpotlight(userId: string): Promise<void>;
     // (undocumented)
     stopVideoBackgroundEffects(): Promise<void>;
     // (undocumented)
