@@ -243,10 +243,10 @@ export type CallCompositeOptions = {
    */
   surveyOptions?: {
     /**
-     * Hide call survey at the end of a call.
+     * Disable call survey at the end of a call.
      * @defaultValue false
      */
-    hideSurvey?: boolean;
+    disableSurvey?: boolean;
     /**
      * Optional callback to handle survey data including free form text response
      * Note that free form text response survey option is only going to be enabled when this callback is provided
@@ -459,7 +459,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           moreDetails={locale.strings.call.failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails}
           dataUiId={'access-denied-teams-meeting-page'}
           /* @conditional-compile-remove(end-of-call-survey) */
-          surveyOptions={{ hideSurvey: true }}
+          surveyOptions={{ disableSurvey: true }}
         />
       );
       break;
@@ -471,7 +471,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           moreDetails={locale.strings.call.removedFromCallMoreDetails}
           dataUiId={'removed-from-call-page'}
           /* @conditional-compile-remove(end-of-call-survey) */
-          surveyOptions={{ hideSurvey: true }}
+          surveyOptions={{ disableSurvey: true }}
         />
       );
       break;
@@ -483,7 +483,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           moreDetails={locale.strings.call.failedToJoinCallDueToNoNetworkMoreDetails}
           dataUiId={'join-call-failed-due-to-no-network-page'}
           /* @conditional-compile-remove(end-of-call-survey) */
-          surveyOptions={{ hideSurvey: true }}
+          surveyOptions={{ disableSurvey: true }}
         />
       );
       break;
@@ -495,7 +495,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           pageStyle={leavePageStyle}
           disableStartCallButton={true}
           /* @conditional-compile-remove(end-of-call-survey) */
-          surveyOptions={{ hideSurvey: true }}
+          surveyOptions={{ disableSurvey: true }}
         />
       );
       break;
