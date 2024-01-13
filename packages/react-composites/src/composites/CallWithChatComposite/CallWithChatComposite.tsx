@@ -194,10 +194,10 @@ export type CallWithChatCompositeOptions = {
    */
   surveyOptions?: {
     /**
-     * Hide call survey at the end of a call.
+     * Disable call survey at the end of a call.
      * @defaultValue false
      */
-    hideSurvey?: boolean;
+    disableSurvey?: boolean;
     /**
      * Optional callback to handle survey data including free form text response
      * Note that free form text response survey option is only going to be enabled when this callback is provided
@@ -300,10 +300,10 @@ type CallWithChatScreenProps = {
    */
   surveyOptions?: {
     /**
-     * Hide call survey at the end of a call.
+     * Disable call survey at the end of a call.
      * @defaultValue false
      */
-    hideSurvey?: boolean;
+    disableSurvey?: boolean;
     /**
      * Optional callback to handle survey data including free form text response
      * Note that free form text response survey option is only going to be enabled when this callback is provided
