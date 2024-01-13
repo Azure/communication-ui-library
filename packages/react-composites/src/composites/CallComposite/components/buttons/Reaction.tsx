@@ -24,7 +24,7 @@ export const Reaction = (props: {
   const reactionButtonProps = usePropsFor(ReactionButton) as unknown as ReactionButtonProps;
   const styles = useMemo(() => concatButtonBaseStyles(props.styles ?? {}), [props.styles]);
 
-  const reactionButtonDisabled = isDisabled(props.option);
+  const reactionButtonDisabled = isDisabled(props.option) || reactionButtonProps.disabled;
 
   return (
     <ReactionButton

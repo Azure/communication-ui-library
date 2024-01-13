@@ -62,7 +62,6 @@ export const reactionEmojiMenuStyles = (): React.CSSProperties => {
     alignItems: 'center',
     flexDirection: 'row',
     width: '220px',
-    height: '42px',
-    borderRadius: '8px'
+    height: '42px'
   };
 };
