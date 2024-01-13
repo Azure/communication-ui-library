@@ -81,7 +81,11 @@ describe('Calling sound subscriber tests', () => {
     };
     const soundSubscriber = new CallingSoundSubscriber(call, callee, sounds);
     expect(soundSubscriber).toBeDefined();
-    call.testHelperSetCallEndReason({ code: 603, subCode: 0 });
+    call.testHelperSetCallEndReason({
+      code: 603,
+      subCode: 0,
+      /* @conditional-compile-remove(calling-beta-sdk) */ resultCategories: []
+    });
     expect(audioMocks.Audio.play).not.toHaveBeenCalled();
   });
 });

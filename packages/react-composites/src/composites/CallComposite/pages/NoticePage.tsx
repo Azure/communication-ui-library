@@ -38,10 +38,10 @@ export interface NoticePageProps {
    */
   surveyOptions?: {
     /**
-     * Hide call survey at the end of a call.
+     * Disable call survey at the end of a call.
      * @defaultValue false
      */
-    hideSurvey?: boolean;
+    disableSurvey?: boolean;
     /* @conditional-compile-remove(end-of-call-survey-self-host) */
     /**
      * Optional callback to add extra logic when survey is dismissed. For self-host only
@@ -107,7 +107,7 @@ export function NoticePage(props: NoticePageProps): JSX.Element {
         )}
       </Stack>
       {
-        /* @conditional-compile-remove(end-of-call-survey) */ !props.surveyOptions?.hideSurvey && (
+        /* @conditional-compile-remove(end-of-call-survey) */ !props.surveyOptions?.disableSurvey && (
           <SurveyPane
             {...handlers}
             onSurveySubmittedCustom={props.surveyOptions?.onSurveySubmitted}
