@@ -42,6 +42,11 @@ export interface NoticePageProps {
      * @defaultValue false
      */
     disableSurvey?: boolean;
+    /* @conditional-compile-remove(end-of-call-survey-self-host) */
+    /**
+     * Optional callback to add extra logic when survey is dismissed. For self-host only
+     */
+    onSurveyDismissed?: () => void;
     /**
      * Optional callback to handle survey data including free form text response
      * Note that free form text response survey option is only going to be enabled when this callback is provided
@@ -103,7 +108,12 @@ export function NoticePage(props: NoticePageProps): JSX.Element {
       </Stack>
       {
         /* @conditional-compile-remove(end-of-call-survey) */ !props.surveyOptions?.disableSurvey && (
-          <SurveyPane {...handlers} onSurveySubmittedCustom={props.surveyOptions?.onSurveySubmitted} />
+          <SurveyPane
+            {...handlers}
+            onSurveySubmittedCustom={props.surveyOptions?.onSurveySubmitted}
+            /* @conditional-compile-remove(end-of-call-survey-self-host) */
+            onSurveyDismissed={props.surveyOptions?.onSurveyDismissed}
+          />
         )
       }
     </Stack>

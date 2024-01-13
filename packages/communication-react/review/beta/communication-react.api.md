@@ -614,6 +614,7 @@ export type CallCompositeOptions = {
     };
     surveyOptions?: {
         disableSurvey?: boolean;
+        onSurveyDismissed?: () => void;
         onSurveySubmitted?: (callId: string, surveyId: string,
         submittedSurvey: CallSurvey,
         improvementSuggestions: CallSurveyImprovementSuggestions) => Promise<void>;
@@ -1274,6 +1275,7 @@ export type CallWithChatCompositeOptions = {
     };
     surveyOptions?: {
         disableSurvey?: boolean;
+        onSurveyDismissed?: () => void;
         onSurveySubmitted?: (callId: string, surveyId: string,
         submittedSurvey: CallSurvey,
         improvementSuggestions: CallSurveyImprovementSuggestions) => Promise<void>;
