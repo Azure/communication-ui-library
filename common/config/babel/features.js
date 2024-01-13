@@ -41,6 +41,8 @@ module.exports = {
     "teams-adhoc-call",
     // Joining calls using teams token
     "teams-identity-support",
+    // Chat teams interop to display images and file attachments in chat messages
+    "teams-inline-images-and-file-sharing",
     "unsupported-browser",
     // Support Calling SDK isReceiving flag, shows a loading spinner on the video tile when isAvailable is true but isReceiving is false
     "video-stream-is-receiving-flag",
@@ -62,6 +64,8 @@ module.exports = {
     "capabilities",
     // Feature for custom video gallery layouts
     "gallery-layouts",
+    // Feature image gallery
+    "image-gallery",
     // Feature for large Gallery layout
     "large-gallery",
     // feature for positioning the overflowGallery at the top of the screen in the composite

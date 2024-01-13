@@ -66,14 +66,16 @@ export type AnnouncerProps = {
     ariaLive: 'off' | 'polite' | 'assertive' | undefined;
 };
 
-// @public
+// @beta
 export interface AttachmentDownloadResult {
+    // (undocumented)
     attachmentId: string;
+    // (undocumented)
     blobUrl: string;
 }
 
-// @public
-export type AttachmentMetadata = InlineImageMetadata | /* @conditional-compile-remove(file-sharing) */ FileMetadata;
+// @beta
+export type AttachmentMetadata = FileMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ InlineImageMetadata;
 
 // @internal
 export type _AudioIssue = 'NoLocalAudio' | 'NoRemoteAudio' | 'Echo' | 'AudioNoise' | 'LowVolume' | 'AudioStoppedUnexpectedly' | 'DistortedSpeech' | 'AudioInterruption' | 'OtherIssues';
@@ -453,8 +455,8 @@ export interface _CaptionsSettingsModalStrings {
     captionsSettingsSpokenLanguageDropdownLabel?: string;
 }
 
-// @public
-export type ChatAttachmentType = 'inlineImage' | /* @conditional-compile-remove(file-sharing) */ 'file' | 'unknown';
+// @beta
+export type ChatAttachmentType = 'file' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | 'unknown';
 
 // @public
 export interface ChatMessage extends MessageCommon {
@@ -474,6 +476,7 @@ export interface ChatMessage extends MessageCommon {
     failureReason?: string;
     // @beta
     files?: FileMetadata[];
+    // @beta
     inlineImages?: InlineImageMetadata[];
     // (undocumented)
     messageType: 'chat';
@@ -488,7 +491,7 @@ export interface ChatMessage extends MessageCommon {
     status?: MessageStatus;
 }
 
-// @public
+// @beta
 export interface ChatTheme {
     chatPalette: {
         modalOverlayBlack: string;
@@ -759,7 +762,7 @@ export interface CustomMessage extends MessageCommon {
 }
 
 // @public
-export const darkTheme: PartialTheme & CallingTheme & ChatTheme;
+export const darkTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-gallery) */ ChatTheme;
 
 // @public
 export const DEFAULT_COMPONENT_ICONS: {
@@ -1308,10 +1311,10 @@ export interface _Identifiers {
     videoTile: string;
 }
 
-// @public
+// @beta
 export const ImageGallery: (props: ImageGalleryProps) => JSX.Element;
 
-// @public
+// @beta
 export interface ImageGalleryImageProps {
     altText?: string;
     downloadFilename: string;
@@ -1320,7 +1323,7 @@ export interface ImageGalleryImageProps {
     titleIcon?: JSX.Element;
 }
 
-// @public
+// @beta
 export interface ImageGalleryProps {
     images: Array<ImageGalleryImageProps>;
     isOpen: boolean;
@@ -1330,13 +1333,13 @@ export interface ImageGalleryProps {
     startIndex?: number;
 }
 
-// @public
+// @beta
 export interface ImageGalleryStrings {
     dismissButtonAriaLabel: string;
     downloadButtonLabel: string;
 }
 
-// @public
+// @beta
 export interface InlineImageMetadata {
     // (undocumented)
     attachmentType: 'inlineImage';
@@ -1356,7 +1359,7 @@ export interface JumpToNewMessageButtonProps {
 }
 
 // @public
-export const lightTheme: PartialTheme & CallingTheme & ChatTheme;
+export const lightTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-gallery) */ ChatTheme;
 
 // @public
 export type LoadingState = 'loading' | 'none';

@@ -98,7 +98,7 @@ export class FileUpload implements FileUploadManager, FileUploadEventEmitter {
    */
   public metadata?: AttachmentMetadata;
 
-  constructor(data: File | AttachmentMetadata) {
+  constructor(data: File | FileMetadata) {
     this._emitter = new EventEmitter();
     this._emitter.setMaxListeners(_MAX_EVENT_LISTENERS);
     this.id = nanoid();
@@ -107,8 +107,7 @@ export class FileUpload implements FileUploadManager, FileUploadEventEmitter {
     } else {
       this.metadata = data;
     }
-    const name = (data as unknown as FileMetadata)?.name;
-    this.fileName = name;
+    this.fileName = data.name;
   }
 
   notifyUploadProgressChanged(value: number): void {

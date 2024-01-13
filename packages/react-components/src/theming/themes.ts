@@ -19,16 +19,17 @@ export interface CallingTheme {
   };
 }
 
+/* @conditional-compile-remove(image-gallery) */
 /**
  * Custom Fluent theme palette used by chat related components in this library.
  *
- * @public
+ * @beta
  */
 export interface ChatTheme {
   /**
    * Custom Fluent theme palette used by chat related components in this library.
    *
-   * @public
+   * @beta
    */
   chatPalette: {
     modalOverlayBlack: string;
@@ -44,7 +45,7 @@ export interface ChatTheme {
  *
  * @public
  */
-export const lightTheme: PartialTheme & CallingTheme & ChatTheme = {
+export const lightTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-gallery) */ ChatTheme = {
   palette: {
     themePrimary: '#0078d4',
     themeLighterAlt: '#eff6fc',
@@ -78,7 +79,7 @@ export const lightTheme: PartialTheme & CallingTheme & ChatTheme = {
     /* @conditional-compile-remove(raise-hand) */
     raiseHandGold: '#eaa300'
   },
-
+  /* @conditional-compile-remove(image-gallery) */
   chatPalette: {
     modalOverlayBlack: '#000000',
     modalTitleWhite: '#ffffff',
@@ -96,7 +97,7 @@ export const lightTheme: PartialTheme & CallingTheme & ChatTheme = {
  *
  * @public
  */
-export const darkTheme: PartialTheme & CallingTheme & ChatTheme = {
+export const darkTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-gallery) */ ChatTheme = {
   palette: {
     themePrimary: '#2899f5',
     themeLighterAlt: '#02060a',
@@ -130,6 +131,7 @@ export const darkTheme: PartialTheme & CallingTheme & ChatTheme = {
     /* @conditional-compile-remove(raise-hand) */
     raiseHandGold: '#eaa300'
   },
+  /* @conditional-compile-remove(image-gallery) */
   chatPalette: {
     modalOverlayBlack: '#000000',
     modalTitleWhite: '#ffffff',

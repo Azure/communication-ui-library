@@ -7,14 +7,14 @@ import { mergeClasses } from '@fluentui/react-components';
 import { _formatString } from '@internal/acs-ui-common';
 import { useTheme } from '../../theming/FluentThemeProvider';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+
 import { editBoxStyle, inputBoxIcon, editingButtonStyle, editBoxStyleSet } from '../styles/EditBox.styles';
 import { InputBoxButton, InputBoxComponent } from '../InputBoxComponent';
 import { MessageThreadStrings } from '../MessageThread';
 import { useChatMyMessageStyles } from '../styles/MessageThread.styles';
 import { ChatMessage } from '../../types';
 import { _FileUploadCards } from '../FileUploadCards';
-/* @conditional-compile-remove(file-sharing) */
-import { FileMetadata } from '../FileDownloadCards';
+import { AttachmentMetadata, FileMetadata } from '../FileDownloadCards';
 import {
   chatMessageFailedTagStyle,
   editChatMessageFailedTagStyle,
@@ -44,8 +44,7 @@ export type ChatMessageComponentAsEditBoxProps = {
     text: string,
     metadata?: Record<string, string>,
     options?: {
-      /* @conditional-compile-remove(file-sharing) */
-      attachmentMetadata?: FileMetadata[];
+      attachmentMetadata?: AttachmentMetadata[];
     }
   ) => void;
   message: ChatMessage;
@@ -65,14 +64,11 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
   const { mentionLookupOptions } = props;
 
   const [textValue, setTextValue] = useState<string>(message.content || '');
-  /* @conditional-compile-remove(file-sharing) */
+
   const [attachmentMetadata, setAttachedFilesMetadata] = React.useState(getMessageAttachedFilesMetadata(message));
   const editTextFieldRef = React.useRef<ITextField>(null);
   const theme = useTheme();
-  const messageState = getMessageState(
-    textValue,
-    /* @conditional-compile-remove(file-sharing) */ attachmentMetadata ?? []
-  );
+  const messageState = getMessageState(textValue, attachmentMetadata ?? []);
   const submitEnabled = messageState === 'OK';
 
   const editContainerStyles = useChatMessageEditContainerStyles();
@@ -105,7 +101,6 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
     return concatStyleSets(editBoxStyleSet, { textField: { borderColor: theme.palette.themePrimary } });
   }, [theme.palette.themePrimary]);
 
-  /* @conditional-compile-remove(file-sharing) */
   const onRenderFileUploads = useCallback(() => {
     return (
       !!attachmentMetadata &&
@@ -143,13 +138,9 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
           }}
           onEnterKeyDown={() => {
             submitEnabled &&
-              onSubmit(
-                textValue,
-                message.metadata,
-                /* @conditional-compile-remove(file-sharing) */ {
-                  attachmentMetadata
-                }
-              );
+              onSubmit(textValue, message.metadata, {
+                attachmentMetadata
+              });
           }}
           supportNewline={false}
           maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
@@ -191,20 +182,16 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
               onRenderIcon={onRenderThemedSubmitIcon}
               onClick={(e) => {
                 submitEnabled &&
-                  onSubmit(
-                    textValue,
-                    message.metadata,
-                    /* @conditional-compile-remove(file-sharing) */ {
-                      attachmentMetadata
-                    }
-                  );
+                  onSubmit(textValue, message.metadata, {
+                    attachmentMetadata
+                  });
                 e.stopPropagation();
               }}
               id={'submitIconWrapper'}
             />
           </Stack.Item>
         </Stack>
-        {/* @conditional-compile-remove(file-sharing) */ onRenderFileUploads()}
+        {onRenderFileUploads()}
       </>
     );
   };
@@ -228,28 +215,14 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
 };
 
 const isMessageTooLong = (messageText: string): boolean => messageText.length > MAXIMUM_LENGTH_OF_MESSAGE;
-function isMessageEmpty(
-  messageText: string,
-  /* @conditional-compile-remove(file-sharing) */
-  attachmentMetadata?: FileMetadata[]
-): boolean {
-  /* @conditional-compile-remove(file-sharing) */
-  return messageText.trim().length === 0 && attachmentMetadata?.length === 0;
-  return messageText.trim().length === 0;
-}
-function getMessageState(
-  messageText: string,
-  /* @conditional-compile-remove(file-sharing) */ attachmentMetadata: FileMetadata[]
-): MessageState {
-  return isMessageEmpty(messageText, /* @conditional-compile-remove(file-sharing) */ attachmentMetadata)
-    ? 'too short'
-    : isMessageTooLong(messageText)
-    ? 'too long'
-    : 'OK';
-}
+const isMessageEmpty = (messageText: string, attachmentMetadata: AttachmentMetadata[]): boolean =>
+  messageText.trim().length === 0 && attachmentMetadata.length === 0;
+const getMessageState = (messageText: string, attachmentMetadata: AttachmentMetadata[]): MessageState =>
+  isMessageEmpty(messageText, attachmentMetadata) ? 'too short' : isMessageTooLong(messageText) ? 'too long' : 'OK';
 
-/* @conditional-compile-remove(file-sharing) */
 // @TODO: Remove when file-sharing feature becomes stable.
 const getMessageAttachedFilesMetadata = (message: ChatMessage): FileMetadata[] | undefined => {
+  /* @conditional-compile-remove(file-sharing) */
   return message.files;
+  return [];
 };

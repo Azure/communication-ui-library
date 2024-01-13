@@ -150,7 +150,7 @@ export type AzureCommunicationChatAdapterArgs = {
     threadId: string;
 };
 
-// @public
+// @beta
 export type AzureCommunicationChatAdapterOptions = {
     credential?: CommunicationTokenCredential;
 };
