@@ -320,7 +320,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                     )}
                     {
                       /* @conditional-compile-remove(reaction) */
-                      !props.mobileView && isEnabled(options.raiseHandButton) && (
+                      !props.mobileView && isEnabled(options.reactionButton) && (
                         <Reaction
                           displayType={options.displayType}
                           styles={commonButtonStyles}
@@ -339,16 +339,6 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                             disabled={props.disableButtonsForHoldScreen || isDisabled(options.microphoneButton)}
                           />
                         )
-                    }
-                    {
-                      /* @conditional-compile-remove(reaction) */
-                      !props.mobileView && (
-                        <Reaction
-                          displayType={options.displayType}
-                          styles={commonButtonStyles}
-                          disabled={props.disableButtonsForHoldScreen}
-                        />
-                      )
                     }
                     {screenShareButtonIsEnabled && (
                       <ScreenShare
