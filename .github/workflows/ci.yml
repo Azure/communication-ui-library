@@ -125,7 +125,7 @@ jobs:
 
   jest-test-coverage:
     needs: [get_matrix, build_packages]
-    name: Build Packages
+    name: Jest Test Coverage
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
@@ -150,6 +150,8 @@ jobs:
         run: npm install -g @microsoft/rush
       - name: Install dependencies
         run: rush install --max-install-attempts 3
+      - name: Build Packages
+        run: rush build -t @azure/communication-react
       - name: Test Packages
         run: rush test:ci-coverage -t @azure/communication-react
         env:
