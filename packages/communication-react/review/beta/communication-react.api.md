@@ -76,6 +76,7 @@ import { PersonaSize } from '@fluentui/react';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { PropertyChangedEvent } from '@azure/communication-calling';
 import { default as React_2 } from 'react';
+import { Reaction as Reaction_2 } from '@azure/communication-calling';
 import { ReactionMessage } from '@azure/communication-calling';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/communication-calling';
@@ -342,6 +343,8 @@ export interface CallAdapterCallOperations {
     leaveCall(forEveryone?: boolean): Promise<void>;
     lowerHand(): Promise<void>;
     mute(): Promise<void>;
+    // @beta
+    onReactionClicked(reaction: Reaction_2): Promise<void>;
     raiseHand(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
     // @beta
@@ -534,6 +537,7 @@ export type CallCompositeIcons = {
     ControlButtonRaiseHand?: JSX.Element;
     ControlButtonLowerHand?: JSX.Element;
     RaiseHandContextualMenuItem?: JSX.Element;
+    ReactionContextualMenuItem?: JSX.Element;
     LowerHandContextualMenuItem?: JSX.Element;
     ReactionButtonIcon?: JSX.Element;
     ErrorBarCallCameraAccessDenied?: JSX.Element;
@@ -990,6 +994,8 @@ export interface CallWithChatAdapterManagement {
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     lowerHand(): Promise<void>;
     mute(): Promise<void>;
+    // @beta
+    onReactionClicked(reaction: Reaction_2): Promise<void>;
     queryCameras(): Promise<VideoDeviceInfo[]>;
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
     querySpeakers(): Promise<AudioDeviceInfo[]>;
@@ -1860,6 +1866,9 @@ export type CommonCallControlOptions = {
     raiseHandButton?: boolean | {
         disabled: boolean;
     };
+    reactionButton?: boolean | {
+        disabled: boolean;
+    };
     onFetchCustomButtonProps?: CustomCallControlButtonCallback[];
     holdButton?: boolean | {
         disabled: boolean;
@@ -1897,6 +1906,8 @@ export interface CommonCallingHandlers {
     onLowerHand: () => Promise<void>;
     // (undocumented)
     onRaiseHand: () => Promise<void>;
+    // (undocumented)
+    onReactionClicked: (reaction: Reaction_2) => Promise<void>;
     // (undocumented)
     onRemoveParticipant(userId: string): Promise<void>;
     // (undocumented)
@@ -2466,6 +2477,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ControlButtonRaiseHand: JSX.Element;
     ControlButtonLowerHand: JSX.Element;
     RaiseHandContextualMenuItem: JSX.Element;
+    ReactionContextualMenuItem?: JSX.Element | undefined;
     LowerHandContextualMenuItem: JSX.Element;
     ReactionButtonIcon: JSX.Element;
     ErrorBarCallCameraAccessDenied: JSX.Element;
@@ -3654,7 +3666,7 @@ export type Reaction = {
 
 // @beta
 export interface ReactionButtonProps extends ControlBarButtonProps {
-    onReactionClicked: (emoji: string) => Promise<void>;
+    onReactionClicked: (reaction: string) => Promise<void>;
     strings?: Partial<ReactionButtonStrings>;
 }
 

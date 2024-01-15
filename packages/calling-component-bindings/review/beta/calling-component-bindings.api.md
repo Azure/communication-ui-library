@@ -44,6 +44,7 @@ import { PermissionConstraints } from '@azure/communication-calling';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
+import { Reaction } from '@azure/communication-calling';
 import { RemoteParticipantState } from '@internal/calling-stateful-client';
 import { ScreenShareButton } from '@internal/react-components';
 import { StartCallOptions } from '@azure/communication-calling';
@@ -171,6 +172,8 @@ export interface CommonCallingHandlers {
     onLowerHand: () => Promise<void>;
     // (undocumented)
     onRaiseHand: () => Promise<void>;
+    // (undocumented)
+    onReactionClicked: (reaction: Reaction) => Promise<void>;
     // (undocumented)
     onRemoveParticipant(userId: string): Promise<void>;
     // (undocumented)
@@ -316,6 +319,15 @@ export type RaiseHandButtonSelector = (state: CallClientState, props: CallingBas
 
 // @public
 export const raiseHandButtonSelector: RaiseHandButtonSelector;
+
+// @beta
+export type ReactionButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
+    checked?: boolean;
+    disabled?: boolean;
+};
+
+// @beta
+export const reactionButtonSelector: ReactionButtonSelector;
 
 // @public
 export type ScreenShareButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
