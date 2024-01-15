@@ -15,6 +15,8 @@ import {
   StartCallOptions,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(reaction) */
+import { Reaction } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -198,6 +200,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.raiseHand.bind(this);
     /* @conditional-compile-remove(raise-hand) */
     this.lowerHand.bind(this);
+    /* @conditional-compile-remove(reaction) */
+    this.onReactionClicked.bind(this);
     this.removeParticipant.bind(this);
     this.createStreamView.bind(this);
     this.disposeStreamView.bind(this);
@@ -368,6 +372,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   /** Lower hand for local user. */
   public async lowerHand(): Promise<void> {
     await this.callAdapter.lowerHand();
+  }
+  /* @conditional-compile-remove(reaction) */
+  public async onReactionClicked(reaction: Reaction): Promise<void> {
+    await this.callAdapter.onReactionClicked(reaction);
   }
   /** Create a stream view for a remote participants video feed. */
   public async createStreamView(
@@ -540,6 +548,16 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   /* @conditional-compile-remove(end-of-call-survey) */
   public async submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined> {
     return this.callAdapter.submitSurvey(survey);
+  }
+
+  /* @conditional-compile-remove(spotlight) */
+  public async startSpotlight(userId: string): Promise<void> {
+    return this.callAdapter.startSpotlight(userId);
+  }
+
+  /* @conditional-compile-remove(spotlight) */
+  public async stopSpotlight(userId: string): Promise<void> {
+    return this.callAdapter.stopSpotlight(userId);
   }
 
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;

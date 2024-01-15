@@ -33,6 +33,8 @@ import {
   StartCallOptions,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(reaction) */
+import { Reaction } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -185,6 +187,14 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   lowerHand(): Promise<void>;
+  /* @conditional-compile-remove(reaction) */
+  /**
+   * Send Reaction to ongoing meeting.
+   * @param reaction - A value of type {@link @azure/communication-calling#Reaction}
+   *
+   * @beta
+   */
+  onReactionClicked(reaction: Reaction): Promise<void>;
   /**
    * Create the html view for a stream.
    *
@@ -470,6 +480,20 @@ export interface CallWithChatAdapterManagement {
    * @beta
    */
   submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Start spotlight
+   *
+   * @beta
+   */
+  startSpotlight(userId: string): Promise<void>;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Stop spotlight
+   *
+   * @beta
+   */
+  stopSpotlight(userId: string): Promise<void>;
 }
 
 /**

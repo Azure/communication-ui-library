@@ -1,0 +1,9 @@
+{
+  "type": "minor",
+  "area": "feature",
+  "workstream": "Send reaction data flow",
+  "comment": "Send reaction button component",
+  "packageName": "@azure/communication-react",
+  "email": "mbellah@microsoft.com",
+  "dependentChangeType": "patch"
+}

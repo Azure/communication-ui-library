@@ -36,6 +36,8 @@ import {
   VideoOptions,
   Call
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(reaction) */
+import { Reaction } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(call-transfer) */
@@ -536,7 +538,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.stopScreenShare.bind(this);
     /* @conditional-compile-remove(raise-hand) */
     this.raiseHand.bind(this);
-    /* @conditional-compile-remove(raise-hand) */
+    /* @conditional-compile-remove(reaction) */
+    this.onReactionClicked.bind(this);
     this.lowerHand.bind(this);
     this.removeParticipant.bind(this);
     this.createStreamView.bind(this);
@@ -855,6 +858,13 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     });
   }
 
+  /* @conditional-compile-remove(reaction) */
+  public async onReactionClicked(reaction: Reaction): Promise<void> {
+    return await this.asyncTeeErrorToEventEmitter(async () => {
+      await this.handlers.onReactionClicked(reaction);
+    });
+  }
+
   /* @conditional-compile-remove(unsupported-browser) */
   public allowUnsupportedBrowserVersion(): void {
     this.context.setAllowedUnsupportedBrowser();
@@ -1025,6 +1035,16 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   /* @conditional-compile-remove(end-of-call-survey) */
   public async submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined> {
     return this.handlers.onSubmitSurvey(survey);
+  }
+
+  /* @conditional-compile-remove(spotlight) */
+  public async startSpotlight(userId: string): Promise<void> {
+    return this.handlers.onStartSpotlight(userId);
+  }
+
+  /* @conditional-compile-remove(spotlight) */
+  public async stopSpotlight(userId: string): Promise<void> {
+    return this.handlers.onStopSpotlight(userId);
   }
 
   public getState(): CallAdapterState {

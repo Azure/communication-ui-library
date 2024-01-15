@@ -12,6 +12,8 @@ import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isCameraOn } from '../utils';
 /* @conditional-compile-remove(PSTN-calls) */
 import { DtmfTone } from '@azure/communication-calling';
+/* @conditional-compile-remove(reaction) */
+import { Reaction } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
 import type { BackgroundReplacementConfig, BackgroundBlurConfig } from '@azure/communication-calling';
 /* @conditional-compile-remove(end-of-call-survey) */
@@ -67,6 +69,10 @@ const createCompositeHandlers = memoizeOne(
       adapter.getState().call?.raiseHand.localParticipantRaisedHand
         ? await adapter.lowerHand()
         : await adapter.raiseHand();
+    },
+    /* @conditional-compile-remove(reaction) */
+    onReactionClicked: async (reaction: Reaction) => {
+      await adapter.onReactionClicked(reaction);
     },
     onSelectCamera: async (deviceInfo, options) => {
       await adapter.setCamera(deviceInfo, options);
@@ -158,6 +164,14 @@ const createCompositeHandlers = memoizeOne(
     /* @conditional-compile-remove(end-of-call-survey) */
     onSubmitSurvey: async (survey: CallSurvey): Promise<CallSurveyResponse | undefined> => {
       return await adapter.submitSurvey(survey);
+    },
+    /* @conditional-compile-remove(spotlight) */
+    onStartSpotlight: async (userId: string): Promise<void> => {
+      await adapter.startSpotlight(userId);
+    },
+    /* @conditional-compile-remove(spotlight) */
+    onStopSpotlight: async (userId: string): Promise<void> => {
+      await adapter.stopSpotlight(userId);
     }
   })
 );
