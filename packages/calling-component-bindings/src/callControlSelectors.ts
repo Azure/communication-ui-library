@@ -197,7 +197,7 @@ export const reactionButtonSelector: ReactionButtonSelector = reselect.createSel
     return {
       checked: reaction ? true : false,
       disabled: callState !== 'Connected',
-      allowed: capabilities?.useReactions.isPresent || capabilities?.useReactions.reason === 'FeatureNotSupported'
+      allowed: !capabilities || capabilities.useReactions.isPresent
     };
   }
 );
