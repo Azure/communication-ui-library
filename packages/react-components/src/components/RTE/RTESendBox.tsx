@@ -6,7 +6,7 @@ import { RTEInputBoxComponent } from './RTEInputBoxComponent';
 import { Stack, useTheme } from '@fluentui/react';
 import { sendBoxStyle } from '../styles/RTESendBox.styles';
 import { useLocale } from '../../localization';
-import { SendBoxStrings } from '../SendBox'; // Should we move this to a shared location? Are the strings the same?
+import { SendBoxStrings } from '../SendBox';
 
 /**
  * Props for {@link RTESendBox}.
@@ -55,10 +55,8 @@ export const RTESendBox = (props: RTESendBoxProps): JSX.Element => {
     >
       <RTEInputBoxComponent placeholderText={strings.placeholderText} textValue={textValue} />
       {/* Send Button */}
-      {/* System Error Message should be outside of inputbox? */}
+      {/* System Error Message */}
       {/* File Upload */}
     </Stack>
   );
 };
-
-// Why is Active File Upload interface in 'Sendbox' instead of 'FileUploadCards'?
