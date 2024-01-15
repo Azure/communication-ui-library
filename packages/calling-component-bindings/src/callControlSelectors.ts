@@ -182,6 +182,7 @@ export type ReactionButtonSelector = (
 ) => {
   checked?: boolean;
   disabled?: boolean;
+  allowed?: boolean;
 };
 
 /* @conditional-compile-remove(reaction) */
@@ -191,11 +192,12 @@ export type ReactionButtonSelector = (
  * @beta
  */
 export const reactionButtonSelector: ReactionButtonSelector = reselect.createSelector(
-  [getLocalParticipantReactionState, getCallState],
-  (reaction, callState) => {
+  [getLocalParticipantReactionState, getCallState, getCapabilites],
+  (reaction, callState, capabilities) => {
     return {
       checked: reaction ? true : false,
-      disabled: callState !== 'Connected'
+      disabled: callState !== 'Connected',
+      allowed: capabilities?.useReactions.isPresent || capabilities?.useReactions.reason === 'FeatureNotSupported'
     };
   }
 );

@@ -8,6 +8,8 @@ import { IContextualMenuItem } from '@fluentui/react';
 import { useState } from 'react';
 import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { ControlBar, DevicesButton, ParticipantMenuItemsCallback } from '@internal/react-components';
+/* @conditional-compile-remove(reaction) */
+import { ReactionButton } from '@internal/react-components';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButton } from '@internal/react-components';
 import React, { useMemo } from 'react';
@@ -137,6 +139,9 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   /* @conditional-compile-remove(raise-hand) */
   const raiseHandButtonProps = usePropsFor(RaiseHandButton) as RaiseHandButtonProps;
 
+  /* @conditional-compile-remove(reaction) */
+  const reactionButtonProps = usePropsFor(ReactionButton);
+
   /* @conditional-compile-remove(PSTN-calls) */
   const alternateCallerId = useAdapter().getState().alternateCallerId;
 
@@ -172,7 +177,8 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   }
 
   /* @conditional-compile-remove(reaction) */
-  const showReactionButtonInControlBar = isEnabled(options?.reactionButton) && !props.isMobile;
+  const showReactionButtonInControlBar =
+    isEnabled(options?.reactionButton) && reactionButtonProps.allowed && !props.isMobile;
   /* @conditional-compile-remove(reaction) */
   if (showReactionButtonInControlBar) {
     numberOfButtons++;

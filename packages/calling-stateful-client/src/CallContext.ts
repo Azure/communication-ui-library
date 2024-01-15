@@ -1096,7 +1096,7 @@ function clearParticipantReactionState(callContext: CallContext, callId: string,
 function isCapableToReact(capabilitiesFeature: CapabilitiesFeatureState | undefined): boolean {
   return (
     capabilitiesFeature !== undefined &&
-    (capabilitiesFeature.capabilities.reaction.isPresent ||
-      capabilitiesFeature.capabilities.reaction.reason === 'FeatureNotSupported')
+    (capabilitiesFeature.capabilities.useReactions.isPresent ||
+      capabilitiesFeature.capabilities.useReactions.reason === 'FeatureNotSupported')
   );
 }
