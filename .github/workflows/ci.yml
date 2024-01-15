@@ -118,14 +118,6 @@ jobs:
         if: ${{ always() && steps.switch-flavor.outcome == 'failure' }}
         run: echo "Failed to switch to ${{ matrix.flavor }} flavor, please make sure you run 'rush update:${{ matrix.flavor }}' if dependencies were updated." && exit 1
 
-      # - name: Restore workspace
-      #   id: restore-workspace
-      #   uses: actions/cache/restore@v3
-      #   with:
-      #     path: |
-      #       ${{ github.workspace }}
-      #     key: ${{ github.workflow }}-${{ github.sha }}-${{ matrix.flavor }}
-
       - name: Build Packages
         run: rush build -t @azure/communication-react
 
@@ -205,15 +197,9 @@ jobs:
 
       - name: Install rush
         run: npm install -g @microsoft/rush
+
       - name: Install dependencies
         run: rush install --max-install-attempts 3
-
-      - name: Restore Rush Temp Area Cache
-        id: cache-workspace
-        uses: actions/cache/restore@v3
-        with:
-          path: common/temp
-          key: ${{ runner.os }}-${{ matrix.flavor }}-${{ github.workflow }}-${{ github.sha }}
 
       - name: Switch flavor for beta-release build
         id: switch-flavor
@@ -257,18 +243,23 @@ jobs:
       #     key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
         run: npm install -g @microsoft/rush
-      # - name: Install dependencies
-      #   run: rush install --max-install-attempts 3
+
       - name: Restore Rush Temp Area Cache
         id: cache-workspace
         uses: actions/cache/restore@v3
         with:
           path: common/temp
           key: ${{ runner.os }}-${{ matrix.flavor }}-${{ github.workflow }}-${{ github.sha }}
-      - uses: browser-actions/setup-chrome@v1
+
+      - name: Install dependencies
+        run: rush install --max-install-attempts 3
+
+      - name: Setup Chrome for Snapshot Tests
+        uses: browser-actions/setup-chrome@v1
         id: setup-chrome
         with:
           chrome-version: 120.0.6099
+
       - name: Switch flavor for build
         id: switch-flavor
         if: ${{ matrix.flavor != 'beta' }}
@@ -278,14 +269,17 @@ jobs:
       # - name: Run dependency update for stable
       #   if: ${{ matrix.flavor == 'stable' }}
       #   run: rush update:stable
+
       - name: Build Call Composite Test App
         run: |
           cd packages/react-composites
           rushx build:e2e:call
+
       - name: Install packlets used by browser tests
         run: |
           cd packages/react-composites
           rush build -t .
+
       - name: Call Composite Visual Regression Tests
         id: visualregressiontests
         run: |
@@ -294,6 +288,7 @@ jobs:
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
           CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
+
       - name: Upload playwright test results
         uses: actions/upload-artifact@v4
         if: ${{ always() }}
@@ -301,12 +296,14 @@ jobs:
           name: e2e-results-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.flavor }}-call.json
           path: packages/react-composites/test-results/*/e2e-results.json
           if-no-files-found: error
+
       - name: Upload snapshot diff
         if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
         uses: actions/upload-artifact@v4
         with:
           name: snapshots
           path: packages/react-composites/test-results
+
       - name: Comment on PR
         if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
         uses: actions/github-script@v3
