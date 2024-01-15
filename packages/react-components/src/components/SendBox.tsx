@@ -18,7 +18,7 @@ import { fileUploadCardsStyles } from './styles/SendBox.styles';
 import { SendBoxErrorBarError } from './SendBoxErrorBar';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from './MentionPopover';
-import { RTESendBox } from './RTE/RTESendBox';
+// import { RTESendBox } from './RTE/RTESendBox';
 
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
 const EMPTY_MESSAGE_REGEX = /^\s*$/;
@@ -364,7 +364,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
           })
         )}
       >
-        <RTESendBox />
+        {/* <RTESendBox /> */}
         <InputBoxComponent
           autoFocus={autoFocus}
           data-ui-id={ids.sendboxTextField}
