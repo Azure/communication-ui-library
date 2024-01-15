@@ -117,6 +117,7 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
       onRenderIcon={props.onRenderIcon ?? onRenderIcon}
       strings={strings}
       labelKey={props.labelKey ?? 'reactionButtonLabel'}
+      onRenderMenuIcon={() => <div />}
     />
   );
 };
