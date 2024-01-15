@@ -178,7 +178,16 @@ jobs:
         id: cache-workspace
         uses: actions/cache/save@v3
         with:
-          path: common/temp
+          path: |
+            common/temp
+            packages/acs-ui-common/node_modules
+            packages/calling-component-bindings/node_modules
+            packages/calling-stateful-client/node_modules
+            packages/chat-component-bindings/node_modules
+            packages/chat-stateful-client/node_modules
+            packages/communication-react/node_modules
+            packages/react-components/node_modules
+            packages/react-composites/node_modules
           key: ${{ runner.os }}-${{ matrix.flavor }}-${{ github.workflow }}-${{ github.sha }}
 
   in-progress-feature-validation:
@@ -250,7 +259,10 @@ jobs:
         id: cache-workspace
         uses: actions/cache/restore@v3
         with:
-          path: common/temp
+          path: |
+            common/temp
+            packages/react-components/node_modules
+            packages/react-composites/node_modules
           key: ${{ runner.os }}-${{ matrix.flavor }}-${{ github.workflow }}-${{ github.sha }}
 
       - name: Install dependencies
