@@ -42,8 +42,6 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Use Node.js
         uses: actions/setup-node@v4
@@ -78,14 +76,6 @@ jobs:
       - name: Run linter
         run: rush lint
 
-      # - name: Cache workspace
-      #   id: cache-workspace
-      #   uses: actions/cache/save@v3
-      #   with:
-      #     path: |
-      #       ${{ github.workspace }}
-      #     key: ${{ github.workflow }}-${{ github.sha }}-${{ matrix.flavor }}
-
   # Build the packages for all matrix flavours
   build_packages:
     needs: [get_matrix, pre_build_checks]
@@ -103,11 +93,11 @@ jobs:
         with:
           node-version: 'lts/*'
 
-      - name: Restore node_modules from cache
-        uses: actions/cache@v3
-        with:
-          path: common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+      # - name: Use Rush Build Cache
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: common/temp
+      #     key: ${{ runner.os }}-${{ matrix.flavor }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
 
       - name: Install rush
         run: npm install -g @microsoft/rush
@@ -190,60 +180,53 @@ jobs:
           path: |
             packages/communication-react/temp/communication-react.api.json
 
-      # - name: Update workspace cache
-      #   id: cache-workspace
-      #   uses: actions/cache/save@v3
-      #   with:
-      #     path: |
-      #       ${{ github.workspace }}
-      #     key: ${{ github.workflow }}-${{ github.ref }}-${{ matrix.flavor }}
+      - name: Cache Rush Temp Area
+        id: cache-workspace
+        uses: actions/cache/save@v3
+        with:
+          path: common/temp
+          key: ${{ runner.os }}-${{ matrix.flavor }}-${{ github.workflow }}-${{ github.sha }}
 
   in-progress-feature-validation:
     needs: [build_packages, get_matrix]
     name: Check if in progress feature can be removed separately
     runs-on: ubuntu-latest
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      # Ensure node version is great enough
+
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
-      # Try get node_modules from cache
-      - name: Restore node_modules from cache
-        uses: actions/cache@v3
-        with:
-          path: common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      # Install dependencies
+
       - name: Install rush
         run: npm install -g @microsoft/rush
       - name: Install dependencies
         run: rush install --max-install-attempts 3
-      # Switch flavour
+
+      - name: Restore Rush Temp Area Cache
+        id: cache-workspace
+        uses: actions/cache/restore@v3
+        with:
+          path: common/temp
+          key: ${{ runner.os }}-${{ matrix.flavor }}-${{ github.workflow }}-${{ github.sha }}
+
       - name: Switch flavor for beta-release build
         id: switch-flavor
         run: |
           rush switch-flavor:beta-release
-      # Perform lint check
+
       - name: Run linter
         run: rush lint
-      # Builds
+
       - name: Build Packages
         run: rush build -t @azure/communication-react
-      # Type check test folder
-      # - must be run after building all packlets because it depends on compiled packlet dependencies
-      # - must be run only on beta flavor build because the browser test code is not conditional compiled
-      - name: Type check test folder
-        if: ${{ matrix.flavor == 'beta' }}
-        run: cd packages/react-composites && rushx tsc:e2e
-      # Tests
+
       - name: Test Packages
         run: rush test -t @azure/communication-react
-      # Upload azure-communication api.md files for easy access
+
       - name: Upload communication-react api files
         uses: actions/upload-artifact@v4
         with:
@@ -265,15 +248,21 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
-      - name: Restore node_modules from cache
-        uses: actions/cache@v3
-        with:
-          path: common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+      # - name: Restore node_modules from cache
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: common/temp/pnpm-store
+      #     key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
         run: npm install -g @microsoft/rush
-      - name: Install dependencies
-        run: rush install --max-install-attempts 3
+      # - name: Install dependencies
+      #   run: rush install --max-install-attempts 3
+      - name: Restore Rush Temp Area Cache
+        id: cache-workspace
+        uses: actions/cache/restore@v3
+        with:
+          path: common/temp
+          key: ${{ runner.os }}-${{ matrix.flavor }}-${{ github.workflow }}-${{ github.sha }}
       - uses: browser-actions/setup-chrome@v1
         id: setup-chrome
         with:
@@ -284,9 +273,9 @@ jobs:
         run: |
           rush switch-flavor:${{ matrix.flavor }}
           node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
-      - name: Run dependency update for stable
-        if: ${{ matrix.flavor == 'stable' }}
-        run: rush update:stable
+      # - name: Run dependency update for stable
+      #   if: ${{ matrix.flavor == 'stable' }}
+      #   run: rush update:stable
       - name: Build Call Composite Test App
         run: |
           cd packages/react-composites
@@ -849,7 +838,7 @@ jobs:
   update_jest_coverage_report:
     needs: [get_matrix, build_packages]
     runs-on: ubuntu-latest
-    name: Upload jest coverage report to gist (${{ matrix.flavor }})
+    name: Upload jest coverage report to gist (main branch, ${{ matrix.flavor }})
     if: github.ref == 'refs/heads/main'
     strategy:
       matrix:
