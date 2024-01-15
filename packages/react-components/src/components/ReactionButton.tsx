@@ -38,7 +38,7 @@ export interface ReactionButtonProps extends ControlBarButtonProps {
   /**
    * Click event to send reaction to meeting
    */
-  onReactionClicked: (emoji: string) => Promise<void>;
+  onReactionClicked: (reaction: string) => Promise<void>;
 }
 
 /* @conditional-compile-remove(reaction) */
@@ -117,6 +117,7 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
       onRenderIcon={props.onRenderIcon ?? onRenderIcon}
       strings={strings}
       labelKey={props.labelKey ?? 'reactionButtonLabel'}
+      onRenderMenuIcon={() => <div />}
     />
   );
 };

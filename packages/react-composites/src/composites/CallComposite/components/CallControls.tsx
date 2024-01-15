@@ -47,6 +47,8 @@ import {
   generateCustomCallDesktopOverflowButtons,
   onFetchCustomButtonPropsTrampoline
 } from '../../common/ControlBar/CustomButton';
+/* @conditional-compile-remove(reaction) */
+import { Reaction } from './buttons/Reaction';
 /**
  * @private
  */
@@ -166,6 +168,13 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
     !props.isMobile;
   if (showParticipantsButtonInControlBar) {
+    numberOfButtons++;
+  }
+
+  /* @conditional-compile-remove(reaction) */
+  const showReactionButtonInControlBar = isEnabled(options?.reactionButton) && !props.isMobile;
+  /* @conditional-compile-remove(reaction) */
+  if (showReactionButtonInControlBar) {
     numberOfButtons++;
   }
 
@@ -395,6 +404,10 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
           {cameraButtonIsEnabled && (
             <Camera displayType={options?.displayType} disabled={isDisabled(options?.cameraButton)} />
           )}
+          {
+            /* @conditional-compile-remove(reaction) */
+            showReactionButtonInControlBar && <Reaction displayType={options?.displayType} />
+          }
           {
             /* @conditional-compile-remove(raise-hand) */ showRaiseHandButtonInControlBar &&
               /* @conditional-compile-remove(rooms) */ !hideRaiseHandButtonInRoomsCall && (

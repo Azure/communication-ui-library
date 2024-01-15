@@ -12,6 +12,8 @@ import {
   getIsScreenSharingOn,
   getLocalVideoStreams
 } from './baseSelectors';
+/* @conditional-compile-remove(reaction) */
+import { getLocalParticipantReactionState } from './baseSelectors';
 /* @conditional-compile-remove(capabilities) */
 import { getCapabilites, getRole } from './baseSelectors';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(raise-hand) */
@@ -164,6 +166,36 @@ export const raiseHandButtonSelector: RaiseHandButtonSelector = reselect.createS
     return {
       checked: raisedHand ? true : false,
       disabled: callState === 'InLobby' ? true : callState === 'Connecting' ?? false
+    };
+  }
+);
+
+/* @conditional-compile-remove(reaction) */
+/**
+ * Selector type for {@link ReactionButton} component.
+ *
+ * @beta
+ */
+export type ReactionButtonSelector = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+) => {
+  checked?: boolean;
+  disabled?: boolean;
+};
+
+/* @conditional-compile-remove(reaction) */
+/**
+ * Selector for {@link ReactionButton} component.
+ *
+ * @beta
+ */
+export const reactionButtonSelector: ReactionButtonSelector = reselect.createSelector(
+  [getLocalParticipantReactionState, getCallState],
+  (reaction, callState) => {
+    return {
+      checked: reaction ? true : false,
+      disabled: callState !== 'Connected'
     };
   }
 );
