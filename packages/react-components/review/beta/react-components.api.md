@@ -1934,8 +1934,8 @@ export const RTESendBox: (props: RTESendBoxProps) => JSX.Element;
 
 // @beta
 export interface RTESendBoxProps {
-    // (undocumented)
-    valueToDisplay?: string;
+    disabled?: boolean;
+    strings?: Partial<SendBoxStrings>;
 }
 
 // @public

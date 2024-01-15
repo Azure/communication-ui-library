@@ -1,7 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React from 'react';
+import React, { useState } from 'react';
+import { RTEInputBoxComponent } from './RTEInputBoxComponent';
+import { Stack, useTheme } from '@fluentui/react';
+import { useLocale } from '../../localization';
+import { SendBoxStrings } from '../SendBox';
+import { borderAndBoxShadowStyle } from '../styles/SendBox.styles';
 
 /**
  * Props for {@link RTESendBox}.
@@ -9,8 +14,19 @@ import React from 'react';
  * @beta
  */
 export interface RTESendBoxProps {
-  // just a value to be displayed for now but it should be deleted when the component development starts
-  valueToDisplay?: string;
+  /**
+   * Optional boolean to disable text box
+   * @defaultValue false
+   */
+  disabled?: boolean;
+  /**
+   * Optional strings to override in component
+   */
+  strings?: Partial<SendBoxStrings>;
+  /**
+   * Optional text for system message below text box
+   */
+  systemMessage?: string;
 }
 
 /**
@@ -19,6 +35,28 @@ export interface RTESendBoxProps {
  * @beta
  */
 export const RTESendBox = (props: RTESendBoxProps): JSX.Element => {
-  const { valueToDisplay = 'Hello World!' } = props;
-  return <div>{valueToDisplay}</div>;
+  const { disabled, systemMessage } = props;
+
+  const theme = useTheme();
+  const localeStrings = useLocale().strings.sendBox;
+  const strings = { ...localeStrings, ...props.strings };
+
+  const [contentValue] = useState('');
+
+  const errorMessage = systemMessage;
+
+  return (
+    <Stack
+      className={borderAndBoxShadowStyle({
+        theme: theme,
+        hasErrorMessage: !!errorMessage,
+        disabled: !!disabled
+      })}
+    >
+      <RTEInputBoxComponent placeholderText={strings.placeholderText} content={contentValue} />
+      {/* Send Button */}
+      {/* System Error Message */}
+      {/* File Upload */}
+    </Stack>
+  );
 };

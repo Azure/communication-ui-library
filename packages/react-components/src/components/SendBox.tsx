@@ -8,7 +8,8 @@ import { BaseCustomStyles } from '../types';
 import { useTheme } from '../theming';
 import { useLocale } from '../localization';
 import { useIdentifiers } from '../identifiers';
-import { InputBoxButton, InputBoxComponent } from './InputBoxComponent';
+import { InputBoxComponent } from './InputBoxComponent';
+import { InputBoxButton } from './InputBoxButton';
 import { SendBoxErrors } from './SendBoxErrors';
 /* @conditional-compile-remove(file-sharing) */
 import { _FileUploadCards } from './FileUploadCards';
@@ -18,8 +19,8 @@ import { SendBoxErrorBarError } from './SendBoxErrorBar';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from './MentionPopover';
 
-const EMPTY_MESSAGE_REGEX = /^\s*$/;
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
+const EMPTY_MESSAGE_REGEX = /^\s*$/;
 
 /**
  * Fluent styles for {@link Sendbox}.
@@ -354,13 +355,11 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     >
       <SendBoxErrors {...sendBoxErrorsProps} />
       <Stack
-        className={mergeStyles(
-          borderAndBoxShadowStyle({
-            theme,
-            hasErrorMessage: !!errorMessage,
-            disabled: !!disabled
-          })
-        )}
+        className={borderAndBoxShadowStyle({
+          theme,
+          hasErrorMessage: !!errorMessage,
+          disabled: !!disabled
+        })}
       >
         <InputBoxComponent
           autoFocus={autoFocus}
@@ -413,6 +412,14 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
 /**
  * @private
  */
+const sanitizeText = (message: string): string => {
+  if (EMPTY_MESSAGE_REGEX.test(message)) {
+    return '';
+  } else {
+    return message;
+  }
+};
+
 const hasIncompleteFileUploads = (props: SendBoxProps): boolean => {
   const activeFileUploads = activeFileUploadsTrampoline(props);
   return !!(
@@ -425,14 +432,6 @@ const hasFile = (props: SendBoxProps): boolean => {
   const activeFileUploads = activeFileUploadsTrampoline(props);
   return !!activeFileUploads?.find((file) => !file.error);
   return false;
-};
-
-const sanitizeText = (message: string): string => {
-  if (EMPTY_MESSAGE_REGEX.test(message)) {
-    return '';
-  } else {
-    return message;
-  }
 };
 
 const activeFileUploadsTrampoline = (props: SendBoxProps): ActiveFileUpload[] | undefined => {
