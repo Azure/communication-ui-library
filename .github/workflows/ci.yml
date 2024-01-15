@@ -94,13 +94,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
-
-      # - name: Use Rush Build Cache
-      #   uses: actions/cache@v3
-      #   with:
-      #     path: common/temp
-      #     key: ${{ runner.os }}-${{ matrix.flavor }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-
+      - name: Build composite packlet used by browser tests
+        run: |
+          cd packages/react-composites
+          rush build -t .
       - name: Install rush
         run: npm install -g @microsoft/rush
 
@@ -120,6 +117,11 @@ jobs:
 
       - name: Build Packages
         run: rush build -t @azure/communication-react
+
+      - name: Build composite packlet once (used by tests later)
+        run: |
+          cd packages/react-composites
+          rush build -t .
 
       # Type check test folder
       # - must be run after building all packlets because it depends on compiled packlet dependencies
@@ -150,22 +152,23 @@ jobs:
       - name: Ensure all package versions are consistent
         run: rush ensure-consistent-versions
 
-      - name: Obtain Test Coverage Metrics
-        run: rush test:ci-coverage -t @azure/communication-react
-        env:
-          NODE_OPTIONS: '--max_old_space_size=4096'
+      # MIGRATE TO A SEPARATE JOB?
+      # - name: Obtain Test Coverage Metrics
+      #   run: rush test:ci-coverage -t @azure/communication-react
+      #   env:
+      #     NODE_OPTIONS: '--max_old_space_size=4096'
 
-      - name: Merge all jest test coverage reports from the current branch
-        run: npx nyc merge temp/jest/coverage/detailed-report/ temp/jest/current/merge/detailed-full/coverage-report.json
+      # - name: Merge all jest test coverage reports from the current branch
+      #   run: npx nyc merge temp/jest/coverage/detailed-report/ temp/jest/current/merge/detailed-full/coverage-report.json
 
-      - name: Create a summary report from the detailed report
-        run: npx nyc report --temp-dir temp/jest/current/merge/detailed-full/ --report-dir temp/jest/current/merge/summary/ --reporter json-summary
+      # - name: Create a summary report from the detailed report
+      #   run: npx nyc report --temp-dir temp/jest/current/merge/detailed-full/ --report-dir temp/jest/current/merge/summary/ --reporter json-summary
 
-      - name: Upload detailed and summary jest coverage reports
-        uses: actions/upload-artifact@v4
-        with:
-          name: jest-coverage-report-${{ matrix.flavor }}
-          path: temp/jest/current/merge/
+      # - name: Upload detailed and summary jest coverage reports
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: jest-coverage-report-${{ matrix.flavor }}
+      #     path: temp/jest/current/merge/
 
       - name: Upload communication-react API files
         uses: actions/upload-artifact@v4
@@ -179,15 +182,16 @@ jobs:
         uses: actions/cache/save@v3
         with:
           path: |
-            common/temp/*
+            common/temp
           key: ${{ runner.os }}-${{ matrix.flavor }}-${{ github.workflow }}-${{ github.sha }}
+
       - name: Cache Composites Build Area
         id: cache-composites
         uses: actions/cache/save@v3
         with:
           key: ${{ runner.os }}-${{ matrix.flavor }}-${{ github.workflow }}-${{ github.sha }}-composites
           path: |
-            packages/react-composites/node_modules/*
+            packages/react-composites/node_modules
 
   in-progress-feature-validation:
     needs: [build_packages, get_matrix]
@@ -246,11 +250,6 @@ jobs:
         with:
           node-version: 'lts/*'
 
-      # - name: Restore node_modules from cache
-      #   uses: actions/cache@v3
-      #   with:
-      #     path: common/temp/pnpm-store
-      #     key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
         run: npm install -g @microsoft/rush
 
@@ -259,7 +258,7 @@ jobs:
         continue-on-error: false
         with:
           path: |
-            common/temp/*
+            common/temp
           key: ${{ runner.os }}-${{ matrix.flavor }}-${{ github.workflow }}-${{ github.sha }}
 
       - name: Install dependencies
@@ -271,7 +270,7 @@ jobs:
         with:
           key: ${{ runner.os }}-${{ matrix.flavor }}-${{ github.workflow }}-${{ github.sha }}-composites
           path: |
-            packages/react-composites/node_modules/*
+            packages/react-composites/node_modules
 
       - name: Setup Chrome for Snapshot Tests
         uses: browser-actions/setup-chrome@v1
