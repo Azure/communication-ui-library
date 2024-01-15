@@ -180,15 +180,14 @@ jobs:
         with:
           path: |
             common/temp
-            packages/acs-ui-common/node_modules
-            packages/calling-component-bindings/node_modules
-            packages/calling-stateful-client/node_modules
-            packages/chat-component-bindings/node_modules
-            packages/chat-stateful-client/node_modules
-            packages/communication-react/node_modules
-            packages/react-components/node_modules
-            packages/react-composites/node_modules
           key: ${{ runner.os }}-${{ matrix.flavor }}-${{ github.workflow }}-${{ github.sha }}
+      - name: Cache Composites Build Area
+        id: cache-composites
+        uses: actions/cache/save@v3
+        with:
+          key: ${{ runner.os }}-${{ matrix.flavor }}-${{ github.workflow }}-${{ github.sha }}-composites
+          path: |
+            packages/react-composites/node_modules
 
   in-progress-feature-validation:
     needs: [build_packages, get_matrix]
@@ -256,13 +255,11 @@ jobs:
         run: npm install -g @microsoft/rush
 
       - name: Restore Rush Temp Area Cache
-        id: cache-workspace
         uses: actions/cache/restore@v3
+        continue-on-error: false
         with:
           path: |
             common/temp
-            packages/react-components/node_modules
-            packages/react-composites/node_modules
           key: ${{ runner.os }}-${{ matrix.flavor }}-${{ github.workflow }}-${{ github.sha }}
 
       - name: Install dependencies
@@ -294,6 +291,14 @@ jobs:
       #   run: |
       #     cd packages/react-composites
       #     rush build -t .
+
+      - name: Restore Composites Build Area
+        continue-on-error: false
+        uses: actions/cache/restore@v3
+        with:
+          key: ${{ runner.os }}-${{ matrix.flavor }}-${{ github.workflow }}-${{ github.sha }}-composites
+          path: |
+            packages/react-composites/node_modules
 
       - name: Call Composite Visual Regression Tests
         id: visualregressiontests
