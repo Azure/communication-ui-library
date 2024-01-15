@@ -179,7 +179,7 @@ jobs:
         uses: actions/cache/save@v3
         with:
           path: |
-            common/temp
+            common/temp/*
           key: ${{ runner.os }}-${{ matrix.flavor }}-${{ github.workflow }}-${{ github.sha }}
       - name: Cache Composites Build Area
         id: cache-composites
@@ -187,7 +187,7 @@ jobs:
         with:
           key: ${{ runner.os }}-${{ matrix.flavor }}-${{ github.workflow }}-${{ github.sha }}-composites
           path: |
-            packages/react-composites/node_modules
+            packages/react-composites/node_modules/*
 
   in-progress-feature-validation:
     needs: [build_packages, get_matrix]
@@ -259,11 +259,19 @@ jobs:
         continue-on-error: false
         with:
           path: |
-            common/temp
+            common/temp/*
           key: ${{ runner.os }}-${{ matrix.flavor }}-${{ github.workflow }}-${{ github.sha }}
 
       - name: Install dependencies
         run: rush install --max-install-attempts 3
+
+      - name: Restore Composites Build Area
+        continue-on-error: false
+        uses: actions/cache/restore@v3
+        with:
+          key: ${{ runner.os }}-${{ matrix.flavor }}-${{ github.workflow }}-${{ github.sha }}-composites
+          path: |
+            packages/react-composites/node_modules/*
 
       - name: Setup Chrome for Snapshot Tests
         uses: browser-actions/setup-chrome@v1
@@ -286,19 +294,11 @@ jobs:
           cd packages/react-composites
           rushx build:e2e:call
 
-      # THIS IS CACHED NOW HOPEFULLY?
+      # THIS IS CACHED NOW via ?
       # - name: Install packlets used by browser tests
       #   run: |
       #     cd packages/react-composites
       #     rush build -t .
-
-      - name: Restore Composites Build Area
-        continue-on-error: false
-        uses: actions/cache/restore@v3
-        with:
-          key: ${{ runner.os }}-${{ matrix.flavor }}-${{ github.workflow }}-${{ github.sha }}-composites
-          path: |
-            packages/react-composites/node_modules
 
       - name: Call Composite Visual Regression Tests
         id: visualregressiontests
