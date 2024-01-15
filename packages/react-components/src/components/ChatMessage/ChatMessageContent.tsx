@@ -5,8 +5,9 @@ import React from 'react';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { useEffect } from 'react';
 import { _formatString } from '@internal/acs-ui-common';
-import parse, { HTMLReactParserOptions, Element as DOMElement, attributesToProps } from 'html-react-parser';
-
+import parse, { HTMLReactParserOptions, Element as DOMElement } from 'html-react-parser';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { attributesToProps } from 'html-react-parser';
 import Linkify from 'react-linkify';
 import { ChatMessage } from '../../types/ChatMessage';
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -19,7 +20,7 @@ import { MentionDisplayOptions, Mention } from '../MentionPopover';
 import { FontIcon, Stack } from '@fluentui/react';
 import { MessageThreadStrings } from '../MessageThread';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { AttachmentMetadata, InlineImageMetadata } from '../FileDownloadCards';
+import { AttachmentMetadata } from '../FileDownloadCards';
 import LiveMessage from '../Announcer/LiveMessage';
 /* @conditional-compile-remove(mention) */
 import { defaultOnMentionRender } from './MentionRenderer';
