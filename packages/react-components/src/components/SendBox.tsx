@@ -355,13 +355,11 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     >
       <SendBoxErrors {...sendBoxErrorsProps} />
       <Stack
-        className={mergeStyles(
-          borderAndBoxShadowStyle({
-            theme,
-            hasErrorMessage: !!errorMessage,
-            disabled: !!disabled
-          })
-        )}
+        className={borderAndBoxShadowStyle({
+          theme,
+          hasErrorMessage: !!errorMessage,
+          disabled: !!disabled
+        })}
       >
         <InputBoxComponent
           autoFocus={autoFocus}

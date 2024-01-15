@@ -15,18 +15,18 @@ export interface RTEInputBoxComponentStylesProps extends BaseCustomStyles {}
  */
 export interface RTEInputBoxComponentProps {
   placeholderText?: string;
-  textValue: string;
+  content: string;
 }
 
 /**
  * @private
  */
 export const RTEInputBoxComponent = (props: RTEInputBoxComponentProps): JSX.Element => {
-  const { placeholderText, textValue } = props;
+  const { placeholderText, content } = props;
 
   return (
     <div>
-      <RichTextEditor content={textValue} placeholderText={placeholderText} onChange={() => {}} />
+      <RichTextEditor content={content} placeholderText={placeholderText} onChange={() => {}} />
     </div>
   );
 };
