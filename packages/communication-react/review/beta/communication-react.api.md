@@ -609,7 +609,8 @@ export type CallCompositeOptions = {
         layout?: VideoGalleryLayout;
     };
     surveyOptions?: {
-        hideSurvey?: boolean;
+        disableSurvey?: boolean;
+        onSurveyDismissed?: () => void;
         onSurveySubmitted?: (callId: string, surveyId: string,
         submittedSurvey: CallSurvey,
         improvementSuggestions: CallSurveyImprovementSuggestions) => Promise<void>;
@@ -1267,7 +1268,8 @@ export type CallWithChatCompositeOptions = {
         layout?: VideoGalleryLayout;
     };
     surveyOptions?: {
-        hideSurvey?: boolean;
+        disableSurvey?: boolean;
+        onSurveyDismissed?: () => void;
         onSurveySubmitted?: (callId: string, surveyId: string,
         submittedSurvey: CallSurvey,
         improvementSuggestions: CallSurveyImprovementSuggestions) => Promise<void>;

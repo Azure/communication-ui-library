@@ -121,7 +121,8 @@ export function defaultMockCallAdapterState(
           ...defaultEndedCallState,
           callEndReason: {
             code: 0,
-            subCode: callEndReasonSubCode
+            subCode: callEndReasonSubCode,
+            /* @conditional-compile-remove(calling-beta-sdk) */ resultCategories: []
           }
         }
       : undefined,
@@ -350,7 +351,7 @@ const consumerCapabilitiesInRoomsCall: ParticipantCapabilities = {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   },
-  reaction: {
+  useReactions: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   }
@@ -378,7 +379,7 @@ const attendeeCapabilitiesInRoomsCall: ParticipantCapabilities = {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   },
-  reaction: {
+  useReactions: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   }
@@ -406,7 +407,7 @@ const presenterCapabilitiesInRoomsCall: ParticipantCapabilities = {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   },
-  reaction: {
+  useReactions: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   }
