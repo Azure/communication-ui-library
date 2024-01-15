@@ -18,9 +18,10 @@ export interface OrganizedParticipantsArgs {
   maxRemoteVideoStreams?: number;
   maxOverflowGalleryDominantSpeakers?: number;
   isScreenShareActive?: boolean;
-  pinnedParticipantUserIds?: string[];
+  focusedParticipantUserIds?: string[];
   /* @conditional-compile-remove(gallery-layouts) */
   layout?: VideoGalleryLayout;
+  spotlightedParticipantUserIds?: string[];
 }
 
 /**
@@ -48,7 +49,7 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
     maxRemoteVideoStreams = DEFAULT_MAX_VIDEO_SREAMS,
     maxOverflowGalleryDominantSpeakers = DEFAULT_MAX_OVERFLOW_GALLERY_DOMINANT_SPEAKERS,
     isScreenShareActive = false,
-    pinnedParticipantUserIds = [],
+    focusedParticipantUserIds = [],
     /* @conditional-compile-remove(gallery-layouts) */
     layout
   } = props;
@@ -74,7 +75,7 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
   };
 
   visibleGridParticipants.current =
-    pinnedParticipantUserIds.length > 0 || isScreenShareActive
+    focusedParticipantUserIds.length > 0 || isScreenShareActive
       ? []
       : smartDominantSpeakerParticipants({
           participants: participantsToSortTrampoline(),
@@ -188,7 +189,7 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
 };
 
 /* @conditional-compile-remove(pinned-participants) */
-const _useOrganizedParticipantsWithPinnedParticipants = (
+const _useOrganizedParticipantsWithFocusedParticipants = (
   props: OrganizedParticipantsArgs
 ): OrganizedParticipantsResult => {
   // map remote participants by userId
@@ -197,35 +198,41 @@ const _useOrganizedParticipantsWithPinnedParticipants = (
     return map;
   }, {});
 
-  // get pinned participants in the same order of pinned participant user ids using remoteParticipantMap
-  const pinnedParticipants: VideoGalleryRemoteParticipant[] = [];
-  props.pinnedParticipantUserIds?.forEach((id) => {
+  const spotlightedParticipantUserIds = props.spotlightedParticipantUserIds ?? [];
+  // declare focused participant user ids as spotlighted participants user ids followed by
+  // pinned participants user ids
+  const focusedParticipantUserIds = [
+    ...new Set(spotlightedParticipantUserIds.concat(props.focusedParticipantUserIds ?? []))
+  ];
+  // get focused participants from map of remote participants in the order of the user ids
+  const focusedParticipants: VideoGalleryRemoteParticipant[] = [];
+  focusedParticipantUserIds.forEach((id) => {
     const pinnedParticipant = remoteParticipantMap[id];
     if (pinnedParticipant) {
-      pinnedParticipants.push(pinnedParticipant);
+      focusedParticipants.push(pinnedParticipant);
     }
   });
 
-  // get unpinned participants by filtering all remote participants using a set of pinned participant user ids
-  const pinnedParticipantUserIdSet = new Set(props.pinnedParticipantUserIds);
-  const unpinnedParticipants = props.remoteParticipants.filter((p) => !pinnedParticipantUserIdSet.has(p.userId));
+  // get unfocused participants by filtering out set of focused participant user ids from all remote participants
+  const focusedParticipantUserIdSet = new Set(focusedParticipantUserIds);
+  const unfocusedParticipants = props.remoteParticipants.filter((p) => !focusedParticipantUserIdSet.has(p.userId));
 
   const useOrganizedParticipantsProps = {
     ...props,
     // if there are pinned participants then we should only consider unpinned participants
-    remoteParticipants: unpinnedParticipants
+    remoteParticipants: unfocusedParticipants
   };
 
   const useOrganizedParticipantsResult = _useOrganizedParticipants(useOrganizedParticipantsProps);
 
-  if (pinnedParticipants.length === 0) {
+  if (focusedParticipants.length === 0) {
     return useOrganizedParticipantsResult;
   }
 
   return {
-    gridParticipants: props.isScreenShareActive ? [] : pinnedParticipants,
+    gridParticipants: props.isScreenShareActive ? [] : focusedParticipants,
     overflowGalleryParticipants: props.isScreenShareActive
-      ? pinnedParticipants.concat(useOrganizedParticipantsResult.overflowGalleryParticipants)
+      ? focusedParticipants.concat(useOrganizedParticipantsResult.overflowGalleryParticipants)
       : useOrganizedParticipantsResult.gridParticipants.concat(
           useOrganizedParticipantsResult.overflowGalleryParticipants
         )
@@ -254,6 +261,6 @@ const putVideoParticipantsFirst = (
  */
 export const useOrganizedParticipants = (args: OrganizedParticipantsArgs): OrganizedParticipantsResult => {
   /* @conditional-compile-remove(pinned-participants) */
-  return _useOrganizedParticipantsWithPinnedParticipants(args);
+  return _useOrganizedParticipantsWithFocusedParticipants(args);
   return _useOrganizedParticipants(args);
 };

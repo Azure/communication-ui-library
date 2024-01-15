@@ -90,6 +90,10 @@ import { Prohibited16Regular } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(unsupported-browser) */
 import { Warning20Filled } from '@fluentui/react-icons';
+
+/* @conditional-compile-remove(spotlight) */
+import { VideoPersonStar20Filled } from '@fluentui/react-icons';
+
 import { _pxToRem } from '@internal/acs-ui-common';
 
 import React from 'react';
@@ -360,5 +364,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(end-of-call-survey) */
   SurveyStarIcon: <Star28Regular />,
   /* @conditional-compile-remove(end-of-call-survey) */
-  SurveyStarIconFilled: <Star28Filled />
+  SurveyStarIconFilled: <Star28Filled />,
+  /* @conditional-compile-remove(spotlight) */
+  VideoSpotlighted: <VideoPersonStar20Filled style={{ height: '16px', width: '16px' }} />
 };

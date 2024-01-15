@@ -151,7 +151,7 @@ describe('useOrganizedParticipants hook tests with pinned participants', () => {
 
     const pinnedParticipantsLayout = setup({
       remoteParticipants,
-      pinnedParticipantUserIds: ['0', '6'],
+      focusedParticipantUserIds: ['0', '6'],
       dominantSpeakers: ['3', '4'],
       maxRemoteVideoStreams: 4
     });
@@ -183,7 +183,7 @@ describe('useOrganizedParticipants hook tests with pinned participants', () => {
 
       const pinnedParticipantsLayout = setup({
         remoteParticipants,
-        pinnedParticipantUserIds: ['0', '6'],
+        focusedParticipantUserIds: ['0', '6'],
         dominantSpeakers: ['3', '4'],
         maxRemoteVideoStreams: 4,
         isScreenShareActive: true
@@ -222,7 +222,7 @@ describe('useOrganizedParticipants hook tests with pinned participants', () => {
         dominantSpeakers: ['3v', '4v'],
         maxRemoteVideoStreams: 4,
         maxOverflowGalleryDominantSpeakers: 3,
-        pinnedParticipantUserIds: ['1']
+        focusedParticipantUserIds: ['1']
       }
     );
 
@@ -248,14 +248,14 @@ describe('useOrganizedParticipants hook tests with pinned participants', () => {
     const pinnedParticipantsLayout = setup(
       {
         remoteParticipants,
-        pinnedParticipantUserIds: ['1'],
+        focusedParticipantUserIds: ['1'],
         maxRemoteVideoStreams: 4,
         maxOverflowGalleryDominantSpeakers: 3,
         isScreenShareActive: true
       },
       {
         remoteParticipants,
-        pinnedParticipantUserIds: ['1'],
+        focusedParticipantUserIds: ['1'],
         maxRemoteVideoStreams: 4,
         maxOverflowGalleryDominantSpeakers: 3,
         isScreenShareActive: true,

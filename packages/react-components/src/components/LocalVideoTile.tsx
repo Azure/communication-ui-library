@@ -45,6 +45,8 @@ export const _LocalVideoTile = React.memo(
     raisedHand?: RaisedHand;
     /* @conditional-compile-remove(reaction) */
     reaction?: Reaction;
+    /* @conditional-compile-remove(spotlight) */
+    isSpotlighted?: boolean;
   }) => {
     const {
       isAvailable,
@@ -67,7 +69,9 @@ export const _LocalVideoTile = React.memo(
       /* @conditional-compile-remove(raise-hand) */
       raisedHand,
       /* @conditional-compile-remove(reaction) */
-      reaction
+      reaction,
+      /* @conditional-compile-remove(spotlight) */
+      isSpotlighted
     } = props;
 
     const localVideoStreamProps: LocalVideoStreamLifecycleMaintainerProps = useMemo(
@@ -136,6 +140,8 @@ export const _LocalVideoTile = React.memo(
         raisedHand={raisedHand}
         /* @conditional-compile-remove(reaction) */
         reaction={reaction}
+        /* @conditional-compile-remove(spotlight) */
+        isSpotlighted={isSpotlighted}
       />
     );
   }
