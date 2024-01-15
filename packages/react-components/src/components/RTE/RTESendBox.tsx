@@ -6,7 +6,7 @@ import { RTEInputBoxComponent } from './RTEInputBoxComponent';
 import { Stack, useTheme } from '@fluentui/react';
 import { sendBoxStyle } from '../styles/RTESendBox.styles';
 import { useLocale } from '../../localization';
-import { SendBoxStrings } from '../SendBox'; // Should we move this to a shared location?
+import { SendBoxStrings } from '../SendBox'; // Should we move this to a shared location? Are the strings the same?
 
 /**
  * Props for {@link RTESendBox}.
@@ -23,6 +23,10 @@ export interface RTESendBoxProps {
    * Optional strings to override in component
    */
   strings?: Partial<SendBoxStrings>;
+  /**
+   * Optional text for system message below text box
+   */
+  systemMessage?: string;
 }
 
 /**
@@ -31,7 +35,7 @@ export interface RTESendBoxProps {
  * @beta
  */
 export const RTESendBox = (props: RTESendBoxProps): JSX.Element => {
-  const { disabled } = props;
+  const { disabled, systemMessage } = props;
 
   const theme = useTheme();
   const localeStrings = useLocale().strings.sendBox;
@@ -39,7 +43,7 @@ export const RTESendBox = (props: RTESendBoxProps): JSX.Element => {
 
   const [textValue] = useState('');
 
-  const errorMessage = ''; // TODO: add error message
+  const errorMessage = systemMessage;
 
   return (
     <Stack
@@ -50,6 +54,11 @@ export const RTESendBox = (props: RTESendBoxProps): JSX.Element => {
       })}
     >
       <RTEInputBoxComponent placeholderText={strings.placeholderText} textValue={textValue} />
+      {/* Send Button */}
+      {/* System Error Message should be outside of inputbox? */}
+      {/* File Upload */}
     </Stack>
   );
 };
+
+// Why is Active File Upload interface in 'Sendbox' instead of 'FileUploadCards'?
