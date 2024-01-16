@@ -123,6 +123,11 @@
     "tooltipOnContent": "Dát ruku dolů",
     "tooltipOffContent": "Zvednout ruku"
   },
+  "reactionButton": {
+    "label": "Reagovat",
+    "tooltipDisabledContent": "Akce reakce je zakázaná",
+    "tooltipContent": "Odeslání reakce"
+  },
   "messageThread": {
     "yesterday": "Včera",
     "sunday": "Neděle",

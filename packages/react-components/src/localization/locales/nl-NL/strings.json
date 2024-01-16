@@ -123,6 +123,11 @@
     "tooltipOnContent": "Hand laten zakken",
     "tooltipOffContent": "Hand opsteken"
   },
+  "reactionButton": {
+    "label": "Reageren",
+    "tooltipDisabledContent": "Reactieactie is uitgeschakeld",
+    "tooltipContent": "Verzend een reactie"
+  },
   "messageThread": {
     "yesterday": "Gisteren",
     "sunday": "Zondag",

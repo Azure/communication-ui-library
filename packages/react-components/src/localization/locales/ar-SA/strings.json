@@ -123,6 +123,11 @@
     "tooltipOnContent": "خفض يد",
     "tooltipOffContent": "رفع يد"
   },
+  "reactionButton": {
+    "label": "تفاعل",
+    "tooltipDisabledContent": "تم تعطيل إجراء التفاعل",
+    "tooltipContent": "إرسال تفاعل"
+  },
   "messageThread": {
     "yesterday": "أمس",
     "sunday": "الأحد",
