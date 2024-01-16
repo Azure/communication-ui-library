@@ -18,7 +18,7 @@ concurrency:
 jobs:
   # get matrix for ci-jobs
   get_matrix:
-    name: Set CI flavors
+    name: Load CI Matrix Details
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.get-matrix.outputs.matrix }}
@@ -37,7 +37,7 @@ jobs:
 
   check_breaking_changes:
     needs: get_matrix
-    name: Check Breaking Changes
+    name: 'Check Breaking Changes (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
