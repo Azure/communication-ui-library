@@ -160,7 +160,8 @@ jobs:
         run: npx nyc merge temp/jest/coverage/detailed-report/ temp/jest/current/merge/detailed-full/coverage-report.json
       - name: Create a summary report from the detailed report
         run: npx nyc report --temp-dir temp/jest/current/merge/detailed-full/ --report-dir temp/jest/current/merge/summary/ --reporter json-summary
-      # Upload coverage reports which will be consumed later
+
+        # Upload coverage reports which will be consumed later
       - name: Upload detailed and summary jest coverage reports
         uses: actions/upload-artifact@v3
         with:
@@ -745,14 +746,9 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'pull_request' }}
     name: Compare unit tests coverage from pr head ref to base ref (${{ matrix.flavor }})
-    needs: [build_packages, jest-test-coverage]
+    needs: [get_matrix, build_packages, jest-test-coverage]
     strategy:
-      matrix:
-        include:
-          - flavor: stable
-            gist_id: d1528e50153e6f7ea569040d7b437abb
-          - flavor: beta
-            gist_id: 67224b1799c92f0e1cd2da24798e4dd5
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v4
@@ -775,7 +771,7 @@ jobs:
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - name: Get jest tests coverage of main from gist
-        run: curl -o temp/jest/base/coverage-report.json "https://gist.github.com/communication-ui-bot/${{ matrix.gist_id }}/raw/communication-react-jest-report-${{ matrix.flavor }}.json" --create-dirs -L
+        run: curl -o temp/jest/base/coverage-report.json "https://gist.github.com/communication-ui-bot/${{ matrix.coverage_gist_id }}/raw/communication-react-jest-report-${{ matrix.flavor }}.json" --create-dirs -L
       - name: Download coverage report from the build_packages job
         uses: actions/download-artifact@v3
         with:
@@ -785,12 +781,10 @@ jobs:
         id: coverage
         run: |
           node ./common/config/workflows/coverage-utils.js ../../../temp/jest/base/coverage-report.json ../../../temp/jest/current/merge/summary/coverage-summary.json lines
-
           node ./common/config/workflows/coverage-utils.js ../../../temp/jest/base/coverage-report.json ../../../temp/jest/current/merge/summary/coverage-summary.json statements
-
           node ./common/config/workflows/coverage-utils.js ../../../temp/jest/base/coverage-report.json ../../../temp/jest/current/merge/summary/coverage-summary.json functions
-
           node ./common/config/workflows/coverage-utils.js ../../../temp/jest/base/coverage-report.json ../../../temp/jest/current/merge/summary/coverage-summary.json branches
+
       - name: Find Comment
         uses: peter-evans/find-comment@v2
         id: fc
@@ -816,17 +810,12 @@ jobs:
   update_jest_coverage_report:
     runs-on: ubuntu-latest
     name: Upload jest coverage report to gist (${{ matrix.flavor }})
-    needs: [build_packages, jest-test-coverage]
+    needs: [get_matrix, jest-test-coverage]
     if: github.ref == 'refs/heads/main'
     strategy:
-      matrix:
-        include:
-          - flavor: stable
-            gist_id: d1528e50153e6f7ea569040d7b437abb
-          - flavor: beta
-            gist_id: 67224b1799c92f0e1cd2da24798e4dd5
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      - name: Download coverage report from the build_packages job
+      - name: Download coverage report from the jest-test-coverage job
         uses: actions/download-artifact@v3
         with:
           name: jest-coverage-report-${{ matrix.flavor }}
@@ -835,7 +824,7 @@ jobs:
         uses: exuanbo/actions-deploy-gist@v1
         with:
           token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
-          gist_id: ${{ matrix.gist_id }}
+          gist_id: ${{ matrix.coverage_gist_id }}
           gist_description: 'Jest report for tracking tests coverage for ${{ matrix.flavor }}'
           gist_file_name: communication-react-jest-report-${{ matrix.flavor }}.json
           file_path: temp/jest/current/merge/summary/coverage-summary.json
@@ -863,10 +852,10 @@ jobs:
         with:
           path: current
           name: ${{ matrix.app }}-report
-      - name: Use Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 'lts/*'
+      # - name: Use Node.js
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version: 'lts/*'
       - name: Calculate size change
         id: bundles
         run: |
