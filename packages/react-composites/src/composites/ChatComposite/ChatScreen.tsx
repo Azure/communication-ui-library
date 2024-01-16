@@ -20,7 +20,7 @@ import {
   TypingIndicatorStylesProps,
   useTheme
 } from '@internal/react-components';
-/* @conditional-compile-remove(image-gallery) */
+/* @conditional-compile-remove(image-gallery) */ /* @conditional-compile-remove(file-sharing) */
 import { ChatMessage } from '@internal/react-components';
 
 import React, { useCallback, useEffect, useMemo } from 'react';
