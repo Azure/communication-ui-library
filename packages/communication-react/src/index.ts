@@ -314,13 +314,10 @@ export type {
 } from '../../react-components/src';
 /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 export type { AttachmentMetadata } from '../../react-components/src';
+/* @conditional-compile-remove(file-sharing) */
+export type { FileMetadata } from '../../react-components/src';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-export type {
-  ChatAttachmentType,
-  AttachmentDownloadResult,
-  FileMetadata,
-  InlineImageMetadata
-} from '../../react-components/src';
+export type { ChatAttachmentType, AttachmentDownloadResult, InlineImageMetadata } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonProps, HoldButtonStrings, VideoTileStrings } from '../../react-components/src';
 /* @conditional-compile-remove(call-readiness) */

@@ -68,9 +68,7 @@ export type AnnouncerProps = {
 
 // @beta
 export interface AttachmentDownloadResult {
-    // (undocumented)
     attachmentId: string;
-    // (undocumented)
     blobUrl: string;
 }
 
@@ -456,7 +454,7 @@ export interface _CaptionsSettingsModalStrings {
 }
 
 // @beta
-export type ChatAttachmentType = 'file' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | 'unknown';
+export type ChatAttachmentType = 'unknown' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | /* @conditional-compile-remove(file-sharing) */ 'file';
 
 // @public
 export interface ChatMessage extends MessageCommon {
