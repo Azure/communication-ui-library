@@ -713,7 +713,7 @@ jobs:
 
   compare_jest_tests_coverage:
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'pull_request' }}
+    if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
     name: Compare unit tests coverage from pr head ref to base ref (${{ matrix.flavor }})
     needs: build_packages
     strategy:
@@ -812,7 +812,7 @@ jobs:
 
   compare_base_bundle_stats:
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'pull_request' }}
+    if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
     name: Compare bundle size from pr head ref to base ref - ${{ matrix.app }}
     needs: [build_calling_sample, build_chat_sample, build_call_with_chat_sample]
     strategy:
