@@ -19,6 +19,11 @@ import { CallSurveyImprovementSuggestions } from '@internal/react-components';
 export const SurveyPane = (props: {
   /* @conditional-compile-remove(end-of-call-survey) */
   onSubmitSurvey?: (survey: CallSurvey) => Promise<CallSurveyResponse | undefined>;
+  /* @conditional-compile-remove(end-of-call-survey-self-host) */
+  /**
+   * Optional callback to add extra logic when survey is dismissed. For self-host only
+   */
+  onSurveyDismissed?: () => void;
   /* @conditional-compile-remove(end-of-call-survey) */
   onSurveySubmittedCustom?: (
     callId: string,
@@ -40,6 +45,8 @@ export const SurveyPane = (props: {
 }): JSX.Element => {
   /* @conditional-compile-remove(end-of-call-survey) */
   const { onSubmitSurvey, onSurveySubmittedCustom } = props;
+  /* @conditional-compile-remove(end-of-call-survey-self-host) */ /* @conditional-compile-remove(end-of-call-survey) */
+  const { onSurveyDismissed } = props;
   /* @conditional-compile-remove(end-of-call-survey) */
   const strings = useLocale().strings.call;
   /* @conditional-compile-remove(end-of-call-survey) */
@@ -112,7 +119,13 @@ export const SurveyPane = (props: {
     <Panel
       headerText={strings.surveyQuestion}
       isOpen={isOpen}
-      onDismiss={() => setIsOpen(false)}
+      onDismiss={() => {
+        /* @conditional-compile-remove(end-of-call-survey-self-host) */
+        if (onSurveyDismissed) {
+          onSurveyDismissed();
+        }
+        setIsOpen(false);
+      }}
       closeButtonAriaLabel={strings.surveyCancelButtonAriaLabel}
       type={PanelType.custom}
       customWidth="24rem"

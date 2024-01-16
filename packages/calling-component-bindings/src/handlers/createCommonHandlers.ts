@@ -34,6 +34,8 @@ import { CommunicationIdentifier } from '@azure/communication-common';
 import { Features } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptions } from '@azure/communication-calling';
+/* @conditional-compile-remove(reaction) */
+import { Reaction } from '@azure/communication-calling';
 
 /**
  * Object containing all the handlers required for calling components.
@@ -60,6 +62,8 @@ export interface CommonCallingHandlers {
   onLowerHand: () => Promise<void>;
   /* @conditional-compile-remove(raise-hand) */
   onToggleRaiseHand: () => Promise<void>;
+  /* @conditional-compile-remove(reaction) */
+  onReactionClicked: (reaction: Reaction) => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   onToggleHold: () => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
@@ -318,6 +322,22 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       } else {
         await raiseHandFeature?.raiseHand();
       }
+    };
+
+    /* @conditional-compile-remove(reaction) */
+    const onReactionClicked = async (reaction: Reaction): Promise<void> => {
+      if (
+        reaction === 'like' ||
+        reaction === 'applause' ||
+        reaction === 'heart' ||
+        reaction === 'laugh' ||
+        reaction === 'surprised'
+      ) {
+        await call?.feature(Features.Reaction)?.sendReaction({ reactionType: reaction });
+      } else {
+        console.warn(`Can not recognize ${reaction} as meeting reaction`);
+      }
+      return;
     };
 
     const onToggleMicrophone = async (): Promise<void> => {
@@ -624,6 +644,8 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onLowerHand,
       /* @conditional-compile-remove(raise-hand) */
       onToggleRaiseHand,
+      /* @conditional-compile-remove(reaction) */
+      onReactionClicked,
       /* @conditional-compile-remove(PSTN-calls) */
       onAddParticipant: notImplemented,
       onRemoveParticipant: notImplemented,
