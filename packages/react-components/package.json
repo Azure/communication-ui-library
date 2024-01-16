@@ -46,7 +46,7 @@
     "@internal/acs-ui-common": "1.11.1-beta.0",
     "copy-to-clipboard": "^3.3.1",
     "dompurify": "^3.0.3",
-    "html-to-react": "1.5.1",
+    "html-react-parser": "^5.0.11",
     "react-linkify": "^1.0.0-alpha",
     "react-use-draggable-scroll": "^0.4.7",
     "roosterjs-editor-core": "^8.54.0",

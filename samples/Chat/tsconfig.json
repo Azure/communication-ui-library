@@ -1,7 +1,7 @@
 {
   "extends": "../../common/config/tsc/tsconfig.json",
   "compilerOptions": {
-    "noImplicitAny": false,
+    "noImplicitAny": false, // REMOVE THIS LINE WHEN THE UI LIBRARY SUPPORTS TRUE
     "outDir": "./dist/dist-esm",
     "baseUrl": "./src",
     "paths": {
