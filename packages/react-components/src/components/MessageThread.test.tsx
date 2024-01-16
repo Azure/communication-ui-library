@@ -533,7 +533,7 @@ describe('Message should display Mention correctly', () => {
 
     const expectedOnUpdateMessageCount = 1;
     let onUpdateMessageCount = 0;
-    const onUpdateMessageCallback = (messageId, content): Promise<void> => {
+    const onUpdateMessageCallback = (messageId: string, content: string): Promise<void> => {
       const msgIdx = messages.findIndex((m) => m.messageId === messageId);
       const message = messages[msgIdx];
       message.content = content;

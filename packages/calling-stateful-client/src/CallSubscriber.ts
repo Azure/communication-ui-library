@@ -30,6 +30,8 @@ import { OptimalVideoCountSubscriber } from './OptimalVideoCountSubscriber';
 import { CapabilitiesSubscriber } from './CapabilitiesSubscriber';
 /* @conditional-compile-remove(reaction) */
 import { ReactionSubscriber } from './ReactionSubscriber';
+/* @conditional-compile-remove(spotlight) */
+import { SpotlightSubscriber } from './SpotlightSubscriber';
 
 /**
  * Keeps track of the listeners assigned to a particular call because when we get an event from SDK, it doesn't tell us
@@ -58,6 +60,8 @@ export class CallSubscriber {
   private _localVideoStreamVideoEffectsSubscribers: Map<string, LocalVideoStreamVideoEffectsSubscriber>;
   /* @conditional-compile-remove(capabilities) */
   private _capabilitiesSubscriber: CapabilitiesSubscriber;
+  /* @conditional-compile-remove(spotlight) */
+  private _spotlightSubscriber: SpotlightSubscriber;
 
   constructor(call: CallCommon, context: CallContext, internalContext: InternalCallContext) {
     this._call = call;
@@ -107,6 +111,13 @@ export class CallSubscriber {
       this._callIdRef,
       this._context,
       this._call.feature(Features.Capabilities)
+    );
+
+    /* @conditional-compile-remove(spotlight) */
+    this._spotlightSubscriber = new SpotlightSubscriber(
+      this._callIdRef,
+      this._context,
+      this._call.feature(Features.Spotlight)
     );
 
     this.subscribe();
@@ -196,6 +207,8 @@ export class CallSubscriber {
     this._capabilitiesSubscriber.unsubscribe();
     /* @conditional-compile-remove(reaction) */
     this._reactionSubscriber?.unsubscribe();
+    /* @conditional-compile-remove(spotlight) */
+    this._spotlightSubscriber.unsubscribe();
   };
 
   private addParticipantListener(participant: RemoteParticipant): void {

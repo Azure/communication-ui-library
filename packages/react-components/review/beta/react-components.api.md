@@ -661,6 +661,7 @@ export interface ComponentStrings {
     ParticipantList: ParticipantListStrings;
     participantsButton: ParticipantsButtonStrings;
     raiseHandButton: RaiseHandButtonStrings;
+    reactionButton: ReactionButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
@@ -771,6 +772,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     ControlButtonLowerHand: React_2.JSX.Element;
     RaiseHandContextualMenuItem: React_2.JSX.Element;
     LowerHandContextualMenuItem: React_2.JSX.Element;
+    ReactionButtonIcon: React_2.JSX.Element;
     CancelFileUpload: React_2.JSX.Element;
     DownloadFile: React_2.JSX.Element;
     DataLossPreventionProhibited: React_2.JSX.Element;
@@ -955,6 +957,7 @@ export const Dialpad: (props: DialpadProps) => JSX.Element;
 // @beta
 export interface DialpadProps {
     disableDtmfPlayback?: boolean;
+    enableInputEditing?: boolean;
     isMobile?: boolean;
     onChange?: (input: string) => void;
     onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
@@ -962,7 +965,6 @@ export interface DialpadProps {
     showDeleteButton?: boolean;
     // (undocumented)
     strings?: DialpadStrings;
-    // (undocumented)
     styles?: DialpadStyles;
     textFieldValue?: string;
 }
@@ -1893,6 +1895,22 @@ export type Reaction = {
     receivedAt: Date;
 };
 
+// @beta
+export const ReactionButton: (props: ReactionButtonProps) => JSX.Element;
+
+// @beta
+export interface ReactionButtonProps extends ControlBarButtonProps {
+    onReactionClicked: (reaction: string) => Promise<void>;
+    strings?: Partial<ReactionButtonStrings>;
+}
+
+// @beta
+export interface ReactionButtonStrings {
+    label: string;
+    tooltipContent?: string;
+    tooltipDisabledContent?: string;
+}
+
 // @public
 export type ReadReceiptsBySenderId = {
     [key: string]: {
@@ -1927,6 +1945,15 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     disablePinMenuItem?: boolean | undefined;
     toggleAnnouncerString?: ((announcerString: string) => void) | undefined;
 }) => React_2.JSX.Element>;
+
+// @beta
+export const RTESendBox: (props: RTESendBoxProps) => JSX.Element;
+
+// @beta
+export interface RTESendBoxProps {
+    // (undocumented)
+    valueToDisplay?: string;
+}
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;

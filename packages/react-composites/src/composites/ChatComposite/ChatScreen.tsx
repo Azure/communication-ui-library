@@ -21,7 +21,7 @@ import {
 import { ChatMessage } from '@internal/react-components';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { useState } from 'react';
-import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPersona';
+import { AvatarPersona, AvatarPersonaDataCallback, AvatarPersonaProps } from '../common/AvatarPersona';
 import { useAdapter } from './adapter/ChatAdapterProvider';
 import { ChatCompositeOptions } from './ChatComposite';
 import { ChatHeader, getHeaderProps } from './ChatHeader';
@@ -152,7 +152,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const errorBarProps = usePropsFor(ErrorBar);
 
   const onRenderAvatarCallback = useCallback(
-    (userId, defaultOptions) => {
+    (userId?: string, defaultOptions?: AvatarPersonaProps) => {
       return (
         <AvatarPersona
           userId={userId}
@@ -197,7 +197,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   /* @conditional-compile-remove(file-sharing) */
   const onRenderFileDownloads = useCallback(
-    (userId, message: ChatMessage) => (
+    (userId: string, message: ChatMessage) => (
       <_FileDownloadCards
         userId={userId}
         fileMetadata={message.files || []}

@@ -42,6 +42,8 @@ import {
   MicProhibited16Filled,
   VideoProhibited16Filled
 } from '@fluentui/react-icons';
+/* @conditional-compile-remove(reaction) */
+import { Emoji20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { Star28Regular, Star28Filled } from '@fluentui/react-icons';
 /* @conditional-compile-remove(raise-hand) */
@@ -225,6 +227,18 @@ const GalleryRightButton = (): JSX.Element => {
   return rtl ? <ChevronLeft20Regular /> : <ChevronRight20Regular />;
 };
 
+const ControlButtonRaiseHandIcon = (): JSX.Element => {
+  /* @conditional-compile-remove(reaction) */
+  return <HandRight20Regular />;
+  return <HandRight20Filled />;
+};
+
+const ControlButtonLowerHandIcon = (): JSX.Element => {
+  /* @conditional-compile-remove(reaction) */
+  return <HandRightOff20Regular />;
+  return <HandRightOff20Filled />;
+};
+
 /**
  * The default set of icons that are available to use in the UI components.
  *
@@ -246,13 +260,15 @@ export const DEFAULT_COMPONENT_ICONS = {
   ControlButtonScreenShareStart: <ShareScreenStart20Filled />,
   ControlButtonScreenShareStop: <ShareScreenStop20Filled />,
   /* @conditional-compile-remove(raise-hand) */
-  ControlButtonRaiseHand: <HandRight20Filled />,
+  ControlButtonRaiseHand: <ControlButtonRaiseHandIcon />,
   /* @conditional-compile-remove(raise-hand) */
-  ControlButtonLowerHand: <HandRightOff20Filled />,
+  ControlButtonLowerHand: <ControlButtonLowerHandIcon />,
   /* @conditional-compile-remove(raise-hand) */
   RaiseHandContextualMenuItem: <HandRight20Regular />,
   /* @conditional-compile-remove(raise-hand) */
   LowerHandContextualMenuItem: <HandRightOff20Regular />,
+  /* @conditional-compile-remove(reaction) */
+  ReactionButtonIcon: <Emoji20Regular />,
   /* @conditional-compile-remove(file-sharing) */
   CancelFileUpload: <Dismiss16Regular />,
   /* @conditional-compile-remove(file-sharing) */

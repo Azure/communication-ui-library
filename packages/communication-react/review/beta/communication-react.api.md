@@ -76,12 +76,14 @@ import { PersonaSize } from '@fluentui/react';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { PropertyChangedEvent } from '@azure/communication-calling';
 import { default as React_2 } from 'react';
+import { Reaction as Reaction_2 } from '@azure/communication-calling';
 import { ReactionMessage } from '@azure/communication-calling';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/communication-calling';
 import { RoomCallLocator } from '@azure/communication-calling';
 import { ScalingMode } from '@azure/communication-calling';
 import { SendMessageOptions } from '@azure/communication-chat';
+import { SpotlightedParticipant } from '@azure/communication-calling';
 import { StartCallOptions } from '@azure/communication-calling';
 import { StartCaptionsOptions } from '@azure/communication-calling';
 import { SyntheticEvent } from 'react';
@@ -335,6 +337,8 @@ export interface CallAdapterCallOperations {
     leaveCall(forEveryone?: boolean): Promise<void>;
     lowerHand(): Promise<void>;
     mute(): Promise<void>;
+    // @beta
+    onReactionClicked(reaction: Reaction_2): Promise<void>;
     raiseHand(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
     // @beta
@@ -348,10 +352,14 @@ export interface CallAdapterCallOperations {
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startCaptions(options?: StartCaptionsOptions): Promise<void>;
     startScreenShare(): Promise<void>;
+    // @beta
+    startSpotlight(userId: string): Promise<void>;
     startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
     stopCamera(): Promise<void>;
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
+    // @beta
+    stopSpotlight(userId: string): Promise<void>;
     stopVideoBackgroundEffects(): Promise<void>;
     // @beta
     submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
@@ -523,7 +531,9 @@ export type CallCompositeIcons = {
     ControlButtonRaiseHand?: JSX.Element;
     ControlButtonLowerHand?: JSX.Element;
     RaiseHandContextualMenuItem?: JSX.Element;
+    ReactionContextualMenuItem?: JSX.Element;
     LowerHandContextualMenuItem?: JSX.Element;
+    ReactionButtonIcon?: JSX.Element;
     ErrorBarCallCameraAccessDenied?: JSX.Element;
     ErrorBarCallCameraAlreadyInUse?: JSX.Element;
     ErrorBarCallLocalVideoFreeze?: JSX.Element;
@@ -597,7 +607,8 @@ export type CallCompositeOptions = {
         layout?: VideoGalleryLayout;
     };
     surveyOptions?: {
-        hideSurvey?: boolean;
+        disableSurvey?: boolean;
+        onSurveyDismissed?: () => void;
         onSurveySubmitted?: (callId: string, surveyId: string,
         submittedSurvey: CallSurvey,
         improvementSuggestions: CallSurveyImprovementSuggestions) => Promise<void>;
@@ -630,7 +641,7 @@ export interface CallCompositeStrings {
     blurBackgroundEffectButtonLabel?: string;
     blurBackgroundTooltip?: string;
     callRejectedMoreDetails?: string;
-    callRejectedTitle: string;
+    callRejectedTitle?: string;
     callTimeoutDetails?: string;
     callTimeoutTitle?: string;
     cameraLabel: string;
@@ -851,7 +862,7 @@ export type CallingHandlersOptions = {
 // @public
 export type CallingReturnProps<Component extends (props: any) => JSX.Element> = GetCallingSelector<Component> extends (state: CallClientState, props: any) => any ? ReturnType<GetCallingSelector<Component>> & Common<CallingHandlers, Parameters<Component>[0]> : never;
 
-// @beta
+// @public
 export type CallingSounds = {
     callEnded?: SoundEffect;
     callRinging?: SoundEffect;
@@ -925,6 +936,7 @@ export interface CallState {
     };
     role?: ParticipantRole;
     screenShareRemoteParticipant?: string;
+    spotlight?: SpotlightCallFeatureState;
     startTime: Date;
     state: CallState_2;
     totalParticipantCount?: number;
@@ -978,6 +990,8 @@ export interface CallWithChatAdapterManagement {
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     lowerHand(): Promise<void>;
     mute(): Promise<void>;
+    // @beta
+    onReactionClicked(reaction: Reaction_2): Promise<void>;
     queryCameras(): Promise<VideoDeviceInfo[]>;
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
     querySpeakers(): Promise<AudioDeviceInfo[]>;
@@ -1007,10 +1021,14 @@ export interface CallWithChatAdapterManagement {
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startCaptions(options?: StartCaptionsOptions): Promise<void>;
     startScreenShare(): Promise<void>;
+    // @beta
+    startSpotlight(userId: string): Promise<void>;
     startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
     stopCamera(): Promise<void>;
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
+    // @beta
+    stopSpotlight(userId: string): Promise<void>;
     stopVideoBackgroundEffects(): Promise<void>;
     // @beta
     submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
@@ -1252,7 +1270,8 @@ export type CallWithChatCompositeOptions = {
         layout?: VideoGalleryLayout;
     };
     surveyOptions?: {
-        hideSurvey?: boolean;
+        disableSurvey?: boolean;
+        onSurveyDismissed?: () => void;
         onSurveySubmitted?: (callId: string, surveyId: string,
         submittedSurvey: CallSurvey,
         improvementSuggestions: CallSurveyImprovementSuggestions) => Promise<void>;
@@ -1845,6 +1864,9 @@ export type CommonCallControlOptions = {
     raiseHandButton?: boolean | {
         disabled: boolean;
     };
+    reactionButton?: boolean | {
+        disabled: boolean;
+    };
     onFetchCustomButtonProps?: CustomCallControlButtonCallback[];
     holdButton?: boolean | {
         disabled: boolean;
@@ -1883,6 +1905,8 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onRaiseHand: () => Promise<void>;
     // (undocumented)
+    onReactionClicked: (reaction: Reaction_2) => Promise<void>;
+    // (undocumented)
     onRemoveParticipant(userId: string): Promise<void>;
     // (undocumented)
     onRemoveParticipant(participant: CommunicationIdentifier): Promise<void>;
@@ -1911,9 +1935,13 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onStartScreenShare: () => Promise<void>;
     // (undocumented)
+    onStartSpotlight: (userId: string) => Promise<void>;
+    // (undocumented)
     onStopCaptions: () => Promise<void>;
     // (undocumented)
     onStopScreenShare: () => Promise<void>;
+    // (undocumented)
+    onStopSpotlight: (userId: string) => Promise<void>;
     // (undocumented)
     onSubmitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
     // (undocumented)
@@ -2060,6 +2088,7 @@ export interface ComponentStrings {
     ParticipantList: ParticipantListStrings;
     participantsButton: ParticipantsButtonStrings;
     raiseHandButton: RaiseHandButtonStrings;
+    reactionButton: ReactionButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
@@ -2340,6 +2369,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     ControlButtonLowerHand: React_2.JSX.Element;
     RaiseHandContextualMenuItem: React_2.JSX.Element;
     LowerHandContextualMenuItem: React_2.JSX.Element;
+    ReactionButtonIcon: React_2.JSX.Element;
     CancelFileUpload: React_2.JSX.Element;
     DownloadFile: React_2.JSX.Element;
     DataLossPreventionProhibited: React_2.JSX.Element;
@@ -2445,7 +2475,9 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ControlButtonRaiseHand: JSX.Element;
     ControlButtonLowerHand: JSX.Element;
     RaiseHandContextualMenuItem: JSX.Element;
+    ReactionContextualMenuItem?: JSX.Element | undefined;
     LowerHandContextualMenuItem: JSX.Element;
+    ReactionButtonIcon: JSX.Element;
     ErrorBarCallCameraAccessDenied: JSX.Element;
     ErrorBarCallCameraAlreadyInUse: JSX.Element;
     ErrorBarCallLocalVideoFreeze: JSX.Element;
@@ -2636,6 +2668,7 @@ export const Dialpad: (props: DialpadProps) => JSX.Element;
 // @beta
 export interface DialpadProps {
     disableDtmfPlayback?: boolean;
+    enableInputEditing?: boolean;
     isMobile?: boolean;
     onChange?: (input: string) => void;
     onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
@@ -2643,7 +2676,6 @@ export interface DialpadProps {
     showDeleteButton?: boolean;
     // (undocumented)
     strings?: DialpadStrings;
-    // (undocumented)
     styles?: DialpadStyles;
     textFieldValue?: string;
 }
@@ -3636,6 +3668,19 @@ export type Reaction = {
 };
 
 // @beta
+export interface ReactionButtonProps extends ControlBarButtonProps {
+    onReactionClicked: (reaction: string) => Promise<void>;
+    strings?: Partial<ReactionButtonStrings>;
+}
+
+// @beta
+export interface ReactionButtonStrings {
+    label: string;
+    tooltipContent?: string;
+    tooltipDisabledContent?: string;
+}
+
+// @beta
 export type ReactionState = {
     reactionMessage: ReactionMessage;
     receivedAt: Date;
@@ -3665,6 +3710,7 @@ export interface RemoteParticipantState {
     // @beta
     reactionState?: ReactionState;
     role?: ParticipantRole;
+    spotlighted?: SpotlightState;
     state: RemoteParticipantState_2;
     videoStreams: {
         [key: number]: RemoteVideoStreamState;
@@ -3789,7 +3835,7 @@ export interface SitePermissionsStyles extends BaseCustomStyles {
     troubleshootingLink?: ILinkStyles;
 }
 
-// @beta
+// @public
 export type SoundEffect = {
     url: string;
 };
@@ -3878,6 +3924,16 @@ export interface SpokenLanguageStrings {
     'zh-hk': string;
     // (undocumented)
     'zh-tw': string;
+}
+
+// @beta
+export interface SpotlightCallFeatureState {
+    spotlightedParticipants: SpotlightedParticipant[];
+}
+
+// @beta
+export interface SpotlightState {
+    spotlightedOrderPosition?: number;
 }
 
 // @public
@@ -4322,6 +4378,7 @@ export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSe
     remoteParticipants: VideoGalleryRemoteParticipant[];
     dominantSpeakers?: string[];
     optimalVideoCount?: number;
+    spotlightedParticipants?: string[];
 };
 
 // @public

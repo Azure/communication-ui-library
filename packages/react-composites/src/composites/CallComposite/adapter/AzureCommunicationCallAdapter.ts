@@ -36,6 +36,8 @@ import {
   VideoOptions,
   Call
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(reaction) */
+import { Reaction } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(call-transfer) */
@@ -98,14 +100,13 @@ import {
   CommunicationTokenCredential,
   CommunicationUserIdentifier,
   CommunicationIdentifier,
-  MicrosoftTeamsUserIdentifier
+  MicrosoftTeamsUserIdentifier,
+  isMicrosoftTeamsUserIdentifier
 } from '@azure/communication-common';
+/* @conditional-compile-remove(teams-identity-support) */ /* @conditional-compile-remove(PSTN-calls) */
+import { isCommunicationUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
-import {
-  isCommunicationUserIdentifier,
-  isPhoneNumberIdentifier,
-  PhoneNumberIdentifier
-} from '@azure/communication-common';
+import { isPhoneNumberIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
 import { DiagnosticsForwarder } from './DiagnosticsForwarder';
@@ -537,7 +538,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.stopScreenShare.bind(this);
     /* @conditional-compile-remove(raise-hand) */
     this.raiseHand.bind(this);
-    /* @conditional-compile-remove(raise-hand) */
+    /* @conditional-compile-remove(reaction) */
+    this.onReactionClicked.bind(this);
     this.lowerHand.bind(this);
     this.removeParticipant.bind(this);
     this.createStreamView.bind(this);
@@ -856,6 +858,13 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     });
   }
 
+  /* @conditional-compile-remove(reaction) */
+  public async onReactionClicked(reaction: Reaction): Promise<void> {
+    return await this.asyncTeeErrorToEventEmitter(async () => {
+      await this.handlers.onReactionClicked(reaction);
+    });
+  }
+
   /* @conditional-compile-remove(unsupported-browser) */
   public allowUnsupportedBrowserVersion(): void {
     this.context.setAllowedUnsupportedBrowser();
@@ -1026,6 +1035,16 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   /* @conditional-compile-remove(end-of-call-survey) */
   public async submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined> {
     return this.handlers.onSubmitSurvey(survey);
+  }
+
+  /* @conditional-compile-remove(spotlight) */
+  public async startSpotlight(userId: string): Promise<void> {
+    return this.handlers.onStartSpotlight(userId);
+  }
+
+  /* @conditional-compile-remove(spotlight) */
+  public async stopSpotlight(userId: string): Promise<void> {
+    return this.handlers.onStopSpotlight(userId);
   }
 
   public getState(): CallAdapterState {
@@ -1452,6 +1471,11 @@ export const createAzureCommunicationCallAdapter = async ({
   /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
   /* @conditional-compile-remove(video-background-effects) */ options
 }: AzureCommunicationCallAdapterArgs): Promise<CallAdapter> => {
+  if (isMicrosoftTeamsUserIdentifier(userId)) {
+    throw new Error(
+      'Microsoft Teams user identifier is not supported by AzureCommunicationCallAdapter. Instead use TeamsCallAdapter.'
+    );
+  }
   return _createAzureCommunicationCallAdapterInner({
     userId,
     displayName,
@@ -1521,6 +1545,11 @@ export const createTeamsCallAdapter = async ({
   locator,
   options
 }: TeamsCallAdapterArgs): Promise<TeamsCallAdapter> => {
+  if (isCommunicationUserIdentifier(userId)) {
+    throw new Error(
+      'Communication User identifier is not supported by TeamsCallAdapter, please use our AzureCommunicationCallAdapter.'
+    );
+  }
   const callClient = _createStatefulCallClientInner(
     {
       userId

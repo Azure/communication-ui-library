@@ -78,10 +78,16 @@ module.exports = {
     "calling-sounds",
     // Feature for end of call survey
     'end-of-call-survey',
+    // Feature for end of call survey self host version
+    'end-of-call-survey-self-host',
     // Feature for the DTMF dialer for Teams voice apps
     'dtmf-dialer',
     // Feature for meeting reactions
     'reaction',
+    // Feature for Rich Text Editor (RTE) support
+    'rich-text-editor',
+    // Feature for spotlight
+    'spotlight'
   ],
   // A list of in progress beta feature.
   // These features are still beta feature but "in progress"
@@ -99,14 +105,20 @@ module.exports = {
     "gallery-layout-composite",
     // feature for hiding attendee name in the teams meeting
     "hide-attendee-name",
-    // Feature for sounds during different calling events
-    "calling-sounds",
+    // custom branding for the composites
+    "custom-branding",
     // Feature for end of call survey
     'end-of-call-survey',
+    // Feature for end of call survey self host version
+    'end-of-call-survey-self-host',
     // Feature for the DTMF dialer for Teams voice apps
     'dtmf-dialer',
     // Feature for meeting reactions
     'reaction',
+    // Feature for Rich Text Editor (RTE) support
+    'rich-text-editor',
+    // Feature for spotlight
+    'spotlight'
   ],
   // A list of stabilized features.
   // These features can be listed in the conditional compilation directives without
@@ -136,5 +148,7 @@ module.exports = {
     "control-bar-button-injection",
     // rooms
     "rooms",
+    // feature for calling sounds
+    "calling-sounds",
   ]
 }

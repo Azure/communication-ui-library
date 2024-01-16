@@ -19,6 +19,11 @@ export type { ImageGalleryStrings } from './ImageGallery';
 
 export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox';
 
+/* @conditional-compile-remove(rich-text-editor) */
+export { RTESendBox } from './RTE/RTESendBox';
+/* @conditional-compile-remove(rich-text-editor) */
+export type { RTESendBoxProps } from './RTE/RTESendBox';
+
 /* @conditional-compile-remove(mention) */
 export type {
   _MentionPopoverProps,
@@ -169,7 +174,10 @@ export type { ScreenShareButtonProps, ScreenShareButtonStrings } from './ScreenS
 export { RaiseHandButton } from './RaiseHandButton';
 /* @conditional-compile-remove(raise-hand) */
 export type { RaiseHandButtonProps, RaiseHandButtonStrings } from './RaiseHandButton';
-
+/* @conditional-compile-remove(reaction) */
+export { ReactionButton } from './ReactionButton';
+/* @conditional-compile-remove(reaction) */
+export type { ReactionButtonProps, ReactionButtonStrings } from './ReactionButton';
 export { VideoTile } from './VideoTile';
 export type { VideoTileProps, VideoTileStylesProps } from './VideoTile';
 /* @conditional-compile-remove(PSTN-calls) */

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { IStyle } from '@fluentui/react';
+import { IRawStyle } from '@fluentui/react';
 import { ComponentSlotStyle } from '../../types';
 
 /**
@@ -11,8 +11,10 @@ import { ComponentSlotStyle } from '../../types';
  *
  * @private
  */
-export function createStyleFromV8Style(v8Style: IStyle | ComponentSlotStyle): React.CSSProperties | undefined {
-  const result = {};
+export function createStyleFromV8Style(
+  v8Style: IRawStyle | ComponentSlotStyle | undefined
+): React.CSSProperties | undefined {
+  const result: { [key: string]: React.CSSProperties | undefined } = {};
   if (v8Style === undefined || v8Style === null || typeof v8Style === 'boolean' || typeof v8Style === 'string') {
     return undefined;
   } else if (typeof v8Style === 'object') {
