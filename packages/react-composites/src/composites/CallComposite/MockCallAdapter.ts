@@ -105,6 +105,9 @@ export class _MockCallAdapter implements CallAdapter {
   lowerHand(): Promise<void> {
     throw Error('lowerHand not implemented');
   }
+  onReactionClicked(emoji: string): Promise<void> {
+    throw Error(`Reaction of type ${emoji} send not successful`);
+  }
   removeParticipant(): Promise<void> {
     throw Error('removeParticipant not implemented');
   }
