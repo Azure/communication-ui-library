@@ -26,6 +26,7 @@
     "_if-preprocess": "if-env COMMUNICATION_REACT_FLAVOR=stable || if-env COMMUNICATION_REACT_FLAVOR=beta-release",
     "_typecheck": "rushx _by-flavor \"npm run _if-preprocess && rushx preprocess && tsc -p tsconfig.preprocess.json  || (if-env COMMUNICATION_REACT_FLAVOR=beta && tsc)\""
   },
+  "license": "MIT",
   "dependencies": {
     "@azure/abort-controller": "^1.1.0",
     "@azure/communication-chat": "1.5.0-beta.1 || ^1.4.0",
