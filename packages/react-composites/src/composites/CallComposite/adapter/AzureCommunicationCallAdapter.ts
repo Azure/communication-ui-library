@@ -122,7 +122,6 @@ import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 import { CallingSoundSubscriber } from './CallingSoundSubscriber';
 /* @conditional-compile-remove(calling-sounds) */
 import { CallingSounds } from './CallAdapter';
-import { onResolveVideoEffectDependency } from '../../common/resolveVideoEffectDependency';
 
 type CallTypeOf<AgentType extends CallAgent | BetaTeamsCallAgent> = AgentType extends CallAgent ? Call : TeamsCall;
 
@@ -167,7 +166,7 @@ class CallContext {
       /* @conditional-compile-remove(video-background-effects) */ videoBackgroundImages:
         options?.videoBackgroundOptions?.videoBackgroundImages,
       /* @conditional-compile-remove(video-background-effects) */
-      onResolveVideoEffectDependency: options?.videoBackgroundOptions?.onResolveDependency || onResolveVideoEffectDependency,
+      onResolveVideoEffectDependency: options?.videoBackgroundOptions?.onResolveDependency,
       /* @conditional-compile-remove(video-background-effects) */ selectedVideoBackgroundEffect: undefined,
       cameraStatus: undefined,
       /* @conditional-compile-remove(calling-sounds) */ sounds: options?.callingSounds
@@ -384,7 +383,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     const isRoomsCall = 'roomId' in this.locator;
 
     /* @conditional-compile-remove(video-background-effects) */
-    this.onResolveVideoBackgroundEffectsDependency = options?.videoBackgroundOptions?.onResolveDependency || onResolveVideoEffectDependency;
+    this.onResolveVideoBackgroundEffectsDependency = options?.videoBackgroundOptions?.onResolveDependency;
 
     this.context = new CallContext(
       callClient.getState(),
