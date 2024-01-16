@@ -227,6 +227,18 @@ const GalleryRightButton = (): JSX.Element => {
   return rtl ? <ChevronLeft20Regular /> : <ChevronRight20Regular />;
 };
 
+const ControlButtonRaiseHandIcon = (): JSX.Element => {
+  /* @conditional-compile-remove(reaction) */
+  return <HandRight20Regular />;
+  return <HandRight20Filled />;
+};
+
+const ControlButtonLowerHandIcon = (): JSX.Element => {
+  /* @conditional-compile-remove(reaction) */
+  return <HandRightOff20Regular />;
+  return <HandRightOff20Filled />;
+};
+
 /**
  * The default set of icons that are available to use in the UI components.
  *
@@ -248,9 +260,9 @@ export const DEFAULT_COMPONENT_ICONS = {
   ControlButtonScreenShareStart: <ShareScreenStart20Filled />,
   ControlButtonScreenShareStop: <ShareScreenStop20Filled />,
   /* @conditional-compile-remove(raise-hand) */
-  ControlButtonRaiseHand: <HandRight20Filled />,
+  ControlButtonRaiseHand: <ControlButtonRaiseHandIcon />,
   /* @conditional-compile-remove(raise-hand) */
-  ControlButtonLowerHand: <HandRightOff20Filled />,
+  ControlButtonLowerHand: <ControlButtonLowerHandIcon />,
   /* @conditional-compile-remove(raise-hand) */
   RaiseHandContextualMenuItem: <HandRight20Regular />,
   /* @conditional-compile-remove(raise-hand) */

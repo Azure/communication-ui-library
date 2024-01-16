@@ -36,6 +36,8 @@ import {
   VideoOptions,
   Call
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(reaction) */
+import { Reaction } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(call-transfer) */
@@ -536,7 +538,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.stopScreenShare.bind(this);
     /* @conditional-compile-remove(raise-hand) */
     this.raiseHand.bind(this);
-    /* @conditional-compile-remove(raise-hand) */
+    /* @conditional-compile-remove(reaction) */
+    this.onReactionClicked.bind(this);
     this.lowerHand.bind(this);
     this.removeParticipant.bind(this);
     this.createStreamView.bind(this);
@@ -852,6 +855,13 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   public async lowerHand(): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
       await this.handlers.onToggleRaiseHand();
+    });
+  }
+
+  /* @conditional-compile-remove(reaction) */
+  public async onReactionClicked(reaction: Reaction): Promise<void> {
+    return await this.asyncTeeErrorToEventEmitter(async () => {
+      await this.handlers.onReactionClicked(reaction);
     });
   }
 

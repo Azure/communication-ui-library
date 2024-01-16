@@ -43,6 +43,8 @@ import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
 import { CaptionsSettingsModal } from '../CaptionsSettingsModal';
 /* @conditional-compile-remove(raise-hand) */
 import { RaiseHand } from '../../CallComposite/components/buttons/RaiseHand';
+/* @conditional-compile-remove(reaction) */
+import { Reaction } from '../../CallComposite/components/buttons/Reaction';
 /**
  * @private
  */
@@ -316,6 +318,16 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         disableTooltip={props.mobileView}
                       />
                     )}
+                    {
+                      /* @conditional-compile-remove(reaction) */
+                      !props.mobileView && isEnabled(options.reactionButton) && (
+                        <Reaction
+                          displayType={options.displayType}
+                          styles={commonButtonStyles}
+                          disabled={props.disableButtonsForHoldScreen}
+                        />
+                      )
+                    }
                     {
                       /* @conditional-compile-remove(raise-hand) */ !props.mobileView &&
                         isEnabled(options.raiseHandButton) &&

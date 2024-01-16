@@ -1902,7 +1902,7 @@ export const ReactionButton: (props: ReactionButtonProps) => JSX.Element;
 
 // @beta
 export interface ReactionButtonProps extends ControlBarButtonProps {
-    onReactionClicked: (emoji: string) => Promise<void>;
+    onReactionClicked: (reaction: string) => Promise<void>;
     strings?: Partial<ReactionButtonStrings>;
 }
 
