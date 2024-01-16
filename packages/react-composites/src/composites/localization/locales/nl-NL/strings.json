@@ -118,6 +118,8 @@
     "dismissModalAriaLabel": "Lokale en externe afbeelding en afbeelding, druk op Enter om terug te keren naar het gesprek",
     "callRejectedTitle": "De aanroep kan niet worden voltooid",
     "callRejectedMoreDetails": "De persoon die u probeert te bereiken, is niet beschikbaar. Probeer het later opnieuw.",
+    "callTimeoutTitle": "De aanroep kan niet worden voltooid",
+    "callTimeoutDetails": "De persoon die u probeert te bereiken, is niet beschikbaar. Probeer het later opnieuw.",
     "spokenLanguageStrings": {
       "ar-ae": "Arabisch - Verenigde Arabische Emiraten",
       "ar-sa": "Arabisch - Saudi-Arabië",
@@ -229,6 +231,66 @@
         "lostDueToRoleChangeToAttendee": "Uw rol is gewijzigd. Sommige acties, zoals het delen van inhoud, zijn niet beschikbaar voor u.",
         "grantedDueToRoleChangeToPresenter": "U bent een presentator. U kunt inhoud delen en de vergadering vergemakkelijken."
       }
+    },
+    "surveyQuestion": "Hoe was uw oproep vandaag?",
+    "starSurveyHelperText": "Wat was de kwaliteit van het gesprek?",
+    "starSurveyOneStarText": "De kwaliteit was erg slecht.",
+    "starSurveyTwoStarText": "De kwaliteit was slecht.",
+    "starSurveyThreeStarText": "De kwaliteit was goed.",
+    "starSurveyFourStarText": "De kwaliteit was geweldig.",
+    "starSurveyFiveStarText": "De kwaliteit was uitstekend.",
+    "surveyConfirmButtonLabel": "Feedback verzenden",
+    "starRatingAriaLabel": "Selecteer {0} van {1} sterren",
+    "surveyCancelButtonAriaLabel": "Annuleren",
+    "tagsSurveyQuestion": "Wat had beter kunnen zijn?",
+    "tagsSurveyTextFieldDefaultText": "Overig, geef een toelichting",
+    "tagsSurveyHelperText": "Controleer eventuele problemen die u hebt ondervonden",
+    "surveyTextboxDefaultText": "Overige, geef een toelichting",
+    "surveyIssues": {
+      "overallRating": {
+        "callCannotJoin": "Ik kan niet deelnemen aan de oproep",
+        "callCannotInvite": "Ik kan niet iemand uitnodigen voor de oproep",
+        "hadToRejoin": "Ik moest opnieuw deelnemen aan de oproep",
+        "callEndedUnexpectedly": "Oproep is onverwacht beëindigd voor mij",
+        "otherIssues": "Ik had andere problemen met de oproep"
+      },
+      "audioRating": {
+        "noLocalAudio": "De ander kon geen geluid horen",
+        "noRemoteAudio": "Ik kon geen geluid horen",
+        "echo": "Ik hoorde echo's tijdens de oproep",
+        "audioNoise": "Ik hoorde een ruis tijdens de oproep",
+        "lowVolume": "Het volume was laag",
+        "audioStoppedUnexpectedly": "Audio is onverwacht gestopt",
+        "distortedSpeech": "Audio is vervormd",
+        "audioInterruption": "Audio is onderbroken",
+        "otherIssues": "Ik had andere audioproblemen in deze oproep"
+      },
+      "videoRating": {
+        "noVideoReceived": "Ik kon geen video zien",
+        "noVideoSent": "Anderen konden mij niet zien",
+        "lowQuality": "Videokwaliteit was laag",
+        "freezes": "Video bevroren",
+        "stoppedUnexpectedly": "De video stopte onverwacht",
+        "darkVideoReceived": "Ik zie alleen donkere schermen wanneer anderen hun camera inschakelen",
+        "audioVideoOutOfSync": "Audio en video niet gesynchroniseerd",
+        "otherIssues": "Ik had andere audioproblemen in deze oproep"
+      },
+      "screenshareRating": {
+        "noContentLocal": "Anderen kunnen mijn gedeelde scherm niet zien",
+        "noContentRemote": "Ik kon het gedeelde scherm van anderen niet zien",
+        "cannotPresent": "Ik kon mijn scherm niet presenteren",
+        "lowQuality": "De kwaliteit van scherm delen was laag",
+        "freezes": "Scherm delen bevroren",
+        "stoppedUnexpectedly": "Scherm delen is onverwacht gestopt",
+        "largeDelay": "Scherm dele heeft een grote vertraging",
+        "otherIssues": "Ik had andere problemen met het delen van het scherm in dit gesprek"
+      }
+    },
+    "SurveyIssuesHeadingStrings": {
+      "overallRating": "Algemeen",
+      "audioRating": "Audio",
+      "videoRating": "Video",
+      "screenshareRating": "Presenteren"
     }
   },
   "chat": {
