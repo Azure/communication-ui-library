@@ -3,7 +3,6 @@
 
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useState } from 'react';
-import { ChatMessageComponentAsEditBox } from './ChatMessageComponentAsEditBox';
 import { MessageThreadStrings } from '../MessageThread';
 import { ChatMessage, ComponentSlotStyle, OnRenderAvatarCallback } from '../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -125,24 +124,7 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
   }, [clientMessageId, content, onSendMessage, onDeleteMessage]);
 
   if (isEditing && message.messageType === 'chat') {
-    return (
-      <ChatMessageComponentAsEditBox
-        message={message}
-        strings={props.strings}
-        onSubmit={async (text, metadata, options) => {
-          props.onUpdateMessage &&
-            message.messageId &&
-            (await props.onUpdateMessage(message.messageId, text, metadata, options));
-          setIsEditing(false);
-        }}
-        onCancel={(messageId) => {
-          props.onCancelEditMessage && props.onCancelEditMessage(messageId);
-          setIsEditing(false);
-        }}
-        /* @conditional-compile-remove(mention) */
-        mentionLookupOptions={props.mentionOptions?.lookupOptions}
-      />
-    );
+    return <>Happy</>;
   } else {
     return (
       <ChatMessageComponentAsMessageBubble
