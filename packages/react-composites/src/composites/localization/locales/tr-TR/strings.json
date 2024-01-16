@@ -118,6 +118,8 @@
     "dismissModalAriaLabel": "Yerel ve uzak resim ve resim, aramaya geri dönmek için Enter tuşuna basın",
     "callRejectedTitle": "Arama tamamlanamadı",
     "callRejectedMoreDetails": "Ulaşmaya çalıştığınız kişi kullanılamıyor. Lütfen daha sonra yeniden deneyin.",
+    "callTimeoutTitle": "Arama tamamlanamadı",
+    "callTimeoutDetails": "Ulaşmaya çalıştığınız kişi kullanılamıyor. Lütfen daha sonra yeniden deneyin.",
     "spokenLanguageStrings": {
       "ar-ae": "Arapça - BAE",
       "ar-sa": "Arapça - Suudi Arabistan",
@@ -229,6 +231,66 @@
         "lostDueToRoleChangeToAttendee": "Rolünüz değiştirildi. İçerik paylaşma gibi bazı eylemler kullanılamaz.",
         "grantedDueToRoleChangeToPresenter": "Sunucuyuz. İçerik paylaşabilir ve toplantıya yardımcı olabilirsiniz."
       }
+    },
+    "surveyQuestion": "Bugün aramanız nasıldı?",
+    "starSurveyHelperText": "Arama kalitesi nasıldı?",
+    "starSurveyOneStarText": "Kalite kötüydü.",
+    "starSurveyTwoStarText": "Kalite düşüktü.",
+    "starSurveyThreeStarText": "Kalite iyiydi.",
+    "starSurveyFourStarText": "Kalite harikaydı.",
+    "starSurveyFiveStarText": "Kalite mükemmeldi.",
+    "surveyConfirmButtonLabel": "Geri Bildirim Gönder",
+    "starRatingAriaLabel": "{1} üzerinden {0} yıldız seçin",
+    "surveyCancelButtonAriaLabel": "İptal",
+    "tagsSurveyQuestion": "Neleri iyileştirebiliriz?",
+    "tagsSurveyTextFieldDefaultText": "Diğer, lütfen belirtin",
+    "tagsSurveyHelperText": "Karşılaştığınız tüm sorunları işaretleyin",
+    "surveyTextboxDefaultText": "Diğer, lütfen belirtin",
+    "surveyIssues": {
+      "overallRating": {
+        "callCannotJoin": "Çağrıya katılamadım",
+        "callCannotInvite": "Başkalarını çağrıya davet edemedim",
+        "hadToRejoin": "Çağrıya yeniden katılmam gerekirdi",
+        "callEndedUnexpectedly": "Arama benim için beklenmedik bir şekilde sona erdi",
+        "otherIssues": "Aramayla ilgili başka sorunlar yaşıyorum"
+      },
+      "audioRating": {
+        "noLocalAudio": "Karşı taraf ses duyamadı",
+        "noRemoteAudio": "Ses duyamadım",
+        "echo": "Aramada yankılar duydum",
+        "audioNoise": "Aramada parazit vardı",
+        "lowVolume": "Ses düzeyi düşüktü",
+        "audioStoppedUnexpectedly": "Ses beklenmedik şekilde durduruldu",
+        "distortedSpeech": "Ses bozuktu",
+        "audioInterruption": "Ses kesildi",
+        "otherIssues": "Bu aramada başka ses sorunlarıyla karşılaştım"
+      },
+      "videoRating": {
+        "noVideoReceived": "Görüntü yoktu",
+        "noVideoSent": "Diğerleri beni göremedi",
+        "lowQuality": "Video kalitesi düşüktü",
+        "freezes": "Video dondu",
+        "stoppedUnexpectedly": "Görüntü beklenmedik şekilde durdu",
+        "darkVideoReceived": "Başkaları kameralarını etkinleştirildiğinde sadece siyah ekranlar görüyorum",
+        "audioVideoOutOfSync": "Ses ve Videoda senkron sorunu vardı",
+        "otherIssues": "Bu aramada başka video sorunlarıyla karşılaştım"
+      },
+      "screenshareRating": {
+        "noContentLocal": "Diğer kişiler ekran paylaşımımı göremedi",
+        "noContentRemote": "Diğer kişilerin ekran paylaşımını göremedim",
+        "cannotPresent": "Ekranımı gösteremedim",
+        "lowQuality": "Ekran paylaşımı kalitesi düşüktü",
+        "freezes": "Ekran paylaşımı donduruldu",
+        "stoppedUnexpectedly": "Ekran paylaşımı beklenmedik şekilde durdu",
+        "largeDelay": "Ekran paylaşımında büyük bir gecikme var",
+        "otherIssues": "Bu aramada başka ekran paylaşımı sorunlarıyla karşılaştım"
+      }
+    },
+    "SurveyIssuesHeadingStrings": {
+      "overallRating": "Genel",
+      "audioRating": "Ses",
+      "videoRating": "Video",
+      "screenshareRating": "Sunu"
     }
   },
   "chat": {
