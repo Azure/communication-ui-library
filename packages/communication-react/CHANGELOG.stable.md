@@ -38,7 +38,7 @@ Call sounds is now available within the CallComposite and CallWithChatComposite.
 - Mobile configuration page enable device button when either microphone or camera is available ([PR #3944](https://github.com/azure/communication-ui-library/pull/3944) by edwardlee@microsoft.com)
 - Fix side pane content being clipped on a small screen at 200% zoom ([PR #3937](https://github.com/azure/communication-ui-library/pull/3937) by 2684369+JamesBurnside@users.noreply.github.com)
 - Disable the camera button while the source is being switched to prevent rapid successive clicks from causing the streams to lock up ([PR #3943](https://github.com/azure/communication-ui-library/pull/3943) by 2684369+JamesBurnside@users.noreply.github.com)
-- Update EndCall button appearance to match high contrast expectations on windows ([PR #3905](https://github.com/azure/communication-ui-library/pull/3905) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Update EndCall button appearance to match high contrast expectations on Windows ([PR #3905](https://github.com/azure/communication-ui-library/pull/3905) by 94866715+dmceachernmsft@users.noreply.github.com)
 - Fix rendering issues in the video effects picker ([PR #3909](https://github.com/azure/communication-ui-library/pull/3909) by 94866715+dmceachernmsft@users.noreply.github.com)
 - Fix function type signature of StatefulCallClient.selectCamera ([PR #3908](https://github.com/azure/communication-ui-library/pull/3908) by 2684369+JamesBurnside@users.noreply.github.com)
 
