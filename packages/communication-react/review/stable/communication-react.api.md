@@ -719,9 +719,11 @@ export interface CallWithChatAdapterManagement {
     disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // (undocumented)
-    downloadAttachments: (options: {
+    downloadAttachment: (options: {
         attachmentUrl: string;
-    }) => Promise<InlineImageSourceResult>;
+    }) => Promise<{
+        blobUrl: string;
+    }>;
     fetchInitialData(): Promise<void>;
     // @deprecated
     joinCall(microphoneOn?: boolean): Call | undefined;
@@ -1231,9 +1233,11 @@ export interface ChatAdapterSubscribers {
 export interface ChatAdapterThreadManagement {
     deleteMessage(messageId: string): Promise<void>;
     // (undocumented)
-    downloadAttachments: (options: {
+    downloadAttachment: (options: {
         attachmentUrl: string;
-    }) => Promise<InlineImageSourceResult>;
+    }) => Promise<{
+        blobUrl: string;
+    }>;
     fetchInitialData(): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     removeParticipant(userId: string): Promise<void>;
@@ -2354,8 +2358,9 @@ export interface InlineImageMetadata {
 }
 
 // @public
-export interface InlineImageSourceResult {
-    blobUrl: string;
+export interface InlineImageProps {
+    onClick?: (attachmentId: string, messageId: string) => Promise<void>;
+    src: string;
 }
 
 // @public
@@ -2558,14 +2563,13 @@ export type MessageThreadProps = {
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
-    onFetchInlineImageSource?: (attachment: InlineImageMetadata) => Promise<InlineImageSourceResult>;
+    onRenderInlineImage?: (attachment: InlineImageMetadata) => Promise<InlineImageProps>;
     onUpdateMessage?: UpdateMessageCallback;
     onCancelEditMessage?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (content: string) => Promise<void>;
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
-    onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
 };
 
 // @public

@@ -1120,8 +1120,9 @@ export interface InlineImageMetadata {
 }
 
 // @public
-export interface InlineImageSourceResult {
-    blobUrl: string;
+export interface InlineImageProps {
+    onClick?: (attachmentId: string, messageId: string) => Promise<void>;
+    src: string;
 }
 
 // @public
@@ -1267,14 +1268,13 @@ export type MessageThreadProps = {
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
-    onFetchInlineImageSource?: (attachment: InlineImageMetadata) => Promise<InlineImageSourceResult>;
+    onRenderInlineImage?: (attachment: InlineImageMetadata) => Promise<InlineImageProps>;
     onUpdateMessage?: UpdateMessageCallback;
     onCancelEditMessage?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (content: string) => Promise<void>;
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
-    onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
 };
 
 // @public
