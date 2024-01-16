@@ -34,7 +34,6 @@ import { PropsWithChildren } from 'react';
 import { default as React_2 } from 'react';
 import * as React_3 from 'react';
 import { RefObject } from 'react';
-import { SyntheticEvent } from 'react';
 import { Theme } from '@fluentui/react';
 
 // @public
@@ -56,14 +55,8 @@ export type AnnouncerProps = {
     ariaLive: 'off' | 'polite' | 'assertive' | undefined;
 };
 
-// @public
-export interface AttachmentDownloadResult {
-    attachmentId: string;
-    blobUrl: string;
-}
-
-// @public
-export type AttachmentMetadata = InlineImageMetadata;
+// @beta
+export type AttachmentMetadata = FileMetadata;
 
 // @public
 export interface BaseCustomStyles {
@@ -311,9 +304,6 @@ export interface _CaptionsSettingsModalStrings {
 }
 
 // @public
-export type ChatAttachmentType = 'inlineImage' | 'unknown';
-
-// @public
 export interface ChatMessage extends MessageCommon {
     // (undocumented)
     attached?: MessageAttachedStatus;
@@ -329,7 +319,6 @@ export interface ChatMessage extends MessageCommon {
     editedOn?: Date;
     // (undocumented)
     failureReason?: string;
-    inlineImages?: InlineImageMetadata[];
     // (undocumented)
     messageType: 'chat';
     metadata?: Record<string, string>;
@@ -341,17 +330,6 @@ export interface ChatMessage extends MessageCommon {
     senderId?: string;
     // (undocumented)
     status?: MessageStatus;
-}
-
-// @public
-export interface ChatTheme {
-    chatPalette: {
-        imageGalleryOverlayBlack: string;
-        imageGalleryTitleWhite: string;
-        imageGalleryDefaultButtonBackground: string;
-        imageGalleryButtonBackgroundHover: string;
-        imageGalleryButtonBackgroundActive: string;
-    };
 }
 
 // @public
@@ -484,7 +462,6 @@ export interface ComponentStrings {
     devicesButton: DevicesButtonStrings;
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
-    imageGallery: ImageGalleryStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
     microphoneButton: MicrophoneButtonStrings;
@@ -576,7 +553,7 @@ export interface CustomMessage extends MessageCommon {
 }
 
 // @public
-export const darkTheme: PartialTheme & CallingTheme & ChatTheme;
+export const darkTheme: PartialTheme & CallingTheme;
 
 // @public
 export const DEFAULT_COMPONENT_ICONS: {
@@ -985,13 +962,8 @@ export type FileDownloadHandler = (userId: string, fileMetadata: AttachmentMetad
 
 // @beta
 export interface FileMetadata {
-    // (undocumented)
-    attachmentType: 'file';
     extension: string;
-    id: string;
     name: string;
-    // (undocumented)
-    payload?: Record<string, string>;
     url: string;
 }
 
@@ -1089,51 +1061,13 @@ export interface _Identifiers {
 }
 
 // @public
-export const ImageGallery: (props: ImageGalleryProps) => JSX.Element;
-
-// @public
-export interface ImageGalleryImageProps {
-    altText?: string;
-    downloadFilename: string;
-    imageUrl: string;
-    title?: string;
-    titleIcon?: JSX.Element;
-}
-
-// @public
-export interface ImageGalleryProps {
-    images: Array<ImageGalleryImageProps>;
-    isOpen: boolean;
-    onDismiss: () => void;
-    onError?: (event: SyntheticEvent<HTMLImageElement, Event>) => void;
-    onImageDownloadButtonClicked: (imageUrl: string, downloadFilename: string) => void;
-    startIndex?: number;
-}
-
-// @public
-export interface ImageGalleryStrings {
-    dismissButtonAriaLabel: string;
-    downloadButtonLabel: string;
-}
-
-// @public
-export interface InlineImageMetadata {
-    // (undocumented)
-    attachmentType: 'inlineImage';
-    id: string;
-    // (undocumented)
-    previewUrl?: string;
-    url: string;
-}
-
-// @public
 export interface JumpToNewMessageButtonProps {
     onClick: () => void;
     text: string;
 }
 
 // @public
-export const lightTheme: PartialTheme & CallingTheme & ChatTheme;
+export const lightTheme: PartialTheme & CallingTheme;
 
 // @public
 export type LoadingState = 'loading' | 'none';
@@ -1269,14 +1203,12 @@ export type MessageThreadProps = {
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
-    onFetchAttachments?: (attachments: AttachmentMetadata[]) => Promise<AttachmentDownloadResult[]>;
     onUpdateMessage?: UpdateMessageCallback;
     onCancelEditMessage?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (content: string) => Promise<void>;
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
-    onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
 };
 
 // @public

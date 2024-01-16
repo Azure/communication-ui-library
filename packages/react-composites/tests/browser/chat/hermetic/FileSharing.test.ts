@@ -307,6 +307,7 @@ test.describe('Filesharing Message Thread', async () => {
   });
 });
 
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 test.describe('Inline Image Message Thread', async () => {
   test('contains Inline Image in remote message', async ({ serverUrl, page }) => {
     await page.goto(
