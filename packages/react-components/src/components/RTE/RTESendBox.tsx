@@ -4,9 +4,9 @@
 import React, { useState } from 'react';
 import { RTEInputBoxComponent } from './RTEInputBoxComponent';
 import { Stack, useTheme } from '@fluentui/react';
-import { sendBoxStyle } from '../styles/RTESendBox.styles';
 import { useLocale } from '../../localization';
-import { SendBoxStrings } from '../SendBox'; // Should we move this to a shared location? Are the strings the same?
+import { SendBoxStrings } from '../SendBox';
+import { borderAndBoxShadowStyle } from '../styles/SendBox.styles';
 
 /**
  * Props for {@link RTESendBox}.
@@ -41,21 +41,21 @@ export const RTESendBox = (props: RTESendBoxProps): JSX.Element => {
   const localeStrings = useLocale().strings.sendBox;
   const strings = { ...localeStrings, ...props.strings };
 
-  const [textValue] = useState('');
+  const [contentValue] = useState('');
 
   const errorMessage = systemMessage;
 
   return (
     <Stack
-      className={sendBoxStyle({
+      className={borderAndBoxShadowStyle({
         theme: theme,
         hasErrorMessage: !!errorMessage,
         disabled: !!disabled
       })}
     >
-      <RTEInputBoxComponent placeholderText={strings.placeholderText} textValue={textValue} />
+      <RTEInputBoxComponent placeholderText={strings.placeholderText} content={contentValue} />
       {/* Send Button */}
-      {/* System Error Message should be outside of inputbox? */}
+      {/* System Error Message */}
       {/* File Upload */}
     </Stack>
   );

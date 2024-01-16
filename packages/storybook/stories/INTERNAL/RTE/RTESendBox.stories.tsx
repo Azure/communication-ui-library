@@ -6,7 +6,7 @@ import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { COMPONENT_FOLDER_PREFIX } from '../../constants';
 
-const RTESendBoxStory = (args): JSX.Element => {
+const RTESendBoxStory = (): JSX.Element => {
   return <RTESendBoxComponent />;
 };
 
