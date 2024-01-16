@@ -123,6 +123,11 @@
     "tooltipOnContent": "Ta ned handen",
     "tooltipOffContent": "Räck upp handen"
   },
+  "reactionButton": {
+    "label": "Reagera",
+    "tooltipDisabledContent": "Reaktionsåtgärden är inaktiverad",
+    "tooltipContent": "Skicka en reaktion"
+  },
   "messageThread": {
     "yesterday": "I går",
     "sunday": "Söndag",

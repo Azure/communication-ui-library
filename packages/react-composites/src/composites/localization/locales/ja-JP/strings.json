@@ -118,6 +118,8 @@
     "dismissModalAriaLabel": "ローカルとリモートの画像と画像。通話に戻るには Enter キーを押します",
     "callRejectedTitle": "通話を完了できませんでした",
     "callRejectedMoreDetails": "連絡を取ろうとしているユーザーは利用できません。後でもう一度お試しください。",
+    "callTimeoutTitle": "通話を完了できませんでした",
+    "callTimeoutDetails": "連絡を取ろうとしているユーザーは利用できません。後でもう一度お試しください。",
     "spokenLanguageStrings": {
       "ar-ae": "アラビア語 - U.A.E.",
       "ar-sa": "アラビア語 - サウジアラビア",
@@ -229,6 +231,66 @@
         "lostDueToRoleChangeToAttendee": "ロールが変更されました。コンテンツの共有などの一部の操作は利用できません。",
         "grantedDueToRoleChangeToPresenter": "あなたは発表者です。コンテンツの共有と会議の進行を行うことができます。"
       }
+    },
+    "surveyQuestion": "今日の通話はいかがでしたか?",
+    "starSurveyHelperText": "通話の音質はどうでしたか?",
+    "starSurveyOneStarText": "品質が悪かった。",
+    "starSurveyTwoStarText": "品質は低かった。",
+    "starSurveyThreeStarText": "品質は良かった。",
+    "starSurveyFourStarText": "品質は優れていた。",
+    "starSurveyFiveStarText": "品質は非常に優れていた。",
+    "surveyConfirmButtonLabel": "フィードバックの送信",
+    "starRatingAriaLabel": "{1} 個中 {0} 個の星を選択する",
+    "surveyCancelButtonAriaLabel": "キャンセル",
+    "tagsSurveyQuestion": "何が良くなりましたか?",
+    "tagsSurveyTextFieldDefaultText": "その他、特定してください",
+    "tagsSurveyHelperText": "発生した問題を確認する",
+    "surveyTextboxDefaultText": "その他 (明記してください)",
+    "surveyIssues": {
+      "overallRating": {
+        "callCannotJoin": "通話に参加できなかった",
+        "callCannotInvite": "他のユーザーを通話に招待できなかった",
+        "hadToRejoin": "通話にもう参加し直す必要があった",
+        "callEndedUnexpectedly": "通話が突然終了した",
+        "otherIssues": "通話で他の問題が発生していた"
+      },
+      "audioRating": {
+        "noLocalAudio": "相手側で音が聞こえませんでした",
+        "noRemoteAudio": "音がまったく聞こえなかった",
+        "echo": "通話でエコーが聞こえた",
+        "audioNoise": "通話中にノイズが聞こえた",
+        "lowVolume": "音量が小さかった",
+        "audioStoppedUnexpectedly": "オーディオが突然停止した",
+        "distortedSpeech": "オーディオが歪んでいた",
+        "audioInterruption": "オーディオが中断された",
+        "otherIssues": "この通話で他のオーディオの問題があった"
+      },
+      "videoRating": {
+        "noVideoReceived": "ビデオを表示できなかった",
+        "noVideoSent": "他のユーザーに自分が表示されなかった",
+        "lowQuality": "ビデオの品質が低かった",
+        "freezes": "ビデオがフリーズした",
+        "stoppedUnexpectedly": "ビデオが突然停止した",
+        "darkVideoReceived": "他のユーザーがカメラをオンにした場合にのみ暗い画面を表示できる",
+        "audioVideoOutOfSync": "オーディオとビデオがずれている",
+        "otherIssues": "この通話で他のビデオの問題があった"
+      },
+      "screenshareRating": {
+        "noContentLocal": "他のユーザーが自分の画面共有を表示できなかった",
+        "noContentRemote": "他のユーザーのスクリーン共有が表示されなかった",
+        "cannotPresent": "画面をプレゼンテーションできなかった",
+        "lowQuality": "画面共有の品質が低かった",
+        "freezes": "画面共有がフリーズした",
+        "stoppedUnexpectedly": "画面共有が突然停止した",
+        "largeDelay": "画面共有に大きな遅延がある",
+        "otherIssues": "この通話で他の画面共有の問題があった"
+      }
+    },
+    "SurveyIssuesHeadingStrings": {
+      "overallRating": "全体",
+      "audioRating": "オーディオ",
+      "videoRating": "動画",
+      "screenshareRating": "発表中"
     }
   },
   "chat": {
