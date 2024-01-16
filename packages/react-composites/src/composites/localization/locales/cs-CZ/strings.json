@@ -118,6 +118,8 @@
     "dismissModalAriaLabel": "Místní a vzdálený obrázek a obrázek, stisknutím klávesy Enter se vrátíte k hovoru",
     "callRejectedTitle": "Hovor nešlo spojit.",
     "callRejectedMoreDetails": "Osoba, se kterou se pokoušíte spojit, není k dispozici. Zkuste to prosím znovu později.",
+    "callTimeoutTitle": "Hovor nešlo spojit.",
+    "callTimeoutDetails": "Osoba, se kterou se pokoušíte spojit, není k dispozici. Zkuste to prosím znovu později.",
     "spokenLanguageStrings": {
       "ar-ae": "Arabština - Spojené arabské emiráty",
       "ar-sa": "Arabština - Saúdská Arábie",
@@ -229,6 +231,66 @@
         "lostDueToRoleChangeToAttendee": "Vaše role se změnila. Některé akce, jako je sdílení obsahu, pro vás nebudou k dispozici.",
         "grantedDueToRoleChangeToPresenter": "Jste prezentující. Můžete sdílet obsah a moderovat schůzku."
       }
+    },
+    "surveyQuestion": "Jaký byl váš dnešní hovor?",
+    "starSurveyHelperText": "Jaká byla kvalita hovoru?",
+    "starSurveyOneStarText": "Kvalita byla špatná.",
+    "starSurveyTwoStarText": "Kvalita byla slabá.",
+    "starSurveyThreeStarText": "Kvalita byla dobrá.",
+    "starSurveyFourStarText": "Kvalita byla skvělá.",
+    "starSurveyFiveStarText": "Kvalita byla vynikající.",
+    "surveyConfirmButtonLabel": "Poslat zpětnou vazbu",
+    "starRatingAriaLabel": "Vybrat {0} z(e) {1} hvězdiček",
+    "surveyCancelButtonAriaLabel": "Zrušit",
+    "tagsSurveyQuestion": "Co by mohlo být lepší?",
+    "tagsSurveyTextFieldDefaultText": "Jiné, upřesněte prosím",
+    "tagsSurveyHelperText": "Zkontrolujte všechny problémy, se které jste zaznamenali.",
+    "surveyTextboxDefaultText": "Jiné, upřesněte prosím",
+    "surveyIssues": {
+      "overallRating": {
+        "callCannotJoin": "Nepovedlo se mi připojit se k hovoru",
+        "callCannotInvite": "Nepovedlo se mi pozvat ostatní do hovoru.",
+        "hadToRejoin": "Musel(a) jsem se znovu připojit k hovoru",
+        "callEndedUnexpectedly": "Hovor pro mě neočekávaně skončil",
+        "otherIssues": "Měl(a) jsem s hovorem jiné problémy"
+      },
+      "audioRating": {
+        "noLocalAudio": "Druhá strana neslyšela žádný zvuk",
+        "noRemoteAudio": "Vůbec jsem neslyšel(a) zvuk",
+        "echo": "Při hovoru jsem slyšel(a) ozvěny",
+        "audioNoise": "Při hovoru jsem slyšel(a) šum",
+        "lowVolume": "Hlasitost byla nízká",
+        "audioStoppedUnexpectedly": "Zvuk se neočekávaně zastavil",
+        "distortedSpeech": "Zvuk byl zkreslený",
+        "audioInterruption": "Došlo k přerušení zvuku",
+        "otherIssues": "Během tohoto hovoru došlo k jiným problémům se zvukem"
+      },
+      "videoRating": {
+        "noVideoReceived": "Vůbec se mi nezobrazovalo video",
+        "noVideoSent": "Ostatní mě neviděli",
+        "lowQuality": "Kvalita videa byla nízká.",
+        "freezes": "Video se zablokuje",
+        "stoppedUnexpectedly": "Video se neočekávaně zastavilo",
+        "darkVideoReceived": "Když ostatní zapnou kameru, vidím jenom tmavé obrazovky",
+        "audioVideoOutOfSync": "Zvuk a video se nesynchronizovaly",
+        "otherIssues": "V tomto hovoru došlo k jiným problémům s videem"
+      },
+      "screenshareRating": {
+        "noContentLocal": "Ostatní uživatelé neviděli moje sdílení obrazovky",
+        "noContentRemote": "Nepovedlo se mi zobrazit sdílení obrazovky jiných lidí",
+        "cannotPresent": "Nepovedlo se mi ukázat obrazovku",
+        "lowQuality": "Kvalita sdílení obrazovky byla nízká",
+        "freezes": "Zablokované sdílení obrazovky",
+        "stoppedUnexpectedly": "Sdílení obrazovky se neočekávaně zastavilo",
+        "largeDelay": "Sdílení obrazovky má velké zpoždění",
+        "otherIssues": "Měl(a) jsem jiné problémy se sdílením obrazovky v tomto hovoru"
+      }
+    },
+    "SurveyIssuesHeadingStrings": {
+      "overallRating": "Celkem",
+      "audioRating": "Zvuk",
+      "videoRating": "Video",
+      "screenshareRating": "Prezentování"
     }
   },
   "chat": {

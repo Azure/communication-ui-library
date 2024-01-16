@@ -118,6 +118,8 @@
     "dismissModalAriaLabel": "Paikallinen kuva ja etäkuva, palaa puheluun painamalla Enter-näppäintä",
     "callRejectedTitle": "Puhelua ei voitu soittaa",
     "callRejectedMoreDetails": "Henkilö, jota yrität tavoittaa, ei ole tavoitettavissa. Yritä myöhemmin uudelleen.",
+    "callTimeoutTitle": "Puhelua ei voitu soittaa",
+    "callTimeoutDetails": "Henkilö, jota yrität tavoittaa, ei ole tavoitettavissa. Yritä myöhemmin uudelleen.",
     "spokenLanguageStrings": {
       "ar-ae": "arabia – Arabiemiirikunnat",
       "ar-sa": "arabia – Saudi-Arabia",
@@ -229,6 +231,66 @@
         "lostDueToRoleChangeToAttendee": "Roolisi on muuttunut. Jotkin toiminnot, kuten sisällön jakaminen, eivät ole käytettävissäsi.",
         "grantedDueToRoleChangeToPresenter": "Olet esittäjä. Voit jakaa sisältöä ja johtaa kokousta."
       }
+    },
+    "surveyQuestion": "Millainen puhelusi oli tänään?",
+    "starSurveyHelperText": "Millainen oli puhelun äänenlaatu?",
+    "starSurveyOneStarText": "Laatu oli huono.",
+    "starSurveyTwoStarText": "Laatu oli erittäin huono.",
+    "starSurveyThreeStarText": "Laatu oli hyvä.",
+    "starSurveyFourStarText": "Laatu oli erinomainen.",
+    "starSurveyFiveStarText": "Laatu oli erinomainen.",
+    "surveyConfirmButtonLabel": "Lähetä palautetta",
+    "starRatingAriaLabel": "Valitse {0}/{1} tähteä",
+    "surveyCancelButtonAriaLabel": "Peruuta",
+    "tagsSurveyQuestion": "Mikä olisi voinut olla paremmin?",
+    "tagsSurveyTextFieldDefaultText": "Muu, anna kuvaus",
+    "tagsSurveyHelperText": "Tarkista havaitsematsi ongelmat",
+    "surveyTextboxDefaultText": "Muu, anna kuvaus",
+    "surveyIssues": {
+      "overallRating": {
+        "callCannotJoin": "En pystynyt liittymään puheluun",
+        "callCannotInvite": "En pystynyt kutsumaan muita mukaan puheluun",
+        "hadToRejoin": "Minun oli pakko liittyä puheluun uudelleen",
+        "callEndedUnexpectedly": "Puhelu päättyi odottamatta",
+        "otherIssues": "Minulla oli muita ongelmia puhelun kanssa"
+      },
+      "audioRating": {
+        "noLocalAudio": "Toinen osapuoli ei kuullut mitään",
+        "noRemoteAudio": "En kuullut mitään",
+        "echo": "Kuulin kaikua puhelun aikana",
+        "audioNoise": "Kuulin taustamelua puhelun aikana",
+        "lowVolume": "Äänenvoimakkuus oli matala",
+        "audioStoppedUnexpectedly": "Ääni lakkasi odottamatta kuulumasta",
+        "distortedSpeech": "Äänessä esiintyi vääristymiä",
+        "audioInterruption": "Ääni keskeytyi",
+        "otherIssues": "Minulla oli puhelun aikana muita ääneen liittyviä ongelmia"
+      },
+      "videoRating": {
+        "noVideoReceived": "En nähnyt videokuvaa",
+        "noVideoSent": "Muut eivät pystyneet näkemään minua",
+        "lowQuality": "Videokuva oli laadultaan heikkoa",
+        "freezes": "Video jumitti",
+        "stoppedUnexpectedly": "Videokuva pysähtyi odottamatta",
+        "darkVideoReceived": "Näen ainoastaan tummia näyttöjä, kun toiset ottavat kameransa käyttöön",
+        "audioVideoOutOfSync": "Ääni ja kuva olivat epätahdissa",
+        "otherIssues": "Minulla oli puhelun aikana muita videokuvaan liittyviä ongelmia"
+      },
+      "screenshareRating": {
+        "noContentLocal": "Muut henkilöt eivät nähneet jakamaani näyttöä",
+        "noContentRemote": "En nähnyt muiden jakamaa näyttöä",
+        "cannotPresent": "En voinut esittää näyttöni sisältöä",
+        "lowQuality": "Näytön jakaminen oli laadultaan heikkoa",
+        "freezes": "Näytön jakaminen jumitti",
+        "stoppedUnexpectedly": "Näytön jakaminen keskeytyi odottamatta",
+        "largeDelay": "Näytön jakamisessa ilmenee suurta viivettä",
+        "otherIssues": "Minulla oli puhelun aikana muita näytön jakamiseen liittyviä ongelmia"
+      }
+    },
+    "SurveyIssuesHeadingStrings": {
+      "overallRating": "Yleinen",
+      "audioRating": "Äänet",
+      "videoRating": "Video",
+      "screenshareRating": "Esitys käynnissä"
     }
   },
   "chat": {
