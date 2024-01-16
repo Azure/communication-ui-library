@@ -6,7 +6,6 @@
 
 /// <reference types="react" />
 
-import { AttachmentDownloadResult } from '@internal/react-components';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import type { BackgroundBlurConfig } from '@azure/communication-calling';
 import type { BackgroundReplacementConfig } from '@azure/communication-calling';
@@ -20,6 +19,7 @@ import type { ChatMessage } from '@azure/communication-chat';
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
+import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { CommunicationParticipant } from '@internal/react-components';
 import { CommunicationTokenCredential } from '@azure/communication-common';
@@ -120,7 +120,6 @@ export type AzureCommunicationCallWithChatAdapterFromClientArgs = {
     chatClient: StatefulChatClient;
     chatThreadClient: ChatThreadClient;
     callAdapterOptions?: AzureCommunicationCallAdapterOptions;
-    chatAdapterOptions?: AzureCommunicationChatAdapterOptions;
 };
 
 // @public
@@ -130,11 +129,6 @@ export type AzureCommunicationChatAdapterArgs = {
     displayName: string;
     credential: CommunicationTokenCredential;
     threadId: string;
-};
-
-// @public
-export type AzureCommunicationChatAdapterOptions = {
-    credential?: CommunicationTokenCredential;
 };
 
 // @public
@@ -201,6 +195,7 @@ export type CallAdapterClientState = {
     userId: CommunicationIdentifierKind;
     displayName?: string;
     call?: CallState;
+    targetCallees?: CommunicationIdentifier[];
     devices: DeviceManagerState;
     endedCall?: CallState;
     isTeamsCall: boolean;
@@ -210,6 +205,7 @@ export type CallAdapterClientState = {
     videoBackgroundImages?: VideoBackgroundImage[];
     onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
+    sounds?: CallingSounds;
 };
 
 // @public
@@ -328,6 +324,7 @@ export type CallCompositeIcons = {
     NoticePageJoinCallFailedDueToNoNetwork?: JSX.Element;
     NoticePageLeftCall?: JSX.Element;
     NoticePageRemovedFromCall?: JSX.Element;
+    NoticePageCallRejected?: JSX.Element;
     NoticePageNotInvitedToRoom?: JSX.Element;
     NoticePageRoomNotFound?: JSX.Element;
     NoticePageRoomNotValid?: JSX.Element;
@@ -379,6 +376,8 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
 export interface CallCompositeStrings {
     blurBackgroundEffectButtonLabel?: string;
     blurBackgroundTooltip?: string;
+    callRejectedMoreDetails?: string;
+    callRejectedTitle?: string;
     callTimeoutDetails?: string;
     callTimeoutTitle?: string;
     cameraLabel: string;
@@ -512,6 +511,13 @@ export type CallIdChangedListener = (event: {
 }) => void;
 
 // @public
+export type CallingSounds = {
+    callEnded?: SoundEffect;
+    callRinging?: SoundEffect;
+    callBusy?: SoundEffect;
+};
+
+// @public
 export interface CallWithChatAdapter extends CallWithChatAdapterManagement, AdapterState<CallWithChatAdapterState>, Disposable_2, CallWithChatAdapterSubscriptions {
 }
 
@@ -524,10 +530,6 @@ export interface CallWithChatAdapterManagement {
     disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
     disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
-    // (undocumented)
-    downloadAttachments: (options: {
-        attachmentUrls: Record<string, string>;
-    }) => Promise<AttachmentDownloadResult[]>;
     fetchInitialData(): Promise<void>;
     // @deprecated
     joinCall(microphoneOn?: boolean): Call | undefined;
@@ -877,10 +879,6 @@ export interface ChatAdapterSubscribers {
 // @public
 export interface ChatAdapterThreadManagement {
     deleteMessage(messageId: string): Promise<void>;
-    // (undocumented)
-    downloadAttachments: (options: {
-        attachmentUrls: Record<string, string>;
-    }) => Promise<AttachmentDownloadResult[]>;
     fetchInitialData(): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     removeParticipant(userId: string): Promise<void>;
@@ -964,6 +962,7 @@ export type CommonCallAdapterOptions = {
         videoBackgroundImages?: VideoBackgroundImage[];
         onResolveDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     };
+    callingSounds?: CallingSounds;
 };
 
 // @public
@@ -1092,15 +1091,13 @@ export const createAzureCommunicationCallWithChatAdapter: ({ userId, displayName
 export const _createAzureCommunicationCallWithChatAdapterFromAdapters: (callAdapter: CallAdapter, chatAdapter: ChatAdapter) => CallWithChatAdapter;
 
 // @public
-export const createAzureCommunicationCallWithChatAdapterFromClients: ({ callClient, callAgent, callLocator, chatClient, chatThreadClient, callAdapterOptions, chatAdapterOptions }: AzureCommunicationCallWithChatAdapterFromClientArgs) => Promise<CallWithChatAdapter>;
+export const createAzureCommunicationCallWithChatAdapterFromClients: ({ callClient, callAgent, callLocator, chatClient, chatThreadClient, callAdapterOptions }: AzureCommunicationCallWithChatAdapterFromClientArgs) => Promise<CallWithChatAdapter>;
 
 // @public
 export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
 
 // @public
-export function createAzureCommunicationChatAdapterFromClient(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient, options?: {
-    credential?: CommunicationTokenCredential;
-}): Promise<ChatAdapter>;
+export function createAzureCommunicationChatAdapterFromClient(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient): Promise<ChatAdapter>;
 
 // @internal
 export const _createAzureCommunicationChatAdapterInner: (endpoint: string, userId: CommunicationUserIdentifier, displayName: string, credential: CommunicationTokenCredential, threadId: string, telemetryImplementationHint?: _TelemetryImplementationHint) => Promise<ChatAdapter>;
@@ -1191,6 +1188,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     NoticePageJoinCallFailedDueToNoNetwork?: JSX.Element | undefined;
     NoticePageLeftCall?: JSX.Element | undefined;
     NoticePageRemovedFromCall?: JSX.Element | undefined;
+    NoticePageCallRejected?: JSX.Element | undefined;
     NoticePageNotInvitedToRoom?: JSX.Element | undefined;
     NoticePageRoomNotFound?: JSX.Element | undefined;
     NoticePageRoomNotValid?: JSX.Element | undefined;
@@ -1405,6 +1403,8 @@ export class _MockCallAdapter implements CallAdapter {
     // (undocumented)
     on(): void;
     // (undocumented)
+    onReactionClicked(emoji: string): Promise<void>;
+    // (undocumented)
     onStateChange(handler: (state: CallAdapterState) => void): void;
     // (undocumented)
     queryCameras(): Promise<VideoDeviceInfo[]>;
@@ -1505,6 +1505,11 @@ export type ParticipantsRemovedListener = (event: {
 export interface RemoteVideoTileMenuOptions {
     isHidden?: boolean;
 }
+
+// @public
+export type SoundEffect = {
+    url: string;
+};
 
 // @public
 export type TeamsAdapterOptions = CommonCallAdapterOptions;

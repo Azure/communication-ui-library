@@ -18,41 +18,41 @@ concurrency:
 jobs:
   # get matrix for ci-jobs
   get_matrix:
-    name: Set CI flavors
+    name: Load CI Matrix Details
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.get-matrix.outputs.matrix }}
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       # Ensure node version is great enough
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: 'lts/*'
       - id: get-matrix
         run: echo "matrix=$(node ./common/scripts/workflow-read-matrix.mjs)" >> $GITHUB_OUTPUT
 
   check_breaking_changes:
     needs: get_matrix
-    name: Check Breaking Changes
+    name: 'Check Breaking Changes (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         if: ${{ github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}
         with:
           fetch-depth: 0
       # Ensure node version is great enough
       - name: Use Node.js
         if: ${{ github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: 'lts/*'
       # Try get node_modules from cache
       - name: Restore node_modules from cache
         if: ${{ github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}

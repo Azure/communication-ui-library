@@ -118,6 +118,8 @@
     "dismissModalAriaLabel": "Image et image locales et distantes, appuyez sur entrée pour revenir à l'appel",
     "callRejectedTitle": "Nous n’avons pas pu effectuer l’appel",
     "callRejectedMoreDetails": "La personne que vous essayez de rejoindre n’est pas disponible. Veuillez réessayer plus tard.",
+    "callTimeoutTitle": "Nous n’avons pas pu effectuer l’appel",
+    "callTimeoutDetails": "La personne que vous essayez de rejoindre n’est pas disponible. Veuillez réessayer plus tard.",
     "spokenLanguageStrings": {
       "ar-ae": "Arabe – E.A.U.",
       "ar-sa": "Arabe – Arabie saoudite",
@@ -229,6 +231,66 @@
         "lostDueToRoleChangeToAttendee": "Votre rôle a été modifié. Certaines actions, telles que le partage de contenu, ne seront pas disponibles pour vous.",
         "grantedDueToRoleChangeToPresenter": "Vous êtes présentateur. Vous pouvez partager du contenu et organiser la réunion."
       }
+    },
+    "surveyQuestion": "Comment s’est passé votre appel aujourd’hui ?",
+    "starSurveyHelperText": "Quelle a été la qualité globale de cet appel ?",
+    "starSurveyOneStarText": "La qualité était mauvaise.",
+    "starSurveyTwoStarText": "La qualité était mauvaise.",
+    "starSurveyThreeStarText": "La qualité était bonne.",
+    "starSurveyFourStarText": "La qualité était excellente.",
+    "starSurveyFiveStarText": "La qualité était excellente.",
+    "surveyConfirmButtonLabel": "Envoyer des commentaires",
+    "starRatingAriaLabel": "Sélectionner {0} étoiles sur {1}",
+    "surveyCancelButtonAriaLabel": "Annuler",
+    "tagsSurveyQuestion": "Que pouvons-nous améliorer ?",
+    "tagsSurveyTextFieldDefaultText": "Autre, veuillez préciser",
+    "tagsSurveyHelperText": "Cochez les problèmes que vous avez rencontrés",
+    "surveyTextboxDefaultText": "Autre, veuillez préciser",
+    "surveyIssues": {
+      "overallRating": {
+        "callCannotJoin": "Je n’ai pas pu rejoindre l’appel",
+        "callCannotInvite": "Je n’ai pas pu inviter d’autres personnes à participer à l’appel",
+        "hadToRejoin": "J’ai dû rejoindre l’appel",
+        "callEndedUnexpectedly": "L’appel s’est terminé pour moi de manière inattendue",
+        "otherIssues": "J’avais d’autres problèmes avec l’appel"
+      },
+      "audioRating": {
+        "noLocalAudio": "Mon interlocuteur n'entendait aucun son",
+        "noRemoteAudio": "Je n'entendais aucun son",
+        "echo": "J’ai entendu des échos lors de l’appel",
+        "audioNoise": "Il y avait des bruits parasites",
+        "lowVolume": "Le volume était faible",
+        "audioStoppedUnexpectedly": "L’audio s’est arrêté de manière inattendue",
+        "distortedSpeech": "L’audio a été altéré",
+        "audioInterruption": "L’audio a été interrompu",
+        "otherIssues": "J’ai rencontré d’autres problèmes audio pendant cet appel"
+      },
+      "videoRating": {
+        "noVideoReceived": "La vidéo ne s'affichait pas sur mon écran",
+        "noVideoSent": "Les autres personnes n’ont pas pu me voir",
+        "lowQuality": "La qualité de la vidéo était faible",
+        "freezes": "Vidéo figée",
+        "stoppedUnexpectedly": "La vidéo s'est arrêtée de manière inattendue",
+        "darkVideoReceived": "Je ne vois que des écrans sombres lorsque d'autres personnes allument leur caméra",
+        "audioVideoOutOfSync": "L’audio et la vidéo n’étaient pas synchronisés",
+        "otherIssues": "J’ai rencontré d’autres problèmes vidéo pendant cet appel"
+      },
+      "screenshareRating": {
+        "noContentLocal": "Les autres personnes n’ont pas pu voir mon partage d’écran",
+        "noContentRemote": "Je n’ai pas pu voir le partage d’écran d’autres personnes",
+        "cannotPresent": "Je n’ai pas pu présenter mon écran",
+        "lowQuality": "La qualité du partage d’écran était faible",
+        "freezes": "Partage d’écran figé",
+        "stoppedUnexpectedly": "Le partage d’écran s’est arrêté de manière inattendue",
+        "largeDelay": "Le partage d’écran a un retard important",
+        "otherIssues": "Je rencontre d’autres problèmes de partage d’écran dans cet appel"
+      }
+    },
+    "SurveyIssuesHeadingStrings": {
+      "overallRating": "Globale",
+      "audioRating": "Audio",
+      "videoRating": "Vidéo",
+      "screenshareRating": "En présentation"
     }
   },
   "chat": {

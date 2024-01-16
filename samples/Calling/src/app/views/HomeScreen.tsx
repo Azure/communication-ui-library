@@ -3,8 +3,8 @@
 
 import React, { useState } from 'react';
 import { Stack, PrimaryButton, Image, ChoiceGroup, IChoiceGroupOption, Text, TextField } from '@fluentui/react';
-/* @conditional-compile-remove(teams-adhoc-call) */
-import { Label, IButtonStyles, IStackStyles, IStackTokens, ITextFieldProps, IconButton } from '@fluentui/react';
+/* @conditional-compile-remove(PSTN-calls) */
+import { Label } from '@fluentui/react';
 /* @conditional-compile-remove(PSTN-calls) */
 import { registerIcons, Callout, mergeStyles, Link } from '@fluentui/react';
 import heroSVG from '../../assets/hero.svg';
@@ -46,8 +46,6 @@ import { Dialpad } from '@azure/communication-react';
 import { Backspace20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
 import { useIsMobile } from '../utils/useIsMobile';
-/* @conditional-compile-remove(teams-adhoc-call) */
-import { useBoolean, useId } from '@fluentui/react-hooks';
 import { CallAdapterLocator } from '@azure/communication-react';
 
 export type CallOption =
@@ -177,12 +175,13 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   /* @conditional-compile-remove(PSTN-calls) */
   const isMobileSession = useIsMobile();
 
-  /* @conditional-compile-remove(teams-adhoc-call) */
-  const outboundTeamsUsersTextFieldLabelId: string = useId('outbound-teams-users-text-field');
-
   let showDisplayNameField = true;
   /* @conditional-compile-remove(teams-identity-support) */
   showDisplayNameField = !teamsIdentityChosen;
+
+  /* @conditional-compile-remove(teams-adhoc-call) */
+  /* @conditional-compile-remove(teams-identity-support) */
+  const [teamsIdFormatError, setTeamsIdFormatError] = useState<boolean>(false);
 
   return (
     <Stack
@@ -207,7 +206,12 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 defaultSelectedKey="ACSCall"
                 options={callOptions}
                 required={true}
-                onChange={(_, option) => option && setChosenCallOption(option as ICallChoiceGroupOption)}
+                onChange={(_, option) => {
+                  option && setChosenCallOption(option as ICallChoiceGroupOption);
+                  /* @conditional-compile-remove(teams-adhoc-call) */
+                  /* @conditional-compile-remove(teams-identity-support) */
+                  setTeamsIdFormatError(false);
+                }}
               />
             )}
             {(teamsCallChosen || /* @conditional-compile-remove(teams-identity-support) */ teamsIdentityChosen) && (
@@ -242,8 +246,22 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                     className={teamsItemStyle}
                     label={teamsIdLabel}
                     required
-                    placeholder={'Enter a Teams id'}
-                    onChange={(_, newValue) => setTeamsId(`8:orgid:${newValue}`)}
+                    placeholder={'Enter a Teams user ID (8:orgid:<UUID>)'}
+                    errorMessage={
+                      teamsIdFormatError ? `Teams user ID should be in the format '8:orgid:<UUID>'` : undefined
+                    }
+                    onChange={(_, newValue) => {
+                      if (!newValue) {
+                        setTeamsIdFormatError(false);
+                        setTeamsId(undefined);
+                      } else if (newValue.match(/8:orgid:[a-zA-Z0-9-]+/)) {
+                        setTeamsIdFormatError(false);
+                        setTeamsId(newValue);
+                      } else {
+                        setTeamsIdFormatError(true);
+                        setTeamsId(undefined);
+                      }
+                    }}
                   />
                 </Stack>
               )
@@ -294,11 +312,22 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                     className={outboundTextField}
                     label={'Teams user ID'}
                     required
-                    placeholder={'Enter a Teams user ID'}
-                    onChange={(_, newValue) => setOutboundTeamsUsers(newValue)}
-                    onRenderLabel={(props?: ITextFieldProps) => (
-                      <TeamsUserIdsTextFieldLabel id={outboundTeamsUsersTextFieldLabelId} {...props} />
-                    )}
+                    placeholder={'Enter a Teams user ID (8:orgid:<UUID>)'}
+                    errorMessage={
+                      teamsIdFormatError ? `Teams user ID should be in the format '8:orgid:<UUID>'` : undefined
+                    }
+                    onChange={(_, newValue) => {
+                      if (!newValue) {
+                        setTeamsIdFormatError(false);
+                        setOutboundTeamsUsers(undefined);
+                      } else if (newValue.match(/8:orgid:[a-zA-Z0-9-]+/)) {
+                        setTeamsIdFormatError(false);
+                        setOutboundTeamsUsers(newValue);
+                      } else {
+                        setTeamsIdFormatError(true);
+                        setOutboundTeamsUsers(undefined);
+                      }
+                    }}
                   />
                 </Stack>
               )
@@ -414,64 +443,4 @@ const parseParticipants = (participantsString?: string): string[] | undefined =>
   } else {
     return undefined;
   }
-};
-
-/* @conditional-compile-remove(teams-adhoc-call) */
-/**
- * Label for Teams user ID's text field. Comes with a Callout with description.
- */
-const TeamsUserIdsTextFieldLabel = (props: ITextFieldProps): JSX.Element => {
-  const [isCalloutVisible, { toggle: toggleIsCalloutVisible }] = useBoolean(false);
-  const descriptionId: string = useId('description');
-  const iconButtonId: string = useId('iconButton');
-
-  const teamsUserIdsTextFieldstackTokens: IStackTokens = {
-    childrenGap: '0.25rem',
-    maxWidth: '18.75rem'
-  };
-  const calloutStackStyles: Partial<IStackStyles> = { root: { padding: 10 } };
-  const iconButtonStyles: Partial<IButtonStyles> = { root: { height: '1.625rem' } };
-  const iconProps = { iconName: 'Info' };
-
-  return (
-    <>
-      <Stack horizontal verticalAlign="center">
-        <Label
-          className={mergeStyles({
-            fontWeight: 600,
-            paddingTop: '0.3125rem',
-            paddingBottom: '0.3125rem',
-            '::after': {
-              paddingRight: '0px'
-            }
-          })}
-          id={props.id}
-          required={props.required}
-        >
-          {props.label}
-        </Label>
-        <IconButton
-          id={iconButtonId}
-          iconProps={iconProps}
-          title="Info"
-          ariaLabel="Info"
-          onClick={toggleIsCalloutVisible}
-          styles={iconButtonStyles}
-        />
-      </Stack>
-      {isCalloutVisible && (
-        <Callout
-          target={'#' + iconButtonId}
-          setInitialFocus
-          onDismiss={toggleIsCalloutVisible}
-          ariaDescribedBy={descriptionId}
-          role="alertdialog"
-        >
-          <Stack tokens={teamsUserIdsTextFieldstackTokens} horizontalAlign="start" styles={calloutStackStyles}>
-            <span id={descriptionId}>{"A Teams user ID should be in the format '8:orgid:<UUID>'"}</span>
-          </Stack>
-        </Callout>
-      )}
-    </>
-  );
 };
