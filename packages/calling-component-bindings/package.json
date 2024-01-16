@@ -30,6 +30,7 @@
     "_current-flavor": "echo You are running under COMMUNICATION_REACT_FLAVOR: && env-cmd -f ../../common/config/env/.env node -p process.env.COMMUNICATION_REACT_FLAVOR",
     "_test:by-flavor": "(npm run _if-preprocess && rushx preprocess || if-env COMMUNICATION_REACT_FLAVOR=beta && echo \"skip preprocess\") && jest"
   },
+  "license": "MIT",
   "dependencies": {
     "@internal/acs-ui-common": "1.11.1-beta.0",
     "@internal/calling-stateful-client": "1.11.1-beta.0",
@@ -39,13 +40,13 @@
     "reselect": "^4.0.0"
   },
   "peerDependencies": {
-    "@azure/communication-calling": "1.20.1-beta.2 || ^1.20.1",
+    "@azure/communication-calling": "1.21.1-beta.4 || ^1.20.1",
     "@azure/communication-calling-effects": "1.0.1",
     "@types/react": ">=16.8.0 <19.0.0",
     "react": ">=16.8.0 <19.0.0"
   },
   "devDependencies": {
-    "@azure/communication-calling": "1.20.1-beta.2 || ^1.20.1",
+    "@azure/communication-calling": "1.21.1-beta.4 || ^1.20.1",
     "@azure/communication-calling-effects": "1.0.1",
     "@babel/cli": "^7.23.4",
     "@babel/core": "^7.23.5",

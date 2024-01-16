@@ -3,6 +3,7 @@
 
 import {
   BaseSlots,
+  IPalette,
   ITheme,
   ThemeGenerator,
   createTheme,
@@ -74,8 +75,12 @@ const getForegroundColors = (isDark: boolean): Record<string, string> => {
     'black'
   ];
   const baseTheme = isDark ? darkTheme : lightTheme;
-  return foregroundColorKeys.reduce((acc, key) => {
-    acc[key] = baseTheme.palette?.[key];
+  return foregroundColorKeys.reduce((acc: Record<string, string>, key) => {
+    const k = key as keyof IPalette;
+    const val = baseTheme.palette?.[k];
+    if (val !== undefined) {
+      acc[k] = val;
+    }
     return acc;
   }, {});
 };
