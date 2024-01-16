@@ -19,8 +19,6 @@ import { controlBarContainerStyles } from '../../CallComposite/styles/CallContro
 import { callControlsContainerStyles } from '../../CallComposite/styles/CallPage.styles';
 import { useCallWithChatCompositeStrings } from '../../CallWithChatComposite/hooks/useCallWithChatCompositeStrings';
 import { BaseCustomStyles, ControlBarButtonStyles } from '@internal/react-components';
-/* @conditional-compile-remove(reaction) */
-import { ReactionButton } from '@internal/react-components';
 /* @conditional-compile-remove(gallery-layouts) */
 import { VideoGalleryLayout } from '@internal/react-components';
 import { ControlBar } from '@internal/react-components';
@@ -48,7 +46,9 @@ import { RaiseHand } from '../../CallComposite/components/buttons/RaiseHand';
 /* @conditional-compile-remove(reaction) */
 import { Reaction } from '../../CallComposite/components/buttons/Reaction';
 /* @conditional-compile-remove(reaction) */
-import { usePropsFor } from '../../CallComposite/hooks/usePropsFor';
+import { useSelector } from '../../CallComposite/hooks/useSelector';
+/* @conditional-compile-remove(reaction) */
+import { capabilitySelector } from '../../CallComposite/selectors/capabilitySelector';
 /**
  * @private
  */
@@ -226,13 +226,16 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
     [options]
   );
 
+  /* @conditional-compile-remove(reaction) */
+  const capabilitiesSelector = useSelector(capabilitySelector);
+  /* @conditional-compile-remove(reaction) */
+  const isReactionAllowed =
+    !capabilitiesSelector?.capabilities || capabilitiesSelector.capabilities.useReactions.isPresent;
+
   // when options is false then we want to hide the whole control bar.
   if (options === false) {
     return <></>;
   }
-
-  /* @conditional-compile-remove(reaction) */
-  const reactionButtonProps = usePropsFor(ReactionButton);
 
   const sideButtonsPresent =
     isEnabled(options.peopleButton) || isEnabled(options.chatButton) || customButtons['secondary'] !== undefined;
@@ -327,7 +330,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                     )}
                     {
                       /* @conditional-compile-remove(reaction) */
-                      !props.mobileView && reactionButtonProps.allowed && isEnabled(options.reactionButton) && (
+                      !props.mobileView && isReactionAllowed && isEnabled(options.reactionButton) && (
                         <Reaction
                           displayType={options.displayType}
                           styles={commonButtonStyles}
