@@ -1955,6 +1955,7 @@ export const RTESendBox: (props: RTESendBoxProps) => JSX.Element;
 export interface RTESendBoxProps {
     disabled?: boolean;
     strings?: Partial<SendBoxStrings>;
+    systemMessage?: string;
 }
 
 // @public
