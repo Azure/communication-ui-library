@@ -53,6 +53,7 @@ import { PersonaInitialsColor } from '@fluentui/react';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { PropertyChangedEvent } from '@azure/communication-calling';
 import { default as React_2 } from 'react';
+import { Reaction } from '@azure/communication-calling';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { RoomCallLocator } from '@azure/communication-calling';
 import { SendMessageOptions } from '@azure/communication-chat';
@@ -150,7 +151,7 @@ export type AzureCommunicationChatAdapterArgs = {
     threadId: string;
 };
 
-// @public
+// @beta
 export type AzureCommunicationChatAdapterOptions = {
     credential?: CommunicationTokenCredential;
 };
@@ -208,6 +209,8 @@ export interface CallAdapterCallOperations {
     leaveCall(forEveryone?: boolean): Promise<void>;
     lowerHand(): Promise<void>;
     mute(): Promise<void>;
+    // @beta
+    onReactionClicked(reaction: Reaction): Promise<void>;
     raiseHand(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
     // @beta
@@ -221,10 +224,14 @@ export interface CallAdapterCallOperations {
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startCaptions(options?: StartCaptionsOptions): Promise<void>;
     startScreenShare(): Promise<void>;
+    // @beta
+    startSpotlight(userId: string): Promise<void>;
     startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
     stopCamera(): Promise<void>;
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
+    // @beta
+    stopSpotlight(userId: string): Promise<void>;
     stopVideoBackgroundEffects(): Promise<void>;
     // @beta
     submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
@@ -347,7 +354,9 @@ export type CallCompositeIcons = {
     ControlButtonRaiseHand?: JSX.Element;
     ControlButtonLowerHand?: JSX.Element;
     RaiseHandContextualMenuItem?: JSX.Element;
+    ReactionContextualMenuItem?: JSX.Element;
     LowerHandContextualMenuItem?: JSX.Element;
+    ReactionButtonIcon?: JSX.Element;
     ErrorBarCallCameraAccessDenied?: JSX.Element;
     ErrorBarCallCameraAlreadyInUse?: JSX.Element;
     ErrorBarCallLocalVideoFreeze?: JSX.Element;
@@ -421,7 +430,8 @@ export type CallCompositeOptions = {
         layout?: VideoGalleryLayout;
     };
     surveyOptions?: {
-        hideSurvey?: boolean;
+        disableSurvey?: boolean;
+        onSurveyDismissed?: () => void;
         onSurveySubmitted?: (callId: string, surveyId: string,
         submittedSurvey: CallSurvey,
         improvementSuggestions: CallSurveyImprovementSuggestions) => Promise<void>;
@@ -454,7 +464,7 @@ export interface CallCompositeStrings {
     blurBackgroundEffectButtonLabel?: string;
     blurBackgroundTooltip?: string;
     callRejectedMoreDetails?: string;
-    callRejectedTitle: string;
+    callRejectedTitle?: string;
     callTimeoutDetails?: string;
     callTimeoutTitle?: string;
     cameraLabel: string;
@@ -635,7 +645,7 @@ export type CallIdChangedListener = (event: {
     callId: string;
 }) => void;
 
-// @beta
+// @public
 export type CallingSounds = {
     callEnded?: SoundEffect;
     callRinging?: SoundEffect;
@@ -683,6 +693,8 @@ export interface CallWithChatAdapterManagement {
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     lowerHand(): Promise<void>;
     mute(): Promise<void>;
+    // @beta
+    onReactionClicked(reaction: Reaction): Promise<void>;
     queryCameras(): Promise<VideoDeviceInfo[]>;
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
     querySpeakers(): Promise<AudioDeviceInfo[]>;
@@ -712,10 +724,14 @@ export interface CallWithChatAdapterManagement {
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startCaptions(options?: StartCaptionsOptions): Promise<void>;
     startScreenShare(): Promise<void>;
+    // @beta
+    startSpotlight(userId: string): Promise<void>;
     startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
     stopCamera(): Promise<void>;
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
+    // @beta
+    stopSpotlight(userId: string): Promise<void>;
     stopVideoBackgroundEffects(): Promise<void>;
     // @beta
     submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
@@ -772,6 +788,10 @@ export interface CallWithChatAdapterSubscriptions {
     // (undocumented)
     off(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
+    off(event: 'messageEdited', listener: MessageEditedListener): void;
+    // (undocumented)
+    off(event: 'messageDeleted', listener: MessageDeletedListener): void;
+    // (undocumented)
     off(event: 'messageSent', listener: MessageSentListener): void;
     // (undocumented)
     off(event: 'messageRead', listener: MessageReadListener): void;
@@ -815,6 +835,10 @@ export interface CallWithChatAdapterSubscriptions {
     on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     // (undocumented)
     on(event: 'messageReceived', listener: MessageReceivedListener): void;
+    // (undocumented)
+    on(event: 'messageEdited', listener: MessageEditedListener): void;
+    // (undocumented)
+    on(event: 'messageDeleted', listener: MessageDeletedListener): void;
     // (undocumented)
     on(event: 'messageSent', listener: MessageSentListener): void;
     // (undocumented)
@@ -949,7 +973,8 @@ export type CallWithChatCompositeOptions = {
         layout?: VideoGalleryLayout;
     };
     surveyOptions?: {
-        hideSurvey?: boolean;
+        disableSurvey?: boolean;
+        onSurveyDismissed?: () => void;
         onSurveySubmitted?: (callId: string, surveyId: string,
         submittedSurvey: CallSurvey,
         improvementSuggestions: CallSurveyImprovementSuggestions) => Promise<void>;
@@ -1024,7 +1049,7 @@ export interface CallWithChatControlOptions extends CommonCallControlOptions {
 }
 
 // @public
-export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | /* @conditional-compile-remove(close-captions) */ 'isCaptionsActiveChanged' | /* @conditional-compile-remove(close-captions) */ 'captionsReceived' | /* @conditional-compile-remove(close-captions) */ 'isCaptionLanguageChanged' | /* @conditional-compile-remove(close-captions) */ 'isSpokenLanguageChanged' | /* @conditional-compile-remove(capabilities) */ 'capabilitiesChanged' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
+export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | /* @conditional-compile-remove(close-captions) */ 'isCaptionsActiveChanged' | /* @conditional-compile-remove(close-captions) */ 'captionsReceived' | /* @conditional-compile-remove(close-captions) */ 'isCaptionLanguageChanged' | /* @conditional-compile-remove(close-captions) */ 'isSpokenLanguageChanged' | /* @conditional-compile-remove(capabilities) */ 'capabilitiesChanged' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
 
 // @public
 export type CapabilitiesChangedListener = (data: CapabilitiesChangeInfo) => void;
@@ -1059,6 +1084,8 @@ export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
 // @public
 export interface ChatAdapterSubscribers {
     off(event: 'messageReceived', listener: MessageReceivedListener): void;
+    off(event: 'messageEdited', listener: MessageEditedListener): void;
+    off(event: 'messageDeleted', listener: MessageDeletedListener): void;
     off(event: 'messageSent', listener: MessageSentListener): void;
     off(event: 'messageRead', listener: MessageReadListener): void;
     off(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
@@ -1066,6 +1093,8 @@ export interface ChatAdapterSubscribers {
     off(event: 'topicChanged', listener: TopicChangedListener): void;
     off(event: 'error', listener: (e: AdapterError) => void): void;
     on(event: 'messageReceived', listener: MessageReceivedListener): void;
+    on(event: 'messageEdited', listener: MessageEditedListener): void;
+    on(event: 'messageDeleted', listener: MessageDeletedListener): void;
     on(event: 'messageSent', listener: MessageSentListener): void;
     on(event: 'messageRead', listener: MessageReadListener): void;
     on(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
@@ -1199,6 +1228,9 @@ export type CommonCallControlOptions = {
     };
     moreButton?: boolean;
     raiseHandButton?: boolean | {
+        disabled: boolean;
+    };
+    reactionButton?: boolean | {
         disabled: boolean;
     };
     onFetchCustomButtonProps?: CustomCallControlButtonCallback[];
@@ -1395,7 +1427,9 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ControlButtonRaiseHand: JSX.Element;
     ControlButtonLowerHand: JSX.Element;
     RaiseHandContextualMenuItem: JSX.Element;
+    ReactionContextualMenuItem?: JSX.Element | undefined;
     LowerHandContextualMenuItem: JSX.Element;
+    ReactionButtonIcon: JSX.Element;
     ErrorBarCallCameraAccessDenied: JSX.Element;
     ErrorBarCallCameraAlreadyInUse: JSX.Element;
     ErrorBarCallLocalVideoFreeze: JSX.Element;
@@ -1661,6 +1695,12 @@ export type MediaDiagnosticChangedEvent = MediaDiagnosticChangedEventArgs & {
 };
 
 // @public
+export type MessageDeletedListener = MessageReceivedListener;
+
+// @public
+export type MessageEditedListener = MessageReceivedListener;
+
+// @public
 export type MessageReadListener = (event: {
     message: ChatMessage;
     readBy: CommunicationUserKind;
@@ -1719,6 +1759,8 @@ export class _MockCallAdapter implements CallAdapter {
     // (undocumented)
     on(): void;
     // (undocumented)
+    onReactionClicked(emoji: string): Promise<void>;
+    // (undocumented)
     onStateChange(handler: (state: CallAdapterState) => void): void;
     // (undocumented)
     queryCameras(): Promise<VideoDeviceInfo[]>;
@@ -1755,6 +1797,8 @@ export class _MockCallAdapter implements CallAdapter {
     // (undocumented)
     startScreenShare(): Promise<void>;
     // (undocumented)
+    startSpotlight(userId: string): Promise<void>;
+    // (undocumented)
     startVideoBackgroundEffect(): Promise<void>;
     // (undocumented)
     state: CallAdapterState;
@@ -1764,6 +1808,8 @@ export class _MockCallAdapter implements CallAdapter {
     stopCaptions(): Promise<void>;
     // (undocumented)
     stopScreenShare(): Promise<void>;
+    // (undocumented)
+    stopSpotlight(userId: string): Promise<void>;
     // (undocumented)
     stopVideoBackgroundEffects(): Promise<void>;
     // (undocumented)
@@ -1830,7 +1876,7 @@ export interface RemoteVideoTileMenuOptions {
     isHidden?: boolean;
 }
 
-// @beta
+// @public
 export type SoundEffect = {
     url: string;
 };

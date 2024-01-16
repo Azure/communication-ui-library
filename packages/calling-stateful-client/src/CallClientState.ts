@@ -29,6 +29,10 @@ import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
 import { ParticipantRole } from '@azure/communication-calling';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
+/* @conditional-compile-remove(reaction) */
+import { ReactionMessage } from '@azure/communication-calling';
+/* @conditional-compile-remove(spotlight) */
+import { SpotlightedParticipant } from '@azure/communication-calling';
 
 /**
  * State only version of {@link @azure/communication-calling#CallAgent} except calls is moved to be a child directly of
@@ -146,6 +150,32 @@ export interface CapabilitiesFeatureState {
   latestCapabilitiesChangeInfo: CapabilitiesChangeInfo;
 }
 
+/* @conditional-compile-remove(spotlight) */
+/**
+ * State only version of {@link @azure/communication-calling#SpotlightCallFeature}
+ *
+ * @beta
+ */
+export interface SpotlightCallFeatureState {
+  /**
+   * Ordered array of spotlighted participants in call
+   */
+  spotlightedParticipants: SpotlightedParticipant[];
+}
+
+/* @conditional-compile-remove(spotlight) */
+/**
+ * Spotlight state with order
+ *
+ * @beta
+ */
+export interface SpotlightState {
+  /**
+   * Order position of spotlight in call
+   */
+  spotlightedOrderPosition?: number;
+}
+
 /**
  * State only version of {@link @azure/communication-calling#RecordingCallFeature}. {@link StatefulCallClient} will
  * automatically listen for recording state of the call and update the state exposed by {@link StatefulCallClient} accordingly.
@@ -185,6 +215,24 @@ export interface RaiseHandCallFeatureState {
  */
 export type RaisedHandState = {
   raisedHandOrderPosition: number;
+};
+
+/* @conditional-compile-remove(reaction) */
+/**
+ * State only version of {@link @azure/communication-calling#Call.ReactionMessage} with UI helper props receivedAt.
+ * Reaction state with a timestamp which helps UI to decide to render the reaction accordingly.
+ *
+ * @beta
+ */
+export type ReactionState = {
+  /**
+   * Reaction message from the meeting {@link @azure/communication-calling#Call.ReactionMessage}
+   */
+  reactionMessage: ReactionMessage;
+  /**
+   * Received timestamp of the reaction message in a meeting.
+   */
+  receivedAt: Date;
 };
 
 /**
@@ -338,12 +386,24 @@ export interface RemoteParticipantState {
    * Proxy of {@link @azure/communication-calling#RemoteParticipant.role}.
    */
   role?: ParticipantRole;
-
   /* @conditional-compile-remove(raise-hand) */
   /**
    * Proxy of {@link @azure/communication-calling#Call.RaisedHand.raisedHands}.
    */
   raisedHand?: RaisedHandState;
+  /* @conditional-compile-remove(reaction) */
+  /**
+   * Proxy of {@link @azure/communication-calling#Call.ReactionMessage} with
+   * UI helper props receivedAt which indicates the timestamp when the message was received.
+   *
+   * @beta
+   */
+  reactionState?: ReactionState;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Proxy of {@link @azure/communication-calling#SpotlightCallFeature.spotlightedParticipants}.
+   */
+  spotlighted?: SpotlightState;
 }
 
 /**
@@ -431,6 +491,14 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#RaiseHandCallFeature}.
    */
   raiseHand: RaiseHandCallFeatureState;
+  /* @conditional-compile-remove(reaction) */
+  /**
+   * Proxy of {@link @azure/communication-calling#Call.ReactionMessage} with
+   * UI helper props receivedAt which indicates the timestamp when the message was received.
+   *
+   * @beta
+   */
+  localParticipantReaction?: ReactionState;
   /**
    * Stores the currently active screenshare participant's key. If there is no screenshare active, then this will be
    * undefined. You can use this key to access the remoteParticipant data in {@link CallState.remoteParticipants} object.
@@ -482,6 +550,11 @@ export interface CallState {
    * Hide attendee names in teams meeting
    */
   hideAttendeeNames?: boolean;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Proxy of {@link @azure/communication-calling#SpotlightCallFeature}.
+   */
+  spotlight?: SpotlightCallFeatureState;
 }
 
 /* @conditional-compile-remove(call-transfer) */

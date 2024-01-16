@@ -21,6 +21,8 @@ test.describe('Custom call control options tests', () => {
         },
         endCallButton: false,
         microphoneButton: true,
+        reactionButton: false,
+        raiseHandButton: false,
         moreButton: undefined
       }
     };
@@ -43,6 +45,8 @@ test.describe('Custom call control options tests', () => {
           microphoneButton: false,
           screenShareButton: false,
           peopleButton: false,
+          reactionButton: false,
+          raiseHandButton: false,
           chatButton: false
         }
       })

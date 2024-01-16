@@ -6,11 +6,10 @@ import type { CommunicationIdentifierKind, CommunicationUserKind } from '@azure/
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import type { AdapterError, AdapterErrors, AdapterState, Disposable } from '../../common/adapters';
 /* @conditional-compile-remove(file-sharing) */
-import { FileUploadAdapter } from './AzureCommunicationFileUploadAdapter';
-/* @conditional-compile-remove(file-sharing) */
-import { FileUploadsUiState } from './AzureCommunicationFileUploadAdapter';
+import { FileUploadAdapter, FileUploadsUiState } from './AzureCommunicationFileUploadAdapter';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AttachmentDownloadResult } from '@internal/react-components';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AttachmentMetadata } from '@internal/react-components';
 
 /**
@@ -110,6 +109,7 @@ export interface ChatAdapterThreadManagement {
    *
    */
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   downloadAttachments: (options: { attachmentUrls: Record<string, string> }) => Promise<AttachmentDownloadResult[]>;
 }
 
@@ -123,6 +123,14 @@ export interface ChatAdapterSubscribers {
    * Subscribe function for 'messageReceived' event.
    */
   on(event: 'messageReceived', listener: MessageReceivedListener): void;
+  /**
+   * Subscribe function for 'messageEdited' event.
+   */
+  on(event: 'messageEdited', listener: MessageEditedListener): void;
+  /**
+   * Subscribe function for 'messageDeleted' event.
+   */
+  on(event: 'messageDeleted', listener: MessageDeletedListener): void;
   /**
    * Subscribe function for 'messageSent' event.
    */
@@ -152,6 +160,14 @@ export interface ChatAdapterSubscribers {
    * Unsubscribe function for 'messageReceived' event.
    */
   off(event: 'messageReceived', listener: MessageReceivedListener): void;
+  /**
+   * Unsubscribe function for 'messageEdited' event.
+   */
+  off(event: 'messageEdited', listener: MessageEditedListener): void;
+  /**
+   * Unsubscribe function for 'messageDeleted' event.
+   */
+  off(event: 'messageDeleted', listener: MessageDeletedListener): void;
   /**
    * Unsubscribe function for 'messageSent' event.
    */
@@ -203,6 +219,20 @@ export type MessageReceivedListener = (event: { message: ChatMessage }) => void;
  * @public
  */
 export type MessageSentListener = MessageReceivedListener;
+
+/**
+ * Callback for {@link ChatAdapterSubscribers} 'messageEdited' event.
+ *
+ * @public
+ */
+export type MessageEditedListener = MessageReceivedListener;
+
+/**
+ * Callback for {@link ChatAdapterSubscribers} 'messageDeleted' event.
+ *
+ * @public
+ */
+export type MessageDeletedListener = MessageReceivedListener;
 
 /**
  * Callback for {@link ChatAdapterSubscribers} 'messageRead' event.

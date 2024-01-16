@@ -6,6 +6,8 @@ import { CallState, DeviceManagerState } from '@internal/calling-stateful-client
 import { CaptionsInfo } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(video-background-effects) */
 import type { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
+/* @conditional-compile-remove(reaction) */
+import { Reaction } from '@azure/communication-calling';
 /* @conditional-compile-remove(capabilities) */
 import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
@@ -31,13 +33,9 @@ import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react
 import type { CommunicationIdentifierKind } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
-
+import { CommunicationIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
-import type {
-  CommunicationIdentifier,
-  CommunicationUserIdentifier,
-  PhoneNumberIdentifier
-} from '@azure/communication-common';
+import type { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
@@ -285,7 +283,7 @@ export interface VideoBackgroundImage {
 }
 
 /**
- * @beta
+ * @public
  * Type for representing a custom sound to use for a calling event
  */
 export type SoundEffect = {
@@ -296,7 +294,7 @@ export type SoundEffect = {
 };
 
 /**
- * @beta
+ * @public
  * Type for representing a set of sounds to use for different calling events
  */
 export type CallingSounds = {
@@ -502,6 +500,13 @@ export interface CallAdapterCallOperations {
    * @public
    */
   lowerHand(): Promise<void>;
+  /* @conditional-compile-remove(reaction) */
+  /**
+   * Send reaction emoji
+   *
+   * @beta
+   */
+  onReactionClicked(reaction: Reaction): Promise<void>;
   /**
    * Stop sharing the screen
    *
@@ -669,6 +674,20 @@ export interface CallAdapterCallOperations {
    * @beta
    */
   submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Start spotlight
+   *
+   * @beta
+   */
+  startSpotlight(userId: string): Promise<void>;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Stop spotlight
+   *
+   * @beta
+   */
+  stopSpotlight(userId: string): Promise<void>;
 }
 
 /**

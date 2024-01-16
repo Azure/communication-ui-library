@@ -66,14 +66,14 @@ export type AnnouncerProps = {
     ariaLive: 'off' | 'polite' | 'assertive' | undefined;
 };
 
-// @public
+// @beta
 export interface AttachmentDownloadResult {
     attachmentId: string;
     blobUrl: string;
 }
 
-// @public
-export type AttachmentMetadata = InlineImageMetadata | /* @conditional-compile-remove(file-sharing) */ FileMetadata;
+// @beta
+export type AttachmentMetadata = FileMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ InlineImageMetadata;
 
 // @internal
 export type _AudioIssue = 'NoLocalAudio' | 'NoRemoteAudio' | 'Echo' | 'AudioNoise' | 'LowVolume' | 'AudioStoppedUnexpectedly' | 'DistortedSpeech' | 'AudioInterruption' | 'OtherIssues';
@@ -175,6 +175,7 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     isMuted?: boolean;
     isSpeaking?: boolean;
     raisedHand?: RaisedHand;
+    reaction?: Reaction;
 };
 
 // @internal
@@ -452,8 +453,8 @@ export interface _CaptionsSettingsModalStrings {
     captionsSettingsSpokenLanguageDropdownLabel?: string;
 }
 
-// @public
-export type ChatAttachmentType = 'inlineImage' | /* @conditional-compile-remove(file-sharing) */ 'file' | 'unknown';
+// @beta
+export type ChatAttachmentType = 'unknown' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | /* @conditional-compile-remove(file-sharing) */ 'file';
 
 // @public
 export interface ChatMessage extends MessageCommon {
@@ -473,6 +474,7 @@ export interface ChatMessage extends MessageCommon {
     failureReason?: string;
     // @beta
     files?: FileMetadata[];
+    // @beta
     inlineImages?: InlineImageMetadata[];
     // (undocumented)
     messageType: 'chat';
@@ -487,14 +489,14 @@ export interface ChatMessage extends MessageCommon {
     status?: MessageStatus;
 }
 
-// @public
+// @beta
 export interface ChatTheme {
     chatPalette: {
-        imageGalleryOverlayBlack: string;
-        imageGalleryTitleWhite: string;
-        imageGalleryDefaultButtonBackground: string;
-        imageGalleryButtonBackgroundHover: string;
-        imageGalleryButtonBackgroundActive: string;
+        modalOverlayBlack: string;
+        modalTitleWhite: string;
+        modalButtonBackground: string;
+        modalButtonBackgroundHover: string;
+        modalButtonBackgroundActive: string;
     };
 }
 
@@ -666,6 +668,7 @@ export interface ComponentStrings {
     ParticipantList: ParticipantListStrings;
     participantsButton: ParticipantsButtonStrings;
     raiseHandButton: RaiseHandButtonStrings;
+    reactionButton: ReactionButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
@@ -757,7 +760,7 @@ export interface CustomMessage extends MessageCommon {
 }
 
 // @public
-export const darkTheme: PartialTheme & CallingTheme & ChatTheme;
+export const darkTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-gallery) */ ChatTheme;
 
 // @public
 export const DEFAULT_COMPONENT_ICONS: {
@@ -776,6 +779,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     ControlButtonLowerHand: React_2.JSX.Element;
     RaiseHandContextualMenuItem: React_2.JSX.Element;
     LowerHandContextualMenuItem: React_2.JSX.Element;
+    ReactionButtonIcon: React_2.JSX.Element;
     CancelFileUpload: React_2.JSX.Element;
     DownloadFile: React_2.JSX.Element;
     DataLossPreventionProhibited: React_2.JSX.Element;
@@ -960,6 +964,7 @@ export const Dialpad: (props: DialpadProps) => JSX.Element;
 // @beta
 export interface DialpadProps {
     disableDtmfPlayback?: boolean;
+    enableInputEditing?: boolean;
     isMobile?: boolean;
     onChange?: (input: string) => void;
     onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
@@ -967,7 +972,6 @@ export interface DialpadProps {
     showDeleteButton?: boolean;
     // (undocumented)
     strings?: DialpadStrings;
-    // (undocumented)
     styles?: DialpadStyles;
     textFieldValue?: string;
 }
@@ -1305,10 +1309,10 @@ export interface _Identifiers {
     videoTile: string;
 }
 
-// @public
+// @beta
 export const ImageGallery: (props: ImageGalleryProps) => JSX.Element;
 
-// @public
+// @beta
 export interface ImageGalleryImageProps {
     altText?: string;
     downloadFilename: string;
@@ -1317,7 +1321,7 @@ export interface ImageGalleryImageProps {
     titleIcon?: JSX.Element;
 }
 
-// @public
+// @beta
 export interface ImageGalleryProps {
     images: Array<ImageGalleryImageProps>;
     isOpen: boolean;
@@ -1327,13 +1331,13 @@ export interface ImageGalleryProps {
     startIndex?: number;
 }
 
-// @public
+// @beta
 export interface ImageGalleryStrings {
     dismissButtonAriaLabel: string;
     downloadButtonLabel: string;
 }
 
-// @public
+// @beta
 export interface InlineImageMetadata {
     // (undocumented)
     attachmentType: 'inlineImage';
@@ -1353,7 +1357,7 @@ export interface JumpToNewMessageButtonProps {
 }
 
 // @public
-export const lightTheme: PartialTheme & CallingTheme & ChatTheme;
+export const lightTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-gallery) */ ChatTheme;
 
 // @public
 export type LoadingState = 'loading' | 'none';
@@ -1403,6 +1407,7 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
     styles?: VideoTileStylesProps | undefined;
     personaMinSize?: number | undefined;
     raisedHand?: RaisedHand | undefined;
+    reaction?: Reaction | undefined;
 }) => React_2.JSX.Element>;
 
 // @public
@@ -1886,6 +1891,28 @@ export interface _RatingScale {
     upperBound: number;
 }
 
+// @beta
+export type Reaction = {
+    reactionType: string;
+    receivedAt: Date;
+};
+
+// @beta
+export const ReactionButton: (props: ReactionButtonProps) => JSX.Element;
+
+// @beta
+export interface ReactionButtonProps extends ControlBarButtonProps {
+    onReactionClicked: (reaction: string) => Promise<void>;
+    strings?: Partial<ReactionButtonStrings>;
+}
+
+// @beta
+export interface ReactionButtonStrings {
+    label: string;
+    tooltipContent?: string;
+    tooltipDisabledContent?: string;
+}
+
 // @public
 export type ReadReceiptsBySenderId = {
     [key: string]: {
@@ -1920,6 +1947,15 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     disablePinMenuItem?: boolean | undefined;
     toggleAnnouncerString?: ((announcerString: string) => void) | undefined;
 }) => React_2.JSX.Element>;
+
+// @beta
+export const RTESendBox: (props: RTESendBoxProps) => JSX.Element;
+
+// @beta
+export interface RTESendBoxProps {
+    // (undocumented)
+    valueToDisplay?: string;
+}
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
@@ -2505,6 +2541,8 @@ export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | /* @conditio
 // @public
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
     raisedHand?: RaisedHand;
+    // @beta
+    reaction?: Reaction;
 }
 
 // @public
@@ -2552,6 +2590,8 @@ export interface VideoGalleryProps {
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     isSpeaking?: boolean;
     raisedHand?: RaisedHand;
+    // @beta
+    reaction?: Reaction;
     screenShareStream?: VideoGalleryStream;
     // @beta
     state?: ParticipantState;
@@ -2638,6 +2678,7 @@ export interface VideoTileProps {
     personaMaxSize?: number;
     personaMinSize?: number;
     raisedHand?: RaisedHand;
+    reaction?: Reaction;
     renderElement?: JSX.Element | null;
     showLabel?: boolean;
     showMuteIndicator?: boolean;

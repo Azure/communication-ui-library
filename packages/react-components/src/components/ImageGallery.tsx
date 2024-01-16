@@ -1,9 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+/* @conditional-compile-remove(image-gallery) */
 import { DefaultButton, Icon, IconButton, Modal, Stack, mergeStyles } from '@fluentui/react';
+/* @conditional-compile-remove(image-gallery) */
 import React, { SyntheticEvent, useState } from 'react';
-
+/* @conditional-compile-remove(image-gallery) */
 import {
   bodyContainer,
   brokenImageStyle,
@@ -22,13 +24,16 @@ import {
   titleBarContainerStyle,
   titleStyle
 } from './styles/ImageGallery.style';
+/* @conditional-compile-remove(image-gallery) */
 import { useTheme } from '../theming/FluentThemeProvider';
+/* @conditional-compile-remove(image-gallery) */
 import { useLocale } from '../localization';
+/* @conditional-compile-remove(image-gallery) */
 import { ChatTheme } from '../theming';
 /**
  * Props for {@link ImageGallery}.
  *
- * @public
+ * @beta
  */
 export interface ImageGalleryImageProps {
   /** Image Url used to display the image in a large scale. */
@@ -42,11 +47,11 @@ export interface ImageGalleryImageProps {
   /** Optional JSX element used as a title icon and displayed to the left of the title element. */
   titleIcon?: JSX.Element;
 }
-
+/* @conditional-compile-remove(image-gallery) */
 /**
  * Props for {@link ImageGallery}.
  *
- * @public
+ * @beta
  */
 export interface ImageGalleryProps {
   /**
@@ -74,11 +79,11 @@ export interface ImageGalleryProps {
    */
   startIndex?: number;
 }
-
+/* @conditional-compile-remove(image-gallery) */
 /**
  * Strings of {@link ImageGallery} that can be overridden.
  *
- * @public
+ * @beta
  */
 export interface ImageGalleryStrings {
   /**
@@ -90,16 +95,17 @@ export interface ImageGalleryStrings {
    */
   dismissButtonAriaLabel: string;
 }
-
+/* @conditional-compile-remove(image-gallery) */
 /**
  * Component to render a fullscreen modal for a selected image.
  *
- * @public
+ * @beta
  */
 export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
   const { isOpen, images, onImageDownloadButtonClicked, onDismiss, onError, startIndex = 0 } = props;
   const theme = useTheme() as unknown as ChatTheme;
 
+  /* @conditional-compile-remove(image-gallery) */
   const localeStrings = useLocale().strings.imageGallery;
 
   const [isImageLoaded, setIsImageLoaded] = useState<boolean>(true);
@@ -119,16 +125,19 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
         <Stack className={mergeStyles(controlBarContainerStyle)}>
           <DefaultButton
             className={mergeStyles(downloadButtonStyle(theme))}
+            /* @conditional-compile-remove(image-gallery) */
             text={localeStrings.downloadButtonLabel}
             onClick={() => onImageDownloadButtonClicked(image?.imageUrl || '', image?.downloadFilename || 'image')}
             onRenderIcon={() => <Icon iconName={downloadIcon.iconName} className={mergeStyles(downloadIconStyle)} />}
             aria-live={'polite'}
+            /* @conditional-compile-remove(image-gallery) */
             aria-label={localeStrings.downloadButtonLabel}
           />
           <IconButton
             iconProps={downloadIcon}
             className={mergeStyles(smallDownloadButtonContainerStyle(theme))}
             onClick={() => onImageDownloadButtonClicked(image?.imageUrl, image?.downloadFilename)}
+            /* @conditional-compile-remove(image-gallery) */
             aria-label={localeStrings.downloadButtonLabel}
             aria-live={'polite'}
           />
@@ -136,6 +145,7 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
             iconProps={cancelIcon}
             className={mergeStyles(closeButtonStyles(theme))}
             onClick={onDismiss}
+            /* @conditional-compile-remove(image-gallery) */
             ariaLabel={localeStrings.dismissButtonAriaLabel}
             aria-live={'polite'}
           />

@@ -15,6 +15,8 @@ import {
   CallEndedListener
 } from '../../CallComposite';
 import {
+  MessageDeletedListener,
+  MessageEditedListener,
   MessageReadListener,
   MessageReceivedListener,
   MessageSentListener,
@@ -31,6 +33,8 @@ import {
   StartCallOptions,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(reaction) */
+import { Reaction } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -38,8 +42,9 @@ import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { SendMessageOptions } from '@azure/communication-chat';
 import { JoinCallOptions } from '../../CallComposite/adapter/CallAdapter';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AttachmentDownloadResult } from '@internal/react-components';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AttachmentMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadManager } from '../../ChatComposite';
@@ -183,6 +188,14 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   lowerHand(): Promise<void>;
+  /* @conditional-compile-remove(reaction) */
+  /**
+   * Send Reaction to ongoing meeting.
+   * @param reaction - A value of type {@link @azure/communication-calling#Reaction}
+   *
+   * @beta
+   */
+  onReactionClicked(reaction: Reaction): Promise<void>;
   /**
    * Create the html view for a stream.
    *
@@ -371,6 +384,7 @@ export interface CallWithChatAdapterManagement {
   /* @conditional-compile-remove(file-sharing) */
   /** @beta */
   updateFileUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   downloadAttachments: (options: { attachmentUrls: Record<string, string> }) => Promise<AttachmentDownloadResult[]>;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
@@ -468,6 +482,20 @@ export interface CallWithChatAdapterManagement {
    * @beta
    */
   submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Start spotlight
+   *
+   * @beta
+   */
+  startSpotlight(userId: string): Promise<void>;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Stop spotlight
+   *
+   * @beta
+   */
+  stopSpotlight(userId: string): Promise<void>;
 }
 
 /**
@@ -522,6 +550,8 @@ export interface CallWithChatAdapterSubscriptions {
 
   // Chat subscriptions
   on(event: 'messageReceived', listener: MessageReceivedListener): void;
+  on(event: 'messageEdited', listener: MessageEditedListener): void;
+  on(event: 'messageDeleted', listener: MessageDeletedListener): void;
   on(event: 'messageSent', listener: MessageSentListener): void;
   on(event: 'messageRead', listener: MessageReadListener): void;
   on(event: 'chatParticipantsAdded', listener: ParticipantsAddedListener): void;
@@ -529,6 +559,8 @@ export interface CallWithChatAdapterSubscriptions {
   on(event: 'chatError', listener: (e: AdapterError) => void): void;
 
   off(event: 'messageReceived', listener: MessageReceivedListener): void;
+  off(event: 'messageEdited', listener: MessageEditedListener): void;
+  off(event: 'messageDeleted', listener: MessageDeletedListener): void;
   off(event: 'messageSent', listener: MessageSentListener): void;
   off(event: 'messageRead', listener: MessageReadListener): void;
   off(event: 'chatParticipantsAdded', listener: ParticipantsAddedListener): void;
@@ -571,6 +603,8 @@ export type CallWithChatEvent =
   | /* @conditional-compile-remove(close-captions) */ 'isSpokenLanguageChanged'
   | /* @conditional-compile-remove(capabilities) */ 'capabilitiesChanged'
   | 'messageReceived'
+  | 'messageEdited'
+  | 'messageDeleted'
   | 'messageSent'
   | 'messageRead'
   | 'chatParticipantsAdded'

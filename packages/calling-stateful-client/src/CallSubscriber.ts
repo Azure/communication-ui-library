@@ -28,6 +28,10 @@ import { RaiseHandSubscriber } from './RaiseHandSubscriber';
 import { OptimalVideoCountSubscriber } from './OptimalVideoCountSubscriber';
 /* @conditional-compile-remove(capabilities) */
 import { CapabilitiesSubscriber } from './CapabilitiesSubscriber';
+/* @conditional-compile-remove(reaction) */
+import { ReactionSubscriber } from './ReactionSubscriber';
+/* @conditional-compile-remove(spotlight) */
+import { SpotlightSubscriber } from './SpotlightSubscriber';
 
 /**
  * Keeps track of the listeners assigned to a particular call because when we get an event from SDK, it doesn't tell us
@@ -50,10 +54,14 @@ export class CallSubscriber {
   private _captionsSubscriber?: CaptionsSubscriber;
   /* @conditional-compile-remove(raise-hand) */
   private _raiseHandSubscriber?: RaiseHandSubscriber;
+  /* @conditional-compile-remove(reaction) */
+  private _reactionSubscriber?: ReactionSubscriber;
   /* @conditional-compile-remove(video-background-effects) */
   private _localVideoStreamVideoEffectsSubscribers: Map<string, LocalVideoStreamVideoEffectsSubscriber>;
   /* @conditional-compile-remove(capabilities) */
   private _capabilitiesSubscriber: CapabilitiesSubscriber;
+  /* @conditional-compile-remove(spotlight) */
+  private _spotlightSubscriber: SpotlightSubscriber;
 
   constructor(call: CallCommon, context: CallContext, internalContext: InternalCallContext) {
     this._call = call;
@@ -83,6 +91,12 @@ export class CallSubscriber {
       this._context,
       this._call.feature(Features.RaiseHand)
     );
+    /* @conditional-compile-remove(reaction) */
+    this._reactionSubscriber = new ReactionSubscriber(
+      this._callIdRef,
+      this._context,
+      this._call.feature(Features.Reaction)
+    );
     /* @conditional-compile-remove(optimal-video-count) */
     this._optimalVideoCountSubscriber = new OptimalVideoCountSubscriber({
       callIdRef: this._callIdRef,
@@ -97,6 +111,13 @@ export class CallSubscriber {
       this._callIdRef,
       this._context,
       this._call.feature(Features.Capabilities)
+    );
+
+    /* @conditional-compile-remove(spotlight) */
+    this._spotlightSubscriber = new SpotlightSubscriber(
+      this._callIdRef,
+      this._context,
+      this._call.feature(Features.Spotlight)
     );
 
     this.subscribe();
@@ -184,6 +205,10 @@ export class CallSubscriber {
     this._raiseHandSubscriber?.unsubscribe();
     /* @conditional-compile-remove(capabilities) */
     this._capabilitiesSubscriber.unsubscribe();
+    /* @conditional-compile-remove(reaction) */
+    this._reactionSubscriber?.unsubscribe();
+    /* @conditional-compile-remove(spotlight) */
+    this._spotlightSubscriber.unsubscribe();
   };
 
   private addParticipantListener(participant: RemoteParticipant): void {
