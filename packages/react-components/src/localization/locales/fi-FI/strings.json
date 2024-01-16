@@ -123,6 +123,11 @@
     "tooltipOnContent": "Laske käsi",
     "tooltipOffContent": "Nosta käsi"
   },
+  "reactionButton": {
+    "label": "Reagoi",
+    "tooltipDisabledContent": "Reaktiotoiminto on poistettu käytöstä",
+    "tooltipContent": "Lähetä reaktio"
+  },
   "messageThread": {
     "yesterday": "eilen",
     "sunday": "sunnuntaina",
