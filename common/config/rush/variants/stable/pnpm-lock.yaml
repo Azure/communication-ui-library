@@ -256,7 +256,7 @@ packages:
       '@azure/core-tracing': 1.0.0-preview.13
       '@azure/core-util': 1.6.1
       '@azure/logger': 1.0.4
-      '@types/node-fetch': 2.6.10
+      '@types/node-fetch': 2.6.11
       '@types/tunnel': 0.0.3
       form-data: 4.0.0
       node-fetch: 2.7.0
@@ -279,7 +279,7 @@ packages:
       '@azure/core-tracing': 1.0.0-preview.13
       '@azure/core-util': 1.6.1
       '@azure/logger': 1.0.4
-      '@types/node-fetch': 2.6.10
+      '@types/node-fetch': 2.6.11
       '@types/tunnel': 0.0.3
       form-data: 4.0.0
       node-fetch: 2.6.7
@@ -5788,7 +5788,7 @@ packages:
       '@storybook/store': 6.5.16(react-dom@18.2.0)(react@18.2.0)
       '@storybook/telemetry': 6.5.16(eslint@7.32.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.3.3)
       '@types/node': 16.18.71
-      '@types/node-fetch': 2.6.10
+      '@types/node-fetch': 2.6.11
       '@types/pretty-hrtime': 1.0.3
       '@types/webpack': 4.41.38
       better-opn: 2.1.1
@@ -6814,8 +6814,8 @@ packages:
       '@types/node': 20.11.4
     dev: false
 
-  /@types/node-fetch@2.6.10:
-    resolution: {integrity: sha512-PPpPK6F9ALFTn59Ka3BaL+qGuipRfxNE8qVgkp0bVixeiR2c2/L+IVOiBdu9JhhT22sWnQEp6YyHGI2b2+CMcA==}
+  /@types/node-fetch@2.6.11:
+    resolution: {integrity: sha512-24xFj9R5+rfQJLRyM56qh+wnVSYhyXC2tkoBndtY0U+vubqNsYXGjufB2nn8Q6gt0LrARwL6UBtMCSVCwl4B1g==}
     dependencies:
       '@types/node': 20.11.4
       form-data: 4.0.0
