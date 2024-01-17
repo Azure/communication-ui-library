@@ -157,6 +157,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
         overflowGallery,
         /* @conditional-compile-remove(gallery-layouts) */ props.overflowGalleryPosition
       )}
+      <></>
     </Stack>
   );
 };
