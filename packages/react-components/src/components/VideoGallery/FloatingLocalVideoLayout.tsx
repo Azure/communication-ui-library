@@ -93,7 +93,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     maxOverflowGalleryDominantSpeakers: screenShareComponent
       ? childrenPerPage.current - (pinnedParticipantUserIds.length % childrenPerPage.current)
       : childrenPerPage.current,
-    /* @conditional-compile-remove(pinned-participants) */ focusedParticipantUserIds: pinnedParticipantUserIds,
+    /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds,
     /* @conditional-compile-remove(gallery-layouts) */ layout: 'floatingLocalVideo',
     /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds
   });

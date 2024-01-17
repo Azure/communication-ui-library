@@ -18,7 +18,7 @@ export interface OrganizedParticipantsArgs {
   maxRemoteVideoStreams?: number;
   maxOverflowGalleryDominantSpeakers?: number;
   isScreenShareActive?: boolean;
-  focusedParticipantUserIds?: string[];
+  pinnedParticipantUserIds?: string[];
   /* @conditional-compile-remove(gallery-layouts) */
   layout?: VideoGalleryLayout;
   spotlightedParticipantUserIds?: string[];
@@ -49,7 +49,7 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
     maxRemoteVideoStreams = DEFAULT_MAX_VIDEO_SREAMS,
     maxOverflowGalleryDominantSpeakers = DEFAULT_MAX_OVERFLOW_GALLERY_DOMINANT_SPEAKERS,
     isScreenShareActive = false,
-    focusedParticipantUserIds = [],
+    pinnedParticipantUserIds = [],
     /* @conditional-compile-remove(gallery-layouts) */
     layout
   } = props;
@@ -75,7 +75,7 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
   };
 
   visibleGridParticipants.current =
-    focusedParticipantUserIds.length > 0 || isScreenShareActive
+    pinnedParticipantUserIds.length > 0 || isScreenShareActive
       ? []
       : smartDominantSpeakerParticipants({
           participants: participantsToSortTrampoline(),
@@ -202,7 +202,7 @@ const _useOrganizedParticipantsWithFocusedParticipants = (
   // declare focused participant user ids as spotlighted participants user ids followed by
   // pinned participants user ids
   const focusedParticipantUserIds = [
-    ...new Set(spotlightedParticipantUserIds.concat(props.focusedParticipantUserIds ?? []))
+    ...new Set(spotlightedParticipantUserIds.concat(props.pinnedParticipantUserIds ?? []))
   ];
   // get focused participants from map of remote participants in the order of the user ids
   const focusedParticipants: VideoGalleryRemoteParticipant[] = [];

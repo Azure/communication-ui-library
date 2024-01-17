@@ -62,7 +62,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     maxOverflowGalleryDominantSpeakers: screenShareComponent
       ? childrenPerPage.current - ((pinnedParticipantUserIds.length + 1) % childrenPerPage.current)
       : childrenPerPage.current,
-    /* @conditional-compile-remove(pinned-participants) */ focusedParticipantUserIds: pinnedParticipantUserIds,
+    /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds,
     /* @conditional-compile-remove(gallery-layouts) */ layout: 'default',
     /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds
   });
