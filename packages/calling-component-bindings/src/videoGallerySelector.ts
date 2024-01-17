@@ -88,7 +88,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     /* @conditional-compile-remove(ppt-live) */
     getIsPPTLiveOn,
     /* @conditional-compile-remove(ppt-live) */
-    getHtmlShareRemoteParticipant
+    getHtmlShareRemoteParticipant,
     /* @conditional-compile-remove(reaction) */
     getLocalParticipantReactionState,
     /* @conditional-compile-remove(spotlight) */
@@ -113,7 +113,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     isHideAttendeeNamesEnabled,
     /* @conditional-compile-remove(ppt-live) */
     isPPTLiveOn,
-    htmlRemoteParticipantId
+    htmlRemoteParticipantId,
     /* @conditional-compile-remove(reaction) */
     localParticipantReaction,
     /* @conditional-compile-remove(spotlight) */
@@ -185,7 +185,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
             htmlRemoteParticipant.htmlStream,
             htmlRemoteParticipant.raisedHand
           )
-        : undefined
+        : undefined,
       /* @conditional-compile-remove(spotlight) */
       spotlightedParticipants: spotlightedParticipantIds
     };
