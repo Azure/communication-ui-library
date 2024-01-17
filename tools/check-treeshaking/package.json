@@ -18,6 +18,7 @@
     "lint:fix": "rushx lint --fix --",
     "lint:quiet": "rushx lint -- --quiet"
   },
+  "license": "MIT",
   "dependencies": {
     "@internal/acs-ui-common": "1.11.1-beta.0",
     "@internal/react-components": "1.11.1-beta.0",

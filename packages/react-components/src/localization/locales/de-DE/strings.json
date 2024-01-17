@@ -123,6 +123,11 @@
     "tooltipOnContent": "Hand senken",
     "tooltipOffContent": "Hand heben"
   },
+  "reactionButton": {
+    "label": "Reagieren",
+    "tooltipDisabledContent": "Reaktionsaktion ist deaktiviert",
+    "tooltipContent": "Reaktion senden"
+  },
   "messageThread": {
     "yesterday": "Gestern",
     "sunday": "Sonntag",

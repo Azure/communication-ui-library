@@ -123,6 +123,11 @@
     "tooltipOnContent": "Baixar a Mão",
     "tooltipOffContent": "Levantar a Mão"
   },
+  "reactionButton": {
+    "label": "Reagir",
+    "tooltipDisabledContent": "A ação de reação está desabilitada",
+    "tooltipContent": "Enviar uma reação"
+  },
   "messageThread": {
     "yesterday": "Ontem",
     "sunday": "Domingo",

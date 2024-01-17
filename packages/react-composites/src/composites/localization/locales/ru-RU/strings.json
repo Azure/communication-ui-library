@@ -118,6 +118,8 @@
     "dismissModalAriaLabel": "Локальное и удаленное изображение. Нажмите клавишу ВВОД, чтобы вернуться к звонку.",
     "callRejectedTitle": "Не удалось совершить звонок",
     "callRejectedMoreDetails": "Пользователь, с которым вы пытаетесь связаться, недоступен. Повторите попытку позже.",
+    "callTimeoutTitle": "Не удалось совершить звонок",
+    "callTimeoutDetails": "Пользователь, с которым вы пытаетесь связаться, недоступен. Повторите попытку позже.",
     "spokenLanguageStrings": {
       "ar-ae": "Арабский (ОАЭ)",
       "ar-sa": "Арабский (Саудовская Аравия)",
@@ -229,6 +231,66 @@
         "lostDueToRoleChangeToAttendee": "Ваша роль изменилась. Некоторые действия, например общий доступ к содержимому, будут вам недоступны.",
         "grantedDueToRoleChangeToPresenter": "Вы ведущий. Вы можете предоставлять доступ к содержимому и помогать вести собрание."
       }
+    },
+    "surveyQuestion": "Как прошел ваш звонок?",
+    "starSurveyHelperText": "Как вы оцениваете качество звонка?",
+    "starSurveyOneStarText": "Качество было очень плохое.",
+    "starSurveyTwoStarText": "Качество было плохое.",
+    "starSurveyThreeStarText": "Качество было хорошее.",
+    "starSurveyFourStarText": "Качество было отличное.",
+    "starSurveyFiveStarText": "Качество было превосходное.",
+    "surveyConfirmButtonLabel": "Отправить отзыв",
+    "starRatingAriaLabel": "Выберите {0} из {1} звезд",
+    "surveyCancelButtonAriaLabel": "Отмена",
+    "tagsSurveyQuestion": "Что можно было улучшить?",
+    "tagsSurveyTextFieldDefaultText": "Другое, укажите",
+    "tagsSurveyHelperText": "Отметьте все проблемы, с которыми вы столкнулись",
+    "surveyTextboxDefaultText": "Другое, укажите",
+    "surveyIssues": {
+      "overallRating": {
+        "callCannotJoin": "Не удалось присоединиться к звонку",
+        "callCannotInvite": "Не удалось пригласить других участников в звонок",
+        "hadToRejoin": "Мне пришлось повторно присоединиться к звонку",
+        "callEndedUnexpectedly": "Звонок неожиданно завершился",
+        "otherIssues": "У меня возникли другие проблемы с вызовом"
+      },
+      "audioRating": {
+        "noLocalAudio": "У моего собеседника не было звука",
+        "noRemoteAudio": "У меня не было звука.",
+        "echo": "Во время звонка было слышно эхо",
+        "audioNoise": "Во время звонка был слышен шум",
+        "lowVolume": "Слишком низкая громкость",
+        "audioStoppedUnexpectedly": "Звук неожиданно остановился",
+        "distortedSpeech": "Звук искажен",
+        "audioInterruption": "Звук был прерван",
+        "otherIssues": "У меня возникли другие проблемы со звуком во время этого звонка"
+      },
+      "videoRating": {
+        "noVideoReceived": "У меня не отображалось видео",
+        "noVideoSent": "Другие пользователи не слышали меня",
+        "lowQuality": "Низкое качество видео",
+        "freezes": "Видео зависло",
+        "stoppedUnexpectedly": "Видео неожиданно остановилось",
+        "darkVideoReceived": "Я вижу темные экраны, когда другие включают камеру",
+        "audioVideoOutOfSync": "Звук и видео не синхронизированы",
+        "otherIssues": "У меня возникли другие проблемы с видео во время этого звонка"
+      },
+      "screenshareRating": {
+        "noContentLocal": "Другие пользователи не могут видеть мою демонстрацию экрана",
+        "noContentRemote": "Не удалось увидеть демонстрацию экрана других людей",
+        "cannotPresent": "Не удалось показать экран",
+        "lowQuality": "Низкое качество демонстрации экрана",
+        "freezes": "Демонстрация экрана зависла",
+        "stoppedUnexpectedly": "Демонстрация экрана неожиданно остановилась",
+        "largeDelay": "Демонстрация экрана имеет большую задержку",
+        "otherIssues": "У меня возникли другие проблемы с демонстрацией экрана во время этого звонка"
+      }
+    },
+    "SurveyIssuesHeadingStrings": {
+      "overallRating": "Общий",
+      "audioRating": "Звук",
+      "videoRating": "Видео",
+      "screenshareRating": "Выступление"
     }
   },
   "chat": {

@@ -123,6 +123,11 @@
     "tooltipOnContent": "手を下げる",
     "tooltipOffContent": "手を挙げる"
   },
+  "reactionButton": {
+    "label": "リアクションする",
+    "tooltipDisabledContent": "リアクション操作が無効になっています",
+    "tooltipContent": "リアクションを送信します"
+  },
   "messageThread": {
     "yesterday": "昨日",
     "sunday": "日曜日",
