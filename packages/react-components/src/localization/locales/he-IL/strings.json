@@ -123,6 +123,11 @@
     "tooltipOnContent": "הורד יד",
     "tooltipOffContent": "הרם יד"
   },
+  "reactionButton": {
+    "label": "תגובה",
+    "tooltipDisabledContent": "פעולת התגובה אינה זמינה",
+    "tooltipContent": "שלח תגובה"
+  },
   "messageThread": {
     "yesterday": "אתמול",
     "sunday": "יום ראשון",

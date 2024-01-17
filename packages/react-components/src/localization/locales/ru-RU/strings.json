@@ -123,6 +123,11 @@
     "tooltipOnContent": "Опустить руку",
     "tooltipOffContent": "Поднять руку"
   },
+  "reactionButton": {
+    "label": "Отреагировать",
+    "tooltipDisabledContent": "Действие реакции отключено",
+    "tooltipContent": "Отправка реакции"
+  },
   "messageThread": {
     "yesterday": "Вчера",
     "sunday": "Воскресенье",
