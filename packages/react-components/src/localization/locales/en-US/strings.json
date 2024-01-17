@@ -25,7 +25,7 @@
     "sendButtonAriaLabel": "Send message",
     "fileUploadsPendingError": "Uploading... Please wait.",
     "removeFile": "Remove file",
-    "uploading": "Uploading",
+    "uploading": "Uploading...",
     "uploadCompleted": "Upload completed"
   },
   "mentionPopover": {
