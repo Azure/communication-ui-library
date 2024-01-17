@@ -57,8 +57,6 @@ import { convertFromSDKToRaisedHandState } from './Converter';
 import { ReactionMessage } from '@azure/communication-calling';
 /* @conditional-compile-remove(spotlight) */
 import { SpotlightedParticipant } from '@azure/communication-calling';
-/* @conditional-compile-remove(reaction) */
-import { CapabilitiesFeatureState } from './CallClientState';
 
 enableMapSet();
 // Needed to generate state diff for verbose logging.
@@ -417,7 +415,7 @@ export class CallContext {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
 
-      if (!call || !isCapableToReact(call.capabilitiesFeature)) {
+      if (!call) {
         return;
       }
 
@@ -1091,13 +1089,4 @@ const findOldestCallEnded = (calls: { [key: string]: { endTime?: Date } }): stri
 /* @conditional-compile-remove(reaction) */
 function clearParticipantReactionState(callContext: CallContext, callId: string, participantKey: string): void {
   callContext.setReceivedReactionFromParticipant(callId, participantKey, null);
-}
-
-/* @conditional-compile-remove(reaction) */
-function isCapableToReact(capabilitiesFeature: CapabilitiesFeatureState | undefined): boolean {
-  return (
-    !capabilitiesFeature?.capabilities ||
-    capabilitiesFeature.capabilities.useReactions.isPresent ||
-    capabilitiesFeature.capabilities.useReactions.reason === 'FeatureNotSupported'
-  );
 }
