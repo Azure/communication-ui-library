@@ -57,7 +57,8 @@ import { convertFromSDKToRaisedHandState } from './Converter';
 import { ReactionMessage } from '@azure/communication-calling';
 /* @conditional-compile-remove(spotlight) */
 import { SpotlightedParticipant } from '@azure/communication-calling';
-import { CapabilitiesFeatureState } from '.';
+/* @conditional-compile-remove(reaction) */
+import { CapabilitiesFeatureState } from './CallClientState';
 
 enableMapSet();
 // Needed to generate state diff for verbose logging.
