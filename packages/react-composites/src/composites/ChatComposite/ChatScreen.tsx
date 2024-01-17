@@ -12,7 +12,6 @@ import {
   MessageThread,
   MessageThreadStyles,
   ParticipantMenuItemsCallback,
-  SendBoxStylesProps,
   TypingIndicator,
   TypingIndicatorStylesProps,
   useTheme
@@ -72,7 +71,6 @@ export type ChatScreenProps = {
  */
 export type ChatScreenStyles = {
   messageThread?: MessageThreadStyles;
-  sendBox?: SendBoxStylesProps;
   typingIndicator?: TypingIndicatorStylesProps;
 };
 
