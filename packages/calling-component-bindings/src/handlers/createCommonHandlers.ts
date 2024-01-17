@@ -21,6 +21,8 @@ import { TeamsCall } from '@azure/communication-calling';
 /* @conditional-compile-remove(call-readiness) */
 import { PermissionConstraints } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(spotlight) */
+import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CreateViewResult, StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
@@ -32,6 +34,8 @@ import { CommunicationIdentifier } from '@azure/communication-common';
 import { Features } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptions } from '@azure/communication-calling';
+/* @conditional-compile-remove(reaction) */
+import { Reaction } from '@azure/communication-calling';
 
 /**
  * Object containing all the handlers required for calling components.
@@ -58,6 +62,8 @@ export interface CommonCallingHandlers {
   onLowerHand: () => Promise<void>;
   /* @conditional-compile-remove(raise-hand) */
   onToggleRaiseHand: () => Promise<void>;
+  /* @conditional-compile-remove(reaction) */
+  onReactionClicked: (reaction: Reaction) => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   onToggleHold: () => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
@@ -100,6 +106,10 @@ export interface CommonCallingHandlers {
   onSetCaptionLanguage: (language: string) => Promise<void>;
   /* @conditional-compile-remove(end-of-call-survey) */
   onSubmitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
+  /* @conditional-compile-remove(spotlight) */
+  onStartSpotlight: (userId: string) => Promise<void>;
+  /* @conditional-compile-remove(spotlight) */
+  onStopSpotlight: (userId: string) => Promise<void>;
 }
 
 /**
@@ -312,6 +322,22 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       } else {
         await raiseHandFeature?.raiseHand();
       }
+    };
+
+    /* @conditional-compile-remove(reaction) */
+    const onReactionClicked = async (reaction: Reaction): Promise<void> => {
+      if (
+        reaction === 'like' ||
+        reaction === 'applause' ||
+        reaction === 'heart' ||
+        reaction === 'laugh' ||
+        reaction === 'surprised'
+      ) {
+        await call?.feature(Features.Reaction)?.sendReaction({ reactionType: reaction });
+      } else {
+        console.warn(`Can not recognize ${reaction} as meeting reaction`);
+      }
+      return;
     };
 
     const onToggleMicrophone = async (): Promise<void> => {
@@ -582,6 +608,16 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     /* @conditional-compile-remove(end-of-call-survey) */
     const onSubmitSurvey = async (survey: CallSurvey): Promise<CallSurveyResponse | undefined> =>
       await call?.feature(Features.CallSurvey).submitSurvey(survey);
+    /* @conditional-compile-remove(spotlight) */
+    const onStartSpotlight = async (userId: string): Promise<void> => {
+      const participant = _toCommunicationIdentifier(userId);
+      await call?.feature(Features.Spotlight).startSpotlight([participant]);
+    };
+    /* @conditional-compile-remove(spotlight) */
+    const onStopSpotlight = async (userId: string): Promise<void> => {
+      const participant = _toCommunicationIdentifier(userId);
+      await call?.feature(Features.Spotlight).stopSpotlight([participant]);
+    };
 
     return {
       onHangUp,
@@ -608,6 +644,8 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onLowerHand,
       /* @conditional-compile-remove(raise-hand) */
       onToggleRaiseHand,
+      /* @conditional-compile-remove(reaction) */
+      onReactionClicked,
       /* @conditional-compile-remove(PSTN-calls) */
       onAddParticipant: notImplemented,
       onRemoveParticipant: notImplemented,
@@ -630,7 +668,11 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       /* @conditional-compile-remove(close-captions) */
       onSetSpokenLanguage,
       /* @conditional-compile-remove(end-of-call-survey) */
-      onSubmitSurvey
+      onSubmitSurvey,
+      /* @conditional-compile-remove(spotlight) */
+      onStartSpotlight,
+      /* @conditional-compile-remove(spotlight) */
+      onStopSpotlight
     };
   }
 );

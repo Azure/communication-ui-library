@@ -749,7 +749,7 @@ export interface CallCompositeStrings {
   /**
    * String for title when the call is rejected by the callee
    */
-  callRejectedTitle: string;
+  callRejectedTitle?: string;
   /* @conditional-compile-remove(calling-sounds) */
   /**
    * String for more details when the call is rejected by the callee

@@ -118,6 +118,8 @@
     "dismissModalAriaLabel": "로컬 및 원격 사진 및 그림, Enter 키를 눌러 통화로 돌아가기",
     "callRejectedTitle": "통화를 완료할 수 없습니다.",
     "callRejectedMoreDetails": "연결하려는 사용자와 지금 대화할 수 없습니다. 나중에 다시 시도하세요.",
+    "callTimeoutTitle": "통화를 완료할 수 없습니다.",
+    "callTimeoutDetails": "연결하려는 사용자와 지금 대화할 수 없습니다. 나중에 다시 시도하세요.",
     "spokenLanguageStrings": {
       "ar-ae": "아랍어 - 아랍에미리트",
       "ar-sa": "아라비아어 - 사우디 아라비아",
@@ -229,6 +231,66 @@
         "lostDueToRoleChangeToAttendee": "역할이 변경되었습니다. 콘텐츠 공유와 같은 일부 작업은 사용할 수 없습니다.",
         "grantedDueToRoleChangeToPresenter": "귀하는 발표자입니다. 콘텐츠를 공유하고 모임을 활성화할 수 있습니다."
       }
+    },
+    "surveyQuestion": "오늘 통화는 어땠나요?",
+    "starSurveyHelperText": "통화 품질은 어떠했습니까?",
+    "starSurveyOneStarText": "품질이 매우 나쁩니다.",
+    "starSurveyTwoStarText": "품질이 나쁩니다.",
+    "starSurveyThreeStarText": "품질이 좋습니다.",
+    "starSurveyFourStarText": "품질이 매우 좋습니다.",
+    "starSurveyFiveStarText": "품질이 매우 좋았습니다.",
+    "surveyConfirmButtonLabel": "피드백 보내기",
+    "starRatingAriaLabel": "별 {0}/{1}개 선택",
+    "surveyCancelButtonAriaLabel": "취소",
+    "tagsSurveyQuestion": "개선할 사항을 알려주세요.",
+    "tagsSurveyTextFieldDefaultText": "기타(구체적으로)",
+    "tagsSurveyHelperText": "발생한 문제를 확인하세요.",
+    "surveyTextboxDefaultText": "기타(구체적으로)",
+    "surveyIssues": {
+      "overallRating": {
+        "callCannotJoin": "통화에 참가할 수 없습니다.",
+        "callCannotInvite": "다른 사람을 통화에 초대할 수 없습니다.",
+        "hadToRejoin": "통화에 다시 참가해야 했습니다.",
+        "callEndedUnexpectedly": "예기치 않게 통화가 종료되었습니다.",
+        "otherIssues": "통화에 다른 문제가 발생했습니다."
+      },
+      "audioRating": {
+        "noLocalAudio": "상대방이 아무 소리도 듣지 못합니다",
+        "noRemoteAudio": "아무 소리도 들리지 않습니다.",
+        "echo": "통화에서 에코가 들립니다.",
+        "audioNoise": "통화 중에 잡음이 들렸습니다.",
+        "lowVolume": "볼륨이 작습니다",
+        "audioStoppedUnexpectedly": "오디오가 예기치 않게 중지됨",
+        "distortedSpeech": "오디오가 왜곡되었습니다.",
+        "audioInterruption": "오디오가 중단되었습니다.",
+        "otherIssues": "이 통화에서 다른 오디오 문제가 발생했습니다."
+      },
+      "videoRating": {
+        "noVideoReceived": "영상이 표시되지 않았습니다.",
+        "noVideoSent": "다른 사용자가 나를 볼 수 없습니다.",
+        "lowQuality": "비디오 품질이 낮음",
+        "freezes": "비디오 동결",
+        "stoppedUnexpectedly": "영상이 중간에 멈췄습니다.",
+        "darkVideoReceived": "다른 사람이 카메라를 켤 때만 어두운 화면을 볼 수 있습니다.",
+        "audioVideoOutOfSync": "오디오 및 비디오가 동기화되지 않았습니다.",
+        "otherIssues": "이 통화에서 다른 비디오 문제가 발생했습니다."
+      },
+      "screenshareRating": {
+        "noContentLocal": "다른 사용자가 내 화면 공유를 볼 수 없습니다.",
+        "noContentRemote": "다른 사람의 화면 공유를 볼 수 없습니다.",
+        "cannotPresent": "내 화면을 표시할 수 없습니다.",
+        "lowQuality": "화면 공유 품질이 낮음",
+        "freezes": "화면 공유가 고정되었습니다.",
+        "stoppedUnexpectedly": "화면 공유가 예기치 않게 중지됨",
+        "largeDelay": "화면 공유에 큰 지연이 있음",
+        "otherIssues": "이 통화에서 다른 화면 공유 문제가 있었습니다."
+      }
+    },
+    "SurveyIssuesHeadingStrings": {
+      "overallRating": "전체",
+      "audioRating": "오디오",
+      "videoRating": "비디오",
+      "screenshareRating": "프레젠테이션 중"
     }
   },
   "chat": {

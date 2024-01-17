@@ -118,7 +118,7 @@ export type Mutable<T> = {
 
 interface MockDeviceManager extends Mutable<DeviceManager> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  emit(event: any, data?: any);
+  emit(event: any, data?: any): any;
 }
 
 const createMockDeviceManager = (): MockDeviceManager => {
@@ -244,6 +244,8 @@ function createMockCall(mockCallId: string): CallState {
     raiseHand: { raisedHands: [] },
     /* @conditional-compile-remove(ppt-live) */
     pptLive: { isActive: false },
+    /* @conditional-compile-remove(reaction) */
+    localParticipantReaction: undefined,
     /* @conditional-compile-remove(close-captions) */
     captionsFeature: {
       captions: [],

@@ -29,6 +29,10 @@ export class MockCallAdapter implements CallAdapter {
     this._emitter = new EventEmitter();
   }
 
+  /* @conditional-compile-remove(reaction) */
+  onReactionClicked(emoji: string): Promise<void> {
+    throw new Error(`Method could not send ${emoji}.`);
+  }
   addParticipant(): Promise<void> {
     throw Error('addParticipant not implemented');
   }
@@ -137,6 +141,14 @@ export class MockCallAdapter implements CallAdapter {
   /* @conditional-compile-remove(close-captions) */
   setSpokenLanguage(): Promise<void> {
     throw Error('setSpokenLanguage not implemented');
+  }
+  /* @conditional-compile-remove(spotlight) */
+  startSpotlight(): Promise<void> {
+    throw Error('startSpotlight not implemented');
+  }
+  /* @conditional-compile-remove(spotlight) */
+  stopSpotlight(): Promise<void> {
+    throw Error('stopSpotlight not implemented');
   }
 
   async setCamera(sourceInfo: VideoDeviceInfo): Promise<void> {

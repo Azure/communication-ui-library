@@ -7,7 +7,7 @@ export {
   useAzureCommunicationChatAdapter
 } from './adapter/AzureCommunicationChatAdapter';
 export type { AzureCommunicationChatAdapterArgs } from './adapter/AzureCommunicationChatAdapter';
-
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 export type { AzureCommunicationChatAdapterOptions } from './adapter/AzureCommunicationChatAdapter';
 export { ChatComposite } from './ChatComposite';
 export type { ChatCompositeProps, ChatCompositeOptions } from './ChatComposite';
@@ -22,6 +22,8 @@ export type {
   MessageReadListener,
   MessageReceivedListener,
   MessageSentListener,
+  MessageEditedListener,
+  MessageDeletedListener,
   ParticipantsAddedListener,
   ParticipantsRemovedListener,
   TopicChangedListener

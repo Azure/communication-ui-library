@@ -11,6 +11,8 @@ import { ChatHandlers, createDefaultChatHandlers } from '@internal/chat-componen
 import { ChatMessage, ChatMessageType, ChatThreadClient, SendMessageOptions } from '@azure/communication-chat';
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import type {
+  ChatMessageDeletedEvent,
+  ChatMessageEditedEvent,
   ChatMessageReceivedEvent,
   ChatThreadPropertiesUpdatedEvent,
   ParticipantsAddedEvent,
@@ -22,6 +24,8 @@ import EventEmitter from 'events';
 import {
   ChatAdapter,
   ChatAdapterState,
+  MessageDeletedListener,
+  MessageEditedListener,
   MessageReadListener,
   MessageReceivedListener,
   ParticipantsAddedListener,
@@ -29,12 +33,13 @@ import {
   TopicChangedListener
 } from './ChatAdapter';
 import { AdapterError } from '../../common/adapters';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { FileUploadAdapter, convertFileUploadsUiStateToMessageMetadata } from './AzureCommunicationFileUploadAdapter';
 /* @conditional-compile-remove(file-sharing) */
 import { AzureCommunicationFileUploadAdapter } from './AzureCommunicationFileUploadAdapter';
 import { useEffect, useRef, useState } from 'react';
 import { _isValidIdentifier } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AttachmentDownloadResult } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { AttachmentMetadata } from '@internal/react-components';
@@ -112,7 +117,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   private chatClient: StatefulChatClient;
   private chatThreadClient: ChatThreadClient;
   private context: ChatContext;
-
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   private credential?: CommunicationTokenCredential = undefined;
   /* @conditional-compile-remove(file-sharing) */
   private fileUploadAdapter: FileUploadAdapter;
@@ -122,7 +127,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   constructor(
     chatClient: StatefulChatClient,
     chatThreadClient: ChatThreadClient,
-    options?: {
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ options?: {
       credential?: CommunicationTokenCredential;
     }
   ) {
@@ -130,7 +135,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.chatClient = chatClient;
     this.chatThreadClient = chatThreadClient;
     this.context = new ChatContext(chatClient.getState(), chatThreadClient.threadId);
-
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     if (options && options.credential) {
       this.credential = options.credential;
     }
@@ -182,6 +187,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.updateFileUploadErrorMessage = this.updateFileUploadErrorMessage.bind(this);
     /* @conditional-compile-remove(file-sharing) */
     this.updateFileUploadMetadata = this.updateFileUploadMetadata.bind(this);
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     this.downloadAttachments = this.downloadAttachments.bind(this);
   }
 
@@ -325,26 +331,21 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.fileUploadAdapter.updateFileUploadMetadata(id, metadata);
   }
 
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   async downloadAttachments(options: { attachmentUrls: Record<string, string> }): Promise<AttachmentDownloadResult[]> {
     return this.asyncTeeErrorToEventEmitter(async () => {
       if (this.credential === undefined) {
-        const e = new Error();
-        e['target'] = 'ChatThreadClient.getMessage';
-        e['innerError'] = new Error('AccessToken is null');
-        throw e;
+        throw new ChatError('ChatThreadClient.getMessage', new Error('AccessToken is null'));
       }
       const accessToken = await this.credential.getToken();
       if (!accessToken) {
-        const e = new Error();
-        e['target'] = 'ChatThreadClient.getMessage';
-        e['innerError'] = new Error('AccessToken is null');
-        throw e;
+        throw new ChatError('ChatThreadClient.getMessage', new Error('AccessToken is null'));
       }
 
       return this.downloadAuthenticatedFile(accessToken.token, options);
     });
   }
-
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   private async downloadAuthenticatedFile(
     accessToken: string,
     options: { attachmentUrls: Record<string, string> }
@@ -355,10 +356,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
       try {
         return await fetch(url, { headers });
       } catch (err) {
-        const e = new Error();
-        e['target'] = 'ChatThreadClient.getMessage';
-        e['innerError'] = err;
-        throw e;
+        throw new ChatError('ChatThreadClient.getMessage', err as Error);
       }
     }
 
@@ -388,6 +386,26 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     }
   }
 
+  private messageEditedListener(event: ChatMessageEditedEvent): void {
+    const isCurrentChatAdapterThread = event.threadId === this.chatThreadClient.threadId;
+    if (!isCurrentChatAdapterThread) {
+      return;
+    }
+
+    const message = convertEventToChatMessage(event);
+    this.emitter.emit('messageEdited', { message });
+  }
+
+  private messageDeletedListener(event: ChatMessageDeletedEvent): void {
+    const isCurrentChatAdapterThread = event.threadId === this.chatThreadClient.threadId;
+    if (!isCurrentChatAdapterThread) {
+      return;
+    }
+
+    const message = convertEventToChatMessage(event);
+    this.emitter.emit('messageDeleted', { message });
+  }
+
   private messageReadListener({ chatMessageId, recipient }: ReadReceiptReceivedEvent): void {
     const message = this.getState().thread.chatMessages[chatMessageId];
     if (message) {
@@ -412,6 +430,8 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.chatClient.on('participantsAdded', this.participantsAddedListener.bind(this));
     this.chatClient.on('participantsRemoved', this.participantsRemovedListener.bind(this));
     this.chatClient.on('chatMessageReceived', this.messageReceivedListener.bind(this));
+    this.chatClient.on('chatMessageEdited', this.messageEditedListener.bind(this));
+    this.chatClient.on('chatMessageDeleted', this.messageDeletedListener.bind(this));
     this.chatClient.on('readReceiptReceived', this.messageReadListener.bind(this));
     this.chatClient.on('participantsRemoved', this.participantsRemovedListener.bind(this));
   }
@@ -421,11 +441,15 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.chatClient.off('participantsAdded', this.participantsAddedListener.bind(this));
     this.chatClient.off('participantsRemoved', this.participantsRemovedListener.bind(this));
     this.chatClient.off('chatMessageReceived', this.messageReceivedListener.bind(this));
+    this.chatClient.off('chatMessageEdited', this.messageEditedListener.bind(this));
+    this.chatClient.off('chatMessageDeleted', this.messageDeletedListener.bind(this));
     this.chatClient.off('readReceiptReceived', this.messageReadListener.bind(this));
     this.chatClient.off('participantsRemoved', this.participantsRemovedListener.bind(this));
   }
 
   on(event: 'messageReceived', listener: MessageReceivedListener): void;
+  on(event: 'messageEdited', listener: MessageEditedListener): void;
+  on(event: 'messageDeleted', listener: MessageDeletedListener): void;
   on(event: 'messageSent', listener: MessageReceivedListener): void;
   on(event: 'messageRead', listener: MessageReadListener): void;
   on(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
@@ -439,6 +463,8 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   off(event: 'messageReceived', listener: MessageReceivedListener): void;
+  off(event: 'messageEdited', listener: MessageEditedListener): void;
+  off(event: 'messageDeleted', listener: MessageDeletedListener): void;
   off(event: 'messageSent', listener: MessageReceivedListener): void;
   off(event: 'messageRead', listener: MessageReadListener): void;
   off(event: 'participantsAdded', listener: ParticipantsAddedListener): void;
@@ -463,17 +489,33 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 }
 
-const convertEventToChatMessage = (event: ChatMessageReceivedEvent): ChatMessage => {
+const convertEventToChatMessage = (
+  event: ChatMessageReceivedEvent | ChatMessageEditedEvent | ChatMessageDeletedEvent
+): ChatMessage => {
   return {
     id: event.id,
     version: event.version,
-    content: { message: event.message },
+    content: isChatMessageDeletedEvent(event) ? undefined : { message: event.message },
     type: convertEventType(event.type),
     sender: event.sender,
     senderDisplayName: event.senderDisplayName,
     sequenceId: '',
-    createdOn: new Date(event.createdOn)
+    createdOn: new Date(event.createdOn),
+    editedOn: isChatMessageEditedEvent(event) ? event.editedOn : undefined,
+    deletedOn: isChatMessageDeletedEvent(event) ? event.deletedOn : undefined
   };
+};
+
+const isChatMessageEditedEvent = (
+  event: ChatMessageReceivedEvent | ChatMessageEditedEvent | ChatMessageDeletedEvent
+): event is ChatMessageEditedEvent => {
+  return 'editedOn' in event;
+};
+
+const isChatMessageDeletedEvent = (
+  event: ChatMessageReceivedEvent | ChatMessageEditedEvent | ChatMessageDeletedEvent
+): event is ChatMessageDeletedEvent => {
+  return 'deletedOn' in event;
 };
 
 // only text/html message type will be received from event
@@ -486,10 +528,10 @@ const convertEventType = (type: string): ChatMessageType => {
   }
 };
 
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * Configuration options to include when creating AzureCommunicationChatAdapter.
- *
- * @public
+ * @beta
  */
 export type AzureCommunicationChatAdapterOptions = {
   credential?: CommunicationTokenCredential;
@@ -555,8 +597,13 @@ export const _createAzureCommunicationChatAdapterInner = async (
   const chatThreadClient = await chatClient.getChatThreadClient(threadId);
   await chatClient.startRealtimeNotifications();
 
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const options = { credential: credential };
-  const adapter = await createAzureCommunicationChatAdapterFromClient(chatClient, chatThreadClient, options);
+  const adapter = await createAzureCommunicationChatAdapterFromClient(
+    chatClient,
+    chatThreadClient,
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ options
+  );
 
   return adapter;
 };
@@ -678,13 +725,18 @@ export const useAzureCommunicationChatAdapter = (
 export async function createAzureCommunicationChatAdapterFromClient(
   chatClient: StatefulChatClient,
   chatThreadClient: ChatThreadClient,
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   options?: {
     credential?: CommunicationTokenCredential;
   }
 ): Promise<ChatAdapter> {
-  return new AzureCommunicationChatAdapter(chatClient, chatThreadClient, options);
+  return new AzureCommunicationChatAdapter(
+    chatClient,
+    chatThreadClient,
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ options
+  );
 }
 
 const isChatError = (e: Error): e is ChatError => {
-  return e['target'] !== undefined && e['innerError'] !== undefined;
+  return 'target' in e && e['target'] !== undefined && 'innerError' in e && e['innerError'] !== undefined;
 };

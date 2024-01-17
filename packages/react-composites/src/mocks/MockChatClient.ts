@@ -21,7 +21,7 @@ export const createStatefulChatClientMock = (threadClient: PublicInterface<ChatT
  * @returns
  */
 export function createMockChatClient(threadClient: PublicInterface<ChatThreadClient>): ChatClient {
-  const mockEventHandlersRef = { value: {} };
+  const mockEventHandlersRef: { value: { [key: string]: ((e: Event) => void) | undefined | null } } = { value: {} };
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const mockChatClient: ChatClient = {} as any;
 
