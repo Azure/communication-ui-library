@@ -125,6 +125,7 @@ jobs:
 
   jest-test-coverage:
     needs: [get_matrix, build_packages]
+    if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
     name: 'Jest Test Coverage (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
     strategy:
@@ -163,7 +164,6 @@ jobs:
 
       # Pull requests show details of coverage changes
       - name: Get jest tests coverage of main from gist
-        if: ${{ github.event_name == 'pull_request' }}
         run: curl -o temp/jest/base/coverage-report.json "https://gist.github.com/communication-ui-bot/${{ matrix.coverage_gist_id }}/raw/communication-react-jest-report-${{ matrix.flavor }}.json" --create-dirs -L
       - name: Calculate coverage change
         id: coverage
@@ -173,7 +173,6 @@ jobs:
           node ./common/config/workflows/coverage-utils.js ../../../temp/jest/base/coverage-report.json ../../../temp/jest/current/merge/summary/coverage-summary.json functions
           node ./common/config/workflows/coverage-utils.js ../../../temp/jest/base/coverage-report.json ../../../temp/jest/current/merge/summary/coverage-summary.json branches
       - name: Find Comment
-        if: ${{ github.event_name == 'pull_request' }}
         uses: peter-evans/find-comment@v2
         id: fc
         with:
@@ -181,7 +180,6 @@ jobs:
           comment-author: 'github-actions[bot]'
           body-includes: '## @azure/communication-react jest test coverage for ***${{ matrix.flavor }}'
       - name: Create or update comment
-        if: ${{ github.event_name == 'pull_request' }}
         uses: peter-evans/create-or-update-comment@v2
         with:
           comment-id: ${{ steps.fc.outputs.comment-id }}
@@ -783,7 +781,7 @@ jobs:
 
   compare_base_bundle_stats:
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'pull_request' }}
+    if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
     name: Compare bundle size from pr head ref to base ref - ${{ matrix.app }}
     needs: [build_calling_sample, build_chat_sample, build_call_with_chat_sample]
     strategy:
