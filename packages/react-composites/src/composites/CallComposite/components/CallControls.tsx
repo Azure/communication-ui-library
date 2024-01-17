@@ -146,7 +146,9 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   const capabilitiesSelector = useSelector(capabilitySelector);
   /* @conditional-compile-remove(reaction) */
   const isReactionAllowed =
-    !capabilitiesSelector?.capabilities || capabilitiesSelector.capabilities.useReactions.isPresent;
+    !capabilitiesSelector?.capabilities ||
+    capabilitiesSelector.capabilities.useReactions.isPresent ||
+    capabilitiesSelector.capabilities.useReactions.reason === 'FeatureNotSupported';
 
   /* @conditional-compile-remove(PSTN-calls) */
   const alternateCallerId = useAdapter().getState().alternateCallerId;

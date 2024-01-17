@@ -1095,5 +1095,9 @@ function clearParticipantReactionState(callContext: CallContext, callId: string,
 
 /* @conditional-compile-remove(reaction) */
 function isCapableToReact(capabilitiesFeature: CapabilitiesFeatureState | undefined): boolean {
-  return !capabilitiesFeature?.capabilities || capabilitiesFeature?.capabilities.useReactions.isPresent;
+  return (
+    !capabilitiesFeature?.capabilities ||
+    capabilitiesFeature.capabilities.useReactions.isPresent ||
+    capabilitiesFeature.capabilities.useReactions.reason === 'FeatureNotSupported'
+  );
 }

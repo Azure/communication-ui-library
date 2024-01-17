@@ -230,7 +230,9 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   const capabilitiesSelector = useSelector(capabilitySelector);
   /* @conditional-compile-remove(reaction) */
   const isReactionAllowed =
-    !capabilitiesSelector?.capabilities || capabilitiesSelector.capabilities.useReactions.isPresent;
+    !capabilitiesSelector?.capabilities ||
+    capabilitiesSelector.capabilities.useReactions.isPresent ||
+    capabilitiesSelector.capabilities.useReactions.reason === 'FeatureNotSupported';
 
   // when options is false then we want to hide the whole control bar.
   if (options === false) {
