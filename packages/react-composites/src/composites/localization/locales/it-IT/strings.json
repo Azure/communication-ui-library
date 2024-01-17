@@ -118,6 +118,8 @@
     "dismissModalAriaLabel": "Immagine e immagine locale e remota, premi INVIO per tornare alla chiamata",
     "callRejectedTitle": "Non è stato possibile completare la chiamata",
     "callRejectedMoreDetails": "La persona che stai tentando di raggiungere non è disponibile. Riprovare più tardi.",
+    "callTimeoutTitle": "Non è stato possibile completare la chiamata",
+    "callTimeoutDetails": "La persona che stai tentando di raggiungere non è disponibile. Riprovare più tardi.",
     "spokenLanguageStrings": {
       "ar-ae": "Arabo - Emirati Arabi Uniti",
       "ar-sa": "Arabo - Arabia Saudita",
@@ -229,6 +231,66 @@
         "lostDueToRoleChangeToAttendee": "Il tuo ruolo è stato modificato. Alcune azioni, come la condivisione di contenuti, non saranno disponibili per te.",
         "grantedDueToRoleChangeToPresenter": "Sei un relatore. Puoi condividere i contenuti e facilitare la riunione."
       }
+    },
+    "surveyQuestion": "Come è stata la chiamata oggi?",
+    "starSurveyHelperText": "Come valuti la qualità della chiamata?",
+    "starSurveyOneStarText": "La qualità era pessima.",
+    "starSurveyTwoStarText": "La qualità era scadente.",
+    "starSurveyThreeStarText": "La qualità era buona.",
+    "starSurveyFourStarText": "La qualità era ottima.",
+    "starSurveyFiveStarText": "La qualità è stata eccellente.",
+    "surveyConfirmButtonLabel": "Invia feedback",
+    "starRatingAriaLabel": "Seleziona {0} di {1} stelle",
+    "surveyCancelButtonAriaLabel": "Annulla",
+    "tagsSurveyQuestion": "Cosa avrebbe potuto essere migliore?",
+    "tagsSurveyTextFieldDefaultText": "Altro, specifica",
+    "tagsSurveyHelperText": "Controlla eventuali problemi riscontrati",
+    "surveyTextboxDefaultText": "Altro, specifica",
+    "surveyIssues": {
+      "overallRating": {
+        "callCannotJoin": "Non sono riuscito a partecipare alla chiamata",
+        "callCannotInvite": "Non ho potuto invitare altri partecipanti alla chiamata",
+        "hadToRejoin": "Ho dovuto partecipare di nuovo alla chiamata",
+        "callEndedUnexpectedly": "La chiamata è terminata per me in modo imprevisto",
+        "otherIssues": "Ho avuto altri problemi con la chiamata"
+      },
+      "audioRating": {
+        "noLocalAudio": "L'altro utente non mi sentiva",
+        "noRemoteAudio": "Non riuscivo a sentire niente",
+        "echo": "Ho sentito eco durante la chiamata",
+        "audioNoise": "Ho sentito rumore durante la chiamata",
+        "lowVolume": "Il volume era basso",
+        "audioStoppedUnexpectedly": "L’audio si è interrotto improvvisamente",
+        "distortedSpeech": "L'audio era distorto",
+        "audioInterruption": "L'audio è stato interrotto",
+        "otherIssues": "Ho avuto altri problemi audio in questa chiamata"
+      },
+      "videoRating": {
+        "noVideoReceived": "Non vedevo nulla",
+        "noVideoSent": "Gli altri utenti non potevano vedermi",
+        "lowQuality": "La qualità del video era bassa",
+        "freezes": "Video bloccato",
+        "stoppedUnexpectedly": "Il video si è interrotto improvvisamente",
+        "darkVideoReceived": "Posso vedere gli schermi scuri solo quando altri utenti accendono la fotocamera",
+        "audioVideoOutOfSync": "Audio e immagini non erano sincronizzati",
+        "otherIssues": "Ho avuto altri problemi video in questa chiamata"
+      },
+      "screenshareRating": {
+        "noContentLocal": "Altre persone non possono vedere la condivisione dello schermo",
+        "noContentRemote": "Non ho potuto visualizzare la condivisione dello schermo di altre persone",
+        "cannotPresent": "Non ho potuto presentare lo schermo",
+        "lowQuality": "La qualità della condivisione dello schermo è bassa",
+        "freezes": "Condivisione schermo bloccata",
+        "stoppedUnexpectedly": "Condivisione dello schermo interrotta in modo imprevisto",
+        "largeDelay": "La condivisione dello schermo presenta un ritardo elevato",
+        "otherIssues": "Ho avuto altri problemi di condivisione dello schermo in questa chiamata"
+      }
+    },
+    "SurveyIssuesHeadingStrings": {
+      "overallRating": "Generale",
+      "audioRating": "Audio",
+      "videoRating": "Video",
+      "screenshareRating": "Presentazione in corso"
     }
   },
   "chat": {

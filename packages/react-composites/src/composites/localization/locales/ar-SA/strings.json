@@ -118,6 +118,8 @@
     "dismissModalAriaLabel": "صورة وصورة محلية وبعيدة، اضغط على مفتاح الإدخال للعودة إلى المكالمة",
     "callRejectedTitle": "إكمال المكالمة غير ممكن",
     "callRejectedMoreDetails": "الشخص الذي تحاول الوصول إليه غير متوفر. الرجاء المحاولة مرة أخرى لاحقا.",
+    "callTimeoutTitle": "إكمال المكالمة غير ممكن",
+    "callTimeoutDetails": "الشخص الذي تحاول الوصول إليه غير متوفر. الرجاء المحاولة مرة أخرى لاحقا.",
     "spokenLanguageStrings": {
       "ar-ae": "العربية - الإمارات العربية المتحدة",
       "ar-sa": "العربية - السعودية",
@@ -229,6 +231,66 @@
         "lostDueToRoleChangeToAttendee": "تم تغيير دورك. لن تتوفر بعض الإجراءات، مثل مشاركة المحتوى، لك.",
         "grantedDueToRoleChangeToPresenter": "أنت مقدم العرض. يمكنك مشاركة المحتوى وتسهيل الاجتماع."
       }
+    },
+    "surveyQuestion": "كيف كانت مكالمتك اليوم؟",
+    "starSurveyHelperText": "كيف كانت جودة المكالمة؟",
+    "starSurveyOneStarText": "كانت الجودة سيئة.",
+    "starSurveyTwoStarText": "كانت الجودة رديئة.",
+    "starSurveyThreeStarText": "كانت الجودة جيدة.",
+    "starSurveyFourStarText": "كانت الجودة رائعة.",
+    "starSurveyFiveStarText": "كانت الجودة ممتازة.",
+    "surveyConfirmButtonLabel": "إرسال ملاحظات",
+    "starRatingAriaLabel": "حدد {0} من {1} نجوم",
+    "surveyCancelButtonAriaLabel": "إلغاء الأمر",
+    "tagsSurveyQuestion": "ما الذي كان يمكن أن يكون أفضل؟",
+    "tagsSurveyTextFieldDefaultText": "أخرى، يُرجى التحديد",
+    "tagsSurveyHelperText": "تحقق من أي مشاكل واجهتك",
+    "surveyTextboxDefaultText": "أخرى، يُرجى التحديد",
+    "surveyIssues": {
+      "overallRating": {
+        "callCannotJoin": "تعذر علي الانضمام إلى المكالمة",
+        "callCannotInvite": "لم أتمكن من دعوة الآخرين إلى المكالمة",
+        "hadToRejoin": "اضطررت إلى إعادة الانضمام إلى المكالمة",
+        "callEndedUnexpectedly": "انتهت المكالمة عندي بشكل غير متوقع",
+        "otherIssues": "كنت أواجه مشكلات أخرى في المكالمة"
+      },
+      "audioRating": {
+        "noLocalAudio": "لم تسمع الجهة الأخرى أي صوت",
+        "noRemoteAudio": "لم أسمع أي صوت",
+        "echo": "سمعت صدى في المكالمة",
+        "audioNoise": "سمعت ضوضاء في المكالمة",
+        "lowVolume": "كان مستوى الصوت منخفضاً",
+        "audioStoppedUnexpectedly": "تم إيقاف الصوت بشكل غير متوقع",
+        "distortedSpeech": "تم تشويه الصوت",
+        "audioInterruption": "تمت مقاطعة الصوت",
+        "otherIssues": "كنت أواجه مشكلات صوتية أخرى في هذه المكالمة"
+      },
+      "videoRating": {
+        "noVideoReceived": "لم أتمكن من مشاهدة أي فيديو",
+        "noVideoSent": "لم يتمكن الآخرون من رؤيتي",
+        "lowQuality": "جودة الفيديو منخفضة",
+        "freezes": "الفيديو مجمد",
+        "stoppedUnexpectedly": "توقف الفيديو بشكل غير متوقع",
+        "darkVideoReceived": "أرى الشاشات الداكنة فقط عندما يقوم الآخرون بتشغيل الكاميرا الخاصة بهم",
+        "audioVideoOutOfSync": "لم تتم مزامنة الصوت والفيديو",
+        "otherIssues": "كنت أواجه مشكلات فيديو أخرى في هذه المكالمة"
+      },
+      "screenshareRating": {
+        "noContentLocal": "تعذر على الأشخاص الآخرين رؤية مشاركة الشاشة",
+        "noContentRemote": "لم أتمكن من رؤية مشاركة الشاشة الخاصة بأشخاص آخرين",
+        "cannotPresent": "تعذر علي تقديم الشاشة",
+        "lowQuality": "كانت جودة مشاركة الشاشة منخفضة",
+        "freezes": "تم تجميد مشاركة الشاشة",
+        "stoppedUnexpectedly": "توقفت مشاركة الشاشة بشكل غير متوقع",
+        "largeDelay": "مشاركة الشاشة لها تأخير كبير",
+        "otherIssues": "كنت أواجه مشكلات أخرى في مشاركة الشاشة في هذه المكالمة"
+      }
+    },
+    "SurveyIssuesHeadingStrings": {
+      "overallRating": "بشكل عام",
+      "audioRating": "صوت",
+      "videoRating": "فيديو",
+      "screenshareRating": "تقديم"
     }
   },
   "chat": {
