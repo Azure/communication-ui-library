@@ -9,8 +9,6 @@ import { ActiveFileUpload, SendBoxStrings } from '../SendBox';
 import { borderAndBoxShadowStyle, sendButtonStyle, sendIconStyle } from '../styles/SendBox.styles';
 import { InputBoxButton } from '../InputBoxButton';
 
-const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
-
 /**
  * Props for {@link RTESendBox}.
  *

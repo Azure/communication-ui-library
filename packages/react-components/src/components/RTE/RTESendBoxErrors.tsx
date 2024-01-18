@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-import { SendBoxErrorBar, SendBoxErrorBarError } from './SendBoxErrorBar';
+import { SendBoxErrorBar, SendBoxErrorBarError } from '../SendBoxErrorBar';
 
 /**
  * @private
