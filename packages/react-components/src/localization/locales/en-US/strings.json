@@ -126,7 +126,12 @@
   "reactionButton": {
     "label": "React",
     "tooltipDisabledContent": "Reaction action is disabled",
-    "tooltipContent": "Send a reaction"
+    "tooltipContent": "Send a reaction",
+    "likeButtonTooltipContent": "Like",
+    "heartButtonTooltipContent": "Love",
+    "laughButtonTooltipContent": "Laugh",
+    "clapButtonTooltipContent": "Applause",
+    "surprisedButtonTooltipContent": "Surprised"
   },
   "messageThread": {
     "yesterday": "Yesterday",
