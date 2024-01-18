@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import { CallState as SDKCallStatus, DominantSpeakersInfo } from '@azure/communication-calling';
+import { ParticipantCapabilities } from '@azure/communication-calling';
 import { VideoDeviceInfo, AudioDeviceInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(capabilities) */
 import { CapabilitiesChangeInfo } from '@azure/communication-calling';
@@ -61,6 +62,12 @@ export const getIsScreenShareOn = (state: CallAdapterState): boolean => state.ca
  */
 export const getLocalParticipantRaisedHand = (state: CallAdapterState): RaisedHandState | undefined =>
   state.call?.raiseHand.localParticipantRaisedHand;
+
+/**
+ * @private
+ */
+export const getCapabilites = (state: CallAdapterState): ParticipantCapabilities | undefined =>
+  state.call?.capabilitiesFeature?.capabilities;
 
 /**
  * @private
