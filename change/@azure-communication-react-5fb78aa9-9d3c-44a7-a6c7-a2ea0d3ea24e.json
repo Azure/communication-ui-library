@@ -1,0 +1,9 @@
+{
+  "type": "minor",
+  "area": "improvement",
+  "workstream": "Adding tooltip for each reaction button",
+  "comment": "Tooltip for each of the reaction button applied",
+  "packageName": "@azure/communication-react",
+  "email": "mbellah@microsoft.com",
+  "dependentChangeType": "patch"
+}

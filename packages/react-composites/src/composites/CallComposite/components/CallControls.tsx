@@ -49,6 +49,11 @@ import {
 } from '../../common/ControlBar/CustomButton';
 /* @conditional-compile-remove(reaction) */
 import { Reaction } from './buttons/Reaction';
+/* @conditional-compile-remove(reaction) */
+import { useSelector } from '../hooks/useSelector';
+/* @conditional-compile-remove(reaction) */
+import { capabilitySelector } from '../../CallComposite/selectors/capabilitySelector';
+
 /**
  * @private
  */
@@ -137,6 +142,12 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   /* @conditional-compile-remove(raise-hand) */
   const raiseHandButtonProps = usePropsFor(RaiseHandButton) as RaiseHandButtonProps;
 
+  /* @conditional-compile-remove(reaction) */
+  const capabilitiesSelector = useSelector(capabilitySelector);
+  /* @conditional-compile-remove(reaction) */
+  const isReactionAllowed =
+    !capabilitiesSelector?.capabilities || capabilitiesSelector.capabilities.useReactions.isPresent;
+
   /* @conditional-compile-remove(PSTN-calls) */
   const alternateCallerId = useAdapter().getState().alternateCallerId;
 
@@ -172,7 +183,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   }
 
   /* @conditional-compile-remove(reaction) */
-  const showReactionButtonInControlBar = isEnabled(options?.reactionButton) && !props.isMobile;
+  const showReactionButtonInControlBar = isEnabled(options?.reactionButton) && isReactionAllowed && !props.isMobile;
   /* @conditional-compile-remove(reaction) */
   if (showReactionButtonInControlBar) {
     numberOfButtons++;
