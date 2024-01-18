@@ -1,12 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { RTEInputBoxComponent } from './RTEInputBoxComponent';
-import { Stack, useTheme } from '@fluentui/react';
+import { Icon, Stack, useTheme } from '@fluentui/react';
 import { useLocale } from '../../localization';
 import { SendBoxStrings } from '../SendBox';
-import { borderAndBoxShadowStyle } from '../styles/SendBox.styles';
+import { borderAndBoxShadowStyle, sendButtonStyle, sendIconStyle } from '../styles/SendBox.styles';
+import { InputBoxButton } from '../InputBoxButton';
+
+const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
 
 /**
  * Props for {@link RTESendBox}.
@@ -42,8 +45,37 @@ export const RTESendBox = (props: RTESendBoxProps): JSX.Element => {
   const strings = { ...localeStrings, ...props.strings };
 
   const [contentValue] = useState('');
+  const [contentValueOverflow] = useState(false);
 
-  const errorMessage = systemMessage;
+  const contentTooLongMessage = contentValueOverflow ? strings.textTooLong : undefined;
+  const errorMessage = systemMessage ?? contentTooLongMessage;
+
+  const sendMessageOnClick = (): void => {
+    if (disabled || contentValueOverflow) {
+      return;
+    }
+  };
+
+  // const sendBoxErrorsProps = useMemo(() => {
+  //   return {
+  //     fileUploadsPendingError: fileUploadsPendingError,
+  //     fileUploadError: activeFileUploads?.filter((fileUpload) => fileUpload.error).pop()?.error
+  //   };
+  // }, [activeFileUploads, fileUploadsPendingError]);
+
+  const onRenderSendIcon = useCallback(
+    (isHover: boolean) => (
+      <Icon
+        iconName={isHover && contentValue ? 'SendBoxSendHovered' : 'SendBoxSend'}
+        className={sendIconStyle({
+          theme,
+          hasTextOrFile: !!contentValue /*|| hasFile(props)*/,
+          hasErrorMessage: !!errorMessage
+        })}
+      />
+    ),
+    [contentValue, errorMessage, theme]
+  );
 
   return (
     <Stack
@@ -53,9 +85,19 @@ export const RTESendBox = (props: RTESendBoxProps): JSX.Element => {
         disabled: !!disabled
       })}
     >
-      <RTEInputBoxComponent placeholderText={strings.placeholderText} content={contentValue} />
-      {/* Send Button */}
+      {/* <RTESendBoxErrors {...sendBoxErrorsProps} /> */}
       {/* System Error Message */}
+      <RTEInputBoxComponent placeholderText={strings.placeholderText} content={contentValue} />
+      <InputBoxButton
+        onRenderIcon={onRenderSendIcon}
+        onClick={(e) => {
+          sendMessageOnClick();
+          e.stopPropagation(); // Prevents the click from bubbling up and triggering a focus event on the chat.
+        }}
+        className={sendButtonStyle}
+        ariaLabel={localeStrings.sendButtonAriaLabel}
+        tooltipContent={localeStrings.sendButtonAriaLabel}
+      />
       {/* File Upload */}
     </Stack>
   );

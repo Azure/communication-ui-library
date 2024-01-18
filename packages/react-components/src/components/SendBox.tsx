@@ -18,6 +18,7 @@ import { fileUploadCardsStyles } from './styles/SendBox.styles';
 import { SendBoxErrorBarError } from './SendBoxErrorBar';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from './MentionPopover';
+import { activeFileUploadsTrampoline, hasCompletedFileUploads, hasIncompleteFileUploads } from './utils/SendBoxUtils';
 
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
 const EMPTY_MESSAGE_REGEX = /^\s*$/;
@@ -228,7 +229,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   const localeStrings = useLocale().strings.sendBox;
   const strings = { ...localeStrings, ...props.strings };
   const ids = useIdentifiers();
-  const activeFileUploads = activeFileUploadsTrampoline(props);
+  const activeFileUploads = activeFileUploadsTrampoline(props.activeFileUploads);
 
   const [textValue, setTextValue] = useState('');
   const [textValueOverflow, setTextValueOverflow] = useState(false);
@@ -246,7 +247,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     // Don't send message until all files have been uploaded successfully
     setFileUploadsPendingError(undefined);
 
-    if (hasIncompleteFileUploads(props)) {
+    if (hasIncompleteFileUploads(activeFileUploads)) {
       /* @conditional-compile-remove(file-sharing) */
       setFileUploadsPendingError({ message: strings.fileUploadsPendingError, timestamp: Date.now() });
       return;
@@ -255,7 +256,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     const message = textValue;
     // we don't want to send empty messages including spaces, newlines, tabs
     // Message can be empty if there is a valid file upload
-    if (!EMPTY_MESSAGE_REGEX.test(message) || hasFile(props)) {
+    if (!EMPTY_MESSAGE_REGEX.test(message) || hasCompletedFileUploads(activeFileUploads)) {
       onSendMessage && onSendMessage(sanitizeText(message));
       setTextValue('');
     }
@@ -286,18 +287,18 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   const mergedStyles = useMemo(() => concatStyleSets(styles), [styles]);
 
   const hasText = !!textValue;
-  const hasTextOrFile = hasText || hasFile(props);
+  const hasTextOrFile = hasText || hasCompletedFileUploads(activeFileUploads);
+  const hasErrorMessage = !!errorMessage;
 
   const mergedSendIconStyle = useMemo(
     () =>
-      mergeStyles(
-        sendIconStyle,
-        {
-          color: !!errorMessage || !hasTextOrFile ? theme.palette.neutralTertiary : theme.palette.themePrimary
-        },
-        styles?.sendMessageIcon
-      ),
-    [errorMessage, hasTextOrFile, theme, styles?.sendMessageIcon]
+      sendIconStyle({
+        theme,
+        hasTextOrFile,
+        hasErrorMessage: hasErrorMessage,
+        customSendIconStyle: styles?.sendMessageIcon
+      }),
+    [theme, hasTextOrFile, hasErrorMessage, styles?.sendMessageIcon]
   );
 
   const onRenderSendIcon = useCallback(
@@ -418,24 +419,4 @@ const sanitizeText = (message: string): string => {
   } else {
     return message;
   }
-};
-
-const hasIncompleteFileUploads = (props: SendBoxProps): boolean => {
-  const activeFileUploads = activeFileUploadsTrampoline(props);
-  return !!(
-    activeFileUploads?.length &&
-    !activeFileUploads.filter((fileUpload) => !fileUpload.error).every((fileUpload) => fileUpload.uploadComplete)
-  );
-};
-
-const hasFile = (props: SendBoxProps): boolean => {
-  const activeFileUploads = activeFileUploadsTrampoline(props);
-  return !!activeFileUploads?.find((file) => !file.error);
-  return false;
-};
-
-const activeFileUploadsTrampoline = (props: SendBoxProps): ActiveFileUpload[] | undefined => {
-  /* @conditional-compile-remove(file-sharing) */
-  return props.activeFileUploads;
-  return [];
 };
