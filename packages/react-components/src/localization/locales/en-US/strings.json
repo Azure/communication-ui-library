@@ -127,11 +127,11 @@
     "label": "React",
     "tooltipDisabledContent": "Reaction action is disabled",
     "tooltipContent": "Send a reaction",
-    "likeButtonTooltipContent": "Like",
-    "heartButtonTooltipContent": "Love",
-    "laughButtonTooltipContent": "Laugh",
-    "clapButtonTooltipContent": "Applause",
-    "surprisedButtonTooltipContent": "Surprised"
+    "likeReactionTooltipContent": "Like",
+    "heartReactionTooltipContent": "Love",
+    "laughReactionTooltipContent": "Laugh",
+    "applauseReactionTooltipContent": "Applause",
+    "surprisedReactionTooltipContent": "Surprised"
   },
   "messageThread": {
     "yesterday": "Yesterday",

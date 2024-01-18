@@ -3673,12 +3673,12 @@ export interface ReactionButtonProps extends ControlBarButtonProps {
 
 // @beta
 export interface ReactionButtonStrings {
-    clapButtonTooltipContent?: string;
-    heartButtonTooltipContent?: string;
+    applauseReactionTooltipContent?: string;
+    heartReactionTooltipContent?: string;
     label: string;
-    laughButtonTooltipContent?: string;
-    likeButtonTooltipContent?: string;
-    surprisedButtonTooltipContent?: string;
+    laughReactionTooltipContent?: string;
+    likeReactionTooltipContent?: string;
+    surprisedReactionTooltipContent?: string;
     tooltipContent?: string;
     tooltipDisabledContent?: string;
 }

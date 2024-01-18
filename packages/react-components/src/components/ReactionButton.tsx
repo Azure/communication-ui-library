@@ -60,15 +60,15 @@ export interface ReactionButtonStrings {
   /** Tooltip content when the button is enabled. */
   tooltipContent?: string;
   /** Tooltip content of like reaction button. */
-  likeButtonTooltipContent?: string;
+  likeReactionTooltipContent?: string;
   /** Tooltip content of heart reaction button. */
-  heartButtonTooltipContent?: string;
+  heartReactionTooltipContent?: string;
   /** Tooltip content of laugh reaction button. */
-  laughButtonTooltipContent?: string;
+  laughReactionTooltipContent?: string;
   /** Tooltip content of clap reaction button. */
-  clapButtonTooltipContent?: string;
+  applauseReactionTooltipContent?: string;
   /** Tooltip content of surprised reaction button. */
-  surprisedButtonTooltipContent?: string;
+  surprisedReactionTooltipContent?: string;
 }
 
 /* @conditional-compile-remove(reaction) */
@@ -91,11 +91,11 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
   const [isHoveredMap, setIsHoveredMap] = useState(new Map());
   const emojis = ['like', 'heart', 'laugh', 'applause', 'surprised'];
   const emojiButtonTooltip: Map<string, string | undefined> = new Map([
-    ['like', strings.likeButtonTooltipContent],
-    ['heart', strings.heartButtonTooltipContent],
-    ['laugh', strings.laughButtonTooltipContent],
-    ['applause', strings.clapButtonTooltipContent],
-    ['surprised', strings.surprisedButtonTooltipContent]
+    ['like', strings.likeReactionTooltipContent],
+    ['heart', strings.heartReactionTooltipContent],
+    ['laugh', strings.laughReactionTooltipContent],
+    ['applause', strings.applauseReactionTooltipContent],
+    ['surprised', strings.surprisedReactionTooltipContent]
   ]);
 
   const calloutStyle: Partial<ICalloutContentStyles> = { root: { padding: 0 }, calloutMain: { padding: '0.5rem' } };
