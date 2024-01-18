@@ -80,7 +80,7 @@ export const getSelector = <Component extends (props: any) => JSX.Element | unde
   return findSelector(component);
 };
 
-const messageThreadSelectorsByThread = {};
+const messageThreadSelectorsByThread: { [key: string]: MessageThreadSelector } = {};
 
 const findSelector = (component: (props: any) => JSX.Element | undefined): any => {
   // For the message thread selector we need to create a new one for each thread

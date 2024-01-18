@@ -153,6 +153,7 @@ export {
   COMPONENT_LOCALE_ZH_CN,
   COMPONENT_LOCALE_ZH_TW
 } from '../../react-components/src';
+/* @conditional-compile-remove(image-gallery) */
 export { ImageGallery } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export { HoldButton } from '../../react-components/src';
@@ -297,7 +298,8 @@ export type {
 /* @conditional-compile-remove(raise-hand) */
 export type { RaiseHandButtonProps, RaiseHandButtonStrings, RaisedHand } from '../../react-components/src';
 /* @conditional-compile-remove(reaction) */
-export type { Reaction } from '../../react-components/src';
+export type { ReactionButtonStrings, Reaction, ReactionButtonProps } from '../../react-components/src';
+/* @conditional-compile-remove(image-gallery) */
 export type { ImageGalleryProps, ImageGalleryImageProps, ImageGalleryStrings } from '../../react-components/src';
 /* @conditional-compile-remove(data-loss-prevention) */
 export type { BlockedMessage } from '../../react-components/src';
@@ -310,14 +312,12 @@ export type {
   FileDownloadHandler,
   FileDownloadError
 } from '../../react-components/src';
+/* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+export type { AttachmentMetadata } from '../../react-components/src';
 /* @conditional-compile-remove(file-sharing) */
 export type { FileMetadata } from '../../react-components/src';
-export type {
-  ChatAttachmentType,
-  AttachmentDownloadResult,
-  AttachmentMetadata,
-  InlineImageMetadata
-} from '../../react-components/src';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+export type { ChatAttachmentType, AttachmentDownloadResult, InlineImageMetadata } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonProps, HoldButtonStrings, VideoTileStrings } from '../../react-components/src';
 /* @conditional-compile-remove(call-readiness) */

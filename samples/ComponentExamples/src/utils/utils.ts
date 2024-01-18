@@ -46,7 +46,7 @@ export const createChatThreadAndUsers = async (displayName: string): Promise<Ide
   };
 };
 
-export const verifyParamExists = <T>(params: T, paramName: string): void => {
+export const verifyParamExists = <T>(params: { [key: string]: T }, paramName: string): void => {
   if (!params[paramName]) {
     throw `${paramName} was not included in the query parameters of the URL.`;
   }

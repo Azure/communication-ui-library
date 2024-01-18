@@ -19,6 +19,7 @@
     "lint:fix": "eslint */**/*.{ts,tsx} --fix",
     "lint:quiet": "eslint */**/*.{ts,tsx} --quiet"
   },
+  "license": "MIT",
   "dependencies": {
     "@azure/communication-chat": "1.5.0-beta.1 || ^1.4.0",
     "@azure/communication-common": "^2.3.0",

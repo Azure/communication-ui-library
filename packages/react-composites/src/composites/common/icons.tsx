@@ -192,8 +192,11 @@ export type CallCompositeIcons = {
   ControlButtonLowerHand?: JSX.Element;
   /* @conditional-compile-remove(raise-hand) */
   RaiseHandContextualMenuItem?: JSX.Element;
-  /* @conditional-compile-remove(raise-hand) */
+  /* @conditional-compile-remove(reaction) */
+  ReactionContextualMenuItem?: JSX.Element;
   LowerHandContextualMenuItem?: JSX.Element;
+  /* @conditional-compile-remove(reaction) */
+  ReactionButtonIcon?: JSX.Element;
   ErrorBarCallCameraAccessDenied?: JSX.Element;
   ErrorBarCallCameraAlreadyInUse?: JSX.Element;
   ErrorBarCallLocalVideoFreeze?: JSX.Element;

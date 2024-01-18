@@ -118,6 +118,8 @@
     "dismissModalAriaLabel": "Imagen e imagen local y remota, presiona Entrar para volver a la llamada",
     "callRejectedTitle": "No se pudo completar la llamada",
     "callRejectedMoreDetails": "La persona con la que quieres contactarte no está disponible. Inténtalo de nuevo más tarde.",
+    "callTimeoutTitle": "No se pudo completar la llamada",
+    "callTimeoutDetails": "La persona con la que quieres contactarte no está disponible. Inténtalo de nuevo más tarde.",
     "spokenLanguageStrings": {
       "ar-ae": "Árabe - Emiratos Árabes Unidos",
       "ar-sa": "Árabe - Arabia Saudí",
@@ -229,6 +231,66 @@
         "lostDueToRoleChangeToAttendee": "Tu rol ha sido cambiado. Algunas acciones, como compartir contenido, no estarán disponibles para usted.",
         "grantedDueToRoleChangeToPresenter": "Es moderador. Puede compartir contenido y facilitar la reunión."
       }
+    },
+    "surveyQuestion": "¿Cómo fue la llamada?",
+    "starSurveyHelperText": "¿Qué tal era la calidad de la llamada?",
+    "starSurveyOneStarText": "La calidad era mala.",
+    "starSurveyTwoStarText": "La calidad era deficiente.",
+    "starSurveyThreeStarText": "La calidad era buena.",
+    "starSurveyFourStarText": "La calidad era estupenda.",
+    "starSurveyFiveStarText": "La calidad era excelente.",
+    "surveyConfirmButtonLabel": "Enviar comentarios",
+    "starRatingAriaLabel": "Seleccione {0} de {1} estrellas",
+    "surveyCancelButtonAriaLabel": "Cancelar",
+    "tagsSurveyQuestion": "¿Qué podría haber sido mejor?",
+    "tagsSurveyTextFieldDefaultText": "Otro, especifique",
+    "tagsSurveyHelperText": "Marque los problemas que haya experimentado",
+    "surveyTextboxDefaultText": "Otro, especifique",
+    "surveyIssues": {
+      "overallRating": {
+        "callCannotJoin": "No pude unirme a la llamada",
+        "callCannotInvite": "No podía invitar a nadie a la llamada",
+        "hadToRejoin": "He tenido que volver a unirme a la llamada",
+        "callEndedUnexpectedly": "La llamada finalizó inesperadamente",
+        "otherIssues": "Estaba teniendo otros problemas con la llamada"
+      },
+      "audioRating": {
+        "noLocalAudio": "Los otros participantes no podían oír nada",
+        "noRemoteAudio": "No pude oír nada",
+        "echo": "He oído ecos en la llamada",
+        "audioNoise": "Se oía ruido en la llamada",
+        "lowVolume": "El volumen era bajo",
+        "audioStoppedUnexpectedly": "El audio se detuvo inesperadamente",
+        "distortedSpeech": "El audio se distorsionaba",
+        "audioInterruption": "Se interrumpió el audio",
+        "otherIssues": "Estaba teniendo otros problemas de audio en esta llamada"
+      },
+      "videoRating": {
+        "noVideoReceived": "No pude ver ningún vídeo",
+        "noVideoSent": "Los demás usuarios no me veían",
+        "lowQuality": "La calidad de vídeo era baja",
+        "freezes": "Vídeo congelado",
+        "stoppedUnexpectedly": "El vídeo se detuvo inesperadamente",
+        "darkVideoReceived": "Solo puedo ver pantallas oscuras cuando otros usuarios activan su cámara",
+        "audioVideoOutOfSync": "Audio y vídeo no sincronizados",
+        "otherIssues": "Estaba teniendo otros problemas de vídeo en esta llamada"
+      },
+      "screenshareRating": {
+        "noContentLocal": "Otras personas no pudieron ver mi pantalla compartida",
+        "noContentRemote": "No pude ver el la pantalla compartida de otras personas",
+        "cannotPresent": "No pude presentar mi pantalla",
+        "lowQuality": "La calidad de la pantalla compartida era baja",
+        "freezes": "Pantalla compartida congelada",
+        "stoppedUnexpectedly": "El la pantalla compartida se detuvo inesperadamente",
+        "largeDelay": "La pantalla compartida tiene mucho retraso",
+        "otherIssues": "Estaba teniendo otros problemas de pantalla compartida en esta llamada"
+      }
+    },
+    "SurveyIssuesHeadingStrings": {
+      "overallRating": "General",
+      "audioRating": "Audio",
+      "videoRating": "Vídeo",
+      "screenshareRating": "Presentación"
     }
   },
   "chat": {
