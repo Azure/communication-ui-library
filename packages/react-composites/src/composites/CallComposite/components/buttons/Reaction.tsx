@@ -20,6 +20,7 @@ export const Reaction = (props: {
   displayType?: CallControlDisplayType;
   styles?: ControlBarButtonStyles;
   disabled?: boolean;
+  disableTooltip?: boolean;
 }): JSX.Element => {
   const reactionButtonProps = usePropsFor(ReactionButton) as unknown as ReactionButtonProps;
   const styles = useMemo(() => concatButtonBaseStyles(props.styles ?? {}), [props.styles]);
@@ -33,6 +34,7 @@ export const Reaction = (props: {
       showLabel={props.displayType !== 'compact'}
       disabled={reactionButtonDisabled || props.disabled}
       styles={styles}
+      disableTooltip={props.disableTooltip}
     />
   );
 };
