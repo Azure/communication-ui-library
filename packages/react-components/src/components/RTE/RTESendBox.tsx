@@ -5,7 +5,7 @@ import React, { useCallback, useState } from 'react';
 import { RTEInputBoxComponent } from './RTEInputBoxComponent';
 import { Icon, Stack, useTheme } from '@fluentui/react';
 import { useLocale } from '../../localization';
-import { SendBoxStrings } from '../SendBox';
+import { ActiveFileUpload, SendBoxStrings } from '../SendBox';
 import { borderAndBoxShadowStyle, sendButtonStyle, sendIconStyle } from '../styles/SendBox.styles';
 import { InputBoxButton } from '../InputBoxButton';
 
@@ -30,6 +30,28 @@ export interface RTESendBoxProps {
    * Optional text for system message below text box
    */
   systemMessage?: string;
+  /* @conditional-compile-remove(file-sharing) */
+  /**
+   * Optional callback to render uploaded files in the SendBox. The sendBox will expand
+   * vertically to accommodate the uploaded files. File uploads will
+   * be rendered below the text area in sendBox.
+   * @beta
+   */
+  onRenderFileUploads?: () => JSX.Element;
+  /* @conditional-compile-remove(file-sharing) */
+  /**
+   * Optional array of active file uploads where each object has attributes
+   * of a file upload like name, progress, errorMessage etc.
+   * @beta
+   */
+  activeFileUploads?: ActiveFileUpload[];
+  /* @conditional-compile-remove(file-sharing) */
+  /**
+   * Optional callback to remove the file upload before sending by clicking on
+   * cancel icon.
+   * @beta
+   */
+  onCancelFileUpload?: (fileId: string) => void;
 }
 
 /**
@@ -55,13 +77,6 @@ export const RTESendBox = (props: RTESendBoxProps): JSX.Element => {
       return;
     }
   };
-
-  // const sendBoxErrorsProps = useMemo(() => {
-  //   return {
-  //     fileUploadsPendingError: fileUploadsPendingError,
-  //     fileUploadError: activeFileUploads?.filter((fileUpload) => fileUpload.error).pop()?.error
-  //   };
-  // }, [activeFileUploads, fileUploadsPendingError]);
 
   const onRenderSendIcon = useCallback(
     (isHover: boolean) => (
