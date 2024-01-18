@@ -440,9 +440,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     const localVideoTileStyles = concatStyleSets(
       localTileNotInGrid ? floatingLocalVideoTileStyle : {},
       {
-        root: {
-          borderRadius: theme.effects.roundedCorner4
-        }
+        root: { borderRadius: theme.effects.roundedCorner4 }
       },
       styles?.localVideo
     );
