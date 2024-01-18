@@ -441,20 +441,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       localTileNotInGrid ? floatingLocalVideoTileStyle : {},
       {
         root: {
-          borderRadius: theme.effects.roundedCorner4,
-          /* @conditional-compile-remove(spotlight) */
-          '::before': isSpotlighted
-            ? {
-                content: '""',
-                position: 'absolute',
-                top: 0,
-                bottom: 0,
-                left: 0,
-                right: 0,
-                zIndex: 1,
-                border: `0.25rem solid ${theme.palette.black}`
-              }
-            : undefined
+          borderRadius: theme.effects.roundedCorner4
         }
       },
       styles?.localVideo
@@ -527,9 +514,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     layout,
     showLocalVideoTileLabel,
     /* @conditional-compile-remove(spotlight) */
-    spotlightedParticipants,
-    /* @conditional-compile-remove(spotlight) */
-    theme.palette.black
+    spotlightedParticipants
   ]);
 
   /* @conditional-compile-remove(pinned-participants) */
