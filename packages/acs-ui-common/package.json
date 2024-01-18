@@ -30,6 +30,7 @@
     "_current-flavor": "echo You are running under COMMUNICATION_REACT_FLAVOR: && env-cmd -f ../../common/config/env/.env node -p process.env.COMMUNICATION_REACT_FLAVOR",
     "_test:by-flavor": "(npm run _if-preprocess && rushx preprocess || if-env COMMUNICATION_REACT_FLAVOR=beta && echo \"skip preprocess\") && jest"
   },
+  "license": "MIT",
   "dependencies": {
     "@azure/communication-common": "^2.3.0",
     "@azure/logger": "^1.0.4"

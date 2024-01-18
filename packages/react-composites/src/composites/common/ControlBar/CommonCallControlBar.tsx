@@ -43,6 +43,12 @@ import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
 import { CaptionsSettingsModal } from '../CaptionsSettingsModal';
 /* @conditional-compile-remove(raise-hand) */
 import { RaiseHand } from '../../CallComposite/components/buttons/RaiseHand';
+/* @conditional-compile-remove(reaction) */
+import { Reaction } from '../../CallComposite/components/buttons/Reaction';
+/* @conditional-compile-remove(reaction) */
+import { useSelector } from '../../CallComposite/hooks/useSelector';
+/* @conditional-compile-remove(reaction) */
+import { capabilitySelector } from '../../CallComposite/selectors/capabilitySelector';
 /**
  * @private
  */
@@ -220,6 +226,12 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
     [options]
   );
 
+  /* @conditional-compile-remove(reaction) */
+  const capabilitiesSelector = useSelector(capabilitySelector);
+  /* @conditional-compile-remove(reaction) */
+  const isReactionAllowed =
+    !capabilitiesSelector?.capabilities || capabilitiesSelector.capabilities.useReactions.isPresent;
+
   // when options is false then we want to hide the whole control bar.
   if (options === false) {
     return <></>;
@@ -316,6 +328,16 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         disableTooltip={props.mobileView}
                       />
                     )}
+                    {
+                      /* @conditional-compile-remove(reaction) */
+                      !props.mobileView && isReactionAllowed && isEnabled(options.reactionButton) && (
+                        <Reaction
+                          displayType={options.displayType}
+                          styles={commonButtonStyles}
+                          disabled={props.disableButtonsForHoldScreen}
+                        />
+                      )
+                    }
                     {
                       /* @conditional-compile-remove(raise-hand) */ !props.mobileView &&
                         isEnabled(options.raiseHandButton) &&

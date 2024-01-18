@@ -123,6 +123,11 @@
     "tooltipOnContent": "手放下",
     "tooltipOffContent": "举手"
   },
+  "reactionButton": {
+    "label": "回应",
+    "tooltipDisabledContent": "已禁用表情符号操作",
+    "tooltipContent": "发送表情符号"
+  },
   "messageThread": {
     "yesterday": "昨天",
     "sunday": "星期日",

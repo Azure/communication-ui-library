@@ -11,11 +11,15 @@ import { _FileCardGroup } from './FileCardGroup';
 import { iconButtonClassName } from './styles/IconButton.styles';
 import { _formatString } from '@internal/acs-ui-common';
 
+/* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * Represents the type of attachment
- * @public
+ * @beta
  */
-export type ChatAttachmentType = 'inlineImage' | /* @conditional-compile-remove(file-sharing) */ 'file' | 'unknown';
+export type ChatAttachmentType =
+  | 'unknown'
+  | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage'
+  | /* @conditional-compile-remove(file-sharing) */ 'file';
 
 /**
  * Metadata containing basic information about the uploaded file.
@@ -23,6 +27,7 @@ export type ChatAttachmentType = 'inlineImage' | /* @conditional-compile-remove(
  * @beta
  */
 export interface FileMetadata {
+  /* @conditional-compile-remove(file-sharing) */
   attachmentType: 'file';
   /**
    * Extension hint, useful for rendering a specific icon.
@@ -33,6 +38,7 @@ export interface FileMetadata {
   /**
    * Unique ID of the file.
    */
+  /* @conditional-compile-remove(file-sharing) */
   id: string;
   /**
    * File name to be displayed.
@@ -42,16 +48,18 @@ export interface FileMetadata {
    * Download URL for the file.
    */
   url: string;
+  /* @conditional-compile-remove(file-sharing) */
   /*
    * Optional dictionary of meta data associated with the file.
    */
   payload?: Record<string, string>;
 }
 
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * Metadata for rendering images inline with a message.
  * This does not include images attached as files.
- * @public
+ * @beta
  */
 export interface InlineImageMetadata {
   /*
@@ -74,13 +82,16 @@ export interface InlineImageMetadata {
 
 /**
  * Metadata containing information about the uploaded file.
- * @public
+ * @beta
  */
-export type AttachmentMetadata = InlineImageMetadata | /* @conditional-compile-remove(file-sharing) */ FileMetadata;
+export type AttachmentMetadata =
+  | FileMetadata
+  | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ InlineImageMetadata;
 
+/* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * Metadata of the attachment object returned by the ACS SDK.
- * @public
+ * @beta
  */
 export interface AttachmentDownloadResult {
   /**
@@ -204,13 +215,13 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
     return false;
   }, []);
 
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const isShowDownloadIcon = useCallback((attachment: AttachmentMetadata): boolean => {
     /* @conditional-compile-remove(file-sharing) */
     return attachment.attachmentType === 'file' && attachment.payload?.teamsFileAttachment !== 'true';
     return true;
   }, []);
 
-  /* @conditional-compile-remove(file-sharing) */
   const fileCardGroupDescription = useMemo(
     () => () => {
       const fileGroupLocaleString = props.strings?.fileCardGroupMessage ?? localeStrings.fileCardGroupMessage;
@@ -226,7 +237,7 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
   );
 
   const fileDownloadHandler = useCallback(
-    async (userId, file: AttachmentMetadata) => {
+    async (userId: string, file: AttachmentMetadata) => {
       if (!props.downloadHandler) {
         window.open(file.url, '_blank', 'noopener,noreferrer');
       } else {
@@ -246,13 +257,17 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
     },
     [props]
   );
-  if (!fileMetadata || fileMetadata.length === 0 || !fileMetadata.some(isFileSharingAttachment)) {
+  if (
+    !fileMetadata ||
+    fileMetadata.length === 0 ||
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ !fileMetadata.some(isFileSharingAttachment)
+  ) {
     return <></>;
   }
 
   return (
     <div style={fileDownloadCardsStyle} data-ui-id="file-download-card-group">
-      <_FileCardGroup /* @conditional-compile-remove(file-sharing) */ ariaLabel={fileCardGroupDescription()}>
+      <_FileCardGroup ariaLabel={fileCardGroupDescription()}>
         {fileMetadata &&
           fileMetadata
             .filter((attachment) => {
@@ -270,7 +285,10 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
                   actionIcon={
                     showSpinner ? (
                       <Spinner size={SpinnerSize.medium} aria-live={'polite'} role={'status'} />
-                    ) : true && isShowDownloadIcon(file as unknown as AttachmentMetadata) ? (
+                    ) : true &&
+                      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ isShowDownloadIcon(
+                        file as unknown as AttachmentMetadata
+                      ) ? (
                       <IconButton className={iconButtonClassName} ariaLabel={downloadFileButtonString()}>
                         <DownloadIconTrampoline />
                       </IconButton>
@@ -296,7 +314,7 @@ const DownloadIconTrampoline = (): JSX.Element => {
 };
 
 const useLocaleStringsTrampoline = (): _FileDownloadCardsStrings => {
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
   return useLocale().strings.messageThread;
   return { downloadFile: '', fileCardGroupMessage: '' };
 };
