@@ -12,7 +12,7 @@ import { InputBoxComponent } from './InputBoxComponent';
 import { InputBoxButton } from './InputBoxButton';
 import { SendBoxErrors } from './SendBoxErrors';
 /* @conditional-compile-remove(file-sharing) */
-import { _FileUploadCards } from './FileUploadCards';
+import { ActiveFileUpload, _FileUploadCards } from './FileUploadCards';
 /* @conditional-compile-remove(file-sharing) */
 import { fileUploadCardsStyles } from './styles/SendBox.styles';
 import { SendBoxErrorBarError } from './SendBoxErrorBar';
@@ -39,42 +39,6 @@ export interface SendBoxStylesProps extends BaseCustomStyles {
   sendMessageIcon?: IStyle;
   /** Styles for the system message; These styles will be ignored when a custom system message component is provided. */
   systemMessage?: IStyle;
-}
-
-/**
- * Attributes required for SendBox to show file uploads like name, progress etc.
- * @beta
- */
-export interface ActiveFileUpload {
-  /**
-   * Unique identifier for the file upload.
-   */
-  id: string;
-
-  /**
-   * File name to be rendered for uploaded file.
-   */
-  filename: string;
-
-  /**
-   * A number between 0 and 1 indicating the progress of the upload.
-   * This is unrelated to the `uploadComplete` property.
-   * It is only used to show the progress of the upload.
-   * Progress of 1 doesn't mark the upload as complete, set the `uploadComplete`
-   * property to true to mark the upload as complete.
-   */
-  progress: number;
-
-  /**
-   * Error to be displayed to the user if the upload fails.
-   */
-  error?: SendBoxErrorBarError;
-
-  /**
-   * `true` means that the upload is completed.
-   * This is independent of the upload `progress`.
-   */
-  uploadComplete?: boolean;
 }
 
 /**

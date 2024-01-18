@@ -5,9 +5,10 @@ import React, { useCallback, useState } from 'react';
 import { RTEInputBoxComponent } from './RTEInputBoxComponent';
 import { Icon, Stack, useTheme } from '@fluentui/react';
 import { useLocale } from '../../localization';
-import { ActiveFileUpload, SendBoxStrings } from '../SendBox';
+import { SendBoxStrings } from '../SendBox';
 import { borderAndBoxShadowStyle, sendButtonStyle, sendIconStyle } from '../styles/SendBox.styles';
 import { InputBoxButton } from '../InputBoxButton';
+import { ActiveFileUpload } from '../FileUploadCards';
 
 /**
  * Props for {@link RTESendBox}.

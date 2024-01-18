@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { ActiveFileUpload } from '../SendBox';
+import { ActiveFileUpload } from '../FileUploadCards';
 
 /**
  * @private

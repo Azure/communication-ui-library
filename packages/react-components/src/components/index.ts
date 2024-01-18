@@ -40,7 +40,7 @@ export type {
 export type { ImageGalleryProps, ImageGalleryImageProps } from './ImageGallery';
 
 /* @conditional-compile-remove(file-sharing) */
-export type { ActiveFileUpload } from './SendBox';
+export type { ActiveFileUpload } from './FileUploadCards';
 
 export { MessageStatusIndicator } from './MessageStatusIndicator';
 export type { MessageStatusIndicatorProps, MessageStatusIndicatorStrings } from './MessageStatusIndicator';
