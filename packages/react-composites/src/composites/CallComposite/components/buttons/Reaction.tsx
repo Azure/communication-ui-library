@@ -35,6 +35,7 @@ export const Reaction = (props: {
       disabled={reactionButtonDisabled || props.disabled}
       styles={styles}
       disableTooltip={props.disableTooltip}
+      persistMenu={true}
     />
   );
 };
