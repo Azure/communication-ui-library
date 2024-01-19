@@ -61,6 +61,7 @@ export const _RemoteVideoTile = React.memo(
     onUnpinParticipant?: (userId: string) => void;
     onUpdateScalingMode?: (userId: string, scalingMode: ViewScalingMode) => void;
     isPinned?: boolean;
+    /* @conditional-compile-remove(spotlight) */ isSpotlighted?: boolean;
     disablePinMenuItem?: boolean;
     toggleAnnouncerString?: (announcerString: string) => void;
   }) => {
@@ -81,6 +82,7 @@ export const _RemoteVideoTile = React.memo(
       isPinned,
       onPinParticipant,
       onUnpinParticipant,
+      /* @conditional-compile-remove(spotlight) */ isSpotlighted,
       onUpdateScalingMode,
       disablePinMenuItem,
       toggleAnnouncerString,
@@ -213,6 +215,8 @@ export const _RemoteVideoTile = React.memo(
               convertContextualMenuItemsToDrawerMenuItemProps(contextualMenuProps, () => setDrawerMenuItemProps([]))
             )
           }
+          /* @conditional-compile-remove(spotlight) */
+          isSpotlighted={isSpotlighted}
         />
         {drawerMenuItemProps.length > 0 && (
           <Layer hostId={props.drawerMenuHostId}>
