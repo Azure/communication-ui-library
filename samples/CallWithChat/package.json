@@ -39,7 +39,8 @@
     "@azure/logger": "^1.0.4",
     "@babel/preset-react": "^7.12.7",
     "@fluentui/react": "^8.114.3",
-        "@fluentui/react-icons": "^2.0.225",
+    "@fluentui/react-file-type-icons": "8.11.1",
+    "@fluentui/react-icons": "^2.0.225",
     "@internal/acs-ui-common": "1.12.1-beta.0",
     "@internal/calling-component-bindings": "1.12.1-beta.0",
     "@internal/calling-stateful-client": "1.12.1-beta.0",
@@ -52,8 +53,7 @@
     "react-router-dom": "^5.1.2",
     "reselect": "^4.0.0",
     "shake.js": "1.2.2",
-    "uuid": "^9.0.0",
-    "@fluentui/react-file-type-icons": "8.11.1"
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.23.7",
@@ -64,8 +64,8 @@
     "@types/react": "18.2.48",
     "@types/react-dom": "18.2.18",
     "@types/uuid": "^9.0.7",
-    "@typescript-eslint/eslint-plugin": "^6.13.2",
-    "@typescript-eslint/parser": "^6.13.2",
+    "@typescript-eslint/eslint-plugin": "^6.19.0",
+    "@typescript-eslint/parser": "^6.19.0",
     "ajv": "^8.12.0",
     "babel-jest": "^29.5.0",
     "babel-loader": "8.1.0",
