@@ -7,15 +7,16 @@ import { SendBoxErrorBar, SendBoxErrorBarError } from '../SendBoxErrorBar';
 /**
  * @private
  */
-export interface SendBoxErrorsProps {
+export interface RTESendBoxErrorsProps {
   fileUploadsPendingError?: SendBoxErrorBarError;
   fileUploadError?: SendBoxErrorBarError;
+  systemError?: SendBoxErrorBarError;
 }
 
 /**
  * @private
  */
-export const SendBoxErrors = (props: SendBoxErrorsProps): JSX.Element => {
+export const RTESendBoxErrors = (props: RTESendBoxErrorsProps): JSX.Element => {
   const { fileUploadError, fileUploadsPendingError } = props;
 
   const errorToDisplay = React.useMemo(() => {

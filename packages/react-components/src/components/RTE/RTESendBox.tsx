@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { RTEInputBoxComponent } from './RTEInputBoxComponent';
 import { Icon, Stack, useTheme } from '@fluentui/react';
 import { useLocale } from '../../localization';
@@ -9,6 +9,8 @@ import { SendBoxStrings } from '../SendBox';
 import { borderAndBoxShadowStyle, sendButtonStyle, sendIconStyle } from '../styles/SendBox.styles';
 import { InputBoxButton } from '../InputBoxButton';
 import { ActiveFileUpload } from '../FileUploadCards';
+import { RTESendBoxErrors, RTESendBoxErrorsProps } from './RTESendBoxErrors';
+import { activeFileUploadsTrampoline } from '../utils/SendBoxUtils';
 
 /**
  * Props for {@link RTESendBox}.
@@ -64,6 +66,7 @@ export const RTESendBox = (props: RTESendBoxProps): JSX.Element => {
   const theme = useTheme();
   const localeStrings = useLocale().strings.sendBox;
   const strings = { ...localeStrings, ...props.strings };
+  const activeFileUploads = activeFileUploadsTrampoline(props.activeFileUploads);
 
   const [contentValue] = useState('');
   const [contentValueOverflow] = useState(false);
@@ -91,6 +94,15 @@ export const RTESendBox = (props: RTESendBoxProps): JSX.Element => {
     [contentValue, errorMessage, theme]
   );
 
+  const sendBoxErrorsProps = useMemo<RTESendBoxErrorsProps>(() => {
+    return {
+      fileUploadsPendingError: undefined,
+      fileUploadError: activeFileUploads?.filter((fileUpload) => fileUpload.error).pop()?.error,
+      systemError: systemMessage ? { message: systemMessage, timestamp: Date.now() } : undefined,
+      messageTooLongError: contentValueOverflow ? { message: contentValueOverflow, timestamp: Date.now() } : undefined
+    };
+  }, [activeFileUploads, contentValueOverflow, systemMessage]);
+
   return (
     <Stack
       className={borderAndBoxShadowStyle({
@@ -99,8 +111,7 @@ export const RTESendBox = (props: RTESendBoxProps): JSX.Element => {
         disabled: !!disabled
       })}
     >
-      {/* <RTESendBoxErrors {...sendBoxErrorsProps} /> */}
-      {/* System Error Message */}
+      <RTESendBoxErrors {...sendBoxErrorsProps} />
       <RTEInputBoxComponent placeholderText={strings.placeholderText} content={contentValue} />
       <InputBoxButton
         onRenderIcon={onRenderSendIcon}
