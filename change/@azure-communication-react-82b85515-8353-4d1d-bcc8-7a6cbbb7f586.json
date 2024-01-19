@@ -1,9 +1,9 @@
 {
   "type": "none",
   "area": "improvement",
-  "workstream": "Changelog grooming",
-  "comment": "Groom stable changelog",
+  "workstream": "",
+  "comment": "Groom changelogs",
   "packageName": "@azure/communication-react",
-  "email": "miguelgamis@microsoft.com",
+  "email": "edwardlee@microsoft.com",
   "dependentChangeType": "none"
 }
