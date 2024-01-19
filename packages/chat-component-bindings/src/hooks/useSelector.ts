@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 import { ChatClientState, StatefulChatClient } from '@internal/chat-stateful-client';
-import { useContext, useEffect, useMemo, useRef, useState } from 'react';
-
 import { ChatClientContext } from '../providers/ChatClientProvider';
+
+import { useState, useEffect, useRef, useMemo, useContext } from 'react';
 import { ChatThreadClientContext } from '../providers/ChatThreadClientProvider';
 import { useChatComponentBindingState } from '../providers/ChatComponentBindingProvider';
 

@@ -1,10 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { ChatAttachmentType as AttachmentType, InlineImageMetadata } from '@internal/react-components';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { ChatAttachment, ChatAttachmentType } from '@azure/communication-chat';
 import {
   ChatBaseSelectorProps,
   getChatMessages,
@@ -15,28 +11,31 @@ import {
   getTeamsAttachments,
   getUserId
 } from './baseSelectors';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { ChatClientState, ChatMessageWithStatus } from '@internal/chat-stateful-client';
+import { memoizeFnAll } from '@internal/acs-ui-common';
 import {
   ChatMessage,
-  CommunicationParticipant,
   Message,
+  CommunicationParticipant,
+  SystemMessage,
   MessageContentType,
-  ReadReceiptsBySenderId,
-  SystemMessage
+  ReadReceiptsBySenderId
 } from '@internal/react-components';
-
-import { ACSKnownMessageType } from './utils/constants';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '@internal/react-components';
-import { ChatComponentBindingState } from './providers/ChatComponentBindingProvider';
+import { createSelector } from 'reselect';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { DEFAULT_DATA_LOSS_PREVENTION_POLICY_URL } from './utils/constants';
+import { ACSKnownMessageType } from './utils/constants';
+import { updateMessagesWithAttached } from './utils/updateMessagesWithAttached';
 /* @conditional-compile-remove(file-sharing) */
 import { FileMetadata } from '@internal/react-components';
-import { createSelector } from 'reselect';
-import { memoizeFnAll } from '@internal/acs-ui-common';
-import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { updateMessagesWithAttached } from './utils/updateMessagesWithAttached';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { ChatAttachment, ChatAttachmentType } from '@azure/communication-chat';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { ChatAttachmentType as AttachmentType, InlineImageMetadata } from '@internal/react-components';
+import { ChatComponentBindingState } from './providers/ChatComponentBindingProvider';
 
 const memoizedAllConvertChatMessage = memoizeFnAll(
   (
@@ -281,7 +280,7 @@ const convertToUiSystemMessage = (message: ChatMessageWithStatus): SystemMessage
  * @public
  */
 export type MessageThreadSelector = (
-  state: ChatClientState & ChatComponentBindingState,
+  state: ChatClientState & ChatComponentBindingState, // Todo: move ChatComponentBindingState to an internal method this calls to keep type private
   props: ChatBaseSelectorProps
 ) => {
   userId: string;
