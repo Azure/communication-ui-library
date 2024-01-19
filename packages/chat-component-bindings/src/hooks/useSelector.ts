@@ -2,10 +2,11 @@
 // Licensed under the MIT License.
 
 import { ChatClientState, StatefulChatClient } from '@internal/chat-stateful-client';
-import { ChatClientContext } from '../providers/ChatClientProvider';
+import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 
-import { useState, useEffect, useRef, useMemo, useContext } from 'react';
+import { ChatClientContext } from '../providers/ChatClientProvider';
 import { ChatThreadClientContext } from '../providers/ChatThreadClientProvider';
+import { useChatComponentBindingState } from '../providers/ChatComponentBindingProvider';
 
 /**
  * Hook to obtain a selector for a specified component.
@@ -63,5 +64,14 @@ export const useSelector = <
       chatClient.offStateChange(onStateChange);
     };
   }, [chatClient, selector, selectorProps, threadConfigProps]);
-  return selector ? props : undefined;
+
+  const componentState = useChatComponentBindingState();
+  const mergedProps = useMemo(() => {
+    return {
+      ...props,
+      ...componentState // Todo: should run selector on componentState and not return the whole componentState
+    };
+  }, [props, componentState]);
+
+  return selector ? mergedProps : undefined;
 };

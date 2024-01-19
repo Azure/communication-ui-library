@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 import { ChatClientState, ChatErrors, ChatMessageWithStatus } from '@internal/chat-stateful-client';
+import { ChatComponentBindingState, TeamsAttachment } from './providers/ChatComponentBindingProvider';
 import { ChatMessageReadReceipt, ChatParticipant } from '@azure/communication-chat';
+
 import { TypingIndicatorReceivedEvent } from '@azure/communication-chat';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
@@ -76,3 +78,8 @@ export const getTypingIndicators = (
  * @private
  */
 export const getLatestErrors = (state: ChatClientState): ChatErrors => state.latestErrors;
+
+/**
+ * @private
+ */
+export const getTeamsAttachments = (state: ChatComponentBindingState): TeamsAttachment[] => state.teamsAttachments;

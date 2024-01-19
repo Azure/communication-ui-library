@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 import React, { createContext, useContext } from 'react';
+
+import { ChatComponentBindingProvider } from './ChatComponentBindingProvider';
 import { ChatThreadClient } from '@azure/communication-chat';
 
 /**
@@ -28,7 +30,11 @@ export type ChatThreadClientProviderProps = {
  */
 export const ChatThreadClientProvider = (props: ChatThreadClientProviderProps): JSX.Element => {
   return (
-    <ChatThreadClientContext.Provider value={props.chatThreadClient}>{props.children}</ChatThreadClientContext.Provider>
+    <ChatThreadClientContext.Provider value={props.chatThreadClient}>
+      <ChatComponentBindingProvider chatThreadClient={props.chatThreadClient}>
+        {props.children}
+      </ChatComponentBindingProvider>
+    </ChatThreadClientContext.Provider>
   );
 };
 /**

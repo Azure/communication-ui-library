@@ -1,6 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { ChatAttachmentType as AttachmentType, InlineImageMetadata } from '@internal/react-components';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { ChatAttachment, ChatAttachmentType } from '@azure/communication-chat';
 import {
   ChatBaseSelectorProps,
   getChatMessages,
@@ -8,32 +12,31 @@ import {
   getLatestReadTime,
   getParticipants,
   getReadReceipts,
+  getTeamsAttachments,
   getUserId
 } from './baseSelectors';
-import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { ChatClientState, ChatMessageWithStatus } from '@internal/chat-stateful-client';
-import { memoizeFnAll } from '@internal/acs-ui-common';
 import {
   ChatMessage,
-  Message,
   CommunicationParticipant,
-  SystemMessage,
+  Message,
   MessageContentType,
-  ReadReceiptsBySenderId
+  ReadReceiptsBySenderId,
+  SystemMessage
 } from '@internal/react-components';
+
+import { ACSKnownMessageType } from './utils/constants';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '@internal/react-components';
-import { createSelector } from 'reselect';
+import { ChatComponentBindingState } from './providers/ChatComponentBindingProvider';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { DEFAULT_DATA_LOSS_PREVENTION_POLICY_URL } from './utils/constants';
-import { ACSKnownMessageType } from './utils/constants';
-import { updateMessagesWithAttached } from './utils/updateMessagesWithAttached';
 /* @conditional-compile-remove(file-sharing) */
 import { FileMetadata } from '@internal/react-components';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { ChatAttachment, ChatAttachmentType } from '@azure/communication-chat';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { ChatAttachmentType as AttachmentType, InlineImageMetadata } from '@internal/react-components';
+import { createSelector } from 'reselect';
+import { memoizeFnAll } from '@internal/acs-ui-common';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { updateMessagesWithAttached } from './utils/updateMessagesWithAttached';
 
 const memoizedAllConvertChatMessage = memoizeFnAll(
   (
@@ -278,7 +281,7 @@ const convertToUiSystemMessage = (message: ChatMessageWithStatus): SystemMessage
  * @public
  */
 export type MessageThreadSelector = (
-  state: ChatClientState,
+  state: ChatClientState & ChatComponentBindingState,
   props: ChatBaseSelectorProps
 ) => {
   userId: string;
@@ -296,8 +299,16 @@ const hasValidParticipant = (chatMessage: ChatMessageWithStatus): boolean =>
  */
 export const messageThreadSelectorWithThread: () => MessageThreadSelector = () =>
   createSelector(
-    [getUserId, getChatMessages, getLatestReadTime, getIsLargeGroup, getReadReceipts, getParticipants],
-    (userId, chatMessages, latestReadTime, isLargeGroup, readReceipts, participants) => {
+    [
+      getUserId,
+      getChatMessages,
+      getLatestReadTime,
+      getIsLargeGroup,
+      getReadReceipts,
+      getParticipants,
+      getTeamsAttachments
+    ],
+    (userId, chatMessages, latestReadTime, isLargeGroup, readReceipts, participants, teamsAttachments) => {
       // We can't get displayName in teams meeting interop for now, disable rr feature when it is teams interop
       const isTeamsInterop = Object.values(participants).find((p) => 'microsoftTeamsUserId' in p.id) !== undefined;
 
@@ -341,7 +352,7 @@ export const messageThreadSelectorWithThread: () => MessageThreadSelector = () =
           .map((message) => {
             return memoizedFn(
               message.id ?? message.clientMessageId,
-              message,
+              message, // transform message content to apply fetched teams attachments where applicable
               userId,
               message.createdOn <= latestReadTime,
               isLargeGroup
