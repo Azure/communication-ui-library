@@ -20,7 +20,7 @@
     "@octokit/rest": "~19.0.3",
     "@rollup/plugin-commonjs": "~25.0.7",
     "@rollup/plugin-json": "^6.0.1",
-    "@types/node": "^20.10.4",
+    "@types/node": "^20.11.5",
     "beachball": "2.31.13",
     "rollup": "^4.9.5",
     "rollup-plugin-sourcemaps": "~0.6.3",
