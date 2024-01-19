@@ -43,7 +43,7 @@
     "@internal/calling-stateful-client": "1.12.1-beta.0",
     "@internal/react-components": "1.12.1-beta.0",
     "@internal/react-composites": "1.12.1-beta.0",
-    "follow-redirects": "1.15.3",
+    "follow-redirects": "1.15.4",
     "merge": "^2.1.1",
     "mobile-detect": "^1.4.5",
     "nanoid": "3.3.6",
