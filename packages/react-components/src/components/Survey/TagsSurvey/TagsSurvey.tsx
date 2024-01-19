@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Text, useTheme, Stack, Checkbox, Pivot, PivotItem, TextField } from '@fluentui/react';
 import { _formatString, _pxToRem } from '@internal/acs-ui-common';
 import {
@@ -91,6 +91,8 @@ export const _TagsSurvey = (props: _TagsSurveyProps): JSX.Element => {
 
   const [selectedTextResponse, setSelectedTextResponse] = useState<CallSurveyImprovementSuggestions>({});
 
+  const [checkedTextFields, setCheckedTextFields] = useState<string[]>([]);
+
   const tags: _SurveyTag[] = useMemo(() => {
     const tags: _SurveyTag[] = [];
     Object.keys(callIssuesToTag).forEach((issueCategory) => {
@@ -128,6 +130,7 @@ export const _TagsSurvey = (props: _TagsSurveyProps): JSX.Element => {
             return prevState;
           });
         } else {
+          setCheckedTextFields([...checkedTextFields, issueCategory]);
           setSelectedTextResponse((prevState) => {
             prevState[issueCategory] = textResponse[issueCategory];
             return prevState;
@@ -147,18 +150,15 @@ export const _TagsSurvey = (props: _TagsSurveyProps): JSX.Element => {
             return prevState;
           });
         } else {
+          setCheckedTextFields(checkedTextFields.filter((id) => id !== issueCategory));
           setSelectedTextResponse((prevState) => {
             delete prevState[issueCategory];
             return prevState;
           });
         }
       }
-
-      if (onConfirm) {
-        onConfirm(selectedTags, selectedTextResponse);
-      }
     },
-    [onConfirm, selectedTags, selectedTextResponse, textResponse]
+    [textResponse, checkedTextFields]
   );
 
   const theme = useTheme();
@@ -173,15 +173,14 @@ export const _TagsSurvey = (props: _TagsSurveyProps): JSX.Element => {
           placeholder={strings?.tagsSurveyTextFieldDefaultText}
           onChange={(e, v) => {
             if (v) {
+              setCheckedTextFields([...checkedTextFields, issueCategory]);
               setTextResponse((prevState) => {
                 prevState[issueCategory] = v;
                 return prevState;
               });
 
               setSelectedTextResponse((prevState) => {
-                if (Object.keys(prevState).includes(issueCategory)) {
-                  prevState[issueCategory] = v;
-                }
+                prevState[issueCategory] = v;
                 return prevState;
               });
             }
@@ -189,8 +188,14 @@ export const _TagsSurvey = (props: _TagsSurveyProps): JSX.Element => {
         />
       );
     },
-    [strings?.tagsSurveyTextFieldDefaultText]
+    [strings?.tagsSurveyTextFieldDefaultText, checkedTextFields]
   );
+
+  useEffect(() => {
+    if (onConfirm) {
+      onConfirm(selectedTags, selectedTextResponse);
+    }
+  }, [selectedTags, selectedTextResponse, onConfirm]);
 
   return (
     <>
@@ -222,6 +227,7 @@ export const _TagsSurvey = (props: _TagsSurveyProps): JSX.Element => {
               })}
               {showFreeFormTextField && (
                 <Checkbox
+                  checked={checkedTextFields.includes(key)}
                   styles={freeFormTextCheckboxStyles}
                   onChange={(ev, checked) => onChange(key, checked ?? false)}
                   onRenderLabel={() => {
