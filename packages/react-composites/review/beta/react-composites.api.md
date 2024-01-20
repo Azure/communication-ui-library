@@ -1546,6 +1546,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ContextMenuSpeakerIcon: React_2.JSX.Element;
     SurveyStarIcon: React_2.JSX.Element;
     SurveyStarIconFilled: React_2.JSX.Element;
+    StartSpotlightContextualMenuItem: React_2.JSX.Element;
+    StopSpotlightContextualMenuItem: React_2.JSX.Element;
     VideoSpotlighted: React_2.JSX.Element;
 };
 

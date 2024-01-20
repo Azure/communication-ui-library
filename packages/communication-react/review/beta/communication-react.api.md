@@ -2458,6 +2458,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     ContextMenuSpeakerIcon: React_2.JSX.Element;
     SurveyStarIcon: React_2.JSX.Element;
     SurveyStarIconFilled: React_2.JSX.Element;
+    StartSpotlightContextualMenuItem: React_2.JSX.Element;
+    StopSpotlightContextualMenuItem: React_2.JSX.Element;
     VideoSpotlighted: React_2.JSX.Element;
 };
 
@@ -2565,7 +2567,11 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ErrorBarCallVideoStoppedBySystem: React_2.JSX.Element;
     MessageResend: React_2.JSX.Element;
     ParticipantItemSpotlighted: React_2.JSX.Element;
-    HoldCallContextualMenuItem: React_2.JSX.Element;
+    HoldCallContextualMenuItem: React_2.JSX.Element; /**
+    * Icons that can be overridden for {@link CallWithChatComposite}.
+    *
+    * @public
+    */
     HoldCallButton: React_2.JSX.Element;
     ResumeCall: React_2.JSX.Element;
     DialpadBackspace: React_2.JSX.Element;
@@ -2600,6 +2606,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ContextMenuSpeakerIcon: React_2.JSX.Element;
     SurveyStarIcon: React_2.JSX.Element;
     SurveyStarIconFilled: React_2.JSX.Element;
+    StartSpotlightContextualMenuItem: React_2.JSX.Element;
+    StopSpotlightContextualMenuItem: React_2.JSX.Element;
     VideoSpotlighted: React_2.JSX.Element;
 };
 
@@ -3525,6 +3533,8 @@ export type ParticipantListProps = {
     onRemoveParticipant?: (userId: string) => void;
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
     onParticipantClick?: (participant?: ParticipantListParticipant) => void;
+    onStartSpotlight?: (userId: string) => void;
+    onStopSpotlight?: (userId: string) => void;
     styles?: ParticipantListStyles;
     showParticipantOverflowTooltip?: boolean;
     totalParticipantCount?: number;
@@ -4375,6 +4385,8 @@ export interface VideoGalleryProps {
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
+    onStartSpotlight?: (userId: string) => Promise<void>;
+    onStopSpotlight?: (userId: string) => Promise<void>;
     onUnpinParticipant?: (userId: string) => void;
     overflowGalleryPosition?: OverflowGalleryPosition;
     pinnedParticipants?: string[];

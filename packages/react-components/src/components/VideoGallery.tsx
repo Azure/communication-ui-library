@@ -266,6 +266,16 @@ export interface VideoGalleryProps {
    * List of spotlighted participant userIds.
    */
   spotlightedParticipants?: string[];
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * This callback will be called when spotlight is started for participant video tile..
+   */
+  onStartSpotlight?: (userId: string) => Promise<void>;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * This callback will be called when spotlight is stopped for participant video tile.
+   */
+  onStopSpotlight?: (userId: string) => Promise<void>;
   /* @conditional-compile-remove(pinned-participants) */
   /**
    * Options for showing the remote video tile menu.
@@ -358,7 +368,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(rooms) */
     localVideoTileSize = 'followDeviceOrientation',
     /* @conditional-compile-remove(spotlight) */
-    spotlightedParticipants
+    spotlightedParticipants,
+    /* @conditional-compile-remove(spotlight) */
+    onStartSpotlight,
+    /* @conditional-compile-remove(spotlight) */
+    onStopSpotlight
   } = props;
 
   const ids = useIdentifiers();
@@ -626,6 +640,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           toggleAnnouncerString={toggleAnnouncerString}
           /* @conditional-compile-remove(spotlight) */
           isSpotlighted={isSpotlighted}
+          /* @conditional-compile-remove(spotlight) */
+          onStartSpotlight={onStartSpotlight}
+          /* @conditional-compile-remove(spotlight) */
+          onStopSpotlight={onStopSpotlight}
         />
       );
     },
@@ -645,7 +663,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       /* @conditional-compile-remove(pinned-participants) */ onUnpinParticipant,
       /* @conditional-compile-remove(pinned-participants) */ toggleAnnouncerString,
       /* @conditional-compile-remove(pinned-participants) */ onUpdateScalingMode,
-      /* @conditional-compile-remove(spotlight) */ spotlightedParticipants
+      /* @conditional-compile-remove(spotlight) */ spotlightedParticipants,
+      /* @conditional-compile-remove(spotlight) */ onStartSpotlight,
+      /* @conditional-compile-remove(spotlight) */ onStopSpotlight
     ]
   );
 
