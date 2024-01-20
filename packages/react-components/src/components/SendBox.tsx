@@ -10,15 +10,18 @@ import { useLocale } from '../localization';
 import { useIdentifiers } from '../identifiers';
 import { InputBoxComponent } from './InputBoxComponent';
 import { InputBoxButton } from './InputBoxButton';
+/* @conditional-compile-remove(file-sharing) */ s;
 import { SendBoxErrors } from './SendBoxErrors';
 /* @conditional-compile-remove(file-sharing) */
 import { ActiveFileUpload, _FileUploadCards } from './FileUploadCards';
 /* @conditional-compile-remove(file-sharing) */
 import { fileUploadCardsStyles } from './styles/SendBox.styles';
+/* @conditional-compile-remove(file-sharing) */
 import { SendBoxErrorBarError } from './SendBoxErrorBar';
+/* @conditional-compile-remove(file-sharing) */
+import { hasCompletedFileUploads, hasIncompleteFileUploads } from './utils/SendBoxUtils';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from './MentionPopover';
-import { activeFileUploadsTrampoline, hasCompletedFileUploads, hasIncompleteFileUploads } from './utils/SendBoxUtils';
 
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
 const EMPTY_MESSAGE_REGEX = /^\s*$/;
@@ -187,19 +190,21 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     styles,
     autoFocus,
     /* @conditional-compile-remove(mention) */
-    mentionLookupOptions
+    mentionLookupOptions,
+    /* @conditional-compile-remove(file-sharing) */
+    activeFileUploads
   } = props;
   const theme = useTheme();
   const localeStrings = useLocale().strings.sendBox;
   const strings = { ...localeStrings, ...props.strings };
   const ids = useIdentifiers();
-  const activeFileUploads = activeFileUploadsTrampoline(props.activeFileUploads);
 
   const [textValue, setTextValue] = useState('');
   const [textValueOverflow, setTextValueOverflow] = useState(false);
 
   const sendTextFieldRef = React.useRef<ITextField>(null);
 
+  /* @conditional-compile-remove(file-sharing) */
   const [fileUploadsPendingError, setFileUploadsPendingError] = useState<SendBoxErrorBarError | undefined>(undefined);
 
   const sendMessageOnClick = (): void => {
@@ -209,10 +214,11 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     }
 
     // Don't send message until all files have been uploaded successfully
+    /* @conditional-compile-remove(file-sharing) */
     setFileUploadsPendingError(undefined);
 
+    /* @conditional-compile-remove(file-sharing) */
     if (hasIncompleteFileUploads(activeFileUploads)) {
-      /* @conditional-compile-remove(file-sharing) */
       setFileUploadsPendingError({ message: strings.fileUploadsPendingError, timestamp: Date.now() });
       return;
     }
@@ -251,7 +257,8 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   const mergedStyles = useMemo(() => concatStyleSets(styles), [styles]);
 
   const hasText = !!textValue;
-  const hasTextOrFile = hasText || hasCompletedFileUploads(activeFileUploads);
+  const hasTextOrFile =
+    hasText || /* @conditional-compile-remove(file-sharing) */ hasCompletedFileUploads(activeFileUploads);
   const hasErrorMessage = !!errorMessage;
 
   const mergedSendIconStyle = useMemo(
@@ -276,12 +283,14 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   );
 
   // Ensure that errors are cleared when there are no files in sendBox
+  /* @conditional-compile-remove(file-sharing) */
   React.useEffect(() => {
     if (!activeFileUploads?.filter((upload) => !upload.error).length) {
       setFileUploadsPendingError(undefined);
     }
   }, [activeFileUploads]);
 
+  /* @conditional-compile-remove(file-sharing) */
   const sendBoxErrorsProps = useMemo(() => {
     return {
       fileUploadsPendingError: fileUploadsPendingError,
@@ -318,7 +327,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
         { overflow: 'visible' } // This is needed for the mention popup to be visible
       )}
     >
-      <SendBoxErrors {...sendBoxErrorsProps} />
+      {/* @conditional-compile-remove(file-sharing) */ <SendBoxErrors {...sendBoxErrorsProps} />}
       <Stack
         className={borderAndBoxShadowStyle({
           theme,

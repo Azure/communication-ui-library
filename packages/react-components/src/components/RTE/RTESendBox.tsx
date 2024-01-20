@@ -8,9 +8,9 @@ import { useLocale } from '../../localization';
 import { SendBoxStrings } from '../SendBox';
 import { borderAndBoxShadowStyle, sendButtonStyle, sendIconStyle } from '../styles/SendBox.styles';
 import { InputBoxButton } from '../InputBoxButton';
-import { ActiveFileUpload } from '../FileUploadCards';
 import { RTESendBoxErrors, RTESendBoxErrorsProps } from './RTESendBoxErrors';
-import { activeFileUploadsTrampoline } from '../utils/SendBoxUtils';
+/* @conditional-compile-remove(file-sharing) */
+import { ActiveFileUpload } from '../FileUploadCards';
 
 /**
  * Props for {@link RTESendBox}.
@@ -66,7 +66,6 @@ export const RTESendBox = (props: RTESendBoxProps): JSX.Element => {
   const theme = useTheme();
   const localeStrings = useLocale().strings.sendBox;
   const strings = { ...localeStrings, ...props.strings };
-  const activeFileUploads = activeFileUploadsTrampoline(props.activeFileUploads);
 
   const [contentValue] = useState('');
   const [contentValueOverflow] = useState(false);
@@ -97,11 +96,11 @@ export const RTESendBox = (props: RTESendBoxProps): JSX.Element => {
   const sendBoxErrorsProps = useMemo<RTESendBoxErrorsProps>(() => {
     return {
       fileUploadsPendingError: undefined,
-      fileUploadError: activeFileUploads?.filter((fileUpload) => fileUpload.error).pop()?.error,
+      fileUploadError: undefined,
       systemError: systemMessage ? { message: systemMessage, timestamp: Date.now() } : undefined,
-      messageTooLongError: contentValueOverflow ? { message: contentValueOverflow, timestamp: Date.now() } : undefined
+      messageTooLongError: contentValueOverflow ? { message: strings.textTooLong, timestamp: Date.now() } : undefined
     };
-  }, [activeFileUploads, contentValueOverflow, systemMessage]);
+  }, [contentValueOverflow, strings.textTooLong, systemMessage]);
 
   return (
     <Stack

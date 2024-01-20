@@ -6,8 +6,7 @@ import { ActiveFileUpload } from '../FileUploadCards';
 /**
  * @private
  */
-export const hasIncompleteFileUploads = (props: ActiveFileUpload[] | undefined): boolean => {
-  const activeFileUploads = activeFileUploadsTrampoline(props);
+export const hasIncompleteFileUploads = (activeFileUploads: ActiveFileUpload[] | undefined): boolean => {
   return !!(
     activeFileUploads?.length &&
     !activeFileUploads.filter((fileUpload) => !fileUpload.error).every((fileUpload) => fileUpload.uploadComplete)
@@ -17,18 +16,17 @@ export const hasIncompleteFileUploads = (props: ActiveFileUpload[] | undefined):
 /**
  * @private
  */
-export const hasCompletedFileUploads = (props: ActiveFileUpload[] | undefined): boolean => {
-  const activeFileUploads = activeFileUploadsTrampoline(props);
+export const hasCompletedFileUploads = (activeFileUploads: ActiveFileUpload[] | undefined): boolean => {
   return !!activeFileUploads?.find((file) => !file.error);
 };
 
-/**
- * @private
- */
-export const activeFileUploadsTrampoline = (
-  activeFileUploads: ActiveFileUpload[] | undefined
-): ActiveFileUpload[] | undefined => {
-  /* @conditional-compile-remove(file-sharing) */
-  return activeFileUploads;
-  return [];
-};
+// /**
+//  * @private
+//  */
+// export const activeFileUploadsTrampoline = (
+//   activeFileUploads: ActiveFileUpload[] | undefined
+// ): ActiveFileUpload[] | undefined => {
+//   /* @conditional-compile-remove(file-sharing) */
+//   return activeFileUploads;
+//   return [];
+// };
