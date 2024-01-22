@@ -639,6 +639,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           /* @conditional-compile-remove(capabilities) */
           capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
           onSetDialpadPage={() => setDialpadScreen(!dialpadScreen)}
+          dtmfDialerPresent={dialpadScreen}
         />
       </>
     );
