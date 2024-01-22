@@ -1,8 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+/* @conditional-compile-remove(file-sharing) */
 import { ActiveFileUpload } from '../FileUploadCards';
 
+/* @conditional-compile-remove(file-sharing) */
 /**
  * @private
  */
@@ -13,20 +15,10 @@ export const hasIncompleteFileUploads = (activeFileUploads: ActiveFileUpload[] |
   );
 };
 
+/* @conditional-compile-remove(file-sharing) */
 /**
  * @private
  */
 export const hasCompletedFileUploads = (activeFileUploads: ActiveFileUpload[] | undefined): boolean => {
   return !!activeFileUploads?.find((file) => !file.error);
 };
-
-// /**
-//  * @private
-//  */
-// export const activeFileUploadsTrampoline = (
-//   activeFileUploads: ActiveFileUpload[] | undefined
-// ): ActiveFileUpload[] | undefined => {
-//   /* @conditional-compile-remove(file-sharing) */
-//   return activeFileUploads;
-//   return [];
-// };
