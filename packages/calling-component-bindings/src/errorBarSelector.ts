@@ -11,7 +11,8 @@ import {
 import { ActiveErrorMessage, ErrorType } from '@internal/react-components';
 import { createSelector } from 'reselect';
 import { CallClientState, CallErrors, CallErrorTarget } from '@internal/calling-stateful-client';
-import { DiagnosticQuality } from '@azure/communication-calling';
+// this import causes calling sdk to be included
+// import { DiagnosticQuality } from '@azure/communication-calling';
 /**
  * Selector type for {@link ErrorBar} component.
  *
@@ -67,8 +68,8 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
 
     // Errors reported via diagnostics are more reliable than from API method failures, so process those first.
     if (
-      diagnostics?.network.latest.networkReceiveQuality?.value === DiagnosticQuality.Bad ||
-      diagnostics?.network.latest.networkReceiveQuality?.value === DiagnosticQuality.Poor
+      diagnostics?.network.latest.networkReceiveQuality?.value === 3 ||
+      diagnostics?.network.latest.networkReceiveQuality?.value === 2
     ) {
       activeErrorMessages.push({ type: 'callNetworkQualityLow' });
     }
@@ -94,10 +95,10 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
     const microphoneMuteUnexpectedlyDiagnostic =
       diagnostics?.media.latest.microphoneMuteUnexpectedly || diagnostics?.media.latest.microphoneNotFunctioning;
     if (microphoneMuteUnexpectedlyDiagnostic) {
-      if (microphoneMuteUnexpectedlyDiagnostic.value === DiagnosticQuality.Bad) {
+      if (microphoneMuteUnexpectedlyDiagnostic.value === 3) {
         // Inform the user that microphone stopped working and inform them to start microphone again
         activeErrorMessages.push({ type: 'callMicrophoneMutedBySystem' });
-      } else if (microphoneMuteUnexpectedlyDiagnostic.value === DiagnosticQuality.Good) {
+      } else if (microphoneMuteUnexpectedlyDiagnostic.value === 1) {
         // Inform the user that microphone recovered
         activeErrorMessages.push({ type: 'callMicrophoneUnmutedBySystem' });
       }
@@ -105,10 +106,10 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
 
     const cameraStoppedUnexpectedlyDiagnostic = diagnostics?.media.latest.cameraStoppedUnexpectedly;
     if (cameraStoppedUnexpectedlyDiagnostic) {
-      if (cameraStoppedUnexpectedlyDiagnostic.value === DiagnosticQuality.Bad) {
+      if (cameraStoppedUnexpectedlyDiagnostic.value === 3) {
         // Inform the user that camera stopped working and inform them to start video again
         activeErrorMessages.push({ type: 'callVideoStoppedBySystem' });
-      } else if (cameraStoppedUnexpectedlyDiagnostic.value === DiagnosticQuality.Good) {
+      } else if (cameraStoppedUnexpectedlyDiagnostic.value === 1) {
         // Inform the user that camera recovered
         activeErrorMessages.push({ type: 'callVideoRecoveredBySystem' });
       }

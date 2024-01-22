@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { RemoteParticipantState } from '@azure/communication-calling';
+import type { RemoteParticipantState } from '@azure/communication-calling';
 import { getIdentifierKind } from '@azure/communication-common';
 import { fromFlatCommunicationIdentifier, memoizeFnAll } from '@internal/acs-ui-common';
 import { CallParticipantListParticipant } from '@internal/react-components';

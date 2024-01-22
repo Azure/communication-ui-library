@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-import { DominantSpeakersInfo } from '@azure/communication-calling';
+import type { DominantSpeakersInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(capabilities) */
-import { ParticipantCapabilities } from '@azure/communication-calling';
+import type { ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(spotlight) */
-import { SpotlightedParticipant } from '@azure/communication-calling';
+import type { SpotlightedParticipant } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
-import { EnvironmentInfo } from '@azure/communication-calling';
-import { ParticipantRole } from '@azure/communication-calling';
+import type { EnvironmentInfo } from '@azure/communication-calling';
+import type { ParticipantRole } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
   CallClientState,

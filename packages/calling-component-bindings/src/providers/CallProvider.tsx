@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 import React, { useContext, createContext } from 'react';
-import { Call } from '@azure/communication-calling';
+import type { Call } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
-import { TeamsCall } from '@azure/communication-calling';
+import type { TeamsCall } from '@azure/communication-calling';
 import { _isACSCall, _isTeamsCall } from '@internal/calling-stateful-client';
 
 /**

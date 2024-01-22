@@ -29,7 +29,7 @@ import { getLocalParticipantReactionState } from './baseSelectors';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { getParticipantCount } from './baseSelectors';
 import { isMicrosoftTeamsAppIdentifier, isPhoneNumberIdentifier } from '@azure/communication-common';
-import { ParticipantRole } from '@azure/communication-calling';
+import type { ParticipantRole } from '@azure/communication-calling';
 /* @conditional-compile-remove(hide-attendee-name) */
 import { maskDisplayNameWithRole } from './utils/callUtils';
 import { getRemoteParticipantsExcludingConsumers } from './getRemoteParticipantsExcludingConsumers';

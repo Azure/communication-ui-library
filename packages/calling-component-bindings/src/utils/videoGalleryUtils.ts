@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import {
+import type {
   DominantSpeakersInfo,
   RemoteParticipantState as RemoteParticipantConnectionState
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(spotlight) */
-import { SpotlightedParticipant } from '@azure/communication-calling';
+import type { SpotlightedParticipant } from '@azure/communication-calling';
 /* @conditional-compile-remove(hide-attendee-name) */
-import { ParticipantRole } from '@azure/communication-calling';
+import type { ParticipantRole } from '@azure/communication-calling';
 import { memoizeFnAll, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { RemoteParticipantState, RemoteVideoStreamState } from '@internal/calling-stateful-client';
 import { VideoGalleryRemoteParticipant, VideoGalleryStream } from '@internal/react-components';

@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 
 import { DeviceManagerState, RemoteParticipantState, StatefulCallClient } from '@internal/calling-stateful-client';
-import { CallState as CallStatus, ParticipantRole } from '@azure/communication-calling';
-/* @conditional-compile-remove(unsupported-browser) */
-import { Features, EnvironmentInfo } from '@azure/communication-calling';
+import type { CallState as CallStatus, ParticipantRole } from '@azure/communication-calling';
+// /* @conditional-compile-remove(unsupported-browser) */
+// import type { EnvironmentInfo } from '@azure/communication-calling';
+// /* @conditional-compile-remove(unsupported-browser) */
+// import { Features } from '@azure/communication-calling';
 import {
   CommunicationIdentifier,
   CommunicationUserIdentifier,
@@ -104,10 +106,10 @@ const memoizedUpdateDisplayName = memoizeFnAll((participantId: string, participa
  *
  * @internal
  */
-export const _getEnvironmentInfo = async (callClient: StatefulCallClient): Promise<EnvironmentInfo> => {
-  const environmentInfo = await callClient.feature(Features.DebugInfo).getEnvironmentInfo();
-  return environmentInfo;
-};
+// export const _getEnvironmentInfo = async (callClient: StatefulCallClient): Promise<EnvironmentInfo> => {
+//   const environmentInfo = await callClient.feature(Features.DebugInfo).getEnvironmentInfo();
+//   return environmentInfo;
+// };
 
 /**
  * @private

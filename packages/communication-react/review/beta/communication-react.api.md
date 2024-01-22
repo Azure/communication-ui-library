@@ -8,10 +8,10 @@
 
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AudioDeviceInfo } from '@azure/communication-calling';
-import { BackgroundBlurConfig } from '@azure/communication-calling';
-import { BackgroundBlurEffect } from '@azure/communication-calling';
-import { BackgroundReplacementConfig } from '@azure/communication-calling';
-import { BackgroundReplacementEffect } from '@azure/communication-calling';
+import type { BackgroundBlurConfig } from '@azure/communication-calling';
+import type { BackgroundBlurEffect } from '@azure/communication-calling';
+import type { BackgroundReplacementConfig } from '@azure/communication-calling';
+import type { BackgroundReplacementEffect } from '@azure/communication-calling';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallClient } from '@azure/communication-calling';

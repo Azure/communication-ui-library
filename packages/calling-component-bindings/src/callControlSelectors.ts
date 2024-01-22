@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { AudioDeviceInfo, VideoDeviceInfo } from '@azure/communication-calling';
+import type { AudioDeviceInfo, VideoDeviceInfo } from '@azure/communication-calling';
 import { CallClientState } from '@internal/calling-stateful-client';
 import * as reselect from 'reselect';
 import {

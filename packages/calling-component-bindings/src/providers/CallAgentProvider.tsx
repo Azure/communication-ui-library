@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { CallAgent } from '@azure/communication-calling';
+import type { CallAgent } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
-import { TeamsCallAgent } from '@azure/communication-calling';
+import type { TeamsCallAgent } from '@azure/communication-calling';
 import { _isACSCallAgent } from '@internal/calling-stateful-client';
 import React, { createContext, useContext } from 'react';
 

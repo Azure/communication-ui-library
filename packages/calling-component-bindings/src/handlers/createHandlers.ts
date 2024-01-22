@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Call, CallAgent, StartCallOptions } from '@azure/communication-calling';
+import type { Call, CallAgent, StartCallOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 /* @conditional-compile-remove(PSTN-calls) */
-import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import type { AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import {
   isCommunicationUserIdentifier,
@@ -19,7 +19,7 @@ import memoizeOne from 'memoize-one';
 import { isACSCallParticipants } from '../utils/callUtils';
 import { createDefaultCommonCallingHandlers, CommonCallingHandlers } from './createCommonHandlers';
 /* @conditional-compile-remove(video-background-effects) */
-import { VideoBackgroundEffectsDependency } from './createCommonHandlers';
+import type { VideoBackgroundEffectsDependency } from './createCommonHandlers';
 
 /**
  * Object containing all the handlers required for calling components.
@@ -72,6 +72,7 @@ export const createDefaultCallingHandlers: CreateDefaultCallingHandlers = memoiz
     call,
     /* @conditional-compile-remove(video-background-effects) */ options
   ] = args;
+  console.log('createDefaultCallingHandlers');
   return {
     ...createDefaultCommonCallingHandlers(
       callClient,

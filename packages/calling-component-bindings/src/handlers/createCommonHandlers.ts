@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import {
+import type {
   AudioDeviceInfo,
   Call,
   LocalVideoStream,
@@ -12,14 +12,15 @@ import {
   BackgroundBlurConfig,
   BackgroundReplacementConfig
 } from '@azure/communication-calling';
+// import { LocalVideoStream } from '@azure/communication-calling';
 /* @conditional-compile-remove(end-of-call-survey) */
-import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
+import type { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
-import { DtmfTone, AddPhoneNumberOptions } from '@azure/communication-calling';
+import type { DtmfTone, AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
-import { TeamsCall } from '@azure/communication-calling';
+import type { TeamsCall } from '@azure/communication-calling';
 /* @conditional-compile-remove(call-readiness) */
-import { PermissionConstraints } from '@azure/communication-calling';
+import type { PermissionConstraints } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(spotlight) */
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
@@ -30,12 +31,12 @@ import { disposeAllLocalPreviewViews, _isInCall, _isInLobbyOrConnecting, _isPrev
 /* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(video-background-effects) */ /* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(raise-hand) */ /* @conditional-compile-remove(end-of-call-survey) */
-import { Features } from '@azure/communication-calling';
-/* @conditional-compile-remove(close-captions) */
-import { TeamsCaptions } from '@azure/communication-calling';
+// /* @conditional-compile-remove(video-background-effects) */ /* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(raise-hand) */ /* @conditional-compile-remove(end-of-call-survey) */
+// import type { Features } from '@azure/communication-calling';
+// /* @conditional-compile-remove(close-captions) */
+// import type { TeamsCaptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(reaction) */
-import { Reaction } from '@azure/communication-calling';
+import type { Reaction } from '@azure/communication-calling';
 
 /**
  * Object containing all the handlers required for calling components.
@@ -121,12 +122,12 @@ export type CaptionsOptions = {
   spokenLanguage: string;
 };
 
-/**
- * @private
- */
-export const areStreamsEqual = (prevStream: LocalVideoStream, newStream: LocalVideoStream): boolean => {
-  return !!prevStream && !!newStream && prevStream.source.id === newStream.source.id;
-};
+// /**
+//  * @private
+//  */
+// export const areStreamsEqual = (prevStream: LocalVideoStream, newStream: LocalVideoStream): boolean => {
+//   return !!prevStream && !!newStream && prevStream.source.id === newStream.source.id;
+// };
 
 /**
  * Dependency type to be injected for video background effects
@@ -168,10 +169,10 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       if (!callId || !videoDeviceInfo) {
         return;
       }
-      const stream = new LocalVideoStream(videoDeviceInfo);
-      if (call && !call.localVideoStreams.find((s) => areStreamsEqual(s, stream))) {
-        await call.startVideo(stream);
-      }
+      // const stream = new LocalVideoStream(videoDeviceInfo);
+      // if (call && !call.localVideoStreams.find((s) => areStreamsEqual(s, stream))) {
+      // await call.startVideo(stream);
+      // }
     };
 
     const onStopLocalVideo = async (stream: LocalVideoStream): Promise<void> => {
@@ -179,9 +180,9 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       if (!callId) {
         return;
       }
-      if (call && call.localVideoStreams.find((s) => areStreamsEqual(s, stream))) {
-        await call.stopVideo(stream);
-      }
+      // if (call && call.localVideoStreams.find((s) => areStreamsEqual(s, stream))) {
+      //   await call.stopVideo(stream);
+      // }
     };
 
     const onToggleCamera = async (options?: VideoStreamOptions): Promise<void> => {
@@ -302,41 +303,41 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     };
 
     /* @conditional-compile-remove(raise-hand) */
-    const onRaiseHand = async (): Promise<void> => await call?.feature(Features.RaiseHand)?.raiseHand();
+    const onRaiseHand = async (): Promise<void> => {}; //await call?.feature(Features.RaiseHand)?.raiseHand();
 
     /* @conditional-compile-remove(raise-hand) */
-    const onLowerHand = async (): Promise<void> => await call?.feature(Features.RaiseHand)?.lowerHand();
+    const onLowerHand = async (): Promise<void> => {}; //await call?.feature(Features.RaiseHand)?.lowerHand();
 
     /* @conditional-compile-remove(raise-hand) */
     const onToggleRaiseHand = async (): Promise<void> => {
-      const raiseHandFeature = call?.feature(Features.RaiseHand);
-      const localUserId = callClient.getState().userId;
-      const isLocalRaisedHand = raiseHandFeature
-        ?.getRaisedHands()
-        .find(
-          (publishedState) =>
-            toFlatCommunicationIdentifier(publishedState.identifier) === toFlatCommunicationIdentifier(localUserId)
-        );
-      if (isLocalRaisedHand) {
-        await raiseHandFeature?.lowerHand();
-      } else {
-        await raiseHandFeature?.raiseHand();
-      }
+      // const raiseHandFeature = call?.feature(Features.RaiseHand);
+      // const localUserId = callClient.getState().userId;
+      // const isLocalRaisedHand = raiseHandFeature
+      //   ?.getRaisedHands()
+      //   .find(
+      //     (publishedState) =>
+      //       toFlatCommunicationIdentifier(publishedState.identifier) === toFlatCommunicationIdentifier(localUserId)
+      //   );
+      // if (isLocalRaisedHand) {
+      //   await raiseHandFeature?.lowerHand();
+      // } else {
+      //   await raiseHandFeature?.raiseHand();
+      // }
     };
 
     /* @conditional-compile-remove(reaction) */
     const onReactionClicked = async (reaction: Reaction): Promise<void> => {
-      if (
-        reaction === 'like' ||
-        reaction === 'applause' ||
-        reaction === 'heart' ||
-        reaction === 'laugh' ||
-        reaction === 'surprised'
-      ) {
-        await call?.feature(Features.Reaction)?.sendReaction({ reactionType: reaction });
-      } else {
-        console.warn(`Can not recognize ${reaction} as meeting reaction`);
-      }
+      // if (
+      //   reaction === 'like' ||
+      //   reaction === 'applause' ||
+      //   reaction === 'heart' ||
+      //   reaction === 'laugh' ||
+      //   reaction === 'surprised'
+      // ) {
+      //   await call?.feature(Features.Reaction)?.sendReaction({ reactionType: reaction });
+      // } else {
+      //   console.warn(`Can not recognize ${reaction} as meeting reaction`);
+      // }
       return;
     };
 
@@ -537,86 +538,87 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
 
     /* @conditional-compile-remove(video-background-effects) */
     const onRemoveVideoBackgroundEffects = async (): Promise<void> => {
-      const stream =
-        call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video') ||
-        deviceManager?.getUnparentedVideoStreams().find((stream) => stream.mediaStreamType === 'Video');
-      if (stream) {
-        if (!options?.onResolveVideoBackgroundEffectsDependency) {
-          throw new Error(`Video background effects dependency not resolved`);
-        } else {
-          return stream.feature(Features.VideoEffects).stopEffects();
-        }
-      }
+      // const stream =
+      // call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video') ||
+      // deviceManager?.getUnparentedVideoStreams().find((stream) => stream.mediaStreamType === 'Video');
+      // if (stream) {
+      //   if (!options?.onResolveVideoBackgroundEffectsDependency) {
+      //     throw new Error(`Video background effects dependency not resolved`);
+      //   } else {
+      //     return stream.feature(Features.VideoEffects).stopEffects();
+      //   }
+      // }
     };
 
     /* @conditional-compile-remove(video-background-effects) */
     const onBlurVideoBackground = async (backgroundBlurConfig?: BackgroundBlurConfig): Promise<void> => {
-      const stream =
-        call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video') ||
-        deviceManager?.getUnparentedVideoStreams().find((stream) => stream.mediaStreamType === 'Video');
-      if (stream) {
-        if (!options?.onResolveVideoBackgroundEffectsDependency) {
-          throw new Error(`Video background effects dependency not resolved`);
-        }
-        const createEffect =
-          options?.onResolveVideoBackgroundEffectsDependency &&
-          (await options.onResolveVideoBackgroundEffectsDependency())?.createBackgroundBlurEffect;
-        return createEffect && stream.feature(Features.VideoEffects).startEffects(createEffect(backgroundBlurConfig));
-      }
+      // const stream =
+      //   call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video') ||
+      //   deviceManager?.getUnparentedVideoStreams().find((stream) => stream.mediaStreamType === 'Video');
+      // if (stream) {
+      //   if (!options?.onResolveVideoBackgroundEffectsDependency) {
+      //     throw new Error(`Video background effects dependency not resolved`);
+      //   }
+      //   const createEffect =
+      //     options?.onResolveVideoBackgroundEffectsDependency &&
+      //     (await options.onResolveVideoBackgroundEffectsDependency())?.createBackgroundBlurEffect;
+      //   return createEffect && stream.feature(Features.VideoEffects).startEffects(createEffect(backgroundBlurConfig));
+      // }
     };
 
     /* @conditional-compile-remove(video-background-effects) */
     const onReplaceVideoBackground = async (
       backgroundReplacementConfig: BackgroundReplacementConfig
     ): Promise<void> => {
-      const stream =
-        call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video') ||
-        deviceManager?.getUnparentedVideoStreams().find((stream) => stream.mediaStreamType === 'Video');
-      if (stream) {
-        if (!options?.onResolveVideoBackgroundEffectsDependency) {
-          throw new Error(`Video background effects dependency not resolved`);
-        }
-        const createEffect =
-          options?.onResolveVideoBackgroundEffectsDependency &&
-          (await options.onResolveVideoBackgroundEffectsDependency())?.createBackgroundReplacementEffect;
-        return (
-          createEffect && stream.feature(Features.VideoEffects).startEffects(createEffect(backgroundReplacementConfig))
-        );
-      }
+      // const stream =
+      //   call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video') ||
+      //   deviceManager?.getUnparentedVideoStreams().find((stream) => stream.mediaStreamType === 'Video');
+      // if (stream) {
+      //   if (!options?.onResolveVideoBackgroundEffectsDependency) {
+      //     throw new Error(`Video background effects dependency not resolved`);
+      //   }
+      //   const createEffect =
+      //     options?.onResolveVideoBackgroundEffectsDependency &&
+      //     (await options.onResolveVideoBackgroundEffectsDependency())?.createBackgroundReplacementEffect;
+      //   return (
+      //     createEffect && stream.feature(Features.VideoEffects).startEffects(createEffect(backgroundReplacementConfig))
+      //   );
+      // }
     };
 
     /* @conditional-compile-remove(close-captions) */
     const onStartCaptions = async (options?: CaptionsOptions): Promise<void> => {
-      const captionsFeature = call?.feature(Features.Captions).captions;
-      await captionsFeature?.startCaptions(options);
+      // const captionsFeature = call?.feature(Features.Captions).captions;
+      // await captionsFeature?.startCaptions(options);
     };
     /* @conditional-compile-remove(close-captions) */
     const onStopCaptions = async (): Promise<void> => {
-      const captionsFeature = call?.feature(Features.Captions).captions;
-      await captionsFeature?.stopCaptions();
+      // const captionsFeature = call?.feature(Features.Captions).captions;
+      // await captionsFeature?.stopCaptions();
     };
     /* @conditional-compile-remove(close-captions) */
     const onSetSpokenLanguage = async (language: string): Promise<void> => {
-      const captionsFeature = call?.feature(Features.Captions).captions;
-      await captionsFeature?.setSpokenLanguage(language);
+      // const captionsFeature = call?.feature(Features.Captions).captions;
+      // await captionsFeature?.setSpokenLanguage(language);
     };
     /* @conditional-compile-remove(close-captions) */
     const onSetCaptionLanguage = async (language: string): Promise<void> => {
-      const captionsFeature = call?.feature(Features.Captions).captions as TeamsCaptions;
-      await captionsFeature.setCaptionLanguage(language);
+      // const captionsFeature = call?.feature(Features.Captions).captions as TeamsCaptions;
+      // await captionsFeature.setCaptionLanguage(language);
     };
     /* @conditional-compile-remove(end-of-call-survey) */
-    const onSubmitSurvey = async (survey: CallSurvey): Promise<CallSurveyResponse | undefined> =>
-      await call?.feature(Features.CallSurvey).submitSurvey(survey);
+    const onSubmitSurvey = async (survey: CallSurvey): Promise<CallSurveyResponse | undefined> => {
+      return undefined;
+    }; //await call?.feature(Features.CallSurvey).submitSurvey(survey);
     /* @conditional-compile-remove(spotlight) */
     const onStartSpotlight = async (userId: string): Promise<void> => {
-      const participant = _toCommunicationIdentifier(userId);
-      await call?.feature(Features.Spotlight).startSpotlight([participant]);
+      // const participant = _toCommunicationIdentifier(userId);
+      // await call?.feature(Features.Spotlight).startSpotlight([participant]);
     };
     /* @conditional-compile-remove(spotlight) */
     const onStopSpotlight = async (userId: string): Promise<void> => {
-      const participant = _toCommunicationIdentifier(userId);
-      await call?.feature(Features.Spotlight).stopSpotlight([participant]);
+      // const participant = _toCommunicationIdentifier(userId);
+      // await call?.feature(Features.Spotlight).stopSpotlight([participant]);
     };
 
     return {

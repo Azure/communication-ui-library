@@ -119,12 +119,19 @@ export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   component: Component,
   type?: 'calling' | 'chat'
 ): ComponentProps<Component> => {
+  console.log('usePropsFor');
   const callingSelector = type === 'calling' || !type ? getCallingSelector(component) : undefined;
+  console.log('callingSelector', callingSelector);
   const chatSelector = type === 'chat' || !type ? getChatSelector(component) : undefined;
+  console.log('chatSelector', chatSelector);
   const callProps = useCallingSelector(callingSelector);
+  console.log('callProps', callProps);
   const chatProps = useChatSelector(chatSelector);
+  console.log('chatProps', chatProps);
   const callingHandlers = useCallingHandlers<Parameters<Component>[0]>(component);
+  console.log('callingHandlers', callingHandlers);
   const chatHandlers = useChatHandlers<Parameters<Component>[0]>(component);
+  console.log('chatHandlers', chatHandlers);
 
   if (chatProps) {
     if (!chatHandlers) {

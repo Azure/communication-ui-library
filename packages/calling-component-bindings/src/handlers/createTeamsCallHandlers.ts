@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { StartCallOptions } from '@azure/communication-calling';
+import type { StartCallOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 /* @conditional-compile-remove(PSTN-calls) */
-import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import type { AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
-import { TeamsCall, TeamsCallAgent } from '@azure/communication-calling';
+import type { TeamsCall, TeamsCallAgent } from '@azure/communication-calling';
 import {
   CommunicationIdentifier,
   isCommunicationUserIdentifier,

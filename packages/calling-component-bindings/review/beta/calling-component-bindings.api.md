@@ -7,20 +7,20 @@
 /// <reference types="react" />
 
 import { ActiveErrorMessage } from '@internal/react-components';
-import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import type { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AreEqual } from '@internal/acs-ui-common';
-import { AudioDeviceInfo } from '@azure/communication-calling';
-import { BackgroundBlurConfig } from '@azure/communication-calling';
-import { BackgroundBlurEffect } from '@azure/communication-calling';
-import { BackgroundReplacementConfig } from '@azure/communication-calling';
-import { BackgroundReplacementEffect } from '@azure/communication-calling';
-import { Call } from '@azure/communication-calling';
-import { CallAgent } from '@azure/communication-calling';
+import type { AudioDeviceInfo } from '@azure/communication-calling';
+import type { BackgroundBlurConfig } from '@azure/communication-calling';
+import type { BackgroundBlurEffect } from '@azure/communication-calling';
+import type { BackgroundReplacementConfig } from '@azure/communication-calling';
+import type { BackgroundReplacementEffect } from '@azure/communication-calling';
+import type { Call } from '@azure/communication-calling';
+import type { CallAgent } from '@azure/communication-calling';
 import { CallClientState } from '@internal/calling-stateful-client';
 import { CallParticipantListParticipant } from '@internal/react-components';
-import { CallState } from '@azure/communication-calling';
-import { CallSurvey } from '@azure/communication-calling';
-import { CallSurveyResponse } from '@azure/communication-calling';
+import type { CallState } from '@azure/communication-calling';
+import type { CallSurvey } from '@azure/communication-calling';
+import type { CallSurveyResponse } from '@azure/communication-calling';
 import { CameraButton } from '@internal/react-components';
 import { _CaptionsInfo } from '@internal/react-components';
 import { Common } from '@internal/acs-ui-common';
@@ -30,29 +30,28 @@ import { CreateVideoStreamViewResult } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
 import { DevicesButton } from '@internal/react-components';
 import { Dialpad } from '@internal/react-components';
-import { DominantSpeakersInfo } from '@azure/communication-calling';
-import { DtmfTone } from '@azure/communication-calling';
+import type { DominantSpeakersInfo } from '@azure/communication-calling';
+import type { DtmfTone } from '@azure/communication-calling';
 import { EndCallButton } from '@internal/react-components';
-import { EnvironmentInfo } from '@azure/communication-calling';
 import { ErrorBar } from '@internal/react-components';
 import { HoldButton } from '@internal/react-components';
 import { MicrophoneButton } from '@internal/react-components';
 import { ParticipantList } from '@internal/react-components';
-import { ParticipantRole } from '@azure/communication-calling';
+import type { ParticipantRole } from '@azure/communication-calling';
 import { ParticipantsButton } from '@internal/react-components';
-import { PermissionConstraints } from '@azure/communication-calling';
+import type { PermissionConstraints } from '@azure/communication-calling';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
-import { Reaction } from '@azure/communication-calling';
+import type { Reaction } from '@azure/communication-calling';
 import { RemoteParticipantState } from '@internal/calling-stateful-client';
 import { ScreenShareButton } from '@internal/react-components';
-import { StartCallOptions } from '@azure/communication-calling';
+import type { StartCallOptions } from '@azure/communication-calling';
 import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulDeviceManager } from '@internal/calling-stateful-client';
-import { TeamsCall } from '@azure/communication-calling';
-import { TeamsCallAgent } from '@azure/communication-calling';
-import { VideoDeviceInfo } from '@azure/communication-calling';
+import type { TeamsCall } from '@azure/communication-calling';
+import type { TeamsCallAgent } from '@azure/communication-calling';
+import type { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoGallery } from '@internal/react-components';
 import { VideoGalleryLocalParticipant } from '@internal/react-components';
 import { VideoGalleryRemoteParticipant } from '@internal/react-components';
@@ -264,9 +263,6 @@ export type GetCallingSelector<Component extends (props: any) => JSX.Element | u
 
 // @public
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
-
-// @internal
-export const _getEnvironmentInfo: (callClient: StatefulCallClient) => Promise<EnvironmentInfo>;
 
 // @public
 export type HoldButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
