@@ -12,6 +12,7 @@ import {
   MessageProps,
   MessageRenderer,
   MessageThread,
+  MessageThreadProps,
   MessageThreadStyles,
   ParticipantMenuItemsCallback,
   SendBox,
@@ -220,20 +221,20 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   );
 
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  const onRenderInlineAttachment = useCallback(
-    async (attachment: AttachmentMetadata[]): Promise<AttachmentDownloadResult[]> => {
-      const entry: Record<string, string> = {};
-      attachment.forEach((target) => {
-        if (target.attachmentType === 'inlineImage' && target.previewUrl) {
-          entry[target.id] = target.previewUrl;
-        }
-      });
+  // const onRenderInlineAttachment = useCallback(
+  //   async (attachment: AttachmentMetadata[]): Promise<AttachmentDownloadResult[]> => {
+  //     const entry: Record<string, string> = {};
+  //     attachment.forEach((target) => {
+  //       if (target.attachmentType === 'inlineImage' && target.previewUrl) {
+  //         entry[target.id] = target.previewUrl;
+  //       }
+  //     });
 
-      const blob = await adapter.downloadAttachments({ attachmentUrls: entry });
-      return blob;
-    },
-    [adapter]
-  );
+  //     const blob = await adapter.downloadAttachments({ attachmentUrls: entry });
+  //     return blob;
+  //   },
+  //   [adapter]
+  // );
 
   /* @conditional-compile-remove(image-gallery) */
   const onInlineImageClicked = useCallback(
@@ -348,15 +349,16 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
               fileDownloadErrorMessage={downloadErrorMessage || ''}
             />
           }
-          <MessageThread
+          <MessageThreadWrapper
             {...messageThreadProps}
             onRenderAvatar={onRenderAvatarCallback}
             onRenderMessage={onRenderMessage}
             /* @conditional-compile-remove(file-sharing) */
             onRenderFileDownloads={onRenderFileDownloads}
             /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-            onFetchAttachments={onRenderInlineAttachment}
             /* @conditional-compile-remove(image-gallery) */
+            // onFetchAttachments={onRenderInlineAttachment}
+            // internalFetchAttachments={onRenderInlineAttachment}
             onInlineImageClicked={onInlineImageClicked}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
@@ -415,4 +417,15 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       }
     </Stack>
   );
+};
+/**
+ * @internal
+ */
+// {spike} New internal Prop for MessageThread
+export type _MessageThreadProps = MessageThreadProps & {
+  internalFetchAttachments?: (attachments: AttachmentMetadata[]) => Promise<AttachmentDownloadResult[]>;
+};
+
+const MessageThreadWrapper = (props: _MessageThreadProps): JSX.Element => {
+  return <MessageThread {...props} />;
 };

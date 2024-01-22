@@ -19,6 +19,7 @@ import { _safeJSONStringify, toFlatCommunicationIdentifier } from '@internal/acs
 import { Constants } from './Constants';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-chat';
 import { chatStatefulLogger } from './Logger';
+import { ChatAttachment, CommunicationTokenCredential } from '@azure/communication-signaling';
 
 enableMapSet();
 // Needed to generate state diff for verbose logging.
@@ -38,10 +39,15 @@ export class ChatContext {
   private _logger: AzureLogger;
   private _emitter: EventEmitter;
   private typingIndicatorInterval: number | undefined = undefined;
+  // {spike} queue storing messages to be sent to AMS
+  private _messageQueue: MessageQueue | undefined = undefined;
 
-  constructor(maxListeners?: number) {
+  constructor(credential?: CommunicationTokenCredential, maxListeners?: number) {
     this._logger = createClientLogger('communication-react:chat-context');
     this._emitter = new EventEmitter();
+    if (credential) {
+      this._messageQueue = new MessageQueue(this, credential);
+    }
     if (maxListeners) {
       this._emitter.setMaxListeners(maxListeners);
     }
@@ -280,6 +286,13 @@ export class ChatContext {
   }
 
   public setChatMessage(threadId: string, message: ChatMessageWithStatus): void {
+    const attachments = message.content?.attachments;
+    if (message.type === 'html' && message.content?.message && attachments && attachments.length > 0) {
+      if (this._messageQueue && !this._messageQueue.containsMessage(message) && message.resourceCache === undefined) {
+        this._messageQueue.addMessage(threadId, message);
+      }
+    }
+
     const { id: messageId, clientMessageId } = message;
     if (messageId || clientMessageId) {
       this.modifyState((draft: ChatClientState) => {
@@ -415,4 +428,65 @@ const toChatError = (target: ChatErrorTarget, error: unknown): ChatError => {
     return new ChatError(target, error);
   }
   return new ChatError(target, new Error(`${error}`));
+};
+// Whether this is a class or not TBD
+class MessageQueue {
+  private _messageQueue: ChatMessageWithStatus[] = [];
+  private _context: ChatContext;
+  private _credential: CommunicationTokenCredential;
+
+  constructor(context: ChatContext, credential: CommunicationTokenCredential) {
+    this._context = context;
+    this._credential = credential;
+  }
+
+  public containsMessage(message: ChatMessageWithStatus): boolean {
+    let contains = false;
+    if (this._messageQueue.includes(message)) {
+      contains = true;
+    }
+    return contains;
+  }
+
+  public async addMessage(threadId: string, message: ChatMessageWithStatus): Promise<void> {
+    // make a copy of message and add to queue
+    const copy = { ...message };
+    this._messageQueue.push(copy);
+    const newMessage = await this.requestAttachments();
+    if (newMessage) {
+      this._context.setChatMessage(threadId, newMessage);
+    }
+  }
+
+  private async requestAttachments(): Promise<ChatMessageWithStatus | undefined> {
+    if (this._messageQueue.length === 0) {
+      return;
+    }
+    const message = this._messageQueue.shift();
+    if (message) {
+      const attachments = message.content?.attachments;
+      if (message.type === 'html' && attachments) {
+        if (message.resourceCache === undefined) {
+          message.resourceCache = {};
+        }
+        for (const attachment of attachments) {
+          const src = await fetchImageSource(attachment, this._credential);
+          message.resourceCache[attachment.id] = src;
+        }
+      }
+    }
+
+    return message;
+  }
+}
+
+const fetchImageSource = async (
+  attachment: ChatAttachment,
+  credential: CommunicationTokenCredential
+): Promise<string> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      return resolve('https://d1y8sb8igg2f8e.cloudfront.net/images/shutterstock_1375463840.width-800.jpg');
+    }, 2000);
+  });
 };

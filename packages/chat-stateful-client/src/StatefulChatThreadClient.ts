@@ -24,6 +24,7 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
         return createDecoratedListMessages(chatThreadClient, this._context);
       }
       case 'getMessage': {
+        // {spike} do some data manipulation for img
         return this._context.withAsyncErrorTeedToState(async (...args: Parameters<ChatThreadClient['getMessage']>) => {
           const message = await chatThreadClient.getMessage(...args);
           this._context.setChatMessage(chatThreadClient.threadId, convertChatMessage(message));
@@ -36,6 +37,9 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
           const [request, options] = args;
           const { content } = request;
           const clientMessageId = nanoid(); // Generate a local short uuid for message
+          // {spike} sending image to AMS
+          // Make upload image call -> attachment id
+          // newMessage with new url
           const newMessage: ChatMessageWithStatus = {
             content: { message: content },
             clientMessageId,

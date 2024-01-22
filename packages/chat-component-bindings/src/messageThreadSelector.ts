@@ -34,6 +34,7 @@ import { FileMetadata } from '@internal/react-components';
 import { ChatAttachment, ChatAttachmentType } from '@azure/communication-chat';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatAttachmentType as AttachmentType, InlineImageMetadata } from '@internal/react-components';
+import { ChatParticipant } from '@azure/communication-chat';
 
 const memoizedAllConvertChatMessage = memoizeFnAll(
   (
@@ -148,26 +149,38 @@ const extractAttachmentUrl = (attachment: ChatAttachment): string => {
   return attachment.url || '';
 };
 const processChatMessageContent = (message: ChatMessageWithStatus): string | undefined => {
+  let content = message.content?.message;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  if (sanitizedMessageContentType(message.type).includes('html') && message.content?.attachments) {
+  if (content && sanitizedMessageContentType(message.type).includes('html') && message.content?.attachments) {
     const attachments: ChatAttachment[] = message.content?.attachments;
+    // Fill in the src here
+    const document = new DOMParser().parseFromString(content, 'text/html');
+    document.querySelectorAll('img').forEach((img) => {
+      const attachmentId = attachments.find((attachment) => attachment.id === img.id)?.id;
+      if (attachmentId) {
+        const src = message.resourceCache?.[attachmentId] ?? '';
+        img.src = src;
+      }
+    });
+    content = document.documentElement.innerHTML;
     const teamsImageHtmlContent = attachments
       .filter(
         (attachment) => attachment.attachmentType === 'image' && !message.content?.message?.includes(attachment.id)
       )
-      .map((attachment) => generateImageAttachmentImgHtml(attachment))
+      .map((attachment) => generateImageAttachmentImgHtml(message, attachment))
       .join('');
     if (teamsImageHtmlContent) {
-      return (message.content?.message ?? '') + teamsImageHtmlContent;
+      return (content ?? '') + teamsImageHtmlContent;
     }
   }
-  return message.content?.message;
+  return content;
 };
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-const generateImageAttachmentImgHtml = (attachment: ChatAttachment): string => {
+const generateImageAttachmentImgHtml = (message: ChatMessageWithStatus, attachment: ChatAttachment): string => {
   const contentType = extractAttachmentContentTypeFromName(attachment.name);
-  return `\r\n<p><img alt="image" src="" itemscope="${contentType}" id="${attachment.id}"></p>`;
+  const src = message.resourceCache?.[attachment.id] ?? '';
+  return `\r\n<p><img alt="image" src="${src}" itemscope="${contentType}" id="${attachment.id}"></p>`;
 };
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
@@ -249,9 +262,9 @@ const convertToUiSystemMessage = (message: ChatMessageWithStatus): SystemMessage
         message.content?.participants
           // TODO: In our moderator logic, we use undefined name as our displayName for moderator, which should be filtered out
           // Once we have a better solution to identify the moderator, remove this line
-          ?.filter((participant) => participant.displayName && participant.displayName !== '')
+          ?.filter((participant: ChatParticipant) => participant.displayName && participant.displayName !== '')
           .map(
-            (participant): CommunicationParticipant => ({
+            (participant: ChatParticipant): CommunicationParticipant => ({
               userId: toFlatCommunicationIdentifier(participant.id),
               displayName: participant.displayName
             })
@@ -288,7 +301,7 @@ export type MessageThreadSelector = (
 
 /** Returns `true` if the message has participants and at least one participant has a display name. */
 const hasValidParticipant = (chatMessage: ChatMessageWithStatus): boolean =>
-  !!chatMessage.content?.participants && chatMessage.content.participants.some((p) => !!p.displayName);
+  !!chatMessage.content?.participants && chatMessage.content.participants.some((p: ChatParticipant) => !!p.displayName);
 
 /**
  *

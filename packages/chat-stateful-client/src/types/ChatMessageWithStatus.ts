@@ -17,4 +17,6 @@ export type ChatMessageWithStatus = ChatMessage & {
   status: MessageStatus;
   /* @conditional-compile-remove(data-loss-prevention) */
   policyViolation?: boolean;
+  // {spike} Img cache [amsURL: url] What is the additional work the steful layer will eed to do?
+  resourceCache?: Record<string, string>;
 };

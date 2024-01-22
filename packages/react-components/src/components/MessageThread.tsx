@@ -457,12 +457,6 @@ export type MessageThreadProps = {
   onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /**
-   * Optional callback to retrieve the inline image in a message.
-   * @param attachment - AttachmentMetadata object we want to render
-   * @beta
-   */
-  onFetchAttachments?: (attachments: AttachmentMetadata[]) => Promise<AttachmentDownloadResult[]>;
-  /**
    * Optional callback to edit a message.
    *
    * @param messageId - message id from chatClient
@@ -612,6 +606,16 @@ export type _ChatMessageProps = MessageProps & {
 };
 
 /**
+ * @internal
+ */
+// {spike} New internal Prop for MessageThread
+// {spike} New method here for when a message bubble is about to be visible
+export type _MessageThreadProps = MessageThreadProps & {
+  // Update this to return JSX.Element?
+  internalFetchAttachments?: (attachments: AttachmentMetadata[]) => Promise<AttachmentDownloadResult[]>;
+};
+
+/**
  * `MessageThread` allows you to easily create a component for rendering chat messages, handling scrolling behavior of new/old messages and customizing icons & controls inside the chat thread.
  * @param props - of type MessageThreadProps
  *
@@ -640,7 +644,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
 /**
  * @private
  */
-export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => {
+export const MessageThreadWrapper = (props: _MessageThreadProps): JSX.Element => {
   const {
     messages: newMessages,
     userId,
@@ -663,8 +667,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     onSendMessage,
     /* @conditional-compile-remove(date-time-customization) */
     onDisplayDateTimeString,
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-    onFetchAttachments,
+    internalFetchAttachments,
     /* @conditional-compile-remove(mention) */
     mentionOptions,
     /* @conditional-compile-remove(image-gallery) */
@@ -695,10 +698,10 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const onFetchInlineAttachment = useCallback(
     async (attachments: AttachmentMetadata[], messageId: string): Promise<void> => {
-      if (!onFetchAttachments || attachments.length === 0) {
+      if (!internalFetchAttachments || attachments.length === 0) {
         return;
       }
-      const attachmentDownloadResult = await onFetchAttachments(attachments);
+      const attachmentDownloadResult = await internalFetchAttachments(attachments);
 
       if (attachmentDownloadResult.length > 0) {
         setInlineAttachments((prev) => {
@@ -713,7 +716,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
         });
       }
     },
-    [onFetchAttachments]
+    [internalFetchAttachments]
   );
 
   const localeStrings = useLocale().strings.messageThread;
@@ -1116,9 +1119,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
                   participantCount={participantCount}
                   /* @conditional-compile-remove(file-sharing) */
                   fileDownloadHandler={props.fileDownloadHandler}
-                  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-                  onFetchInlineAttachment={onFetchInlineAttachment}
-                  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+                  onFetchInlineAttachment={onFetchInlineAttachment} // Turn this into an internal API
                   inlineAttachments={inlineAttachments}
                   /* @conditional-compile-remove(image-gallery) */
                   onInlineImageClicked={onInlineImageClicked}
