@@ -365,8 +365,8 @@ export const waitForParticipants = async (page: Page, numParticipants: number): 
       return participantList.children.length === args.numParticipants;
     },
     {
-      participantListSelector: participantListSelector,
-      numParticipants: numParticipants
+      participantListSelector,
+      numParticipants
     }
   );
 };
