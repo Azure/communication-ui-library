@@ -49,6 +49,7 @@ import { Reaction } from '../../CallComposite/components/buttons/Reaction';
 import { useSelector } from '../../CallComposite/hooks/useSelector';
 /* @conditional-compile-remove(reaction) */
 import { capabilitySelector } from '../../CallComposite/selectors/capabilitySelector';
+/* @conditional-compile-remove(dtmf-dialer) */
 import { DtmfDialpadButton } from './DtmfDialerButton';
 /**
  * @private
@@ -353,17 +354,19 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                           />
                         )
                     }
-                    {props.onSetDialpadPage !== undefined && (
-                      <DtmfDialpadButton
-                        styles={commonButtonStyles}
-                        displayType={options.displayType}
-                        onClick={() => {
-                          if (props.onSetDialpadPage !== undefined) {
-                            props.onSetDialpadPage();
-                          }
-                        }}
-                      />
-                    )}
+                    {
+                      /* @conditional-compile-remove(dtmf-dialer) */ props.onSetDialpadPage !== undefined && (
+                        <DtmfDialpadButton
+                          styles={commonButtonStyles}
+                          displayType={options.displayType}
+                          onClick={() => {
+                            if (props.onSetDialpadPage !== undefined) {
+                              props.onSetDialpadPage();
+                            }
+                          }}
+                        />
+                      )
+                    }
                     {screenShareButtonIsEnabled && (
                       <ScreenShare
                         option={options.screenShareButton}

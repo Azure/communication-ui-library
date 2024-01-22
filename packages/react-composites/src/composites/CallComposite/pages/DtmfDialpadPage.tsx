@@ -71,6 +71,7 @@ const DtmfDialpadPageContent = (props: DialpadPageContentProps): JSX.Element => 
         <Text>{calleeName !== 'Unnamed participant' ? calleeName : ''}</Text>
         <Dialpad
           onSendDtmfTone={async (tone: DtmfTone) => {
+            /* @conditional-compile-remove(dtmf-dialer) */
             await adapter.sendDtmfTone(tone);
           }}
           enableInputEditing={false}
