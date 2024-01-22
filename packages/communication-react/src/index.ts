@@ -299,6 +299,8 @@ export type {
 export type { RaiseHandButtonProps, RaiseHandButtonStrings, RaisedHand } from '../../react-components/src';
 /* @conditional-compile-remove(reaction) */
 export type { ReactionButtonStrings, Reaction, ReactionButtonProps } from '../../react-components/src';
+/* @conditional-compile-remove(spotlight) */
+export type { Spotlight } from '../../react-components/src';
 /* @conditional-compile-remove(image-gallery) */
 export type { ImageGalleryProps, ImageGalleryImageProps, ImageGalleryStrings } from '../../react-components/src';
 /* @conditional-compile-remove(data-loss-prevention) */
