@@ -110,7 +110,7 @@ export interface CallArrangementProps {
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
   onCloseChatPane?: () => void;
   /* @conditional-compile-remove(dtmf-dialer) */
-  onSetDialpadPage: () => void;
+  onSetDialpadPage?: () => void;
 }
 
 /**

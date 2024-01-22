@@ -82,7 +82,7 @@ export interface CommonCallControlBarProps {
   /* @conditional-compile-remove(video-background-effects) */
   videoBackgroundPickerRef?: React.RefObject<IButton>;
   /* @conditional-compile-remove(dtmf-dialer) */
-  onSetDialpadPage: () => void;
+  onSetDialpadPage?: () => void;
 }
 
 const inferCommonCallControlOptions = (
@@ -357,7 +357,11 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                       <DtmfDialpadButton
                         styles={commonButtonStyles}
                         displayType={options.displayType}
-                        onClick={() => props.onSetDialpadPage()}
+                        onClick={() => {
+                          if (props.onSetDialpadPage !== undefined) {
+                            props.onSetDialpadPage();
+                          }
+                        }}
                       />
                     )}
                     {screenShareButtonIsEnabled && (

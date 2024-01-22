@@ -14,6 +14,7 @@ const icon = (): JSX.Element => <CallCompositeIcon iconName={'DtmfDialpadButton'
  */
 export interface DtmfDialerButtonProps extends ControlBarButtonProps {
   displayType?: CallControlDisplayType;
+  styles?: ControlBarButtonStyles;
 }
 /**
  * Button for showing and hiding the dtmf dialer in the Call composite.
