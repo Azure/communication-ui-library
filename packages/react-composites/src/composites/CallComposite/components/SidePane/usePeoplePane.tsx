@@ -9,6 +9,8 @@ import { useLocale } from '../../../localization';
 import { ParticipantMenuItemsCallback, _DrawerMenuItemProps } from '@internal/react-components';
 import { AvatarPersonaDataCallback } from '../../../common/AvatarPersona';
 import { IButton } from '@fluentui/react';
+/* @conditional-compile-remove(spotlight) */
+import { IContextualMenuItem } from '@fluentui/react';
 
 const PEOPLE_SIDE_PANE_ID = 'people';
 
@@ -21,6 +23,12 @@ export const usePeoplePane = (props: {
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   mobileView?: boolean;
   peopleButtonRef?: RefObject<IButton>;
+  /* @conditional-compile-remove(spotlight) */
+  spotlightedParticipantUserIds?: string[];
+  /* @conditional-compile-remove(spotlight) */
+  onStartSpotlight?: (userId: string) => Promise<void>;
+  /* @conditional-compile-remove(spotlight) */
+  onStopSpotlight?: (userId: string) => Promise<void>;
 }): {
   openPeoplePane: () => void;
   closePeoplePane: () => void;
@@ -33,7 +41,13 @@ export const usePeoplePane = (props: {
     onFetchParticipantMenuItems,
     setDrawerMenuItems,
     mobileView,
-    peopleButtonRef
+    peopleButtonRef,
+    /* @conditional-compile-remove(spotlight) */
+    spotlightedParticipantUserIds,
+    /* @conditional-compile-remove(spotlight) */
+    onStartSpotlight,
+    /* @conditional-compile-remove(spotlight) */
+    onStopSpotlight
   } = props;
 
   const closePane = useCallback(() => {
@@ -55,17 +69,69 @@ export const usePeoplePane = (props: {
     [mobileView, closePane, localeStrings]
   );
 
+  /* @conditional-compile-remove(spotlight) */
+  const onFetchParticipantMenuItemsForCallComposite = useCallback(
+    (participantId: string, myUserId?: string, defaultMenuItems?: IContextualMenuItem[]): IContextualMenuItem[] => {
+      const _defaultMenuItems = defaultMenuItems ?? [];
+      const isSpotlighted = spotlightedParticipantUserIds?.find((p) => p === participantId);
+      if (isSpotlighted) {
+        if (onStopSpotlight) {
+          _defaultMenuItems.push({
+            key: 'stop-spotlight',
+            text: localeStrings.stopSpotlightParticipantListMenuLabel,
+            onClick: () => {
+              onStopSpotlight?.(participantId);
+            },
+            iconProps: {
+              iconName: 'StopSpotlightContextualMenuItem',
+              styles: { root: { lineHeight: 0 } }
+            }
+          });
+        }
+      } else {
+        if (onStartSpotlight) {
+          _defaultMenuItems.push({
+            key: 'start-spotlight',
+            text: localeStrings.startSpotlightParticipantListMenuLabel,
+            onClick: () => {
+              onStartSpotlight?.(participantId);
+            },
+            iconProps: {
+              iconName: 'StartSpotlightContextualMenuItem',
+              styles: { root: { lineHeight: 0 } }
+            }
+          });
+        }
+      }
+      return onFetchParticipantMenuItems
+        ? onFetchParticipantMenuItems(participantId, myUserId, _defaultMenuItems)
+        : _defaultMenuItems;
+    },
+    [
+      spotlightedParticipantUserIds,
+      onStartSpotlight,
+      onStopSpotlight,
+      onFetchParticipantMenuItems,
+      localeStrings.stopSpotlightParticipantListMenuLabel,
+      localeStrings.startSpotlightParticipantListMenuLabel
+    ]
+  );
+
+  let _onFetchParticipantMenuItems = onFetchParticipantMenuItems;
+  /* @conditional-compile-remove(spotlight) */
+  _onFetchParticipantMenuItems = onFetchParticipantMenuItemsForCallComposite;
+
   const onRenderContent = useCallback((): JSX.Element => {
     return (
       <PeoplePaneContent
         inviteLink={inviteLink}
         onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-        onFetchParticipantMenuItems={onFetchParticipantMenuItems}
+        onFetchParticipantMenuItems={_onFetchParticipantMenuItems}
         setDrawerMenuItems={setDrawerMenuItems}
         mobileView={mobileView}
       />
     );
-  }, [inviteLink, mobileView, onFetchAvatarPersonaData, onFetchParticipantMenuItems, setDrawerMenuItems]);
+  }, [inviteLink, mobileView, onFetchAvatarPersonaData, _onFetchParticipantMenuItems, setDrawerMenuItems]);
 
   const sidePaneRenderer: SidePaneRenderer = useMemo(
     () => ({

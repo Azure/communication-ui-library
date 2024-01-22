@@ -113,7 +113,7 @@ export interface VideoGalleryStrings {
   /** Menu text shown in Video Tile contextual menu for pinning a remote participant's video tile */
   pinParticipantForMe: string;
   /* @conditional-compile-remove(pinned-participants) */
-  /** Menu text shown in Video Tile contextual menu for setting a remote participant's video tile */
+  /** Menu text shown in Video Tile contextual menu for unpinning a remote participant's video tile */
   unpinParticipantForMe: string;
   /* @conditional-compile-remove(pinned-participants) */
   /** Aria label for pin participant menu item of remote participant's video tile */
@@ -127,6 +127,12 @@ export interface VideoGalleryStrings {
   /* @conditional-compile-remove(pinned-participants) */
   /** Aria label to announce when remote participant's video tile is unpinned */
   unpinnedParticipantAnnouncementAriaLabel: string;
+  /* @conditional-compile-remove(pinned-participants) */
+  /** Menu text shown in Video Tile contextual menu to start spotlight for a participant's video tile */
+  startSpotlightVideoTileMenuLabel: string;
+  /* @conditional-compile-remove(pinned-participants) */
+  /** Menu text shown in Video Tile contextual menu to stop spotlight for a participant's video tile */
+  stopSpotlightVideoTileMenuLabel: string;
 }
 
 /**

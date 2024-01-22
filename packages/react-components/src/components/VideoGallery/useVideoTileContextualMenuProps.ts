@@ -22,6 +22,10 @@ export const useVideoTileContextualMenuProps = (props: {
     unpinParticipantMenuItemAriaLabel?: string;
     pinnedParticipantAnnouncementAriaLabel?: string;
     unpinnedParticipantAnnouncementAriaLabel?: string;
+    /* @conditional-compile-remove(spotlight) */
+    startSpotlightVideoTileMenuLabel?: string;
+    /* @conditional-compile-remove(spotlight) */
+    stopSpotlightVideoTileMenuLabel?: string;
   };
   view?: { updateScalingMode: (scalingMode: ViewScalingMode) => Promise<void> };
   isPinned?: boolean;

@@ -60,6 +60,8 @@
     "removedFromCallMoreDetails": "Another participant removed you from the call.",
     "removedFromCallTitle": "You were removed",
     "removeMenuLabel": "Remove",
+    "startSpotlightParticipantListMenuLabel": "Spotlight for everyone",
+    "stopSpotlightParticipantListMenuLabel": "Stop spotlighting",
     "returnToCallButtonAriaDescription": "Return to Call",
     "returnToCallButtonAriaLabel": "Back",
     "roomNotFoundDetails": "The room ID provided could not be found.",

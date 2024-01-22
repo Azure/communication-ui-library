@@ -789,6 +789,8 @@ export interface CallCompositeStrings {
     startCaptionsButtonOnLabel?: string;
     startCaptionsButtonTooltipOffContent?: string;
     startCaptionsButtonTooltipOnContent?: string;
+    startSpotlightParticipantListMenuLabel: string;
+    stopSpotlightParticipantListMenuLabel: string;
     surveyCancelButtonAriaLabel: string;
     surveyConfirmButtonLabel: string;
     surveyIssues: SurveyIssues;
@@ -4449,6 +4451,8 @@ export interface VideoGalleryStrings {
     pinParticipantMenuItemAriaLabel: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;
+    startSpotlightVideoTileMenuLabel: string;
+    stopSpotlightVideoTileMenuLabel: string;
     unpinnedParticipantAnnouncementAriaLabel: string;
     unpinParticipantForMe: string;
     unpinParticipantMenuItemAriaLabel: string;
