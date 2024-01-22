@@ -13,7 +13,7 @@ import React, { useRef, useState } from 'react';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { CallArrangement } from '../components/CallArrangement';
 import { CommonCallAdapter } from '../adapter';
-import { Stack, Text } from '@fluentui/react';
+import { Stack, Text, useTheme } from '@fluentui/react';
 import { getReadableTime } from '../utils/timerUtils';
 import { DtmfDialpadContentTimerStyles } from '../styles/DtmfDialpadPage.styles';
 
@@ -30,7 +30,7 @@ export interface DialpadPageProps {
   onDismissError: (error: ActiveErrorMessage) => void;
   /* @conditional-compile-remove(capabilities) */
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
-  onSetDialpadPage?: () => void;
+  onSetDialpadPage: () => void;
 }
 
 interface DialpadPageContentProps {
@@ -45,6 +45,7 @@ const DtmfDialpadPageContent = (props: DialpadPageContentProps): JSX.Element => 
   const elapsedTime = getReadableTime(time);
   const startTime = useRef(performance.now());
   const adapterState = adapter.getState();
+  const theme = useTheme();
 
   const calleeId = adapterState.targetCallees?.[0];
   const remoteParticipants = adapterState.call?.remoteParticipants;
@@ -64,14 +65,17 @@ const DtmfDialpadPageContent = (props: DialpadPageContentProps): JSX.Element => 
   }, [startTime]);
 
   return (
-    <Stack>
-      <Text styles={DtmfDialpadContentTimerStyles}>{elapsedTime}</Text>
-      <Text>{calleeName !== 'Unnamed participant' ? calleeName : ''}</Text>
-      <Dialpad
-        onSendDtmfTone={async (tone: DtmfTone) => {
-          await adapter.sendDtmfTone(tone);
-        }}
-      ></Dialpad>
+    <Stack style={{ height: '100%', width: '100%', background: theme.palette.white }}>
+      <Stack style={{ margin: 'auto' }}>
+        <Text styles={DtmfDialpadContentTimerStyles}>{elapsedTime}</Text>
+        <Text>{calleeName !== 'Unnamed participant' ? calleeName : ''}</Text>
+        <Dialpad
+          onSendDtmfTone={async (tone: DtmfTone) => {
+            await adapter.sendDtmfTone(tone);
+          }}
+          enableInputEditing={false}
+        ></Dialpad>
+      </Stack>
     </Stack>
   );
 };
@@ -114,6 +118,8 @@ export const DtmfDialpadPage = (props: DialpadPageProps): JSX.Element => {
       mobileChatTabHeader={props.mobileChatTabHeader}
       latestErrors={props.latestErrors}
       onDismissError={props.onDismissError}
+      /* @conditional-compile-remove(dtmf-dialer) */
+      onSetDialpadPage={props.onSetDialpadPage}
     />
   );
 };
