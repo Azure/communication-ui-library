@@ -30,6 +30,7 @@ export interface DialpadPageProps {
   onDismissError: (error: ActiveErrorMessage) => void;
   /* @conditional-compile-remove(capabilities) */
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
+  onSetDialpadPage?: () => void;
 }
 
 interface DialpadPageContentProps {
@@ -38,7 +39,7 @@ interface DialpadPageContentProps {
 }
 
 const DtmfDialpadPageContent = (props: DialpadPageContentProps): JSX.Element => {
-  const { adapter, mobileView } = props;
+  const { adapter } = props;
 
   const [time, setTime] = useState<number>(0);
   const elapsedTime = getReadableTime(time);
@@ -46,10 +47,12 @@ const DtmfDialpadPageContent = (props: DialpadPageContentProps): JSX.Element => 
   const adapterState = adapter.getState();
 
   const calleeId = adapterState.targetCallees?.[0];
-  // this needs to be a more complex function to get the name of the callee
-  // const calleeName = Object.values(adapterState.call?.remoteParticipants).find(
-  //   (p) => p.identifier === calleeId
-  // );
+  const remoteParticipants = adapterState.call?.remoteParticipants;
+  let calleeName;
+
+  if (remoteParticipants) {
+    calleeName = Object.values(remoteParticipants).find((p) => p.identifier === calleeId);
+  }
 
   React.useEffect(() => {
     const interval = setInterval(() => {
@@ -63,7 +66,7 @@ const DtmfDialpadPageContent = (props: DialpadPageContentProps): JSX.Element => 
   return (
     <Stack>
       <Text styles={DtmfDialpadContentTimerStyles}>{elapsedTime}</Text>
-      <Text>{}</Text>
+      <Text>{calleeName !== 'Unnamed participant' ? calleeName : ''}</Text>
       <Dialpad
         onSendDtmfTone={async (tone: DtmfTone) => {
           await adapter.sendDtmfTone(tone);
