@@ -31,6 +31,7 @@ export interface DialpadPageProps {
   /* @conditional-compile-remove(capabilities) */
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
   onSetDialpadPage: () => void;
+  dtmfDialerPresent: boolean;
 }
 
 interface DialpadPageContentProps {
@@ -121,6 +122,8 @@ export const DtmfDialpadPage = (props: DialpadPageProps): JSX.Element => {
       onDismissError={props.onDismissError}
       /* @conditional-compile-remove(dtmf-dialer) */
       onSetDialpadPage={props.onSetDialpadPage}
+      /* @conditional-compile-remove(dtmf-dialer) */
+      dtmfDialerPresent={props.dtmfDialerPresent}
     />
   );
 };

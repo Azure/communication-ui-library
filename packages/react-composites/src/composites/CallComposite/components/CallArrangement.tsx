@@ -111,6 +111,8 @@ export interface CallArrangementProps {
   onCloseChatPane?: () => void;
   /* @conditional-compile-remove(dtmf-dialer) */
   onSetDialpadPage?: () => void;
+  /* @conditional-compile-remove(dtmf-dialer) */
+  dtmfDialerPresent?: boolean;
 }
 
 /**
@@ -367,6 +369,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   userSetGalleryLayout={props.userSetGalleryLayout}
                   /* @conditional-compile-remove(dtmf-dialer) */
                   onSetDialpadPage={props.onSetDialpadPage}
+                  /* @conditional-compile-remove(dtmf-dialer) */
+                  dtmfDialerPresent={props.dtmfDialerPresent}
                   peopleButtonRef={peopleButtonRef}
                   cameraButtonRef={cameraButtonRef}
                 />
