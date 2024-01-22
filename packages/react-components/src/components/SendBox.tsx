@@ -256,20 +256,16 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
 
   const mergedStyles = useMemo(() => concatStyleSets(styles), [styles]);
 
-  const hasText = !!textValue;
-  const hasTextOrFile =
-    hasText || /* @conditional-compile-remove(file-sharing) */ hasCompletedFileUploads(activeFileUploads);
-  const hasErrorMessage = !!errorMessage;
-
   const mergedSendIconStyle = useMemo(
     () =>
       sendIconStyle({
         theme,
-        hasTextOrFile,
-        hasErrorMessage: hasErrorMessage,
+        hasText: !!textValue,
+        /* @conditional-compile-remove(file-sharing) */ hasFile: hasCompletedFileUploads(activeFileUploads),
+        hasErrorMessage: !!errorMessage,
         customSendIconStyle: styles?.sendMessageIcon
       }),
-    [theme, hasTextOrFile, hasErrorMessage, styles?.sendMessageIcon]
+    [theme, textValue, activeFileUploads, errorMessage, styles?.sendMessageIcon]
   );
 
   const onRenderSendIcon = useCallback(

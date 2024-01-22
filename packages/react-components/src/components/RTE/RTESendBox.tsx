@@ -85,7 +85,8 @@ export const RTESendBox = (props: RTESendBoxProps): JSX.Element => {
         iconName={isHover && contentValue ? 'SendBoxSendHovered' : 'SendBoxSend'}
         className={sendIconStyle({
           theme,
-          hasTextOrFile: !!contentValue /*|| hasFile(props)*/,
+          hasText: !!contentValue,
+          /* @conditional-compile-remove(file-sharing) */ hasFile: false,
           hasErrorMessage: !!errorMessage
         })}
       />
