@@ -43,13 +43,20 @@ export const sendIconStyle = (props: {
   hasErrorMessage: boolean;
   customSendIconStyle?: IStyle;
 }): string => {
-  const { theme, hasText, hasFile, hasErrorMessage, customSendIconStyle } = props;
+  const {
+    theme,
+    hasText,
+    /* @conditional-compile-remove(file-sharing) */ hasFile,
+    hasErrorMessage,
+    customSendIconStyle
+  } = props;
+  const hasNoContent = !hasText && /* @conditional-compile-remove(file-sharing) */ !hasFile;
   return mergeStyles(
     {
       width: '1.25rem',
       height: '1.25rem',
       margin: 'auto',
-      color: hasErrorMessage || (!hasText && !hasFile) ? theme.palette.neutralTertiary : theme.palette.themePrimary
+      color: hasErrorMessage || hasNoContent ? theme.palette.neutralTertiary : theme.palette.themePrimary
     },
     customSendIconStyle
   );

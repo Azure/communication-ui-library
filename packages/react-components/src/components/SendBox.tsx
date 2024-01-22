@@ -10,7 +10,7 @@ import { useLocale } from '../localization';
 import { useIdentifiers } from '../identifiers';
 import { InputBoxComponent } from './InputBoxComponent';
 import { InputBoxButton } from './InputBoxButton';
-/* @conditional-compile-remove(file-sharing) */ s;
+/* @conditional-compile-remove(file-sharing) */
 import { SendBoxErrors } from './SendBoxErrors';
 /* @conditional-compile-remove(file-sharing) */
 import { ActiveFileUpload, _FileUploadCards } from './FileUploadCards';
@@ -226,7 +226,10 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     const message = textValue;
     // we don't want to send empty messages including spaces, newlines, tabs
     // Message can be empty if there is a valid file upload
-    if (!EMPTY_MESSAGE_REGEX.test(message) || hasCompletedFileUploads(activeFileUploads)) {
+    if (
+      !EMPTY_MESSAGE_REGEX.test(message) ||
+      /* @conditional-compile-remove(file-sharing) */ hasCompletedFileUploads(activeFileUploads)
+    ) {
       onSendMessage && onSendMessage(sanitizeText(message));
       setTextValue('');
     }
@@ -265,7 +268,13 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
         hasErrorMessage: !!errorMessage,
         customSendIconStyle: styles?.sendMessageIcon
       }),
-    [theme, textValue, activeFileUploads, errorMessage, styles?.sendMessageIcon]
+    [
+      theme,
+      textValue,
+      /* @conditional-compile-remove(file-sharing) */ activeFileUploads,
+      errorMessage,
+      styles?.sendMessageIcon
+    ]
   );
 
   const onRenderSendIcon = useCallback(
