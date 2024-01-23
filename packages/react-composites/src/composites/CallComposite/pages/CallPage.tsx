@@ -100,6 +100,62 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
 
   const drawerMenuHostId = useId('drawerMenuHost');
 
+  const onRenderGalleryContentTrampoline = (): JSX.Element => {
+    /* @conditional-compile-remove(dtmf-dialer) */
+    if (dtmfDialerPresent) {
+      return (
+        <DtmfDialpadPage
+          mobileView={props.mobileView}
+          modalLayerHostId={props.modalLayerHostId}
+          options={props.options}
+          updateSidePaneRenderer={props.updateSidePaneRenderer}
+          mobileChatTabHeader={props.mobileChatTabHeader}
+          latestErrors={props.latestErrors}
+          onDismissError={props.onDismissError}
+          /* @conditional-compile-remove(capabilities) */
+          capabilitiesChangedNotificationBarProps={props.capabilitiesChangedNotificationBarProps}
+          onSetDialpadPage={() => setDtmfDialerPresent(!dtmfDialerPresent)}
+          dtmfDialerPresent={dtmfDialerPresent}
+        />
+      );
+    } else {
+      return (
+        <MediaGallery
+          isMobile={mobileView}
+          {...mediaGalleryProps}
+          {...mediaGalleryHandlers}
+          onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+          /* @conditional-compile-remove(pinned-participants) */
+          remoteVideoTileMenuOptions={options?.remoteVideoTileMenuOptions}
+          drawerMenuHostId={drawerMenuHostId}
+          /* @conditional-compile-remove(click-to-call) */
+          localVideoTileOptions={options?.localVideoTile}
+          /* @conditional-compile-remove(gallery-layouts) */
+          userSetOverflowGalleryPosition={userSetOverflowGalleryPosition}
+          /* @conditional-compile-remove(gallery-layouts) */
+          userSetGalleryLayout={galleryLayout}
+        />
+      );
+    }
+    return (
+      <MediaGallery
+        isMobile={mobileView}
+        {...mediaGalleryProps}
+        {...mediaGalleryHandlers}
+        onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+        /* @conditional-compile-remove(pinned-participants) */
+        remoteVideoTileMenuOptions={options?.remoteVideoTileMenuOptions}
+        drawerMenuHostId={drawerMenuHostId}
+        /* @conditional-compile-remove(click-to-call) */
+        localVideoTileOptions={options?.localVideoTile}
+        /* @conditional-compile-remove(gallery-layouts) */
+        userSetOverflowGalleryPosition={userSetOverflowGalleryPosition}
+        /* @conditional-compile-remove(gallery-layouts) */
+        userSetGalleryLayout={galleryLayout}
+      />
+    );
+  };
+
   return (
     <CallArrangement
       id={drawerMenuHostId}
@@ -119,37 +175,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
       onRenderGalleryContent={() =>
         _isInCall(callStatus) ? (
           isNetworkHealthy(networkReconnectTileProps.networkReconnectValue) ? (
-            dtmfDialerPresent ? (
-              <DtmfDialpadPage
-                mobileView={props.mobileView}
-                modalLayerHostId={props.modalLayerHostId}
-                options={props.options}
-                updateSidePaneRenderer={props.updateSidePaneRenderer}
-                mobileChatTabHeader={props.mobileChatTabHeader}
-                latestErrors={props.latestErrors}
-                onDismissError={props.onDismissError}
-                /* @conditional-compile-remove(capabilities) */
-                capabilitiesChangedNotificationBarProps={props.capabilitiesChangedNotificationBarProps}
-                onSetDialpadPage={() => setDtmfDialerPresent(!dtmfDialerPresent)}
-                dtmfDialerPresent={dtmfDialerPresent}
-              />
-            ) : (
-              <MediaGallery
-                isMobile={mobileView}
-                {...mediaGalleryProps}
-                {...mediaGalleryHandlers}
-                onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-                /* @conditional-compile-remove(pinned-participants) */
-                remoteVideoTileMenuOptions={options?.remoteVideoTileMenuOptions}
-                drawerMenuHostId={drawerMenuHostId}
-                /* @conditional-compile-remove(click-to-call) */
-                localVideoTileOptions={options?.localVideoTile}
-                /* @conditional-compile-remove(gallery-layouts) */
-                userSetOverflowGalleryPosition={userSetOverflowGalleryPosition}
-                /* @conditional-compile-remove(gallery-layouts) */
-                userSetGalleryLayout={galleryLayout}
-              />
-            )
+            onRenderGalleryContentTrampoline()
           ) : (
             <NetworkReconnectTile {...networkReconnectTileProps} />
           )
