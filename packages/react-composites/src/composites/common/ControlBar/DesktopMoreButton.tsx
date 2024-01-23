@@ -87,6 +87,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     props.userSetGalleryLayout ?? 'floatingLocalVideo'
   );
 
+  /* @conditional-compile-remove(dtmf-dialer) */
   const [dtmfDialerChecked, setDtmfDialerChecked] = useState<boolean>(props.dtmfDialerPresent ?? false);
 
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */

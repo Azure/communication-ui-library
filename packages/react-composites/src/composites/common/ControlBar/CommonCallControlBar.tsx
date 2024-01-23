@@ -600,6 +600,7 @@ const getDesktopEndCallButtonStyles = (theme: ITheme): ControlBarButtonStyles =>
 
 const isEnabled = (option: unknown): boolean => option !== false;
 
+/* @conditional-compile-remove(dtmf-dialer) */
 const showDtmfDialerButton = (options: CommonCallControlOptions | CallWithChatControlOptions): boolean => {
   if (options.moreButton === false && options.dtmfDialerButton !== false) {
     return true;
