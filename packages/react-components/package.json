@@ -32,7 +32,8 @@
     "_build:by-flavor": "rushx clean && rushx build:esm && rushx build:cjs && rushx _api-extractor:by-flavor",
     "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell",
     "_current-flavor": "echo You are running under COMMUNICATION_REACT_FLAVOR: && env-cmd -f ../../common/config/env/.env node -p process.env.COMMUNICATION_REACT_FLAVOR",
-    "_test:by-flavor": "(npm run _if-preprocess && rushx preprocess || if-env COMMUNICATION_REACT_FLAVOR=beta && echo \"skip preprocess\") && jest"
+    "_test:by-flavor": "(npm run _if-preprocess && rushx preprocess || if-env COMMUNICATION_REACT_FLAVOR=beta && echo \"skip preprocess\") && jest",
+    "test:components": "rushx _by-flavor \"playwright test -c playwright-ct.config.ts"
   },
   "license": "MIT",
   "dependencies": {
@@ -66,6 +67,7 @@
     "@babel/preset-env": "7.23.5",
     "@microsoft/api-documenter": "~7.23.14",
     "@microsoft/api-extractor": "~7.38.5",
+    "@playwright/experimental-ct-react": "~1.41.0",
     "@rollup/plugin-json": "^6.0.1",
     "@testing-library/dom": "^9.3.1",
     "@testing-library/jest-dom": "^6.1.5",
