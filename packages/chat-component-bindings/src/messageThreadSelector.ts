@@ -31,10 +31,9 @@ import { updateMessagesWithAttached } from './utils/updateMessagesWithAttached';
 /* @conditional-compile-remove(file-sharing) */
 import { FileMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { ChatAttachment, ChatAttachmentType } from '@azure/communication-chat';
+import { ChatAttachment, ChatAttachmentType, ChatParticipant } from '@azure/communication-chat';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatAttachmentType as AttachmentType, InlineImageMetadata } from '@internal/react-components';
-import { ChatParticipant } from '@azure/communication-chat';
 
 const memoizedAllConvertChatMessage = memoizeFnAll(
   (
@@ -151,7 +150,7 @@ const extractAttachmentUrl = (attachment: ChatAttachment): string => {
 const processChatMessageContent = (message: ChatMessageWithStatus): string | undefined => {
   let content = message.content?.message;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  if (content && sanitizedMessageContentType(message.type).includes('html') && message.content?.attachments) {
+  if (content && message.content?.attachments && sanitizedMessageContentType(message.type).includes('html')) {
     const attachments: ChatAttachment[] = message.content?.attachments;
     // Fill in the src here
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
@@ -168,7 +167,10 @@ const processChatMessageContent = (message: ChatMessageWithStatus): string | und
     content = document.documentElement.innerHTML;
     const teamsImageHtmlContent = attachments
       .filter(
-        (attachment) => attachment.attachmentType === 'image' && !message.content?.message?.includes(attachment.id)
+        (attachment) =>
+          attachment.attachmentType === 'image' &&
+          attachment.previewUrl !== undefined &&
+          !message.content?.message?.includes(attachment.id)
       )
       .map((attachment) => generateImageAttachmentImgHtml(message, attachment))
       .join('');
@@ -181,10 +183,13 @@ const processChatMessageContent = (message: ChatMessageWithStatus): string | und
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 const generateImageAttachmentImgHtml = (message: ChatMessageWithStatus, attachment: ChatAttachment): string => {
-  const contentType = extractAttachmentContentTypeFromName(attachment.name);
-  const previewUrl = attachment.previewUrl ?? '';
-  const src = message.resourceCache?.[previewUrl] ?? '';
-  return `\r\n<p><img alt="image" src="${src}" itemscope="${contentType}" id="${attachment.id}"></p>`;
+  if (attachment.previewUrl !== undefined) {
+    const contentType = extractAttachmentContentTypeFromName(attachment.name);
+    const src = message.resourceCache?.[attachment.previewUrl] ?? '';
+    return `\r\n<p><img alt="image" src="${src}" itemscope="${contentType}" id="${attachment.id}"></p>`;
+  }
+
+  return '';
 };
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
