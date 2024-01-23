@@ -70,7 +70,6 @@
     "rimraf": "^2.6.2",
     "rollup": "^4.9.5",
     "ts-jest": "^29.1.0",
-    "typescript": "5.3.3",
-    "html-dom-parser": "^5.0.7"
+    "typescript": "5.3.3"
   }
 }

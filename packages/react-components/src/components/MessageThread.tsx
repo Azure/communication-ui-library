@@ -36,8 +36,6 @@ import getParticipantsWhoHaveReadMessage from './utils/getParticipantsWhoHaveRea
 import { FileDownloadHandler } from './FileDownloadCards';
 /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AttachmentMetadata } from './FileDownloadCards';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { AttachmentDownloadResult } from './FileDownloadCards';
 import { useTheme } from '../theming';
 import { FluentV9ThemeProvider } from './../theming/FluentV9ThemeProvider';
 import LiveAnnouncer from './Announcer/LiveAnnouncer';
@@ -606,16 +604,6 @@ export type _ChatMessageProps = MessageProps & {
 };
 
 /**
- * @internal
- */
-// {spike} New internal Prop for MessageThread
-// {spike} New method here for when a message bubble is about to be visible
-export type _MessageThreadProps = MessageThreadProps & {
-  // Update this to return JSX.Element?
-  internalFetchAttachments?: (attachments: AttachmentMetadata[]) => Promise<AttachmentDownloadResult[]>;
-};
-
-/**
  * `MessageThread` allows you to easily create a component for rendering chat messages, handling scrolling behavior of new/old messages and customizing icons & controls inside the chat thread.
  * @param props - of type MessageThreadProps
  *
@@ -644,7 +632,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
 /**
  * @private
  */
-export const MessageThreadWrapper = (props: _MessageThreadProps): JSX.Element => {
+export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => {
   const {
     messages: newMessages,
     userId,
@@ -667,7 +655,6 @@ export const MessageThreadWrapper = (props: _MessageThreadProps): JSX.Element =>
     onSendMessage,
     /* @conditional-compile-remove(date-time-customization) */
     onDisplayDateTimeString,
-    internalFetchAttachments,
     /* @conditional-compile-remove(mention) */
     mentionOptions,
     /* @conditional-compile-remove(image-gallery) */
@@ -692,32 +679,6 @@ export const MessageThreadWrapper = (props: _MessageThreadProps): JSX.Element =>
 
   // readCount and participantCount will only need to be updated on-fly when user hover on an indicator
   const [readCountForHoveredIndicator, setReadCountForHoveredIndicator] = useState<number | undefined>(undefined);
-
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  const [inlineAttachments, setInlineAttachments] = useState<Record<string, Record<string, string>>>({});
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  const onFetchInlineAttachment = useCallback(
-    async (attachments: AttachmentMetadata[], messageId: string): Promise<void> => {
-      if (!internalFetchAttachments || attachments.length === 0) {
-        return;
-      }
-      const attachmentDownloadResult = await internalFetchAttachments(attachments);
-
-      if (attachmentDownloadResult.length > 0) {
-        setInlineAttachments((prev) => {
-          // The new state should always be based on the previous one
-          // otherwise there can be issues with renders
-          const listOfAttachments = prev[messageId] ?? {};
-          for (const result of attachmentDownloadResult) {
-            const { attachmentId, blobUrl } = result;
-            listOfAttachments[attachmentId] = blobUrl;
-          }
-          return { ...prev, [messageId]: listOfAttachments };
-        });
-      }
-    },
-    [internalFetchAttachments]
-  );
 
   const localeStrings = useLocale().strings.messageThread;
   const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
@@ -1119,8 +1080,6 @@ export const MessageThreadWrapper = (props: _MessageThreadProps): JSX.Element =>
                   participantCount={participantCount}
                   /* @conditional-compile-remove(file-sharing) */
                   fileDownloadHandler={props.fileDownloadHandler}
-                  onFetchInlineAttachment={onFetchInlineAttachment} // Turn this into an internal API
-                  inlineAttachments={inlineAttachments}
                   /* @conditional-compile-remove(image-gallery) */
                   onInlineImageClicked={onInlineImageClicked}
                   /* @conditional-compile-remove(date-time-customization) */
