@@ -77,7 +77,6 @@ jobs:
             echo "hasChanged=true" >> $GITHUB_OUTPUT
           fi
       - name: Commit new snapshots
-        if: ${{ always() && steps.changescheck.outputs.hasChanged == 'true' }}
         run: |
           git add packages/**/*.api.md
           git commit -m 'Update ${{ matrix.flavor }} API files'
