@@ -19,6 +19,7 @@ import { _safeJSONStringify, toFlatCommunicationIdentifier } from '@internal/acs
 import { Constants } from './Constants';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-chat';
 import { chatStatefulLogger } from './Logger';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { CommunicationTokenCredential } from '@azure/communication-common';
 
 enableMapSet();
