@@ -58,7 +58,7 @@ const DtmfDialpadPageContent = (props: DialpadPageContentProps): JSX.Element => 
             /* @conditional-compile-remove(dtmf-dialer) */
             await adapter.sendDtmfTone(tone);
           }}
-          enableInputEditing={false}
+          dialpadMode={'dtmf'}
         ></Dialpad>
       </Stack>
     </Stack>
