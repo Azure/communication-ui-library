@@ -1,8 +1,47 @@
 # Change Log - @azure/communication-react
 
-This log was last generated on Mon, 11 Dec 2023 21:24:49 GMT and should not be manually modified.
+This log was last generated on Tue, 16 Jan 2024 22:14:17 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.12.0](https://github.com/azure/communication-ui-library/tree/1.12.0)
+
+Tue, 16 Jan 2024 22:14:17 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.11.0...1.12.0)
+
+### Calling Sounds - General Availability
+Call sounds is now available within the CallComposite and CallWithChatComposite. The feature also includes Call Ringing, Call Ended, Call Busy sounds available through the CallAdapter.
+
+### Features
+- Calling sounds feature ([PR #3969](https://github.com/azure/communication-ui-library/pull/3969) by 94866715+dmceachernmsft@users.noreply.github.com)
+### Improvements
+- Update dependencies ([PR #3933](https://github.com/azure/communication-ui-library/pull/3933) [PR #3901](https://github.com/azure/communication-ui-library/pull/3901) by edwardlee@microsoft.com 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
+- Add messageEdited and messageDeleted events to the ChatAdapter ([PR #3971](https://github.com/azure/communication-ui-library/pull/3971) by 2684369+JamesBurnside@users.noreply.github.com)
+- Replace html-to-react with html-react-parser ([PR #3995](https://github.com/azure/communication-ui-library/pull/3995) by 3941071+emlynmac@users.noreply.github.com)
+### Bug Fixes
+- Prevent showing screenShareButton when formFactor is set to mobile ([PR #3915](https://github.com/azure/communication-ui-library/pull/3915) by 79475487+mgamis-msft@users.noreply.github.com)
+- Fix participant list to be the scrollable portion in side pane ([PR #3957](https://github.com/azure/communication-ui-library/pull/3957) by 79475487+mgamis-msft@users.noreply.github.com)
+- Fix for a race condition for "The message is deleted" announcement ([PR #3946](https://github.com/azure/communication-ui-library/pull/3946) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Remove speaker dropdown for Safari browsers as speaker enumeration is not available for Safari browsers ([PR #3964](https://github.com/azure/communication-ui-library/pull/3964) by edwardlee@microsoft.com)
+- Ensure the CallComposite and CallWithChatComposite side pane's are closed if the call is rejoined ([PR #3941](https://github.com/azure/communication-ui-library/pull/3941) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fixed an issues when mentions list wasn't scrolled when navigated by keyboard ([PR #3958](https://github.com/azure/communication-ui-library/pull/3958) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Update camera behavior to turn off the camera befroe we go on hold for privacy reasons ([PR #3926](https://github.com/azure/communication-ui-library/pull/3926) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Apply tablist role and tablist behavior to sidepane tab headings on mobile ([PR #3955](https://github.com/azure/communication-ui-library/pull/3955) by 2684369+JamesBurnside@users.noreply.github.com)
+- Update remote screen share component to respect scaling ([PR #3956](https://github.com/azure/communication-ui-library/pull/3956) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Fix for an issue when a new messages button was shown because the status didn't match for the same message ([PR #3930](https://github.com/azure/communication-ui-library/pull/3930) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Introduce blocking error when giving wrong kind of identifier to createAzureCommunicationCallAdapter ([PR #3972](https://github.com/azure/communication-ui-library/pull/3972) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Show the hand raise order on the local video tile when on mobile ([PR #3938](https://github.com/azure/communication-ui-library/pull/3938) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix for an infinite scrolling at top of Message Thread which existed in some cases ([PR #3942](https://github.com/azure/communication-ui-library/pull/3942) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Fix issues with turning camera off and on when joining a call, as well fix microphone button to unmute and mute when joining ([PR #3917](https://github.com/azure/communication-ui-library/pull/3917) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Fix issue where using the keyboard would throw an error when selecting a background effect ([PR #3927](https://github.com/azure/communication-ui-library/pull/3927) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Update role for sidepane headers ([PR #3929](https://github.com/azure/communication-ui-library/pull/3929) by edwardlee@microsoft.com)
+- Mobile configuration page enable device button when either microphone or camera is available ([PR #3944](https://github.com/azure/communication-ui-library/pull/3944) by edwardlee@microsoft.com)
+- Fix side pane content being clipped on a small screen at 200% zoom ([PR #3937](https://github.com/azure/communication-ui-library/pull/3937) by 2684369+JamesBurnside@users.noreply.github.com)
+- Disable the camera button while the source is being switched to prevent rapid successive clicks from causing the streams to lock up ([PR #3943](https://github.com/azure/communication-ui-library/pull/3943) by 2684369+JamesBurnside@users.noreply.github.com)
+- Update EndCall button appearance to match high contrast expectations on Windows ([PR #3905](https://github.com/azure/communication-ui-library/pull/3905) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Fix rendering issues in the video effects picker ([PR #3909](https://github.com/azure/communication-ui-library/pull/3909) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Fix function type signature of StatefulCallClient.selectCamera ([PR #3908](https://github.com/azure/communication-ui-library/pull/3908) by 2684369+JamesBurnside@users.noreply.github.com)
+
 
 ## [1.11.0](https://github.com/azure/communication-ui-library/tree/1.11.0)
 
