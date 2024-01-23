@@ -57,8 +57,6 @@ export interface CallPageProps {
   /* @conditional-compile-remove(gallery-layouts) */
   onSetUserSetOverflowGalleryPosition?: (position: 'Responsive' | 'horizontalTop') => void;
   onCloseChatPane?: () => void;
-  /* @conditional-compile-remove(dtmf-dialer) */
-  onSetDialpadPage: () => void;
 }
 
 /**
