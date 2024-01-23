@@ -1,17 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { ActiveErrorMessage, Dialpad, DtmfTone, ErrorBar } from '@internal/react-components';
+import { ActiveErrorMessage, Dialpad, DtmfTone } from '@internal/react-components';
 import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
 import { CallCompositeOptions } from '../CallComposite';
 import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
 import { CapabilitiesChangeNotificationBarProps } from '../components/CapabilitiesChangedNotificationBar';
-import { usePropsFor } from '../hooks/usePropsFor';
-import { useLocale } from '../../localization';
-import { disableCallControls, reduceCallControlsForMobile } from '../utils';
 import React, { useEffect, useRef, useState } from 'react';
 import { useAdapter } from '../adapter/CallAdapterProvider';
-import { CallArrangement } from '../components/CallArrangement';
 import { CommonCallAdapter } from '../adapter';
 import { Stack, Text, useTheme } from '@fluentui/react';
 import { getReadableTime } from '../utils/timerUtils';
@@ -90,44 +86,7 @@ const DtmfDialerContentTimer = (): JSX.Element => {
  * @internal
  */
 export const DtmfDialpadPage = (props: DialpadPageProps): JSX.Element => {
-  const errorBarProps = usePropsFor(ErrorBar);
-  const strings = useLocale().strings.call;
   const adapter = useAdapter();
 
-  let callControlOptions = props.mobileView
-    ? reduceCallControlsForMobile(props.options?.callControls)
-    : props.options?.callControls;
-
-  callControlOptions = disableCallControls(callControlOptions, [
-    'cameraButton',
-    'microphoneButton',
-    'devicesButton',
-    'screenShareButton',
-    /* @conditional-compile-remove(PSTN-calls) */
-    /* @conditional-compile-remove(one-to-n-calling) */
-    'holdButton'
-  ]);
-
-  return (
-    <CallArrangement
-      complianceBannerProps={{ strings }}
-      errorBarProps={props.options?.errorBar !== false && errorBarProps}
-      callControlProps={{
-        options: callControlOptions,
-        increaseFlyoutItemSize: props.mobileView
-      }}
-      mobileView={props.mobileView}
-      modalLayerHostId={props.modalLayerHostId}
-      onRenderGalleryContent={() => <DtmfDialpadPageContent adapter={adapter} mobileView={props.mobileView} />}
-      dataUiId={'hold-page'}
-      updateSidePaneRenderer={props.updateSidePaneRenderer}
-      mobileChatTabHeader={props.mobileChatTabHeader}
-      latestErrors={props.latestErrors}
-      onDismissError={props.onDismissError}
-      /* @conditional-compile-remove(dtmf-dialer) */
-      onSetDialpadPage={props.onSetDialpadPage}
-      /* @conditional-compile-remove(dtmf-dialer) */
-      dtmfDialerPresent={props.dtmfDialerPresent}
-    />
-  );
+  return <DtmfDialpadPageContent adapter={adapter} mobileView={props.mobileView} />;
 };
