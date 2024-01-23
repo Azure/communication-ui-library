@@ -78,6 +78,8 @@ jobs:
           fi
       - name: Commit new snapshots
         run: |
+          touch test.txt
+          git add test.txt
           git add packages/**/*.api.md
           git commit -m 'Update ${{ matrix.flavor }} API files'
           git push
