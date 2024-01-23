@@ -1,8 +1,8 @@
 {
   "type": "prerelease",
   "area": "feature",
-  "workstream": "End of call survey",
-  "comment": "Tag survey component",
+  "workstream": "End of Call Survey",
+  "comment": "Typing in the textfield should auto check checkbox",
   "packageName": "@azure/communication-react",
   "email": "96077406+carocao-msft@users.noreply.github.com",
   "dependentChangeType": "patch"

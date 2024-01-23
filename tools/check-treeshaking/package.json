@@ -20,15 +20,15 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@internal/acs-ui-common": "1.11.1-beta.0",
-    "@internal/react-components": "1.11.1-beta.0",
-    "@internal/chat-stateful-client": "1.11.1-beta.0",
-    "@internal/calling-stateful-client": "1.11.1-beta.0",
-    "@internal/chat-component-bindings": "1.11.1-beta.0",
-    "@internal/calling-component-bindings": "1.11.1-beta.0"
+    "@internal/acs-ui-common": "1.12.1-beta.0",
+    "@internal/react-components": "1.12.1-beta.0",
+    "@internal/chat-stateful-client": "1.12.1-beta.0",
+    "@internal/calling-stateful-client": "1.12.1-beta.0",
+    "@internal/chat-component-bindings": "1.12.1-beta.0",
+    "@internal/calling-component-bindings": "1.12.1-beta.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.5",
+    "@babel/core": "^7.23.7",
     "@babel/plugin-transform-export-namespace-from": "^7.22.11",
     "babel-loader": "8.1.0",
     "eslint": "^7.7.0",
