@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { mergeStyles, Theme } from '@fluentui/react';
+import { IStyle, mergeStyles, Theme } from '@fluentui/react';
 
 /**
  * @private
@@ -36,11 +36,31 @@ export const sendButtonStyle = mergeStyles({
 /**
  * @private
  */
-export const sendIconStyle = mergeStyles({
-  width: '1.25rem',
-  height: '1.25rem',
-  margin: 'auto'
-});
+export const sendIconStyle = (props: {
+  theme: Theme;
+  hasText: boolean;
+  /* @conditional-compile-remove(file-sharing) */ hasFile: boolean;
+  hasErrorMessage: boolean;
+  customSendIconStyle?: IStyle;
+}): string => {
+  const {
+    theme,
+    hasText,
+    /* @conditional-compile-remove(file-sharing) */ hasFile,
+    hasErrorMessage,
+    customSendIconStyle
+  } = props;
+  const hasNoContent = !hasText && /* @conditional-compile-remove(file-sharing) */ !hasFile;
+  return mergeStyles(
+    {
+      width: '1.25rem',
+      height: '1.25rem',
+      margin: 'auto',
+      color: hasErrorMessage || hasNoContent ? theme.palette.neutralTertiary : theme.palette.themePrimary
+    },
+    customSendIconStyle
+  );
+};
 
 /**
  * @private
