@@ -214,7 +214,7 @@ export const _createStatefulChatClientWithDeps = (
   args: StatefulChatClientArgs,
   options?: StatefulChatClientOptions
 ): StatefulChatClient => {
-  const context = new ChatContext(args.credential, options?.maxStateChangeListeners);
+  const context = new ChatContext(options?.maxStateChangeListeners, args.credential);
   let eventSubscriber: EventSubscriber;
 
   context.updateChatConfig(getIdentifierKind(args.userId), args.displayName);

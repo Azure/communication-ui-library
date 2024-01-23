@@ -40,14 +40,17 @@ export class ChatContext {
   private _emitter: EventEmitter;
   private typingIndicatorInterval: number | undefined = undefined;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  private _messageQueue: MessageQueue | undefined = undefined;
+  private _messageQueue: ResourceDownloadQueue | undefined = undefined;
 
-  constructor(credential?: CommunicationTokenCredential, maxListeners?: number) {
+  constructor(
+    maxListeners?: number,
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ credential?: CommunicationTokenCredential
+  ) {
     this._logger = createClientLogger('communication-react:chat-context');
     this._emitter = new EventEmitter();
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     if (credential) {
-      this._messageQueue = new MessageQueue(this, credential);
+      this._messageQueue = new ResourceDownloadQueue(this, credential);
     }
     if (maxListeners) {
       this._emitter.setMaxListeners(maxListeners);
@@ -288,14 +291,7 @@ export class ChatContext {
 
   public setChatMessage(threadId: string, message: ChatMessageWithStatus): void {
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-    const attachments = message.content?.attachments;
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-    if (message.type === 'html' && message.content?.message && attachments && attachments.length > 0) {
-      if (this._messageQueue && !this._messageQueue.containsMessage(message) && message.resourceCache === undefined) {
-        // Need to discuss retry logic in case of failure
-        this._messageQueue.addMessage(threadId, message);
-      }
-    }
+    this.parseAttachments(threadId, message);
 
     const { id: messageId, clientMessageId } = message;
     if (messageId || clientMessageId) {
@@ -314,6 +310,17 @@ export class ChatContext {
           this.filterTypingIndicatorForUser(thread, message.sender);
         }
       });
+    }
+  }
+
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  private parseAttachments(threadId: string, message: ChatMessageWithStatus): void {
+    const attachments = message.content?.attachments;
+    if (message.type === 'html' && message.content?.message && attachments && attachments.length > 0) {
+      if (this._messageQueue && !this._messageQueue.containsMessage(message) && message.resourceCache === undefined) {
+        // Need to discuss retry logic in case of failure
+        this._messageQueue.addMessage(threadId, message);
+      }
     }
   }
 
@@ -434,14 +441,19 @@ const toChatError = (target: ChatErrorTarget, error: unknown): ChatError => {
   return new ChatError(target, new Error(`${error}`));
 };
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-class MessageQueue {
+class ResourceDownloadQueue {
   private _messageQueue: ChatMessageWithStatus[] = [];
   private _context: ChatContext;
   private _credential: CommunicationTokenCredential;
+  private _isRequesting = false;
 
   constructor(context: ChatContext, credential: CommunicationTokenCredential) {
     this._context = context;
     this._credential = credential;
+  }
+
+  public isRequesting(): boolean {
+    return this._isRequesting;
   }
 
   public containsMessage(message: ChatMessageWithStatus): boolean {
@@ -452,20 +464,31 @@ class MessageQueue {
     return contains;
   }
 
-  public async addMessage(threadId: string, message: ChatMessageWithStatus): Promise<void> {
+  public addMessage(threadId: string, message: ChatMessageWithStatus): void {
     // make a copy of message and add to queue
     const copy = { ...message };
     this._messageQueue.push(copy);
-    const newMessage = await this.requestAttachments();
-    if (newMessage) {
-      this._context.setChatMessage(threadId, newMessage);
+
+    if (!this.isRequesting()) {
+      this.startQueue(threadId);
     }
   }
 
-  private async requestAttachments(): Promise<ChatMessageWithStatus | undefined> {
+  private async startQueue(threadId: string): Promise<void> {
+    while (this._messageQueue.length > 0) {
+      const newMessage = await this.requestAttachments();
+      this._isRequesting = false;
+      if (newMessage) {
+        this._context.setChatMessage(threadId, newMessage);
+      }
+    }
+  }
+
+  public async requestAttachments(): Promise<ChatMessageWithStatus | undefined> {
     if (this._messageQueue.length === 0) {
       return;
     }
+    this._isRequesting = true;
     const message = this._messageQueue.shift();
     if (message) {
       const attachments = message.content?.attachments;
