@@ -154,7 +154,9 @@ const processChatMessageContent = (message: ChatMessageWithStatus): string | und
   if (content && sanitizedMessageContentType(message.type).includes('html') && message.content?.attachments) {
     const attachments: ChatAttachment[] = message.content?.attachments;
     // Fill in the src here
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     const document = new DOMParser().parseFromString(content, 'text/html');
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     document.querySelectorAll('img').forEach((img) => {
       const attachmentPreviewUrl = attachments.find((attachment) => attachment.id === img.id)?.previewUrl;
       if (attachmentPreviewUrl) {
@@ -162,6 +164,7 @@ const processChatMessageContent = (message: ChatMessageWithStatus): string | und
         img.src = src;
       }
     });
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     content = document.documentElement.innerHTML;
     const teamsImageHtmlContent = attachments
       .filter(

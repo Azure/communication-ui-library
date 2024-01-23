@@ -19,7 +19,7 @@ import { _safeJSONStringify, toFlatCommunicationIdentifier } from '@internal/acs
 import { Constants } from './Constants';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-chat';
 import { chatStatefulLogger } from './Logger';
-import { CommunicationTokenCredential } from '@azure/communication-signaling';
+import { CommunicationTokenCredential } from '@azure/communication-common';
 
 enableMapSet();
 // Needed to generate state diff for verbose logging.
@@ -39,12 +39,13 @@ export class ChatContext {
   private _logger: AzureLogger;
   private _emitter: EventEmitter;
   private typingIndicatorInterval: number | undefined = undefined;
-  // {spike} queue storing messages to be sent to AMS
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   private _messageQueue: MessageQueue | undefined = undefined;
 
   constructor(credential?: CommunicationTokenCredential, maxListeners?: number) {
     this._logger = createClientLogger('communication-react:chat-context');
     this._emitter = new EventEmitter();
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     if (credential) {
       this._messageQueue = new MessageQueue(this, credential);
     }
@@ -286,7 +287,9 @@ export class ChatContext {
   }
 
   public setChatMessage(threadId: string, message: ChatMessageWithStatus): void {
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     const attachments = message.content?.attachments;
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     if (message.type === 'html' && message.content?.message && attachments && attachments.length > 0) {
       if (this._messageQueue && !this._messageQueue.containsMessage(message) && message.resourceCache === undefined) {
         // Need to discuss retry logic in case of failure
@@ -430,6 +433,7 @@ const toChatError = (target: ChatErrorTarget, error: unknown): ChatError => {
   }
   return new ChatError(target, new Error(`${error}`));
 };
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 class MessageQueue {
   private _messageQueue: ChatMessageWithStatus[] = [];
   private _context: ChatContext;
@@ -482,7 +486,7 @@ class MessageQueue {
     return message;
   }
 }
-
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 const fetchImageSource = async (src: string, credential: CommunicationTokenCredential): Promise<string> => {
   async function fetchWithAuthentication(url: string, token: string): Promise<Response> {
     const headers = new Headers();

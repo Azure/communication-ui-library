@@ -17,5 +17,6 @@ export type ChatMessageWithStatus = ChatMessage & {
   status: MessageStatus;
   /* @conditional-compile-remove(data-loss-prevention) */
   policyViolation?: boolean;
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   resourceCache?: Record<string, string>;
 };
