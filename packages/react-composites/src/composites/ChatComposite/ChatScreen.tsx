@@ -264,6 +264,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       }
 
       if (attachment.attachmentType === 'inlineImage' && attachment.url) {
+        // TBD: Need to begin investigating how to download HQ images.
         const blob = await adapter.downloadAttachments({ attachmentUrls: { [attachment.id]: attachment.url } });
         if (blob[0]) {
           const blobUrl = blob[0].blobUrl;
