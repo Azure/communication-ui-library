@@ -9,14 +9,16 @@ import { useLocale } from '../localization';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 /* @conditional-compile-remove(end-of-call-survey) */
-import { Panel, PanelType, PrimaryButton, Stack } from '@fluentui/react';
+import { Text, PrimaryButton, Stack, Theme, mergeStyles, useTheme } from '@fluentui/react';
 /* @conditional-compile-remove(end-of-call-survey) */
-import { SurveyPaneContent } from './SurveyPaneContent';
+import { SurveyContent } from './SurveyContent';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurveyImprovementSuggestions } from '@internal/react-components';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { _pxToRem } from '@internal/acs-ui-common';
 
 /** @private */
-export const SurveyPane = (props: {
+export const Survey = (props: {
   /* @conditional-compile-remove(end-of-call-survey) */
   onSubmitSurvey?: (survey: CallSurvey) => Promise<CallSurveyResponse | undefined>;
   /* @conditional-compile-remove(end-of-call-survey-self-host) */
@@ -44,13 +46,9 @@ export const SurveyPane = (props: {
   ) => Promise<void>;
 }): JSX.Element => {
   /* @conditional-compile-remove(end-of-call-survey) */
-  const { onSubmitSurvey, onSurveySubmittedCustom } = props;
-  /* @conditional-compile-remove(end-of-call-survey-self-host) */ /* @conditional-compile-remove(end-of-call-survey) */
-  const { onSurveyDismissed } = props;
+  const { onSubmitSurvey, onSurveySubmittedCustom, onSurveyDismissed } = props;
   /* @conditional-compile-remove(end-of-call-survey) */
   const strings = useLocale().strings.call;
-  /* @conditional-compile-remove(end-of-call-survey) */
-  const [isOpen, setIsOpen] = useState(true);
   /* @conditional-compile-remove(end-of-call-survey) */
   const [ratings, setRatings] = useState(0);
   /* @conditional-compile-remove(end-of-call-survey) */
@@ -59,80 +57,23 @@ export const SurveyPane = (props: {
   const [showSubmitFeedbackButton, setShowSubmitFeedbackButton] = useState(false);
   /* @conditional-compile-remove(end-of-call-survey) */
   const [improvementSuggestions, setImprovementSuggestions] = useState<CallSurveyImprovementSuggestions>({});
+
   /* @conditional-compile-remove(end-of-call-survey) */
-  const onRenderFooterContent = React.useCallback(
-    () => (
-      <>
-        {showSubmitFeedbackButton && (
-          <Stack horizontalAlign="end">
-            <PrimaryButton
-              style={{ marginTop: '1rem' }}
-              onClick={() => {
-                const surveyResults: CallSurvey = { overallRating: { score: ratings } };
-                if (issuesSelected?.overallRating) {
-                  surveyResults.overallRating = { score: ratings, issues: issuesSelected.overallRating.issues };
-                }
-                if (issuesSelected?.audioRating) {
-                  surveyResults.audioRating = { score: ratings, issues: issuesSelected.audioRating.issues };
-                }
-                if (issuesSelected?.screenshareRating) {
-                  surveyResults.screenshareRating = { score: ratings, issues: issuesSelected.screenshareRating.issues };
-                }
-                if (issuesSelected?.videoRating) {
-                  surveyResults.videoRating = { score: ratings, issues: issuesSelected.videoRating.issues };
-                }
-                if (onSubmitSurvey) {
-                  onSubmitSurvey(surveyResults)
-                    .then((res) => {
-                      if (onSurveySubmittedCustom) {
-                        onSurveySubmittedCustom(
-                          res?.callId ?? '',
-                          res?.id ?? '',
-                          surveyResults,
-                          improvementSuggestions
-                        );
-                      }
-                    })
-                    .catch((e) => console.log('error when submitting survey: ' + e));
-                }
-                setIsOpen(false);
-              }}
-            >
-              {strings.surveyConfirmButtonLabel}
-            </PrimaryButton>
-          </Stack>
-        )}
-      </>
-    ),
-    [
-      showSubmitFeedbackButton,
-      ratings,
-      issuesSelected,
-      onSubmitSurvey,
-      strings.surveyConfirmButtonLabel,
-      onSurveySubmittedCustom,
-      improvementSuggestions
-    ]
-  );
+  const theme = useTheme();
+
+  /* @conditional-compile-remove(end-of-call-survey) */
+  const questionTextStyle = (theme: Theme): string =>
+    mergeStyles({
+      fontWeight: 600,
+      fontSize: _pxToRem(20),
+      lineHeight: _pxToRem(20),
+      color: theme.palette.neutralPrimary
+    });
   /* @conditional-compile-remove(end-of-call-survey) */
   return (
-    <Panel
-      headerText={strings.surveyQuestion}
-      isOpen={isOpen}
-      onDismiss={() => {
-        /* @conditional-compile-remove(end-of-call-survey-self-host) */
-        if (onSurveyDismissed) {
-          onSurveyDismissed();
-        }
-        setIsOpen(false);
-      }}
-      closeButtonAriaLabel={strings.surveyCancelButtonAriaLabel}
-      type={PanelType.custom}
-      customWidth="24rem"
-      onRenderFooterContent={onRenderFooterContent}
-      isFooterAtBottom
-    >
-      <SurveyPaneContent
+    <Stack verticalAlign="center" style={{ width: '24rem' }}>
+      <Text className={questionTextStyle(theme)}>{strings.surveyQuestion}</Text>
+      <SurveyContent
         setShowSubmitFeedbackButton={(showButton: boolean) => {
           setShowSubmitFeedbackButton(showButton);
         }}
@@ -150,7 +91,54 @@ export const SurveyPane = (props: {
             : undefined
         }
       />
-    </Panel>
+      <Stack horizontal horizontalAlign="end">
+        <PrimaryButton
+          style={{ marginTop: '1rem', marginRight: '0.5rem' }}
+          onClick={() => {
+            if (onSurveyDismissed) {
+              onSurveyDismissed();
+            }
+          }}
+        >
+          {strings.surveyCancelButtonAriaLabel}
+        </PrimaryButton>
+
+        {showSubmitFeedbackButton && (
+          <PrimaryButton
+            style={{ marginTop: '1rem', marginLeft: '0.5rem' }}
+            onClick={async () => {
+              const surveyResults: CallSurvey = { overallRating: { score: ratings } };
+              if (issuesSelected?.overallRating) {
+                surveyResults.overallRating = { score: ratings, issues: issuesSelected.overallRating.issues };
+              }
+              if (issuesSelected?.audioRating) {
+                surveyResults.audioRating = { score: ratings, issues: issuesSelected.audioRating.issues };
+              }
+              if (issuesSelected?.screenshareRating) {
+                surveyResults.screenshareRating = {
+                  score: ratings,
+                  issues: issuesSelected.screenshareRating.issues
+                };
+              }
+              if (issuesSelected?.videoRating) {
+                surveyResults.videoRating = { score: ratings, issues: issuesSelected.videoRating.issues };
+              }
+              if (onSubmitSurvey) {
+                await onSubmitSurvey(surveyResults)
+                  .then((res) => {
+                    if (onSurveySubmittedCustom) {
+                      onSurveySubmittedCustom(res?.callId ?? '', res?.id ?? '', surveyResults, improvementSuggestions);
+                    }
+                  })
+                  .catch((e) => console.log('error when submitting survey: ' + e));
+              }
+            }}
+          >
+            {strings.surveyConfirmButtonLabel}
+          </PrimaryButton>
+        )}
+      </Stack>
+    </Stack>
   );
   return <></>;
 };

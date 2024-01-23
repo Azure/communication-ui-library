@@ -57,6 +57,8 @@ import { capabilitiesChangedInfoAndRoleSelector } from './selectors/capabilities
 /* @conditional-compile-remove(capabilities) */
 import { useTrackedCapabilityChangedNotifications } from './utils/TrackCapabilityChangedNotifications';
 import { useEndedCallConsoleErrors } from './utils/useConsoleErrors';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { SurveyPage } from './pages/SurveyPage';
 
 /**
  * Props for {@link CallComposite}.
@@ -463,8 +465,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           title={locale.strings.call.failedToJoinTeamsMeetingReasonAccessDeniedTitle}
           moreDetails={locale.strings.call.failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails}
           dataUiId={'access-denied-teams-meeting-page'}
-          /* @conditional-compile-remove(end-of-call-survey) */
-          surveyOptions={{ disableSurvey: true }}
         />
       );
       break;
@@ -475,8 +475,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           title={locale.strings.call.removedFromCallTitle}
           moreDetails={locale.strings.call.removedFromCallMoreDetails}
           dataUiId={'removed-from-call-page'}
-          /* @conditional-compile-remove(end-of-call-survey) */
-          surveyOptions={{ disableSurvey: true }}
         />
       );
       break;
@@ -487,8 +485,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           title={locale.strings.call.failedToJoinCallDueToNoNetworkTitle}
           moreDetails={locale.strings.call.failedToJoinCallDueToNoNetworkMoreDetails}
           dataUiId={'join-call-failed-due-to-no-network-page'}
-          /* @conditional-compile-remove(end-of-call-survey) */
-          surveyOptions={{ disableSurvey: true }}
         />
       );
       break;
@@ -499,13 +495,16 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           dataUiId={'leaving-page'}
           pageStyle={leavePageStyle}
           disableStartCallButton={true}
-          /* @conditional-compile-remove(end-of-call-survey) */
-          surveyOptions={{ disableSurvey: true }}
         />
       );
       break;
     case 'leftCall': {
       const { title, moreDetails, disableStartCallButton, iconName } = getEndedCallPageProps(locale, endedCall);
+      /* @conditional-compile-remove(end-of-call-survey) */
+      if (!props.options?.surveyOptions?.disableSurvey) {
+        pageElement = <SurveyPage dataUiId={'left-call-page'} surveyOptions={props.options?.surveyOptions} />;
+        break;
+      }
       pageElement = (
         <NoticePage
           iconName={iconName}
@@ -513,10 +512,9 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           moreDetails={moreDetails}
           dataUiId={'left-call-page'}
           disableStartCallButton={disableStartCallButton}
-          /* @conditional-compile-remove(end-of-call-survey) */
-          surveyOptions={props.options?.surveyOptions}
         />
       );
+
       break;
     }
     case 'lobby':
