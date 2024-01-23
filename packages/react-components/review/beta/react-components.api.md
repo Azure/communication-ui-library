@@ -1953,7 +1953,10 @@ export const RTESendBox: (props: RTESendBoxProps) => JSX.Element;
 
 // @beta
 export interface RTESendBoxProps {
+    activeFileUploads?: ActiveFileUpload[];
     disabled?: boolean;
+    onCancelFileUpload?: (fileId: string) => void;
+    onRenderFileUploads?: () => JSX.Element;
     strings?: Partial<SendBoxStrings>;
     systemMessage?: string;
 }
