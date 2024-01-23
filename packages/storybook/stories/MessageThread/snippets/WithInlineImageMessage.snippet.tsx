@@ -2,8 +2,6 @@ import {
   FluentThemeProvider,
   MessageThread,
   Message,
-  AttachmentMetadata,
-  AttachmentDownloadResult,
   ImageGalleryImageProps,
   ImageGallery,
   ChatMessage
