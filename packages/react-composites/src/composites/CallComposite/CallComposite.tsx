@@ -57,8 +57,6 @@ import { capabilitiesChangedInfoAndRoleSelector } from './selectors/capabilities
 /* @conditional-compile-remove(capabilities) */
 import { useTrackedCapabilityChangedNotifications } from './utils/TrackCapabilityChangedNotifications';
 import { useEndedCallConsoleErrors } from './utils/useConsoleErrors';
-/* @conditional-compile-remove(dtmf-dialer) */
-import { DtmfDialpadPage } from './pages/DtmfDialpadPage';
 
 /**
  * Props for {@link CallComposite}.

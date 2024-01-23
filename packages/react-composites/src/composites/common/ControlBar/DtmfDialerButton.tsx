@@ -5,11 +5,13 @@ import React, { useMemo } from 'react';
 /* @conditional-compile-remove(dtmf-dialer) */
 import { CallCompositeIcon } from '../icons';
 /* @conditional-compile-remove(dtmf-dialer) */
-import { ControlBarButton } from '@internal/react-components';
+import { ControlBarButton, ControlBarButtonStrings } from '@internal/react-components';
 import { ControlBarButtonProps, ControlBarButtonStyles } from '@internal/react-components';
 /* @conditional-compile-remove(dtmf-dialer) */
 import { concatStyleSets, useTheme } from '@fluentui/react';
 import { CallControlDisplayType } from '../types/CommonCallControlOptions';
+/* @conditional-compile-remove(dtmf-dialer) */
+import { useLocale } from '../../localization';
 
 /* @conditional-compile-remove(dtmf-dialer) */
 const icon = (): JSX.Element => <CallCompositeIcon iconName={'DtmfDialpadButton'} />;
@@ -31,6 +33,12 @@ export interface DtmfDialerButtonProps extends ControlBarButtonProps {
 export const DtmfDialpadButton = (props: DtmfDialerButtonProps): JSX.Element => {
   const { strings, onRenderOnIcon, onRenderOffIcon, onClick, displayType } = props;
   const theme = useTheme();
+  const locale = useLocale();
+  const dialpadButtonStrings: ControlBarButtonStrings = {
+    label: locale.strings.call.dtmfDialerButtonLabel,
+    tooltipOnContent: locale.strings.call.dtmfDialerButtonTooltipOn,
+    tooltipOffContent: locale.strings.call.dtmfDialerButtonTooltipOff
+  };
   const styles: ControlBarButtonStyles = useMemo(
     () =>
       concatStyleSets(
@@ -46,7 +54,7 @@ export const DtmfDialpadButton = (props: DtmfDialerButtonProps): JSX.Element => 
   return (
     <ControlBarButton
       {...props}
-      strings={strings}
+      strings={strings ? strings : dialpadButtonStrings}
       showLabel={displayType !== 'compact'}
       labelKey={'dtmfDialpadButtonLabelKey'}
       onRenderOnIcon={onRenderOnIcon ?? icon}

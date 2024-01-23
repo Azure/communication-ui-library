@@ -29,6 +29,7 @@ import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
 import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
 /* @conditional-compile-remove(capabilities) */
 import { CapabilitiesChangeNotificationBarProps } from '../components/CapabilitiesChangedNotificationBar';
+/* @conditional-compile-remove(dtmf-dialer) */
 import { DtmfDialpadPage } from './DtmfDialpadPage';
 
 /**
