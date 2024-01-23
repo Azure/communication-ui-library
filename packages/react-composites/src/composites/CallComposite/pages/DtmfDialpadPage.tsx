@@ -9,7 +9,7 @@ import { CapabilitiesChangeNotificationBarProps } from '../components/Capabiliti
 import { usePropsFor } from '../hooks/usePropsFor';
 import { useLocale } from '../../localization';
 import { disableCallControls, reduceCallControlsForMobile } from '../utils';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { CallArrangement } from '../components/CallArrangement';
 import { CommonCallAdapter } from '../adapter';
@@ -41,10 +41,6 @@ interface DialpadPageContentProps {
 
 const DtmfDialpadPageContent = (props: DialpadPageContentProps): JSX.Element => {
   const { adapter } = props;
-
-  const [time, setTime] = useState<number>(0);
-  const elapsedTime = getReadableTime(time);
-  const startTime = useRef(performance.now());
   const adapterState = adapter.getState();
   const theme = useTheme();
 
@@ -56,19 +52,10 @@ const DtmfDialpadPageContent = (props: DialpadPageContentProps): JSX.Element => 
     calleeName = Object.values(remoteParticipants).find((p) => p.identifier === calleeId);
   }
 
-  React.useEffect(() => {
-    const interval = setInterval(() => {
-      setTime(performance.now() - startTime.current);
-    }, 10);
-    return () => {
-      clearInterval(interval);
-    };
-  }, [startTime]);
-
   return (
     <Stack style={{ height: '100%', width: '100%', background: theme.palette.white }}>
       <Stack style={{ margin: 'auto' }}>
-        <Text styles={DtmfDialpadContentTimerStyles}>{elapsedTime}</Text>
+        <DtmfDialerContentTimer />
         <Text>{calleeName !== 'Unnamed participant' ? calleeName : ''}</Text>
         <Dialpad
           onSendDtmfTone={async (tone: DtmfTone) => {
@@ -80,6 +67,23 @@ const DtmfDialpadPageContent = (props: DialpadPageContentProps): JSX.Element => 
       </Stack>
     </Stack>
   );
+};
+
+const DtmfDialerContentTimer = (): JSX.Element => {
+  const [time, setTime] = useState<number>(0);
+  const elapsedTime = getReadableTime(time);
+  const startTime = useRef(performance.now());
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTime(performance.now() - startTime.current);
+    }, 10);
+    return () => {
+      clearInterval(interval);
+    };
+  }, [startTime]);
+
+  return <Text styles={DtmfDialpadContentTimerStyles}>{elapsedTime}</Text>;
 };
 
 /**
