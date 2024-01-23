@@ -57,6 +57,8 @@ import { capabilitiesChangedInfoAndRoleSelector } from './selectors/capabilities
 /* @conditional-compile-remove(capabilities) */
 import { useTrackedCapabilityChangedNotifications } from './utils/TrackCapabilityChangedNotifications';
 import { useEndedCallConsoleErrors } from './utils/useConsoleErrors';
+/* @conditional-compile-remove(dtmf-dialer) */
+import { DtmfDialpadPage } from './pages/DtmfDialpadPage';
 
 /**
  * Props for {@link CallComposite}.
@@ -365,7 +367,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
 
   const [sidePaneRenderer, setSidePaneRenderer] = React.useState<SidePaneRenderer | undefined>();
   const [injectedSidePaneProps, setInjectedSidePaneProps] = React.useState<InjectedSidePaneProps>();
-
+  /* @conditional-compile-remove(dtmf-dialer) */
+  const [dialpadScreen, setDialpadScreen] = useState<boolean>(false);
   /* @conditional-compile-remove(gallery-layouts) */
   const [userSetGalleryLayout, setUserSetGalleryLayout] = useState<VideoGalleryLayout>(
     props.options?.galleryOptions?.layout ?? 'floatingLocalVideo'
@@ -575,6 +578,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           userSetOverflowGalleryPosition={userSetOverflowGalleryPosition}
           /* @conditional-compile-remove(capabilities) */
           capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
+          /* @conditional-compile-remove(dtmf-dialer) */
+          onSetDialpadPage={() => setDialpadScreen(!dialpadScreen)}
         />
       );
       break;
@@ -617,6 +622,26 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         </>
       );
       break;
+  }
+
+  /* @conditional-compile-remove(dtmf-dialer) */
+  if (dialpadScreen) {
+    pageElement = (
+      <>
+        <DtmfDialpadPage
+          mobileView={props.mobileView}
+          modalLayerHostId={props.modalLayerHostId}
+          options={props.options}
+          updateSidePaneRenderer={setSidePaneRenderer}
+          mobileChatTabHeader={props.mobileChatTabHeader}
+          latestErrors={latestErrors}
+          onDismissError={onDismissError}
+          /* @conditional-compile-remove(capabilities) */
+          capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
+          onSetDialpadPage={() => setDialpadScreen(!dialpadScreen)}
+        />
+      </>
+    );
   }
 
   if (!pageElement) {

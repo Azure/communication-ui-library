@@ -49,6 +49,8 @@ import { Reaction } from '../../CallComposite/components/buttons/Reaction';
 import { useSelector } from '../../CallComposite/hooks/useSelector';
 /* @conditional-compile-remove(reaction) */
 import { capabilitySelector } from '../../CallComposite/selectors/capabilitySelector';
+/* @conditional-compile-remove(dtmf-dialer) */
+import { DtmfDialpadButton } from './DtmfDialerButton';
 /**
  * @private
  */
@@ -80,6 +82,8 @@ export interface CommonCallControlBarProps {
   cameraButtonRef?: React.RefObject<IButton>;
   /* @conditional-compile-remove(video-background-effects) */
   videoBackgroundPickerRef?: React.RefObject<IButton>;
+  /* @conditional-compile-remove(dtmf-dialer) */
+  onSetDialpadPage?: () => void;
 }
 
 const inferCommonCallControlOptions = (
@@ -349,6 +353,19 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                             disabled={props.disableButtonsForHoldScreen || isDisabled(options.microphoneButton)}
                           />
                         )
+                    }
+                    {
+                      /* @conditional-compile-remove(dtmf-dialer) */ props.onSetDialpadPage !== undefined && (
+                        <DtmfDialpadButton
+                          styles={commonButtonStyles}
+                          displayType={options.displayType}
+                          onClick={() => {
+                            if (props.onSetDialpadPage !== undefined) {
+                              props.onSetDialpadPage();
+                            }
+                          }}
+                        />
+                      )
                     }
                     {screenShareButtonIsEnabled && (
                       <ScreenShare

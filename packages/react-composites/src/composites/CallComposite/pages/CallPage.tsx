@@ -53,6 +53,8 @@ export interface CallPageProps {
   /* @conditional-compile-remove(gallery-layouts) */
   onSetUserSetOverflowGalleryPosition?: (position: 'Responsive' | 'horizontalTop') => void;
   onCloseChatPane?: () => void;
+  /* @conditional-compile-remove(dtmf-dialer) */
+  onSetDialpadPage: () => void;
 }
 
 /**
@@ -148,6 +150,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
       userSetGalleryLayout={galleryLayout}
       /* @conditional-compile-remove(capabilities) */
       capabilitiesChangedNotificationBarProps={props.capabilitiesChangedNotificationBarProps}
+      /* @conditional-compile-remove(dtmf-dialer) */
+      onSetDialpadPage={props.onSetDialpadPage}
     />
   );
 };
