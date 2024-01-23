@@ -156,9 +156,9 @@ const processChatMessageContent = (message: ChatMessageWithStatus): string | und
     // Fill in the src here
     const document = new DOMParser().parseFromString(content, 'text/html');
     document.querySelectorAll('img').forEach((img) => {
-      const attachmentId = attachments.find((attachment) => attachment.id === img.id)?.id;
-      if (attachmentId) {
-        const src = message.resourceCache?.[attachmentId] ?? '';
+      const attachmentPreviewUrl = attachments.find((attachment) => attachment.id === img.id)?.previewUrl;
+      if (attachmentPreviewUrl) {
+        const src = message.resourceCache?.[attachmentPreviewUrl] ?? '';
         img.src = src;
       }
     });
@@ -179,7 +179,8 @@ const processChatMessageContent = (message: ChatMessageWithStatus): string | und
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 const generateImageAttachmentImgHtml = (message: ChatMessageWithStatus, attachment: ChatAttachment): string => {
   const contentType = extractAttachmentContentTypeFromName(attachment.name);
-  const src = message.resourceCache?.[attachment.id] ?? '';
+  const previewUrl = attachment.previewUrl ?? '';
+  const src = message.resourceCache?.[previewUrl] ?? '';
   return `\r\n<p><img alt="image" src="${src}" itemscope="${contentType}" id="${attachment.id}"></p>`;
 };
 

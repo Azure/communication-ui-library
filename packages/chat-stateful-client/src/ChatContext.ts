@@ -19,7 +19,7 @@ import { _safeJSONStringify, toFlatCommunicationIdentifier } from '@internal/acs
 import { Constants } from './Constants';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-chat';
 import { chatStatefulLogger } from './Logger';
-import { ChatAttachment, CommunicationTokenCredential } from '@azure/communication-signaling';
+import { CommunicationTokenCredential } from '@azure/communication-signaling';
 
 enableMapSet();
 // Needed to generate state diff for verbose logging.
@@ -289,6 +289,7 @@ export class ChatContext {
     const attachments = message.content?.attachments;
     if (message.type === 'html' && message.content?.message && attachments && attachments.length > 0) {
       if (this._messageQueue && !this._messageQueue.containsMessage(message) && message.resourceCache === undefined) {
+        // Need to discuss retry logic in case of failure
         this._messageQueue.addMessage(threadId, message);
       }
     }
@@ -429,7 +430,6 @@ const toChatError = (target: ChatErrorTarget, error: unknown): ChatError => {
   }
   return new ChatError(target, new Error(`${error}`));
 };
-// Whether this is a class or not TBD
 class MessageQueue {
   private _messageQueue: ChatMessageWithStatus[] = [];
   private _context: ChatContext;
@@ -470,8 +470,11 @@ class MessageQueue {
           message.resourceCache = {};
         }
         for (const attachment of attachments) {
-          const src = await fetchImageSource(attachment, this._credential);
-          message.resourceCache[attachment.id] = src;
+          if (attachment.previewUrl) {
+            const previewUrl = attachment.previewUrl;
+            const src = await fetchImageSource(previewUrl, this._credential);
+            message.resourceCache[previewUrl] = src;
+          }
         }
       }
     }
@@ -480,13 +483,18 @@ class MessageQueue {
   }
 }
 
-const fetchImageSource = async (
-  attachment: ChatAttachment,
-  credential: CommunicationTokenCredential
-): Promise<string> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      return resolve('https://d1y8sb8igg2f8e.cloudfront.net/images/shutterstock_1375463840.width-800.jpg');
-    }, 2000);
-  });
+const fetchImageSource = async (src: string, credential: CommunicationTokenCredential): Promise<string> => {
+  async function fetchWithAuthentication(url: string, token: string): Promise<Response> {
+    const headers = new Headers();
+    headers.append('Authorization', `Bearer ${token}`);
+    try {
+      return await fetch(url, { headers });
+    } catch (err) {
+      throw new ChatError('ChatThreadClient.getMessage', err as Error);
+    }
+  }
+  const accessToken = await credential.getToken();
+  const response = await fetchWithAuthentication(src, accessToken.token);
+  const blob = await response.blob();
+  return URL.createObjectURL(blob);
 };
