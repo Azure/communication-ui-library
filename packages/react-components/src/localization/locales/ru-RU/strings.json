@@ -126,7 +126,12 @@
   "reactionButton": {
     "label": "Отреагировать",
     "tooltipDisabledContent": "Действие реакции отключено",
-    "tooltipContent": "Отправка реакции"
+    "tooltipContent": "Отправка реакции",
+    "likeReactionTooltipContent": "Нравится",
+    "heartReactionTooltipContent": "Люблю",
+    "laughReactionTooltipContent": "Смеюсь",
+    "applauseReactionTooltipContent": "Аплодисменты",
+    "surprisedReactionTooltipContent": "Удивляюсь"
   },
   "messageThread": {
     "yesterday": "Вчера",

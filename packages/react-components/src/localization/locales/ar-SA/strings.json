@@ -126,7 +126,12 @@
   "reactionButton": {
     "label": "تفاعل",
     "tooltipDisabledContent": "تم تعطيل إجراء التفاعل",
-    "tooltipContent": "إرسال تفاعل"
+    "tooltipContent": "إرسال تفاعل",
+    "likeReactionTooltipContent": "إعجاب",
+    "heartReactionTooltipContent": "حب",
+    "laughReactionTooltipContent": "ضحك",
+    "applauseReactionTooltipContent": "تصفيق",
+    "surprisedReactionTooltipContent": "مندهش"
   },
   "messageThread": {
     "yesterday": "أمس",

@@ -126,7 +126,12 @@
   "reactionButton": {
     "label": "Tepki ver",
     "tooltipDisabledContent": "Tepki eylemi devre dışı bırakıldı",
-    "tooltipContent": "Tepki gönder"
+    "tooltipContent": "Tepki gönder",
+    "likeReactionTooltipContent": "Beğen",
+    "heartReactionTooltipContent": "Aşk",
+    "laughReactionTooltipContent": "Kahkaha",
+    "applauseReactionTooltipContent": "Alkış",
+    "surprisedReactionTooltipContent": "Şaşırmış"
   },
   "messageThread": {
     "yesterday": "Dün",
