@@ -55,7 +55,7 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     onFetchInlineAttachment,
     /* @conditional-compile-remove(image-gallery) */
-    onInlineImageClicked,
+    inlineImageOptions,
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     inlineAttachments,
     /* @conditional-compile-remove(mention) */
@@ -104,7 +104,7 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
             /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
             onFetchAttachments={onFetchInlineAttachment}
             /* @conditional-compile-remove(image-gallery) */
-            onInlineImageClicked={onInlineImageClicked}
+            inlineImageOptions={inlineImageOptions}
             /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
             attachmentsMap={inlineAttachments[messageProps.message.messageId] ?? {}}
             /* @conditional-compile-remove(mention) */
@@ -129,7 +129,7 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
       /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
       onFetchInlineAttachment,
       /* @conditional-compile-remove(image-gallery) */
-      onInlineImageClicked,
+      inlineImageOptions,
       /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
       inlineAttachments,
       /* @conditional-compile-remove(mention) */

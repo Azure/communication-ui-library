@@ -1338,6 +1338,24 @@ export interface ImageGalleryStrings {
     downloadButtonLabel: string;
 }
 
+// @beta (undocumented)
+export interface InlineImage {
+    // (undocumented)
+    alt: string;
+    // (undocumented)
+    height?: string;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    itemscope?: string;
+    // (undocumented)
+    messageId: string;
+    // (undocumented)
+    src: string;
+    // (undocumented)
+    width?: string;
+}
+
 // @beta
 export interface InlineImageMetadata {
     // (undocumented)
@@ -1346,6 +1364,12 @@ export interface InlineImageMetadata {
     // (undocumented)
     previewUrl?: string;
     url: string;
+}
+
+// @beta (undocumented)
+export interface InlineImageOptions {
+    // (undocumented)
+    onRenderInlineImage?: (inlineImage: InlineImage, defaultOnRender: (inlineImage: InlineImage) => JSX.Element) => JSX.Element;
 }
 
 // @internal
@@ -1556,7 +1580,7 @@ export type MessageThreadProps = {
     fileDownloadHandler?: FileDownloadHandler;
     onDisplayDateTimeString?: (messageDate: Date) => string;
     mentionOptions?: MentionOptions;
-    onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
+    inlineImageOptions?: InlineImageOptions;
 };
 
 // @public

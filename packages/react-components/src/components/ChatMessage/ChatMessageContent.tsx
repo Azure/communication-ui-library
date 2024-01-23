@@ -36,7 +36,7 @@ type ChatMessageContentProps = {
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   onFetchAttachments?: (attachments: AttachmentMetadata[], messageId: string) => Promise<void>;
   /* @conditional-compile-remove(image-gallery) */
-  onInlineImageClicked?: (attachmentId: string) => void;
+  inlineImageOptions?: InlineImageOptions;
 };
 
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -51,6 +51,34 @@ type MessageContentWithLiveAriaProps = {
   ariaLabel?: string;
   content: JSX.Element;
 };
+
+/** @beta */
+export interface InlineImage {
+  messageId: string;
+  id: string;
+  src: string;
+  alt: string;
+  itemscope?: string;
+  width?: string;
+  height?: string;
+  // style: Properties<string | number, string & {}>;
+  // name?: string;
+}
+
+// '<p>Check out this image:&nbsp;</p>\r\n<p><img alt="image" src="" itemscope="png" width="250" height="375" id="SomeImageId" style="vertical-align:bottom"></p><p>&nbsp;</p>\r\n',
+
+
+// Option 1
+// export interface InlineImageOptions {
+//   onRenderInlineImage?: (messageContent: string, defaultOnRender: (messageContent: string) => JSX.Element) => JSX.Element;
+// }
+
+// Option 2
+/** @beta */
+export interface InlineImageOptions {
+  onRenderInlineImage?: (inlineImage: InlineImage, defaultOnRender: (inlineImage: InlineImage) => JSX.Element) => JSX.Element;
+}
+
 
 /** @private */
 export const ChatMessageContent = (props: ChatMessageContentProps): JSX.Element => {
@@ -198,6 +226,39 @@ const messageContentAriaText = (props: ChatMessageContentProps): string | undefi
     : undefined;
 };
 
+// Option 1
+// const defaultOnRenderInlineImage = (messageContent: string | undefined) => {
+//   if (messageContent === undefined) {
+//     return <></>;
+//   }
+//   const inlineImageProps: InlineImage = attributesToProps(messageContent);
+//   return (
+//     <img {...inlineImageProps} data-ui-id={inlineImageProps.id} tabIndex={0} role="button" style={{
+//       cursor: 'pointer'
+//     }}/>
+// )}
+
+const defaultOnRenderInlineImage = (inlineImage: InlineImage) => {
+  return (
+    <span
+      data-ui-id={inlineImage.id}
+      // onClick={(e) => handleOnClick(e)}
+      tabIndex={0}
+      role="button"
+      style={{
+        cursor: 'pointer'
+      }}
+      // onKeyDown={(e) => {
+      //   if (e.key === 'Enter') {
+      //     handleOnClick(e);
+      //   }
+      // }}
+    >
+      <img {...inlineImage} />
+    </span>
+  )
+}
+
 const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
   const options: HTMLReactParserOptions = {
     transform(reactNode, domNode) {
@@ -230,30 +291,28 @@ const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
             domNode.attribs.src = props.attachmentsMap[domNode.attribs.id];
           }
           /* @conditional-compile-remove(image-gallery) */
-          const handleOnClick = (): void => {
-            props.onInlineImageClicked && props.onInlineImageClicked(domNode.attribs.id);
-          };
-          const imgProps = attributesToProps(domNode.attribs);
+          // const handleOnClick = (event: React.MouseEvent<Element, MouseEvent> | React.KeyboardEvent<HTMLElement>): void => {
+          //   props.onInlineImageMouseEvent && props.onInlineImageMouseEvent(event, domNode.attribs.id);
+          // };
+
+          // Option 1
           /* @conditional-compile-remove(image-gallery) */
-          return (
-            <span
-              data-ui-id={domNode.attribs.id}
-              onClick={handleOnClick}
-              tabIndex={0}
-              role="button"
-              style={{
-                cursor: 'pointer'
-              }}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  handleOnClick();
-                }
-              }}
-            >
-              <img {...imgProps} />
-            </span>
-          );
-          return <img {...imgProps} />;
+          // return props.inlineImageOptions?.onRenderInlineImage ? (
+          //   props.inlineImageOptions.onRenderInlineImage(props.message.content, defaultOnRenderInlineImage)
+          // ) : defaultOnRenderInlineImage(props.message.content)
+
+          // Option 2
+          const imgProps = attributesToProps(domNode.attribs);
+          // const inlineImageProps: InlineImage = {...imgProps, messageId: props.message.messageId};
+          const inlineImageProps: InlineImage = {messageId: props.message.messageId, id: imgProps.id as string, src: imgProps.src as string, alt: imgProps.alt as string, itemscope: imgProps.itemscope as string, width: imgProps.width as string, height: imgProps.height as string};
+
+          /* @conditional-compile-remove(image-gallery) */
+          return props.inlineImageOptions?.onRenderInlineImage ? (
+            props.inlineImageOptions.onRenderInlineImage(inlineImageProps, defaultOnRenderInlineImage)
+          ) : defaultOnRenderInlineImage(inlineImageProps)
+
+
+          // return <img {...inlineImageProps} />;
         }
       }
       // Pass through the original node

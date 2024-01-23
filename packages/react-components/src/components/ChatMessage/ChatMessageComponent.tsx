@@ -12,6 +12,7 @@ import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMes
 import { FileDownloadHandler, AttachmentMetadata } from '../FileDownloadCards';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from '../MentionPopover';
+import { InlineImageOptions } from './ChatMessageContent';
 
 type ChatMessageComponentProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
@@ -94,7 +95,7 @@ type ChatMessageComponentProps = {
    * Optional callback called when an inline image is clicked.
    * @beta
    */
-  onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
+  inlineImageOptions?: InlineImageOptions;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /**
    * Optional map of attachment ids to blob urls.
@@ -160,7 +161,7 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
         /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
         onFetchAttachments={props.onFetchAttachments}
         /* @conditional-compile-remove(image-gallery) */
-        onInlineImageClicked={props.onInlineImageClicked}
+        inlineImageOptions={props.inlineImageOptions}
         /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
         attachmentsMap={props.attachmentsMap}
         /* @conditional-compile-remove(mention) */

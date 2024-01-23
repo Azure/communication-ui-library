@@ -11,7 +11,8 @@ import {
   AttachmentMetadata,
   AttachmentDownloadResult,
   ImageGalleryImageProps,
-  ImageGallery
+  ImageGallery,
+  InlineImage
 } from '@azure/communication-react';
 import {
   Persona,
@@ -497,6 +498,31 @@ const MessageThreadStory = (args): JSX.Element => {
     return Promise.resolve();
   };
 
+  /* @conditional-compile-remove(image-gallery) */
+  const inlineImageOptions = {
+    onRenderInlineImage: (inlineImage: InlineImage, defaultOnRender: (inlineImage: InlineImage) => JSX.Element): JSX.Element => {
+      return (
+        <span
+          data-ui-id={inlineImage.id}
+          onClick={() => onInlineImageClicked(inlineImage.id, inlineImage.messageId)}
+          tabIndex={0}
+          role="button"
+          style={{
+            cursor: 'pointer'
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              onInlineImageClicked(inlineImage.id, inlineImage.messageId);
+            }
+          }}
+        >
+          {defaultOnRender(inlineImage)}
+        </span>
+      )
+    }
+  };
+
+
   const onSendHandler = (): void => {
     switch (selectedMessageType.key) {
       case 'newMessage':
@@ -532,7 +558,7 @@ const MessageThreadStory = (args): JSX.Element => {
         onLoadPreviousChatMessages={onLoadPreviousMessages}
         onRenderMessage={onRenderMessage}
         onFetchAttachments={onFetchAttachments}
-        onInlineImageClicked={onInlineImageClicked}
+        inlineImageOptions={inlineImageOptions}
         onUpdateMessage={onUpdateMessageCallback}
         onRenderAvatar={(userId?: string) => {
           return (

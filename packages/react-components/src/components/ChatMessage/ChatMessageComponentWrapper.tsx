@@ -16,6 +16,7 @@ import { MentionOptions } from '../MentionPopover';
 import { MessageStatusIndicatorProps } from '../MessageStatusIndicator';
 import { FluentChatMessageComponentWrapper } from './FluentChatMessageComponentWrapper';
 import { DefaultSystemMessage } from './DefaultSystemMessage';
+import { InlineImageOptions } from './ChatMessageContent';
 
 /**
  * Props for {@link ChatMessageComponentWrapper}
@@ -59,7 +60,7 @@ export type ChatMessageComponentWrapperProps = _ChatMessageProps & {
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   onFetchInlineAttachment: (attachments: AttachmentMetadata[], messageId: string) => Promise<void>;
   /* @conditional-compile-remove(image-gallery) */
-  onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
+  inlineImageOptions?: InlineImageOptions;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   inlineAttachments: Record<string, Record<string, string>>;
   /* @conditional-compile-remove(mention) */

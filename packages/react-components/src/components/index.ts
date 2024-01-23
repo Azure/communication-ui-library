@@ -39,6 +39,9 @@ export type {
 /* @conditional-compile-remove(image-gallery) */
 export type { ImageGalleryProps, ImageGalleryImageProps } from './ImageGallery';
 
+/* @conditional-compile-remove(image-gallery) */
+export type { InlineImageOptions, InlineImage } from './ChatMessage/ChatMessageContent';
+
 /* @conditional-compile-remove(file-sharing) */
 export type { ActiveFileUpload } from './SendBox';
 

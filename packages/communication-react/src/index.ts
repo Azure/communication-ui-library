@@ -318,6 +318,8 @@ export type { AttachmentMetadata } from '../../react-components/src';
 export type { FileMetadata } from '../../react-components/src';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 export type { ChatAttachmentType, AttachmentDownloadResult, InlineImageMetadata } from '../../react-components/src';
+/* @conditional-compile-remove(image-gallery) */
+export type { InlineImageOptions, InlineImage } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonProps, HoldButtonStrings, VideoTileStrings } from '../../react-components/src';
 /* @conditional-compile-remove(call-readiness) */

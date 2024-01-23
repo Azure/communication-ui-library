@@ -6,6 +6,8 @@ import { isIOS } from '@fluentui/react';
 import { mergeStyles, Stack } from '@fluentui/react';
 /* @conditional-compile-remove(image-gallery) */
 import { PersonaSize } from '@fluentui/react';
+// /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+// import { attributesToProps } from 'html-react-parser';
 import {
   CommunicationParticipant,
   ErrorBar,
@@ -59,6 +61,8 @@ import { _FileDownloadCards } from '@internal/react-components';
 import { AttachmentDownloadResult, AttachmentMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(image-gallery) */
 import { ImageGallery, ImageGalleryImageProps } from '@internal/react-components';
+/* @conditional-compile-remove(image-gallery) */
+import { InlineImage } from '@internal/react-components';
 
 /**
  * @private
@@ -299,6 +303,30 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   );
 
   /* @conditional-compile-remove(image-gallery) */
+  const inlineImageOptions = {
+      onRenderInlineImage: (inlineImage: InlineImage, defaultOnRender: (inlineImage: InlineImage) => JSX.Element): JSX.Element => {
+        return (
+          <span
+            data-ui-id={inlineImage.id}
+            onClick={() => onInlineImageClicked(inlineImage.id, inlineImage.messageId)}
+            tabIndex={0}
+            role="button"
+            style={{
+              cursor: 'pointer'
+            }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                onInlineImageClicked(inlineImage.id, inlineImage.messageId);
+              }
+            }}
+          >
+            {defaultOnRender(inlineImage)}
+          </span>
+        )
+      }
+    };
+
+  /* @conditional-compile-remove(image-gallery) */
   const onImageDownloadButtonClicked = useCallback((imageUrl: string, downloadFilename: string): void => {
     if (imageUrl === '') {
       return;
@@ -357,7 +385,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
             onFetchAttachments={onRenderInlineAttachment}
             /* @conditional-compile-remove(image-gallery) */
-            onInlineImageClicked={onInlineImageClicked}
+            inlineImageOptions={inlineImageOptions}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
           />

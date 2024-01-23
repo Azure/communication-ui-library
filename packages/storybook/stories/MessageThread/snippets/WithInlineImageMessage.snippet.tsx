@@ -6,7 +6,8 @@ import {
   AttachmentDownloadResult,
   ImageGalleryImageProps,
   ImageGallery,
-  ChatMessage
+  ChatMessage,
+  InlineImage
 } from '@azure/communication-react';
 import { Persona, PersonaSize } from '@fluentui/react';
 import React, { useState } from 'react';
@@ -61,6 +62,30 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
     return Promise.resolve();
   };
 
+  /* @conditional-compile-remove(image-gallery) */
+  const inlineImageOptions = {
+    onRenderInlineImage: (inlineImage: InlineImage, defaultOnRender: (inlineImage: InlineImage) => JSX.Element): JSX.Element => {
+      return (
+        <span
+          data-ui-id={inlineImage.id}
+          onClick={() => onInlineImageClicked(inlineImage.id, inlineImage.messageId)}
+          tabIndex={0}
+          role="button"
+          style={{
+            cursor: 'pointer'
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              onInlineImageClicked(inlineImage.id, inlineImage.messageId);
+            }
+          }}
+        >
+          {defaultOnRender(inlineImage)}
+        </span>
+      )
+    }
+  };
+
   const messages: Message[] = [
     {
       messageType: 'chat',
@@ -106,7 +131,7 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
         userId={'1'}
         messages={messages}
         onFetchAttachments={onFetchAttachments}
-        onInlineImageClicked={onInlineImageClicked}
+        inlineImageOptions={inlineImageOptions}
       />
       {
         <ImageGallery
