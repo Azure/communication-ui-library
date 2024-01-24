@@ -27,7 +27,6 @@ import { fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 /* @conditional-compile-remove(mention) */
 import { Mention } from './MentionPopover';
-import { InlineImage } from './ChatMessage/ChatMessageContent';
 
 const twentyFourHoursAgo = (): Date => {
   const date = new Date();
