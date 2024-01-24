@@ -389,7 +389,7 @@ describe('Message should display image and attachment correctly', () => {
     const onInlineImageClickedHandler = jest.fn();
     const inlineImageOptions = {
       onRenderInlineImage: jest.fn()
-    }
+    };
 
     const { container } = render(
       <MessageThread userId="user1" messages={[sampleMessage]} inlineImageOptions={inlineImageOptions} />

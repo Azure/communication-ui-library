@@ -279,13 +279,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
         }
       </div>
     );
-  }, [
-    defaultOnRenderFileDownloads,
-    message,
-    props,
-    strings,
-    userId,
-  ]);
+  }, [defaultOnRenderFileDownloads, inlineImageOptions, message, props, strings, userId]);
 
   const isBlockedMessage =
     false || /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked';

@@ -74,8 +74,11 @@ export interface InlineImage {
 export interface InlineImageOptions {
   /**
    * Optional callback to render an inline image of in a message.
-  */
-  onRenderInlineImage?: (inlineImage: InlineImage, defaultOnRender: (inlineImage: InlineImage) => JSX.Element) => JSX.Element;
+   */
+  onRenderInlineImage?: (
+    inlineImage: InlineImage,
+    defaultOnRender: (inlineImage: InlineImage) => JSX.Element
+  ) => JSX.Element;
 }
 
 /** @private */
@@ -226,18 +229,18 @@ const messageContentAriaText = (props: ChatMessageContentProps): string | undefi
 
 const defaultOnRenderInlineImage = (inlineImage: InlineImage) => {
   return (
-      <img 
-        {...inlineImage.imgAttrs}
-        data-ui-id={inlineImage.imgAttrs.id}
-        tabIndex={0} 
-        role="button"
-        style={{
-          cursor: 'pointer',
-          ...inlineImage.imgAttrs.style
-        }}
-      />
-  )
-}
+    <img
+      {...inlineImage.imgAttrs}
+      data-ui-id={inlineImage.imgAttrs.id}
+      tabIndex={0}
+      role="button"
+      style={{
+        cursor: 'pointer',
+        ...inlineImage.imgAttrs.style
+      }}
+    />
+  );
+};
 
 const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
   const options: HTMLReactParserOptions = {
@@ -273,12 +276,12 @@ const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
 
           const imgProps = attributesToProps(domNode.attribs);
           /* @conditional-compile-remove(image-gallery) */
-          const inlineImageProps: InlineImage = { messageId: props.message.messageId, imgAttrs: imgProps};
+          const inlineImageProps: InlineImage = { messageId: props.message.messageId, imgAttrs: imgProps };
 
           /* @conditional-compile-remove(image-gallery) */
-          return props.inlineImageOptions?.onRenderInlineImage ? (
-            props.inlineImageOptions.onRenderInlineImage(inlineImageProps, defaultOnRenderInlineImage)
-          ) : defaultOnRenderInlineImage(inlineImageProps)
+          return props.inlineImageOptions?.onRenderInlineImage
+            ? props.inlineImageOptions.onRenderInlineImage(inlineImageProps, defaultOnRenderInlineImage)
+            : defaultOnRenderInlineImage(inlineImageProps);
 
           return <img {...imgProps} />;
         }
