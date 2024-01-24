@@ -9,7 +9,7 @@ import { ActiveErrorMessage, ErrorBar, ParticipantMenuItemsCallback } from '@int
 import { VideoGalleryLayout } from '@internal/react-components';
 import React from 'react';
 /* @conditional-compile-remove(dtmf-dialer) */
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { useLocale } from '../../localization';
 import { CallCompositeOptions } from '../CallComposite';
@@ -34,9 +34,9 @@ import { CapabilitiesChangeNotificationBarProps } from '../components/Capabiliti
 /* @conditional-compile-remove(dtmf-dialer) */
 import { DtmfDialpadPage } from './DtmfDialpadPage';
 /* @conditional-compile-remove(dtmf-dialer) */
-import { useAdapter } from '../adapter/CallAdapterProvider';
-/* @conditional-compile-remove(dtmf-dialer) */
 import { showDtmfDialer } from '../utils/MediaGalleryUtils';
+/* @conditional-compile-remove(dtmf-dialer) */
+import { getTargetCallees } from '../selectors/baseSelectors';
 
 /**
  * @private
@@ -99,24 +99,26 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   const remoteParticipantsConnected = useSelector(getRemoteParticipantsConnectedSelector);
 
   /* @conditional-compile-remove(dtmf-dialer) */
-  const adapter = useAdapter();
-  /* @conditional-compile-remove(dtmf-dialer) */
-  const callees = adapter.getState().targetCallees;
+  const callees = useSelector(getTargetCallees);
   /* @conditional-compile-remove(dtmf-dialer) */
   const renderDtmfDialerFromStart = showDtmfDialer(callees);
 
   /* @conditional-compile-remove(dtmf-dialer) */
   const [dtmfDialerPresent, setDtmfDialerPresent] = useState<boolean>(renderDtmfDialerFromStart);
   /* @conditional-compile-remove(dtmf-dialer) */
-  const [initialDialerDismissed, setInitialDialerDismissed] = useState<boolean>(false);
+  const dialerShouldAutoDismiss = useRef<boolean>(renderDtmfDialerFromStart);
 
   /* @conditional-compile-remove(dtmf-dialer) */
+  /**
+   * This useEffect is about clearing the dtmf dialer should there be a new participant that joins the call.
+   * This will only happen the first time should the dialer be present when the call starts.
+   */
   useEffect(() => {
-    if (remoteParticipantsConnected.length > 1 && dtmfDialerPresent && !initialDialerDismissed) {
+    if (remoteParticipantsConnected.length > 1 && dtmfDialerPresent && dialerShouldAutoDismiss.current) {
       setDtmfDialerPresent(false);
-      setInitialDialerDismissed(true);
+      dialerShouldAutoDismiss.current = false;
     }
-  }, [dtmfDialerPresent, initialDialerDismissed, remoteParticipantsConnected, setDtmfDialerPresent]);
+  }, [dtmfDialerPresent, remoteParticipantsConnected, setDtmfDialerPresent]);
 
   const strings = useLocale().strings.call;
 

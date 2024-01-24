@@ -174,7 +174,9 @@ export const createAnnouncementString = (
  * @returns whether the dialer should be the gallery content or not
  */
 export const showDtmfDialer = (callees?: CommunicationIdentifier[]): boolean => {
-  return !!callees?.filter((callee) => {
-    return isPhoneNumberIdentifier(callee) || isMicrosoftTeamsAppIdentifier(callee);
-  });
+  return !!(
+    callees?.filter((callee) => {
+      return isPhoneNumberIdentifier(callee) || isMicrosoftTeamsAppIdentifier(callee);
+    }) && callees.length > 0
+  );
 };
