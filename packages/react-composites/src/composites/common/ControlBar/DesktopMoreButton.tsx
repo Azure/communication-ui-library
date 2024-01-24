@@ -37,9 +37,11 @@ import { _startCaptionsButtonSelector } from '@internal/calling-component-bindin
 import { useAdaptedSelector } from '../../CallComposite/hooks/useAdaptedSelector';
 import { _preventDismissOnEvent } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(dtmf-dialer) */
-import { useAdapter } from '../../CallComposite/adapter/CallAdapterProvider';
-/* @conditional-compile-remove(dtmf-dialer) */
 import { showDtmfDialer } from '../../CallComposite/utils/MediaGalleryUtils';
+/* @conditional-compile-remove(dtmf-dialer) */
+import { useSelector } from '../../CallComposite/hooks/useSelector';
+/* @conditional-compile-remove(dtmf-dialer) */
+import { getTargetCallees } from '../../CallComposite/selectors/baseSelectors';
 
 /** @private */
 export interface DesktopMoreButtonProps extends ControlBarButtonProps {
@@ -92,9 +94,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
   );
 
   /* @conditional-compile-remove(dtmf-dialer) */
-  const adapter = useAdapter();
-  /* @conditional-compile-remove(dtmf-dialer) */
-  const callees = adapter.getState().targetCallees;
+  const callees = useSelector(getTargetCallees);
   /* @conditional-compile-remove(dtmf-dialer) */
   const allowDtmfDialer = showDtmfDialer(callees);
 

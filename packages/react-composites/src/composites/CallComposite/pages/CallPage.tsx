@@ -226,6 +226,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
       capabilitiesChangedNotificationBarProps={props.capabilitiesChangedNotificationBarProps}
       /* @conditional-compile-remove(dtmf-dialer) */
       onSetDialpadPage={() => setDtmfDialerPresent(!dtmfDialerPresent)}
+      /* @conditional-compile-remove(dtmf-dialer) */
+      dtmfDialerPresent={dtmfDialerPresent}
     />
   );
 };
