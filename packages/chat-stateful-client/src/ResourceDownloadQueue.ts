@@ -16,8 +16,8 @@ import { CommunicationTokenCredential } from '@azure/communication-common';
 export class ResourceDownloadQueue {
   private _messageQueue: ChatMessageWithStatus[] = [];
   private _context: ChatContext;
-  private _credential: CommunicationTokenCredential;
   private _isRequesting = false;
+  private _credential: CommunicationTokenCredential;
 
   constructor(context: ChatContext, credential: CommunicationTokenCredential) {
     this._context = context;
@@ -30,56 +30,71 @@ export class ResourceDownloadQueue {
 
   public containsMessage(message: ChatMessageWithStatus): boolean {
     let contains = false;
-    if (this._messageQueue.includes(message)) {
+    if (this._messageQueue.find((m) => m.id === message.id)) {
       contains = true;
     }
     return contains;
   }
 
-  public addMessage(threadId: string, message: ChatMessageWithStatus): void {
+  public addMessage(message: ChatMessageWithStatus): void {
     // make a copy of message and add to queue
     const copy = { ...message };
     this._messageQueue.push(copy);
-
-    if (!this.isRequesting()) {
-      this.startQueue(threadId);
-    }
   }
 
-  private async startQueue(threadId: string): Promise<void> {
+  public async startQueue(threadId: string, operation: ImageRequest): Promise<void> {
     while (this._messageQueue.length > 0) {
-      const newMessage = await this.requestAttachments();
-      this._isRequesting = false;
-      if (newMessage) {
-        this._context.setChatMessage(threadId, newMessage);
+      this._isRequesting = true;
+      const message = this._messageQueue.shift();
+      if (!message) {
+        this._isRequesting = false;
+        continue;
       }
-    }
-  }
 
-  public async requestAttachments(): Promise<ChatMessageWithStatus | undefined> {
-    if (this._messageQueue.length === 0) {
-      return;
-    }
-    this._isRequesting = true;
-    const message = this._messageQueue.shift();
-    if (message) {
-      const attachments = message.content?.attachments;
-      if (message.type === 'html' && attachments) {
-        if (message.resourceCache === undefined) {
-          message.resourceCache = {};
+      try {
+        const newMessage = await operation(message, this._credential);
+        if (newMessage) {
+          this._context.setChatMessage(threadId, newMessage);
         }
-        for (const attachment of attachments) {
-          if (attachment.previewUrl) {
-            const previewUrl = attachment.previewUrl;
-            const src = await fetchImageSource(previewUrl, this._credential);
-            message.resourceCache[previewUrl] = src;
-          }
+      } catch (error) {
+        if (error instanceof ResourceDownloadError) {
+          this.addMessage(error.chatMessageWithStatus);
         }
       }
     }
-    return message;
   }
 }
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/**
+ * @private
+ */
+export const requestAttachments = async (
+  message: ChatMessageWithStatus,
+  credential: CommunicationTokenCredential
+): Promise<ChatMessageWithStatus> => {
+  const attachments = message.content?.attachments;
+  if (message.type === 'html' && attachments) {
+    if (message.resourceCache === undefined) {
+      message.resourceCache = {};
+    }
+    for (const attachment of attachments) {
+      if (attachment.previewUrl) {
+        const previewUrl = attachment.previewUrl;
+        try {
+          const src = await fetchImageSource(previewUrl, credential);
+          message.resourceCache[previewUrl] = src;
+        } catch (error) {
+          throw new ResourceDownloadError(message);
+        }
+      }
+    }
+  }
+
+  return message;
+};
+/**
+ * @private
+ */
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 const fetchImageSource = async (src: string, credential: CommunicationTokenCredential): Promise<string> => {
   async function fetchWithAuthentication(url: string, token: string): Promise<Response> {
@@ -96,3 +111,19 @@ const fetchImageSource = async (src: string, credential: CommunicationTokenCrede
   const blob = await response.blob();
   return URL.createObjectURL(blob);
 };
+
+interface ImageRequest {
+  (message: ChatMessageWithStatus, credential: CommunicationTokenCredential): Promise<ChatMessageWithStatus>;
+}
+
+/**
+ * @private
+ */
+export class ResourceDownloadError extends Error {
+  public chatMessageWithStatus: ChatMessageWithStatus;
+
+  constructor(chatMessageWithStatus: ChatMessageWithStatus) {
+    super();
+    this.chatMessageWithStatus = chatMessageWithStatus;
+  }
+}

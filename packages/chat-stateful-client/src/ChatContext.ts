@@ -22,7 +22,7 @@ import { chatStatefulLogger } from './Logger';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { CommunicationTokenCredential } from '@azure/communication-common';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { ResourceDownloadQueue } from './ResourceDownloadQueue';
+import { ResourceDownloadQueue, requestAttachments } from './ResourceDownloadQueue';
 
 enableMapSet();
 // Needed to generate state diff for verbose logging.
@@ -322,7 +322,10 @@ export class ChatContext {
     if (message.type === 'html' && message.content?.message && attachments && attachments.length > 0) {
       if (this._messageQueue && !this._messageQueue.containsMessage(message) && message.resourceCache === undefined) {
         // Need to discuss retry logic in case of failure
-        this._messageQueue.addMessage(threadId, message);
+        this._messageQueue.addMessage(message);
+        if (!this._messageQueue.isRequesting()) {
+          this._messageQueue.startQueue(threadId, requestAttachments);
+        }
       }
     }
   }
