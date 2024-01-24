@@ -175,12 +175,7 @@ export const createAnnouncementString = (
  */
 export const showDtmfDialer = (callees?: CommunicationIdentifier[]): boolean => {
   return !!callees?.filter((callee) => {
-    if (isPhoneNumberIdentifier(callee)) {
-      return true;
-    } else if (isMicrosoftTeamsAppIdentifier(callee)) {
-      return true;
-    } else {
-      return false;
+    return isPhoneNumberIdentifier(callee) || isMicrosoftTeamsAppIdentifier(callee))
     }
   });
 };
