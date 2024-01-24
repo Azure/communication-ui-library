@@ -125,7 +125,6 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
           {...mediaGalleryProps}
           {...mediaGalleryHandlers}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-          /* @conditional-compile-remove(pinned-participants) */
           remoteVideoTileMenuOptions={options?.remoteVideoTileMenuOptions}
           drawerMenuHostId={drawerMenuHostId}
           /* @conditional-compile-remove(click-to-call) */
@@ -143,7 +142,6 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         {...mediaGalleryProps}
         {...mediaGalleryHandlers}
         onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-        /* @conditional-compile-remove(pinned-participants) */
         remoteVideoTileMenuOptions={options?.remoteVideoTileMenuOptions}
         drawerMenuHostId={drawerMenuHostId}
         /* @conditional-compile-remove(click-to-call) */

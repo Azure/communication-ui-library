@@ -43,13 +43,8 @@ export const useVideoTileContextualMenuProps = (props: {
     toggleAnnouncerString
   } = props;
   const scalingMode = useMemo(() => {
-    /* @conditional-compile-remove(pinned-participants) */
     return props.remoteParticipant.videoStream?.scalingMode;
-    return undefined;
-  }, [
-    /* @conditional-compile-remove(pinned-participants) */
-    props.remoteParticipant.videoStream?.scalingMode
-  ]);
+  }, [props.remoteParticipant.videoStream?.scalingMode]);
 
   const contextualMenuProps: IContextualMenuProps | undefined = useMemo(() => {
     const items: IContextualMenuItem[] = [];

@@ -119,7 +119,6 @@ export const OverflowGallery = (props: {
 
   SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM;
 
-  /* @conditional-compile-remove(pinned-participants) */
   if (isNarrow) {
     // There are no pages for ScrollableHorizontalGallery so we will approximate the first 3 remote
     // participant tiles are visible

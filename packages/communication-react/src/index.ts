@@ -293,7 +293,9 @@ export type {
   VideoStreamOptions,
   VideoTileProps,
   VideoTileStylesProps,
-  ViewScalingMode
+  ViewScalingMode,
+  VideoTileContextualMenuProps,
+  VideoTileDrawerMenuProps
 } from '../../react-components/src';
 /* @conditional-compile-remove(raise-hand) */
 export type { RaiseHandButtonProps, RaiseHandButtonStrings, RaisedHand } from '../../react-components/src';
@@ -330,8 +332,6 @@ export type {
   BrowserPermissionDeniedStyles,
   BrowserPermissionDeniedIOSProps
 } from '../../react-components/src';
-/* @conditional-compile-remove(pinned-participants) */
-export type { VideoTileContextualMenuProps, VideoTileDrawerMenuProps } from '../../react-components/src';
 /* @conditional-compile-remove(vertical-gallery) */
 export type { OverflowGalleryPosition } from '../../react-components/src';
 /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */

@@ -85,7 +85,6 @@ test.describe('Overflow gallery tests', async () => {
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-many-audio-participants-on-page-1.png');
 
-    /* @conditional-compile-remove(pinned-participants) */
     if (await existsOnPage(page, dataUiId('scrollable-horizontal-gallery'))) {
       await dragToRight(page, dataUiId('scrollable-horizontal-gallery'));
       expect(await stableScreenshot(page)).toMatchSnapshot(
@@ -174,7 +173,6 @@ test.describe('Overflow gallery tests', async () => {
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
 
-    /* @conditional-compile-remove(pinned-participants) */
     if (
       (await existsOnPage(page, dataUiId('scrollable-horizontal-gallery'))) &&
       !isTestProfileLandscapeMobile(testInfo)
