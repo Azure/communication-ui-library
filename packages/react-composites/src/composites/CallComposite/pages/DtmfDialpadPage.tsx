@@ -12,6 +12,8 @@ import { CommonCallAdapter } from '../adapter';
 import { Stack, Text, useTheme } from '@fluentui/react';
 import { getReadableTime } from '../utils/timerUtils';
 import { DtmfDialpadContentTimerStyles } from '../styles/DtmfDialpadPage.styles';
+import { RemoteParticipantState } from '@internal/calling-stateful-client';
+import { isPhoneNumberIdentifier } from '@azure/communication-common';
 
 /**
  * @internal
@@ -45,20 +47,25 @@ const DtmfDialpadPageContent = (props: DialpadPageContentProps): JSX.Element => 
   let calleeName;
 
   if (remoteParticipants) {
-    calleeName = Object.values(remoteParticipants).find((p) => p.identifier === calleeId);
+    const remoteParticipantValues: RemoteParticipantState[] = Object.values(remoteParticipants);
+    if (calleeId && isPhoneNumberIdentifier(calleeId)) {
+      calleeName = calleeId.phoneNumber;
+    } else {
+      calleeName = remoteParticipantValues.find((p) => p.identifier === calleeId);
+    }
   }
 
   return (
     <Stack style={{ height: '100%', width: '100%', background: theme.palette.white }}>
-      <Stack style={{ margin: 'auto' }}>
+      <Stack verticalAlign={'center'} style={{ margin: 'auto' }}>
         <DtmfDialerContentTimer />
-        <Text>{calleeName !== 'Unnamed participant' ? calleeName : ''}</Text>
+        <Text style={{ margin: 'auto' }}>{calleeName !== 'Unnamed participant' ? calleeName : ''}</Text>
         <Dialpad
           onSendDtmfTone={async (tone: DtmfTone) => {
             /* @conditional-compile-remove(dtmf-dialer) */
             await adapter.sendDtmfTone(tone);
           }}
-          enableInputEditing={false}
+          dialpadMode={'dtmf'}
         ></Dialpad>
       </Stack>
     </Stack>

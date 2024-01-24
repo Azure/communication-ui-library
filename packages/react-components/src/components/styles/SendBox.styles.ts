@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { mergeStyles, IStyle, Theme } from '@fluentui/react';
+import { IStyle, mergeStyles, Theme } from '@fluentui/react';
 
 /**
  * @private
@@ -36,11 +36,31 @@ export const sendButtonStyle = mergeStyles({
 /**
  * @private
  */
-export const sendIconStyle = mergeStyles({
-  width: '1.25rem',
-  height: '1.25rem',
-  margin: 'auto'
-});
+export const sendIconStyle = (props: {
+  theme: Theme;
+  hasText: boolean;
+  /* @conditional-compile-remove(file-sharing) */ hasFile: boolean;
+  hasErrorMessage: boolean;
+  customSendIconStyle?: IStyle;
+}): string => {
+  const {
+    theme,
+    hasText,
+    /* @conditional-compile-remove(file-sharing) */ hasFile,
+    hasErrorMessage,
+    customSendIconStyle
+  } = props;
+  const hasNoContent = !hasText && /* @conditional-compile-remove(file-sharing) */ !hasFile;
+  return mergeStyles(
+    {
+      width: '1.25rem',
+      height: '1.25rem',
+      margin: 'auto',
+      color: hasErrorMessage || hasNoContent ? theme.palette.neutralTertiary : theme.palette.themePrimary
+    },
+    customSendIconStyle
+  );
+};
 
 /**
  * @private
@@ -75,7 +95,7 @@ export const borderAndBoxShadowStyle = (props: {
   theme: Theme;
   hasErrorMessage: boolean;
   disabled: boolean;
-}): IStyle => {
+}): string => {
   const { theme, hasErrorMessage, disabled } = props;
   const borderColor = hasErrorMessage ? theme.semanticColors.errorText : theme.palette.neutralSecondary;
   const borderColorActive = hasErrorMessage ? theme.semanticColors.errorText : theme.palette.themePrimary;
@@ -83,7 +103,7 @@ export const borderAndBoxShadowStyle = (props: {
   const borderThickness = disabled ? 0 : defaultSendBoxInactiveBorderThicknessREM;
   const borderActiveThickness = disabled ? 0 : defaultSendBoxActiveBorderThicknessREM;
 
-  return {
+  return mergeStyles({
     borderRadius: theme.effects.roundedCorner4,
     border: `${borderThickness}rem solid ${borderColor}`,
 
@@ -95,5 +115,5 @@ export const borderAndBoxShadowStyle = (props: {
       border: `${borderActiveThickness}rem solid ${borderColorActive}`,
       margin: `${defaultSendBoxActiveBorderThicknessREM - borderActiveThickness}rem`
     }
-  };
+  });
 };
