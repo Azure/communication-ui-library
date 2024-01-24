@@ -176,6 +176,7 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     isSpeaking?: boolean;
     raisedHand?: RaisedHand;
     reaction?: Reaction;
+    isSpotlighted?: Spotlight;
 };
 
 // @internal
@@ -815,6 +816,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     ParticipantItemOptions: React_2.JSX.Element;
     ParticipantItemOptionsHovered: React_2.JSX.Element;
     ParticipantItemScreenShareStart: React_2.JSX.Element;
+    ParticipantItemSpotlighted: React_2.JSX.Element;
     HoldCallContextualMenuItem: React_2.JSX.Element;
     HoldCallButton: React_2.JSX.Element;
     ResumeCall: React_2.JSX.Element;
@@ -2192,6 +2194,11 @@ export const _spokenLanguageToCaptionLanguage: {
     'ro-ro': string;
     'sk-sk': string;
     'zh-tw': string;
+};
+
+// @beta
+export type Spotlight = {
+    spotlightOrderPosition?: number;
 };
 
 // @internal
