@@ -52,6 +52,9 @@ import { themedToggleButtonStyle } from './MoreDrawer.styles';
 import { _spokenLanguageToCaptionLanguage } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { useAdapter } from '../../CallComposite/adapter/CallAdapterProvider';
+import { useSelector } from '../../CallComposite/hooks/useSelector';
+import { getTargetCallees } from '../../CallComposite/selectors/baseSelectors';
+import { showDtmfDialer } from '../../CallComposite/utils/MediaGalleryUtils';
 
 /** @private */
 export interface MoreDrawerStrings {
@@ -143,6 +146,16 @@ export interface MoreDrawerDevicesMenuProps {
    * Callback for when the gallery layout is changed
    */
   onUserSetGalleryLayout?: (layout: VideoGalleryLayout) => void;
+  /* @conditional-compile-remove(dtmf-dialer) */
+  /**
+   * Callback to hide and show the dialpad in the more drawer
+   */
+  onSetDialpadPage?: () => void;
+  /* @conditional-compile-remove(dtmf-dialer) */
+  /**
+   * Whether the dialpad is present in the call
+   */
+  dtmfDialerPresent?: boolean;
 }
 
 /** @private */
@@ -181,6 +194,13 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   const localeStrings = useLocale();
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const holdButtonProps = usePropsFor(HoldButton);
+
+  /* @conditional-compile-remove(dtmf-dialer) */
+  const callees = useSelector(getTargetCallees);
+  /* @conditional-compile-remove(dtmf-dialer) */
+  const allowDtmfDialer = showDtmfDialer(callees);
+  /* @conditional-compile-remove(dtmf-dialer) */
+  const [dtmfDialerChecked, setDtmfDialerChecked] = useState<boolean>(props.dtmfDialerPresent ?? false);
 
   /* @conditional-compile-remove(raise-hand) */
   const raiseHandButtonProps = usePropsFor(RaiseHandButton) as RaiseHandButtonProps;
@@ -260,6 +280,31 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       })),
       secondaryText: props.selectedMicrophone?.name
     });
+  }
+
+  /* @conditional-compile-remove(dtmf-dialer) */
+  const dtmfDialerScreenOption = {
+    itemKey: 'dtmfDialerScreenKey',
+    text: !dtmfDialerChecked
+      ? localeStrings.strings.call.dtmfDialerMoreButtonLabelOn
+      : localeStrings.strings.call.dtmfDialerMoreButtonLabelOff,
+    onClick: () => {
+      if (props.onSetDialpadPage) {
+        props.onSetDialpadPage();
+      }
+      setDtmfDialerChecked(!dtmfDialerChecked);
+    },
+    iconProps: {
+      iconName: 'DtmfDialpadButton',
+      styles: { root: { lineHeight: 0 } }
+    }
+  };
+  /* @conditional-compile-remove(dtmf-dialer) */
+  /**
+   * Only render the dtmf dialer if the dialpad for PSTN calls is not present
+   */
+  if (props.onSetDialpadPage && allowDtmfDialer) {
+    drawerMenuItems.push(dtmfDialerScreenOption);
   }
   /* @conditional-compile-remove(gallery-layouts) */
   const galleryLayoutOptions = {
@@ -375,21 +420,6 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         iconName: raiseHandIcon,
         styles: { root: { lineHeight: 0 } }
       }
-    });
-  }
-
-  /*@conditional-compile-remove(PSTN-calls) */
-  // dtmf tone sending only works for 1:1 PSTN call
-  if (drawerSelectionOptions !== false && props.onClickShowDialpad) {
-    drawerMenuItems.push({
-      itemKey: 'showDialpadKey',
-      disabled: props.disableButtonsForHoldScreen,
-      text: localeStrings.strings.callWithChat.openDtmfDialpadLabel,
-      onItemClick: () => {
-        props.onClickShowDialpad && props.onClickShowDialpad();
-        onLightDismiss();
-      },
-      iconProps: { iconName: 'Dialpad', styles: { root: { lineHeight: 0 } } }
     });
   }
 

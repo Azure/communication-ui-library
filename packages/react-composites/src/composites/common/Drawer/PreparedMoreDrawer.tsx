@@ -23,6 +23,10 @@ export interface PreparedMoreDrawerProps {
   disableButtonsForHoldScreen?: boolean;
   onUserSetGalleryLayout?: (layout: VideoGalleryLayout) => void;
   userSetGalleryLayout?: VideoGalleryLayout;
+  /* @conditional-compile-remove(dtmf-dialer) */
+  onSetDialpadPage?: () => void;
+  /* @conditional-compile-remove(dtmf-dialer) */
+  dtmfDialerPresent?: boolean;
 }
 
 /** @private */
