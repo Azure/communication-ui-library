@@ -14,9 +14,9 @@ import { CommunicationTokenCredential } from '@azure/communication-common';
  * @private
  */
 export class ResourceDownloadQueue {
-  private _messageQueue: ChatMessageWithStatus[] = [];
+  private _messagesNeedingResourceRetrieval: ChatMessageWithStatus[] = [];
   private _context: ChatContext;
-  private _isRequesting = false;
+  private isActive = false;
   private _credential: CommunicationTokenCredential;
 
   constructor(context: ChatContext, credential: CommunicationTokenCredential) {
@@ -24,13 +24,9 @@ export class ResourceDownloadQueue {
     this._credential = credential;
   }
 
-  public isRequesting(): boolean {
-    return this._isRequesting;
-  }
-
   public containsMessage(message: ChatMessageWithStatus): boolean {
     let contains = false;
-    if (this._messageQueue.find((m) => m.id === message.id)) {
+    if (this._messagesNeedingResourceRetrieval.find((m) => m.id === message.id)) {
       contains = true;
     }
     return contains;
@@ -39,15 +35,19 @@ export class ResourceDownloadQueue {
   public addMessage(message: ChatMessageWithStatus): void {
     // make a copy of message and add to queue
     const copy = { ...message };
-    this._messageQueue.push(copy);
+    this._messagesNeedingResourceRetrieval.push(copy);
   }
 
   public async startQueue(threadId: string, operation: ImageRequest): Promise<void> {
-    while (this._messageQueue.length > 0) {
-      this._isRequesting = true;
-      const message = this._messageQueue.shift();
+    if (this.isActive) {
+      return;
+    }
+
+    while (this._messagesNeedingResourceRetrieval.length > 0) {
+      this.isActive = true;
+      const message = this._messagesNeedingResourceRetrieval.shift();
       if (!message) {
-        this._isRequesting = false;
+        this.isActive = false;
         continue;
       }
 

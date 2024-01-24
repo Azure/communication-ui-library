@@ -323,9 +323,7 @@ export class ChatContext {
       if (this._messageQueue && !this._messageQueue.containsMessage(message) && message.resourceCache === undefined) {
         // Need to discuss retry logic in case of failure
         this._messageQueue.addMessage(message);
-        if (!this._messageQueue.isRequesting()) {
-          this._messageQueue.startQueue(threadId, requestAttachments);
-        }
+        this._messageQueue.startQueue(threadId, requestAttachments);
       }
     }
   }
