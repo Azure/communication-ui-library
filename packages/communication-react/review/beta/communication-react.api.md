@@ -2688,9 +2688,12 @@ export interface DiagnosticsCallFeatureState {
 export const Dialpad: (props: DialpadProps) => JSX.Element;
 
 // @beta
+export type DialpadMode = 'dtmf' | 'dialer';
+
+// @beta
 export interface DialpadProps {
+    dialpadMode?: DialpadMode;
     disableDtmfPlayback?: boolean;
-    enableInputEditing?: boolean;
     isMobile?: boolean;
     onChange?: (input: string) => void;
     onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
