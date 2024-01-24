@@ -87,7 +87,7 @@ describe('Dialpad tests', () => {
   });
 
   test('Dialpad input box should be editable by keyboard', async () => {
-    render(<Dialpad enableInputEditing={true} />);
+    render(<Dialpad />);
     const input = screen.getByRole('textbox');
 
     act(() => {
@@ -98,7 +98,7 @@ describe('Dialpad tests', () => {
   });
 
   test('Dialpad input box should filter out non-valid input', async () => {
-    render(<Dialpad enableInputEditing={true} />);
+    render(<Dialpad />);
     const input = screen.getByRole('textbox');
 
     act(() => {
@@ -109,7 +109,7 @@ describe('Dialpad tests', () => {
   });
 
   test('Typing in 12345678900 should show 1 (234) 567-8900 in input box', async () => {
-    render(<Dialpad enableInputEditing={true} />);
+    render(<Dialpad />);
     const input = screen.getByRole('textbox');
 
     act(() => {
@@ -120,7 +120,7 @@ describe('Dialpad tests', () => {
   });
 
   test('Typing in 2345678900 should show (234) 567-8900 in input box', async () => {
-    render(<Dialpad enableInputEditing={true} />);
+    render(<Dialpad />);
     const input = screen.getByRole('textbox');
 
     act(() => {
@@ -131,7 +131,7 @@ describe('Dialpad tests', () => {
   });
 
   test('Typing in 23456789000 should show  23456789000 in input box', async () => {
-    render(<Dialpad enableInputEditing={true} />);
+    render(<Dialpad />);
     const input = screen.getByRole('textbox');
 
     act(() => {
