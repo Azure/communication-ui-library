@@ -47,6 +47,7 @@ jobs:
       url: https://www.npmjs.com/package/@azure/communication-react
     name: Publish release
     runs-on: ubuntu-latest
+    permissions: read-all
     steps:
       # Check-out repo
       - uses: actions/checkout@v3

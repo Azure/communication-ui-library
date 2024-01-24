@@ -17,6 +17,7 @@ jobs:
   calling:
     name: Build and Deploy Calling App
     runs-on: ubuntu-latest
+    permissions: read-all
     environment: staging
     steps:
       - uses: actions/checkout@v3
@@ -56,6 +57,7 @@ jobs:
   chat:
     name: Build and Deploy Chat App
     runs-on: ubuntu-latest
+    permissions: read-all
     environment: staging
     steps:
       - uses: actions/checkout@v3
@@ -95,6 +97,7 @@ jobs:
   callwithchat:
     name: Build and Deploy CallWithChat App
     runs-on: ubuntu-latest
+    permissions: read-all
     environment: staging
     steps:
       - uses: actions/checkout@v3

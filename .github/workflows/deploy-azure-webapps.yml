@@ -23,6 +23,7 @@ jobs:
   build-and-deploy-samples:
     name: Build and Deploy samples
     runs-on: ubuntu-latest
+    permissions: read-all
     environment: production
     steps:
       - uses: actions/checkout@v3
