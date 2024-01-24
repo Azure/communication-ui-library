@@ -7,6 +7,12 @@ import { useMemo, useRef, useState } from 'react';
 import { useLocale } from '../../localization';
 import { useSelector } from '../hooks/useSelector';
 import { getRemoteParticipantsConnectedSelector } from '../selectors/mediaGallerySelector';
+/* @conditional-compile-remove(dtmf-dialer) */
+import {
+  CommunicationIdentifier,
+  isMicrosoftTeamsAppIdentifier,
+  isPhoneNumberIdentifier
+} from '@azure/communication-common';
 
 type ParticipantChangedAnnouncmentStrings = {
   participantJoinedNoticeString: string;
@@ -158,5 +164,23 @@ export const createAnnouncementString = (
     displayName2: sortedParticipants[1].displayName ?? strings.unnamedParticipantString,
     displayName3: sortedParticipants[2].displayName ?? strings.unnamedParticipantString,
     numOfParticipants: numberOfExtraParticipants.toString()
+  });
+};
+
+/* @conditional-compile-remove(dtmf-dialer) */
+/**
+ * determines if the media gallery should be replaced by the dtmf dialer
+ * @param callees Target callees to determine if the dtmf dialer should be shown
+ * @returns whether the dialer should be the gallery content or not
+ */
+export const showDtmfDialer = (callees?: CommunicationIdentifier[]): boolean => {
+  return !!callees?.filter((callee) => {
+    if (isPhoneNumberIdentifier(callee)) {
+      return true;
+    } else if (isMicrosoftTeamsAppIdentifier(callee)) {
+      return true;
+    } else {
+      return false;
+    }
   });
 };

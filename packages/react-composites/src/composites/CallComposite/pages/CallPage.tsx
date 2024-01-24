@@ -9,7 +9,7 @@ import { ActiveErrorMessage, ErrorBar, ParticipantMenuItemsCallback } from '@int
 import { VideoGalleryLayout } from '@internal/react-components';
 import React from 'react';
 /* @conditional-compile-remove(dtmf-dialer) */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { useLocale } from '../../localization';
 import { CallCompositeOptions } from '../CallComposite';
@@ -22,6 +22,8 @@ import { useSelector } from '../hooks/useSelector';
 import { callStatusSelector } from '../selectors/callStatusSelector';
 import { complianceBannerSelector } from '../selectors/complianceBannerSelector';
 import { mediaGallerySelector } from '../selectors/mediaGallerySelector';
+/* @conditional-compile-remove(dtmf-dialer) */
+import { getRemoteParticipantsConnectedSelector } from '../selectors/mediaGallerySelector';
 import { mutedNotificationSelector } from '../selectors/mutedNotificationSelector';
 import { networkReconnectTileSelector } from '../selectors/networkReconnectTileSelector';
 import { reduceCallControlsForMobile } from '../utils';
@@ -31,6 +33,10 @@ import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
 import { CapabilitiesChangeNotificationBarProps } from '../components/CapabilitiesChangedNotificationBar';
 /* @conditional-compile-remove(dtmf-dialer) */
 import { DtmfDialpadPage } from './DtmfDialpadPage';
+/* @conditional-compile-remove(dtmf-dialer) */
+import { useAdapter } from '../adapter/CallAdapterProvider';
+/* @conditional-compile-remove(dtmf-dialer) */
+import { showDtmfDialer } from '../utils/MediaGalleryUtils';
 
 /**
  * @private
@@ -89,9 +95,28 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   const errorBarProps = usePropsFor(ErrorBar);
   const mutedNotificationProps = useSelector(mutedNotificationSelector);
   const networkReconnectTileProps = useSelector(networkReconnectTileSelector);
+  /* @conditional-compile-remove(dtmf-dialer) */
+  const remoteParticipantsConnected = useSelector(getRemoteParticipantsConnectedSelector);
 
   /* @conditional-compile-remove(dtmf-dialer) */
-  const [dtmfDialerPresent, setDtmfDialerPresent] = useState<boolean>(false);
+  const adapter = useAdapter();
+  /* @conditional-compile-remove(dtmf-dialer) */
+  const callees = adapter.getState().targetCallees;
+  /* @conditional-compile-remove(dtmf-dialer) */
+  const renderDtmfDialerFromStart = showDtmfDialer(callees);
+
+  /* @conditional-compile-remove(dtmf-dialer) */
+  const [dtmfDialerPresent, setDtmfDialerPresent] = useState<boolean>(renderDtmfDialerFromStart);
+  /* @conditional-compile-remove(dtmf-dialer) */
+  const [initialDialerDismissed, setInitialDialerDismissed] = useState<boolean>(false);
+
+  /* @conditional-compile-remove(dtmf-dialer) */
+  useEffect(() => {
+    if (remoteParticipantsConnected.length > 1 && dtmfDialerPresent && !initialDialerDismissed) {
+      setDtmfDialerPresent(false);
+      setInitialDialerDismissed(true);
+    }
+  }, [dtmfDialerPresent, initialDialerDismissed, remoteParticipantsConnected]);
 
   const strings = useLocale().strings.call;
 
