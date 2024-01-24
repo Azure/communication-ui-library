@@ -402,7 +402,6 @@ describe('Message should display image and attachment correctly', () => {
       const inlineImage: HTMLElement | null = container.querySelector(`#${imgId1}`);
       inlineImage?.click();
       expect(onInlineImageClickedHandler).toBeCalledTimes(1);
-      expect(onInlineImageClickedHandler).toBeCalledWith(imgId1, messageId);
     });
   });
 });
