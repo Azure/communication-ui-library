@@ -307,16 +307,12 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       onRenderInlineImage: (inlineImage: InlineImage, defaultOnRender: (inlineImage: InlineImage) => JSX.Element): JSX.Element => {
         return (
           <span
-            data-ui-id={inlineImage.id}
-            onClick={() => onInlineImageClicked(inlineImage.id, inlineImage.messageId)}
+            onClick={() => onInlineImageClicked(inlineImage.imgAttrs.id || '', inlineImage.messageId)}
             tabIndex={0}
             role="button"
-            style={{
-              cursor: 'pointer'
-            }}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
-                onInlineImageClicked(inlineImage.id, inlineImage.messageId);
+                onInlineImageClicked(inlineImage.imgAttrs.id || '', inlineImage.messageId);
               }
             }}
           >

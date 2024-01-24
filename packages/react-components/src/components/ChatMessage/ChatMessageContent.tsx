@@ -52,33 +52,31 @@ type MessageContentWithLiveAriaProps = {
   content: JSX.Element;
 };
 
-/** @beta */
+/* @conditional-compile-remove(image-gallery) */
+/**
+ * InlineImage's state, as reflected in the UI.
+ *
+ * @beta
+ */
 export interface InlineImage {
+  /** ID of the message that the inline image is belonged to */
   messageId: string;
-  id: string;
-  src: string;
-  alt: string;
-  itemscope?: string;
-  width?: string;
-  height?: string;
-  // style: Properties<string | number, string & {}>;
-  // name?: string;
+  /** Attributes of the inline image */
+  imgAttrs: React.ImgHTMLAttributes<HTMLImageElement>;
 }
 
-// '<p>Check out this image:&nbsp;</p>\r\n<p><img alt="image" src="" itemscope="png" width="250" height="375" id="SomeImageId" style="vertical-align:bottom"></p><p>&nbsp;</p>\r\n',
-
-
-// Option 1
-// export interface InlineImageOptions {
-//   onRenderInlineImage?: (messageContent: string, defaultOnRender: (messageContent: string) => JSX.Element) => JSX.Element;
-// }
-
-// Option 2
-/** @beta */
+/* @conditional-compile-remove(image-gallery) */
+/**
+ * Options to display inline image in the inline image scenario.
+ *
+ * @beta
+ */
 export interface InlineImageOptions {
+  /**
+   * Optional callback to render an inline image of in a message.
+  */
   onRenderInlineImage?: (inlineImage: InlineImage, defaultOnRender: (inlineImage: InlineImage) => JSX.Element) => JSX.Element;
 }
-
 
 /** @private */
 export const ChatMessageContent = (props: ChatMessageContentProps): JSX.Element => {
@@ -226,36 +224,18 @@ const messageContentAriaText = (props: ChatMessageContentProps): string | undefi
     : undefined;
 };
 
-// Option 1
-// const defaultOnRenderInlineImage = (messageContent: string | undefined) => {
-//   if (messageContent === undefined) {
-//     return <></>;
-//   }
-//   const inlineImageProps: InlineImage = attributesToProps(messageContent);
-//   return (
-//     <img {...inlineImageProps} data-ui-id={inlineImageProps.id} tabIndex={0} role="button" style={{
-//       cursor: 'pointer'
-//     }}/>
-// )}
-
 const defaultOnRenderInlineImage = (inlineImage: InlineImage) => {
   return (
-    <span
-      data-ui-id={inlineImage.id}
-      // onClick={(e) => handleOnClick(e)}
-      tabIndex={0}
-      role="button"
-      style={{
-        cursor: 'pointer'
-      }}
-      // onKeyDown={(e) => {
-      //   if (e.key === 'Enter') {
-      //     handleOnClick(e);
-      //   }
-      // }}
-    >
-      <img {...inlineImage} />
-    </span>
+      <img 
+        {...inlineImage.imgAttrs}
+        data-ui-id={inlineImage.imgAttrs.id}
+        tabIndex={0} 
+        role="button"
+        style={{
+          cursor: 'pointer',
+          ...inlineImage.imgAttrs.style
+        }}
+      />
   )
 }
 
@@ -290,29 +270,17 @@ const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
           if (props.attachmentsMap && domNode.attribs.id in props.attachmentsMap) {
             domNode.attribs.src = props.attachmentsMap[domNode.attribs.id];
           }
-          /* @conditional-compile-remove(image-gallery) */
-          // const handleOnClick = (event: React.MouseEvent<Element, MouseEvent> | React.KeyboardEvent<HTMLElement>): void => {
-          //   props.onInlineImageMouseEvent && props.onInlineImageMouseEvent(event, domNode.attribs.id);
-          // };
 
-          // Option 1
-          /* @conditional-compile-remove(image-gallery) */
-          // return props.inlineImageOptions?.onRenderInlineImage ? (
-          //   props.inlineImageOptions.onRenderInlineImage(props.message.content, defaultOnRenderInlineImage)
-          // ) : defaultOnRenderInlineImage(props.message.content)
-
-          // Option 2
           const imgProps = attributesToProps(domNode.attribs);
-          // const inlineImageProps: InlineImage = {...imgProps, messageId: props.message.messageId};
-          const inlineImageProps: InlineImage = {messageId: props.message.messageId, id: imgProps.id as string, src: imgProps.src as string, alt: imgProps.alt as string, itemscope: imgProps.itemscope as string, width: imgProps.width as string, height: imgProps.height as string};
+          /* @conditional-compile-remove(image-gallery) */
+          const inlineImageProps: InlineImage = { messageId: props.message.messageId, imgAttrs: imgProps};
 
           /* @conditional-compile-remove(image-gallery) */
           return props.inlineImageOptions?.onRenderInlineImage ? (
             props.inlineImageOptions.onRenderInlineImage(inlineImageProps, defaultOnRenderInlineImage)
           ) : defaultOnRenderInlineImage(inlineImageProps)
 
-
-          // return <img {...inlineImageProps} />;
+          return <img {...imgProps} />;
         }
       }
       // Pass through the original node

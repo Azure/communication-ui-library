@@ -3012,22 +3012,10 @@ export interface IncomingCallState {
     startTime: Date;
 }
 
-// @beta (undocumented)
+// @beta
 export interface InlineImage {
-    // (undocumented)
-    alt: string;
-    // (undocumented)
-    height?: string;
-    // (undocumented)
-    id: string;
-    // (undocumented)
-    itemscope?: string;
-    // (undocumented)
+    imgAttrs: React_2.ImgHTMLAttributes<HTMLImageElement>;
     messageId: string;
-    // (undocumented)
-    src: string;
-    // (undocumented)
-    width?: string;
 }
 
 // @beta
@@ -3040,9 +3028,8 @@ export interface InlineImageMetadata {
     url: string;
 }
 
-// @beta (undocumented)
+// @beta
 export interface InlineImageOptions {
-    // (undocumented)
     onRenderInlineImage?: (inlineImage: InlineImage, defaultOnRender: (inlineImage: InlineImage) => JSX.Element) => JSX.Element;
 }
 
