@@ -13,6 +13,8 @@ jobs:
   precondition:
     name: Determine if this workflow is applicable
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     outputs:
       met: ${{ steps.label.outputs.found || steps.workflow_dispatch.outputs.found }}
     steps:

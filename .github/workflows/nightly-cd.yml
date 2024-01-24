@@ -21,6 +21,7 @@ jobs:
     outputs:
       hasChanged: ${{ steps.checkChange.outputs.hasChanged }}
     runs-on: ubuntu-latest
+    permissions: read-all
     steps:
       # Check-out repo
       - uses: actions/checkout@v3
@@ -160,6 +161,8 @@ jobs:
 
   check_failure:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
     needs: release
     if: failure()
     name: Create GitHub issue on failure

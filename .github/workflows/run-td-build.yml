@@ -38,6 +38,8 @@ jobs:
 
   check_failure:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
     needs: runTDBuild
     if: failure()
     name: Create GitHub issue on failure

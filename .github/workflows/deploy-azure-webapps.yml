@@ -86,6 +86,8 @@ jobs:
 
   check_failure:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
     needs: [build-and-deploy-samples]
     if: failure() && github.ref == 'refs/heads/main'
     name: File issue if Azure Deployment failed
