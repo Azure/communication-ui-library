@@ -15,7 +15,9 @@ import { formatTimeForChatMessage, formatTimestampForChatMessage } from '../util
 import { useIdentifiers } from '../../identifiers/IdentifierProvider';
 import { useTheme } from '../../theming';
 import { ChatMessageActionFlyout } from './ChatMessageActionsFlyout';
-import { ChatMessageContent, InlineImageOptions } from './ChatMessageContent';
+import { ChatMessageContent } from './ChatMessageContent';
+/* @conditional-compile-remove(image-gallery) */
+import { InlineImageOptions } from './ChatMessageContent';
 import { ChatMessage } from '../../types/ChatMessage';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AttachmentMetadata } from '../FileDownloadCards';
@@ -279,7 +281,14 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
         }
       </div>
     );
-  }, [defaultOnRenderFileDownloads, inlineImageOptions, message, props, strings, userId]);
+  }, [
+    defaultOnRenderFileDownloads,
+    /* @conditional-compile-remove(image-gallery) */ inlineImageOptions,
+    message,
+    props,
+    strings,
+    userId
+  ]);
 
   const isBlockedMessage =
     false || /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked';

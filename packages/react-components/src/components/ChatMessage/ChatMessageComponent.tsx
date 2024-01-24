@@ -12,6 +12,7 @@ import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMes
 import { FileDownloadHandler, AttachmentMetadata } from '../FileDownloadCards';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from '../MentionPopover';
+/* @conditional-compile-remove(image-gallery) */
 import { InlineImageOptions } from './ChatMessageContent';
 
 type ChatMessageComponentProps = {

@@ -500,11 +500,14 @@ const MessageThreadStory = (args): JSX.Element => {
 
   /* @conditional-compile-remove(image-gallery) */
   const inlineImageOptions = {
-    onRenderInlineImage: (inlineImage: InlineImage, defaultOnRender: (inlineImage: InlineImage) => JSX.Element): JSX.Element => {
+    onRenderInlineImage: (
+      inlineImage: InlineImage,
+      defaultOnRender: (inlineImage: InlineImage) => JSX.Element
+    ): JSX.Element => {
       return (
         <span
-          data-ui-id={inlineImage.id}
-          onClick={() => onInlineImageClicked(inlineImage.id, inlineImage.messageId)}
+          data-ui-id={inlineImage.imgAttrs.id}
+          onClick={() => onInlineImageClicked(inlineImage.imgAttrs.id || '', inlineImage.messageId)}
           tabIndex={0}
           role="button"
           style={{
@@ -512,16 +515,15 @@ const MessageThreadStory = (args): JSX.Element => {
           }}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
-              onInlineImageClicked(inlineImage.id, inlineImage.messageId);
+              onInlineImageClicked(inlineImage.imgAttrs.id || '', inlineImage.messageId);
             }
           }}
         >
           {defaultOnRender(inlineImage)}
         </span>
-      )
+      );
     }
   };
-
 
   const onSendHandler = (): void => {
     switch (selectedMessageType.key) {

@@ -64,7 +64,10 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
 
   /* @conditional-compile-remove(image-gallery) */
   const inlineImageOptions = {
-    onRenderInlineImage: (inlineImage: InlineImage, defaultOnRender: (inlineImage: InlineImage) => JSX.Element): JSX.Element => {
+    onRenderInlineImage: (
+      inlineImage: InlineImage,
+      defaultOnRender: (inlineImage: InlineImage) => JSX.Element
+    ): JSX.Element => {
       return (
         <span
           onClick={() => onInlineImageClicked(inlineImage.imgAttrs.id || '', inlineImage.messageId)}
@@ -78,7 +81,7 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
         >
           {defaultOnRender(inlineImage)}
         </span>
-      )
+      );
     }
   };
 

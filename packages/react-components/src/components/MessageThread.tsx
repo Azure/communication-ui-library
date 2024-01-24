@@ -49,6 +49,7 @@ import {
   ChatMessageComponentWrapperProps
 } from './ChatMessage/ChatMessageComponentWrapper';
 import { Announcer } from './Announcer';
+/* @conditional-compile-remove(image-gallery) */
 import { InlineImageOptions } from './ChatMessage/ChatMessageContent';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {

@@ -16,6 +16,7 @@ import { MentionOptions } from '../MentionPopover';
 import { MessageStatusIndicatorProps } from '../MessageStatusIndicator';
 import { FluentChatMessageComponentWrapper } from './FluentChatMessageComponentWrapper';
 import { DefaultSystemMessage } from './DefaultSystemMessage';
+/* @conditional-compile-remove(image-gallery) */
 import { InlineImageOptions } from './ChatMessageContent';
 
 /**

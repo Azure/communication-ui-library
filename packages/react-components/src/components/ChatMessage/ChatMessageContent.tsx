@@ -227,7 +227,8 @@ const messageContentAriaText = (props: ChatMessageContentProps): string | undefi
     : undefined;
 };
 
-const defaultOnRenderInlineImage = (inlineImage: InlineImage) => {
+/* @conditional-compile-remove(image-gallery) */
+const defaultOnRenderInlineImage = (inlineImage: InlineImage): JSX.Element => {
   return (
     <img
       {...inlineImage.imgAttrs}
