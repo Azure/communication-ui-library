@@ -2,9 +2,15 @@
 // Licensed under the MIT License.
 
 import { RemoteParticipantState } from '@azure/communication-calling';
+/* @conditional-compile-remove(spotlight) */
+import { SpotlightedParticipant } from '@azure/communication-calling';
 import { getIdentifierKind } from '@azure/communication-common';
 import { fromFlatCommunicationIdentifier, memoizeFnAll } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(spotlight) */
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CallParticipantListParticipant } from '@internal/react-components';
+/* @conditional-compile-remove(spotlight) */
+import { Spotlight } from '@internal/react-components';
 /* @conditional-compile-remove(raise-hand) */
 import { RaisedHandState } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(reaction) */
@@ -110,7 +116,8 @@ export const memoizedConvertAllremoteParticipantsBeta = memoizeFnAll(
     isSpeaking: boolean,
     raisedHand: RaisedHandState | undefined,
     localUserCanRemoveOthers: boolean,
-    reaction: Reaction | undefined
+    reaction: Reaction | undefined,
+    isSpotlighted: Spotlight | undefined
   ): CallParticipantListParticipant => {
     return convertRemoteParticipantToParticipantListParticipantBeta(
       userId,
@@ -121,7 +128,8 @@ export const memoizedConvertAllremoteParticipantsBeta = memoizeFnAll(
       isSpeaking,
       raisedHand,
       localUserCanRemoveOthers,
-      reaction
+      reaction,
+      isSpotlighted
     );
   }
 );
@@ -138,6 +146,19 @@ export const memoizedConvertToVideoTileReaction = memoizeOne(
           receivedAt: reactionState.receivedAt
         }
       : undefined;
+  }
+);
+
+/* @conditional-compile-remove(reaction) */
+/**
+ * @private
+ */
+export const memoizedSpotlight = memoizeOne(
+  (spotlightedParticipants: SpotlightedParticipant[] | undefined, userId: string): Spotlight | undefined => {
+    const spotlightOrder = spotlightedParticipants?.find(
+      (spotlightedParticipant) => toFlatCommunicationIdentifier(spotlightedParticipant.identifier) === userId
+    );
+    return spotlightOrder ? { spotlightOrderPosition: spotlightOrder.order } : undefined;
   }
 );
 
@@ -176,7 +197,8 @@ const convertRemoteParticipantToParticipantListParticipantBeta = (
   isSpeaking: boolean,
   raisedHand: RaisedHandState | undefined,
   localUserCanRemoveOthers: boolean,
-  reaction: Reaction | undefined
+  reaction: Reaction | undefined,
+  isSpotlighted: Spotlight | undefined
 ): CallParticipantListParticipant => {
   return {
     ...convertRemoteParticipantToParticipantListParticipant(
@@ -189,6 +211,7 @@ const convertRemoteParticipantToParticipantListParticipantBeta = (
       raisedHand,
       localUserCanRemoveOthers
     ),
-    reaction
+    reaction,
+    isSpotlighted
   };
 };
