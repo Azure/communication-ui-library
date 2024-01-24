@@ -128,10 +128,12 @@ export const _RemoteVideoTile = React.memo(
     });
 
     const videoTileContextualMenuProps = useMemo(() => {
-      if (menuKind !== 'contextual') {
+      if (menuKind !== 'contextual' || !contextualMenuProps) {
         return {};
       }
-      return videoTileContextualMenuPropsTrampoline(contextualMenuProps);
+      return {
+        contextualMenu: contextualMenuProps
+      };
     }, [contextualMenuProps, menuKind]);
 
     const showLoadingIndicator = isAvailable && isReceiving === false && participantState !== 'Disconnected';
@@ -226,17 +228,6 @@ export const _RemoteVideoTile = React.memo(
     );
   }
 );
-
-const videoTileContextualMenuPropsTrampoline = (
-  contextualMenuProps?: IContextualMenuProps
-): { contextualMenu?: IContextualMenuProps } => {
-  if (!contextualMenuProps) {
-    return {};
-  }
-  return {
-    contextualMenu: contextualMenuProps
-  };
-};
 
 const convertContextualMenuItemsToDrawerMenuItemProps = (
   contextualMenuProps?: IContextualMenuProps,
