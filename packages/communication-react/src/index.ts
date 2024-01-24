@@ -297,6 +297,7 @@ export type {
 } from '../../react-components/src';
 /* @conditional-compile-remove(raise-hand) */
 export type { RaiseHandButtonProps, RaiseHandButtonStrings, RaisedHand } from '../../react-components/src';
+/* @conditional-compile-remove(reaction) */
 export type {
   ReactionButtonStrings,
   Reaction,
