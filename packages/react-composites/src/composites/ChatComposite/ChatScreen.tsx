@@ -6,8 +6,6 @@ import { isIOS } from '@fluentui/react';
 import { mergeStyles, Stack } from '@fluentui/react';
 /* @conditional-compile-remove(image-gallery) */
 import { PersonaSize } from '@fluentui/react';
-// /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-// import { attributesToProps } from 'html-react-parser';
 import {
   CommunicationParticipant,
   ErrorBar,
