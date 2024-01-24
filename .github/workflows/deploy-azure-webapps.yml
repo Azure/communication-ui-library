@@ -15,15 +15,15 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-permissions:
-  # Needed for Azure login
-  id-token: write
+permissions: read-all
 
 jobs:
   build-and-deploy-samples:
     name: Build and Deploy samples
     runs-on: ubuntu-latest
-    permissions: read-all
+    permissions:
+      # Needed for Azure login
+      id-token: write
     environment: production
     steps:
       - uses: actions/checkout@v3
