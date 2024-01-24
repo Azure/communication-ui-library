@@ -389,11 +389,10 @@ describe('Message should display image and attachment correctly', () => {
 
     const onInlineImageClickedHandler = jest.fn();
     const inlineImageOptions = {
-      onRenderInlineImage:
-        (inlineImage: InlineImage, defaultOnRender: (inlineImage: InlineImage) => Element) => (Element) => {
-          onInlineImageClickedHandler();
-          return <span />;
-        }
+      onRenderInlineImage: () => {
+        onInlineImageClickedHandler();
+        return <span />;
+      }
     };
 
     const { container } = render(
