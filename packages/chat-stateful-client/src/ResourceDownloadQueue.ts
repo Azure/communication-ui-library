@@ -111,11 +111,12 @@ const fetchImageSource = async (src: string, credential: CommunicationTokenCrede
   const blob = await response.blob();
   return URL.createObjectURL(blob);
 };
-
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 interface ImageRequest {
   (message: ChatMessageWithStatus, credential: CommunicationTokenCredential): Promise<ChatMessageWithStatus>;
 }
 
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * @private
  */
