@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "improvement",
+  "workstream": "",
+  "comment": "Update permissions for workflows.",
+  "packageName": "@azure/communication-react",
+  "email": "73612854+palatter@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
