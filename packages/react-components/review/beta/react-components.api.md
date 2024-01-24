@@ -176,6 +176,7 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     isSpeaking?: boolean;
     raisedHand?: RaisedHand;
     reaction?: Reaction;
+    isSpotlighted?: Spotlight;
 };
 
 // @internal
@@ -815,6 +816,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     ParticipantItemOptions: React_2.JSX.Element;
     ParticipantItemOptionsHovered: React_2.JSX.Element;
     ParticipantItemScreenShareStart: React_2.JSX.Element;
+    ParticipantItemSpotlighted: React_2.JSX.Element;
     HoldCallContextualMenuItem: React_2.JSX.Element;
     HoldCallButton: React_2.JSX.Element;
     ResumeCall: React_2.JSX.Element;
@@ -853,6 +855,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     ContextMenuSpeakerIcon: React_2.JSX.Element;
     SurveyStarIcon: React_2.JSX.Element;
     SurveyStarIconFilled: React_2.JSX.Element;
+    VideoSpotlighted: React_2.JSX.Element;
 };
 
 // @internal
@@ -1408,6 +1411,7 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
     personaMinSize?: number | undefined;
     raisedHand?: RaisedHand | undefined;
     reaction?: Reaction | undefined;
+    isSpotlighted?: boolean | undefined;
 }) => React_2.JSX.Element>;
 
 // @public
@@ -1908,7 +1912,12 @@ export interface ReactionButtonProps extends ControlBarButtonProps {
 
 // @beta
 export interface ReactionButtonStrings {
+    applauseReactionTooltipContent?: string;
+    heartReactionTooltipContent?: string;
     label: string;
+    laughReactionTooltipContent?: string;
+    likeReactionTooltipContent?: string;
+    surprisedReactionTooltipContent?: string;
     tooltipContent?: string;
     tooltipDisabledContent?: string;
 }
@@ -1944,6 +1953,7 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     onUnpinParticipant?: ((userId: string) => void) | undefined;
     onUpdateScalingMode?: ((userId: string, scalingMode: ViewScalingMode) => void) | undefined;
     isPinned?: boolean | undefined;
+    isSpotlighted?: boolean | undefined;
     disablePinMenuItem?: boolean | undefined;
     toggleAnnouncerString?: ((announcerString: string) => void) | undefined;
 }) => React_2.JSX.Element>;
@@ -1953,8 +1963,12 @@ export const RTESendBox: (props: RTESendBoxProps) => JSX.Element;
 
 // @beta
 export interface RTESendBoxProps {
-    // (undocumented)
-    valueToDisplay?: string;
+    activeFileUploads?: ActiveFileUpload[];
+    disabled?: boolean;
+    onCancelFileUpload?: (fileId: string) => void;
+    onRenderFileUploads?: () => JSX.Element;
+    strings?: Partial<SendBoxStrings>;
+    systemMessage?: string;
 }
 
 // @public
@@ -2173,6 +2187,11 @@ export const _spokenLanguageToCaptionLanguage: {
     'ro-ro': string;
     'sk-sk': string;
     'zh-tw': string;
+};
+
+// @beta
+export type Spotlight = {
+    spotlightOrderPosition?: number;
 };
 
 // @internal
@@ -2582,6 +2601,7 @@ export interface VideoGalleryProps {
     remoteVideoViewOptions?: VideoStreamOptions;
     showCameraSwitcherInLocalPreview?: boolean;
     showMuteIndicator?: boolean;
+    spotlightedParticipants?: string[];
     strings?: Partial<VideoGalleryStrings>;
     styles?: VideoGalleryStyles;
 }
@@ -2671,6 +2691,7 @@ export interface VideoTileProps {
     isMuted?: boolean;
     isPinned?: boolean;
     isSpeaking?: boolean;
+    isSpotlighted?: boolean;
     noVideoAvailableAriaLabel?: string;
     onLongTouch?: () => void;
     onRenderPlaceholder?: OnRenderAvatarCallback;

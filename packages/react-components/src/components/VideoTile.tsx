@@ -174,6 +174,11 @@ export interface VideoTileProps {
    * Callback triggered by video tile on touch and hold.
    */
   onLongTouch?: () => void;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * If true, the video tile will show the spotlighted icon.
+   */
+  isSpotlighted?: boolean;
 }
 
 // Coin max size is set to PersonaSize.size100
@@ -249,6 +254,8 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     initialsName,
     isMirrored,
     isMuted,
+    /* @conditional-compile-remove(spotlight) */
+    isSpotlighted,
     /* @conditional-compile-remove(pinned-participants) */
     isPinned,
     onRenderPlaceholder,
@@ -481,11 +488,12 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
                 </Stack>
               )}
               {
-                /* @conditional-compile-remove(pinned-participants) */
-                <VideoTileMoreOptionsButton
-                  contextualMenu={contextualMenu}
-                  canShowContextMenuButton={canShowContextMenuButton}
-                />
+                /* @conditional-compile-remove(spotlight) */
+                isSpotlighted && (
+                  <Stack className={mergeStyles(iconContainerStyle)}>
+                    <Icon iconName="VideoSpotlighted" />
+                  </Stack>
+                )
               }
               {
                 /* @conditional-compile-remove(pinned-participants) */
@@ -494,6 +502,13 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
                     <Icon iconName="VideoTilePinned" className={mergeStyles(pinIconStyle)} />
                   </Stack>
                 )
+              }
+              {
+                /* @conditional-compile-remove(pinned-participants) */
+                <VideoTileMoreOptionsButton
+                  contextualMenu={contextualMenu}
+                  canShowContextMenuButton={canShowContextMenuButton}
+                />
               }
             </Stack>
           </Stack>
