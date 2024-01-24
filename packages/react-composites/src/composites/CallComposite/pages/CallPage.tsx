@@ -116,7 +116,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
       setDtmfDialerPresent(false);
       setInitialDialerDismissed(true);
     }
-  }, [dtmfDialerPresent, initialDialerDismissed, remoteParticipantsConnected]);
+  }, [dtmfDialerPresent, initialDialerDismissed, remoteParticipantsConnected, setDtmfDialerPresent]);
 
   const strings = useLocale().strings.call;
 
