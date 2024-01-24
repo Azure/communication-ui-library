@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "area": "feature",
+  "workstream": "RTE",
+  "comment": "Merge feature/RichTextEditor branch to main",
+  "packageName": "@azure/communication-react",
+  "email": "98852890+vhuseinova-msft@users.noreply.github.com",
+  "dependentChangeType": "none"
+}
