@@ -5,16 +5,7 @@ import React, { useState, FormEvent, useCallback, useRef } from 'react';
 import { useEffect, useMemo } from 'react';
 import { useLocale } from '../../localization';
 import { Announcer } from '../Announcer';
-import {
-  Stack,
-  TextField,
-  mergeStyles,
-  ITextField,
-  IconButton,
-  TooltipHost,
-  ICalloutContentStyles,
-  ITextFieldProps
-} from '@fluentui/react';
+import { TextField, ITextField, ITextFieldProps } from '@fluentui/react';
 
 import { isEnterKeyEventFromCompositionSession, nullToUndefined } from '../utils';
 import {
@@ -28,11 +19,8 @@ import {
   textToTagParser,
   updateHTML
 } from './mentionTagUtils';
-import { inputButtonStyle, inputButtonTooltipStyle, iconWrapperStyle } from '../styles/InputBoxComponent.style';
 
 import { Caret } from 'textarea-caret-ts';
-import { isDarkThemed } from '../../theming/themeUtils';
-import { useTheme } from '../../theming';
 
 import { MentionLookupOptions, _MentionPopover, Mention } from '../MentionPopover';
 
@@ -802,56 +790,5 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
         elementRef={inputBoxRef}
       />
     </>
-  );
-};
-
-/**
- * Props for displaying a send button besides the text input area.
- *
- * @private
- */
-export type InputBoxButtonProps = {
-  onRenderIcon: (isHover: boolean) => JSX.Element;
-  onClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-  className?: string;
-  id?: string;
-  ariaLabel?: string;
-  tooltipContent?: string;
-};
-
-/**
- * @private
- */
-export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
-  const { onRenderIcon, onClick, ariaLabel, className, id, tooltipContent } = props;
-  const [isHover, setIsHover] = useState(false);
-  const mergedButtonStyle = mergeStyles(inputButtonStyle, className);
-
-  const theme = useTheme();
-  const calloutStyle: Partial<ICalloutContentStyles> = { root: { padding: 0 }, calloutMain: { padding: '0.5rem' } };
-
-  // Place callout with no gap between it and the button.
-  const calloutProps = {
-    gapSpace: 0,
-    styles: calloutStyle,
-    backgroundColor: isDarkThemed(theme) ? theme.palette.neutralLighter : ''
-  };
-  return (
-    <TooltipHost hostClassName={inputButtonTooltipStyle} content={tooltipContent} calloutProps={{ ...calloutProps }}>
-      <IconButton
-        className={mergedButtonStyle}
-        ariaLabel={ariaLabel}
-        onClick={onClick}
-        id={id}
-        onMouseEnter={() => {
-          setIsHover(true);
-        }}
-        onMouseLeave={() => {
-          setIsHover(false);
-        }}
-        // VoiceOver fix: Avoid icon from stealing focus when IconButton is double-tapped to send message by wrapping with Stack with pointerEvents style to none
-        onRenderIcon={() => <Stack className={iconWrapperStyle}>{onRenderIcon(isHover)}</Stack>}
-      />
-    </TooltipHost>
   );
 };
