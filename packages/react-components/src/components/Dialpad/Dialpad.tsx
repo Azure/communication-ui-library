@@ -130,7 +130,6 @@ export interface DialpadProps {
    * Dialer mode for the dialpad. The dtmf mode is for sending dtmf tones and the appearence of
    * the dialpad is changed like hiding the input box. When using dialer mode the input box is there
    * and can be edited to change the number being dialed.
-   *
    */
   dialpadMode?: DialpadMode;
 }
