@@ -27,6 +27,7 @@ import { fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 /* @conditional-compile-remove(mention) */
 import { Mention } from './MentionPopover';
+import { InlineImage } from './ChatMessage/ChatMessageContent';
 
 const twentyFourHoursAgo = (): Date => {
   const date = new Date();
@@ -388,7 +389,11 @@ describe('Message should display image and attachment correctly', () => {
 
     const onInlineImageClickedHandler = jest.fn();
     const inlineImageOptions = {
-      onRenderInlineImage: jest.fn()
+      onRenderInlineImage:
+        (inlineImage: InlineImage, defaultOnRender: (inlineImage: InlineImage) => Element) => (Element) => {
+          onInlineImageClickedHandler();
+          return <span />;
+        }
     };
 
     const { container } = render(
