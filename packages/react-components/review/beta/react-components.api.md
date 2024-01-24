@@ -1412,6 +1412,7 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
     raisedHand?: RaisedHand | undefined;
     reaction?: Reaction | undefined;
     isSpotlighted?: boolean | undefined;
+    reactionResources?: ReactionResources | undefined;
 }) => React_2.JSX.Element>;
 
 // @public
@@ -1907,6 +1908,7 @@ export const ReactionButton: (props: ReactionButtonProps) => JSX.Element;
 // @beta
 export interface ReactionButtonProps extends ControlBarButtonProps {
     onReactionClicked: (reaction: string) => Promise<void>;
+    reactionResources: ReactionResources;
     strings?: Partial<ReactionButtonStrings>;
 }
 
@@ -1920,6 +1922,22 @@ export interface ReactionButtonStrings {
     surprisedReactionTooltipContent?: string;
     tooltipContent?: string;
     tooltipDisabledContent?: string;
+}
+
+// @beta
+export type ReactionResourceParams = {
+    url: string;
+    frameCount: number;
+    size?: number;
+};
+
+// @beta
+export interface ReactionResources {
+    applaseReaction?: ReactionResourceParams;
+    heartReaction?: ReactionResourceParams;
+    laughReaction?: ReactionResourceParams;
+    likeReaction?: ReactionResourceParams;
+    surprisedReaction?: ReactionResourceParams;
 }
 
 // @public
@@ -1956,6 +1974,7 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     isSpotlighted?: boolean | undefined;
     disablePinMenuItem?: boolean | undefined;
     toggleAnnouncerString?: ((announcerString: string) => void) | undefined;
+    reactionResources?: ReactionResources | undefined;
 }) => React_2.JSX.Element>;
 
 // @beta
@@ -2596,6 +2615,7 @@ export interface VideoGalleryProps {
     onUnpinParticipant?: (userId: string) => void;
     overflowGalleryPosition?: OverflowGalleryPosition;
     pinnedParticipants?: string[];
+    reactionResources?: ReactionResources;
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoTileMenu?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
     remoteVideoViewOptions?: VideoStreamOptions;
@@ -2700,6 +2720,7 @@ export interface VideoTileProps {
     personaMinSize?: number;
     raisedHand?: RaisedHand;
     reaction?: Reaction;
+    reactionResources?: ReactionResources;
     renderElement?: JSX.Element | null;
     showLabel?: boolean;
     showMuteIndicator?: boolean;

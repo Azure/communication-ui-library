@@ -4,6 +4,8 @@
 import { IButtonStyles, IStyle, mergeStyles, Theme, ITheme } from '@fluentui/react';
 /* @conditional-compile-remove(reaction) */
 import { keyframes, memoizeFunction } from '@fluentui/react';
+/* @conditional-compile-remove(reaction) */
+import { ReactionResources } from '../../types/ReactionTypes';
 /**
  * @private
  */
@@ -194,13 +196,14 @@ export const playFrames = memoizeFunction(() =>
 /**
  * @private
  */
-export const reactionRenderingStyle = (args: { backgroundImageUrl?: string; personaSize: number }): string =>
-  mergeStyles({
+export const reactionRenderingStyle = (args: { backgroundImageUrl?: string; personaSize: number }): string => {
+  const imageUrl = `url(${args.backgroundImageUrl})`;
+  return mergeStyles({
     height: '100%',
     width: '100%',
     overflow: 'hidden',
     animationName: playFrames(),
-    backgroundImage: args.backgroundImageUrl,
+    backgroundImage: imageUrl,
     animationDuration: '5.12s',
     animationTimingFunction: `steps(102)`,
     backgroundSize: `cover`,
@@ -211,3 +214,24 @@ export const reactionRenderingStyle = (args: { backgroundImageUrl?: string; pers
     backgroundPosition: `center`,
     transform: `scale(${84 < args.personaSize ? 84 / args.personaSize : args.personaSize / 84})`
   });
+};
+
+/* @conditional-compile-remove(reaction) */
+/**
+ * @private
+ */
+export const getEmojiResource = (reactionName: string, reactionResources: ReactionResources): string | undefined => {
+  switch (reactionName) {
+    case 'like':
+      return reactionResources.likeReaction?.url;
+    case 'heart':
+      return reactionResources.heartReaction?.url;
+    case 'laugh':
+      return reactionResources.laughReaction?.url;
+    case 'applause':
+      return reactionResources.applaseReaction?.url;
+    case 'surprised':
+      return reactionResources.surprisedReaction?.url;
+  }
+  return undefined;
+};

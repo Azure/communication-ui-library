@@ -23,11 +23,11 @@ import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 /* @conditional-compile-remove(reaction) */
 import { useLocale } from '../localization';
 /* @conditional-compile-remove(reaction) */
-import { reactionEmoji } from './utils/videoTileStylesUtils';
-/* @conditional-compile-remove(reaction) */
 import { emojiStyles, reactionEmojiMenuStyles, reactionToolTipHostStyle } from './styles/ReactionButton.styles';
 /* @conditional-compile-remove(reaction) */
 import { isDarkThemed } from '../theming/themeUtils';
+/* @conditional-compile-remove(reaction) */
+import { ReactionResources } from '..';
 
 /* @conditional-compile-remove(reaction) */
 /**
@@ -44,6 +44,10 @@ export interface ReactionButtonProps extends ControlBarButtonProps {
    * Click event to send reaction to meeting
    */
   onReactionClicked: (reaction: string) => Promise<void>;
+  /**
+   * Reaction resource locator and parameters
+   */
+  reactionResources: ReactionResources;
 }
 
 /* @conditional-compile-remove(reaction) */
@@ -97,6 +101,13 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
     ['applause', strings.applauseReactionTooltipContent],
     ['surprised', strings.surprisedReactionTooltipContent]
   ]);
+  const emojiResource: Map<string, string | undefined> = new Map([
+    ['like', props.reactionResources.likeReaction?.url],
+    ['heart', props.reactionResources.heartReaction?.url],
+    ['laugh', props.reactionResources.laughReaction?.url],
+    ['applause', props.reactionResources.applaseReaction?.url],
+    ['surprised', props.reactionResources.surprisedReaction?.url]
+  ]);
 
   const calloutStyle: Partial<ICalloutContentStyles> = { root: { padding: 0 }, calloutMain: { padding: '0.5rem' } };
 
@@ -126,7 +137,7 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
               });
               dismissMenu();
             }}
-            style={emojiStyles(reactionEmoji.get(emoji), isHoveredMap.get(emoji) ? 'running' : 'paused')}
+            style={emojiStyles(emojiResource.get(emoji), isHoveredMap.get(emoji) ? 'running' : 'paused')}
             onMouseEnter={() =>
               setIsHoveredMap((prevMap) => {
                 return new Map(prevMap).set(emoji, true);

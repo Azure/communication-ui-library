@@ -34,10 +34,8 @@ import {
   participantStateStringStyles
 } from './styles/VideoTile.styles';
 /* @conditional-compile-remove(reaction) */
-import { reactionRenderingStyle } from './styles/VideoTile.styles';
+import { reactionRenderingStyle, getEmojiResource } from './styles/VideoTile.styles';
 import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
-/* @conditional-compile-remove(reaction) */
-import { reactionEmoji } from './utils/videoTileStylesUtils';
 /* @conditional-compile-remove(pinned-participants) */
 import { pinIconStyle } from './styles/VideoTile.styles';
 /* @conditional-compile-remove(pinned-participants) */
@@ -48,6 +46,8 @@ import useLongPress from './utils/useLongPress';
 import { moreButtonStyles } from './styles/VideoTile.styles';
 /* @conditional-compile-remove(raise-hand) */
 import { raiseHandContainerStyles } from './styles/VideoTile.styles';
+/* @conditional-compile-remove(reaction) */
+import { ReactionResources } from '../types/ReactionTypes';
 
 /**
  * Strings of {@link VideoTile} that can be overridden.
@@ -179,6 +179,11 @@ export interface VideoTileProps {
    * If true, the video tile will show the spotlighted icon.
    */
   isSpotlighted?: boolean;
+  /* @conditional-compile-remove(reaction) */
+  /**
+   * Reactions resources' url and metadata.
+   */
+  reactionResources?: ReactionResources;
 }
 
 // Coin max size is set to PersonaSize.size100
@@ -273,7 +278,9 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     personaMinSize = DEFAULT_PERSONA_MIN_SIZE_PX,
     personaMaxSize = DEFAULT_PERSONA_MAX_SIZE_PX,
     /* @conditional-compile-remove(pinned-participants) */
-    contextualMenu
+    contextualMenu,
+    /* @conditional-compile-remove(reaction) */
+    reactionResources
   } = props;
 
   /* @conditional-compile-remove(pinned-participants) */
@@ -374,7 +381,10 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   raisedHandBackgroundColor = callingPalette.raiseHandGold;
 
   /* @conditional-compile-remove(reaction) */
-  const backgroundImageUrl = reaction !== undefined ? reactionEmoji.get(reaction?.reactionType) : '';
+  const backgroundImageUrl =
+    reaction !== undefined && reactionResources !== undefined
+      ? getEmojiResource(reaction?.reactionType, reactionResources)
+      : '';
   /* @conditional-compile-remove(reaction) */
   const currentTimestamp = new Date();
   /* @conditional-compile-remove(reaction) */

@@ -68,7 +68,7 @@ export type { RaisedHand } from './types';
 export type { Spotlight } from './types';
 
 /* @conditional-compile-remove(reaction) */
-export type { Reaction } from './types';
+export type { Reaction, ReactionResources, ReactionResourceParams } from './types';
 
 /* @conditional-compile-remove(close-captions) */
 export type { SpokenLanguageStrings, CaptionLanguageStrings } from './types';
