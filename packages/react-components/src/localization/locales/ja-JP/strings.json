@@ -126,7 +126,12 @@
   "reactionButton": {
     "label": "リアクションする",
     "tooltipDisabledContent": "リアクション操作が無効になっています",
-    "tooltipContent": "リアクションを送信します"
+    "tooltipContent": "リアクションを送信します",
+    "likeReactionTooltipContent": "高く評価",
+    "heartReactionTooltipContent": "大好き",
+    "laughReactionTooltipContent": "笑い",
+    "applauseReactionTooltipContent": "喝采",
+    "surprisedReactionTooltipContent": "驚いた"
   },
   "messageThread": {
     "yesterday": "昨日",

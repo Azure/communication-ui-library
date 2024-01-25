@@ -126,7 +126,12 @@
   "reactionButton": {
     "label": "Zareaguj",
     "tooltipDisabledContent": "Akcja reakcji jest wyłączona",
-    "tooltipContent": "Wyślij reakcję"
+    "tooltipContent": "Wyślij reakcję",
+    "likeReactionTooltipContent": "Lubię",
+    "heartReactionTooltipContent": "Miłość",
+    "laughReactionTooltipContent": "Śmiech",
+    "applauseReactionTooltipContent": "Aplauz",
+    "surprisedReactionTooltipContent": "Niespodzianka"
   },
   "messageThread": {
     "yesterday": "Wczoraj",

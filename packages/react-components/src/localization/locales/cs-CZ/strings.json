@@ -126,7 +126,12 @@
   "reactionButton": {
     "label": "Reagovat",
     "tooltipDisabledContent": "Akce reakce je zakázaná",
-    "tooltipContent": "Odeslání reakce"
+    "tooltipContent": "Odeslání reakce",
+    "likeReactionTooltipContent": "To se mi líbí",
+    "heartReactionTooltipContent": "Láska",
+    "laughReactionTooltipContent": "Smích",
+    "applauseReactionTooltipContent": "Aplaus",
+    "surprisedReactionTooltipContent": "Překvapení"
   },
   "messageThread": {
     "yesterday": "Včera",
