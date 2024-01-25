@@ -288,11 +288,12 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     text: !dtmfDialerChecked
       ? localeStrings.strings.call.dtmfDialerMoreButtonLabelOn
       : localeStrings.strings.call.dtmfDialerMoreButtonLabelOff,
-    onClick: () => {
+    onItemClick: () => {
       if (props.onSetDialpadPage) {
         props.onSetDialpadPage();
       }
       setDtmfDialerChecked(!dtmfDialerChecked);
+      onLightDismiss();
     },
     iconProps: {
       iconName: 'DtmfDialpadButton',
