@@ -105,7 +105,7 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
     ['like', props.reactionResources.likeReaction?.url],
     ['heart', props.reactionResources.heartReaction?.url],
     ['laugh', props.reactionResources.laughReaction?.url],
-    ['applause', props.reactionResources.applaseReaction?.url],
+    ['applause', props.reactionResources.applauseReaction?.url],
     ['surprised', props.reactionResources.surprisedReaction?.url]
   ]);
 

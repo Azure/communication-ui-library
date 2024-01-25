@@ -289,6 +289,8 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const [isFocused, setIsFocused] = useState<boolean>(false);
   // need to set a default otherwise the resizeObserver will get stuck in an infinite loop.
   const [personaSize, setPersonaSize] = useState<number>(1);
+  /* @conditional-compile-remove(reaction) */
+  const [isValidImageSource, setIsValidImageSource] = useState<boolean>(false);
   const videoTileRef = useRef<HTMLDivElement>(null);
 
   const locale = useLocale();
@@ -392,15 +394,35 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   /* @conditional-compile-remove(reaction) */
   const receivedUnixTimestamp = reaction ? Math.floor(reaction.receivedAt.getTime() / 1000) : undefined;
   /* @conditional-compile-remove(reaction) */
-  const canRenderReaction = receivedUnixTimestamp ? currentUnixTimeStamp - receivedUnixTimestamp < 3000 : false;
+  const canRenderReaction =
+    (receivedUnixTimestamp ? currentUnixTimeStamp - receivedUnixTimestamp < 3000 : false) &&
+    backgroundImageUrl !== undefined;
+  /* @conditional-compile-remove(reaction) */
+  if (canRenderReaction && backgroundImageUrl && backgroundImageUrl?.length > 0) {
+    fetch(`${backgroundImageUrl}`)
+      .then((res) => {
+        console.log('Mohtasim: fetch logs ', res.status);
+        if (res.status === 404) {
+          setIsValidImageSource(false);
+        } else {
+          setIsValidImageSource(true);
+        }
+      })
+      .catch((warning) => {
+        setIsValidImageSource(false);
+        console.warn(`Sprite image for animation rendering failed with warning: ${warning}`);
+      });
+  }
+  /* @conditional-compile-remove(reaction) */
+  const spriteImageUrl = backgroundImageUrl !== undefined ? backgroundImageUrl : '';
   /* @conditional-compile-remove(reaction) */
   const reactionContainerStyles = useCallback(
     () =>
       reactionRenderingStyle({
-        backgroundImageUrl,
+        spriteImageUrl,
         personaSize
       }),
-    [backgroundImageUrl, personaSize]
+    [spriteImageUrl, personaSize]
   );
 
   return (
@@ -458,7 +480,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
         {
           /* @conditional-compile-remove(reaction) */
-          canRenderReaction && (
+          canRenderReaction && isValidImageSource && (
             <Stack
               className={mergeStyles(videoContainerStyles, {
                 display: 'flex',

@@ -165,7 +165,7 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
         likeReaction: { url: '/assets/reactions/likeEmoji.png' },
         heartReaction: { url: '/assets/reactions/heartEmoji.png' },
         laughReaction: { url: '/assets/reactions/laughEmoji.png' },
-        applaseReaction: { url: '/assets/reactions/clapEmoji.png' },
+        applauseReaction: { url: '/assets/reactions/clapEmoji.png' },
         surprisedReaction: { url: '/assets/reactions/surprisedEmoji.png' }
       }
     };

@@ -196,8 +196,8 @@ export const playFrames = memoizeFunction(() =>
 /**
  * @private
  */
-export const reactionRenderingStyle = (args: { backgroundImageUrl?: string; personaSize: number }): string => {
-  const imageUrl = `url(${args.backgroundImageUrl})`;
+export const reactionRenderingStyle = (args: { spriteImageUrl: string; personaSize: number }): string => {
+  const imageUrl = `url(${args.spriteImageUrl})`;
   return mergeStyles({
     height: '100%',
     width: '100%',
@@ -229,9 +229,9 @@ export const getEmojiResource = (reactionName: string, reactionResources: Reacti
     case 'laugh':
       return reactionResources.laughReaction?.url;
     case 'applause':
-      return reactionResources.applaseReaction?.url;
+      return reactionResources.applauseReaction?.url;
     case 'surprised':
       return reactionResources.surprisedReaction?.url;
   }
-  return undefined;
+  return '';
 };

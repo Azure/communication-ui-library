@@ -1936,7 +1936,7 @@ export type ReactionResourceParams = {
 
 // @beta
 export interface ReactionResources {
-    applaseReaction?: ReactionResourceParams;
+    applauseReaction?: ReactionResourceParams;
     heartReaction?: ReactionResourceParams;
     laughReaction?: ReactionResourceParams;
     likeReaction?: ReactionResourceParams;

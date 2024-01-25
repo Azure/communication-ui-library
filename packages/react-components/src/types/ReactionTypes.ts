@@ -15,7 +15,7 @@ export type ReactionResourceParams = {
    */
   frameCount: number;
   /**
-   * The square size of the animation resource.
+   * The square size of one frame in the animation resource..
    */
   size?: number;
 };
@@ -40,7 +40,7 @@ export interface ReactionResources {
   /**
    * Applause reaction animation resource.
    */
-  applaseReaction?: ReactionResourceParams;
+  applauseReaction?: ReactionResourceParams;
   /**
    * Surprised reaction animation resource.
    */

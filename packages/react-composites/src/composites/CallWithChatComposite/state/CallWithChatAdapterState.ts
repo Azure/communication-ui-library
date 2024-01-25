@@ -97,6 +97,7 @@ export interface CallWithChatClientState {
   /** Hide attendee names in teams meeting */
   hideAttendeeNames?: boolean;
   /* @conditional-compile-remove(reaction) */
+  /** Reaction resources to render in meetings */
   reactions?: ReactionResources;
 }
 

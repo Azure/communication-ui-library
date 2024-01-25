@@ -882,7 +882,6 @@ export interface CallWithChatClientState {
     latestCallErrors: AdapterErrors;
     latestChatErrors: AdapterErrors;
     onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
-    // (undocumented)
     reactions?: ReactionResources;
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
     userId: CommunicationIdentifierKind;

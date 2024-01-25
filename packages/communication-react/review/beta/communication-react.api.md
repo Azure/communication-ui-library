@@ -1183,7 +1183,6 @@ export interface CallWithChatClientState {
     latestCallErrors: AdapterErrors;
     latestChatErrors: AdapterErrors;
     onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
-    // (undocumented)
     reactions?: ReactionResources;
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
     userId: CommunicationIdentifierKind;
@@ -3715,7 +3714,7 @@ export type ReactionResourceParams = {
 
 // @beta
 export interface ReactionResources {
-    applaseReaction?: ReactionResourceParams;
+    applauseReaction?: ReactionResourceParams;
     heartReaction?: ReactionResourceParams;
     laughReaction?: ReactionResourceParams;
     likeReaction?: ReactionResourceParams;
