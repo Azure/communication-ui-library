@@ -75,7 +75,7 @@ import { getChatThreadFromTeamsLink } from './parseTeamsUrl';
 import { AdapterError } from '../../common/adapters';
 
 /* @conditional-compile-remove(teams-adhoc-call) */
-import { CallParticipantsLocator } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
+// import { CallParticipantsLocator } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 
 import { _createAzureCommunicationCallAdapterInner } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 
@@ -794,7 +794,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
  */
 export interface CallAndChatLocator {
   /** Locator used by {@link createAzureCommunicationCallWithChatAdapter} to locate the call to join */
-  callLocator: GroupCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ CallParticipantsLocator;
+  callLocator?: GroupCallLocator;
+  // | /* @conditional-compile-remove(teams-adhoc-call) */ CallParticipantsLocator;
   /** Chat thread ID used by {@link createAzureCommunicationCallWithChatAdapter} to locate the chat thread to join */
   chatThreadId: string;
 }
@@ -836,7 +837,7 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
     userId,
     displayName,
     credential,
-    locator: callAdapterLocator,
+    locator: callAdapterLocator ? callAdapterLocator : undefined,
     /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
     /* @conditional-compile-remove(video-background-effects) */ options: callAdapterOptions,
     telemetryImplementationHint: 'CallWithChat' as _TelemetryImplementationHint

@@ -344,7 +344,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   private callClient: StatefulCallClient;
   private callAgent: AgentType;
   private deviceManager: StatefulDeviceManager;
-  private locator: CallAdapterLocator;
+  private locator?: CallAdapterLocator;
   // Never use directly, even internally. Use `call` property instead.
   private _call?: CallCommon;
   private context: CallContext;
@@ -369,9 +369,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
   constructor(
     callClient: StatefulCallClient,
-    locator: CallAdapterLocator,
     callAgent: AgentType,
     deviceManager: StatefulDeviceManager,
+    locator?: CallAdapterLocator,
     options?: AzureCommunicationCallAdapterOptions | TeamsAdapterOptions
   ) {
     this.bindPublicMethods();
@@ -379,10 +379,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.callAgent = callAgent;
     this.locator = locator;
     this.deviceManager = deviceManager;
-    const isTeamsMeeting = 'meetingLink' in this.locator;
+    const isTeamsMeeting = this.locator ? 'meetingLink' in this.locator : false;
 
     /* @conditional-compile-remove(rooms) */
-    const isRoomsCall = 'roomId' in this.locator;
+    const isRoomsCall = this.locator ? 'roomId' in this.locator : false;
 
     /* @conditional-compile-remove(video-background-effects) */
     this.onResolveVideoBackgroundEffectsDependency = options?.videoBackgroundOptions?.onResolveDependency;
@@ -653,16 +653,16 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
           ? { localVideoStreams: [new SDKLocalVideoStream(selectedCamera)] }
           : {};
 
-      /* @conditional-compile-remove(teams-adhoc-call) */
-      /* @conditional-compile-remove(PSTN-calls) */
-      if (isOutboundCall(this.locator)) {
-        const phoneNumber = this.getState().alternateCallerId;
-        return this.startCall(this.locator.participantIds, {
-          alternateCallerId: phoneNumber ? { phoneNumber: phoneNumber } : undefined,
-          audioOptions,
-          videoOptions
-        });
-      }
+      // /* @conditional-compile-remove(teams-adhoc-call) */
+      // /* @conditional-compile-remove(PSTN-calls) */
+      // if (isOutboundCall(this.locator)) {
+      //   const phoneNumber = this.getState().alternateCallerId;
+      //   return this.startCall(this.locator.participantIds, {
+      //     alternateCallerId: phoneNumber ? { phoneNumber: phoneNumber } : undefined,
+      //     audioOptions,
+      //     videoOptions
+      //   });
+      // }
       const call = this._joinCall(audioOptions, videoOptions);
 
       this.processNewCall(call);
@@ -671,9 +671,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   }
 
   private _joinCall(audioOptions: AudioOptions, videoOptions: VideoOptions): CallTypeOf<AgentType> {
-    const isTeamsMeeting = 'meetingLink' in this.locator;
+    const isTeamsMeeting = this.locator ? 'meetingLink' in this.locator : false;
     /* @conditional-compile-remove(rooms) */
-    const isRoomsCall = 'roomId' in this.locator;
+    const isRoomsCall = this.locator ? 'roomId' in this.locator : false;
 
     /* @conditional-compile-remove(teams-identity-support) */
     if (_isTeamsCallAgent(this.callAgent)) {
@@ -1367,8 +1367,8 @@ export type CallParticipantsLocator = {
 export type CallAdapterLocator =
   | TeamsMeetingLinkLocator
   | GroupCallLocator
-  | /* @conditional-compile-remove(rooms) */ RoomCallLocator
-  | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator;
+  | /* @conditional-compile-remove(rooms) */ RoomCallLocator;
+// | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator;
 
 /**
  * Common optional parameters to create {@link AzureCommunicationCallAdapter} or {@link TeamsCallAdapter}
@@ -1396,6 +1396,11 @@ export type CommonCallAdapterOptions = {
    * Sounds to use for calling events
    */
   callingSounds?: CallingSounds;
+  /**
+   * Optional TargetCallees that the composite will make an outbound call to following the start call on
+   * the configuration screen.
+   */
+  targetCallees?: CommunicationIdentifier[];
 };
 
 /**
@@ -1416,7 +1421,7 @@ export type AzureCommunicationCallAdapterArgs = {
   userId: CommunicationUserIdentifier;
   displayName: string;
   credential: CommunicationTokenCredential;
-  locator: CallAdapterLocator;
+  locator?: CallAdapterLocator;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * A phone number in E.164 format procured using Azure Communication Services that will be used to represent callers identity.
@@ -1445,9 +1450,8 @@ export type TeamsAdapterOptions = CommonCallAdapterOptions;
 export type TeamsCallAdapterArgs = {
   userId: MicrosoftTeamsUserIdentifier;
   credential: CommunicationTokenCredential;
-  locator:
-    | TeamsMeetingLinkLocator
-    | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator;
+  locator?: TeamsMeetingLinkLocator;
+  // | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator;
   /**
    * Optional parameters for the {@link TeamsCallAdapter} created
    */
@@ -1505,7 +1509,7 @@ export const _createAzureCommunicationCallAdapterInner = async ({
   userId: CommunicationUserIdentifier;
   displayName: string;
   credential: CommunicationTokenCredential;
-  locator: CallAdapterLocator;
+  locator?: CallAdapterLocator;
   /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId?: string;
   /* @conditional-compile-remove(video-background-effects) */ options?: AzureCommunicationCallAdapterOptions;
   telemetryImplementationHint?: _TelemetryImplementationHint;
@@ -1801,12 +1805,12 @@ export const useTeamsCallAdapter = (
 export const createAzureCommunicationCallAdapterFromClient: (
   callClient: StatefulCallClient,
   callAgent: CallAgent,
-  locator: CallAdapterLocator,
+  locator?: CallAdapterLocator,
   /* @conditional-compile-remove(video-background-effects) */ options?: AzureCommunicationCallAdapterOptions
 ) => Promise<CallAdapter> = async (
   callClient: StatefulCallClient,
   callAgent: CallAgent,
-  locator: CallAdapterLocator,
+  locator?: CallAdapterLocator,
   options?
 ): Promise<CallAdapter> => {
   const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
@@ -1818,9 +1822,9 @@ export const createAzureCommunicationCallAdapterFromClient: (
   await callClient.feature(Features.DebugInfo).getEnvironmentInfo();
   return new AzureCommunicationCallAdapter(
     callClient,
-    locator,
     callAgent,
     deviceManager,
+    locator,
     /* @conditional-compile-remove(video-background-effects) */ options
   );
 };
@@ -1837,7 +1841,7 @@ export const createAzureCommunicationCallAdapterFromClient: (
 export const createTeamsCallAdapterFromClient = async (
   callClient: StatefulCallClient,
   callAgent: TeamsCallAgent,
-  locator: CallAdapterLocator,
+  locator?: CallAdapterLocator,
   options?: TeamsAdapterOptions
 ): Promise<TeamsCallAdapter> => {
   const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
@@ -1847,15 +1851,15 @@ export const createTeamsCallAdapterFromClient = async (
   }
   /* @conditional-compile-remove(unsupported-browser) */
   await callClient.feature(Features.DebugInfo).getEnvironmentInfo();
-  return new AzureCommunicationCallAdapter(callClient, locator, callAgent, deviceManager, options);
+  return new AzureCommunicationCallAdapter(callClient, callAgent, deviceManager, locator, options);
 };
 
 const isCallError = (e: Error): e is CallError => {
   return e['target'] !== undefined && e['innerError'] !== undefined;
 };
 
-/* @conditional-compile-remove(teams-adhoc-call) */
-/* @conditional-compile-remove(PSTN-calls) */
-const isOutboundCall = (callLocator: CallAdapterLocator): callLocator is CallParticipantsLocator => {
-  return 'participantIds' in callLocator;
-};
+// /* @conditional-compile-remove(teams-adhoc-call) */
+// /* @conditional-compile-remove(PSTN-calls) */
+// const isOutboundCall = (callLocator: CallAdapterLocator): callLocator is CallParticipantsLocator => {
+//   return 'participantIds' in callLocator;
+// };

@@ -112,7 +112,7 @@ export type AzureCommunicationCallAdapterArgs = {
     userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
-    locator: CallAdapterLocator;
+    locator?: CallAdapterLocator;
     alternateCallerId?: string;
     options?: AzureCommunicationCallAdapterOptions;
 };
@@ -274,7 +274,7 @@ export interface CallAdapterDeviceManagement {
 }
 
 // @public
-export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | /* @conditional-compile-remove(rooms) */ RoomCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator;
+export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | /* @conditional-compile-remove(rooms) */ RoomCallLocator;
 
 // @public
 export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
@@ -330,7 +330,7 @@ export type CallAdapterUiState = {
 
 // @public
 export interface CallAndChatLocator {
-    callLocator: GroupCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ CallParticipantsLocator;
+    callLocator?: GroupCallLocator;
     chatThreadId: string;
 }
 
@@ -1212,6 +1212,7 @@ export type CommonCallAdapterOptions = {
     };
     onFetchProfile?: OnFetchProfileCallback;
     callingSounds?: CallingSounds;
+    targetCallees?: CommunicationIdentifier[];
 };
 
 // @public
@@ -1338,14 +1339,14 @@ export interface CompositeStrings {
 export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator, alternateCallerId, options }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
 
 // @public
-export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: CallAdapterLocator, options?: AzureCommunicationCallAdapterOptions) => Promise<CallAdapter>;
+export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator?: CallAdapterLocator, options?: AzureCommunicationCallAdapterOptions) => Promise<CallAdapter>;
 
 // @internal
 export const _createAzureCommunicationCallAdapterInner: ({ userId, displayName, credential, locator, alternateCallerId, options, telemetryImplementationHint }: {
     userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
-    locator: CallAdapterLocator;
+    locator?: CallAdapterLocator | undefined;
     alternateCallerId?: string | undefined;
     options?: CommonCallAdapterOptions | undefined;
     telemetryImplementationHint?: _TelemetryImplementationHint | undefined;
@@ -1375,7 +1376,7 @@ export const _createAzureCommunicationChatAdapterInner: (endpoint: string, userI
 export const createTeamsCallAdapter: ({ userId, credential, locator, options }: TeamsCallAdapterArgs) => Promise<TeamsCallAdapter>;
 
 // @beta
-export const createTeamsCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: TeamsCallAgent, locator: CallAdapterLocator, options?: TeamsAdapterOptions) => Promise<TeamsCallAdapter>;
+export const createTeamsCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: TeamsCallAgent, locator?: CallAdapterLocator, options?: TeamsAdapterOptions) => Promise<TeamsCallAdapter>;
 
 // @public
 export type CustomCallControlButtonCallback = (args: CustomCallControlButtonCallbackArgs) => CustomCallControlButtonProps;
@@ -1911,7 +1912,7 @@ export interface TeamsCallAdapter extends CommonCallAdapter {
 export type TeamsCallAdapterArgs = {
     userId: MicrosoftTeamsUserIdentifier;
     credential: CommunicationTokenCredential;
-    locator: TeamsMeetingLinkLocator | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator;
+    locator?: TeamsMeetingLinkLocator;
     options?: TeamsAdapterOptions;
 };
 
