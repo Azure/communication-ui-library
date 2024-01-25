@@ -303,7 +303,7 @@ export type {
   Reaction,
   ReactionButtonProps,
   ReactionResources,
-  ReactionResourceParams
+  ReactionSprite
 } from '../../react-components/src';
 /* @conditional-compile-remove(spotlight) */
 export type { Spotlight } from '../../react-components/src';

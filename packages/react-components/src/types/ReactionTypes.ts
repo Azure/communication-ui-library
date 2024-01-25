@@ -5,7 +5,7 @@
  * Type for animation sprite image and related metadata
  * @beta
  */
-export type ReactionResourceParams = {
+export type ReactionSprite = {
   /**
    * Path to animation sprite image for reaction.
    */
@@ -28,21 +28,21 @@ export interface ReactionResources {
   /**
    * Like reaction animation resource.
    */
-  likeReaction?: ReactionResourceParams;
+  likeReaction?: ReactionSprite;
   /**
    * Heart reaction animation resource.
    */
-  heartReaction?: ReactionResourceParams;
+  heartReaction?: ReactionSprite;
   /**
    * Laugh reaction animation resource.
    */
-  laughReaction?: ReactionResourceParams;
+  laughReaction?: ReactionSprite;
   /**
    * Applause reaction animation resource.
    */
-  applauseReaction?: ReactionResourceParams;
+  applauseReaction?: ReactionSprite;
   /**
    * Surprised reaction animation resource.
    */
-  surprisedReaction?: ReactionResourceParams;
+  surprisedReaction?: ReactionSprite;
 }

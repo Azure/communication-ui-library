@@ -3706,20 +3706,20 @@ export interface ReactionButtonStrings {
 }
 
 // @beta
-export type ReactionResourceParams = {
+export interface ReactionResources {
+    applauseReaction?: ReactionSprite;
+    heartReaction?: ReactionSprite;
+    laughReaction?: ReactionSprite;
+    likeReaction?: ReactionSprite;
+    surprisedReaction?: ReactionSprite;
+}
+
+// @beta
+export type ReactionSprite = {
     url: string;
     frameCount: number;
     size?: number;
 };
-
-// @beta
-export interface ReactionResources {
-    applauseReaction?: ReactionResourceParams;
-    heartReaction?: ReactionResourceParams;
-    laughReaction?: ReactionResourceParams;
-    likeReaction?: ReactionResourceParams;
-    surprisedReaction?: ReactionResourceParams;
-}
 
 // @beta
 export type ReactionState = {
