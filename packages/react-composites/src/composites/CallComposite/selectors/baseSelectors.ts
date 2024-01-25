@@ -26,6 +26,7 @@ import { _isInCall, _isPreviewOn, _dominantSpeakersWithFlatId } from '@internal/
 import { AdapterErrors } from '../../common/adapters';
 /* @conditional-compile-remove(raise-hand) */
 import { RaisedHandState } from '@internal/calling-stateful-client';
+import { CommunicationIdentifier } from '@azure/communication-common';
 /**
  * @private
  */
@@ -213,3 +214,8 @@ export const getLatestErrors = (state: CallAdapterState): AdapterErrors => state
 export const getLatestCapabilitiesChangedInfo = (state: CallAdapterState): CapabilitiesChangeInfo | undefined => {
   return state.call?.capabilitiesFeature?.latestCapabilitiesChangeInfo;
 };
+
+/**
+ * @private
+ */
+export const getTargetCallees = (state: CallAdapterState): CommunicationIdentifier[] | undefined => state.targetCallees;
