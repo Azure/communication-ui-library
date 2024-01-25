@@ -21,7 +21,7 @@ const getDocs: () => JSX.Element = () => {
   /* eslint-disable react/no-unescaped-entities */
   return (
     <>
-      <SingleLineBetaBanner version={'1.3.2-beta.1'} topOfPage={true} />
+      <SingleLineBetaBanner topOfPage={true} />
       <Title>Dialpad</Title>
       <Heading>Dialpad modes</Heading>
       <Description>
