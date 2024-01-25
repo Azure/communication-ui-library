@@ -401,7 +401,6 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   if (canRenderReaction && backgroundImageUrl && backgroundImageUrl?.length > 0) {
     fetch(`${backgroundImageUrl}`)
       .then((res) => {
-        console.log('Mohtasim: fetch logs ', res.status);
         if (res.status === 404) {
           setIsValidImageSource(false);
         } else {
