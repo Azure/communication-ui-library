@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { ChatAttachmentType } from '@azure/communication-chat';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { CommunicationTokenCredential } from '@azure/communication-common';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatContext } from './ChatContext';
@@ -34,9 +36,35 @@ describe('ResourceDownloadQueue api functions', () => {
     const context = new ChatContext();
     const tokenCredential = stubCommunicationTokenCredential();
     const mockMessage = messageTemplate;
+    const firstAttachments = [
+      { id: '1', attachmentType: 'image' as ChatAttachmentType, name: 'image1', url: 'url1', previewUrl: 'previewUrl1' }
+    ];
+    mockMessage.content = { message: 'new message', attachments: firstAttachments };
     const queue = new ResourceDownloadQueue(context, tokenCredential);
     queue.addMessage(mockMessage);
-    expect(queue.containsMessage(mockMessage)).toBe(true);
+    expect(queue.containsMessageWithSameAttachments(mockMessage)).toBe(true);
+  });
+
+  test('should add a message to queue and the same message with edited content', () => {
+    const context = new ChatContext();
+    const tokenCredential = stubCommunicationTokenCredential();
+    const firstAttachments = [
+      { id: '1', attachmentType: 'image' as ChatAttachmentType, name: 'image1', url: 'url1', previewUrl: 'previewUrl1' }
+    ];
+    const secondAttachments = [
+      { id: '2', attachmentType: 'image' as ChatAttachmentType, name: 'image2', url: 'url2', previewUrl: 'previewUrl2' }
+    ];
+    const originalMessage = { ...messageTemplate };
+    originalMessage.content = { message: 'new message', attachments: firstAttachments };
+    const editedMessage = { ...originalMessage };
+    editedMessage.content = { message: 'edited message', attachments: secondAttachments };
+
+    const queue = new ResourceDownloadQueue(context, tokenCredential);
+    queue.addMessage(originalMessage);
+    expect(queue.containsMessageWithSameAttachments(originalMessage)).toBe(true);
+    expect(queue.containsMessageWithSameAttachments(editedMessage)).toBe(false);
+    queue.addMessage(editedMessage);
+    expect(queue.containsMessageWithSameAttachments(editedMessage)).toBe(true);
   });
 
   test('start queue should call operation', async () => {

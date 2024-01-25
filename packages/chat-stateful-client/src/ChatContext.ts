@@ -320,7 +320,11 @@ export class ChatContext {
   private parseAttachments(threadId: string, message: ChatMessageWithStatus): void {
     const attachments = message.content?.attachments;
     if (message.type === 'html' && message.content?.message && attachments && attachments.length > 0) {
-      if (this._messageQueue && !this._messageQueue.containsMessage(message) && message.resourceCache === undefined) {
+      if (
+        this._messageQueue &&
+        !this._messageQueue.containsMessageWithSameAttachments(message) &&
+        message.resourceCache === undefined
+      ) {
         // Need to discuss retry logic in case of failure
         this._messageQueue.addMessage(message);
         this._messageQueue.startQueue(threadId, requestAttachments);

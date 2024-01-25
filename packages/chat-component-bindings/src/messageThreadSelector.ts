@@ -154,9 +154,7 @@ const processChatMessageContent = (message: ChatMessageWithStatus): string | und
   if (content && message.content?.attachments && sanitizedMessageContentType(message.type).includes('html')) {
     const attachments: ChatAttachment[] = message.content?.attachments;
     // Fill in the src here
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     const document = new DOMParser().parseFromString(content, 'text/html');
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     document.querySelectorAll('img').forEach((img) => {
       const attachmentPreviewUrl = attachments.find((attachment) => attachment.id === img.id)?.previewUrl;
       if (attachmentPreviewUrl) {

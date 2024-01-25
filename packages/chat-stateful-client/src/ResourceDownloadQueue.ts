@@ -7,7 +7,7 @@ import { ChatError } from './ChatClientState';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { CommunicationTokenCredential } from '@azure/communication-common';
+import type { CommunicationTokenCredential } from '@azure/communication-common';
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
@@ -24,11 +24,19 @@ export class ResourceDownloadQueue {
     this._credential = credential;
   }
 
-  public containsMessage(message: ChatMessageWithStatus): boolean {
+  public containsMessageWithSameAttachments(message: ChatMessageWithStatus): boolean {
     let contains = false;
-    if (this._messagesNeedingResourceRetrieval.find((m) => m.id === message.id)) {
-      contains = true;
+    const incomingAttachment = message.content?.attachments;
+    if (incomingAttachment) {
+      for (const m of this._messagesNeedingResourceRetrieval) {
+        const existingAttachment = m.content?.attachments ?? [];
+        contains = incomingAttachment.every((element, index) => element === existingAttachment[index]);
+        if (contains) {
+          break;
+        }
+      }
     }
+
     return contains;
   }
 
