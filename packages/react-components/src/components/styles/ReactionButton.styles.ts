@@ -28,7 +28,7 @@ export const playFrames = memoizeFunction(() =>
  *
  * @private
  */
-export const emojiStyles = (backgroundImage?: string, animationPlayState?: string): React.CSSProperties => {
+export const emojiStyles = (backgroundImage: string, animationPlayState: string): React.CSSProperties => {
   const imageResourceUrl = `url(${backgroundImage})`;
   return {
     display: 'flex',

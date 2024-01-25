@@ -119,38 +119,41 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
 
   const renderEmoji = (item: IContextualMenuItem, dismissMenu: () => void): React.JSX.Element => (
     <div style={reactionEmojiMenuStyles()}>
-      {emojis.map((emoji, index) => (
-        <TooltipHost
-          key={index}
-          data-ui-id={index}
-          hidden={props.disableTooltip}
-          content={emojiButtonTooltip.get(emoji)}
-          styles={reactionToolTipHostStyle()}
-          calloutProps={{ ...calloutProps }}
-        >
-          <IconButton
+      {emojis.map((emoji, index) => {
+        const resourceUrl = emojiResource.get(emoji);
+        return (
+          <TooltipHost
             key={index}
-            onClick={() => {
-              props.onReactionClicked(emoji);
-              setIsHoveredMap((prevMap) => {
-                return new Map(prevMap).set(emoji, false);
-              });
-              dismissMenu();
-            }}
-            style={emojiStyles(emojiResource.get(emoji), isHoveredMap.get(emoji) ? 'running' : 'paused')}
-            onMouseEnter={() =>
-              setIsHoveredMap((prevMap) => {
-                return new Map(prevMap).set(emoji, true);
-              })
-            }
-            onMouseLeave={() =>
-              setIsHoveredMap((prevMap) => {
-                return new Map(prevMap).set(emoji, false);
-              })
-            }
-          />
-        </TooltipHost>
-      ))}
+            data-ui-id={index}
+            hidden={props.disableTooltip}
+            content={emojiButtonTooltip.get(emoji)}
+            styles={reactionToolTipHostStyle()}
+            calloutProps={{ ...calloutProps }}
+          >
+            <IconButton
+              key={index}
+              onClick={() => {
+                props.onReactionClicked(emoji);
+                setIsHoveredMap((prevMap) => {
+                  return new Map(prevMap).set(emoji, false);
+                });
+                dismissMenu();
+              }}
+              style={emojiStyles(resourceUrl ? resourceUrl : '', isHoveredMap.get(emoji) ? 'running' : 'paused')}
+              onMouseEnter={() =>
+                setIsHoveredMap((prevMap) => {
+                  return new Map(prevMap).set(emoji, true);
+                })
+              }
+              onMouseLeave={() =>
+                setIsHoveredMap((prevMap) => {
+                  return new Map(prevMap).set(emoji, false);
+                })
+              }
+            />
+          </TooltipHost>
+        );
+      })}
     </div>
   );
 

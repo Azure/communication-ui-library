@@ -4,8 +4,7 @@
 import { IButtonStyles, IStyle, mergeStyles, Theme, ITheme } from '@fluentui/react';
 /* @conditional-compile-remove(reaction) */
 import { keyframes, memoizeFunction } from '@fluentui/react';
-/* @conditional-compile-remove(reaction) */
-import { ReactionResources } from '../../types/ReactionTypes';
+
 /**
  * @private
  */
@@ -214,24 +213,4 @@ export const reactionRenderingStyle = (args: { spriteImageUrl: string; personaSi
     backgroundPosition: `center`,
     transform: `scale(${84 < args.personaSize ? 84 / args.personaSize : args.personaSize / 84})`
   });
-};
-
-/* @conditional-compile-remove(reaction) */
-/**
- * @private
- */
-export const getEmojiResource = (reactionName: string, reactionResources: ReactionResources): string | undefined => {
-  switch (reactionName) {
-    case 'like':
-      return reactionResources.likeReaction?.url;
-    case 'heart':
-      return reactionResources.heartReaction?.url;
-    case 'laugh':
-      return reactionResources.laughReaction?.url;
-    case 'applause':
-      return reactionResources.applauseReaction?.url;
-    case 'surprised':
-      return reactionResources.surprisedReaction?.url;
-  }
-  return '';
 };

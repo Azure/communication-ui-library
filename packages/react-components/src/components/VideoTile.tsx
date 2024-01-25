@@ -6,7 +6,7 @@ import { Icon, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react
 import { IconButton } from '@fluentui/react';
 import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
 /* @conditional-compile-remove(reaction) */
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { ComponentLocale, useLocale } from '../localization';
 import { useTheme } from '../theming';
@@ -34,7 +34,7 @@ import {
   participantStateStringStyles
 } from './styles/VideoTile.styles';
 /* @conditional-compile-remove(reaction) */
-import { reactionRenderingStyle, getEmojiResource } from './styles/VideoTile.styles';
+import { reactionRenderingStyle } from './styles/VideoTile.styles';
 import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
 /* @conditional-compile-remove(pinned-participants) */
 import { pinIconStyle } from './styles/VideoTile.styles';
@@ -48,6 +48,8 @@ import { moreButtonStyles } from './styles/VideoTile.styles';
 import { raiseHandContainerStyles } from './styles/VideoTile.styles';
 /* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '../types/ReactionTypes';
+/* @conditional-compile-remove(reaction) */
+import { getEmojiResource } from './VideoGallery/utils/videoGalleryLayoutUtils';
 
 /**
  * Strings of {@link VideoTile} that can be overridden.
@@ -398,20 +400,17 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     (receivedUnixTimestamp ? currentUnixTimeStamp - receivedUnixTimestamp < 3000 : false) &&
     backgroundImageUrl !== undefined;
   /* @conditional-compile-remove(reaction) */
-  if (canRenderReaction && backgroundImageUrl && backgroundImageUrl?.length > 0) {
+  useEffect(() => {
+    if (!backgroundImageUrl || backgroundImageUrl.length === 0) {
+      return;
+    }
+
     fetch(`${backgroundImageUrl}`)
-      .then((res) => {
-        if (res.status === 404) {
-          setIsValidImageSource(false);
-        } else {
-          setIsValidImageSource(true);
-        }
-      })
-      .catch((warning) => {
-        setIsValidImageSource(false);
-        console.warn(`Sprite image for animation rendering failed with warning: ${warning}`);
-      });
-  }
+      .then((res) => setIsValidImageSource(res.ok))
+      .catch((warning) => console.warn(`Sprite image for animation rendering failed with warning: ${warning}`));
+
+    return () => setIsValidImageSource(false);
+  }, [backgroundImageUrl]);
   /* @conditional-compile-remove(reaction) */
   const spriteImageUrl = backgroundImageUrl !== undefined ? backgroundImageUrl : '';
   /* @conditional-compile-remove(reaction) */
