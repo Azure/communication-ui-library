@@ -32,7 +32,7 @@ import { updateMessagesWithAttached } from './utils/updateMessagesWithAttached';
 import { FileMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatAttachment, ChatAttachmentType } from '@azure/communication-chat';
-import { ChatParticipant } from '@azure/communication-chat';
+import type { ChatParticipant } from '@azure/communication-chat';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatAttachmentType as AttachmentType, InlineImageMetadata } from '@internal/react-components';
 
