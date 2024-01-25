@@ -10,6 +10,7 @@ import { ResourceDownloadError, ResourceDownloadQueue } from './ResourceDownload
 import { messageTemplate } from './mocks/createMockChatThreadClient';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { resolve } from 'path';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 jest.mock('@azure/communication-chat');
