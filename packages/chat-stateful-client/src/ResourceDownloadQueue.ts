@@ -62,6 +62,7 @@ export class ResourceDownloadQueue {
       try {
         const newMessage = await operation(message, this._credential);
         if (newMessage) {
+          this.isActive = false;
           this._context.setChatMessage(threadId, newMessage);
         }
       } catch (error) {
