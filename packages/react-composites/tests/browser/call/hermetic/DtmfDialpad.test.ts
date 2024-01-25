@@ -44,7 +44,7 @@ test.describe('Dtmf dialpad tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`Dtmf-Dialpad-Hidden-Non-PSTN.png`);
   });
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(dtmf-dialer) */
-  test.only('More Button menu opens and shows dialpad Control', async ({ page, serverUrl }, testInfo) => {
+  test('More Button menu opens and shows dialpad Control', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo) || isTestProfileLandscapeMobile(testInfo));
     const initialState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
     initialState.targetCallees = [{ phoneNumber: '+14255550123', rawId: '4:14255550123' }];
@@ -58,7 +58,7 @@ test.describe('Dtmf dialpad tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-more-button-dtmf-dialpad-closed.png`);
   });
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(dtmf-dialer) */
-  test.only('More Drawer menu opens and shows dialpad Control', async ({ page, serverUrl }, testInfo) => {
+  test('More Drawer menu opens and shows dialpad Control', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileDesktop(testInfo));
     const initialState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
     initialState.targetCallees = [{ phoneNumber: '+14255550123', rawId: '4:14255550123' }];
