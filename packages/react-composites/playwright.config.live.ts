@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 import { PlaywrightTestConfig } from '@playwright/test';
-import common from './playwright.config.common';
+import common from '../../common/config/playwright/playwright.config.common';
 
 const config: PlaywrightTestConfig = {
   ...common,
