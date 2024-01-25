@@ -52,8 +52,11 @@ import { themedToggleButtonStyle } from './MoreDrawer.styles';
 import { _spokenLanguageToCaptionLanguage } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { useAdapter } from '../../CallComposite/adapter/CallAdapterProvider';
+/* @conditional-compile-remove(dtmf-dialer) */
 import { useSelector } from '../../CallComposite/hooks/useSelector';
+/* @conditional-compile-remove(dtmf-dialer) */
 import { getTargetCallees } from '../../CallComposite/selectors/baseSelectors';
+/* @conditional-compile-remove(dtmf-dialer) */
 import { showDtmfDialer } from '../../CallComposite/utils/MediaGalleryUtils';
 
 /** @private */
