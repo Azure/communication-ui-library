@@ -92,13 +92,14 @@ export const usePeoplePane = (props: {
           });
         }
       } else {
-        if (onStartSpotlight) {
+        const startSpotlightMenuLabelText =
+          spotlightedParticipantUserIds && spotlightedParticipantUserIds.length > 0
+            ? localeStrings.addSpotlightParticipantListMenuLabel
+            : localeStrings.startSpotlightParticipantListMenuLabel;
+        if (onStartSpotlight && startSpotlightMenuLabelText) {
           _defaultMenuItems.push({
             key: 'start-spotlight',
-            text:
-              spotlightedParticipantUserIds && spotlightedParticipantUserIds.length > 0
-                ? localeStrings.startSpotlightParticipantListMenuLabel
-                : localeStrings.startSpotlightParticipantListMenuLabel,
+            text: startSpotlightMenuLabelText,
             onClick: () => {
               onStartSpotlight?.(participantId);
             },
@@ -120,6 +121,7 @@ export const usePeoplePane = (props: {
       onFetchParticipantMenuItems,
       localeStrings.stopSpotlightParticipantListMenuLabel,
       localeStrings.stopSpotlightOnSelfParticipantListMenuLabel,
+      localeStrings.addSpotlightParticipantListMenuLabel,
       localeStrings.startSpotlightParticipantListMenuLabel
     ]
   );
