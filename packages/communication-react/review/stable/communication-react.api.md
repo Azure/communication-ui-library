@@ -36,6 +36,7 @@ import { CreateViewOptions } from '@azure/communication-calling';
 import { DeviceAccess } from '@azure/communication-calling';
 import { DeviceManager } from '@azure/communication-calling';
 import { DominantSpeakersInfo } from '@azure/communication-calling';
+import { DtmfTone as DtmfTone_2 } from '@azure/communication-calling';
 import { GroupCallLocator } from '@azure/communication-calling';
 import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
@@ -50,6 +51,7 @@ import { IRawStyle } from '@fluentui/react';
 import { IRenderFunction } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { IStyleFunctionOrObject } from '@fluentui/react';
+import { ITextFieldStyles } from '@fluentui/react';
 import { LatestMediaDiagnostics } from '@azure/communication-calling';
 import { LatestNetworkDiagnostics } from '@azure/communication-calling';
 import { LocalVideoStream } from '@azure/communication-calling';
@@ -216,6 +218,8 @@ export interface CallAdapterCallOperations {
     mute(): Promise<void>;
     raiseHand(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
+    // @beta
+    sendDtmfTone(dtmfTone: DtmfTone_2): Promise<void>;
     setCaptionLanguage(language: string): Promise<void>;
     setSpokenLanguage(language: string): Promise<void>;
     startCamera(options?: VideoStreamOptions): Promise<void>;
@@ -437,6 +441,7 @@ export type CallCompositeIcons = {
     OverflowGalleryTop?: JSX.Element;
     LargeGalleryLayout?: JSX.Element;
     DefaultCustomButton?: JSX.Element;
+    DtmfDialpadButton?: JSX.Element;
 };
 
 // @public
@@ -508,6 +513,11 @@ export interface CallCompositeStrings {
     defaultPlaceHolder: string;
     dismissModalAriaLabel?: string;
     dismissSidePaneButtonLabel?: string;
+    dtmfDialerButtonLabel?: string;
+    dtmfDialerButtonTooltipOff?: string;
+    dtmfDialerButtonTooltipOn?: string;
+    dtmfDialerMoreButtonLabelOff?: string;
+    dtmfDialerMoreButtonLabelOn?: string;
     failedToJoinCallDueToNoNetworkMoreDetails?: string;
     failedToJoinCallDueToNoNetworkTitle: string;
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
@@ -733,6 +743,8 @@ export interface CallWithChatAdapterManagement {
     querySpeakers(): Promise<AudioDeviceInfo[]>;
     raiseHand(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
+    // @beta
+    sendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
@@ -940,6 +952,7 @@ export type CallWithChatCompositeIcons = {
     VideoTileMicOff?: JSX.Element;
     LocalCameraSwitch?: JSX.Element;
     DefaultCustomButton?: JSX.Element;
+    DtmfDialpadButton?: JSX.Element;
     EditBoxCancel?: JSX.Element;
     EditBoxSubmit?: JSX.Element;
     MessageDelivered?: JSX.Element;
@@ -1462,6 +1475,9 @@ export type CommonCallControlOptions = {
     };
     onFetchCustomButtonProps?: CustomCallControlButtonCallback[];
     peopleButton?: boolean;
+    dtmfDialerButton?: boolean | {
+        disabled: boolean;
+    };
 };
 
 // @public
@@ -1498,6 +1514,8 @@ export interface CommonCallingHandlers {
     onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
     // (undocumented)
     onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
+    // (undocumented)
+    onSendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
     // (undocumented)
     onSetCaptionLanguage: (language: string) => Promise<void>;
     // (undocumented)
@@ -1616,6 +1634,7 @@ export type ComponentSlotStyle = Omit<IRawStyle, 'animation'>;
 export interface ComponentStrings {
     cameraButton: CameraButtonStrings;
     devicesButton: DevicesButtonStrings;
+    dialpad: DialpadStrings;
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
@@ -1872,6 +1891,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     ControlButtonMicOn: React_2.JSX.Element;
     ControlButtonOptions: React_2.JSX.Element;
     ControlButtonParticipants: React_2.JSX.Element;
+    ControlButtonParticipantsContextualMenuItem: React_2.JSX.Element;
     ControlButtonScreenShareStart: React_2.JSX.Element;
     ControlButtonScreenShareStop: React_2.JSX.Element;
     ControlButtonRaiseHand: React_2.JSX.Element;
@@ -1913,6 +1933,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     SendBoxSend: React_2.JSX.Element;
     SendBoxSendHovered: React_2.JSX.Element;
     VideoTileMicOff: React_2.JSX.Element;
+    DialpadBackspace: React_2.JSX.Element;
     VideoTilePinned: React_2.JSX.Element;
     VideoTileMoreOptions: React_2.JSX.Element;
     VideoTileScaleFit: React_2.JSX.Element;
@@ -2016,6 +2037,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     OverflowGalleryTop?: JSX.Element | undefined;
     LargeGalleryLayout?: JSX.Element | undefined;
     DefaultCustomButton?: JSX.Element | undefined;
+    DtmfDialpadButton?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;
@@ -2027,9 +2049,11 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MoreDrawerSpeakers?: JSX.Element | undefined;
     SendBoxAttachFile?: JSX.Element | undefined;
     ChatMessageOptions: React_2.JSX.Element;
+    ControlButtonParticipantsContextualMenuItem: React_2.JSX.Element;
     ErrorBarCallVideoRecoveredBySystem: React_2.JSX.Element;
     ErrorBarCallVideoStoppedBySystem: React_2.JSX.Element;
     MessageResend: React_2.JSX.Element;
+    DialpadBackspace: React_2.JSX.Element;
     VideoTilePinned: React_2.JSX.Element;
     VideoTileMoreOptions: React_2.JSX.Element;
     VideoTileScaleFit: React_2.JSX.Element;
@@ -2127,6 +2151,51 @@ export interface DiagnosticsCallFeatureState {
 }
 
 // @public
+export const Dialpad: (props: DialpadProps) => JSX.Element;
+
+// @public
+export type DialpadMode = 'dtmf' | 'dialer';
+
+// @public
+export interface DialpadProps {
+    dialpadMode?: DialpadMode;
+    disableDtmfPlayback?: boolean;
+    longPressTrigger?: LongPressTrigger;
+    onChange?: (input: string) => void;
+    onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
+    onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
+    showDeleteButton?: boolean;
+    // (undocumented)
+    strings?: DialpadStrings;
+    styles?: DialpadStyles;
+    textFieldValue?: string;
+}
+
+// @public
+export interface DialpadStrings {
+    // (undocumented)
+    deleteButtonAriaLabel?: string;
+    // (undocumented)
+    placeholderText: string;
+}
+
+// @public
+export interface DialpadStyles {
+    // (undocumented)
+    button?: IButtonStyles;
+    // (undocumented)
+    deleteIcon?: IButtonStyles;
+    // (undocumented)
+    digit?: IStyle;
+    // (undocumented)
+    letter?: IStyle;
+    // (undocumented)
+    root?: IStyle;
+    // (undocumented)
+    textField?: Partial<ITextFieldStyles>;
+}
+
+// @public
 export type DisplayNameChangedListener = (event: {
     participantId: CommunicationIdentifierKind;
     displayName: string;
@@ -2137,6 +2206,9 @@ interface Disposable_2 {
     dispose(): void;
 }
 export { Disposable_2 as Disposable }
+
+// @public
+export type DtmfTone = 'A' | 'B' | 'C' | 'D' | 'Flash' | 'Num0' | 'Num1' | 'Num2' | 'Num3' | 'Num4' | 'Num5' | 'Num6' | 'Num7' | 'Num8' | 'Num9' | 'Pound' | 'Star';
 
 // @public
 export type EmptySelector = () => Record<string, never>;
@@ -2220,7 +2292,7 @@ export interface FluentThemeProviderProps {
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
 
 // @public
-export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : undefined;
+export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : AreEqual<Component, typeof Dialpad> extends true ? EmptySelector : undefined;
 
 // @public
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
@@ -2377,6 +2449,9 @@ export interface LocalVideoStreamVideoEffectsState {
 
 // @public
 export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'followDeviceOrientation';
+
+// @public
+export type LongPressTrigger = 'mouseAndTouch' | 'touch';
 
 // @public
 export type MediaDiagnosticChangedEvent = MediaDiagnosticChangedEventArgs & {

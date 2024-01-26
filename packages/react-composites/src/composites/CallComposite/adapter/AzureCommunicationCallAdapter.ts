@@ -55,7 +55,9 @@ import { RoomCallLocator } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */ /* @conditional-compile-remove(video-background-effects) */ /* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(capabilities) */
 import { Features } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
-import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
+/* @conditional-compile-remove(dtmf-dialer) */
+import { DtmfTone } from '@azure/communication-calling';
 import { EventEmitter } from 'events';
 import {
   CommonCallAdapter,
@@ -561,7 +563,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.holdCall.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
     this.resumeCall.bind(this);
-    /* @conditional-compile-remove(PSTN-calls) */
+    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(dtmf-dialer) */
     this.sendDtmfTone.bind(this);
     /* @conditional-compile-remove(unsupported-browser) */
     this.allowUnsupportedBrowserVersion.bind(this);
@@ -1013,7 +1015,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     }
   }
 
-  /* @conditional-compile-remove(PSTN-calls) */
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(dtmf-dialer) */
   public async sendDtmfTone(dtmfTone: DtmfTone): Promise<void> {
     this.handlers.onSendDtmfTone(dtmfTone);
   }

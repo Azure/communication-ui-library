@@ -18,7 +18,9 @@ import { Reaction } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
-import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
+/* @conditional-compile-remove(dtmf-dialer) */
+import { DtmfTone } from '@azure/communication-calling';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 /* @conditional-compile-remove(PSTN-calls) */
 import {
@@ -185,7 +187,7 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     return this.callWithChatAdapter.allowUnsupportedBrowserVersion();
   }
 
-  /* @conditional-compile-remove(PSTN-calls) */
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(dtmf-dialer) */
   public sendDtmfTone = async (dtmfTone: DtmfTone): Promise<void> => {
     await this.callWithChatAdapter.sendDtmfTone(dtmfTone);
   };
