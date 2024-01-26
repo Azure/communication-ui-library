@@ -75,38 +75,41 @@ export const usePeoplePane = (props: {
       const _defaultMenuItems = defaultMenuItems ?? [];
       const isSpotlighted = spotlightedParticipantUserIds?.find((p) => p === participantId);
       if (isSpotlighted) {
-        if (onStopSpotlight) {
+        const stopSpotlightMenuText =
+          myUserId === participantId
+            ? localeStrings.stopSpotlightOnSelfParticipantListMenuLabel
+            : localeStrings.stopSpotlightParticipantListMenuLabel;
+        if (onStopSpotlight && stopSpotlightMenuText) {
           _defaultMenuItems.push({
             key: 'stop-spotlight',
-            text:
-              myUserId === participantId
-                ? localeStrings.stopSpotlightOnSelfParticipantListMenuLabel
-                : localeStrings.stopSpotlightParticipantListMenuLabel,
+            text: stopSpotlightMenuText,
             onClick: () => {
               onStopSpotlight?.(participantId);
             },
             iconProps: {
               iconName: 'StopSpotlightContextualMenuItem',
               styles: { root: { lineHeight: 0 } }
-            }
+            },
+            ariaLabel: stopSpotlightMenuText
           });
         }
       } else {
-        const startSpotlightMenuLabelText =
+        const startSpotlightMenuText =
           spotlightedParticipantUserIds && spotlightedParticipantUserIds.length > 0
             ? localeStrings.addSpotlightParticipantListMenuLabel
             : localeStrings.startSpotlightParticipantListMenuLabel;
-        if (onStartSpotlight && startSpotlightMenuLabelText) {
+        if (onStartSpotlight && startSpotlightMenuText) {
           _defaultMenuItems.push({
             key: 'start-spotlight',
-            text: startSpotlightMenuLabelText,
+            text: startSpotlightMenuText,
             onClick: () => {
               onStartSpotlight?.(participantId);
             },
             iconProps: {
               iconName: 'StartSpotlightContextualMenuItem',
               styles: { root: { lineHeight: 0 } }
-            }
+            },
+            ariaLabel: startSpotlightMenuText
           });
         }
       }
