@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(reaction) */
+import { ReactionResources } from '@internal/react-components';
+/* @conditional-compile-remove(reaction) */
 import { ControlBarButtonStyles, ReactionButton, ReactionButtonProps } from '@internal/react-components';
 /* @conditional-compile-remove(reaction) */
 import React, { useMemo } from 'react';
@@ -16,6 +18,7 @@ import { concatButtonBaseStyles } from '../../styles/Buttons.styles';
 /** @private */
 export const Reaction = (props: {
   // The value of `CallControlOptions.reactionButton`.
+  reactionResource: ReactionResources;
   option?: boolean | { disabled: boolean };
   displayType?: CallControlDisplayType;
   styles?: ControlBarButtonStyles;
@@ -36,6 +39,7 @@ export const Reaction = (props: {
       styles={styles}
       disableTooltip={props.disableTooltip}
       persistMenu={true}
+      reactionResources={props.reactionResource}
     />
   );
 };

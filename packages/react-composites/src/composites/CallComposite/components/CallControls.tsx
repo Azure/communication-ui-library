@@ -276,6 +276,8 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     showMoreButton = isEnabled(options?.moreButton);
   }
 
+  /* @conditional-compile-remove(reaction) */
+  const reactionResources = adapter.getState().reactions;
   /* @conditional-compile-remove(raise-hand) */
   const raiseHandButtonIsEnabled = isEnabled(options?.raiseHandButton);
   /* @conditional-compile-remove(raise-hand) */
@@ -417,7 +419,9 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
           )}
           {
             /* @conditional-compile-remove(reaction) */
-            showReactionButtonInControlBar && <Reaction displayType={options?.displayType} />
+            showReactionButtonInControlBar && reactionResources && (
+              <Reaction displayType={options?.displayType} reactionResource={reactionResources} />
+            )
           }
           {
             /* @conditional-compile-remove(raise-hand) */ showRaiseHandButtonInControlBar &&
