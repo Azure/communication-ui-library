@@ -40,10 +40,10 @@ const getDocs: () => JSX.Element = () => {
       </Canvas>
       <Subheading>DTMF Mode</Subheading>
       <Description>
-        This mode is for sendinf DTMF tones when in a call. These tones are for controlling the bot or other service
-        that that that you might encounter. Each tone is represented by a sound that is played when pressing each key.
-        You can disable these sounds by using the `disableDtmfPlayback` property on the component. In this mode the
-        input box in the dialpad is hidden since you are not able to edit DTMF tones that you have sent.
+        This mode is for sending DTMF tones when in a call. These tones are used for controlling bots or other services
+        that you might encounter. Each tone is mapped to a sound that is played when pressing each key.
+        You can disable these sounds by using the `disableDtmfPlayback` property on the component. In this mode, the
+        input box in the dialpad is hidden since you are not able to edit DTMF tones that are sent.
       </Description>
       <Canvas mdxSource={ExampleDialpadText}>
         <DialpadExample />
