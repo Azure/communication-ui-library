@@ -26,14 +26,13 @@ const getDocs: () => JSX.Element = () => {
       <Heading>Dialpad modes</Heading>
       <Description>
         The Dialpad component is versatile in its usage. Like on a physical phone, the dialpad can have many different
-        roles. Our Dialpad component is designed to accommodate different scenarios encountered in calling
-        experiences.
+        roles. Our Dialpad component is designed to accommodate different scenarios encountered in calling experiences.
       </Description>
       <Subheading>Dialer Mode</Subheading>
       <Description>
         This is the default mode of the Dialpad component. In this mode you are able to enter and edit numbers in the
-        Dialpad's input box. The typical scenario to use this mode is when you are dialling to phone number to call the number, or to dial
-        in a new participant into an ongoing call.
+        Dialpad's input box. The typical scenario to use this mode is when you are dialling to phone number to call the
+        number, or to dial in a new participant into an ongoing call.
       </Description>
       <Canvas mdxSource={DialerExampleText}>
         <DialerExample />
@@ -41,9 +40,9 @@ const getDocs: () => JSX.Element = () => {
       <Subheading>DTMF Mode</Subheading>
       <Description>
         This mode is for sending DTMF tones when in a call. These tones are used for controlling bots or other services
-        that you might encounter. Each tone is mapped to a sound that is played when pressing each key.
-        You can disable these sounds by using the `disableDtmfPlayback` property on the component. In this mode, the
-        input box in the dialpad is hidden since you are not able to edit DTMF tones that are sent.
+        that you might encounter. Each tone is mapped to a sound that is played when pressing each key. You can disable
+        these sounds by using the `disableDtmfPlayback` property on the component. In this mode, the input box in the
+        dialpad is hidden since you are not able to edit DTMF tones that are sent.
       </Description>
       <Canvas mdxSource={ExampleDialpadText}>
         <DialpadExample />
@@ -56,8 +55,8 @@ const getDocs: () => JSX.Element = () => {
       <Description>
         We provide many different ways to customize the Dialpad component. This example showcases how to customize the
         format for dialpad input using onChange, how to grab textfield values using onChange, and how to add extra
-        functionality to dialpad buttons. This overrides the included number formatting behavior to North
-        American phone numbers. In this example, the sounds are also disabled.
+        functionality to dialpad buttons. This overrides the included number formatting behavior to North American phone
+        numbers. In this example, the sounds are also disabled.
       </Description>
       <Canvas mdxSource={CustomDialpadText}>
         <CustomDialpadExample />
