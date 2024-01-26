@@ -28,13 +28,14 @@ export const playFrames = memoizeFunction(() =>
  *
  * @private
  */
-export const emojiStyles = (backgroundImage?: string, animationPlayState?: string): React.CSSProperties => {
+export const emojiStyles = (backgroundImage: string, animationPlayState: string): React.CSSProperties => {
+  const imageResourceUrl = `url(${backgroundImage})`;
   return {
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
     width: '100%',
-    backgroundImage: backgroundImage,
+    backgroundImage: imageResourceUrl,
     animationName: playFrames(),
     animationDuration: '8.12s',
     animationTimingFunction: `steps(102)`,
