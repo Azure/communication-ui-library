@@ -25,8 +25,8 @@ const getDocs: () => JSX.Element = () => {
       <Title>Dialpad</Title>
       <Heading>Dialpad modes</Heading>
       <Description>
-        The Dialpad component is versitile in its usage. Like on a physical phone the dialpad can have many different
-        jobs. Our Dialpad component is designed to fit the different scenarios that can be encountered in calling
+        The Dialpad component is versatile in its usage. Like on a physical phone, the dialpad can have many different
+        roles. Our Dialpad component is designed to accommodate different scenarios encountered in calling
         experiences.
       </Description>
       <Subheading>Dialer Mode</Subheading>
