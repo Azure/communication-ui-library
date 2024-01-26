@@ -405,6 +405,10 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 onUserSetGalleryLayout={props.onUserSetGalleryLayoutChange}
                 /* @conditional-compile-remove(gallery-layouts) */
                 userSetGalleryLayout={props.userSetGalleryLayout}
+                /* @conditional-compile-remove(dtmf-dialer) */
+                onSetDialpadPage={props.onSetDialpadPage}
+                /* @conditional-compile-remove(dtmf-dialer) */
+                dtmfDialerPresent={props.dtmfDialerPresent}
               />
             </Stack>
           )}

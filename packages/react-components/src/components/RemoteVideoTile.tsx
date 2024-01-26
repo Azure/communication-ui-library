@@ -27,6 +27,8 @@ import { VideoTile } from './VideoTile';
 import { _formatString } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(hide-attendee-name) */
 import { useLocale } from '../localization';
+/* @conditional-compile-remove(reaction) */
+import { ReactionResources } from '../types/ReactionTypes';
 
 /**
  * A memoized version of VideoTile for rendering remote participants. React.memo is used for a performance
@@ -67,6 +69,7 @@ export const _RemoteVideoTile = React.memo(
     /* @conditional-compile-remove(spotlight) */ onStopSpotlight?: (userId: string) => void;
     disablePinMenuItem?: boolean;
     toggleAnnouncerString?: (announcerString: string) => void;
+    /* @conditional-compile-remove(reaction) */ reactionResources?: ReactionResources;
   }) => {
     const {
       isAvailable,
@@ -92,7 +95,8 @@ export const _RemoteVideoTile = React.memo(
       onUpdateScalingMode,
       disablePinMenuItem,
       toggleAnnouncerString,
-      strings
+      strings,
+      /* @conditional-compile-remove(reaction) */ reactionResources
     } = props;
 
     const remoteVideoStreamProps: RemoteVideoStreamLifecycleMaintainerProps = useMemo(
@@ -227,6 +231,8 @@ export const _RemoteVideoTile = React.memo(
           }
           /* @conditional-compile-remove(spotlight) */
           isSpotlighted={isSpotlighted}
+          /* @conditional-compile-remove(reaction) */
+          reactionResources={reactionResources}
         />
         {drawerMenuItemProps.length > 0 && (
           <Layer hostId={props.drawerMenuHostId}>

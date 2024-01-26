@@ -73,6 +73,8 @@ import {
   CallAdapter,
   JoinCallOptions
 } from './CallAdapter';
+/* @conditional-compile-remove(reaction) */
+import { ReactionResources } from '@internal/react-components';
 /* @conditional-compile-remove(call-transfer) */
 import { TransferRequestedListener } from './CallAdapter';
 /* @conditional-compile-remove(capabilities) */
@@ -149,6 +151,8 @@ class CallContext {
       };
       /* @conditional-compile-remove(calling-sounds) */
       callingSounds?: CallingSounds;
+      /* @conditional-compile-remove(reaction) */
+      reactionResources?: ReactionResources;
     }
   ) {
     this.state = {
@@ -171,7 +175,8 @@ class CallContext {
       onResolveVideoEffectDependency: options?.videoBackgroundOptions?.onResolveDependency,
       /* @conditional-compile-remove(video-background-effects) */ selectedVideoBackgroundEffect: undefined,
       cameraStatus: undefined,
-      /* @conditional-compile-remove(calling-sounds) */ sounds: options?.callingSounds
+      /* @conditional-compile-remove(calling-sounds) */ sounds: options?.callingSounds,
+      /* @conditional-compile-remove(reaction) */ reactions: options?.reactionResources
     };
     this.emitter.setMaxListeners(options?.maxListeners ?? 50);
     this.bindPublicMethods();

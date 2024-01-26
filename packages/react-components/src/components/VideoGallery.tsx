@@ -45,6 +45,8 @@ import { FocusedContentLayout } from './VideoGallery/FocusContentLayout';
 /* @conditional-compile-remove(large-gallery) */
 import { LargeGalleryLayout } from './VideoGallery/LargeGalleryLayout';
 import { LayoutProps } from './VideoGallery/Layout';
+/* @conditional-compile-remove(reaction) */
+import { ReactionResources } from '../types/ReactionTypes';
 
 /**
  * @private
@@ -309,6 +311,11 @@ export interface VideoGalleryProps {
    * @defaultValue 'followDeviceOrientation'
    */
   localVideoTileSize?: LocalVideoTileSize;
+  /* @conditional-compile-remove(reaction) */
+  /**
+   * Reaction resources for like, heart, laugh, applause and surprised.
+   */
+  reactionResources?: ReactionResources;
 }
 
 /* @conditional-compile-remove(pinned-participants) */
@@ -384,7 +391,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(spotlight) */
     onStartSpotlight,
     /* @conditional-compile-remove(spotlight) */
-    onStopSpotlight
+    onStopSpotlight,
+    /* @conditional-compile-remove(reaction) */
+    reactionResources
   } = props;
 
   const ids = useIdentifiers();
@@ -511,6 +520,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           reaction={localParticipant.reaction}
           /* @conditional-compile-remove(spotlight) */
           isSpotlighted={isSpotlighted}
+          /* @conditional-compile-remove(reaction) */
+          reactionResources={reactionResources}
         />
       </Stack>
     );
@@ -538,7 +549,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     layout,
     showLocalVideoTileLabel,
     /* @conditional-compile-remove(spotlight) */
-    spotlightedParticipants
+    spotlightedParticipants,
+    /* @conditional-compile-remove(reaction) */
+    reactionResources
   ]);
 
   /* @conditional-compile-remove(pinned-participants) */
@@ -658,6 +671,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           onStartSpotlight={onStartSpotlight}
           /* @conditional-compile-remove(spotlight) */
           onStopSpotlight={onStopSpotlight}
+          /* @conditional-compile-remove(reaction) */
+          reactionResources={reactionResources}
         />
       );
     },
@@ -679,7 +694,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       /* @conditional-compile-remove(pinned-participants) */ onUpdateScalingMode,
       /* @conditional-compile-remove(spotlight) */ spotlightedParticipants,
       /* @conditional-compile-remove(spotlight) */ onStartSpotlight,
-      /* @conditional-compile-remove(spotlight) */ onStopSpotlight
+      /* @conditional-compile-remove(spotlight) */ onStopSpotlight,
+      /* @conditional-compile-remove(reaction) */ reactionResources
     ]
   );
 
