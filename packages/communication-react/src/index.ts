@@ -312,7 +312,14 @@ export type { ImageGalleryProps, ImageGalleryImageProps, ImageGalleryStrings } f
 /* @conditional-compile-remove(data-loss-prevention) */
 export type { BlockedMessage } from '../../react-components/src';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
-export type { DialpadMode, DialpadProps, DialpadStrings, DialpadStyles, DtmfTone } from '../../react-components/src';
+export type {
+  DialpadMode,
+  DialpadProps,
+  DialpadStrings,
+  DialpadStyles,
+  DtmfTone,
+  LongPressTrigger
+} from '../../react-components/src';
 /* @conditional-compile-remove(file-sharing) */
 export type {
   ActiveFileUpload,
