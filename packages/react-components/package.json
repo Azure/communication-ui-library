@@ -33,7 +33,7 @@
     "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell",
     "_current-flavor": "echo You are running under COMMUNICATION_REACT_FLAVOR: && env-cmd -f ../../common/config/env/.env node -p process.env.COMMUNICATION_REACT_FLAVOR",
     "_test:by-flavor": "(npm run _if-preprocess && rushx preprocess || if-env COMMUNICATION_REACT_FLAVOR=beta && echo \"skip preprocess\") && jest",
-    "test:components": "rushx _by-flavor \"playwright test -c playwright-ct.config.ts"
+    "test:components": "rushx _by-flavor \"npx playwright test -c playwright.config.components.ts\""
   },
   "license": "MIT",
   "dependencies": {
@@ -128,6 +128,7 @@
     "type-fest": "^3.13.1",
     "typescript": "5.3.3",
     "webpack": "5.89.0",
-    "jest-environment-jsdom": "^29.5.0"
+    "jest-environment-jsdom": "^29.5.0",
+    "@playwright/test": "~1.39.0"
   }
 }

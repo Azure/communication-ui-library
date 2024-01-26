@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import telemetryVersion from './telemetryVersion';
+import * as telemetryVersion from './telemetryVersion';
 
 /**
  * @private
