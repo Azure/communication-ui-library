@@ -55,9 +55,9 @@ const getDocs: () => JSX.Element = () => {
       <Heading>Customizing your Dialpad</Heading>
       <Description>
         We provide many different ways to customize the Dialpad component. This example showcases how to customize the
-        format for dialpad input using onChange, how to grab textfield values using onChange and how to add extra
-        functionality to dialpad buttons. This overrides the included behavior of the number formatting to North
-        American phone numbers. In this example the sounds are also disabled.
+        format for dialpad input using onChange, how to grab textfield values using onChange, and how to add extra
+        functionality to dialpad buttons. This overrides the included number formatting behavior to North
+        American phone numbers. In this example, the sounds are also disabled.
       </Description>
       <Canvas mdxSource={CustomDialpadText}>
         <CustomDialpadExample />
