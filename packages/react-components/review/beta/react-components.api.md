@@ -1415,6 +1415,7 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
     raisedHand?: RaisedHand | undefined;
     reaction?: Reaction | undefined;
     isSpotlighted?: boolean | undefined;
+    reactionResources?: ReactionResources | undefined;
 }) => React_2.JSX.Element>;
 
 // @public
@@ -1910,6 +1911,7 @@ export const ReactionButton: (props: ReactionButtonProps) => JSX.Element;
 // @beta
 export interface ReactionButtonProps extends ControlBarButtonProps {
     onReactionClicked: (reaction: string) => Promise<void>;
+    reactionResources: ReactionResources;
     strings?: Partial<ReactionButtonStrings>;
 }
 
@@ -1924,6 +1926,22 @@ export interface ReactionButtonStrings {
     tooltipContent?: string;
     tooltipDisabledContent?: string;
 }
+
+// @beta
+export interface ReactionResources {
+    applauseReaction?: ReactionSprite;
+    heartReaction?: ReactionSprite;
+    laughReaction?: ReactionSprite;
+    likeReaction?: ReactionSprite;
+    surprisedReaction?: ReactionSprite;
+}
+
+// @beta
+export type ReactionSprite = {
+    url: string;
+    frameCount: number;
+    size?: number;
+};
 
 // @public
 export type ReadReceiptsBySenderId = {
@@ -1959,6 +1977,7 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     isSpotlighted?: boolean | undefined;
     disablePinMenuItem?: boolean | undefined;
     toggleAnnouncerString?: ((announcerString: string) => void) | undefined;
+    reactionResources?: ReactionResources | undefined;
 }) => React_2.JSX.Element>;
 
 // @beta
@@ -2599,6 +2618,7 @@ export interface VideoGalleryProps {
     onUnpinParticipant?: (userId: string) => void;
     overflowGalleryPosition?: OverflowGalleryPosition;
     pinnedParticipants?: string[];
+    reactionResources?: ReactionResources;
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoTileMenu?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
     remoteVideoViewOptions?: VideoStreamOptions;
@@ -2703,6 +2723,7 @@ export interface VideoTileProps {
     personaMinSize?: number;
     raisedHand?: RaisedHand;
     reaction?: Reaction;
+    reactionResources?: ReactionResources;
     renderElement?: JSX.Element | null;
     showLabel?: boolean;
     showMuteIndicator?: boolean;

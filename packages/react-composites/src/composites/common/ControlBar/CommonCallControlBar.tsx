@@ -268,6 +268,8 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   /*@conditional-compile-remove(rooms) */
   const hideRaiseHandButtonInRoomsCall =
     props.callAdapter.getState().isRoomsCall && role && ['Consumer', 'Unknown'].includes(role);
+  /*@conditional-compile-remove(reaction) */
+  const reactionResources = props.callAdapter.getState().reactions;
 
   return (
     <div ref={controlBarSizeRef}>
@@ -336,13 +338,17 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                     )}
                     {
                       /* @conditional-compile-remove(reaction) */
-                      !props.mobileView && isReactionAllowed && isEnabled(options.reactionButton) && (
-                        <Reaction
-                          displayType={options.displayType}
-                          styles={commonButtonStyles}
-                          disabled={props.disableButtonsForHoldScreen}
-                        />
-                      )
+                      !props.mobileView &&
+                        isReactionAllowed &&
+                        isEnabled(options.reactionButton) &&
+                        reactionResources && (
+                          <Reaction
+                            displayType={options.displayType}
+                            styles={commonButtonStyles}
+                            disabled={props.disableButtonsForHoldScreen}
+                            reactionResource={reactionResources}
+                          />
+                        )
                     }
                     {
                       /* @conditional-compile-remove(raise-hand) */ !props.mobileView &&
