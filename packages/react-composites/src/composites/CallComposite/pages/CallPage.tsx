@@ -37,7 +37,9 @@ import { DtmfDialpadPage } from './DtmfDialpadPage';
 import { showDtmfDialer } from '../utils/MediaGalleryUtils';
 /* @conditional-compile-remove(dtmf-dialer) */
 import { getTargetCallees } from '../selectors/baseSelectors';
+/* @conditional-compile-remove(dtmf-dialer) */
 import { Stack } from '@fluentui/react';
+/* @conditional-compile-remove(dtmf-dialer) */
 import { dtmfDialerContainerStyles, mediaGalleryContainerItemStyles } from '../styles/CallPage.styles';
 
 /**
