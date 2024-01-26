@@ -3132,7 +3132,7 @@ export interface LocalVideoTileOptions {
 export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'followDeviceOrientation';
 
 // @beta
-export type LongPressTrigger = 'mouse' | 'touch' | 'both';
+export type LongPressTrigger = 'mouseAndTouch' | 'touch';
 
 // @public
 export type MediaDiagnosticChangedEvent = MediaDiagnosticChangedEventArgs & {

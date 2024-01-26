@@ -90,7 +90,7 @@ export type DialpadMode = 'dtmf' | 'dialer';
  * Modes of how the longpress handlers can be tiggered.
  * @beta
  */
-export type LongPressTrigger = 'mouse' | 'touch' | 'both';
+export type LongPressTrigger = 'mouseAndTouch' | 'touch';
 
 /**
  * Props for {@link Dialpad} component.
@@ -304,7 +304,7 @@ const DialpadContainer = (props: {
     textFieldValue,
     onChange,
     showDeleteButton = true,
-    longPressTrigger = 'mouse',
+    longPressTrigger = 'mouseAndTouch',
     disableDtmfPlayback,
     dialpadMode = 'dialer'
   } = props;

@@ -71,7 +71,11 @@ export const CallingDialpad = (props: CallingDialpadProps): JSX.Element => {
   const dialpadComponent = (): JSX.Element => {
     return (
       <>
-        <Dialpad styles={dialpadStyle} onChange={setTextFieldInput} longPressTrigger={isMobile ? 'touch' : 'mouse'} />
+        <Dialpad
+          styles={dialpadStyle}
+          onChange={setTextFieldInput}
+          longPressTrigger={isMobile ? 'touch' : 'mouseAndTouch'}
+        />
         <PrimaryButton
           text={strings.dialpadStartCallButtonLabel}
           onRenderIcon={() => DialpadStartCallIconTrampoline()}
