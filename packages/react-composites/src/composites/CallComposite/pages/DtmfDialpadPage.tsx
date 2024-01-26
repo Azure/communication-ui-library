@@ -6,7 +6,7 @@ import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
 import { CallCompositeOptions } from '../CallComposite';
 import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
 import { CapabilitiesChangeNotificationBarProps } from '../components/CapabilitiesChangedNotificationBar';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { CommonCallAdapter } from '../adapter';
 import { Stack, Text, useTheme } from '@fluentui/react';
