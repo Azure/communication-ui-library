@@ -32,8 +32,8 @@ const getDocs: () => JSX.Element = () => {
       <Subheading>Dialer Mode</Subheading>
       <Description>
         This is the default mode of the Dialpad component. In this mode you are able to enter and edit numbers in the
-        Dialpad's input box. The typical scenario to use this mode is when you are dialing a number to call, or to dial
-        in a new participant into a ongoing call.
+        Dialpad's input box. The typical scenario to use this mode is when you are dialling to phone number to call the number, or to dial
+        in a new participant into an ongoing call.
       </Description>
       <Canvas mdxSource={DialerExampleText}>
         <DialerExample />
