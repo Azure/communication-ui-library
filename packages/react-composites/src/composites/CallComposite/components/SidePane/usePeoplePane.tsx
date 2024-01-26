@@ -78,7 +78,10 @@ export const usePeoplePane = (props: {
         if (onStopSpotlight) {
           _defaultMenuItems.push({
             key: 'stop-spotlight',
-            text: localeStrings.stopSpotlightParticipantListMenuLabel,
+            text:
+              myUserId === participantId
+                ? localeStrings.stopSpotlightOnSelfParticipantListMenuLabel
+                : localeStrings.stopSpotlightParticipantListMenuLabel,
             onClick: () => {
               onStopSpotlight?.(participantId);
             },
@@ -92,7 +95,10 @@ export const usePeoplePane = (props: {
         if (onStartSpotlight) {
           _defaultMenuItems.push({
             key: 'start-spotlight',
-            text: localeStrings.startSpotlightParticipantListMenuLabel,
+            text:
+              spotlightedParticipantUserIds && spotlightedParticipantUserIds.length > 0
+                ? localeStrings.startSpotlightParticipantListMenuLabel
+                : localeStrings.startSpotlightParticipantListMenuLabel,
             onClick: () => {
               onStartSpotlight?.(participantId);
             },
@@ -113,6 +119,7 @@ export const usePeoplePane = (props: {
       onStopSpotlight,
       onFetchParticipantMenuItems,
       localeStrings.stopSpotlightParticipantListMenuLabel,
+      localeStrings.stopSpotlightOnSelfParticipantListMenuLabel,
       localeStrings.startSpotlightParticipantListMenuLabel
     ]
   );

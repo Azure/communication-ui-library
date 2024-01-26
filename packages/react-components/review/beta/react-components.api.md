@@ -1960,6 +1960,7 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     onUnpinParticipant?: ((userId: string) => void) | undefined;
     onUpdateScalingMode?: ((userId: string, scalingMode: ViewScalingMode) => void) | undefined;
     isPinned?: boolean | undefined;
+    spotlightedParticipantUserIds?: string[] | undefined;
     isSpotlighted?: boolean | undefined;
     onStartSpotlight?: ((userId: string) => void) | undefined;
     onStopSpotlight?: ((userId: string) => void) | undefined;
@@ -2644,6 +2645,7 @@ export interface VideoGalleryStream {
 
 // @public
 export interface VideoGalleryStrings {
+    addSpotlightVideoTileMenuLabel: string;
     displayNamePlaceholder: string;
     fillRemoteParticipantFrame: string;
     fitRemoteParticipantToFrame: string;
@@ -2657,6 +2659,7 @@ export interface VideoGalleryStrings {
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;
     startSpotlightVideoTileMenuLabel: string;
+    stopSpotlightOnSelfVideoTileMenuLabel: string;
     stopSpotlightVideoTileMenuLabel: string;
     unpinnedParticipantAnnouncementAriaLabel: string;
     unpinParticipantForMe: string;

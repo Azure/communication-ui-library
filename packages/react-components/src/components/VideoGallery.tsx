@@ -128,11 +128,17 @@ export interface VideoGalleryStrings {
   /** Aria label to announce when remote participant's video tile is unpinned */
   unpinnedParticipantAnnouncementAriaLabel: string;
   /* @conditional-compile-remove(pinned-participants) */
-  /** Menu text shown in Video Tile contextual menu to start spotlight for a participant's video tile */
+  /** Menu text shown in Video Tile contextual menu to start spotlight on participant's video tile */
   startSpotlightVideoTileMenuLabel: string;
   /* @conditional-compile-remove(pinned-participants) */
-  /** Menu text shown in Video Tile contextual menu to stop spotlight for a participant's video tile */
+  /** Menu text shown in Video Tile contextual menu to add spotlight to participant's video tile */
+  addSpotlightVideoTileMenuLabel: string;
+  /* @conditional-compile-remove(pinned-participants) */
+  /** Menu text shown in Video Tile contextual menu to stop spotlight on participant's video tile */
   stopSpotlightVideoTileMenuLabel: string;
+  /* @conditional-compile-remove(pinned-participants) */
+  /** Menu text shown in Video Tile contextual menu to stop spotlight on local user's video tile */
+  stopSpotlightOnSelfVideoTileMenuLabel: string;
 }
 
 /**
@@ -274,7 +280,7 @@ export interface VideoGalleryProps {
   spotlightedParticipants?: string[];
   /* @conditional-compile-remove(spotlight) */
   /**
-   * This callback will be called when spotlight is started for participant video tile..
+   * This callback will be called when spotlight is started for participant video tile.
    */
   onStartSpotlight?: (userId: string) => Promise<void>;
   /* @conditional-compile-remove(spotlight) */
@@ -644,6 +650,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           disablePinMenuItem={pinnedParticipants.length >= MAX_PINNED_REMOTE_VIDEO_TILES}
           /* @conditional-compile-remove(pinned-participants) */
           toggleAnnouncerString={toggleAnnouncerString}
+          /* @conditional-compile-remove(spotlight) */
+          spotlightedParticipantUserIds={spotlightedParticipants}
           /* @conditional-compile-remove(spotlight) */
           isSpotlighted={isSpotlighted}
           /* @conditional-compile-remove(spotlight) */

@@ -25,6 +25,8 @@ export const useVideoTileContextualMenuProps = (props: {
     /* @conditional-compile-remove(spotlight) */
     startSpotlightVideoTileMenuLabel?: string;
     /* @conditional-compile-remove(spotlight) */
+    addSpotlightVideoTileMenuLabel?: string;
+    /* @conditional-compile-remove(spotlight) */
     stopSpotlightVideoTileMenuLabel?: string;
   };
   view?: { updateScalingMode: (scalingMode: ViewScalingMode) => Promise<void> };
@@ -36,6 +38,8 @@ export const useVideoTileContextualMenuProps = (props: {
   toggleAnnouncerString?: (announcerString: string) => void;
   /* @conditional-compile-remove(spotlight) */
   isSpotlighted?: boolean;
+  /* @conditional-compile-remove(spotlight) */
+  spotlightedParticipantUserIds?: string[];
   /* @conditional-compile-remove(spotlight) */
   onStartSpotlight?: (userId: string) => void;
   /* @conditional-compile-remove(spotlight) */
@@ -51,6 +55,7 @@ export const useVideoTileContextualMenuProps = (props: {
     onUpdateScalingMode,
     disablePinMenuItem,
     toggleAnnouncerString,
+    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds,
     /* @conditional-compile-remove(spotlight) */ isSpotlighted,
     /* @conditional-compile-remove(spotlight) */ onStartSpotlight,
     /* @conditional-compile-remove(spotlight) */ onStopSpotlight
@@ -116,10 +121,10 @@ export const useVideoTileContextualMenuProps = (props: {
     }
     /* @conditional-compile-remove(spotlight) */
     if (isSpotlighted) {
-      if (onStopSpotlight && remoteParticipant.userId) {
+      if (onStopSpotlight && remoteParticipant.userId && strings?.stopSpotlightVideoTileMenuLabel) {
         items.push({
           key: 'stopSpotlight',
-          text: 'Stop spotlighting',
+          text: strings.stopSpotlightVideoTileMenuLabel,
           iconProps: {
             iconName: 'StopSpotlightContextualMenuItem',
             styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
@@ -130,10 +135,14 @@ export const useVideoTileContextualMenuProps = (props: {
         });
       }
     } else {
-      if (onStartSpotlight && remoteParticipant.userId) {
+      const startSpotlightMenuLabelText =
+        spotlightedParticipantUserIds && spotlightedParticipantUserIds.length > 0
+          ? strings?.addSpotlightVideoTileMenuLabel
+          : strings?.startSpotlightVideoTileMenuLabel;
+      if (onStartSpotlight && remoteParticipant.userId && startSpotlightMenuLabelText) {
         items.push({
           key: 'startSpotlight',
-          text: 'Spotlight for everyone',
+          text: startSpotlightMenuLabelText,
           iconProps: {
             iconName: 'StartSpotlightContextualMenuItem',
             styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
@@ -194,6 +203,7 @@ export const useVideoTileContextualMenuProps = (props: {
     remoteParticipant.displayName,
     disablePinMenuItem,
     toggleAnnouncerString,
+    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds,
     /* @conditional-compile-remove(spotlight) */ isSpotlighted,
     /* @conditional-compile-remove(spotlight) */ onStartSpotlight,
     /* @conditional-compile-remove(spotlight) */ onStopSpotlight

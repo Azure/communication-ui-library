@@ -61,6 +61,7 @@ export const _RemoteVideoTile = React.memo(
     onUnpinParticipant?: (userId: string) => void;
     onUpdateScalingMode?: (userId: string, scalingMode: ViewScalingMode) => void;
     isPinned?: boolean;
+    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds?: string[];
     /* @conditional-compile-remove(spotlight) */ isSpotlighted?: boolean;
     /* @conditional-compile-remove(spotlight) */ onStartSpotlight?: (userId: string) => void;
     /* @conditional-compile-remove(spotlight) */ onStopSpotlight?: (userId: string) => void;
@@ -84,6 +85,7 @@ export const _RemoteVideoTile = React.memo(
       isPinned,
       onPinParticipant,
       onUnpinParticipant,
+      /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds,
       /* @conditional-compile-remove(spotlight) */ isSpotlighted,
       /* @conditional-compile-remove(spotlight) */ onStartSpotlight,
       /* @conditional-compile-remove(spotlight) */ onStopSpotlight,
@@ -131,6 +133,7 @@ export const _RemoteVideoTile = React.memo(
       onUpdateScalingMode,
       disablePinMenuItem,
       toggleAnnouncerString,
+      /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds,
       /* @conditional-compile-remove(spotlight) */ isSpotlighted,
       /* @conditional-compile-remove(spotlight) */ onStartSpotlight,
       /* @conditional-compile-remove(spotlight) */ onStopSpotlight
