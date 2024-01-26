@@ -965,9 +965,12 @@ export interface DevicesButtonStyles extends ControlBarButtonStyles {
 export const Dialpad: (props: DialpadProps) => JSX.Element;
 
 // @beta
+export type DialpadMode = 'dtmf' | 'dialer';
+
+// @beta
 export interface DialpadProps {
+    dialpadMode?: DialpadMode;
     disableDtmfPlayback?: boolean;
-    enableInputEditing?: boolean;
     isMobile?: boolean;
     onChange?: (input: string) => void;
     onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
@@ -1963,8 +1966,12 @@ export const RTESendBox: (props: RTESendBoxProps) => JSX.Element;
 
 // @beta
 export interface RTESendBoxProps {
-    // (undocumented)
-    valueToDisplay?: string;
+    activeFileUploads?: ActiveFileUpload[];
+    disabled?: boolean;
+    onCancelFileUpload?: (fileId: string) => void;
+    onRenderFileUploads?: () => JSX.Element;
+    strings?: Partial<SendBoxStrings>;
+    systemMessage?: string;
 }
 
 // @public
