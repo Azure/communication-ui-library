@@ -37,6 +37,8 @@ import { DtmfDialpadPage } from './DtmfDialpadPage';
 import { showDtmfDialer } from '../utils/MediaGalleryUtils';
 /* @conditional-compile-remove(dtmf-dialer) */
 import { getTargetCallees } from '../selectors/baseSelectors';
+import { Stack } from '@fluentui/react';
+import { dtmfDialerContainerStyles, mediaGalleryContainerItemStyles } from '../styles/CallPage.styles';
 
 /**
  * @private
@@ -129,41 +131,44 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
 
   const onRenderGalleryContentTrampoline = (): JSX.Element => {
     /* @conditional-compile-remove(dtmf-dialer) */
-    if (dtmfDialerPresent) {
-      return (
-        <DtmfDialpadPage
-          mobileView={props.mobileView}
-          modalLayerHostId={props.modalLayerHostId}
-          options={props.options}
-          updateSidePaneRenderer={props.updateSidePaneRenderer}
-          mobileChatTabHeader={props.mobileChatTabHeader}
-          latestErrors={props.latestErrors}
-          onDismissError={props.onDismissError}
-          /* @conditional-compile-remove(capabilities) */
-          capabilitiesChangedNotificationBarProps={props.capabilitiesChangedNotificationBarProps}
-          onSetDialpadPage={() => setDtmfDialerPresent(!dtmfDialerPresent)}
-          dtmfDialerPresent={dtmfDialerPresent}
-        />
-      );
-    } else {
-      return (
-        <MediaGallery
-          isMobile={mobileView}
-          {...mediaGalleryProps}
-          {...mediaGalleryHandlers}
-          onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-          /* @conditional-compile-remove(pinned-participants) */
-          remoteVideoTileMenuOptions={options?.remoteVideoTileMenuOptions}
-          drawerMenuHostId={drawerMenuHostId}
-          /* @conditional-compile-remove(click-to-call) */
-          localVideoTileOptions={options?.localVideoTile}
-          /* @conditional-compile-remove(gallery-layouts) */
-          userSetOverflowGalleryPosition={userSetOverflowGalleryPosition}
-          /* @conditional-compile-remove(gallery-layouts) */
-          userSetGalleryLayout={galleryLayout}
-        />
-      );
-    }
+    return (
+      <Stack style={{ width: '100%', height: '100%', position: 'relative' }}>
+        <Stack.Item styles={dtmfDialerContainerStyles(dtmfDialerPresent)}>
+          <DtmfDialpadPage
+            mobileView={props.mobileView}
+            modalLayerHostId={props.modalLayerHostId}
+            options={props.options}
+            updateSidePaneRenderer={props.updateSidePaneRenderer}
+            mobileChatTabHeader={props.mobileChatTabHeader}
+            latestErrors={props.latestErrors}
+            onDismissError={props.onDismissError}
+            /* @conditional-compile-remove(capabilities) */
+            capabilitiesChangedNotificationBarProps={props.capabilitiesChangedNotificationBarProps}
+            onSetDialpadPage={() => setDtmfDialerPresent(!dtmfDialerPresent)}
+            dtmfDialerPresent={dtmfDialerPresent}
+          />
+        </Stack.Item>
+        {!dtmfDialerPresent && (
+          <Stack.Item styles={mediaGalleryContainerItemStyles()}>
+            <MediaGallery
+              isMobile={mobileView}
+              {...mediaGalleryProps}
+              {...mediaGalleryHandlers}
+              onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+              /* @conditional-compile-remove(pinned-participants) */
+              remoteVideoTileMenuOptions={options?.remoteVideoTileMenuOptions}
+              drawerMenuHostId={drawerMenuHostId}
+              /* @conditional-compile-remove(click-to-call) */
+              localVideoTileOptions={options?.localVideoTile}
+              /* @conditional-compile-remove(gallery-layouts) */
+              userSetOverflowGalleryPosition={userSetOverflowGalleryPosition}
+              /* @conditional-compile-remove(gallery-layouts) */
+              userSetGalleryLayout={galleryLayout}
+            />
+          </Stack.Item>
+        )}
+      </Stack>
+    );
     return (
       <MediaGallery
         isMobile={mobileView}

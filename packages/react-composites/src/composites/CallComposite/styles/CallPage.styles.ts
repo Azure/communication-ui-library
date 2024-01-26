@@ -109,3 +109,21 @@ export const verticalControlBarStyles: IStackItemStyles = {
     margin: 'auto'
   }
 };
+
+/**
+ * @private
+ */
+export const dtmfDialerContainerStyles = (dtmfDialerPresent: boolean): IStackItemStyles => {
+  return {
+    root: { visibility: dtmfDialerPresent ? undefined : 'hidden', position: 'absolute', height: '100%', width: '100%' }
+  };
+};
+
+/**
+ * @private
+ */
+export const mediaGalleryContainerItemStyles = (): IStackItemStyles => {
+  return {
+    root: { position: 'absolute', height: '100%', width: '100%' }
+  };
+};
