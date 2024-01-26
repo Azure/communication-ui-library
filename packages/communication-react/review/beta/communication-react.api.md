@@ -394,6 +394,7 @@ export type CallAdapterClientState = {
     acceptedTransferCallState?: CallState;
     hideAttendeeNames?: boolean;
     sounds?: CallingSounds;
+    reactions?: ReactionResources;
 };
 
 // @public
@@ -1182,6 +1183,7 @@ export interface CallWithChatClientState {
     latestCallErrors: AdapterErrors;
     latestChatErrors: AdapterErrors;
     onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
+    reactions?: ReactionResources;
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
     userId: CommunicationIdentifierKind;
     videoBackgroundImages?: VideoBackgroundImage[];
@@ -3698,6 +3700,7 @@ export type Reaction = {
 // @beta
 export interface ReactionButtonProps extends ControlBarButtonProps {
     onReactionClicked: (reaction: string) => Promise<void>;
+    reactionResources: ReactionResources;
     strings?: Partial<ReactionButtonStrings>;
 }
 
@@ -3712,6 +3715,22 @@ export interface ReactionButtonStrings {
     tooltipContent?: string;
     tooltipDisabledContent?: string;
 }
+
+// @beta
+export interface ReactionResources {
+    applauseReaction?: ReactionSprite;
+    heartReaction?: ReactionSprite;
+    laughReaction?: ReactionSprite;
+    likeReaction?: ReactionSprite;
+    surprisedReaction?: ReactionSprite;
+}
+
+// @beta
+export type ReactionSprite = {
+    url: string;
+    frameCount: number;
+    size?: number;
+};
 
 // @beta
 export type ReactionState = {
@@ -4389,6 +4408,7 @@ export interface VideoGalleryProps {
     onUnpinParticipant?: (userId: string) => void;
     overflowGalleryPosition?: OverflowGalleryPosition;
     pinnedParticipants?: string[];
+    reactionResources?: ReactionResources;
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoTileMenu?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
     remoteVideoViewOptions?: VideoStreamOptions;
@@ -4507,6 +4527,7 @@ export interface VideoTileProps {
     personaMinSize?: number;
     raisedHand?: RaisedHand;
     reaction?: Reaction;
+    reactionResources?: ReactionResources;
     renderElement?: JSX.Element | null;
     showLabel?: boolean;
     showMuteIndicator?: boolean;
