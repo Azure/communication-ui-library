@@ -14,6 +14,8 @@ import { getReadableTime } from '../utils/timerUtils';
 import { DtmfDialpadContentTimerStyles } from '../styles/DtmfDialpadPage.styles';
 import { RemoteParticipantState } from '@internal/calling-stateful-client';
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
+import { useSelector } from '../hooks/useSelector';
+import { getStartTime } from '../selectors/baseSelectors';
 
 /**
  * @internal
@@ -76,11 +78,11 @@ const DtmfDialpadPageContent = (props: DialpadPageContentProps): JSX.Element => 
 const DtmfDialerContentTimer = (): JSX.Element => {
   const [time, setTime] = useState<number>(0);
   const elapsedTime = getReadableTime(time);
-  const startTime = useRef(performance.now());
+  const startTime = useSelector(getStartTime);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTime(performance.now() - startTime.current);
+      setTime(new Date(Date.now()).getTime() - startTime.getTime());
     }, 10);
     return () => {
       clearInterval(interval);
