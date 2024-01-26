@@ -415,7 +415,7 @@ export interface CallWithChatAdapterManagement {
   /**
    * send dtmf tone to another participant in the call in 1:1 calls
    *
-   * @beta
+   * @public
    */
   sendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
   /* @conditional-compile-remove(unsupported-browser) */

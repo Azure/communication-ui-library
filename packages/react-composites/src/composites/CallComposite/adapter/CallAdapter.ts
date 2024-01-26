@@ -616,7 +616,7 @@ export interface CallAdapterCallOperations {
   /**
    * send dtmf tone to another participant in a 1:1 PSTN call
    *
-   * @beta
+   * @public
    */
   sendDtmfTone(dtmfTone: DtmfTone): Promise<void>;
   /* @conditional-compile-remove(unsupported-browser) */

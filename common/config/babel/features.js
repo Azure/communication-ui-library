@@ -156,5 +156,7 @@ module.exports = {
     "dtmf-dialer",
     // dialpad
     "dialpad",
+    // Feature for updates needed for Click to Call (C2C) scenarios
+    "click-to-call"
   ]
 }
