@@ -66,9 +66,7 @@ export class ResourceDownloadQueue {
           this._context.setChatMessage(threadId, newMessage);
         }
       } catch (error) {
-        if (error instanceof ResourceDownloadError) {
-          this.addMessage(error.chatMessageWithStatus);
-        }
+        console.log('Downloading Resource error: ', error);
       }
     }
   }

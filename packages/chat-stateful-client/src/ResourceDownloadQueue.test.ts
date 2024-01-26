@@ -166,6 +166,6 @@ describe('ResourceDownloadQueue api functions', () => {
     queue.addMessage(second);
     queue.addMessage(third);
     await queue.startQueue('threadId', operation);
-    expect(operation).toHaveBeenCalledTimes(4);
+    expect(operation).toHaveBeenCalledTimes(3);
   });
 });
