@@ -130,8 +130,7 @@ export const useVideoTileContextualMenuProps = (props: {
             styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
           },
           onClick: () => onStopSpotlight(remoteParticipant.userId),
-          'data-ui-id': 'video-tile-start-spotlight',
-          ariaLabel: 'Spotlight for everyone'
+          ariaLabel: strings.stopSpotlightVideoTileMenuLabel
         });
       }
     } else {
@@ -148,8 +147,7 @@ export const useVideoTileContextualMenuProps = (props: {
             styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
           },
           onClick: () => onStartSpotlight(remoteParticipant.userId),
-          'data-ui-id': 'video-tile-start-spotlight',
-          ariaLabel: 'Spotlight for everyone'
+          ariaLabel: startSpotlightMenuLabelText
         });
       }
     }
