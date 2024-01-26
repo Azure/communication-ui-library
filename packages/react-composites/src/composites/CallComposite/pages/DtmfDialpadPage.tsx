@@ -6,7 +6,7 @@ import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
 import { CallCompositeOptions } from '../CallComposite';
 import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
 import { CapabilitiesChangeNotificationBarProps } from '../components/CapabilitiesChangedNotificationBar';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { CommonCallAdapter } from '../adapter';
 import { Stack, Text, useTheme } from '@fluentui/react';
@@ -78,11 +78,14 @@ const DtmfDialpadPageContent = (props: DialpadPageContentProps): JSX.Element => 
 const DtmfDialerContentTimer = (): JSX.Element => {
   const [time, setTime] = useState<number>(0);
   const elapsedTime = getReadableTime(time);
-  const startTime = useSelector(getStartTime);
+  const statefulStartTime = useSelector(getStartTime);
+  const startTime = useMemo(() => {
+    return statefulStartTime ?? new Date(Date.now());
+  }, [statefulStartTime]);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTime(new Date(Date.now()).getTime() - startTime.getTime());
+      setTime(new Date(Date.now()).getTime() - startTime?.getTime() ?? 0);
     }, 10);
     return () => {
       clearInterval(interval);

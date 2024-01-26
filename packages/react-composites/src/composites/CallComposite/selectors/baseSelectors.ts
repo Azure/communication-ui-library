@@ -223,4 +223,4 @@ export const getTargetCallees = (state: CallAdapterState): CommunicationIdentifi
 /**
  * @private
  */
-export const getStartTime = (state: CallAdapterState): Date => state.call.startTime;
+export const getStartTime = (state: CallAdapterState): Date | undefined => state.call?.startTime;
