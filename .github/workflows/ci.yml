@@ -131,7 +131,7 @@ jobs:
     name: 'Jest Test Coverage (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
     permissions:
-      issues: write
+      pull-requests: write
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
@@ -266,7 +266,7 @@ jobs:
     name: 'Call Composite automation test (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
     permissions:
-      issues: write
+      pull-requests: write
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
@@ -346,7 +346,7 @@ jobs:
     name: 'Chat Composite automation test (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
     permissions:
-      issues: write
+      pull-requests: write
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
@@ -426,7 +426,7 @@ jobs:
     name: 'Call With Chat Composite automation test (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
     permissions:
-      issues: write
+      pull-requests: write
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
@@ -670,7 +670,7 @@ jobs:
     name: 'Build And Test Static HTML Composites Sample (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
     permissions:
-      issues: write
+      pull-requests: write
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
@@ -734,7 +734,7 @@ jobs:
     name: 'Build And Test Component+Binding Examples (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
     permissions:
-      issues: write
+      pull-requests: write
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
@@ -796,7 +796,7 @@ jobs:
   compare_base_bundle_stats:
     runs-on: ubuntu-latest
     permissions:
-      issues: write
+      pull-requests: write
     if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
     name: Compare bundle size from pr head ref to base ref - ${{ matrix.app }}
     needs: [build_calling_sample, build_chat_sample, build_call_with_chat_sample]
