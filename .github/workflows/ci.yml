@@ -14,12 +14,13 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions: read-all
+
 jobs:
   # get matrix for ci-jobs
   get_matrix:
     name: Load CI Matrix Details
     runs-on: ubuntu-latest
-    permissions: read-all
     outputs:
       matrix: ${{ steps.get-matrix.outputs.matrix }}
     steps:
@@ -40,7 +41,6 @@ jobs:
     needs: get_matrix
     name: 'Build Packages (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
-    permissions: read-all
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
@@ -130,7 +130,8 @@ jobs:
     if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
     name: 'Jest Test Coverage (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
-    permissions: read-all
+    permissions:
+      issues: write
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
@@ -211,7 +212,6 @@ jobs:
   in-progress-feature-validation:
     name: Check if in progress feature can be removed separately
     runs-on: ubuntu-latest
-    permissions: read-all
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v4
@@ -504,7 +504,6 @@ jobs:
   build_storybook:
     name: Build Storybook
     runs-on: ubuntu-latest
-    permissions: read-all
     steps:
       - uses: actions/checkout@v4
         with:
@@ -532,7 +531,6 @@ jobs:
     needs: get_matrix
     name: 'Build Calling Sample (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
-    permissions: read-all
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
@@ -579,7 +577,6 @@ jobs:
     needs: get_matrix
     name: 'Build Chat Sample (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
-    permissions: read-all
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
@@ -626,7 +623,6 @@ jobs:
     needs: get_matrix
     name: 'Build CallWithChat Sample (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
-    permissions: read-all
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
@@ -853,7 +849,6 @@ jobs:
 
   update_base_bundle_report:
     runs-on: ubuntu-latest
-    permissions: read-all
     name: Upload bundle size report to gist - ${{ matrix.app }}
     needs: [build_calling_sample, build_chat_sample, build_call_with_chat_sample]
     if: github.ref == 'refs/heads/main'
