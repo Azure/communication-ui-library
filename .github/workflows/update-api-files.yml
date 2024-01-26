@@ -8,11 +8,12 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions: read-all
+
 jobs:
   update_composite_snapshot:
     name: Update all API files
     runs-on: ubuntu-latest
-    permissions: read-all
     strategy:
       matrix:
         include:
@@ -77,9 +78,8 @@ jobs:
             echo "hasChanged=true" >> $GITHUB_OUTPUT
           fi
       - name: Commit new snapshots
+        if: ${{ always() && steps.changescheck.outputs.hasChanged == 'true' }}
         run: |
-          touch test.txt
-          git add test.txt
           git add packages/**/*.api.md
           git commit -m 'Update ${{ matrix.flavor }} API files'
           git push

@@ -81,6 +81,12 @@ export type DtmfTone =
   | 'Star';
 
 /**
+ * Modes of the dialpad component.
+ * @beta
+ */
+export type DialpadMode = 'dtmf' | 'dialer';
+
+/**
  * Props for {@link Dialpad} component.
  *
  * @beta
@@ -121,12 +127,11 @@ export interface DialpadProps {
    */
   disableDtmfPlayback?: boolean;
   /**
-   * Enable the ability to edit the number in the text box.
-   * This mode is for when dailing someone to call to that the user can edit the number before calling if needed.
-   * @default false
-   *
+   * Dialer mode for the dialpad. The dtmf mode is for sending dtmf tones and the appearence of
+   * the dialpad is changed like hiding the input box. When using dialer mode the input box is there
+   * and can be edited to change the number being dialed.
    */
-  enableInputEditing?: boolean;
+  dialpadMode?: DialpadMode;
 }
 
 type DialpadButtonContent = {
@@ -272,10 +277,8 @@ const DialpadContainer = (props: {
   /**  boolean input to determine if dialpad is in mobile view, default false */
   isMobile?: boolean;
   styles?: DialpadStyles;
-
   disableDtmfPlayback?: boolean;
-
-  enableInputEditing?: boolean;
+  dialpadMode?: DialpadMode;
 }): JSX.Element => {
   const theme = useTheme();
 
@@ -286,10 +289,8 @@ const DialpadContainer = (props: {
     onChange,
     showDeleteButton = true,
     isMobile = false,
-
     disableDtmfPlayback,
-
-    enableInputEditing
+    dialpadMode = 'dialer'
   } = props;
 
   const dtmfToneAudioContext = useRef(new AudioContext());
@@ -351,37 +352,33 @@ const DialpadContainer = (props: {
       data-ui-id="dialpadContainer"
       horizontalAlign={'center'}
     >
-      <TextField
-        styles={concatStyleSets(textFieldStyles(theme), props.styles?.textField)}
-        value={
-          textFieldValue ? textFieldValue : enableInputEditing ? formatPhoneNumber(plainTextValue) : plainTextValue
-        }
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        onChange={(e: any) => {
-          if (enableInputEditing) {
+      {dialpadMode === 'dialer' && (
+        <TextField
+          styles={concatStyleSets(textFieldStyles(theme), props.styles?.textField)}
+          value={textFieldValue ? textFieldValue : formatPhoneNumber(plainTextValue)}
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          onChange={(e: any) => {
             setText(e.target.value);
-          }
-        }}
-        onClick={(e) => {
-          if (!enableInputEditing) {
+          }}
+          onClick={(e) => {
             e.preventDefault();
-          }
-        }}
-        placeholder={props.strings.placeholderText}
-        data-test-id="dialpad-input"
-        onRenderSuffix={(): JSX.Element => (
-          <>
-            {showDeleteButton && plainTextValue.length !== 0 && (
-              <IconButton
-                ariaLabel={props.strings.deleteButtonAriaLabel}
-                onClick={deleteNumbers}
-                styles={concatStyleSets(iconButtonStyles(theme), props.styles?.deleteIcon)}
-                iconProps={{ iconName: 'DialpadBackspace' }}
-              />
-            )}
-          </>
-        )}
-      />
+          }}
+          placeholder={props.strings.placeholderText}
+          data-test-id="dialpad-input"
+          onRenderSuffix={(): JSX.Element => (
+            <>
+              {showDeleteButton && plainTextValue.length !== 0 && (
+                <IconButton
+                  ariaLabel={props.strings.deleteButtonAriaLabel}
+                  onClick={deleteNumbers}
+                  styles={concatStyleSets(iconButtonStyles(theme), props.styles?.deleteIcon)}
+                  iconProps={{ iconName: 'DialpadBackspace' }}
+                />
+              )}
+            </>
+          )}
+        />
+      )}
       <FocusZone>
         {dialPadButtonsDefault.map((rows, rowIndex) => {
           return (
