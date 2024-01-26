@@ -6,7 +6,7 @@ import { Icon, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react
 import { IconButton } from '@fluentui/react';
 import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
 /* @conditional-compile-remove(reaction) */
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { ComponentLocale, useLocale } from '../localization';
 import { useTheme } from '../theming';
@@ -36,8 +36,6 @@ import {
 /* @conditional-compile-remove(reaction) */
 import { reactionRenderingStyle } from './styles/VideoTile.styles';
 import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
-/* @conditional-compile-remove(reaction) */
-import { reactionEmoji } from './utils/videoTileStylesUtils';
 /* @conditional-compile-remove(pinned-participants) */
 import { pinIconStyle } from './styles/VideoTile.styles';
 /* @conditional-compile-remove(pinned-participants) */
@@ -48,6 +46,10 @@ import useLongPress from './utils/useLongPress';
 import { moreButtonStyles } from './styles/VideoTile.styles';
 /* @conditional-compile-remove(raise-hand) */
 import { raiseHandContainerStyles } from './styles/VideoTile.styles';
+/* @conditional-compile-remove(reaction) */
+import { ReactionResources } from '../types/ReactionTypes';
+/* @conditional-compile-remove(reaction) */
+import { getEmojiResource } from './VideoGallery/utils/videoGalleryLayoutUtils';
 
 /**
  * Strings of {@link VideoTile} that can be overridden.
@@ -179,6 +181,11 @@ export interface VideoTileProps {
    * If true, the video tile will show the spotlighted icon.
    */
   isSpotlighted?: boolean;
+  /* @conditional-compile-remove(reaction) */
+  /**
+   * Reactions resources' url and metadata.
+   */
+  reactionResources?: ReactionResources;
 }
 
 // Coin max size is set to PersonaSize.size100
@@ -273,7 +280,9 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     personaMinSize = DEFAULT_PERSONA_MIN_SIZE_PX,
     personaMaxSize = DEFAULT_PERSONA_MAX_SIZE_PX,
     /* @conditional-compile-remove(pinned-participants) */
-    contextualMenu
+    contextualMenu,
+    /* @conditional-compile-remove(reaction) */
+    reactionResources
   } = props;
 
   /* @conditional-compile-remove(pinned-participants) */
@@ -282,6 +291,8 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const [isFocused, setIsFocused] = useState<boolean>(false);
   // need to set a default otherwise the resizeObserver will get stuck in an infinite loop.
   const [personaSize, setPersonaSize] = useState<number>(1);
+  /* @conditional-compile-remove(reaction) */
+  const [isValidImageSource, setIsValidImageSource] = useState<boolean>(false);
   const videoTileRef = useRef<HTMLDivElement>(null);
 
   const locale = useLocale();
@@ -374,7 +385,10 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   raisedHandBackgroundColor = callingPalette.raiseHandGold;
 
   /* @conditional-compile-remove(reaction) */
-  const backgroundImageUrl = reaction !== undefined ? reactionEmoji.get(reaction?.reactionType) : '';
+  const backgroundImageUrl =
+    reaction !== undefined && reactionResources !== undefined
+      ? getEmojiResource(reaction?.reactionType, reactionResources)
+      : '';
   /* @conditional-compile-remove(reaction) */
   const currentTimestamp = new Date();
   /* @conditional-compile-remove(reaction) */
@@ -382,15 +396,31 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   /* @conditional-compile-remove(reaction) */
   const receivedUnixTimestamp = reaction ? Math.floor(reaction.receivedAt.getTime() / 1000) : undefined;
   /* @conditional-compile-remove(reaction) */
-  const canRenderReaction = receivedUnixTimestamp ? currentUnixTimeStamp - receivedUnixTimestamp < 3000 : false;
+  const canRenderReaction =
+    (receivedUnixTimestamp ? currentUnixTimeStamp - receivedUnixTimestamp < 3000 : false) &&
+    backgroundImageUrl !== undefined;
+  /* @conditional-compile-remove(reaction) */
+  useEffect(() => {
+    if (!backgroundImageUrl || backgroundImageUrl.length === 0) {
+      return;
+    }
+
+    fetch(`${backgroundImageUrl}`)
+      .then((res) => setIsValidImageSource(res.ok))
+      .catch((warning) => console.warn(`Sprite image for animation rendering failed with warning: ${warning}`));
+
+    return () => setIsValidImageSource(false);
+  }, [backgroundImageUrl]);
+  /* @conditional-compile-remove(reaction) */
+  const spriteImageUrl = backgroundImageUrl !== undefined ? backgroundImageUrl : '';
   /* @conditional-compile-remove(reaction) */
   const reactionContainerStyles = useCallback(
     () =>
       reactionRenderingStyle({
-        backgroundImageUrl,
+        spriteImageUrl,
         personaSize
       }),
-    [backgroundImageUrl, personaSize]
+    [spriteImageUrl, personaSize]
   );
 
   return (
@@ -448,7 +478,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
         {
           /* @conditional-compile-remove(reaction) */
-          canRenderReaction && (
+          canRenderReaction && isValidImageSource && (
             <Stack
               className={mergeStyles(videoContainerStyles, {
                 display: 'flex',

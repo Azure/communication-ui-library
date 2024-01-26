@@ -20,6 +20,8 @@ import { VideoTile, VideoTileStylesProps } from './VideoTile';
 import { RaisedHand } from '../types';
 /* @conditional-compile-remove(spotlight) */
 import { useTheme } from '../theming';
+/* @conditional-compile-remove(reaction) */
+import { ReactionResources } from '../types/ReactionTypes';
 /**
  * A memoized version of VideoTile for rendering local participant.
  *
@@ -51,6 +53,8 @@ export const _LocalVideoTile = React.memo(
     reaction?: Reaction;
     /* @conditional-compile-remove(spotlight) */
     isSpotlighted?: boolean;
+    /* @conditional-compile-remove(reaction) */
+    reactionResources?: ReactionResources;
   }) => {
     const {
       isAvailable,
@@ -75,7 +79,9 @@ export const _LocalVideoTile = React.memo(
       /* @conditional-compile-remove(reaction) */
       reaction,
       /* @conditional-compile-remove(spotlight) */
-      isSpotlighted
+      isSpotlighted,
+      /* @conditional-compile-remove(reaction) */
+      reactionResources
     } = props;
 
     /* @conditional-compile-remove(spotlight) */
@@ -169,6 +175,8 @@ export const _LocalVideoTile = React.memo(
           reaction={reaction}
           /* @conditional-compile-remove(spotlight) */
           isSpotlighted={isSpotlighted}
+          /* @conditional-compile-remove(reaction) */
+          reactionResources={reactionResources}
         />
         {/* @conditional-compile-remove(spotlight) */ isSpotlighted && spotlightBorder}
       </>
