@@ -192,7 +192,8 @@ const createDefaultContextualMenuItems = (
       },
       iconProps: {
         iconName: 'UserRemove'
-      }
+      },
+      'data-ui-id': 'participant-list-remove-participant-button'
     });
   }
   return menuItems;
