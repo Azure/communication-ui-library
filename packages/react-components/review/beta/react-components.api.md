@@ -1425,9 +1425,6 @@ export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'followDeviceOrien
 export type LongPressTrigger = 'mouseAndTouch' | 'touch';
 
 // @beta
-export type LongPressTrigger = 'mouseAndTouch' | 'touch';
-
-// @beta
 export interface Mention {
     displayText: string;
     icon?: JSX.Element;
