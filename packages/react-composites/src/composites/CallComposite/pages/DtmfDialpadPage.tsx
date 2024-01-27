@@ -67,7 +67,7 @@ const DtmfDialpadPageContent = (props: DialpadPageContentProps): JSX.Element => 
             /* @conditional-compile-remove(dtmf-dialer) */
             await adapter.sendDtmfTone(tone);
           }}
-          isMobile={props.mobileView}
+          longPressTrigger={props.mobileView ? 'touch' : 'mouseAndTouch'}
           dialpadMode={'dtmf'}
         ></Dialpad>
       </Stack>
