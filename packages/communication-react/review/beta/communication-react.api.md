@@ -351,7 +351,6 @@ export interface CallAdapterCallOperations {
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
     // @beta
     resumeCall(): Promise<void>;
-    // @beta
     sendDtmfTone(dtmfTone: DtmfTone_2): Promise<void>;
     setCaptionLanguage(language: string): Promise<void>;
     setSpokenLanguage(language: string): Promise<void>;
@@ -1017,7 +1016,6 @@ export interface CallWithChatAdapterManagement {
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
     // @beta
     resumeCall: () => Promise<void>;
-    // @beta
     sendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
@@ -3123,7 +3121,7 @@ export interface LocalVideoStreamVideoEffectsState {
     activeEffects?: VideoEffectName[];
 }
 
-// @beta
+// @public
 export interface LocalVideoTileOptions {
     position?: 'grid' | 'floating';
 }
