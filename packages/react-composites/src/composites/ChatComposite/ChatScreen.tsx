@@ -55,8 +55,6 @@ import { useSelector } from './hooks/useSelector';
 import { FileDownloadErrorBar } from './FileDownloadErrorBar';
 /* @conditional-compile-remove(file-sharing) */
 import { _FileDownloadCards } from '@internal/react-components';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { AttachmentDownloadResult, AttachmentMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(image-gallery) */
 import { ImageGallery, ImageGalleryImageProps } from '@internal/react-components';
 
@@ -219,22 +217,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [fileSharing?.downloadHandler]
   );
 
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  const onRenderInlineAttachment = useCallback(
-    async (attachment: AttachmentMetadata[]): Promise<AttachmentDownloadResult[]> => {
-      const entry: Record<string, string> = {};
-      attachment.forEach((target) => {
-        if (target.attachmentType === 'inlineImage' && target.previewUrl) {
-          entry[target.id] = target.previewUrl;
-        }
-      });
-
-      const blob = await adapter.downloadAttachments({ attachmentUrls: entry });
-      return blob;
-    },
-    [adapter]
-  );
-
   /* @conditional-compile-remove(image-gallery) */
   const onInlineImageClicked = useCallback(
     async (attachmentId: string, messageId: string): Promise<void> => {
@@ -282,6 +264,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       }
 
       if (attachment.attachmentType === 'inlineImage' && attachment.url) {
+        // TBD: Need to begin investigating how to download HQ images.
         const blob = await adapter.downloadAttachments({ attachmentUrls: { [attachment.id]: attachment.url } });
         if (blob[0]) {
           const blobUrl = blob[0].blobUrl;
@@ -354,8 +337,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             onRenderMessage={onRenderMessage}
             /* @conditional-compile-remove(file-sharing) */
             onRenderFileDownloads={onRenderFileDownloads}
-            /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-            onFetchAttachments={onRenderInlineAttachment}
             /* @conditional-compile-remove(image-gallery) */
             onInlineImageClicked={onInlineImageClicked}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
