@@ -220,6 +220,15 @@ const DialpadButton = (props: {
           setButtonPressed(true);
           return;
         }
+        if (
+          e.key === 'Tab' ||
+          e.key === 'ArrowLeft' ||
+          e.key === 'ArrowRight' ||
+          e.key === 'ArrowUp' ||
+          e.key === 'ArrowDown'
+        ) {
+          dtmfToneSound.current.stop();
+        }
         longPressHandlers.onKeyDown();
       }}
       onKeyUp={(e) => {
