@@ -17,8 +17,6 @@ import { useTheme } from '../../theming';
 import { ChatMessageActionFlyout } from './ChatMessageActionsFlyout';
 import { ChatMessageContent } from './ChatMessageContent';
 import { ChatMessage } from '../../types/ChatMessage';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { AttachmentMetadata } from '../FileDownloadCards';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessageContent } from './ChatMessageContent';
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -96,22 +94,12 @@ type ChatMessageComponentAsMessageBubbleProps = {
    * @internal
    */
   mentionDisplayOptions?: MentionDisplayOptions;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  /**
-   * Optional function to fetch attachments.
-   */
-  onFetchAttachments?: (attachment: AttachmentMetadata[], messageId: string) => Promise<void>;
   /* @conditional-compile-remove(image-gallery) */
   /**
    * Optional callback called when an inline image is clicked.
    * @beta
    */
   onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  /**
-   * Optional map of attachment ids to blob urls.
-   */
-  attachmentsMap?: Record<string, string>;
 };
 
 const generateDefaultTimestamp = (
@@ -274,10 +262,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
         <ChatMessageContent
           message={message}
           strings={strings}
-          /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-          onFetchAttachments={props.onFetchAttachments}
-          /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-          attachmentsMap={props.attachmentsMap}
           /* @conditional-compile-remove(mention) */
           mentionDisplayOptions={props.mentionDisplayOptions}
           /* @conditional-compile-remove(image-gallery) */
