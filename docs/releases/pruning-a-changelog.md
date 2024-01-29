@@ -11,6 +11,7 @@ This means going through the auto generated changelog and fixing it up for custo
 1. Create a subheading for each the following sections: Features, Bug Fixes, and Improvements. The changelog entries will be grouped in these sections.
 1. Go through each changelog entry and do the following:
 
+   * Changes related to features that will not released should be removed.
    * Remove changelog entry if it pertains to changes STRICTLY to storybook, tests, refactoring, or internal code. This entry will not be relevant information for customers using our UI library. Ensure the removal is correct by checking the PR link.
    * Couple entries that are for the same feature.
    * Often we create multiple, small PRs for the one feature, if this is the case each changelog entry should be merged into a single changelog entry and all PRs should be linked.
