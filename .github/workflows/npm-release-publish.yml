@@ -27,6 +27,7 @@ concurrency:
 jobs:
   job-inputs:
     runs-on: ubuntu-latest
+    permissions: read-all
     steps:
       - name: Set branch name
         id: vars
@@ -45,6 +46,8 @@ jobs:
       url: https://www.npmjs.com/package/@azure/communication-react
     name: Publish release
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
     steps:
       # Check-out repo
       - uses: actions/checkout@v3

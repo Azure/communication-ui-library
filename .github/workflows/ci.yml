@@ -14,6 +14,8 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions: read-all
+
 jobs:
   # get matrix for ci-jobs
   get_matrix:
@@ -128,6 +130,8 @@ jobs:
     if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
     name: 'Jest Test Coverage (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
@@ -261,6 +265,8 @@ jobs:
     needs: get_matrix
     name: 'Call Composite automation test (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
@@ -339,6 +345,8 @@ jobs:
     needs: get_matrix
     name: 'Chat Composite automation test (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
@@ -417,6 +425,8 @@ jobs:
     needs: get_matrix
     name: 'Call With Chat Composite automation test (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
@@ -659,6 +669,8 @@ jobs:
     needs: get_matrix
     name: 'Build And Test Static HTML Composites Sample (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
@@ -721,6 +733,8 @@ jobs:
     needs: get_matrix
     name: 'Build And Test Component+Binding Examples (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
@@ -781,6 +795,8 @@ jobs:
 
   compare_base_bundle_stats:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
     name: Compare bundle size from pr head ref to base ref - ${{ matrix.app }}
     needs: [build_calling_sample, build_chat_sample, build_call_with_chat_sample]
@@ -861,6 +877,8 @@ jobs:
 
   check_failure:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
     needs:
       [build_packages, build_calling_sample, build_chat_sample, build_static_html_composites_sample, build_storybook]
     if: failure() && github.ref == 'refs/heads/main'
