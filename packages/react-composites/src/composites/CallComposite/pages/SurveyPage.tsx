@@ -11,20 +11,28 @@ import { Survey } from '../../common/Survey';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurveyImprovementSuggestions } from '@internal/react-components';
 /* @conditional-compile-remove(end-of-call-survey) */
-import { IStyle, Stack, mergeStyles } from '@fluentui/react';
+import { Stack, mergeStyles } from '@fluentui/react';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { containerStyle } from '../styles/NetworkReconnectTile.styles';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { containerItemGap } from '../styles/NoticePage.styles';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { CallCompositeIcons } from '../../common/icons';
 
 /**
  * @private
  */
 export interface SurveyPageProps {
   /* @conditional-compile-remove(end-of-call-survey) */
+  iconName?: keyof CallCompositeIcons;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  title: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  moreDetails?: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
   dataUiId: string;
   /* @conditional-compile-remove(end-of-call-survey) */
-  pageStyle?: IStyle;
+  disableStartCallButton?: boolean;
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Options for end of call survey
@@ -35,11 +43,11 @@ export interface SurveyPageProps {
      * @defaultValue false
      */
     disableSurvey?: boolean;
-    /* @conditional-compile-remove(end-of-call-survey-self-host) */
     /**
-     * Optional callback to add extra logic when survey is dismissed. For self-host only
+     * Optional callback to redirect users to custom screens when survey is done, note that default end call screen will be shown if this callback is not provided
+     * This callback can be used to redirect users to different screens depending on survey state, whether it is submitted, dismissed or has a problem when submitting the survey
      */
-    onSurveyDismissed?: () => void;
+    onSurveyClosed?: (surveyState: 'sent' | 'dismissed' | 'error', surveyError?: string) => void;
     /**
      * Optional callback to handle survey data including free form text response
      * Note that free form text response survey option is only going to be enabled when this callback is provided
@@ -75,20 +83,13 @@ export function SurveyPage(props: SurveyPageProps): JSX.Element {
   const handlers = useHandlers(Survey);
   /* @conditional-compile-remove(end-of-call-survey) */
   return (
-    <Stack
-      className={mergeStyles(props.pageStyle)}
-      verticalFill
-      verticalAlign="center"
-      horizontalAlign="center"
-      data-ui-id={props.dataUiId}
-      aria-atomic
-    >
+    <Stack verticalFill verticalAlign="center" horizontalAlign="center" data-ui-id={props.dataUiId} aria-atomic>
       <Stack className={mergeStyles(containerStyle)} tokens={containerItemGap}>
         <Survey
           {...handlers}
+          {...props}
           onSurveySubmittedCustom={props.surveyOptions?.onSurveySubmitted}
-          /* @conditional-compile-remove(end-of-call-survey-self-host) */
-          onSurveyDismissed={props.surveyOptions?.onSurveyDismissed}
+          onSurveyClosed={props.surveyOptions?.onSurveyClosed}
         />
       </Stack>
     </Stack>

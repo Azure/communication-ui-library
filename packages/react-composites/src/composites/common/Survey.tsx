@@ -16,16 +16,31 @@ import { SurveyContent } from './SurveyContent';
 import { CallSurveyImprovementSuggestions } from '@internal/react-components';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { _pxToRem } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { CallCompositeIcons } from './icons';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { NoticePage } from '../CallComposite/pages/NoticePage';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { ThankYouForFeedbackPage } from '../CallComposite/pages/ThankYouForFeedbackPage';
 
 /** @private */
 export const Survey = (props: {
   /* @conditional-compile-remove(end-of-call-survey) */
+  iconName?: keyof CallCompositeIcons;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  title: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  moreDetails?: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  disableStartCallButton?: boolean;
+  /* @conditional-compile-remove(end-of-call-survey) */
   onSubmitSurvey?: (survey: CallSurvey) => Promise<CallSurveyResponse | undefined>;
-  /* @conditional-compile-remove(end-of-call-survey-self-host) */
+  /* @conditional-compile-remove(end-of-call-survey) */
   /**
-   * Optional callback to add extra logic when survey is dismissed. For self-host only
+   * Optional callback to redirect users to custom screens when survey is done, note that default end call screen will be shown if this callback is not provided
+   * This callback can be used to redirect users to different screens depending on survey state, whether it is submitted, dismissed or has a problem when submitting the survey
    */
-  onSurveyDismissed?: () => void;
+  onSurveyClosed?: (surveyState: 'sent' | 'dismissed' | 'error', surveyError?: string) => void;
   /* @conditional-compile-remove(end-of-call-survey) */
   onSurveySubmittedCustom?: (
     callId: string,
@@ -46,7 +61,15 @@ export const Survey = (props: {
   ) => Promise<void>;
 }): JSX.Element => {
   /* @conditional-compile-remove(end-of-call-survey) */
-  const { onSubmitSurvey, onSurveySubmittedCustom, onSurveyDismissed } = props;
+  const {
+    onSubmitSurvey,
+    onSurveySubmittedCustom,
+    onSurveyClosed,
+    iconName,
+    title,
+    moreDetails,
+    disableStartCallButton
+  } = props;
   /* @conditional-compile-remove(end-of-call-survey) */
   const strings = useLocale().strings.call;
   /* @conditional-compile-remove(end-of-call-survey) */
@@ -57,6 +80,15 @@ export const Survey = (props: {
   const [showSubmitFeedbackButton, setShowSubmitFeedbackButton] = useState(false);
   /* @conditional-compile-remove(end-of-call-survey) */
   const [improvementSuggestions, setImprovementSuggestions] = useState<CallSurveyImprovementSuggestions>({});
+
+  /* @conditional-compile-remove(end-of-call-survey) */
+  const [showDefaultAfterSubmitScreen, setShowDefaultAfterSubmitScreen] = useState<boolean>(false);
+
+  /* @conditional-compile-remove(end-of-call-survey) */
+  const [showDefaultAfterDismissedScreen, setShowDefaultAfterDismissedScreen] = useState<boolean>(false);
+
+  /* @conditional-compile-remove(end-of-call-survey) */
+  const [submitButtonDisabled, setSubmitButtonDisabled] = useState<boolean>(false);
 
   /* @conditional-compile-remove(end-of-call-survey) */
   const theme = useTheme();
@@ -71,74 +103,119 @@ export const Survey = (props: {
     });
   /* @conditional-compile-remove(end-of-call-survey) */
   return (
-    <Stack verticalAlign="center" style={{ width: '24rem' }}>
-      <Text className={questionTextStyle(theme)}>{strings.surveyQuestion}</Text>
-      <SurveyContent
-        setShowSubmitFeedbackButton={(showButton: boolean) => {
-          setShowSubmitFeedbackButton(showButton);
-        }}
-        setRatings={(rating: number) => {
-          setRatings(rating);
-        }}
-        setIssuesSelected={(issuesSelected: CallSurvey) => {
-          setIssuesSelected(issuesSelected);
-        }}
-        setImprovementSuggestions={
-          onSurveySubmittedCustom
-            ? (improvementSuggestions: CallSurveyImprovementSuggestions) => {
-                setImprovementSuggestions(improvementSuggestions);
-              }
-            : undefined
-        }
-      />
-      <Stack horizontal horizontalAlign="end">
-        <PrimaryButton
-          style={{ marginTop: '1rem', marginRight: '0.5rem' }}
-          onClick={() => {
-            if (onSurveyDismissed) {
-              onSurveyDismissed();
-            }
-          }}
-        >
-          {strings.surveyCancelButtonAriaLabel}
-        </PrimaryButton>
-
-        {showSubmitFeedbackButton && (
-          <PrimaryButton
-            style={{ marginTop: '1rem', marginLeft: '0.5rem' }}
-            onClick={async () => {
-              const surveyResults: CallSurvey = { overallRating: { score: ratings } };
-              if (issuesSelected?.overallRating) {
-                surveyResults.overallRating = { score: ratings, issues: issuesSelected.overallRating.issues };
-              }
-              if (issuesSelected?.audioRating) {
-                surveyResults.audioRating = { score: ratings, issues: issuesSelected.audioRating.issues };
-              }
-              if (issuesSelected?.screenshareRating) {
-                surveyResults.screenshareRating = {
-                  score: ratings,
-                  issues: issuesSelected.screenshareRating.issues
-                };
-              }
-              if (issuesSelected?.videoRating) {
-                surveyResults.videoRating = { score: ratings, issues: issuesSelected.videoRating.issues };
-              }
-              if (onSubmitSurvey) {
-                await onSubmitSurvey(surveyResults)
-                  .then((res) => {
-                    if (onSurveySubmittedCustom) {
-                      onSurveySubmittedCustom(res?.callId ?? '', res?.id ?? '', surveyResults, improvementSuggestions);
-                    }
-                  })
-                  .catch((e) => console.log('error when submitting survey: ' + e));
-              }
+    <>
+      {showDefaultAfterSubmitScreen && <ThankYouForFeedbackPage iconName={iconName} />}
+      {showDefaultAfterDismissedScreen && (
+        <NoticePage
+          iconName={iconName}
+          title={title}
+          moreDetails={moreDetails}
+          dataUiId={'left-call-page'}
+          disableStartCallButton={disableStartCallButton}
+        />
+      )}
+      {!showDefaultAfterSubmitScreen && !showDefaultAfterDismissedScreen && (
+        <Stack verticalAlign="center" style={{ width: '24rem' }}>
+          <Text className={questionTextStyle(theme)}>{strings.surveyQuestion}</Text>
+          <SurveyContent
+            setShowSubmitFeedbackButton={(showButton: boolean) => {
+              setShowSubmitFeedbackButton(showButton);
             }}
-          >
-            {strings.surveyConfirmButtonLabel}
-          </PrimaryButton>
-        )}
-      </Stack>
-    </Stack>
+            setRatings={(rating: number) => {
+              setRatings(rating);
+            }}
+            setIssuesSelected={(issuesSelected: CallSurvey) => {
+              setIssuesSelected(issuesSelected);
+            }}
+            setImprovementSuggestions={
+              onSurveySubmittedCustom
+                ? (improvementSuggestions: CallSurveyImprovementSuggestions) => {
+                    setImprovementSuggestions(improvementSuggestions);
+                  }
+                : undefined
+            }
+          />
+          <Stack horizontal horizontalAlign="end">
+            <PrimaryButton
+              style={{ marginTop: '1rem', marginRight: '0.5rem' }}
+              onClick={() => {
+                if (onSurveyClosed) {
+                  onSurveyClosed('dismissed');
+                } else {
+                  setShowDefaultAfterDismissedScreen(true);
+                }
+              }}
+            >
+              {strings.surveyCancelButtonLabel}
+            </PrimaryButton>
+
+            {showSubmitFeedbackButton && (
+              <PrimaryButton
+                disabled={submitButtonDisabled}
+                style={{ marginTop: '1rem', marginLeft: '0.5rem' }}
+                onClick={async () => {
+                  const surveyResults: CallSurvey = { overallRating: { score: ratings } };
+                  if (issuesSelected?.overallRating) {
+                    surveyResults.overallRating = { score: ratings, issues: issuesSelected.overallRating.issues };
+                  }
+                  if (issuesSelected?.audioRating) {
+                    surveyResults.audioRating = { score: ratings, issues: issuesSelected.audioRating.issues };
+                  }
+                  if (issuesSelected?.screenshareRating) {
+                    surveyResults.screenshareRating = {
+                      score: ratings,
+                      issues: issuesSelected.screenshareRating.issues
+                    };
+                  }
+                  if (issuesSelected?.videoRating) {
+                    surveyResults.videoRating = { score: ratings, issues: issuesSelected.videoRating.issues };
+                  }
+                  if (onSubmitSurvey) {
+                    // disable submit button while waiting for the survey to submit
+                    setSubmitButtonDisabled(true);
+                    // submitting survey results to calling
+                    onSubmitSurvey(surveyResults)
+                      .then((res) => {
+                        // if contoso provided callback to handle their own survey data, send over the submitted survey results
+                        if (onSurveySubmittedCustom) {
+                          onSurveySubmittedCustom(
+                            res?.callId ?? '',
+                            res?.id ?? '',
+                            surveyResults,
+                            improvementSuggestions
+                          ).then(() => setSubmitButtonDisabled(false));
+                        } else {
+                          // if callback is not provided, enable the submit button after survey is submitted
+                          setSubmitButtonDisabled(false);
+                        }
+
+                        // redirect to new screen
+                        if (onSurveyClosed) {
+                          // redirect to new screen according to contoso's callback set up
+                          onSurveyClosed('sent');
+                        } else {
+                          // if call back not provided, redirect to default screen
+                          setShowDefaultAfterSubmitScreen(true);
+                        }
+                      })
+                      .catch((e) => {
+                        // if there is an error submitting the survey, log the error in the console
+                        console.log('error when submitting survey: ' + e);
+                        // if contoso provided redirect callback, pass contoso the error so they can redirect to a corresponding error screen
+                        if (onSurveyClosed) {
+                          onSurveyClosed('error', e);
+                        }
+                      });
+                  }
+                }}
+              >
+                {strings.surveyConfirmButtonLabel}
+              </PrimaryButton>
+            )}
+          </Stack>
+        </Stack>
+      )}
+    </>
   );
   return <></>;
 };

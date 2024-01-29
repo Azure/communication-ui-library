@@ -82,8 +82,6 @@ module.exports = {
     "calling-sounds",
     // Feature for end of call survey
     'end-of-call-survey',
-    // Feature for end of call survey self host version
-    'end-of-call-survey-self-host',
     // Feature for the DTMF dialer for Teams voice apps
     'dtmf-dialer',
     // Feature for meeting reactions
@@ -113,8 +111,6 @@ module.exports = {
     "custom-branding",
     // Feature for end of call survey
     'end-of-call-survey',
-    // Feature for end of call survey self host version
-    'end-of-call-survey-self-host',
     // Feature for the DTMF dialer for Teams voice apps
     'dtmf-dialer',
     // Feature for meeting reactions

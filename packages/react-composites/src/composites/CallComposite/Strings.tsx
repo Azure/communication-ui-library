@@ -723,14 +723,19 @@ export interface CallCompositeStrings {
   surveyConfirmButtonLabel: string;
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
-   * Aria Label for cancel button
+   * Cancel button label for survey
    */
-  surveyCancelButtonAriaLabel: string;
+  surveyCancelButtonLabel: string;
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Default text for free form text box
    */
   surveyTextboxDefaultText: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Thank you text appeared on screen after survey is submitted
+   */
+  thankYouForFeedBackString: string;
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Corresponding texts to each call issue

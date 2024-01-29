@@ -431,7 +431,7 @@ export type CallCompositeOptions = {
     };
     surveyOptions?: {
         disableSurvey?: boolean;
-        onSurveyDismissed?: () => void;
+        onSurveyClosed?: (surveyState: 'sent' | 'dismissed' | 'error', surveyError?: string) => void;
         onSurveySubmitted?: (callId: string, surveyId: string,
         submittedSurvey: CallSurvey,
         improvementSuggestions: CallSurveyImprovementSuggestions) => Promise<void>;
@@ -600,7 +600,7 @@ export interface CallCompositeStrings {
     startCaptionsButtonOnLabel?: string;
     startCaptionsButtonTooltipOffContent?: string;
     startCaptionsButtonTooltipOnContent?: string;
-    surveyCancelButtonAriaLabel: string;
+    surveyCancelButtonLabel: string;
     surveyConfirmButtonLabel: string;
     surveyIssues: SurveyIssues;
     SurveyIssuesHeadingStrings: SurveyIssuesHeadingStrings;
@@ -609,6 +609,7 @@ export interface CallCompositeStrings {
     tagsSurveyHelperText: string;
     tagsSurveyQuestion: string;
     tagsSurveyTextFieldDefaultText: string;
+    thankYouForFeedBackString: string;
     threeParticipantJoinedNoticeString: string;
     threeParticipantLeftNoticeString: string;
     transferPageNoticeString: string;
@@ -974,7 +975,7 @@ export type CallWithChatCompositeOptions = {
     };
     surveyOptions?: {
         disableSurvey?: boolean;
-        onSurveyDismissed?: () => void;
+        onSurveyClosed?: (surveyState: 'sent' | 'dismissed' | 'error', surveyError?: string) => void;
         onSurveySubmitted?: (callId: string, surveyId: string,
         submittedSurvey: CallSurvey,
         improvementSuggestions: CallSurveyImprovementSuggestions) => Promise<void>;
