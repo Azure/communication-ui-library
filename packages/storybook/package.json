@@ -44,7 +44,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.23.9",
-    "@babel/preset-env": "7.23.5",
+    "@babel/preset-env": "7.23.9",
     "@mdx-js/react": "^1.6.22",
     "@microsoft/api-documenter": "~7.23.20",
     "@microsoft/api-extractor": "~7.39.4",
