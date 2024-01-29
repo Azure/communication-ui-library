@@ -1344,6 +1344,12 @@ export interface ImageGalleryStrings {
 }
 
 // @beta
+export interface InlineImage {
+    imgAttrs: React_2.ImgHTMLAttributes<HTMLImageElement>;
+    messageId: string;
+}
+
+// @beta
 export interface InlineImageMetadata {
     // (undocumented)
     attachmentType: 'inlineImage';
@@ -1351,6 +1357,11 @@ export interface InlineImageMetadata {
     // (undocumented)
     previewUrl?: string;
     url: string;
+}
+
+// @beta
+export interface InlineImageOptions {
+    onRenderInlineImage?: (inlineImage: InlineImage, defaultOnRender: (inlineImage: InlineImage) => JSX.Element) => JSX.Element;
 }
 
 // @internal
@@ -1564,7 +1575,7 @@ export type MessageThreadProps = {
     fileDownloadHandler?: FileDownloadHandler;
     onDisplayDateTimeString?: (messageDate: Date) => string;
     mentionOptions?: MentionOptions;
-    onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
+    inlineImageOptions?: InlineImageOptions;
 };
 
 // @public
