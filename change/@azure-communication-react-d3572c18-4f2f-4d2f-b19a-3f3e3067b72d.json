@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "area": "fix",
+  "workstream": "Fix for legal alerts for internal sample packages and packages for testing",
+  "comment": "Fix for legal alerts for internal sample packages and packages for testing",
+  "packageName": "@azure/communication-react",
+  "email": "98852890+vhuseinova-msft@users.noreply.github.com",
+  "dependentChangeType": "none"
+}
