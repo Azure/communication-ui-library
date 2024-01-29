@@ -29,6 +29,8 @@ export const usePeoplePane = (props: {
   onStartSpotlight?: (userId: string) => Promise<void>;
   /* @conditional-compile-remove(spotlight) */
   onStopSpotlight?: (userId: string) => Promise<void>;
+  /* @conditional-compile-remove(spotlight) */
+  ableToSpotlight?: boolean;
 }): {
   openPeoplePane: () => void;
   closePeoplePane: () => void;
@@ -47,7 +49,9 @@ export const usePeoplePane = (props: {
     /* @conditional-compile-remove(spotlight) */
     onStartSpotlight,
     /* @conditional-compile-remove(spotlight) */
-    onStopSpotlight
+    onStopSpotlight,
+    /* @conditional-compile-remove(spotlight) */
+    ableToSpotlight
   } = props;
 
   const closePane = useCallback(() => {
@@ -79,7 +83,7 @@ export const usePeoplePane = (props: {
           myUserId === participantId
             ? localeStrings.stopSpotlightOnSelfParticipantListMenuLabel
             : localeStrings.stopSpotlightParticipantListMenuLabel;
-        if (onStopSpotlight && stopSpotlightMenuText) {
+        if (onStopSpotlight && stopSpotlightMenuText && (ableToSpotlight || myUserId === participantId)) {
           _defaultMenuItems.push({
             key: 'stop-spotlight',
             text: stopSpotlightMenuText,
@@ -98,7 +102,7 @@ export const usePeoplePane = (props: {
           spotlightedParticipantUserIds && spotlightedParticipantUserIds.length > 0
             ? localeStrings.addSpotlightParticipantListMenuLabel
             : localeStrings.startSpotlightParticipantListMenuLabel;
-        if (onStartSpotlight && startSpotlightMenuText) {
+        if (onStartSpotlight && startSpotlightMenuText && ableToSpotlight) {
           _defaultMenuItems.push({
             key: 'start-spotlight',
             text: startSpotlightMenuText,
@@ -125,7 +129,8 @@ export const usePeoplePane = (props: {
       localeStrings.stopSpotlightParticipantListMenuLabel,
       localeStrings.stopSpotlightOnSelfParticipantListMenuLabel,
       localeStrings.addSpotlightParticipantListMenuLabel,
-      localeStrings.startSpotlightParticipantListMenuLabel
+      localeStrings.startSpotlightParticipantListMenuLabel,
+      ableToSpotlight
     ]
   );
 

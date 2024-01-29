@@ -177,7 +177,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds:
       videoGalleryProps.spotlightedParticipants,
     /* @conditional-compile-remove(spotlight) */ onStartSpotlight: videoGalleryProps.onStartSpotlight,
-    /* @conditional-compile-remove(spotlight) */ onStopSpotlight: videoGalleryProps.onStopSpotlight
+    /* @conditional-compile-remove(spotlight) */ onStopSpotlight: videoGalleryProps.onStopSpotlight,
+    /* @conditional-compile-remove(spotlight) */ ableToSpotlight:
+      adapter.getState().call?.capabilitiesFeature?.capabilities.spotlightParticipant.isPresent
   });
   const togglePeoplePane = useCallback(() => {
     if (isPeoplePaneOpen) {
