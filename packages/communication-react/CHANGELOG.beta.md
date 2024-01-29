@@ -35,7 +35,6 @@ The CallComposite and CallWithChatComposite now support applying a background im
 - Stop the ringing sound from playing when the call disconnects before the callee answers ([PR #3889](https://github.com/azure/communication-ui-library/pull/3889) by 94866715+dmceachernmsft@users.noreply.github.com)
 - Enable the ability for user to edit value in text field with keyboard ([PR #3970](https://github.com/azure/communication-ui-library/pull/3970) by 94866715+dmceachernmsft@users.noreply.github.com)
 - Introduce new endcall screen for when a outbound call times out ([PR #3914](https://github.com/azure/communication-ui-library/pull/3914) by 94866715+dmceachernmsft@users.noreply.github.com)
-- Reaction sub-menu re-render bug fix ([PR #4038](https://github.com/azure/communication-ui-library/pull/4038) by mbellah@microsoft.com)
 
 ## [1.11.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.11.0-beta.1)
 
