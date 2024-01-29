@@ -61,7 +61,7 @@
       "reviewCategory": "internal"
     },
     {
-      "packageName": "calling",
+      "packageName": "@internal/calling",
       "projectFolder": "samples/Calling",
       "reviewCategory": "sample"
     },
@@ -71,12 +71,12 @@
       "reviewCategory": "sample"
     },
     {
-      "packageName": "callwithchat",
+      "packageName": "@internal/callwithchat",
       "projectFolder": "samples/CallWithChat",
       "reviewCategory": "sample"
     },
     {
-      "packageName": "component-examples",
+      "packageName": "@internal/component-examples",
       "projectFolder": "samples/ComponentExamples",
       "reviewCategory": "sample"
     },
@@ -86,12 +86,12 @@
       "reviewCategory": "sample"
     },
     {
-      "packageName": "sample-automation-tests",
+      "packageName": "@internal/sample-automation-tests",
       "projectFolder": "samples/tests",
       "reviewCategory": "sample"
     },
     {
-      "packageName": "sample-static-html-composites",
+      "packageName": "@internal/sample-static-html-composites",
       "projectFolder": "samples/StaticHtmlComposites",
       "reviewCategory": "sample"
     },
