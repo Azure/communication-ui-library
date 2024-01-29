@@ -81,7 +81,7 @@
       "reviewCategory": "sample"
     },
     {
-      "packageName": "server",
+      "packageName": "@internal/server",
       "projectFolder": "samples/Server",
       "reviewCategory": "sample"
     },
