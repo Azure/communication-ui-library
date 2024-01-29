@@ -20,6 +20,7 @@ jobs:
   get_matrix:
     name: Load CI Matrix Details
     runs-on: ubuntu-latest
+    permissions: read-all
     outputs:
       matrix: ${{ steps.get-matrix.outputs.matrix }}
     steps:
@@ -39,6 +40,7 @@ jobs:
     needs: get_matrix
     name: 'Check Breaking Changes (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
+    permissions: read-all
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:

@@ -22,6 +22,7 @@ jobs:
   runTDBuild:
     name: Run Touchdown build
     runs-on: ubuntu-latest
+    permissions: read-all
     steps:
       - uses: actions/checkout@v3
         with:
@@ -38,6 +39,8 @@ jobs:
 
   check_failure:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
     needs: runTDBuild
     if: failure()
     name: Create GitHub issue on failure
