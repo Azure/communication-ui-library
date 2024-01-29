@@ -140,6 +140,9 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     containerHeight
   ]);
 
+  /* @conditional-compile-remove(spotlight) */
+  const ableToSpotlight = adapter.getState().call?.capabilitiesFeature?.capabilities.spotlightParticipant.isPresent;
+
   const VideoGalleryMemoized = useMemo(() => {
     const layoutBasedOnUserSelection = (): VideoGalleryLayout => {
       /* @conditional-compile-remove(gallery-layouts) */
@@ -171,6 +174,10 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         }
         /* @conditional-compile-remove(reaction) */
         reactionResources={reactionResources}
+        /* @conditional-compile-remove(spotlight) */
+        onStartSpotlight={ableToSpotlight ? videoGalleryProps.onStartSpotlight : undefined}
+        /* @conditional-compile-remove(spotlight) */
+        onStopSpotlight={ableToSpotlight ? videoGalleryProps.onStopSpotlight : undefined}
       />
     );
   }, [
@@ -194,7 +201,9 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     props.userSetGalleryLayout,
     layoutBasedOnTilePosition,
     /* @conditional-compile-remove(reaction) */
-    reactionResources
+    reactionResources,
+    /* @conditional-compile-remove(spotlight) */
+    ableToSpotlight
   ]);
 
   return (

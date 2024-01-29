@@ -127,7 +127,7 @@ export const useVideoTileContextualMenuProps = (props: {
           text: strings.stopSpotlightVideoTileMenuLabel,
           iconProps: {
             iconName: 'StopSpotlightContextualMenuItem',
-            styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
+            styles: { root: { lineHeight: 0 } }
           },
           onClick: () => onStopSpotlight(remoteParticipant.userId),
           ariaLabel: strings.stopSpotlightVideoTileMenuLabel
@@ -144,7 +144,7 @@ export const useVideoTileContextualMenuProps = (props: {
           text: startSpotlightMenuLabelText,
           iconProps: {
             iconName: 'StartSpotlightContextualMenuItem',
-            styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
+            styles: { root: { lineHeight: 0 } }
           },
           onClick: () => onStartSpotlight(remoteParticipant.userId),
           ariaLabel: startSpotlightMenuLabelText
