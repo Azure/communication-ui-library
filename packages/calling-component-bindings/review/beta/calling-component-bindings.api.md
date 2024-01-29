@@ -19,8 +19,6 @@ import { CallAgent } from '@azure/communication-calling';
 import { CallClientState } from '@internal/calling-stateful-client';
 import { CallParticipantListParticipant } from '@internal/react-components';
 import { CallState } from '@azure/communication-calling';
-import { CallSurvey } from '@azure/communication-calling';
-import { CallSurveyResponse } from '@azure/communication-calling';
 import { CameraButton } from '@internal/react-components';
 import { _CaptionsInfo } from '@internal/react-components';
 import { Common } from '@internal/acs-ui-common';
@@ -38,13 +36,11 @@ import { ErrorBar } from '@internal/react-components';
 import { HoldButton } from '@internal/react-components';
 import { MicrophoneButton } from '@internal/react-components';
 import { ParticipantList } from '@internal/react-components';
-import { ParticipantRole } from '@azure/communication-calling';
 import { ParticipantsButton } from '@internal/react-components';
 import { PermissionConstraints } from '@azure/communication-calling';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
-import { Reaction } from '@azure/communication-calling';
 import { RemoteParticipantState } from '@internal/calling-stateful-client';
 import { ScreenShareButton } from '@internal/react-components';
 import { StartCallOptions } from '@azure/communication-calling';
@@ -173,8 +169,6 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onRaiseHand: () => Promise<void>;
     // (undocumented)
-    onReactionClicked: (reaction: Reaction) => Promise<void>;
-    // (undocumented)
     onRemoveParticipant(userId: string): Promise<void>;
     // (undocumented)
     onRemoveParticipant(participant: CommunicationIdentifier): Promise<void>;
@@ -203,15 +197,9 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onStartScreenShare: () => Promise<void>;
     // (undocumented)
-    onStartSpotlight: (userId: string) => Promise<void>;
-    // (undocumented)
     onStopCaptions: () => Promise<void>;
     // (undocumented)
     onStopScreenShare: () => Promise<void>;
-    // (undocumented)
-    onStopSpotlight: (userId: string) => Promise<void>;
-    // (undocumented)
-    onSubmitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
     // (undocumented)
     onToggleCamera: (options?: VideoStreamOptions) => Promise<void>;
     // (undocumented)
@@ -225,7 +213,7 @@ export interface CommonCallingHandlers {
 }
 
 // @public
-export type CreateDefaultCallingHandlers = (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, options?: CallingHandlersOptions) => CallingHandlers;
+export type CreateDefaultCallingHandlers = (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, /* @conditional-compile-remove(video-background-effects) */ options?: CallingHandlersOptions) => CallingHandlers;
 
 // @public
 export const createDefaultCallingHandlers: CreateDefaultCallingHandlers;
@@ -320,15 +308,6 @@ export type RaiseHandButtonSelector = (state: CallClientState, props: CallingBas
 // @public
 export const raiseHandButtonSelector: RaiseHandButtonSelector;
 
-// @beta
-export type ReactionButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
-    checked?: boolean;
-    disabled?: boolean;
-};
-
-// @beta
-export const reactionButtonSelector: ReactionButtonSelector;
-
 // @public
 export type ScreenShareButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     checked?: boolean;
@@ -391,7 +370,7 @@ export type VideoBackgroundEffectsDependency = {
 };
 
 // @internal (undocumented)
-export const _videoGalleryRemoteParticipantsMemo: (remoteParticipants: RemoteParticipantState[] | undefined, isHideAttendeeNamesEnabled?: boolean, localUserRole?: ParticipantRole) => VideoGalleryRemoteParticipant[];
+export const _videoGalleryRemoteParticipantsMemo: (remoteParticipants: RemoteParticipantState[] | undefined) => VideoGalleryRemoteParticipant[];
 
 // @public
 export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
@@ -400,7 +379,6 @@ export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSe
     remoteParticipants: VideoGalleryRemoteParticipant[];
     dominantSpeakers?: string[];
     optimalVideoCount?: number;
-    spotlightedParticipants?: string[];
 };
 
 // (No @packageDocumentation comment for this package)
