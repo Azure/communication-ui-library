@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { useEffect } from 'react';
 import { _formatString } from '@internal/acs-ui-common';
 import parse, { HTMLReactParserOptions, Element as DOMElement } from 'html-react-parser';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
@@ -19,8 +17,6 @@ import { MentionDisplayOptions, Mention } from '../MentionPopover';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { FontIcon, Stack } from '@fluentui/react';
 import { MessageThreadStrings } from '../MessageThread';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { AttachmentMetadata } from '../FileDownloadCards';
 import LiveMessage from '../Announcer/LiveMessage';
 /* @conditional-compile-remove(mention) */
 import { defaultOnMentionRender } from './MentionRenderer';
@@ -31,10 +27,6 @@ type ChatMessageContentProps = {
   strings: MessageThreadStrings;
   /* @conditional-compile-remove(mention) */
   mentionDisplayOptions?: MentionDisplayOptions;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  attachmentsMap?: Record<string, string>;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  onFetchAttachments?: (attachments: AttachmentMetadata[], messageId: string) => Promise<void>;
   /* @conditional-compile-remove(image-gallery) */
   inlineImageOptions?: InlineImageOptions;
 };
@@ -106,28 +98,6 @@ const MessageContentWithLiveAria = (props: MessageContentWithLiveAriaProps): JSX
 };
 
 const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Element => {
-  const {
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-    // message is used only in useEffect that is under teams-inline-images-and-file-sharing cc
-    message,
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-    attachmentsMap,
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-    onFetchAttachments
-  } = props;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  useEffect(() => {
-    if (!attachmentsMap || !onFetchAttachments) {
-      return;
-    }
-    const attachments = message.inlineImages?.filter((inlinedImages) => {
-      return attachmentsMap[inlinedImages.id] === undefined;
-    });
-    if (attachments && attachments.length > 0) {
-      onFetchAttachments(attachments, message.messageId);
-    }
-  }, [message.inlineImages, message.messageId, onFetchAttachments, attachmentsMap]);
-
   return (
     <MessageContentWithLiveAria
       message={props.message}
@@ -270,11 +240,6 @@ const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
           })
         ) {
           domNode.attribs['aria-label'] = domNode.attribs.name;
-          // logic to check id in map/list
-          if (props.attachmentsMap && domNode.attribs.id in props.attachmentsMap) {
-            domNode.attribs.src = props.attachmentsMap[domNode.attribs.id];
-          }
-
           const imgProps = attributesToProps(domNode.attribs);
           /* @conditional-compile-remove(image-gallery) */
           const inlineImageProps: InlineImage = { messageId: props.message.messageId, imgAttrs: imgProps };
