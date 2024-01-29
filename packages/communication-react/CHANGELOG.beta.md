@@ -14,12 +14,11 @@ Mon, 29 Jan 2024 17:18:22 GMT
 The CallComposite and CallWithChatComposite now support applying a background image and logo to the Configuration Page. This allows developers to unify their customers' joining experiences if they have a Teams Premium feature enabled called Teams Meeting Themes.
 
 ### Features
+- Introduce new queue system to download images ([PR #4044](https://github.com/azure/communication-ui-library/pull/4044) by 9044372+JoshuaLai@users.noreply.github.com)
 - Update Composite interface to have branding options nested in a branding object ([PR #3806](https://github.com/azure/communication-ui-library/pull/3806) by 2684369+JamesBurnside@users.noreply.github.com)
 - Fix custom branding props ([PR #3833](https://github.com/azure/communication-ui-library/pull/3833) by 2684369+JamesBurnside@users.noreply.github.com)
 - Include ability to set background image and logo in CallComposites in beta packages ([PR #3968](https://github.com/azure/communication-ui-library/pull/3968) by 2684369+JamesBurnside@users.noreply.github.com)
 - Support rectangular logos ([PR #3859](https://github.com/azure/communication-ui-library/pull/3859) by 2684369+JamesBurnside@users.noreply.github.com)
-
-- Introduce new queue system to download images ([PR #4044](https://github.com/azure/communication-ui-library/pull/4044) by 9044372+JoshuaLai@users.noreply.github.com)
 ### Improvements
 - Update dependencies that had a patch bump available ([PR #4036](https://github.com/azure/communication-ui-library/pull/4036) by 94866715+dmceachernmsft@users.noreply.github.com)
 - Add license field for package.json files ([PR #4018](https://github.com/azure/communication-ui-library/pull/4018) by 98852890+vhuseinova-msft@users.noreply.github.com)
