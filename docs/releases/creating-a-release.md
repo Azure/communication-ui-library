@@ -13,6 +13,20 @@ _This document applies to beta and stable releases. Alpha releases are created n
 
 _This document applies to normal releases, off of `main`. For hotfixing a prior release on NPM, see [documentation on creating hotfixes](./hotfix-release.md)._
 
+## Timeline
+
+2 Week sprint. Release on 2nd week of sprint.
+
+First week of sprint, steps 0.1-0.4.
+
+Second week of sprint:
+
+Monday - 
+Tuesday - 
+Wednesday - 
+Thursday - 
+Friday - 
+
 ## Step 0: Preparation
 
 ### Step 0.1: Update Strings on Main
