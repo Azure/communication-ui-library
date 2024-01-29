@@ -446,7 +446,7 @@ const MessageThreadStory = (args): JSX.Element => {
     return Promise.resolve();
   };
 
-  const onFetchAttachments = async (attachments: AttachmentMetadata[]): Promise<AttachmentDownloadResult[]> => {
+  const onFetchAttachments = async (attachments: AttachmentMetadata[]): Promise<AttachmentDownloadResult> => {
     // Mocking promise
     const delay = (): Promise<void> => new Promise((resolve) => setTimeout(resolve, 3000));
     return await delay().then(() => {

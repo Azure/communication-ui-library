@@ -149,7 +149,6 @@ export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : fa
 
 // @beta
 export interface AttachmentDownloadResult {
-    attachmentId: string;
     blobUrl: string;
 }
 
@@ -990,8 +989,8 @@ export interface CallWithChatAdapterManagement {
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // (undocumented)
     downloadAttachments: (options: {
-        attachmentUrls: Record<string, string>;
-    }) => Promise<AttachmentDownloadResult[]>;
+        attachmentUrl: string;
+    }) => Promise<AttachmentDownloadResult>;
     fetchInitialData(): Promise<void>;
     // @beta
     holdCall: () => Promise<void>;
@@ -1604,8 +1603,8 @@ export interface ChatAdapterThreadManagement {
     deleteMessage(messageId: string): Promise<void>;
     // (undocumented)
     downloadAttachments: (options: {
-        attachmentUrls: Record<string, string>;
-    }) => Promise<AttachmentDownloadResult[]>;
+        attachmentUrl: string;
+    }) => Promise<AttachmentDownloadResult>;
     fetchInitialData(): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     removeParticipant(userId: string): Promise<void>;
