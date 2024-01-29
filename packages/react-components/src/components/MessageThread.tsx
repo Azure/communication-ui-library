@@ -47,6 +47,8 @@ import {
   ChatMessageComponentWrapperProps
 } from './ChatMessage/ChatMessageComponentWrapper';
 import { Announcer } from './Announcer';
+/* @conditional-compile-remove(image-gallery) */
+import { InlineImageOptions } from './ChatMessage/ChatMessageContent';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (
@@ -525,7 +527,7 @@ export type MessageThreadProps = {
    * Optional callback called when an inline image is clicked.
    * @beta
    */
-  onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
+  inlineImageOptions?: InlineImageOptions;
 };
 
 /**
@@ -657,7 +659,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     /* @conditional-compile-remove(mention) */
     mentionOptions,
     /* @conditional-compile-remove(image-gallery) */
-    onInlineImageClicked,
+    inlineImageOptions,
     /* @conditional-compile-remove(file-sharing) */
     onRenderFileDownloads
   } = props;
@@ -1080,7 +1082,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
                   /* @conditional-compile-remove(file-sharing) */
                   fileDownloadHandler={props.fileDownloadHandler}
                   /* @conditional-compile-remove(image-gallery) */
-                  onInlineImageClicked={onInlineImageClicked}
+                  inlineImageOptions={inlineImageOptions}
                   /* @conditional-compile-remove(date-time-customization) */
                   onDisplayDateTimeString={onDisplayDateTimeString}
                   /* @conditional-compile-remove(mention) */
