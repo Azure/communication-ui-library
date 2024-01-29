@@ -33,14 +33,15 @@ For all the features that are going into this release, ask the feature owners to
 ### Step 0.3: Create a Thread in the WebUI channel to Track Release Progress
 
 Create a release thread in the WebUI channel and keep it up to date so the whole team knows where we are at.
-![image](https://github.com/Azure/communication-ui-library/assets/73612854/79634dd3-d9bb-482c-a83a-a87159d06a20)
-![image](https://github.com/Azure/communication-ui-library/assets/73612854/40516359-5d31-403a-a70a-a55eb40081cb)
 
-
-
-### Step 0.4: Create A Bug Bash Meeting
+### Step 0.4: Create an Async Bug Bash Meeting
 
 Set it for Tuesday or Wednesday. 
+
+Ex.
+
+![image](https://github.com/Azure/communication-ui-library/assets/73612854/79634dd3-d9bb-482c-a83a-a87159d06a20)
+![image](https://github.com/Azure/communication-ui-library/assets/73612854/40516359-5d31-403a-a70a-a55eb40081cb)
 
 ## Step 1: Creating a Release Branch
 
