@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 import { defineConfig, devices } from '@playwright/experimental-ct-react';
-// import common from '../../common/config/playwright/playwright.config.common';
+import react from '@vitejs/plugin-react';
 
 // const config: PlaywrightTestConfig = {
 //   ...common,
@@ -91,7 +91,20 @@ export default defineConfig({
   // Applies to all projects
   use: {
     headless: !process.env.LOCAL_DEBUG,
-    video: 'on-first-retry' // No traces on first attempt - this seems to make tests flaky.
+    video: 'on-first-retry', // No traces on first attempt - this seems to make tests flaky.
+    ctViteConfig: {
+      plugins: [
+        react({
+          include: /\.(js|jsx|ts|tsx)$/,
+          babel: {
+            // Use .babelrc files
+            babelrc: true,
+            // Use babel.config.js files
+            configFile: true
+          }
+        })
+      ]
+    }
   },
 
   projects: [
@@ -145,5 +158,6 @@ export default defineConfig({
   },
   // reporter: process.env.CI ? CI_REPORTERS : LOCAL_REPORTERS,
   testDir: './tests/browser/',
+  testMatch: '*.spec.tsx',
   snapshotDir: './tests/snapshots/'
 });

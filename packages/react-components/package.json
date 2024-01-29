@@ -129,6 +129,7 @@
     "typescript": "5.3.3",
     "webpack": "5.89.0",
     "jest-environment-jsdom": "^29.5.0",
-    "@playwright/test": "~1.39.0"
+    "@playwright/test": "~1.39.0",
+    "@vitejs/plugin-react": "~4.2.1"
   }
 }
