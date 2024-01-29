@@ -5,10 +5,10 @@ import { CallAdapterState, CallCompositePage, END_CALL_PAGES } from '../adapter/
 import { _isInCall, _isPreviewOn, _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { CallState, RemoteParticipantState } from '@internal/calling-stateful-client';
-import { isPhoneNumberIdentifier } from '@azure/communication-common';
+import { CommunicationIdentifier, isPhoneNumberIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
-import { AdapterStateModifier } from '../adapter/AzureCommunicationCallAdapter';
+import { AdapterStateModifier, CallAdapterLocator } from '../adapter/AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 /* @conditional-compile-remove(video-background-effects) */
@@ -529,3 +529,19 @@ export const getBackgroundEffectFromSelectedEffect = (
  */
 export const getSelectedCameraFromAdapterState = (state: CallAdapterState): VideoDeviceInfo | undefined =>
   state.devices.selectedCamera || state.devices.cameras[0];
+
+/**
+ * helper to determine if the adapter has a locator or targetCallees
+ * @param locatorOrTargetCallees
+ * @returns enum to determine if the adapter has a locator or targetCallees
+ * @private
+ */
+export const getLocatorOrTargetCallees = (
+  locatorOrTargetCallees: CallAdapterLocator | CommunicationIdentifier[]
+): 'locator' | 'targetCallees' => {
+  if (Array.isArray(locatorOrTargetCallees)) {
+    return 'targetCallees';
+  } else {
+    return 'locator';
+  }
+};

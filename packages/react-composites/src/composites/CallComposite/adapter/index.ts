@@ -20,7 +20,11 @@ export type { TeamsAdapterOptions } from './AzureCommunicationCallAdapter';
 export type { TeamsCallAdapterArgs } from './AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(teams-identity-support) */
 export type { OnFetchProfileCallback, Profile } from './OnFetchProfileCallback';
-export type { AzureCommunicationCallAdapterArgs, CallAdapterLocator } from './AzureCommunicationCallAdapter';
+export type {
+  AzureCommunicationCallAdapterArgs,
+  CallAdapterLocator,
+  AzureCommunicationOutboundCallAdapterArgs
+} from './AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 export type { AzureCommunicationCallAdapterOptions } from './AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(video-background-effects) */

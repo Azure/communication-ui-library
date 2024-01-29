@@ -31,7 +31,8 @@ export type {
   AzureCommunicationCallAdapterArgs,
   CallAdapterLocator,
   CommonCallAdapter,
-  CallAdapterCallOperations
+  CallAdapterCallOperations,
+  AzureCommunicationOutboundCallAdapterArgs
 } from './adapter';
 
 /* @conditional-compile-remove(video-background-effects) */

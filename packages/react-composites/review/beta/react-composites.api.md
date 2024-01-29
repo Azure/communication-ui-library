@@ -158,6 +158,16 @@ export type AzureCommunicationChatAdapterOptions = {
 };
 
 // @public
+export type AzureCommunicationOutboundCallAdapterArgs = {
+    userId: CommunicationUserIdentifier;
+    displayName: string;
+    credential: CommunicationTokenCredential;
+    targetCallees: CommunicationIdentifier[];
+    alternateCallerId?: string;
+    options?: AzureCommunicationCallAdapterOptions;
+};
+
+// @public
 export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> {
     fluentTheme?: PartialTheme | Theme;
     icons?: TIcons;
@@ -1337,18 +1347,25 @@ export interface CompositeStrings {
     chat: ChatCompositeStrings;
 }
 
-// @public
-export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator, alternateCallerId, options }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
+// @public (undocumented)
+export function createAzureCommunicationCallAdapter(args: AzureCommunicationCallAdapterArgs): Promise<CallAdapter>;
+
+// @public (undocumented)
+export function createAzureCommunicationCallAdapter(args: AzureCommunicationOutboundCallAdapterArgs): Promise<CallAdapter>;
 
 // @public
-export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: CallAdapterLocator, options?: AzureCommunicationCallAdapterOptions) => Promise<CallAdapter>;
+export function createAzureCommunicationCallAdapterFromClient(callClient: StatefulCallClient, callAgent: CallAgent, targetCallees: CommunicationIdentifier[], options?: AzureCommunicationCallAdapterOptions): Promise<CallAdapter>;
+
+// @public
+export function createAzureCommunicationCallAdapterFromClient(callClient: StatefulCallClient, callAgent: CallAgent, locator: CallAdapterLocator, options?: AzureCommunicationCallAdapterOptions): Promise<CallAdapter>;
 
 // @internal
-export const _createAzureCommunicationCallAdapterInner: ({ userId, displayName, credential, locator, alternateCallerId, options, telemetryImplementationHint }: {
+export const _createAzureCommunicationCallAdapterInner: ({ userId, displayName, credential, locator, targetCallees, alternateCallerId, options, telemetryImplementationHint }: {
     userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
     locator: CallAdapterLocator;
+    targetCallees?: CommunicationIdentifier[] | undefined;
     alternateCallerId?: string | undefined;
     options?: CommonCallAdapterOptions | undefined;
     telemetryImplementationHint?: _TelemetryImplementationHint | undefined;
