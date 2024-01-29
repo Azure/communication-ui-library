@@ -325,13 +325,8 @@ const Docs: () => JSX.Element = () => {
       </div>
 
       <div ref={refDisplayInlineImages}>
-        <Heading>Display Inline Image with Messages</Heading>
+        <Heading>Tapping Inline Images on Messages</Heading>
         <SingleLineBetaBanner />
-        <Description>
-          MessageThread component provides UI for displaying inline image attachments in a message. If an image is
-          protected by header-based authentication, developers can write there own HTTP call to get the image so you can
-          provide the applicable headers. By default the `previewUrl` is displayed in the message bubble.
-        </Description>
         <Canvas mdxSource={MessageThreadWithInlineImageExampleText}>
           <MessageThreadWithInlineImageExample />
         </Canvas>

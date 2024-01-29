@@ -192,6 +192,11 @@ const onRenderParticipantDefault = (
             {callingParticipant.isMuted && (
               <Icon iconName="ParticipantItemMicOff" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
             )}
+            {
+              /* @conditional-compile-remove(spotlight) */ callingParticipant.isSpotlighted && (
+                <Icon iconName="ParticipantItemSpotlighted" className={iconStyles} />
+              )
+            }
           </Stack>
         )
       : () => null;

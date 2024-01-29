@@ -159,6 +159,14 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
         callEnded: { url: '/assets/sounds/callEnded.mp3' },
         callRinging: { url: '/assets/sounds/callRinging.mp3' },
         callBusy: { url: '/assets/sounds/callBusy.mp3' }
+      },
+      /* @conditional-compile-remove(reaction) */
+      reactionResources: {
+        likeReaction: { url: '/assets/reactions/likeEmoji.png' },
+        heartReaction: { url: '/assets/reactions/heartEmoji.png' },
+        laughReaction: { url: '/assets/reactions/laughEmoji.png' },
+        applauseReaction: { url: '/assets/reactions/clapEmoji.png' },
+        surprisedReaction: { url: '/assets/reactions/surprisedEmoji.png' }
       }
     };
   }, []);

@@ -340,7 +340,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                   </Label>
                   <Stack styles={dialpadOptionStyles}>
                     <Dialpad
-                      isMobile={isMobileSession}
+                      longPressTrigger={isMobileSession ? 'touch' : 'mouseAndTouch'}
                       onChange={(newValue) => {
                         /**
                          * We need to pass in the formatting for the phone number string in the onChange handler

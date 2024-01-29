@@ -737,10 +737,13 @@ export interface DevicesButtonStyles extends ControlBarButtonStyles {
 export const Dialpad: (props: DialpadProps) => JSX.Element;
 
 // @beta
+export type DialpadMode = 'dtmf' | 'dialer';
+
+// @beta
 export interface DialpadProps {
+    dialpadMode?: DialpadMode;
     disableDtmfPlayback?: boolean;
-    enableInputEditing?: boolean;
-    isMobile?: boolean;
+    longPressTrigger?: LongPressTrigger;
     onChange?: (input: string) => void;
     onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
     onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
@@ -1121,6 +1124,9 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
 
 // @public
 export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'followDeviceOrientation';
+
+// @beta
+export type LongPressTrigger = 'mouseAndTouch' | 'touch';
 
 // @public
 export type Message = ChatMessage | SystemMessage | CustomMessage;

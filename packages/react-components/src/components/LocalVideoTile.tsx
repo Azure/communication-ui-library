@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 import { Stack } from '@fluentui/react';
+/* @conditional-compile-remove(spotlight) */
+import { mergeStyles } from '@fluentui/react';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useMemo } from 'react';
 import { OnRenderAvatarCallback, VideoStreamOptions, CreateVideoStreamViewResult } from '../types';
@@ -16,6 +18,10 @@ import {
 import { VideoTile, VideoTileStylesProps } from './VideoTile';
 /* @conditional-compile-remove(raise-hand) */
 import { RaisedHand } from '../types';
+/* @conditional-compile-remove(spotlight) */
+import { useTheme } from '../theming';
+/* @conditional-compile-remove(reaction) */
+import { ReactionResources } from '../types/ReactionTypes';
 /**
  * A memoized version of VideoTile for rendering local participant.
  *
@@ -45,6 +51,10 @@ export const _LocalVideoTile = React.memo(
     raisedHand?: RaisedHand;
     /* @conditional-compile-remove(reaction) */
     reaction?: Reaction;
+    /* @conditional-compile-remove(spotlight) */
+    isSpotlighted?: boolean;
+    /* @conditional-compile-remove(reaction) */
+    reactionResources?: ReactionResources;
   }) => {
     const {
       isAvailable,
@@ -67,8 +77,15 @@ export const _LocalVideoTile = React.memo(
       /* @conditional-compile-remove(raise-hand) */
       raisedHand,
       /* @conditional-compile-remove(reaction) */
-      reaction
+      reaction,
+      /* @conditional-compile-remove(spotlight) */
+      isSpotlighted,
+      /* @conditional-compile-remove(reaction) */
+      reactionResources
     } = props;
+
+    /* @conditional-compile-remove(spotlight) */
+    const theme = useTheme();
 
     const localVideoStreamProps: LocalVideoStreamLifecycleMaintainerProps = useMemo(
       () => ({
@@ -92,6 +109,22 @@ export const _LocalVideoTile = React.memo(
     // Handle creating, destroying and updating the video stream as necessary
     useLocalVideoStreamLifecycleMaintainer(localVideoStreamProps);
 
+    /* @conditional-compile-remove(spotlight) */
+    const spotlightBorder = useMemo(
+      () => (
+        <Stack
+          className={mergeStyles({
+            position: 'absolute',
+            height: '100%',
+            width: '100%',
+            zIndex: 100,
+            border: `0.25rem solid ${theme.palette.black}`
+          })}
+        />
+      ),
+      [theme.palette.black]
+    );
+
     const renderVideoStreamElement = useMemo(() => {
       // Checking if renderElement is well defined or not as calling SDK has a number of video streams limitation which
       // implies that, after their threshold, all streams have no child (blank video)
@@ -109,6 +142,7 @@ export const _LocalVideoTile = React.memo(
             localVideoSelectedDescription={localVideoSelectedDescription}
           />
           <StreamMedia videoStreamElement={renderElement} isMirrored={true} />
+          {/* @conditional-compile-remove(spotlight) */ isSpotlighted && spotlightBorder}
         </>
       );
     }, [
@@ -116,27 +150,36 @@ export const _LocalVideoTile = React.memo(
       localVideoCameraSwitcherLabel,
       localVideoSelectedDescription,
       renderElement,
-      showCameraSwitcherInLocalPreview
+      showCameraSwitcherInLocalPreview,
+      /* @conditional-compile-remove(spotlight) */ isSpotlighted,
+      /* @conditional-compile-remove(spotlight) */ spotlightBorder
     ]);
 
     return (
-      <VideoTile
-        key={userId ?? 'local-video-tile'}
-        userId={userId}
-        renderElement={renderVideoStreamElement}
-        showLabel={showLabel}
-        displayName={displayName}
-        initialsName={initialsName}
-        styles={styles}
-        onRenderPlaceholder={onRenderAvatar}
-        isMuted={isMuted}
-        showMuteIndicator={showMuteIndicator}
-        personaMinSize={props.personaMinSize}
-        /* @conditional-compile-remove(raise-hand) */
-        raisedHand={raisedHand}
-        /* @conditional-compile-remove(reaction) */
-        reaction={reaction}
-      />
+      <>
+        <VideoTile
+          key={userId ?? 'local-video-tile'}
+          userId={userId}
+          renderElement={renderVideoStreamElement}
+          showLabel={showLabel}
+          displayName={displayName}
+          initialsName={initialsName}
+          styles={styles}
+          onRenderPlaceholder={onRenderAvatar}
+          isMuted={isMuted}
+          showMuteIndicator={showMuteIndicator}
+          personaMinSize={props.personaMinSize}
+          /* @conditional-compile-remove(raise-hand) */
+          raisedHand={raisedHand}
+          /* @conditional-compile-remove(reaction) */
+          reaction={reaction}
+          /* @conditional-compile-remove(spotlight) */
+          isSpotlighted={isSpotlighted}
+          /* @conditional-compile-remove(reaction) */
+          reactionResources={reactionResources}
+        />
+        {/* @conditional-compile-remove(spotlight) */ isSpotlighted && spotlightBorder}
+      </>
     );
   }
 );

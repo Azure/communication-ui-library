@@ -120,6 +120,11 @@
     "callRejectedMoreDetails": "The person you are trying to reach is unavailable. Please try again later.",
     "callTimeoutTitle": "The call could not be completed",
     "callTimeoutDetails": "The person you are trying to reach is unavailable. Please try again later.",
+    "dtmfDialerButtonLabel": "Dialpad",
+    "dtmfDialerButtonTooltipOn": "Show dialpad",
+    "dtmfDialerButtonTooltipOff": "Hide dialpad",
+    "dtmfDialerMoreButtonLabelOn": "Show dialpad",
+    "dtmfDialerMoreButtonLabelOff": "Hide dialpad",
     "spokenLanguageStrings": {
       "ar-ae": "Arabic - U.A.E.",
       "ar-sa": "Arabic - Saudi Arabia",
