@@ -20,6 +20,9 @@ jobs:
   chromatic_deployment:
     name: Publish Chromatic
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@v3
         with:
