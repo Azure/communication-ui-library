@@ -80,6 +80,10 @@ graph LR
   pr -.-o|Create Pull Request| prerelease
 ```
 
+### Step 1.2: Groom changelog
+
+Add steps link to grooming steps
+
 ### Step 1.2: Create Release branch
 
 Use the [create-release-branch](https://github.com/Azure/communication-ui-library/actions/workflows/create-release-branch.yml) github action to trigger the release branch creation workflow.
