@@ -2,8 +2,6 @@ import {
   FluentThemeProvider,
   MessageThread,
   Message,
-  AttachmentMetadata,
-  AttachmentDownloadResult,
   ImageGalleryImageProps,
   ImageGallery,
   ChatMessage
@@ -13,21 +11,6 @@ import React, { useState } from 'react';
 
 export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
   const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps>>([]);
-
-  const onFetchAttachments = async (attachments: AttachmentMetadata[]): Promise<AttachmentDownloadResult[]> => {
-    // * Your custom function to fetch image behind authenticated blob storage/server
-    // const response = await fetchImage(attachment.previewUrl ?? '', token);
-    // const blob = await response.blob();
-
-    // * Create a blob url as <img> src
-    return [
-      {
-        attachmentId: attachments[0].id,
-        // blobUrl: URL.createObjectURL(blob);
-        blobUrl: attachments[0].attachmentType === 'inlineImage' ? attachments[0].previewUrl ?? '' : ''
-      }
-    ];
-  };
 
   const onInlineImageClicked = (attachmentId: string, messageId: string): Promise<void> => {
     const filteredMessages = messages?.filter((message) => {
@@ -66,7 +49,7 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
       messageType: 'chat',
       senderId: 'user3',
       content:
-        '<p>How should I design my new house?</p><p><img alt="image" src="" itemscope="png" width="166.5625" height="250" id="SomeImageId1" style="vertical-align:bottom"></p><p><img alt="image" src="" itemscope="png" width="374.53183520599254" height="250" id="SomeImageId2" style="vertical-align:bottom"></p><p>&nbsp;</p>',
+        '<p>How should I design my new house?</p><p><img alt="image" src="images/inlineImageExample1.png" itemscope="png" width="166.5625" height="250" id="SomeImageId1" style="vertical-align:bottom"></p><p><img alt="image" src="images/inlineImageExample2.png" itemscope="png" width="374.53183520599254" height="250" id="SomeImageId2" style="vertical-align:bottom"></p><p>&nbsp;</p>',
       senderDisplayName: 'Miguel Garcia',
       messageId: Math.random().toString(),
       createdOn: new Date('2019-04-13T00:00:00.000+08:09'),
@@ -102,12 +85,7 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
   ];
   return (
     <FluentThemeProvider>
-      <MessageThread
-        userId={'1'}
-        messages={messages}
-        onFetchAttachments={onFetchAttachments}
-        onInlineImageClicked={onInlineImageClicked}
-      />
+      <MessageThread userId={'1'} messages={messages} onInlineImageClicked={onInlineImageClicked} />
       {
         <ImageGallery
           isOpen={galleryImages.length > 0}
