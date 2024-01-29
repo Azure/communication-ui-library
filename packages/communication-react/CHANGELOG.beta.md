@@ -9,24 +9,15 @@ This log was last generated on Mon, 29 Jan 2024 17:18:22 GMT and should not be m
 Mon, 29 Jan 2024 17:18:22 GMT 
 [Compare changes](https://github.com/azure/communication-ui-library/compare/1.12.0...1.13.0-beta.1)
 
-### UI Library Supports Teams Meeting Themes
+### Custom Branding - Public Preivew
 
--- TODO: Add blurb
-
-### Inline Image / Filesharing Improvements
-
--- TODO: Add blurb. May not be needed, as these are already released and this is just a change.
+The CallComposite and CallWithChatComposite now support applying a background image and logo to the Configuration Page. This allows developers to unify their customers' joining experiences if they have a Teams Premium feature enabled called Teams Meeting Themes.
 
 ### Features
 - Update Composite interface to have branding options nested in a branding object ([PR #3806](https://github.com/azure/communication-ui-library/pull/3806) by 2684369+JamesBurnside@users.noreply.github.com)
 - Fix custom branding props ([PR #3833](https://github.com/azure/communication-ui-library/pull/3833) by 2684369+JamesBurnside@users.noreply.github.com)
 - Include ability to set background image and logo in CallComposites in beta packages ([PR #3968](https://github.com/azure/communication-ui-library/pull/3968) by 2684369+JamesBurnside@users.noreply.github.com)
 - Support rectangular logos ([PR #3859](https://github.com/azure/communication-ui-library/pull/3859) by 2684369+JamesBurnside@users.noreply.github.com)
-
-- Add Spotlight selectors and handlers ([PR #4004](https://github.com/azure/communication-ui-library/pull/4004) by 79475487+mgamis-msft@users.noreply.github.com)
-- Show spotlighted participants in call composites ([PR #4012](https://github.com/azure/communication-ui-library/pull/4012) by 79475487+mgamis-msft@users.noreply.github.com)
-- Add spotlight icon to participant list on call composites ([PR #4040](https://github.com/azure/communication-ui-library/pull/4040) by 79475487+mgamis-msft@users.noreply.github.com)
-- Add Spotlight feature to stateful call client ([PR #3993](https://github.com/azure/communication-ui-library/pull/3993) by 79475487+mgamis-msft@users.noreply.github.com)
 
 - Introduce new queue system to download images ([PR #4044](https://github.com/azure/communication-ui-library/pull/4044) by 9044372+JoshuaLai@users.noreply.github.com)
 ### Improvements
@@ -41,21 +32,10 @@ Mon, 29 Jan 2024 17:18:22 GMT
 - Upgrade rooms client to versions 1.1.0-beta.1 and 1.1.0 ([PR #3819](https://github.com/azure/communication-ui-library/pull/3819) by 79475487+mgamis-msft@users.noreply.github.com)
 - TDBuild - updating localized resource files. ([PR #4025](https://github.com/azure/communication-ui-library/pull/4025) by edwardlee@microsoft.com)
 ### Bug Fixes
-- ensure beta-release version is checked out ([PR #3867](https://github.com/azure/communication-ui-library/pull/3867) by 2684369+JamesBurnside@users.noreply.github.com)
-- Fix Inline Image Gallery ([PR #3850](https://github.com/azure/communication-ui-library/pull/3850) by 3941071+emlynmac@users.noreply.github.com)
-- Prevent dialpad unecessarily triggering onChange event ([PR #3963](https://github.com/azure/communication-ui-library/pull/3963) by 2684369+JamesBurnside@users.noreply.github.com)
-- Fix Dialpad bugs ([PR #4062](https://github.com/azure/communication-ui-library/pull/4062) by 94866715+dmceachernmsft@users.noreply.github.com)
 - Stop the ringing sound from playing when the call disconnects before the callee answers ([PR #3889](https://github.com/azure/communication-ui-library/pull/3889) by 94866715+dmceachernmsft@users.noreply.github.com)
-- Fix up chat components noImplcitAny ([PR #3988](https://github.com/azure/communication-ui-library/pull/3988) by 3941071+emlynmac@users.noreply.github.com)
 - Enable the ability for user to edit value in text field with keyboard ([PR #3970](https://github.com/azure/communication-ui-library/pull/3970) by 94866715+dmceachernmsft@users.noreply.github.com)
-- Assume 'AzureCommunicationLibrary' for telemetry to make consistent with iOS and Android ([PR #3871](https://github.com/azure/communication-ui-library/pull/3871) by 73612854+palatter@users.noreply.github.com)
-- Enable noImplicitAny in chat-component-bindings ([PR #3998](https://github.com/azure/communication-ui-library/pull/3998) by 3941071+emlynmac@users.noreply.github.com)
-- Fix theme snippet by making alternative rtl snippet fix ([PR #3932](https://github.com/azure/communication-ui-library/pull/3932) by 73612854+palatter@users.noreply.github.com)
 - Introduce new endcall screen for when a outbound call times out ([PR #3914](https://github.com/azure/communication-ui-library/pull/3914) by 94866715+dmceachernmsft@users.noreply.github.com)
-- Update component examples for noImplicitAny ([PR #4001](https://github.com/azure/communication-ui-library/pull/4001) by 3941071+emlynmac@users.noreply.github.com)
-- Remove beta banners for stablized features ([PR #3952](https://github.com/azure/communication-ui-library/pull/3952) by 96077406+carocao-msft@users.noreply.github.com)
 - Reaction sub-menu re-render bug fix ([PR #4038](https://github.com/azure/communication-ui-library/pull/4038) by mbellah@microsoft.com)
-
 
 ## [1.11.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.11.0-beta.1)
 
