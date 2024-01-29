@@ -4,7 +4,8 @@ import {
   Message,
   ImageGalleryImageProps,
   ImageGallery,
-  ChatMessage
+  ChatMessage,
+  InlineImage
 } from '@azure/communication-react';
 import { Persona, PersonaSize } from '@fluentui/react';
 import React, { useState } from 'react';
@@ -42,6 +43,29 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
     };
     setGalleryImages([galleryImage]);
     return Promise.resolve();
+  };
+
+  /* @conditional-compile-remove(image-gallery) */
+  const inlineImageOptions = {
+    onRenderInlineImage: (
+      inlineImage: InlineImage,
+      defaultOnRender: (inlineImage: InlineImage) => JSX.Element
+    ): JSX.Element => {
+      return (
+        <span
+          onClick={() => onInlineImageClicked(inlineImage.imgAttrs.id || '', inlineImage.messageId)}
+          tabIndex={0}
+          role="button"
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              onInlineImageClicked(inlineImage.imgAttrs.id || '', inlineImage.messageId);
+            }
+          }}
+        >
+          {defaultOnRender(inlineImage)}
+        </span>
+      );
+    }
   };
 
   const messages: Message[] = [
@@ -85,7 +109,7 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
   ];
   return (
     <FluentThemeProvider>
-      <MessageThread userId={'1'} messages={messages} onInlineImageClicked={onInlineImageClicked} />
+      <MessageThread userId={'1'} messages={messages} inlineImageOptions={inlineImageOptions} />
       {
         <ImageGallery
           isOpen={galleryImages.length > 0}
