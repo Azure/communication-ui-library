@@ -188,7 +188,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     /* @conditional-compile-remove(file-sharing) */
     this.updateFileUploadMetadata = this.updateFileUploadMetadata.bind(this);
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-    this.downloadAttachments = this.downloadAttachments.bind(this);
+    this.downloadAttachment = this.downloadAttachment.bind(this);
   }
 
   dispose(): void {
@@ -332,7 +332,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  async downloadAttachments(options: { attachmentUrl: string }): Promise<AttachmentDownloadResult> {
+  async downloadAttachment(options: { attachmentUrl: string }): Promise<AttachmentDownloadResult> {
     return this.asyncTeeErrorToEventEmitter(async () => {
       if (this.credential === undefined) {
         throw new ChatError('ChatThreadClient.getMessage', new Error('AccessToken is null'));
