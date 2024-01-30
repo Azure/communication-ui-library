@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "fix",
-  "workstream": "",
-  "comment": "Assume 'AzureCommunicationLibrary' for telemetry to make consistent with iOS and Android",
-  "packageName": "@azure/communication-react",
-  "email": "73612854+palatter@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
