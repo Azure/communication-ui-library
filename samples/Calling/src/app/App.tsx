@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { CommunicationUserIdentifier } from '@azure/communication-common';
+import { CommunicationIdentifier, CommunicationUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(rooms) */
 import { ParticipantRole } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
@@ -58,6 +58,7 @@ const App = (): JSX.Element => {
 
   // Call details to join a call - these are collected from the user on the home screen
   const [callLocator, setCallLocator] = useState<CallAdapterLocator>(createGroupId());
+  const [targetCallees, setTargetCallees] = useState<CommunicationIdentifier[]>([]);
   const [displayName, setDisplayName] = useState<string>('');
 
   /* @conditional-compile-remove(teams-identity-support) */
@@ -128,7 +129,10 @@ const App = (): JSX.Element => {
 
             /* @conditional-compile-remove(teams-adhoc-call) */
             if (callDetails.option === 'TeamsAdhoc') {
-              callLocator = getOutboundParticipants(callDetails.outboundTeamsUsers);
+              const outboundTeamsUsers = callDetails.outboundTeamsUsers?.map((user) => {
+                return fromFlatCommunicationIdentifier(user);
+              });
+              setTargetCallees(outboundTeamsUsers ?? []);
             }
 
             /* @conditional-compile-remove(rooms) */
@@ -215,6 +219,7 @@ const App = (): JSX.Element => {
           userId={userId}
           displayName={displayName}
           callLocator={callLocator}
+          targetCallees={targetCallees}
           /* @conditional-compile-remove(PSTN-calls) */
           alternateCallerId={alternateCallerId}
           /* @conditional-compile-remove(teams-identity-support) */
