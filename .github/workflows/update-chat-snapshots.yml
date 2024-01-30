@@ -13,6 +13,8 @@ jobs:
   precondition:
     name: Determine if this workflow is applicable
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     outputs:
       met: ${{ steps.label.outputs.found || steps.workflow_dispatch.outputs.found }}
     steps:
@@ -39,6 +41,7 @@ jobs:
     needs: precondition
     if: needs.precondition.outputs.met
     runs-on: ubuntu-latest
+    permissions: read-all
     outputs:
       matrix: ${{ steps.get-matrix.outputs.matrix }}
     steps:
@@ -57,6 +60,7 @@ jobs:
     if: needs.precondition.outputs.met
     name: Update packages/react-composites ChatComposite browser test snapshots
     runs-on: ubuntu-latest
+    permissions: read-all
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
@@ -147,6 +151,7 @@ jobs:
     if: needs.precondition.outputs.met
     name: Push all updated snapshots to branch
     runs-on: ubuntu-latest
+    permissions: read-all
     steps:
       - uses: actions/checkout@v3
         with:
