@@ -28,6 +28,8 @@ import { _formatString } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(hide-attendee-name) */
 import { useLocale } from '../localization';
 
+let i = 0;
+
 /**
  * A memoized version of VideoTile for rendering remote participants. React.memo is used for a performance
  * boost by memoizing the same rendered component to avoid rerendering a VideoTile when its position in the
@@ -86,6 +88,8 @@ export const _RemoteVideoTile = React.memo(
       toggleAnnouncerString,
       strings
     } = props;
+
+    console.log('RemoteVideoTile re-rendered', i++);
 
     const remoteVideoStreamProps: RemoteVideoStreamLifecycleMaintainerProps = useMemo(
       () => ({

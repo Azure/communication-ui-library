@@ -314,6 +314,9 @@ export interface VideoTileDrawerMenuProps {
    */
   hostId?: string;
 }
+
+let i = 0;
+
 /**
  * VideoGallery represents a layout of video tiles for a specific call.
  * It displays a {@link VideoTile} for the local user as well as for each remote participant who has joined the call.
@@ -352,6 +355,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(rooms) */
     localVideoTileSize = 'followDeviceOrientation'
   } = props;
+
+  console.log('VideoGallery re-rendered', i++);
 
   const ids = useIdentifiers();
   const theme = useTheme();

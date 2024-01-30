@@ -14,6 +14,9 @@ import {
 import { VideoTile, VideoTileStylesProps } from './VideoTile';
 /* @conditional-compile-remove(raise-hand) */
 import { RaisedHand } from '../types';
+
+let i = 0;
+
 /**
  * A memoized version of VideoTile for rendering local participant.
  *
@@ -63,6 +66,8 @@ export const _LocalVideoTile = React.memo(
       /* @conditional-compile-remove(raise-hand) */
       raisedHand
     } = props;
+
+    console.log('LocalVideoTile re-rendered', i++);
 
     const localVideoStreamProps: LocalVideoStreamLifecycleMaintainerProps = useMemo(
       () => ({
