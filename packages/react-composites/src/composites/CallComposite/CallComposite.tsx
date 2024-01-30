@@ -433,11 +433,12 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           startCallHandler={(): void => {
             if (callees) {
               adapter.startCall(callees);
+            } else {
+              adapter.joinCall({
+                microphoneOn: 'keep',
+                cameraOn: 'keep'
+              });
             }
-            adapter.joinCall({
-              microphoneOn: 'keep',
-              cameraOn: 'keep'
-            });
           }}
           updateSidePaneRenderer={setSidePaneRenderer}
           latestErrors={latestErrors}

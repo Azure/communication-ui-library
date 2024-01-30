@@ -57,7 +57,7 @@ const App = (): JSX.Element => {
   const [userCredentialFetchError, setUserCredentialFetchError] = useState<boolean>(false);
 
   // Call details to join a call - these are collected from the user on the home screen
-  const [callLocator, setCallLocator] = useState<CallAdapterLocator>(createGroupId());
+  const [callLocator, setCallLocator] = useState<CallAdapterLocator>();
   const [targetCallees, setTargetCallees] = useState<CommunicationIdentifier[]>([]);
   const [displayName, setDisplayName] = useState<string>('');
 
@@ -110,12 +110,17 @@ const App = (): JSX.Element => {
             setDisplayName(callDetails.displayName);
             /* @conditional-compile-remove(PSTN-calls) */
             setAlternateCallerId(callDetails.alternateCallerId);
-            let callLocator: CallAdapterLocator | undefined =
-              callDetails.callLocator ||
-              /* @conditional-compile-remove(rooms) */ getRoomIdFromUrl() ||
-              getTeamsLinkFromUrl() ||
-              getGroupIdFromUrl() ||
-              createGroupId();
+            let callLocator: CallAdapterLocator | undefined = !(
+              callDetails.option === 'TeamsAdhoc' ||
+              callDetails.option === '1:N' ||
+              callDetails.option === 'PSTN'
+            )
+              ? callDetails.callLocator ||
+                /* @conditional-compile-remove(rooms) */ getRoomIdFromUrl() ||
+                getTeamsLinkFromUrl() ||
+                getGroupIdFromUrl() ||
+                createGroupId()
+              : undefined;
 
             /* @conditional-compile-remove(rooms) */
             if (callDetails.option === 'Rooms') {
@@ -148,12 +153,8 @@ const App = (): JSX.Element => {
               callLocator = { roomId: roomId };
             }
 
-            if (!callLocator) {
-              throw new Error('Invalid call locator', callLocator);
-            }
-
             /* @conditional-compile-remove(rooms) */
-            if ('roomId' in callLocator) {
+            if (callLocator && 'roomId' in callLocator) {
               if (userId && 'communicationUserId' in userId) {
                 await addUserToRoom(
                   userId.communicationUserId,
@@ -168,7 +169,7 @@ const App = (): JSX.Element => {
             setCallLocator(callLocator);
 
             // Update window URL to have a joinable link
-            if (!joiningExistingCall) {
+            if (callLocator && !joiningExistingCall) {
               window.history.pushState(
                 {},
                 document.title,
@@ -208,7 +209,7 @@ const App = (): JSX.Element => {
         !token ||
         !userId ||
         (!displayName && /* @conditional-compile-remove(teams-identity-support) */ !isTeamsCall) ||
-        !callLocator
+        (!targetCallees && !callLocator)
       ) {
         document.title = `credentials - ${WEB_APP_TITLE}`;
         return <Spinner label={'Getting user credentials from server'} ariaLive="assertive" labelPosition="top" />;

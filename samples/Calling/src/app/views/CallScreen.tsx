@@ -34,8 +34,8 @@ export interface CallScreenProps {
   userId:
     | CommunicationUserIdentifier
     | /* @conditional-compile-remove(teams-identity-support) */ MicrosoftTeamsUserIdentifier;
-  callLocator: CallAdapterLocator;
-  targetCallees: CommunicationIdentifier[];
+  callLocator?: CallAdapterLocator;
+  targetCallees?: CommunicationIdentifier[];
   displayName: string;
   /* @conditional-compile-remove(PSTN-calls) */
   alternateCallerId?: string;
@@ -109,7 +109,7 @@ type TeamsCallScreenProps = CallScreenProps & {
 /* @conditional-compile-remove(teams-identity-support) */
 const TeamsCallScreen = (props: TeamsCallScreenProps): JSX.Element => {
   const { afterCreate, callLocator: locator, userId, ...adapterArgs } = props;
-  if (!('meetingLink' in locator)) {
+  if (!(locator && 'meetingLink' in locator)) {
     throw new Error('A teams meeting locator must be provided for Teams Identity Call.');
   }
 
@@ -180,7 +180,7 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
     {
       ...adapterArgs,
       userId,
-      locator,
+      targetCallees: props.targetCallees,
       /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(unsupported-browser) */ /* @conditional-compile-remove(video-background-effects) */
       options: callAdapterOptions
     },

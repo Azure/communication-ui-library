@@ -418,7 +418,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       callClient.getState(),
       isTeamsMeeting,
       /* @conditional-compile-remove(rooms) */ isRoomsCall,
-      /* @conditional-compile-remove(video-background-effects) */ options
+      /* @conditional-compile-remove(video-background-effects) */ options,
+      this.targetCallees
     );
 
     this.context.onCallEnded((endCallData) => this.emitter.emit('callEnded', endCallData));
@@ -1571,7 +1572,6 @@ export const _createAzureCommunicationCallAdapterInner = async ({
   if (!_isValidIdentifier(userId)) {
     throw new Error('Invalid identifier. Please provide valid identifier object.');
   }
-
   const callClient = _createStatefulCallClientInner(
     {
       userId,
@@ -1706,7 +1706,7 @@ function useAzureCommunicationCallAdapterGeneric<
 
   useEffect(
     () => {
-      if (!credential || !locator || !userId) {
+      if (!credential || (!locator && !targetCallees) || !userId) {
         return;
       }
 
