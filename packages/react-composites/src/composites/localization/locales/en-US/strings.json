@@ -300,7 +300,19 @@
       "audioRating": "Audio",
       "videoRating": "Video",
       "screenshareRating": "Presenting"
-    }
+    },
+    "startSpotlightPromptHeading": "Spotlight for everyone?",
+    "startSpotlightPromptText": "You'll highlight this video for everyone in the meeting.",
+    "startSpotlightOnSelfPromptText": "You'll highlight your video for everyone in the meeting.",
+    "startSpotlightPromptConfirmButtonLabel": "Spotlight for everyone",
+    "startSpotlightPromptCancelButtonLabel": "Cancel",
+    "stopSpotlightPromptHeading": "Stop spotlighting?",
+    "stopSpotlightOnSelfPromptHeading": "Exit spotlight?",
+    "stopSpotlightPromptText": "This video will no longer be highlighted for everyone in the meeting.",
+    "stopSpotlightOnSelfPromptText": "Your video will no longer be highlighted for everyone in the meeting.",
+    "stopSpotlightPromptConfirmButtonLabel": "Stop spotlighting",
+    "stopSpotlightOnSelfPromptConfirmButtonLabel": "Exit spotlight",
+    "stopSpotlightPromptCancelButtonLabel": "Cancel"
   },
   "chat": {
     "chatListHeader": "In this chat",

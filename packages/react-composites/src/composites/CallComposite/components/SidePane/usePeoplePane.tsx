@@ -11,6 +11,8 @@ import { AvatarPersonaDataCallback } from '../../../common/AvatarPersona';
 import { IButton } from '@fluentui/react';
 /* @conditional-compile-remove(spotlight) */
 import { IContextualMenuItem } from '@fluentui/react';
+/* @conditional-compile-remove(spotlight) */
+import { PromptProps } from '../Prompt';
 
 const PEOPLE_SIDE_PANE_ID = 'people';
 
@@ -26,11 +28,15 @@ export const usePeoplePane = (props: {
   /* @conditional-compile-remove(spotlight) */
   spotlightedParticipantUserIds?: string[];
   /* @conditional-compile-remove(spotlight) */
-  onStartSpotlight?: (userId: string) => Promise<void>;
+  onStartSpotlight?: (userId: string) => void;
   /* @conditional-compile-remove(spotlight) */
-  onStopSpotlight?: (userId: string) => Promise<void>;
+  onStopSpotlight?: (userId: string) => void;
   /* @conditional-compile-remove(spotlight) */
   ableToSpotlight?: boolean;
+  /* @conditional-compile-remove(spotlight) */
+  setIsConfirmationPromptOpen?: (isOpen: boolean) => void;
+  /* @conditional-compile-remove(spotlight) */
+  setConfirmationPromptProps?: (props: PromptProps) => void;
 }): {
   openPeoplePane: () => void;
   closePeoplePane: () => void;
@@ -51,7 +57,11 @@ export const usePeoplePane = (props: {
     /* @conditional-compile-remove(spotlight) */
     onStopSpotlight,
     /* @conditional-compile-remove(spotlight) */
-    ableToSpotlight
+    ableToSpotlight,
+    /* @conditional-compile-remove(spotlight) */
+    setIsConfirmationPromptOpen,
+    /* @conditional-compile-remove(spotlight) */
+    setConfirmationPromptProps
   } = props;
 
   const closePane = useCallback(() => {
@@ -74,6 +84,55 @@ export const usePeoplePane = (props: {
   );
 
   /* @conditional-compile-remove(spotlight) */
+  const onStartSpotlightWithPrompt = useCallback(
+    (userId: string, myUserId?: string): void => {
+      const startSpotlightPromptText =
+        userId === myUserId ? localeStrings.startSpotlightOnSelfPromptText : localeStrings.startSpotlightPromptText;
+      setConfirmationPromptProps?.({
+        heading: localeStrings.startSpotlightPromptHeading,
+        text: startSpotlightPromptText,
+        confirmButtonLabel: localeStrings.startSpotlightPromptConfirmButtonLabel,
+        cancelButtonLabel: localeStrings.startSpotlightPromptCancelButtonLabel,
+        onConfirm: () => {
+          onStartSpotlight?.(userId);
+          setIsConfirmationPromptOpen?.(false);
+        },
+        onCancel: () => setIsConfirmationPromptOpen?.(false)
+      });
+      setIsConfirmationPromptOpen?.(true);
+    },
+    [onStartSpotlight, setIsConfirmationPromptOpen, setConfirmationPromptProps, localeStrings]
+  );
+
+  /* @conditional-compile-remove(spotlight) */
+  const onStopSpotlightWithPrompt = useCallback(
+    (userId: string, myUserId?: string): void => {
+      const stopSpotlightPromptHeading =
+        userId === myUserId ? localeStrings.stopSpotlightOnSelfPromptHeading : localeStrings.stopSpotlightPromptHeading;
+      const stopSpotlightPromptText =
+        userId === myUserId ? localeStrings.stopSpotlightOnSelfPromptText : localeStrings.stopSpotlightPromptText;
+      const stopSpotlightPromptConfirmButtonLabel =
+        userId === myUserId
+          ? localeStrings.stopSpotlightOnSelfPromptConfirmButtonLabel
+          : localeStrings.stopSpotlightPromptConfirmButtonLabel;
+
+      setConfirmationPromptProps?.({
+        heading: stopSpotlightPromptHeading,
+        text: stopSpotlightPromptText,
+        confirmButtonLabel: stopSpotlightPromptConfirmButtonLabel,
+        cancelButtonLabel: localeStrings.stopSpotlightPromptCancelButtonLabel,
+        onConfirm: () => {
+          onStopSpotlight?.(userId);
+          setIsConfirmationPromptOpen?.(false);
+        },
+        onCancel: () => setIsConfirmationPromptOpen?.(false)
+      });
+      setIsConfirmationPromptOpen?.(true);
+    },
+    [onStopSpotlight, setIsConfirmationPromptOpen, setConfirmationPromptProps, localeStrings]
+  );
+
+  /* @conditional-compile-remove(spotlight) */
   const onFetchParticipantMenuItemsForCallComposite = useCallback(
     (participantId: string, myUserId?: string, defaultMenuItems?: IContextualMenuItem[]): IContextualMenuItem[] => {
       const _defaultMenuItems = defaultMenuItems ?? [];
@@ -83,12 +142,12 @@ export const usePeoplePane = (props: {
           myUserId === participantId
             ? localeStrings.stopSpotlightOnSelfParticipantListMenuLabel
             : localeStrings.stopSpotlightParticipantListMenuLabel;
-        if (onStopSpotlight && stopSpotlightMenuText && (ableToSpotlight || myUserId === participantId)) {
+        if (onStopSpotlightWithPrompt && stopSpotlightMenuText && (ableToSpotlight || myUserId === participantId)) {
           _defaultMenuItems.push({
             key: 'stop-spotlight',
             text: stopSpotlightMenuText,
             onClick: () => {
-              onStopSpotlight?.(participantId);
+              onStopSpotlightWithPrompt?.(participantId, myUserId);
             },
             iconProps: {
               iconName: 'StopSpotlightContextualMenuItem',
@@ -102,12 +161,12 @@ export const usePeoplePane = (props: {
           spotlightedParticipantUserIds && spotlightedParticipantUserIds.length > 0
             ? localeStrings.addSpotlightParticipantListMenuLabel
             : localeStrings.startSpotlightParticipantListMenuLabel;
-        if (onStartSpotlight && startSpotlightMenuText && ableToSpotlight) {
+        if (onStartSpotlightWithPrompt && startSpotlightMenuText && ableToSpotlight) {
           _defaultMenuItems.push({
             key: 'start-spotlight',
             text: startSpotlightMenuText,
             onClick: () => {
-              onStartSpotlight?.(participantId);
+              onStartSpotlightWithPrompt?.(participantId, myUserId);
             },
             iconProps: {
               iconName: 'StartSpotlightContextualMenuItem',
@@ -123,8 +182,8 @@ export const usePeoplePane = (props: {
     },
     [
       spotlightedParticipantUserIds,
-      onStartSpotlight,
-      onStopSpotlight,
+      onStartSpotlightWithPrompt,
+      onStopSpotlightWithPrompt,
       onFetchParticipantMenuItems,
       localeStrings.stopSpotlightParticipantListMenuLabel,
       localeStrings.stopSpotlightOnSelfParticipantListMenuLabel,

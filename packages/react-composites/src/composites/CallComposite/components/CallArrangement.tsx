@@ -80,6 +80,8 @@ import {
 import { useLocale } from '../../localization';
 /* @conditional-compile-remove(spotlight) */
 import { usePropsFor } from '../hooks/usePropsFor';
+/* @conditional-compile-remove(spotlight) */
+import { PromptProps } from './Prompt';
 
 /**
  * @private
@@ -113,6 +115,10 @@ export interface CallArrangementProps {
   onSetDialpadPage?: () => void;
   /* @conditional-compile-remove(dtmf-dialer) */
   dtmfDialerPresent?: boolean;
+  /* @conditional-compile-remove(spotlight) */
+  setIsConfirmationPromptOpen?: (isOpen: boolean) => void;
+  /* @conditional-compile-remove(spotlight) */
+  setConfirmationPromptProps?: (props: PromptProps) => void;
 }
 
 /**
@@ -175,7 +181,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     /* @conditional-compile-remove(spotlight) */ onStartSpotlight: videoGalleryProps.onStartSpotlight,
     /* @conditional-compile-remove(spotlight) */ onStopSpotlight: videoGalleryProps.onStopSpotlight,
     /* @conditional-compile-remove(spotlight) */ ableToSpotlight:
-      adapter.getState().call?.capabilitiesFeature?.capabilities.spotlightParticipant.isPresent
+      adapter.getState().call?.capabilitiesFeature?.capabilities.spotlightParticipant.isPresent,
+    /* @conditional-compile-remove(spotlight) */ setIsConfirmationPromptOpen: props.setIsConfirmationPromptOpen,
+    /* @conditional-compile-remove(spotlight) */ setConfirmationPromptProps: props.setConfirmationPromptProps
   });
   const togglePeoplePane = useCallback(() => {
     if (isPeoplePaneOpen) {

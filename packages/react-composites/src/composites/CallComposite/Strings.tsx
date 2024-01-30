@@ -808,4 +808,64 @@ export interface CallCompositeStrings {
    * Label to hide the dtmf dialer in the more button menu
    */
   dtmfDialerMoreButtonLabelOff?: string;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Heading for prompt when starting spotlight on participant
+   */
+  startSpotlightPromptHeading?: string;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Text for prompt when starting spotlight on participant
+   */
+  startSpotlightPromptText?: string;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Label for button to confirm starting spotlight on local user in prompt
+   */
+  startSpotlightOnSelfPromptText?: string;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Label for button to confirm starting spotlight on participant in prompt
+   */
+  startSpotlightPromptConfirmButtonLabel?: string;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Label for button to cancel starting spotlight on participant in prompt
+   */
+  startSpotlightPromptCancelButtonLabel?: string;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Heading for prompt when stopping spotlight on participant
+   */
+  stopSpotlightPromptHeading?: string;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Heading for prompt when stopping spotlight on local user
+   */
+  stopSpotlightOnSelfPromptHeading?: string;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Text for prompt when stopping spotlight on participant
+   */
+  stopSpotlightPromptText?: string;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Text for prompt when stopping spotlight on local user
+   */
+  stopSpotlightOnSelfPromptText?: string;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Label for button to confirm stopping spotlight on participant in prompt
+   */
+  stopSpotlightPromptConfirmButtonLabel?: string;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Label for button to confirm stopping spotlight on local user in prompt
+   */
+  stopSpotlightOnSelfPromptConfirmButtonLabel?: string;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Label for button to cancel stopping spotlight on participant in prompt
+   */
+  stopSpotlightPromptCancelButtonLabel?: string;
 }

@@ -18,6 +18,8 @@ import { useSelector } from '../hooks/useSelector';
 import { localVideoCameraCycleButtonSelector } from '../selectors/LocalVideoTileSelector';
 import { LocalVideoCameraCycleButton } from '@internal/react-components';
 import { _formatString } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(spotlight) */
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { useParticipantChangedAnnouncement } from '../utils/MediaGalleryUtils';
 /* @conditional-compile-remove(pinned-participants) */
 import { RemoteVideoTileMenuOptions } from '../CallComposite';
@@ -25,6 +27,10 @@ import { RemoteVideoTileMenuOptions } from '../CallComposite';
 import { LocalVideoTileOptions } from '../CallComposite';
 /* @conditional-compile-remove(rooms) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
+/* @conditional-compile-remove(spotlight) */
+import { PromptProps } from './Prompt';
+/* @conditional-compile-remove(spotlight) */
+import { useLocale } from '../../localization';
 
 const VideoGalleryStyles = {
   root: {
@@ -61,12 +67,19 @@ export interface MediaGalleryProps {
   userSetOverflowGalleryPosition?: 'Responsive' | 'horizontalTop';
   /* @conditional-compile-remove(gallery-layouts) */
   userSetGalleryLayout: VideoGalleryLayout;
+  /* @conditional-compile-remove(spotlight) */
+  setIsPromptOpen: (isOpen: boolean) => void;
+  /* @conditional-compile-remove(spotlight) */
+  setPromptProps: (props: PromptProps) => void;
 }
 
 /**
  * @private
  */
 export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
+  /* @conditional-compile-remove(spotlight) */
+  const { setIsPromptOpen, setPromptProps } = props;
+
   const videoGalleryProps = usePropsFor(VideoGallery);
   const cameraSwitcherCameras = useSelector(localVideoCameraCycleButtonSelector);
   const cameraSwitcherCallback = useHandlers(LocalVideoCameraCycleButton);
@@ -141,6 +154,58 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   ]);
 
   /* @conditional-compile-remove(spotlight) */
+  const strings = useLocale().strings.call;
+
+  /* @conditional-compile-remove(spotlight) */
+  const { onStartSpotlight, onStopSpotlight } = videoGalleryProps;
+
+  /* @conditional-compile-remove(spotlight) */
+  const myUserId = toFlatCommunicationIdentifier(adapter.getState().userId);
+
+  /* @conditional-compile-remove(spotlight) */
+  const onStartSpotlightWithPrompt = useCallback(
+    async (userId: string): Promise<void> => {
+      const startSpotlightPromptText =
+        userId === myUserId ? strings.startSpotlightOnSelfPromptText : strings.startSpotlightPromptText;
+      setPromptProps({
+        heading: strings.startSpotlightPromptHeading,
+        text: startSpotlightPromptText,
+        confirmButtonLabel: strings.startSpotlightPromptConfirmButtonLabel,
+        cancelButtonLabel: strings.startSpotlightPromptCancelButtonLabel,
+        onConfirm: () => {
+          onStartSpotlight(userId), setIsPromptOpen(false);
+        },
+        onCancel: () => setIsPromptOpen(false)
+      });
+      setIsPromptOpen(true);
+    },
+    [onStartSpotlight, setIsPromptOpen, setPromptProps, myUserId, strings]
+  );
+
+  /* @conditional-compile-remove(spotlight) */
+  const onStopSpotlightWithPrompt = useCallback(
+    async (userId: string): Promise<void> => {
+      const stopSpotlightPromptHeading =
+        userId === myUserId ? strings.stopSpotlightOnSelfPromptHeading : strings.stopSpotlightPromptHeading;
+      const stopSpotlightPromptText =
+        userId === myUserId ? strings.stopSpotlightOnSelfPromptText : strings.stopSpotlightPromptText;
+      setPromptProps({
+        heading: stopSpotlightPromptHeading,
+        text: stopSpotlightPromptText,
+        confirmButtonLabel: strings.stopSpotlightPromptConfirmButtonLabel,
+        cancelButtonLabel: strings.stopSpotlightPromptCancelButtonLabel,
+        onConfirm: () => {
+          onStopSpotlight(userId);
+          setIsPromptOpen(false);
+        },
+        onCancel: () => setIsPromptOpen(false)
+      });
+      setIsPromptOpen(true);
+    },
+    [onStopSpotlight, setIsPromptOpen, setPromptProps, myUserId, strings]
+  );
+
+  /* @conditional-compile-remove(spotlight) */
   const ableToSpotlight = adapter.getState().call?.capabilitiesFeature?.capabilities.spotlightParticipant.isPresent;
 
   const VideoGalleryMemoized = useMemo(() => {
@@ -175,9 +240,9 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         /* @conditional-compile-remove(reaction) */
         reactionResources={reactionResources}
         /* @conditional-compile-remove(spotlight) */
-        onStartSpotlight={ableToSpotlight ? videoGalleryProps.onStartSpotlight : undefined}
+        onStartSpotlight={ableToSpotlight ? onStartSpotlightWithPrompt : undefined}
         /* @conditional-compile-remove(spotlight) */
-        onStopSpotlight={ableToSpotlight ? videoGalleryProps.onStopSpotlight : undefined}
+        onStopSpotlight={ableToSpotlight ? onStopSpotlightWithPrompt : undefined}
       />
     );
   }, [
@@ -203,7 +268,11 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(reaction) */
     reactionResources,
     /* @conditional-compile-remove(spotlight) */
-    ableToSpotlight
+    ableToSpotlight,
+    /* @conditional-compile-remove(spotlight) */
+    onStartSpotlightWithPrompt,
+    /* @conditional-compile-remove(spotlight) */
+    onStopSpotlightWithPrompt
   ]);
 
   return (
