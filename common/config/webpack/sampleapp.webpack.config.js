@@ -12,8 +12,9 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
     entry: {
       build: './src/index.tsx'
     },
+    optimization: false,
     mode: env.production ? 'production' : 'development',
-    ...(env.production || !env.development ? {} : { devtool: 'eval-source-map' }),
+    devtool: 'eval-source-map',
     resolve:  {
       extensions: ['.ts', '.tsx', '.js'],
       alias: env.production ? {
