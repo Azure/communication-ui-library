@@ -7,6 +7,7 @@ import { SpokenLanguageStrings, CaptionLanguageStrings } from '@internal/react-c
 import { SurveyIssues, SurveyIssuesHeadingStrings } from '@internal/react-components';
 /* @conditional-compile-remove(capabilities) */
 import { CapabilityChangedNotificationStrings } from './components/CapabilitiesChangedNotificationBar';
+/* @conditional-compile-remove(spotlight) */
 import { PromptStrings } from './components/Prompt';
 
 /**
