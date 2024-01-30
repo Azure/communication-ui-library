@@ -145,7 +145,8 @@ export function defaultMockCallAdapterState(
     },
     isTeamsCall: false,
     isRoomsCall: isRoomsCall ?? false,
-    latestErrors: {}
+    latestErrors: {},
+    targetCallees: []
   };
 }
 

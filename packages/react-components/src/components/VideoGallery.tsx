@@ -44,6 +44,9 @@ import { SpeakerVideoLayout } from './VideoGallery/SpeakerVideoLayout';
 import { FocusedContentLayout } from './VideoGallery/FocusContentLayout';
 /* @conditional-compile-remove(large-gallery) */
 import { LargeGalleryLayout } from './VideoGallery/LargeGalleryLayout';
+import { LayoutProps } from './VideoGallery/Layout';
+/* @conditional-compile-remove(reaction) */
+import { ReactionResources } from '../types/ReactionTypes';
 
 /**
  * @private
@@ -260,6 +263,11 @@ export interface VideoGalleryProps {
    * This callback will be called when a participant video tile is un-pinned.
    */
   onUnpinParticipant?: (userId: string) => void;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * List of spotlighted participant userIds.
+   */
+  spotlightedParticipants?: string[];
   /* @conditional-compile-remove(pinned-participants) */
   /**
    * Options for showing the remote video tile menu.
@@ -281,6 +289,11 @@ export interface VideoGalleryProps {
    * @defaultValue 'followDeviceOrientation'
    */
   localVideoTileSize?: LocalVideoTileSize;
+  /* @conditional-compile-remove(reaction) */
+  /**
+   * Reaction resources for like, heart, laugh, applause and surprised.
+   */
+  reactionResources?: ReactionResources;
 }
 
 /* @conditional-compile-remove(pinned-participants) */
@@ -350,7 +363,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(vertical-gallery) */
     overflowGalleryPosition = 'horizontalBottom',
     /* @conditional-compile-remove(rooms) */
-    localVideoTileSize = 'followDeviceOrientation'
+    localVideoTileSize = 'followDeviceOrientation',
+    /* @conditional-compile-remove(spotlight) */
+    spotlightedParticipants,
+    /* @conditional-compile-remove(reaction) */
+    reactionResources
   } = props;
 
   const ids = useIdentifiers();
@@ -426,6 +443,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       return onRenderLocalVideoTile(localParticipant);
     }
 
+    /* @conditional-compile-remove(spotlight) */
+    const isSpotlighted = spotlightedParticipants?.includes(localParticipant.userId);
+
     const localVideoTileStyles = concatStyleSets(
       localTileNotInGrid ? floatingLocalVideoTileStyle : {},
       {
@@ -472,6 +492,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           raisedHand={localParticipant.raisedHand}
           /* @conditional-compile-remove(reaction) */
           reaction={localParticipant.reaction}
+          /* @conditional-compile-remove(spotlight) */
+          isSpotlighted={isSpotlighted}
+          /* @conditional-compile-remove(reaction) */
+          reactionResources={reactionResources}
         />
       </Stack>
     );
@@ -497,7 +521,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     localVideoTileSize,
     /* @conditional-compile-remove(gallery-layouts) */
     layout,
-    showLocalVideoTileLabel
+    showLocalVideoTileLabel,
+    /* @conditional-compile-remove(spotlight) */
+    spotlightedParticipants,
+    /* @conditional-compile-remove(reaction) */
+    reactionResources
   ]);
 
   /* @conditional-compile-remove(pinned-participants) */
@@ -547,7 +575,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       /* @conditional-compile-remove(pinned-participants) */
       const selectedScalingMode = remoteVideoStream ? selectedScalingModeState[participant.userId] : undefined;
       /* @conditional-compile-remove(pinned-participants) */
-      const isPinned = pinnedParticipants?.includes(participant.userId);
+      let isPinned = pinnedParticipants?.includes(participant.userId);
+      /* @conditional-compile-remove(spotlight) */
+      const isSpotlighted = spotlightedParticipants?.includes(participant.userId);
+      /* @conditional-compile-remove(spotlight) */
+      isPinned = isSpotlighted ? false : isPinned;
 
       const createViewOptions = (): VideoStreamOptions | undefined => {
         /* @conditional-compile-remove(pinned-participants) */
@@ -605,6 +637,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           disablePinMenuItem={pinnedParticipants.length >= MAX_PINNED_REMOTE_VIDEO_TILES}
           /* @conditional-compile-remove(pinned-participants) */
           toggleAnnouncerString={toggleAnnouncerString}
+          /* @conditional-compile-remove(spotlight) */
+          isSpotlighted={isSpotlighted}
+          /* @conditional-compile-remove(reaction) */
+          reactionResources={reactionResources}
         />
       );
     },
@@ -623,7 +659,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       /* @conditional-compile-remove(pinned-participants) */ onPinParticipant,
       /* @conditional-compile-remove(pinned-participants) */ onUnpinParticipant,
       /* @conditional-compile-remove(pinned-participants) */ toggleAnnouncerString,
-      /* @conditional-compile-remove(pinned-participants) */ onUpdateScalingMode
+      /* @conditional-compile-remove(pinned-participants) */ onUpdateScalingMode,
+      /* @conditional-compile-remove(spotlight) */ spotlightedParticipants,
+      /* @conditional-compile-remove(reaction) */ reactionResources
     ]
   );
 
@@ -648,7 +686,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     ? localScreenShareStreamComponent
     : undefined;
 
-  const layoutProps = useMemo(
+  const layoutProps = useMemo<LayoutProps>(
     () => ({
       remoteParticipants,
       localParticipant,
@@ -663,7 +701,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       parentHeight: containerHeight,
       /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds: pinnedParticipants,
       /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
-      /* @conditional-compile-remove(click-to-call) */ localVideoTileSize
+      /* @conditional-compile-remove(click-to-call) */ localVideoTileSize,
+      /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds: spotlightedParticipants
     }),
     [
       remoteParticipants,
@@ -680,7 +719,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       defaultOnRenderVideoTile,
       /* @conditional-compile-remove(pinned-participants) */ pinnedParticipants,
       /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
-      /* @conditional-compile-remove(click-to-call) */ localVideoTileSize
+      /* @conditional-compile-remove(click-to-call) */ localVideoTileSize,
+      /* @conditional-compile-remove(spotlight) */ spotlightedParticipants
     ]
   );
 

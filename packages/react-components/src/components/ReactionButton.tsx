@@ -23,11 +23,11 @@ import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 /* @conditional-compile-remove(reaction) */
 import { useLocale } from '../localization';
 /* @conditional-compile-remove(reaction) */
-import { reactionEmoji } from './utils/videoTileStylesUtils';
-/* @conditional-compile-remove(reaction) */
 import { emojiStyles, reactionEmojiMenuStyles, reactionToolTipHostStyle } from './styles/ReactionButton.styles';
 /* @conditional-compile-remove(reaction) */
 import { isDarkThemed } from '../theming/themeUtils';
+/* @conditional-compile-remove(reaction) */
+import { ReactionResources } from '..';
 
 /* @conditional-compile-remove(reaction) */
 /**
@@ -44,6 +44,10 @@ export interface ReactionButtonProps extends ControlBarButtonProps {
    * Click event to send reaction to meeting
    */
   onReactionClicked: (reaction: string) => Promise<void>;
+  /**
+   * Reaction resource locator and parameters
+   */
+  reactionResources: ReactionResources;
 }
 
 /* @conditional-compile-remove(reaction) */
@@ -97,6 +101,13 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
     ['applause', strings.applauseReactionTooltipContent],
     ['surprised', strings.surprisedReactionTooltipContent]
   ]);
+  const emojiResource: Map<string, string | undefined> = new Map([
+    ['like', props.reactionResources.likeReaction?.url],
+    ['heart', props.reactionResources.heartReaction?.url],
+    ['laugh', props.reactionResources.laughReaction?.url],
+    ['applause', props.reactionResources.applauseReaction?.url],
+    ['surprised', props.reactionResources.surprisedReaction?.url]
+  ]);
 
   const calloutStyle: Partial<ICalloutContentStyles> = { root: { padding: 0 }, calloutMain: { padding: '0.5rem' } };
 
@@ -108,38 +119,41 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
 
   const renderEmoji = (item: IContextualMenuItem, dismissMenu: () => void): React.JSX.Element => (
     <div style={reactionEmojiMenuStyles()}>
-      {emojis.map((emoji, index) => (
-        <TooltipHost
-          key={index}
-          data-ui-id={index}
-          hidden={props.disableTooltip}
-          content={emojiButtonTooltip.get(emoji)}
-          styles={reactionToolTipHostStyle()}
-          calloutProps={{ ...calloutProps }}
-        >
-          <IconButton
+      {emojis.map((emoji, index) => {
+        const resourceUrl = emojiResource.get(emoji);
+        return (
+          <TooltipHost
             key={index}
-            onClick={() => {
-              props.onReactionClicked(emoji);
-              setIsHoveredMap((prevMap) => {
-                return new Map(prevMap).set(emoji, false);
-              });
-              dismissMenu();
-            }}
-            style={emojiStyles(reactionEmoji.get(emoji), isHoveredMap.get(emoji) ? 'running' : 'paused')}
-            onMouseEnter={() =>
-              setIsHoveredMap((prevMap) => {
-                return new Map(prevMap).set(emoji, true);
-              })
-            }
-            onMouseLeave={() =>
-              setIsHoveredMap((prevMap) => {
-                return new Map(prevMap).set(emoji, false);
-              })
-            }
-          />
-        </TooltipHost>
-      ))}
+            data-ui-id={index}
+            hidden={props.disableTooltip}
+            content={emojiButtonTooltip.get(emoji)}
+            styles={reactionToolTipHostStyle()}
+            calloutProps={{ ...calloutProps }}
+          >
+            <IconButton
+              key={index}
+              onClick={() => {
+                props.onReactionClicked(emoji);
+                setIsHoveredMap((prevMap) => {
+                  return new Map(prevMap).set(emoji, false);
+                });
+                dismissMenu();
+              }}
+              style={emojiStyles(resourceUrl ? resourceUrl : '', isHoveredMap.get(emoji) ? 'running' : 'paused')}
+              onMouseEnter={() =>
+                setIsHoveredMap((prevMap) => {
+                  return new Map(prevMap).set(emoji, true);
+                })
+              }
+              onMouseLeave={() =>
+                setIsHoveredMap((prevMap) => {
+                  return new Map(prevMap).set(emoji, false);
+                })
+              }
+            />
+          </TooltipHost>
+        );
+      })}
     </div>
   );
 
