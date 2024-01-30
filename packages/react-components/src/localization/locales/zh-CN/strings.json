@@ -126,7 +126,12 @@
   "reactionButton": {
     "label": "回应",
     "tooltipDisabledContent": "已禁用表情符号操作",
-    "tooltipContent": "发送表情符号"
+    "tooltipContent": "发送表情符号",
+    "likeReactionTooltipContent": "点赞",
+    "heartReactionTooltipContent": "喜欢",
+    "laughReactionTooltipContent": "大笑",
+    "applauseReactionTooltipContent": "鼓掌",
+    "surprisedReactionTooltipContent": "惊讶"
   },
   "messageThread": {
     "yesterday": "昨天",

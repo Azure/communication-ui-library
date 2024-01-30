@@ -126,7 +126,12 @@
   "reactionButton": {
     "label": "Reagoi",
     "tooltipDisabledContent": "Reaktiotoiminto on poistettu käytöstä",
-    "tooltipContent": "Lähetä reaktio"
+    "tooltipContent": "Lähetä reaktio",
+    "likeReactionTooltipContent": "Tykkää",
+    "heartReactionTooltipContent": "Ihastu",
+    "laughReactionTooltipContent": "Naura",
+    "applauseReactionTooltipContent": "Suosionosoitus",
+    "surprisedReactionTooltipContent": "Yllättynyt"
   },
   "messageThread": {
     "yesterday": "eilen",
