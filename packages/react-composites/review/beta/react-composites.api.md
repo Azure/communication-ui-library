@@ -609,10 +609,10 @@ export interface CallCompositeStrings {
     startCaptionsButtonOnLabel?: string;
     startCaptionsButtonTooltipOffContent?: string;
     startCaptionsButtonTooltipOnContent?: string;
-    surveyCancelButtonLabel: string;
     startSpotlightParticipantListMenuLabel: string;
     stopSpotlightOnSelfParticipantListMenuLabel: string;
     stopSpotlightParticipantListMenuLabel: string;
+    surveyCancelButtonLabel: string;
     surveyConfirmButtonLabel: string;
     surveyIssues: SurveyIssues;
     SurveyIssuesHeadingStrings: SurveyIssuesHeadingStrings;
