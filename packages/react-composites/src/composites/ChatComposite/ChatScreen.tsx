@@ -57,6 +57,8 @@ import { FileDownloadErrorBar } from './FileDownloadErrorBar';
 import { _FileDownloadCards } from '@internal/react-components';
 /* @conditional-compile-remove(image-gallery) */
 import { ImageGallery, ImageGalleryImageProps } from '@internal/react-components';
+/* @conditional-compile-remove(image-gallery) */
+import { InlineImage } from '@internal/react-components';
 
 /**
  * @private
@@ -282,6 +284,29 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   );
 
   /* @conditional-compile-remove(image-gallery) */
+  const inlineImageOptions = {
+    onRenderInlineImage: (
+      inlineImage: InlineImage,
+      defaultOnRender: (inlineImage: InlineImage) => JSX.Element
+    ): JSX.Element => {
+      return (
+        <span
+          onClick={() => onInlineImageClicked(inlineImage.imgAttrs.id || '', inlineImage.messageId)}
+          tabIndex={0}
+          role="button"
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              onInlineImageClicked(inlineImage.imgAttrs.id || '', inlineImage.messageId);
+            }
+          }}
+        >
+          {defaultOnRender(inlineImage)}
+        </span>
+      );
+    }
+  };
+
+  /* @conditional-compile-remove(image-gallery) */
   const onImageDownloadButtonClicked = useCallback((imageUrl: string, downloadFilename: string): void => {
     if (imageUrl === '') {
       return;
@@ -338,7 +363,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             /* @conditional-compile-remove(file-sharing) */
             onRenderFileDownloads={onRenderFileDownloads}
             /* @conditional-compile-remove(image-gallery) */
-            onInlineImageClicked={onInlineImageClicked}
+            inlineImageOptions={inlineImageOptions}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
           />
