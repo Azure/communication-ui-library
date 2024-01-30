@@ -232,7 +232,7 @@
         "grantedDueToRoleChangeToPresenter": "You're a presenter. You can share content and facilitate the meeting."
       }
     },
-    "surveyQuestion": "Help us improve",
+    "surveyTitle": "Help us improve",
     "starSurveyHelperText": "How was the quality of the call?",
     "starSurveyOneStarText": "The quality was bad.",
     "starSurveyTwoStarText": "The quality was poor.",

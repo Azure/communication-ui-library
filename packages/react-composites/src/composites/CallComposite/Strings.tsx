@@ -663,9 +663,9 @@ export interface CallCompositeStrings {
   capabilityChangedNotification?: CapabilityChangedNotificationStrings;
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
-   * Question for the survey
+   * Title for the survey
    */
-  surveyQuestion: string;
+  surveyTitle: string;
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Helper text to explain what the survey is for

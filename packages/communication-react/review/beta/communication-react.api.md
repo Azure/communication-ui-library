@@ -787,8 +787,8 @@ export interface CallCompositeStrings {
     surveyConfirmButtonLabel: string;
     surveyIssues: SurveyIssues;
     SurveyIssuesHeadingStrings: SurveyIssuesHeadingStrings;
-    surveyQuestion: string;
     surveyTextboxDefaultText: string;
+    surveyTitle: string;
     tagsSurveyHelperText: string;
     tagsSurveyQuestion: string;
     tagsSurveyTextFieldDefaultText: string;

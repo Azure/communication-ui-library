@@ -116,7 +116,7 @@ export const Survey = (props: {
       )}
       {!showDefaultAfterSubmitScreen && !showDefaultAfterDismissedScreen && (
         <Stack verticalAlign="center" style={{ width: '24rem' }}>
-          <Text className={questionTextStyle(theme)}>{strings.surveyQuestion}</Text>
+          <Text className={questionTextStyle(theme)}>{strings.surveyTitle}</Text>
           <SurveyContent
             setShowSubmitFeedbackButton={(showButton: boolean) => {
               setShowSubmitFeedbackButton(showButton);
