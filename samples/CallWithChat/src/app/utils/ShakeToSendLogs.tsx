@@ -14,7 +14,7 @@
 /// This component works by intercepting console logs and storing them in memory.
 /// This component also stores AzureLogger logs but does not forward these to the console to avoid spamming the console.
 
-import { setLogLevel, AzureLogger } from '@azure/logger';
+// import { setLogLevel, AzureLogger } from '@azure/logger';
 import { DefaultButton, Dialog, DialogFooter, DialogType, Link, PrimaryButton, Spinner, Text } from '@fluentui/react';
 import React from 'react';
 import { useEffect } from 'react';
@@ -34,6 +34,16 @@ const logLengthMaxSize = 1000000;
 const storeLog = (logType: string, log: string | undefined): void => {
   log && logs.push(`${logType} ${new Date().toISOString()} ${log}`.slice(0, logLineCharacterLimit));
 };
+
+setTimeout(() => {
+  const heapSize = window.performance['memory']?.usedJSHeapSize;
+  alert(heapSize);
+}, 1000 * 30);
+
+setInterval(() => {
+  const heapSize = window.performance['memory']?.usedJSHeapSize;
+  storeLog('log', `heapSize: ${heapSize}`);
+}, 1000 * 30);
 
 /**
  * Track console logs for pushing to a debug location.
@@ -56,8 +66,8 @@ const startRecordingLogs = (): void => {
   console.info = hookLogType('info', true);
   console.debug = hookLogType('debug', true);
 
-  setLogLevel('verbose');
-  AzureLogger.log = hookLogType('log', false);
+  // setLogLevel('verbose');
+  // AzureLogger.log = hookLogType('log', false);
 
   window.addEventListener('error', function (event) {
     storeLog('error', safeJSONStringify(event));

@@ -4,7 +4,7 @@
 import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CallAndChatLocator } from '@azure/communication-react';
-import { setLogLevel } from '@azure/logger';
+// import { setLogLevel } from '@azure/logger';
 import { initializeIcons, Spinner } from '@fluentui/react';
 import React, { useState } from 'react';
 import {
@@ -32,7 +32,7 @@ import { WEB_APP_TITLE } from './utils/constants';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CallParticipantsLocator } from '@azure/communication-react';
 
-setLogLevel('error');
+// setLogLevel('error');
 initializeIcons();
 
 interface Credentials {

@@ -8,7 +8,7 @@ import { ParticipantRole } from '@azure/communication-calling';
 import { fromFlatCommunicationIdentifier } from '@azure/communication-react';
 /* @conditional-compile-remove(teams-identity-support) */
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
-import { setLogLevel } from '@azure/logger';
+// import { setLogLevel } from '@azure/logger';
 import { initializeIcons, Spinner } from '@fluentui/react';
 import { CallAdapterLocator } from '@azure/communication-react';
 import React, { useEffect, useState } from 'react';
@@ -36,7 +36,7 @@ import { CallScreen } from './views/CallScreen';
 import { HomeScreen } from './views/HomeScreen';
 import { UnsupportedBrowserPage } from './views/UnsupportedBrowserPage';
 
-setLogLevel('error');
+// setLogLevel('error');
 
 console.log(
   `ACS sample calling app. Last Updated ${buildTime} Using @azure/communication-calling:${callingSDKVersion} and @azure/communication-react:${communicationReactSDKVersion}`

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { setLogLevel } from '@azure/logger';
+// import { setLogLevel } from '@azure/logger';
 import { initializeIcons, Spinner } from '@fluentui/react';
 import React, { useState } from 'react';
 import { ChatScreen } from './ChatScreen';
@@ -13,7 +13,7 @@ import { getExistingThreadIdFromURL } from './utils/getParametersFromURL';
 import { getBuildTime, getChatSDKVersion, getCommnicationReactSDKVersion } from './utils/utils';
 import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 
-setLogLevel('error');
+// setLogLevel('error');
 
 console.info(
   `Thread chat sample using @azure/communication-chat : ${getChatSDKVersion()} and @azure/communication-react : ${getCommnicationReactSDKVersion()}`

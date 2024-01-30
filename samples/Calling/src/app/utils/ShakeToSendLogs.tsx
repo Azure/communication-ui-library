@@ -14,7 +14,7 @@
 /// This component works by intercepting console logs and storing them in memory.
 /// This component also stores AzureLogger logs but does not forward these to the console to avoid spamming the console.
 
-import { AzureLogger, setLogLevel } from '@azure/logger';
+// import { AzureLogger, setLogLevel } from '@azure/logger';
 import { DefaultButton, Dialog, DialogFooter, DialogType, Link, PrimaryButton, Spinner, Text } from '@fluentui/react';
 import React from 'react';
 import { useEffect } from 'react';
@@ -56,8 +56,8 @@ const startRecordingLogs = (): void => {
   console.info = hookLogType('info', true);
   console.debug = hookLogType('debug', true);
 
-  setLogLevel('verbose');
-  AzureLogger.log = hookLogType('log', false);
+  // setLogLevel('verbose');
+  // AzureLogger.log = hookLogType('log', false);
 
   window.addEventListener('error', function (event) {
     storeLog('error', safeJSONStringify(event));

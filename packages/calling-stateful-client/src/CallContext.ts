@@ -109,11 +109,11 @@ export class CallContext {
 
   public modifyState(modifier: (draft: CallClientState) => void): void {
     const priorState = this._state;
-    this._state = produce(this._state, modifier, (patches: Patch[]) => {
-      if (getLogLevel() === 'verbose') {
-        // Log to `info` because AzureLogger.verbose() doesn't show up in console.
-        this._logger.info(`State change: ${_safeJSONStringify(patches)}`);
-      }
+    this._state = produce(this._state, modifier, (/*patches: Patch[]*/) => {
+      // if (getLogLevel() === 'verbose') {
+      //   // Log to `info` because AzureLogger.verbose() doesn't show up in console.
+      //   this._logger.info(`State change: ${_safeJSONStringify(patches)}`);
+      // }
     });
     if (this._state !== priorState) {
       this._emitter.emit('stateChanged', this._state);
