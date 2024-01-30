@@ -54,6 +54,16 @@ import { convertFromSDKToCaptionInfoState } from './Converter';
 /* @conditional-compile-remove(raise-hand) */
 import { convertFromSDKToRaisedHandState } from './Converter';
 
+setInterval(() => {
+  const usedJSHeapSize = window.performance['memory']?.usedJSHeapSize;
+  const jsHeapSizeLimit = window.performance['memory']?.jsHeapSizeLimit;
+  const totalJSHeapSize = window.performance['memory']?.totalJSHeapSize;
+  console.log(
+    'log',
+    `usedJSHeapSize: ${usedJSHeapSize} jsHeapSizeLimit: ${jsHeapSizeLimit} totalJSHeapSize: ${totalJSHeapSize}`
+  );
+}, 1000 * 30);
+
 enableMapSet();
 // Needed to generate state diff for verbose logging.
 enablePatches();
