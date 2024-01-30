@@ -19,9 +19,9 @@ import { TeamsCaptionsInfo } from '@azure/communication-calling';
 import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
 import { ParticipantRole } from '@azure/communication-calling';
-import { AzureLogger, createClientLogger, getLogLevel } from '@azure/logger';
+// import { AzureLogger, createClientLogger, getLogLevel } from '@azure/logger';
 import EventEmitter from 'events';
-import { enableMapSet, enablePatches, Patch, produce } from 'immer';
+import { enableMapSet, enablePatches, /*Patch,*/ produce } from 'immer';
 import {
   CallEndReason,
   CallState as CallStatus,
@@ -68,7 +68,7 @@ export const MAX_CALL_HISTORY_LENGTH = 10;
  * @private
  */
 export class CallContext {
-  private _logger: AzureLogger;
+  // private _logger: AzureLogger;
   private _state: CallClientState;
   private _emitter: EventEmitter;
   private _atomicId: number;
@@ -79,7 +79,7 @@ export class CallContext {
     maxListeners = 50,
     /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId?: string
   ) {
-    this._logger = createClientLogger('communication-react:calling-context');
+    // this._logger = createClientLogger('communication-react:calling-context');
     this._state = {
       calls: {},
       callsEnded: {},
