@@ -57,6 +57,10 @@ Ex.
 ![image](https://github.com/Azure/communication-ui-library/assets/73612854/79634dd3-d9bb-482c-a83a-a87159d06a20)
 ![image](https://github.com/Azure/communication-ui-library/assets/73612854/40516359-5d31-403a-a70a-a55eb40081cb)
 
+### step 0.5: Create post in ARB channel for review
+
+... Add more detail
+
 ## Step 1: Creating a Release Branch
 
 Both beta and stable releases follow a two-step workflow, aided by GitHub actions.
