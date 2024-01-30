@@ -36,13 +36,20 @@ const storeLog = (logType: string, log: string | undefined): void => {
 };
 
 setTimeout(() => {
-  const heapSize = window.performance['memory']?.usedJSHeapSize;
-  alert(heapSize);
+  const usedJSHeapSize = window.performance['memory']?.usedJSHeapSize;
+  const jsHeapSizeLimit = window.performance['memory']?.jsHeapSizeLimit;
+  const totalJSHeapSize = window.performance['memory']?.totalJSHeapSize;
+  alert(`${usedJSHeapSize} ${jsHeapSizeLimit} ${totalJSHeapSize}`);
 }, 1000 * 30);
 
 setInterval(() => {
-  const heapSize = window.performance['memory']?.usedJSHeapSize;
-  storeLog('log', `heapSize: ${heapSize}`);
+  const usedJSHeapSize = window.performance['memory']?.usedJSHeapSize;
+  const jsHeapSizeLimit = window.performance['memory']?.jsHeapSizeLimit;
+  const totalJSHeapSize = window.performance['memory']?.totalJSHeapSize;
+  storeLog(
+    'log',
+    `usedJSHeapSize: ${usedJSHeapSize} jsHeapSizeLimit: ${jsHeapSizeLimit} totalJSHeapSize: ${totalJSHeapSize}`
+  );
 }, 1000 * 30);
 
 /**
