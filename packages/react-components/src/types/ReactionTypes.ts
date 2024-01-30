@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+/* @conditional-compile-remove(reaction) */
 /**
  * Type for animation sprite image and related metadata
  * @beta
@@ -20,6 +21,7 @@ export type ReactionSprite = {
   size?: number;
 };
 
+/* @conditional-compile-remove(reaction) */
 /**
  * Interface for animation sprite image and related metadata
  * @beta
