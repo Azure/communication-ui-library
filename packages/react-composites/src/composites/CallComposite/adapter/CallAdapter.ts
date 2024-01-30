@@ -41,6 +41,8 @@ import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../.
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
+/* @conditional-compile-remove(reaction) */
+import { ReactionResources } from '@internal/react-components';
 
 /**
  * Major UI screens shown in the {@link CallComposite}.
@@ -156,6 +158,12 @@ export type CallAdapterClientState = {
    * State to track the sounds to be used in the call.
    */
   sounds?: CallingSounds;
+  /* @conditional-compile-remove(reaction) */
+  /**
+   * State to track the reactions to be used.
+   * @beta
+   */
+  reactions?: ReactionResources;
 };
 
 /**

@@ -45,6 +45,8 @@ import { FocusedContentLayout } from './VideoGallery/FocusContentLayout';
 /* @conditional-compile-remove(large-gallery) */
 import { LargeGalleryLayout } from './VideoGallery/LargeGalleryLayout';
 import { LayoutProps } from './VideoGallery/Layout';
+/* @conditional-compile-remove(reaction) */
+import { ReactionResources } from '../types/ReactionTypes';
 
 /**
  * @private
@@ -113,7 +115,7 @@ export interface VideoGalleryStrings {
   /** Menu text shown in Video Tile contextual menu for pinning a remote participant's video tile */
   pinParticipantForMe: string;
   /* @conditional-compile-remove(pinned-participants) */
-  /** Menu text shown in Video Tile contextual menu for setting a remote participant's video tile */
+  /** Menu text shown in Video Tile contextual menu for unpinning a remote participant's video tile */
   unpinParticipantForMe: string;
   /* @conditional-compile-remove(pinned-participants) */
   /** Aria label for pin participant menu item of remote participant's video tile */
@@ -127,6 +129,18 @@ export interface VideoGalleryStrings {
   /* @conditional-compile-remove(pinned-participants) */
   /** Aria label to announce when remote participant's video tile is unpinned */
   unpinnedParticipantAnnouncementAriaLabel: string;
+  /* @conditional-compile-remove(pinned-participants) */
+  /** Menu text shown in Video Tile contextual menu to start spotlight on participant's video tile */
+  startSpotlightVideoTileMenuLabel: string;
+  /* @conditional-compile-remove(pinned-participants) */
+  /** Menu text shown in Video Tile contextual menu to add spotlight to participant's video tile */
+  addSpotlightVideoTileMenuLabel: string;
+  /* @conditional-compile-remove(pinned-participants) */
+  /** Menu text shown in Video Tile contextual menu to stop spotlight on participant's video tile */
+  stopSpotlightVideoTileMenuLabel: string;
+  /* @conditional-compile-remove(pinned-participants) */
+  /** Menu text shown in Video Tile contextual menu to stop spotlight on local user's video tile */
+  stopSpotlightOnSelfVideoTileMenuLabel: string;
 }
 
 /**
@@ -266,6 +280,16 @@ export interface VideoGalleryProps {
    * List of spotlighted participant userIds.
    */
   spotlightedParticipants?: string[];
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * This callback will be called when spotlight is started for participant video tile.
+   */
+  onStartSpotlight?: (userId: string) => Promise<void>;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * This callback will be called when spotlight is stopped for participant video tile.
+   */
+  onStopSpotlight?: (userId: string) => Promise<void>;
   /* @conditional-compile-remove(pinned-participants) */
   /**
    * Options for showing the remote video tile menu.
@@ -287,6 +311,11 @@ export interface VideoGalleryProps {
    * @defaultValue 'followDeviceOrientation'
    */
   localVideoTileSize?: LocalVideoTileSize;
+  /* @conditional-compile-remove(reaction) */
+  /**
+   * Reaction resources for like, heart, laugh, applause and surprised.
+   */
+  reactionResources?: ReactionResources;
 }
 
 /* @conditional-compile-remove(pinned-participants) */
@@ -358,7 +387,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(rooms) */
     localVideoTileSize = 'followDeviceOrientation',
     /* @conditional-compile-remove(spotlight) */
-    spotlightedParticipants
+    spotlightedParticipants,
+    /* @conditional-compile-remove(spotlight) */
+    onStartSpotlight,
+    /* @conditional-compile-remove(spotlight) */
+    onStopSpotlight,
+    /* @conditional-compile-remove(reaction) */
+    reactionResources
   } = props;
 
   const ids = useIdentifiers();
@@ -485,6 +520,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           reaction={localParticipant.reaction}
           /* @conditional-compile-remove(spotlight) */
           isSpotlighted={isSpotlighted}
+          /* @conditional-compile-remove(reaction) */
+          reactionResources={reactionResources}
         />
       </Stack>
     );
@@ -512,7 +549,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     layout,
     showLocalVideoTileLabel,
     /* @conditional-compile-remove(spotlight) */
-    spotlightedParticipants
+    spotlightedParticipants,
+    /* @conditional-compile-remove(reaction) */
+    reactionResources
   ]);
 
   /* @conditional-compile-remove(pinned-participants) */
@@ -625,7 +664,15 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           /* @conditional-compile-remove(pinned-participants) */
           toggleAnnouncerString={toggleAnnouncerString}
           /* @conditional-compile-remove(spotlight) */
+          spotlightedParticipantUserIds={spotlightedParticipants}
+          /* @conditional-compile-remove(spotlight) */
           isSpotlighted={isSpotlighted}
+          /* @conditional-compile-remove(spotlight) */
+          onStartSpotlight={onStartSpotlight}
+          /* @conditional-compile-remove(spotlight) */
+          onStopSpotlight={onStopSpotlight}
+          /* @conditional-compile-remove(reaction) */
+          reactionResources={reactionResources}
         />
       );
     },
@@ -645,7 +692,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       /* @conditional-compile-remove(pinned-participants) */ onUnpinParticipant,
       /* @conditional-compile-remove(pinned-participants) */ toggleAnnouncerString,
       /* @conditional-compile-remove(pinned-participants) */ onUpdateScalingMode,
-      /* @conditional-compile-remove(spotlight) */ spotlightedParticipants
+      /* @conditional-compile-remove(spotlight) */ spotlightedParticipants,
+      /* @conditional-compile-remove(spotlight) */ onStartSpotlight,
+      /* @conditional-compile-remove(spotlight) */ onStopSpotlight,
+      /* @conditional-compile-remove(reaction) */ reactionResources
     ]
   );
 

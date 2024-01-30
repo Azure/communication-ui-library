@@ -9,13 +9,13 @@ import { ChatMessage, OnRenderAvatarCallback } from '../../types';
 import { BlockedMessage } from '../../types';
 /* @conditional-compile-remove(file-sharing) */
 import { FileDownloadHandler } from '../FileDownloadCards';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { AttachmentMetadata } from '../FileDownloadCards';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from '../MentionPopover';
 import { MessageStatusIndicatorProps } from '../MessageStatusIndicator';
 import { FluentChatMessageComponentWrapper } from './FluentChatMessageComponentWrapper';
 import { DefaultSystemMessage } from './DefaultSystemMessage';
+/* @conditional-compile-remove(image-gallery) */
+import { InlineImageOptions } from './ChatMessageContent';
 
 /**
  * Props for {@link ChatMessageComponentWrapper}
@@ -56,12 +56,8 @@ export type ChatMessageComponentWrapperProps = _ChatMessageProps & {
   fileDownloadHandler?: FileDownloadHandler;
   /* @conditional-compile-remove(date-time-customization) */
   onDisplayDateTimeString?: (messageDate: Date) => string;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  onFetchInlineAttachment: (attachments: AttachmentMetadata[], messageId: string) => Promise<void>;
   /* @conditional-compile-remove(image-gallery) */
-  onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  inlineAttachments: Record<string, Record<string, string>>;
+  inlineImageOptions?: InlineImageOptions;
   /* @conditional-compile-remove(mention) */
   mentionOptions?: MentionOptions;
 };

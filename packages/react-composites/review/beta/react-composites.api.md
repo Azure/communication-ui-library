@@ -54,6 +54,7 @@ import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { PropertyChangedEvent } from '@azure/communication-calling';
 import { default as React_2 } from 'react';
 import { Reaction } from '@azure/communication-calling';
+import { ReactionResources } from '@internal/react-components';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { RoomCallLocator } from '@azure/communication-calling';
 import { SendMessageOptions } from '@azure/communication-chat';
@@ -260,6 +261,7 @@ export type CallAdapterClientState = {
     acceptedTransferCallState?: CallState;
     hideAttendeeNames?: boolean;
     sounds?: CallingSounds;
+    reactions?: ReactionResources;
 };
 
 // @public
@@ -411,6 +413,7 @@ export type CallCompositeIcons = {
     OverflowGalleryTop?: JSX.Element;
     LargeGalleryLayout?: JSX.Element;
     DefaultCustomButton?: JSX.Element;
+    DtmfDialpadButton?: JSX.Element;
 };
 
 // @public
@@ -461,6 +464,7 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
 
 // @public
 export interface CallCompositeStrings {
+    addSpotlightParticipantListMenuLabel: string;
     blurBackgroundEffectButtonLabel?: string;
     blurBackgroundTooltip?: string;
     callRejectedMoreDetails?: string;
@@ -512,6 +516,11 @@ export interface CallCompositeStrings {
     dialpadStartCallButtonLabel: string;
     dismissModalAriaLabel?: string;
     dismissSidePaneButtonLabel?: string;
+    dtmfDialerButtonLabel?: string;
+    dtmfDialerButtonTooltipOff?: string;
+    dtmfDialerButtonTooltipOn?: string;
+    dtmfDialerMoreButtonLabelOff?: string;
+    dtmfDialerMoreButtonLabelOn?: string;
     dtmfDialpadPlaceholderText: string;
     failedToJoinCallDueToNoNetworkMoreDetails?: string;
     failedToJoinCallDueToNoNetworkTitle: string;
@@ -600,6 +609,9 @@ export interface CallCompositeStrings {
     startCaptionsButtonOnLabel?: string;
     startCaptionsButtonTooltipOffContent?: string;
     startCaptionsButtonTooltipOnContent?: string;
+    startSpotlightParticipantListMenuLabel: string;
+    stopSpotlightOnSelfParticipantListMenuLabel: string;
+    stopSpotlightParticipantListMenuLabel: string;
     surveyCancelButtonAriaLabel: string;
     surveyConfirmButtonLabel: string;
     surveyIssues: SurveyIssues;
@@ -874,6 +886,7 @@ export interface CallWithChatClientState {
     latestCallErrors: AdapterErrors;
     latestChatErrors: AdapterErrors;
     onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
+    reactions?: ReactionResources;
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
     userId: CommunicationIdentifierKind;
     videoBackgroundImages?: VideoBackgroundImage[];
@@ -941,6 +954,7 @@ export type CallWithChatCompositeIcons = {
     PeoplePaneOpenDialpad?: JSX.Element;
     DialpadStartCall?: JSX.Element;
     DefaultCustomButton?: JSX.Element;
+    DtmfDialpadButton?: JSX.Element;
     EditBoxCancel?: JSX.Element;
     EditBoxSubmit?: JSX.Element;
     MessageDelivered?: JSX.Element;
@@ -1240,6 +1254,9 @@ export type CommonCallControlOptions = {
     peopleButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
         disabled: boolean;
     };
+    dtmfDialerButton?: boolean | {
+        disabled: boolean;
+    };
 };
 
 // @public
@@ -1482,6 +1499,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     OverflowGalleryTop?: JSX.Element | undefined;
     LargeGalleryLayout?: JSX.Element | undefined;
     DefaultCustomButton?: JSX.Element | undefined;
+    DtmfDialpadButton?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;
@@ -1535,6 +1553,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ContextMenuSpeakerIcon: React_2.JSX.Element;
     SurveyStarIcon: React_2.JSX.Element;
     SurveyStarIconFilled: React_2.JSX.Element;
+    StartSpotlightContextualMenuItem: React_2.JSX.Element;
+    StopSpotlightContextualMenuItem: React_2.JSX.Element;
     VideoSpotlighted: React_2.JSX.Element;
 };
 

@@ -87,6 +87,8 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const containerHeight = _useContainerHeight(containerRef);
   /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(vertical-gallery) */
   const containerAspectRatio = containerWidth && containerHeight ? containerWidth / containerHeight : 0;
+  /* @conditional-compile-remove(reaction) */
+  const reactionResources = adapter.getState().reactions;
 
   const layoutBasedOnTilePosition: VideoGalleryLayout = localVideoTileLayoutTrampoline(
     /* @conditional-compile-remove(click-to-call) */ (props.localVideoTileOptions as LocalVideoTileOptions)?.position
@@ -138,6 +140,9 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     containerHeight
   ]);
 
+  /* @conditional-compile-remove(spotlight) */
+  const ableToSpotlight = adapter.getState().call?.capabilitiesFeature?.capabilities.spotlightParticipant.isPresent;
+
   const VideoGalleryMemoized = useMemo(() => {
     const layoutBasedOnUserSelection = (): VideoGalleryLayout => {
       /* @conditional-compile-remove(gallery-layouts) */
@@ -167,6 +172,12 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
             ? '9:16'
             : '16:9'
         }
+        /* @conditional-compile-remove(reaction) */
+        reactionResources={reactionResources}
+        /* @conditional-compile-remove(spotlight) */
+        onStartSpotlight={ableToSpotlight ? videoGalleryProps.onStartSpotlight : undefined}
+        /* @conditional-compile-remove(spotlight) */
+        onStopSpotlight={ableToSpotlight ? videoGalleryProps.onStopSpotlight : undefined}
       />
     );
   }, [
@@ -188,7 +199,11 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     containerAspectRatio,
     /* @conditional-compile-remove(gallery-layouts) */
     props.userSetGalleryLayout,
-    layoutBasedOnTilePosition
+    layoutBasedOnTilePosition,
+    /* @conditional-compile-remove(reaction) */
+    reactionResources,
+    /* @conditional-compile-remove(spotlight) */
+    ableToSpotlight
   ]);
 
   return (

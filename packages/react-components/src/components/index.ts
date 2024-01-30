@@ -39,8 +39,11 @@ export type {
 /* @conditional-compile-remove(image-gallery) */
 export type { ImageGalleryProps, ImageGalleryImageProps } from './ImageGallery';
 
+/* @conditional-compile-remove(image-gallery) */
+export type { InlineImageOptions, InlineImage } from './ChatMessage/ChatMessageContent';
+
 /* @conditional-compile-remove(file-sharing) */
-export type { ActiveFileUpload } from './SendBox';
+export type { ActiveFileUpload } from './FileUploadCards';
 
 export { MessageStatusIndicator } from './MessageStatusIndicator';
 export type { MessageStatusIndicatorProps, MessageStatusIndicatorStrings } from './MessageStatusIndicator';
@@ -211,6 +214,7 @@ export { _ComplianceBanner } from './ComplianceBanner';
 export type { _ComplianceBannerProps, _ComplianceBannerStrings } from './ComplianceBanner';
 export { Dialpad } from './Dialpad/Dialpad';
 export type { DialpadProps, DialpadStrings, DialpadStyles, DtmfTone } from './Dialpad/Dialpad';
+export type { DialpadMode, LongPressTrigger } from './Dialpad/Dialpad';
 /* @conditional-compile-remove(end-of-call-survey) */
 export { _StarSurvey } from './Survey/StarSurvey/StarSurvey';
 /* @conditional-compile-remove(end-of-call-survey) */

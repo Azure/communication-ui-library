@@ -394,6 +394,7 @@ export type CallAdapterClientState = {
     acceptedTransferCallState?: CallState;
     hideAttendeeNames?: boolean;
     sounds?: CallingSounds;
+    reactions?: ReactionResources;
 };
 
 // @public
@@ -594,6 +595,7 @@ export type CallCompositeIcons = {
     OverflowGalleryTop?: JSX.Element;
     LargeGalleryLayout?: JSX.Element;
     DefaultCustomButton?: JSX.Element;
+    DtmfDialpadButton?: JSX.Element;
 };
 
 // @public
@@ -644,6 +646,7 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
 
 // @public
 export interface CallCompositeStrings {
+    addSpotlightParticipantListMenuLabel: string;
     blurBackgroundEffectButtonLabel?: string;
     blurBackgroundTooltip?: string;
     callRejectedMoreDetails?: string;
@@ -695,6 +698,11 @@ export interface CallCompositeStrings {
     dialpadStartCallButtonLabel: string;
     dismissModalAriaLabel?: string;
     dismissSidePaneButtonLabel?: string;
+    dtmfDialerButtonLabel?: string;
+    dtmfDialerButtonTooltipOff?: string;
+    dtmfDialerButtonTooltipOn?: string;
+    dtmfDialerMoreButtonLabelOff?: string;
+    dtmfDialerMoreButtonLabelOn?: string;
     dtmfDialpadPlaceholderText: string;
     failedToJoinCallDueToNoNetworkMoreDetails?: string;
     failedToJoinCallDueToNoNetworkTitle: string;
@@ -783,6 +791,9 @@ export interface CallCompositeStrings {
     startCaptionsButtonOnLabel?: string;
     startCaptionsButtonTooltipOffContent?: string;
     startCaptionsButtonTooltipOnContent?: string;
+    startSpotlightParticipantListMenuLabel: string;
+    stopSpotlightOnSelfParticipantListMenuLabel: string;
+    stopSpotlightParticipantListMenuLabel: string;
     surveyCancelButtonAriaLabel: string;
     surveyConfirmButtonLabel: string;
     surveyIssues: SurveyIssues;
@@ -1176,6 +1187,7 @@ export interface CallWithChatClientState {
     latestCallErrors: AdapterErrors;
     latestChatErrors: AdapterErrors;
     onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
+    reactions?: ReactionResources;
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
     userId: CommunicationIdentifierKind;
     videoBackgroundImages?: VideoBackgroundImage[];
@@ -1243,6 +1255,7 @@ export type CallWithChatCompositeIcons = {
     PeoplePaneOpenDialpad?: JSX.Element;
     DialpadStartCall?: JSX.Element;
     DefaultCustomButton?: JSX.Element;
+    DtmfDialpadButton?: JSX.Element;
     EditBoxCancel?: JSX.Element;
     EditBoxSubmit?: JSX.Element;
     MessageDelivered?: JSX.Element;
@@ -1768,6 +1781,7 @@ export type ChatMessageWithStatus = ChatMessage_2 & {
     clientMessageId?: string;
     status: MessageStatus;
     policyViolation?: boolean;
+    resourceCache?: Record<string, string>;
 };
 
 // @public
@@ -1876,6 +1890,9 @@ export type CommonCallControlOptions = {
         disabled: boolean;
     };
     peopleButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
+        disabled: boolean;
+    };
+    dtmfDialerButton?: boolean | {
         disabled: boolean;
     };
 };
@@ -2448,6 +2465,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     ContextMenuSpeakerIcon: React_2.JSX.Element;
     SurveyStarIcon: React_2.JSX.Element;
     SurveyStarIconFilled: React_2.JSX.Element;
+    StartSpotlightContextualMenuItem: React_2.JSX.Element;
+    StopSpotlightContextualMenuItem: React_2.JSX.Element;
     VideoSpotlighted: React_2.JSX.Element;
 };
 
@@ -2536,6 +2555,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     OverflowGalleryTop?: JSX.Element | undefined;
     LargeGalleryLayout?: JSX.Element | undefined;
     DefaultCustomButton?: JSX.Element | undefined;
+    DtmfDialpadButton?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;
@@ -2589,6 +2609,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ContextMenuSpeakerIcon: React_2.JSX.Element;
     SurveyStarIcon: React_2.JSX.Element;
     SurveyStarIconFilled: React_2.JSX.Element;
+    StartSpotlightContextualMenuItem: React_2.JSX.Element;
+    StopSpotlightContextualMenuItem: React_2.JSX.Element;
     VideoSpotlighted: React_2.JSX.Element;
 };
 
@@ -2674,10 +2696,13 @@ export interface DiagnosticsCallFeatureState {
 export const Dialpad: (props: DialpadProps) => JSX.Element;
 
 // @beta
+export type DialpadMode = 'dtmf' | 'dialer';
+
+// @beta
 export interface DialpadProps {
+    dialpadMode?: DialpadMode;
     disableDtmfPlayback?: boolean;
-    enableInputEditing?: boolean;
-    isMobile?: boolean;
+    longPressTrigger?: LongPressTrigger;
     onChange?: (input: string) => void;
     onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
     onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
@@ -3016,6 +3041,12 @@ export interface IncomingCallState {
 }
 
 // @beta
+export interface InlineImage {
+    imgAttrs: React_2.ImgHTMLAttributes<HTMLImageElement>;
+    messageId: string;
+}
+
+// @beta
 export interface InlineImageMetadata {
     // (undocumented)
     attachmentType: 'inlineImage';
@@ -3023,6 +3054,11 @@ export interface InlineImageMetadata {
     // (undocumented)
     previewUrl?: string;
     url: string;
+}
+
+// @beta
+export interface InlineImageOptions {
+    onRenderInlineImage?: (inlineImage: InlineImage, defaultOnRender: (inlineImage: InlineImage) => JSX.Element) => JSX.Element;
 }
 
 // @public
@@ -3114,6 +3150,9 @@ export interface LocalVideoTileOptions {
 
 // @public
 export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'followDeviceOrientation';
+
+// @beta
+export type LongPressTrigger = 'mouseAndTouch' | 'touch';
 
 // @public
 export type MediaDiagnosticChangedEvent = MediaDiagnosticChangedEventArgs & {
@@ -3261,7 +3300,6 @@ export type MessageThreadProps = {
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
     onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
-    onFetchAttachments?: (attachments: AttachmentMetadata[]) => Promise<AttachmentDownloadResult[]>;
     onUpdateMessage?: UpdateMessageCallback;
     onCancelEditMessage?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
@@ -3271,7 +3309,7 @@ export type MessageThreadProps = {
     fileDownloadHandler?: FileDownloadHandler;
     onDisplayDateTimeString?: (messageDate: Date) => string;
     mentionOptions?: MentionOptions;
-    onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
+    inlineImageOptions?: InlineImageOptions;
 };
 
 // @public
@@ -3511,6 +3549,8 @@ export type ParticipantListProps = {
     onRemoveParticipant?: (userId: string) => void;
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
     onParticipantClick?: (participant?: ParticipantListParticipant) => void;
+    onStartSpotlight?: (userId: string) => void;
+    onStopSpotlight?: (userId: string) => void;
     styles?: ParticipantListStyles;
     showParticipantOverflowTooltip?: boolean;
     totalParticipantCount?: number;
@@ -3673,6 +3713,7 @@ export type Reaction = {
 // @beta
 export interface ReactionButtonProps extends ControlBarButtonProps {
     onReactionClicked: (reaction: string) => Promise<void>;
+    reactionResources: ReactionResources;
     strings?: Partial<ReactionButtonStrings>;
 }
 
@@ -3687,6 +3728,22 @@ export interface ReactionButtonStrings {
     tooltipContent?: string;
     tooltipDisabledContent?: string;
 }
+
+// @beta
+export interface ReactionResources {
+    applauseReaction?: ReactionSprite;
+    heartReaction?: ReactionSprite;
+    laughReaction?: ReactionSprite;
+    likeReaction?: ReactionSprite;
+    surprisedReaction?: ReactionSprite;
+}
+
+// @beta
+export type ReactionSprite = {
+    url: string;
+    frameCount: number;
+    size?: number;
+};
 
 // @beta
 export type ReactionState = {
@@ -4361,9 +4418,12 @@ export interface VideoGalleryProps {
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
+    onStartSpotlight?: (userId: string) => Promise<void>;
+    onStopSpotlight?: (userId: string) => Promise<void>;
     onUnpinParticipant?: (userId: string) => void;
     overflowGalleryPosition?: OverflowGalleryPosition;
     pinnedParticipants?: string[];
+    reactionResources?: ReactionResources;
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoTileMenu?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
     remoteVideoViewOptions?: VideoStreamOptions;
@@ -4411,6 +4471,7 @@ export interface VideoGalleryStream {
 
 // @public
 export interface VideoGalleryStrings {
+    addSpotlightVideoTileMenuLabel: string;
     displayNamePlaceholder: string;
     fillRemoteParticipantFrame: string;
     fitRemoteParticipantToFrame: string;
@@ -4423,6 +4484,9 @@ export interface VideoGalleryStrings {
     pinParticipantMenuItemAriaLabel: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;
+    startSpotlightVideoTileMenuLabel: string;
+    stopSpotlightOnSelfVideoTileMenuLabel: string;
+    stopSpotlightVideoTileMenuLabel: string;
     unpinnedParticipantAnnouncementAriaLabel: string;
     unpinParticipantForMe: string;
     unpinParticipantMenuItemAriaLabel: string;
@@ -4482,6 +4546,7 @@ export interface VideoTileProps {
     personaMinSize?: number;
     raisedHand?: RaisedHand;
     reaction?: Reaction;
+    reactionResources?: ReactionResources;
     renderElement?: JSX.Element | null;
     showLabel?: boolean;
     showMuteIndicator?: boolean;
