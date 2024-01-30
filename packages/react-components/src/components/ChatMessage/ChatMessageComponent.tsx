@@ -12,6 +12,8 @@ import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMes
 import { FileDownloadHandler, AttachmentMetadata } from '../FileDownloadCards';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from '../MentionPopover';
+/* @conditional-compile-remove(image-gallery) */
+import { InlineImageOptions } from './ChatMessageContent';
 
 type ChatMessageComponentProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
@@ -88,7 +90,7 @@ type ChatMessageComponentProps = {
    * Optional callback called when an inline image is clicked.
    * @beta
    */
-  onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
+  inlineImageOptions?: InlineImageOptions;
 };
 
 /**
@@ -147,7 +149,7 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
         onDisplayDateTimeString={props.onDisplayDateTimeString}
         strings={props.strings}
         /* @conditional-compile-remove(image-gallery) */
-        onInlineImageClicked={props.onInlineImageClicked}
+        inlineImageOptions={props.inlineImageOptions}
         /* @conditional-compile-remove(mention) */
         mentionDisplayOptions={props.mentionOptions?.displayOptions}
       />
