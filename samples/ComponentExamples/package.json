@@ -1,5 +1,5 @@
 {
-  "name": "component-examples",
+  "name": "@internal/component-examples",
   "version": "0.0.1",
   "private": true,
   "description": "This is a sample application to show how the ACS Chat Web SDK can be used to build a group chat experience. The client-side application is a React based user interface which uses React Hooks for handling complex state while leveraging Microsoft Fluent UI for how things look.",

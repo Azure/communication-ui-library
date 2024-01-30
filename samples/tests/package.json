@@ -1,5 +1,5 @@
 {
-  "name": "sample-automation-tests",
+  "name": "@internal/sample-automation-tests",
   "version": "1.0.0",
   "description": "Automation tests for samples.",
   "private": true,
