@@ -855,6 +855,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     ContextMenuSpeakerIcon: React_2.JSX.Element;
     SurveyStarIcon: React_2.JSX.Element;
     SurveyStarIconFilled: React_2.JSX.Element;
+    StartSpotlightContextualMenuItem: React_2.JSX.Element;
+    StopSpotlightContextualMenuItem: React_2.JSX.Element;
     VideoSpotlighted: React_2.JSX.Element;
 };
 
@@ -1779,6 +1781,8 @@ export type ParticipantListProps = {
     onRemoveParticipant?: (userId: string) => void;
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
     onParticipantClick?: (participant?: ParticipantListParticipant) => void;
+    onStartSpotlight?: (userId: string) => void;
+    onStopSpotlight?: (userId: string) => void;
     styles?: ParticipantListStyles;
     showParticipantOverflowTooltip?: boolean;
     totalParticipantCount?: number;
@@ -1987,7 +1991,10 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     onUnpinParticipant?: ((userId: string) => void) | undefined;
     onUpdateScalingMode?: ((userId: string, scalingMode: ViewScalingMode) => void) | undefined;
     isPinned?: boolean | undefined;
+    spotlightedParticipantUserIds?: string[] | undefined;
     isSpotlighted?: boolean | undefined;
+    onStartSpotlight?: ((userId: string) => void) | undefined;
+    onStopSpotlight?: ((userId: string) => void) | undefined;
     disablePinMenuItem?: boolean | undefined;
     toggleAnnouncerString?: ((announcerString: string) => void) | undefined;
     reactionResources?: ReactionResources | undefined;
@@ -2628,6 +2635,8 @@ export interface VideoGalleryProps {
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
+    onStartSpotlight?: (userId: string) => Promise<void>;
+    onStopSpotlight?: (userId: string) => Promise<void>;
     onUnpinParticipant?: (userId: string) => void;
     overflowGalleryPosition?: OverflowGalleryPosition;
     pinnedParticipants?: string[];
@@ -2669,6 +2678,7 @@ export interface VideoGalleryStream {
 
 // @public
 export interface VideoGalleryStrings {
+    addSpotlightVideoTileMenuLabel: string;
     displayNamePlaceholder: string;
     fillRemoteParticipantFrame: string;
     fitRemoteParticipantToFrame: string;
@@ -2681,6 +2691,9 @@ export interface VideoGalleryStrings {
     pinParticipantMenuItemAriaLabel: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;
+    startSpotlightVideoTileMenuLabel: string;
+    stopSpotlightOnSelfVideoTileMenuLabel: string;
+    stopSpotlightVideoTileMenuLabel: string;
     unpinnedParticipantAnnouncementAriaLabel: string;
     unpinParticipantForMe: string;
     unpinParticipantMenuItemAriaLabel: string;
