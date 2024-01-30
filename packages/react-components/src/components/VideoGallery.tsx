@@ -293,6 +293,7 @@ export interface VideoGalleryProps {
   /* @conditional-compile-remove(reaction) */
   /**
    * Reaction resources for like, heart, laugh, applause and surprised.
+   * @beta
    */
   reactionResources?: ReactionResources;
 }
