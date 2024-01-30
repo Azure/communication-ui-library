@@ -244,6 +244,26 @@ export interface CallCompositeStrings {
    * Label for menu item to remove participant
    */
   removeMenuLabel: string;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Label for menu item to start spotlight on participant
+   */
+  startSpotlightParticipantListMenuLabel: string;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Label for menu item to add spotlight on participant
+   */
+  addSpotlightParticipantListMenuLabel: string;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Label for menu item to stop spotlight on participant
+   */
+  stopSpotlightParticipantListMenuLabel: string;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Label for menu item to stop spotlight on local user
+   */
+  stopSpotlightOnSelfParticipantListMenuLabel: string;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Label for add people dropdown

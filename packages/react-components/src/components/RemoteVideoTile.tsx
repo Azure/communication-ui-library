@@ -63,7 +63,10 @@ export const _RemoteVideoTile = React.memo(
     onUnpinParticipant?: (userId: string) => void;
     onUpdateScalingMode?: (userId: string, scalingMode: ViewScalingMode) => void;
     isPinned?: boolean;
+    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds?: string[];
     /* @conditional-compile-remove(spotlight) */ isSpotlighted?: boolean;
+    /* @conditional-compile-remove(spotlight) */ onStartSpotlight?: (userId: string) => void;
+    /* @conditional-compile-remove(spotlight) */ onStopSpotlight?: (userId: string) => void;
     disablePinMenuItem?: boolean;
     toggleAnnouncerString?: (announcerString: string) => void;
     /* @conditional-compile-remove(reaction) */ reactionResources?: ReactionResources;
@@ -85,7 +88,10 @@ export const _RemoteVideoTile = React.memo(
       isPinned,
       onPinParticipant,
       onUnpinParticipant,
+      /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds,
       /* @conditional-compile-remove(spotlight) */ isSpotlighted,
+      /* @conditional-compile-remove(spotlight) */ onStartSpotlight,
+      /* @conditional-compile-remove(spotlight) */ onStopSpotlight,
       onUpdateScalingMode,
       disablePinMenuItem,
       toggleAnnouncerString,
@@ -130,7 +136,11 @@ export const _RemoteVideoTile = React.memo(
       onUnpinParticipant,
       onUpdateScalingMode,
       disablePinMenuItem,
-      toggleAnnouncerString
+      toggleAnnouncerString,
+      /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds,
+      /* @conditional-compile-remove(spotlight) */ isSpotlighted,
+      /* @conditional-compile-remove(spotlight) */ onStartSpotlight,
+      /* @conditional-compile-remove(spotlight) */ onStopSpotlight
     });
 
     const videoTileContextualMenuProps = useMemo(() => {
