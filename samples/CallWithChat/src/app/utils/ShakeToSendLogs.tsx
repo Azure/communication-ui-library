@@ -40,7 +40,7 @@ setTimeout(() => {
   const jsHeapSizeLimit = window.performance['memory']?.jsHeapSizeLimit;
   const totalJSHeapSize = window.performance['memory']?.totalJSHeapSize;
   alert(`${usedJSHeapSize} ${jsHeapSizeLimit} ${totalJSHeapSize}`);
-}, 1000 * 30);
+}, 1000);
 
 setInterval(() => {
   const usedJSHeapSize = window.performance['memory']?.usedJSHeapSize;
