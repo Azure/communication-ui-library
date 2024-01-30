@@ -18,12 +18,13 @@ const buildVersionTextStyle = mergeStyles({
   padding: '0.5em'
 });
 
-// TODO: Get build version from pipeline
-const buildVersion = '1.0.0';
+const buildVersion = process.env.REACT_APP_COMMIT_SHA;
 
 export const BuildVersionOverlay = (): JSX.Element => {
+  if (!buildVersion) {
+    return <></>;
+  }
   return (
-    // TODO: Only show the build version in alpha
     <Overlay className={buildVersionOverlayStyle}>
       <Text className={buildVersionTextStyle} variant="medium">{`Build version: ${buildVersion}`}</Text>
     </Overlay>
