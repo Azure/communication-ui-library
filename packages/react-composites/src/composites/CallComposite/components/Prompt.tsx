@@ -72,3 +72,64 @@ const iconButtonStyles = (theme: Theme): IButtonStyles => ({
 
 /* @conditional-compile-remove(spotlight) */
 const modalStyles = { main: { padding: '1.5rem ', maxWidth: '30rem' } };
+
+/* @conditional-compile-remove(spotlight) */
+/**
+ * Strings in call composite prompt
+ * @beta
+ */
+export interface PromptStrings {
+  /**
+   * Strings in prompt related to spotlight
+   */
+  spotlight: {
+    /**
+     * Heading for prompt when starting spotlight on participant
+     */
+    startSpotlightHeading: string;
+    /**
+     * Text for prompt when starting spotlight on participant
+     */
+    startSpotlightText: string;
+    /**
+     * Label for button to confirm starting spotlight on local user in prompt
+     */
+    startSpotlightOnSelfText: string;
+    /**
+     * Label for button to confirm starting spotlight on participant in prompt
+     */
+    startSpotlightConfirmButtonLabel: string;
+    /**
+     * Label for button to cancel starting spotlight on participant in prompt
+     */
+    startSpotlightCancelButtonLabel: string;
+    /**
+     * Heading for prompt when stopping spotlight on participant
+     */
+    stopSpotlightHeading: string;
+    /**
+     * Heading for prompt when stopping spotlight on local user
+     */
+    stopSpotlightOnSelfHeading: string;
+    /**
+     * Text for prompt when stopping spotlight on participant
+     */
+    stopSpotlightText: string;
+    /**
+     * Text for prompt when stopping spotlight on local user
+     */
+    stopSpotlightOnSelfText: string;
+    /**
+     * Label for button to confirm stopping spotlight on participant in prompt
+     */
+    stopSpotlightConfirmButtonLabel: string;
+    /**
+     * Label for button to confirm stopping spotlight on local user in prompt
+     */
+    stopSpotlightOnSelfConfirmButtonLabel: string;
+    /**
+     * Label for button to cancel stopping spotlight on participant in prompt
+     */
+    stopSpotlightCancelButtonLabel: string;
+  };
+}

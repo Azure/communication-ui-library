@@ -87,12 +87,14 @@ export const usePeoplePane = (props: {
   const onStartSpotlightWithPrompt = useCallback(
     (userId: string, myUserId?: string): void => {
       const startSpotlightPromptText =
-        userId === myUserId ? localeStrings.startSpotlightOnSelfPromptText : localeStrings.startSpotlightPromptText;
+        userId === myUserId
+          ? localeStrings.prompt.spotlight.startSpotlightOnSelfText
+          : localeStrings.prompt.spotlight.startSpotlightText;
       setConfirmationPromptProps?.({
-        heading: localeStrings.startSpotlightPromptHeading,
+        heading: localeStrings.prompt.spotlight.startSpotlightHeading,
         text: startSpotlightPromptText,
-        confirmButtonLabel: localeStrings.startSpotlightPromptConfirmButtonLabel,
-        cancelButtonLabel: localeStrings.startSpotlightPromptCancelButtonLabel,
+        confirmButtonLabel: localeStrings.prompt.spotlight.startSpotlightConfirmButtonLabel,
+        cancelButtonLabel: localeStrings.prompt.spotlight.startSpotlightCancelButtonLabel,
         onConfirm: () => {
           onStartSpotlight?.(userId);
           setIsConfirmationPromptOpen?.(false);
@@ -108,19 +110,23 @@ export const usePeoplePane = (props: {
   const onStopSpotlightWithPrompt = useCallback(
     (userId: string, myUserId?: string): void => {
       const stopSpotlightPromptHeading =
-        userId === myUserId ? localeStrings.stopSpotlightOnSelfPromptHeading : localeStrings.stopSpotlightPromptHeading;
+        userId === myUserId
+          ? localeStrings.prompt.spotlight.stopSpotlightOnSelfHeading
+          : localeStrings.prompt.spotlight.stopSpotlightHeading;
       const stopSpotlightPromptText =
-        userId === myUserId ? localeStrings.stopSpotlightOnSelfPromptText : localeStrings.stopSpotlightPromptText;
+        userId === myUserId
+          ? localeStrings.prompt.spotlight.stopSpotlightOnSelfText
+          : localeStrings.prompt.spotlight.stopSpotlightText;
       const stopSpotlightPromptConfirmButtonLabel =
         userId === myUserId
-          ? localeStrings.stopSpotlightOnSelfPromptConfirmButtonLabel
-          : localeStrings.stopSpotlightPromptConfirmButtonLabel;
+          ? localeStrings.prompt.spotlight.stopSpotlightOnSelfConfirmButtonLabel
+          : localeStrings.prompt.spotlight.stopSpotlightConfirmButtonLabel;
 
       setConfirmationPromptProps?.({
         heading: stopSpotlightPromptHeading,
         text: stopSpotlightPromptText,
         confirmButtonLabel: stopSpotlightPromptConfirmButtonLabel,
-        cancelButtonLabel: localeStrings.stopSpotlightPromptCancelButtonLabel,
+        cancelButtonLabel: localeStrings.prompt.spotlight.stopSpotlightCancelButtonLabel,
         onConfirm: () => {
           onStopSpotlight?.(userId);
           setIsConfirmationPromptOpen?.(false);

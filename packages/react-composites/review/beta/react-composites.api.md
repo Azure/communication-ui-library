@@ -578,6 +578,7 @@ export interface CallCompositeStrings {
     permissionToReachTargetParticipantNotAllowedMoreDetails?: string;
     permissionToReachTargetParticipantNotAllowedTitle?: string;
     privacyPolicy: string;
+    prompt: PromptStrings;
     rejoinCallButtonLabel: string;
     removeBackgroundEffectButtonLabel?: string;
     removeBackgroundTooltip?: string;
@@ -609,21 +610,9 @@ export interface CallCompositeStrings {
     startCaptionsButtonOnLabel?: string;
     startCaptionsButtonTooltipOffContent?: string;
     startCaptionsButtonTooltipOnContent?: string;
-    startSpotlightOnSelfPromptText?: string;
     startSpotlightParticipantListMenuLabel: string;
-    startSpotlightPromptCancelButtonLabel?: string;
-    startSpotlightPromptConfirmButtonLabel?: string;
-    startSpotlightPromptHeading?: string;
-    startSpotlightPromptText?: string;
     stopSpotlightOnSelfParticipantListMenuLabel: string;
-    stopSpotlightOnSelfPromptConfirmButtonLabel?: string;
-    stopSpotlightOnSelfPromptHeading?: string;
-    stopSpotlightOnSelfPromptText?: string;
     stopSpotlightParticipantListMenuLabel: string;
-    stopSpotlightPromptCancelButtonLabel?: string;
-    stopSpotlightPromptConfirmButtonLabel?: string;
-    stopSpotlightPromptHeading?: string;
-    stopSpotlightPromptText?: string;
     surveyCancelButtonAriaLabel: string;
     surveyConfirmButtonLabel: string;
     surveyIssues: SurveyIssues;
@@ -1904,6 +1893,24 @@ export type ParticipantsRemovedListener = (event: {
 export type Profile = {
     displayName?: string;
 };
+
+// @beta
+export interface PromptStrings {
+    spotlight: {
+        startSpotlightHeading: string;
+        startSpotlightText: string;
+        startSpotlightOnSelfText: string;
+        startSpotlightConfirmButtonLabel: string;
+        startSpotlightCancelButtonLabel: string;
+        stopSpotlightHeading: string;
+        stopSpotlightOnSelfHeading: string;
+        stopSpotlightText: string;
+        stopSpotlightOnSelfText: string;
+        stopSpotlightConfirmButtonLabel: string;
+        stopSpotlightOnSelfConfirmButtonLabel: string;
+        stopSpotlightCancelButtonLabel: string;
+    };
+}
 
 // @public
 export interface RemoteVideoTileMenuOptions {
