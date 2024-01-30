@@ -1,5 +1,5 @@
 {
-  "name": "sample-static-html-composites",
+  "name": "@internal/sample-static-html-composites",
   "version": "1.0.0",
   "description": "Basic bundle for communication react composites and usage on a static HTML page.",
   "private": true,

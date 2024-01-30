@@ -126,7 +126,12 @@
   "reactionButton": {
     "label": "반응",
     "tooltipDisabledContent": "반응 동작을 사용할 수 없습니다.",
-    "tooltipContent": "반응 보내기"
+    "tooltipContent": "반응 보내기",
+    "likeReactionTooltipContent": "좋아요",
+    "heartReactionTooltipContent": "사랑",
+    "laughReactionTooltipContent": "크게 웃는 표정",
+    "applauseReactionTooltipContent": "박수",
+    "surprisedReactionTooltipContent": "놀란 표정"
   },
   "messageThread": {
     "yesterday": "어제",
