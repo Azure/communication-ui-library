@@ -4,12 +4,10 @@
 declare let __BUILDTIME__: string; // Injected by webpack
 declare let __CHATVERSION__: string; // Injected by webpack
 declare let __COMMUNICATIONREACTVERSION__: string; //Injected by webpack
-declare let __COMMITID__: string; //Injected by webpack
 
 export const getChatSDKVersion = (): string => __CHATVERSION__;
 export const getBuildTime = (): string => __BUILDTIME__;
 export const getCommnicationReactSDKVersion = (): string => __COMMUNICATIONREACTVERSION__;
-export const getCommitID = (): string => __COMMITID__;
 export const CAT = '🐱';
 export const MOUSE = '🐭';
 export const KOALA = '🐨';
