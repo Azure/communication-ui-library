@@ -51,13 +51,13 @@ export const digitStyles = (theme: Theme): IStyle => {
 /**
  * @private
  */
-export const textFieldStyles = (theme: Theme): Partial<ITextFieldStyles> => ({
+export const textFieldStyles = (theme: Theme, buttonPresent: boolean): Partial<ITextFieldStyles> => ({
   field: {
     padding: 0,
     textAlign: 'center',
     fontSize: `${_pxToRem(18)}`,
     fontWeight: 400,
-    width: `${_pxToRem(192)}`,
+    width: `${!buttonPresent ? '12rem' : '10rem'}`,
     height: '3rem',
     borderRadius: '0.5rem',
     position: 'relative',
@@ -72,6 +72,7 @@ export const textFieldStyles = (theme: Theme): Partial<ITextFieldStyles> => ({
   fieldGroup: {
     border: 'none',
     borderRadius: '0.5rem',
+    width: '12rem',
     height: '3rem',
     backgroundColor: `${theme.palette.neutralLighter}`,
     ':after': {
