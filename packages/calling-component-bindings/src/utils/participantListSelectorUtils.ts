@@ -133,6 +133,9 @@ export const memoizedConvertAllremoteParticipantsBeta = memoizeFnAll(
 );
 
 /* @conditional-compile-remove(spotlight) */
+/**
+ * @private
+ */
 export const memoizedConvertAllremoteParticipantsBetaSpotlight = memoizeFnAll(
   (
     userId: string,
