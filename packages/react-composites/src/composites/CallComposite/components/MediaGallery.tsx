@@ -31,6 +31,8 @@ import { useAdapter } from '../adapter/CallAdapterProvider';
 import { PromptProps } from './Prompt';
 /* @conditional-compile-remove(spotlight) */
 import { useLocale } from '../../localization';
+/* @conditional-compile-remove(spotlight) */
+import { getStartSpotlightWithPromptCallback, getStopSpotlightWithPromptCallback } from '../utils/spotlightUtils';
 
 const VideoGalleryStyles = {
   root: {
@@ -163,53 +165,20 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const myUserId = toFlatCommunicationIdentifier(adapter.getState().userId);
 
   /* @conditional-compile-remove(spotlight) */
-  const onStartSpotlightWithPrompt = useCallback(
-    async (userId: string): Promise<void> => {
-      const startSpotlightPromptText =
-        userId === myUserId
-          ? strings.prompt.spotlight.startSpotlightOnSelfText
-          : strings.prompt.spotlight.startSpotlightText;
-      setPromptProps({
-        heading: strings.prompt.spotlight.startSpotlightHeading,
-        text: startSpotlightPromptText,
-        confirmButtonLabel: strings.prompt.spotlight.startSpotlightConfirmButtonLabel,
-        cancelButtonLabel: strings.prompt.spotlight.startSpotlightCancelButtonLabel,
-        onConfirm: () => {
-          onStartSpotlight(userId), setIsPromptOpen(false);
-        },
-        onCancel: () => setIsPromptOpen(false)
-      });
-      setIsPromptOpen(true);
-    },
-    [onStartSpotlight, setIsPromptOpen, setPromptProps, myUserId, strings]
-  );
+  const onStartSpotlightWithPrompt = useMemo(() => {
+    if (!setIsPromptOpen || !setPromptProps) {
+      return undefined;
+    }
+    return getStartSpotlightWithPromptCallback(myUserId, onStartSpotlight, setIsPromptOpen, setPromptProps, strings);
+  }, [myUserId, onStartSpotlight, setIsPromptOpen, setPromptProps, strings]);
 
   /* @conditional-compile-remove(spotlight) */
-  const onStopSpotlightWithPrompt = useCallback(
-    async (userId: string): Promise<void> => {
-      const stopSpotlightPromptHeading =
-        userId === myUserId
-          ? strings.prompt.spotlight.stopSpotlightOnSelfHeading
-          : strings.prompt.spotlight.stopSpotlightHeading;
-      const stopSpotlightPromptText =
-        userId === myUserId
-          ? strings.prompt.spotlight.stopSpotlightOnSelfText
-          : strings.prompt.spotlight.stopSpotlightText;
-      setPromptProps({
-        heading: stopSpotlightPromptHeading,
-        text: stopSpotlightPromptText,
-        confirmButtonLabel: strings.prompt.spotlight.stopSpotlightConfirmButtonLabel,
-        cancelButtonLabel: strings.prompt.spotlight.stopSpotlightCancelButtonLabel,
-        onConfirm: () => {
-          onStopSpotlight(userId);
-          setIsPromptOpen(false);
-        },
-        onCancel: () => setIsPromptOpen(false)
-      });
-      setIsPromptOpen(true);
-    },
-    [onStopSpotlight, setIsPromptOpen, setPromptProps, myUserId, strings]
-  );
+  const onStopSpotlightWithPrompt = useMemo(() => {
+    if (!setIsPromptOpen || !setPromptProps) {
+      return undefined;
+    }
+    return getStopSpotlightWithPromptCallback(myUserId, onStopSpotlight, setIsPromptOpen, setPromptProps, strings);
+  }, [myUserId, onStopSpotlight, setIsPromptOpen, setPromptProps, strings]);
 
   /* @conditional-compile-remove(spotlight) */
   const ableToSpotlight = adapter.getState().call?.capabilitiesFeature?.capabilities.spotlightParticipant.isPresent;

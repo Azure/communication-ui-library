@@ -245,9 +245,9 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         /* @conditional-compile-remove(dtmf-dialer) */
         dtmfDialerPresent={dtmfDialerPresent}
         /* @conditional-compile-remove(spotlight) */
-        setIsConfirmationPromptOpen={setIsPromptOpen}
+        setIsPromptOpen={setIsPromptOpen}
         /* @conditional-compile-remove(spotlight) */
-        setConfirmationPromptProps={setPromptProps}
+        setPromptProps={setPromptProps}
       />
       {
         /* @conditional-compile-remove(spotlight) */

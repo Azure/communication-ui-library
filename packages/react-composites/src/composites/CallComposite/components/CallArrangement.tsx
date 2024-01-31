@@ -82,6 +82,10 @@ import { useLocale } from '../../localization';
 import { usePropsFor } from '../hooks/usePropsFor';
 /* @conditional-compile-remove(spotlight) */
 import { PromptProps } from './Prompt';
+/* @conditional-compile-remove(spotlight) */
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(spotlight) */
+import { getStartSpotlightWithPromptCallback, getStopSpotlightWithPromptCallback } from '../utils/spotlightUtils';
 
 /**
  * @private
@@ -116,9 +120,9 @@ export interface CallArrangementProps {
   /* @conditional-compile-remove(dtmf-dialer) */
   dtmfDialerPresent?: boolean;
   /* @conditional-compile-remove(spotlight) */
-  setIsConfirmationPromptOpen?: (isOpen: boolean) => void;
+  setIsPromptOpen?: (isOpen: boolean) => void;
   /* @conditional-compile-remove(spotlight) */
-  setConfirmationPromptProps?: (props: PromptProps) => void;
+  setPromptProps?: (props: PromptProps) => void;
 }
 
 /**
@@ -172,18 +176,54 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       peopleButtonRef
     ]
   );
+
+  const locale = useLocale();
+
+  /* @conditional-compile-remove(spotlight) */
+  const callStrings = locale.strings.call;
+
+  /* @conditional-compile-remove(spotlight) */
+  const myUserId = toFlatCommunicationIdentifier(adapter.getState().userId);
+
   /* @conditional-compile-remove(spotlight) */
   const videoGalleryProps = usePropsFor(VideoGallery);
+
+  /* @conditional-compile-remove(spotlight) */
+  const { setPromptProps, setIsPromptOpen } = props;
+
+  /* @conditional-compile-remove(spotlight) */
+  const { onStartSpotlight, onStopSpotlight } = videoGalleryProps;
+
+  /* @conditional-compile-remove(spotlight) */
+  const onStartSpotlightWithPrompt = useMemo(() => {
+    if (!setIsPromptOpen || !setPromptProps) {
+      return undefined;
+    }
+    return getStartSpotlightWithPromptCallback(
+      myUserId,
+      onStartSpotlight,
+      setIsPromptOpen,
+      setPromptProps,
+      callStrings
+    );
+  }, [myUserId, onStartSpotlight, setIsPromptOpen, setPromptProps, callStrings]);
+
+  /* @conditional-compile-remove(spotlight) */
+  const onStopSpotlightWithPrompt = useMemo(() => {
+    if (!setIsPromptOpen || !setPromptProps) {
+      return undefined;
+    }
+    return getStopSpotlightWithPromptCallback(myUserId, onStopSpotlight, setIsPromptOpen, setPromptProps, callStrings);
+  }, [myUserId, onStopSpotlight, setIsPromptOpen, setPromptProps, callStrings]);
+
   const { isPeoplePaneOpen, openPeoplePane, closePeoplePane } = usePeoplePane({
     ...peoplePaneProps,
     /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds:
       videoGalleryProps.spotlightedParticipants,
-    /* @conditional-compile-remove(spotlight) */ onStartSpotlight: videoGalleryProps.onStartSpotlight,
-    /* @conditional-compile-remove(spotlight) */ onStopSpotlight: videoGalleryProps.onStopSpotlight,
+    /* @conditional-compile-remove(spotlight) */ onStartSpotlight: onStartSpotlightWithPrompt,
+    /* @conditional-compile-remove(spotlight) */ onStopSpotlight: onStopSpotlightWithPrompt,
     /* @conditional-compile-remove(spotlight) */ ableToSpotlight:
-      adapter.getState().call?.capabilitiesFeature?.capabilities.spotlightParticipant.isPresent,
-    /* @conditional-compile-remove(spotlight) */ setIsConfirmationPromptOpen: props.setIsConfirmationPromptOpen,
-    /* @conditional-compile-remove(spotlight) */ setConfirmationPromptProps: props.setConfirmationPromptProps
+      adapter.getState().call?.capabilitiesFeature?.capabilities.spotlightParticipant.isPresent
   });
   const togglePeoplePane = useCallback(() => {
     if (isPeoplePaneOpen) {
@@ -213,7 +253,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     }
   }, [props.mobileView, isSidePaneOpen]);
 
-  const locale = useLocale();
   const modalStrings = { dismissModalAriaLabel: locale.strings.call.dismissModalAriaLabel };
 
   const isMobileWithActivePane = props.mobileView && isSidePaneOpen;
