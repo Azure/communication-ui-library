@@ -15,6 +15,7 @@ import React, { useEffect, useState } from 'react';
 import {
   buildTime,
   callingSDKVersion,
+  commitID,
   communicationReactSDKVersion,
   createGroupId,
   fetchTokenResponse,
@@ -39,7 +40,7 @@ import { UnsupportedBrowserPage } from './views/UnsupportedBrowserPage';
 setLogLevel('error');
 
 console.log(
-  `ACS sample calling app. Last Updated ${buildTime} Using @azure/communication-calling:${callingSDKVersion} and @azure/communication-react:${communicationReactSDKVersion}`
+  `ACS sample calling app. Last Updated ${buildTime} with CommitID:${commitID} using @azure/communication-calling:${callingSDKVersion} and @azure/communication-react:${communicationReactSDKVersion}`
 );
 
 initializeIcons();
