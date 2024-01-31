@@ -57,11 +57,12 @@ export const textFieldStyles = (theme: Theme, buttonPresent: boolean): Partial<I
     textAlign: 'center',
     fontSize: `${_pxToRem(18)}`,
     fontWeight: 400,
-    width: `${!buttonPresent ? '12rem' : '10rem'}`,
+    width: `${buttonPresent ? '10rem' : '12rem'}`,
     height: '3rem',
     borderRadius: '0.5rem',
     position: 'relative',
-    overflowX: 'auto'
+    overflowX: 'hidden',
+    textOverflow: 'clip'
   },
   root: {
     backgroundColor: `${theme.palette.neutralLighter}`,
