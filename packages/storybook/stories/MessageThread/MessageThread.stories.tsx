@@ -556,13 +556,16 @@ const MessageThreadStory = (args): JSX.Element => {
       />
       {
         <ImageOverlay
-          isOpen={overlayImageItem.length > 0}
-          images={overlayImageItem}
-          onDismiss={() => setOverlayImageItem([])}
+          isOpen={overlayImageItem != undefined}
+          imageSrc={overlayImageItem?.imageSrc || ''}
+          title='Image'
+          onDismiss={() => {
+            setOverlayImageItem(undefined);
+          }}
           onDownloadButtonClicked={() => {
             alert('Download button clicked');
           }}
-        />
+      />
       }
       {/* We need to use the component to render more messages in the chat thread. Using storybook controls would trigger the whole story to do a fresh re-render, not just components inside the story. */}
       <Stack horizontal verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: '1rem' }}>

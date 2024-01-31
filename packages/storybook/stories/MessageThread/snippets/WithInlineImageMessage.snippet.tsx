@@ -10,7 +10,7 @@ import { Persona, PersonaSize } from '@fluentui/react';
 import React, { useState } from 'react';
 
 export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
-  const [galleryImages, setGalleryImages] = useState<Array<ImageOverlayImageProps>>([]);
+  const [overlayImageItem, setOverlayImageItem] = useState<{ imageSrc: string, title: string, titleIcon: JSX.Element, downloadFilename: string }>();
 
   const onInlineImageClicked = (attachmentId: string, messageId: string): Promise<void> => {
     const filteredMessages = messages?.filter((message) => {
@@ -34,13 +34,13 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
     const titleIcon = (
       <Persona text={chatMessage.senderDisplayName} size={PersonaSize.size32} hidePersonaDetails={true} />
     );
-    const galleryImage: ImageOverlayImageProps = {
+    const overlayImage = {
       title,
       titleIcon,
       downloadFilename: attachment.id,
-      imageUrl: attachment.url
+      imageSrc: attachment.url
     };
-    setGalleryImages([galleryImage]);
+    setOverlayImageItem(overlayImage);
     return Promise.resolve();
   };
 
@@ -111,13 +111,16 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
       <MessageThread userId={'1'} messages={messages} inlineImageOptions={inlineImageOptions} />
       {
         <ImageOverlay
-          isOpen={galleryImages.length > 0}
-          images={galleryImages}
-          onDismiss={() => setGalleryImages([])}
-          onDownloadButtonClicked={() => {
-            alert('Download button clicked');
-          }}
-        />
+        isOpen={overlayImageItem !== undefined}
+        imageSrc={overlayImageItem?.imageSrc || ''}
+        title='Image'
+        onDismiss={() => {
+          setOverlayImageItem(undefined);
+        }}
+        onDownloadButtonClicked={() => {
+          alert('Download button clicked');
+        }}
+      />
       }
     </FluentThemeProvider>
   );
