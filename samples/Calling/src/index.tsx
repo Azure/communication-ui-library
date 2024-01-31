@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { LocalVideoStream, RemoteVideoStream } from '@azure/communication-calling';
-import { AzureCommunicationTokenCredential, CommunicationIdentifierKind } from '@azure/communication-common';
-import { createStatefulCallClient, StatefulDeviceManager } from '@azure/communication-react';
+import { CallClient, LocalVideoStream, RemoteVideoStream, VideoStreamRenderer } from '@azure/communication-calling';
+import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 
-const groupId = '1b69ea20-c065-11ee-9d41-1dbbab32777a';
+const groupId = '1b69ea20-c065-11ee-9d41-1dbbab32777c';
 const displayName = 'James test user';
 
 const fetchTokenResponse = async (): Promise<{
@@ -32,10 +31,8 @@ async function startCall(): Promise<void> {
   const { token, user: userId } = await fetchTokenResponse();
   const tokenCredential = new AzureCommunicationTokenCredential(token);
   console.log(userId, token);
-  const statefulCallClient = createStatefulCallClient({
-    userId: { communicationUserId: userId }
-  });
-  const deviceManager = (await statefulCallClient.getDeviceManager()) as StatefulDeviceManager;
+  const callClient = new CallClient();
+  const deviceManager = await callClient.getDeviceManager();
   callStateElement.innerText = 'Checking device permission';
   await deviceManager.askDevicePermission({
     video: true,
@@ -47,9 +44,9 @@ async function startCall(): Promise<void> {
     await deviceManager.getSpeakers();
   }
   callStateElement.innerText = 'Joining call';
-  const statefulCallAgent = await statefulCallClient.createCallAgent(tokenCredential, { displayName: displayName });
+  const callAgent = await callClient.createCallAgent(tokenCredential, { displayName: displayName });
   const localVideoStream = new LocalVideoStream(cameras[0]);
-  const call = statefulCallAgent.join(
+  const call = callAgent.join(
     { groupId },
     {
       audioOptions: { muted: true }
@@ -139,27 +136,21 @@ async function startCall(): Promise<void> {
   remoteVideoContainer.id = 'remote-video-container';
   document.body.appendChild(remoteVideoContainer);
 
-  const showOrDisposeRemoteStreamInDom = async (
-    participantId: CommunicationIdentifierKind,
-    stream: RemoteVideoStream
-  ): Promise<void> => {
+  const showOrDisposeRemoteStreamInDom = async (stream: RemoteVideoStream): Promise<void> => {
     if (stream.isAvailable) {
-      const result = await statefulCallClient.createView(call.id, participantId, stream);
-      if (result) {
-        remoteVideoContainer.appendChild(result.view.target);
-      }
+      const renderer = new VideoStreamRenderer(stream);
+      const view = await renderer.createView();
+      remoteVideoContainer.appendChild(view.target);
     } else {
-      statefulCallClient.disposeView(call.id, participantId, stream);
+      const renderer = new VideoStreamRenderer(stream);
+      renderer.dispose();
     }
   };
 
-  const showAndSubscribeToRemoteVideoStream = async (
-    participantId: CommunicationIdentifierKind,
-    stream: RemoteVideoStream
-  ): Promise<void> => {
-    await showOrDisposeRemoteStreamInDom(participantId, stream);
+  const showAndSubscribeToRemoteVideoStream = async (stream: RemoteVideoStream): Promise<void> => {
+    await showOrDisposeRemoteStreamInDom(stream);
     stream.on('isAvailableChanged', async () => {
-      await showOrDisposeRemoteStreamInDom(participantId, stream);
+      await showOrDisposeRemoteStreamInDom(stream);
     });
   };
 
@@ -167,14 +158,15 @@ async function startCall(): Promise<void> {
   call.on('remoteParticipantsUpdated', async (e) => {
     for (const participant of e.added) {
       for (const stream of participant.videoStreams) {
-        await showAndSubscribeToRemoteVideoStream(participant.identifier, stream);
+        await showAndSubscribeToRemoteVideoStream(stream);
       }
       participant.on('videoStreamsUpdated', async (e) => {
         for (const stream of e.added) {
-          await showAndSubscribeToRemoteVideoStream(participant.identifier, stream);
+          await showAndSubscribeToRemoteVideoStream(stream);
         }
         for (const stream of e.removed) {
-          statefulCallClient.disposeView(call.id, participant.identifier, stream);
+          const renderer = new VideoStreamRenderer(stream);
+          renderer.dispose();
         }
       });
     }
@@ -184,17 +176,17 @@ async function startCall(): Promise<void> {
       if (!(stream.mediaStreamType === 'Video')) {
         break;
       }
-      const result = await statefulCallClient.createView(call.id, undefined, stream);
-      if (result) {
-        localVideoContainer.appendChild(result.view.target);
-        localVideoState.innerText = `Local video state: on`;
-      }
+      const renderer = new VideoStreamRenderer(stream);
+      const view = await renderer.createView();
+      localVideoContainer.appendChild(view.target);
+      localVideoState.innerText = `Local video state: on`;
     }
     for (const stream of e.removed) {
       if (!(stream.mediaStreamType === 'Video')) {
         break;
       }
-      statefulCallClient.disposeView(call.id, undefined, stream);
+      const renderer = new VideoStreamRenderer(stream);
+      renderer.dispose();
       localVideoState.innerText = `Local video state: off`;
     }
   });
