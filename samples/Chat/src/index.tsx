@@ -7,7 +7,6 @@ import './index.css';
 import App from './app/App';
 import { SwitchableFluentThemeProvider } from './app/theming/SwitchableFluentThemeProvider';
 import { ShakeToSendLogs } from './app/utils/ShakeToSendLogs';
-import { BuildVersionOverlay } from './app/utils/BuildVersionOverlay';
 
 const domNode = document.getElementById('root');
 if (!domNode) {
@@ -18,7 +17,6 @@ createRoot(domNode).render(
   <React.StrictMode>
     <SwitchableFluentThemeProvider scopeId="SampleChatApp">
       <div className="wrapper">
-        <BuildVersionOverlay />
         <App />
         <ShakeToSendLogs />
       </div>
