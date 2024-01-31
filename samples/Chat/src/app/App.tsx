@@ -16,7 +16,7 @@ import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 setLogLevel('error');
 
 console.log(
-  `ACS sample chat app. Last Updated ${getBuildTime()} with CommitID:${getCommitID()} @azure/communication-chat:${getChatSDKVersion()}, and @azure/communication-react:${getCommnicationReactSDKVersion()}`
+  `ACS sample chat app. Last Updated ${getBuildTime()} with CommitID:${getCommitID()} using @azure/communication-chat:${getChatSDKVersion()} and @azure/communication-react:${getCommnicationReactSDKVersion()}`
 );
 
 initializeIcons();
