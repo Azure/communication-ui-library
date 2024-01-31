@@ -68,7 +68,8 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
         __CALLINGVERSION__: JSON.stringify(require(path.resolve(sampleAppDir, 'package.json')).dependencies['@azure/communication-calling']),
         __CHATVERSION__: JSON.stringify(require(path.resolve(sampleAppDir, 'package.json')).dependencies['@azure/communication-chat']),
         __COMMUNICATIONREACTVERSION__: JSON.stringify(require(path.resolve(sampleAppDir, 'package.json')).dependencies['@azure/communication-react']),
-        __BUILDTIME__: JSON.stringify(new Date().toLocaleString())
+        __BUILDTIME__: JSON.stringify(new Date().toLocaleString()),
+        __COMMITID__: process.env['REACT_APP_COMMIT_SHA']
       }),
       new BundleAnalyzerPlugin({
         analyzerMode: 'json'

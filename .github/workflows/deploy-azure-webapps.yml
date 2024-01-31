@@ -42,7 +42,6 @@ jobs:
       - name: Install Rush
         run: npm install -g @microsoft/rush@5.112.2
 
-      # Inject the github hash so that it can be used for versioning when reporting bugs
       - name: Set commit SHA as environment variable
         run: echo "REACT_APP_COMMIT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
 

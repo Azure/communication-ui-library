@@ -4,6 +4,7 @@
 import React from 'react';
 import { Overlay, Text } from '@fluentui/react';
 import { mergeStyles } from '@fluentui/react';
+import { getCommitID } from './utils';
 
 // TODO: Implement for Calling and CallWithChat
 
@@ -18,7 +19,7 @@ const buildVersionTextStyle = mergeStyles({
   padding: '0.5em'
 });
 
-const buildVersion = process.env.REACT_APP_COMMIT_SHA;
+const buildVersion = getCommitID();
 
 export const BuildVersionOverlay = (): JSX.Element => {
   if (!buildVersion) {
