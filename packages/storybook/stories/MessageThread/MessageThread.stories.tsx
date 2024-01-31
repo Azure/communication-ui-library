@@ -8,8 +8,6 @@ import {
   CustomMessage,
   SystemMessage,
   MessageRenderer,
-  AttachmentMetadata,
-  AttachmentDownloadResult,
   ImageOverlay,
   InlineImage
 } from '@azure/communication-react';
@@ -446,20 +444,8 @@ const MessageThreadStory = (args): JSX.Element => {
     return Promise.resolve();
   };
 
-  const onFetchAttachments = async (attachments: AttachmentMetadata[]): Promise<AttachmentDownloadResult[]> => {
-    // Mocking promise
-    const delay = (): Promise<void> => new Promise((resolve) => setTimeout(resolve, 3000));
-    return await delay().then(() => {
-      return [
-        {
-          attachmentId: attachments[0].id,
-          blobUrl: attachments[0].previewUrl ?? ''
-        }
-      ];
-    });
-  };
   const [overlayImageItem, setOverlayImageItem] = useState<{ imageSrc: string, title: string, titleIcon: JSX.Element, downloadFilename: string }>();
-
+  
   const onInlineImageClicked = (attachmentId: string, messageId: string): Promise<void> => {
     const messages = chatMessages?.filter((message) => {
       return message.messageId === messageId;
@@ -553,7 +539,6 @@ const MessageThreadStory = (args): JSX.Element => {
         disableJumpToNewMessageButton={!args.enableJumpToNewMessageButton}
         onLoadPreviousChatMessages={onLoadPreviousMessages}
         onRenderMessage={onRenderMessage}
-        onFetchAttachments={onFetchAttachments}
         inlineImageOptions={inlineImageOptions}
         onUpdateMessage={onUpdateMessageCallback}
         onRenderAvatar={(userId?: string) => {
