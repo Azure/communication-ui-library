@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { LocalVideoStream } from '@azure/communication-calling';
-import { AzureCommunicationTokenCredential } from '@azure/communication-common';
+import { LocalVideoStream, RemoteVideoStream } from '@azure/communication-calling';
+import { AzureCommunicationTokenCredential, CommunicationIdentifierKind } from '@azure/communication-common';
 import { createStatefulCallClient, StatefulDeviceManager } from '@azure/communication-react';
 
 const groupId = '1b69ea20-c065-11ee-9d41-1dbbab32777a';
@@ -49,7 +49,12 @@ async function startCall(): Promise<void> {
   callStateElement.innerText = 'Joining call';
   const statefulCallAgent = await statefulCallClient.createCallAgent(tokenCredential, { displayName: displayName });
   const localVideoStream = new LocalVideoStream(cameras[0]);
-  const call = statefulCallAgent.join({ groupId });
+  const call = statefulCallAgent.join(
+    { groupId },
+    {
+      audioOptions: { muted: true }
+    }
+  );
 
   // Show call state on the dom
   call.on('stateChanged', () => {
@@ -64,6 +69,21 @@ async function startCall(): Promise<void> {
   call.on('idChanged', () => {
     callIdElement.innerText = `CallId: ${call.id}`;
   });
+
+  // show mute state on the dom
+  const muteStateElement = document.createElement('div');
+  muteStateElement.id = 'mute-state';
+  document.body.appendChild(muteStateElement);
+  muteStateElement.innerText = `Mute state: ${call.isMuted ? 'muted' : 'unmuted'}`;
+  call.on('isMutedChanged', () => {
+    muteStateElement.innerText = `Mute state: ${call.isMuted ? 'muted' : 'unmuted'}`;
+  });
+
+  // show local video state on the dom
+  const localVideoState = document.createElement('div');
+  localVideoState.id = 'local-video-state';
+  document.body.appendChild(localVideoState);
+  localVideoState.innerText = `Local video state: off`;
 
   // add a button to the dom to stop the video
   const stopVideoButton = document.createElement('button');
@@ -85,7 +105,7 @@ async function startCall(): Promise<void> {
   const muteButton = document.createElement('button');
   muteButton.innerText = 'Mute';
   muteButton.onclick = () => {
-    call.mute();
+    !call.isMuted && call.mute();
   };
   document.body.appendChild(muteButton);
 
@@ -93,7 +113,7 @@ async function startCall(): Promise<void> {
   const unmuteButton = document.createElement('button');
   unmuteButton.innerText = 'Unmute';
   unmuteButton.onclick = () => {
-    call.unmute();
+    call.isMuted && call.unmute();
   };
   document.body.appendChild(unmuteButton);
 
@@ -106,27 +126,76 @@ async function startCall(): Promise<void> {
   document.body.appendChild(hangUpButton);
 
   // Show video feed in the dom
-  const videoContainer = document.createElement('div');
-  videoContainer.id = 'video-container';
-  document.body.appendChild(videoContainer);
+  const localVideoText = document.createElement('div');
+  localVideoText.innerText = 'Local Video';
+  document.body.appendChild(localVideoText);
+  const localVideoContainer = document.createElement('div');
+  localVideoContainer.id = 'local-video-container';
+  document.body.appendChild(localVideoContainer);
+  const remoteVideoText = document.createElement('div');
+  remoteVideoText.innerText = 'Remote Videos';
+  document.body.appendChild(remoteVideoText);
+  const remoteVideoContainer = document.createElement('div');
+  remoteVideoContainer.id = 'remote-video-container';
+  document.body.appendChild(remoteVideoContainer);
+
+  const showOrDisposeRemoteStreamInDom = async (
+    participantId: CommunicationIdentifierKind,
+    stream: RemoteVideoStream
+  ): Promise<void> => {
+    if (stream.isAvailable) {
+      const result = await statefulCallClient.createView(call.id, participantId, stream);
+      if (result) {
+        remoteVideoContainer.appendChild(result.view.target);
+      }
+    } else {
+      statefulCallClient.disposeView(call.id, participantId, stream);
+    }
+  };
+
+  const showAndSubscribeToRemoteVideoStream = async (
+    participantId: CommunicationIdentifierKind,
+    stream: RemoteVideoStream
+  ): Promise<void> => {
+    await showOrDisposeRemoteStreamInDom(participantId, stream);
+    stream.on('isAvailableChanged', async () => {
+      await showOrDisposeRemoteStreamInDom(participantId, stream);
+    });
+  };
 
   // Subscribe to video streams
   call.on('remoteParticipantsUpdated', async (e) => {
     for (const participant of e.added) {
       for (const stream of participant.videoStreams) {
-        const result = await statefulCallClient.createView(call.id, participant.identifier, stream);
-        if (result) {
-          videoContainer.appendChild(result.view.target);
-        }
+        await showAndSubscribeToRemoteVideoStream(participant.identifier, stream);
       }
+      participant.on('videoStreamsUpdated', async (e) => {
+        for (const stream of e.added) {
+          await showAndSubscribeToRemoteVideoStream(participant.identifier, stream);
+        }
+        for (const stream of e.removed) {
+          statefulCallClient.disposeView(call.id, participant.identifier, stream);
+        }
+      });
     }
   });
   call.on('localVideoStreamsUpdated', async (e) => {
     for (const stream of e.added) {
+      if (!(stream.mediaStreamType === 'Video')) {
+        break;
+      }
       const result = await statefulCallClient.createView(call.id, undefined, stream);
       if (result) {
-        videoContainer.appendChild(result.view.target);
+        localVideoContainer.appendChild(result.view.target);
+        localVideoState.innerText = `Local video state: on`;
       }
+    }
+    for (const stream of e.removed) {
+      if (!(stream.mediaStreamType === 'Video')) {
+        break;
+      }
+      statefulCallClient.disposeView(call.id, undefined, stream);
+      localVideoState.innerText = `Local video state: off`;
     }
   });
 }
