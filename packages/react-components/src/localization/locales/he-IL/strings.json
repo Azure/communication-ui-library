@@ -126,7 +126,12 @@
   "reactionButton": {
     "label": "תגובה",
     "tooltipDisabledContent": "פעולת התגובה אינה זמינה",
-    "tooltipContent": "שלח תגובה"
+    "tooltipContent": "שלח תגובה",
+    "likeReactionTooltipContent": "אהבתי",
+    "heartReactionTooltipContent": "אהבה",
+    "laughReactionTooltipContent": "צחוק",
+    "applauseReactionTooltipContent": "תשואות",
+    "surprisedReactionTooltipContent": "מופתע"
   },
   "messageThread": {
     "yesterday": "אתמול",

@@ -17,6 +17,8 @@ import {
 } from '@internal/react-components';
 /* @conditional-compile-remove(gallery-layouts) */
 import { VideoGalleryLayout } from '@internal/react-components';
+/* @conditional-compile-remove(spotlight) */
+import { VideoGallery } from '@internal/react-components';
 import React, { useMemo, useRef, useState } from 'react';
 import { useEffect } from 'react';
 import { useCallback } from 'react';
@@ -76,6 +78,8 @@ import {
   CapabilitiesChangeNotificationBarProps
 } from './CapabilitiesChangedNotificationBar';
 import { useLocale } from '../../localization';
+/* @conditional-compile-remove(spotlight) */
+import { usePropsFor } from '../hooks/usePropsFor';
 
 /**
  * @private
@@ -162,7 +166,17 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       peopleButtonRef
     ]
   );
-  const { isPeoplePaneOpen, openPeoplePane, closePeoplePane } = usePeoplePane(peoplePaneProps);
+  /* @conditional-compile-remove(spotlight) */
+  const videoGalleryProps = usePropsFor(VideoGallery);
+  const { isPeoplePaneOpen, openPeoplePane, closePeoplePane } = usePeoplePane({
+    ...peoplePaneProps,
+    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds:
+      videoGalleryProps.spotlightedParticipants,
+    /* @conditional-compile-remove(spotlight) */ onStartSpotlight: videoGalleryProps.onStartSpotlight,
+    /* @conditional-compile-remove(spotlight) */ onStopSpotlight: videoGalleryProps.onStopSpotlight,
+    /* @conditional-compile-remove(spotlight) */ ableToSpotlight:
+      adapter.getState().call?.capabilitiesFeature?.capabilities.spotlightParticipant.isPresent
+  });
   const togglePeoplePane = useCallback(() => {
     if (isPeoplePaneOpen) {
       closePeoplePane();

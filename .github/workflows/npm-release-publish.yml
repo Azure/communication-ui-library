@@ -48,6 +48,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       packages: write
+      contents: write
     steps:
       # Check-out repo
       - uses: actions/checkout@v3
