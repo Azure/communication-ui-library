@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(image-gallery) */
+/* @conditional-compile-remove(image-overlay) */
 import { isIOS } from '@fluentui/react';
 import { mergeStyles, Stack } from '@fluentui/react';
-/* @conditional-compile-remove(image-gallery) */
+/* @conditional-compile-remove(image-overlay) */
 import { PersonaSize } from '@fluentui/react';
 import {
   CommunicationParticipant,
@@ -20,11 +20,11 @@ import {
   TypingIndicatorStylesProps,
   useTheme
 } from '@internal/react-components';
-/* @conditional-compile-remove(image-gallery) */ /* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(image-overlay) */ /* @conditional-compile-remove(file-sharing) */
 import { ChatMessage } from '@internal/react-components';
 
 import React, { useCallback, useEffect, useMemo } from 'react';
-/* @conditional-compile-remove(image-gallery) */
+/* @conditional-compile-remove(image-overlay) */
 import { useState } from 'react';
 import { AvatarPersona, AvatarPersonaDataCallback, AvatarPersonaProps } from '../common/AvatarPersona';
 import { useAdapter } from './adapter/ChatAdapterProvider';
@@ -55,9 +55,9 @@ import { useSelector } from './hooks/useSelector';
 import { FileDownloadErrorBar } from './FileDownloadErrorBar';
 /* @conditional-compile-remove(file-sharing) */
 import { _FileDownloadCards } from '@internal/react-components';
-/* @conditional-compile-remove(image-gallery) */
-import { ImageGallery, ImageGalleryImageProps } from '@internal/react-components';
-/* @conditional-compile-remove(image-gallery) */
+/* @conditional-compile-remove(image-overlay) */
+import { ImageOverlay } from '@internal/react-components';
+/* @conditional-compile-remove(image-overlay) */
 import { InlineImage } from '@internal/react-components';
 
 /**
@@ -128,17 +128,17 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     styles,
     fileSharing,
     formFactor
-  } = props;
+  } = props; 
 
   const defaultNumberOfChatMessagesToReload = 5;
   /* @conditional-compile-remove(file-sharing) */
   const [downloadErrorMessage, setDownloadErrorMessage] = React.useState('');
-  /* @conditional-compile-remove(image-gallery) */
+  /* @conditional-compile-remove(image-overlay) */
   const [fullSizeAttachments, setFullSizeAttachments] = useState<Record<string, string>>({});
-  /* @conditional-compile-remove(image-gallery) */
-  const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps>>([]);
-  /* @conditional-compile-remove(image-gallery) */
-  const [isImageGalleryOpen, setIsImageGalleryOpen] = useState<boolean>(false);
+  /* @conditional-compile-remove(image-overlay) */
+  const [overlayImageItem, setOverlayImageItem] = useState<{ imageSrc: string, title: string, titleIcon: JSX.Element, downloadFilename: string }>();
+  /* @conditional-compile-remove(image-overlay) */
+  const [isImageOverlayOpen, setIsImageOverlayOpen] = useState<boolean>(false);
 
   const adapter = useAdapter();
   const theme = useTheme();
@@ -219,7 +219,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [fileSharing?.downloadHandler]
   );
 
-  /* @conditional-compile-remove(image-gallery) */
+  /* @conditional-compile-remove(image-overlay) */
   const onInlineImageClicked = useCallback(
     async (attachmentId: string, messageId: string): Promise<void> => {
       const messages = messageThreadProps.messages?.filter((message) => {
@@ -247,21 +247,19 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         imageAlt: chatMessage.senderDisplayName
       };
       const titleIcon = onRenderAvatarCallback && onRenderAvatarCallback(chatMessage.senderId, titleIconRenderOptions);
-      const galleryImage: ImageGalleryImageProps = {
+      const overlayImage = {
         title: chatMessage.senderDisplayName || '',
         titleIcon: titleIcon,
         downloadFilename: attachment.id,
-        imageUrl: ''
+        imageSrc: ''
       };
-      setIsImageGalleryOpen(true);
+      setIsImageOverlayOpen(true);
 
       if (attachment.id in fullSizeAttachments) {
-        setGalleryImages([
-          {
-            ...galleryImage,
-            imageUrl: fullSizeAttachments[attachment.id]
-          }
-        ]);
+        setOverlayImageItem({
+          ...overlayImage,
+          imageSrc: fullSizeAttachments[attachment.id]
+        });
         return;
       }
 
@@ -271,19 +269,17 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         if (blob[0]) {
           const blobUrl = blob[0].blobUrl;
           setFullSizeAttachments((prev) => ({ ...prev, [attachment.id]: blobUrl }));
-          setGalleryImages([
-            {
-              ...galleryImage,
-              imageUrl: blobUrl
-            }
-          ]);
+          setOverlayImageItem({
+            ...overlayImage,
+            imageSrc: blobUrl
+          });
         }
       }
     },
     [adapter, fullSizeAttachments, messageThreadProps.messages, onRenderAvatarCallback]
   );
 
-  /* @conditional-compile-remove(image-gallery) */
+  /* @conditional-compile-remove(image-overlay) */
   const inlineImageOptions = {
     onRenderInlineImage: (
       inlineImage: InlineImage,
@@ -306,19 +302,19 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     }
   };
 
-  /* @conditional-compile-remove(image-gallery) */
-  const onImageDownloadButtonClicked = useCallback((imageUrl: string, downloadFilename: string): void => {
-    if (imageUrl === '') {
+  /* @conditional-compile-remove(image-overlay) */
+  const onDownloadButtonClicked = useCallback((imageSrc: string): void => {
+    if (imageSrc === '') {
       return;
     }
     if (isIOS()) {
-      window.open(imageUrl, '_blank');
+      window.open(imageSrc, '_blank');
     } else {
       // Create a new anchor element
       const a = document.createElement('a');
       // Set the href and download attributes for the anchor element
-      a.href = imageUrl;
-      a.download = downloadFilename;
+      a.href = imageSrc;
+      a.download = overlayImageItem?.downloadFilename || '';
       a.rel = 'noopener noreferrer';
       a.target = '_blank';
 
@@ -362,7 +358,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             onRenderMessage={onRenderMessage}
             /* @conditional-compile-remove(file-sharing) */
             onRenderFileDownloads={onRenderFileDownloads}
-            /* @conditional-compile-remove(image-gallery) */
+            /* @conditional-compile-remove(image-overlay) */
             inlineImageOptions={inlineImageOptions}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
@@ -408,16 +404,18 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         }
       </Stack>
       {
-        /* @conditional-compile-remove(image-gallery) */
-        <ImageGallery
-          isOpen={isImageGalleryOpen}
-          images={galleryImages}
-          onDismiss={() => {
-            setGalleryImages([]);
-            setIsImageGalleryOpen(false);
-          }}
-          onImageDownloadButtonClicked={onImageDownloadButtonClicked}
-        />
+        /* @conditional-compile-remove(image-overlay) */
+        overlayImageItem && 
+          <ImageOverlay
+            {...overlayImageItem}
+            isOpen={isImageOverlayOpen}
+            onDismiss={() => {
+              setOverlayImageItem(undefined);
+              setIsImageOverlayOpen(false);
+            }}
+            onDownloadButtonClicked={onDownloadButtonClicked}
+          />
+          
       }
     </Stack>
   );

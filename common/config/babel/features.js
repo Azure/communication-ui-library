@@ -64,8 +64,8 @@ module.exports = {
     "capabilities",
     // Feature for custom video gallery layouts
     "gallery-layouts",
-    // Feature image gallery
-    "image-gallery",
+    // Feature image overlay
+    "image-overlay",
     // Feature for large Gallery layout
     "large-gallery",
     // feature for positioning the overflowGallery at the top of the screen in the composite

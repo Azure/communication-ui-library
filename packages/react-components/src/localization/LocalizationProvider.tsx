@@ -45,8 +45,8 @@ import { VerticalGalleryStrings } from '../components/VerticalGallery';
 import { ParticipantListStrings } from '../components/ParticipantList';
 /* @conditional-compile-remove(mention) */
 import { MentionPopoverStrings } from '../components/MentionPopover';
-/* @conditional-compile-remove(image-gallery) */
-import { ImageGalleryStrings } from '../components/ImageGallery';
+/* @conditional-compile-remove(image-overlay) */
+import { ImageOverlayStrings } from '../components/ImageGallery';
 /* @conditional-compile-remove(reaction) */
 import { ReactionButtonStrings } from '../components';
 
@@ -101,9 +101,9 @@ export interface ComponentStrings {
   /* @conditional-compile-remove(mention) */
   /** Strings for MentionPopover */
   mentionPopover: MentionPopoverStrings;
-  /* @conditional-compile-remove(image-gallery) */
-  /** Strings for ImageGallery */
-  imageGallery: ImageGalleryStrings;
+  /* @conditional-compile-remove(image-overlay) */
+  /** Strings for ImageOverlay */
+  imageOverlay: ImageOverlayStrings;
   /** Strings for MessageStatusIndicator */
   messageStatusIndicator: MessageStatusIndicatorStrings;
   /** Strings for ErroBar */

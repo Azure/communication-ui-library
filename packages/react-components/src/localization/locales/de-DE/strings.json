@@ -31,7 +31,7 @@
   "mentionPopover": {
     "mentionPopoverHeader": "Vorschläge"
   },
-  "imageGallery": {
+  "ImageOverlay": {
     "downloadButtonLabel": "Herunterladen",
     "dismissButtonAriaLabel": "Schließen"
   },

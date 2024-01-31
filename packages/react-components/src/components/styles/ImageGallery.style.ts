@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 import { IIconProps, IStyle } from '@fluentui/react';
-/* @conditional-compile-remove(image-gallery) */
+/* @conditional-compile-remove(image-overlay) */
 import { IOverlayStyles } from '@fluentui/react';
-/* @conditional-compile-remove(image-gallery) */
+/* @conditional-compile-remove(image-overlay) */
 import { ChatTheme } from '../../theming/themes';
 
 /**
@@ -19,7 +19,7 @@ export const downloadIcon: IIconProps = {
   iconName: 'Download'
 };
 
-/* @conditional-compile-remove(image-gallery) */
+/* @conditional-compile-remove(image-overlay) */
 /**
  * @private
  */
@@ -81,7 +81,7 @@ export const titleBarContainerStyle: IStyle = {
   alignItems: 'center'
 };
 
-/* @conditional-compile-remove(image-gallery) */
+/* @conditional-compile-remove(image-overlay) */
 /**
  * @private
  */
@@ -141,7 +141,7 @@ export const normalImageStyle: IStyle = {
   maxWidth: '100%'
 };
 
-/* @conditional-compile-remove(image-gallery) */
+/* @conditional-compile-remove(image-overlay) */
 /**
  * @private
  */
@@ -151,7 +151,7 @@ export const brokenImageStyle = (theme: ChatTheme): IStyle => {
   };
 };
 
-/* @conditional-compile-remove(image-gallery) */
+/* @conditional-compile-remove(image-overlay) */
 /**
  * @private
  */
@@ -169,7 +169,7 @@ export const closeButtonStyles = (theme: ChatTheme): IStyle => {
   };
 };
 
-/* @conditional-compile-remove(image-gallery) */
+/* @conditional-compile-remove(image-overlay) */
 /**
  * @private
  */
@@ -199,7 +199,7 @@ export const downloadButtonStyle = (theme: ChatTheme): IStyle => {
   };
 };
 
-/* @conditional-compile-remove(image-gallery) */
+/* @conditional-compile-remove(image-overlay) */
 /**
  * @private
  */

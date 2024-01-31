@@ -10,8 +10,7 @@ import {
   MessageRenderer,
   AttachmentMetadata,
   AttachmentDownloadResult,
-  ImageGalleryImageProps,
-  ImageGallery,
+  ImageOverlay,
   InlineImage
 } from '@azure/communication-react';
 import {
@@ -459,7 +458,7 @@ const MessageThreadStory = (args): JSX.Element => {
       ];
     });
   };
-  const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps>>([]);
+  const [overlayImageItem, setOverlayImageItem] = useState<{ imageSrc: string, title: string, titleIcon: JSX.Element, downloadFilename: string }>();
 
   const onInlineImageClicked = (attachmentId: string, messageId: string): Promise<void> => {
     const messages = chatMessages?.filter((message) => {
@@ -483,17 +482,17 @@ const MessageThreadStory = (args): JSX.Element => {
     const titleIcon = (
       <Persona text={chatMessage.senderDisplayName} size={PersonaSize.size32} hidePersonaDetails={true} />
     );
-    const galleryImage: ImageGalleryImageProps = {
+    const overlayImage = {
       title,
       titleIcon,
       downloadFilename: attachment.id,
-      imageUrl: attachment.url
+      imageSrc: attachment.url
     };
-    setGalleryImages([galleryImage]);
+    setOverlayImageItem(overlayImage);
     return Promise.resolve();
   };
 
-  /* @conditional-compile-remove(image-gallery) */
+  /* @conditional-compile-remove(image-overlay) */
   const inlineImageOptions = {
     onRenderInlineImage: (
       inlineImage: InlineImage,
@@ -571,11 +570,11 @@ const MessageThreadStory = (args): JSX.Element => {
         }}
       />
       {
-        <ImageGallery
-          isOpen={galleryImages.length > 0}
-          images={galleryImages}
-          onDismiss={() => setGalleryImages([])}
-          onImageDownloadButtonClicked={() => {
+        <ImageOverlay
+          isOpen={overlayImageItem.length > 0}
+          images={overlayImageItem}
+          onDismiss={() => setOverlayImageItem([])}
+          onDownloadButtonClicked={() => {
             alert('Download button clicked');
           }}
         />

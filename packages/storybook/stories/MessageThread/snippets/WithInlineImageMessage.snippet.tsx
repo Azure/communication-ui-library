@@ -2,8 +2,7 @@ import {
   FluentThemeProvider,
   MessageThread,
   Message,
-  ImageGalleryImageProps,
-  ImageGallery,
+  ImageOverlay,
   ChatMessage,
   InlineImage
 } from '@azure/communication-react';
@@ -11,7 +10,7 @@ import { Persona, PersonaSize } from '@fluentui/react';
 import React, { useState } from 'react';
 
 export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
-  const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps>>([]);
+  const [galleryImages, setGalleryImages] = useState<Array<ImageOverlayImageProps>>([]);
 
   const onInlineImageClicked = (attachmentId: string, messageId: string): Promise<void> => {
     const filteredMessages = messages?.filter((message) => {
@@ -35,7 +34,7 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
     const titleIcon = (
       <Persona text={chatMessage.senderDisplayName} size={PersonaSize.size32} hidePersonaDetails={true} />
     );
-    const galleryImage: ImageGalleryImageProps = {
+    const galleryImage: ImageOverlayImageProps = {
       title,
       titleIcon,
       downloadFilename: attachment.id,
@@ -45,7 +44,7 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
     return Promise.resolve();
   };
 
-  /* @conditional-compile-remove(image-gallery) */
+  /* @conditional-compile-remove(image-overlay) */
   const inlineImageOptions = {
     onRenderInlineImage: (
       inlineImage: InlineImage,
@@ -111,11 +110,11 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
     <FluentThemeProvider>
       <MessageThread userId={'1'} messages={messages} inlineImageOptions={inlineImageOptions} />
       {
-        <ImageGallery
+        <ImageOverlay
           isOpen={galleryImages.length > 0}
           images={galleryImages}
           onDismiss={() => setGalleryImages([])}
-          onImageDownloadButtonClicked={() => {
+          onDownloadButtonClicked={() => {
             alert('Download button clicked');
           }}
         />
