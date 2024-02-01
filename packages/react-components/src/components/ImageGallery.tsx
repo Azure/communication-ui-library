@@ -42,20 +42,20 @@ export interface ImageOverlayProps {
    * Boolean that controls whether the modal is displayed.
    */
   isOpen: boolean;
-  /** 
-   * Image source used to display the image in a large scale. 
+  /**
+   * Image source used to display the image in a large scale.
    */
   imageSrc: string;
-  /** 
-   * Optional string used as a alt text for the image. @default 'image' 
+  /**
+   * Optional string used as a alt text for the image. @default 'image'
    */
   altText?: string;
-  /** 
-   * Optional string used as the title of the image and displayed on the top left corner of the ImageOverlay. 
+  /**
+   * Optional string used as the title of the image and displayed on the top left corner of the ImageOverlay.
    */
   title?: string;
-  /** 
-   * Optional JSX element used as a title icon and displayed to the left of the title element. 
+  /**
+   * Optional JSX element used as a title icon and displayed to the left of the title element.
    */
   titleIcon?: JSX.Element;
   /**

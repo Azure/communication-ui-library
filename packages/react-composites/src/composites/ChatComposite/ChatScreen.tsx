@@ -128,7 +128,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     styles,
     fileSharing,
     formFactor
-  } = props; 
+  } = props;
 
   const defaultNumberOfChatMessagesToReload = 5;
   /* @conditional-compile-remove(file-sharing) */
@@ -136,7 +136,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   /* @conditional-compile-remove(image-overlay) */
   const [fullSizeAttachments, setFullSizeAttachments] = useState<Record<string, string>>({});
   /* @conditional-compile-remove(image-overlay) */
-  const [overlayImageItem, setOverlayImageItem] = useState<{ imageSrc: string, title: string, titleIcon: JSX.Element, downloadFilename: string }>();
+  const [overlayImageItem, setOverlayImageItem] =
+    useState<{ imageSrc: string; title: string; titleIcon: JSX.Element; downloadFilename: string }>();
   /* @conditional-compile-remove(image-overlay) */
   const [isImageOverlayOpen, setIsImageOverlayOpen] = useState<boolean>(false);
 
@@ -405,7 +406,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       </Stack>
       {
         /* @conditional-compile-remove(image-overlay) */
-        overlayImageItem && 
+        overlayImageItem && (
           <ImageOverlay
             {...overlayImageItem}
             isOpen={isImageOverlayOpen}
@@ -415,7 +416,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             }}
             onDownloadButtonClicked={onDownloadButtonClicked}
           />
-          
+        )
       }
     </Stack>
   );
