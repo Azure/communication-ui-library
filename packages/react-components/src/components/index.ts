@@ -82,9 +82,14 @@ export { Announcer } from './Announcer';
 export type { AnnouncerProps } from './Announcer';
 
 export { VideoGallery } from './VideoGallery';
-export type { VideoGalleryProps, VideoGalleryStrings, VideoGalleryStyles, VideoGalleryLayout } from './VideoGallery';
-/* @conditional-compile-remove(pinned-participants) */
-export type { VideoTileContextualMenuProps, VideoTileDrawerMenuProps } from './VideoGallery';
+export type {
+  VideoGalleryProps,
+  VideoGalleryStrings,
+  VideoGalleryStyles,
+  VideoGalleryLayout,
+  VideoTileContextualMenuProps,
+  VideoTileDrawerMenuProps
+} from './VideoGallery';
 /* @conditional-compile-remove(vertical-gallery) */
 export type { OverflowGalleryPosition } from './VideoGallery';
 /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
