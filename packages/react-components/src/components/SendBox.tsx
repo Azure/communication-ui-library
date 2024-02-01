@@ -19,12 +19,15 @@ import { fileUploadCardsStyles } from './styles/SendBox.styles';
 /* @conditional-compile-remove(file-sharing) */
 import { SendBoxErrorBarError } from './SendBoxErrorBar';
 /* @conditional-compile-remove(file-sharing) */
-import { hasCompletedFileUploads, hasIncompleteFileUploads } from './utils/SendBoxUtils';
+import {
+  MAXIMUM_LENGTH_OF_MESSAGE,
+  exceedsMaxAllowedLength,
+  hasCompletedFileUploads,
+  hasIncompleteFileUploads,
+  sanitizeText
+} from './utils/SendBoxUtils';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from './MentionPopover';
-
-const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
-const EMPTY_MESSAGE_REGEX = /^\s*$/;
 
 /**
  * Fluent styles for {@link Sendbox}.
@@ -227,10 +230,10 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     // we don't want to send empty messages including spaces, newlines, tabs
     // Message can be empty if there is a valid file upload
     if (
-      !EMPTY_MESSAGE_REGEX.test(message) ||
+      sanitizeText(message).length > 0 ||
       /* @conditional-compile-remove(file-sharing) */ hasCompletedFileUploads(activeFileUploads)
     ) {
-      onSendMessage && onSendMessage(sanitizeText(message));
+      onSendMessage && onSendMessage(message);
       setTextValue('');
     }
     sendTextFieldRef.current?.focus();
@@ -241,11 +244,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       return;
     }
 
-    if (newValue.length > MAXIMUM_LENGTH_OF_MESSAGE) {
-      setTextValueOverflow(true);
-    } else {
-      setTextValueOverflow(false);
-    }
+    setTextValueOverflow(exceedsMaxAllowedLength(newValue.length));
     setTextValue(newValue);
   };
 
@@ -386,15 +385,4 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       </Stack>
     </Stack>
   );
-};
-
-/**
- * @private
- */
-const sanitizeText = (message: string): string => {
-  if (EMPTY_MESSAGE_REGEX.test(message)) {
-    return '';
-  } else {
-    return message;
-  }
 };
