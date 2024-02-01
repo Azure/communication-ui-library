@@ -25,9 +25,6 @@ import {
   navigateToHomePage,
   WEB_APP_TITLE
 } from './utils/AppUtils';
-/* @conditional-compile-remove(PSTN-calls) */
-/* @conditional-compile-remove(one-to-n-calling) */
-import { getOutboundParticipants } from './utils/AppUtils';
 /* @conditional-compile-remove(rooms) */
 import { createRoom, getRoomIdFromUrl, addUserToRoom } from './utils/AppUtils';
 import { useIsMobile } from './utils/useIsMobile';
@@ -129,7 +126,10 @@ const App = (): JSX.Element => {
 
             /* @conditional-compile-remove(PSTN-calls) */
             if (callDetails.option === '1:N' || callDetails.option === 'PSTN') {
-              callLocator = getOutboundParticipants(callDetails.outboundParticipants);
+              const outboundUsers = callDetails.outboundParticipants?.map((user) => {
+                return fromFlatCommunicationIdentifier(user);
+              });
+              setTargetCallees(outboundUsers ?? []);
             }
 
             /* @conditional-compile-remove(teams-adhoc-call) */

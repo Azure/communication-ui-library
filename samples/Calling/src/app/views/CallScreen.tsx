@@ -96,8 +96,13 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   if (isTeamsIdentityCall) {
     return <TeamsCallScreen afterCreate={afterTeamsCallAdapterCreate} credential={credential} {...props} />;
   }
-
-  return <AzureCommunicationCallScreen afterCreate={afterCallAdapterCreate} credential={credential} {...props} />;
+  if (props.callLocator) {
+    return <AzureCommunicationCallScreen afterCreate={afterCallAdapterCreate} credential={credential} {...props} />;
+  } else {
+    return (
+      <AzureCommunicationOutboundCallScreen afterCreate={afterCallAdapterCreate} credential={credential} {...props} />
+    );
+  }
 };
 
 /* @conditional-compile-remove(teams-identity-support) */
@@ -180,7 +185,53 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
     {
       ...adapterArgs,
       userId,
-      targetCallees: props.targetCallees,
+      locator,
+      /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(unsupported-browser) */ /* @conditional-compile-remove(video-background-effects) */
+      options: callAdapterOptions
+    },
+    afterCreate
+  );
+
+  return <CallCompositeContainer {...props} adapter={adapter} />;
+};
+
+const AzureCommunicationOutboundCallScreen = (props: AzureCommunicationCallScreenProps): JSX.Element => {
+  const { afterCreate, targetCallees: targetCallees, userId, ...adapterArgs } = props;
+
+  if (!('communicationUserId' in userId)) {
+    throw new Error('A MicrosoftTeamsUserIdentifier must be provided for Teams Identity Call.');
+  }
+
+  /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(video-background-effects) */
+  const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(() => {
+    return {
+      /* @conditional-compile-remove(video-background-effects) */
+      videoBackgroundOptions: {
+        videoBackgroundImages,
+        onResolveDependency: onResolveVideoEffectDependencyLazy
+      },
+      /* @conditional-compile-remove(calling-sounds) */
+      callingSounds: {
+        callEnded: { url: '/assets/sounds/callEnded.mp3' },
+        callRinging: { url: '/assets/sounds/callRinging.mp3' },
+        callBusy: { url: '/assets/sounds/callBusy.mp3' }
+      },
+      /* @conditional-compile-remove(reaction) */
+      reactionResources: {
+        likeReaction: { url: '/assets/reactions/likeEmoji.png' },
+        heartReaction: { url: '/assets/reactions/heartEmoji.png' },
+        laughReaction: { url: '/assets/reactions/laughEmoji.png' },
+        applauseReaction: { url: '/assets/reactions/clapEmoji.png' },
+        surprisedReaction: { url: '/assets/reactions/surprisedEmoji.png' }
+      }
+    };
+  }, []);
+
+  const adapter = useAzureCommunicationCallAdapter(
+    {
+      ...adapterArgs,
+      userId,
+      targetCallees: targetCallees,
       /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(unsupported-browser) */ /* @conditional-compile-remove(video-background-effects) */
       options: callAdapterOptions
     },
