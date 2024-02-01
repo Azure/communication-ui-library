@@ -479,6 +479,8 @@ export interface CallCompositeStrings {
     blurBackgroundTooltip?: string;
     callRejectedMoreDetails?: string;
     callRejectedTitle?: string;
+    callTimeoutBotDetails?: string;
+    callTimeoutBotTitle?: string;
     callTimeoutDetails?: string;
     callTimeoutTitle?: string;
     cameraLabel: string;
@@ -702,9 +704,9 @@ export interface CallWithChatAdapterManagement {
     disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // (undocumented)
-    downloadAttachments: (options: {
-        attachmentUrls: Record<string, string>;
-    }) => Promise<AttachmentDownloadResult[]>;
+    downloadAttachment: (options: {
+        attachmentUrl: string;
+    }) => Promise<AttachmentDownloadResult>;
     fetchInitialData(): Promise<void>;
     // @beta
     holdCall: () => Promise<void>;
@@ -1131,9 +1133,9 @@ export interface ChatAdapterSubscribers {
 export interface ChatAdapterThreadManagement {
     deleteMessage(messageId: string): Promise<void>;
     // (undocumented)
-    downloadAttachments: (options: {
-        attachmentUrls: Record<string, string>;
-    }) => Promise<AttachmentDownloadResult[]>;
+    downloadAttachment: (options: {
+        attachmentUrl: string;
+    }) => Promise<AttachmentDownloadResult>;
     fetchInitialData(): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     removeParticipant(userId: string): Promise<void>;

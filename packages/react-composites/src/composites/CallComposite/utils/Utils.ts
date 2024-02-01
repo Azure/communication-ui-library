@@ -40,6 +40,10 @@ export const INVITE_TO_ROOM_REMOVED_SUB_CODE = 5317;
 export const CALL_TIMEOUT_SUB_CODE = 10004;
 /** @private */
 export const CALL_TIMEOUT_CODE = 487;
+/** @private */
+export const BOT_TIMEOUT_CODE = 486;
+/** @private */
+export const BOT_TIMEOUT_SUB_CODE = 10321;
 
 /**
  * @private
@@ -177,6 +181,15 @@ export const getEndedCallPageProps = (
         disableStartCallButton = true;
         iconName = 'NoticePageCallTimeout';
       }
+      break;
+    case BOT_TIMEOUT_SUB_CODE:
+      if (endedCall?.callEndReason?.code === BOT_TIMEOUT_CODE && locale.strings.call.callTimeoutBotTitle) {
+        title = locale.strings.call.callTimeoutBotTitle;
+        moreDetails = locale.strings.call.callTimeoutBotDetails;
+        disableStartCallButton = true;
+        iconName = 'NoticePageCallTimeout';
+      }
+      break;
   }
   /* @conditional-compile-remove(calling-sounds) */
   switch (endedCall?.callEndReason?.code) {

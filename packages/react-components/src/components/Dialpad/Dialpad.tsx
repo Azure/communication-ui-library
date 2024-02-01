@@ -370,7 +370,7 @@ const DialpadContainer = (props: {
     >
       {dialpadMode === 'dialer' && (
         <TextField
-          styles={concatStyleSets(textFieldStyles(theme), props.styles?.textField)}
+          styles={concatStyleSets(textFieldStyles(theme, plainTextValue !== ''), props.styles?.textField)}
           value={textFieldValue ? textFieldValue : formatPhoneNumber(plainTextValue)}
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           onChange={(e: any) => {
