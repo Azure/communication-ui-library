@@ -250,12 +250,12 @@
     "starSurveyFiveStarText": "The quality was excellent.",
     "surveyConfirmButtonLabel": "Send Feedback",
     "starRatingAriaLabel": "Select {0} of {1} stars",
-    "surveyCancelButtonLabel": "Cancel",
+    "surveySkipButtonLabel": "Skip",
     "tagsSurveyQuestion": "What could have been better?",
     "tagsSurveyTextFieldDefaultText": "Other, please specify",
     "tagsSurveyHelperText": "Check any issues you experienced",
     "surveyTextboxDefaultText": "Other, please specify",
-    "thankYouForFeedBackString": "Thank you for your feedback!",
+    "endOfSurveyText": "Thank you for your feedback!",
     "surveyIssues": {
       "overallRating": {
         "callCannotJoin": "I could not join call",

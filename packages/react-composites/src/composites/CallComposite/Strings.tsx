@@ -745,7 +745,7 @@ export interface CallCompositeStrings {
   /**
    * Cancel button label for survey
    */
-  surveyCancelButtonLabel: string;
+  surveySkipButtonLabel: string;
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Default text for free form text box
@@ -755,7 +755,7 @@ export interface CallCompositeStrings {
   /**
    * Thank you text appeared on screen after survey is submitted
    */
-  thankYouForFeedBackString: string;
+  endOfSurveyText: string;
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Corresponding texts to each call issue

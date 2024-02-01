@@ -200,9 +200,9 @@ export type CallWithChatCompositeOptions = {
     disableSurvey?: boolean;
     /**
      * Optional callback to redirect users to custom screens when survey is done, note that default end call screen will be shown if this callback is not provided
-     * This callback can be used to redirect users to different screens depending on survey state, whether it is submitted, dismissed or has a problem when submitting the survey
+     * This callback can be used to redirect users to different screens depending on survey state, whether it is submitted, skipped or has a problem when submitting the survey
      */
-    onSurveyClosed?: (surveyState: 'sent' | 'dismissed' | 'error', surveyError?: string) => void;
+    onSurveyClosed?: (surveyState: 'sent' | 'skipped' | 'error', surveyError?: string) => void;
     /**
      * Optional callback to handle survey data including free form text response
      * Note that free form text response survey option is only going to be enabled when this callback is provided
@@ -311,9 +311,9 @@ type CallWithChatScreenProps = {
     disableSurvey?: boolean;
     /**
      * Optional callback to redirect users to custom screens when survey is done, note that default end call screen will be shown if this callback is not provided
-     * This callback can be used to redirect users to different screens depending on survey state, whether it is submitted, dismissed or has a problem when submitting the survey
+     * This callback can be used to redirect users to different screens depending on survey state, whether it is submitted, skipped or has a problem when submitting the survey
      */
-    onSurveyClosed?: (surveyState: 'sent' | 'dismissed' | 'error', surveyError?: string) => void;
+    onSurveyClosed?: (surveyState: 'sent' | 'skipped' | 'error', surveyError?: string) => void;
     /**
      * Optional callback to handle survey data including free form text response
      * Note that free form text response survey option is only going to be enabled when this callback is provided

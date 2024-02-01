@@ -32,7 +32,7 @@ export function ThankYouForFeedbackPage(props: ThankYouForFeedbackPageProps): JS
       <Stack className={mergeStyles(containerStyle)} tokens={containerItemGap}>
         {props.iconName && <CallCompositeIcon iconName={props.iconName} />}
         <Text className={mergeStyles(titleStyles)} aria-live="assertive">
-          {strings.thankYouForFeedBackString}
+          {strings.endOfSurveyText}
         </Text>
       </Stack>
     </Stack>

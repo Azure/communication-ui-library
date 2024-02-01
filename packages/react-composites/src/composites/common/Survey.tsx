@@ -38,9 +38,9 @@ export const Survey = (props: {
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Optional callback to redirect users to custom screens when survey is done, note that default end call screen will be shown if this callback is not provided
-   * This callback can be used to redirect users to different screens depending on survey state, whether it is submitted, dismissed or has a problem when submitting the survey
+   * This callback can be used to redirect users to different screens depending on survey state, whether it is submitted, skipped or has a problem when submitting the survey
    */
-  onSurveyClosed?: (surveyState: 'sent' | 'dismissed' | 'error', surveyError?: string) => void;
+  onSurveyClosed?: (surveyState: 'sent' | 'skipped' | 'error', surveyError?: string) => void;
   /* @conditional-compile-remove(end-of-call-survey) */
   onSurveySubmittedCustom?: (
     callId: string,
@@ -140,13 +140,13 @@ export const Survey = (props: {
               style={{ marginTop: '1rem', marginRight: '0.5rem' }}
               onClick={() => {
                 if (onSurveyClosed) {
-                  onSurveyClosed('dismissed');
+                  onSurveyClosed('skipped');
                 } else {
                   setShowDefaultAfterDismissedScreen(true);
                 }
               }}
             >
-              {strings.surveyCancelButtonLabel}
+              {strings.surveySkipButtonLabel}
             </PrimaryButton>
 
             {showSubmitFeedbackButton && (
