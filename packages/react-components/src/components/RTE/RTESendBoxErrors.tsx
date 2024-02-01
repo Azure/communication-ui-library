@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { SendBoxErrorBar, SendBoxErrorBarError } from '../SendBoxErrorBar';
 
 /**
@@ -22,13 +22,13 @@ export const RTESendBoxErrors = (props: RTESendBoxErrorsProps): JSX.Element => {
   const [sendBoxError, setSendBoxError] = useState<SendBoxErrorBarError | undefined>(undefined);
 
   useEffect(() => {
-    if (systemMessage && systemMessage.length > 0) {
+    if (systemMessage && !isMessageEmpty(systemMessage)) {
       setSendBoxError({ message: systemMessage, timestamp: Date.now() });
     }
   }, [systemMessage]);
 
   useEffect(() => {
-    if (textTooLongMessage && textTooLongMessage.length > 0) {
+    if (textTooLongMessage && !isMessageEmpty(textTooLongMessage)) {
       setSendBoxError({ message: textTooLongMessage, timestamp: Date.now() });
     }
   }, [textTooLongMessage]);
@@ -54,5 +54,24 @@ export const RTESendBoxErrors = (props: RTESendBoxErrorsProps): JSX.Element => {
     });
   }, [fileUploadError, fileUploadsPendingError]);
 
-  return <SendBoxErrorBar error={sendBoxError} dismissAfterMs={10 * 1000} />;
+  const onDismiss = useCallback(() => {
+    if (systemMessage && !isMessageEmpty(systemMessage)) {
+      setSendBoxError({ message: systemMessage, timestamp: Date.now() });
+    }
+  }, [systemMessage]);
+
+  return (
+    <SendBoxErrorBar
+      error={sendBoxError}
+      dismissAfterMs={
+        // don't dismiss the system message
+        systemMessage !== undefined && sendBoxError?.message !== systemMessage ? 10 * 1000 : undefined
+      }
+      onDismiss={onDismiss}
+    />
+  );
+};
+
+const isMessageEmpty = (message: string): boolean => {
+  return message.trim().length === 0;
 };

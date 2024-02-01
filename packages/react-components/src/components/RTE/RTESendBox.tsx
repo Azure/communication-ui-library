@@ -153,7 +153,7 @@ export const RTESendBox = (props: RTESendBoxProps): JSX.Element => {
     [contentValue, hasErrorMessage, theme]
   );
 
-  const sendBoxErrorsProps = useMemo<RTESendBoxErrorsProps>(() => {
+  const sendBoxErrorsProps: RTESendBoxErrorsProps = useMemo(() => {
     return {
       fileUploadsPendingError: fileUploadsPendingError,
       fileUploadError: activeFileUploads?.filter((fileUpload) => fileUpload.error).pop()?.error,
