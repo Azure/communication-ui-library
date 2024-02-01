@@ -17,6 +17,7 @@ import { useLocale } from '../../localization';
 import { CallCompositeOptions } from '../CallComposite';
 import { CallArrangement } from '../components/CallArrangement';
 import { MediaGallery } from '../components/MediaGallery';
+import { NetworkReconnectTile } from '../components/NetworkReconnectTile';
 import { useHandlers } from '../hooks/useHandlers';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { useSelector } from '../hooks/useSelector';
@@ -220,7 +221,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
             isNetworkHealthy(networkReconnectTileProps.networkReconnectValue) ? (
               onRenderGalleryContentTrampoline()
             ) : (
-              <></>
+              <NetworkReconnectTile {...networkReconnectTileProps} />
             )
           ) : (
             <></>
