@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "InlineImages",
+  "comment": "Fixing defect when a img is shared via drag and drop and there is no message content",
+  "packageName": "@azure/communication-react",
+  "email": "9044372+JoshuaLai@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
