@@ -929,12 +929,13 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     }
 
     const isCameraOn = this.getState().cameraStatus === 'On';
+    const selectedCamera = getSelectedCameraFromAdapterState(this.getState());
     /* we only configure the video options here since the Calling SDK always unmutes the participant when starting a call */
-    const startCallVideoOptions: StartCallOptions = {
-      videoOptions: isCameraOn
-        ? { localVideoStreams: [new LocalVideoStream(this.getState().devices.selectedCamera)] }
-        : undefined
-    };
+    const startCallVideoOptions: StartCallOptions = selectedCamera
+      ? {
+          videoOptions: isCameraOn ? { localVideoStreams: [new LocalVideoStream(selectedCamera)] } : undefined
+        }
+      : {};
 
     const combinedCallOptions = { ...startCallVideoOptions, ...options };
 
