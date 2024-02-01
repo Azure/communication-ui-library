@@ -68,7 +68,6 @@ export type AnnouncerProps = {
 
 // @beta
 export interface AttachmentDownloadResult {
-    attachmentId: string;
     blobUrl: string;
 }
 

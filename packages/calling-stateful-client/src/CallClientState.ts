@@ -317,7 +317,6 @@ export interface RemoteVideoStreamState {
    * API. This can be undefined if the stream has not yet been rendered and defined after createView creates the view.
    */
   view?: VideoStreamRendererViewState;
-  /* @conditional-compile-remove(pinned-participants) */
   /**
    * Proxy of {@link @azure/communication-calling#RemoteVideoStream.size}.
    */
