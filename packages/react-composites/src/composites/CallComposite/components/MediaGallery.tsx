@@ -30,9 +30,7 @@ import { useAdapter } from '../adapter/CallAdapterProvider';
 /* @conditional-compile-remove(spotlight) */
 import { PromptProps } from './Prompt';
 /* @conditional-compile-remove(spotlight) */
-import { useLocale } from '../../localization';
-/* @conditional-compile-remove(spotlight) */
-import { getStartSpotlightWithPromptCallback, getStopSpotlightWithPromptCallback } from '../utils/spotlightUtils';
+import { useSpotlightCallbacksWithPrompt } from '../utils/spotlightUtils';
 
 const VideoGalleryStyles = {
   root: {
@@ -156,29 +154,19 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   ]);
 
   /* @conditional-compile-remove(spotlight) */
-  const strings = useLocale().strings.call;
-
-  /* @conditional-compile-remove(spotlight) */
   const { onStartSpotlight, onStopSpotlight } = videoGalleryProps;
 
   /* @conditional-compile-remove(spotlight) */
   const myUserId = toFlatCommunicationIdentifier(adapter.getState().userId);
 
   /* @conditional-compile-remove(spotlight) */
-  const onStartSpotlightWithPrompt = useMemo(() => {
-    if (!setIsPromptOpen || !setPromptProps) {
-      return undefined;
-    }
-    return getStartSpotlightWithPromptCallback(myUserId, onStartSpotlight, setIsPromptOpen, setPromptProps, strings);
-  }, [myUserId, onStartSpotlight, setIsPromptOpen, setPromptProps, strings]);
-
-  /* @conditional-compile-remove(spotlight) */
-  const onStopSpotlightWithPrompt = useMemo(() => {
-    if (!setIsPromptOpen || !setPromptProps) {
-      return undefined;
-    }
-    return getStopSpotlightWithPromptCallback(myUserId, onStopSpotlight, setIsPromptOpen, setPromptProps, strings);
-  }, [myUserId, onStopSpotlight, setIsPromptOpen, setPromptProps, strings]);
+  const { onStartSpotlightWithPrompt, onStopSpotlightWithPrompt } = useSpotlightCallbacksWithPrompt(
+    myUserId,
+    onStartSpotlight,
+    onStopSpotlight,
+    setIsPromptOpen,
+    setPromptProps
+  );
 
   /* @conditional-compile-remove(spotlight) */
   const ableToSpotlight = adapter.getState().call?.capabilitiesFeature?.capabilities.spotlightParticipant.isPresent;

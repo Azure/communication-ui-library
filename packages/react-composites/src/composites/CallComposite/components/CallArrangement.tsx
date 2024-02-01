@@ -85,7 +85,7 @@ import { PromptProps } from './Prompt';
 /* @conditional-compile-remove(spotlight) */
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(spotlight) */
-import { getStartSpotlightWithPromptCallback, getStopSpotlightWithPromptCallback } from '../utils/spotlightUtils';
+import { useSpotlightCallbacksWithPrompt } from '../utils/spotlightUtils';
 
 /**
  * @private
@@ -180,9 +180,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const locale = useLocale();
 
   /* @conditional-compile-remove(spotlight) */
-  const callStrings = locale.strings.call;
-
-  /* @conditional-compile-remove(spotlight) */
   const myUserId = toFlatCommunicationIdentifier(adapter.getState().userId);
 
   /* @conditional-compile-remove(spotlight) */
@@ -192,34 +189,20 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const { setPromptProps, setIsPromptOpen } = props;
 
   /* @conditional-compile-remove(spotlight) */
-  const { onStartSpotlight, onStopSpotlight } = videoGalleryProps;
+  const { onStartSpotlight, onStopSpotlight, spotlightedParticipants } = videoGalleryProps;
 
   /* @conditional-compile-remove(spotlight) */
-  const onStartSpotlightWithPrompt = useMemo(() => {
-    if (!setIsPromptOpen || !setPromptProps) {
-      return undefined;
-    }
-    return getStartSpotlightWithPromptCallback(
-      myUserId,
-      onStartSpotlight,
-      setIsPromptOpen,
-      setPromptProps,
-      callStrings
-    );
-  }, [myUserId, onStartSpotlight, setIsPromptOpen, setPromptProps, callStrings]);
-
-  /* @conditional-compile-remove(spotlight) */
-  const onStopSpotlightWithPrompt = useMemo(() => {
-    if (!setIsPromptOpen || !setPromptProps) {
-      return undefined;
-    }
-    return getStopSpotlightWithPromptCallback(myUserId, onStopSpotlight, setIsPromptOpen, setPromptProps, callStrings);
-  }, [myUserId, onStopSpotlight, setIsPromptOpen, setPromptProps, callStrings]);
+  const { onStartSpotlightWithPrompt, onStopSpotlightWithPrompt } = useSpotlightCallbacksWithPrompt(
+    myUserId,
+    onStartSpotlight,
+    onStopSpotlight,
+    setIsPromptOpen,
+    setPromptProps
+  );
 
   const { isPeoplePaneOpen, openPeoplePane, closePeoplePane } = usePeoplePane({
     ...peoplePaneProps,
-    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds:
-      videoGalleryProps.spotlightedParticipants,
+    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds: spotlightedParticipants,
     /* @conditional-compile-remove(spotlight) */ onStartSpotlight: onStartSpotlightWithPrompt,
     /* @conditional-compile-remove(spotlight) */ onStopSpotlight: onStopSpotlightWithPrompt,
     /* @conditional-compile-remove(spotlight) */ ableToSpotlight:
