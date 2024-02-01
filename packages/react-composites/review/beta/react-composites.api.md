@@ -522,6 +522,7 @@ export interface CallCompositeStrings {
     dtmfDialerMoreButtonLabelOff?: string;
     dtmfDialerMoreButtonLabelOn?: string;
     dtmfDialpadPlaceholderText: string;
+    endOfSurveyText: string;
     failedToJoinCallDueToNoNetworkMoreDetails?: string;
     failedToJoinCallDueToNoNetworkTitle: string;
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
@@ -612,16 +613,15 @@ export interface CallCompositeStrings {
     startSpotlightParticipantListMenuLabel: string;
     stopSpotlightOnSelfParticipantListMenuLabel: string;
     stopSpotlightParticipantListMenuLabel: string;
-    surveySkipButtonLabel: string;
     surveyConfirmButtonLabel: string;
     surveyIssues: SurveyIssues;
     SurveyIssuesHeadingStrings: SurveyIssuesHeadingStrings;
+    surveySkipButtonLabel: string;
     surveyTextboxDefaultText: string;
     surveyTitle: string;
     tagsSurveyHelperText: string;
     tagsSurveyQuestion: string;
     tagsSurveyTextFieldDefaultText: string;
-    endOfSurveyText: string;
     threeParticipantJoinedNoticeString: string;
     threeParticipantLeftNoticeString: string;
     transferPageNoticeString: string;

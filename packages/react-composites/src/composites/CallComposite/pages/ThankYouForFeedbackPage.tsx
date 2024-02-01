@@ -23,7 +23,9 @@ export interface ThankYouForFeedbackPageProps {
  * Page shown after the survey is submitted.
  * @private
  */
-export function ThankYouForFeedbackPage(props: ThankYouForFeedbackPageProps): JSX.Element {
+export function ThankYouForFeedbackPage(
+  /* @conditional-compile-remove(end-of-call-survey) */ props: ThankYouForFeedbackPageProps
+): JSX.Element {
   /* @conditional-compile-remove(end-of-call-survey) */
   const strings = useLocale().strings.call;
   /* @conditional-compile-remove(end-of-call-survey) */
