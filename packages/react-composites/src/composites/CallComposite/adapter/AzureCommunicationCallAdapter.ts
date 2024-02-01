@@ -928,6 +928,16 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       throw new Error('You are already in the call.');
     }
 
+    const isCameraOn = this.getState().cameraStatus === 'On';
+    /* we only configure the video options here since the Calling SDK always unmutes the participant when starting a call */
+    const startCallVideoOptions: StartCallOptions = {
+      videoOptions: isCameraOn
+        ? { localVideoStreams: [new LocalVideoStream(this.getState().devices.selectedCamera)] }
+        : undefined
+    };
+
+    const combinedCallOptions = { ...startCallVideoOptions, ...options };
+
     const idsToAdd = participants.map((participant) => {
       let backendId = participant;
       if (typeof participant === 'string') {
@@ -946,7 +956,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     /* @conditional-compile-remove(calling-sounds) */
     this.context.setTargetCallee(idsToAdd);
 
-    const call = this.handlers.onStartCall(idsToAdd, options) as CallTypeOf<AgentType>;
+    const call = this.handlers.onStartCall(idsToAdd, combinedCallOptions) as CallTypeOf<AgentType>;
     if (!call) {
       throw new Error('Unable to start call.');
     }
