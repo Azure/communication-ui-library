@@ -8,7 +8,7 @@ import { SurveyIssues, SurveyIssuesHeadingStrings } from '@internal/react-compon
 /* @conditional-compile-remove(capabilities) */
 import { CapabilityChangedNotificationStrings } from './components/CapabilitiesChangedNotificationBar';
 /* @conditional-compile-remove(spotlight) */
-import { PromptStrings } from './components/Prompt';
+import { SpotlightPromptStrings } from './components/Prompt';
 
 /**
  * Strings used by the {@link CallComposite} directly.
@@ -812,7 +812,7 @@ export interface CallCompositeStrings {
   dtmfDialerMoreButtonLabelOff?: string;
   /* @conditional-compile-remove(spotlight) */
   /**
-   * All strings shown in prompt
+   * Strings for spotlight prompt
    */
-  prompt: PromptStrings;
+  spotlightPrompt: SpotlightPromptStrings;
 }

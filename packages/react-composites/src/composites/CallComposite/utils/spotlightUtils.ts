@@ -60,13 +60,13 @@ const getStartSpotlightWithPromptCallback = (
   return async (userId: string): Promise<void> => {
     const startSpotlightPromptText =
       userId === myUserId
-        ? strings.prompt.spotlight.startSpotlightOnSelfText
-        : strings.prompt.spotlight.startSpotlightText;
+        ? strings.spotlightPrompt.startSpotlightOnSelfText
+        : strings.spotlightPrompt.startSpotlightText;
     setPromptProps({
-      heading: strings.prompt.spotlight.startSpotlightHeading,
+      heading: strings.spotlightPrompt.startSpotlightHeading,
       text: startSpotlightPromptText,
-      confirmButtonLabel: strings.prompt.spotlight.startSpotlightConfirmButtonLabel,
-      cancelButtonLabel: strings.prompt.spotlight.startSpotlightCancelButtonLabel,
+      confirmButtonLabel: strings.spotlightPrompt.startSpotlightConfirmButtonLabel,
+      cancelButtonLabel: strings.spotlightPrompt.startSpotlightCancelButtonLabel,
       onConfirm: () => {
         onStartSpotlight(userId);
         setIsPromptOpen(false);
@@ -88,22 +88,20 @@ const getStopSpotlightWithPromptCallback = (
   return async (userId: string): Promise<void> => {
     const stopSpotlightPromptHeading =
       userId === myUserId
-        ? strings.prompt.spotlight.stopSpotlightOnSelfHeading
-        : strings.prompt.spotlight.stopSpotlightHeading;
+        ? strings.spotlightPrompt.stopSpotlightOnSelfHeading
+        : strings.spotlightPrompt.stopSpotlightHeading;
     const stopSpotlightPromptText =
-      userId === myUserId
-        ? strings.prompt.spotlight.stopSpotlightOnSelfText
-        : strings.prompt.spotlight.stopSpotlightText;
+      userId === myUserId ? strings.spotlightPrompt.stopSpotlightOnSelfText : strings.spotlightPrompt.stopSpotlightText;
     const stopSpotlightPromptConfirmButtonLabel =
       userId === myUserId
-        ? strings.prompt.spotlight.stopSpotlightOnSelfConfirmButtonLabel
-        : strings.prompt.spotlight.stopSpotlightConfirmButtonLabel;
+        ? strings.spotlightPrompt.stopSpotlightOnSelfConfirmButtonLabel
+        : strings.spotlightPrompt.stopSpotlightConfirmButtonLabel;
 
     setPromptProps({
       heading: stopSpotlightPromptHeading,
       text: stopSpotlightPromptText,
       confirmButtonLabel: stopSpotlightPromptConfirmButtonLabel,
-      cancelButtonLabel: strings.prompt.spotlight.stopSpotlightCancelButtonLabel,
+      cancelButtonLabel: strings.spotlightPrompt.stopSpotlightCancelButtonLabel,
       onConfirm: () => {
         onStopSpotlight(userId);
         setIsPromptOpen(false);

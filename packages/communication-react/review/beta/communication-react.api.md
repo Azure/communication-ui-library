@@ -760,7 +760,6 @@ export interface CallCompositeStrings {
     permissionToReachTargetParticipantNotAllowedMoreDetails?: string;
     permissionToReachTargetParticipantNotAllowedTitle?: string;
     privacyPolicy: string;
-    prompt: PromptStrings;
     rejoinCallButtonLabel: string;
     removeBackgroundEffectButtonLabel?: string;
     removeBackgroundTooltip?: string;
@@ -780,6 +779,7 @@ export interface CallCompositeStrings {
     selectedPeopleButtonLabel: string;
     soundLabel: string;
     spokenLanguageStrings?: SpokenLanguageStrings;
+    spotlightPrompt: SpotlightPromptStrings;
     starRatingAriaLabel: string;
     starSurveyFiveStarText: string;
     starSurveyFourStarText: string;
@@ -3665,24 +3665,6 @@ export type Profile = {
     displayName?: string;
 };
 
-// @beta
-export interface PromptStrings {
-    spotlight: {
-        startSpotlightHeading: string;
-        startSpotlightText: string;
-        startSpotlightOnSelfText: string;
-        startSpotlightConfirmButtonLabel: string;
-        startSpotlightCancelButtonLabel: string;
-        stopSpotlightHeading: string;
-        stopSpotlightOnSelfHeading: string;
-        stopSpotlightText: string;
-        stopSpotlightOnSelfText: string;
-        stopSpotlightConfirmButtonLabel: string;
-        stopSpotlightOnSelfConfirmButtonLabel: string;
-        stopSpotlightCancelButtonLabel: string;
-    };
-}
-
 // @public
 export type RaisedHand = {
     raisedHandOrderPosition: number;
@@ -4018,6 +4000,22 @@ export type Spotlight = {
 // @beta
 export interface SpotlightCallFeatureState {
     spotlightedParticipants: SpotlightedParticipant[];
+}
+
+// @beta
+export interface SpotlightPromptStrings {
+    startSpotlightCancelButtonLabel: string;
+    startSpotlightConfirmButtonLabel: string;
+    startSpotlightHeading: string;
+    startSpotlightOnSelfText: string;
+    startSpotlightText: string;
+    stopSpotlightCancelButtonLabel: string;
+    stopSpotlightConfirmButtonLabel: string;
+    stopSpotlightHeading: string;
+    stopSpotlightOnSelfConfirmButtonLabel: string;
+    stopSpotlightOnSelfHeading: string;
+    stopSpotlightOnSelfText: string;
+    stopSpotlightText: string;
 }
 
 // @beta

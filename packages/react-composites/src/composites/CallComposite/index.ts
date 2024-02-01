@@ -96,4 +96,4 @@ export type { CapabilityChangedNotificationStrings } from './components/Capabili
 export type { CallingSounds, SoundEffect } from './adapter';
 
 /* @conditional-compile-remove(spotlight) */
-export type { PromptStrings } from './components/Prompt';
+export type { SpotlightPromptStrings } from './components/Prompt';
