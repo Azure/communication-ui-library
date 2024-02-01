@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "improvement",
+  "workstream": "",
+  "comment": "Add commitID to console logged message for azure deployed sample apps.",
+  "packageName": "@azure/communication-react",
+  "email": "73612854+palatter@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

@@ -782,9 +782,17 @@ export interface CallCompositeStrings {
    */
   callTimeoutTitle?: string;
   /**
+   * String for title when the call times out when calling a bot.
+   */
+  callTimeoutBotTitle?: string;
+  /**
    * String for more details when the call times out because the remote user does not answer
    */
   callTimeoutDetails?: string;
+  /**
+   * String for more details when the call times out when calling a bot
+   */
+  callTimeoutBotDetails?: string;
   /* @conditional-compile-remove(dtmf-dialer) */
   /**
    * Label for the control bar button to show the dtmf dialer when the more button is disabled
