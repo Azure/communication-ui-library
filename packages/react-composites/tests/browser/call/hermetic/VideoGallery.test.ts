@@ -97,7 +97,6 @@ test.describe('VideoGallery tests', async () => {
     );
   });
 
-  /* @conditional-compile-remove(pinned-participants) */
   test('Remote video tile pin menu button should be disabled when max remote video tiles are pinned', async ({
     page,
     serverUrl
