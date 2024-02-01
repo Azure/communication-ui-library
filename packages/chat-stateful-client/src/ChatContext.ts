@@ -19,6 +19,10 @@ import { _safeJSONStringify, toFlatCommunicationIdentifier } from '@internal/acs
 import { Constants } from './Constants';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-chat';
 import { chatStatefulLogger } from './Logger';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import type { CommunicationTokenCredential } from '@azure/communication-common';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { ResourceDownloadQueue, requestAttachments } from './ResourceDownloadQueue';
 
 enableMapSet();
 // Needed to generate state diff for verbose logging.
@@ -38,10 +42,19 @@ export class ChatContext {
   private _logger: AzureLogger;
   private _emitter: EventEmitter;
   private typingIndicatorInterval: number | undefined = undefined;
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  private _messageQueue: ResourceDownloadQueue | undefined = undefined;
 
-  constructor(maxListeners?: number) {
+  constructor(
+    maxListeners?: number,
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ credential?: CommunicationTokenCredential
+  ) {
     this._logger = createClientLogger('communication-react:chat-context');
     this._emitter = new EventEmitter();
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    if (credential) {
+      this._messageQueue = new ResourceDownloadQueue(this, credential);
+    }
     if (maxListeners) {
       this._emitter.setMaxListeners(maxListeners);
     }
@@ -280,6 +293,9 @@ export class ChatContext {
   }
 
   public setChatMessage(threadId: string, message: ChatMessageWithStatus): void {
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    this.parseAttachments(threadId, message);
+
     const { id: messageId, clientMessageId } = message;
     if (messageId || clientMessageId) {
       this.modifyState((draft: ChatClientState) => {
@@ -297,6 +313,22 @@ export class ChatContext {
           this.filterTypingIndicatorForUser(thread, message.sender);
         }
       });
+    }
+  }
+
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  private parseAttachments(threadId: string, message: ChatMessageWithStatus): void {
+    const attachments = message.content?.attachments;
+    if (message.type === 'html' && attachments && attachments.length > 0) {
+      if (
+        this._messageQueue &&
+        !this._messageQueue.containsMessageWithSameAttachments(message) &&
+        message.resourceCache === undefined
+      ) {
+        // Need to discuss retry logic in case of failure
+        this._messageQueue.addMessage(message);
+        this._messageQueue.startQueue(threadId, requestAttachments);
+      }
     }
   }
 

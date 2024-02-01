@@ -6,12 +6,16 @@ import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
 import { CallCompositeOptions } from '../CallComposite';
 import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
 import { CapabilitiesChangeNotificationBarProps } from '../components/CapabilitiesChangedNotificationBar';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { CommonCallAdapter } from '../adapter';
 import { Stack, Text, useTheme } from '@fluentui/react';
 import { getReadableTime } from '../utils/timerUtils';
 import { DtmfDialpadContentTimerStyles } from '../styles/DtmfDialpadPage.styles';
+import { RemoteParticipantState } from '@internal/calling-stateful-client';
+import { isPhoneNumberIdentifier } from '@azure/communication-common';
+import { useSelector } from '../hooks/useSelector';
+import { getStartTime } from '../selectors/baseSelectors';
 
 /**
  * @internal
@@ -45,20 +49,26 @@ const DtmfDialpadPageContent = (props: DialpadPageContentProps): JSX.Element => 
   let calleeName;
 
   if (remoteParticipants) {
-    calleeName = Object.values(remoteParticipants).find((p) => p.identifier === calleeId);
+    const remoteParticipantValues: RemoteParticipantState[] = Object.values(remoteParticipants);
+    if (calleeId && isPhoneNumberIdentifier(calleeId)) {
+      calleeName = calleeId.phoneNumber;
+    } else {
+      calleeName = remoteParticipantValues.find((p) => p.identifier === calleeId);
+    }
   }
 
   return (
     <Stack style={{ height: '100%', width: '100%', background: theme.palette.white }}>
-      <Stack style={{ margin: 'auto' }}>
+      <Stack verticalAlign={'center'} style={{ margin: 'auto' }}>
         <DtmfDialerContentTimer />
-        <Text>{calleeName !== 'Unnamed participant' ? calleeName : ''}</Text>
+        <Text style={{ margin: 'auto' }}>{calleeName !== 'Unnamed participant' ? calleeName : ''}</Text>
         <Dialpad
           onSendDtmfTone={async (tone: DtmfTone) => {
             /* @conditional-compile-remove(dtmf-dialer) */
             await adapter.sendDtmfTone(tone);
           }}
-          enableInputEditing={false}
+          longPressTrigger={props.mobileView ? 'touch' : 'mouseAndTouch'}
+          dialpadMode={'dtmf'}
         ></Dialpad>
       </Stack>
     </Stack>
@@ -68,11 +78,14 @@ const DtmfDialpadPageContent = (props: DialpadPageContentProps): JSX.Element => 
 const DtmfDialerContentTimer = (): JSX.Element => {
   const [time, setTime] = useState<number>(0);
   const elapsedTime = getReadableTime(time);
-  const startTime = useRef(performance.now());
+  const statefulStartTime = useSelector(getStartTime);
+  const startTime = useMemo(() => {
+    return statefulStartTime ?? new Date(Date.now());
+  }, [statefulStartTime]);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTime(performance.now() - startTime.current);
+      setTime(new Date(Date.now()).getTime() - startTime?.getTime() ?? 0);
     }, 10);
     return () => {
       clearInterval(interval);

@@ -307,27 +307,6 @@ test.describe('Filesharing Message Thread', async () => {
   });
 });
 
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-test.describe('Inline Image Message Thread', async () => {
-  test('contains Inline Image in remote message', async ({ serverUrl, page }) => {
-    await page.goto(
-      buildUrlForChatAppUsingFakeAdapter(serverUrl, {
-        localParticipant: TEST_PARTICIPANTS[1],
-        remoteParticipants: [TEST_PARTICIPANTS[0], TEST_PARTICIPANTS[2]],
-        localParticipantPosition: 1,
-        sendRemoteInlineImageMessage: true
-      })
-    );
-
-    expect(
-      await stableScreenshot(page, {
-        stubMessageTimestamps: true,
-        dismissChatMessageActions: true
-      })
-    ).toMatchSnapshot('inline-image-in-received-messages.png');
-  });
-});
-
 /* @conditional-compile-remove(file-sharing) */
 test.describe('Filesharing Edit Message', async () => {
   test.beforeEach(async ({ serverUrl, page }) => {

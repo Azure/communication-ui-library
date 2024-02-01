@@ -54,7 +54,6 @@ export const CustomDialpadExample: () => JSX.Element = () => {
           onClickDialpadButton={onClickDialpadButton}
           onChange={onChange}
           disableDtmfPlayback={true}
-          enableInputEditing={true}
         />
       </Stack>
     </FluentThemeProvider>

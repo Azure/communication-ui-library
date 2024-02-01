@@ -180,7 +180,7 @@ const sendRemoteInlineImageMessage = (
 ): void => {
   const localParticipantId = getIdentifierKind(localParticipant.id);
   const remoteParticipantId = getIdentifierKind(remoteParticipant.id);
-
+  const imgSrc = inlineImageUrl || 'images/inlineImageExample1.png';
   if (localParticipantId.kind === 'microsoftTeamsApp' || remoteParticipantId.kind === 'microsoftTeamsApp') {
     throw new Error('Unsupported identifier kind: microsoftBot');
   }
@@ -192,14 +192,13 @@ const sendRemoteInlineImageMessage = (
     sequenceId: `${thread.messages.length}`,
     version: '0',
     content: {
-      message:
-        '<p>Test</p><p><img alt="image" src="" itemscope="png" width="200" height="300" id="SomeImageId1" style="vertical-align:bottom"></p><p>&nbsp;</p>',
+      message: `<p>Test</p><p><img alt="image" src="${imgSrc}" itemscope="png" width="200" height="300" id="SomeImageId1" style="vertical-align:bottom"></p><p>&nbsp;</p>`,
       attachments: [
         {
           id: 'SomeImageId1',
           attachmentType: 'image',
           name: '',
-          url: inlineImageUrl || 'images/inlineImageExample1.png',
+          url: imgSrc,
           previewUrl: 'images/inlineImageExample1.png'
         }
       ]

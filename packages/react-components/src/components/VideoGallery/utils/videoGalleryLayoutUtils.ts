@@ -4,6 +4,8 @@
 import { useCallback, useRef } from 'react';
 import { smartDominantSpeakerParticipants } from '../../../gallery';
 import { VideoGalleryParticipant, VideoGalleryRemoteParticipant } from '../../../types';
+/* @conditional-compile-remove(reaction) */
+import { ReactionResources } from '../../..';
 /* @conditional-compile-remove(gallery-layouts) */
 import { VideoGalleryLayout } from '../../VideoGallery';
 
@@ -260,4 +262,24 @@ const putVideoParticipantsFirst = (
  */
 export const useOrganizedParticipants = (args: OrganizedParticipantsArgs): OrganizedParticipantsResult => {
   return _useOrganizedParticipantsWithFocusedParticipants(args);
+};
+
+/* @conditional-compile-remove(reaction) */
+/**
+ * @private
+ */
+export const getEmojiResource = (reactionName: string, reactionResources: ReactionResources): string | undefined => {
+  switch (reactionName) {
+    case 'like':
+      return reactionResources.likeReaction?.url;
+    case 'heart':
+      return reactionResources.heartReaction?.url;
+    case 'laugh':
+      return reactionResources.laughReaction?.url;
+    case 'applause':
+      return reactionResources.applauseReaction?.url;
+    case 'surprised':
+      return reactionResources.surprisedReaction?.url;
+  }
+  return '';
 };

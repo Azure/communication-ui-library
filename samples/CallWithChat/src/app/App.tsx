@@ -11,6 +11,7 @@ import {
   buildTime,
   callingSDKVersion,
   chatSDKVersion,
+  commitID,
   communicationReactSDKVersion,
   createGroupId,
   ensureJoinableCallLocatorPushedToUrl,
@@ -51,7 +52,7 @@ interface CallWithChatArgs {
 type AppPages = 'home' | 'call' | 'error';
 
 console.log(
-  `ACS sample Call with Chat app. Last Updated ${buildTime} Using @azure/communication-calling:${callingSDKVersion}, @azure/communication-chat:${chatSDKVersion}, and @azure/communication-react:${communicationReactSDKVersion}`
+  `ACS sample Call with Chat app. Last Updated ${buildTime} with CommitID:${commitID} using @azure/communication-calling:${callingSDKVersion}, @azure/communication-chat:${chatSDKVersion}, and @azure/communication-react:${communicationReactSDKVersion}`
 );
 
 const App = (): JSX.Element => {

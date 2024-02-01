@@ -36,8 +36,6 @@ import getParticipantsWhoHaveReadMessage from './utils/getParticipantsWhoHaveRea
 import { FileDownloadHandler } from './FileDownloadCards';
 /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AttachmentMetadata } from './FileDownloadCards';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { AttachmentDownloadResult } from './FileDownloadCards';
 import { useTheme } from '../theming';
 import { FluentV9ThemeProvider } from './../theming/FluentV9ThemeProvider';
 import LiveAnnouncer from './Announcer/LiveAnnouncer';
@@ -49,6 +47,8 @@ import {
   ChatMessageComponentWrapperProps
 } from './ChatMessage/ChatMessageComponentWrapper';
 import { Announcer } from './Announcer';
+/* @conditional-compile-remove(image-gallery) */
+import { InlineImageOptions } from './ChatMessage/ChatMessageContent';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (
@@ -455,13 +455,6 @@ export type MessageThreadProps = {
    * @beta
    */
   onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  /**
-   * Optional callback to retrieve the inline image in a message.
-   * @param attachment - AttachmentMetadata object we want to render
-   * @beta
-   */
-  onFetchAttachments?: (attachments: AttachmentMetadata[]) => Promise<AttachmentDownloadResult[]>;
   /**
    * Optional callback to edit a message.
    *
@@ -534,7 +527,7 @@ export type MessageThreadProps = {
    * Optional callback called when an inline image is clicked.
    * @beta
    */
-  onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
+  inlineImageOptions?: InlineImageOptions;
 };
 
 /**
@@ -663,12 +656,10 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     onSendMessage,
     /* @conditional-compile-remove(date-time-customization) */
     onDisplayDateTimeString,
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-    onFetchAttachments,
     /* @conditional-compile-remove(mention) */
     mentionOptions,
     /* @conditional-compile-remove(image-gallery) */
-    onInlineImageClicked,
+    inlineImageOptions,
     /* @conditional-compile-remove(file-sharing) */
     onRenderFileDownloads
   } = props;
@@ -689,32 +680,6 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
 
   // readCount and participantCount will only need to be updated on-fly when user hover on an indicator
   const [readCountForHoveredIndicator, setReadCountForHoveredIndicator] = useState<number | undefined>(undefined);
-
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  const [inlineAttachments, setInlineAttachments] = useState<Record<string, Record<string, string>>>({});
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  const onFetchInlineAttachment = useCallback(
-    async (attachments: AttachmentMetadata[], messageId: string): Promise<void> => {
-      if (!onFetchAttachments || attachments.length === 0) {
-        return;
-      }
-      const attachmentDownloadResult = await onFetchAttachments(attachments);
-
-      if (attachmentDownloadResult.length > 0) {
-        setInlineAttachments((prev) => {
-          // The new state should always be based on the previous one
-          // otherwise there can be issues with renders
-          const listOfAttachments = prev[messageId] ?? {};
-          for (const result of attachmentDownloadResult) {
-            const { attachmentId, blobUrl } = result;
-            listOfAttachments[attachmentId] = blobUrl;
-          }
-          return { ...prev, [messageId]: listOfAttachments };
-        });
-      }
-    },
-    [onFetchAttachments]
-  );
 
   const localeStrings = useLocale().strings.messageThread;
   const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
@@ -1116,12 +1081,8 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
                   participantCount={participantCount}
                   /* @conditional-compile-remove(file-sharing) */
                   fileDownloadHandler={props.fileDownloadHandler}
-                  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-                  onFetchInlineAttachment={onFetchInlineAttachment}
-                  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-                  inlineAttachments={inlineAttachments}
                   /* @conditional-compile-remove(image-gallery) */
-                  onInlineImageClicked={onInlineImageClicked}
+                  inlineImageOptions={inlineImageOptions}
                   /* @conditional-compile-remove(date-time-customization) */
                   onDisplayDateTimeString={onDisplayDateTimeString}
                   /* @conditional-compile-remove(mention) */
