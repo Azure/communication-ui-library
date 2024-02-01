@@ -2008,6 +2008,7 @@ export interface RTESendBoxProps {
     disabled?: boolean;
     onCancelFileUpload?: (fileId: string) => void;
     onRenderFileUploads?: () => JSX.Element;
+    onSendMessage?: (content: string) => Promise<void>;
     strings?: Partial<SendBoxStrings>;
     systemMessage?: string;
 }
