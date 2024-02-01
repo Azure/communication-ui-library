@@ -64,7 +64,14 @@ import {
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AzureCommunicationChatAdapterOptions } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
 import { EventEmitter } from 'events';
-import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+import {
+  CommunicationTokenCredential,
+  MicrosoftTeamsAppIdentifier,
+  UnknownIdentifier,
+  CommunicationUserIdentifier
+} from '@azure/communication-common';
+/* @conditional-compile-remove(teams-adhoc-call) */
+import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import {
   CommunicationIdentifier,
@@ -270,15 +277,47 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     // Only remove self from the GroupCall. Contoso must manage access to Chat.
     await this.callAdapter.leaveCall(forEveryone);
   }
+
+  /** Start a new Call. */
+  public startCall(participants: string[], options?: StartCallOptions): Call | undefined;
   /** Start a new Call. */
   public startCall(
-    participants: string[] | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier[],
+    participants: (
+      | MicrosoftTeamsAppIdentifier
+      | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier
+      | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
+      | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
+      | UnknownIdentifier
+    )[],
+    options?: StartCallOptions
+  ): Call | undefined;
+  /** Start a new Call. */
+  public startCall(
+    participants:
+      | string[]
+      | (
+          | MicrosoftTeamsAppIdentifier
+          | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier
+          | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
+          | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
+          | UnknownIdentifier
+        )[],
     options?: StartCallOptions
   ): Call | undefined {
-    let communicationParticipants = participants;
-    /* @conditional-compile-remove(PSTN-calls) */
-    communicationParticipants = participants.map(_toCommunicationIdentifier);
-    return this.callAdapter.startCall(communicationParticipants, options);
+    if (typeof participants[0] === 'string') {
+      return this.callAdapter.startCall(participants as string[], options);
+    } else {
+      return this.callAdapter.startCall(
+        participants as (
+          | MicrosoftTeamsAppIdentifier
+          | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier
+          | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
+          | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
+          | UnknownIdentifier
+        )[],
+        options
+      );
+    }
   }
   /**
    * Subscribe to state change events.

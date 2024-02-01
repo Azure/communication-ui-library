@@ -5,7 +5,13 @@ import { CallAdapterState, CallCompositePage, END_CALL_PAGES } from '../adapter/
 import { _isInCall, _isPreviewOn, _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { CallState, RemoteParticipantState } from '@internal/calling-stateful-client';
-import { CommunicationIdentifier, isPhoneNumberIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { CommunicationUserIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(PSTN-calls) */
+import { PhoneNumberIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(teams-adhoc-call) */
+import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
+import { MicrosoftTeamsAppIdentifier, UnknownIdentifier, isPhoneNumberIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { AdapterStateModifier, CallAdapterLocator } from '../adapter/AzureCommunicationCallAdapter';
@@ -550,7 +556,15 @@ export const getSelectedCameraFromAdapterState = (state: CallAdapterState): Vide
  * @private
  */
 export const getLocatorOrTargetCallees = (
-  locatorOrTargetCallees: CallAdapterLocator | CommunicationIdentifier[]
+  locatorOrTargetCallees:
+    | CallAdapterLocator
+    | (
+        | MicrosoftTeamsAppIdentifier
+        | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier
+        | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
+        | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
+        | UnknownIdentifier
+      )[]
 ): 'locator' | 'targetCallees' => {
   if (Array.isArray(locatorOrTargetCallees)) {
     return 'targetCallees';

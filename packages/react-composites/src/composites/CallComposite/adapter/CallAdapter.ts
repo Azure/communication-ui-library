@@ -30,9 +30,16 @@ import type {
   PropertyChangedEvent
 } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
-import type { CommunicationIdentifierKind } from '@azure/communication-common';
+import type {
+  CommunicationIdentifierKind,
+  MicrosoftTeamsAppIdentifier,
+  UnknownIdentifier
+} from '@azure/communication-common';
+/* @conditional-compile-remove(teams-adhoc-call) */
+import type { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
+/* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import type { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
@@ -100,7 +107,13 @@ export type CallAdapterClientState = {
    * State to track who the original call went out to. will be undefined the call is not a outbound
    * modality. This includes, groupCalls, Rooms calls, and Teams InteropMeetings.
    */
-  targetCallees?: CommunicationIdentifier[];
+  targetCallees?: (
+    | MicrosoftTeamsAppIdentifier
+    | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier
+    | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
+    | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
+    | UnknownIdentifier
+  )[];
   devices: DeviceManagerState;
   endedCall?: CallState;
   isTeamsCall: boolean;
@@ -1048,13 +1061,21 @@ export interface CommonCallAdapter
    * @public
    */
   startCall(participants: string[], options?: StartCallOptions): void;
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Start the call.
    * @param participants - An array of {@link @azure/communication-common#CommunicationIdentifier} to be called
    * @beta
    */
-  startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): void;
+  startCall(
+    participants: (
+      | MicrosoftTeamsAppIdentifier
+      | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier
+      | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
+      | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
+      | UnknownIdentifier
+    )[],
+    options?: StartCallOptions
+  ): void;
 }
 
 /**
@@ -1091,13 +1112,21 @@ export interface CallAdapter extends CommonCallAdapter {
    * @public
    */
   startCall(participants: string[], options?: StartCallOptions): Call | undefined;
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Start the call.
    * @param participants - An array of {@link @azure/communication-common#CommunicationIdentifier} to be called
    * @beta
    */
-  startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
+  startCall(
+    participants: (
+      | MicrosoftTeamsAppIdentifier
+      | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier
+      | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
+      | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
+      | UnknownIdentifier
+    )[],
+    options?: StartCallOptions
+  ): Call | undefined;
 }
 
 /* @conditional-compile-remove(teams-identity-support) */

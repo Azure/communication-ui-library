@@ -21,12 +21,12 @@ import { StartCaptionsOptions } from '@azure/communication-calling';
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 /* @conditional-compile-remove(PSTN-calls) */
-import {
-  CommunicationIdentifier,
-  CommunicationUserIdentifier,
-  isPhoneNumberIdentifier,
-  PhoneNumberIdentifier
-} from '@azure/communication-common';
+import { CommunicationIdentifier, isPhoneNumberIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(teams-adhoc-call) */
+import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { CommunicationUserIdentifier } from '@azure/communication-common';
+import { MicrosoftTeamsAppIdentifier, UnknownIdentifier } from '@azure/communication-common';
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { JoinCallOptions } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(end-of-call-survey) */
@@ -98,14 +98,33 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   };
   public leaveCall = async (forEveryone?: boolean): Promise<void> =>
     await this.callWithChatAdapter.leaveCall(forEveryone);
+
   public startCall = (
-    participants: string[] | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier[],
+    participants:
+      | string[]
+      | (
+          | MicrosoftTeamsAppIdentifier
+          | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier
+          | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
+          | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
+          | UnknownIdentifier
+        )[],
     options: StartCallOptions
   ): Call | undefined => {
-    let communicationParticipants = participants;
-    /* @conditional-compile-remove(PSTN-calls) */
-    communicationParticipants = participants.map(_toCommunicationIdentifier);
-    return this.callWithChatAdapter.startCall(communicationParticipants, options);
+    if (participants.every((participant) => typeof participant === 'string')) {
+      return this.callWithChatAdapter.startCall(participants as string[], options);
+    } else {
+      return this.callWithChatAdapter.startCall(
+        participants as (
+          | MicrosoftTeamsAppIdentifier
+          | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier
+          | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
+          | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
+          | UnknownIdentifier
+        )[],
+        options
+      );
+    }
   };
   public setCamera = async (sourceId: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void> =>
     await this.callWithChatAdapter.setCamera(sourceId, options);

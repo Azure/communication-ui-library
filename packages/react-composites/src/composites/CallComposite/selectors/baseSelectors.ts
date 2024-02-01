@@ -26,7 +26,13 @@ import { _isInCall, _isPreviewOn, _dominantSpeakersWithFlatId } from '@internal/
 import { AdapterErrors } from '../../common/adapters';
 /* @conditional-compile-remove(raise-hand) */
 import { RaisedHandState } from '@internal/calling-stateful-client';
-import { CommunicationIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { CommunicationUserIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(PSTN-calls) */
+import { PhoneNumberIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(teams-adhoc-call) */
+import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
+import { MicrosoftTeamsAppIdentifier, UnknownIdentifier } from '@azure/communication-common';
 /**
  * @private
  */
@@ -218,7 +224,17 @@ export const getLatestCapabilitiesChangedInfo = (state: CallAdapterState): Capab
 /**
  * @private
  */
-export const getTargetCallees = (state: CallAdapterState): CommunicationIdentifier[] | undefined => state.targetCallees;
+export const getTargetCallees = (
+  state: CallAdapterState
+):
+  | (
+      | MicrosoftTeamsAppIdentifier
+      | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier
+      | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
+      | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
+      | UnknownIdentifier
+    )[]
+  | undefined => state.targetCallees;
 
 /**
  * @private
