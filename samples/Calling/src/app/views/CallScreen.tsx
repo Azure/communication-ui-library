@@ -3,9 +3,12 @@
 
 import {
   AzureCommunicationTokenCredential,
-  CommunicationIdentifier,
-  CommunicationUserIdentifier
+  MicrosoftTeamsAppIdentifier,
+  UnknownIdentifier
 } from '@azure/communication-common';
+/* @conditional-compile-remove(PSTN-calls) */
+import { PhoneNumberIdentifier } from '@azure/communication-common';
+import { CommunicationUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(teams-identity-support) */
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import {
@@ -35,7 +38,13 @@ export interface CallScreenProps {
     | CommunicationUserIdentifier
     | /* @conditional-compile-remove(teams-identity-support) */ MicrosoftTeamsUserIdentifier;
   callLocator?: CallAdapterLocator;
-  targetCallees?: CommunicationIdentifier[];
+  targetCallees?: (
+    | MicrosoftTeamsAppIdentifier
+    | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier
+    | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
+    | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
+    | UnknownIdentifier
+  )[];
   displayName: string;
   /* @conditional-compile-remove(PSTN-calls) */
   alternateCallerId?: string;

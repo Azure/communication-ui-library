@@ -1,10 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { CommunicationIdentifier, CommunicationUserIdentifier } from '@azure/communication-common';
+import {
+  CommunicationUserIdentifier,
+  MicrosoftTeamsAppIdentifier,
+  UnknownIdentifier
+} from '@azure/communication-common';
+/* @conditional-compile-remove(PSTN-calls) */
+import { PhoneNumberIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(rooms) */
 import { ParticipantRole } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-identity-support) */
 import { fromFlatCommunicationIdentifier } from '@azure/communication-react';
 /* @conditional-compile-remove(teams-identity-support) */
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
@@ -56,7 +61,15 @@ const App = (): JSX.Element => {
 
   // Call details to join a call - these are collected from the user on the home screen
   const [callLocator, setCallLocator] = useState<CallAdapterLocator>();
-  const [targetCallees, setTargetCallees] = useState<CommunicationIdentifier[]>([]);
+  const [targetCallees, setTargetCallees] = useState<
+    (
+      | MicrosoftTeamsAppIdentifier
+      | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier
+      | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
+      | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
+      | UnknownIdentifier
+    )[]
+  >([]);
   const [displayName, setDisplayName] = useState<string>('');
 
   /* @conditional-compile-remove(teams-identity-support) */
@@ -108,17 +121,12 @@ const App = (): JSX.Element => {
             setDisplayName(callDetails.displayName);
             /* @conditional-compile-remove(PSTN-calls) */
             setAlternateCallerId(callDetails.alternateCallerId);
-            let callLocator: CallAdapterLocator | undefined = !(
-              callDetails.option === 'TeamsAdhoc' ||
-              callDetails.option === '1:N' ||
-              callDetails.option === 'PSTN'
-            )
-              ? callDetails.callLocator ||
-                /* @conditional-compile-remove(rooms) */ getRoomIdFromUrl() ||
-                getTeamsLinkFromUrl() ||
-                getGroupIdFromUrl() ||
-                createGroupId()
-              : undefined;
+            let callLocator: CallAdapterLocator | undefined =
+              callDetails.callLocator ||
+              /* @conditional-compile-remove(rooms) */ getRoomIdFromUrl() ||
+              getTeamsLinkFromUrl() ||
+              getGroupIdFromUrl() ||
+              createGroupId();
 
             /* @conditional-compile-remove(rooms) */
             if (callDetails.option === 'Rooms') {
@@ -130,14 +138,20 @@ const App = (): JSX.Element => {
               const outboundUsers = callDetails.outboundParticipants?.map((user) => {
                 return fromFlatCommunicationIdentifier(user);
               });
+              callLocator = undefined;
               setTargetCallees(outboundUsers ?? []);
             }
 
-            /* @conditional-compile-remove(teams-adhoc-call) */
             if (callDetails.option === 'TeamsAdhoc') {
               const outboundTeamsUsers = callDetails.outboundTeamsUsers?.map((user) => {
-                return fromFlatCommunicationIdentifier(user);
+                return fromFlatCommunicationIdentifier(user) as
+                  | MicrosoftTeamsAppIdentifier
+                  | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier
+                  | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
+                  | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
+                  | UnknownIdentifier;
               });
+              callLocator = undefined;
               setTargetCallees(outboundTeamsUsers ?? []);
             }
 
