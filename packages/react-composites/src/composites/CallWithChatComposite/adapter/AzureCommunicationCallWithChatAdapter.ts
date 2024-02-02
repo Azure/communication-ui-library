@@ -64,14 +64,7 @@ import {
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AzureCommunicationChatAdapterOptions } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
 import { EventEmitter } from 'events';
-import {
-  CommunicationTokenCredential,
-  MicrosoftTeamsAppIdentifier,
-  UnknownIdentifier,
-  CommunicationUserIdentifier
-} from '@azure/communication-common';
-/* @conditional-compile-remove(teams-adhoc-call) */
-import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
+import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import {
   CommunicationIdentifier,
@@ -290,16 +283,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     if (typeof participants[0] === 'string') {
       return this.callAdapter.startCall(participants as string[], options);
     } else {
-      return this.callAdapter.startCall(
-        participants as (
-          | MicrosoftTeamsAppIdentifier
-          | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier
-          | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
-          | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
-          | UnknownIdentifier
-        )[],
-        options
-      );
+      return this.callAdapter.startCall(participants as StartCallIdentifier[], options);
     }
   }
   /**
