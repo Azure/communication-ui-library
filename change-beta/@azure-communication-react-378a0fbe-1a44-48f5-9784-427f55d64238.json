@@ -1,9 +1,0 @@
-{
-  "type": "minor",
-  "area": "feature",
-  "workstream": "Reaction API for VideoTile React Components.",
-  "comment": "React-Component update",
-  "packageName": "@azure/communication-react",
-  "email": "mbellah@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,8 +1,8 @@
 {
   "type": "none",
-  "area": "feature",
-  "workstream": "RTE",
-  "comment": "InputBox and SendBox",
+  "area": "fix",
+  "workstream": "",
+  "comment": "Add missing permissions to storybook deploy action",
   "packageName": "@azure/communication-react",
   "email": "73612854+palatter@users.noreply.github.com",
   "dependentChangeType": "none"
