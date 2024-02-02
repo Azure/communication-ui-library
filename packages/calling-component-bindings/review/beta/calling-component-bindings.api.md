@@ -172,7 +172,7 @@ export interface CommonCallingHandlers {
     onLowerHand: () => Promise<void>;
     // (undocumented)
     onRaiseHand: () => Promise<void>;
-    // (undocumented)
+    // @beta (undocumented)
     onReactionClicked: (reaction: Reaction) => Promise<void>;
     // (undocumented)
     onRemoveParticipant(userId: string): Promise<void>;
