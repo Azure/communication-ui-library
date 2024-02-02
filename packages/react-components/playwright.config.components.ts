@@ -2,22 +2,8 @@
 // Licensed under the MIT License.
 import { defineConfig, devices } from '@playwright/experimental-ct-react';
 import react from '@vitejs/plugin-react';
-
-// const config: PlaywrightTestConfig = {
-//   ...common,
-
-//   // Use a fixed number of workers in CI because some of our CI bots have only one vCPU.
-//   // Some parallelism still helps in this case.
-//   workers: process.env.CI ? 2 : undefined,
-
-//   // All these tests are hermetic. It is safe to run them in parallel.
-//   fullyParallel: true
-// };
-
-// export default config;
-
-// import { PlaywrightTestConfig, devices, ReporterDescription } from '@playwright/test';
 import path from 'path';
+import type { TestOptions } from './tests/browser/FlavoredBaseTest';
 
 const DESKTOP_4_TO_3_VIEWPORT = {
   width: 1024,
@@ -42,6 +28,7 @@ const DESKTOP_16_TO_9_VIEWPORT = {
 // if (!outputDir) {
 //   throw new Error('Environment variable PLAYWRIGHT_OUTPUT_DIR not set');
 // }
+const notBetaBuildVariable = process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta';
 
 const chromeLaunchOptions = {
   channel: 'chrome',
@@ -76,7 +63,7 @@ const MINUTE = 60 * SECOND;
 const DESKTOP_USER_AGENT = 'Windows Chrome/999.0.0.0';
 const ANDROID_USER_AGENT = 'Android 99 Chrome/999.0.0.0 Mobile';
 
-export default defineConfig({
+export default defineConfig<TestOptions>({
   outputDir: './tests/temp/playwright',
   // Extend per-test timeout for local debugging so that developers can single-step through
   // the test in playwright inspector.
@@ -115,7 +102,8 @@ export default defineConfig({
         launchOptions: { ...chromeLaunchOptions },
         contextOptions: {
           userAgent: DESKTOP_USER_AGENT
-        }
+        },
+        isStableBuild: notBetaBuildVariable
       }
     },
     {
@@ -125,7 +113,8 @@ export default defineConfig({
         launchOptions: { ...chromeLaunchOptions },
         contextOptions: {
           userAgent: DESKTOP_USER_AGENT
-        }
+        },
+        isStableBuild: notBetaBuildVariable
       },
       testMatch: ['OverflowGallery.test.ts']
     },
@@ -134,7 +123,8 @@ export default defineConfig({
       use: {
         ...devices['Nexus 5'],
         launchOptions: { ...chromeLaunchOptions },
-        userAgent: ANDROID_USER_AGENT
+        userAgent: ANDROID_USER_AGENT,
+        isStableBuild: notBetaBuildVariable
       }
     },
     {
@@ -147,7 +137,8 @@ export default defineConfig({
         isMobile: true,
         hasTouch: true,
         defaultBrowserType: 'chromium',
-        launchOptions: { ...chromeLaunchOptions }
+        launchOptions: { ...chromeLaunchOptions },
+        isStableBuild: notBetaBuildVariable
       }
     }
   ],
@@ -159,5 +150,5 @@ export default defineConfig({
   // reporter: process.env.CI ? CI_REPORTERS : LOCAL_REPORTERS,
   testDir: './tests/browser/',
   testMatch: '*.spec.tsx',
-  snapshotDir: './tests/snapshots/'
+  snapshotDir: notBetaBuildVariable ? './tests/snapshots/stable' : './tests/snapshots/beta'
 });
