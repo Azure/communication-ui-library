@@ -131,8 +131,6 @@ module.exports = {
     "stabilizedDemo",
     // feature for blurred background and replace background effects
     "video-background-effects",
-    // Pinned Participants
-    "pinned-participants",
     // Feature for capabilities
     "capabilities",
     // Closed captions

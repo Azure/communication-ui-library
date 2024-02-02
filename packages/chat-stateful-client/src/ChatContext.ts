@@ -319,7 +319,7 @@ export class ChatContext {
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   private parseAttachments(threadId: string, message: ChatMessageWithStatus): void {
     const attachments = message.content?.attachments;
-    if (message.type === 'html' && message.content?.message && attachments && attachments.length > 0) {
+    if (message.type === 'html' && attachments && attachments.length > 0) {
       if (
         this._messageQueue &&
         !this._messageQueue.containsMessageWithSameAttachments(message) &&

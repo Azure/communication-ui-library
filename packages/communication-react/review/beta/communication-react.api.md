@@ -649,6 +649,8 @@ export interface CallCompositeStrings {
     blurBackgroundTooltip?: string;
     callRejectedMoreDetails?: string;
     callRejectedTitle?: string;
+    callTimeoutBotDetails?: string;
+    callTimeoutBotTitle?: string;
     callTimeoutDetails?: string;
     callTimeoutTitle?: string;
     cameraLabel: string;
