@@ -219,3 +219,8 @@ export const getLatestCapabilitiesChangedInfo = (state: CallAdapterState): Capab
  * @private
  */
 export const getTargetCallees = (state: CallAdapterState): CommunicationIdentifier[] | undefined => state.targetCallees;
+
+/**
+ * @private
+ */
+export const getStartTime = (state: CallAdapterState): Date | undefined => state.call?.startTime;

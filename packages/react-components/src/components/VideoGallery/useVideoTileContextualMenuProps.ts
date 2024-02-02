@@ -22,6 +22,12 @@ export const useVideoTileContextualMenuProps = (props: {
     unpinParticipantMenuItemAriaLabel?: string;
     pinnedParticipantAnnouncementAriaLabel?: string;
     unpinnedParticipantAnnouncementAriaLabel?: string;
+    /* @conditional-compile-remove(spotlight) */
+    startSpotlightVideoTileMenuLabel?: string;
+    /* @conditional-compile-remove(spotlight) */
+    addSpotlightVideoTileMenuLabel?: string;
+    /* @conditional-compile-remove(spotlight) */
+    stopSpotlightVideoTileMenuLabel?: string;
   };
   view?: { updateScalingMode: (scalingMode: ViewScalingMode) => Promise<void> };
   isPinned?: boolean;
@@ -30,6 +36,14 @@ export const useVideoTileContextualMenuProps = (props: {
   onUpdateScalingMode?: (userId: string, scalingMode: ViewScalingMode) => void;
   disablePinMenuItem?: boolean;
   toggleAnnouncerString?: (announcerString: string) => void;
+  /* @conditional-compile-remove(spotlight) */
+  isSpotlighted?: boolean;
+  /* @conditional-compile-remove(spotlight) */
+  spotlightedParticipantUserIds?: string[];
+  /* @conditional-compile-remove(spotlight) */
+  onStartSpotlight?: (userId: string) => void;
+  /* @conditional-compile-remove(spotlight) */
+  onStopSpotlight?: (userId: string) => void;
 }): IContextualMenuProps | undefined => {
   const {
     remoteParticipant,
@@ -40,16 +54,15 @@ export const useVideoTileContextualMenuProps = (props: {
     onUnpinParticipant,
     onUpdateScalingMode,
     disablePinMenuItem,
-    toggleAnnouncerString
+    toggleAnnouncerString,
+    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds,
+    /* @conditional-compile-remove(spotlight) */ isSpotlighted,
+    /* @conditional-compile-remove(spotlight) */ onStartSpotlight,
+    /* @conditional-compile-remove(spotlight) */ onStopSpotlight
   } = props;
   const scalingMode = useMemo(() => {
-    /* @conditional-compile-remove(pinned-participants) */
     return props.remoteParticipant.videoStream?.scalingMode;
-    return undefined;
-  }, [
-    /* @conditional-compile-remove(pinned-participants) */
-    props.remoteParticipant.videoStream?.scalingMode
-  ]);
+  }, [props.remoteParticipant.videoStream?.scalingMode]);
 
   const contextualMenuProps: IContextualMenuProps | undefined = useMemo(() => {
     const items: IContextualMenuItem[] = [];
@@ -96,8 +109,40 @@ export const useVideoTileContextualMenuProps = (props: {
             pinActionString && toggleAnnouncerString?.(pinActionString);
           },
           'data-ui-id': 'video-tile-pin-participant-button',
-          disabled: disablePinMenuItem,
+          disabled: disablePinMenuItem || /* @conditional-compile-remove(spotlight) */ isSpotlighted,
           ariaLabel: pinActionString
+        });
+      }
+    }
+    /* @conditional-compile-remove(spotlight) */
+    if (isSpotlighted) {
+      if (onStopSpotlight && remoteParticipant.userId && strings?.stopSpotlightVideoTileMenuLabel) {
+        items.push({
+          key: 'stopSpotlight',
+          text: strings.stopSpotlightVideoTileMenuLabel,
+          iconProps: {
+            iconName: 'StopSpotlightContextualMenuItem',
+            styles: { root: { lineHeight: 0 } }
+          },
+          onClick: () => onStopSpotlight(remoteParticipant.userId),
+          ariaLabel: strings.stopSpotlightVideoTileMenuLabel
+        });
+      }
+    } else {
+      const startSpotlightMenuLabelText =
+        spotlightedParticipantUserIds && spotlightedParticipantUserIds.length > 0
+          ? strings?.addSpotlightVideoTileMenuLabel
+          : strings?.startSpotlightVideoTileMenuLabel;
+      if (onStartSpotlight && remoteParticipant.userId && startSpotlightMenuLabelText) {
+        items.push({
+          key: 'startSpotlight',
+          text: startSpotlightMenuLabelText,
+          iconProps: {
+            iconName: 'StartSpotlightContextualMenuItem',
+            styles: { root: { lineHeight: 0 } }
+          },
+          onClick: () => onStartSpotlight(remoteParticipant.userId),
+          ariaLabel: startSpotlightMenuLabelText
         });
       }
     }
@@ -118,22 +163,20 @@ export const useVideoTileContextualMenuProps = (props: {
           ariaLabel: strings.fitRemoteParticipantToFrame
         });
       } else if (scalingMode === 'Fit' && strings?.fillRemoteParticipantFrame) {
-        {
-          items.push({
-            key: 'fillRemoteParticipantFrame',
-            text: strings.fillRemoteParticipantFrame,
-            iconProps: {
-              iconName: 'VideoTileScaleFill',
-              styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
-            },
-            onClick: () => {
-              onUpdateScalingMode?.(remoteParticipant.userId, 'Crop');
-              view?.updateScalingMode('Crop');
-            },
-            'data-ui-id': 'video-tile-fill-frame',
-            ariaLabel: strings.fillRemoteParticipantFrame
-          });
-        }
+        items.push({
+          key: 'fillRemoteParticipantFrame',
+          text: strings.fillRemoteParticipantFrame,
+          iconProps: {
+            iconName: 'VideoTileScaleFill',
+            styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
+          },
+          onClick: () => {
+            onUpdateScalingMode?.(remoteParticipant.userId, 'Crop');
+            view?.updateScalingMode('Crop');
+          },
+          'data-ui-id': 'video-tile-fill-frame',
+          ariaLabel: strings.fillRemoteParticipantFrame
+        });
       }
     }
     if (items.length === 0) {
@@ -152,7 +195,11 @@ export const useVideoTileContextualMenuProps = (props: {
     remoteParticipant.userId,
     remoteParticipant.displayName,
     disablePinMenuItem,
-    toggleAnnouncerString
+    toggleAnnouncerString,
+    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds,
+    /* @conditional-compile-remove(spotlight) */ isSpotlighted,
+    /* @conditional-compile-remove(spotlight) */ onStartSpotlight,
+    /* @conditional-compile-remove(spotlight) */ onStopSpotlight
   ]);
 
   return contextualMenuProps;

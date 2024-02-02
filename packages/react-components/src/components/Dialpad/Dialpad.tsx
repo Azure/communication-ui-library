@@ -87,6 +87,12 @@ export type DtmfTone =
 export type DialpadMode = 'dtmf' | 'dialer';
 
 /**
+ * Modes of how the longpress handlers can be tiggered.
+ * @beta
+ */
+export type LongPressTrigger = 'mouseAndTouch' | 'touch';
+
+/**
  * Props for {@link Dialpad} component.
  *
  * @beta
@@ -114,9 +120,10 @@ export interface DialpadProps {
    */
   showDeleteButton?: boolean;
   /**
-   * flag to determine if dialpad is in mobile view, default false
+   * Determines what kind of device that the user is on and should respect that based on interaction
+   * interfaces available to the user
    */
-  isMobile?: boolean;
+  longPressTrigger?: LongPressTrigger;
   /**
    * Styles for customizing the dialpad component
    */
@@ -178,13 +185,13 @@ const DialpadButton = (props: {
   index: number;
   onClick: (input: string, index: number) => void;
   onLongPress: (input: string, index: number) => void;
-  isMobile?: boolean;
+  longPressTrigger: LongPressTrigger;
   dtmfToneAudioContext: AudioContext;
   disableDtmfPlayback?: boolean;
 }): JSX.Element => {
   const theme = useTheme();
 
-  const { digit, index, onClick, onLongPress, isMobile = false, dtmfToneAudioContext, disableDtmfPlayback } = props;
+  const { digit, index, onClick, onLongPress, longPressTrigger, dtmfToneAudioContext, disableDtmfPlayback } = props;
   const [buttonPressed, setButtonPressed] = useState(false);
 
   const dtmfToneSound = useRef<Tone>(
@@ -199,9 +206,9 @@ const DialpadButton = (props: {
       onLongPress: async () => {
         onLongPress(digit, index);
       },
-      touchEventsOnly: isMobile
+      touchEventsOnly: longPressTrigger === 'touch'
     }),
-    [digit, index, isMobile, onClick, onLongPress]
+    [digit, index, longPressTrigger, onClick, onLongPress]
   );
 
   const longPressHandlers = useLongPress(useLongPressProps);
@@ -219,6 +226,15 @@ const DialpadButton = (props: {
           longPressHandlers.onKeyDown();
           setButtonPressed(true);
           return;
+        }
+        if (
+          e.key === 'Tab' ||
+          e.key === 'ArrowLeft' ||
+          e.key === 'ArrowRight' ||
+          e.key === 'ArrowUp' ||
+          e.key === 'ArrowDown'
+        ) {
+          dtmfToneSound.current.stop();
         }
         longPressHandlers.onKeyDown();
       }}
@@ -275,7 +291,7 @@ const DialpadContainer = (props: {
   /**  boolean input to determine when to show/hide delete button, default true */
   showDeleteButton?: boolean;
   /**  boolean input to determine if dialpad is in mobile view, default false */
-  isMobile?: boolean;
+  longPressTrigger?: LongPressTrigger;
   styles?: DialpadStyles;
   disableDtmfPlayback?: boolean;
   dialpadMode?: DialpadMode;
@@ -288,7 +304,7 @@ const DialpadContainer = (props: {
     textFieldValue,
     onChange,
     showDeleteButton = true,
-    isMobile = false,
+    longPressTrigger = 'mouseAndTouch',
     disableDtmfPlayback,
     dialpadMode = 'dialer'
   } = props;
@@ -354,7 +370,7 @@ const DialpadContainer = (props: {
     >
       {dialpadMode === 'dialer' && (
         <TextField
-          styles={concatStyleSets(textFieldStyles(theme), props.styles?.textField)}
+          styles={concatStyleSets(textFieldStyles(theme, plainTextValue !== ''), props.styles?.textField)}
           value={textFieldValue ? textFieldValue : formatPhoneNumber(plainTextValue)}
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           onChange={(e: any) => {
@@ -409,7 +425,7 @@ const DialpadContainer = (props: {
                   styles={props.styles}
                   onClick={onClickDialpad}
                   onLongPress={onLongPressDialpad}
-                  isMobile={isMobile}
+                  longPressTrigger={longPressTrigger}
                   dtmfToneAudioContext={dtmfToneAudioContext.current}
                   disableDtmfPlayback={disableDtmfPlayback}
                 />

@@ -4,12 +4,17 @@
 import React, { CSSProperties, useCallback, useMemo } from 'react';
 /* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(rooms) */
 import { useRef } from 'react';
-import { VideoGallery, VideoStreamOptions, CustomAvatarOptions, Announcer } from '@internal/react-components';
+import {
+  VideoGallery,
+  VideoStreamOptions,
+  CustomAvatarOptions,
+  Announcer,
+  VideoTileContextualMenuProps,
+  VideoTileDrawerMenuProps
+} from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
 /* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(rooms) */
 import { _useContainerWidth, _useContainerHeight } from '@internal/react-components';
-/* @conditional-compile-remove(pinned-participants) */
-import { VideoTileContextualMenuProps, VideoTileDrawerMenuProps } from '@internal/react-components';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { mergeStyles, Stack } from '@fluentui/react';
@@ -19,7 +24,6 @@ import { localVideoCameraCycleButtonSelector } from '../selectors/LocalVideoTile
 import { LocalVideoCameraCycleButton } from '@internal/react-components';
 import { _formatString } from '@internal/acs-ui-common';
 import { useParticipantChangedAnnouncement } from '../utils/MediaGalleryUtils';
-/* @conditional-compile-remove(pinned-participants) */
 import { RemoteVideoTileMenuOptions } from '../CallComposite';
 /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(vertical-gallery) */
 import { LocalVideoTileOptions } from '../CallComposite';
@@ -53,7 +57,6 @@ export interface MediaGalleryProps {
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   isMobile?: boolean;
   drawerMenuHostId?: string;
-  /* @conditional-compile-remove(pinned-participants) */
   remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
   /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(vertical-gallery) */
   localVideoTileOptions?: boolean | LocalVideoTileOptions;
@@ -87,6 +90,8 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const containerHeight = _useContainerHeight(containerRef);
   /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(vertical-gallery) */
   const containerAspectRatio = containerWidth && containerHeight ? containerWidth / containerHeight : 0;
+  /* @conditional-compile-remove(reaction) */
+  const reactionResources = adapter.getState().reactions;
 
   const layoutBasedOnTilePosition: VideoGalleryLayout = localVideoTileLayoutTrampoline(
     /* @conditional-compile-remove(click-to-call) */ (props.localVideoTileOptions as LocalVideoTileOptions)?.position
@@ -114,7 +119,6 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     [props.onFetchAvatarPersonaData]
   );
 
-  /* @conditional-compile-remove(pinned-participants) */
   const remoteVideoTileMenuOptions: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps = useMemo(() => {
     return props.remoteVideoTileMenuOptions?.isHidden
       ? false
@@ -138,6 +142,9 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     containerHeight
   ]);
 
+  /* @conditional-compile-remove(spotlight) */
+  const ableToSpotlight = adapter.getState().call?.capabilitiesFeature?.capabilities.spotlightParticipant.isPresent;
+
   const VideoGalleryMemoized = useMemo(() => {
     const layoutBasedOnUserSelection = (): VideoGalleryLayout => {
       /* @conditional-compile-remove(gallery-layouts) */
@@ -155,7 +162,6 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         showCameraSwitcherInLocalPreview={props.isMobile}
         localVideoCameraCycleButtonProps={cameraSwitcherProps}
         onRenderAvatar={onRenderAvatar}
-        /* @conditional-compile-remove(pinned-participants) */
         remoteVideoTileMenu={remoteVideoTileMenuOptions}
         /* @conditional-compile-remove(vertical-gallery) */
         overflowGalleryPosition={overflowGalleryPosition}
@@ -167,6 +173,12 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
             ? '9:16'
             : '16:9'
         }
+        /* @conditional-compile-remove(reaction) */
+        reactionResources={reactionResources}
+        /* @conditional-compile-remove(spotlight) */
+        onStartSpotlight={ableToSpotlight ? videoGalleryProps.onStartSpotlight : undefined}
+        /* @conditional-compile-remove(spotlight) */
+        onStopSpotlight={ableToSpotlight ? videoGalleryProps.onStopSpotlight : undefined}
       />
     );
   }, [
@@ -176,7 +188,6 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     props.localVideoTileOptions,
     cameraSwitcherProps,
     onRenderAvatar,
-    /* @conditional-compile-remove(pinned-participants) */
     remoteVideoTileMenuOptions,
     /* @conditional-compile-remove(vertical-gallery) */
     overflowGalleryPosition,
@@ -188,7 +199,11 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     containerAspectRatio,
     /* @conditional-compile-remove(gallery-layouts) */
     props.userSetGalleryLayout,
-    layoutBasedOnTilePosition
+    layoutBasedOnTilePosition,
+    /* @conditional-compile-remove(reaction) */
+    reactionResources,
+    /* @conditional-compile-remove(spotlight) */
+    ableToSpotlight
   ]);
 
   return (

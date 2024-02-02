@@ -244,6 +244,26 @@ export interface CallCompositeStrings {
    * Label for menu item to remove participant
    */
   removeMenuLabel: string;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Label for menu item to start spotlight on participant
+   */
+  startSpotlightParticipantListMenuLabel: string;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Label for menu item to add spotlight on participant
+   */
+  addSpotlightParticipantListMenuLabel: string;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Label for menu item to stop spotlight on participant
+   */
+  stopSpotlightParticipantListMenuLabel: string;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Label for menu item to stop spotlight on local user
+   */
+  stopSpotlightOnSelfParticipantListMenuLabel: string;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Label for add people dropdown
@@ -760,9 +780,17 @@ export interface CallCompositeStrings {
    */
   callTimeoutTitle?: string;
   /**
+   * String for title when the call times out when calling a bot.
+   */
+  callTimeoutBotTitle?: string;
+  /**
    * String for more details when the call times out because the remote user does not answer
    */
   callTimeoutDetails?: string;
+  /**
+   * String for more details when the call times out when calling a bot
+   */
+  callTimeoutBotDetails?: string;
   /* @conditional-compile-remove(dtmf-dialer) */
   /**
    * Label for the control bar button to show the dtmf dialer when the more button is disabled

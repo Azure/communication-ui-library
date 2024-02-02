@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { useEffect } from 'react';
 import { _formatString } from '@internal/acs-ui-common';
 import parse, { HTMLReactParserOptions, Element as DOMElement } from 'html-react-parser';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
@@ -19,8 +17,6 @@ import { MentionDisplayOptions, Mention } from '../MentionPopover';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { FontIcon, Stack } from '@fluentui/react';
 import { MessageThreadStrings } from '../MessageThread';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { AttachmentMetadata } from '../FileDownloadCards';
 import LiveMessage from '../Announcer/LiveMessage';
 /* @conditional-compile-remove(mention) */
 import { defaultOnMentionRender } from './MentionRenderer';
@@ -31,12 +27,8 @@ type ChatMessageContentProps = {
   strings: MessageThreadStrings;
   /* @conditional-compile-remove(mention) */
   mentionDisplayOptions?: MentionDisplayOptions;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  attachmentsMap?: Record<string, string>;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  onFetchAttachments?: (attachments: AttachmentMetadata[], messageId: string) => Promise<void>;
   /* @conditional-compile-remove(image-gallery) */
-  onInlineImageClicked?: (attachmentId: string) => void;
+  inlineImageOptions?: InlineImageOptions;
 };
 
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -51,6 +43,35 @@ type MessageContentWithLiveAriaProps = {
   ariaLabel?: string;
   content: JSX.Element;
 };
+
+/* @conditional-compile-remove(image-gallery) */
+/**
+ * InlineImage's state, as reflected in the UI.
+ *
+ * @beta
+ */
+export interface InlineImage {
+  /** ID of the message that the inline image is belonged to */
+  messageId: string;
+  /** Attributes of the inline image */
+  imgAttrs: React.ImgHTMLAttributes<HTMLImageElement>;
+}
+
+/* @conditional-compile-remove(image-gallery) */
+/**
+ * Options to display inline image in the inline image scenario.
+ *
+ * @beta
+ */
+export interface InlineImageOptions {
+  /**
+   * Optional callback to render an inline image of in a message.
+   */
+  onRenderInlineImage?: (
+    inlineImage: InlineImage,
+    defaultOnRender: (inlineImage: InlineImage) => JSX.Element
+  ) => JSX.Element;
+}
 
 /** @private */
 export const ChatMessageContent = (props: ChatMessageContentProps): JSX.Element => {
@@ -77,28 +98,6 @@ const MessageContentWithLiveAria = (props: MessageContentWithLiveAriaProps): JSX
 };
 
 const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Element => {
-  const {
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-    // message is used only in useEffect that is under teams-inline-images-and-file-sharing cc
-    message,
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-    attachmentsMap,
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-    onFetchAttachments
-  } = props;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  useEffect(() => {
-    if (!attachmentsMap || !onFetchAttachments) {
-      return;
-    }
-    const attachments = message.inlineImages?.filter((inlinedImages) => {
-      return attachmentsMap[inlinedImages.id] === undefined;
-    });
-    if (attachments && attachments.length > 0) {
-      onFetchAttachments(attachments, message.messageId);
-    }
-  }, [message.inlineImages, message.messageId, onFetchAttachments, attachmentsMap]);
-
   return (
     <MessageContentWithLiveAria
       message={props.message}
@@ -198,6 +197,22 @@ const messageContentAriaText = (props: ChatMessageContentProps): string | undefi
     : undefined;
 };
 
+/* @conditional-compile-remove(image-gallery) */
+const defaultOnRenderInlineImage = (inlineImage: InlineImage): JSX.Element => {
+  return (
+    <img
+      {...inlineImage.imgAttrs}
+      data-ui-id={inlineImage.imgAttrs.id}
+      tabIndex={0}
+      role="button"
+      style={{
+        cursor: 'pointer',
+        ...inlineImage.imgAttrs.style
+      }}
+    />
+  );
+};
+
 const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
   const options: HTMLReactParserOptions = {
     transform(reactNode, domNode) {
@@ -225,34 +240,15 @@ const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
           })
         ) {
           domNode.attribs['aria-label'] = domNode.attribs.name;
-          // logic to check id in map/list
-          if (props.attachmentsMap && domNode.attribs.id in props.attachmentsMap) {
-            domNode.attribs.src = props.attachmentsMap[domNode.attribs.id];
-          }
-          /* @conditional-compile-remove(image-gallery) */
-          const handleOnClick = (): void => {
-            props.onInlineImageClicked && props.onInlineImageClicked(domNode.attribs.id);
-          };
           const imgProps = attributesToProps(domNode.attribs);
           /* @conditional-compile-remove(image-gallery) */
-          return (
-            <span
-              data-ui-id={domNode.attribs.id}
-              onClick={handleOnClick}
-              tabIndex={0}
-              role="button"
-              style={{
-                cursor: 'pointer'
-              }}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  handleOnClick();
-                }
-              }}
-            >
-              <img {...imgProps} />
-            </span>
-          );
+          const inlineImageProps: InlineImage = { messageId: props.message.messageId, imgAttrs: imgProps };
+
+          /* @conditional-compile-remove(image-gallery) */
+          return props.inlineImageOptions?.onRenderInlineImage
+            ? props.inlineImageOptions.onRenderInlineImage(inlineImageProps, defaultOnRenderInlineImage)
+            : defaultOnRenderInlineImage(inlineImageProps);
+
           return <img {...imgProps} />;
         }
       }
