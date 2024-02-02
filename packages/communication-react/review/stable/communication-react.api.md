@@ -1448,7 +1448,6 @@ export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Dispo
     joinCall(microphoneOn?: boolean): void;
     joinCall(options?: JoinCallOptions): void;
     startCall(participants: string[], options?: StartCallOptions): void;
-    // @beta
     startCall(participants: (MicrosoftTeamsAppIdentifier | UnknownIdentifier)[], options?: StartCallOptions): void;
 }
 
@@ -1781,10 +1780,10 @@ export interface ControlBarProps {
     styles?: BaseCustomStyles;
 }
 
-// @public (undocumented)
+// @public
 export function createAzureCommunicationCallAdapter(args: AzureCommunicationCallAdapterArgs): Promise<CallAdapter>;
 
-// @public (undocumented)
+// @public
 export function createAzureCommunicationCallAdapter(args: AzureCommunicationOutboundCallAdapterArgs): Promise<CallAdapter>;
 
 // @public

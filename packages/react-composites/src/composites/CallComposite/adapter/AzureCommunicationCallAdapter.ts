@@ -1577,12 +1577,24 @@ export type TeamsCallAdapterArgs = {
 };
 
 /**
+ * Create a {@link CallAdapter} backed by Azure Communication Services.
+ *
+ * This is the default implementation of {@link CallAdapter} provided by this library.
+ *
+ * Note: `displayName` can be a maximum of 256 characters.
+ *
  * @public
  */
 export async function createAzureCommunicationCallAdapter(
   args: AzureCommunicationCallAdapterArgs
 ): Promise<CallAdapter>;
 /**
+ * Create a {@link CallAdapter} backed by Azure Communication Services.
+ *
+ * This is the default implementation of {@link CallAdapter} provided by this library.
+ *
+ * Note: `displayName` can be a maximum of 256 characters.
+ *
  * @public
  */
 export async function createAzureCommunicationCallAdapter(
@@ -1835,18 +1847,11 @@ function useAzureCommunicationCallAdapterGeneric<
               /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
               /* @conditional-compile-remove(video-background-effects) */ options
             })) as Adapter;
-          } else {
+          } else if (targetCallees) {
             newAdapter = (await createAzureCommunicationCallAdapter({
               credential,
               displayName: displayName,
-              targetCallees: targetCallees as
-                | (
-                    | MicrosoftTeamsAppIdentifier
-                    | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier
-                    | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
-                    | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
-                    | UnknownIdentifier
-                  )[],
+              targetCallees,
               userId: userId as CommunicationUserIdentifier,
               /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
               /* @conditional-compile-remove(video-background-effects) */ options

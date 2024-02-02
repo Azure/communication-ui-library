@@ -550,7 +550,7 @@ export const getSelectedCameraFromAdapterState = (state: CallAdapterState): Vide
   state.devices.selectedCamera || state.devices.cameras[0];
 
 /**
- * helper to determine if the adapter has a locator or targetCallees
+ * Helper to determine if the adapter has a locator or targetCallees
  * @param locatorOrTargetCallees
  * @returns enum to determine if the adapter has a locator or targetCallees
  * @private

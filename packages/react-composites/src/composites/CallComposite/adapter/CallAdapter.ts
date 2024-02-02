@@ -1010,9 +1010,18 @@ export interface CallAdapterCallManagement extends CallAdapterCallOperations {
   /**
    * Start the call.
    * @param participants - An array of {@link @azure/communication-common#CommunicationIdentifier} to be called
-   * @beta
+   * @public
    */
-  startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
+  startCall(
+    participants: (
+      | MicrosoftTeamsAppIdentifier
+      | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier
+      | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
+      | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
+      | UnknownIdentifier
+    )[],
+    options?: StartCallOptions
+  ): Call | undefined;
 }
 
 // TODO: Flatten the adapter structure
@@ -1057,7 +1066,7 @@ export interface CommonCallAdapter
   /**
    * Start the call.
    * @param participants - An array of {@link @azure/communication-common#CommunicationIdentifier} to be called
-   * @beta
+   * @public
    */
   startCall(
     participants: (

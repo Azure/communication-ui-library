@@ -200,8 +200,7 @@ export interface CallAdapterCallManagement extends CallAdapterCallOperations {
     joinCall(microphoneOn?: boolean): Call | undefined;
     joinCall(options?: JoinCallOptions): Call | undefined;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
-    // @beta
-    startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
+    startCall(participants: (MicrosoftTeamsAppIdentifier | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier | UnknownIdentifier)[], options?: StartCallOptions): Call | undefined;
 }
 
 // @public
@@ -1220,7 +1219,6 @@ export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Dispo
     joinCall(microphoneOn?: boolean): void;
     joinCall(options?: JoinCallOptions): void;
     startCall(participants: string[], options?: StartCallOptions): void;
-    // @beta
     startCall(participants: (MicrosoftTeamsAppIdentifier | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier | UnknownIdentifier)[], options?: StartCallOptions): void;
 }
 
@@ -1354,10 +1352,10 @@ export interface CompositeStrings {
     chat: ChatCompositeStrings;
 }
 
-// @public (undocumented)
+// @public
 export function createAzureCommunicationCallAdapter(args: AzureCommunicationCallAdapterArgs): Promise<CallAdapter>;
 
-// @public (undocumented)
+// @public
 export function createAzureCommunicationCallAdapter(args: AzureCommunicationOutboundCallAdapterArgs): Promise<CallAdapter>;
 
 // @public

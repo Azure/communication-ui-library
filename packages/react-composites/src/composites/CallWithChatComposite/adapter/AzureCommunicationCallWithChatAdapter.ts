@@ -304,6 +304,9 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         )[],
     options?: StartCallOptions
   ): Call | undefined {
+    if (participants.length === 0) {
+      throw new Error('At least one participant is required to start a call');
+    }
     if (typeof participants[0] === 'string') {
       return this.callAdapter.startCall(participants as string[], options);
     } else {
