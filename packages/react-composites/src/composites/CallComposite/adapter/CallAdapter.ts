@@ -107,13 +107,7 @@ export type CallAdapterClientState = {
    * State to track who the original call went out to. will be undefined the call is not a outbound
    * modality. This includes, groupCalls, Rooms calls, and Teams InteropMeetings.
    */
-  targetCallees?: (
-    | MicrosoftTeamsAppIdentifier
-    | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier
-    | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
-    | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
-    | UnknownIdentifier
-  )[];
+  targetCallees?: CommunicationIdentifier[];
   devices: DeviceManagerState;
   endedCall?: CallState;
   isTeamsCall: boolean;

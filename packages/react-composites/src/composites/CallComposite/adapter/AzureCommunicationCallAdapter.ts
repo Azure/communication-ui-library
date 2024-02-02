@@ -170,7 +170,7 @@ class CallContext {
       displayName: clientState.callAgent?.displayName,
       devices: clientState.deviceManager,
       call: undefined,
-      /* @conditional-compile-remove(calling-sounds) */ targetCallees,
+      /* @conditional-compile-remove(calling-sounds) */ targetCallees: targetCallees as CommunicationIdentifier[],
       page: 'configuration',
       latestErrors: clientState.latestErrors,
       isTeamsCall,

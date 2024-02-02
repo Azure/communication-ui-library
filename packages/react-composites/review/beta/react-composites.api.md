@@ -258,7 +258,7 @@ export type CallAdapterClientState = {
     userId: CommunicationIdentifierKind;
     displayName?: string;
     call?: CallState;
-    targetCallees?: (MicrosoftTeamsAppIdentifier | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier | UnknownIdentifier)[];
+    targetCallees?: CommunicationIdentifier[];
     devices: DeviceManagerState;
     endedCall?: CallState;
     isTeamsCall: boolean;
