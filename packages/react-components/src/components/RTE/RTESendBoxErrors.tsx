@@ -8,7 +8,9 @@ import { SendBoxErrorBar, SendBoxErrorBarError } from '../SendBoxErrorBar';
  * @private
  */
 export interface RTESendBoxErrorsProps {
+  /* @conditional-compile-remove(file-sharing) */
   fileUploadsPendingError?: SendBoxErrorBarError;
+  /* @conditional-compile-remove(file-sharing) */
   fileUploadError?: SendBoxErrorBarError;
   systemMessage?: string;
   textTooLongMessage?: string;
@@ -18,7 +20,14 @@ export interface RTESendBoxErrorsProps {
  * @private
  */
 export const RTESendBoxErrors = (props: RTESendBoxErrorsProps): JSX.Element => {
-  const { fileUploadError, fileUploadsPendingError, systemMessage, textTooLongMessage } = props;
+  const {
+    /* @conditional-compile-remove(file-sharing) */
+    fileUploadError,
+    /* @conditional-compile-remove(file-sharing) */
+    fileUploadsPendingError,
+    systemMessage,
+    textTooLongMessage
+  } = props;
   const [sendBoxError, setSendBoxError] = useState<SendBoxErrorBarError | undefined>(undefined);
 
   useEffect(() => {
@@ -39,9 +48,11 @@ export const RTESendBoxErrors = (props: RTESendBoxErrorsProps): JSX.Element => {
       if (prev) {
         errors.push(prev);
       }
+      /* @conditional-compile-remove(file-sharing) */
       if (fileUploadsPendingError) {
         errors.push(fileUploadsPendingError);
       }
+      /* @conditional-compile-remove(file-sharing) */
       if (fileUploadError) {
         errors.push(fileUploadError);
       }
@@ -52,7 +63,10 @@ export const RTESendBoxErrors = (props: RTESendBoxErrorsProps): JSX.Element => {
       const sortedErrors = errors.sort((a, b) => b.timestamp - a.timestamp);
       return sortedErrors[0];
     });
-  }, [fileUploadError, fileUploadsPendingError]);
+  }, [
+    /* @conditional-compile-remove(file-sharing) */ fileUploadError,
+    /* @conditional-compile-remove(file-sharing) */ fileUploadsPendingError
+  ]);
 
   const onDismiss = useCallback(() => {
     if (systemMessage && !isMessageEmpty(systemMessage)) {

@@ -28,6 +28,7 @@ describe('RTESendBoxErrors should be shown correctly', () => {
     expect(sendBoxErrorComponent).not.toBeNull();
   });
 
+  /* @conditional-compile-remove(file-sharing) */
   test('MessageBar should show file uploads pending error', async () => {
     const text = 'Test file uploads pending error';
     render(<RTESendBoxErrors fileUploadsPendingError={{ message: text, timestamp: Date.now() }} />);
@@ -36,6 +37,7 @@ describe('RTESendBoxErrors should be shown correctly', () => {
     expect(sendBoxErrorComponent).not.toBeNull();
   });
 
+  /* @conditional-compile-remove(file-sharing) */
   test('MessageBar should show file uploads error', async () => {
     const text = 'Test file uploads error';
     render(<RTESendBoxErrors fileUploadError={{ message: text, timestamp: Date.now() }} />);

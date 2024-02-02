@@ -11,8 +11,11 @@ import { InputBoxButton } from '../InputBoxButton';
 import { RTESendBoxErrors, RTESendBoxErrorsProps } from './RTESendBoxErrors';
 /* @conditional-compile-remove(file-sharing) */
 import { ActiveFileUpload } from '../FileUploadCards';
+/* @conditional-compile-remove(file-sharing) */
 import { SendBoxErrorBarError } from '../SendBoxErrorBar';
-import { exceedsMaxAllowedLength, sanitizeText, hasCompletedFileUploads } from '../utils/SendBoxUtils';
+import { exceedsMaxAllowedLength, sanitizeText } from '../utils/SendBoxUtils';
+/* @conditional-compile-remove(file-sharing) */
+import { hasCompletedFileUploads } from '../utils/SendBoxUtils';
 import { RichTextEditorComponentRef } from './RichTextEditor';
 
 /**
@@ -108,7 +111,6 @@ export const RTESendBox = (props: RTESendBoxProps): JSX.Element => {
     /* @conditional-compile-remove(file-sharing) */
     setFileUploadsPendingError(undefined);
 
-    // /* @conditional-compile-remove(file-sharing) */
     // if (hasIncompleteFileUploads(activeFileUploads)) {
     //   setFileUploadsPendingError({ message: strings.fileUploadsPendingError, timestamp: Date.now() });
     //   return;
@@ -128,15 +130,22 @@ export const RTESendBox = (props: RTESendBoxProps): JSX.Element => {
   };
 
   const hasErrorMessage = useMemo(() => {
-    // check if any of this values are undefined,
-    // if so, return true to show the error bar
     return (
-      !!fileUploadsPendingError ||
       !!systemMessage ||
       !!contentTooLongMessage ||
+      /* @conditional-compile-remove(file-sharing) */
+      !!fileUploadsPendingError ||
+      /* @conditional-compile-remove(file-sharing) */
       !!activeFileUploads?.filter((fileUpload) => fileUpload.error).pop()?.error
     );
-  }, [activeFileUploads, contentTooLongMessage, fileUploadsPendingError, systemMessage]);
+  }, [
+    /* @conditional-compile-remove(file-sharing) */
+    activeFileUploads,
+    contentTooLongMessage,
+    /* @conditional-compile-remove(file-sharing) */
+    fileUploadsPendingError,
+    systemMessage
+  ]);
 
   const onRenderSendIcon = useCallback(
     (isHover: boolean) => (
@@ -145,7 +154,8 @@ export const RTESendBox = (props: RTESendBoxProps): JSX.Element => {
         className={sendIconStyle({
           theme,
           hasText: !!contentValue,
-          /* @conditional-compile-remove(file-sharing) */ hasFile: false,
+          /* @conditional-compile-remove(file-sharing) */
+          hasFile: false,
           hasErrorMessage: hasErrorMessage
         })}
       />
@@ -155,12 +165,21 @@ export const RTESendBox = (props: RTESendBoxProps): JSX.Element => {
 
   const sendBoxErrorsProps: RTESendBoxErrorsProps = useMemo(() => {
     return {
+      /* @conditional-compile-remove(file-sharing) */
       fileUploadsPendingError: fileUploadsPendingError,
+      /* @conditional-compile-remove(file-sharing) */
       fileUploadError: activeFileUploads?.filter((fileUpload) => fileUpload.error).pop()?.error,
       systemMessage: systemMessage,
       textTooLongMessage: contentTooLongMessage
     };
-  }, [activeFileUploads, contentTooLongMessage, fileUploadsPendingError, systemMessage]);
+  }, [
+    /* @conditional-compile-remove(file-sharing) */
+    activeFileUploads,
+    contentTooLongMessage,
+    /* @conditional-compile-remove(file-sharing) */
+    fileUploadsPendingError,
+    systemMessage
+  ]);
 
   return (
     <Stack>

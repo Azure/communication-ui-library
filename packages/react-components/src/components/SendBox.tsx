@@ -19,13 +19,8 @@ import { fileUploadCardsStyles } from './styles/SendBox.styles';
 /* @conditional-compile-remove(file-sharing) */
 import { SendBoxErrorBarError } from './SendBoxErrorBar';
 /* @conditional-compile-remove(file-sharing) */
-import {
-  MAXIMUM_LENGTH_OF_MESSAGE,
-  exceedsMaxAllowedLength,
-  hasCompletedFileUploads,
-  hasIncompleteFileUploads,
-  sanitizeText
-} from './utils/SendBoxUtils';
+import { hasCompletedFileUploads, hasIncompleteFileUploads } from './utils/SendBoxUtils';
+import { MAXIMUM_LENGTH_OF_MESSAGE, exceedsMaxAllowedLength, sanitizeText } from './utils/SendBoxUtils';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from './MentionPopover';
 
