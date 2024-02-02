@@ -536,39 +536,31 @@ jobs:
       - name: Run dependency update for stable
         if: ${{ matrix.flavor == 'stable' }}
         run: rush update:stable
-      # - name: Components Visual Regression Tests
-      #   id: visualregressiontests
-      #   run: |
-      #     cd packages/react-composites
-      #     rushx test:e2e:chat
-      #   env:
-      #     CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
-      #     CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
-      # - name: Upload playwright test results
-      #   uses: actions/upload-artifact@v3
-      #   if: ${{ always() }}
-      #   with:
-      #     name: e2e-results-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.flavor }}-chat.json
-      #     path: packages/react-composites/test-results/*/e2e-results.json
-      #     if-no-files-found: error
-      # - name: Upload snapshot diff
-      #   if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: snapshots
-      #     path: packages/react-composites/test-results
-      # - name: Comment on PR
-      #   if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
-      #   uses: actions/github-script@v3
-      #   with:
-      #     github-token: ${{secrets.GITHUB_TOKEN}}
-      #     script: |
-      #       github.issues.createComment({
-      #         issue_number: context.issue.number,
-      #         owner: context.repo.owner,
-      #         repo: context.repo.repo,
-      #         body: 'Failed to pass the UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "update_snapshots" label to the PR for updating the snapshot.'
-      #       })
+      - name: Components Visual Regression Tests
+        id: visualregressiontests
+        run: |
+          cd packages/react-components
+          rushx test:components
+        env:
+          CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
+      - name: Upload snapshot diff
+        if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: snapshots
+          path: packages/react-components/tests/temp/playwright
+      - name: Comment on PR
+        if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'Failed to pass the UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "update_snapshots" label to the PR for updating the snapshot.'
+            })
 
   build_storybook:
     name: Build Storybook
