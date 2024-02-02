@@ -249,7 +249,7 @@ export type CallAdapterClientState = {
     userId: CommunicationIdentifierKind;
     displayName?: string;
     call?: CallState;
-    targetCallees?: (MicrosoftTeamsAppIdentifier | UnknownIdentifier)[];
+    targetCallees?: CommunicationIdentifier[];
     devices: DeviceManagerState;
     endedCall?: CallState;
     isTeamsCall: boolean;

@@ -57,6 +57,13 @@ import { capabilitiesChangedInfoAndRoleSelector } from './selectors/capabilities
 /* @conditional-compile-remove(capabilities) */
 import { useTrackedCapabilityChangedNotifications } from './utils/TrackCapabilityChangedNotifications';
 import { useEndedCallConsoleErrors } from './utils/useConsoleErrors';
+import { MicrosoftTeamsAppIdentifier, UnknownIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(teams-adhoc-call) */
+import {
+  MicrosoftTeamsUserIdentifier,
+  PhoneNumberIdentifier,
+  CommunicationUserIdentifier
+} from '@azure/communication-common';
 
 /**
  * Props for {@link CallComposite}.
@@ -418,7 +425,13 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     setTrackedErrors((prev) => trackErrorAsDismissed(error.type, prev));
   }, []);
   const latestErrors = useMemo(() => filterLatestErrors(activeErrors, trackedErrors), [activeErrors, trackedErrors]);
-  const callees = useSelector(getTargetCallees);
+  const callees = useSelector(getTargetCallees) as (
+    | MicrosoftTeamsAppIdentifier
+    | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier
+    | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
+    | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
+    | UnknownIdentifier
+  )[];
   const locale = useLocale();
   const palette = useTheme().palette;
   const leavePageStyle = useMemo(() => leavingPageStyle(palette), [palette]);
