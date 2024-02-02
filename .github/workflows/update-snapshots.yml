@@ -589,7 +589,7 @@ jobs:
         run: rush switch-flavor:${{ matrix.flavor }}
       - name: Update components snapshots
         id: update-components-snapshots
-        run: test:components:update
+        run: rushx test:components:update
         working-directory: ./packages/react-components
         env:
           CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
