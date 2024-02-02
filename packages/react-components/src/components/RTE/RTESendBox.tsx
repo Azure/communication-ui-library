@@ -60,9 +60,9 @@ export interface RTESendBoxProps {
    */
   onCancelFileUpload?: (fileId: string) => void;
   /**
-   * Optional override behavior on send button click
+   * Callback function used when the send button is clicked.
    */
-  onSendMessage?: (content: string) => Promise<void>;
+  onSendMessage: (content: string) => Promise<void>;
 }
 
 /**
@@ -123,7 +123,7 @@ export const RTESendBox = (props: RTESendBoxProps): JSX.Element => {
       sanitizeText(message).length > 0 ||
       /* @conditional-compile-remove(file-sharing) */ hasCompletedFileUploads(activeFileUploads)
     ) {
-      onSendMessage && onSendMessage(message);
+      onSendMessage(message);
       setContentValue('');
     }
     editorComponentRef.current?.focus();
