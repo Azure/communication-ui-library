@@ -1117,7 +1117,7 @@ export interface CallAdapter extends CommonCallAdapter {
   /**
    * Start the call.
    * @param participants - An array of {@link @azure/communication-common#CommunicationIdentifier} to be called
-   * @beta
+   * @public
    */
   startCall(
     participants: (
