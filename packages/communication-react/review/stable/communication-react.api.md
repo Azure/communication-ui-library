@@ -174,7 +174,7 @@ export type AzureCommunicationOutboundCallAdapterArgs = {
     userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
-    targetCallees: (MicrosoftTeamsAppIdentifier | UnknownIdentifier)[];
+    targetCallees: StartCallIdentifier[];
     options?: AzureCommunicationCallAdapterOptions;
 };
 
@@ -199,7 +199,7 @@ export interface CallAdapter extends CommonCallAdapter {
     joinCall(microphoneOn?: boolean): Call | undefined;
     joinCall(options?: JoinCallOptions): Call | undefined;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
-    startCall(participants: (MicrosoftTeamsAppIdentifier | UnknownIdentifier)[], options?: StartCallOptions): Call | undefined;
+    startCall(participants: StartCallIdentifier[], options?: StartCallOptions): Call | undefined;
 }
 
 // @public
@@ -1447,7 +1447,7 @@ export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Dispo
     joinCall(microphoneOn?: boolean): void;
     joinCall(options?: JoinCallOptions): void;
     startCall(participants: string[], options?: StartCallOptions): void;
-    startCall(participants: (MicrosoftTeamsAppIdentifier | UnknownIdentifier)[], options?: StartCallOptions): void;
+    startCall(participants: StartCallIdentifier[], options?: StartCallOptions): void;
 }
 
 // @public
@@ -1786,7 +1786,7 @@ export function createAzureCommunicationCallAdapter(args: AzureCommunicationCall
 export function createAzureCommunicationCallAdapter(args: AzureCommunicationOutboundCallAdapterArgs): Promise<CallAdapter>;
 
 // @public
-export function createAzureCommunicationCallAdapterFromClient(callClient: StatefulCallClient, callAgent: CallAgent, targetCallees: (MicrosoftTeamsAppIdentifier | UnknownIdentifier)[], /* @conditional-compile-remove(video-background-effects) */ options?: AzureCommunicationCallAdapterOptions): Promise<CallAdapter>;
+export function createAzureCommunicationCallAdapterFromClient(callClient: StatefulCallClient, callAgent: CallAgent, targetCallees: StartCallIdentifier[], /* @conditional-compile-remove(video-background-effects) */ options?: AzureCommunicationCallAdapterOptions): Promise<CallAdapter>;
 
 // @public
 export function createAzureCommunicationCallAdapterFromClient(callClient: StatefulCallClient, callAgent: CallAgent, locator: CallAdapterLocator, /* @conditional-compile-remove(video-background-effects) */ options?: AzureCommunicationCallAdapterOptions): Promise<CallAdapter>;
@@ -3080,6 +3080,9 @@ export interface SpokenLanguageStrings {
     // (undocumented)
     'zh-tw': string;
 }
+
+// @public
+export type StartCallIdentifier = (MicrosoftTeamsAppIdentifier | UnknownIdentifier);
 
 // @public
 export interface StatefulCallClient extends CallClient {

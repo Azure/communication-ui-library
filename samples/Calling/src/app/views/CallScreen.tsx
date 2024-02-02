@@ -1,13 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import {
-  AzureCommunicationTokenCredential,
-  MicrosoftTeamsAppIdentifier,
-  UnknownIdentifier
-} from '@azure/communication-common';
-/* @conditional-compile-remove(PSTN-calls) */
-import { PhoneNumberIdentifier } from '@azure/communication-common';
+import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(teams-identity-support) */
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
@@ -27,6 +21,7 @@ import { AzureCommunicationCallAdapterOptions } from '@azure/communication-react
 import { onResolveVideoEffectDependencyLazy } from '@azure/communication-react';
 /* @conditional-compile-remove(teams-identity-support) */
 import type { TeamsAdapterOptions } from '@azure/communication-react';
+import type { StartCallIdentifier } from '@azure/communication-react';
 import React, { useCallback, useMemo, useRef } from 'react';
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/AppUtils';
@@ -38,13 +33,7 @@ export interface CallScreenProps {
     | CommunicationUserIdentifier
     | /* @conditional-compile-remove(teams-identity-support) */ MicrosoftTeamsUserIdentifier;
   callLocator?: CallAdapterLocator;
-  targetCallees?: (
-    | MicrosoftTeamsAppIdentifier
-    | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier
-    | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
-    | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
-    | UnknownIdentifier
-  )[];
+  targetCallees?: StartCallIdentifier[];
   displayName: string;
   /* @conditional-compile-remove(PSTN-calls) */
   alternateCallerId?: string;

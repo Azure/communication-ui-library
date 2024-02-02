@@ -56,7 +56,8 @@ export type {
   NetworkDiagnosticChangedEvent,
   ParticipantsJoinedListener,
   ParticipantsLeftListener,
-  JoinCallOptions
+  JoinCallOptions,
+  StartCallIdentifier
 } from './CallAdapter';
 
 /* @conditional-compile-remove(close-captions) */

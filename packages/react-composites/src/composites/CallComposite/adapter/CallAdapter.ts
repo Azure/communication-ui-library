@@ -93,6 +93,20 @@ export type CallAdapterUiState = {
 };
 
 /**
+ * Identifier types for initiating a call using the CallAdapter
+ * @public
+ */
+export type StartCallIdentifier =
+  | (
+      | MicrosoftTeamsAppIdentifier
+      | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier
+      | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
+      | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
+      | UnknownIdentifier
+    )
+  | /* @conditional-compile-remove(start-call-beta) */ CommunicationIdentifier;
+
+/**
  * {@link CommonCallAdapter} state inferred from Azure Communication Services backend.
  *
  * @public
@@ -1012,16 +1026,7 @@ export interface CallAdapterCallManagement extends CallAdapterCallOperations {
    * @param participants - An array of {@link @azure/communication-common#CommunicationIdentifier} to be called
    * @public
    */
-  startCall(
-    participants: (
-      | MicrosoftTeamsAppIdentifier
-      | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier
-      | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
-      | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
-      | UnknownIdentifier
-    )[],
-    options?: StartCallOptions
-  ): Call | undefined;
+  startCall(participants: StartCallIdentifier[], options?: StartCallOptions): Call | undefined;
 }
 
 // TODO: Flatten the adapter structure
@@ -1068,16 +1073,7 @@ export interface CommonCallAdapter
    * @param participants - An array of {@link @azure/communication-common#CommunicationIdentifier} to be called
    * @public
    */
-  startCall(
-    participants: (
-      | MicrosoftTeamsAppIdentifier
-      | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier
-      | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
-      | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
-      | UnknownIdentifier
-    )[],
-    options?: StartCallOptions
-  ): void;
+  startCall(participants: StartCallIdentifier[], options?: StartCallOptions): void;
 }
 
 /**
@@ -1119,16 +1115,7 @@ export interface CallAdapter extends CommonCallAdapter {
    * @param participants - An array of {@link @azure/communication-common#CommunicationIdentifier} to be called
    * @public
    */
-  startCall(
-    participants: (
-      | MicrosoftTeamsAppIdentifier
-      | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier
-      | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
-      | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
-      | UnknownIdentifier
-    )[],
-    options?: StartCallOptions
-  ): Call | undefined;
+  startCall(participants: StartCallIdentifier[], options?: StartCallOptions): Call | undefined;
 }
 
 /* @conditional-compile-remove(teams-identity-support) */

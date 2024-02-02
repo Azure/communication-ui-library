@@ -91,7 +91,9 @@ module.exports = {
     // Feature for Rich Text Editor (RTE) support
     'rich-text-editor',
     // Feature for spotlight
-    'spotlight'
+    'spotlight',
+    // Feature for tracking beta start call identifier
+    'start-call-beta'
   ],
   // A list of in progress beta feature.
   // These features are still beta feature but "in progress"

@@ -95,7 +95,7 @@ import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { useEffect, useRef, useState } from 'react';
 import { _toCommunicationIdentifier, _TelemetryImplementationHint } from '@internal/acs-ui-common';
-import { JoinCallOptions } from '../../CallComposite/adapter/CallAdapter';
+import { JoinCallOptions, StartCallIdentifier } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 import { AzureCommunicationCallAdapterOptions } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(close-captions) */
@@ -281,29 +281,9 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   /** Start a new Call. */
   public startCall(participants: string[], options?: StartCallOptions): Call | undefined;
   /** Start a new Call. */
-  public startCall(
-    participants: (
-      | MicrosoftTeamsAppIdentifier
-      | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier
-      | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
-      | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
-      | UnknownIdentifier
-    )[],
-    options?: StartCallOptions
-  ): Call | undefined;
+  public startCall(participants: StartCallIdentifier[], options?: StartCallOptions): Call | undefined;
   /** Start a new Call. */
-  public startCall(
-    participants:
-      | string[]
-      | (
-          | MicrosoftTeamsAppIdentifier
-          | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier
-          | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
-          | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
-          | UnknownIdentifier
-        )[],
-    options?: StartCallOptions
-  ): Call | undefined {
+  public startCall(participants: string[] | StartCallIdentifier[], options?: StartCallOptions): Call | undefined {
     if (participants.length === 0) {
       throw new Error('At least one participant is required to start a call');
     }
