@@ -398,15 +398,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   );
   constructor(
     callClient: StatefulCallClient,
-    locatorOrTargetCalless:
-      | CallAdapterLocator
-      | (
-          | MicrosoftTeamsAppIdentifier
-          | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier
-          | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
-          | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
-          | UnknownIdentifier
-        )[],
+    locatorOrTargetCalless: CallAdapterLocator | StartCallIdentifier[],
     callAgent: AgentType,
     deviceManager: StatefulDeviceManager,
     options?: AzureCommunicationCallAdapterOptions | TeamsAdapterOptions
@@ -415,18 +407,12 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.callClient = callClient;
     this.callAgent = callAgent;
     this.locator =
-      getLocatorOrTargetCallees(locatorOrTargetCalless) === 'locator'
+      getLocatorOrTargetCallees(locatorOrTargetCalless) === true
         ? (locatorOrTargetCalless as CallAdapterLocator)
         : undefined;
     this.targetCallees =
-      getLocatorOrTargetCallees(locatorOrTargetCalless) === 'targetCallees'
-        ? (locatorOrTargetCalless as (
-            | MicrosoftTeamsAppIdentifier
-            | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier
-            | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
-            | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
-            | UnknownIdentifier
-          )[])
+      getLocatorOrTargetCallees(locatorOrTargetCalless) === false
+        ? (locatorOrTargetCalless as StartCallIdentifier[])
         : undefined;
     this.deviceManager = deviceManager;
     const isTeamsMeeting = this.locator ? 'meetingLink' in this.locator : false;
@@ -2011,7 +1997,7 @@ export async function createAzureCommunicationCallAdapterFromClient(
   }
   /* @conditional-compile-remove(unsupported-browser) */
   await callClient.feature(Features.DebugInfo).getEnvironmentInfo();
-  if (getLocatorOrTargetCallees(locatorOrtargetCallees) === 'locator') {
+  if (getLocatorOrTargetCallees(locatorOrtargetCallees)) {
     return new AzureCommunicationCallAdapter(
       callClient,
       locatorOrtargetCallees as CallAdapterLocator,

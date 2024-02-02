@@ -1,17 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { CallAdapterState, CallCompositePage, END_CALL_PAGES } from '../adapter/CallAdapter';
+import { CallAdapterState, CallCompositePage, END_CALL_PAGES, StartCallIdentifier } from '../adapter/CallAdapter';
 import { _isInCall, _isPreviewOn, _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { CallState, RemoteParticipantState } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(one-to-n-calling) */
-import { CommunicationUserIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(PSTN-calls) */
-import { PhoneNumberIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(teams-adhoc-call) */
-import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
-import { MicrosoftTeamsAppIdentifier, UnknownIdentifier, isPhoneNumberIdentifier } from '@azure/communication-common';
+import { isPhoneNumberIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { AdapterStateModifier, CallAdapterLocator } from '../adapter/AzureCommunicationCallAdapter';
@@ -552,23 +546,11 @@ export const getSelectedCameraFromAdapterState = (state: CallAdapterState): Vide
 /**
  * Helper to determine if the adapter has a locator or targetCallees
  * @param locatorOrTargetCallees
- * @returns enum to determine if the adapter has a locator or targetCallees
+ * @returns boolean to determine if the adapter has a locator or targetCallees, true is locator, false is targetCallees
  * @private
  */
 export const getLocatorOrTargetCallees = (
-  locatorOrTargetCallees:
-    | CallAdapterLocator
-    | (
-        | MicrosoftTeamsAppIdentifier
-        | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier
-        | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
-        | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
-        | UnknownIdentifier
-      )[]
-): 'locator' | 'targetCallees' => {
-  if (Array.isArray(locatorOrTargetCallees)) {
-    return 'targetCallees';
-  } else {
-    return 'locator';
-  }
+  locatorOrTargetCallees: CallAdapterLocator | StartCallIdentifier[]
+): locatorOrTargetCallees is CallAdapterLocator => {
+  return !!(('groupId' || 'meetingLink' || 'roomId') in locatorOrTargetCallees);
 };
