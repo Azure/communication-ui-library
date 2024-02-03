@@ -551,6 +551,6 @@ export const getSelectedCameraFromAdapterState = (state: CallAdapterState): Vide
  */
 export const getLocatorOrTargetCallees = (
   locatorOrTargetCallees: CallAdapterLocator | StartCallIdentifier[]
-): locatorOrTargetCallees is CallAdapterLocator => {
-  return !!(('groupId' || 'meetingLink' || 'roomId') in locatorOrTargetCallees);
+): locatorOrTargetCallees is StartCallIdentifier[] => {
+  return !!Array.isArray(locatorOrTargetCallees);
 };
