@@ -1,7 +1,7 @@
 {
   "type": "none",
   "area": "feature",
-  "workstream": "UI tests",
+  "workstream": "Reliability",
   "comment": "Playwright components testing setup",
   "packageName": "@azure/communication-react",
   "email": "98852890+vhuseinova-msft@users.noreply.github.com",
