@@ -1128,9 +1128,6 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
 // @public
 export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'followDeviceOrientation';
 
-// @beta
-export type LongPressTrigger = 'mouseAndTouch' | 'touch';
-
 // @public
 export type LongPressTrigger = 'mouseAndTouch' | 'touch';
 
