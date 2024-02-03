@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useImperativeHandle, useMemo, useRef } from 'react';
 import { ContentEdit, Watermark } from 'roosterjs-editor-plugins';
 import { Editor } from 'roosterjs-editor-core';
 import { EditorOptions, IEditor } from 'roosterjs-editor-types';
@@ -18,13 +18,36 @@ export interface RichTextEditorProps {
 }
 
 /**
+ * Props for {@link RichTextEditor}.
+ *
+ * @beta
+ */
+export interface RichTextEditorComponentRef {
+  focus: () => void;
+}
+
+/**
  * A component to wrap RoosterJS Rich Text Editor.
  *
  * @beta
  */
-export const RichTextEditor = (props: RichTextEditorProps): JSX.Element => {
+export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichTextEditorProps>((props, ref) => {
   const { content, onChange, placeholderText } = props;
   const editor = useRef<IEditor | null>(null);
+
+  useImperativeHandle(
+    ref,
+    () => {
+      return {
+        focus() {
+          if (editor.current) {
+            editor.current.focus();
+          }
+        }
+      };
+    },
+    []
+  );
 
   useEffect(() => {
     if (content !== editor.current?.getContent()) {
@@ -58,4 +81,4 @@ export const RichTextEditor = (props: RichTextEditorProps): JSX.Element => {
       <Rooster className={richTextEditorStyle} editorCreator={editorCreator} />
     </div>
   );
-};
+});
