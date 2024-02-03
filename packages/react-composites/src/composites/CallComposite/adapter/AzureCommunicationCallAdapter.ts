@@ -354,13 +354,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   private callAgent: AgentType;
   private deviceManager: StatefulDeviceManager;
   private locator?: CallAdapterLocator;
-  targetCallees?: (
-    | MicrosoftTeamsAppIdentifier
-    | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier
-    | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
-    | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
-    | UnknownIdentifier
-  )[];
+  targetCallees?: StartCallIdentifier[];
   // Never use directly, even internally. Use `call` property instead.
   private _call?: CallCommon;
   private context: CallContext;
@@ -2000,7 +1994,7 @@ export async function createAzureCommunicationCallAdapterFromClient(
   if (getLocatorOrTargetCallees(locatorOrtargetCallees)) {
     return new AzureCommunicationCallAdapter(
       callClient,
-      locatorOrtargetCallees as CallAdapterLocator,
+      locatorOrtargetCallees as StartCallIdentifier[],
       callAgent,
       deviceManager,
       /* @conditional-compile-remove(video-background-effects) */ options
@@ -2008,7 +2002,7 @@ export async function createAzureCommunicationCallAdapterFromClient(
   } else {
     return new AzureCommunicationCallAdapter(
       callClient,
-      locatorOrtargetCallees as StartCallIdentifier[],
+      locatorOrtargetCallees as CallAdapterLocator,
       callAgent,
       deviceManager,
       /* @conditional-compile-remove(video-background-effects) */ options
