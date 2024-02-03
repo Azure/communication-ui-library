@@ -153,7 +153,10 @@ export interface VideoTileProps {
   raisedHand?: RaisedHand;
 
   /* @conditional-compile-remove(reaction) */
-  /** When the participant has reacted, animate the reaction. */
+  /**
+   * When the participant has reacted, animate the reaction.
+   * @beta
+   * */
   reaction?: Reaction;
 
   /* @conditional-compile-remove(one-to-n-calling) */
@@ -184,6 +187,7 @@ export interface VideoTileProps {
   /* @conditional-compile-remove(reaction) */
   /**
    * Reactions resources' url and metadata.
+   * @beta
    */
   reactionResources?: ReactionResources;
 }
