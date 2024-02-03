@@ -428,7 +428,6 @@ describe('VideoGallery Focused Content layout tests', () => {
   });
 });
 
-// /* @conditional-compile-remove(pinned-participants) */
 describe('VideoGallery pinned participants tests', () => {
   beforeAll(() => {
     mockVideoGalleryInternalHelpers();
@@ -644,7 +643,6 @@ describe('VideoGallery with vertical overflow gallery tests', () => {
     expect(tileIsVideo(verticalGalleryTiles[1])).toBe(true);
   });
 
-  /* @conditional-compile-remove(pinned-participants) */
   test('should render pinned participants in grid layout and others to vertical gallery', () => {
     const localParticipant = createLocalParticipant({
       videoStream: { isAvailable: true, renderElement: createVideoDivElement() }
@@ -753,7 +751,6 @@ const createRemoteParticipant = (attrs?: Partial<VideoGalleryRemoteParticipant>)
       isReceiving: attrs?.videoStream?.isReceiving ?? true,
       isMirrored: attrs?.videoStream?.isMirrored ?? false,
       renderElement: attrs?.videoStream?.renderElement ?? undefined,
-      /* @conditional-compile-remove(pinned-participants) */
       scalingMode: attrs?.videoStream?.scalingMode ?? 'Crop'
     },
     isScreenSharingOn: attrs?.isScreenSharingOn ?? false

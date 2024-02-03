@@ -2,11 +2,9 @@
 // Licensed under the MIT License.
 
 export { CallComposite } from './CallComposite';
-export type { CallCompositeOptions, CallCompositeProps } from './CallComposite';
+export type { CallCompositeOptions, CallCompositeProps, RemoteVideoTileMenuOptions } from './CallComposite';
 /* @conditional-compile-remove(call-readiness) */
 export type { DeviceCheckOptions } from './CallComposite';
-/* @conditional-compile-remove(pinned-participants) */
-export type { RemoteVideoTileMenuOptions } from './CallComposite';
 /* @conditional-compile-remove(click-to-call) */
 export type { LocalVideoTileOptions } from './CallComposite';
 export type { CallControlOptions } from './types/CallControlOptions';
