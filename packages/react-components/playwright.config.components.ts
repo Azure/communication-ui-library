@@ -2,66 +2,17 @@
 // Licensed under the MIT License.
 import { defineConfig, devices } from '@playwright/experimental-ct-react';
 import react from '@vitejs/plugin-react';
-import path from 'path';
 import type { TestOptions } from './tests/browser/FlavoredBaseTest';
+import {
+  ANDROID_USER_AGENT,
+  DESKTOP_16_TO_9_VIEWPORT,
+  DESKTOP_4_TO_3_VIEWPORT,
+  DESKTOP_USER_AGENT,
+  MINUTE,
+  chromeLaunchOptions
+} from '../../common/config/playwright/playwrightConfigConstants';
 
-const DESKTOP_4_TO_3_VIEWPORT = {
-  width: 1024,
-  height: 768
-};
-
-const DESKTOP_16_TO_9_VIEWPORT = {
-  width: 1024,
-  height: 576
-};
-
-// const testDir = process.env.TEST_DIR;
-// console.log(testDir);
-// if (!testDir) {
-//   throw new Error('Environment variable TEST_DIR not set');
-// }
-// const snapshotDir = process.env.SNAPSHOT_DIR;
-// if (!snapshotDir) {
-//   throw new Error('Environment variable SNAPSHOT_DIR not set');
-// }
-// const outputDir = process.env.PLAYWRIGHT_OUTPUT_DIR;
-// if (!outputDir) {
-//   throw new Error('Environment variable PLAYWRIGHT_OUTPUT_DIR not set');
-// }
 const notBetaBuildVariable = process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta';
-
-const chromeLaunchOptions = {
-  channel: 'chrome',
-  permissions: ['notifications', 'camera', 'microphone'],
-  args: [
-    '--font-render-hinting=none', // Ensures that fonts are rendered consistently.
-    '--enable-font-antialiasing', // Ensures that fonts are rendered consistently.
-    '--disable-gpu', // Ensures that fonts are rendered consistently.
-    '--allow-file-access',
-    '--use-fake-ui-for-media-stream',
-    '--use-fake-device-for-media-stream',
-    `--use-file-for-fake-video-capture=${path.join(__dirname, 'tests', 'browser', 'common', 'test.y4m')}`,
-    '--lang=en-US',
-    '--mute-audio'
-  ],
-  ignoreDefaultArgs: [
-    '--hide-scrollbars' // Don't hide scrollbars in headless mode.
-  ],
-  // Use the CHROME_PATH environment variable if it's set, otherwise use the default installed browser by playwright.
-  // We use a pinned version in GitHub actions to ensure newer versions of Chrome don't suddenly impact our tests.
-  // For more information see: [Automated Tests - Pinned version of Chrome](../../docs/automated-tests.md#pinned-version-of-chrome)
-  executablePath: process.env.CHROME_PATH ? process.env.CHROME_PATH : undefined
-};
-
-// const CI_REPORTERS: ReporterDescription[] = [['dot'], ['json', { outputFile: `${outputDir}/e2e-results.json` }]];
-// const LOCAL_REPORTERS: ReporterDescription[] = [['list']];
-
-const SECOND = 1000;
-const MINUTE = 60 * SECOND;
-
-// Using chromium useragent with a very high version to avoid breaking the unsupportedBrowser page
-const DESKTOP_USER_AGENT = 'Windows Chrome/999.0.0.0';
-const ANDROID_USER_AGENT = 'Android 99 Chrome/999.0.0.0 Mobile';
 
 export default defineConfig<TestOptions>({
   outputDir: './tests/temp/playwright',
@@ -147,7 +98,6 @@ export default defineConfig<TestOptions>({
       maxDiffPixels: 1
     }
   },
-  // reporter: process.env.CI ? CI_REPORTERS : LOCAL_REPORTERS,
   testDir: './tests/browser/',
   testMatch: '*.spec.tsx',
   snapshotDir: notBetaBuildVariable ? './tests/snapshots/stable' : './tests/snapshots/beta'

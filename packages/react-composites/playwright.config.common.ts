@@ -2,17 +2,14 @@
 // Licensed under the MIT License.
 
 import { PlaywrightTestConfig, devices, ReporterDescription } from '@playwright/test';
-import path from 'path';
-
-const DESKTOP_4_TO_3_VIEWPORT = {
-  width: 1024,
-  height: 768
-};
-
-const DESKTOP_16_TO_9_VIEWPORT = {
-  width: 1024,
-  height: 576
-};
+import {
+  ANDROID_USER_AGENT,
+  DESKTOP_16_TO_9_VIEWPORT,
+  DESKTOP_4_TO_3_VIEWPORT,
+  DESKTOP_USER_AGENT,
+  MINUTE,
+  chromeLaunchOptions
+} from '../../common/config/playwright/playwrightConfigConstants';
 
 const testDir = process.env.TEST_DIR;
 if (!testDir) {
@@ -27,38 +24,8 @@ if (!outputDir) {
   throw new Error('Environment variable PLAYWRIGHT_OUTPUT_DIR not set');
 }
 
-const chromeLaunchOptions = {
-  channel: 'chrome',
-  permissions: ['notifications', 'camera', 'microphone'],
-  args: [
-    '--font-render-hinting=none', // Ensures that fonts are rendered consistently.
-    '--enable-font-antialiasing', // Ensures that fonts are rendered consistently.
-    '--disable-gpu', // Ensures that fonts are rendered consistently.
-    '--allow-file-access',
-    '--use-fake-ui-for-media-stream',
-    '--use-fake-device-for-media-stream',
-    `--use-file-for-fake-video-capture=${path.join(__dirname, 'tests', 'browser', 'common', 'test.y4m')}`,
-    '--lang=en-US',
-    '--mute-audio'
-  ],
-  ignoreDefaultArgs: [
-    '--hide-scrollbars' // Don't hide scrollbars in headless mode.
-  ],
-  // Use the CHROME_PATH environment variable if it's set, otherwise use the default installed browser by playwright.
-  // We use a pinned version in GitHub actions to ensure newer versions of Chrome don't suddenly impact our tests.
-  // For more information see: [Automated Tests - Pinned version of Chrome](../../docs/automated-tests.md#pinned-version-of-chrome)
-  executablePath: process.env.CHROME_PATH ? process.env.CHROME_PATH : undefined
-};
-
 const CI_REPORTERS: ReporterDescription[] = [['dot'], ['json', { outputFile: `${outputDir}/e2e-results.json` }]];
 const LOCAL_REPORTERS: ReporterDescription[] = [['list']];
-
-const SECOND = 1000;
-const MINUTE = 60 * SECOND;
-
-// Using chromium useragent with a very high version to avoid breaking the unsupportedBrowser page
-const DESKTOP_USER_AGENT = 'Windows Chrome/999.0.0.0';
-const ANDROID_USER_AGENT = 'Android 99 Chrome/999.0.0.0 Mobile';
 
 const config: PlaywrightTestConfig = {
   outputDir: outputDir,
