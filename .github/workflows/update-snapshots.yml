@@ -598,7 +598,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: snapshots
-          path: packages/react-components/tests/temp/playwright
+          path: packages/react-components/tests/temp/
       # Check if files have changed
       # More information see: https://stackoverflow.com/questions/3878624/how-do-i-programmatically-determine-if-there-are-uncommitted-changes
       - name: Check for snapshot changes

@@ -15,7 +15,7 @@ import {
 const notBetaBuildVariable = process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta';
 
 export default defineConfig<TestOptions>({
-  outputDir: './tests/temp/playwright',
+  outputDir: './tests/temp/',
   // Extend per-test timeout for local debugging so that developers can single-step through
   // the test in playwright inspector.
   timeout: process.env.LOCAL_DEBUG ? 10 * MINUTE : 2 * MINUTE,
