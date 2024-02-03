@@ -3359,7 +3359,6 @@ export interface VideoGalleryStream {
 
 // @public
 export interface VideoGalleryStrings {
-    addSpotlightVideoTileMenuLabel: string;
     displayNamePlaceholder: string;
     fillRemoteParticipantFrame: string;
     fitRemoteParticipantToFrame: string;
@@ -3372,9 +3371,6 @@ export interface VideoGalleryStrings {
     pinParticipantMenuItemAriaLabel: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;
-    startSpotlightVideoTileMenuLabel: string;
-    stopSpotlightOnSelfVideoTileMenuLabel: string;
-    stopSpotlightVideoTileMenuLabel: string;
     unpinnedParticipantAnnouncementAriaLabel: string;
     unpinParticipantForMe: string;
     unpinParticipantMenuItemAriaLabel: string;
