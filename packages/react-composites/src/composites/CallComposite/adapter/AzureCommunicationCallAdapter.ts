@@ -406,13 +406,13 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.bindPublicMethods();
     this.callClient = callClient;
     this.callAgent = callAgent;
-    this.locator =
-      getLocatorOrTargetCallees(locatorOrTargetCalless) === true
-        ? (locatorOrTargetCalless as CallAdapterLocator)
-        : undefined;
     this.targetCallees =
-      getLocatorOrTargetCallees(locatorOrTargetCalless) === false
+      getLocatorOrTargetCallees(locatorOrTargetCalless) === true
         ? (locatorOrTargetCalless as StartCallIdentifier[])
+        : undefined;
+    this.locator =
+      getLocatorOrTargetCallees(locatorOrTargetCalless) === false
+        ? (locatorOrTargetCalless as CallAdapterLocator)
         : undefined;
     this.deviceManager = deviceManager;
     const isTeamsMeeting = this.locator ? 'meetingLink' in this.locator : false;

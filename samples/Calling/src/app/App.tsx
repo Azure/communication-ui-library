@@ -1,16 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import {
-  CommunicationUserIdentifier,
-  MicrosoftTeamsAppIdentifier,
-  UnknownIdentifier
-} from '@azure/communication-common';
-/* @conditional-compile-remove(PSTN-calls) */
-import { PhoneNumberIdentifier } from '@azure/communication-common';
+import { CommunicationUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(rooms) */
 import { ParticipantRole } from '@azure/communication-calling';
-import { fromFlatCommunicationIdentifier } from '@azure/communication-react';
+import { fromFlatCommunicationIdentifier, StartCallIdentifier } from '@azure/communication-react';
 /* @conditional-compile-remove(teams-identity-support) */
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { setLogLevel } from '@azure/logger';
@@ -61,15 +55,7 @@ const App = (): JSX.Element => {
 
   // Call details to join a call - these are collected from the user on the home screen
   const [callLocator, setCallLocator] = useState<CallAdapterLocator>();
-  const [targetCallees, setTargetCallees] = useState<
-    (
-      | MicrosoftTeamsAppIdentifier
-      | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier
-      | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
-      | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
-      | UnknownIdentifier
-    )[]
-  >([]);
+  const [targetCallees, setTargetCallees] = useState<StartCallIdentifier[]>([]);
   const [displayName, setDisplayName] = useState<string>('');
 
   /* @conditional-compile-remove(teams-identity-support) */
@@ -144,12 +130,7 @@ const App = (): JSX.Element => {
 
             if (callDetails.option === 'TeamsAdhoc') {
               const outboundTeamsUsers = callDetails.outboundTeamsUsers?.map((user) => {
-                return fromFlatCommunicationIdentifier(user) as
-                  | MicrosoftTeamsAppIdentifier
-                  | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier
-                  | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
-                  | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
-                  | UnknownIdentifier;
+                return fromFlatCommunicationIdentifier(user) as StartCallIdentifier;
               });
               callLocator = undefined;
               setTargetCallees(outboundTeamsUsers ?? []);
