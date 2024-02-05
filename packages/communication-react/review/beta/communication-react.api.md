@@ -1189,6 +1189,7 @@ export interface CallWithChatClientState {
     latestCallErrors: AdapterErrors;
     latestChatErrors: AdapterErrors;
     onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
+    // @beta
     reactions?: ReactionResources;
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
     userId: CommunicationIdentifierKind;
@@ -1859,6 +1860,7 @@ export type CommonCallAdapterOptions = {
     };
     onFetchProfile?: OnFetchProfileCallback;
     callingSounds?: CallingSounds;
+    reactionResources?: ReactionResources;
 };
 
 // @public
@@ -1927,7 +1929,7 @@ export interface CommonCallingHandlers {
     onLowerHand: () => Promise<void>;
     // (undocumented)
     onRaiseHand: () => Promise<void>;
-    // (undocumented)
+    // @beta (undocumented)
     onReactionClicked: (reaction: Reaction_2) => Promise<void>;
     // (undocumented)
     onRemoveParticipant(userId: string): Promise<void>;
@@ -2111,6 +2113,7 @@ export interface ComponentStrings {
     ParticipantList: ParticipantListStrings;
     participantsButton: ParticipantsButtonStrings;
     raiseHandButton: RaiseHandButtonStrings;
+    // @beta
     reactionButton: ReactionButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
@@ -4441,6 +4444,7 @@ export interface VideoGalleryProps {
     onUnpinParticipant?: (userId: string) => void;
     overflowGalleryPosition?: OverflowGalleryPosition;
     pinnedParticipants?: string[];
+    // @beta
     reactionResources?: ReactionResources;
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoTileMenu?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
@@ -4563,7 +4567,9 @@ export interface VideoTileProps {
     personaMaxSize?: number;
     personaMinSize?: number;
     raisedHand?: RaisedHand;
+    // @beta
     reaction?: Reaction;
+    // @beta
     reactionResources?: ReactionResources;
     renderElement?: JSX.Element | null;
     showLabel?: boolean;

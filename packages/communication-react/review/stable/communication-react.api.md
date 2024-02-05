@@ -2717,8 +2717,6 @@ export type ParticipantListProps = {
     onRemoveParticipant?: (userId: string) => void;
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
     onParticipantClick?: (participant?: ParticipantListParticipant) => void;
-    onStartSpotlight?: (userId: string) => void;
-    onStopSpotlight?: (userId: string) => void;
     styles?: ParticipantListStyles;
     showParticipantOverflowTooltip?: boolean;
     participantAriaLabelledBy?: string;
