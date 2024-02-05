@@ -6,7 +6,7 @@ import { test as base } from '@playwright/experimental-ct-react';
  * Represents the option that should be used to skip tests for stable
  */
 export type TestOptions = {
-  isStableBuild: boolean;
+  isBetaBuild: boolean;
 };
 
 /**
@@ -15,5 +15,5 @@ export type TestOptions = {
 export const test = base.extend<TestOptions>({
   // Define an option and provide a default value.
   // This will be overridden in the config.
-  isStableBuild: [true, { option: true }]
+  isBetaBuild: [true, { option: true }]
 });

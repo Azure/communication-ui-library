@@ -12,7 +12,7 @@ import {
   chromeLaunchOptions
 } from '../../common/config/playwright/playwrightConfigConstants';
 
-const notBetaBuildVariable = process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta';
+const isBetaBuild = process.env['COMMUNICATION_REACT_FLAVOR'] === 'beta';
 
 export default defineConfig<TestOptions>({
   outputDir: './tests/temp/',
@@ -54,7 +54,7 @@ export default defineConfig<TestOptions>({
         contextOptions: {
           userAgent: DESKTOP_USER_AGENT
         },
-        isStableBuild: notBetaBuildVariable
+        isBetaBuild: isBetaBuild
       }
     },
     {
@@ -65,7 +65,7 @@ export default defineConfig<TestOptions>({
         contextOptions: {
           userAgent: DESKTOP_USER_AGENT
         },
-        isStableBuild: notBetaBuildVariable
+        isBetaBuild: isBetaBuild
       },
       testMatch: ['OverflowGallery.test.ts']
     },
@@ -75,7 +75,7 @@ export default defineConfig<TestOptions>({
         ...devices['Nexus 5'],
         launchOptions: { ...chromeLaunchOptions },
         userAgent: ANDROID_USER_AGENT,
-        isStableBuild: notBetaBuildVariable
+        isBetaBuild: isBetaBuild
       }
     },
     {
@@ -89,7 +89,7 @@ export default defineConfig<TestOptions>({
         hasTouch: true,
         defaultBrowserType: 'chromium',
         launchOptions: { ...chromeLaunchOptions },
-        isStableBuild: notBetaBuildVariable
+        isBetaBuild: isBetaBuild
       }
     }
   ],
@@ -100,5 +100,5 @@ export default defineConfig<TestOptions>({
   },
   testDir: './tests/browser/',
   testMatch: '*.spec.tsx',
-  snapshotDir: notBetaBuildVariable ? './tests/snapshots/stable' : './tests/snapshots/beta'
+  snapshotDir: isBetaBuild ? './tests/snapshots/beta' : './tests/snapshots/stable'
 });

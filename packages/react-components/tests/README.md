@@ -62,7 +62,7 @@ import { test as betaTest } from './FlavoredBaseTest';
 
 //This is an example of a description with a eta only test
 betaTest.describe('TypingIndicator beta only test', () => {
-  betaTest.skip(({ isStableBuild }) => isStableBuild, 'The tests should be run for beta flavor only');
+  betaTest.skip(({ isBetaBuild }) => !isBetaBuild, 'The tests should be run for beta flavor only');
 
   betaTest('TypingIndicator should be shown correctly 123', async ({ mount }) => {
     // some test
