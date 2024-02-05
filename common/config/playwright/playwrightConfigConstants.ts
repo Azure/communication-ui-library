@@ -39,3 +39,10 @@ export const MINUTE = 60 * SECOND;
 // Using chromium useragent with a very high version to avoid breaking the unsupportedBrowser page
 export const DESKTOP_USER_AGENT = 'Windows Chrome/999.0.0.0';
 export const ANDROID_USER_AGENT = 'Android 99 Chrome/999.0.0.0 Mobile';
+
+/**
+ * Represents the option that should be used to skip tests for stable
+ */
+export type TestOptions = {
+  isBetaBuild: boolean;
+};

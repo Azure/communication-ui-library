@@ -1,13 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 import { test as base } from '@playwright/experimental-ct-react';
-
-/**
- * Represents the option that should be used to skip tests for stable
- */
-export type TestOptions = {
-  isBetaBuild: boolean;
-};
+import { TestOptions } from '../../../../common/config/playwright/playwrightConfigConstants';
 
 /**
  * The test function that should be used to skip tests for stable
