@@ -31,7 +31,7 @@
   "mentionPopover": {
     "mentionPopoverHeader": "Рекомендации"
   },
-  "imageGallery": {
+  "imageOverlay": {
     "downloadButtonLabel": "Скачать",
     "dismissButtonAriaLabel": "Закрыть"
   },

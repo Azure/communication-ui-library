@@ -31,7 +31,7 @@
   "mentionPopover": {
     "mentionPopoverHeader": "Forslag"
   },
-  "imageGallery": {
+  "imageOverlay": {
     "downloadButtonLabel": "Last ned",
     "dismissButtonAriaLabel": "Lukk"
   },
