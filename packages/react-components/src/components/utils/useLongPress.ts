@@ -90,8 +90,11 @@ export default function useLongPress(props: {
   }, [startPressTimer]);
 
   const handleOnTouchEnd = useCallback(() => {
+    if (!isLongPress && onClick) {
+      onClick();
+    }
     timerRef.current && clearTimeout(timerRef.current);
-  }, []);
+  }, [onClick, isLongPress]);
 
   const handleOnTouchMove = useCallback(() => {
     timerRef.current && clearTimeout(timerRef.current);

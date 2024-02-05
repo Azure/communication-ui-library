@@ -8,10 +8,9 @@ import {
   CustomMessage,
   SystemMessage,
   MessageRenderer,
-  AttachmentMetadata,
-  AttachmentDownloadResult,
   ImageGalleryImageProps,
-  ImageGallery
+  ImageGallery,
+  InlineImage
 } from '@azure/communication-react';
 import {
   Persona,
@@ -325,13 +324,8 @@ const Docs: () => JSX.Element = () => {
       </div>
 
       <div ref={refDisplayInlineImages}>
-        <Heading>Display Inline Image with Messages</Heading>
+        <Heading>Tapping Inline Images on Messages</Heading>
         <SingleLineBetaBanner />
-        <Description>
-          MessageThread component provides UI for displaying inline image attachments in a message. If an image is
-          protected by header-based authentication, developers can write there own HTTP call to get the image so you can
-          provide the applicable headers. By default the `previewUrl` is displayed in the message bubble.
-        </Description>
         <Canvas mdxSource={MessageThreadWithInlineImageExampleText}>
           <MessageThreadWithInlineImageExample />
         </Canvas>
@@ -451,18 +445,6 @@ const MessageThreadStory = (args): JSX.Element => {
     return Promise.resolve();
   };
 
-  const onFetchAttachments = async (attachments: AttachmentMetadata[]): Promise<AttachmentDownloadResult[]> => {
-    // Mocking promise
-    const delay = (): Promise<void> => new Promise((resolve) => setTimeout(resolve, 3000));
-    return await delay().then(() => {
-      return [
-        {
-          attachmentId: attachments[0].id,
-          blobUrl: attachments[0].previewUrl ?? ''
-        }
-      ];
-    });
-  };
   const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps>>([]);
 
   const onInlineImageClicked = (attachmentId: string, messageId: string): Promise<void> => {
@@ -495,6 +477,33 @@ const MessageThreadStory = (args): JSX.Element => {
     };
     setGalleryImages([galleryImage]);
     return Promise.resolve();
+  };
+
+  /* @conditional-compile-remove(image-gallery) */
+  const inlineImageOptions = {
+    onRenderInlineImage: (
+      inlineImage: InlineImage,
+      defaultOnRender: (inlineImage: InlineImage) => JSX.Element
+    ): JSX.Element => {
+      return (
+        <span
+          data-ui-id={inlineImage.imgAttrs.id}
+          onClick={() => onInlineImageClicked(inlineImage.imgAttrs.id || '', inlineImage.messageId)}
+          tabIndex={0}
+          role="button"
+          style={{
+            cursor: 'pointer'
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              onInlineImageClicked(inlineImage.imgAttrs.id || '', inlineImage.messageId);
+            }
+          }}
+        >
+          {defaultOnRender(inlineImage)}
+        </span>
+      );
+    }
   };
 
   const onSendHandler = (): void => {
@@ -531,8 +540,7 @@ const MessageThreadStory = (args): JSX.Element => {
         disableJumpToNewMessageButton={!args.enableJumpToNewMessageButton}
         onLoadPreviousChatMessages={onLoadPreviousMessages}
         onRenderMessage={onRenderMessage}
-        onFetchAttachments={onFetchAttachments}
-        onInlineImageClicked={onInlineImageClicked}
+        inlineImageOptions={inlineImageOptions}
         onUpdateMessage={onUpdateMessageCallback}
         onRenderAvatar={(userId?: string) => {
           return (

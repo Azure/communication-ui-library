@@ -126,7 +126,12 @@
   "reactionButton": {
     "label": "React",
     "tooltipDisabledContent": "Reaction action is disabled",
-    "tooltipContent": "Send a reaction"
+    "tooltipContent": "Send a reaction",
+    "likeReactionTooltipContent": "Like",
+    "heartReactionTooltipContent": "Love",
+    "laughReactionTooltipContent": "Laugh",
+    "applauseReactionTooltipContent": "Applause",
+    "surprisedReactionTooltipContent": "Surprised"
   },
   "messageThread": {
     "yesterday": "Yesterday",
@@ -213,7 +218,11 @@
     "pinParticipantMenuItemAriaLabel": "Pin {participantName}",
     "unpinParticipantMenuItemAriaLabel": "Unpin {participantName}",
     "pinnedParticipantAnnouncementAriaLabel": "Pinned {participantName}",
-    "unpinnedParticipantAnnouncementAriaLabel": "Unpinned {participantName}"
+    "unpinnedParticipantAnnouncementAriaLabel": "Unpinned {participantName}",
+    "startSpotlightVideoTileMenuLabel": "Spotlight for everyone",
+    "addSpotlightVideoTileMenuLabel": "Add spotlight",
+    "stopSpotlightVideoTileMenuLabel": "Stop spotlighting",
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Exit spotlight"
   },
   "dialpad": {
     "placeholderText": "Enter phone number",

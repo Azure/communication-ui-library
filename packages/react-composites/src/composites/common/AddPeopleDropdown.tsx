@@ -149,7 +149,7 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
         )}
         {alternateCallerId && (
           <CallingDialpad
-            isMobile
+            isMobile={true}
             strings={strings}
             showDialpad={showDialpad}
             onDismissDialpad={onDismissDialpad}

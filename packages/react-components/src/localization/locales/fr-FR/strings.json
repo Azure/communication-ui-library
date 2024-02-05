@@ -123,6 +123,16 @@
     "tooltipOnContent": "Baisser la main",
     "tooltipOffContent": "Lever les mains"
   },
+  "reactionButton": {
+    "label": "Réagir",
+    "tooltipDisabledContent": "L’action de réaction est désactivée",
+    "tooltipContent": "Envoyer une réaction",
+    "likeReactionTooltipContent": "J’aime",
+    "heartReactionTooltipContent": "Aimer",
+    "laughReactionTooltipContent": "Rire",
+    "applauseReactionTooltipContent": "Acclamation",
+    "surprisedReactionTooltipContent": "Surpris"
+  },
   "messageThread": {
     "yesterday": "Hier",
     "sunday": "Dimanche",

@@ -15,6 +15,8 @@ import { FileUploadsUiState } from '../../ChatComposite';
 import { AdapterErrors } from '../../common/adapters';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(reaction) */
+import { ReactionResources } from '@internal/react-components';
 
 /**
  * UI state pertaining to the {@link CallWithChatComposite}.
@@ -94,6 +96,12 @@ export interface CallWithChatClientState {
   /* @conditional-compile-remove(hide-attendee-name) */
   /** Hide attendee names in teams meeting */
   hideAttendeeNames?: boolean;
+  /* @conditional-compile-remove(reaction) */
+  /**
+   * Reaction resources to render in meetings
+   * @beta
+   * */
+  reactions?: ReactionResources;
 }
 
 /**
@@ -139,7 +147,9 @@ export function callWithChatAdapterStateFromBackingStates(
     selectedVideoBackgroundEffect: callAdapterState.selectedVideoBackgroundEffect,
     /* @conditional-compile-remove(hide-attendee-name) */
     /** Hide attendee names in teams meeting */
-    hideAttendeeNames: callAdapterState.hideAttendeeNames
+    hideAttendeeNames: callAdapterState.hideAttendeeNames,
+    /* @conditional-compile-remove(reaction) */
+    reactions: callAdapterState.reactions
   };
 }
 

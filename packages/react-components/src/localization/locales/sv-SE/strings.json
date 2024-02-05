@@ -123,6 +123,16 @@
     "tooltipOnContent": "Ta ned handen",
     "tooltipOffContent": "Räck upp handen"
   },
+  "reactionButton": {
+    "label": "Reagera",
+    "tooltipDisabledContent": "Reaktionsåtgärden är inaktiverad",
+    "tooltipContent": "Skicka en reaktion",
+    "likeReactionTooltipContent": "Gilla",
+    "heartReactionTooltipContent": "Kärlek",
+    "laughReactionTooltipContent": "Skrattar",
+    "applauseReactionTooltipContent": "Applåd",
+    "surprisedReactionTooltipContent": "Förvånad"
+  },
   "messageThread": {
     "yesterday": "I går",
     "sunday": "Söndag",

@@ -102,6 +102,12 @@ export type ParticipantListProps = {
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   /** Optional callback when rendered ParticipantItem is clicked */
   onParticipantClick?: (participant?: ParticipantListParticipant) => void;
+  /* @conditional-compile-remove(spotlight) */
+  /** Optional callback to generate context menu item to stop spotlight of each participant */
+  onStartSpotlight?: (userId: string) => void;
+  /* @conditional-compile-remove(spotlight) */
+  /** Optional callback to generate context menu item to stop spotlight of each participant */
+  onStopSpotlight?: (userId: string) => void;
   /** Styles for the {@link ParticipantList} */
   styles?: ParticipantListStyles;
   /** Optional value to determine if the tooltip should be shown for participants or not */
@@ -112,7 +118,7 @@ export type ParticipantListProps = {
   /* @conditional-compile-remove(total-participant-count) */
   /** Strings for the participant list */
   strings?: ParticipantListStrings;
-  /** Optional aria-lablledby prop that prefixes each ParticipantItem aria-label */
+  /** Optional aria-labelledby prop that prefixes each ParticipantItem aria-label */
   participantAriaLabelledBy?: string;
 };
 
@@ -192,6 +198,11 @@ const onRenderParticipantDefault = (
             {callingParticipant.isMuted && (
               <Icon iconName="ParticipantItemMicOff" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
             )}
+            {
+              /* @conditional-compile-remove(spotlight) */ callingParticipant.isSpotlighted && (
+                <Icon iconName="ParticipantItemSpotlighted" className={iconStyles} />
+              )
+            }
           </Stack>
         )
       : () => null;

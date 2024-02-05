@@ -123,6 +123,16 @@
     "tooltipOnContent": "Hand laten zakken",
     "tooltipOffContent": "Hand opsteken"
   },
+  "reactionButton": {
+    "label": "Reageren",
+    "tooltipDisabledContent": "Reactieactie is uitgeschakeld",
+    "tooltipContent": "Verzend een reactie",
+    "likeReactionTooltipContent": "Vind ik leuk",
+    "heartReactionTooltipContent": "Hartje",
+    "laughReactionTooltipContent": "Lachen",
+    "applauseReactionTooltipContent": "Applaus",
+    "surprisedReactionTooltipContent": "Verrast"
+  },
   "messageThread": {
     "yesterday": "Gisteren",
     "sunday": "Zondag",

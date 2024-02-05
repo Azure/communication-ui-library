@@ -71,7 +71,8 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     parentHeight,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'horizontalBottom',
     pinnedParticipantUserIds = [],
-    /* @conditional-compile-remove(click-to-call) */ localVideoTileSize
+    /* @conditional-compile-remove(click-to-call) */ localVideoTileSize,
+    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds
   } = props;
 
   const theme = useTheme();
@@ -92,8 +93,9 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     maxOverflowGalleryDominantSpeakers: screenShareComponent
       ? childrenPerPage.current - (pinnedParticipantUserIds.length % childrenPerPage.current)
       : childrenPerPage.current,
-    /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds,
-    /* @conditional-compile-remove(gallery-layouts) */ layout: 'floatingLocalVideo'
+    pinnedParticipantUserIds,
+    /* @conditional-compile-remove(gallery-layouts) */ layout: 'floatingLocalVideo',
+    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds
   });
 
   let activeVideoStreams = 0;

@@ -123,6 +123,16 @@
     "tooltipOnContent": "把手放下",
     "tooltipOffContent": "舉手"
   },
+  "reactionButton": {
+    "label": "傳送表情符號",
+    "tooltipDisabledContent": "已停用表情符號動作",
+    "tooltipContent": "傳送表情符號",
+    "likeReactionTooltipContent": "按讚",
+    "heartReactionTooltipContent": "喜歡",
+    "laughReactionTooltipContent": "大笑",
+    "applauseReactionTooltipContent": "鼓掌",
+    "surprisedReactionTooltipContent": "驚訝"
+  },
   "messageThread": {
     "yesterday": "昨天",
     "sunday": "星期日",

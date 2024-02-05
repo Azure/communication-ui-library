@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import { CallState as SDKCallStatus, DominantSpeakersInfo } from '@azure/communication-calling';
+import { ParticipantCapabilities } from '@azure/communication-calling';
 import { VideoDeviceInfo, AudioDeviceInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(capabilities) */
 import { CapabilitiesChangeInfo } from '@azure/communication-calling';
@@ -25,6 +26,7 @@ import { _isInCall, _isPreviewOn, _dominantSpeakersWithFlatId } from '@internal/
 import { AdapterErrors } from '../../common/adapters';
 /* @conditional-compile-remove(raise-hand) */
 import { RaisedHandState } from '@internal/calling-stateful-client';
+import { CommunicationIdentifier } from '@azure/communication-common';
 /**
  * @private
  */
@@ -61,6 +63,12 @@ export const getIsScreenShareOn = (state: CallAdapterState): boolean => state.ca
  */
 export const getLocalParticipantRaisedHand = (state: CallAdapterState): RaisedHandState | undefined =>
   state.call?.raiseHand.localParticipantRaisedHand;
+
+/**
+ * @private
+ */
+export const getCapabilites = (state: CallAdapterState): ParticipantCapabilities | undefined =>
+  state.call?.capabilitiesFeature?.capabilities;
 
 /**
  * @private
@@ -206,3 +214,13 @@ export const getLatestErrors = (state: CallAdapterState): AdapterErrors => state
 export const getLatestCapabilitiesChangedInfo = (state: CallAdapterState): CapabilitiesChangeInfo | undefined => {
   return state.call?.capabilitiesFeature?.latestCapabilitiesChangeInfo;
 };
+
+/**
+ * @private
+ */
+export const getTargetCallees = (state: CallAdapterState): CommunicationIdentifier[] | undefined => state.targetCallees;
+
+/**
+ * @private
+ */
+export const getStartTime = (state: CallAdapterState): Date | undefined => state.call?.startTime;

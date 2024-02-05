@@ -14,42 +14,45 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions: read-all
+
 jobs:
   # get matrix for ci-jobs
   get_matrix:
-    name: Set CI flavors
+    name: Load CI Matrix Details
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.get-matrix.outputs.matrix }}
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          sparse-checkout: |
+            common
       # Ensure node version is great enough
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: 'lts/*'
       - id: get-matrix
         run: echo "matrix=$(node ./common/scripts/workflow-read-matrix.mjs)" >> $GITHUB_OUTPUT
 
   build_packages:
     needs: get_matrix
-    name: Build Packages
+    name: 'Build Packages (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       # Ensure node version is great enough
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: 'lts/*'
       # Try get node_modules from cache
       - name: Restore node_modules from cache
         uses: actions/cache@v3
@@ -58,7 +61,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       # Install dependencies
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.2
+        run: npm install -g @microsoft/rush
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       # Switch flavor if necessary
@@ -114,21 +117,6 @@ jobs:
       # Ensure all downstream packlet versions are consitent with the base packlet version
       - name: Ensure all package versions are consistent
         run: rush ensure-consistent-versions
-      # Tests
-      - name: Test Packages
-        run: rush test:ci-coverage -t @azure/communication-react
-        env:
-          NODE_OPTIONS: '--max_old_space_size=4096'
-      - name: Merge all jest test coverage reports from the current branch
-        run: npx nyc merge temp/jest/coverage/detailed-report/ temp/jest/current/merge/detailed-full/coverage-report.json
-      - name: Create a summary report from the detailed report
-        run: npx nyc report --temp-dir temp/jest/current/merge/detailed-full/ --report-dir temp/jest/current/merge/summary/ --reporter json-summary
-      # Upload coverage reports which will be consumed later
-      - name: Upload detailed and summary jest coverage reports
-        uses: actions/upload-artifact@v3
-        with:
-          name: jest-coverage-report-${{ matrix.flavor }}
-          path: temp/jest/current/merge/
       # Upload azure-communication api.md files for easy access
       - name: Upload communication-react api files
         uses: actions/upload-artifact@v3
@@ -137,19 +125,25 @@ jobs:
           path: |
             packages/communication-react/temp/communication-react.api.json
 
-  in-progress-feature-validation:
-    name: Check if in progress feature can be removed separately
+  jest-test-coverage:
+    needs: [get_matrix, build_packages]
+    if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
+    name: 'Jest Test Coverage (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    strategy:
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       # Ensure node version is great enough
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: 'lts/*'
       # Try get node_modules from cache
       - name: Restore node_modules from cache
         uses: actions/cache@v3
@@ -158,7 +152,85 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       # Install dependencies
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.2
+        run: npm install -g @microsoft/rush
+      - name: Install dependencies
+        run: rush install --max-install-attempts 3
+      - name: Build Packages
+        run: rush build -t @azure/communication-react
+      - name: Test Packages
+        run: rush test:ci-coverage -t @azure/communication-react
+        env:
+          NODE_OPTIONS: '--max_old_space_size=4096'
+      - name: Merge all jest test coverage reports from the current branch
+        run: npx nyc merge temp/jest/coverage/detailed-report/ temp/jest/current/merge/detailed-full/coverage-report.json
+      - name: Create a summary report from the detailed report
+        run: npx nyc report --temp-dir temp/jest/current/merge/detailed-full/ --report-dir temp/jest/current/merge/summary/ --reporter json-summary
+
+      # Pull requests show details of coverage changes
+      - name: Get jest tests coverage of main from gist
+        run: curl -o temp/jest/base/coverage-report.json "https://gist.github.com/communication-ui-bot/${{ matrix.coverage_gist_id }}/raw/communication-react-jest-report-${{ matrix.flavor }}.json" --create-dirs -L
+      - name: Calculate coverage change
+        id: coverage
+        run: |
+          node ./common/config/workflows/coverage-utils.js ../../../temp/jest/base/coverage-report.json ../../../temp/jest/current/merge/summary/coverage-summary.json lines
+          node ./common/config/workflows/coverage-utils.js ../../../temp/jest/base/coverage-report.json ../../../temp/jest/current/merge/summary/coverage-summary.json statements
+          node ./common/config/workflows/coverage-utils.js ../../../temp/jest/base/coverage-report.json ../../../temp/jest/current/merge/summary/coverage-summary.json functions
+          node ./common/config/workflows/coverage-utils.js ../../../temp/jest/base/coverage-report.json ../../../temp/jest/current/merge/summary/coverage-summary.json branches
+      - name: Find Comment
+        uses: peter-evans/find-comment@v2
+        id: fc
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: '## @azure/communication-react jest test coverage for ***${{ matrix.flavor }}'
+      - name: Create or update comment
+        uses: peter-evans/create-or-update-comment@v2
+        with:
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            ## @azure/communication-react jest test coverage for ***${{ matrix.flavor }}***.
+
+            |   | Lines | Statements | Functions | Branches |
+            | --- | :-------: | :-------: | :-------: | :-------: |
+            | Base |${{ steps.coverage.outputs.base_lines }}|${{ steps.coverage.outputs.base_statements }}|${{ steps.coverage.outputs.base_functions }}|${{ steps.coverage.outputs.base_branches }}|
+            | Current |${{ steps.coverage.outputs.current_lines }}|${{ steps.coverage.outputs.current_statements }}|${{ steps.coverage.outputs.current_functions }}|${{ steps.coverage.outputs.current_branches }}|
+            | Diff |${{ steps.coverage.outputs.lines_diff }}|${{ steps.coverage.outputs.statements_diff }}|${{ steps.coverage.outputs.functions_diff }}|${{ steps.coverage.outputs.branches_diff }}|
+          edit-mode: replace
+
+        # Main branch gets coverage report uploaded
+      - name: Upload bundle report to gist
+        if: github.ref == 'refs/heads/main'
+        uses: exuanbo/actions-deploy-gist@v1
+        with:
+          token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
+          gist_id: ${{ matrix.coverage_gist_id }}
+          gist_description: 'Jest report for tracking tests coverage for ${{ matrix.flavor }}'
+          gist_file_name: communication-react-jest-report-${{ matrix.flavor }}.json
+          file_path: temp/jest/current/merge/summary/coverage-summary.json
+
+  in-progress-feature-validation:
+    name: Check if in progress feature can be removed separately
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      # Ensure node version is great enough
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+      # Try get node_modules from cache
+      - name: Restore node_modules from cache
+        uses: actions/cache@v3
+        with:
+          path: common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+      # Install dependencies
+      - name: Install rush
+        run: npm install -g @microsoft/rush
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       # Switch flavor if necessary
@@ -172,12 +244,12 @@ jobs:
       # Builds
       - name: Build Packages
         run: rush build -t @azure/communication-react
-      # Type check test folder
-      # - must be run after building all packlets because it depends on compiled packlet dependencies
-      # - must be run only on beta flavor build because the browser test code is not conditional compiled
-      - name: Type check test folder
-        if: ${{ matrix.flavor == 'beta' }}
-        run: cd packages/react-composites && rushx tsc:e2e
+      # # Type check test folder
+      # # - must be run after building all packlets because it depends on compiled packlet dependencies
+      # # - must be run only on beta flavor build because the browser test code is not conditional compiled
+      # - name: Type check test folder
+      #   if: ${{ matrix.flavor == 'beta' }}
+      #   run: cd packages/react-composites && rushx tsc:e2e
       # Tests
       - name: Test Packages
         run: rush test -t @azure/communication-react
@@ -191,25 +263,27 @@ jobs:
 
   call_composite_automation_test:
     needs: get_matrix
-    name: Call Composite automation test
+    name: 'Call Composite automation test (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: 'lts/*'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.2
+        run: npm install -g @microsoft/rush
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - uses: browser-actions/setup-chrome@v1
@@ -269,25 +343,27 @@ jobs:
 
   chat_composite_automation_test:
     needs: get_matrix
-    name: Chat Composite automation test
+    name: 'Chat Composite automation test (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: 'lts/*'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.2
+        run: npm install -g @microsoft/rush
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - uses: browser-actions/setup-chrome@v1
@@ -347,25 +423,27 @@ jobs:
 
   call_with_chat_composite_automation_test:
     needs: get_matrix
-    name: Call With Chat Composite automation test
+    name: 'Call With Chat Composite automation test (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: 'lts/*'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.2
+        run: npm install -g @microsoft/rush
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - uses: browser-actions/setup-chrome@v1
@@ -427,20 +505,20 @@ jobs:
     name: Build Storybook
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: 'lts/*'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.2
+        run: npm install -g @microsoft/rush
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - name: Build
@@ -451,25 +529,25 @@ jobs:
 
   build_calling_sample:
     needs: get_matrix
-    name: Build Calling Sample
+    name: 'Build Calling Sample (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: 'lts/*'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.2
+        run: npm install -g @microsoft/rush
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       # Switch flavor if necessary
@@ -497,25 +575,25 @@ jobs:
 
   build_chat_sample:
     needs: get_matrix
-    name: Build Chat Sample
+    name: 'Build Chat Sample (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: 'lts/*'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.2
+        run: npm install -g @microsoft/rush
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       # Switch flavor if necessary
@@ -543,25 +621,25 @@ jobs:
 
   build_call_with_chat_sample:
     needs: get_matrix
-    name: Build CallWithChat Sample
+    name: 'Build CallWithChat Sample (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: 'lts/*'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.2
+        run: npm install -g @microsoft/rush
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       # Switch flavor if necessary
@@ -589,20 +667,22 @@ jobs:
 
   build_static_html_composites_sample:
     needs: get_matrix
-    name: Build And Test Static HTML Composites Sample
+    name: 'Build And Test Static HTML Composites Sample (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: 'lts/*'
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.2
+        run: npm install -g @microsoft/rush
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - uses: browser-actions/setup-chrome@v1
@@ -651,20 +731,22 @@ jobs:
 
   build_component_examples:
     needs: get_matrix
-    name: Build And Test Component+Binding Examples
+    name: 'Build And Test Component+Binding Examples (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: 'lts/*'
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.2
+        run: npm install -g @microsoft/rush
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - uses: browser-actions/setup-chrome@v1
@@ -711,108 +793,11 @@ jobs:
               body: 'Failed to pass the component examples UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "update_snapshots" label to the PR for updating the snapshot.'
             })
 
-  compare_jest_tests_coverage:
-    runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'pull_request' }}
-    name: Compare unit tests coverage from pr head ref to base ref (${{ matrix.flavor }})
-    needs: build_packages
-    strategy:
-      matrix:
-        include:
-          - flavor: stable
-            gist_id: d1528e50153e6f7ea569040d7b437abb
-          - flavor: beta
-            gist_id: 67224b1799c92f0e1cd2da24798e4dd5
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      # Ensure node version is great enough
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20.x'
-      # Try get node_modules from cache
-      - name: Restore node_modules from cache
-        uses: actions/cache@v3
-        with:
-          path: common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      # Install dependencies in order to use script
-      - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.2
-      - name: Install dependencies
-        run: rush install --max-install-attempts 3
-      - name: Get jest tests coverage of main from gist
-        run: curl -o temp/jest/base/coverage-report.json "https://gist.github.com/communication-ui-bot/${{ matrix.gist_id }}/raw/communication-react-jest-report-${{ matrix.flavor }}.json" --create-dirs -L
-      - name: Download coverage report from the build_packages job
-        uses: actions/download-artifact@v3
-        with:
-          name: jest-coverage-report-${{ matrix.flavor }}
-          path: temp/jest/current/merge/
-      - name: Calculate coverage change
-        id: coverage
-        run: |
-          node ./common/config/workflows/coverage-utils.js ../../../temp/jest/base/coverage-report.json ../../../temp/jest/current/merge/summary/coverage-summary.json lines
-
-          node ./common/config/workflows/coverage-utils.js ../../../temp/jest/base/coverage-report.json ../../../temp/jest/current/merge/summary/coverage-summary.json statements
-
-          node ./common/config/workflows/coverage-utils.js ../../../temp/jest/base/coverage-report.json ../../../temp/jest/current/merge/summary/coverage-summary.json functions
-
-          node ./common/config/workflows/coverage-utils.js ../../../temp/jest/base/coverage-report.json ../../../temp/jest/current/merge/summary/coverage-summary.json branches
-      - name: Find Comment
-        uses: peter-evans/find-comment@v2
-        id: fc
-        with:
-          issue-number: ${{ github.event.pull_request.number }}
-          comment-author: 'github-actions[bot]'
-          body-includes: '## @azure/communication-react jest test coverage for ***${{ matrix.flavor }}'
-      - name: Create or update comment
-        uses: peter-evans/create-or-update-comment@v2
-        with:
-          comment-id: ${{ steps.fc.outputs.comment-id }}
-          issue-number: ${{ github.event.pull_request.number }}
-          body: |
-            ## @azure/communication-react jest test coverage for ***${{ matrix.flavor }}***.
-
-            |   | Lines | Statements | Functions | Branches |
-            | --- | :-------: | :-------: | :-------: | :-------: |
-            | Base |${{ steps.coverage.outputs.base_lines }}|${{ steps.coverage.outputs.base_statements }}|${{ steps.coverage.outputs.base_functions }}|${{ steps.coverage.outputs.base_branches }}|
-            | Current |${{ steps.coverage.outputs.current_lines }}|${{ steps.coverage.outputs.current_statements }}|${{ steps.coverage.outputs.current_functions }}|${{ steps.coverage.outputs.current_branches }}|
-            | Diff |${{ steps.coverage.outputs.lines_diff }}|${{ steps.coverage.outputs.statements_diff }}|${{ steps.coverage.outputs.functions_diff }}|${{ steps.coverage.outputs.branches_diff }}|
-          edit-mode: replace
-
-  update_jest_coverage_report:
-    runs-on: ubuntu-latest
-    name: Upload jest coverage report to gist (${{ matrix.flavor }})
-    needs: build_packages
-    if: github.ref == 'refs/heads/main'
-    strategy:
-      matrix:
-        include:
-          - flavor: stable
-            gist_id: d1528e50153e6f7ea569040d7b437abb
-          - flavor: beta
-            gist_id: 67224b1799c92f0e1cd2da24798e4dd5
-    steps:
-      - name: Download coverage report from the build_packages job
-        uses: actions/download-artifact@v3
-        with:
-          name: jest-coverage-report-${{ matrix.flavor }}
-          path: temp/jest/current/merge/
-      - name: Upload bundle report to gist
-        uses: exuanbo/actions-deploy-gist@v1
-        with:
-          token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
-          gist_id: ${{ matrix.gist_id }}
-          gist_description: 'Jest report for tracking tests coverage for ${{ matrix.flavor }}'
-          gist_file_name: communication-react-jest-report-${{ matrix.flavor }}.json
-          file_path: temp/jest/current/merge/summary/coverage-summary.json
-
   compare_base_bundle_stats:
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'pull_request' }}
+    permissions:
+      pull-requests: write
+    if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
     name: Compare bundle size from pr head ref to base ref - ${{ matrix.app }}
     needs: [build_calling_sample, build_chat_sample, build_call_with_chat_sample]
     strategy:
@@ -833,10 +818,6 @@ jobs:
         with:
           path: current
           name: ${{ matrix.app }}-report
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20.x'
       - name: Calculate size change
         id: bundles
         run: |
@@ -896,6 +877,8 @@ jobs:
 
   check_failure:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
     needs:
       [build_packages, build_calling_sample, build_chat_sample, build_static_html_composites_sample, build_storybook]
     if: failure() && github.ref == 'refs/heads/main'

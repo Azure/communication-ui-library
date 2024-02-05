@@ -123,6 +123,16 @@
     "tooltipOnContent": "Ta ned hånden",
     "tooltipOffContent": "Rekke opp hånden"
   },
+  "reactionButton": {
+    "label": "Reager",
+    "tooltipDisabledContent": "Reaksjonshandling er deaktivert",
+    "tooltipContent": "Send en reaksjon",
+    "likeReactionTooltipContent": "Liker",
+    "heartReactionTooltipContent": "Kjærlighet",
+    "laughReactionTooltipContent": "Latter",
+    "applauseReactionTooltipContent": "Applaus",
+    "surprisedReactionTooltipContent": "Overrasket"
+  },
   "messageThread": {
     "yesterday": "I går",
     "sunday": "Søndag",

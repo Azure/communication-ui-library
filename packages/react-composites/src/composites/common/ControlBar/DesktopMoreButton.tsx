@@ -36,6 +36,12 @@ import { _startCaptionsButtonSelector } from '@internal/calling-component-bindin
 /* @conditional-compile-remove(close-captions) */
 import { useAdaptedSelector } from '../../CallComposite/hooks/useAdaptedSelector';
 import { _preventDismissOnEvent } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(dtmf-dialer) */
+import { showDtmfDialer } from '../../CallComposite/utils/MediaGalleryUtils';
+/* @conditional-compile-remove(dtmf-dialer) */
+import { useSelector } from '../../CallComposite/hooks/useSelector';
+/* @conditional-compile-remove(dtmf-dialer) */
+import { getTargetCallees } from '../../CallComposite/selectors/baseSelectors';
 
 /** @private */
 export interface DesktopMoreButtonProps extends ControlBarButtonProps {
@@ -52,6 +58,10 @@ export interface DesktopMoreButtonProps extends ControlBarButtonProps {
   onUserSetGalleryLayout?: (layout: VideoGalleryLayout) => void;
   /* @conditional-compile-remove(gallery-layouts) */
   userSetGalleryLayout?: VideoGalleryLayout;
+  /* @conditional-compile-remove(dtmf-dialer) */
+  onSetDialpadPage?: () => void;
+  /* @conditional-compile-remove(dtmf-dialer) */
+  dtmfDialerPresent?: boolean;
 }
 
 /**
@@ -82,6 +92,14 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
   const [previousLayout, setPreviousLayout] = useState<VideoGalleryLayout>(
     props.userSetGalleryLayout ?? 'floatingLocalVideo'
   );
+
+  /* @conditional-compile-remove(dtmf-dialer) */
+  const callees = useSelector(getTargetCallees);
+  /* @conditional-compile-remove(dtmf-dialer) */
+  const allowDtmfDialer = showDtmfDialer(callees);
+
+  /* @conditional-compile-remove(dtmf-dialer) */
+  const [dtmfDialerChecked, setDtmfDialerChecked] = useState<boolean>(props.dtmfDialerPresent ?? false);
 
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
   const moreButtonStrings = useMemo(
@@ -185,20 +203,30 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     }
   }
 
-  /*@conditional-compile-remove(PSTN-calls) */
-  if (props.onClickShowDialpad) {
-    moreButtonContextualMenuItems.push({
-      key: 'showDialpadKey',
-      text: localeStrings.strings.callWithChat.openDtmfDialpadLabel,
-      onClick: () => {
-        props.onClickShowDialpad && props.onClickShowDialpad();
-      },
-      iconProps: { iconName: 'Dialpad', styles: { root: { lineHeight: 0 } } },
-      itemProps: {
-        styles: buttonFlyoutIncreasedSizeStyles
-      },
-      disabled: props.disableButtonsForHoldScreen
-    });
+  /* @conditional-compile-remove(dtmf-dialer) */
+  const dtmfDialerScreenOption = {
+    key: 'dtmfDialerScreenKey',
+    itemProps: {
+      styles: buttonFlyoutIncreasedSizeStyles
+    },
+    text: !dtmfDialerChecked
+      ? localeStrings.strings.call.dtmfDialerMoreButtonLabelOn
+      : localeStrings.strings.call.dtmfDialerMoreButtonLabelOff,
+    onClick: () => {
+      props.onSetDialpadPage && props.onSetDialpadPage();
+      setDtmfDialerChecked(!dtmfDialerChecked);
+    },
+    iconProps: {
+      iconName: 'DtmfDialpadButton',
+      styles: { root: { lineHeight: 0 } }
+    }
+  };
+  /* @conditional-compile-remove(dtmf-dialer) */
+  /**
+   * Only render the dtmf dialer if the dialpad for PSTN calls is not present
+   */
+  if (props.onSetDialpadPage && allowDtmfDialer) {
+    moreButtonContextualMenuItems.push(dtmfDialerScreenOption);
   }
 
   /* @conditional-compile-remove(gallery-layouts) */

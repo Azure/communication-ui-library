@@ -123,6 +123,16 @@
     "tooltipOnContent": "Eli İndirme",
     "tooltipOffContent": "El Kaldırma"
   },
+  "reactionButton": {
+    "label": "Tepki ver",
+    "tooltipDisabledContent": "Tepki eylemi devre dışı bırakıldı",
+    "tooltipContent": "Tepki gönder",
+    "likeReactionTooltipContent": "Beğen",
+    "heartReactionTooltipContent": "Aşk",
+    "laughReactionTooltipContent": "Kahkaha",
+    "applauseReactionTooltipContent": "Alkış",
+    "surprisedReactionTooltipContent": "Şaşırmış"
+  },
   "messageThread": {
     "yesterday": "Dün",
     "sunday": "Pazar",

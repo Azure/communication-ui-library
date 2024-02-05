@@ -3,7 +3,6 @@
 
 import { IContextualMenuProps, Layer, Stack } from '@fluentui/react';
 import React, { useMemo } from 'react';
-/* @conditional-compile-remove(pinned-participants) */
 import { KeyboardEvent, useCallback } from 'react';
 import {
   CreateVideoStreamViewResult,
@@ -27,6 +26,8 @@ import { VideoTile } from './VideoTile';
 import { _formatString } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(hide-attendee-name) */
 import { useLocale } from '../localization';
+/* @conditional-compile-remove(reaction) */
+import { ReactionResources } from '../types/ReactionTypes';
 
 /**
  * A memoized version of VideoTile for rendering remote participants. React.memo is used for a performance
@@ -61,8 +62,13 @@ export const _RemoteVideoTile = React.memo(
     onUnpinParticipant?: (userId: string) => void;
     onUpdateScalingMode?: (userId: string, scalingMode: ViewScalingMode) => void;
     isPinned?: boolean;
+    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds?: string[];
+    /* @conditional-compile-remove(spotlight) */ isSpotlighted?: boolean;
+    /* @conditional-compile-remove(spotlight) */ onStartSpotlight?: (userId: string) => void;
+    /* @conditional-compile-remove(spotlight) */ onStopSpotlight?: (userId: string) => void;
     disablePinMenuItem?: boolean;
     toggleAnnouncerString?: (announcerString: string) => void;
+    /* @conditional-compile-remove(reaction) */ reactionResources?: ReactionResources;
   }) => {
     const {
       isAvailable,
@@ -81,10 +87,15 @@ export const _RemoteVideoTile = React.memo(
       isPinned,
       onPinParticipant,
       onUnpinParticipant,
+      /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds,
+      /* @conditional-compile-remove(spotlight) */ isSpotlighted,
+      /* @conditional-compile-remove(spotlight) */ onStartSpotlight,
+      /* @conditional-compile-remove(spotlight) */ onStopSpotlight,
       onUpdateScalingMode,
       disablePinMenuItem,
       toggleAnnouncerString,
-      strings
+      strings,
+      /* @conditional-compile-remove(reaction) */ reactionResources
     } = props;
 
     const remoteVideoStreamProps: RemoteVideoStreamLifecycleMaintainerProps = useMemo(
@@ -117,21 +128,26 @@ export const _RemoteVideoTile = React.memo(
     const contextualMenuProps = useVideoTileContextualMenuProps({
       remoteParticipant,
       view: createVideoStreamResult?.view,
-      /* @conditional-compile-remove(pinned-participants) */
       strings: { ...props.strings },
       isPinned,
       onPinParticipant,
       onUnpinParticipant,
       onUpdateScalingMode,
       disablePinMenuItem,
-      toggleAnnouncerString
+      toggleAnnouncerString,
+      /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds,
+      /* @conditional-compile-remove(spotlight) */ isSpotlighted,
+      /* @conditional-compile-remove(spotlight) */ onStartSpotlight,
+      /* @conditional-compile-remove(spotlight) */ onStopSpotlight
     });
 
     const videoTileContextualMenuProps = useMemo(() => {
-      if (menuKind !== 'contextual') {
+      if (menuKind !== 'contextual' || !contextualMenuProps) {
         return {};
       }
-      return videoTileContextualMenuPropsTrampoline(contextualMenuProps);
+      return {
+        contextualMenu: contextualMenuProps
+      };
     }, [contextualMenuProps, menuKind]);
 
     const showLoadingIndicator = isAvailable && isReceiving === false && participantState !== 'Disconnected';
@@ -151,7 +167,6 @@ export const _RemoteVideoTile = React.memo(
       );
     }, [renderElement, showLoadingIndicator]);
 
-    /* @conditional-compile-remove(pinned-participants) */
     const onKeyDown = useCallback(
       (e: KeyboardEvent) => {
         if (e.key === 'Enter') {
@@ -179,9 +194,7 @@ export const _RemoteVideoTile = React.memo(
     displayName = formatDisplayName();
     return (
       <Stack
-        /* @conditional-compile-remove(pinned-participants) */
         tabIndex={menuKind === 'drawer' ? 0 : undefined}
-        /* @conditional-compile-remove(pinned-participants) */
         onKeyDown={menuKind === 'drawer' ? onKeyDown : undefined}
         style={remoteVideoTileWrapperStyle}
       >
@@ -205,14 +218,16 @@ export const _RemoteVideoTile = React.memo(
           /* @conditional-compile-remove(PSTN-calls) */
           participantState={participantState}
           {...videoTileContextualMenuProps}
-          /* @conditional-compile-remove(pinned-participants) */
           isPinned={props.isPinned}
-          /* @conditional-compile-remove(pinned-participants) */
           onLongTouch={() =>
             setDrawerMenuItemProps(
               convertContextualMenuItemsToDrawerMenuItemProps(contextualMenuProps, () => setDrawerMenuItemProps([]))
             )
           }
+          /* @conditional-compile-remove(spotlight) */
+          isSpotlighted={isSpotlighted}
+          /* @conditional-compile-remove(reaction) */
+          reactionResources={reactionResources}
         />
         {drawerMenuItemProps.length > 0 && (
           <Layer hostId={props.drawerMenuHostId}>
@@ -230,21 +245,6 @@ export const _RemoteVideoTile = React.memo(
   }
 );
 
-const videoTileContextualMenuPropsTrampoline = (
-  contextualMenuProps?: IContextualMenuProps
-): { contextualMenu?: IContextualMenuProps } => {
-  if (!contextualMenuProps) {
-    return {};
-  }
-  /* @conditional-compile-remove(pinned-participants) */
-  return {
-    contextualMenu: contextualMenuProps
-  };
-
-  return {};
-};
-
-/* @conditional-compile-remove(pinned-participants) */
 const convertContextualMenuItemsToDrawerMenuItemProps = (
   contextualMenuProps?: IContextualMenuProps,
   onLightDismiss?: () => void
