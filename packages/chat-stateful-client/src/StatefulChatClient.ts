@@ -3,7 +3,7 @@
 
 import { ChatClient, ChatClientOptions } from '@azure/communication-chat';
 import { _getApplicationId, _TelemetryImplementationHint } from '@internal/acs-ui-common';
-import { ChatContext } from './ChatContext';
+import { _ChatContext } from './ChatContext';
 import { ChatClientState } from './ChatClientState';
 import { EventSubscriber } from './EventSubscriber';
 import { chatThreadClientDeclaratify } from './StatefulChatThreadClient';
@@ -47,7 +47,7 @@ export interface StatefulChatClient extends ChatClient {
 }
 
 interface StatefulChatClientWithPrivateProps extends StatefulChatClient {
-  context: ChatContext;
+  context: _ChatContext;
   eventSubscriber: EventSubscriber | undefined;
 }
 
@@ -217,13 +217,13 @@ export const _createStatefulChatClientWithDeps = (
   chatClient: ChatClient,
   args: StatefulChatClientArgs,
   options?: StatefulChatClientOptions,
-  chatContext?: ChatContext
+  chatContext?: _ChatContext
 ): StatefulChatClient => {
-  let context: ChatContext;
+  let context: _ChatContext;
   if (chatContext) {
     context = chatContext;
   } else {
-    context = new ChatContext(
+    context = new _ChatContext(
       options?.maxStateChangeListeners,
       /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ args.credential
     );

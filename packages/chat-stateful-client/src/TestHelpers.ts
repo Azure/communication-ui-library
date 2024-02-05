@@ -8,7 +8,7 @@ import { _createStatefulChatClientWithDeps, StatefulChatClient, StatefulChatClie
 import { createMockChatThreadClient } from './mocks/createMockChatThreadClient';
 import { createMockIterator } from './mocks/createMockIterator';
 import { MockCommunicationUserCredential } from './mocks/MockCommunicationUserCredential';
-import { ChatContext } from './ChatContext';
+import { _ChatContext } from './ChatContext';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 
 /**
@@ -85,7 +85,7 @@ export const createStatefulChatClientMock = (): StatefulChatClientWithEventTrigg
  * @private
  */
 export const createStatefulChatClientWithContextMock = (): StatefulChatClientWithEventTrigger => {
-  const chatContext = new ChatContext();
+  const chatContext = new _ChatContext();
   chatContext.createThreadIfNotExist('threadId1');
   chatContext.setChatMessages('threadId1', { messageId1: messageTemplate });
   return _createStatefulChatClientWithDeps(

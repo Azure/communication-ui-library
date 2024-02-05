@@ -3,7 +3,7 @@
 
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { ChatMessage, ChatMessageReadReceipt, ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
-import { ChatContext } from './ChatContext';
+import { _ChatContext } from './ChatContext';
 import { chatThreadClientDeclaratify } from './StatefulChatThreadClient';
 import {
   createMockChatThreadClient,
@@ -20,14 +20,14 @@ const threadId = '1';
 
 jest.mock('@azure/communication-chat');
 
-const createMockChatClientAndDeclaratify = (context: ChatContext): ChatThreadClient => {
+const createMockChatClientAndDeclaratify = (context: _ChatContext): ChatThreadClient => {
   const declarativeChatThreadClient = chatThreadClientDeclaratify(createMockChatThreadClient(threadId), context);
   return declarativeChatThreadClient;
 };
 
 describe('declarative chatThreadClient list iterators', () => {
   test('declarative listMessage should proxy listMessages iterator and store it in internal state', async () => {
-    const context = new ChatContext();
+    const context = new _ChatContext();
     const messages = createMockChatClientAndDeclaratify(context).listMessages();
     const proxiedMessages: ChatMessage[] = [];
     for await (const message of messages) {
@@ -38,7 +38,7 @@ describe('declarative chatThreadClient list iterators', () => {
   });
 
   test('declarative listMessage should proxy listMessages paged iterator and store it in internal state', async () => {
-    const context = new ChatContext();
+    const context = new _ChatContext();
     const pages = createMockChatClientAndDeclaratify(context).listMessages().byPage();
     const proxiedMessages: ChatMessage[] = [];
     for await (const page of pages) {
@@ -51,7 +51,7 @@ describe('declarative chatThreadClient list iterators', () => {
   });
 
   test('declarative listParticipants should proxy listParticipants iterator and store it in internal state', async () => {
-    const context = new ChatContext();
+    const context = new _ChatContext();
     const participants = createMockChatClientAndDeclaratify(context).listParticipants();
     const proxiedParticipants: ChatParticipant[] = [];
     for await (const participant of participants) {
@@ -62,7 +62,7 @@ describe('declarative chatThreadClient list iterators', () => {
   });
 
   test('declarative listParticipants should proxy listParticipants paged iterator and store it in internal state', async () => {
-    const context = new ChatContext();
+    const context = new _ChatContext();
     const pages = createMockChatClientAndDeclaratify(context).listParticipants().byPage();
     const proxiedParticipants: ChatParticipant[] = [];
     for await (const page of pages) {
@@ -75,7 +75,7 @@ describe('declarative chatThreadClient list iterators', () => {
   });
 
   test('declarative listReadReceipts should proxy listReadReceipts iterator and store it in internal state', async () => {
-    const context = new ChatContext();
+    const context = new _ChatContext();
     const readReceipts = createMockChatClientAndDeclaratify(context).listReadReceipts();
     const proxiedReadReceipt: ChatMessageReadReceipt[] = [];
     for await (const readReceipt of readReceipts) {
@@ -86,7 +86,7 @@ describe('declarative chatThreadClient list iterators', () => {
   });
 
   test('declarative listReadReceipts should proxy listReadReceipts paged iterator and store it in internal state', async () => {
-    const context = new ChatContext();
+    const context = new _ChatContext();
     const pages = createMockChatClientAndDeclaratify(context).listReadReceipts().byPage();
     const proxiedReadReceipt: ChatMessageReadReceipt[] = [];
     for await (const page of pages) {
@@ -99,7 +99,7 @@ describe('declarative chatThreadClient list iterators', () => {
   });
 
   test('declarative listReadReceipts should generate latestReadTime properly', async () => {
-    const context = new ChatContext();
+    const context = new _ChatContext();
     const pages = createMockChatClientAndDeclaratify(context).listReadReceipts().byPage();
     // eslint-disable-next-line curly
     for await (const _page of pages);
@@ -112,7 +112,7 @@ describe('declarative chatThreadClient list iterators', () => {
 
 describe('declarative chatThreadClient basic api functions', () => {
   test('set internal store correctly when proxy getMessage', async () => {
-    const context = new ChatContext();
+    const context = new _ChatContext();
     const message = await createMockChatClientAndDeclaratify(context).getMessage('MessageId1');
 
     const messageInContext = context.getState().threads[threadId]?.chatMessages['MessageId1'];
@@ -121,7 +121,7 @@ describe('declarative chatThreadClient basic api functions', () => {
   });
 
   test('set internal store correctly when proxy sendMessage', async () => {
-    const context = new ChatContext();
+    const context = new _ChatContext();
     const content = 'test';
     const sendMessagePromise = createMockChatClientAndDeclaratify(context).sendMessage({ content });
 
@@ -141,7 +141,7 @@ describe('declarative chatThreadClient basic api functions', () => {
   });
 
   test('set internal store correctly when proxy sendMessage', async () => {
-    const context = new ChatContext();
+    const context = new _ChatContext();
     const content = 'fail';
 
     const sendMessagePromise = createMockChatClientAndDeclaratify(context).sendMessage({ content });
@@ -162,7 +162,7 @@ describe('declarative chatThreadClient basic api functions', () => {
   });
 
   test('should be able to proxy add participants and remove participants', async () => {
-    const context = new ChatContext();
+    const context = new _ChatContext();
     const mockClient = createMockChatClientAndDeclaratify(context);
     const participants = [{ id: { communicationUserId: 'User1' } }, { id: { communicationUserId: 'User2' } }];
 
@@ -184,7 +184,7 @@ describe('declarative chatThreadClient basic api functions', () => {
   });
 
   test('should be able to proxy updateMessage', async () => {
-    const context = new ChatContext();
+    const context = new _ChatContext();
     const mockClient = createMockChatClientAndDeclaratify(context);
     context.setChatMessage(threadId, messageTemplate);
     const content = 'updatedContent';
@@ -198,7 +198,7 @@ describe('declarative chatThreadClient basic api functions', () => {
   });
 
   test('should be able to proxy updateThread', async () => {
-    const context = new ChatContext();
+    const context = new _ChatContext();
     const mockClient = createMockChatClientAndDeclaratify(context);
     const topic = 'updatedTopic';
 
@@ -211,7 +211,7 @@ describe('declarative chatThreadClient basic api functions', () => {
   });
 
   test('should be able to delete message with local messageId', async () => {
-    const context = new ChatContext();
+    const context = new _ChatContext();
     const clientMessageId = 'clientId1';
     context.setChatMessage(threadId, { ...messageTemplate, clientMessageId, id: '' });
     const mockClient = createMockChatClientAndDeclaratify(context);
@@ -224,7 +224,7 @@ describe('declarative chatThreadClient basic api functions', () => {
   });
 
   test('should be able to delete message with messageId', async () => {
-    const context = new ChatContext();
+    const context = new _ChatContext();
     context.setChatMessage(threadId, messageTemplate);
     const mockClient = createMockChatClientAndDeclaratify(context);
 

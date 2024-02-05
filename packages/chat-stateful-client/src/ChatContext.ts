@@ -29,9 +29,9 @@ enableMapSet();
 enablePatches();
 
 /**
- * @private
+ * @internal
  */
-export class ChatContext {
+export class _ChatContext {
   private _state: ChatClientState = {
     userId: { id: '' } as UnknownIdentifierKind,
     displayName: '',
@@ -82,7 +82,13 @@ export class ChatContext {
       Object.keys(draft.threads).forEach((threadId) => {
         const thread = draft.threads[threadId];
         Object.keys(thread.chatMessages).forEach((messageId) => {
-          // const cache = thread.chatMessages[messageId].resourceCache;
+          const cache = thread.chatMessages[messageId].resourceCache;
+          if (cache) {
+            Object.keys(cache).forEach((resourceUrl) => {
+              const blobUrl = cache[resourceUrl];
+              URL.revokeObjectURL(blobUrl);
+            });
+          }
           thread.chatMessages[messageId].resourceCache = undefined;
         });
       });

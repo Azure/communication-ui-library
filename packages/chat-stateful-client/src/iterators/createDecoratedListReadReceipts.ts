@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { ChatThreadClient, ChatMessageReadReceipt, RestListReadReceiptsOptions } from '@azure/communication-chat';
-import { ChatContext } from '../ChatContext';
+import { _ChatContext } from '../ChatContext';
 import { createDecoratedIterator, createErrorHandlingIterator } from './createDecoratedIterator';
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
 
@@ -11,9 +11,9 @@ import { PagedAsyncIterableIterator } from '@azure/core-paging';
  */
 export const createDecoratedListReadReceipts = (
   chatThreadClient: ChatThreadClient,
-  context: ChatContext
+  context: _ChatContext
 ): ((options?: RestListReadReceiptsOptions | undefined) => PagedAsyncIterableIterator<ChatMessageReadReceipt>) => {
-  const setReadReceipt = (readReceipt: ChatMessageReadReceipt, context: ChatContext): void => {
+  const setReadReceipt = (readReceipt: ChatMessageReadReceipt, context: _ChatContext): void => {
     context.addReadReceipt(chatThreadClient.threadId, {
       ...readReceipt
     });

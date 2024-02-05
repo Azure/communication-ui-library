@@ -15,7 +15,7 @@ import {
   TypingIndicatorReceivedEvent
 } from '@azure/communication-chat';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { ChatContext } from './ChatContext';
+import { _ChatContext } from './ChatContext';
 import { convertChatMessage } from './convertChatMessage';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 
@@ -28,9 +28,9 @@ const maxSyncTimeInMs = 10 * 1000;
  */
 export class EventSubscriber {
   private chatClient: ChatClient;
-  private chatContext: ChatContext;
+  private chatContext: _ChatContext;
 
-  constructor(chatClient: ChatClient, chatContext: ChatContext) {
+  constructor(chatClient: ChatClient, chatContext: _ChatContext) {
     this.chatClient = chatClient;
     this.chatContext = chatContext;
     this.subscribe();

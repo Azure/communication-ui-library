@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { ChatContext } from './ChatContext';
+import { _ChatContext } from './ChatContext';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatError } from './ChatClientState';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
@@ -15,11 +15,11 @@ import type { CommunicationTokenCredential } from '@azure/communication-common';
  */
 export class ResourceDownloadQueue {
   private _messagesNeedingResourceRetrieval: ChatMessageWithStatus[] = [];
-  private _context: ChatContext;
+  private _context: _ChatContext;
   private isActive = false;
   private _credential: CommunicationTokenCredential;
 
-  constructor(context: ChatContext, credential: CommunicationTokenCredential) {
+  constructor(context: _ChatContext, credential: CommunicationTokenCredential) {
     this._context = context;
     this._credential = credential;
   }
