@@ -29,7 +29,8 @@ export type {
   AzureCommunicationCallAdapterArgs,
   CallAdapterLocator,
   CommonCallAdapter,
-  CallAdapterCallOperations
+  CallAdapterCallOperations,
+  AzureCommunicationOutboundCallAdapterArgs
 } from './adapter';
 
 /* @conditional-compile-remove(video-background-effects) */
@@ -71,7 +72,8 @@ export type {
   NetworkDiagnosticChangedEvent,
   ParticipantsJoinedListener,
   ParticipantsLeftListener,
-  JoinCallOptions
+  JoinCallOptions,
+  StartCallIdentifier
 } from './adapter';
 
 /* @conditional-compile-remove(close-captions) */
