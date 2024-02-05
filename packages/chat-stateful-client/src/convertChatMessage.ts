@@ -21,7 +21,8 @@ export const convertChatMessage = (
     policyViolation: !!(
       message.sender?.kind === 'microsoftTeamsUser' &&
       !!message.editedOn &&
-      message.content?.message === ''
+      message.content?.message === '' &&
+      message.content.attachments?.length === 0
     )
   };
 };

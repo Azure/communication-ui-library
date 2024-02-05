@@ -92,7 +92,10 @@ export interface ComponentStrings {
   /** Strings for RaiseHandButton */
   raiseHandButton: RaiseHandButtonStrings;
   /* @conditional-compile-remove(reaction) */
-  /** Strings for ReactionButton */
+  /**
+   * Strings for ReactionButton
+   * @beta
+   * */
   reactionButton: ReactionButtonStrings;
   /** Strings for TypingIndicator */
   typingIndicator: TypingIndicatorStrings;
