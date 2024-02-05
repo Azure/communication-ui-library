@@ -31,7 +31,7 @@ test.describe('Page state tests', async () => {
     const initialState = defaultMockCallAdapterState();
     initialState.page = 'leftCall';
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
-    await waitForSelector(page, dataUiId('call-composite-star-survey'));
+    await waitForSelector(page, dataUiId('call-composite-survey'));
     expect(await stableScreenshot(page)).toMatchSnapshot('left-call-page.png');
   });
   test('Page when local participant is removed from call', async ({ page, serverUrl }) => {

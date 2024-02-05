@@ -61,8 +61,8 @@ export const SurveyContent = (
   };
   /* @conditional-compile-remove(end-of-call-survey) */
   return (
-    <Stack>
-      <StarSurvey onStarRatingSelected={onStarRatingSelected} data-ui-id="call-composite-star-survey" />
+    <Stack data-ui-id="call-composite-survey">
+      <StarSurvey onStarRatingSelected={onStarRatingSelected} />
 
       {showTagsSurvey && (
         <TagsSurvey
