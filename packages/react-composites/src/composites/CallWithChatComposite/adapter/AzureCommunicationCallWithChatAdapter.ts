@@ -88,7 +88,7 @@ import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { useEffect, useRef, useState } from 'react';
 import { _toCommunicationIdentifier, _TelemetryImplementationHint } from '@internal/acs-ui-common';
-import { JoinCallOptions } from '../../CallComposite/adapter/CallAdapter';
+import { JoinCallOptions, StartCallIdentifier } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 import { AzureCommunicationCallAdapterOptions } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(close-captions) */
@@ -270,15 +270,21 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     // Only remove self from the GroupCall. Contoso must manage access to Chat.
     await this.callAdapter.leaveCall(forEveryone);
   }
+
   /** Start a new Call. */
-  public startCall(
-    participants: string[] | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier[],
-    options?: StartCallOptions
-  ): Call | undefined {
-    let communicationParticipants = participants;
-    /* @conditional-compile-remove(PSTN-calls) */
-    communicationParticipants = participants.map(_toCommunicationIdentifier);
-    return this.callAdapter.startCall(communicationParticipants, options);
+  public startCall(participants: string[], options?: StartCallOptions): Call | undefined;
+  /** Start a new Call. */
+  public startCall(participants: StartCallIdentifier[], options?: StartCallOptions): Call | undefined;
+  /** Start a new Call. */
+  public startCall(participants: string[] | StartCallIdentifier[], options?: StartCallOptions): Call | undefined {
+    if (participants.length === 0) {
+      throw new Error('At least one participant is required to start a call');
+    }
+    if (typeof participants[0] === 'string') {
+      return this.callAdapter.startCall(participants as string[], options);
+    } else {
+      return this.callAdapter.startCall(participants as StartCallIdentifier[], options);
+    }
   }
   /**
    * Subscribe to state change events.

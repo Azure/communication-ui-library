@@ -10,13 +10,13 @@ import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons } from '../common/icons';
 import { useLocale } from '../localization';
-import { CommonCallAdapter } from './adapter/CallAdapter';
+import { CommonCallAdapter, StartCallIdentifier } from './adapter/CallAdapter';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
 import { CallPage } from './pages/CallPage';
 import { ConfigurationPage } from './pages/ConfigurationPage';
 import { NoticePage } from './pages/NoticePage';
 import { useSelector } from './hooks/useSelector';
-import { getEndedCall, getPage } from './selectors/baseSelectors';
+import { getEndedCall, getPage, getTargetCallees } from './selectors/baseSelectors';
 import { LobbyPage } from './pages/LobbyPage';
 /* @conditional-compile-remove(call-transfer) */
 import { TransferPage } from './pages/TransferPage';
@@ -420,7 +420,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     setTrackedErrors((prev) => trackErrorAsDismissed(error.type, prev));
   }, []);
   const latestErrors = useMemo(() => filterLatestErrors(activeErrors, trackedErrors), [activeErrors, trackedErrors]);
-
+  const callees = useSelector(getTargetCallees) as StartCallIdentifier[];
   const locale = useLocale();
   const palette = useTheme().palette;
   const leavePageStyle = useMemo(() => leavingPageStyle(palette), [palette]);
@@ -431,10 +431,14 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         <ConfigurationPage
           mobileView={props.mobileView}
           startCallHandler={(): void => {
-            adapter.joinCall({
-              microphoneOn: 'keep',
-              cameraOn: 'keep'
-            });
+            if (callees) {
+              adapter.startCall(callees);
+            } else {
+              adapter.joinCall({
+                microphoneOn: 'keep',
+                cameraOn: 'keep'
+              });
+            }
           }}
           updateSidePaneRenderer={setSidePaneRenderer}
           latestErrors={latestErrors}

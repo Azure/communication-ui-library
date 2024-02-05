@@ -4,7 +4,7 @@
 /* @conditional-compile-remove(image-overlay) */
 import React from 'react';
 /* @conditional-compile-remove(image-overlay) */
-import { ImageOverlay } from './ImageGallery';
+import { ImageOverlay } from './ImageOverlay';
 /* @conditional-compile-remove(image-overlay) */
 import { render, screen } from '@testing-library/react';
 /* @conditional-compile-remove(image-overlay) */
