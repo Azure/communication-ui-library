@@ -159,11 +159,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const { onStartSpotlight, onStopSpotlight } = videoGalleryProps;
 
   /* @conditional-compile-remove(spotlight) */
-  const myUserId = toFlatCommunicationIdentifier(adapter.getState().userId);
-
-  /* @conditional-compile-remove(spotlight) */
   const { onStartSpotlightWithPrompt, onStopSpotlightWithPrompt } = useSpotlightCallbacksWithPrompt(
-    myUserId,
     onStartSpotlight,
     onStopSpotlight,
     setIsPromptOpen,
