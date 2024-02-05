@@ -147,7 +147,9 @@ export function callWithChatAdapterStateFromBackingStates(
     selectedVideoBackgroundEffect: callAdapterState.selectedVideoBackgroundEffect,
     /* @conditional-compile-remove(hide-attendee-name) */
     /** Hide attendee names in teams meeting */
-    hideAttendeeNames: callAdapterState.hideAttendeeNames
+    hideAttendeeNames: callAdapterState.hideAttendeeNames,
+    /* @conditional-compile-remove(reaction) */
+    reactions: callAdapterState.reactions
   };
 }
 
