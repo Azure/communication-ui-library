@@ -63,6 +63,9 @@ export interface CommonCallingHandlers {
   /* @conditional-compile-remove(raise-hand) */
   onToggleRaiseHand: () => Promise<void>;
   /* @conditional-compile-remove(reaction) */
+  /**
+   * @beta
+   */
   onReactionClicked: (reaction: Reaction) => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   onToggleHold: () => Promise<void>;

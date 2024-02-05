@@ -264,6 +264,8 @@ function callAdapterStateFromCallWithChatAdapterState(
     /* @conditional-compile-remove(video-background-effects) */
     onResolveVideoEffectDependency: callWithChatAdapterState.onResolveVideoEffectDependency,
     /* @conditional-compile-remove(video-background-effects) */
-    selectedVideoBackgroundEffect: callWithChatAdapterState.selectedVideoBackgroundEffect
+    selectedVideoBackgroundEffect: callWithChatAdapterState.selectedVideoBackgroundEffect,
+    /* @conditional-compile-remove(reaction) */
+    reactions: callWithChatAdapterState.reactions
   };
 }
