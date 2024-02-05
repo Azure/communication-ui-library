@@ -23,7 +23,7 @@ import {
   smallDownloadButtonContainerStyle,
   titleBarContainerStyle,
   titleStyle
-} from './styles/ImageGallery.style';
+} from './styles/ImageOverlay.style';
 /* @conditional-compile-remove(image-overlay) */
 import { useTheme } from '../theming/FluentThemeProvider';
 /* @conditional-compile-remove(image-overlay) */
