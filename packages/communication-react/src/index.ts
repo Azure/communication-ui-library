@@ -153,8 +153,8 @@ export {
   COMPONENT_LOCALE_ZH_CN,
   COMPONENT_LOCALE_ZH_TW
 } from '../../react-components/src';
-/* @conditional-compile-remove(image-gallery) */
-export { ImageGallery } from '../../react-components/src';
+/* @conditional-compile-remove(image-overlay) */
+export { ImageOverlay } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export { HoldButton } from '../../react-components/src';
 
@@ -309,8 +309,8 @@ export type {
 } from '../../react-components/src';
 /* @conditional-compile-remove(spotlight) */
 export type { Spotlight } from '../../react-components/src';
-/* @conditional-compile-remove(image-gallery) */
-export type { ImageGalleryProps, ImageGalleryImageProps, ImageGalleryStrings } from '../../react-components/src';
+/* @conditional-compile-remove(image-overlay) */
+export type { ImageOverlayProps, ImageOverlayStrings } from '../../react-components/src';
 /* @conditional-compile-remove(data-loss-prevention) */
 export type { BlockedMessage } from '../../react-components/src';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
@@ -335,7 +335,7 @@ export type { AttachmentMetadata } from '../../react-components/src';
 export type { FileMetadata } from '../../react-components/src';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 export type { ChatAttachmentType, AttachmentDownloadResult, InlineImageMetadata } from '../../react-components/src';
-/* @conditional-compile-remove(image-gallery) */
+/* @conditional-compile-remove(image-overlay) */
 export type { InlineImageOptions, InlineImage } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonProps, HoldButtonStrings, VideoTileStrings } from '../../react-components/src';

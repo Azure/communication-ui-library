@@ -1,20 +1,13 @@
-import { ImageGallery, ImageGalleryImageProps, FluentThemeProvider } from '@azure/communication-react';
+import { ImageOverlay, FluentThemeProvider } from '@azure/communication-react';
 import React, { useState } from 'react';
 
-export const ImageGalleryExample: () => JSX.Element = () => {
-  const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps>>([]);
+export const ImageOverlayExample: () => JSX.Element = () => {
+  const [overlayImageSrc, setOverlayImageSrc] = useState<string>();
   const imgClickedHandler = (event: React.MouseEvent<HTMLImageElement>): void => {
     event.stopPropagation();
 
     const img = event.currentTarget;
-    const source = img.src;
-    const title = 'Image';
-    const galleryImage: ImageGalleryImageProps = {
-      title: title,
-      downloadFilename: source,
-      imageUrl: source
-    };
-    setGalleryImages([galleryImage]);
+    setOverlayImageSrc(img.src);
   };
 
   return (
@@ -22,13 +15,14 @@ export const ImageGalleryExample: () => JSX.Element = () => {
       <div style={{ width: '31.25rem' }}>
         <img alt="image" src="images/inlineImageExample1.png" onClick={imgClickedHandler} />
       </div>
-      <ImageGallery
-        isOpen={galleryImages.length > 0}
-        images={galleryImages}
+      <ImageOverlay
+        isOpen={overlayImageSrc !== undefined}
+        imageSrc={overlayImageSrc || ''}
+        title="Image"
         onDismiss={() => {
-          setGalleryImages([]);
+          setOverlayImageSrc(undefined);
         }}
-        onImageDownloadButtonClicked={() => {
+        onDownloadButtonClicked={() => {
           alert('Download button clicked');
         }}
       />

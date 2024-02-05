@@ -1,16 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(image-gallery) */
+/* @conditional-compile-remove(image-overlay) */
 import { TEST_PARTICIPANTS, buildUrlForChatAppUsingFakeAdapter, test } from './fixture';
-/* @conditional-compile-remove(image-gallery) */
+/* @conditional-compile-remove(image-overlay) */
 import { expect } from '@playwright/test';
-/* @conditional-compile-remove(image-gallery) */
+/* @conditional-compile-remove(image-overlay) */
 import { dataUiId, stableScreenshot } from '../../common/utils';
 
-/* @conditional-compile-remove(image-gallery) */
-test.describe('ImageGallery Modal tests', () => {
-  test('ImageGallery Modal loads correctly when an inline image is clicked', async ({ page, serverUrl }) => {
+/* @conditional-compile-remove(image-overlay) */
+test.describe('ImageOverlay tests', () => {
+  test('ImageOverlay loads correctly when an inline image is clicked', async ({ page, serverUrl }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         localParticipant: TEST_PARTICIPANTS[1],
@@ -21,10 +21,10 @@ test.describe('ImageGallery Modal tests', () => {
     );
 
     await page.locator(dataUiId('SomeImageId1')).click();
-    expect(await stableScreenshot(page)).toMatchSnapshot(`inline-image-gallery-modal.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`inline-image-overlay-modal.png`);
   });
 
-  test('ImageGallery Modal should show broken image icon with alt text when url is a broken link', async ({
+  test('ImageOverlay should show broken image icon with alt text when url is a broken link', async ({
     page,
     serverUrl
   }) => {
@@ -42,11 +42,11 @@ test.describe('ImageGallery Modal tests', () => {
       // This is expected to fail because the image url is a broken link,
       // we want to swallow this error to prevent it from logging to the console
       await page.locator(dataUiId('SomeImageId1')).click();
-      expect(await stableScreenshot(page)).toMatchSnapshot(`inline-image-gallery-modal-broken-link.png`);
+      expect(await stableScreenshot(page)).toMatchSnapshot(`inline-image-overlay-modal-broken-link.png`);
     }
   });
 
-  test('ImageGallery Modal loads correctly in dark theme', async ({ page, serverUrl }) => {
+  test('ImageOverlay loads correctly in dark theme', async ({ page, serverUrl }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         localParticipant: TEST_PARTICIPANTS[1],
@@ -57,10 +57,10 @@ test.describe('ImageGallery Modal tests', () => {
       })
     );
     await page.locator(dataUiId('SomeImageId1')).click();
-    expect(await stableScreenshot(page)).toMatchSnapshot(`inline-image-gallery-modal-dark-mode.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`inline-image-overlay-modal-dark-mode.png`);
   });
 
-  test('ImageGallery Modal loads correctly in light theme', async ({ page, serverUrl }) => {
+  test('ImageOverlay loads correctly in light theme', async ({ page, serverUrl }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         localParticipant: TEST_PARTICIPANTS[1],
@@ -71,6 +71,6 @@ test.describe('ImageGallery Modal tests', () => {
       })
     );
     await page.locator(dataUiId('SomeImageId1')).click();
-    expect(await stableScreenshot(page)).toMatchSnapshot(`inline-image-gallery-modal-light-mode.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`inline-image-overlay-modal-light-mode.png`);
   });
 });
