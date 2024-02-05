@@ -18,7 +18,7 @@ export const ImageOverlayExample: () => JSX.Element = () => {
       <ImageOverlay
         isOpen={overlayImageSrc !== undefined}
         imageSrc={overlayImageSrc || ''}
-        title='Image'
+        title="Image"
         onDismiss={() => {
           setOverlayImageSrc(undefined);
         }}
