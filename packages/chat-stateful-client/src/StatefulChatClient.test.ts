@@ -24,11 +24,12 @@ import {
   StatefulChatClientWithEventTrigger,
   createMockChatClient,
   createStatefulChatClientMock,
-  createStatefulChatClientWithContextMock,
   defaultClientArgs,
   failingPagedAsyncIterator,
   mockChatThreads
 } from './TestHelpers';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { createStatefulChatClientWithContextMock } from './TestHelpers';
 
 jest.useFakeTimers();
 
@@ -186,6 +187,7 @@ describe('declarative chatClient subscribe to event properly after startRealtime
     expect(Object.keys(client.getState().threads).length).toBe(0);
   });
 
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   test('chat message with status with default resource cache should be cleaned when dispose is called', async () => {
     const threadId = 'threadId1';
     const messageId = 'messageId1';

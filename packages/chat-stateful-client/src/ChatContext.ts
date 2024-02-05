@@ -77,6 +77,7 @@ export class _ChatContext {
     }
   }
 
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   public dispose(): void {
     this.modifyState((draft: ChatClientState) => {
       Object.keys(draft.threads).forEach((threadId) => {

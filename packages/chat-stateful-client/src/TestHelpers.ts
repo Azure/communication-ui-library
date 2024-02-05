@@ -9,6 +9,7 @@ import { createMockChatThreadClient } from './mocks/createMockChatThreadClient';
 import { createMockIterator } from './mocks/createMockIterator';
 import { MockCommunicationUserCredential } from './mocks/MockCommunicationUserCredential';
 import { _ChatContext } from './ChatContext';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 
 /**
@@ -84,6 +85,7 @@ export const createStatefulChatClientMock = (): StatefulChatClientWithEventTrigg
 /**
  * @private
  */
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 export const createStatefulChatClientWithContextMock = (): StatefulChatClientWithEventTrigger => {
   const chatContext = new _ChatContext();
   chatContext.createThreadIfNotExist('threadId1');
@@ -98,6 +100,7 @@ export const createStatefulChatClientWithContextMock = (): StatefulChatClientWit
 /**
  * @private
  */
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 export const messageTemplate: ChatMessageWithStatus = {
   id: 'MessageId',
   content: { message: 'MessageContent' },

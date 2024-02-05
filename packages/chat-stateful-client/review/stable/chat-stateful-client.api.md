@@ -26,6 +26,60 @@ export type ChatClientState = {
     latestErrors: ChatErrors;
 };
 
+// @internal (undocumented)
+export class _ChatContext {
+    constructor(maxListeners?: number);
+    // (undocumented)
+    addReadReceipt(threadId: string, readReceipt: ChatMessageReadReceipt): void;
+    // (undocumented)
+    addTypingIndicator(threadId: string, typingIndicator: TypingIndicatorReceivedEvent): void;
+    batch(operations: () => void): void;
+    // (undocumented)
+    createThread(threadId: string, properties?: ChatThreadProperties): void;
+    // (undocumented)
+    createThreadIfNotExist(threadId: string, properties?: ChatThreadProperties): boolean;
+    // (undocumented)
+    deleteLocalMessage(threadId: string, localId: string): boolean;
+    // (undocumented)
+    deleteMessage(threadId: string, id: string): void;
+    // (undocumented)
+    deleteParticipant(threadId: string, participantId: CommunicationIdentifierKind): void;
+    // (undocumented)
+    deleteParticipants(threadId: string, participantIds: CommunicationIdentifierKind[]): void;
+    // (undocumented)
+    deleteThread(threadId: string): void;
+    // (undocumented)
+    getState(): ChatClientState;
+    // (undocumented)
+    modifyState(modifier: (draft: ChatClientState) => void): void;
+    // (undocumented)
+    offStateChange(handler: (state: ChatClientState) => void): void;
+    // (undocumented)
+    onStateChange(handler: (state: ChatClientState) => void): void;
+    // (undocumented)
+    setChatMessage(threadId: string, message: ChatMessageWithStatus): void;
+    // (undocumented)
+    setChatMessages(threadId: string, messages: {
+        [key: string]: ChatMessageWithStatus;
+    }): void;
+    // (undocumented)
+    setParticipant(threadId: string, participant: ChatParticipant): void;
+    // (undocumented)
+    setParticipants(threadId: string, participants: ChatParticipant[]): void;
+    // (undocumented)
+    setThread(threadId: string, threadState: ChatThreadClientState): void;
+    // (undocumented)
+    updateChatConfig(userId: CommunicationIdentifierKind, displayName: string): void;
+    // (undocumented)
+    updateChatMessageContent(threadId: string, messagesId: string, content: string | undefined): void;
+    // (undocumented)
+    updateThread(threadId: string, properties?: ChatThreadProperties): void;
+    // (undocumented)
+    updateThreadTopic(threadId: string, topic?: string): void;
+    withAsyncErrorTeedToState<Args extends unknown[], R>(f: (...args: Args) => Promise<R>, target: ChatErrorTarget): (...args: Args) => Promise<R>;
+    withErrorTeedToState<Args extends unknown[], R>(f: (...args: Args) => R, target: ChatErrorTarget): (...args: Args) => R;
+}
+
 // @public
 export class ChatError extends Error {
     constructor(target: ChatErrorTarget, innerError: Error, timestamp?: Date);
@@ -75,7 +129,7 @@ export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: 
 export const _createStatefulChatClientInner: (args: StatefulChatClientArgs, options?: StatefulChatClientOptions, telemetryImplementationHint?: _TelemetryImplementationHint) => StatefulChatClient;
 
 // @internal
-export const _createStatefulChatClientWithDeps: (chatClient: ChatClient, args: StatefulChatClientArgs, options?: StatefulChatClientOptions) => StatefulChatClient;
+export const _createStatefulChatClientWithDeps: (chatClient: ChatClient, args: StatefulChatClientArgs, options?: StatefulChatClientOptions, chatContext?: _ChatContext) => StatefulChatClient;
 
 // @public
 export interface StatefulChatClient extends ChatClient {

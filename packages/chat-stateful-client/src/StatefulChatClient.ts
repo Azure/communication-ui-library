@@ -23,6 +23,7 @@ import { chatStatefulLogger } from './Logger';
  * @public
  */
 export interface StatefulChatClient extends ChatClient {
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /**
    * Cleans up the resource cache from the chat thread client.
    */
@@ -247,7 +248,7 @@ export const _createStatefulChatClientWithDeps = (
       eventSubscriber = val;
     }
   });
-
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   Object.defineProperty(proxy, 'dispose', {
     configurable: false,
     value: () => context?.dispose()
