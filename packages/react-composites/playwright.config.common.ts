@@ -7,8 +7,7 @@ import {
   DESKTOP_USER_AGENT,
   chromeLaunchOptions
 } from '../../common/config/playwright/playwrightConfigConstants';
-
-import config from '../../common/config/playwright/playwright.config.common';
+import { config as commonConfig } from '../../common/config/playwright/playwright.config.common';
 
 const testDir = process.env.TEST_DIR;
 if (!testDir) {
@@ -26,15 +25,15 @@ if (!outputDir) {
 const CI_REPORTERS: ReporterDescription[] = [['dot'], ['json', { outputFile: `${outputDir}/e2e-results.json` }]];
 const LOCAL_REPORTERS: ReporterDescription[] = [['list']];
 
-const commonConfig = {
-  ...config,
+const config = {
+  ...commonConfig,
   outputDir: outputDir,
   reporter: process.env.CI ? CI_REPORTERS : LOCAL_REPORTERS,
   testDir: testDir,
   snapshotDir: snapshotDir
 };
 
-commonConfig.projects?.push({
+config.projects?.push({
   name: 'Desktop Chrome 16:9',
   use: {
     viewport: DESKTOP_16_TO_9_VIEWPORT,
