@@ -1,3 +1,4 @@
+import { LaunchOptions } from '@playwright/test';
 import path from 'path';
 
 export const DESKTOP_4_TO_3_VIEWPORT = {
@@ -10,9 +11,8 @@ export const DESKTOP_16_TO_9_VIEWPORT = {
   height: 576
 };
 
-export const chromeLaunchOptions = {
+export const chromeLaunchOptions: LaunchOptions = {
   channel: 'chrome',
-  permissions: ['notifications', 'camera', 'microphone'],
   args: [
     '--font-render-hinting=none', // Ensures that fonts are rendered consistently.
     '--enable-font-antialiasing', // Ensures that fonts are rendered consistently.
