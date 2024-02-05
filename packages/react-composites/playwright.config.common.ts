@@ -37,7 +37,6 @@ config.projects?.push({
   name: 'Desktop Chrome 16:9',
   use: {
     viewport: DESKTOP_16_TO_9_VIEWPORT,
-    permissions: ['notifications', 'camera', 'microphone'],
     launchOptions: { ...chromeLaunchOptions },
     contextOptions: {
       userAgent: DESKTOP_USER_AGENT

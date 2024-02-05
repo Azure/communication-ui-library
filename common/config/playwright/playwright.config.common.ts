@@ -27,7 +27,8 @@ export const config: PlaywrightTestConfig<TestOptions> = {
   // Applies to all projects
   use: {
     headless: !process.env.LOCAL_DEBUG,
-    video: 'on-first-retry' // No traces on first attempt - this seems to make tests flaky.
+    video: 'on-first-retry', // No traces on first attempt - this seems to make tests flaky.
+    permissions: ['notifications', 'camera', 'microphone']
   },
 
   projects: [
@@ -35,7 +36,6 @@ export const config: PlaywrightTestConfig<TestOptions> = {
       name: 'Desktop Chrome',
       use: {
         viewport: DESKTOP_4_TO_3_VIEWPORT,
-        permissions: ['notifications', 'camera', 'microphone'],
         launchOptions: { ...chromeLaunchOptions },
         contextOptions: {
           userAgent: DESKTOP_USER_AGENT
@@ -47,7 +47,6 @@ export const config: PlaywrightTestConfig<TestOptions> = {
       name: 'Mobile Android Portrait',
       use: {
         ...devices['Nexus 5'],
-        permissions: ['notifications', 'camera', 'microphone'],
         launchOptions: { ...chromeLaunchOptions },
         userAgent: ANDROID_USER_AGENT,
         isBetaBuild: isBetaBuild
@@ -57,7 +56,6 @@ export const config: PlaywrightTestConfig<TestOptions> = {
       name: 'Mobile Android Landscape',
       use: {
         userAgent: ANDROID_USER_AGENT,
-        permissions: ['notifications', 'camera', 'microphone'],
         // Support smallest supported mobile viewport (iPhone 5/SE) ({ width: 568, height: 320 })
         viewport: { width: 568, height: 320 },
         deviceScaleFactor: 2,
