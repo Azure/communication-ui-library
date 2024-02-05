@@ -46,7 +46,7 @@ import { ParticipantListStrings } from '../components/ParticipantList';
 /* @conditional-compile-remove(mention) */
 import { MentionPopoverStrings } from '../components/MentionPopover';
 /* @conditional-compile-remove(image-overlay) */
-import { ImageOverlayStrings } from '../components/ImageGallery';
+import { ImageOverlayStrings } from '../components/ImageOverlay';
 /* @conditional-compile-remove(reaction) */
 import { ReactionButtonStrings } from '../components';
 
