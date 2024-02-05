@@ -1407,6 +1407,12 @@ export type CommonCallAdapterOptions = {
    * Sounds to use for calling events
    */
   callingSounds?: CallingSounds;
+  /* @conditional-compile-remove(reaction) */
+  /**
+   * Reaction resource for reaction resources
+   * @beta
+   */
+  reactionResources?: ReactionResources;
 };
 
 /**

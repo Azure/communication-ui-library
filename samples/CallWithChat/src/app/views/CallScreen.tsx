@@ -85,6 +85,14 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
         videoBackgroundImages,
         /* @conditional-compile-remove(video-background-effects) */
         onResolveDependency: onResolveVideoEffectDependencyLazy
+      },
+      /* @conditional-compile-remove(reaction) */
+      reactionResources: {
+        likeReaction: { url: '/assets/reactions/likeEmoji.png', frameCount: 102 },
+        heartReaction: { url: '/assets/reactions/heartEmoji.png', frameCount: 102 },
+        laughReaction: { url: '/assets/reactions/laughEmoji.png', frameCount: 102 },
+        applauseReaction: { url: '/assets/reactions/clapEmoji.png', frameCount: 102 },
+        surprisedReaction: { url: '/assets/reactions/surprisedEmoji.png', frameCount: 102 }
       }
     };
   }, []);
@@ -141,7 +149,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       endpoint,
       locator,
       /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-      /* @conditional-compile-remove(video-background-effects) */ callAdapterOptions
+      /* @conditional-compile-remove(video-background-effects) */ callAdapterOptions: callAdapterOptions
     },
     afterAdapterCreate
   );
