@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(image-gallery) */
+/* @conditional-compile-remove(image-overlay) */
 import { DefaultButton, Icon, IconButton, Modal, Stack, mergeStyles } from '@fluentui/react';
-/* @conditional-compile-remove(image-gallery) */
+/* @conditional-compile-remove(image-overlay) */
 import React, { SyntheticEvent, useState } from 'react';
-/* @conditional-compile-remove(image-gallery) */
+/* @conditional-compile-remove(image-overlay) */
 import {
   bodyContainer,
   brokenImageStyle,
@@ -24,120 +24,111 @@ import {
   titleBarContainerStyle,
   titleStyle
 } from './styles/ImageGallery.style';
-/* @conditional-compile-remove(image-gallery) */
+/* @conditional-compile-remove(image-overlay) */
 import { useTheme } from '../theming/FluentThemeProvider';
-/* @conditional-compile-remove(image-gallery) */
+/* @conditional-compile-remove(image-overlay) */
 import { useLocale } from '../localization';
-/* @conditional-compile-remove(image-gallery) */
+/* @conditional-compile-remove(image-overlay) */
 import { ChatTheme } from '../theming';
+
+/* @conditional-compile-remove(image-overlay) */
 /**
- * Props for {@link ImageGallery}.
+ * Props for {@link ImageOverlay}.
  *
  * @beta
  */
-export interface ImageGalleryImageProps {
-  /** Image Url used to display the image in a large scale. */
-  imageUrl: string;
-  /** String used as a file name when downloading this image to user's local device. */
-  downloadFilename: string;
-  /** Optional string used as a alt text for the image. @default 'image' */
-  altText?: string;
-  /** Optional string used as the title of the image and displayed on the top left corner of the ImageGallery. */
-  title?: string;
-  /** Optional JSX element used as a title icon and displayed to the left of the title element. */
-  titleIcon?: JSX.Element;
-}
-/* @conditional-compile-remove(image-gallery) */
-/**
- * Props for {@link ImageGallery}.
- *
- * @beta
- */
-export interface ImageGalleryProps {
+export interface ImageOverlayProps {
   /**
    * Boolean that controls whether the modal is displayed.
    */
   isOpen: boolean;
   /**
-   * Array of images used to populate the ImageGallery
+   * Image source used to display the image in a large scale.
    */
-  images: Array<ImageGalleryImageProps>;
+  imageSrc: string;
   /**
-   * Callback to invoke when the ImageGallery modal is dismissed
+   * Optional string used as a alt text for the image. @default 'image'
+   */
+  altText?: string;
+  /**
+   * Optional string used as the title of the image and displayed on the top left corner of the ImageOverlay.
+   */
+  title?: string;
+  /**
+   * Optional JSX element used as a title icon and displayed to the left of the title element.
+   */
+  titleIcon?: JSX.Element;
+  /**
+   * Callback to invoke when the ImageOverlay modal is dismissed
    */
   onDismiss: () => void;
   /**
    * Callback called when the download button is clicked.
    */
-  onImageDownloadButtonClicked: (imageUrl: string, downloadFilename: string) => void;
+  onDownloadButtonClicked: (imageSrc: string) => void;
   /**
    * Callback called when there's an error loading the image.
    */
   onError?: (event: SyntheticEvent<HTMLImageElement, Event>) => void;
-  /**
-   * Indicating which index of the images array to start with.
-   */
-  startIndex?: number;
 }
-/* @conditional-compile-remove(image-gallery) */
+/* @conditional-compile-remove(image-overlay) */
 /**
- * Strings of {@link ImageGallery} that can be overridden.
+ * Strings of {@link ImageOverlay} that can be overridden.
  *
  * @beta
  */
-export interface ImageGalleryStrings {
+export interface ImageOverlayStrings {
   /**
-   * Download button label for ImageGallery
+   * Download button label for ImageOverlay
    */
   downloadButtonLabel: string;
   /**
-   * Dismiss button aria label for ImageGallery
+   * Dismiss button aria label for ImageOverlay
    */
   dismissButtonAriaLabel: string;
 }
-/* @conditional-compile-remove(image-gallery) */
+/* @conditional-compile-remove(image-overlay) */
 /**
  * Component to render a fullscreen modal for a selected image.
  *
  * @beta
  */
-export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
-  const { isOpen, images, onImageDownloadButtonClicked, onDismiss, onError, startIndex = 0 } = props;
+export const ImageOverlay = (props: ImageOverlayProps): JSX.Element => {
+  const { isOpen, imageSrc, title, titleIcon, altText, onDownloadButtonClicked, onDismiss, onError } = props;
   const theme = useTheme() as unknown as ChatTheme;
 
-  /* @conditional-compile-remove(image-gallery) */
-  const localeStrings = useLocale().strings.imageGallery;
+  /* @conditional-compile-remove(image-overlay) */
+  const localeStrings = useLocale().strings.imageOverlay;
 
   const [isImageLoaded, setIsImageLoaded] = useState<boolean>(true);
 
   const imageStyle = isImageLoaded ? normalImageStyle : brokenImageStyle(theme);
 
-  const image = images[startIndex];
   const renderHeaderBar = (): JSX.Element => {
     return (
       <Stack className={mergeStyles(headerStyle)}>
         <Stack className={mergeStyles(titleBarContainerStyle)}>
-          {image?.titleIcon}
-          <Stack.Item className={mergeStyles(titleStyle(theme))} aria-label={image?.title}>
-            {image?.title}
+          {titleIcon}
+          <Stack.Item className={mergeStyles(titleStyle(theme))} aria-label={title || 'Image'}>
+            {title}
           </Stack.Item>
         </Stack>
         <Stack className={mergeStyles(controlBarContainerStyle)}>
           <DefaultButton
             className={mergeStyles(downloadButtonStyle(theme))}
-            /* @conditional-compile-remove(image-gallery) */
+            /* @conditional-compile-remove(image-overlay) */
             text={localeStrings.downloadButtonLabel}
-            onClick={() => onImageDownloadButtonClicked(image?.imageUrl || '', image?.downloadFilename || 'image')}
+            onClick={() => onDownloadButtonClicked(imageSrc)}
             onRenderIcon={() => <Icon iconName={downloadIcon.iconName} className={mergeStyles(downloadIconStyle)} />}
             aria-live={'polite'}
-            /* @conditional-compile-remove(image-gallery) */
+            /* @conditional-compile-remove(image-overlay) */
             aria-label={localeStrings.downloadButtonLabel}
           />
           <IconButton
             iconProps={downloadIcon}
             className={mergeStyles(smallDownloadButtonContainerStyle(theme))}
-            onClick={() => onImageDownloadButtonClicked(image?.imageUrl, image?.downloadFilename)}
-            /* @conditional-compile-remove(image-gallery) */
+            onClick={() => onDownloadButtonClicked(imageSrc)}
+            /* @conditional-compile-remove(image-overlay) */
             aria-label={localeStrings.downloadButtonLabel}
             aria-live={'polite'}
           />
@@ -145,7 +136,7 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
             iconProps={cancelIcon}
             className={mergeStyles(closeButtonStyles(theme))}
             onClick={onDismiss}
-            /* @conditional-compile-remove(image-gallery) */
+            /* @conditional-compile-remove(image-overlay) */
             ariaLabel={localeStrings.dismissButtonAriaLabel}
             aria-live={'polite'}
           />
@@ -157,12 +148,12 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
   const renderBodyWithLightDismiss = (): JSX.Element => {
     return (
       <Stack className={mergeStyles(bodyContainer)} onClick={() => props.onDismiss()}>
-        {images.length > startIndex && (
+        {imageSrc && (
           <img
-            src={image?.imageUrl}
+            src={imageSrc}
             className={mergeStyles(imageStyle)}
-            alt={image?.altText || 'image'}
-            aria-label={'image-gallery-main-image'}
+            alt={altText || 'image'}
+            aria-label={'image-overlay-main-image'}
             aria-live={'polite'}
             onError={(event) => {
               setIsImageLoaded(false);
@@ -180,7 +171,7 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
 
   return (
     <Modal
-      titleAriaId={image?.title}
+      titleAriaId={title}
       isOpen={isOpen}
       onDismiss={onDismiss}
       overlay={{ styles: { ...overlayStyles(theme) } }}
