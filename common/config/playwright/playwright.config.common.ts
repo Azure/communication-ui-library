@@ -28,7 +28,6 @@ export const config: PlaywrightTestConfig<TestOptions> = {
   use: {
     headless: !process.env.LOCAL_DEBUG,
     video: 'on-first-retry', // No traces on first attempt - this seems to make tests flaky.
-    permissions: ['notifications', 'camera', 'microphone']
   },
 
   projects: [

@@ -13,6 +13,7 @@ export const DESKTOP_16_TO_9_VIEWPORT = {
 
 export const chromeLaunchOptions: LaunchOptions = {
   channel: 'chrome',
+  permissions: ['notifications', 'camera', 'microphone'],
   args: [
     '--font-render-hinting=none', // Ensures that fonts are rendered consistently.
     '--enable-font-antialiasing', // Ensures that fonts are rendered consistently.
