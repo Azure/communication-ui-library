@@ -31,7 +31,8 @@
   "mentionPopover": {
     "mentionPopoverHeader": "الاقتراحات"
   },
-  "ImageOverlay": {
+  "imageOverlay": {
+
     "downloadButtonLabel": "تنزيل",
     "dismissButtonAriaLabel": "إغلاق"
   },
