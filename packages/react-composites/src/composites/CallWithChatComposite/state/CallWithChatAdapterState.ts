@@ -191,8 +191,6 @@ export function mergeCallAdapterStateIntoCallWithChatAdapterState(
     /* @conditional-compile-remove(video-background-effects) */
     onResolveVideoEffectDependency: callAdapterState.onResolveVideoEffectDependency,
     /* @conditional-compile-remove(video-background-effects) */
-    selectedVideoBackgroundEffect: callAdapterState.selectedVideoBackgroundEffect,
-    /* @conditional-compile-remove(reaction) */
-    reactions: callAdapterState.reactions
+    selectedVideoBackgroundEffect: callAdapterState.selectedVideoBackgroundEffect
   };
 }
