@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "area": "feature",
-  "workstream": "RTE",
-  "comment": "Merge branch 'main' into palatter/merge-main-rte-retry",
-  "packageName": "@azure/communication-react",
-  "email": "73612854+palatter@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

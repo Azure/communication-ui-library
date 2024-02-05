@@ -4,9 +4,7 @@
 import { concatStyleSets, IStyle, mergeStyles, Stack } from '@fluentui/react';
 import React, { useCallback, useMemo, useRef } from 'react';
 import { GridLayoutStyles } from '.';
-/* @conditional-compile-remove(pinned-participants) */
 import { Announcer } from './Announcer';
-/* @conditional-compile-remove(pinned-participants) */
 import { useEffect } from 'react';
 import { useLocale } from '../localization';
 import { useTheme } from '../theming';
@@ -18,7 +16,6 @@ import {
   VideoStreamOptions,
   CreateVideoStreamViewResult
 } from '../types';
-/* @conditional-compile-remove(pinned-participants) */
 import { ViewScalingMode } from '../types';
 import { HorizontalGalleryStyles } from './HorizontalGallery';
 import { _RemoteVideoTile } from './RemoteVideoTile';
@@ -34,7 +31,6 @@ import { FloatingLocalVideoLayout } from './VideoGallery/FloatingLocalVideoLayou
 import { useIdentifiers } from '../identifiers';
 import { localVideoTileContainerStyles, videoGalleryOuterDivStyle } from './styles/VideoGallery.styles';
 import { floatingLocalVideoTileStyle } from './VideoGallery/styles/FloatingLocalVideo.styles';
-/* @conditional-compile-remove(pinned-participants) */
 import { useId } from '@fluentui/react-hooks';
 /* @conditional-compile-remove(vertical-gallery) */
 import { VerticalGalleryStyles } from './VerticalGallery';
@@ -78,7 +74,6 @@ export const DEFAULT_REMOTE_VIDEO_TILE_MENU_OPTIONS = {
   kind: 'contextual'
 };
 
-/* @conditional-compile-remove(pinned-participants) */
 /**
  * @private
  * Maximum number of remote video tiles that can be pinned
@@ -105,40 +100,28 @@ export interface VideoGalleryStrings {
   localVideoSelectedDescription: string;
   /** placeholder text for participants who does not have a display name*/
   displayNamePlaceholder: string;
-  /* @conditional-compile-remove(pinned-participants) */
   /** Menu text shown in Video Tile contextual menu for setting a remote participants video to fit in frame */
   fitRemoteParticipantToFrame: string;
-  /* @conditional-compile-remove(pinned-participants) */
   /** Menu text shown in Video Tile contextual menu for setting a remote participants video to fill the frame */
   fillRemoteParticipantFrame: string;
-  /* @conditional-compile-remove(pinned-participants) */
   /** Menu text shown in Video Tile contextual menu for pinning a remote participant's video tile */
   pinParticipantForMe: string;
-  /* @conditional-compile-remove(pinned-participants) */
   /** Menu text shown in Video Tile contextual menu for unpinning a remote participant's video tile */
   unpinParticipantForMe: string;
-  /* @conditional-compile-remove(pinned-participants) */
   /** Aria label for pin participant menu item of remote participant's video tile */
   pinParticipantMenuItemAriaLabel: string;
-  /* @conditional-compile-remove(pinned-participants) */
   /** Aria label for unpin participant menu item of remote participant's video tile */
   unpinParticipantMenuItemAriaLabel: string;
-  /* @conditional-compile-remove(pinned-participants) */
   /** Aria label to announce when remote participant's video tile is pinned */
   pinnedParticipantAnnouncementAriaLabel: string;
-  /* @conditional-compile-remove(pinned-participants) */
   /** Aria label to announce when remote participant's video tile is unpinned */
   unpinnedParticipantAnnouncementAriaLabel: string;
-  /* @conditional-compile-remove(pinned-participants) */
   /** Menu text shown in Video Tile contextual menu to start spotlight on participant's video tile */
   startSpotlightVideoTileMenuLabel: string;
-  /* @conditional-compile-remove(pinned-participants) */
   /** Menu text shown in Video Tile contextual menu to add spotlight to participant's video tile */
   addSpotlightVideoTileMenuLabel: string;
-  /* @conditional-compile-remove(pinned-participants) */
   /** Menu text shown in Video Tile contextual menu to stop spotlight on participant's video tile */
   stopSpotlightVideoTileMenuLabel: string;
-  /* @conditional-compile-remove(pinned-participants) */
   /** Menu text shown in Video Tile contextual menu to stop spotlight on local user's video tile */
   stopSpotlightOnSelfVideoTileMenuLabel: string;
 }
@@ -260,17 +243,14 @@ export interface VideoGalleryProps {
    * Camera control information for button to switch cameras.
    */
   localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
-  /* @conditional-compile-remove(pinned-participants) */
   /**
    * List of pinned participant userIds.
    */
   pinnedParticipants?: string[];
-  /* @conditional-compile-remove(pinned-participants) */
   /**
    * This callback will be called when a participant video tile is pinned.
    */
   onPinParticipant?: (userId: string) => void;
-  /* @conditional-compile-remove(pinned-participants) */
   /**
    * This callback will be called when a participant video tile is un-pinned.
    */
@@ -290,7 +270,6 @@ export interface VideoGalleryProps {
    * This callback will be called when spotlight is stopped for participant video tile.
    */
   onStopSpotlight?: (userId: string) => Promise<void>;
-  /* @conditional-compile-remove(pinned-participants) */
   /**
    * Options for showing the remote video tile menu.
    *
@@ -314,11 +293,11 @@ export interface VideoGalleryProps {
   /* @conditional-compile-remove(reaction) */
   /**
    * Reaction resources for like, heart, laugh, applause and surprised.
+   * @beta
    */
   reactionResources?: ReactionResources;
 }
 
-/* @conditional-compile-remove(pinned-participants) */
 /**
  * Properties for showing contextual menu for remote {@link VideoTile} components in {@link VideoGallery}.
  *
@@ -331,7 +310,6 @@ export interface VideoTileContextualMenuProps {
   kind: 'contextual';
 }
 
-/* @conditional-compile-remove(pinned-participants) */
 /**
  * Properties for showing drawer menu on remote {@link VideoTile} long touch in {@link VideoGallery}.
  *
@@ -376,11 +354,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     maxRemoteVideoStreams = DEFAULT_MAX_REMOTE_VIDEO_STREAMS,
     showCameraSwitcherInLocalPreview,
     localVideoCameraCycleButtonProps,
-    /* @conditional-compile-remove(pinned-participants) */
     onPinParticipant: onPinParticipantHandler,
-    /* @conditional-compile-remove(pinned-participants) */
     onUnpinParticipant: onUnpinParticipantHandler,
-    /* @conditional-compile-remove(pinned-participants) */
     remoteVideoTileMenu = DEFAULT_REMOTE_VIDEO_TILE_MENU_OPTIONS,
     /* @conditional-compile-remove(vertical-gallery) */
     overflowGalleryPosition = 'horizontalBottom',
@@ -401,12 +376,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const localeStrings = useLocale().strings.videoGallery;
   const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
 
-  /* @conditional-compile-remove(pinned-participants) */
   const drawerMenuHostIdFromProp =
     remoteVideoTileMenu && remoteVideoTileMenu.kind === 'drawer'
       ? (remoteVideoTileMenu as VideoTileDrawerMenuProps).hostId
       : undefined;
-  /* @conditional-compile-remove(pinned-participants) */
   const drawerMenuHostId = useId('drawerMenuHost', drawerMenuHostIdFromProp);
 
   const localTileNotInGrid =
@@ -418,14 +391,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const containerHeight = _useContainerHeight(containerRef);
   const isNarrow = containerWidth ? isNarrowWidth(containerWidth) : false;
 
-  /* @conditional-compile-remove(pinned-participants) */
   const [pinnedParticipantsState, setPinnedParticipantsState] = React.useState<string[]>([]);
-  /* @conditional-compile-remove(pinned-participants) */
   const [selectedScalingModeState, setselectedScalingModeState] = React.useState<Record<string, VideoStreamOptions>>(
     {}
   );
 
-  /* @conditional-compile-remove(pinned-participants) */
   const onUpdateScalingMode = useCallback(
     (remoteUserId: string, scalingMode: ViewScalingMode) => {
       setselectedScalingModeState((current) => ({
@@ -438,7 +408,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     },
     [remoteVideoViewOptions?.isMirrored]
   );
-  /* @conditional-compile-remove(pinned-participants) */
   useEffect(() => {
     props.pinnedParticipants?.forEach((pinParticipant) => {
       if (!props.remoteParticipants?.find((t) => t.userId === pinParticipant)) {
@@ -447,7 +416,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       }
     });
   }, [props.pinnedParticipants, props.remoteParticipants]);
-  /* @conditional-compile-remove(pinned-participants) */
   // Use pinnedParticipants from props but if it is not defined use the maintained state of pinned participants
   const pinnedParticipants = props.pinnedParticipants ?? pinnedParticipantsState;
 
@@ -554,7 +522,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     reactionResources
   ]);
 
-  /* @conditional-compile-remove(pinned-participants) */
   const onPinParticipant = useCallback(
     (userId: string) => {
       if (pinnedParticipants.length >= MAX_PINNED_REMOTE_VIDEO_TILES) {
@@ -567,7 +534,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     },
     [pinnedParticipants.length, pinnedParticipantsState, setPinnedParticipantsState, onPinParticipantHandler]
   );
-  /* @conditional-compile-remove(pinned-participants) */
   const onUnpinParticipant = useCallback(
     (userId: string) => {
       setPinnedParticipantsState(pinnedParticipantsState.filter((p) => p !== userId));
@@ -576,9 +542,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     [pinnedParticipantsState, setPinnedParticipantsState, onUnpinParticipantHandler]
   );
 
-  /* @conditional-compile-remove(pinned-participants) */
   const [announcementString, setAnnouncementString] = React.useState<string>('');
-  /* @conditional-compile-remove(pinned-participants) */
   /**
    * sets the announcement string for VideoGallery actions so that the screenreader will trigger
    */
@@ -598,9 +562,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const defaultOnRenderVideoTile = useCallback(
     (participant: VideoGalleryRemoteParticipant, isVideoParticipant?: boolean) => {
       const remoteVideoStream = participant.videoStream;
-      /* @conditional-compile-remove(pinned-participants) */
       const selectedScalingMode = remoteVideoStream ? selectedScalingModeState[participant.userId] : undefined;
-      /* @conditional-compile-remove(pinned-participants) */
       let isPinned = pinnedParticipants?.includes(participant.userId);
       /* @conditional-compile-remove(spotlight) */
       const isSpotlighted = spotlightedParticipants?.includes(participant.userId);
@@ -608,11 +570,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       isPinned = isSpotlighted ? false : isPinned;
 
       const createViewOptions = (): VideoStreamOptions | undefined => {
-        /* @conditional-compile-remove(pinned-participants) */
         if (selectedScalingMode) {
           return selectedScalingMode;
         }
-        /* @conditional-compile-remove(pinned-participants) */
         return remoteVideoStream?.streamSize &&
           remoteVideoStream.streamSize?.height > remoteVideoStream.streamSize?.width
           ? ({
@@ -620,7 +580,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
               isMirrored: remoteVideoViewOptions?.isMirrored
             } as VideoStreamOptions)
           : remoteVideoViewOptions;
-        return remoteVideoViewOptions;
       };
 
       return (
@@ -639,7 +598,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           strings={strings}
           /* @conditional-compile-remove(PSTN-calls) */
           participantState={participant.state}
-          /* @conditional-compile-remove(pinned-participants) */
           menuKind={
             participant.userId === localParticipant.userId
               ? undefined
@@ -649,19 +607,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
                 : 'contextual'
               : undefined
           }
-          /* @conditional-compile-remove(pinned-participants) */
           drawerMenuHostId={drawerMenuHostId}
-          /* @conditional-compile-remove(pinned-participants) */
           onPinParticipant={onPinParticipant}
-          /* @conditional-compile-remove(pinned-participants) */
           onUnpinParticipant={onUnpinParticipant}
-          /* @conditional-compile-remove(pinned-participants) */
           onUpdateScalingMode={onUpdateScalingMode}
-          /* @conditional-compile-remove(pinned-participants) */
           isPinned={isPinned}
-          /* @conditional-compile-remove(pinned-participants) */
           disablePinMenuItem={pinnedParticipants.length >= MAX_PINNED_REMOTE_VIDEO_TILES}
-          /* @conditional-compile-remove(pinned-participants) */
           toggleAnnouncerString={toggleAnnouncerString}
           /* @conditional-compile-remove(spotlight) */
           spotlightedParticipantUserIds={spotlightedParticipants}
@@ -684,14 +635,14 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       onRenderAvatar,
       showMuteIndicator,
       strings,
-      /* @conditional-compile-remove(pinned-participants) */ drawerMenuHostId,
-      /* @conditional-compile-remove(pinned-participants) */ remoteVideoTileMenu,
-      /* @conditional-compile-remove(pinned-participants) */ selectedScalingModeState,
-      /* @conditional-compile-remove(pinned-participants) */ pinnedParticipants,
-      /* @conditional-compile-remove(pinned-participants) */ onPinParticipant,
-      /* @conditional-compile-remove(pinned-participants) */ onUnpinParticipant,
-      /* @conditional-compile-remove(pinned-participants) */ toggleAnnouncerString,
-      /* @conditional-compile-remove(pinned-participants) */ onUpdateScalingMode,
+      drawerMenuHostId,
+      remoteVideoTileMenu,
+      selectedScalingModeState,
+      pinnedParticipants,
+      onPinParticipant,
+      onUnpinParticipant,
+      toggleAnnouncerString,
+      onUpdateScalingMode,
       /* @conditional-compile-remove(spotlight) */ spotlightedParticipants,
       /* @conditional-compile-remove(spotlight) */ onStartSpotlight,
       /* @conditional-compile-remove(spotlight) */ onStopSpotlight,
@@ -733,7 +684,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       localVideoComponent: localVideoTile,
       parentWidth: containerWidth,
       parentHeight: containerHeight,
-      /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds: pinnedParticipants,
+      pinnedParticipantUserIds: pinnedParticipants,
       /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
       /* @conditional-compile-remove(click-to-call) */ localVideoTileSize,
       /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds: spotlightedParticipants
@@ -751,7 +702,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       containerHeight,
       onRenderRemoteVideoTile,
       defaultOnRenderVideoTile,
-      /* @conditional-compile-remove(pinned-participants) */ pinnedParticipants,
+      pinnedParticipants,
       /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
       /* @conditional-compile-remove(click-to-call) */ localVideoTileSize,
       /* @conditional-compile-remove(spotlight) */ spotlightedParticipants
@@ -779,7 +730,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
   return (
     <div
-      /* @conditional-compile-remove(pinned-participants) */
       // We don't assign an drawer menu host id to the VideoGallery when a drawerMenuHostId is assigned from props
       id={drawerMenuHostIdFromProp ? undefined : drawerMenuHostId}
       data-ui-id={ids.videoGallery}
@@ -787,10 +737,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       className={mergeStyles(videoGalleryOuterDivStyle, styles?.root, unselectable)}
     >
       {videoGalleryLayout}
-      {
-        /* @conditional-compile-remove(pinned-participants) */
-        <Announcer announcementString={announcementString} ariaLive="polite" />
-      }
+      <Announcer announcementString={announcementString} ariaLive="polite" />
     </div>
   );
 };

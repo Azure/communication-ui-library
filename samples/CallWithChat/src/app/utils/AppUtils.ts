@@ -88,3 +88,6 @@ export const chatSDKVersion = __CHATVERSION__;
 
 declare let __COMMUNICATIONREACTVERSION__: string; //Injected by webpack
 export const communicationReactSDKVersion = __COMMUNICATIONREACTVERSION__;
+
+declare let __COMMITID__: string; //Injected by webpack
+export const commitID = __COMMITID__;

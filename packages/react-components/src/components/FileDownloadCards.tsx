@@ -95,10 +95,6 @@ export type AttachmentMetadata =
  */
 export interface AttachmentDownloadResult {
   /**
-   * Unique ID of the attachment.
-   */
-  attachmentId: string;
-  /**
    * Blob URL for the attachment.
    */
   blobUrl: string;

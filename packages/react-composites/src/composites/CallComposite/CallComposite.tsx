@@ -112,7 +112,6 @@ export interface DeviceCheckOptions {
   microphone: 'required' | 'optional' | 'doNotPrompt';
 }
 
-/* @conditional-compile-remove(pinned-participants) */
 /**
  * Menu options for remote video tiles in {@link VideoGallery}.
  *
@@ -217,7 +216,6 @@ export type CallCompositeOptions = {
    * if this is not supplied, the composite will not show a unsupported browser page.
    */
   onEnvironmentInfoTroubleshootingClick?: () => void;
-  /* @conditional-compile-remove(pinned-participants) */
   /**
    * Remote participant video tile menu options
    */

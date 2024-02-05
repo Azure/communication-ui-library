@@ -149,7 +149,6 @@ export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : fa
 
 // @beta
 export interface AttachmentDownloadResult {
-    attachmentId: string;
     blobUrl: string;
 }
 
@@ -651,6 +650,8 @@ export interface CallCompositeStrings {
     blurBackgroundTooltip?: string;
     callRejectedMoreDetails?: string;
     callRejectedTitle?: string;
+    callTimeoutBotDetails?: string;
+    callTimeoutBotTitle?: string;
     callTimeoutDetails?: string;
     callTimeoutTitle?: string;
     cameraLabel: string;
@@ -994,9 +995,9 @@ export interface CallWithChatAdapterManagement {
     disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // (undocumented)
-    downloadAttachments: (options: {
-        attachmentUrls: Record<string, string>;
-    }) => Promise<AttachmentDownloadResult[]>;
+    downloadAttachment: (options: {
+        attachmentUrl: string;
+    }) => Promise<AttachmentDownloadResult>;
     fetchInitialData(): Promise<void>;
     // @beta
     holdCall: () => Promise<void>;
@@ -1188,6 +1189,7 @@ export interface CallWithChatClientState {
     latestCallErrors: AdapterErrors;
     latestChatErrors: AdapterErrors;
     onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
+    // @beta
     reactions?: ReactionResources;
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
     userId: CommunicationIdentifierKind;
@@ -1608,9 +1610,9 @@ export interface ChatAdapterSubscribers {
 export interface ChatAdapterThreadManagement {
     deleteMessage(messageId: string): Promise<void>;
     // (undocumented)
-    downloadAttachments: (options: {
-        attachmentUrls: Record<string, string>;
-    }) => Promise<AttachmentDownloadResult[]>;
+    downloadAttachment: (options: {
+        attachmentUrl: string;
+    }) => Promise<AttachmentDownloadResult>;
     fetchInitialData(): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     removeParticipant(userId: string): Promise<void>;
@@ -2110,6 +2112,7 @@ export interface ComponentStrings {
     ParticipantList: ParticipantListStrings;
     participantsButton: ParticipantsButtonStrings;
     raiseHandButton: RaiseHandButtonStrings;
+    // @beta
     reactionButton: ReactionButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
@@ -4424,6 +4427,7 @@ export interface VideoGalleryProps {
     onUnpinParticipant?: (userId: string) => void;
     overflowGalleryPosition?: OverflowGalleryPosition;
     pinnedParticipants?: string[];
+    // @beta
     reactionResources?: ReactionResources;
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoTileMenu?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
@@ -4546,7 +4550,9 @@ export interface VideoTileProps {
     personaMaxSize?: number;
     personaMinSize?: number;
     raisedHand?: RaisedHand;
+    // @beta
     reaction?: Reaction;
+    // @beta
     reactionResources?: ReactionResources;
     renderElement?: JSX.Element | null;
     showLabel?: boolean;
