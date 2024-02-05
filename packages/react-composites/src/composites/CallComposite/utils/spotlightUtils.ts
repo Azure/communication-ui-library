@@ -8,17 +8,14 @@ import { CallCompositeStrings } from '../Strings';
 /* @conditional-compile-remove(spotlight) */
 import { PromptProps } from '../components/Prompt';
 /* @conditional-compile-remove(spotlight) */
-import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(spotlight) */
 import { useLocale } from '../../localization';
-/* @conditional-compile-remove(spotlight) */
-import { useAdapter } from '../adapter/CallAdapterProvider';
 
 /* @conditional-compile-remove(spotlight) */
 /**
  * @internal
  */
 export const useSpotlightCallbacksWithPrompt = (
+  myUserId: string,
   onStartSpotlight: (userId: string) => Promise<void>,
   onStopSpotlight: (userId: string) => Promise<void>,
   setIsPromptOpen?: (isOpen: boolean) => void,
@@ -27,8 +24,6 @@ export const useSpotlightCallbacksWithPrompt = (
   onStartSpotlightWithPrompt: (userId: string) => Promise<void>;
   onStopSpotlightWithPrompt: (userId: string) => Promise<void>;
 } => {
-  const myUserId = toFlatCommunicationIdentifier(useAdapter().getState().userId);
-
   const strings = useLocale().strings.call;
 
   return useMemo(() => {
