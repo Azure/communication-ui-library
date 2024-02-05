@@ -8,8 +8,8 @@ import React from 'react';
 import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 
-import { ImageOverlayExample } from './snippets/ImageGallery.snippet';
-const ImageOverlayExampleText = require('!!raw-loader!./snippets/ImageGallery.snippet.tsx').default;
+import { ImageOverlayExample } from './snippets/ImageOverlay.snippet';
+const ImageOverlayExampleText = require('!!raw-loader!./snippets/ImageOverlay.snippet.tsx').default;
 const importStatement = `import { ImageOverlay } from '@azure/communication-react';`;
 const metaTagExample = `<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">`;
 
@@ -19,7 +19,7 @@ const getDocs: () => JSX.Element = () => {
       <Title>ImageOverlay</Title>
       <DetailedBetaBanner />
       <Description>
-        Component to display image in a gallery. The gallery launches as a modal, it takes focus from the page or app
+        Component to display image in a overlay. The overlay launches as a modal, it takes focus from the page or app
         and require users to interact with them.
       </Description>
 
