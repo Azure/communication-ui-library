@@ -1,0 +1,9 @@
+{
+  "type": "minor",
+  "area": "improvement",
+  "workstream": "ImageGallery",
+  "comment": "Rename ImageGallery to ImageOverlay and change some related APIs",
+  "packageName": "@azure/communication-react",
+  "email": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
