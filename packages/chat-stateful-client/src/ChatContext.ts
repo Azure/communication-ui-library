@@ -43,7 +43,7 @@ export class ChatContext {
   private _emitter: EventEmitter;
   private typingIndicatorInterval: number | undefined = undefined;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  private _messageQueue: ResourceDownloadQueue | undefined = undefined;
+  private _downloadQueue: ResourceDownloadQueue | undefined = undefined;
 
   constructor(
     maxListeners?: number,
@@ -53,7 +53,7 @@ export class ChatContext {
     this._emitter = new EventEmitter();
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     if (credential) {
-      this._messageQueue = new ResourceDownloadQueue(this, credential);
+      this._downloadQueue = new ResourceDownloadQueue(this, credential);
     }
     if (maxListeners) {
       this._emitter.setMaxListeners(maxListeners);
@@ -75,6 +75,19 @@ export class ChatContext {
     if (!this._batchMode && this._state !== priorState) {
       this._emitter.emit('stateChanged', this._state);
     }
+  }
+
+  public dispose(): void {
+    this.modifyState((draft: ChatClientState) => {
+      Object.keys(draft.threads).forEach((threadId) => {
+        const thread = draft.threads[threadId];
+        Object.keys(thread.chatMessages).forEach((messageId) => {
+          // const cache = thread.chatMessages[messageId].resourceCache;
+          thread.chatMessages[messageId].resourceCache = undefined;
+        });
+      });
+    });
+    // Any item in queue should be removed.
   }
 
   public setThread(threadId: string, threadState: ChatThreadClientState): void {
@@ -295,7 +308,6 @@ export class ChatContext {
   public setChatMessage(threadId: string, message: ChatMessageWithStatus): void {
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     this.parseAttachments(threadId, message);
-
     const { id: messageId, clientMessageId } = message;
     if (messageId || clientMessageId) {
       this.modifyState((draft: ChatClientState) => {
@@ -321,13 +333,13 @@ export class ChatContext {
     const attachments = message.content?.attachments;
     if (message.type === 'html' && attachments && attachments.length > 0) {
       if (
-        this._messageQueue &&
-        !this._messageQueue.containsMessageWithSameAttachments(message) &&
+        this._downloadQueue &&
+        !this._downloadQueue.containsMessageWithSameAttachments(message) &&
         message.resourceCache === undefined
       ) {
         // Need to discuss retry logic in case of failure
-        this._messageQueue.addMessage(message);
-        this._messageQueue.startQueue(threadId, requestAttachments);
+        this._downloadQueue.addMessage(message);
+        this._downloadQueue.startQueue(threadId, requestAttachments);
       }
     }
   }

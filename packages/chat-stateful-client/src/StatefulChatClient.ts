@@ -24,6 +24,10 @@ import { chatStatefulLogger } from './Logger';
  */
 export interface StatefulChatClient extends ChatClient {
   /**
+   * Cleans up the resource cache from the chat thread client.
+   */
+  dispose(): void;
+  /**
    * Holds all the state that we could proxy from ChatClient {@Link @azure/communication-chat#ChatClient} as
    * ChatClientState {@Link ChatClientState}.
    */
@@ -212,12 +216,19 @@ export type ChatStateModifier = (state: ChatClientState) => void;
 export const _createStatefulChatClientWithDeps = (
   chatClient: ChatClient,
   args: StatefulChatClientArgs,
-  options?: StatefulChatClientOptions
+  options?: StatefulChatClientOptions,
+  chatContext?: ChatContext
 ): StatefulChatClient => {
-  const context = new ChatContext(
-    options?.maxStateChangeListeners,
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ args.credential
-  );
+  let context: ChatContext;
+  if (chatContext) {
+    context = chatContext;
+  } else {
+    context = new ChatContext(
+      options?.maxStateChangeListeners,
+      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ args.credential
+    );
+  }
+
   let eventSubscriber: EventSubscriber;
 
   context.updateChatConfig(getIdentifierKind(args.userId), args.displayName);
@@ -237,6 +248,10 @@ export const _createStatefulChatClientWithDeps = (
     }
   });
 
+  Object.defineProperty(proxy, 'dispose', {
+    configurable: false,
+    value: () => context?.dispose()
+  });
   Object.defineProperty(proxy, 'getState', {
     configurable: false,
     value: () => context?.getState()

@@ -24,6 +24,7 @@ import {
   StatefulChatClientWithEventTrigger,
   createMockChatClient,
   createStatefulChatClientMock,
+  createStatefulChatClientWithContextMock,
   defaultClientArgs,
   failingPagedAsyncIterator,
   mockChatThreads
@@ -183,6 +184,19 @@ describe('declarative chatClient subscribe to event properly after startRealtime
     };
     await client.triggerEvent('chatThreadDeleted', deletedEvent);
     expect(Object.keys(client.getState().threads).length).toBe(0);
+  });
+
+  test('chat message with status with default resource cache should be cleaned when dispose is called', async () => {
+    const threadId = 'threadId1';
+    const messageId = 'messageId1';
+
+    client = createStatefulChatClientWithContextMock();
+    let chatMessageWithStatus = client.getState().threads[threadId]?.chatMessages[messageId];
+    expect(chatMessageWithStatus.resourceCache).toBeDefined();
+
+    client.dispose();
+    chatMessageWithStatus = client.getState().threads[threadId]?.chatMessages[messageId];
+    expect(chatMessageWithStatus.resourceCache).toBeUndefined();
   });
 
   test('set internal store correctly when receive chatMessage related events', async () => {

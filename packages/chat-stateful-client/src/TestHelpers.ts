@@ -8,6 +8,8 @@ import { _createStatefulChatClientWithDeps, StatefulChatClient, StatefulChatClie
 import { createMockChatThreadClient } from './mocks/createMockChatThreadClient';
 import { createMockIterator } from './mocks/createMockIterator';
 import { MockCommunicationUserCredential } from './mocks/MockCommunicationUserCredential';
+import { ChatContext } from './ChatContext';
+import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 
 /**
  * @private
@@ -79,7 +81,41 @@ export const createStatefulChatClientMock = (): StatefulChatClientWithEventTrigg
     defaultClientArgs
   ) as StatefulChatClientWithEventTrigger;
 };
-
+/**
+ * @private
+ */
+export const createStatefulChatClientWithContextMock = (): StatefulChatClientWithEventTrigger => {
+  const chatContext = new ChatContext();
+  chatContext.createThreadIfNotExist('threadId1');
+  chatContext.setChatMessages('threadId1', { messageId1: messageTemplate });
+  return _createStatefulChatClientWithDeps(
+    createMockChatClient(),
+    defaultClientArgs,
+    undefined,
+    chatContext
+  ) as StatefulChatClientWithEventTrigger;
+};
+/**
+ * @private
+ */
+export const messageTemplate: ChatMessageWithStatus = {
+  id: 'MessageId',
+  content: { message: 'MessageContent' },
+  clientMessageId: undefined,
+  createdOn: new Date(),
+  sender: {
+    kind: 'communicationUser',
+    communicationUserId: 'UserId'
+  },
+  senderDisplayName: 'User',
+  type: 'text',
+  sequenceId: '',
+  version: '',
+  status: 'delivered',
+  /* @conditional-compile-remove(data-loss-prevention) */
+  policyViolation: false,
+  resourceCache: { resourceUrl: 'blobUrl' }
+};
 /**
  * @private
  */
