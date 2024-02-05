@@ -216,11 +216,11 @@ const AzureCommunicationOutboundCallScreen = (props: AzureCommunicationCallScree
       },
       /* @conditional-compile-remove(reaction) */
       reactionResources: {
-        likeReaction: { url: '/assets/reactions/likeEmoji.png' },
-        heartReaction: { url: '/assets/reactions/heartEmoji.png' },
-        laughReaction: { url: '/assets/reactions/laughEmoji.png' },
-        applauseReaction: { url: '/assets/reactions/clapEmoji.png' },
-        surprisedReaction: { url: '/assets/reactions/surprisedEmoji.png' }
+        likeReaction: { url: '/assets/reactions/likeEmoji.png', frameCount: 102 },
+        heartReaction: { url: '/assets/reactions/heartEmoji.png', frameCount: 102 },
+        laughReaction: { url: '/assets/reactions/laughEmoji.png', frameCount: 102 },
+        applauseReaction: { url: '/assets/reactions/clapEmoji.png', frameCount: 102 },
+        surprisedReaction: { url: '/assets/reactions/surprisedEmoji.png', frameCount: 102 }
       }
     };
   }, []);
