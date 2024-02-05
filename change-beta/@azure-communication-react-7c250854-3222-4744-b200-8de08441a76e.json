@@ -1,7 +1,7 @@
 {
   "type": "none",
   "area": "improvement",
-  "workstream": "Fix for the body styles in storybook",
+  "workstream": "Storybook",
   "comment": "Fix for the body styles in storybook",
   "packageName": "@azure/communication-react",
   "email": "98852890+vhuseinova-msft@users.noreply.github.com",
