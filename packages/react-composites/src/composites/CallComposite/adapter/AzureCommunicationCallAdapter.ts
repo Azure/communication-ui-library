@@ -36,6 +36,8 @@ import {
   VideoOptions,
   Call
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(spotlight) */
+import { SpotlightedParticipant } from '@azure/communication-calling';
 /* @conditional-compile-remove(reaction) */
 import { Reaction } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
@@ -47,7 +49,7 @@ import { StartCaptionsOptions, TeamsCaptionsInfo } from '@azure/communication-ca
 /* @conditional-compile-remove(video-background-effects) */
 import type { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
 /* @conditional-compile-remove(capabilities) */
-import type { CapabilitiesChangeHandler, CapabilitiesChangeInfo } from '@azure/communication-calling';
+import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support)) */
 import { TeamsCallAgent } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
@@ -82,6 +84,8 @@ import { ReactionResources } from '@internal/react-components';
 import { TransferRequestedListener } from './CallAdapter';
 /* @conditional-compile-remove(capabilities) */
 import { CapabilitiesChangedListener } from './CallAdapter';
+/* @conditional-compile-remove(spotlight) */
+import { SpotlightChangedListener } from './CallAdapter';
 /* @conditional-compile-remove(close-captions) */
 import {
   CaptionsReceivedListener,
@@ -1134,9 +1138,11 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   /* @conditional-compile-remove(call-transfer) */
   on(event: 'transferRequested', listener: TransferRequestedListener): void;
   /* @conditional-compile-remove(capabilities) */
-  on(event: 'capabilitiesChanged', listener: CapabilitiesChangeHandler): void;
+  on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   /* @conditional-compile-remove(capabilities) */
   on(event: 'roleChanged', listener: PropertyChangedEvent): void;
+  /* @conditional-compile-remove(spotlight) */
+  on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public on(event: string, listener: (e: any) => void): void {
@@ -1187,6 +1193,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.call?.feature(Features.Transfer).on('transferRequested', this.transferRequested.bind(this));
     /* @conditional-compile-remove(capabilities) */
     this.call?.feature(Features.Capabilities).on('capabilitiesChanged', this.capabilitiesChanged.bind(this));
+    /* @conditional-compile-remove(spotlight) */
+    this.call?.feature(Features.Spotlight).on('spotlightChanged', this.spotlightChanged.bind(this));
   }
 
   private unsubscribeCallEvents(): void {
@@ -1324,6 +1332,11 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.emitter.emit('roleChanged');
   }
 
+  /* @conditional-compile-remove(spotlight) */
+  private spotlightChanged(args: { added: SpotlightedParticipant[]; removed: SpotlightedParticipant[] }): void {
+    this.emitter.emit('spotlightChanged', args);
+  }
+
   private callIdChanged(): void {
     this.call?.id && this.emitter.emit('callIdChanged', { callId: this.call.id });
   }
@@ -1363,6 +1376,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   /* @conditional-compile-remove(rooms) */
   off(event: 'roleChanged', listener: PropertyChangedEvent): void;
+  /* @conditional-compile-remove(spotlight) */
+  off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public off(event: string, listener: (e: any) => void): void {
