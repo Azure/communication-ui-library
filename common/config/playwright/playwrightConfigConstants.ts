@@ -21,7 +21,7 @@ export const chromeLaunchOptions: LaunchOptions = {
     '--allow-file-access',
     '--use-fake-ui-for-media-stream',
     '--use-fake-device-for-media-stream',
-    `--use-file-for-fake-video-capture=${path.join(__dirname, 'tests', 'browser', 'common', 'test.y4m')}`,
+    `--use-file-for-fake-video-capture=${path.join(__dirname, 'test.y4m')}`,
     '--lang=en-US',
     '--mute-audio'
   ],
