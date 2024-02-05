@@ -109,7 +109,7 @@ export const ImageOverlay = (props: ImageOverlayProps): JSX.Element => {
       <Stack className={mergeStyles(headerStyle)}>
         <Stack className={mergeStyles(titleBarContainerStyle)}>
           {titleIcon}
-          <Stack.Item className={mergeStyles(titleStyle(theme))} aria-label={title || 'image'}>
+          <Stack.Item className={mergeStyles(titleStyle(theme))} aria-label={title || 'Image'}>
             {title}
           </Stack.Item>
         </Stack>
@@ -118,7 +118,7 @@ export const ImageOverlay = (props: ImageOverlayProps): JSX.Element => {
             className={mergeStyles(downloadButtonStyle(theme))}
             /* @conditional-compile-remove(image-overlay) */
             text={localeStrings.downloadButtonLabel}
-            onClick={() => onDownloadButtonClicked(imageSrc || '')}
+            onClick={() => onDownloadButtonClicked(imageSrc)}
             onRenderIcon={() => <Icon iconName={downloadIcon.iconName} className={mergeStyles(downloadIconStyle)} />}
             aria-live={'polite'}
             /* @conditional-compile-remove(image-overlay) */
