@@ -507,6 +507,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
             title={title}
             moreDetails={moreDetails}
             disableStartCallButton={disableStartCallButton}
+            mobileView={props.mobileView}
           />
         );
         break;

@@ -34,6 +34,8 @@ export const Survey = (props: {
   /* @conditional-compile-remove(end-of-call-survey) */
   disableStartCallButton?: boolean;
   /* @conditional-compile-remove(end-of-call-survey) */
+  isMobile?: boolean;
+  /* @conditional-compile-remove(end-of-call-survey) */
   onSubmitSurvey?: (survey: CallSurvey) => Promise<CallSurveyResponse | undefined>;
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
@@ -68,7 +70,8 @@ export const Survey = (props: {
     iconName,
     title,
     moreDetails,
-    disableStartCallButton
+    disableStartCallButton,
+    isMobile
   } = props;
   /* @conditional-compile-remove(end-of-call-survey) */
   const strings = useLocale().strings.call;
@@ -115,7 +118,7 @@ export const Survey = (props: {
         />
       )}
       {!showDefaultAfterSubmitScreen && !showDefaultAfterDismissedScreen && (
-        <Stack verticalAlign="center" style={{ width: '24rem' }}>
+        <Stack verticalAlign="center" style={{ width: isMobile ? '20rem' : '24rem' }}>
           <Text className={questionTextStyle(theme)}>{strings.surveyTitle}</Text>
           <SurveyContent
             setShowSubmitFeedbackButton={(showButton: boolean) => {

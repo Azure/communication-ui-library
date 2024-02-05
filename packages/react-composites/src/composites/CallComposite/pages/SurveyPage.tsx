@@ -34,6 +34,8 @@ export interface SurveyPageProps {
   /* @conditional-compile-remove(end-of-call-survey) */
   disableStartCallButton?: boolean;
   /* @conditional-compile-remove(end-of-call-survey) */
+  mobileView?: boolean;
+  /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Options for end of call survey
    */
@@ -90,6 +92,7 @@ export function SurveyPage(props: SurveyPageProps): JSX.Element {
           {...props}
           onSurveySubmittedCustom={props.surveyOptions?.onSurveySubmitted}
           onSurveyClosed={props.surveyOptions?.onSurveyClosed}
+          isMobile={props.mobileView}
         />
       </Stack>
     </Stack>
