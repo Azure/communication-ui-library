@@ -304,27 +304,30 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   };
 
   /* @conditional-compile-remove(image-overlay) */
-  const onDownloadButtonClicked = useCallback((imageSrc: string): void => {
-    if (imageSrc === '') {
-      return;
-    }
-    if (isIOS()) {
-      window.open(imageSrc, '_blank');
-    } else {
-      // Create a new anchor element
-      const a = document.createElement('a');
-      // Set the href and download attributes for the anchor element
-      a.href = imageSrc;
-      a.download = overlayImageItem?.downloadFilename || '';
-      a.rel = 'noopener noreferrer';
-      a.target = '_blank';
+  const onDownloadButtonClicked = useCallback(
+    (imageSrc: string): void => {
+      if (imageSrc === '') {
+        return;
+      }
+      if (isIOS()) {
+        window.open(imageSrc, '_blank');
+      } else {
+        // Create a new anchor element
+        const a = document.createElement('a');
+        // Set the href and download attributes for the anchor element
+        a.href = imageSrc;
+        a.download = overlayImageItem?.downloadFilename || '';
+        a.rel = 'noopener noreferrer';
+        a.target = '_blank';
 
-      // Programmatically click the anchor element to trigger the download
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    }
-  }, []);
+        // Programmatically click the anchor element to trigger the download
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
+    },
+    [overlayImageItem?.downloadFilename]
+  );
 
   const AttachFileButton = useCallback(() => {
     if (!fileSharing?.uploadHandler) {
