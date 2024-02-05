@@ -31,7 +31,7 @@
   "mentionPopover": {
     "mentionPopoverHeader": "建議"
   },
-  "imageGallery": {
+  "imageOverlay": {
     "downloadButtonLabel": "下載",
     "dismissButtonAriaLabel": "關閉"
   },

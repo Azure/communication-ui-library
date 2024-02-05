@@ -31,7 +31,7 @@
   "mentionPopover": {
     "mentionPopoverHeader": "Návrhy"
   },
-  "imageGallery": {
+  "imageOverlay": {
     "downloadButtonLabel": "Stáhnout",
     "dismissButtonAriaLabel": "Zavřít"
   },
