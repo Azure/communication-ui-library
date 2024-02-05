@@ -1860,6 +1860,7 @@ export type CommonCallAdapterOptions = {
     };
     onFetchProfile?: OnFetchProfileCallback;
     callingSounds?: CallingSounds;
+    reactionResources?: ReactionResources;
 };
 
 // @public
@@ -1928,7 +1929,7 @@ export interface CommonCallingHandlers {
     onLowerHand: () => Promise<void>;
     // (undocumented)
     onRaiseHand: () => Promise<void>;
-    // (undocumented)
+    // @beta (undocumented)
     onReactionClicked: (reaction: Reaction_2) => Promise<void>;
     // (undocumented)
     onRemoveParticipant(userId: string): Promise<void>;
