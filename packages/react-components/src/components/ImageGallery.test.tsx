@@ -49,6 +49,7 @@ describe('ImageOverlay default layout tests', () => {
         imageSrc={imageSrc || imageInfo.imageSrc}
         title={title || imageInfo.title}
         titleIcon={titleIcon || imageInfo.titleIcon}
+        altText="altText"
         onDismiss={onDismiss || jest.fn()}
         onDownloadButtonClicked={onDownloadButtonClicked || jest.fn()}
         onError={onError || jest.fn()}
@@ -90,6 +91,6 @@ describe('ImageOverlay default layout tests', () => {
     const downloadButton: HTMLElement = buttons[0];
     downloadButton.click();
     expect(onDownloadButtonClicked).toBeCalledTimes(1);
-    expect(onDownloadButtonClicked).toBeCalledWith(imageInfo.imageSrc, imageInfo.downloadFilename);
+    expect(onDownloadButtonClicked).toBeCalledWith(imageInfo.imageSrc);
   });
 });
