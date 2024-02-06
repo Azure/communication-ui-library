@@ -360,7 +360,6 @@ export interface CallAdapterCallOperations {
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
     // @beta
     resumeCall(): Promise<void>;
-    // @beta
     sendDtmfTone(dtmfTone: DtmfTone_2): Promise<void>;
     setCaptionLanguage(language: string): Promise<void>;
     setSpokenLanguage(language: string): Promise<void>;
@@ -1034,7 +1033,6 @@ export interface CallWithChatAdapterManagement {
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
     // @beta
     resumeCall: () => Promise<void>;
-    // @beta
     sendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
@@ -2712,13 +2710,13 @@ export interface DiagnosticsCallFeatureState {
     network: NetworkDiagnosticsState;
 }
 
-// @beta
+// @public
 export const Dialpad: (props: DialpadProps) => JSX.Element;
 
-// @beta
+// @public
 export type DialpadMode = 'dtmf' | 'dialer';
 
-// @beta
+// @public
 export interface DialpadProps {
     dialpadMode?: DialpadMode;
     disableDtmfPlayback?: boolean;
@@ -2733,7 +2731,7 @@ export interface DialpadProps {
     textFieldValue?: string;
 }
 
-// @beta
+// @public
 export interface DialpadStrings {
     // (undocumented)
     deleteButtonAriaLabel?: string;
@@ -2741,7 +2739,7 @@ export interface DialpadStrings {
     placeholderText: string;
 }
 
-// @beta
+// @public
 export interface DialpadStyles {
     // (undocumented)
     button?: IButtonStyles;
@@ -2769,7 +2767,7 @@ interface Disposable_2 {
 }
 export { Disposable_2 as Disposable }
 
-// @beta
+// @public
 export type DtmfTone = 'A' | 'B' | 'C' | 'D' | 'Flash' | 'Num0' | 'Num1' | 'Num2' | 'Num3' | 'Num4' | 'Num5' | 'Num6' | 'Num7' | 'Num8' | 'Num9' | 'Pound' | 'Star';
 
 // @public
@@ -3156,7 +3154,7 @@ export interface LocalVideoStreamVideoEffectsState {
     activeEffects?: VideoEffectName[];
 }
 
-// @beta
+// @public
 export interface LocalVideoTileOptions {
     position?: 'grid' | 'floating';
 }
@@ -3164,7 +3162,7 @@ export interface LocalVideoTileOptions {
 // @public
 export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'followDeviceOrientation';
 
-// @beta
+// @public
 export type LongPressTrigger = 'mouseAndTouch' | 'touch';
 
 // @public
