@@ -29,7 +29,8 @@ export type {
   AzureCommunicationCallAdapterArgs,
   CallAdapterLocator,
   CommonCallAdapter,
-  CallAdapterCallOperations
+  CallAdapterCallOperations,
+  AzureCommunicationOutboundCallAdapterArgs
 } from './adapter';
 
 /* @conditional-compile-remove(video-background-effects) */
@@ -71,7 +72,8 @@ export type {
   NetworkDiagnosticChangedEvent,
   ParticipantsJoinedListener,
   ParticipantsLeftListener,
-  JoinCallOptions
+  JoinCallOptions,
+  StartCallIdentifier
 } from './adapter';
 
 /* @conditional-compile-remove(close-captions) */
@@ -92,3 +94,6 @@ export type { CapabilityChangedNotificationStrings } from './components/Capabili
 
 /* @conditional-compile-remove(calling-sounds) */
 export type { CallingSounds, SoundEffect } from './adapter';
+
+/* @conditional-compile-remove(spotlight) */
+export type { SpotlightPromptStrings } from './components/Prompt';
