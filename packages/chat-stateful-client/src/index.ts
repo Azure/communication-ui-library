@@ -6,7 +6,6 @@ export {
   _createStatefulChatClientInner,
   _createStatefulChatClientWithDeps
 } from './StatefulChatClient';
-export type { ChatContext as _ChatContext } from './ChatContext';
 export type { StatefulChatClient, StatefulChatClientArgs, StatefulChatClientOptions } from './StatefulChatClient';
 export type { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 export { ChatError } from './ChatClientState';
