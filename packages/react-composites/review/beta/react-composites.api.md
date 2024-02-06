@@ -610,6 +610,7 @@ export interface CallCompositeStrings {
     selectedPeopleButtonLabel: string;
     soundLabel: string;
     spokenLanguageStrings?: SpokenLanguageStrings;
+    spotlightPrompt: SpotlightPromptStrings;
     starRatingAriaLabel: string;
     starSurveyFiveStarText: string;
     starSurveyFourStarText: string;
@@ -1922,6 +1923,22 @@ export interface RemoteVideoTileMenuOptions {
 export type SoundEffect = {
     url: string;
 };
+
+// @beta
+export interface SpotlightPromptStrings {
+    startSpotlightCancelButtonLabel: string;
+    startSpotlightConfirmButtonLabel: string;
+    startSpotlightHeading: string;
+    startSpotlightOnSelfText: string;
+    startSpotlightText: string;
+    stopSpotlightCancelButtonLabel: string;
+    stopSpotlightConfirmButtonLabel: string;
+    stopSpotlightHeading: string;
+    stopSpotlightOnSelfConfirmButtonLabel: string;
+    stopSpotlightOnSelfHeading: string;
+    stopSpotlightOnSelfText: string;
+    stopSpotlightText: string;
+}
 
 // @public
 export type StartCallIdentifier = (MicrosoftTeamsAppIdentifier | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier | UnknownIdentifier) | /* @conditional-compile-remove(start-call-beta) */ CommunicationIdentifier;
