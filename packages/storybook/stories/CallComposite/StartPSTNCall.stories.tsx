@@ -36,7 +36,7 @@ const StartPSTNCallStory = (args: ArgsFrom<typeof storyControls>, context): JSX.
           alternateCallerId={args.alternateCallerId}
           fluentTheme={context.theme}
           rtl={context.globals.rtl === 'rtl'}
-          locator={args.callLocator}
+          targetCallees={args.callLocator}
           userId={{ communicationUserId: args.userId }}
           token={args.token}
           displayName={args.displayName}

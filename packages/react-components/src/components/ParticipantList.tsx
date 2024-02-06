@@ -102,8 +102,10 @@ export type ParticipantListProps = {
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   /** Optional callback when rendered ParticipantItem is clicked */
   onParticipantClick?: (participant?: ParticipantListParticipant) => void;
+  /* @conditional-compile-remove(spotlight) */
   /** Optional callback to generate context menu item to stop spotlight of each participant */
   onStartSpotlight?: (userId: string) => void;
+  /* @conditional-compile-remove(spotlight) */
   /** Optional callback to generate context menu item to stop spotlight of each participant */
   onStopSpotlight?: (userId: string) => void;
   /** Styles for the {@link ParticipantList} */

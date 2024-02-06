@@ -7,6 +7,8 @@ import { SpokenLanguageStrings, CaptionLanguageStrings } from '@internal/react-c
 import { SurveyIssues, SurveyIssuesHeadingStrings } from '@internal/react-components';
 /* @conditional-compile-remove(capabilities) */
 import { CapabilityChangedNotificationStrings } from './components/CapabilitiesChangedNotificationBar';
+/* @conditional-compile-remove(spotlight) */
+import { SpotlightPromptStrings } from './components/Prompt';
 
 /**
  * Strings used by the {@link CallComposite} directly.
@@ -683,9 +685,9 @@ export interface CallCompositeStrings {
   capabilityChangedNotification?: CapabilityChangedNotificationStrings;
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
-   * Question for the survey
+   * Title for the survey
    */
-  surveyQuestion: string;
+  surveyTitle: string;
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Helper text to explain what the survey is for
@@ -743,14 +745,19 @@ export interface CallCompositeStrings {
   surveyConfirmButtonLabel: string;
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
-   * Aria Label for cancel button
+   * Cancel button label for survey
    */
-  surveyCancelButtonAriaLabel: string;
+  surveySkipButtonLabel: string;
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Default text for free form text box
    */
   surveyTextboxDefaultText: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Thank you text appeared on screen after survey is submitted
+   */
+  endOfSurveyText: string;
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Corresponding texts to each call issue
@@ -816,4 +823,9 @@ export interface CallCompositeStrings {
    * Label to hide the dtmf dialer in the more button menu
    */
   dtmfDialerMoreButtonLabelOff?: string;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Strings for spotlight prompt
+   */
+  spotlightPrompt: SpotlightPromptStrings;
 }

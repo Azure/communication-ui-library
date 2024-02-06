@@ -1,4 +1,8 @@
-import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+import {
+  AzureCommunicationTokenCredential,
+  CommunicationUserIdentifier,
+  PhoneNumberIdentifier
+} from '@azure/communication-common';
 import {
   CallComposite,
   fromFlatCommunicationIdentifier,
@@ -54,6 +58,10 @@ function App(): JSX.Element {
   // (indirectly) by the user.
   const { userId, token, displayName, participantIds, alternateCallerId } = useAzureCommunicationServiceArgs();
 
+  const createTargetCallees = useMemo(() => {
+    return participantIds.map((c) => fromFlatCommunicationIdentifier(c) as PhoneNumberIdentifier);
+  }, [participantIds]);
+
   // A well-formed token is required to initialize the chat and calling adapters.
   const credential = useMemo(() => {
     try {
@@ -72,9 +80,9 @@ function App(): JSX.Element {
       displayName,
       credential,
       alternateCallerId,
-      locator: { participantIds }
+      targetCallees: createTargetCallees
     }),
-    [userId, credential, displayName, alternateCallerId, participantIds]
+    [userId, displayName, credential, alternateCallerId, createTargetCallees]
   );
   const callAdapter = useAzureCommunicationCallAdapter(callAdapterArgs);
 

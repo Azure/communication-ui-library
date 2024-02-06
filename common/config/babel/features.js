@@ -64,8 +64,8 @@ module.exports = {
     "capabilities",
     // Feature for custom video gallery layouts
     "gallery-layouts",
-    // Feature image gallery
-    "image-gallery",
+    // Feature image overlay
+    "image-overlay",
     // Feature for large Gallery layout
     "large-gallery",
     // feature for positioning the overflowGallery at the top of the screen in the composite
@@ -82,8 +82,6 @@ module.exports = {
     "calling-sounds",
     // Feature for end of call survey
     'end-of-call-survey',
-    // Feature for end of call survey self host version
-    'end-of-call-survey-self-host',
     // Feature for the DTMF dialer for Teams voice apps
     'dtmf-dialer',
     // Feature for meeting reactions
@@ -91,7 +89,9 @@ module.exports = {
     // Feature for Rich Text Editor (RTE) support
     'rich-text-editor',
     // Feature for spotlight
-    'spotlight'
+    'spotlight',
+    // Feature for tracking beta start call identifier
+    'start-call-beta'
   ],
   // A list of in progress beta feature.
   // These features are still beta feature but "in progress"
@@ -113,8 +113,6 @@ module.exports = {
     "custom-branding",
     // Feature for end of call survey
     'end-of-call-survey',
-    // Feature for end of call survey self host version
-    'end-of-call-survey-self-host',
     // Feature for the DTMF dialer for Teams voice apps
     'dtmf-dialer',
     // Feature for meeting reactions
