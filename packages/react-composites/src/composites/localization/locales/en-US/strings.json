@@ -243,7 +243,7 @@
         "grantedDueToRoleChangeToPresenter": "You're a presenter. You can share content and facilitate the meeting."
       }
     },
-    "surveyQuestion": "How was your call today?",
+    "surveyTitle": "Help us improve",
     "starSurveyHelperText": "How was the quality of the call?",
     "starSurveyOneStarText": "The quality was bad.",
     "starSurveyTwoStarText": "The quality was poor.",
@@ -252,11 +252,12 @@
     "starSurveyFiveStarText": "The quality was excellent.",
     "surveyConfirmButtonLabel": "Send Feedback",
     "starRatingAriaLabel": "Select {0} of {1} stars",
-    "surveyCancelButtonAriaLabel": "Cancel",
+    "surveySkipButtonLabel": "Skip",
     "tagsSurveyQuestion": "What could have been better?",
     "tagsSurveyTextFieldDefaultText": "Other, please specify",
     "tagsSurveyHelperText": "Check any issues you experienced",
     "surveyTextboxDefaultText": "Other, please specify",
+    "endOfSurveyText": "Thank you for your feedback!",
     "surveyIssues": {
       "overallRating": {
         "callCannotJoin": "I could not join call",
