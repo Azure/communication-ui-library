@@ -83,8 +83,6 @@ import { usePropsFor } from '../hooks/usePropsFor';
 /* @conditional-compile-remove(spotlight) */
 import { PromptProps } from './Prompt';
 /* @conditional-compile-remove(spotlight) */
-import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(spotlight) */
 import { useSpotlightCallbacksWithPrompt } from '../utils/spotlightUtils';
 
 /**
@@ -180,9 +178,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const locale = useLocale();
 
   /* @conditional-compile-remove(spotlight) */
-  const myUserId = toFlatCommunicationIdentifier(adapter.getState().userId);
-
-  /* @conditional-compile-remove(spotlight) */
   const videoGalleryProps = usePropsFor(VideoGallery);
 
   /* @conditional-compile-remove(spotlight) */
@@ -193,7 +188,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
   /* @conditional-compile-remove(spotlight) */
   const { onStartSpotlightWithPrompt, onStopSpotlightWithPrompt } = useSpotlightCallbacksWithPrompt(
-    myUserId,
     onStartSpotlight,
     onStopSpotlight,
     setIsPromptOpen,

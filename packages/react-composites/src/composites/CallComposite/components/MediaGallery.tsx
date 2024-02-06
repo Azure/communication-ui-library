@@ -23,8 +23,6 @@ import { useSelector } from '../hooks/useSelector';
 import { localVideoCameraCycleButtonSelector } from '../selectors/LocalVideoTileSelector';
 import { LocalVideoCameraCycleButton } from '@internal/react-components';
 import { _formatString } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(spotlight) */
-import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { useParticipantChangedAnnouncement } from '../utils/MediaGalleryUtils';
 import { RemoteVideoTileMenuOptions } from '../CallComposite';
 /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(vertical-gallery) */
@@ -159,11 +157,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const { onStartSpotlight, onStopSpotlight } = videoGalleryProps;
 
   /* @conditional-compile-remove(spotlight) */
-  const myUserId = toFlatCommunicationIdentifier(adapter.getState().userId);
-
-  /* @conditional-compile-remove(spotlight) */
   const { onStartSpotlightWithPrompt, onStopSpotlightWithPrompt } = useSpotlightCallbacksWithPrompt(
-    myUserId,
     onStartSpotlight,
     onStopSpotlight,
     setIsPromptOpen,
