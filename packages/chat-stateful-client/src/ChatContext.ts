@@ -113,7 +113,9 @@ export class ChatContext {
     this.modifyState((draft: ChatClientState) => {
       const message = draft.threads[threadId]?.chatMessages[messageId];
       if (message && message.resourceCache) {
-        // Clean up the resource cache for specific url
+        const blobUrl = message.resourceCache[resourceUrl];
+        URL.revokeObjectURL(blobUrl);
+        delete message.resourceCache[resourceUrl];
       }
     });
   }

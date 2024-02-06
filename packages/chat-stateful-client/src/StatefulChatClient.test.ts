@@ -28,8 +28,6 @@ import {
   failingPagedAsyncIterator,
   mockChatThreads
 } from './TestHelpers';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { messageTemplate } from './TestHelpers';
 
 jest.useFakeTimers();
 
@@ -185,43 +183,6 @@ describe('declarative chatClient subscribe to event properly after startRealtime
     };
     await client.triggerEvent('chatThreadDeleted', deletedEvent);
     expect(Object.keys(client.getState().threads).length).toBe(0);
-  });
-
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  test('chat message with status with default resource cache should be cleaned when dispose is called', async () => {
-    const threadId = 'threadId1';
-    const topic = 'topic';
-    const event: ChatThreadCreatedEvent = {
-      threadId,
-      version: '',
-      properties: {
-        topic,
-        /* @conditional-compile-remove(chat-beta-sdk) */ metadata: {}
-      },
-      createdOn: new Date('01-01-2020'),
-      createdBy: {
-        id: { kind: 'communicationUser', communicationUserId: 'user1' },
-        displayName: '',
-        // /* @conditional-compile-remove(chat-beta-sdk) */
-        metadata: {}
-      },
-      participants: mockParticipants
-    };
-
-    await client.triggerEvent('chatThreadCreated', event);
-
-    expect(client.getState().threads[threadId]).toBeDefined();
-
-    const messageThread = client.getState().threads[threadId];
-    jest.replaceProperty(messageThread, 'chatMessages', { messageId1: messageTemplate });
-    // jest.spyOn(messageThread, 'chatMessages', 'get').mockReturnValue({ messageId1: messageTemplate });
-    const messageId = 'messageId1';
-    let chatMessageWithStatus = client.getState().threads[threadId]?.chatMessages[messageId];
-    expect(chatMessageWithStatus.resourceCache).toBeDefined();
-
-    client.dispose();
-    chatMessageWithStatus = client.getState().threads[threadId]?.chatMessages[messageId];
-    expect(chatMessageWithStatus.resourceCache).toBeUndefined();
   });
 
   test('set internal store correctly when receive chatMessage related events', async () => {

@@ -9,8 +9,6 @@ import { createMockChatThreadClient } from './mocks/createMockChatThreadClient';
 import { createMockIterator } from './mocks/createMockIterator';
 import { MockCommunicationUserCredential } from './mocks/MockCommunicationUserCredential';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { ChatContext } from './ChatContext';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 
 /**
@@ -85,34 +83,6 @@ export const createStatefulChatClientMock = (): StatefulChatClientWithEventTrigg
 };
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
- *
- * @private
- */
-export const createStatefulChatClienWithPrivatePropsMock = (): StatefulChatClientWithPrivateProps => {
-  return _createStatefulChatClientWithDeps(
-    createMockChatClient(),
-    defaultClientArgs
-  ) as StatefulChatClientWithPrivateProps;
-};
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-/**
- * @private
- */
-export type StatefulChatClientWithPrivateProps = StatefulChatClient & {
-  context: ChatContext;
-};
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-/**
- * @private
- */
-export const createChatContextMock = (): ChatContext => {
-  const chatContext = new ChatContext();
-  chatContext.createThreadIfNotExist('threadId1');
-  chatContext.setChatMessages('threadId1', { messageId1: messageTemplate });
-  return chatContext;
-};
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-/**
  * @private
  */
 export const messageTemplate: ChatMessageWithStatus = {
@@ -130,8 +100,29 @@ export const messageTemplate: ChatMessageWithStatus = {
   version: '',
   status: 'delivered',
   /* @conditional-compile-remove(data-loss-prevention) */
+  policyViolation: false
+};
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/**
+ * @private
+ */
+export const messageTemplateWithResourceCache: ChatMessageWithStatus = {
+  id: 'MessageId',
+  content: { message: 'MessageContent' },
+  clientMessageId: undefined,
+  createdOn: new Date(),
+  sender: {
+    kind: 'communicationUser',
+    communicationUserId: 'UserId'
+  },
+  senderDisplayName: 'User',
+  type: 'text',
+  sequenceId: '',
+  version: '',
+  status: 'delivered',
+  /* @conditional-compile-remove(data-loss-prevention) */
   policyViolation: false,
-  resourceCache: { resourceUrl: 'blobUrl' }
+  resourceCache: { resource1Url: 'blob:resource1', resource2Url: 'blob:resource2' }
 };
 /**
  * @private
