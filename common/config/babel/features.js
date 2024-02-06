@@ -113,8 +113,8 @@ module.exports = {
     "custom-branding",
     // Feature for end of call survey
     'end-of-call-survey',
-    // Feature for the DTMF dialer for Teams voice apps
-    'dtmf-dialer',
+    // Feature for end of call survey self host version
+    'end-of-call-survey-self-host',
     // Feature for meeting reactions
     'reaction',
     // Feature for Rich Text Editor (RTE) support
@@ -150,5 +150,11 @@ module.exports = {
     "rooms",
     // feature for calling sounds
     "calling-sounds",
+    // Feature for the DTMF dialer for Teams voice apps
+    "dtmf-dialer",
+    // dialpad
+    "dialpad",
+    // Feature for updates needed for Click to Call (C2C) scenarios
+    "click-to-call"
   ]
 }
