@@ -7,6 +7,8 @@ import { SpokenLanguageStrings, CaptionLanguageStrings } from '@internal/react-c
 import { SurveyIssues, SurveyIssuesHeadingStrings } from '@internal/react-components';
 /* @conditional-compile-remove(capabilities) */
 import { CapabilityChangedNotificationStrings } from './components/CapabilitiesChangedNotificationBar';
+/* @conditional-compile-remove(spotlight) */
+import { SpotlightPromptStrings } from './components/Prompt';
 
 /**
  * Strings used by the {@link CallComposite} directly.
@@ -821,4 +823,9 @@ export interface CallCompositeStrings {
    * Label to hide the dtmf dialer in the more button menu
    */
   dtmfDialerMoreButtonLabelOff?: string;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Strings for spotlight prompt
+   */
+  spotlightPrompt: SpotlightPromptStrings;
 }
