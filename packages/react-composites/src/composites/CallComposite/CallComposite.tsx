@@ -57,6 +57,8 @@ import { capabilitiesChangedInfoAndRoleSelector } from './selectors/capabilities
 /* @conditional-compile-remove(capabilities) */
 import { useTrackedCapabilityChangedNotifications } from './utils/TrackCapabilityChangedNotifications';
 import { useEndedCallConsoleErrors } from './utils/useConsoleErrors';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { SurveyPage } from './pages/SurveyPage';
 
 /**
  * Props for {@link CallComposite}.
@@ -245,11 +247,11 @@ export type CallCompositeOptions = {
      * @defaultValue false
      */
     disableSurvey?: boolean;
-    /* @conditional-compile-remove(end-of-call-survey-self-host) */
     /**
-     * Optional callback to add extra logic when survey is dismissed. For self-host only
+     * Optional callback to redirect users to custom screens when survey is done, note that default end call screen will be shown if this callback is not provided
+     * This callback can be used to redirect users to different screens depending on survey state, whether it is submitted, skipped or has a problem when submitting the survey
      */
-    onSurveyDismissed?: () => void;
+    onSurveyClosed?: (surveyState: 'sent' | 'skipped' | 'error', surveyError?: string) => void;
     /**
      * Optional callback to handle survey data including free form text response
      * Note that free form text response survey option is only going to be enabled when this callback is provided
@@ -464,8 +466,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           title={locale.strings.call.failedToJoinTeamsMeetingReasonAccessDeniedTitle}
           moreDetails={locale.strings.call.failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails}
           dataUiId={'access-denied-teams-meeting-page'}
-          /* @conditional-compile-remove(end-of-call-survey) */
-          surveyOptions={{ disableSurvey: true }}
         />
       );
       break;
@@ -476,8 +476,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           title={locale.strings.call.removedFromCallTitle}
           moreDetails={locale.strings.call.removedFromCallMoreDetails}
           dataUiId={'removed-from-call-page'}
-          /* @conditional-compile-remove(end-of-call-survey) */
-          surveyOptions={{ disableSurvey: true }}
         />
       );
       break;
@@ -488,8 +486,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           title={locale.strings.call.failedToJoinCallDueToNoNetworkTitle}
           moreDetails={locale.strings.call.failedToJoinCallDueToNoNetworkMoreDetails}
           dataUiId={'join-call-failed-due-to-no-network-page'}
-          /* @conditional-compile-remove(end-of-call-survey) */
-          surveyOptions={{ disableSurvey: true }}
         />
       );
       break;
@@ -500,13 +496,26 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           dataUiId={'leaving-page'}
           pageStyle={leavePageStyle}
           disableStartCallButton={true}
-          /* @conditional-compile-remove(end-of-call-survey) */
-          surveyOptions={{ disableSurvey: true }}
         />
       );
       break;
     case 'leftCall': {
       const { title, moreDetails, disableStartCallButton, iconName } = getEndedCallPageProps(locale, endedCall);
+      /* @conditional-compile-remove(end-of-call-survey) */
+      if (!props.options?.surveyOptions?.disableSurvey) {
+        pageElement = (
+          <SurveyPage
+            dataUiId={'left-call-page'}
+            surveyOptions={props.options?.surveyOptions}
+            iconName={iconName}
+            title={title}
+            moreDetails={moreDetails}
+            disableStartCallButton={disableStartCallButton}
+            mobileView={props.mobileView}
+          />
+        );
+        break;
+      }
       pageElement = (
         <NoticePage
           iconName={iconName}
@@ -514,10 +523,9 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           moreDetails={moreDetails}
           dataUiId={'left-call-page'}
           disableStartCallButton={disableStartCallButton}
-          /* @conditional-compile-remove(end-of-call-survey) */
-          surveyOptions={props.options?.surveyOptions}
         />
       );
+
       break;
     }
     case 'lobby':

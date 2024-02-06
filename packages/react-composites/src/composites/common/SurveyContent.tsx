@@ -24,7 +24,7 @@ import { Stack } from '@fluentui/react';
 /**
  * @private
  */
-export const SurveyPaneContent = (
+export const SurveyContent = (
   /* @conditional-compile-remove(end-of-call-survey) */ props: {
     /* @conditional-compile-remove(end-of-call-survey) */
     setShowSubmitFeedbackButton: (showButton: boolean) => void;
@@ -40,7 +40,7 @@ export const SurveyPaneContent = (
   const [showTagsSurvey, setShowTagsSurvey] = useState(false);
   /* @conditional-compile-remove(end-of-call-survey) */
   const onStarRatingSelected = (ratings: number): void => {
-    if (ratings <= 2) {
+    if (ratings < 5) {
       setShowTagsSurvey(true);
       props.setShowSubmitFeedbackButton(true);
     } else {
@@ -61,7 +61,7 @@ export const SurveyPaneContent = (
   };
   /* @conditional-compile-remove(end-of-call-survey) */
   return (
-    <Stack>
+    <Stack data-ui-id="call-composite-survey">
       <StarSurvey onStarRatingSelected={onStarRatingSelected} />
 
       {showTagsSurvey && (
