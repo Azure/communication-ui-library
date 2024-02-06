@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { ChatParticipant, ChatThreadClient, RestListParticipantsOptions } from '@azure/communication-chat';
-import { _ChatContext } from '../ChatContext';
+import { ChatContext } from '../ChatContext';
 import { createDecoratedIterator, createErrorHandlingIterator } from './createDecoratedIterator';
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
 
@@ -11,9 +11,9 @@ import { PagedAsyncIterableIterator } from '@azure/core-paging';
  */
 export const createDecoratedListParticipants = (
   chatThreadClient: ChatThreadClient,
-  context: _ChatContext
+  context: ChatContext
 ): ((options?: RestListParticipantsOptions) => PagedAsyncIterableIterator<ChatParticipant>) => {
-  const setParticipant = (participant: ChatParticipant, context: _ChatContext): void => {
+  const setParticipant = (participant: ChatParticipant, context: ChatContext): void => {
     context.setParticipant(chatThreadClient.threadId, participant);
   };
   return createDecoratedIterator(

@@ -5,7 +5,7 @@ import { ChatAttachmentType } from '@azure/communication-chat';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { CommunicationTokenCredential } from '@azure/communication-common';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { _ChatContext } from './ChatContext';
+import { ChatContext } from './ChatContext';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ResourceDownloadError, ResourceDownloadQueue } from './ResourceDownloadQueue';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
@@ -33,7 +33,7 @@ export const stubCommunicationTokenCredential = (): CommunicationTokenCredential
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 describe('ResourceDownloadQueue api functions', () => {
   test('should add a message to the queue and contains message', () => {
-    const context = new _ChatContext();
+    const context = new ChatContext();
     const tokenCredential = stubCommunicationTokenCredential();
     const mockMessage = messageTemplate;
     const firstAttachments = [
@@ -46,7 +46,7 @@ describe('ResourceDownloadQueue api functions', () => {
   });
 
   test('should add a message to queue and the same message with edited content', () => {
-    const context = new _ChatContext();
+    const context = new ChatContext();
     const tokenCredential = stubCommunicationTokenCredential();
     const firstAttachments = [
       { id: '1', attachmentType: 'image' as ChatAttachmentType, name: 'image1', url: 'url1', previewUrl: 'previewUrl1' }
@@ -68,7 +68,7 @@ describe('ResourceDownloadQueue api functions', () => {
   });
 
   test('start queue should call operation', async () => {
-    const context = new _ChatContext();
+    const context = new ChatContext();
     const tokenCredential = stubCommunicationTokenCredential();
     const mockMessage = messageTemplate;
     const queue = new ResourceDownloadQueue(context, tokenCredential);
@@ -79,7 +79,7 @@ describe('ResourceDownloadQueue api functions', () => {
   });
 
   test('adding multiple chats to queue should call operation multiple times', async () => {
-    const context = new _ChatContext();
+    const context = new ChatContext();
     const tokenCredential = stubCommunicationTokenCredential();
     const first = messageTemplate;
     first.id = 'first';
@@ -98,7 +98,7 @@ describe('ResourceDownloadQueue api functions', () => {
   });
 
   test('multiple chats in queue should call only one operation at a time', (done) => {
-    const context = new _ChatContext();
+    const context = new ChatContext();
     const tokenCredential = stubCommunicationTokenCredential();
     const first = { ...messageTemplate };
     first.id = 'first';
@@ -127,7 +127,7 @@ describe('ResourceDownloadQueue api functions', () => {
   });
 
   test('adding multiple chat to queue should call operation in order', async () => {
-    const context = new _ChatContext();
+    const context = new ChatContext();
     const tokenCredential = stubCommunicationTokenCredential();
     const first = { ...messageTemplate };
     first.id = 'first';
@@ -149,7 +149,7 @@ describe('ResourceDownloadQueue api functions', () => {
   });
 
   test('if one operation fails, retry attempt should be made', async () => {
-    const context = new _ChatContext();
+    const context = new ChatContext();
     const tokenCredential = stubCommunicationTokenCredential();
     const first = { ...messageTemplate };
     first.id = 'first';

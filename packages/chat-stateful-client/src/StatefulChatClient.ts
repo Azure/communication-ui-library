@@ -3,7 +3,7 @@
 
 import { ChatClient, ChatClientOptions } from '@azure/communication-chat';
 import { _getApplicationId, _TelemetryImplementationHint } from '@internal/acs-ui-common';
-import { _ChatContext } from './ChatContext';
+import { ChatContext } from './ChatContext';
 import { ChatClientState } from './ChatClientState';
 import { EventSubscriber } from './EventSubscriber';
 import { chatThreadClientDeclaratify } from './StatefulChatThreadClient';
@@ -45,10 +45,28 @@ export interface StatefulChatClient extends ChatClient {
    * @param handler - Original callback to be unsubscribed.
    */
   offStateChange(handler: (state: ChatClientState) => void): void;
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /**
+   * Downloads a resource for specific message and caches it.
+   *
+   * @param threadId - The thread id of the chat thread.
+   * @param messageId - The message id of the chat message.
+   * @param resourceUrl - The resource url to fetch and cache.
+   */
+  downloadResourceToCache(threadId: string, messageId: string, resourceUrl: string): void;
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /**
+   * Removes a resource from cache for specific message.
+   *
+   * @param threadId - The thread id of the chat thread.
+   * @param messageId - The message id of the chat message.
+   * @param resourceUrl - The resource url to remove from cache.
+   */
+  removeResourceFromCache(threadId: string, messageId: string, resourceUrl: string): void;
 }
 
 interface StatefulChatClientWithPrivateProps extends StatefulChatClient {
-  context: _ChatContext;
+  context: ChatContext;
   eventSubscriber: EventSubscriber | undefined;
 }
 
@@ -217,18 +235,12 @@ export type ChatStateModifier = (state: ChatClientState) => void;
 export const _createStatefulChatClientWithDeps = (
   chatClient: ChatClient,
   args: StatefulChatClientArgs,
-  options?: StatefulChatClientOptions,
-  chatContext?: _ChatContext
+  options?: StatefulChatClientOptions
 ): StatefulChatClient => {
-  let context: _ChatContext;
-  if (chatContext) {
-    context = chatContext;
-  } else {
-    context = new _ChatContext(
-      options?.maxStateChangeListeners,
-      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ args.credential
-    );
-  }
+  const context = new ChatContext(
+    options?.maxStateChangeListeners,
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ args.credential
+  );
 
   let eventSubscriber: EventSubscriber;
 
@@ -252,6 +264,18 @@ export const _createStatefulChatClientWithDeps = (
   Object.defineProperty(proxy, 'dispose', {
     configurable: false,
     value: () => context?.dispose()
+  });
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  Object.defineProperty(proxy, 'downloadResourceToCache', {
+    configurable: false,
+    value: (threadId: string, messageId: string, resourceUrl: string) =>
+      context?.downloadResourceToCache(threadId, messageId, resourceUrl)
+  });
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  Object.defineProperty(proxy, 'removeResourceFromCache', {
+    configurable: false,
+    value: (threadId: string, messageId: string, resourceUrl: string) =>
+      context?.removeResourceFromCache(threadId, messageId, resourceUrl)
   });
   Object.defineProperty(proxy, 'getState', {
     configurable: false,

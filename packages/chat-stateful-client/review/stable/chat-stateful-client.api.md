@@ -129,7 +129,7 @@ export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: 
 export const _createStatefulChatClientInner: (args: StatefulChatClientArgs, options?: StatefulChatClientOptions, telemetryImplementationHint?: _TelemetryImplementationHint) => StatefulChatClient;
 
 // @internal
-export const _createStatefulChatClientWithDeps: (chatClient: ChatClient, args: StatefulChatClientArgs, options?: StatefulChatClientOptions, chatContext?: _ChatContext) => StatefulChatClient;
+export const _createStatefulChatClientWithDeps: (chatClient: ChatClient, args: StatefulChatClientArgs, options?: StatefulChatClientOptions) => StatefulChatClient;
 
 // @public
 export interface StatefulChatClient extends ChatClient {

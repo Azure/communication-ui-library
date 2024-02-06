@@ -51,6 +51,8 @@ export class _ChatContext {
     // (undocumented)
     dispose(): void;
     // (undocumented)
+    downloadResourceToCache(threadId: string, messageId: string, resourceUrl: string): void;
+    // (undocumented)
     getState(): ChatClientState;
     // (undocumented)
     modifyState(modifier: (draft: ChatClientState) => void): void;
@@ -58,6 +60,8 @@ export class _ChatContext {
     offStateChange(handler: (state: ChatClientState) => void): void;
     // (undocumented)
     onStateChange(handler: (state: ChatClientState) => void): void;
+    // (undocumented)
+    removeResourceFromCache(threadId: string, messageId: string, resourceUrl: string): void;
     // (undocumented)
     setChatMessage(threadId: string, message: ChatMessageWithStatus): void;
     // (undocumented)
@@ -133,14 +137,16 @@ export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: 
 export const _createStatefulChatClientInner: (args: StatefulChatClientArgs, options?: StatefulChatClientOptions, telemetryImplementationHint?: _TelemetryImplementationHint) => StatefulChatClient;
 
 // @internal
-export const _createStatefulChatClientWithDeps: (chatClient: ChatClient, args: StatefulChatClientArgs, options?: StatefulChatClientOptions, chatContext?: _ChatContext) => StatefulChatClient;
+export const _createStatefulChatClientWithDeps: (chatClient: ChatClient, args: StatefulChatClientArgs, options?: StatefulChatClientOptions) => StatefulChatClient;
 
 // @public
 export interface StatefulChatClient extends ChatClient {
     dispose(): void;
+    downloadResourceToCache(threadId: string, messageId: string, resourceUrl: string): void;
     getState(): ChatClientState;
     offStateChange(handler: (state: ChatClientState) => void): void;
     onStateChange(handler: (state: ChatClientState) => void): void;
+    removeResourceFromCache(threadId: string, messageId: string, resourceUrl: string): void;
 }
 
 // @public

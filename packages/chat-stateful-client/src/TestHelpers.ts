@@ -8,7 +8,8 @@ import { _createStatefulChatClientWithDeps, StatefulChatClient, StatefulChatClie
 import { createMockChatThreadClient } from './mocks/createMockChatThreadClient';
 import { createMockIterator } from './mocks/createMockIterator';
 import { MockCommunicationUserCredential } from './mocks/MockCommunicationUserCredential';
-import { _ChatContext } from './ChatContext';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { ChatContext } from './ChatContext';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 
@@ -82,25 +83,38 @@ export const createStatefulChatClientMock = (): StatefulChatClientWithEventTrigg
     defaultClientArgs
   ) as StatefulChatClientWithEventTrigger;
 };
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
+ *
  * @private
  */
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-export const createStatefulChatClientWithContextMock = (): StatefulChatClientWithEventTrigger => {
-  const chatContext = new _ChatContext();
-  chatContext.createThreadIfNotExist('threadId1');
-  chatContext.setChatMessages('threadId1', { messageId1: messageTemplate });
+export const createStatefulChatClienWithPrivatePropsMock = (): StatefulChatClientWithPrivateProps => {
   return _createStatefulChatClientWithDeps(
     createMockChatClient(),
-    defaultClientArgs,
-    undefined,
-    chatContext
-  ) as StatefulChatClientWithEventTrigger;
+    defaultClientArgs
+  ) as StatefulChatClientWithPrivateProps;
 };
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * @private
  */
+export type StatefulChatClientWithPrivateProps = StatefulChatClient & {
+  context: ChatContext;
+};
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/**
+ * @private
+ */
+export const createChatContextMock = (): ChatContext => {
+  const chatContext = new ChatContext();
+  chatContext.createThreadIfNotExist('threadId1');
+  chatContext.setChatMessages('threadId1', { messageId1: messageTemplate });
+  return chatContext;
+};
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/**
+ * @private
+ */
 export const messageTemplate: ChatMessageWithStatus = {
   id: 'MessageId',
   content: { message: 'MessageContent' },

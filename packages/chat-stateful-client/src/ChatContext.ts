@@ -31,7 +31,7 @@ enablePatches();
 /**
  * @internal
  */
-export class _ChatContext {
+export class ChatContext {
   private _state: ChatClientState = {
     userId: { id: '' } as UnknownIdentifierKind,
     displayName: '',
@@ -95,6 +95,27 @@ export class _ChatContext {
       });
     });
     // Any item in queue should be removed.
+  }
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  public downloadResourceToCache(threadId: string, messageId: string, resourceUrl: string): void {
+    this.modifyState((draft: ChatClientState) => {
+      const message = draft.threads[threadId]?.chatMessages[messageId];
+      if (message) {
+        if (!message.resourceCache) {
+          message.resourceCache = {};
+        }
+        // Make request to download the resource and cache it.
+      }
+    });
+  }
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  public removeResourceFromCache(threadId: string, messageId: string, resourceUrl: string): void {
+    this.modifyState((draft: ChatClientState) => {
+      const message = draft.threads[threadId]?.chatMessages[messageId];
+      if (message && message.resourceCache) {
+        // Clean up the resource cache for specific url
+      }
+    });
   }
 
   public setThread(threadId: string, threadState: ChatThreadClientState): void {

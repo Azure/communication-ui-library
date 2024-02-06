@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { ListPageSettings } from '@azure/communication-chat';
-import { _ChatContext } from '../ChatContext';
+import { ChatContext } from '../ChatContext';
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { ChatErrorTarget } from '../ChatClientState';
 
@@ -18,8 +18,8 @@ type IteratorCreatorFn<T, OptionsType, PageT = T[]> = (options?: OptionsType) =>
  */
 export const createDecoratedIterator = <ItemType, OptionsType>(
   iteratorCreator: IteratorCreatorFn<ItemType, OptionsType>,
-  context: _ChatContext,
-  decorateFn: (item: ItemType, context: _ChatContext) => void
+  context: ChatContext,
+  decorateFn: (item: ItemType, context: ChatContext) => void
 ) => {
   return (...args: Parameters<IteratorCreatorFn<ItemType, OptionsType>>): PagedAsyncIterableIterator<ItemType> => {
     const threadsIterator = iteratorCreator(...args);
@@ -62,12 +62,12 @@ export const createDecoratedIterator = <ItemType, OptionsType>(
  *
  * @param iteratorCreator Function that creates the base iteartor
  * @param context The ChatContext that stores all internal state.
- * @param target See {@link _ChatContext.asyncTeeErrorToState}.
+ * @param target See {@link ChatContext.asyncTeeErrorToState}.
  * @returns A function to create an iterator that handles errors when iterting over the iterator from `iteratorCreator`.
  */
 export const createErrorHandlingIterator = <ItemType, OptionsType>(
   iteratorCreator: IteratorCreatorFn<ItemType, OptionsType>,
-  context: _ChatContext,
+  context: ChatContext,
   target: ChatErrorTarget
 ): IteratorCreatorFn<ItemType, OptionsType> => {
   return (...args: Parameters<IteratorCreatorFn<ItemType, OptionsType>>): PagedAsyncIterableIterator<ItemType> => {

@@ -4,7 +4,7 @@
 import { ChatThreadClient, SendChatMessageResult } from '@azure/communication-chat';
 import { getIdentifierKind } from '@azure/communication-common';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
-import { _ChatContext } from './ChatContext';
+import { ChatContext } from './ChatContext';
 import { nanoid } from 'nanoid';
 import { createDecoratedListMessages } from './iterators/createDecoratedListMessages';
 import { createDecoratedListReadReceipts } from './iterators/createDecoratedListReadReceipts';
@@ -12,9 +12,9 @@ import { createDecoratedListParticipants } from './iterators/createDecoratedList
 import { convertChatMessage } from './convertChatMessage';
 
 class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
-  private _context: _ChatContext;
+  private _context: ChatContext;
 
-  constructor(context: _ChatContext) {
+  constructor(context: ChatContext) {
     this._context = context;
   }
 
@@ -169,7 +169,7 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
  */
 export const chatThreadClientDeclaratify = (
   chatThreadClient: ChatThreadClient,
-  context: _ChatContext
+  context: ChatContext
 ): ChatThreadClient => {
   context.createThreadIfNotExist(chatThreadClient.threadId);
   return new Proxy(chatThreadClient, new ProxyChatThreadClient(context)) as ChatThreadClient;
