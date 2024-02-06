@@ -13,7 +13,8 @@ export const questionTextStyle = (theme: Theme): string =>
     fontSize: _pxToRem(16),
     lineHeight: _pxToRem(20),
     color: theme.palette.neutralPrimary,
-    paddingTop: _pxToRem(20)
+    marginTop: _pxToRem(8),
+    marginBottom: _pxToRem(4)
   });
 
 /**
@@ -24,6 +25,7 @@ export const helperTextStyle = (theme: Theme): string =>
     fontWeight: 400,
     fontSize: _pxToRem(12),
     lineHeight: _pxToRem(16),
+    marginTop: _pxToRem(4),
     color: theme.palette.neutralSecondary
   });
 
