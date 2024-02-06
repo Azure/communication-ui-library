@@ -129,20 +129,20 @@ export const useVideoTileContextualMenuProps = (props: {
         });
       }
     } else {
-      const startSpotlightMenuLabelText =
+      const startSpotlightMenuLabel =
         spotlightedParticipantUserIds && spotlightedParticipantUserIds.length > 0
           ? strings?.addSpotlightVideoTileMenuLabel
           : strings?.startSpotlightVideoTileMenuLabel;
-      if (onStartSpotlight && remoteParticipant.userId && startSpotlightMenuLabelText) {
+      if (onStartSpotlight && remoteParticipant.userId && startSpotlightMenuLabel) {
         items.push({
           key: 'startSpotlight',
-          text: startSpotlightMenuLabelText,
+          text: startSpotlightMenuLabel,
           iconProps: {
             iconName: 'StartSpotlightContextualMenuItem',
             styles: { root: { lineHeight: 0 } }
           },
           onClick: () => onStartSpotlight(remoteParticipant.userId),
-          ariaLabel: startSpotlightMenuLabelText
+          ariaLabel: startSpotlightMenuLabel
         });
       }
     }
