@@ -35,7 +35,7 @@ import { dtmfFrequencies, Tone } from './DTMFToneGenerator';
 /**
  * Strings of {@link Dialpad} that can be overridden.
  *
- * @beta
+ * @public
  */
 export interface DialpadStrings {
   placeholderText: string;
@@ -45,7 +45,7 @@ export interface DialpadStrings {
 /**
  * Styles for {@link Dialpad} component.
  *
- * @beta
+ * @public
  */
 export interface DialpadStyles {
   root?: IStyle;
@@ -59,7 +59,7 @@ export interface DialpadStyles {
 /**
  * DTMF tone for PSTN calls.
  *
- * @beta
+ * @public
  */
 export type DtmfTone =
   | 'A'
@@ -82,20 +82,20 @@ export type DtmfTone =
 
 /**
  * Modes of the dialpad component.
- * @beta
+ * @public
  */
 export type DialpadMode = 'dtmf' | 'dialer';
 
 /**
  * Modes of how the longpress handlers can be tiggered.
- * @beta
+ * @public
  */
 export type LongPressTrigger = 'mouseAndTouch' | 'touch';
 
 /**
  * Props for {@link Dialpad} component.
  *
- * @beta
+ * @public
  */
 export interface DialpadProps {
   strings?: DialpadStrings;
@@ -442,7 +442,7 @@ const DialpadContainer = (props: {
  * A component to allow users to enter phone number through clicking on dialpad/using keyboard
  * It will return empty component for stable builds
  *
- * @beta
+ * @public
  */
 export const Dialpad = (props: DialpadProps): JSX.Element => {
   /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */

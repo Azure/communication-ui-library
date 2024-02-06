@@ -80,7 +80,9 @@ import { Sparkle20Filled, VideoProhibited20Filled, MicProhibited20Filled } from 
 /* @conditional-compile-remove(file-sharing) */
 import { ArrowDownload16Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
-import { CallPause20Regular, CallPause20Filled, Play20Regular, People20Regular } from '@fluentui/react-icons';
+import { CallPause20Regular, CallPause20Filled, Play20Regular } from '@fluentui/react-icons';
+/* @conditional-compile-remove(dialpad) */
+import { People20Regular } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(data-loss-prevention) */
 import { Prohibited16Regular } from '@fluentui/react-icons';

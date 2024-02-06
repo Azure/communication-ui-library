@@ -130,7 +130,7 @@ export interface RemoteVideoTileMenuOptions {
 /**
  * Options for the local video tile in the Call composite.
  *
- * @beta
+ * @public
  */
 export interface LocalVideoTileOptions {
   /**
