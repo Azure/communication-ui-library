@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { Persona, PersonaSize, Stack, mergeStyles, useTheme } from '@fluentui/react';
+import { IStyle, Persona, PersonaSize, Stack, mergeStyles, useTheme } from '@fluentui/react';
 import {
   mentionPopoverContainerStyle,
   headerStyleThemed,
@@ -83,6 +83,8 @@ export interface MentionLookupOptions {
    * Optional callback to render an item of the mention suggestions list.
    */
   onRenderSuggestionItem?: (suggestion: Mention, onSuggestionSelected: (suggestion: Mention) => void) => JSX.Element;
+  mentionStyle?: IStyle;  // or type of React.CSSProperties;
+  onRenderMention?: (mentionElement: HTMLElement) => HTMLElement;
 }
 
 /**
@@ -94,7 +96,7 @@ export interface MentionDisplayOptions {
   /**
    * Optional callback for customizing the mention renderer in a message thread.
    */
-  onRenderMention?: (mention: Mention, defaultOnRender: (mention: Mention) => JSX.Element) => JSX.Element;
+  onRenderMention?: (mentionElement: HTMLElement) => JSX.Element;
 }
 
 /**
@@ -119,6 +121,8 @@ export interface Mention {
   displayText: string;
   /** Optional React element to render an item icon of a mention suggestion */
   icon?: JSX.Element;
+  /** Optional style property to style the mentioned user in the input field. */
+  style?: React.CSSProperties;
 }
 
 /**
@@ -216,7 +220,9 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
       finalPosition.bottom = (rect?.height ?? 0) - (targetPositionOffset?.top ?? 0) + verticalOffset;
     }
     // setPosition(finalPosition);
-    setPosition({ left: targetPositionOffset?.left ?? 0, bottom: targetPositionOffset?.top ?? 0 });
+    // setPosition({ left: targetPositionOffset?.left ?? 0, bottom: targetPositionOffset?.top ?? 0 });
+    setPosition({ left: targetPositionOffset?.left ?? 0, bottom: -1600 });
+
   }, [location, target, targetPositionOffset]);
 
   const handleOnKeyDown = useCallback(

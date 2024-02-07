@@ -4,7 +4,7 @@ import React from 'react';
 import { PickerPlugin } from 'roosterjs-editor-plugins';
 import { PickerPluginOptions } from 'roosterjs-editor-types';
 import { ReactEditorPlugin, UIUtilities } from 'roosterjs-react';
-import { MentionPluginDataProvider } from '../DataProvider/MentionPluginDataProvider';
+import { MentionDataProvider } from '../DataProvider/MentionDataProvider';
 import { Mention, MentionLookupOptions, _MentionPopover, _MentionPopoverProps } from '../../MentionPopover';
 import { renderReactComponent } from '../PluginUI/PluginUI';
 
@@ -21,7 +21,7 @@ export interface MentionPluginProps extends MentionLookupOptions {
 /**
  * @private
  */
-export interface RenderMentionPluginUIProps {
+export interface MentionPluginUIProps {
   /**
    * Array of mention suggestions used to populate the suggestion list
    */
@@ -55,7 +55,7 @@ export default class MentionPlugin extends PickerPlugin implements ReactEditorPl
   private disposer: (() => void) | undefined = undefined;
 
   constructor(props: MentionPluginProps) {
-    const onRenderPluginUICallback = (renderPluginUIProps: RenderMentionPluginUIProps): void => {
+    const onRenderPluginUICallback = (renderPluginUIProps: MentionPluginUIProps): void => {
       const { suggestions, activeSuggestionIndex, cursorPoint, onSuggestionSelected, onDismiss } = renderPluginUIProps;
       const targetPositionOffset = { left: cursorPoint?.x ?? 0, top: cursorPoint?.y ?? 0 };
       if (suggestions.length > 0) {
@@ -79,9 +79,14 @@ export default class MentionPlugin extends PickerPlugin implements ReactEditorPl
     const onDismissCallback = (): void => {
       this.disposer?.();
       this.disposer = undefined;
+      // this.uiUtilities?.remove(); //???
+      // this.setIsSuggesting(false);
+      // this.emojiCalloutRef.current?.dismiss();
+      // this.editor = null;
+      // this.baseId = 0;
     };
 
-    const provider = new MentionPluginDataProvider({
+    const provider = new MentionDataProvider({
       ...props,
       onRenderPluginUI: onRenderPluginUICallback,
       onPluginUIDismiss: onDismissCallback

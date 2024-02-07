@@ -98,6 +98,11 @@ export const MentionsExample: () => JSX.Element = () => {
                 return suggestion.displayText.toLocaleLowerCase().startsWith(query.toLocaleLowerCase());
               });
               return Promise.resolve(filtered);
+            },
+            onRenderMention: (mentionElement) => {
+              // mentionElement.style.cssText = "color: pink; background-color: yellow;"
+              mentionElement.style.color = '#004578';
+              return mentionElement;
             }
           }}
         />
@@ -105,3 +110,11 @@ export const MentionsExample: () => JSX.Element = () => {
     </FluentThemeProvider>
   );
 };
+
+// onRenderMention: (mentionElement) => {
+//   mentionElement.style.cssText = "color: pink; background-color: yellow;"
+//   mentionElement.style.color = 'blue'
+//   return mentionElement;
+// }
+
+// mentionStyle: { color: 'pink' },

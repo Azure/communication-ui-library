@@ -3,8 +3,9 @@
 
 import { IEditor, PickerDataProvider } from 'roosterjs-editor-types';
 import { Mention, _MentionPopover } from '../../MentionPopover';
-import { MentionPluginProps, RenderMentionPluginUIProps } from '../Plugins/MentionPlugin';
-import React from 'react';
+import { MentionPluginProps, MentionPluginUIProps } from '../Plugins/MentionPlugin';
+import _ from 'lodash';
+import { Position } from '@fluentui/react';
 
 // Note:
 // setIsSuggesting is a satchel action for this data provider
@@ -13,16 +14,17 @@ import React from 'react';
 /**
  * @private
  */
-export interface MentionPluginDataProviderProps extends MentionPluginProps {
-  onRenderPluginUI: (props: RenderMentionPluginUIProps) => void;
+export interface MentionDataProviderProps extends MentionPluginProps {
+  onRenderPluginUI: (props: MentionPluginUIProps) => void;
   onPluginUIDismiss: () => void;
 }
 
 /**
  * @private
  */
-export interface MentionPluginDataProviderState {
+export interface MentionDataProviderState {
   isSuggesting: boolean;
+  queryString?: string;
   suggestions: Mention[];
   cursorPoint: { x: number; y: number };
 }
@@ -30,16 +32,18 @@ export interface MentionPluginDataProviderState {
 /**
  * @private
  */
-export class MentionPluginDataProvider implements PickerDataProvider {
-  private _state: MentionPluginDataProviderState;
+export class MentionDataProvider implements PickerDataProvider {
+  private _state: MentionDataProviderState;
   private insertMentionIntoEditor: ((element: HTMLElement) => void) | null = null;
   private setIsSuggestingCallback: ((isSuggesting: boolean) => void) | null = null;
   public editor: IEditor | undefined;
-  private props: MentionPluginDataProviderProps;
+  private props: MentionDataProviderProps;
+  private disposer: (() => void) | undefined = undefined;
 
-  constructor(props: MentionPluginDataProviderProps) {
+  constructor(props: MentionDataProviderProps) {
     this._state = {
       isSuggesting: false,
+      queryString: '',
       suggestions: [],
       cursorPoint: { x: 0, y: 0 }
     };
@@ -69,10 +73,20 @@ export class MentionPluginDataProvider implements PickerDataProvider {
   };
 
   queryStringUpdated = async (queryString: string): Promise<void> => {
+    console.log('queryStringUpdated::: ', queryString);
     let suggestions = (await this.props?.onQueryUpdated(queryString)) ?? [];
     suggestions = suggestions.filter((suggestion) => suggestion.displayText.trim() !== '');
+    console.log('queryStringUpdated::: suggestions', suggestions, 'state', this._state.suggestions);
+
+    // Sometimes PickerPlugin calls queryStringUpdated with the same queryString twice. Compare the suggestions to avoid unnecessary rendering.
+    // Check the length first to avoid calling isEqual.
+    if (queryString == this._state.queryString && suggestions.length == this._state.suggestions.length && _.isEqual(suggestions, this._state.suggestions)) {
+      return;
+    }
+    this._state.queryString = queryString;
     this._state.suggestions = suggestions;
     if (this._state.isSuggesting) {
+      console.log('queryStringUpdated::: show popover', queryString);
       const { suggestions, cursorPoint } = this._state;
       this.props.onRenderPluginUI({
         suggestions: suggestions,
@@ -131,27 +145,27 @@ export class MentionPluginDataProvider implements PickerDataProvider {
     this.editor?.setEditorDomAttribute('aria-activedescendant', activeDescendantId);
   };
 
-  getMentionPopoverElement = (): JSX.Element => {
-    const suggestions = this._state.suggestions;
-    const offset = { left: this._state.cursorPoint.x, top: this._state.cursorPoint.y };
-    return suggestions.length > 0 ? (
-      <_MentionPopover
-        suggestions={suggestions}
-        // activeSuggestionIndex={this.activeSuggestionIndex}
-        target={this.props.target}
-        targetPositionOffset={offset}
-        onRenderSuggestionItem={this.props.onRenderSuggestionItem}
-        onSuggestionSelected={this.onSuggestionSelected}
-        onDismiss={() => {
-          this._state.suggestions = [];
-          // setSuggestions([]);
-          // onDismiss();
-        }}
-      />
-    ) : (
-      <></>
-    );
-  };
+  // getMentionPopoverElement = (): JSX.Element => {
+  //   const suggestions = this._state.suggestions;
+  //   const offset = { left: this._state.cursorPoint.x, top: this._state.cursorPoint.y };
+  //   return suggestions.length > 0 ? (
+  //     <_MentionPopover
+  //       suggestions={suggestions}
+  //       // activeSuggestionIndex={this.activeSuggestionIndex}
+  //       target={this.props.target}
+  //       targetPositionOffset={offset}
+  //       onRenderSuggestionItem={this.props.onRenderSuggestionItem}
+  //       onSuggestionSelected={this.onSuggestionSelected}
+  //       onDismiss={() => {
+  //         this._state.suggestions = [];
+  //         // setSuggestions([]);
+  //         // onDismiss();
+  //       }}
+  //     />
+  //   ) : (
+  //     <></>
+  //   );
+  // };
 
   onSuggestionSelected = (suggestion: Mention) => {
     const anchorElement = document.createElement('a');
@@ -161,10 +175,30 @@ export class MentionPluginDataProvider implements PickerDataProvider {
     anchorElement.innerText = '@' + targetName;
     // Href is needed here to fix the bug where all the characters after the mention are also highlighted
     anchorElement.href = '#';
+    anchorElement.style.color = '#004578';
+
+    // const mentionElement = this.props.onRenderMention && this.props.onRenderMention(anchorElement)
 
     this.insertMentionIntoEditor && this.insertMentionIntoEditor(anchorElement);
+    // this.editor?.select(anchorElement, Position.After)
     this.onDismissMentionPopover();
-  };
+  }
+
+
+  // const style = this.props.mentionStyle;
+  // const styleString = (
+  //   Object.entries(style).map(([k, v]) => `${k}:${v}`).join(';')
+  // );
+  // anchorElement.style.cssText = styleString
+  
+  // this.insertMentionIntoEditor && this.insertMentionIntoEditor(anchorElement);
+  // this.onDismissMentionPopover();
+    
+    // const mentionElement = this.props.onRenderMention && this.props.onRenderMention(anchorElement)
+
+    // this.insertMentionIntoEditor && this.insertMentionIntoEditor(mentionElement || anchorElement);
+    // this.onDismissMentionPopover();
+  // };
 
   onDismissMentionPopover = (): void => {
     this._state.suggestions = [];
