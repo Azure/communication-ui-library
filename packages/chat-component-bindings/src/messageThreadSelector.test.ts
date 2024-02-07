@@ -97,6 +97,7 @@ const getChatParticipants = (): { [key: string]: ChatParticipant } => {
 const getChatMessages = (
   messageText: string,
   attachments?: ChatAttachment[],
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   resourceCache?: Record<string, string>
 ): { [key: string]: ChatMessageWithStatus } => {
   const chatMessages: { [key: string]: ChatMessageWithStatus } = {};
@@ -112,6 +113,7 @@ const getChatMessages = (
       message: messageText,
       attachments: attachments
     },
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     resourceCache: resourceCache
   };
   return chatMessages;
