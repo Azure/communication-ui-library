@@ -159,6 +159,8 @@ export class MentionPluginDataProvider implements PickerDataProvider {
     const targetName = suggestion.displayText;
     anchorElement.id = atMentionId;
     anchorElement.innerText = '@' + targetName;
+    // Href is needed here to fix the bug where all the characters after the mention are also highlighted
+    anchorElement.href = '#';
 
     this.insertMentionIntoEditor && this.insertMentionIntoEditor(anchorElement);
     this.onDismissMentionPopover();
