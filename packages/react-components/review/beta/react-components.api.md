@@ -175,7 +175,7 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     isSpeaking?: boolean;
     raisedHand?: RaisedHand;
     reaction?: Reaction;
-    isSpotlighted?: Spotlight;
+    spotlight?: Spotlight;
 };
 
 // @internal
@@ -2227,7 +2227,7 @@ export const _spokenLanguageToCaptionLanguage: {
 
 // @beta
 export type Spotlight = {
-    spotlightOrderPosition?: number;
+    spotlightedOrderPosition?: number;
 };
 
 // @internal
@@ -2607,6 +2607,7 @@ export type VideoGalleryParticipant = {
     displayName?: string;
     videoStream?: VideoGalleryStream;
     isScreenSharingOn?: boolean;
+    spotlight?: Spotlight;
 };
 
 // @public

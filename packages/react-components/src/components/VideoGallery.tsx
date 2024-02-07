@@ -442,7 +442,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     }
 
     /* @conditional-compile-remove(spotlight) */
-    const isSpotlighted = spotlightedParticipants?.includes(localParticipant.userId);
+    const isSpotlighted = !!localParticipant.spotlight;
 
     const localVideoTileStyles = concatStyleSets(
       localTileNotInGrid ? floatingLocalVideoTileStyle : {},
@@ -520,8 +520,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(gallery-layouts) */
     layout,
     showLocalVideoTileLabel,
-    /* @conditional-compile-remove(spotlight) */
-    spotlightedParticipants,
     /* @conditional-compile-remove(reaction) */
     reactionResources
   ]);
@@ -569,7 +567,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       const selectedScalingMode = remoteVideoStream ? selectedScalingModeState[participant.userId] : undefined;
       let isPinned = pinnedParticipants?.includes(participant.userId);
       /* @conditional-compile-remove(spotlight) */
-      const isSpotlighted = spotlightedParticipants?.includes(participant.userId);
+      const isSpotlighted = !!participant.spotlight;
       /* @conditional-compile-remove(spotlight) */
       isPinned = isSpotlighted ? false : isPinned;
 

@@ -199,7 +199,7 @@ const onRenderParticipantDefault = (
               <Icon iconName="ParticipantItemMicOff" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
             )}
             {
-              /* @conditional-compile-remove(spotlight) */ callingParticipant.isSpotlighted && (
+              /* @conditional-compile-remove(spotlight) */ callingParticipant.spotlight && (
                 <Icon iconName="ParticipantItemSpotlighted" className={iconStyles} />
               )
             }

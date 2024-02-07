@@ -402,7 +402,7 @@ export interface RemoteParticipantState {
   /**
    * Proxy of {@link @azure/communication-calling#SpotlightCallFeature.spotlightedParticipants}.
    */
-  spotlighted?: SpotlightState;
+  spotlight?: SpotlightState;
 }
 
 /**
