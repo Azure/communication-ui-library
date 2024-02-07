@@ -1,0 +1,48 @@
+import { Meta, Source } from '@storybook/addon-docs';
+
+<Meta
+  id="addingReactions"
+  title="Concepts/Adding Meeting Reaction"
+  parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }}
+/>
+
+import MeetingReactionSnippetText from '!!raw-loader!./snippets/MeetingReactionsSnippet.snippet.tsx';
+
+# Adding Reaction to your Meeting Experiences
+
+The web is a quiet place and communication experiences are not. This concept is about creating a more rich communication experience by providing event driven reaction to your communication experiences.
+
+## Meeting Reaction
+
+This feature is designed to empower developers by enabling them to integrate the ability to send or receive reactions into their calling experiences.
+While the web environment is generally quiet, calling experiences tend to be more dynamic. There are various calling or meeting scenarios in which we aim to add reaction experience
+throughout the call's lifecycle to offer users real-time feedback about ongoing events. These include:
+
+<ul>
+  <li>
+    In an ongoing meeting or call - User expressing their support, approval, funny emotion, love, surprise emotion or
+    appreciation to an ongoing topic.
+  </li>
+  <li>
+    Meeting where admin restricts a particular set of users to talk or turn their video on - send reaction or seeing
+    reaction is the only mode of communication in a larger audience to interact with everyone without interrupting
+    ongoing presentation.
+  </li>
+</ul>
+
+It is important to note that as the developer you will need to ensure that your sprite animation image files are loaded or bundled appropriately in your project.
+Recommended reading for this is found here with these common bundlers:
+
+<ul>
+  <li>
+    <a href="https://webpack.js.org/guides/asset-management/#loading-images">webpack</a>
+  </li>
+  <li>
+    <a href="https://create-react-app.dev/docs/adding-images-fonts-and-files/">create-react-app</a>
+  </li>
+</ul>
+
+We are providing the meeting reaction experiences on our `CallComposite` and `CallWithChatComposite`. The reaction resources are
+applied through the `CallAdapter` options and reactions can be added to the experience with the following snippet.
+
+<Source code={MeetingReactionSnippetText} />
