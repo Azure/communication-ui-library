@@ -3,7 +3,7 @@
 
 import { ChatMessageWithStatus } from '@internal/chat-stateful-client';
 import { messageThreadSelector } from './messageThreadSelector';
-import { ChatAttachment, ChatParticipant } from '@azure/communication-chat';
+import { ChatAttachment, ChatMessageType, ChatParticipant } from '@azure/communication-chat';
 
 // Make it type safe when messageThreadSelector can return resultFunc property
 const messageThreadSelectorResultFunc = (messageThreadSelector as any).resultFunc;
@@ -13,7 +13,7 @@ describe('messageThreadSelector tests', () => {
     const messageText = 'Hello';
     const result = messageThreadSelectorResultFunc(
       '1',
-      getChatMessages(messageText),
+      getChatMessages(messageText, 'text'),
       Date.now(),
       false,
       [],
@@ -31,7 +31,7 @@ describe('messageThreadSelector tests', () => {
     const messageText = '<p>Hello</p>';
     const result = messageThreadSelectorResultFunc(
       '1',
-      getChatMessages(messageText),
+      getChatMessages(messageText, 'html'),
       Date.now(),
       false,
       [],
@@ -49,7 +49,7 @@ describe('messageThreadSelector tests', () => {
     const messageText = '<p>Hello <img alt="image" src="" id="1"></p>';
     const result = messageThreadSelectorResultFunc(
       '1',
-      getChatMessages(messageText),
+      getChatMessages(messageText, 'html'),
       Date.now(),
       false,
       [],
@@ -62,6 +62,7 @@ describe('messageThreadSelector tests', () => {
     ]);
   });
 
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   test('should parse HTML messages with image tag correctly with attachments', async (): Promise<void> => {
     const messageText = '<p>Hello <img alt="image" src="" id="1"></p>';
     const imageContent = 'data:image/png;base64,iVBORw0KGgoAAAA';
@@ -69,7 +70,7 @@ describe('messageThreadSelector tests', () => {
 
     const result = messageThreadSelectorResultFunc(
       '1',
-      getChatMessages(messageText, [{ id: '1', attachmentType: 'image', previewUrl: 'testURL' }], {
+      getChatMessages(messageText, 'html', [{ id: '1', attachmentType: 'image', previewUrl: 'testURL' }], {
         testURL: imageContent
       }),
       Date.now(),
@@ -96,6 +97,7 @@ const getChatParticipants = (): { [key: string]: ChatParticipant } => {
 
 const getChatMessages = (
   messageText: string,
+  type: ChatMessageType,
   attachments?: ChatAttachment[],
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   resourceCache?: Record<string, string>
@@ -106,7 +108,7 @@ const getChatMessages = (
     clientMessageId: '0',
     sequenceId: '0',
     status: 'delivered',
-    type: 'html',
+    type: type,
     version: '1',
     createdOn: new Date(),
     content: {
