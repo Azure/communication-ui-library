@@ -139,7 +139,6 @@ const overlayPropsOutboundCall = (
 };
 
 const outboundCallStringsTrampoline = (strings: CallCompositeStrings): string => {
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   return strings.outboundCallingNoticeString;
   return '';
 };
