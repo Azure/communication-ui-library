@@ -5,7 +5,7 @@ import { ChatMessageWithStatus } from '@internal/chat-stateful-client';
 import { messageThreadSelector } from './messageThreadSelector';
 import { ChatAttachment, ChatParticipant } from '@azure/communication-chat';
 
-// Make it type safe when update messageThreadSelector
+// Make it type safe when messageThreadSelector can return resultFunc property
 const messageThreadSelectorResultFunc = (messageThreadSelector as any).resultFunc;
 
 describe('messageThreadSelector tests', () => {
