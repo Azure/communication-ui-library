@@ -85,7 +85,7 @@ describe('messageThreadSelector tests', () => {
   });
 });
 
-const getChatParticipants = () => {
+const getChatParticipants = (): { [key: string]: ChatParticipant } => {
   const participants: { [key: string]: ChatParticipant } = {};
   participants['1'] = {
     id: { communicationUserId: '1' },
@@ -98,7 +98,7 @@ const getChatMessages = (
   messageText: string,
   attachments?: ChatAttachment[],
   resourceCache?: Record<string, string>
-) => {
+): { [key: string]: ChatMessageWithStatus } => {
   const chatMessages: { [key: string]: ChatMessageWithStatus } = {};
   chatMessages['0'] = {
     id: '0',
