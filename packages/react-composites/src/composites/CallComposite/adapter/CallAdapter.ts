@@ -30,9 +30,17 @@ import type {
   PropertyChangedEvent
 } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
-import type { CommunicationIdentifierKind } from '@azure/communication-common';
+import type {
+  CommunicationIdentifierKind,
+  MicrosoftTeamsAppIdentifier,
+  UnknownIdentifier
+} from '@azure/communication-common';
+/* @conditional-compile-remove(teams-adhoc-call) */
+import type { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
-import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
+/* @conditional-compile-remove(dtmf-dialer) */
+import { DtmfTone } from '@azure/communication-calling';
 import { CommunicationIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import type { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
@@ -85,6 +93,20 @@ export type CallAdapterUiState = {
   /* @conditional-compile-remove(unsupported-browser) */
   unsupportedBrowserVersionsAllowed?: boolean;
 };
+
+/**
+ * Identifier types for initiating a call using the CallAdapter
+ * @public
+ */
+export type StartCallIdentifier =
+  | (
+      | MicrosoftTeamsAppIdentifier
+      | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier
+      | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
+      | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
+      | UnknownIdentifier
+    )
+  | /* @conditional-compile-remove(start-call-beta) */ CommunicationIdentifier;
 
 /**
  * {@link CommonCallAdapter} state inferred from Azure Communication Services backend.
@@ -610,11 +632,11 @@ export interface CallAdapterCallOperations {
   addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(dtmf-dialer) */
   /**
    * send dtmf tone to another participant in a 1:1 PSTN call
    *
-   * @beta
+   * @public
    */
   sendDtmfTone(dtmfTone: DtmfTone): Promise<void>;
   /* @conditional-compile-remove(unsupported-browser) */
@@ -1004,9 +1026,9 @@ export interface CallAdapterCallManagement extends CallAdapterCallOperations {
   /**
    * Start the call.
    * @param participants - An array of {@link @azure/communication-common#CommunicationIdentifier} to be called
-   * @beta
+   * @public
    */
-  startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
+  startCall(participants: StartCallIdentifier[], options?: StartCallOptions): Call | undefined;
 }
 
 // TODO: Flatten the adapter structure
@@ -1048,13 +1070,12 @@ export interface CommonCallAdapter
    * @public
    */
   startCall(participants: string[], options?: StartCallOptions): void;
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Start the call.
    * @param participants - An array of {@link @azure/communication-common#CommunicationIdentifier} to be called
-   * @beta
+   * @public
    */
-  startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): void;
+  startCall(participants: StartCallIdentifier[], options?: StartCallOptions): void;
 }
 
 /**
@@ -1091,13 +1112,12 @@ export interface CallAdapter extends CommonCallAdapter {
    * @public
    */
   startCall(participants: string[], options?: StartCallOptions): Call | undefined;
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Start the call.
    * @param participants - An array of {@link @azure/communication-common#CommunicationIdentifier} to be called
-   * @beta
+   * @public
    */
-  startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
+  startCall(participants: StartCallIdentifier[], options?: StartCallOptions): Call | undefined;
 }
 
 /* @conditional-compile-remove(teams-identity-support) */

@@ -460,6 +460,7 @@ export type ComponentSlotStyle = Omit<IRawStyle, 'animation'>;
 export interface ComponentStrings {
     cameraButton: CameraButtonStrings;
     devicesButton: DevicesButtonStrings;
+    dialpad: DialpadStrings;
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
@@ -565,6 +566,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     ControlButtonMicOn: React_2.JSX.Element;
     ControlButtonOptions: React_2.JSX.Element;
     ControlButtonParticipants: React_2.JSX.Element;
+    ControlButtonParticipantsContextualMenuItem: React_2.JSX.Element;
     ControlButtonScreenShareStart: React_2.JSX.Element;
     ControlButtonScreenShareStop: React_2.JSX.Element;
     ControlButtonRaiseHand: React_2.JSX.Element;
@@ -606,6 +608,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     SendBoxSend: React_2.JSX.Element;
     SendBoxSendHovered: React_2.JSX.Element;
     VideoTileMicOff: React_2.JSX.Element;
+    DialpadBackspace: React_2.JSX.Element;
     VideoTilePinned: React_2.JSX.Element;
     VideoTileMoreOptions: React_2.JSX.Element;
     VideoTileScaleFit: React_2.JSX.Element;
@@ -733,13 +736,13 @@ export interface DevicesButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<DevicesButtonContextualMenuStyles>;
 }
 
-// @beta
+// @public
 export const Dialpad: (props: DialpadProps) => JSX.Element;
 
-// @beta
+// @public
 export type DialpadMode = 'dtmf' | 'dialer';
 
-// @beta
+// @public
 export interface DialpadProps {
     dialpadMode?: DialpadMode;
     disableDtmfPlayback?: boolean;
@@ -754,7 +757,7 @@ export interface DialpadProps {
     textFieldValue?: string;
 }
 
-// @beta
+// @public
 export interface DialpadStrings {
     // (undocumented)
     deleteButtonAriaLabel?: string;
@@ -762,7 +765,7 @@ export interface DialpadStrings {
     placeholderText: string;
 }
 
-// @beta
+// @public
 export interface DialpadStyles {
     // (undocumented)
     button?: IButtonStyles;
@@ -836,7 +839,7 @@ export interface _DrawerSurfaceStyles extends BaseCustomStyles {
     lightDismissRoot?: BaseCustomStyles;
 }
 
-// @beta
+// @public
 export type DtmfTone = 'A' | 'B' | 'C' | 'D' | 'Flash' | 'Num0' | 'Num1' | 'Num2' | 'Num3' | 'Num4' | 'Num5' | 'Num6' | 'Num7' | 'Num8' | 'Num9' | 'Pound' | 'Star';
 
 // @public
@@ -1125,7 +1128,7 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
 // @public
 export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'followDeviceOrientation';
 
-// @beta
+// @public
 export type LongPressTrigger = 'mouseAndTouch' | 'touch';
 
 // @public
@@ -1395,8 +1398,6 @@ export type ParticipantListProps = {
     onRemoveParticipant?: (userId: string) => void;
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
     onParticipantClick?: (participant?: ParticipantListParticipant) => void;
-    onStartSpotlight?: (userId: string) => void;
-    onStopSpotlight?: (userId: string) => void;
     styles?: ParticipantListStyles;
     showParticipantOverflowTooltip?: boolean;
     participantAriaLabelledBy?: string;
@@ -2055,7 +2056,6 @@ export interface VideoGalleryStream {
 
 // @public
 export interface VideoGalleryStrings {
-    addSpotlightVideoTileMenuLabel: string;
     displayNamePlaceholder: string;
     fillRemoteParticipantFrame: string;
     fitRemoteParticipantToFrame: string;
@@ -2068,9 +2068,6 @@ export interface VideoGalleryStrings {
     pinParticipantMenuItemAriaLabel: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;
-    startSpotlightVideoTileMenuLabel: string;
-    stopSpotlightOnSelfVideoTileMenuLabel: string;
-    stopSpotlightVideoTileMenuLabel: string;
     unpinnedParticipantAnnouncementAriaLabel: string;
     unpinParticipantForMe: string;
     unpinParticipantMenuItemAriaLabel: string;

@@ -655,7 +655,7 @@ export interface ComponentStrings {
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
     holdButton: HoldButtonStrings;
-    imageGallery: ImageGalleryStrings;
+    imageOverlay: ImageOverlayStrings;
     mentionPopover: MentionPopoverStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
@@ -761,7 +761,7 @@ export interface CustomMessage extends MessageCommon {
 }
 
 // @public
-export const darkTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-gallery) */ ChatTheme;
+export const darkTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-overlay) */ ChatTheme;
 
 // @public
 export const DEFAULT_COMPONENT_ICONS: {
@@ -963,13 +963,13 @@ export interface DevicesButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<DevicesButtonContextualMenuStyles>;
 }
 
-// @beta
+// @public
 export const Dialpad: (props: DialpadProps) => JSX.Element;
 
-// @beta
+// @public
 export type DialpadMode = 'dtmf' | 'dialer';
 
-// @beta
+// @public
 export interface DialpadProps {
     dialpadMode?: DialpadMode;
     disableDtmfPlayback?: boolean;
@@ -984,7 +984,7 @@ export interface DialpadProps {
     textFieldValue?: string;
 }
 
-// @beta
+// @public
 export interface DialpadStrings {
     // (undocumented)
     deleteButtonAriaLabel?: string;
@@ -992,7 +992,7 @@ export interface DialpadStrings {
     placeholderText: string;
 }
 
-// @beta
+// @public
 export interface DialpadStyles {
     // (undocumented)
     button?: IButtonStyles;
@@ -1066,7 +1066,7 @@ export interface _DrawerSurfaceStyles extends BaseCustomStyles {
     lightDismissRoot?: BaseCustomStyles;
 }
 
-// @beta
+// @public
 export type DtmfTone = 'A' | 'B' | 'C' | 'D' | 'Flash' | 'Num0' | 'Num1' | 'Num2' | 'Num3' | 'Num4' | 'Num5' | 'Num6' | 'Num7' | 'Num8' | 'Num9' | 'Pound' | 'Star';
 
 // @public
@@ -1318,29 +1318,22 @@ export interface _Identifiers {
 }
 
 // @beta
-export const ImageGallery: (props: ImageGalleryProps) => JSX.Element;
+export const ImageOverlay: (props: ImageOverlayProps) => JSX.Element;
 
 // @beta
-export interface ImageGalleryImageProps {
+export interface ImageOverlayProps {
     altText?: string;
-    downloadFilename: string;
-    imageUrl: string;
+    imageSrc: string;
+    isOpen: boolean;
+    onDismiss: () => void;
+    onDownloadButtonClicked: (imageSrc: string) => void;
+    onError?: (event: SyntheticEvent<HTMLImageElement, Event>) => void;
     title?: string;
     titleIcon?: JSX.Element;
 }
 
 // @beta
-export interface ImageGalleryProps {
-    images: Array<ImageGalleryImageProps>;
-    isOpen: boolean;
-    onDismiss: () => void;
-    onError?: (event: SyntheticEvent<HTMLImageElement, Event>) => void;
-    onImageDownloadButtonClicked: (imageUrl: string, downloadFilename: string) => void;
-    startIndex?: number;
-}
-
-// @beta
-export interface ImageGalleryStrings {
+export interface ImageOverlayStrings {
     dismissButtonAriaLabel: string;
     downloadButtonLabel: string;
 }
@@ -1376,7 +1369,7 @@ export interface JumpToNewMessageButtonProps {
 }
 
 // @public
-export const lightTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-gallery) */ ChatTheme;
+export const lightTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-overlay) */ ChatTheme;
 
 // @public
 export type LoadingState = 'loading' | 'none';
@@ -1434,7 +1427,7 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
 // @public
 export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'followDeviceOrientation';
 
-// @beta
+// @public
 export type LongPressTrigger = 'mouseAndTouch' | 'touch';
 
 // @beta
