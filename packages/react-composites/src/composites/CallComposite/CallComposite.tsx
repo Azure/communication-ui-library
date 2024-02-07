@@ -510,7 +510,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
             iconName={iconName}
             title={title}
             moreDetails={moreDetails}
-            disableStartCallButton={disableStartCallButton}
+            disableStartCallButton={callees ? true : disableStartCallButton}
             mobileView={props.mobileView}
           />
         );
@@ -520,9 +520,9 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         <NoticePage
           iconName={iconName}
           title={title}
-          moreDetails={moreDetails}
+          moreDetails={callees ? '' : moreDetails}
           dataUiId={'left-call-page'}
-          disableStartCallButton={disableStartCallButton}
+          disableStartCallButton={callees ? true : disableStartCallButton}
         />
       );
 
