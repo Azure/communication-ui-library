@@ -60,9 +60,9 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
         console.log(`Call Id: ${callIdRef.current}`);
       }
     });
-    /* @conditional-compile-remove(call-transfer) */
-    adapter.on('transferRequested', (e) => {
-      e.accept();
+
+    adapter.on('transferAccepted', (e) => {
+      console.log(e);
     });
   }, []);
 
