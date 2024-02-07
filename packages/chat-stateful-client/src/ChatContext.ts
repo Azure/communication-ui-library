@@ -22,7 +22,7 @@ import { chatStatefulLogger } from './Logger';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import type { CommunicationTokenCredential } from '@azure/communication-common';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { ResourceDownloadQueue, requestAttachments } from './ResourceDownloadQueue';
+import { ResourceDownloadQueue, fetchImageSource } from './ResourceDownloadQueue';
 
 enableMapSet();
 // Needed to generate state diff for verbose logging.
@@ -43,8 +43,9 @@ export class ChatContext {
   private _emitter: EventEmitter;
   private typingIndicatorInterval: number | undefined = undefined;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  private _downloadQueue: ResourceDownloadQueue | undefined = undefined;
-
+  private _inlineImageQueue: ResourceDownloadQueue | undefined = undefined;
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  private _fullsizeImageQueue: ResourceDownloadQueue | undefined = undefined;
   constructor(
     maxListeners?: number,
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ credential?: CommunicationTokenCredential
@@ -53,7 +54,8 @@ export class ChatContext {
     this._emitter = new EventEmitter();
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     if (credential) {
-      this._downloadQueue = new ResourceDownloadQueue(this, credential);
+      this._inlineImageQueue = new ResourceDownloadQueue(this, credential);
+      this._fullsizeImageQueue = new ResourceDownloadQueue(this, credential);
     }
     if (maxListeners) {
       this._emitter.setMaxListeners(maxListeners);
@@ -100,11 +102,13 @@ export class ChatContext {
   public downloadResourceToCache(threadId: string, messageId: string, resourceUrl: string): void {
     this.modifyState((draft: ChatClientState) => {
       const message = draft.threads[threadId]?.chatMessages[messageId];
-      if (message) {
+      if (message && this._fullsizeImageQueue) {
         if (!message.resourceCache) {
           message.resourceCache = {};
         }
-        // Make request to download the resource and cache it.
+        // Need to discuss retry logic in case of failure
+        this._fullsizeImageQueue.addMessage(message);
+        this._fullsizeImageQueue.startQueue(threadId, fetchImageSource, { singleUrl: resourceUrl });
       }
     });
   }
@@ -363,13 +367,13 @@ export class ChatContext {
     const attachments = message.content?.attachments;
     if (message.type === 'html' && attachments && attachments.length > 0) {
       if (
-        this._downloadQueue &&
-        !this._downloadQueue.containsMessageWithSameAttachments(message) &&
+        this._inlineImageQueue &&
+        !this._inlineImageQueue.containsMessageWithSameAttachments(message) &&
         message.resourceCache === undefined
       ) {
         // Need to discuss retry logic in case of failure
-        this._downloadQueue.addMessage(message);
-        this._downloadQueue.startQueue(threadId, requestAttachments);
+        this._inlineImageQueue.addMessage(message);
+        this._inlineImageQueue.startQueue(threadId, fetchImageSource);
       }
     }
   }
