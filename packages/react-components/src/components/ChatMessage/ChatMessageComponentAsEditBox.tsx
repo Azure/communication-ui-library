@@ -210,17 +210,19 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
     );
   };
 
-  const bodyClassName = mergeClasses(
-    editContainerStyles.body,
-    message.failureReason !== undefined ? editContainerStyles.bodyError : editContainerStyles.bodyDefault
-  );
+  const attached = message.attached === true ? 'center' : message.attached === 'bottom' ? 'bottom' : 'top';
   return (
     <ChatMyMessage
+      attached={attached}
       root={{
         className: mergeClasses(chatMyMessageStyles.root, editContainerStyles.root)
       }}
       body={{
-        className: bodyClassName
+        className: mergeClasses(
+          editContainerStyles.body,
+          message.failureReason !== undefined ? editContainerStyles.bodyError : editContainerStyles.bodyDefault,
+          attached !== 'top' ? editContainerStyles.bodyAttached : undefined
+        )
       }}
     >
       {getContent()}
