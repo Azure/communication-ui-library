@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatContext } from './ChatContext';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ResourceDownloadQueue } from './ResourceDownloadQueue';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { messageTemplate, messageTemplateWithResourceCache } from './TestHelpers';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { MockCommunicationUserCredential } from './mocks/MockCommunicationUserCredential';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 describe('ChatContext api funcations', () => {
