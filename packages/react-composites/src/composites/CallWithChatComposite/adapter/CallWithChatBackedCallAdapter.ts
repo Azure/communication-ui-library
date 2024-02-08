@@ -229,13 +229,13 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     return this.callWithChatAdapter.submitSurvey(survey);
   }
   /* @conditional-compile-remove(spotlight) */
-  public async startSpotlight(userId: string): Promise<void> {
-    return this.callWithChatAdapter.startSpotlight(userId);
+  public async startSpotlight(userIds?: string[]): Promise<void> {
+    return this.callWithChatAdapter.startSpotlight(userIds);
   }
 
   /* @conditional-compile-remove(spotlight) */
-  public async stopSpotlight(userId: string): Promise<void> {
-    return this.callWithChatAdapter.stopSpotlight(userId);
+  public async stopSpotlight(userIds?: string[]): Promise<void> {
+    return this.callWithChatAdapter.stopSpotlight(userIds);
   }
 }
 

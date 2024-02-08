@@ -26,9 +26,9 @@ export const usePeoplePane = (props: {
   /* @conditional-compile-remove(spotlight) */
   spotlightedParticipantUserIds?: string[];
   /* @conditional-compile-remove(spotlight) */
-  onStartSpotlight?: (userId: string) => Promise<void>;
+  onStartSpotlight?: (userIds?: string[]) => Promise<void>;
   /* @conditional-compile-remove(spotlight) */
-  onStopSpotlight?: (userId: string) => Promise<void>;
+  onStopSpotlight?: (userIds?: string[]) => Promise<void>;
   /* @conditional-compile-remove(spotlight) */
   ableToSpotlight?: boolean;
 }): {
@@ -88,7 +88,7 @@ export const usePeoplePane = (props: {
             key: 'stop-spotlight',
             text: stopSpotlightMenuText,
             onClick: () => {
-              onStopSpotlight?.(participantId);
+              onStopSpotlight?.([participantId]);
             },
             iconProps: {
               iconName: 'StopSpotlightContextualMenuItem',
@@ -107,7 +107,7 @@ export const usePeoplePane = (props: {
             key: 'start-spotlight',
             text: startSpotlightMenuText,
             onClick: () => {
-              onStartSpotlight?.(participantId);
+              onStartSpotlight?.([participantId]);
             },
             iconProps: {
               iconName: 'StartSpotlightContextualMenuItem',

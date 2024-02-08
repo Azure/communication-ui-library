@@ -268,12 +268,12 @@ export interface VideoGalleryProps {
   /**
    * This callback will be called when spotlight is started for participant video tile.
    */
-  onStartSpotlight?: (userId: string) => Promise<void>;
+  onStartSpotlight?: (userIds?: string[]) => Promise<void>;
   /* @conditional-compile-remove(spotlight) */
   /**
    * This callback will be called when spotlight is stopped for participant video tile.
    */
-  onStopSpotlight?: (userId: string) => Promise<void>;
+  onStopSpotlight?: (userIds?: string[]) => Promise<void>;
   /**
    * Options for showing the remote video tile menu.
    *
