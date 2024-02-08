@@ -127,7 +127,6 @@ jobs:
 
   jest-test-coverage:
     needs: [get_matrix, build_packages]
-    if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
     name: 'Jest Test Coverage (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
     permissions:
@@ -162,14 +161,22 @@ jobs:
         env:
           NODE_OPTIONS: '--max_old_space_size=4096'
       - name: Merge all jest test coverage reports from the current branch
+        # No need to run this step when the base is a release branch
+        # but it's still needed for the upload bundle report step when main is updated
+        if: ${{ !startsWith(github.event.pull_request.base.ref, 'release/') }}
         run: npx nyc merge temp/jest/coverage/detailed-report/ temp/jest/current/merge/detailed-full/coverage-report.json
       - name: Create a summary report from the detailed report
+        # No need to run this step when the base is a release branch
+        # but it's still needed for the upload bundle report step when main is updated
+        if: ${{ !startsWith(github.event.pull_request.base.ref, 'release/') }}
         run: npx nyc report --temp-dir temp/jest/current/merge/detailed-full/ --report-dir temp/jest/current/merge/summary/ --reporter json-summary
 
       # Pull requests show details of coverage changes
       - name: Get jest tests coverage of main from gist
+        if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
         run: curl -o temp/jest/base/coverage-report.json "https://gist.github.com/communication-ui-bot/${{ matrix.coverage_gist_id }}/raw/communication-react-jest-report-${{ matrix.flavor }}.json" --create-dirs -L
       - name: Calculate coverage change
+        if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
         id: coverage
         run: |
           node ./common/config/workflows/coverage-utils.js ../../../temp/jest/base/coverage-report.json ../../../temp/jest/current/merge/summary/coverage-summary.json lines
@@ -177,6 +184,7 @@ jobs:
           node ./common/config/workflows/coverage-utils.js ../../../temp/jest/base/coverage-report.json ../../../temp/jest/current/merge/summary/coverage-summary.json functions
           node ./common/config/workflows/coverage-utils.js ../../../temp/jest/base/coverage-report.json ../../../temp/jest/current/merge/summary/coverage-summary.json branches
       - name: Find Comment
+        if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
         uses: peter-evans/find-comment@v2
         id: fc
         with:
@@ -184,6 +192,7 @@ jobs:
           comment-author: 'github-actions[bot]'
           body-includes: '## @azure/communication-react jest test coverage for ***${{ matrix.flavor }}'
       - name: Create or update comment
+        if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
         uses: peter-evans/create-or-update-comment@v2
         with:
           comment-id: ${{ steps.fc.outputs.comment-id }}
