@@ -125,7 +125,6 @@ export const chatMessageMenuStyle = mergeStyles({
  * @private
  */
 export const useChatMessageEditContainerStyles = makeStyles({
-  root: {},
   body: {
     ...shorthands.padding(0),
     backgroundColor: 'transparent',
@@ -134,18 +133,24 @@ export const useChatMessageEditContainerStyles = makeStyles({
     ...shorthands.borderRadius(tokens.borderRadiusMedium),
     // The border thickness changes on hover, to prevent the border thickness change causing the
     // input box to shift we apply a margin to compensate. This margin is then removed on hover when the border is thicker.
-    marginBottom: '2px',
-    marginTop: '1rem',
+    ...shorthands.margin('17px', '1px', '1px', '1px'),
     // Width should be updated on hover to include the border width change
     width: `calc(100% - ${defaultSendBoxActiveBorderThicknessREM}rem)`,
     '&:hover, &:active, &:focus, &:focus-within': {
       ...shorthands.borderWidth(`${defaultSendBoxActiveBorderThicknessREM}rem`),
-      marginBottom: 0,
+      ...shorthands.margin('16px', 0, 0, 0),
       width: '100%'
     }
   },
   bodyAttached: {
-    marginTop: '0.125rem'
+    marginBottom: '1px',
+    marginTop: '3px',
+    // Width should be updated on hover to include the border width change
+    width: `calc(100% - ${defaultSendBoxActiveBorderThicknessREM}rem)`,
+    '&:hover, &:active, &:focus, &:focus-within': {
+      marginTop: '2px',
+      marginBottom: 0
+    }
   },
   bodyError: {
     ...shorthands.borderColor(errorTextColor)
