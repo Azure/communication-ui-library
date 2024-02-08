@@ -1421,7 +1421,13 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
     personaMinSize?: number | undefined;
     raisedHand?: RaisedHand | undefined;
     reaction?: Reaction | undefined;
+    spotlightedParticipantUserIds?: string[] | undefined;
     isSpotlighted?: boolean | undefined;
+    onStartSpotlight?: ((userIds?: string[]) => void) | undefined;
+    onStopSpotlight?: ((userIds?: string[]) => void) | undefined;
+    maxParticipantsToSpotlight?: number | undefined;
+    menuKind?: "contextual" | "drawer" | undefined;
+    strings?: VideoGalleryStrings | undefined;
     reactionResources?: ReactionResources | undefined;
 }) => React_2.JSX.Element>;
 
@@ -2595,6 +2601,11 @@ export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | /* @conditio
 
 // @public
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
+    capabilities?: {
+        spotlightParticipant?: {
+            isPresent: boolean;
+        };
+    };
     raisedHand?: RaisedHand;
     // @beta
     reaction?: Reaction;

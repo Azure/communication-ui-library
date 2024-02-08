@@ -501,7 +501,21 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           /* @conditional-compile-remove(reaction) */
           reaction={localParticipant.reaction}
           /* @conditional-compile-remove(spotlight) */
+          spotlightedParticipantUserIds={spotlightedParticipants}
+          /* @conditional-compile-remove(spotlight) */
           isSpotlighted={isSpotlighted}
+          /* @conditional-compile-remove(spotlight) */
+          onStartSpotlight={
+            localParticipant.capabilities?.spotlightParticipant?.isPresent ? onStartSpotlight : undefined
+          }
+          /* @conditional-compile-remove(spotlight) */
+          onStopSpotlight={onStopSpotlight}
+          /* @conditional-compile-remove(spotlight) */
+          maxParticipantsToSpotlight={maxParticipantsToSpotlight}
+          /* @conditional-compile-remove(spotlight) */
+          menuKind={remoteVideoTileMenu ? (remoteVideoTileMenu.kind === 'drawer' ? 'drawer' : 'contextual') : undefined}
+          /* @conditional-compile-remove(spotlight) */
+          strings={strings}
           /* @conditional-compile-remove(reaction) */
           reactionResources={reactionResources}
         />
@@ -519,10 +533,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     localTileNotInGrid,
     showCameraSwitcherInLocalPreview,
     showMuteIndicator,
-    strings.localVideoCameraSwitcherLabel,
-    strings.localVideoLabel,
-    strings.localVideoMovementLabel,
-    strings.localVideoSelectedDescription,
     styles?.localVideo,
     theme.effects.roundedCorner4,
     /*@conditional-compile-remove(click-to-call) */
@@ -530,6 +540,18 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(gallery-layouts) */
     layout,
     showLocalVideoTileLabel,
+    /* @conditional-compile-remove(spotlight) */
+    spotlightedParticipants,
+    /* @conditional-compile-remove(spotlight) */
+    onStartSpotlight,
+    /* @conditional-compile-remove(spotlight) */
+    onStopSpotlight,
+    /* @conditional-compile-remove(spotlight) */
+    maxParticipantsToSpotlight,
+    /* @conditional-compile-remove(spotlight) */
+    remoteVideoTileMenu,
+    /* @conditional-compile-remove(spotlight) */
+    strings,
     /* @conditional-compile-remove(reaction) */
     reactionResources
   ]);
@@ -631,9 +653,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           /* @conditional-compile-remove(spotlight) */
           isSpotlighted={isSpotlighted}
           /* @conditional-compile-remove(spotlight) */
-          onStartSpotlight={onStartSpotlight}
+          onStartSpotlight={
+            localParticipant.capabilities?.spotlightParticipant?.isPresent ? onStartSpotlight : undefined
+          }
           /* @conditional-compile-remove(spotlight) */
-          onStopSpotlight={onStopSpotlight}
+          onStopSpotlight={localParticipant.capabilities?.spotlightParticipant?.isPresent ? onStopSpotlight : undefined}
           /* @conditional-compile-remove(spotlight) */
           maxParticipantsToSpotlight={maxParticipantsToSpotlight}
           /* @conditional-compile-remove(reaction) */

@@ -60,7 +60,7 @@ export const isHideAttendeeNamesEnabled = (state: CallClientState, props: Callin
 /**
  * @private
  */
-export const getCapabilites = (
+export const getCapabilities = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ): ParticipantCapabilities | undefined => state.calls[props.callId]?.capabilitiesFeature?.capabilities;

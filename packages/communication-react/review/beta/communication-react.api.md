@@ -4414,6 +4414,11 @@ export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | /* @conditio
 
 // @public
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
+    capabilities?: {
+        spotlightParticipant?: {
+            isPresent: boolean;
+        };
+    };
     raisedHand?: RaisedHand;
     // @beta
     reaction?: Reaction;

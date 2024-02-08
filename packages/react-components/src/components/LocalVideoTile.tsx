@@ -22,6 +22,10 @@ import { RaisedHand } from '../types';
 import { useTheme } from '../theming';
 /* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '../types/ReactionTypes';
+/* @conditional-compile-remove(reaction) */
+import { useVideoTileContextualMenuProps } from './VideoGallery/useVideoTileContextualMenuProps';
+/* @conditional-compile-remove(reaction) */
+import { VideoGalleryStrings } from './VideoGallery';
 /**
  * A memoized version of VideoTile for rendering local participant.
  *
@@ -52,7 +56,19 @@ export const _LocalVideoTile = React.memo(
     /* @conditional-compile-remove(reaction) */
     reaction?: Reaction;
     /* @conditional-compile-remove(spotlight) */
+    spotlightedParticipantUserIds?: string[];
+    /* @conditional-compile-remove(spotlight) */
     isSpotlighted?: boolean;
+    /* @conditional-compile-remove(spotlight) */
+    onStartSpotlight?: (userIds?: string[]) => void;
+    /* @conditional-compile-remove(spotlight) */
+    onStopSpotlight?: (userIds?: string[]) => void;
+    /* @conditional-compile-remove(spotlight) */
+    maxParticipantsToSpotlight?: number;
+    /* @conditional-compile-remove(spotlight) */
+    menuKind?: 'contextual' | 'drawer';
+    /* @conditional-compile-remove(spotlight) */
+    strings?: VideoGalleryStrings;
     /* @conditional-compile-remove(reaction) */
     reactionResources?: ReactionResources;
   }) => {
@@ -80,6 +96,18 @@ export const _LocalVideoTile = React.memo(
       reaction,
       /* @conditional-compile-remove(spotlight) */
       isSpotlighted,
+      /* @conditional-compile-remove(spotlight) */
+      spotlightedParticipantUserIds,
+      /* @conditional-compile-remove(spotlight) */
+      onStartSpotlight,
+      /* @conditional-compile-remove(spotlight) */
+      onStopSpotlight,
+      /* @conditional-compile-remove(spotlight) */
+      maxParticipantsToSpotlight,
+      /* @conditional-compile-remove(spotlight) */
+      menuKind,
+      /* @conditional-compile-remove(spotlight) */
+      strings,
       /* @conditional-compile-remove(reaction) */
       reactionResources
     } = props;
@@ -110,6 +138,28 @@ export const _LocalVideoTile = React.memo(
     useLocalVideoStreamLifecycleMaintainer(localVideoStreamProps);
 
     /* @conditional-compile-remove(spotlight) */
+    const contextualMenuProps = useVideoTileContextualMenuProps({
+      participant: { userId: userId ?? '' },
+      strings: { ...strings },
+      spotlightedParticipantUserIds,
+      isSpotlighted,
+      onStartSpotlight,
+      onStopSpotlight,
+      maxParticipantsToSpotlight,
+      myUserId: userId
+    });
+
+    /* @conditional-compile-remove(spotlight) */
+    const videoTileContextualMenuProps = useMemo(() => {
+      if (menuKind !== 'contextual' || !contextualMenuProps) {
+        return {};
+      }
+      return {
+        contextualMenu: contextualMenuProps
+      };
+    }, [contextualMenuProps, menuKind]);
+
+    /* @conditional-compile-remove(spotlight) */
     const spotlightBorder = useMemo(
       () => (
         <Stack
@@ -118,7 +168,8 @@ export const _LocalVideoTile = React.memo(
             height: '100%',
             width: '100%',
             zIndex: 100,
-            border: `0.25rem solid ${theme.palette.black}`
+            border: `0.25rem solid ${theme.palette.black}`,
+            pointerEvents: 'none'
           })}
         />
       ),
@@ -175,6 +226,8 @@ export const _LocalVideoTile = React.memo(
           reaction={reaction}
           /* @conditional-compile-remove(spotlight) */
           isSpotlighted={isSpotlighted}
+          /* @conditional-compile-remove(spotlight) */
+          {...videoTileContextualMenuProps}
           /* @conditional-compile-remove(reaction) */
           reactionResources={reactionResources}
         />

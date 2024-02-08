@@ -108,6 +108,11 @@ export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
    * @beta
    * */
   reaction?: Reaction;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Whether local participant has reacted
+   * */
+  capabilities?: { spotlightParticipant?: { isPresent: boolean } };
 }
 
 /**

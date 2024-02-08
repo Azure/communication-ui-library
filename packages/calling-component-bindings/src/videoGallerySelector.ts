@@ -7,6 +7,7 @@ import { VideoGalleryRemoteParticipant, VideoGalleryLocalParticipant } from '@in
 import { createSelector } from 'reselect';
 import {
   CallingBaseSelectorProps,
+  getCapabilities,
   getDisplayName,
   getDominantSpeakers,
   getIdentifier,
@@ -89,7 +90,9 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     /* @conditional-compile-remove(spotlight) */
     getSpotlightedParticipants,
     /* @conditional-compile-remove(spotlight) */
-    getMaxParticipantsToSpotlight
+    getMaxParticipantsToSpotlight,
+    /* @conditional-compile-remove(spotlight) */
+    getCapabilities
   ],
   (
     screenShareRemoteParticipantId,
@@ -113,7 +116,9 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     /* @conditional-compile-remove(spotlight) */
     spotlightedParticipants,
     /* @conditional-compile-remove(spotlight) */
-    maxParticipantsToSpotlight
+    maxParticipantsToSpotlight,
+    /* @conditional-compile-remove(spotlight) */
+    capabilities
   ) => {
     const screenShareRemoteParticipant =
       screenShareRemoteParticipantId && remoteParticipants
@@ -156,7 +161,9 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
         /* @conditional-compile-remove(raise-hand) */
         raisedHand,
         /* @conditional-compile-remove(reaction) */
-        localParticipantReactionState
+        localParticipantReactionState,
+        /* @conditional-compile-remove(spotlight) */
+        capabilities
       ),
       remoteParticipants: _videoGalleryRemoteParticipantsMemo(
         updateUserDisplayNamesTrampoline(remoteParticipants ? Object.values(remoteParticipants) : noRemoteParticipants),

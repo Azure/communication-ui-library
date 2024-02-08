@@ -164,9 +164,6 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     setPromptProps
   );
 
-  /* @conditional-compile-remove(spotlight) */
-  const ableToSpotlight = adapter.getState().call?.capabilitiesFeature?.capabilities.spotlightParticipant.isPresent;
-
   const VideoGalleryMemoized = useMemo(() => {
     const layoutBasedOnUserSelection = (): VideoGalleryLayout => {
       /* @conditional-compile-remove(gallery-layouts) */
@@ -198,9 +195,9 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         /* @conditional-compile-remove(reaction) */
         reactionResources={reactionResources}
         /* @conditional-compile-remove(spotlight) */
-        onStartSpotlight={ableToSpotlight ? onStartSpotlightWithPrompt : undefined}
+        onStartSpotlight={onStartSpotlightWithPrompt}
         /* @conditional-compile-remove(spotlight) */
-        onStopSpotlight={ableToSpotlight ? onStopSpotlightWithPrompt : undefined}
+        onStopSpotlight={onStopSpotlightWithPrompt}
       />
     );
   }, [
@@ -224,8 +221,6 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     layoutBasedOnTilePosition,
     /* @conditional-compile-remove(reaction) */
     reactionResources,
-    /* @conditional-compile-remove(spotlight) */
-    ableToSpotlight,
     /* @conditional-compile-remove(spotlight) */
     onStartSpotlightWithPrompt,
     /* @conditional-compile-remove(spotlight) */
