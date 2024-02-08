@@ -215,7 +215,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
     <ChatMyMessage
       attached={attached}
       root={{
-        className: mergeClasses(chatMyMessageStyles.root, editContainerStyles.root)
+        className: chatMyMessageStyles.root
       }}
       body={{
         className: mergeClasses(
