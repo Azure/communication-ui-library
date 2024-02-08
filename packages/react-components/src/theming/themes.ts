@@ -106,3 +106,11 @@ export const darkTheme: PartialTheme & CallingTheme = {
     errorText: '#f1707b'
   }
 };
+
+/* @conditional-compile-remove(image-overlay) */
+/**
+ * Preset dark theme for the ImageOverlay component.
+ *
+ * @beta
+ */
+export const imageOverlayTheme: PartialTheme = darkTheme;

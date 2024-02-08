@@ -1326,6 +1326,9 @@ export interface ImageOverlayStrings {
 }
 
 // @beta
+export const imageOverlayTheme: PartialTheme;
+
+// @beta
 export interface InlineImage {
     imgAttrs: React_2.ImgHTMLAttributes<HTMLImageElement>;
     messageId: string;

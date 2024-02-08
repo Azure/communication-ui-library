@@ -29,7 +29,7 @@ import { FluentThemeProvider, useTheme } from '../theming/FluentThemeProvider';
 /* @conditional-compile-remove(image-overlay) */
 import { useLocale } from '../localization';
 /* @conditional-compile-remove(image-overlay) */
-import { darkTheme } from '../theming';
+import { imageOverlayTheme } from '../theming';
 
 /* @conditional-compile-remove(image-overlay) */
 /**
@@ -169,7 +169,7 @@ export const ImageOverlay = (props: ImageOverlayProps): JSX.Element => {
   };
 
   return (
-    <FluentThemeProvider fluentTheme={darkTheme}>
+    <FluentThemeProvider fluentTheme={imageOverlayTheme}>
       <Modal
         titleAriaId={title}
         isOpen={isOpen}
