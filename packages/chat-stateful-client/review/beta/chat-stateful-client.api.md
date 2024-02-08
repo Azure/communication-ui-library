@@ -81,12 +81,12 @@ export const _createStatefulChatClientWithDeps: (chatClient: ChatClient, args: S
 
 // @public
 export interface StatefulChatClient extends ChatClient {
-    dispose?(): void;
-    downloadResourceToCache?(threadId: string, messageId: string, resourceUrl: string): void;
+    dispose(): void;
+    downloadResourceToCache(threadId: string, messageId: string, resourceUrl: string): void;
     getState(): ChatClientState;
     offStateChange(handler: (state: ChatClientState) => void): void;
     onStateChange(handler: (state: ChatClientState) => void): void;
-    removeResourceFromCache?(threadId: string, messageId: string, resourceUrl: string): void;
+    removeResourceFromCache(threadId: string, messageId: string, resourceUrl: string): void;
 }
 
 // @public

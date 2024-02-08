@@ -27,7 +27,7 @@ export interface StatefulChatClient extends ChatClient {
   /**
    * Cleans up the resource cache from the chat thread client.
    */
-  dispose?(): void;
+  dispose(): void;
   /**
    * Holds all the state that we could proxy from ChatClient {@Link @azure/communication-chat#ChatClient} as
    * ChatClientState {@Link ChatClientState}.
@@ -53,7 +53,7 @@ export interface StatefulChatClient extends ChatClient {
    * @param messageId - The message id of the chat message.
    * @param resourceUrl - The resource url to fetch and cache.
    */
-  downloadResourceToCache?(threadId: string, messageId: string, resourceUrl: string): void;
+  downloadResourceToCache(threadId: string, messageId: string, resourceUrl: string): void;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /**
    * Removes a resource from cache for a specific message.
@@ -62,7 +62,7 @@ export interface StatefulChatClient extends ChatClient {
    * @param messageId - The message id of the chat message.
    * @param resourceUrl - The resource url to remove from cache.
    */
-  removeResourceFromCache?(threadId: string, messageId: string, resourceUrl: string): void;
+  removeResourceFromCache(threadId: string, messageId: string, resourceUrl: string): void;
 }
 
 interface StatefulChatClientWithPrivateProps extends StatefulChatClient {
