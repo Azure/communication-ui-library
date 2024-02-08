@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatContext } from './ChatContext';
+import { ResourceDownloadQueue } from './ResourceDownloadQueue';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { messageTemplate, messageTemplateWithResourceCache } from './TestHelpers';
+import { MockCommunicationUserCredential } from './mocks/MockCommunicationUserCredential';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 describe('ChatContext api funcations', () => {
   let context: ChatContext;
@@ -11,7 +13,7 @@ describe('ChatContext api funcations', () => {
   const messageId = 'messageId1';
 
   beforeEach(() => {
-    context = new ChatContext();
+    context = new ChatContext(0, new MockCommunicationUserCredential());
   });
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   test('dispose method clears the message resourceCache', () => {
@@ -30,10 +32,10 @@ describe('ChatContext api funcations', () => {
   test('downloadResourceToCache method should update the resourceCache', () => {
     context.createThreadIfNotExist(threadId);
     context.setChatMessages(threadId, { messageId1: messageTemplate });
+    const mockStartQueue = jest.spyOn(ResourceDownloadQueue.prototype, 'startQueue').mockImplementation();
     context.downloadResourceToCache(threadId, messageId, 'blob:url');
+    expect(mockStartQueue).toHaveBeenCalledTimes(1);
     expect(context.getState().threads[threadId].chatMessages[messageId].resourceCache).toBeDefined();
-    // TODO: Add more tests for downloadResourceToCache
-    // expect(context.getState().threads[threadId].chatMessages[messageId].resourceCache).toContain('blob:url');
   });
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   test('removeResourceFromCache method should remove a specific item from resourceCache', () => {
