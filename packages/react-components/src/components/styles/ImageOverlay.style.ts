@@ -17,6 +17,7 @@ export const downloadIcon: IIconProps = {
   iconName: 'Download'
 };
 
+/* @conditional-compile-remove(image-overlay) */
 /**
  * @private
  */
