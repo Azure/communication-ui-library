@@ -221,6 +221,7 @@
     "unpinnedParticipantAnnouncementAriaLabel": "Unpinned {participantName}",
     "startSpotlightVideoTileMenuLabel": "Spotlight for everyone",
     "addSpotlightVideoTileMenuLabel": "Add spotlight",
+    "spotlightLimitReachedAriaLabel": "Spotlight limit reached",
     "stopSpotlightVideoTileMenuLabel": "Stop spotlighting",
     "stopSpotlightOnSelfVideoTileMenuLabel": "Exit spotlight"
   },

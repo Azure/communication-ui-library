@@ -4009,6 +4009,7 @@ export type Spotlight = {
 
 // @beta
 export interface SpotlightCallFeatureState {
+    maxParticipantsToSpotlight: number;
     spotlightedParticipants: SpotlightedParticipant[];
 }
 
@@ -4436,6 +4437,7 @@ export interface VideoGalleryProps {
     localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
     localVideoTileSize?: LocalVideoTileSize;
     localVideoViewOptions?: VideoStreamOptions;
+    maxParticipantsToSpotlight?: number;
     maxRemoteVideoStreams?: number;
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
@@ -4484,6 +4486,7 @@ export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSe
     dominantSpeakers?: string[];
     optimalVideoCount?: number;
     spotlightedParticipants?: string[];
+    maxParticipantsToSpotlight?: number;
 };
 
 // @public
@@ -4515,6 +4518,7 @@ export interface VideoGalleryStrings {
     pinParticipantMenuItemAriaLabel: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;
+    spotlightLimitReachedAriaLabel: string;
     startSpotlightVideoTileMenuLabel: string;
     stopSpotlightOnSelfVideoTileMenuLabel: string;
     stopSpotlightVideoTileMenuLabel: string;

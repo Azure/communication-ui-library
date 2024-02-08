@@ -123,6 +123,9 @@ export interface VideoGalleryStrings {
   /** Menu text shown in Video Tile contextual menu to add spotlight to participant's video tile */
   addSpotlightVideoTileMenuLabel: string;
   /* @conditional-compile-remove(spotlight) */
+  /** Aria label to start spotlight menu item when spotlight limit is reached */
+  spotlightLimitReachedAriaLabel: string;
+  /* @conditional-compile-remove(spotlight) */
   /** Menu text shown in Video Tile contextual menu to stop spotlight on participant's video tile */
   stopSpotlightVideoTileMenuLabel: string;
   /* @conditional-compile-remove(spotlight) */
@@ -274,6 +277,11 @@ export interface VideoGalleryProps {
    * This callback will be called when spotlight is stopped for participant video tile.
    */
   onStopSpotlight?: (userId: string) => Promise<void>;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Maximum participants that can be spotlighted
+   */
+  maxParticipantsToSpotlight?: number;
   /**
    * Options for showing the remote video tile menu.
    *
@@ -371,6 +379,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onStartSpotlight,
     /* @conditional-compile-remove(spotlight) */
     onStopSpotlight,
+    /* @conditional-compile-remove(spotlight) */
+    maxParticipantsToSpotlight,
     /* @conditional-compile-remove(reaction) */
     reactionResources
   } = props;
@@ -626,6 +636,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           onStartSpotlight={onStartSpotlight}
           /* @conditional-compile-remove(spotlight) */
           onStopSpotlight={onStopSpotlight}
+          /* @conditional-compile-remove(spotlight) */
+          maxParticipantsToSpotlight={maxParticipantsToSpotlight}
           /* @conditional-compile-remove(reaction) */
           reactionResources={reactionResources}
         />
@@ -650,6 +662,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       /* @conditional-compile-remove(spotlight) */ spotlightedParticipants,
       /* @conditional-compile-remove(spotlight) */ onStartSpotlight,
       /* @conditional-compile-remove(spotlight) */ onStopSpotlight,
+      /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight,
       /* @conditional-compile-remove(reaction) */ reactionResources
     ]
   );
