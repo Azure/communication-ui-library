@@ -128,7 +128,7 @@ jobs:
   jest-test-coverage:
     needs: [get_matrix, build_packages]
     # Skip this job if the base branch is a release branch
-    if: ${{ !github.event_name == 'pull_request' || !startsWith(github.event.pull_request.base.ref, 'release/') }}
+    if: ${{ !startsWith(github.event.pull_request.base.ref, 'release/') }}
     name: 'Jest Test Coverage (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
     permissions:
