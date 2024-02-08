@@ -13,7 +13,7 @@ export const helperTextStyle = (theme: Theme): string =>
     fontSize: _pxToRem(16),
     lineHeight: _pxToRem(20),
     color: theme.palette.neutralPrimary,
-    paddingTop: _pxToRem(20)
+    paddingTop: _pxToRem(24)
   });
 
 /**
@@ -25,8 +25,8 @@ export const ratingHelperTextStyle = (theme: Theme): string =>
     fontSize: _pxToRem(12),
     lineHeight: _pxToRem(12),
     color: theme.palette.themePrimary,
-    marginBottom: _pxToRem(24),
-    marginTop: _pxToRem(10),
+    marginBottom: _pxToRem(8),
+    marginTop: _pxToRem(8),
     textAlign: 'center'
   });
 
@@ -45,7 +45,7 @@ export const ratingStyles = (theme: Theme): Partial<IRatingStyles> => {
       padding: 0
     },
     ratingStar: {
-      transform: 'scale(1.2)',
+      transform: 'scale(1.4)',
       margin: _pxToRem(6),
       height: 'auto'
     },

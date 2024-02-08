@@ -14,8 +14,10 @@ import {
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
-/* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
-import { DtmfTone, AddPhoneNumberOptions } from '@azure/communication-calling';
+/* @conditional-compile-remove(dialpad) */
+import { DtmfTone } from '@azure/communication-calling';
+/* @conditional-compile-remove(PSTN-calls) */
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCall } from '@azure/communication-calling';
 /* @conditional-compile-remove(call-readiness) */
@@ -63,6 +65,9 @@ export interface CommonCallingHandlers {
   /* @conditional-compile-remove(raise-hand) */
   onToggleRaiseHand: () => Promise<void>;
   /* @conditional-compile-remove(reaction) */
+  /**
+   * @beta
+   */
   onReactionClicked: (reaction: Reaction) => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   onToggleHold: () => Promise<void>;

@@ -116,10 +116,40 @@ export const memoizedConvertAllremoteParticipantsBeta = memoizeFnAll(
     isSpeaking: boolean,
     raisedHand: RaisedHandState | undefined,
     localUserCanRemoveOthers: boolean,
+    reaction: Reaction | undefined
+  ): CallParticipantListParticipant => {
+    return convertRemoteParticipantToParticipantListParticipantBeta(
+      userId,
+      displayName,
+      state,
+      isMuted,
+      isScreenSharing,
+      isSpeaking,
+      raisedHand,
+      localUserCanRemoveOthers,
+      reaction
+    );
+  }
+);
+
+/* @conditional-compile-remove(spotlight) */
+/**
+ * @private
+ */
+export const memoizedConvertAllremoteParticipantsBetaSpotlight = memoizeFnAll(
+  (
+    userId: string,
+    displayName: string | undefined,
+    state: RemoteParticipantState,
+    isMuted: boolean,
+    isScreenSharing: boolean,
+    isSpeaking: boolean,
+    raisedHand: RaisedHandState | undefined,
+    localUserCanRemoveOthers: boolean,
     reaction: Reaction | undefined,
     isSpotlighted: Spotlight | undefined
   ): CallParticipantListParticipant => {
-    return convertRemoteParticipantToParticipantListParticipantBeta(
+    return convertRemoteParticipantToParticipantListParticipantBetaSpotlight(
       userId,
       displayName,
       state,
@@ -149,7 +179,7 @@ export const memoizedConvertToVideoTileReaction = memoizeOne(
   }
 );
 
-/* @conditional-compile-remove(reaction) */
+/* @conditional-compile-remove(spotlight) */
 /**
  * @private
  */
@@ -189,6 +219,33 @@ const convertRemoteParticipantToParticipantListParticipantBetaRelease = (
 
 /* @conditional-compile-remove(reaction) */
 const convertRemoteParticipantToParticipantListParticipantBeta = (
+  userId: string,
+  displayName: string | undefined,
+  state: RemoteParticipantState,
+  isMuted: boolean,
+  isScreenSharing: boolean,
+  isSpeaking: boolean,
+  raisedHand: RaisedHandState | undefined,
+  localUserCanRemoveOthers: boolean,
+  reaction: Reaction | undefined
+): CallParticipantListParticipant => {
+  return {
+    ...convertRemoteParticipantToParticipantListParticipant(
+      userId,
+      displayName,
+      state,
+      isMuted,
+      isScreenSharing,
+      isSpeaking,
+      raisedHand,
+      localUserCanRemoveOthers
+    ),
+    reaction
+  };
+};
+
+/* @conditional-compile-remove(spotlight) */
+const convertRemoteParticipantToParticipantListParticipantBetaSpotlight = (
   userId: string,
   displayName: string | undefined,
   state: RemoteParticipantState,

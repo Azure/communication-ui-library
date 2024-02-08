@@ -116,12 +116,16 @@ export interface VideoGalleryStrings {
   pinnedParticipantAnnouncementAriaLabel: string;
   /** Aria label to announce when remote participant's video tile is unpinned */
   unpinnedParticipantAnnouncementAriaLabel: string;
+  /* @conditional-compile-remove(spotlight) */
   /** Menu text shown in Video Tile contextual menu to start spotlight on participant's video tile */
   startSpotlightVideoTileMenuLabel: string;
+  /* @conditional-compile-remove(spotlight) */
   /** Menu text shown in Video Tile contextual menu to add spotlight to participant's video tile */
   addSpotlightVideoTileMenuLabel: string;
+  /* @conditional-compile-remove(spotlight) */
   /** Menu text shown in Video Tile contextual menu to stop spotlight on participant's video tile */
   stopSpotlightVideoTileMenuLabel: string;
+  /* @conditional-compile-remove(spotlight) */
   /** Menu text shown in Video Tile contextual menu to stop spotlight on local user's video tile */
   stopSpotlightOnSelfVideoTileMenuLabel: string;
 }
@@ -293,6 +297,7 @@ export interface VideoGalleryProps {
   /* @conditional-compile-remove(reaction) */
   /**
    * Reaction resources for like, heart, laugh, applause and surprised.
+   * @beta
    */
   reactionResources?: ReactionResources;
 }

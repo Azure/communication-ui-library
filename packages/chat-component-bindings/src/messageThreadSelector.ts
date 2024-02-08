@@ -152,7 +152,11 @@ const processChatMessageContent = (message: ChatMessageWithStatus): string | und
   let content = message.content?.message;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 
-  if (message.content?.attachments && sanitizedMessageContentType(message.type).includes('html')) {
+  if (
+    message.content?.attachments &&
+    message.content?.attachments.length > 0 &&
+    sanitizedMessageContentType(message.type).includes('html')
+  ) {
     const attachments: ChatAttachment[] = message.content?.attachments;
     // Fill in the src here
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
@@ -165,7 +169,7 @@ const processChatMessageContent = (message: ChatMessageWithStatus): string | und
           img.src = src;
         }
       });
-      content = document.documentElement.innerHTML;
+      content = document.body.innerHTML;
     }
 
     const teamsImageHtmlContent = attachments

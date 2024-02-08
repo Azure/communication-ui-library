@@ -31,7 +31,7 @@
   "mentionPopover": {
     "mentionPopoverHeader": "הצעות"
   },
-  "imageGallery": {
+  "imageOverlay": {
     "downloadButtonLabel": "הורד",
     "dismissButtonAriaLabel": "סגור"
   },

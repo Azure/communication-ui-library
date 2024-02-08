@@ -1,4 +1,8 @@
-import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+import {
+  AzureCommunicationTokenCredential,
+  CommunicationUserIdentifier,
+  MicrosoftTeamsUserIdentifier
+} from '@azure/communication-common';
 import {
   AvatarPersonaData,
   AvatarPersonaDataCallback,
@@ -7,6 +11,7 @@ import {
   CompositeLocale,
   OnFetchProfileCallback,
   Profile,
+  fromFlatCommunicationIdentifier,
   useAzureCommunicationCallAdapter
 } from '@azure/communication-react';
 import { PartialTheme, Theme } from '@fluentui/react';
@@ -22,7 +27,7 @@ export type ContainerProps = {
   // Teams user ids need to be in format '8:orgid:<UUID>'. For example, '8:orgid:87d349ed-44d7-43e1-9a83-5f2406dee5bd'
   // Teams resource account ids linked to a call queue need to be in format '28:orgid:<UUID>'. For example,
   // '28:orgid:87d349ed-44d7-43e1-9a83-5f2406dee5bd'
-  microsoftTeamsUserId?: string;
+  microsoftTeamsUserId: string;
 };
 
 export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
@@ -35,19 +40,19 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
     }
   }, [props.token]);
 
+  const createTargetCallees = useMemo(() => {
+    return fromFlatCommunicationIdentifier(props.microsoftTeamsUserId) as MicrosoftTeamsUserIdentifier;
+  }, [props.microsoftTeamsUserId]);
+
   const callAdapterArgs = useMemo(
     () => ({
       userId: props.userId,
       credential,
-      locator: props.microsoftTeamsUserId
-        ? {
-            participantIds: [props.microsoftTeamsUserId]
-          }
-        : undefined,
+      targetCallees: createTargetCallees,
       // To provide a display name for call queues
       options: { onFetchProfile }
     }),
-    [props.userId, credential, props.microsoftTeamsUserId]
+    [props.userId, credential, createTargetCallees]
   );
 
   const adapter = useAzureCommunicationCallAdapter(callAdapterArgs);

@@ -46,36 +46,74 @@ export class ResourceDownloadQueue {
     this._messagesNeedingResourceRetrieval.push(copy);
   }
 
-  public async startQueue(threadId: string, operation: ImageRequest): Promise<void> {
+  public async startQueue(threadId: string, operation: ImageRequest, options?: { singleUrl: string }): Promise<void> {
     if (this.isActive) {
       return;
     }
 
     while (this._messagesNeedingResourceRetrieval.length > 0) {
       this.isActive = true;
-      const message = this._messagesNeedingResourceRetrieval.shift();
+      let message = this._messagesNeedingResourceRetrieval.shift();
       if (!message) {
         this.isActive = false;
         continue;
       }
 
       try {
-        const newMessage = await operation(message, this._credential);
-        if (newMessage) {
-          this.isActive = false;
-          this._context.setChatMessage(threadId, newMessage);
+        if (options) {
+          const singleUrl = options.singleUrl;
+          message = await this.downloadSingleUrl(message, singleUrl, operation);
+        } else {
+          message = await this.downloadAllPreviewUrls(message, operation);
         }
+
+        this.isActive = false;
+        this._context.setChatMessage(threadId, message);
       } catch (error) {
         console.log('Downloading Resource error: ', error);
       }
     }
+  }
+
+  private async downloadSingleUrl(
+    message: ChatMessageWithStatus,
+    resourceUrl: string,
+    operation: ImageRequest
+  ): Promise<ChatMessageWithStatus> {
+    if (message.resourceCache === undefined) {
+      message.resourceCache = {};
+    }
+
+    const blobUrl = await operation(resourceUrl, this._credential);
+    message.resourceCache[resourceUrl] = blobUrl;
+    return message;
+  }
+
+  private async downloadAllPreviewUrls(
+    message: ChatMessageWithStatus,
+    operation: ImageRequest
+  ): Promise<ChatMessageWithStatus> {
+    const attachments = message.content?.attachments;
+    if (message.type === 'html' && attachments) {
+      if (message.resourceCache === undefined) {
+        message.resourceCache = {};
+      }
+      for (const attachment of attachments) {
+        if (attachment.previewUrl) {
+          const blobUrl = await operation(attachment.previewUrl, this._credential);
+          message.resourceCache[attachment.previewUrl] = blobUrl;
+        }
+      }
+    }
+
+    return message;
   }
 }
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * @private
  */
-export const requestAttachments = async (
+export const requestPreviewUrl = async (
   message: ChatMessageWithStatus,
   credential: CommunicationTokenCredential
 ): Promise<ChatMessageWithStatus> => {
@@ -99,11 +137,11 @@ export const requestAttachments = async (
 
   return message;
 };
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * @private
  */
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-const fetchImageSource = async (src: string, credential: CommunicationTokenCredential): Promise<string> => {
+export const fetchImageSource = async (src: string, credential: CommunicationTokenCredential): Promise<string> => {
   async function fetchWithAuthentication(url: string, token: string): Promise<Response> {
     const headers = new Headers();
     headers.append('Authorization', `Bearer ${token}`);
@@ -120,7 +158,7 @@ const fetchImageSource = async (src: string, credential: CommunicationTokenCrede
 };
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 interface ImageRequest {
-  (message: ChatMessageWithStatus, credential: CommunicationTokenCredential): Promise<ChatMessageWithStatus>;
+  (request: string, credential: CommunicationTokenCredential): Promise<string>;
 }
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */

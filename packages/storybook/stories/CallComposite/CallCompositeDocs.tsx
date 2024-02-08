@@ -25,12 +25,15 @@ body,
 }
 `;
 
-const callParticipantsLocatorSnippet = `
-// CallParticipantsLocator
-{ participantIds: string[] }
+const creatingTargetCalleesSnippet = `
+// You will want to make sure that any flat id's are converted to CommunicationUserIdentifier or PhoneNumberIdentifier
+const createTargetCallees = (targetCallees: string[]): CommunicationUserIdentifier[] => {
+  return targetCallees.map((c) => fromFlatCommunicationIdentifier(c) as CommunicationUserIdentifier);
+};
 
-// Example
-{ participantsIDs: ["<phone #>", "<phone #>", "<ACS userId>", ...] }
+const createTargetCallees = useMemo(() => {
+  return participantIds.map((c) => fromFlatCommunicationIdentifier(c) as PhoneNumberIdentifier);
+}, [participantIds]);
 `;
 
 const customBrandingSnippet = `
@@ -368,12 +371,13 @@ export const Docs: () => JSX.Element = () => {
       <SingleLineBetaBanner version={'1.3.2-beta.1'} />
       <Description>
         The CallComposite supports making outbound PSTN and 1:N calls. 1:N is a call either between just Azure
-        Communication Users or, a mix between ACS and PSTN users. To make these outbound calls you need to provide a
-        `locator` that contains participantIds that you are looking to call to the
+        Communication Users or, a mix between ACS and PSTN users. To make these outbound calls you need to provide an
+        array of `targetCallees` that contains participantIds that you are looking to call to the
         [CallAdapter](./?path=/docs/composite-adapters--page). For PSTN these IDs are the phone numbers that you are
         looking to call. For Azure Communication Users you will need to provide their unique ACS acquired `userId`.
+        These are to be provided to the `CallAdapter` properties in place of a locator as `targetCallees`.
       </Description>
-      <Source code={callParticipantsLocatorSnippet} />
+      <Source code={creatingTargetCalleesSnippet} />
       <Description>
         As well as these participantIds you are required to provide a [phone
         number](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/telephony/get-phone-number?tabs=windows&pivots=platform-azcli)
@@ -384,7 +388,6 @@ export const Docs: () => JSX.Element = () => {
       </Description>
 
       <Heading>Rooms</Heading>
-      <SingleLineBetaBanner version={'1.3.2-beta.1'} />
       <Description>
         The CallComposite supports [Rooms](./?path=/docs/rooms--page). To join a room call you need to provide a
         `locator` that contains the roomId of the room call you want to join to the
