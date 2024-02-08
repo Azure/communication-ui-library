@@ -1326,7 +1326,7 @@ export interface ImageOverlayStrings {
 }
 
 // @beta
-export const imageOverlayTheme: PartialTheme;
+export const imageOverlayTheme: PartialTheme & CallingTheme;
 
 // @beta
 export interface InlineImage {

@@ -113,4 +113,4 @@ export const darkTheme: PartialTheme & CallingTheme = {
  *
  * @beta
  */
-export const imageOverlayTheme: PartialTheme = darkTheme;
+export const imageOverlayTheme: PartialTheme & CallingTheme = darkTheme;
