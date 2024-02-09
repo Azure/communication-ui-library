@@ -34,7 +34,11 @@ export class SpotlightSubscriber {
   };
 
   private spotlightChanged = (args: { added: SpotlightedParticipant[]; removed: SpotlightedParticipant[] }): void => {
-    this._context.setSpotlight(this._callIdRef.callId, this._spotlightFeature.getSpotlightedParticipants());
+    this._context.setSpotlight(
+      this._callIdRef.callId,
+      this._spotlightFeature.getSpotlightedParticipants(),
+      this._spotlightFeature.maxParticipantsToSpotlight
+    );
     for (const addedParticipant of args.added) {
       this._context.setParticipantSpotlighted(this._callIdRef.callId, addedParticipant);
     }

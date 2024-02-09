@@ -47,6 +47,7 @@ Most often, you should write a combination of unit-tests and hermetic browser te
 | Test Type         |  Characteristics                  | When to write                               |
 | ----------------- | --------------------------------- | ------------------------------------------- |
 | unit-tests        | +fast, +not-flakey, -narrow       | Complex business logic, helper functions    |
+| components        | +fast, less-flakey                 | Validate features for components only       |
 | browser: hermetic | fast-ish, less-flakey, e2e/static | Validate features, composite snapshots      |
 | browser: live     | -slow, -flakey, +faithful         | Smoke testing, critical user journeys       |
 | storybook         | ??                                | ??                                          |
