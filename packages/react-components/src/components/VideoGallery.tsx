@@ -269,12 +269,12 @@ export interface VideoGalleryProps {
   spotlightedParticipants?: string[];
   /* @conditional-compile-remove(spotlight) */
   /**
-   * This callback will be called when spotlight is started for participant video tile.
+   * This callback will be called when spotlight is started for participant video tiles.
    */
   onStartSpotlight?: (userIds?: string[]) => Promise<void>;
   /* @conditional-compile-remove(spotlight) */
   /**
-   * This callback will be called when spotlight is stopped for participant video tile.
+   * This callback will be called when spotlight is stopped for participant video tiles.
    */
   onStopSpotlight?: (userIds?: string[]) => Promise<void>;
   /* @conditional-compile-remove(spotlight) */
