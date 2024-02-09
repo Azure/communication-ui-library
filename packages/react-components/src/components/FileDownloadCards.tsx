@@ -113,12 +113,10 @@ export interface _FileDownloadCardsStrings {
 
 /**
  * @beta
- * A file download error returned via a {@link FileDownloadHandler}.
- * This error message is used to render an error message in the UI.
  */
-export interface FileDownloadError {
-  /** The error message to display in the UI */
-  errorMessage: string;
+export enum FileCardAuctionType {
+  preview = 0,
+  download = 1
 }
 
 /**
@@ -153,8 +151,9 @@ export interface FileDownloadError {
  */
 export type FileDownloadHandler = (
   userId: string,
-  fileMetadata: AttachmentMetadata
-) => Promise<URL | FileDownloadError>;
+  fileMetadata: AttachmentMetadata,
+  actionType: FileCardAuctionType
+) => Promise<URL | undefined>;
 
 /**
  * @internal
@@ -214,7 +213,8 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const isShowDownloadIcon = useCallback((attachment: AttachmentMetadata): boolean => {
     /* @conditional-compile-remove(file-sharing) */
-    return attachment.attachmentType === 'file' && attachment.payload?.teamsFileAttachment !== 'true';
+    // return attachment.attachmentType === 'file' && attachment.payload?.teamsFileAttachment !== 'true';
+    // return false;
     return true;
   }, []);
 
@@ -233,20 +233,29 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
   );
 
   const fileDownloadHandler = useCallback(
-    async (userId: string, file: AttachmentMetadata) => {
+    async (userId: string, file: AttachmentMetadata, actionType: FileCardAuctionType) => {
+      if (actionType === FileCardAuctionType.preview) {
+        console.log('Previewing file');
+      } else if (actionType === FileCardAuctionType.download) {
+        console.log('Downloading file');
+      }
+      return;
       if (!props.downloadHandler) {
         window.open(file.url, '_blank', 'noopener,noreferrer');
       } else {
         setShowSpinner(true);
         try {
-          const response = await props.downloadHandler(userId, file);
+          const response = await props.downloadHandler(userId, file, actionType);
           setShowSpinner(false);
-          if (response instanceof URL) {
+          if (response && response instanceof URL) {
             window.open(response.toString(), '_blank', 'noopener,noreferrer');
-          } else {
-            props.onDownloadErrorMessage && props.onDownloadErrorMessage(response.errorMessage);
           }
-        } finally {
+        } catch(e) {
+          let error = e as Error;
+          setShowSpinner(false);
+          props.onDownloadErrorMessage && props.onDownloadErrorMessage(error.message);
+        }
+         finally {
           setShowSpinner(false);
         }
       }
@@ -273,7 +282,6 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
             })
             .map((file) => file as unknown as FileMetadata)
             .map((file) => (
-              <TooltipHost content={downloadFileButtonString()} key={file.name}>
                 <_FileCard
                   fileName={file.name}
                   key={file.name}
@@ -290,9 +298,8 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
                       </IconButton>
                     ) : undefined
                   }
-                  actionHandler={() => fileDownloadHandler(userId, file as unknown as AttachmentMetadata)}
+                  actionHandler={(action) => fileDownloadHandler(userId, file as unknown as AttachmentMetadata, action)}
                 />
-              </TooltipHost>
             ))}
       </_FileCardGroup>
     </div>

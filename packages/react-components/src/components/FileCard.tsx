@@ -11,6 +11,7 @@ import {
   ProgressIndicator,
   Stack,
   Text,
+  TooltipHost,
   useTheme
 } from '@fluentui/react';
 import { getFileTypeIconProps } from '@fluentui/react-file-type-icons';
@@ -20,6 +21,7 @@ import { Announcer } from './Announcer';
 import { useEffect, useState } from 'react';
 import { _FileUploadCardsStrings } from './FileUploadCards';
 import { useLocaleFileCardStringsTrampoline } from './utils/common';
+import { FileCardAuctionType } from './FileDownloadCards';
 
 /**
  * @internal
@@ -46,7 +48,7 @@ export interface _FileCardProps {
   /**
    * Function that runs when actionIcon is clicked
    */
-  actionHandler?: () => void;
+  actionHandler?: (actionType: FileCardAuctionType) => void;
   /**
    * Optional arialabel strings for file cards
    */
@@ -84,31 +86,29 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
     background: theme.palette.neutralLighter,
     borderRadius: theme.effects.roundedCorner4,
     border: `${_pxToRem(1)} solid ${theme.palette.neutralQuaternary}`,
-    cursor: 'pointer'
   });
 
   const fileInfoWrapperClassName = mergeStyles({
+    backgroundColor: 'yellow',
     padding: _pxToRem(12),
     // To make space for the progress indicator.
     paddingBottom: showProgressIndicator ? _pxToRem(12 - progressBarThicknessPx * 2) : _pxToRem(12)
   });
 
   const fileNameContainerClassName = mergeStyles({
+    maxWidth: '7rem',
     paddingLeft: _pxToRem(4),
-    minWidth: '75%',
-    maxWidth: '75%'
-  });
-
-  const fileNameTextClassName = mergeStyles({
+    backgroundColor: 'red',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     lineHeight: 'normal',
-    whiteSpace: 'nowrap',
-    paddingRight: _pxToRem(4)
+    whiteSpace: 'nowrap'
   });
 
   const actionIconClassName = mergeStyles({
-    cursor: 'pointer'
+    cursor: 'pointer',
+    padding: _pxToRem(4),
+
   });
 
   const progressIndicatorStyles: IStyleFunctionOrObject<IProgressIndicatorStyleProps, IProgressIndicatorStyles> = {
@@ -127,30 +127,40 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
       <Announcer announcementString={announcerString} ariaLive={'polite'} />
       <Stack
         className={containerClassName}
-        onClick={() => {
-          props.actionHandler?.();
-        }}
       >
         <Stack horizontal horizontalAlign="space-between" verticalAlign="center" className={fileInfoWrapperClassName}>
-          <Stack>
-            {/* We are not using <ChatCompositeIcon /> here as we currently do not support customizing these filetype icons. */}
-            <Icon
-              data-ui-id={'filetype-icon'}
-              iconName={
-                getFileTypeIconProps({
-                  extension: fileExtension,
-                  size: 24,
-                  imageFileType: 'svg'
-                }).iconName
-              }
-            />
+        <TooltipHost content="open file">
+          <Stack horizontal verticalAlign='center' className={mergeStyles({cursor: 'pointer', backgroundColor: 'grey'})} 
+            onClick={() => {
+              props.actionHandler?.(FileCardAuctionType.preview);
+            }}>
+            <Stack.Item className={mergeStyles({backgroundColor: 'white'})}>
+              {/* We are not using <ChatCompositeIcon /> here as we currently do not support customizing these filetype icons. */}
+              <Icon
+                data-ui-id={'filetype-icon'}
+                iconName={
+                  getFileTypeIconProps({
+                    extension: fileExtension,
+                    size: 24,
+                    imageFileType: 'svg'
+                  }).iconName
+                }
+              />
+            </Stack.Item>
+            <Stack.Item className={fileNameContainerClassName}>
+              <Text>{fileName}</Text>
+            </Stack.Item>
           </Stack>
-          <Stack className={fileNameContainerClassName}>
-            <Text className={fileNameTextClassName}>{fileName}</Text>
+        </TooltipHost>
+        <TooltipHost content="download file">
+          <Stack verticalAlign="center" className={mergeStyles({ backgroundColor: 'green'})} onClick={() => {
+            props.actionHandler?.(FileCardAuctionType.download);
+          }}>
+            <Stack.Item className={actionIconClassName}>
+              {actionIcon && actionIcon}
+            </Stack.Item>
           </Stack>
-          <Stack verticalAlign="center" className={actionIconClassName}>
-            {actionIcon && actionIcon}
-          </Stack>
+        </TooltipHost>
         </Stack>
         {showProgressIndicator && <ProgressIndicator percentComplete={progress} styles={progressIndicatorStyles} />}
       </Stack>
