@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "area": "feature",
+  "workstream": "RTE",
+  "comment": "RoosterJS types package update to add isolatedModules support",
+  "packageName": "@azure/communication-react",
+  "email": "98852890+vhuseinova-msft@users.noreply.github.com",
+  "dependentChangeType": "none"
+}

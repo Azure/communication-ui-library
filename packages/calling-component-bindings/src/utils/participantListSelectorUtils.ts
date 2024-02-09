@@ -188,7 +188,7 @@ export const memoizedSpotlight = memoizeOne(
     const spotlightOrder = spotlightedParticipants?.find(
       (spotlightedParticipant) => toFlatCommunicationIdentifier(spotlightedParticipant.identifier) === userId
     );
-    return spotlightOrder ? { spotlightOrderPosition: spotlightOrder.order } : undefined;
+    return spotlightOrder ? { spotlightedOrderPosition: spotlightOrder.order } : undefined;
   }
 );
 
@@ -255,7 +255,7 @@ const convertRemoteParticipantToParticipantListParticipantBetaSpotlight = (
   raisedHand: RaisedHandState | undefined,
   localUserCanRemoveOthers: boolean,
   reaction: Reaction | undefined,
-  isSpotlighted: Spotlight | undefined
+  spotlight: Spotlight | undefined
 ): CallParticipantListParticipant => {
   return {
     ...convertRemoteParticipantToParticipantListParticipant(
@@ -269,6 +269,6 @@ const convertRemoteParticipantToParticipantListParticipantBetaSpotlight = (
       localUserCanRemoveOthers
     ),
     reaction,
-    isSpotlighted
+    spotlight
   };
 };
