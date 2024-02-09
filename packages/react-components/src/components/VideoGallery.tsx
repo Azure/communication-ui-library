@@ -123,8 +123,8 @@ export interface VideoGalleryStrings {
   /** Menu text shown in Video Tile contextual menu to add spotlight to participant's video tile */
   addSpotlightVideoTileMenuLabel: string;
   /* @conditional-compile-remove(spotlight) */
-  /** Aria label to start spotlight menu item when spotlight limit is reached */
-  spotlightLimitReachedAriaLabel: string;
+  /** Menu title for start spotlight menu item when spotlight limit is reached */
+  spotlightLimitReachedMenuTitle: string;
   /* @conditional-compile-remove(spotlight) */
   /** Menu text shown in Video Tile contextual menu to stop spotlight on participant's video tile */
   stopSpotlightVideoTileMenuLabel: string;

@@ -29,7 +29,7 @@ export const useVideoTileContextualMenuProps = (props: {
     /* @conditional-compile-remove(spotlight) */
     stopSpotlightVideoTileMenuLabel?: string;
     /* @conditional-compile-remove(spotlight) */
-    spotlightLimitReachedAriaLabel?: string;
+    spotlightLimitReachedMenuTitle?: string;
   };
   view?: { updateScalingMode: (scalingMode: ViewScalingMode) => Promise<void> };
   isPinned?: boolean;
@@ -150,10 +150,9 @@ export const useVideoTileContextualMenuProps = (props: {
             styles: { root: { lineHeight: 0 } }
           },
           onClick: () => onStartSpotlight(remoteParticipant.userId),
-          ariaLabel: maxSpotlightedParticipantsReached
-            ? strings?.spotlightLimitReachedAriaLabel
-            : startSpotlightMenuLabel,
-          disabled: maxSpotlightedParticipantsReached
+          ariaLabel: startSpotlightMenuLabel,
+          disabled: maxSpotlightedParticipantsReached,
+          title: maxSpotlightedParticipantsReached ? strings?.spotlightLimitReachedMenuTitle : undefined
         });
       }
     }

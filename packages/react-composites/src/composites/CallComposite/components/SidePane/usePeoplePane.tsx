@@ -80,7 +80,7 @@ export const usePeoplePane = (props: {
   /* @conditional-compile-remove(spotlight) */
   const onFetchParticipantMenuItemsForCallComposite = useCallback(
     (participantId: string, myUserId?: string, defaultMenuItems?: IContextualMenuItem[]): IContextualMenuItem[] => {
-      const _defaultMenuItems = defaultMenuItems ?? [];
+      const _defaultMenuItems: IContextualMenuItem[] = defaultMenuItems ?? [];
       const isSpotlighted = spotlightedParticipantUserIds?.find((p) => p === participantId);
       if (isSpotlighted) {
         const stopSpotlightMenuText =
@@ -123,7 +123,10 @@ export const usePeoplePane = (props: {
               styles: { root: { lineHeight: 0 } }
             },
             ariaLabel: startSpotlightMenuText,
-            disabled: maxSpotlightedParticipantsReached
+            disabled: maxSpotlightedParticipantsReached,
+            title: maxSpotlightedParticipantsReached
+              ? localeStrings.spotlightLimitReachedParticipantListMenuTitle
+              : undefined
           });
         }
       }
@@ -140,6 +143,7 @@ export const usePeoplePane = (props: {
       localeStrings.stopSpotlightOnSelfParticipantListMenuLabel,
       localeStrings.addSpotlightParticipantListMenuLabel,
       localeStrings.startSpotlightParticipantListMenuLabel,
+      localeStrings.spotlightLimitReachedParticipantListMenuTitle,
       ableToSpotlight,
       maxParticipantsToSpotlight
     ]

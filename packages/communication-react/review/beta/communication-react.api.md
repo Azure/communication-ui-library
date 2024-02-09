@@ -790,6 +790,7 @@ export interface CallCompositeStrings {
     selectedPeopleButtonLabel: string;
     soundLabel: string;
     spokenLanguageStrings?: SpokenLanguageStrings;
+    spotlightLimitReachedParticipantListMenuTitle: string;
     spotlightPrompt: SpotlightPromptStrings;
     starRatingAriaLabel: string;
     starSurveyFiveStarText: string;
@@ -4519,7 +4520,7 @@ export interface VideoGalleryStrings {
     pinParticipantMenuItemAriaLabel: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;
-    spotlightLimitReachedAriaLabel: string;
+    spotlightLimitReachedMenuTitle: string;
     startSpotlightVideoTileMenuLabel: string;
     stopSpotlightOnSelfVideoTileMenuLabel: string;
     stopSpotlightVideoTileMenuLabel: string;
