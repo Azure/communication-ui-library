@@ -125,42 +125,46 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
   return (
     <div data-is-focusable={true}>
       <Announcer announcementString={announcerString} ariaLive={'polite'} />
-      <Stack
-        className={containerClassName}
-      >
+      <Stack className={containerClassName}>
         <Stack horizontal horizontalAlign="space-between" verticalAlign="center" className={fileInfoWrapperClassName}>
-        <TooltipHost content="open file">
-          <Stack horizontal verticalAlign='center' className={mergeStyles({cursor: 'pointer', backgroundColor: 'grey'})} 
-            onClick={() => {
-              props.actionHandler?.(FileCardAuctionType.preview);
-            }}>
-            <Stack.Item className={mergeStyles({backgroundColor: 'white'})}>
-              {/* We are not using <ChatCompositeIcon /> here as we currently do not support customizing these filetype icons. */}
-              <Icon
-                data-ui-id={'filetype-icon'}
-                iconName={
-                  getFileTypeIconProps({
-                    extension: fileExtension,
-                    size: 24,
-                    imageFileType: 'svg'
-                  }).iconName
-                }
-              />
-            </Stack.Item>
-            <Stack.Item className={fileNameContainerClassName}>
-              <Text>{fileName}</Text>
-            </Stack.Item>
-          </Stack>
-        </TooltipHost>
-        <TooltipHost content="download file">
-          <Stack verticalAlign="center" className={mergeStyles({ backgroundColor: 'green'})} onClick={() => {
-            props.actionHandler?.(FileCardAuctionType.download);
-          }}>
-            <Stack.Item className={actionIconClassName}>
-              {actionIcon && actionIcon}
-            </Stack.Item>
-          </Stack>
-        </TooltipHost>
+          <TooltipHost content="open file">
+            <Stack
+              horizontal
+              verticalAlign="center"
+              className={mergeStyles({ cursor: 'pointer', backgroundColor: 'grey' })}
+              onClick={() => {
+                props.actionHandler?.(FileCardAuctionType.preview);
+              }}
+            >
+              <Stack.Item className={mergeStyles({ backgroundColor: 'white' })}>
+                {/* We are not using <ChatCompositeIcon /> here as we currently do not support customizing these filetype icons. */}
+                <Icon
+                  data-ui-id={'filetype-icon'}
+                  iconName={
+                    getFileTypeIconProps({
+                      extension: fileExtension,
+                      size: 24,
+                      imageFileType: 'svg'
+                    }).iconName
+                  }
+                />
+              </Stack.Item>
+              <Stack.Item className={fileNameContainerClassName}>
+                <Text>{fileName}</Text>
+              </Stack.Item>
+            </Stack>
+          </TooltipHost>
+          <TooltipHost content="download file">
+            <Stack
+              verticalAlign="center"
+              className={mergeStyles({ backgroundColor: 'green' })}
+              onClick={() => {
+                props.actionHandler?.(FileCardAuctionType.download);
+              }}
+            >
+              <Stack.Item className={actionIconClassName}>{actionIcon && actionIcon}</Stack.Item>
+            </Stack>
+          </TooltipHost>
         </Stack>
         {showProgressIndicator && <ProgressIndicator percentComplete={progress} styles={progressIndicatorStyles} />}
       </Stack>
