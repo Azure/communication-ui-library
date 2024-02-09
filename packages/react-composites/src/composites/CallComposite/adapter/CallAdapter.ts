@@ -708,12 +708,12 @@ export interface CallAdapterCallOperations {
   /**
    * Start spotlight
    */
-  startSpotlight(userId: string): Promise<void>;
+  startSpotlight(userIds?: string[]): Promise<void>;
   /* @conditional-compile-remove(spotlight) */
   /**
    * Stop spotlight
    */
-  stopSpotlight(userId: string): Promise<void>;
+  stopSpotlight(userIds?: string[]): Promise<void>;
 }
 
 /**

@@ -575,13 +575,13 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   }
 
   /* @conditional-compile-remove(spotlight) */
-  public async startSpotlight(userId: string): Promise<void> {
-    return this.callAdapter.startSpotlight(userId);
+  public async startSpotlight(userIds?: string[]): Promise<void> {
+    return this.callAdapter.startSpotlight(userIds);
   }
 
   /* @conditional-compile-remove(spotlight) */
-  public async stopSpotlight(userId: string): Promise<void> {
-    return this.callAdapter.stopSpotlight(userId);
+  public async stopSpotlight(userIds?: string[]): Promise<void> {
+    return this.callAdapter.stopSpotlight(userIds);
   }
 
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;

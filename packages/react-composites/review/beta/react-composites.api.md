@@ -234,12 +234,12 @@ export interface CallAdapterCallOperations {
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startCaptions(options?: StartCaptionsOptions): Promise<void>;
     startScreenShare(): Promise<void>;
-    startSpotlight(userId: string): Promise<void>;
+    startSpotlight(userIds?: string[]): Promise<void>;
     startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
     stopCamera(): Promise<void>;
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
-    stopSpotlight(userId: string): Promise<void>;
+    stopSpotlight(userIds?: string[]): Promise<void>;
     stopVideoBackgroundEffects(): Promise<void>;
     // @beta
     submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
@@ -750,12 +750,12 @@ export interface CallWithChatAdapterManagement {
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startCaptions(options?: StartCaptionsOptions): Promise<void>;
     startScreenShare(): Promise<void>;
-    startSpotlight(userId: string): Promise<void>;
+    startSpotlight(userIds?: string[]): Promise<void>;
     startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
     stopCamera(): Promise<void>;
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
-    stopSpotlight(userId: string): Promise<void>;
+    stopSpotlight(userIds?: string[]): Promise<void>;
     stopVideoBackgroundEffects(): Promise<void>;
     // @beta
     submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
@@ -1841,7 +1841,7 @@ export class _MockCallAdapter implements CallAdapter {
     // (undocumented)
     startScreenShare(): Promise<void>;
     // (undocumented)
-    startSpotlight(userId: string): Promise<void>;
+    startSpotlight(userIds?: string[]): Promise<void>;
     // (undocumented)
     startVideoBackgroundEffect(): Promise<void>;
     // (undocumented)
@@ -1853,7 +1853,7 @@ export class _MockCallAdapter implements CallAdapter {
     // (undocumented)
     stopScreenShare(): Promise<void>;
     // (undocumented)
-    stopSpotlight(userId: string): Promise<void>;
+    stopSpotlight(userIds?: string[]): Promise<void>;
     // (undocumented)
     stopVideoBackgroundEffects(): Promise<void>;
     // (undocumented)

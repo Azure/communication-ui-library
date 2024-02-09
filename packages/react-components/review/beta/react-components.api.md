@@ -1775,8 +1775,6 @@ export type ParticipantListProps = {
     onRemoveParticipant?: (userId: string) => void;
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
     onParticipantClick?: (participant?: ParticipantListParticipant) => void;
-    onStartSpotlight?: (userId: string) => void;
-    onStopSpotlight?: (userId: string) => void;
     styles?: ParticipantListStyles;
     showParticipantOverflowTooltip?: boolean;
     totalParticipantCount?: number;
@@ -1987,8 +1985,8 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     isPinned?: boolean | undefined;
     spotlightedParticipantUserIds?: string[] | undefined;
     isSpotlighted?: boolean | undefined;
-    onStartSpotlight?: ((userId: string) => void) | undefined;
-    onStopSpotlight?: ((userId: string) => void) | undefined;
+    onStartSpotlight?: ((userIds: string[]) => void) | undefined;
+    onStopSpotlight?: ((userIds: string[]) => void) | undefined;
     maxParticipantsToSpotlight?: number | undefined;
     disablePinMenuItem?: boolean | undefined;
     toggleAnnouncerString?: ((announcerString: string) => void) | undefined;
@@ -2633,8 +2631,8 @@ export interface VideoGalleryProps {
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
-    onStartSpotlight?: (userId: string) => Promise<void>;
-    onStopSpotlight?: (userId: string) => Promise<void>;
+    onStartSpotlight?: (userIds?: string[]) => Promise<void>;
+    onStopSpotlight?: (userIds?: string[]) => Promise<void>;
     onUnpinParticipant?: (userId: string) => void;
     overflowGalleryPosition?: OverflowGalleryPosition;
     pinnedParticipants?: string[];

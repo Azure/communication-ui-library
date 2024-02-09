@@ -64,8 +64,8 @@ export const _RemoteVideoTile = React.memo(
     isPinned?: boolean;
     /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds?: string[];
     /* @conditional-compile-remove(spotlight) */ isSpotlighted?: boolean;
-    /* @conditional-compile-remove(spotlight) */ onStartSpotlight?: (userId: string) => void;
-    /* @conditional-compile-remove(spotlight) */ onStopSpotlight?: (userId: string) => void;
+    /* @conditional-compile-remove(spotlight) */ onStartSpotlight?: (userIds: string[]) => void;
+    /* @conditional-compile-remove(spotlight) */ onStopSpotlight?: (userIds: string[]) => void;
     /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight?: number;
     disablePinMenuItem?: boolean;
     toggleAnnouncerString?: (announcerString: string) => void;
