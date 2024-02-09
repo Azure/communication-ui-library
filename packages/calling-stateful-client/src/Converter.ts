@@ -163,7 +163,7 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     },
     /* @conditional-compile-remove(hide-attendee-name) */
     // TODO: Replace this once the SDK supports hide attendee name
-    hideAttendeeNames: true
+    hideAttendeeNames: false
   };
 }
 
