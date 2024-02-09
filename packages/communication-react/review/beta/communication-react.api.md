@@ -790,6 +790,7 @@ export interface CallCompositeStrings {
     selectedPeopleButtonLabel: string;
     soundLabel: string;
     spokenLanguageStrings?: SpokenLanguageStrings;
+    spotlightLimitReachedParticipantListMenuTitle: string;
     spotlightPrompt: SpotlightPromptStrings;
     starRatingAriaLabel: string;
     starSurveyFiveStarText: string;
@@ -2826,6 +2827,7 @@ export interface ErrorBarStrings {
     sendMessageGeneric: string;
     sendMessageNotInChatThread: string;
     startScreenShareGeneric: string;
+    startSpotlightWhileMaxParticipantsAreSpotlighted: string;
     startVideoGeneric: string;
     stopScreenShareGeneric: string;
     stopVideoGeneric: string;
@@ -4009,6 +4011,7 @@ export type Spotlight = {
 
 // @beta
 export interface SpotlightCallFeatureState {
+    maxParticipantsToSpotlight: number;
     spotlightedParticipants: SpotlightedParticipant[];
 }
 
@@ -4439,6 +4442,7 @@ export interface VideoGalleryProps {
     localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
     localVideoTileSize?: LocalVideoTileSize;
     localVideoViewOptions?: VideoStreamOptions;
+    maxParticipantsToSpotlight?: number;
     maxRemoteVideoStreams?: number;
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
@@ -4487,6 +4491,7 @@ export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSe
     dominantSpeakers?: string[];
     optimalVideoCount?: number;
     spotlightedParticipants?: string[];
+    maxParticipantsToSpotlight?: number;
 };
 
 // @public
@@ -4518,6 +4523,7 @@ export interface VideoGalleryStrings {
     pinParticipantMenuItemAriaLabel: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;
+    spotlightLimitReachedMenuTitle: string;
     startSpotlightVideoTileMenuLabel: string;
     stopSpotlightOnSelfVideoTileMenuLabel: string;
     stopSpotlightVideoTileMenuLabel: string;

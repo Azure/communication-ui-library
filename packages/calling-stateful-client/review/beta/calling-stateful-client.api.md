@@ -319,6 +319,7 @@ export interface RemoteVideoStreamState {
 
 // @beta
 export interface SpotlightCallFeatureState {
+    maxParticipantsToSpotlight: number;
     spotlightedParticipants: SpotlightedParticipant[];
 }
 

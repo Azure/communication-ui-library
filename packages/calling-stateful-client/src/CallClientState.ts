@@ -161,6 +161,10 @@ export interface SpotlightCallFeatureState {
    * Ordered array of spotlighted participants in call
    */
   spotlightedParticipants: SpotlightedParticipant[];
+  /**
+   * Proxy of {@link @azure/communication-calling#SpotlightCallFeature.maxParticipantsToSpotlight}.
+   */
+  maxParticipantsToSpotlight: number;
 }
 
 /* @conditional-compile-remove(spotlight) */
