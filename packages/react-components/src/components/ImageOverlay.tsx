@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(image-overlay) */
-import { DefaultButton, Icon, IconButton, Modal, Stack, Theme, mergeStyles } from '@fluentui/react';
+import { DefaultButton, Icon, IconButton, Modal, Stack, mergeStyles } from '@fluentui/react';
 /* @conditional-compile-remove(image-overlay) */
 import React, { useState } from 'react';
 /* @conditional-compile-remove(image-overlay) */
@@ -25,7 +25,7 @@ import {
   titleStyle
 } from './styles/ImageOverlay.style';
 /* @conditional-compile-remove(image-overlay) */
-import { FluentThemeProvider, useTheme } from '../theming/FluentThemeProvider';
+import { FluentThemeProvider } from '../theming/FluentThemeProvider';
 /* @conditional-compile-remove(image-overlay) */
 import { useLocale } from '../localization';
 /* @conditional-compile-remove(image-overlay) */
