@@ -90,9 +90,9 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
 
   const fileInfoWrapperClassName = mergeStyles({
     backgroundColor: 'yellow',
-    padding: _pxToRem(12),
+    padding: _pxToRem(4)
     // To make space for the progress indicator.
-    paddingBottom: showProgressIndicator ? _pxToRem(12 - progressBarThicknessPx * 2) : _pxToRem(12)
+    // paddingBottom: showProgressIndicator ? _pxToRem(12 - progressBarThicknessPx * 2) : _pxToRem(12)
   });
 
   const fileNameContainerClassName = mergeStyles({
@@ -132,7 +132,7 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
             <Stack
               horizontal
               verticalAlign="center"
-              className={mergeStyles({ cursor: 'pointer', backgroundColor: 'grey' })}
+              className={mergeStyles({ cursor: 'pointer', backgroundColor: 'grey', padding: '10px' })}
               onClick={() => {
                 props.actionHandler?.(FileCardAuctionType.preview);
               }}
@@ -164,13 +164,16 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
           </TooltipHost>
           <TooltipHost content="download file">
             <Stack
+              grow
               verticalAlign="center"
-              className={mergeStyles({ backgroundColor: 'green' })}
+              className={mergeStyles({ backgroundColor: 'green', padding: '10px 0 9px 0' })}
               onClick={() => {
                 props.actionHandler?.(FileCardAuctionType.download);
               }}
             >
-              <Stack.Item className={actionIconClassName}>{actionIcon && actionIcon}</Stack.Item>
+              <Stack.Item align="auto" className={actionIconClassName}>
+                {actionIcon && actionIcon}
+              </Stack.Item>
             </Stack>
           </TooltipHost>
         </Stack>
