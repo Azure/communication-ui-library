@@ -188,7 +188,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     /* @conditional-compile-remove(file-sharing) */
     this.updateFileUploadMetadata = this.updateFileUploadMetadata.bind(this);
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-    this.downloadAttachment = this.downloadAttachment.bind(this);
+    this.downloadAttachment = this.downloadAttachment.bind(this); // ToDo: This method is to be removed
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     this.downloadResourceToCache = this.downloadResourceToCache.bind(this);
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */

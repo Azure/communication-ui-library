@@ -400,7 +400,7 @@ export interface CallWithChatAdapterManagement {
   /** @beta */
   updateFileUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  downloadAttachment: (options: { attachmentUrl: string }) => Promise<AttachmentDownloadResult>;
+  downloadAttachment: (options: { attachmentUrl: string }) => Promise<AttachmentDownloadResult>; // ToDo: This method is to be removed
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   downloadResourceToCache(threadId: string, messageId: string, resourceUrl: string): void;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
