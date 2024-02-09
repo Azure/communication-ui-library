@@ -22,6 +22,8 @@ import { CallCompositeIcons } from './icons';
 import { NoticePage } from '../CallComposite/pages/NoticePage';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { ThankYouForFeedbackPage } from '../CallComposite/pages/ThankYouForFeedbackPage';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { questionTextStyle, surveyContainerStyle } from './styles/Survey.styles';
 
 /** @private */
 export const Survey = (props: {
@@ -97,14 +99,6 @@ export const Survey = (props: {
   const theme = useTheme();
 
   /* @conditional-compile-remove(end-of-call-survey) */
-  const questionTextStyle = (theme: Theme): string =>
-    mergeStyles({
-      fontWeight: 600,
-      fontSize: _pxToRem(20),
-      lineHeight: _pxToRem(20),
-      color: theme.palette.neutralPrimary
-    });
-  /* @conditional-compile-remove(end-of-call-survey) */
   return (
     <>
       {showDefaultAfterSubmitScreen && <ThankYouForFeedbackPage iconName={iconName} />}
@@ -118,7 +112,7 @@ export const Survey = (props: {
         />
       )}
       {!showDefaultAfterSubmitScreen && !showDefaultAfterDismissedScreen && (
-        <Stack verticalAlign="center" style={{ width: isMobile ? '20rem' : '24rem' }}>
+        <Stack verticalAlign="center" className={surveyContainerStyle(isMobile)}>
           <Text className={questionTextStyle(theme)}>{strings.surveyTitle}</Text>
           <SurveyContent
             setShowSubmitFeedbackButton={(showButton: boolean) => {
