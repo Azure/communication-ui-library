@@ -502,17 +502,13 @@ export interface CallWithChatAdapterManagement {
   /* @conditional-compile-remove(spotlight) */
   /**
    * Start spotlight
-   *
-   * @beta
    */
-  startSpotlight(userId: string): Promise<void>;
+  startSpotlight(userIds?: string[]): Promise<void>;
   /* @conditional-compile-remove(spotlight) */
   /**
    * Stop spotlight
-   *
-   * @beta
    */
-  stopSpotlight(userId: string): Promise<void>;
+  stopSpotlight(userIds?: string[]): Promise<void>;
 }
 
 /**

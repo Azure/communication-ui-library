@@ -464,11 +464,15 @@ export class CallContext {
   }
 
   /* @conditional-compile-remove(spotlight) */
-  public setSpotlight(callId: string, spotlightedParticipants: SpotlightedParticipant[]): void {
+  public setSpotlight(
+    callId: string,
+    spotlightedParticipants: SpotlightedParticipant[],
+    maxParticipantsToSpotlight: number
+  ): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        call.spotlight = { spotlightedParticipants };
+        call.spotlight = { spotlightedParticipants, maxParticipantsToSpotlight };
       }
     });
   }
@@ -480,7 +484,20 @@ export class CallContext {
       if (call) {
         const participant = call.remoteParticipants[toFlatCommunicationIdentifier(spotlightedParticipant.identifier)];
         if (participant) {
-          participant.spotlighted = { spotlightedOrderPosition: spotlightedParticipant.order };
+          participant.spotlight = { spotlightedOrderPosition: spotlightedParticipant.order };
+        }
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(spotlight) */
+  public setParticipantNotSpotlighted(callId: string, spotlightedParticipant: SpotlightedParticipant): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        const participant = call.remoteParticipants[toFlatCommunicationIdentifier(spotlightedParticipant.identifier)];
+        if (participant) {
+          participant.spotlight = undefined;
         }
       }
     });

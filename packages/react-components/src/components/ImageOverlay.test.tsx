@@ -41,8 +41,7 @@ describe('ImageOverlay default layout tests', () => {
     title?: string,
     titleIcon?: JSX.Element,
     onDismiss?: () => void,
-    onDownloadButtonClicked?: () => void,
-    onError?: () => void
+    onDownloadButtonClicked?: () => void
   ): HTMLElement => {
     const { container } = render(
       <ImageOverlay
@@ -52,7 +51,6 @@ describe('ImageOverlay default layout tests', () => {
         altText="altText"
         onDismiss={onDismiss || jest.fn()}
         onDownloadButtonClicked={onDownloadButtonClicked || jest.fn()}
-        onError={onError || jest.fn()}
         isOpen={true}
       />
     );
