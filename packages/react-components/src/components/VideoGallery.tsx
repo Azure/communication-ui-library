@@ -123,6 +123,9 @@ export interface VideoGalleryStrings {
   /** Menu text shown in Video Tile contextual menu to add spotlight to participant's video tile */
   addSpotlightVideoTileMenuLabel: string;
   /* @conditional-compile-remove(spotlight) */
+  /** Menu title for start spotlight menu item when spotlight limit is reached */
+  spotlightLimitReachedMenuTitle: string;
+  /* @conditional-compile-remove(spotlight) */
   /** Menu text shown in Video Tile contextual menu to stop spotlight on participant's video tile */
   stopSpotlightVideoTileMenuLabel: string;
   /* @conditional-compile-remove(spotlight) */
@@ -274,6 +277,11 @@ export interface VideoGalleryProps {
    * This callback will be called when spotlight is stopped for participant video tile.
    */
   onStopSpotlight?: (userId: string) => Promise<void>;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Maximum participants that can be spotlighted
+   */
+  maxParticipantsToSpotlight?: number;
   /**
    * Options for showing the remote video tile menu.
    *
@@ -371,6 +379,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onStartSpotlight,
     /* @conditional-compile-remove(spotlight) */
     onStopSpotlight,
+    /* @conditional-compile-remove(spotlight) */
+    maxParticipantsToSpotlight,
     /* @conditional-compile-remove(reaction) */
     reactionResources
   } = props;
@@ -442,7 +452,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     }
 
     /* @conditional-compile-remove(spotlight) */
-    const isSpotlighted = spotlightedParticipants?.includes(localParticipant.userId);
+    const isSpotlighted = !!localParticipant.spotlight;
 
     const localVideoTileStyles = concatStyleSets(
       localTileNotInGrid ? floatingLocalVideoTileStyle : {},
@@ -520,8 +530,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(gallery-layouts) */
     layout,
     showLocalVideoTileLabel,
-    /* @conditional-compile-remove(spotlight) */
-    spotlightedParticipants,
     /* @conditional-compile-remove(reaction) */
     reactionResources
   ]);
@@ -569,7 +577,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       const selectedScalingMode = remoteVideoStream ? selectedScalingModeState[participant.userId] : undefined;
       let isPinned = pinnedParticipants?.includes(participant.userId);
       /* @conditional-compile-remove(spotlight) */
-      const isSpotlighted = spotlightedParticipants?.includes(participant.userId);
+      const isSpotlighted = !!participant.spotlight;
       /* @conditional-compile-remove(spotlight) */
       isPinned = isSpotlighted ? false : isPinned;
 
@@ -626,6 +634,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           onStartSpotlight={onStartSpotlight}
           /* @conditional-compile-remove(spotlight) */
           onStopSpotlight={onStopSpotlight}
+          /* @conditional-compile-remove(spotlight) */
+          maxParticipantsToSpotlight={maxParticipantsToSpotlight}
           /* @conditional-compile-remove(reaction) */
           reactionResources={reactionResources}
         />
@@ -650,6 +660,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       /* @conditional-compile-remove(spotlight) */ spotlightedParticipants,
       /* @conditional-compile-remove(spotlight) */ onStartSpotlight,
       /* @conditional-compile-remove(spotlight) */ onStopSpotlight,
+      /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight,
       /* @conditional-compile-remove(reaction) */ reactionResources
     ]
   );

@@ -215,7 +215,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
       /* @conditional-compile-remove(reaction) */
       reaction: localParticipantReaction,
       /* @conditional-compile-remove(spotlight) */
-      isSpotlighted: memoizedSpotlight(spotlightedParticipants, userId)
+      spotlight: memoizedSpotlight(spotlightedParticipants, userId)
     });
     /* @conditional-compile-remove(total-participant-count) */
     const totalParticipantCount = partitipantCount;

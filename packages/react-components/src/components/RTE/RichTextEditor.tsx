@@ -3,7 +3,7 @@
 import React, { useEffect, useImperativeHandle, useMemo, useRef } from 'react';
 import { ContentEdit, Watermark } from 'roosterjs-editor-plugins';
 import { Editor } from 'roosterjs-editor-core';
-import { EditorOptions, IEditor } from 'roosterjs-editor-types';
+import { EditorOptions, IEditor } from 'roosterjs-editor-types-compatible';
 import { Rooster, createUpdateContentPlugin, UpdateMode } from 'roosterjs-react';
 import { richTextEditorStyle } from '../styles/RichTextEditor.styles';
 /**
