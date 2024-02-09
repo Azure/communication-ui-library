@@ -401,6 +401,10 @@ export interface CallWithChatAdapterManagement {
   updateFileUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   downloadAttachment: (options: { attachmentUrl: string }) => Promise<AttachmentDownloadResult>;
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  downloadResourceToCache(threadId: string, messageId: string, resourceUrl: string): void;
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  removeResourceFromCache(threadId: string, messageId: string, resourceUrl: string): void;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Puts the Call in a Localhold.

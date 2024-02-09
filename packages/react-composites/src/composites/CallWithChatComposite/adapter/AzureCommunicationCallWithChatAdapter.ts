@@ -235,6 +235,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.updateFileUploadMetadata = this.updateFileUploadMetadata.bind(this);
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     this.downloadAttachment = this.downloadAttachment.bind(this);
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    this.downloadResourceToCache = this.downloadResourceToCache.bind(this);
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    this.removeResourceFromCache = this.removeResourceFromCache.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
     this.holdCall.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
@@ -482,6 +486,14 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   async downloadAttachment(options: { attachmentUrl: string }): Promise<AttachmentDownloadResult> {
     return await this.chatAdapter.downloadAttachment(options);
+  }
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  public downloadResourceToCache(threadId: string, messageId: string, resourceUrl: string): void {
+    this.chatAdapter.downloadResourceToCache(threadId, messageId, resourceUrl);
+  }
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  public removeResourceFromCache(threadId: string, messageId: string, resourceUrl: string): void {
+    this.chatAdapter.removeResourceFromCache(threadId, messageId, resourceUrl);
   }
   /* @conditional-compile-remove(PSTN-calls) */
   public async holdCall(): Promise<void> {

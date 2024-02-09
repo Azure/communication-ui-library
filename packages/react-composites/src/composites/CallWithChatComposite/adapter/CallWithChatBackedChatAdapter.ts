@@ -133,6 +133,14 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
   public async downloadAttachment(options: { attachmentUrl: string }): Promise<AttachmentDownloadResult> {
     return await this.callWithChatAdapter.downloadAttachment(options);
   }
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  public downloadResourceToCache(threadId: string, messageId: string, resourceUrl: string): void {
+    this.callWithChatAdapter.downloadResourceToCache(threadId, messageId, resourceUrl);
+  }
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  public removeResourceFromCache(threadId: string, messageId: string, resourceUrl: string): void {
+    this.callWithChatAdapter.removeResourceFromCache(threadId, messageId, resourceUrl);
+  }
 }
 
 function chatAdapterStateFromCallWithChatAdapterState(

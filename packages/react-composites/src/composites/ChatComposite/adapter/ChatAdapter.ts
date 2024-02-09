@@ -110,7 +110,12 @@ export interface ChatAdapterThreadManagement {
    */
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  // ToDo: This method is to be removed
   downloadAttachment: (options: { attachmentUrl: string }) => Promise<AttachmentDownloadResult>;
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  downloadResourceToCache(threadId: string, messageId: string, resourceUrl: string): void;
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  removeResourceFromCache(threadId: string, messageId: string, resourceUrl: string): void;
 }
 
 /**

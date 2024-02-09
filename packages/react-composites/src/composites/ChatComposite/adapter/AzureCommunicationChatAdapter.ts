@@ -189,10 +189,15 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.updateFileUploadMetadata = this.updateFileUploadMetadata.bind(this);
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     this.downloadAttachment = this.downloadAttachment.bind(this);
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    this.downloadResourceToCache = this.downloadResourceToCache.bind(this);
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    this.removeResourceFromCache = this.removeResourceFromCache.bind(this);
   }
 
   dispose(): void {
     this.unsubscribeAllEvents();
+    this.chatClient.dispose();
   }
 
   async fetchInitialData(): Promise<void> {
@@ -332,6 +337,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  // ToDo: This method is to be removed
   async downloadAttachment(options: { attachmentUrl: string }): Promise<AttachmentDownloadResult> {
     return this.asyncTeeErrorToEventEmitter(async () => {
       if (this.credential === undefined) {
@@ -346,6 +352,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     });
   }
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  // ToDo: This method is to be removed
   private async downloadAuthenticatedFile(
     accessToken: string,
     options: { attachmentUrl: string }
@@ -364,6 +371,15 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     const blob = await response.blob();
 
     return { blobUrl: URL.createObjectURL(blob) };
+  }
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  downloadResourceToCache(threadId: string, messageId: string, resourceUrl: string): void {
+    this.chatClient.downloadResourceToCache(threadId, messageId, resourceUrl);
+  }
+
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  removeResourceFromCache(threadId: string, messageId: string, resourceUrl: string): void {
+    this.chatClient.removeResourceFromCache(threadId, messageId, resourceUrl);
   }
 
   private messageReceivedListener(event: ChatMessageReceivedEvent): void {
