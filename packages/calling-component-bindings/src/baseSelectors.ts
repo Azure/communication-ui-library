@@ -115,6 +115,17 @@ export const getSpotlightedParticipants = (
   return state.calls[props.callId]?.spotlight?.spotlightedParticipants;
 };
 
+/* @conditional-compile-remove(spotlight) */
+/**
+ * @private
+ */
+export const getMaxParticipantsToSpotlight = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): number | undefined => {
+  return state.calls[props.callId]?.spotlight?.maxParticipantsToSpotlight;
+};
+
 /* @conditional-compile-remove(reaction) */
 /**
  * @private

@@ -14,6 +14,8 @@ import {
   TransferRequestedEvent,
   TransferRequestedEventArgs
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(spotlight) */
+import { SpotlightCallFeature } from '@azure/communication-calling';
 /**
  * @private
  */
@@ -95,6 +97,12 @@ export abstract class ProxyCallCommon implements ProxyHandler<CallCommon> {
             const proxyFeature = new ProxyTransferCallFeature(this._context, target);
             return new Proxy(transferFeature, proxyFeature);
           }
+          /* @conditional-compile-remove(spotlight) */
+          if (args[0] === Features.Spotlight) {
+            const spotlightFeature = target.feature(Features.Spotlight);
+            const proxyFeature = new ProxySpotlightCallFeature(this._context);
+            return new Proxy(spotlightFeature, proxyFeature);
+          }
           return target.feature(...args);
         }, 'Call.feature');
       }
@@ -149,6 +157,42 @@ class ProxyTeamsCaptions implements ProxyHandler<TeamsCaptions> {
           async (...args: Parameters<TeamsCaptions['setCaptionLanguage']>) => {
             const ret = await target.setCaptionLanguage(...args);
             this._context.setSelectedCaptionLanguage(this._call.id, args[0]);
+            return ret;
+          },
+          'Call.feature'
+        );
+      default:
+        return Reflect.get(target, prop);
+    }
+  }
+}
+
+/* @conditional-compile-remove(spotlight) */
+/**
+ * @private
+ */
+class ProxySpotlightCallFeature implements ProxyHandler<SpotlightCallFeature> {
+  private _context: CallContext;
+
+  constructor(context: CallContext) {
+    this._context = context;
+  }
+
+  public get<P extends keyof SpotlightCallFeature>(target: SpotlightCallFeature, prop: P): any {
+    switch (prop) {
+      case 'startSpotlight':
+        return this._context.withAsyncErrorTeedToState(
+          async (...args: Parameters<SpotlightCallFeature['startSpotlight']>) => {
+            const ret = await target.startSpotlight(...args);
+            return ret;
+          },
+          'Call.feature'
+        );
+        break;
+      case 'stopSpotlight':
+        return this._context.withAsyncErrorTeedToState(
+          async (...args: Parameters<SpotlightCallFeature['stopSpotlight']>) => {
+            const ret = await target.stopSpotlight(...args);
             return ret;
           },
           'Call.feature'

@@ -184,7 +184,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const { setPromptProps, setIsPromptOpen } = props;
 
   /* @conditional-compile-remove(spotlight) */
-  const { onStartSpotlight, onStopSpotlight, spotlightedParticipants } = videoGalleryProps;
+  const { onStartSpotlight, onStopSpotlight, spotlightedParticipants, maxParticipantsToSpotlight } = videoGalleryProps;
 
   /* @conditional-compile-remove(spotlight) */
   const { onStartSpotlightWithPrompt, onStopSpotlightWithPrompt } = useSpotlightCallbacksWithPrompt(
@@ -200,7 +200,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     /* @conditional-compile-remove(spotlight) */ onStartSpotlight: onStartSpotlightWithPrompt,
     /* @conditional-compile-remove(spotlight) */ onStopSpotlight: onStopSpotlightWithPrompt,
     /* @conditional-compile-remove(spotlight) */ ableToSpotlight:
-      adapter.getState().call?.capabilitiesFeature?.capabilities.spotlightParticipant.isPresent
+      adapter.getState().call?.capabilitiesFeature?.capabilities.spotlightParticipant.isPresent,
+    /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight
   });
   const togglePeoplePane = useCallback(() => {
     if (isPeoplePaneOpen) {

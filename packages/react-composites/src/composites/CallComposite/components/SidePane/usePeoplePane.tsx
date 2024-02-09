@@ -31,6 +31,8 @@ export const usePeoplePane = (props: {
   onStopSpotlight?: (userId: string) => Promise<void>;
   /* @conditional-compile-remove(spotlight) */
   ableToSpotlight?: boolean;
+  /* @conditional-compile-remove(spotlight) */
+  maxParticipantsToSpotlight?: number;
 }): {
   openPeoplePane: () => void;
   closePeoplePane: () => void;
@@ -51,7 +53,9 @@ export const usePeoplePane = (props: {
     /* @conditional-compile-remove(spotlight) */
     onStopSpotlight,
     /* @conditional-compile-remove(spotlight) */
-    ableToSpotlight
+    ableToSpotlight,
+    /* @conditional-compile-remove(spotlight) */
+    maxParticipantsToSpotlight
   } = props;
 
   const closePane = useCallback(() => {
@@ -76,7 +80,7 @@ export const usePeoplePane = (props: {
   /* @conditional-compile-remove(spotlight) */
   const onFetchParticipantMenuItemsForCallComposite = useCallback(
     (participantId: string, myUserId?: string, defaultMenuItems?: IContextualMenuItem[]): IContextualMenuItem[] => {
-      const _defaultMenuItems = defaultMenuItems ?? [];
+      const _defaultMenuItems: IContextualMenuItem[] = defaultMenuItems ?? [];
       const isSpotlighted = spotlightedParticipantUserIds?.find((p) => p === participantId);
       if (isSpotlighted) {
         const stopSpotlightMenuText =
@@ -102,6 +106,11 @@ export const usePeoplePane = (props: {
           spotlightedParticipantUserIds && spotlightedParticipantUserIds.length > 0
             ? localeStrings.addSpotlightParticipantListMenuLabel
             : localeStrings.startSpotlightParticipantListMenuLabel;
+        const maxSpotlightedParticipantsReached = maxParticipantsToSpotlight
+          ? spotlightedParticipantUserIds
+            ? spotlightedParticipantUserIds.length >= maxParticipantsToSpotlight
+            : false
+          : false;
         if (onStartSpotlight && startSpotlightMenuText && ableToSpotlight) {
           _defaultMenuItems.push({
             key: 'start-spotlight',
@@ -113,7 +122,11 @@ export const usePeoplePane = (props: {
               iconName: 'StartSpotlightContextualMenuItem',
               styles: { root: { lineHeight: 0 } }
             },
-            ariaLabel: startSpotlightMenuText
+            ariaLabel: startSpotlightMenuText,
+            disabled: maxSpotlightedParticipantsReached,
+            title: maxSpotlightedParticipantsReached
+              ? localeStrings.spotlightLimitReachedParticipantListMenuTitle
+              : undefined
           });
         }
       }
@@ -130,7 +143,9 @@ export const usePeoplePane = (props: {
       localeStrings.stopSpotlightOnSelfParticipantListMenuLabel,
       localeStrings.addSpotlightParticipantListMenuLabel,
       localeStrings.startSpotlightParticipantListMenuLabel,
-      ableToSpotlight
+      localeStrings.spotlightLimitReachedParticipantListMenuTitle,
+      ableToSpotlight,
+      maxParticipantsToSpotlight
     ]
   );
 
