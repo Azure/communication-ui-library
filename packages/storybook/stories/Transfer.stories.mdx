@@ -11,40 +11,34 @@ import TransferSnippetText from '!!raw-loader!./snippets/transfer/Transfer.snipp
 
 # Transfer
 
-<SingleLineBetaBanner version={'1.7.0-beta.1'} />
-
 ## Overview
 
 During an active call, a participant can transfer another participant to another user or call. The transfer process
-starts when a participant (the transferor) requests to transfer another participant (the transferee) to another
-participant (the transfer target.) The transferee receives a transfer requested event which they can accept or reject.
-If the request is accepted, then the transferee makes an outgoing call to transfer target. Finally, the call is ended
+starts when a participant (the transferor) transfers another participant (the transferee) to another
+participant (the transfer target.) The transferee receives a transfer accepted event which contains the new call that was started to facilitate the transfer.
+If the oubound call is accepted, the transferee joins the new call with the transfer target. Finally, the call is ended
 by the transferor.
 
-In the current beta version, ACS users cannot request to transfer other participants yet but they can receive transfer
-requests. Currently, only Teams users can request to transfer other participants. To make a call to a Teams user, refer
+In the current version, ACS users cannot request to transfer other participants yet but they can receive transfers.
+Currently, only Teams users can request to transfer other participants. To make a call to a Teams user or Teams Voice app, refer
 to the [Adhoc calling page](path=/docs/adhoc-calling--page).
 
-## Handling transfer requests
+## Handling transfer events
 
-The [CallAdapter](path=/docs/composite-adapters--page#call-adapter) is able to receive `transferRequested` events and
+The [CallAdapter](path=/docs/composite-adapters--page#call-adapter) is able to receive `transferAccepted` events and
 allows you to handle these events by defining your own `TransferRequestedListener` callback. The following code snippet
-shows an example of a `TransferRequestedListener` that accepts all `transferRequested` events.
+shows an example of a `TransferAcceptedListener` that outputs all transferred calls to state.
 
 <Source code={TransferSnippetText} />
 
-When a transfer request is accepted with no `AcceptTransferOptions`, the microphone state and camera state are
-maintained from the original call to the transferred call. But you can provide `AcceptTransferOptions` to the `accept`
-function so that the user's microphone is muted and their camera turned off in the transferred call. This is done by
-changing the `afterCallAdapterCreate` callback from the code snippet above to the code snippet below.
+When a transfer event comes in, the microphone state and camera state are
+maintained from the original call to the transferred call. The code snippet below shows how to access the `Call` object that
+is returned from the event.
 
 ```typescript
 const afterCallAdapterCreate = useCallback(async (adapter: CallAdapter) => {
-  adapter.on('transferRequested', (e) => {
-    e.accept({
-      audioOptions: { muted: true },
-      videoOptions: { localVideoStreams: undefined }
-    });
+  adapter.on('transferAccepted', (e) => {
+    console.log('Transferred call: `, e.targetCall.id);
   });
   return adapter;
 }, []);
