@@ -8,7 +8,6 @@ import {
   CallComposite,
   CallCompositeOptions,
   CompositeLocale,
-  StartCallIdentifier,
   fromFlatCommunicationIdentifier,
   useAzureCommunicationCallAdapter
 } from '@azure/communication-react';
