@@ -197,6 +197,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
 
   dispose(): void {
     this.unsubscribeAllEvents();
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     this.chatClient.dispose();
   }
 

@@ -2,21 +2,24 @@
 // Licensed under the MIT License.
 
 import { ChatClient, ChatThreadClient } from '@azure/communication-chat';
-
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { ChatThreadItem, CreateChatThreadResult } from '@azure/communication-chat';
 import {
   StatefulChatClient,
   StatefulChatClientArgs,
   _createStatefulChatClientWithDeps
 } from '@internal/chat-stateful-client';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { ChatClientState, ChatErrors } from '@internal/chat-stateful-client';
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
 
 type PublicInterface<T> = { [K in keyof T]: T[K] };
 /**
  * @returns
  */
-export const createStatefulChatClientMock = (threadClient: PublicInterface<ChatThreadClient>): StatefulChatClient => {
+export function createStatefulChatClientMock(threadClient: PublicInterface<ChatThreadClient>): StatefulChatClient {
   return _createStatefulChatClientWithDeps(createMockChatClient(threadClient), defaultClientArgs);
-};
+}
 /**
  * @returns
  */
@@ -111,3 +114,70 @@ export const pagedAsyncIterator = <T>(values: T[]): PagedAsyncIterableIterator<T
     }
   };
 };
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/**
+ * @private
+ */
+export class MockStatefulChatClient implements PublicInterface<StatefulChatClient> {
+  private _threadClient: ChatThreadClient;
+
+  constructor(threadClient: PublicInterface<ChatThreadClient>) {
+    this._threadClient = threadClient as ChatThreadClient;
+  }
+  getChatThreadClient(): ChatThreadClient {
+    return this._threadClient;
+  }
+  createChatThread(): Promise<CreateChatThreadResult> {
+    throw new Error('Method not implemented.');
+  }
+  listChatThreads(): PagedAsyncIterableIterator<ChatThreadItem> {
+    throw new Error('Method not implemented.');
+  }
+  deleteChatThread(): Promise<void> {
+    return Promise.resolve();
+  }
+  startRealtimeNotifications(): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
+  stopRealtimeNotifications(): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
+  on(): void {
+    return;
+  }
+  off(): void {
+    return;
+  }
+  dispose(): void {
+    throw new Error('Method not implemented.');
+  }
+  getState(): ChatClientState {
+    return {
+      userId: { id: 'userId1', kind: 'unknown' },
+      displayName: 'displayName',
+      threads: {
+        threadId: {
+          chatMessages: {},
+          participants: {},
+          threadId: 'threadId',
+          readReceipts: [],
+          typingIndicators: [],
+          latestReadTime: new Date()
+        }
+      },
+      latestErrors: {} as ChatErrors
+    };
+  }
+  onStateChange(handler: (state: ChatClientState) => void): void {
+    return;
+  }
+  offStateChange(handler: (state: ChatClientState) => void): void {
+    throw new Error('Method not implemented.');
+  }
+  downloadResourceToCache(threadId: string, messageId: string, resourceUrl: string): void {
+    throw new Error('Method not implemented.');
+  }
+  removeResourceFromCache(threadId: string, messageId: string, resourceUrl: string): void {
+    throw new Error('Method not implemented.');
+  }
+}
