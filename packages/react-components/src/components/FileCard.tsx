@@ -85,7 +85,7 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
     width: '12rem',
     background: theme.palette.neutralLighter,
     borderRadius: theme.effects.roundedCorner4,
-    border: `${_pxToRem(1)} solid ${theme.palette.neutralQuaternary}`,
+    border: `${_pxToRem(1)} solid ${theme.palette.neutralQuaternary}`
   });
 
   const fileInfoWrapperClassName = mergeStyles({
@@ -108,7 +108,8 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
   const actionIconClassName = mergeStyles({
     cursor: 'pointer',
     padding: _pxToRem(4),
-
+    lineHeight: _pxToRem(4),
+    background: 'no-repeat center center'
   });
 
   const progressIndicatorStyles: IStyleFunctionOrObject<IProgressIndicatorStyleProps, IProgressIndicatorStyles> = {
@@ -136,7 +137,14 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
                 props.actionHandler?.(FileCardAuctionType.preview);
               }}
             >
-              <Stack.Item className={mergeStyles({ backgroundColor: 'white' })}>
+              <Stack.Item
+                className={mergeStyles({
+                  backgroundColor: 'white',
+                  lineHeight: '23px',
+                  height: '23px',
+                  verticalAlign: 'middle'
+                })}
+              >
                 {/* We are not using <ChatCompositeIcon /> here as we currently do not support customizing these filetype icons. */}
                 <Icon
                   data-ui-id={'filetype-icon'}

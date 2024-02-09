@@ -115,8 +115,8 @@ export interface _FileDownloadCardsStrings {
  * @beta
  */
 export enum FileCardAuctionType {
-  preview = 0,
-  download = 1
+  preview,
+  download
 }
 
 /**
