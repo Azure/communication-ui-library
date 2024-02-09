@@ -1625,12 +1625,10 @@ export interface ChatAdapterThreadManagement {
     downloadAttachment: (options: {
         attachmentUrl: string;
     }) => Promise<AttachmentDownloadResult>;
-    // (undocumented)
     downloadResourceToCache(threadId: string, messageId: string, resourceUrl: string): void;
     fetchInitialData(): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     removeParticipant(userId: string): Promise<void>;
-    // (undocumented)
     removeResourceFromCache(threadId: string, messageId: string, resourceUrl: string): void;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;

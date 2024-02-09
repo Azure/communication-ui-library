@@ -17,9 +17,9 @@ type PublicInterface<T> = { [K in keyof T]: T[K] };
 /**
  * @returns
  */
-export function createStatefulChatClientMock(threadClient: PublicInterface<ChatThreadClient>): StatefulChatClient {
+export const createStatefulChatClientMock = (threadClient: PublicInterface<ChatThreadClient>): StatefulChatClient => {
   return _createStatefulChatClientWithDeps(createMockChatClient(threadClient), defaultClientArgs);
-}
+};
 /**
  * @returns
  */
