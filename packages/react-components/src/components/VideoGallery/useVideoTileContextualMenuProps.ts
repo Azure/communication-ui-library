@@ -43,9 +43,9 @@ export const useVideoTileContextualMenuProps = (props: {
   /* @conditional-compile-remove(spotlight) */
   spotlightedParticipantUserIds?: string[];
   /* @conditional-compile-remove(spotlight) */
-  onStartSpotlight?: (userId: string) => void;
+  onStartSpotlight?: (userIds: string[]) => void;
   /* @conditional-compile-remove(spotlight) */
-  onStopSpotlight?: (userId: string) => void;
+  onStopSpotlight?: (userIds: string[]) => void;
   /* @conditional-compile-remove(spotlight) */
   maxParticipantsToSpotlight?: number;
 }): IContextualMenuProps | undefined => {
@@ -129,7 +129,7 @@ export const useVideoTileContextualMenuProps = (props: {
             iconName: 'StopSpotlightContextualMenuItem',
             styles: { root: { lineHeight: 0 } }
           },
-          onClick: () => onStopSpotlight(remoteParticipant.userId),
+          onClick: () => onStopSpotlight([remoteParticipant.userId]),
           ariaLabel: strings.stopSpotlightVideoTileMenuLabel
         });
       }
@@ -149,7 +149,7 @@ export const useVideoTileContextualMenuProps = (props: {
             iconName: 'StartSpotlightContextualMenuItem',
             styles: { root: { lineHeight: 0 } }
           },
-          onClick: () => onStartSpotlight(remoteParticipant.userId),
+          onClick: () => onStartSpotlight([remoteParticipant.userId]),
           ariaLabel: startSpotlightMenuLabel,
           disabled: maxSpotlightedParticipantsReached,
           title: maxSpotlightedParticipantsReached ? strings?.spotlightLimitReachedMenuTitle : undefined

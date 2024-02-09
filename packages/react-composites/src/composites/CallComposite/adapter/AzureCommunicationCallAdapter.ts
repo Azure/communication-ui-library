@@ -1090,13 +1090,13 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   }
 
   /* @conditional-compile-remove(spotlight) */
-  public async startSpotlight(userId: string): Promise<void> {
-    this.handlers.onStartSpotlight(userId);
+  public async startSpotlight(userIds: string[]): Promise<void> {
+    this.handlers.onStartSpotlight(userIds);
   }
 
   /* @conditional-compile-remove(spotlight) */
-  public async stopSpotlight(userId: string): Promise<void> {
-    this.handlers.onStopSpotlight(userId);
+  public async stopSpotlight(userIds: string[]): Promise<void> {
+    this.handlers.onStopSpotlight(userIds);
   }
 
   public getState(): CallAdapterState {
