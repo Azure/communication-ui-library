@@ -31,19 +31,6 @@ shows an example of a `TransferAcceptedListener` that outputs all transferred ca
 
 <Source code={TransferSnippetText} />
 
-When a transfer event comes in, the microphone state and camera state are
-maintained from the original call to the transferred call. The code snippet below shows how to access the `Call` object that
-is returned from the event.
-
-```typescript
-const afterCallAdapterCreate = useCallback(async (adapter: CallAdapter) => {
-  adapter.on('transferAccepted', (e) => {
-    console.log('Transferred call: `, e.targetCall.id);
-  });
-  return adapter;
-}, []);
-```
-
 ## Requesting transfers
 
 ACS users cannot request transfers yet.
