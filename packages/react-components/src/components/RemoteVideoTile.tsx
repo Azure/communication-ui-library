@@ -66,6 +66,7 @@ export const _RemoteVideoTile = React.memo(
     /* @conditional-compile-remove(spotlight) */ isSpotlighted?: boolean;
     /* @conditional-compile-remove(spotlight) */ onStartSpotlight?: (userId: string) => void;
     /* @conditional-compile-remove(spotlight) */ onStopSpotlight?: (userId: string) => void;
+    /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight?: number;
     disablePinMenuItem?: boolean;
     toggleAnnouncerString?: (announcerString: string) => void;
     /* @conditional-compile-remove(reaction) */ reactionResources?: ReactionResources;
@@ -91,6 +92,7 @@ export const _RemoteVideoTile = React.memo(
       /* @conditional-compile-remove(spotlight) */ isSpotlighted,
       /* @conditional-compile-remove(spotlight) */ onStartSpotlight,
       /* @conditional-compile-remove(spotlight) */ onStopSpotlight,
+      /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight,
       onUpdateScalingMode,
       disablePinMenuItem,
       toggleAnnouncerString,
@@ -138,7 +140,8 @@ export const _RemoteVideoTile = React.memo(
       /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds,
       /* @conditional-compile-remove(spotlight) */ isSpotlighted,
       /* @conditional-compile-remove(spotlight) */ onStartSpotlight,
-      /* @conditional-compile-remove(spotlight) */ onStopSpotlight
+      /* @conditional-compile-remove(spotlight) */ onStopSpotlight,
+      /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight
     });
 
     const videoTileContextualMenuProps = useMemo(() => {

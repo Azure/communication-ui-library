@@ -266,6 +266,11 @@ export interface CallCompositeStrings {
    * Label for menu item to stop spotlight on local user
    */
   stopSpotlightOnSelfParticipantListMenuLabel: string;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Label for menu item to stop spotlight on local user
+   */
+  spotlightLimitReachedParticipantListMenuTitle: string;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Label for add people dropdown
