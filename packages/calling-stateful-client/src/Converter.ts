@@ -96,7 +96,7 @@ export function convertSdkParticipantToDeclarativeParticipant(
     /* @conditional-compile-remove(hide-attendee-name) */
     role: participant.role,
     /* @conditional-compile-remove(spotlight) */
-    spotlighted: undefined
+    spotlight: undefined
   };
 }
 

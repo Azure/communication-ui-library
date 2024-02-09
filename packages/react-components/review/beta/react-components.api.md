@@ -175,7 +175,7 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     isSpeaking?: boolean;
     raisedHand?: RaisedHand;
     reaction?: Reaction;
-    isSpotlighted?: Spotlight;
+    spotlight?: Spotlight;
 };
 
 // @internal
@@ -1122,6 +1122,7 @@ export interface ErrorBarStrings {
     sendMessageGeneric: string;
     sendMessageNotInChatThread: string;
     startScreenShareGeneric: string;
+    startSpotlightWhileMaxParticipantsAreSpotlighted: string;
     startVideoGeneric: string;
     stopScreenShareGeneric: string;
     stopVideoGeneric: string;
@@ -1774,8 +1775,6 @@ export type ParticipantListProps = {
     onRemoveParticipant?: (userId: string) => void;
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
     onParticipantClick?: (participant?: ParticipantListParticipant) => void;
-    onStartSpotlight?: (userId: string) => void;
-    onStopSpotlight?: (userId: string) => void;
     styles?: ParticipantListStyles;
     showParticipantOverflowTooltip?: boolean;
     totalParticipantCount?: number;
@@ -1986,8 +1985,9 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     isPinned?: boolean | undefined;
     spotlightedParticipantUserIds?: string[] | undefined;
     isSpotlighted?: boolean | undefined;
-    onStartSpotlight?: ((userId: string) => void) | undefined;
-    onStopSpotlight?: ((userId: string) => void) | undefined;
+    onStartSpotlight?: ((userIds: string[]) => void) | undefined;
+    onStopSpotlight?: ((userIds: string[]) => void) | undefined;
+    maxParticipantsToSpotlight?: number | undefined;
     disablePinMenuItem?: boolean | undefined;
     toggleAnnouncerString?: ((announcerString: string) => void) | undefined;
     reactionResources?: ReactionResources | undefined;
@@ -2227,7 +2227,7 @@ export const _spokenLanguageToCaptionLanguage: {
 
 // @beta
 export type Spotlight = {
-    spotlightOrderPosition?: number;
+    spotlightedOrderPosition?: number;
 };
 
 // @internal
@@ -2607,6 +2607,7 @@ export type VideoGalleryParticipant = {
     displayName?: string;
     videoStream?: VideoGalleryStream;
     isScreenSharingOn?: boolean;
+    spotlight?: Spotlight;
 };
 
 // @public
@@ -2617,6 +2618,7 @@ export interface VideoGalleryProps {
     localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
     localVideoTileSize?: LocalVideoTileSize;
     localVideoViewOptions?: VideoStreamOptions;
+    maxParticipantsToSpotlight?: number;
     maxRemoteVideoStreams?: number;
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
@@ -2629,8 +2631,8 @@ export interface VideoGalleryProps {
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
-    onStartSpotlight?: (userId: string) => Promise<void>;
-    onStopSpotlight?: (userId: string) => Promise<void>;
+    onStartSpotlight?: (userIds?: string[]) => Promise<void>;
+    onStopSpotlight?: (userIds?: string[]) => Promise<void>;
     onUnpinParticipant?: (userId: string) => void;
     overflowGalleryPosition?: OverflowGalleryPosition;
     pinnedParticipants?: string[];
@@ -2686,6 +2688,7 @@ export interface VideoGalleryStrings {
     pinParticipantMenuItemAriaLabel: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;
+    spotlightLimitReachedMenuTitle: string;
     startSpotlightVideoTileMenuLabel: string;
     stopSpotlightOnSelfVideoTileMenuLabel: string;
     stopSpotlightVideoTileMenuLabel: string;
