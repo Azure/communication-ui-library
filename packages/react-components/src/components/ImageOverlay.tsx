@@ -91,21 +91,20 @@ export interface ImageOverlayStrings {
  */
 export const ImageOverlay = (props: ImageOverlayProps): JSX.Element => {
   const { isOpen, imageSrc, title, titleIcon, altText, onDownloadButtonClicked, onDismiss } = props;
-  const theme: Theme = useTheme();
 
   /* @conditional-compile-remove(image-overlay) */
   const localeStrings = useLocale().strings.imageOverlay;
 
   const [isImageLoaded, setIsImageLoaded] = useState<boolean>(true);
 
-  const imageStyle = isImageLoaded ? normalImageStyle : brokenImageStyle(theme);
+  const imageStyle = isImageLoaded ? normalImageStyle : brokenImageStyle(imageOverlayTheme);
 
   const renderHeaderBar = (): JSX.Element => {
     return (
       <Stack className={mergeStyles(headerStyle)}>
         <Stack className={mergeStyles(titleBarContainerStyle)}>
           {titleIcon}
-          <Stack.Item className={mergeStyles(titleStyle(theme))} aria-label={title || 'Image'}>
+          <Stack.Item className={mergeStyles(titleStyle(imageOverlayTheme))} aria-label={title || 'Image'}>
             {title}
           </Stack.Item>
         </Stack>
@@ -125,7 +124,7 @@ export const ImageOverlay = (props: ImageOverlayProps): JSX.Element => {
           {onDownloadButtonClicked && (
             <IconButton
               iconProps={downloadIcon}
-              className={mergeStyles(smallDownloadButtonContainerStyle(theme))}
+              className={mergeStyles(smallDownloadButtonContainerStyle(imageOverlayTheme))}
               onClick={() => onDownloadButtonClicked && onDownloadButtonClicked(imageSrc)}
               /* @conditional-compile-remove(image-overlay) */
               aria-label={localeStrings.downloadButtonLabel}
@@ -134,7 +133,7 @@ export const ImageOverlay = (props: ImageOverlayProps): JSX.Element => {
           )}
           <IconButton
             iconProps={cancelIcon}
-            className={mergeStyles(closeButtonStyles(theme))}
+            className={mergeStyles(closeButtonStyles(imageOverlayTheme))}
             onClick={onDismiss}
             /* @conditional-compile-remove(image-overlay) */
             ariaLabel={localeStrings.dismissButtonAriaLabel}
@@ -174,7 +173,7 @@ export const ImageOverlay = (props: ImageOverlayProps): JSX.Element => {
         titleAriaId={title}
         isOpen={isOpen}
         onDismiss={onDismiss}
-        overlay={{ styles: { ...overlayStyles(theme) } }}
+        overlay={{ styles: { ...overlayStyles(imageOverlayTheme) } }}
         styles={{ main: focusTrapZoneStyle, scrollableContent: scrollableContentStyle }}
         isDarkOverlay={true}
       >

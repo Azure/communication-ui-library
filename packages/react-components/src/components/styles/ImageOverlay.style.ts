@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { IIconProps, IStyle, Theme } from '@fluentui/react';
+import { IIconProps, IStyle, PartialTheme } from '@fluentui/react';
 /* @conditional-compile-remove(image-overlay) */
 import { IOverlayStyles } from '@fluentui/react';
 
@@ -21,11 +21,11 @@ export const downloadIcon: IIconProps = {
 /**
  * @private
  */
-export const overlayStyles = (theme: Theme): IOverlayStyles => {
+export const overlayStyles = (theme: PartialTheme): IOverlayStyles => {
   return {
     root: {
-      background: theme.palette.black,
-      opacity: '0.85'
+      background: theme.palette?.white,
+      opacity: '0.95'
     }
   };
 };
@@ -82,10 +82,10 @@ export const titleBarContainerStyle: IStyle = {
 /**
  * @private
  */
-export const titleStyle = (theme: Theme): IStyle => {
+export const titleStyle = (theme: PartialTheme): IStyle => {
   return {
     paddingLeft: '0.5rem',
-    color: theme.palette.white,
+    color: theme.palette?.black,
     fontFamily: 'inherit',
     fontSize: '0.875rem',
     fontStyle: 'normal',
@@ -141,23 +141,23 @@ export const normalImageStyle: IStyle = {
 /**
  * @private
  */
-export const brokenImageStyle = (theme: Theme): IStyle => {
+export const brokenImageStyle = (theme: PartialTheme): IStyle => {
   return {
-    color: theme.palette.white
+    color: theme.palette?.black
   };
 };
 
 /**
  * @private
  */
-export const closeButtonStyles = (theme: Theme): IStyle => {
+export const closeButtonStyles = (theme: PartialTheme): IStyle => {
   return {
-    color: theme.palette.white,
+    color: theme.palette?.black,
     ':hover': {
-      color: theme.palette.white
+      color: theme.palette?.black
     },
     ':active': {
-      color: theme.palette.white
+      color: theme.palette?.black
     }
   };
 };
@@ -182,16 +182,16 @@ export const downloadButtonStyle: IStyle = {
 /**
  * @private
  */
-export const smallDownloadButtonContainerStyle = (theme: Theme): IStyle => {
+export const smallDownloadButtonContainerStyle = (theme: PartialTheme): IStyle => {
   return {
     marginRight: '0.5rem',
     whiteSpace: 'nowrap',
-    color: theme.palette.white,
+    color: theme.palette?.black,
     ':hover': {
-      color: theme.palette.white
+      color: theme.palette?.black
     },
     ':active': {
-      color: theme.palette.white
+      color: theme.palette?.black
     },
     '@media (min-width: 25rem)': {
       display: 'none'
