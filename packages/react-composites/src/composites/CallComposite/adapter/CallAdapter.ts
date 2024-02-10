@@ -10,6 +10,8 @@ import type { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/c
 import { Reaction } from '@azure/communication-calling';
 /* @conditional-compile-remove(capabilities) */
 import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(spotlight) */
+import type { SpotlightedParticipant } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCall } from '@azure/communication-calling';
 /* @conditional-compile-remove(call-transfer) */
@@ -414,6 +416,17 @@ export type TransferRequestedListener = (event: TransferRequestedEventArgs) => v
  * @public
  */
 export type CapabilitiesChangedListener = (data: CapabilitiesChangeInfo) => void;
+
+/* @conditional-compile-remove(spotlight) */
+/**
+ * Callback for {@link CallAdapterSubscribers} 'spotlightChanged' event.
+ *
+ * @public
+ */
+export type SpotlightChangedListener = (args: {
+  added: SpotlightedParticipant[];
+  removed: SpotlightedParticipant[];
+}) => void;
 
 /* @conditional-compile-remove(video-background-effects) */
 /**
@@ -897,6 +910,11 @@ export interface CallAdapterSubscribers {
    * Subscribe function for 'roleChanged' event.
    */
   on(event: 'roleChanged', listener: PropertyChangedEvent): void;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Subscribe function for 'spotlightChanged' event.
+   */
+  on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
 
   /**
    * Unsubscribe function for 'participantsJoined' event.
@@ -981,6 +999,11 @@ export interface CallAdapterSubscribers {
    * Unsubscribe function for 'roleChanged' event.
    */
   off(event: 'roleChanged', listener: PropertyChangedEvent): void;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Subscribe function for 'spotlightChanged' event.
+   */
+  off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
 }
 
 // This type remains for non-breaking change reason
