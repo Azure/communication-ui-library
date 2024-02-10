@@ -68,6 +68,8 @@ import {
 } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(capabilities) */
 import { CapabilitiesChangedListener } from '../../CallComposite/adapter/CallAdapter';
+/* @conditional-compile-remove(spotlight) */
+import { SpotlightChangedListener } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 
@@ -536,6 +538,8 @@ export interface CallWithChatAdapterSubscriptions {
   on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
   /* @conditional-compile-remove(capabilities) */
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
+  /* @conditional-compile-remove(spotlight) */
+  on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
 
   off(event: 'callEnded', listener: CallEndedListener): void;
   off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -558,6 +562,8 @@ export interface CallWithChatAdapterSubscriptions {
   off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
   /* @conditional-compile-remove(capabilities) */
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
+  /* @conditional-compile-remove(spotlight) */
+  off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
 
   // Chat subscriptions
   on(event: 'messageReceived', listener: MessageReceivedListener): void;
@@ -613,6 +619,7 @@ export type CallWithChatEvent =
   | /* @conditional-compile-remove(close-captions) */ 'isCaptionLanguageChanged'
   | /* @conditional-compile-remove(close-captions) */ 'isSpokenLanguageChanged'
   | /* @conditional-compile-remove(capabilities) */ 'capabilitiesChanged'
+  | /* @conditional-compile-remove(spotlight) */ 'spotlightChanged'
   | 'messageReceived'
   | 'messageEdited'
   | 'messageDeleted'
