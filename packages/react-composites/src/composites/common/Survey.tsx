@@ -9,7 +9,7 @@ import { useLocale } from '../localization';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 /* @conditional-compile-remove(end-of-call-survey) */
-import { Text, PrimaryButton, Stack, Theme, mergeStyles, useTheme } from '@fluentui/react';
+import { Text, PrimaryButton, Stack, useTheme } from '@fluentui/react';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { SurveyContent } from './SurveyContent';
 /* @conditional-compile-remove(end-of-call-survey) */
