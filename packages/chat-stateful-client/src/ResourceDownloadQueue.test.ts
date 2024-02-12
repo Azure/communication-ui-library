@@ -11,8 +11,6 @@ import { ResourceDownloadError, ResourceDownloadQueue } from './ResourceDownload
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { messageTemplate } from './mocks/createMockChatThreadClient';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { resolve } from 'path';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 jest.mock('@azure/communication-chat');
@@ -35,7 +33,7 @@ describe('ResourceDownloadQueue api functions', () => {
   test('should add a message to the queue and contains message', () => {
     const context = new ChatContext();
     const tokenCredential = stubCommunicationTokenCredential();
-    const mockMessage = messageTemplate;
+    const mockMessage = { ...messageTemplate };
     const firstAttachments = [
       { id: '1', attachmentType: 'image' as ChatAttachmentType, name: 'image1', url: 'url1', previewUrl: 'previewUrl1' }
     ];
@@ -68,9 +66,13 @@ describe('ResourceDownloadQueue api functions', () => {
   });
 
   test('start queue should call operation', async () => {
-    const context = new ChatContext();
     const tokenCredential = stubCommunicationTokenCredential();
-    const mockMessage = messageTemplate;
+    const context = new ChatContext(0, tokenCredential);
+    const mockMessage = { ...messageTemplate };
+    const mockAttachments = [
+      { id: '1', attachmentType: 'image' as ChatAttachmentType, name: 'image1', url: 'url1', previewUrl: 'previewUrl1' }
+    ];
+    mockMessage.content = { message: 'new message', attachments: mockAttachments };
     const queue = new ResourceDownloadQueue(context, tokenCredential);
     const operation = jest.fn();
     queue.addMessage(mockMessage);
@@ -81,12 +83,24 @@ describe('ResourceDownloadQueue api functions', () => {
   test('adding multiple chats to queue should call operation multiple times', async () => {
     const context = new ChatContext();
     const tokenCredential = stubCommunicationTokenCredential();
-    const first = messageTemplate;
+    const first = { ...messageTemplate };
     first.id = 'first';
-    const second = messageTemplate;
+    const firstAttachments = [
+      { id: '1', attachmentType: 'image' as ChatAttachmentType, name: 'image1', url: 'url1', previewUrl: 'previewUrl1' }
+    ];
+    first.content = { message: 'new message', attachments: firstAttachments };
+    const second = { ...messageTemplate };
     second.id = 'second';
-    const third = messageTemplate;
+    const secondAttachments = [
+      { id: '2', attachmentType: 'image' as ChatAttachmentType, name: 'image2', url: 'url2', previewUrl: 'previewUrl2' }
+    ];
+    second.content = { message: 'new message', attachments: secondAttachments };
+    const third = { ...messageTemplate };
     third.id = 'third';
+    const thirdAttachments = [
+      { id: '3', attachmentType: 'image' as ChatAttachmentType, name: 'image3', url: 'url3', previewUrl: 'previewUrl3' }
+    ];
+    third.content = { message: 'new message', attachments: thirdAttachments };
 
     const queue = new ResourceDownloadQueue(context, tokenCredential);
     const operation = jest.fn();
@@ -102,17 +116,29 @@ describe('ResourceDownloadQueue api functions', () => {
     const tokenCredential = stubCommunicationTokenCredential();
     const first = { ...messageTemplate };
     first.id = 'first';
+    const firstAttachments = [
+      { id: '1', attachmentType: 'image' as ChatAttachmentType, name: 'image1', url: 'url1', previewUrl: 'previewUrl1' }
+    ];
+    first.content = { message: 'new message', attachments: firstAttachments };
     const second = { ...messageTemplate };
     second.id = 'second';
+    const secondAttachments = [
+      { id: '2', attachmentType: 'image' as ChatAttachmentType, name: 'image2', url: 'url2', previewUrl: 'previewUrl2' }
+    ];
+    second.content = { message: 'new message', attachments: secondAttachments };
     const third = { ...messageTemplate };
     third.id = 'third';
+    const thirdAttachments = [
+      { id: '3', attachmentType: 'image' as ChatAttachmentType, name: 'image3', url: 'url3', previewUrl: 'previewUrl3' }
+    ];
+    third.content = { message: 'new message', attachments: thirdAttachments };
 
     const queue = new ResourceDownloadQueue(context, tokenCredential);
     const operation = jest.fn();
     const query: string[] = [];
-    const expected = ['first', 'second', 'third'];
-    operation.mockImplementation(async (message: ChatMessageWithStatus) => {
-      query.push(message.id);
+    const expected = ['previewUrl1', 'previewUrl2', 'previewUrl3'];
+    operation.mockImplementation(async (url: string) => {
+      query.push(url);
       if (query.length === 3) {
         expect(query).toEqual(expected);
         done();
@@ -131,10 +157,22 @@ describe('ResourceDownloadQueue api functions', () => {
     const tokenCredential = stubCommunicationTokenCredential();
     const first = { ...messageTemplate };
     first.id = 'first';
+    const firstAttachments = [
+      { id: '1', attachmentType: 'image' as ChatAttachmentType, name: 'image1', url: 'url1', previewUrl: 'previewUrl1' }
+    ];
+    first.content = { message: 'new message', attachments: firstAttachments };
     const second = { ...messageTemplate };
     second.id = 'second';
+    const secondAttachments = [
+      { id: '2', attachmentType: 'image' as ChatAttachmentType, name: 'image2', url: 'url2', previewUrl: 'previewUrl2' }
+    ];
+    second.content = { message: 'new message', attachments: secondAttachments };
     const third = { ...messageTemplate };
     third.id = 'third';
+    const thirdAttachments = [
+      { id: '3', attachmentType: 'image' as ChatAttachmentType, name: 'image3', url: 'url3', previewUrl: 'previewUrl3' }
+    ];
+    third.content = { message: 'new message', attachments: thirdAttachments };
 
     const queue = new ResourceDownloadQueue(context, tokenCredential);
     const operation = jest.fn();
@@ -143,20 +181,32 @@ describe('ResourceDownloadQueue api functions', () => {
     queue.addMessage(third);
     await queue.startQueue('threadId', operation);
 
-    expect((operation.mock.calls[0][0] as ChatMessageWithStatus).id).toBe(first.id);
-    expect((operation.mock.calls[1][0] as ChatMessageWithStatus).id).toBe(second.id);
-    expect((operation.mock.calls[2][0] as ChatMessageWithStatus).id).toBe(third.id);
+    expect(operation.mock.calls[0][0] as string).toBe('previewUrl1');
+    expect(operation.mock.calls[1][0] as string).toBe('previewUrl2');
+    expect(operation.mock.calls[2][0] as string).toBe('previewUrl3');
   });
 
-  test('if one operation fails, retry attempt should be made', async () => {
+  test('if first operation fails, the rest should still be made', async () => {
     const context = new ChatContext();
     const tokenCredential = stubCommunicationTokenCredential();
     const first = { ...messageTemplate };
     first.id = 'first';
+    const firstAttachments = [
+      { id: '1', attachmentType: 'image' as ChatAttachmentType, name: 'image1', url: 'url1', previewUrl: 'previewUrl1' }
+    ];
+    first.content = { message: 'new message', attachments: firstAttachments };
     const second = { ...messageTemplate };
     second.id = 'second';
+    const secondAttachments = [
+      { id: '2', attachmentType: 'image' as ChatAttachmentType, name: 'image2', url: 'url2', previewUrl: 'previewUrl2' }
+    ];
+    second.content = { message: 'new message', attachments: secondAttachments };
     const third = { ...messageTemplate };
     third.id = 'third';
+    const thirdAttachments = [
+      { id: '3', attachmentType: 'image' as ChatAttachmentType, name: 'image3', url: 'url3', previewUrl: 'previewUrl3' }
+    ];
+    third.content = { message: 'new message', attachments: thirdAttachments };
 
     const queue = new ResourceDownloadQueue(context, tokenCredential);
     const operation = jest.fn();
