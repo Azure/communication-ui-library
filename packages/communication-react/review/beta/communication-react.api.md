@@ -977,10 +977,10 @@ export interface CallState {
 
 // @beta
 export interface CallSurveyImprovementSuggestions {
-    audio?: string;
-    overall?: string;
-    screenshare?: string;
-    video?: string;
+    audioRating?: string;
+    overallRating?: string;
+    screenshareRating?: string;
+    videoRating?: string;
 }
 
 // @public
