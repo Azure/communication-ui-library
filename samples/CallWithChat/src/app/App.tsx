@@ -151,7 +151,9 @@ const generateCallWithChatArgs = async (
   if (teamsLocator) {
     if ('meetingLink' in teamsLocator) {
       locator = teamsLocator;
-    } else {
+    }
+    /* @conditional-compile-remove(meeting-id) */
+    if ('meetingId' in teamsLocator) {
       const chatThreadId = threadId ?? getThreadIdFromUrl();
       locator = { callLocator: teamsLocator, chatThreadId: chatThreadId ? chatThreadId : '' };
     }
