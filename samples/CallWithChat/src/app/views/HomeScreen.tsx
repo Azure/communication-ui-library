@@ -148,11 +148,13 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 }}
               />
             )}
-            {/* @conditional-compile-remove(meeting-id) */ teamsCallChosen && (
-              <Text className={teamsItemStyle} block variant="medium">
-                <b>Or</b>
-              </Text>
-            )}
+            {
+              /* @conditional-compile-remove(meeting-id) */ teamsCallChosen && (
+                <Text className={teamsItemStyle} block variant="medium">
+                  <b>Or</b>
+                </Text>
+              )
+            }
             {
               /* @conditional-compile-remove(meeting-id) */ teamsCallChosen && (
                 <TextField
