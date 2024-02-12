@@ -9,7 +9,7 @@ import { useLocale } from '../localization';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 /* @conditional-compile-remove(end-of-call-survey) */
-import { Text, PrimaryButton, Stack, Theme, mergeStyles, useTheme } from '@fluentui/react';
+import { Text, PrimaryButton, Stack, Theme, mergeStyles, useTheme, DefaultButton } from '@fluentui/react';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { SurveyContent } from './SurveyContent';
 /* @conditional-compile-remove(end-of-call-survey) */
@@ -139,7 +139,7 @@ export const Survey = (props: {
             }
           />
           <Stack horizontal horizontalAlign="end">
-            <PrimaryButton
+            <DefaultButton
               style={{ marginTop: '1rem', marginRight: '0.5rem' }}
               onClick={() => {
                 if (onSurveyClosed) {
@@ -150,7 +150,7 @@ export const Survey = (props: {
               }}
             >
               {strings.surveySkipButtonLabel}
-            </PrimaryButton>
+            </DefaultButton>
 
             {showSubmitFeedbackButton && (
               <PrimaryButton
