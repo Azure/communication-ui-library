@@ -58,6 +58,16 @@ export const getMeetingIdFromUrl = (): TeamsMeetingIdLocator | undefined => {
 };
 
 /* @conditional-compile-remove(meeting-id) */
+/**
+ * Get threadId from the url's query params.
+ */
+export const getThreadIdFromUrl = (): string | undefined => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const threadId = urlParams.get('threadId');
+  return threadId ? threadId : undefined;
+};
+
+/* @conditional-compile-remove(meeting-id) */
 export const ensureJoinableMeetingIdPushedToUrl = (teamsLink: TeamsMeetingIdLocator): void => {
   if (!getTeamsLinkFromUrl()) {
     pushQSPUrl({ name: 'meetingId', value: encodeURIComponent(teamsLink.meetingId) });

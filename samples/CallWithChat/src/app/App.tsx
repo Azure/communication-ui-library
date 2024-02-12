@@ -24,7 +24,7 @@ import {
   isOnIphoneAndNotSafari
 } from './utils/AppUtils';
 /* @conditional-compile-remove(meeting-id) */
-import { ensureJoinableMeetingIdPushedToUrl, getMeetingIdFromUrl } from './utils/AppUtils';
+import { ensureJoinableMeetingIdPushedToUrl, getMeetingIdFromUrl, getThreadIdFromUrl } from './utils/AppUtils';
 import { CallScreen } from './views/CallScreen';
 import { HomeScreen } from './views/HomeScreen';
 import { UnsupportedBrowserPage } from './views/UnsupportedBrowserPage';
@@ -69,7 +69,7 @@ const App = (): JSX.Element => {
   const joiningExistingCallWithChat: boolean =
     (!!getGroupIdFromUrl() && !!getExistingThreadIdFromURL()) ||
     !!getTeamsLinkFromUrl() ||
-    /* @conditional-compile-remove(meeting-id) */ !!getMeetingIdFromUrl();
+    /* @conditional-compile-remove(meeting-id) */ (!!getMeetingIdFromUrl() && !!getExistingThreadIdFromURL());
 
   switch (page) {
     case 'home': {
@@ -151,7 +151,8 @@ const generateCallWithChatArgs = async (
     if ('meetingLink' in teamsLocator) {
       locator = teamsLocator;
     } else {
-      locator = { callLocator: teamsLocator, chatThreadId: threadId ? threadId : '' };
+      const chatThreadId = threadId ?? getThreadIdFromUrl();
+      locator = { callLocator: teamsLocator, chatThreadId: chatThreadId ? chatThreadId : '' };
     }
     if ('meetingLink' in teamsLocator) {
       ensureJoinableTeamsLinkPushedToUrl(teamsLocator);
