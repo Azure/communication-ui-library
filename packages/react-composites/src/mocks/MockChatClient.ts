@@ -168,16 +168,16 @@ export class MockStatefulChatClient implements PublicInterface<StatefulChatClien
       latestErrors: {} as ChatErrors
     };
   }
-  onStateChange(handler: (state: ChatClientState) => void): void {
+  onStateChange(): void {
     return;
   }
-  offStateChange(handler: (state: ChatClientState) => void): void {
+  offStateChange(): void {
     throw new Error('Method not implemented.');
   }
-  downloadResourceToCache(threadId: string, messageId: string, resourceUrl: string): void {
+  downloadResourceToCache(): void {
     throw new Error('Method not implemented.');
   }
-  removeResourceFromCache(threadId: string, messageId: string, resourceUrl: string): void {
+  removeResourceFromCache(): void {
     throw new Error('Method not implemented.');
   }
 }
