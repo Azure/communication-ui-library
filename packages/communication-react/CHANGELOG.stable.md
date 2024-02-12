@@ -7,70 +7,43 @@ This log was last generated on Mon, 12 Feb 2024 18:52:29 GMT and should not be m
 ## [1.13.0](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.13.0)
 
 Mon, 12 Feb 2024 18:52:29 GMT 
-[Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.13.0-beta.1...@azure/communication-react_v1.13.0)
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.12.0...1.13.0)
+
+### Microsoft Teams Voice applications support - General Availability
+
+We are excited to announce our CallComposite can now connect to Microsoft Teams Voice applications. To facilitate this we are introducing the new Dialpad Component and DTMF Dialer experience in our CallComposite. This includes:
+
+- Sending DTMF Tone with Microsoft Teams Voice Apps.
+- Dialpad front and center in our CallComposite when dialing a Microsoft Teams Voice App.
 
 ### Features
-- Add spotlightChanged event to CallAdapter and CallWithChatAdapter ([PR #4116](https://github.com/azure/communication-ui-library/pull/4116) by 79475487+mgamis-msft@users.noreply.github.com)
-- Update storybook to reflect new start call API behavior ([PR #4097](https://github.com/azure/communication-ui-library/pull/4097) by 94866715+dmceachernmsft@users.noreply.github.com)
+
 - Introduce new DTMF tone screen where you can use the dialpad to send DTMF tones in the call ([PR #4041](https://github.com/azure/communication-ui-library/pull/4041) by 94866715+dmceachernmsft@users.noreply.github.com)
-- Add spotlight icon to participant list on call composites ([PR #4040](https://github.com/azure/communication-ui-library/pull/4040) by 79475487+mgamis-msft@users.noreply.github.com)
 - Introduce the DTMF dialer button to the more button ([PR #4042](https://github.com/azure/communication-ui-library/pull/4042) by 94866715+dmceachernmsft@users.noreply.github.com)
-- Disable start spotlight menu when maximum spotlight is reached ([PR #4098](https://github.com/azure/communication-ui-library/pull/4098) by 79475487+mgamis-msft@users.noreply.github.com)
-- Update the CallAdapter creation functions to be able to start outbound calls to Teams voice applications ([PR #4075](https://github.com/azure/communication-ui-library/pull/4075) by 94866715+dmceachernmsft@users.noreply.github.com)
 - Introduce dtmf dialer and controls in mobile ([PR #4059](https://github.com/azure/communication-ui-library/pull/4059) by 94866715+dmceachernmsft@users.noreply.github.com)
-- Tag spotlight strings and participant list props for conditional compilation ([PR #4100](https://github.com/azure/communication-ui-library/pull/4100) by 79475487+mgamis-msft@users.noreply.github.com)
-- Reaction Resource API implementation ([PR #4054](https://github.com/azure/communication-ui-library/pull/4054) by mbellah@microsoft.com)
-- Add start and stop spotlight menus to remote video tiles and participant list ([PR #4063](https://github.com/azure/communication-ui-library/pull/4063) by 79475487+mgamis-msft@users.noreply.github.com)
-- Change arg of spotlight handlers and VideoGallery spotlight callback props to optional array of user ids ([PR #4115](https://github.com/azure/communication-ui-library/pull/4115) by 79475487+mgamis-msft@users.noreply.github.com)
-- Change skip button to default button ([PR #4124](https://github.com/azure/communication-ui-library/pull/4124) by 96077406+carocao-msft@users.noreply.github.com)
-- Add spotlight property to VideoGalleryParticipant and resulting refactoring ([PR #4110](https://github.com/azure/communication-ui-library/pull/4110) by 79475487+mgamis-msft@users.noreply.github.com)
 - Introduces Dialpad behavior based on the participants that are called ([PR #4048](https://github.com/azure/communication-ui-library/pull/4048) by 94866715+dmceachernmsft@users.noreply.github.com)
-- Add prompt when starting and stopping spotlight on participants ([PR #4077](https://github.com/azure/communication-ui-library/pull/4077) by 79475487+mgamis-msft@users.noreply.github.com)
-- Add new API to expose survey state (dismissed, sent , error) so contoso can redirect to their own screen after survey ends, updated survey UI to be it's own page appearing before end call page, added default page after survey is dismissed/sent ([PR #4045](https://github.com/azure/communication-ui-library/pull/4045) by 96077406+carocao-msft@users.noreply.github.com)
-- Show spotlighted participants in call composites ([PR #4012](https://github.com/azure/communication-ui-library/pull/4012) by 79475487+mgamis-msft@users.noreply.github.com)
 - Introduce screen for when a bot timesout the call ([PR #4082](https://github.com/azure/communication-ui-library/pull/4082) by 94866715+dmceachernmsft@users.noreply.github.com)
 - Remove old DTMF experience and update dialpad API to be platform agnostic ([PR #4065](https://github.com/azure/communication-ui-library/pull/4065) by 94866715+dmceachernmsft@users.noreply.github.com)
-- Typing in the textfield should auto check checkbox ([PR #4020](https://github.com/azure/communication-ui-library/pull/4020) by 96077406+carocao-msft@users.noreply.github.com)
 - Update dialpad documentation ([PR #4061](https://github.com/azure/communication-ui-library/pull/4061) by 94866715+dmceachernmsft@users.noreply.github.com)
-- InputBox and SendBox ([PR #4053](https://github.com/azure/communication-ui-library/pull/4053) by 73612854+palatter@users.noreply.github.com)
-- RoosterJS types package update to add isolatedModules support ([PR #4095](https://github.com/azure/communication-ui-library/pull/4095) by 98852890+vhuseinova-msft@users.noreply.github.com)
-- Refactor Sendbox to share code for RTESendbox ([PR #4053](https://github.com/azure/communication-ui-library/pull/4053) by 73612854+palatter@users.noreply.github.com)
-- Error bar update for Rich Text Editor ([PR #4093](https://github.com/azure/communication-ui-library/pull/4093) by 98852890+vhuseinova-msft@users.noreply.github.com)
-- Merge branch 'main' into palatter/merge-main-rte-retry ([PR #4053](https://github.com/azure/communication-ui-library/pull/4053) by 73612854+palatter@users.noreply.github.com)
-- Initial the Rich Text Editor component ([PR #4053](https://github.com/azure/communication-ui-library/pull/4053) by longamy@microsoft.com)
-- Playwright components testing setup ([PR #4096](https://github.com/azure/communication-ui-library/pull/4096) by 98852890+vhuseinova-msft@users.noreply.github.com)
-- remove sounds beta banner from storybook ([PR #4031](https://github.com/azure/communication-ui-library/pull/4031) by 94866715+dmceachernmsft@users.noreply.github.com)
-- Introduce new queue system to download images ([PR #4044](https://github.com/azure/communication-ui-library/pull/4044) by 9044372+JoshuaLai@users.noreply.github.com)
 - Stabilize API's for DTMF Dialer, Dialpad, and remaining Click to Call features ([PR #4066](https://github.com/azure/communication-ui-library/pull/4066) by 94866715+dmceachernmsft@users.noreply.github.com)
-- Reaction Resource API implementation ([PR #4054](https://github.com/azure/communication-ui-library/pull/4054) by mbellah@microsoft.com)
-- Introduce new method download resource and remove from cache ([PR #4099](https://github.com/azure/communication-ui-library/pull/4099) by 9044372+JoshuaLai@users.noreply.github.com)
+
 ### Improvements
+
 - Update localization strings ([PR #4130](https://github.com/azure/communication-ui-library/pull/4130) by 2684369+JamesBurnside@users.noreply.github.com)
-- Add commitID to console logged message for azure deployed sample apps. ([PR #4067](https://github.com/azure/communication-ui-library/pull/4067) by 73612854+palatter@users.noreply.github.com)
-- Conditional compilation tags imposing to get successful builds ([PR #4076](https://github.com/azure/communication-ui-library/pull/4076) by mbellah@microsoft.com)
-- Adding concept storybook section for Reaction feature ([PR #4113](https://github.com/azure/communication-ui-library/pull/4113) by mbellah@microsoft.com)
-- Update API signature for common adapter and common handler ([PR #4094](https://github.com/azure/communication-ui-library/pull/4094) by mbellah@microsoft.com)
-- Updating the downloadAttachment api to not be list ([PR #4071](https://github.com/azure/communication-ui-library/pull/4071) by 9044372+JoshuaLai@users.noreply.github.com)
-- Update strings from Touchdown Build ([PR #4057](https://github.com/azure/communication-ui-library/pull/4057) by 79475487+mgamis-msft@users.noreply.github.com)
-- Convert Touchdown Build pipeline to 1ES PT ([PR #4056](https://github.com/azure/communication-ui-library/pull/4056) by 79475487+mgamis-msft@users.noreply.github.com)
-- update minor packages ([PR #4039](https://github.com/azure/communication-ui-library/pull/4039) by 94866715+dmceachernmsft@users.noreply.github.com)
-- Break out jest coverage to separate job ([PR #4016](https://github.com/azure/communication-ui-library/pull/4016) by 3941071+emlynmac@users.noreply.github.com)
-- Groom changelog (#4080) ([PR #4092](https://github.com/azure/communication-ui-library/pull/4092) by 73612854+palatter@users.noreply.github.com)
+- Update minor packages ([PR #4039](https://github.com/azure/communication-ui-library/pull/4039) by 94866715+dmceachernmsft@users.noreply.github.com)
 - Clean up conditional compilation code for pinned participants feature ([PR #4049](https://github.com/azure/communication-ui-library/pull/4049) by 79475487+mgamis-msft@users.noreply.github.com)
-- Update calling dependency ([PR #4055](https://github.com/azure/communication-ui-library/pull/4055) by 96077406+carocao-msft@users.noreply.github.com)
+- Update `@azure/communication-calling` dependency to `1.21.1` ([PR #4055](https://github.com/azure/communication-ui-library/pull/4055) by 96077406+carocao-msft@users.noreply.github.com)
 - Add messageThreadSelector tests ([PR #4107](https://github.com/azure/communication-ui-library/pull/4107) by 98852890+vhuseinova-msft@users.noreply.github.com)
-- Update permissions for github workflows ([PR #4046](https://github.com/azure/communication-ui-library/pull/4046) by 73612854+palatter@users.noreply.github.com)
-- Groom changelogs ([PR #4037](https://github.com/azure/communication-ui-library/pull/4037) by edwardlee@microsoft.com)
-- Update permissions in GitHub workflows ([PR #4074](https://github.com/azure/communication-ui-library/pull/4074) by 73612854+palatter@users.noreply.github.com)
 - Update dependencies that had a patch bump available ([PR #4036](https://github.com/azure/communication-ui-library/pull/4036) by 94866715+dmceachernmsft@users.noreply.github.com)
-- update stable calling SDK ([PR #4109](https://github.com/azure/communication-ui-library/pull/4109) by dmceachern@microsoft.com)
 - Rename ImageGallery to ImageOverlay and change some related APIs ([PR #4083](https://github.com/azure/communication-ui-library/pull/4083) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
 - Applying meeting capability for reaction feature ([PR #4013](https://github.com/azure/communication-ui-library/pull/4013) by mbellah@microsoft.com)
 - Wrap ImageOverlay with theme provider and change some of the APIs ([PR #4117](https://github.com/azure/communication-ui-library/pull/4117) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
 - Tooltip for each of the reaction button applied ([PR #4035](https://github.com/azure/communication-ui-library/pull/4035) by mbellah@microsoft.com)
 - Rename ImageGallery files to ImageOverlay ([PR #4101](https://github.com/azure/communication-ui-library/pull/4101) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
 - Change onInlineImageClicked API to inlineImageOptions ([PR #4050](https://github.com/azure/communication-ui-library/pull/4050) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
+
 ### Bug Fixes
+
 - Set hide attendee name option to 'False' until replaced by sdk ([PR #4111](https://github.com/azure/communication-ui-library/pull/4111) by 97124699+prabhjot-msft@users.noreply.github.com)
 - Fix offset of message edit box ([PR #4112](https://github.com/azure/communication-ui-library/pull/4112) by 3941071+emlynmac@users.noreply.github.com)
 - Fix for an issue when head and body tags were added to messages with html type ([PR #4106](https://github.com/azure/communication-ui-library/pull/4106) by 98852890+vhuseinova-msft@users.noreply.github.com)
@@ -87,7 +60,6 @@ Mon, 12 Feb 2024 18:52:29 GMT
 - Skip jest test coverage and compare bundle stats steps when base branch is a release branch ([PR #4026](https://github.com/azure/communication-ui-library/pull/4026) by 79475487+mgamis-msft@users.noreply.github.com)
 - Defect fixing the src of the inline image ([PR #4104](https://github.com/azure/communication-ui-library/pull/4104) by 9044372+JoshuaLai@users.noreply.github.com)
 - Fix calling sample to be able to join room with roomId query arg ([PR #4032](https://github.com/azure/communication-ui-library/pull/4032) by 79475487+mgamis-msft@users.noreply.github.com)
-
 
 ## [1.12.0](https://github.com/azure/communication-ui-library/tree/1.12.0)
 
