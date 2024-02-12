@@ -91,7 +91,9 @@ module.exports = {
     // Feature for spotlight
     'spotlight',
     // Feature for tracking beta start call identifier
-    'start-call-beta'
+    'start-call-beta',
+    // Join meeting with meetingId and passcode
+    'meeting-id'
   ],
   // A list of in progress beta feature.
   // These features are still beta feature but "in progress"

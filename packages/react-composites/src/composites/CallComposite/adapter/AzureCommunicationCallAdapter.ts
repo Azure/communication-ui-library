@@ -38,6 +38,8 @@ import {
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(spotlight) */
 import { SpotlightedParticipant } from '@azure/communication-calling';
+/* @conditional-compile-remove(meeting-id) */
+import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 /* @conditional-compile-remove(reaction) */
 import { Reaction } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
@@ -704,22 +706,39 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
   private _joinCall(audioOptions: AudioOptions, videoOptions: VideoOptions): CallTypeOf<AgentType> {
     const isTeamsMeeting = this.locator ? 'meetingLink' in this.locator : false;
+    /* @conditional-compile-remove(meeting-id) */
+    const isTeamsMeetingId = this.locator ? 'meetingId' in this.locator : false;
     /* @conditional-compile-remove(rooms) */
     const isRoomsCall = this.locator ? 'roomId' in this.locator : false;
 
     /* @conditional-compile-remove(teams-identity-support) */
     if (_isTeamsCallAgent(this.callAgent)) {
-      if (!isTeamsMeeting) {
-        throw new Error('Locator not supported by TeamsCallAgent');
+      if (isTeamsMeeting) {
+        return this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
+          audioOptions,
+          videoOptions
+        }) as CallTypeOf<AgentType>;
       }
+      /* @conditional-compile-remove(meeting-id) */
+      if (isTeamsMeetingId) {
+        return this.callAgent.join(this.locator as TeamsMeetingIdLocator, {
+          audioOptions,
+          videoOptions
+        }) as CallTypeOf<AgentType>;
+      }
+      throw new Error('Locator not supported by TeamsCallAgent');
+    }
 
+    if (isTeamsMeeting) {
       return this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
         audioOptions,
         videoOptions
       }) as CallTypeOf<AgentType>;
     }
-    if (isTeamsMeeting) {
-      return this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
+
+    /* @conditional-compile-remove(meeting-id) */
+    if (isTeamsMeetingId) {
+      return this.callAgent.join(this.locator as TeamsMeetingIdLocator, {
         audioOptions,
         videoOptions
       }) as CallTypeOf<AgentType>;
@@ -1435,7 +1454,8 @@ export type CallAdapterLocator =
   | TeamsMeetingLinkLocator
   | GroupCallLocator
   | /* @conditional-compile-remove(rooms) */ RoomCallLocator
-  | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator;
+  | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator
+  | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
 
 /**
  * Common optional parameters to create {@link AzureCommunicationCallAdapter} or {@link TeamsCallAdapter}
@@ -1547,7 +1567,8 @@ export type TeamsCallAdapterArgs = {
   credential: CommunicationTokenCredential;
   locator:
     | TeamsMeetingLinkLocator
-    | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator;
+    | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator
+    | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
   /**
    * Optional parameters for the {@link TeamsCallAdapter} created
    */
