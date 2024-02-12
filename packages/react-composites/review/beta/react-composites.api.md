@@ -710,6 +710,8 @@ export interface CallWithChatAdapterManagement {
     downloadAttachment: (options: {
         attachmentUrl: string;
     }) => Promise<AttachmentDownloadResult>;
+    // (undocumented)
+    downloadResourceToCache(resourceDetails: ResourceDetails): void;
     fetchInitialData(): Promise<void>;
     // @beta
     holdCall: () => Promise<void>;
@@ -733,6 +735,8 @@ export interface CallWithChatAdapterManagement {
     removeParticipant(userId: string): Promise<void>;
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
+    // (undocumented)
+    removeResourceFromCache(resourceDetails: ResourceDetails): void;
     // @beta
     resumeCall: () => Promise<void>;
     sendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
@@ -1140,9 +1144,11 @@ export interface ChatAdapterThreadManagement {
     downloadAttachment: (options: {
         attachmentUrl: string;
     }) => Promise<AttachmentDownloadResult>;
+    downloadResourceToCache(resourceDetails: ResourceDetails): void;
     fetchInitialData(): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     removeParticipant(userId: string): Promise<void>;
+    removeResourceFromCache(resourceDetails: ResourceDetails): void;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
@@ -1920,6 +1926,13 @@ export type Profile = {
 export interface RemoteVideoTileMenuOptions {
     isHidden?: boolean;
 }
+
+// @public
+export type ResourceDetails = {
+    threadId: string;
+    messageId: string;
+    resourceUrl: string;
+};
 
 // @public
 export type SoundEffect = {
