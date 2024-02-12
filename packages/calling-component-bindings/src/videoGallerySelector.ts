@@ -39,12 +39,7 @@ import { getLocalParticipantReactionState } from './baseSelectors';
 import { memoizedConvertToVideoTileReaction } from './utils/participantListSelectorUtils';
 import { getRemoteParticipantsExcludingConsumers } from './getRemoteParticipantsExcludingConsumers';
 /* @conditional-compile-remove(spotlight) */
-import {
-  getSpotlightedParticipants,
-  getMaxParticipantsToSpotlight,
-  getLocalParticipantSpotlight,
-  getCapabilities
-} from './baseSelectors';
+import { getSpotlightCallFeature, getCapabilities } from './baseSelectors';
 
 /**
  * Selector type for {@link VideoGallery} component.
@@ -92,11 +87,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     /* @conditional-compile-remove(reaction) */
     getLocalParticipantReactionState,
     /* @conditional-compile-remove(spotlight) */
-    getSpotlightedParticipants,
-    /* @conditional-compile-remove(spotlight) */
-    getMaxParticipantsToSpotlight,
-    /* @conditional-compile-remove(spotlight) */
-    getLocalParticipantSpotlight,
+    getSpotlightCallFeature,
     /* @conditional-compile-remove(spotlight) */
     getCapabilities
   ],
@@ -120,11 +111,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     /* @conditional-compile-remove(reaction) */
     localParticipantReaction,
     /* @conditional-compile-remove(spotlight) */
-    spotlightedParticipants,
-    /* @conditional-compile-remove(spotlight) */
-    maxParticipantsToSpotlight,
-    /* @conditional-compile-remove(spotlight) */
-    localSpotlight,
+    spotlightCallFeature,
     /* @conditional-compile-remove(spotlight) */
     capabilities
   ) => {
@@ -141,7 +128,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     /* @conditional-compile-remove(reaction) */
     const localParticipantReactionState = memoizedConvertToVideoTileReaction(localParticipantReaction);
     /* @conditional-compile-remove(spotlight) */
-    const spotlightedParticipantIds = memoizeSpotlightedParticipantIds(spotlightedParticipants);
+    const spotlightedParticipantIds = memoizeSpotlightedParticipantIds(spotlightCallFeature?.spotlightedParticipants);
 
     return {
       screenShareParticipant: screenShareRemoteParticipant
@@ -171,7 +158,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
         /* @conditional-compile-remove(reaction) */
         localParticipantReactionState,
         /* @conditional-compile-remove(spotlight) */
-        localSpotlight,
+        spotlightCallFeature?.localParticipantSpotlight,
         /* @conditional-compile-remove(spotlight) */
         capabilities
       ),
@@ -188,7 +175,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
       /* @conditional-compile-remove(spotlight) */
       spotlightedParticipants: spotlightedParticipantIds,
       /* @conditional-compile-remove(spotlight) */
-      maxParticipantsToSpotlight: maxParticipantsToSpotlight
+      maxParticipantsToSpotlight: spotlightCallFeature?.maxParticipantsToSpotlight
     };
   }
 );

@@ -3,8 +3,6 @@
 import { DominantSpeakersInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(capabilities) */
 import { ParticipantCapabilities } from '@azure/communication-calling';
-/* @conditional-compile-remove(spotlight) */
-import { SpotlightedParticipant } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { ParticipantRole } from '@azure/communication-calling';
@@ -18,7 +16,7 @@ import {
   DiagnosticsCallFeatureState
 } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(spotlight) */
-import { SpotlightState } from '@internal/calling-stateful-client';
+import { SpotlightCallFeatureState } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(reaction) */
 import { ReactionState } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(close-captions) */
@@ -110,33 +108,11 @@ export const getLocalParticipantRaisedHand = (
 /**
  * @private
  */
-export const getSpotlightedParticipants = (
+export const getSpotlightCallFeature = (
   state: CallClientState,
   props: CallingBaseSelectorProps
-): SpotlightedParticipant[] | undefined => {
-  return state.calls[props.callId]?.spotlight?.spotlightedParticipants;
-};
-
-/* @conditional-compile-remove(spotlight) */
-/**
- * @private
- */
-export const getMaxParticipantsToSpotlight = (
-  state: CallClientState,
-  props: CallingBaseSelectorProps
-): number | undefined => {
-  return state.calls[props.callId]?.spotlight?.maxParticipantsToSpotlight;
-};
-
-/* @conditional-compile-remove(spotlight) */
-/**
- * @private
- */
-export const getLocalParticipantSpotlight = (
-  state: CallClientState,
-  props: CallingBaseSelectorProps
-): SpotlightState | undefined => {
-  return state.calls[props.callId]?.spotlight?.localParticipantSpotlight;
+): SpotlightCallFeatureState | undefined => {
+  return state.calls[props.callId]?.spotlight;
 };
 
 /* @conditional-compile-remove(reaction) */
