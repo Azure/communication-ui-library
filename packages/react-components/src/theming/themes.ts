@@ -19,12 +19,33 @@ export interface CallingTheme {
   };
 }
 
+/* @conditional-compile-remove(image-overlay) */
+/**
+ * Custom Fluent theme palette used by chat related components in this library.
+ *
+ * @beta
+ */
+export interface ChatTheme {
+  /**
+   * Custom Fluent theme palette used by chat related components in this library.
+   *
+   * @beta
+   */
+  chatPalette: {
+    modalOverlayBlack: string;
+    modalTitleWhite: string;
+    modalButtonBackground: string;
+    modalButtonBackgroundHover: string;
+    modalButtonBackgroundActive: string;
+  };
+}
+
 /**
  * Preset light theme for components exported from this library.
  *
  * @public
  */
-export const lightTheme: PartialTheme & CallingTheme = {
+export const lightTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-overlay) */ ChatTheme = {
   palette: {
     themePrimary: '#0078d4',
     themeLighterAlt: '#eff6fc',
@@ -58,6 +79,14 @@ export const lightTheme: PartialTheme & CallingTheme = {
     /* @conditional-compile-remove(raise-hand) */
     raiseHandGold: '#eaa300'
   },
+  /* @conditional-compile-remove(image-overlay) */
+  chatPalette: {
+    modalOverlayBlack: '#000000',
+    modalTitleWhite: '#ffffff',
+    modalButtonBackground: '#1b1a19',
+    modalButtonBackgroundHover: '#252423',
+    modalButtonBackgroundActive: '#292827'
+  },
   semanticColors: {
     errorText: '#a80000'
   }
@@ -68,7 +97,7 @@ export const lightTheme: PartialTheme & CallingTheme = {
  *
  * @public
  */
-export const darkTheme: PartialTheme & CallingTheme = {
+export const darkTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-overlay) */ ChatTheme = {
   palette: {
     themePrimary: '#2899f5',
     themeLighterAlt: '#02060a',
@@ -102,15 +131,15 @@ export const darkTheme: PartialTheme & CallingTheme = {
     /* @conditional-compile-remove(raise-hand) */
     raiseHandGold: '#eaa300'
   },
+  /* @conditional-compile-remove(image-overlay) */
+  chatPalette: {
+    modalOverlayBlack: '#000000',
+    modalTitleWhite: '#ffffff',
+    modalButtonBackground: '#1b1a19',
+    modalButtonBackgroundHover: '#252423',
+    modalButtonBackgroundActive: '#292827'
+  },
   semanticColors: {
     errorText: '#f1707b'
   }
 };
-
-/* @conditional-compile-remove(image-overlay) */
-/**
- * Preset dark theme for the ImageOverlay component.
- *
- * @beta
- */
-export const imageOverlayTheme: PartialTheme = { palette: darkTheme.palette };

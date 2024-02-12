@@ -1,9 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { IIconProps, IStyle, PartialTheme } from '@fluentui/react';
+import { IIconProps, IStyle } from '@fluentui/react';
 /* @conditional-compile-remove(image-overlay) */
 import { IOverlayStyles } from '@fluentui/react';
+/* @conditional-compile-remove(image-overlay) */
+import { ChatTheme } from '../../theming/themes';
 
 /**
  * @private
@@ -21,11 +23,11 @@ export const downloadIcon: IIconProps = {
 /**
  * @private
  */
-export const overlayStyles = (theme: PartialTheme): IOverlayStyles => {
+export const overlayStyles = (theme: ChatTheme): IOverlayStyles => {
   return {
     root: {
-      background: theme.palette?.white,
-      opacity: '0.95'
+      background: theme.chatPalette.modalOverlayBlack,
+      opacity: '0.85'
     }
   };
 };
@@ -79,13 +81,14 @@ export const titleBarContainerStyle: IStyle = {
   alignItems: 'center'
 };
 
+/* @conditional-compile-remove(image-overlay) */
 /**
  * @private
  */
-export const titleStyle = (theme: PartialTheme): IStyle => {
+export const titleStyle = (theme: ChatTheme): IStyle => {
   return {
     paddingLeft: '0.5rem',
-    color: theme.palette?.black,
+    color: theme.chatPalette.modalTitleWhite,
     fontFamily: 'inherit',
     fontSize: '0.875rem',
     fontStyle: 'normal',
@@ -138,60 +141,80 @@ export const normalImageStyle: IStyle = {
   maxWidth: '100%'
 };
 
+/* @conditional-compile-remove(image-overlay) */
 /**
  * @private
  */
-export const brokenImageStyle = (theme: PartialTheme): IStyle => {
+export const brokenImageStyle = (theme: ChatTheme): IStyle => {
   return {
-    color: theme.palette?.black
+    color: theme.chatPalette.modalTitleWhite
   };
 };
 
+/* @conditional-compile-remove(image-overlay) */
 /**
  * @private
  */
-export const closeButtonStyles = (theme: PartialTheme): IStyle => {
+export const closeButtonStyles = (theme: ChatTheme): IStyle => {
   return {
-    color: theme.palette?.black,
+    color: theme.chatPalette.modalTitleWhite,
     ':hover': {
-      color: theme.palette?.black
+      color: theme.chatPalette.modalTitleWhite,
+      backgroundColor: theme.chatPalette.modalButtonBackgroundHover
     },
     ':active': {
-      color: theme.palette?.black
+      color: theme.chatPalette.modalTitleWhite,
+      backgroundColor: theme.chatPalette.modalButtonBackgroundActive
     }
   };
 };
 
+/* @conditional-compile-remove(image-overlay) */
 /**
  * @private
  */
-export const downloadButtonStyle: IStyle = {
-  margin: '0 0.5rem',
-  height: '32px',
-  borderWidth: '1px',
-  fontSize: '0.875rem', // 14px
-  fontWeight: 600,
-  padding: '0.38rem 0.75rem',
-  borderRadius: '4px',
-  whiteSpace: 'nowrap',
-  '@media (max-width: 25rem)': {
-    display: 'none'
-  }
-};
-
-/**
- * @private
- */
-export const smallDownloadButtonContainerStyle = (theme: PartialTheme): IStyle => {
+export const downloadButtonStyle = (theme: ChatTheme): IStyle => {
   return {
-    marginRight: '0.5rem',
+    margin: '0 0.5rem',
+    height: '32px',
+    borderWidth: '1px',
+    fontSize: '0.875rem', // 14px
+    fontWeight: 600,
+    padding: '0.38rem 0.75rem',
+    borderRadius: '4px',
+    backgroundColor: theme.chatPalette.modalButtonBackground,
+    color: theme.chatPalette.modalTitleWhite,
     whiteSpace: 'nowrap',
-    color: theme.palette?.black,
     ':hover': {
-      color: theme.palette?.black
+      color: theme.chatPalette.modalTitleWhite,
+      backgroundColor: theme.chatPalette.modalButtonBackgroundHover
     },
     ':active': {
-      color: theme.palette?.black
+      color: theme.chatPalette.modalTitleWhite,
+      backgroundColor: theme.chatPalette.modalButtonBackgroundActive
+    },
+    '@media (max-width: 25rem)': {
+      display: 'none'
+    }
+  };
+};
+
+/* @conditional-compile-remove(image-overlay) */
+/**
+ * @private
+ */
+export const smallDownloadButtonContainerStyle = (theme: ChatTheme): IStyle => {
+  return {
+    marginRight: '0.5rem',
+    color: theme.chatPalette.modalTitleWhite,
+    whiteSpace: 'nowrap',
+    ':hover': {
+      color: theme.chatPalette.modalTitleWhite,
+      backgroundColor: theme.chatPalette.modalButtonBackgroundHover
+    },
+    ':active': {
+      color: theme.chatPalette.modalTitleWhite,
+      backgroundColor: theme.chatPalette.modalButtonBackgroundActive
     },
     '@media (min-width: 25rem)': {
       display: 'none'

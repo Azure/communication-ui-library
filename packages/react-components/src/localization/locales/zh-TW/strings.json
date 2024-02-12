@@ -200,7 +200,8 @@
     "failedToJoinCallGeneric": "無法加入通話。",
     "failedToJoinCallInvalidMeetingLink": "無法加入會議。連結無效。",
     "cameraFrozenForRemoteParticipants": "通話中的使用者在觀看您的視訊時發生問題。請檢查您的裝置和網路。",
-    "unableToStartVideoEffect": "無法套用視訊效果。"
+    "unableToStartVideoEffect": "無法套用視訊效果。",
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "無法啟動參與者的焦點，因為參與者人數已達焦點上限。"
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "您現在正在分享螢幕畫面。",
@@ -218,7 +219,12 @@
     "pinParticipantMenuItemAriaLabel": "釘選 {participantName}",
     "unpinParticipantMenuItemAriaLabel": "取消釘選 {participantName}",
     "pinnedParticipantAnnouncementAriaLabel": "已釘選 {participantName}",
-    "unpinnedParticipantAnnouncementAriaLabel": "已取消釘選 {participantName}"
+    "unpinnedParticipantAnnouncementAriaLabel": "已取消釘選 {participantName}",
+    "startSpotlightVideoTileMenuLabel": "設為每個人的焦點",
+    "addSpotlightVideoTileMenuLabel": "新增焦點",
+    "spotlightLimitReachedMenuTitle": "已達焦點限制",
+    "stopSpotlightVideoTileMenuLabel": "停止聚焦",
+    "stopSpotlightOnSelfVideoTileMenuLabel": "結束聚焦"
   },
   "dialpad": {
     "placeholderText": "輸入電話號碼",
