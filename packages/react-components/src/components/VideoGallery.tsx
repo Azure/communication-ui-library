@@ -515,6 +515,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           /* @conditional-compile-remove(spotlight) */
           menuKind={remoteVideoTileMenu ? (remoteVideoTileMenu.kind === 'drawer' ? 'drawer' : 'contextual') : undefined}
           /* @conditional-compile-remove(spotlight) */
+          drawerMenuHostId={drawerMenuHostId}
+          /* @conditional-compile-remove(spotlight) */
           strings={strings}
           /* @conditional-compile-remove(reaction) */
           reactionResources={reactionResources}
@@ -552,6 +554,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     remoteVideoTileMenu,
     /* @conditional-compile-remove(spotlight) */
     strings,
+    /* @conditional-compile-remove(spotlight) */
+    drawerMenuHostId,
     /* @conditional-compile-remove(reaction) */
     reactionResources
   ]);

@@ -7,7 +7,6 @@ import { VideoGalleryRemoteParticipant, VideoGalleryLocalParticipant } from '@in
 import { createSelector } from 'reselect';
 import {
   CallingBaseSelectorProps,
-  getCapabilities,
   getDisplayName,
   getDominantSpeakers,
   getIdentifier,
@@ -40,7 +39,12 @@ import { getLocalParticipantReactionState } from './baseSelectors';
 import { memoizedConvertToVideoTileReaction } from './utils/participantListSelectorUtils';
 import { getRemoteParticipantsExcludingConsumers } from './getRemoteParticipantsExcludingConsumers';
 /* @conditional-compile-remove(spotlight) */
-import { getSpotlightedParticipants, getMaxParticipantsToSpotlight } from './baseSelectors';
+import {
+  getSpotlightedParticipants,
+  getMaxParticipantsToSpotlight,
+  getLocalParticipantSpotlight,
+  getCapabilities
+} from './baseSelectors';
 
 /**
  * Selector type for {@link VideoGallery} component.
@@ -92,6 +96,8 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     /* @conditional-compile-remove(spotlight) */
     getMaxParticipantsToSpotlight,
     /* @conditional-compile-remove(spotlight) */
+    getLocalParticipantSpotlight,
+    /* @conditional-compile-remove(spotlight) */
     getCapabilities
   ],
   (
@@ -117,6 +123,8 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     spotlightedParticipants,
     /* @conditional-compile-remove(spotlight) */
     maxParticipantsToSpotlight,
+    /* @conditional-compile-remove(spotlight) */
+    localSpotlight,
     /* @conditional-compile-remove(spotlight) */
     capabilities
   ) => {
@@ -162,6 +170,8 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
         raisedHand,
         /* @conditional-compile-remove(reaction) */
         localParticipantReactionState,
+        /* @conditional-compile-remove(spotlight) */
+        localSpotlight,
         /* @conditional-compile-remove(spotlight) */
         capabilities
       ),

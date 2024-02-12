@@ -1427,6 +1427,7 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
     onStopSpotlight?: ((userIds?: string[]) => void) | undefined;
     maxParticipantsToSpotlight?: number | undefined;
     menuKind?: "contextual" | "drawer" | undefined;
+    drawerMenuHostId?: string | undefined;
     strings?: VideoGalleryStrings | undefined;
     reactionResources?: ReactionResources | undefined;
 }) => React_2.JSX.Element>;

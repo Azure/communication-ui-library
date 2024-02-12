@@ -17,6 +17,8 @@ import {
   CallErrors,
   DiagnosticsCallFeatureState
 } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(spotlight) */
+import { SpotlightState } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(reaction) */
 import { ReactionState } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(close-captions) */
@@ -124,6 +126,17 @@ export const getMaxParticipantsToSpotlight = (
   props: CallingBaseSelectorProps
 ): number | undefined => {
   return state.calls[props.callId]?.spotlight?.maxParticipantsToSpotlight;
+};
+
+/* @conditional-compile-remove(spotlight) */
+/**
+ * @private
+ */
+export const getLocalParticipantSpotlight = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): SpotlightState | undefined => {
+  return state.calls[props.callId]?.spotlight?.localParticipantSpotlight;
 };
 
 /* @conditional-compile-remove(reaction) */

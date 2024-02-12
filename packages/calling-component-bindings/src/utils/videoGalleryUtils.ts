@@ -173,7 +173,7 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     raisedHand: raisedHand as RaisedHandState,
     /* @conditional-compile-remove(reaction) */
     reaction: reaction as Reaction,
-    /* @conditional-compile-remove(reaction) */
+    /* @conditional-compile-remove(spotlight) */
     spotlight: spotlight as Spotlight
   };
 };
@@ -202,6 +202,7 @@ export const memoizeLocalParticipant = memoizeOne(
     /* @conditional-compile-remove(rooms) */ role,
     /* @conditional-compile-remove(raise-hand) */ raisedHand,
     /* @conditional-compile-remove(reaction) */ reaction,
+    /* @conditional-compile-remove(spotlight) */ localSpotlight,
     /* @conditional-compile-remove(spotlight) */ capabilities
   ) => ({
     userId: identifier,
@@ -219,6 +220,8 @@ export const memoizeLocalParticipant = memoizeOne(
     raisedHand: raisedHand,
     /* @conditional-compile-remove(reaction) */
     reaction: reaction,
+    /* @conditional-compile-remove(spotlight) */
+    spotlight: localSpotlight,
     /* @conditional-compile-remove(spotlight) */
     capabilities
   })
