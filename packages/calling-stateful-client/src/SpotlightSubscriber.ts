@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(spotlight) */
-import { SpotlightCallFeature } from '@azure/communication-calling';
+import { SpotlightCallFeature, SpotlightedParticipant } from '@azure/communication-calling';
 /* @conditional-compile-remove(spotlight) */
 import { CallContext } from './CallContext';
 /* @conditional-compile-remove(spotlight) */
@@ -33,10 +33,17 @@ export class SpotlightSubscriber {
     this._spotlightFeature.off('spotlightChanged', this.spotlightChanged);
   };
 
-  private spotlightChanged = (): void => {
-    this._context.setSpotlight(this._callIdRef.callId, this._spotlightFeature.getSpotlightedParticipants());
-    for (const addedParticipant of this._spotlightFeature.getSpotlightedParticipants()) {
+  private spotlightChanged = (args: { added: SpotlightedParticipant[]; removed: SpotlightedParticipant[] }): void => {
+    this._context.setSpotlight(
+      this._callIdRef.callId,
+      this._spotlightFeature.getSpotlightedParticipants(),
+      this._spotlightFeature.maxParticipantsToSpotlight
+    );
+    for (const addedParticipant of args.added) {
       this._context.setParticipantSpotlighted(this._callIdRef.callId, addedParticipant);
+    }
+    for (const removedParticipant of args.removed) {
+      this._context.setParticipantNotSpotlighted(this._callIdRef.callId, removedParticipant);
     }
   };
 }
