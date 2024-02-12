@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Stack } from '@fluentui/react';
+import { mergeStyles, Stack } from '@fluentui/react';
 /* @conditional-compile-remove(spotlight) */
-import { IContextualMenuProps, Layer, mergeStyles } from '@fluentui/react';
+import { concatStyleSets, IContextualMenuProps, Layer } from '@fluentui/react';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useMemo } from 'react';
 /* @conditional-compile-remove(spotlight) */
@@ -172,22 +172,33 @@ export const _LocalVideoTile = React.memo(
       /* @conditional-compile-remove(spotlight) */ menuKind
     ]);
 
-    /* @conditional-compile-remove(spotlight) */
-    const spotlightBorder = useMemo(
-      () => (
-        <Stack
-          className={mergeStyles({
-            position: 'absolute',
-            height: '100%',
-            width: '100%',
-            zIndex: 100,
-            border: `0.25rem solid ${theme.palette.black}`,
-            pointerEvents: 'none'
-          })}
-        />
-      ),
-      [theme.palette.black]
-    );
+    const videoTileStyles = useMemo(() => {
+      /* @conditional-compile-remove(spotlight) */
+      if (isSpotlighted) {
+        return concatStyleSets(
+          {
+            root: {
+              '&::after': {
+                content: `''`,
+                position: 'absolute',
+                border: `0.25rem solid ${theme.palette.neutralTertiaryAlt}`,
+                borderRadius: theme.effects.roundedCorner4,
+                width: '100%',
+                height: '100%',
+                pointerEvents: 'none'
+              }
+            }
+          },
+          styles
+        );
+      }
+      return styles;
+    }, [
+      /* @conditional-compile-remove(spotlight) */ isSpotlighted,
+      /* @conditional-compile-remove(spotlight) */ theme.palette.neutralTertiaryAlt,
+      /* @conditional-compile-remove(spotlight) */ theme.effects.roundedCorner4,
+      styles
+    ]);
 
     /* @conditional-compile-remove(spotlight) */
     const [drawerMenuItemProps, setDrawerMenuItemProps] = React.useState<_DrawerMenuItemProps[]>([]);
@@ -221,7 +232,6 @@ export const _LocalVideoTile = React.memo(
             localVideoSelectedDescription={localVideoSelectedDescription}
           />
           <StreamMedia videoStreamElement={renderElement} isMirrored={true} />
-          {/* @conditional-compile-remove(spotlight) */ isSpotlighted && spotlightBorder}
         </>
       );
     }, [
@@ -229,13 +239,14 @@ export const _LocalVideoTile = React.memo(
       localVideoCameraSwitcherLabel,
       localVideoSelectedDescription,
       renderElement,
-      showCameraSwitcherInLocalPreview,
-      /* @conditional-compile-remove(spotlight) */ isSpotlighted,
-      /* @conditional-compile-remove(spotlight) */ spotlightBorder
+      showCameraSwitcherInLocalPreview
     ]);
 
     return (
-      <Stack /* @conditional-compile-remove(spotlight) */ onKeyDown={menuKind === 'drawer' ? onKeyDown : undefined}>
+      <Stack
+        className={mergeStyles({ width: '100%', height: '100%' })}
+        /* @conditional-compile-remove(spotlight) */ onKeyDown={menuKind === 'drawer' ? onKeyDown : undefined}
+      >
         <VideoTile
           key={userId ?? 'local-video-tile'}
           userId={userId}
@@ -243,7 +254,7 @@ export const _LocalVideoTile = React.memo(
           showLabel={showLabel}
           displayName={displayName}
           initialsName={initialsName}
-          styles={styles}
+          styles={videoTileStyles}
           onRenderPlaceholder={onRenderAvatar}
           isMuted={isMuted}
           showMuteIndicator={showMuteIndicator}
@@ -274,7 +285,6 @@ export const _LocalVideoTile = React.memo(
             )
           }
         </VideoTile>
-        {/* @conditional-compile-remove(spotlight) */ isSpotlighted && spotlightBorder}
       </Stack>
     );
   }
