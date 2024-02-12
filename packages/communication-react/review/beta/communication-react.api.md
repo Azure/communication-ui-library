@@ -87,6 +87,7 @@ import { SendMessageOptions } from '@azure/communication-chat';
 import { SpotlightedParticipant } from '@azure/communication-calling';
 import { StartCallOptions } from '@azure/communication-calling';
 import { StartCaptionsOptions } from '@azure/communication-calling';
+import { SyntheticEvent } from 'react';
 import { TeamsCall } from '@azure/communication-calling';
 import { TeamsCallAgent } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
@@ -1812,6 +1813,17 @@ export type ChatParticipantListSelector = (state: ChatClientState, props: ChatBa
 // @public
 export type ChatReturnProps<Component extends (props: any) => JSX.Element> = GetChatSelector<Component> extends (state: ChatClientState, props: any) => any ? ReturnType<GetChatSelector<Component>> & Common<ChatHandlers, Parameters<Component>[0]> : never;
 
+// @beta
+export interface ChatTheme {
+    chatPalette: {
+        modalOverlayBlack: string;
+        modalTitleWhite: string;
+        modalButtonBackground: string;
+        modalButtonBackgroundHover: string;
+        modalButtonBackgroundActive: string;
+    };
+}
+
 // @public
 export const ChatThreadClientProvider: (props: ChatThreadClientProviderProps) => JSX.Element;
 
@@ -2380,7 +2392,7 @@ export interface CustomMessage extends MessageCommon {
 }
 
 // @public
-export const darkTheme: PartialTheme & CallingTheme;
+export const darkTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-overlay) */ ChatTheme;
 
 // @beta
 export type DeclarativeCallAgent = CallAgent & IncomingCallManagement;
@@ -3023,7 +3035,8 @@ export interface ImageOverlayProps {
     imageSrc: string;
     isOpen: boolean;
     onDismiss: () => void;
-    onDownloadButtonClicked?: (imageSrc: string) => void;
+    onDownloadButtonClicked: (imageSrc: string) => void;
+    onError?: (event: SyntheticEvent<HTMLImageElement, Event>) => void;
     title?: string;
     titleIcon?: JSX.Element;
 }
@@ -3033,9 +3046,6 @@ export interface ImageOverlayStrings {
     dismissButtonAriaLabel: string;
     downloadButtonLabel: string;
 }
-
-// @beta
-export const imageOverlayTheme: PartialTheme;
 
 // @beta
 export type IncomingCallManagement = {
@@ -3117,7 +3127,7 @@ export interface JumpToNewMessageButtonProps {
 }
 
 // @public
-export const lightTheme: PartialTheme & CallingTheme;
+export const lightTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-overlay) */ ChatTheme;
 
 // @public
 export type LoadingState = 'loading' | 'none';
