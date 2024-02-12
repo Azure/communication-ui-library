@@ -30,6 +30,8 @@ import {
 import { getOutboundParticipants } from './utils/AppUtils';
 /* @conditional-compile-remove(rooms) */
 import { createRoom, getRoomIdFromUrl, addUserToRoom } from './utils/AppUtils';
+/*@conditional-compile-remove(meeting-id)  */
+import { getMeetingIdFromUrl } from './utils/AppUtils';
 import { useIsMobile } from './utils/useIsMobile';
 import { CallError } from './views/CallError';
 import { CallScreen } from './views/CallScreen';
@@ -101,6 +103,7 @@ const App = (): JSX.Element => {
       const joiningExistingCall: boolean =
         !!getGroupIdFromUrl() ||
         !!getTeamsLinkFromUrl() ||
+        /* @conditional-compile-remove(meeting-id) */ !!getMeetingIdFromUrl() ||
         /* @conditional-compile-remove(rooms) */ !!getRoomIdFromUrl();
       return (
         <HomeScreen
@@ -113,6 +116,7 @@ const App = (): JSX.Element => {
               callDetails.callLocator ||
               /* @conditional-compile-remove(rooms) */ getRoomIdFromUrl() ||
               getTeamsLinkFromUrl() ||
+              /* @conditional-compile-remove(meeting-id) */ getMeetingIdFromUrl() ||
               getGroupIdFromUrl() ||
               createGroupId();
 
@@ -236,6 +240,12 @@ const getIsCTEParam = (isCTE?: boolean): string => {
 const getJoinParams = (locator: CallAdapterLocator): string => {
   if ('meetingLink' in locator) {
     return '?teamsLink=' + encodeURIComponent(locator.meetingLink);
+  }
+  /* @conditional-compile-remove(meeting-id) */
+  if ('meetingId' in locator) {
+    return (
+      '?meetingId=' + encodeURIComponent(locator.meetingId) + (locator.passcode ? '&passcode=' + locator.passcode : '')
+    );
   }
   /* @conditional-compile-remove(rooms) */
   if ('roomId' in locator) {

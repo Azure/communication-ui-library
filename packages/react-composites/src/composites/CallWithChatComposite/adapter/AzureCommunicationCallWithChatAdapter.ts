@@ -15,6 +15,8 @@ import {
   StartCallOptions,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(meeting-id) */
+import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 /* @conditional-compile-remove(reaction) */
 import { Reaction } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
@@ -794,7 +796,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
  */
 export interface CallAndChatLocator {
   /** Locator used by {@link createAzureCommunicationCallWithChatAdapter} to locate the call to join */
-  callLocator: GroupCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ CallParticipantsLocator;
+  callLocator:
+    | GroupCallLocator
+    | /* @conditional-compile-remove(teams-adhoc-call) */ CallParticipantsLocator
+    | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
   /** Chat thread ID used by {@link createAzureCommunicationCallWithChatAdapter} to locate the chat thread to join */
   chatThreadId: string;
 }
@@ -1061,7 +1066,10 @@ export const _createAzureCommunicationCallWithChatAdapterFromAdapters = (
 ): CallWithChatAdapter => new AzureCommunicationCallWithChatAdapter(callAdapter, chatAdapter);
 
 const isTeamsMeetingLinkLocator = (
-  locator: CallAndChatLocator | TeamsMeetingLinkLocator
+  locator:
+    | CallAndChatLocator
+    | TeamsMeetingLinkLocator
+    | /*@conditional-compile-remove(meeting-id)  */ TeamsMeetingIdLocator
 ): locator is TeamsMeetingLinkLocator => {
   return 'meetingLink' in locator;
 };

@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
+/* @conditional-compile-remove(meeting-id) */
+import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CallAndChatLocator } from '@azure/communication-react';
 import { setLogLevel } from '@azure/logger';
@@ -21,6 +23,8 @@ import {
   getTeamsLinkFromUrl,
   isOnIphoneAndNotSafari
 } from './utils/AppUtils';
+/* @conditional-compile-remove(meeting-id) */
+import { ensureJoinableMeetingIdPushedToUrl, getMeetingIdFromUrl } from './utils/AppUtils';
 import { CallScreen } from './views/CallScreen';
 import { HomeScreen } from './views/HomeScreen';
 import { UnsupportedBrowserPage } from './views/UnsupportedBrowserPage';
@@ -63,7 +67,9 @@ const App = (): JSX.Element => {
   }
 
   const joiningExistingCallWithChat: boolean =
-    (!!getGroupIdFromUrl() && !!getExistingThreadIdFromURL()) || !!getTeamsLinkFromUrl();
+    (!!getGroupIdFromUrl() && !!getExistingThreadIdFromURL()) ||
+    !!getTeamsLinkFromUrl() ||
+    /* @conditional-compile-remove(meeting-id) */ !!getMeetingIdFromUrl();
 
   switch (page) {
     case 'home': {
@@ -77,7 +83,8 @@ const App = (): JSX.Element => {
             try {
               const callWithChatArgs = await generateCallWithChatArgs(
                 homeScreenDetails.displayName,
-                homeScreenDetails?.teamsLink,
+                homeScreenDetails?.meetingLocator,
+                /* @conditional-compile-remove(meeting-id) */ homeScreenDetails?.threadId,
                 /* @conditional-compile-remove(PSTN-calls) */ homeScreenDetails.alternateCallerId,
                 /* @conditional-compile-remove(PSTN-calls) */ homeScreenDetails.outboundParticipants
               );
@@ -123,7 +130,9 @@ export default App;
 
 const generateCallWithChatArgs = async (
   displayName: string,
-  teamsLink?: TeamsMeetingLinkLocator,
+  teamsLocator?: TeamsMeetingLinkLocator | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator,
+  /* @conditional-compile-remove(meeting-id) */
+  threadId?: string,
   /* @conditional-compile-remove(PSTN-calls) */
   alternateCallerId?: string,
   /* @conditional-compile-remove(PSTN-calls) */
@@ -136,10 +145,24 @@ const generateCallWithChatArgs = async (
   let locator: CallAndChatLocator | TeamsMeetingLinkLocator;
 
   // Check if we should join a teams meeting, or an ACS CallWithChat
-  teamsLink = teamsLink ?? getTeamsLinkFromUrl();
-  if (teamsLink) {
-    locator = teamsLink;
-    ensureJoinableTeamsLinkPushedToUrl(teamsLink);
+  teamsLocator =
+    teamsLocator ?? getTeamsLinkFromUrl() ?? /* @conditional-compile-remove(meeting-id) */ getMeetingIdFromUrl();
+  if (teamsLocator) {
+    if ('meetingLink' in teamsLocator) {
+      locator = teamsLocator;
+    } else {
+      locator = { callLocator: teamsLocator, chatThreadId: threadId ? threadId : '' };
+    }
+    if ('meetingLink' in teamsLocator) {
+      ensureJoinableTeamsLinkPushedToUrl(teamsLocator);
+    }
+    /* @conditional-compile-remove(meeting-id) */
+    if ('meetingId' in teamsLocator) {
+      ensureJoinableMeetingIdPushedToUrl(teamsLocator);
+      if (threadId) {
+        ensureJoinableChatThreadPushedToUrl(threadId);
+      }
+    }
   } else {
     const callLocator = callLocatorGen(outboundParticipants);
 
