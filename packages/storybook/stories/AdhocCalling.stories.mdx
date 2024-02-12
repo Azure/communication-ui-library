@@ -11,12 +11,12 @@ import AdhocCallingVoiceAppSnippetText from '!!raw-loader!./snippets/AdhocCallin
   parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }}
 />
 
-# Adhoc calling
+# Ad-hoc calling
 
 ## Overview
 
 A call can be started with a Teams user or a call queue by using their id. You can call a teams user or a Teams voice application
-like a call queue or auto attendant. These calls it is important to note can only be one Teams voice application, or, multiple teams users. You cannot call multiple
+like a call queue or auto attendant. These calls it is important to note can only be one Teams voice application, or multiple teams users. You cannot call multiple
 Teams voice applications at the same time.
 
 ## Calling a Teams voice application
@@ -40,7 +40,7 @@ for customizing display names and avatars of users, respectively.
 
 <SingleLineBetaBanner />
 
-Like a Teams voice application you can call a Teams user by using their id. The id of the Teams user should be stored in the type of `MicrosoftTeamsUserIdentifier[]`.
+Like a Teams voice application, you can call a Teams user by using their id. The id of the Teams user should be stored in the type of `MicrosoftTeamsUserIdentifier[]`.
 This array should be given to the `targetCallees` property of the [CallAdapter](?path=/docs/composite-adapters--page#call-adapter) when creating a call. Like with the bot, the
 configuration screen in the CallComposite will call the Teams user. See the following snippet for an example.
 
