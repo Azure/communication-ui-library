@@ -32,6 +32,8 @@ import {
   ParticipantsRemovedListener,
   TopicChangedListener
 } from './ChatAdapter';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { ResourceDetails } from './ChatAdapter';
 import { AdapterError } from '../../common/adapters';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { FileUploadAdapter, convertFileUploadsUiStateToMessageMetadata } from './AzureCommunicationFileUploadAdapter';
@@ -374,7 +376,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     return { blobUrl: URL.createObjectURL(blob) };
   }
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  downloadResourceToCache(resourceDetails: { threadId: string; messageId: string; resourceUrl: string }): void {
+  downloadResourceToCache(resourceDetails: ResourceDetails): void {
     this.chatClient.downloadResourceToCache(
       resourceDetails.threadId,
       resourceDetails.messageId,
@@ -383,7 +385,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  removeResourceFromCache(resourceDetails: { threadId: string; messageId: string; resourceUrl: string }): void {
+  removeResourceFromCache(resourceDetails: ResourceDetails): void {
     this.chatClient.removeResourceFromCache(
       resourceDetails.threadId,
       resourceDetails.messageId,

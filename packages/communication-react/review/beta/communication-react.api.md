@@ -1009,11 +1009,7 @@ export interface CallWithChatAdapterManagement {
         attachmentUrl: string;
     }) => Promise<AttachmentDownloadResult>;
     // (undocumented)
-    downloadResourceToCache(resourceDetails: {
-        threadId: string;
-        messageId: string;
-        resourceUrl: string;
-    }): void;
+    downloadResourceToCache(resourceDetails: ResourceDetails): void;
     fetchInitialData(): Promise<void>;
     // @beta
     holdCall: () => Promise<void>;
@@ -1038,11 +1034,7 @@ export interface CallWithChatAdapterManagement {
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
     // (undocumented)
-    removeResourceFromCache(resourceDetails: {
-        threadId: string;
-        messageId: string;
-        resourceUrl: string;
-    }): void;
+    removeResourceFromCache(resourceDetails: ResourceDetails): void;
     // @beta
     resumeCall: () => Promise<void>;
     sendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
@@ -1635,19 +1627,11 @@ export interface ChatAdapterThreadManagement {
     downloadAttachment: (options: {
         attachmentUrl: string;
     }) => Promise<AttachmentDownloadResult>;
-    downloadResourceToCache(resourceDetails: {
-        threadId: string;
-        messageId: string;
-        resourceUrl: string;
-    }): void;
+    downloadResourceToCache(resourceDetails: ResourceDetails): void;
     fetchInitialData(): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     removeParticipant(userId: string): Promise<void>;
-    removeResourceFromCache(resourceDetails: {
-        threadId: string;
-        messageId: string;
-        resourceUrl: string;
-    }): void;
+    removeResourceFromCache(resourceDetails: ResourceDetails): void;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
@@ -3825,6 +3809,13 @@ export interface RemoteVideoStreamState {
 export interface RemoteVideoTileMenuOptions {
     isHidden?: boolean;
 }
+
+// @public
+export type ResourceDetails = {
+    threadId: string;
+    messageId: string;
+    resourceUrl: string;
+};
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;

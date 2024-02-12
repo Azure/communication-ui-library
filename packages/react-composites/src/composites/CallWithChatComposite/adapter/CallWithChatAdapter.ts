@@ -23,6 +23,8 @@ import {
   ParticipantsAddedListener,
   ParticipantsRemovedListener
 } from '../../ChatComposite';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { ResourceDetails } from '../../ChatComposite';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 import type { AdapterError, AdapterState, Disposable } from '../../common/adapters';
 import {
@@ -404,9 +406,9 @@ export interface CallWithChatAdapterManagement {
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   downloadAttachment: (options: { attachmentUrl: string }) => Promise<AttachmentDownloadResult>; // ToDo: This method is to be removed
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  downloadResourceToCache(resourceDetails: { threadId: string; messageId: string; resourceUrl: string }): void;
+  downloadResourceToCache(resourceDetails: ResourceDetails): void;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  removeResourceFromCache(resourceDetails: { threadId: string; messageId: string; resourceUrl: string }): void;
+  removeResourceFromCache(resourceDetails: ResourceDetails): void;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Puts the Call in a Localhold.

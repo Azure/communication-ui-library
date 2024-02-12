@@ -3,6 +3,8 @@
 
 import { CallWithChatAdapter } from './CallWithChatAdapter';
 import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { ResourceDetails } from '../../ChatComposite';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadManager } from '../../ChatComposite';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
@@ -135,11 +137,11 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
     return await this.callWithChatAdapter.downloadAttachment(options);
   }
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  public downloadResourceToCache(resourceDetails: { threadId: string; messageId: string; resourceUrl: string }): void {
+  public downloadResourceToCache(resourceDetails: ResourceDetails): void {
     this.callWithChatAdapter.downloadResourceToCache(resourceDetails);
   }
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  public removeResourceFromCache(resourceDetails: { threadId: string; messageId: string; resourceUrl: string }): void {
+  public removeResourceFromCache(resourceDetails: ResourceDetails): void {
     this.callWithChatAdapter.removeResourceFromCache(resourceDetails);
   }
 }
