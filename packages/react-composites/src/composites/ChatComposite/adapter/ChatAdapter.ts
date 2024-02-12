@@ -116,12 +116,12 @@ export interface ChatAdapterThreadManagement {
   /**
    * Downloads a resource into the cache for the given message.
    */
-  downloadResourceToCache(threadId: string, messageId: string, resourceUrl: string): void;
+  downloadResourceToCache(resourceDetails: { threadId: string; messageId: string; resourceUrl: string }): void;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /**
    * Removes a resource from the cache for the given message.
    */
-  removeResourceFromCache(threadId: string, messageId: string, resourceUrl: string): void;
+  removeResourceFromCache(resourceDetails: { threadId: string; messageId: string; resourceUrl: string }): void;
 }
 
 /**

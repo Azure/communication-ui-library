@@ -711,7 +711,11 @@ export interface CallWithChatAdapterManagement {
         attachmentUrl: string;
     }) => Promise<AttachmentDownloadResult>;
     // (undocumented)
-    downloadResourceToCache(threadId: string, messageId: string, resourceUrl: string): void;
+    downloadResourceToCache(resourceDetails: {
+        threadId: string;
+        messageId: string;
+        resourceUrl: string;
+    }): void;
     fetchInitialData(): Promise<void>;
     // @beta
     holdCall: () => Promise<void>;
@@ -736,7 +740,11 @@ export interface CallWithChatAdapterManagement {
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
     // (undocumented)
-    removeResourceFromCache(threadId: string, messageId: string, resourceUrl: string): void;
+    removeResourceFromCache(resourceDetails: {
+        threadId: string;
+        messageId: string;
+        resourceUrl: string;
+    }): void;
     // @beta
     resumeCall: () => Promise<void>;
     sendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
@@ -1144,11 +1152,19 @@ export interface ChatAdapterThreadManagement {
     downloadAttachment: (options: {
         attachmentUrl: string;
     }) => Promise<AttachmentDownloadResult>;
-    downloadResourceToCache(threadId: string, messageId: string, resourceUrl: string): void;
+    downloadResourceToCache(resourceDetails: {
+        threadId: string;
+        messageId: string;
+        resourceUrl: string;
+    }): void;
     fetchInitialData(): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     removeParticipant(userId: string): Promise<void>;
-    removeResourceFromCache(threadId: string, messageId: string, resourceUrl: string): void;
+    removeResourceFromCache(resourceDetails: {
+        threadId: string;
+        messageId: string;
+        resourceUrl: string;
+    }): void;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;

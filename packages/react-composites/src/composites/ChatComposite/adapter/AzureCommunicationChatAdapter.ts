@@ -374,13 +374,21 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     return { blobUrl: URL.createObjectURL(blob) };
   }
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  downloadResourceToCache(threadId: string, messageId: string, resourceUrl: string): void {
-    this.chatClient.downloadResourceToCache(threadId, messageId, resourceUrl);
+  downloadResourceToCache(resourceDetails: { threadId: string; messageId: string; resourceUrl: string }): void {
+    this.chatClient.downloadResourceToCache(
+      resourceDetails.threadId,
+      resourceDetails.messageId,
+      resourceDetails.resourceUrl
+    );
   }
 
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  removeResourceFromCache(threadId: string, messageId: string, resourceUrl: string): void {
-    this.chatClient.removeResourceFromCache(threadId, messageId, resourceUrl);
+  removeResourceFromCache(resourceDetails: { threadId: string; messageId: string; resourceUrl: string }): void {
+    this.chatClient.removeResourceFromCache(
+      resourceDetails.threadId,
+      resourceDetails.messageId,
+      resourceDetails.resourceUrl
+    );
   }
 
   private messageReceivedListener(event: ChatMessageReceivedEvent): void {

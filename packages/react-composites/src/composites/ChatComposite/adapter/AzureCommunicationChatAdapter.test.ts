@@ -227,7 +227,7 @@ describe('Error is reflected in state and events', () => {
       credential: fakeToken
     });
 
-    adapter.downloadResourceToCache('someThreadId', 'someMessageId', 'someAttachmentId');
+    adapter.downloadResourceToCache({ threadId: 'threadId', messageId: 'messageId', resourceUrl: 'attachmentId' });
     expect(mockDownloadResourceToCache).toHaveBeenCalled();
   });
 
@@ -276,7 +276,7 @@ describe('Error is reflected in state and events', () => {
       credential: fakeToken
     });
 
-    adapter.removeResourceFromCache('threadId', 'messageId', 'attachmentId');
+    adapter.removeResourceFromCache({ threadId: 'threadId', messageId: 'messageId', resourceUrl: 'attachmentId' });
     expect(mockStatefulDispose).toHaveBeenCalledTimes(1);
   });
 });

@@ -491,12 +491,12 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return await this.chatAdapter.downloadAttachment(options);
   }
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  public downloadResourceToCache(threadId: string, messageId: string, resourceUrl: string): void {
-    this.chatAdapter.downloadResourceToCache(threadId, messageId, resourceUrl);
+  public downloadResourceToCache(resourceDetails: { threadId: string; messageId: string; resourceUrl: string }): void {
+    this.chatAdapter.downloadResourceToCache(resourceDetails);
   }
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  public removeResourceFromCache(threadId: string, messageId: string, resourceUrl: string): void {
-    this.chatAdapter.removeResourceFromCache(threadId, messageId, resourceUrl);
+  public removeResourceFromCache(resourceDetails: { threadId: string; messageId: string; resourceUrl: string }): void {
+    this.chatAdapter.removeResourceFromCache(resourceDetails);
   }
   /* @conditional-compile-remove(PSTN-calls) */
   public async holdCall(): Promise<void> {
