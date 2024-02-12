@@ -10,8 +10,6 @@ import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
 import { SurveyExample } from './components/SurveyExample';
 import { exampleDisableSurvey, exampleOnSurveyClosed, exampleOnSurveySubmitted } from './SurveyDocs';
 
-// const ExampleSurveyText = require('!!raw-loader!./snippets/Survey.snippet.tsx').default;
-
 const getDocs: () => JSX.Element = () => {
   /* eslint-disable react/no-unescaped-entities */
   return (
@@ -24,7 +22,8 @@ const getDocs: () => JSX.Element = () => {
         participants will be able to share feedback on the quality and reliability of Audio and Video calls.
       </Description>
       <Description>
-        Participants will be able to submit feedback based on four categories: Overall Call, Audio, Video,Screen Share.
+        Participants will be able to submit feedback based on four categories: Overall Call, Audio, Video, and Screen
+        Share.
       </Description>
       <Description>
         They can rate their call experience on a star based numerical survey and provide additional detail as to the
@@ -35,34 +34,34 @@ const getDocs: () => JSX.Element = () => {
       <Subheading>Handling Survey Results</Subheading>
       <Description>
         Survey feedbacks are automatically sent to Azure Monitor. To send survey results to your own service, you can
-        also gain access to the survey results by passing in a custom function utilizing the onSurveySubmitted prop
-        inside surveyOptions.
+        also gain access to the survey results by passing in a custom function utilizing the `onSurveySubmitted` prop
+        inside `surveyOptions`.
       </Description>
       <Description>
-        With onSurveySubmitted populated, a free form text survey is available to the call users at end of call to
+        With `onSurveySubmitted` populated, a free form text survey is available to the call users at end of call to
         gather more detailed feedback.
       </Description>
       <Description>
         - Note that results from the free form text survey will not be sent to Azure Monitor. Text results are
-        accessible through improvementSuggestions prop from onSurveySubmitted and need to be collected and handled by
-        Contoso.
+        accessible through the `improvementSuggestions` prop from `onSurveySubmitted` and need to be collected and
+        handled by Contoso.
       </Description>
 
       <Source code={exampleOnSurveySubmitted} />
-      <Subheading>Incorporating End of Call Survey into your experience</Subheading>
+      <Subheading>Disabling End of Call Survey</Subheading>
       <Description>
         The UI Library enables users to display surveys at end of call by providing the option to use end of call survey
         within the CallComposite and CallWithChatComposite experience. End of Call Survey are enabled by default both in
-        Mobile Web sessions and in Desktop Web sessions. If you wish to not see end of call survey, you have the option
-        to remove this feature from the composites.
+        Mobile Web sessions and in Desktop Web sessions. If you wish to disable the end of call survey, you have the
+        option to remove this feature from the composites.
       </Description>
       <Source code={exampleDisableSurvey} />
 
       <Subheading>Redirect to your own experience after end of call survey</Subheading>
       <Description>
-        The UI Library enables users to redirect to their own experience when end of call survey is
-        skipped/submitted/have an issue sending. This is done by passing in a custom function utilizing the
-        onSurveyClosed prop inside surveyOptions.
+        The UI Library enables users to redirect to their own experience when end of call survey is skipped, submitted,
+        or has an issue sending. This is done by passing in a custom function utilizing the `onSurveyClosed` prop inside
+        `surveyOptions`.
       </Description>
       <Description>
         - Note that by writing to this function, the default screens shown after survey is closed are overwritten. Users
