@@ -64,6 +64,7 @@
     "addSpotlightParticipantListMenuLabel": "Add spotlight",
     "stopSpotlightParticipantListMenuLabel": "Stop spotlighting",
     "stopSpotlightOnSelfParticipantListMenuLabel": "Exit spotlight",
+    "spotlightLimitReachedParticipantListMenuTitle": "Spotlight limit reached",
     "returnToCallButtonAriaDescription": "Return to Call",
     "returnToCallButtonAriaLabel": "Back",
     "roomNotFoundDetails": "The room ID provided could not be found.",

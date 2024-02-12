@@ -87,7 +87,6 @@ import { SendMessageOptions } from '@azure/communication-chat';
 import { SpotlightedParticipant } from '@azure/communication-calling';
 import { StartCallOptions } from '@azure/communication-calling';
 import { StartCaptionsOptions } from '@azure/communication-calling';
-import { SyntheticEvent } from 'react';
 import { TeamsCall } from '@azure/communication-calling';
 import { TeamsCallAgent } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
@@ -366,14 +365,12 @@ export interface CallAdapterCallOperations {
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startCaptions(options?: StartCaptionsOptions): Promise<void>;
     startScreenShare(): Promise<void>;
-    // @beta
-    startSpotlight(userId: string): Promise<void>;
+    startSpotlight(userIds?: string[]): Promise<void>;
     startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
     stopCamera(): Promise<void>;
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
-    // @beta
-    stopSpotlight(userId: string): Promise<void>;
+    stopSpotlight(userIds?: string[]): Promise<void>;
     stopVideoBackgroundEffects(): Promise<void>;
     // @beta
     submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
@@ -443,6 +440,7 @@ export interface CallAdapterSubscribers {
     off(event: 'transferRequested', listener: TransferRequestedListener): void;
     off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     off(event: 'roleChanged', listener: PropertyChangedEvent): void;
+    off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
     on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
     on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
     on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -462,6 +460,7 @@ export interface CallAdapterSubscribers {
     on(event: 'transferRequested', listener: TransferRequestedListener): void;
     on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     on(event: 'roleChanged', listener: PropertyChangedEvent): void;
+    on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
 }
 
 // @public
@@ -790,6 +789,7 @@ export interface CallCompositeStrings {
     selectedPeopleButtonLabel: string;
     soundLabel: string;
     spokenLanguageStrings?: SpokenLanguageStrings;
+    spotlightLimitReachedParticipantListMenuTitle: string;
     spotlightPrompt: SpotlightPromptStrings;
     starRatingAriaLabel: string;
     starSurveyFiveStarText: string;
@@ -918,7 +918,7 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     isSpeaking?: boolean;
     raisedHand?: RaisedHand;
     reaction?: Reaction;
-    isSpotlighted?: Spotlight;
+    spotlight?: Spotlight;
 };
 
 // @beta
@@ -1047,14 +1047,12 @@ export interface CallWithChatAdapterManagement {
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startCaptions(options?: StartCaptionsOptions): Promise<void>;
     startScreenShare(): Promise<void>;
-    // @beta
-    startSpotlight(userId: string): Promise<void>;
+    startSpotlight(userIds?: string[]): Promise<void>;
     startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
     stopCamera(): Promise<void>;
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
-    // @beta
-    stopSpotlight(userId: string): Promise<void>;
+    stopSpotlight(userIds?: string[]): Promise<void>;
     stopVideoBackgroundEffects(): Promise<void>;
     // @beta
     submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
@@ -1109,6 +1107,8 @@ export interface CallWithChatAdapterSubscriptions {
     // (undocumented)
     off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     // (undocumented)
+    off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
+    // (undocumented)
     off(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
     off(event: 'messageEdited', listener: MessageEditedListener): void;
@@ -1156,6 +1156,8 @@ export interface CallWithChatAdapterSubscriptions {
     on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
     // (undocumented)
     on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
+    // (undocumented)
+    on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
     // (undocumented)
     on(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
@@ -1375,7 +1377,7 @@ export interface CallWithChatControlOptions extends CommonCallControlOptions {
 }
 
 // @public
-export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | /* @conditional-compile-remove(close-captions) */ 'isCaptionsActiveChanged' | /* @conditional-compile-remove(close-captions) */ 'captionsReceived' | /* @conditional-compile-remove(close-captions) */ 'isCaptionLanguageChanged' | /* @conditional-compile-remove(close-captions) */ 'isSpokenLanguageChanged' | /* @conditional-compile-remove(capabilities) */ 'capabilitiesChanged' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
+export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | /* @conditional-compile-remove(close-captions) */ 'isCaptionsActiveChanged' | /* @conditional-compile-remove(close-captions) */ 'captionsReceived' | /* @conditional-compile-remove(close-captions) */ 'isCaptionLanguageChanged' | /* @conditional-compile-remove(close-captions) */ 'isSpokenLanguageChanged' | /* @conditional-compile-remove(capabilities) */ 'capabilitiesChanged' | /* @conditional-compile-remove(spotlight) */ 'spotlightChanged' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
 
 // @beta
 export const CameraAndMicrophoneSitePermissions: (props: CameraAndMicrophoneSitePermissionsProps) => JSX.Element;
@@ -1804,17 +1806,6 @@ export type ChatParticipantListSelector = (state: ChatClientState, props: ChatBa
 // @public
 export type ChatReturnProps<Component extends (props: any) => JSX.Element> = GetChatSelector<Component> extends (state: ChatClientState, props: any) => any ? ReturnType<GetChatSelector<Component>> & Common<ChatHandlers, Parameters<Component>[0]> : never;
 
-// @beta
-export interface ChatTheme {
-    chatPalette: {
-        modalOverlayBlack: string;
-        modalTitleWhite: string;
-        modalButtonBackground: string;
-        modalButtonBackgroundHover: string;
-        modalButtonBackgroundActive: string;
-    };
-}
-
 // @public
 export const ChatThreadClientProvider: (props: ChatThreadClientProviderProps) => JSX.Element;
 
@@ -1967,13 +1958,13 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onStartScreenShare: () => Promise<void>;
     // (undocumented)
-    onStartSpotlight: (userId: string) => Promise<void>;
+    onStartSpotlight: (userIds?: string[]) => Promise<void>;
     // (undocumented)
     onStopCaptions: () => Promise<void>;
     // (undocumented)
     onStopScreenShare: () => Promise<void>;
     // (undocumented)
-    onStopSpotlight: (userId: string) => Promise<void>;
+    onStopSpotlight: (userIds?: string[]) => Promise<void>;
     // (undocumented)
     onSubmitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
     // (undocumented)
@@ -2383,7 +2374,7 @@ export interface CustomMessage extends MessageCommon {
 }
 
 // @public
-export const darkTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-overlay) */ ChatTheme;
+export const darkTheme: PartialTheme & CallingTheme;
 
 // @beta
 export type DeclarativeCallAgent = CallAgent & IncomingCallManagement;
@@ -2826,6 +2817,7 @@ export interface ErrorBarStrings {
     sendMessageGeneric: string;
     sendMessageNotInChatThread: string;
     startScreenShareGeneric: string;
+    startSpotlightWhileMaxParticipantsAreSpotlighted: string;
     startVideoGeneric: string;
     stopScreenShareGeneric: string;
     stopVideoGeneric: string;
@@ -3025,8 +3017,7 @@ export interface ImageOverlayProps {
     imageSrc: string;
     isOpen: boolean;
     onDismiss: () => void;
-    onDownloadButtonClicked: (imageSrc: string) => void;
-    onError?: (event: SyntheticEvent<HTMLImageElement, Event>) => void;
+    onDownloadButtonClicked?: (imageSrc: string) => void;
     title?: string;
     titleIcon?: JSX.Element;
 }
@@ -3036,6 +3027,9 @@ export interface ImageOverlayStrings {
     dismissButtonAriaLabel: string;
     downloadButtonLabel: string;
 }
+
+// @beta
+export const imageOverlayTheme: PartialTheme;
 
 // @beta
 export type IncomingCallManagement = {
@@ -3117,7 +3111,7 @@ export interface JumpToNewMessageButtonProps {
 }
 
 // @public
-export const lightTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-overlay) */ ChatTheme;
+export const lightTheme: PartialTheme & CallingTheme;
 
 // @public
 export type LoadingState = 'loading' | 'none';
@@ -3560,8 +3554,6 @@ export type ParticipantListProps = {
     onRemoveParticipant?: (userId: string) => void;
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
     onParticipantClick?: (participant?: ParticipantListParticipant) => void;
-    onStartSpotlight?: (userId: string) => void;
-    onStopSpotlight?: (userId: string) => void;
     styles?: ParticipantListStyles;
     showParticipantOverflowTooltip?: boolean;
     totalParticipantCount?: number;
@@ -3786,7 +3778,7 @@ export interface RemoteParticipantState {
     // @beta
     reactionState?: ReactionState;
     role?: ParticipantRole;
-    spotlighted?: SpotlightState;
+    spotlight?: SpotlightState;
     state: RemoteParticipantState_2;
     videoStreams: {
         [key: number]: RemoteVideoStreamState;
@@ -4004,13 +3996,20 @@ export interface SpokenLanguageStrings {
 
 // @beta
 export type Spotlight = {
-    spotlightOrderPosition?: number;
+    spotlightedOrderPosition?: number;
 };
 
 // @beta
 export interface SpotlightCallFeatureState {
+    maxParticipantsToSpotlight: number;
     spotlightedParticipants: SpotlightedParticipant[];
 }
+
+// @public
+export type SpotlightChangedListener = (args: {
+    added: SpotlightedParticipant[];
+    removed: SpotlightedParticipant[];
+}) => void;
 
 // @beta
 export interface SpotlightPromptStrings {
@@ -4429,6 +4428,7 @@ export type VideoGalleryParticipant = {
     displayName?: string;
     videoStream?: VideoGalleryStream;
     isScreenSharingOn?: boolean;
+    spotlight?: Spotlight;
 };
 
 // @public
@@ -4439,6 +4439,7 @@ export interface VideoGalleryProps {
     localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
     localVideoTileSize?: LocalVideoTileSize;
     localVideoViewOptions?: VideoStreamOptions;
+    maxParticipantsToSpotlight?: number;
     maxRemoteVideoStreams?: number;
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
@@ -4451,8 +4452,8 @@ export interface VideoGalleryProps {
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
-    onStartSpotlight?: (userId: string) => Promise<void>;
-    onStopSpotlight?: (userId: string) => Promise<void>;
+    onStartSpotlight?: (userIds?: string[]) => Promise<void>;
+    onStopSpotlight?: (userIds?: string[]) => Promise<void>;
     onUnpinParticipant?: (userId: string) => void;
     overflowGalleryPosition?: OverflowGalleryPosition;
     pinnedParticipants?: string[];
@@ -4487,6 +4488,7 @@ export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSe
     dominantSpeakers?: string[];
     optimalVideoCount?: number;
     spotlightedParticipants?: string[];
+    maxParticipantsToSpotlight?: number;
 };
 
 // @public
@@ -4518,6 +4520,7 @@ export interface VideoGalleryStrings {
     pinParticipantMenuItemAriaLabel: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;
+    spotlightLimitReachedMenuTitle: string;
     startSpotlightVideoTileMenuLabel: string;
     stopSpotlightOnSelfVideoTileMenuLabel: string;
     stopSpotlightVideoTileMenuLabel: string;

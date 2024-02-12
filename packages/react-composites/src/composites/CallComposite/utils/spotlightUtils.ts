@@ -19,13 +19,13 @@ import { useAdapter } from '../adapter/CallAdapterProvider';
  * @internal
  */
 export const useSpotlightCallbacksWithPrompt = (
-  onStartSpotlight: (userId: string) => Promise<void>,
-  onStopSpotlight: (userId: string) => Promise<void>,
+  onStartSpotlight: (userIds?: string[]) => Promise<void>,
+  onStopSpotlight: (userIds?: string[]) => Promise<void>,
   setIsPromptOpen?: (isOpen: boolean) => void,
   setPromptProps?: (promptProps: PromptProps) => void
 ): {
-  onStartSpotlightWithPrompt: (userId: string) => Promise<void>;
-  onStopSpotlightWithPrompt: (userId: string) => Promise<void>;
+  onStartSpotlightWithPrompt: (userIds?: string[]) => Promise<void>;
+  onStopSpotlightWithPrompt: (userIds?: string[]) => Promise<void>;
 } => {
   const myUserId = toFlatCommunicationIdentifier(useAdapter().getState().userId);
 
@@ -57,14 +57,17 @@ export const useSpotlightCallbacksWithPrompt = (
 /* @conditional-compile-remove(spotlight) */
 const getStartSpotlightWithPromptCallback = (
   myUserId: string,
-  onStartSpotlight: (userId: string) => void,
+  onStartSpotlight: (userIds?: string[]) => void,
   setIsPromptOpen: (isOpen: boolean) => void,
   setPromptProps: (promptProps: PromptProps) => void,
   strings: CallCompositeStrings
-): ((userId: string) => Promise<void>) => {
-  return async (userId: string): Promise<void> => {
+): ((userIds?: string[]) => Promise<void>) => {
+  return async (userIds?: string[]): Promise<void> => {
+    if (userIds && userIds.length > 1) {
+      onStartSpotlight(userIds);
+    }
     const startSpotlightPromptText =
-      userId === myUserId
+      userIds === undefined || userIds[0] === myUserId
         ? strings.spotlightPrompt.startSpotlightOnSelfText
         : strings.spotlightPrompt.startSpotlightText;
     setPromptProps({
@@ -73,7 +76,7 @@ const getStartSpotlightWithPromptCallback = (
       confirmButtonLabel: strings.spotlightPrompt.startSpotlightConfirmButtonLabel,
       cancelButtonLabel: strings.spotlightPrompt.startSpotlightCancelButtonLabel,
       onConfirm: () => {
-        onStartSpotlight(userId);
+        onStartSpotlight(userIds);
         setIsPromptOpen(false);
       },
       onCancel: () => setIsPromptOpen(false)
@@ -85,20 +88,25 @@ const getStartSpotlightWithPromptCallback = (
 /* @conditional-compile-remove(spotlight) */
 const getStopSpotlightWithPromptCallback = (
   myUserId: string,
-  onStopSpotlight: (userId: string) => void,
+  onStopSpotlight: (userIds?: string[]) => void,
   setIsPromptOpen: (isOpen: boolean) => void,
   setPromptProps: (promptProps: PromptProps) => void,
   strings: CallCompositeStrings
-): ((userId: string) => Promise<void>) => {
-  return async (userId: string): Promise<void> => {
+): ((userIds?: string[]) => Promise<void>) => {
+  return async (userIds?: string[]): Promise<void> => {
+    if (userIds && userIds.length > 1) {
+      onStopSpotlight(userIds);
+    }
     const stopSpotlightPromptHeading =
-      userId === myUserId
+      userIds === undefined || userIds[0] === myUserId
         ? strings.spotlightPrompt.stopSpotlightOnSelfHeading
         : strings.spotlightPrompt.stopSpotlightHeading;
     const stopSpotlightPromptText =
-      userId === myUserId ? strings.spotlightPrompt.stopSpotlightOnSelfText : strings.spotlightPrompt.stopSpotlightText;
+      userIds === undefined || userIds[0] === myUserId
+        ? strings.spotlightPrompt.stopSpotlightOnSelfText
+        : strings.spotlightPrompt.stopSpotlightText;
     const stopSpotlightPromptConfirmButtonLabel =
-      userId === myUserId
+      userIds === undefined || userIds[0] === myUserId
         ? strings.spotlightPrompt.stopSpotlightOnSelfConfirmButtonLabel
         : strings.spotlightPrompt.stopSpotlightConfirmButtonLabel;
 
@@ -108,7 +116,7 @@ const getStopSpotlightWithPromptCallback = (
       confirmButtonLabel: stopSpotlightPromptConfirmButtonLabel,
       cancelButtonLabel: strings.spotlightPrompt.stopSpotlightCancelButtonLabel,
       onConfirm: () => {
-        onStopSpotlight(userId);
+        onStopSpotlight(userIds);
         setIsPromptOpen(false);
       },
       onCancel: () => setIsPromptOpen(false)
