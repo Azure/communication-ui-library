@@ -32,6 +32,8 @@ import {
   ParticipantsRemovedListener,
   TopicChangedListener
 } from './ChatAdapter';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { ResourceDetails } from './ChatAdapter';
 import { AdapterError } from '../../common/adapters';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { FileUploadAdapter, convertFileUploadsUiStateToMessageMetadata } from './AzureCommunicationFileUploadAdapter';
@@ -188,11 +190,17 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     /* @conditional-compile-remove(file-sharing) */
     this.updateFileUploadMetadata = this.updateFileUploadMetadata.bind(this);
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-    this.downloadAttachment = this.downloadAttachment.bind(this);
+    this.downloadAttachment = this.downloadAttachment.bind(this); // ToDo: This method is to be removed
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    this.downloadResourceToCache = this.downloadResourceToCache.bind(this);
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    this.removeResourceFromCache = this.removeResourceFromCache.bind(this);
   }
 
   dispose(): void {
     this.unsubscribeAllEvents();
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    this.chatClient.dispose();
   }
 
   async fetchInitialData(): Promise<void> {
@@ -332,6 +340,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  // ToDo: This method is to be removed
   async downloadAttachment(options: { attachmentUrl: string }): Promise<AttachmentDownloadResult> {
     return this.asyncTeeErrorToEventEmitter(async () => {
       if (this.credential === undefined) {
@@ -346,6 +355,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     });
   }
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  // ToDo: This method is to be removed
   private async downloadAuthenticatedFile(
     accessToken: string,
     options: { attachmentUrl: string }
@@ -364,6 +374,23 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     const blob = await response.blob();
 
     return { blobUrl: URL.createObjectURL(blob) };
+  }
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  downloadResourceToCache(resourceDetails: ResourceDetails): void {
+    this.chatClient.downloadResourceToCache(
+      resourceDetails.threadId,
+      resourceDetails.messageId,
+      resourceDetails.resourceUrl
+    );
+  }
+
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  removeResourceFromCache(resourceDetails: ResourceDetails): void {
+    this.chatClient.removeResourceFromCache(
+      resourceDetails.threadId,
+      resourceDetails.messageId,
+      resourceDetails.resourceUrl
+    );
   }
 
   private messageReceivedListener(event: ChatMessageReceivedEvent): void {
