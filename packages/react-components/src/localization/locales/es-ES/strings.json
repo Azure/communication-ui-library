@@ -200,7 +200,8 @@
     "failedToJoinCallGeneric": "No se pudo unir a la llamada.",
     "failedToJoinCallInvalidMeetingLink": "No se puede unir a la reunión. Vínculo no válido.",
     "cameraFrozenForRemoteParticipants": "Los usuarios de la llamada tienen problemas para ver el vídeo. Compruebe los dispositivos y la red.",
-    "unableToStartVideoEffect": "No se puede aplicar el efecto de vídeo."
+    "unableToStartVideoEffect": "No se puede aplicar el efecto de vídeo.",
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "No se puede iniciar el primer plano en los participantes porque el número máximo de participantes ya está puesto en primer plano."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Está compartiendo su pantalla",
@@ -218,7 +219,12 @@
     "pinParticipantMenuItemAriaLabel": "Anclar {participantName}",
     "unpinParticipantMenuItemAriaLabel": "Desanclar {participantName}",
     "pinnedParticipantAnnouncementAriaLabel": "{participantName} anclado",
-    "unpinnedParticipantAnnouncementAriaLabel": "{participantName} desanclado"
+    "unpinnedParticipantAnnouncementAriaLabel": "{participantName} desanclado",
+    "startSpotlightVideoTileMenuLabel": "Poner en primer plano para todos",
+    "addSpotlightVideoTileMenuLabel": "Agregar primer plano",
+    "spotlightLimitReachedMenuTitle": "Se alcanzó el límite de primer plano",
+    "stopSpotlightVideoTileMenuLabel": "Dejar de poner en primer plano",
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Primer plano"
   },
   "dialpad": {
     "placeholderText": "Introduzca el número de teléfono",

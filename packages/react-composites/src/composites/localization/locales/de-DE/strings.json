@@ -60,6 +60,11 @@
     "removedFromCallMoreDetails": "Ein anderer Teilnehmer hat Sie aus dem Anruf entfernt.",
     "removedFromCallTitle": "Sie wurden entfernt",
     "removeMenuLabel": "Entfernen",
+    "startSpotlightParticipantListMenuLabel": "Spotlight für alle",
+    "addSpotlightParticipantListMenuLabel": "Spotlight hinzufügen",
+    "stopSpotlightParticipantListMenuLabel": "Spotlight beenden",
+    "stopSpotlightOnSelfParticipantListMenuLabel": "Spotlight beenden",
+    "spotlightLimitReachedParticipantListMenuTitle": "Spotlight-Limit erreicht",
     "returnToCallButtonAriaDescription": "Zurück zum Anruf",
     "returnToCallButtonAriaLabel": "Zurück",
     "roomNotFoundDetails": "Die angegebene Raum-ID wurde nicht gefunden.",
@@ -120,6 +125,13 @@
     "callRejectedMoreDetails": "Die Person, die Sie erreichen möchten, ist nicht verfügbar. Versuchen Sie es später noch mal.",
     "callTimeoutTitle": "Der Anruf konnte nicht ausgeführt werden.",
     "callTimeoutDetails": "Die Person, die Sie erreichen möchten, ist nicht verfügbar. Versuchen Sie es später noch mal.",
+    "callTimeoutBotTitle": "Der Anruf konnte nicht ausgeführt werden.",
+    "callTimeoutBotDetails": "Der Dienst, den Sie erreichen möchten, ist nicht verfügbar. Versuchen Sie es später noch mal.",
+    "dtmfDialerButtonLabel": "Wähltastatur",
+    "dtmfDialerButtonTooltipOn": "Wähltastatur anzeigen",
+    "dtmfDialerButtonTooltipOff": "Wähltastatur ausblenden",
+    "dtmfDialerMoreButtonLabelOn": "Wähltastatur anzeigen",
+    "dtmfDialerMoreButtonLabelOff": "Wähltastatur ausblenden",
     "spokenLanguageStrings": {
       "ar-ae": "Arabisch – Vereinigte Arabische Emirate",
       "ar-sa": "Arabisch – Saudi-Arabien",
@@ -232,7 +244,7 @@
         "grantedDueToRoleChangeToPresenter": "Sie sind Referent. Sie können Inhalte teilen und die Besprechung unterstützen."
       }
     },
-    "surveyQuestion": "Wie war Ihr Anruf heute?",
+    "surveyTitle": "Helfen Sie uns, besser zu werden.",
     "starSurveyHelperText": "Wie war die Qualität des Anrufs?",
     "starSurveyOneStarText": "Die Qualität war schlecht.",
     "starSurveyTwoStarText": "Die Qualität war schlecht.",
@@ -241,11 +253,12 @@
     "starSurveyFiveStarText": "Die Qualität war ausgezeichnet.",
     "surveyConfirmButtonLabel": "Feedback senden",
     "starRatingAriaLabel": "{0} von {1} Sternen auswählen",
-    "surveyCancelButtonAriaLabel": "Abbrechen",
+    "surveySkipButtonLabel": "Überspringen",
     "tagsSurveyQuestion": "Was hätte besser sein können?",
     "tagsSurveyTextFieldDefaultText": "Sonstiges, bitte angeben",
     "tagsSurveyHelperText": "Überprüfen Sie alle aufgetretenen Probleme",
     "surveyTextboxDefaultText": "Sonstiges, bitte angeben",
+    "endOfSurveyText": "Vielen Dank für Ihr Feedback!",
     "surveyIssues": {
       "overallRating": {
         "callCannotJoin": "Ich konnte dem Anruf nicht beitreten",
@@ -291,6 +304,20 @@
       "audioRating": "Audio",
       "videoRating": "Video",
       "screenshareRating": "Hält Präsentation"
+    },
+    "spotlightPrompt": {
+      "startSpotlightHeading": "Spotlight für alle?",
+      "startSpotlightText": "Sie heben dieses Video für alle Teilnehmer der Besprechung hervor.",
+      "startSpotlightOnSelfText": "Sie setzen Ihr Video für alle Teilnehmer der Besprechung ins Spotlight.",
+      "startSpotlightConfirmButtonLabel": "Spotlight für alle",
+      "startSpotlightCancelButtonLabel": "Abbrechen",
+      "stopSpotlightHeading": "Spotlight beenden",
+      "stopSpotlightOnSelfHeading": "Spotlight verlassen?",
+      "stopSpotlightText": "Dieses Video wird nicht mehr für alle Teilnehmer der Besprechung hervorgehoben.",
+      "stopSpotlightOnSelfText": "Ihr Video wird nicht mehr für alle Teilnehmer der Besprechung hervor gehoben.",
+      "stopSpotlightConfirmButtonLabel": "Spotlight beenden",
+      "stopSpotlightOnSelfConfirmButtonLabel": "Spotlight beenden",
+      "stopSpotlightCancelButtonLabel": "Abbrechen"
     }
   },
   "chat": {
