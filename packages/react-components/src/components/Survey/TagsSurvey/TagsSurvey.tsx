@@ -93,21 +93,24 @@ export const _TagsSurvey = (props: _TagsSurveyProps): JSX.Element => {
 
   const [checkedTextFields, setCheckedTextFields] = useState<string[]>([]);
 
-  const tags: _SurveyTag[] = useMemo(() => {
-    const tags: _SurveyTag[] = [];
-    Object.keys(callIssuesToTag).forEach((issueCategory) => {
-      Object.keys(callIssuesToTag[issueCategory]).map((issue) => {
-        const issueCapitalized = issue?.charAt(0).toUpperCase() + issue?.slice(1);
+  const tags: _SurveyTag = useMemo(() => {
+    const tags: _SurveyTag = {};
+    Object.keys(callIssuesToTag).forEach((category) => {
+      const issueCategory = category as keyof SurveyIssues;
+      Object.keys(callIssuesToTag[issueCategory]).map((i) => {
+        const issue = i as keyof keyof SurveyIssues as string;
+        const issueCapitalized = (issue?.charAt(0).toUpperCase() + issue?.slice(1)) as _AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue;
 
+        const issueMessages = callIssuesToTag[issueCategory] as { [key: string]: string };
         if (tags[issueCategory]) {
           tags[issueCategory].push({
-            message: callIssuesToTag[issueCategory][issue],
+            message: issueMessages[issue],
             issue: issueCapitalized
           });
         } else {
           tags[issueCategory] = [
             {
-              message: callIssuesToTag[issueCategory][issue],
+              message: issueMessages[issue],
               issue: issueCapitalized
             }
           ];
@@ -118,10 +121,10 @@ export const _TagsSurvey = (props: _TagsSurveyProps): JSX.Element => {
   }, [callIssuesToTag]);
 
   const onChange = React.useCallback(
-    (issueCategory: string, checked: boolean, issue?: string): void => {
+    (issueCategory: keyof SurveyIssues, checked: boolean, issue?: string): void => {
       if (checked) {
         if (issue) {
-          setSelectedTags((prevState) => {
+          setSelectedTags((prevState: {[key: string]: {score: number, issues: string[]}}) => {
             if (prevState[issueCategory]) {
               prevState[issueCategory].issues.push(issue);
             } else {
@@ -138,7 +141,7 @@ export const _TagsSurvey = (props: _TagsSurveyProps): JSX.Element => {
         }
       } else {
         if (issue) {
-          setSelectedTags((prevState) => {
+          setSelectedTags((prevState: {[key: string]: {score: number, issues: string[]}}) => {
             if (prevState[issueCategory]) {
               prevState[issueCategory].issues = prevState[issueCategory].issues.filter(function (value) {
                 return value !== issue;
@@ -164,7 +167,7 @@ export const _TagsSurvey = (props: _TagsSurveyProps): JSX.Element => {
   const theme = useTheme();
 
   const onRenderLabel = useCallback(
-    (issueCategory) => {
+    (issueCategory: keyof SurveyIssues) => {
       return (
         <TextField
           key={issueCategory}
@@ -204,11 +207,12 @@ export const _TagsSurvey = (props: _TagsSurveyProps): JSX.Element => {
       </Stack>
 
       <Pivot>
-        {Object.keys(tags).map((key, i) => {
+        {Object.keys(tags).map((k, i) => {
+          const key = k as keyof SurveyIssuesHeadingStrings;
           return (
             <PivotItem
               key={`key-${i}`}
-              headerText={categoryHeadings[key]}
+              headerText={categoryHeadings[key]} // Add index signature to allow indexing with a string
               headerButtonProps={{
                 'data-order': i,
                 'data-title': key

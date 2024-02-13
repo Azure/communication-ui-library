@@ -559,7 +559,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
    * sets the announcement string for VideoGallery actions so that the screenreader will trigger
    */
   const toggleAnnouncerString = useCallback(
-    (announcement) => {
+    (announcement: string) => {
       setAnnouncementString(announcement);
       /**
        * Clears the announcer string after VideoGallery action allowing it to be re-announced.

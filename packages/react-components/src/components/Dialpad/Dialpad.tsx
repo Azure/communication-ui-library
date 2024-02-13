@@ -30,7 +30,7 @@ import {
 import { formatPhoneNumber } from '../utils/formatPhoneNumber';
 import useLongPress from '../utils/useLongPress';
 
-import { dtmfFrequencies, Tone } from './DTMFToneGenerator';
+import { dtmfFrequencies, dtmfFrequenciesKeys, Tone } from './DTMFToneGenerator';
 
 /**
  * Strings of {@link Dialpad} that can be overridden.
@@ -195,7 +195,7 @@ const DialpadButton = (props: {
   const [buttonPressed, setButtonPressed] = useState(false);
 
   const dtmfToneSound = useRef<Tone>(
-    new Tone(dtmfToneAudioContext, dtmfFrequencies[digit].f1, dtmfFrequencies[digit].f2)
+    new Tone(dtmfToneAudioContext, dtmfFrequencies[digit as dtmfFrequenciesKeys].f1, dtmfFrequencies[digit as dtmfFrequenciesKeys].f2)
   );
 
   const useLongPressProps = React.useMemo(

@@ -78,3 +78,11 @@ export const dtmfFrequencies = {
   '0': { f1: 941, f2: 1336 },
   '#': { f1: 941, f2: 1477 }
 };
+
+/**
+ * Key of the mapping of the different dtmf frequencies that are needed for the creation of sound that
+ * matches the dtmf tones.
+ *
+ * @internal
+ */
+export type dtmfFrequenciesKeys = keyof typeof dtmfFrequencies;

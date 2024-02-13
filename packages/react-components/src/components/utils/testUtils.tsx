@@ -52,7 +52,8 @@ export const renderWithLocalization = (
 export const createTestLocale = (testStrings: PartialDeep<ComponentStrings>): ComponentLocale => {
   const strings: ComponentStrings = COMPONENT_LOCALE_EN_US.strings;
   Object.keys(testStrings).forEach((key: string) => {
-    strings[key] = { ...strings[key], ...testStrings[key] };
+    const k = key as keyof ComponentStrings;
+    strings[k] = { ...strings[k] as any, ...testStrings[k] as ComponentStrings };
   });
   return { strings };
 };

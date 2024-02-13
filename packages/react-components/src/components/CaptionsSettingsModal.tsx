@@ -103,11 +103,11 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
     key:
       currentCaptionLanguage !== ''
         ? currentCaptionLanguage
-        : _spokenLanguageToCaptionLanguage[selectedSpokenLanguage.key],
+        : _spokenLanguageToCaptionLanguage[selectedSpokenLanguage.key as keyof SpokenLanguageStrings],
     text:
       currentCaptionLanguage !== ''
         ? currentCaptionLanguage
-        : _spokenLanguageToCaptionLanguage[selectedSpokenLanguage.key]
+        : _spokenLanguageToCaptionLanguage[selectedSpokenLanguage.key as keyof SpokenLanguageStrings]
   });
 
   useEffect(() => {
@@ -150,7 +150,7 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
     return supportedSpokenLanguages.map((languageCode) => {
       return {
         key: languageCode,
-        text: spokenLanguageStrings ? spokenLanguageStrings[languageCode] : languageCode
+        text: spokenLanguageStrings ? spokenLanguageStrings[languageCode as keyof SpokenLanguageStrings] : languageCode
       };
     });
   }, [supportedSpokenLanguages, spokenLanguageStrings]);
@@ -159,7 +159,7 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
     return supportedCaptionLanguages.map((languageCode) => {
       return {
         key: languageCode,
-        text: captionLanguageStrings ? captionLanguageStrings[languageCode] : languageCode
+        text: captionLanguageStrings ? captionLanguageStrings[languageCode as keyof CaptionLanguageStrings] : languageCode
       };
     });
   }, [supportedCaptionLanguages, captionLanguageStrings]);
@@ -204,7 +204,7 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
     const placeholderCaptionLanguage =
       currentCaptionLanguage !== ''
         ? currentCaptionLanguage
-        : _spokenLanguageToCaptionLanguage[placeholderSpokenLanguage];
+        : _spokenLanguageToCaptionLanguage[placeholderSpokenLanguage as keyof SpokenLanguageStrings];
     return (
       <Stack>
         <Dropdown
