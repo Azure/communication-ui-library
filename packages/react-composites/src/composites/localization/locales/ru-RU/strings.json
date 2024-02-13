@@ -60,6 +60,11 @@
     "removedFromCallMoreDetails": "Другой участник удалил вас из беседы.",
     "removedFromCallTitle": "Вы были удалены",
     "removeMenuLabel": "Удалить",
+    "startSpotlightParticipantListMenuLabel": "Закрепить видео для всех",
+    "addSpotlightParticipantListMenuLabel": "Добавить закрепление",
+    "stopSpotlightParticipantListMenuLabel": "Не закреплять",
+    "stopSpotlightOnSelfParticipantListMenuLabel": "Открепить",
+    "spotlightLimitReachedParticipantListMenuTitle": "Достигнуто предельное число закреплений",
     "returnToCallButtonAriaDescription": "Вернуться к звонку",
     "returnToCallButtonAriaLabel": "Назад",
     "roomNotFoundDetails": "Не удалось найти указанный идентификатор комнаты.",
@@ -120,6 +125,13 @@
     "callRejectedMoreDetails": "Пользователь, с которым вы пытаетесь связаться, недоступен. Повторите попытку позже.",
     "callTimeoutTitle": "Не удалось совершить звонок",
     "callTimeoutDetails": "Пользователь, с которым вы пытаетесь связаться, недоступен. Повторите попытку позже.",
+    "callTimeoutBotTitle": "Не удалось совершить звонок",
+    "callTimeoutBotDetails": "Служба, к которому вы пытаетесь подключиться, недоступна. Повторите попытку позже.",
+    "dtmfDialerButtonLabel": "Панель набора номера",
+    "dtmfDialerButtonTooltipOn": "Показать панель набора номера",
+    "dtmfDialerButtonTooltipOff": "Скрыть панель набора номера",
+    "dtmfDialerMoreButtonLabelOn": "Показать панель набора номера",
+    "dtmfDialerMoreButtonLabelOff": "Скрыть панель набора номера",
     "spokenLanguageStrings": {
       "ar-ae": "Арабский (ОАЭ)",
       "ar-sa": "Арабский (Саудовская Аравия)",
@@ -232,7 +244,7 @@
         "grantedDueToRoleChangeToPresenter": "Вы ведущий. Вы можете предоставлять доступ к содержимому и помогать вести собрание."
       }
     },
-    "surveyQuestion": "Как прошел ваш звонок?",
+    "surveyTitle": "Улучшение продукта",
     "starSurveyHelperText": "Как вы оцениваете качество звонка?",
     "starSurveyOneStarText": "Качество было очень плохое.",
     "starSurveyTwoStarText": "Качество было плохое.",
@@ -241,11 +253,12 @@
     "starSurveyFiveStarText": "Качество было превосходное.",
     "surveyConfirmButtonLabel": "Отправить отзыв",
     "starRatingAriaLabel": "Выберите {0} из {1} звезд",
-    "surveyCancelButtonAriaLabel": "Отмена",
+    "surveySkipButtonLabel": "Пропустить",
     "tagsSurveyQuestion": "Что можно было улучшить?",
     "tagsSurveyTextFieldDefaultText": "Другое, укажите",
     "tagsSurveyHelperText": "Отметьте все проблемы, с которыми вы столкнулись",
     "surveyTextboxDefaultText": "Другое, укажите",
+    "endOfSurveyText": "Спасибо за отзыв!",
     "surveyIssues": {
       "overallRating": {
         "callCannotJoin": "Не удалось присоединиться к звонку",
@@ -291,6 +304,20 @@
       "audioRating": "Звук",
       "videoRating": "Видео",
       "screenshareRating": "Выступление"
+    },
+    "spotlightPrompt": {
+      "startSpotlightHeading": "Пометить как важное для всех?",
+      "startSpotlightText": "Вы выделите это видео для всех участников собрания.",
+      "startSpotlightOnSelfText": "Вы выделите свое видео для всех участников собрания.",
+      "startSpotlightConfirmButtonLabel": "Отметить видео как важное для всех",
+      "startSpotlightCancelButtonLabel": "Отмена",
+      "stopSpotlightHeading": "Исключить из важного?",
+      "stopSpotlightOnSelfHeading": "Выйти из работы с важным?",
+      "stopSpotlightText": "Ваше видео больше не будет помечено как важное для всех участников собрания.",
+      "stopSpotlightOnSelfText": "Ваше видео больше не будет выделено для всех участников собрания.",
+      "stopSpotlightConfirmButtonLabel": "Больше не помечать важное",
+      "stopSpotlightOnSelfConfirmButtonLabel": "Выйти из важного",
+      "stopSpotlightCancelButtonLabel": "Отмена"
     }
   },
   "chat": {

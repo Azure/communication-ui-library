@@ -200,7 +200,8 @@
     "failedToJoinCallGeneric": "Failed to join call.",
     "failedToJoinCallInvalidMeetingLink": "Unable to join Meeting. Invalid Link.",
     "cameraFrozenForRemoteParticipants": "Users in the call are having issues seeing your video. Please check your devices and network.",
-    "unableToStartVideoEffect": "Unable to apply video effect."
+    "unableToStartVideoEffect": "Unable to apply video effect.",
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "Cannot start spotlight on participant(s) because the maximum number of participants are already spotlighted."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "You are sharing your screen",
@@ -221,6 +222,7 @@
     "unpinnedParticipantAnnouncementAriaLabel": "Unpinned {participantName}",
     "startSpotlightVideoTileMenuLabel": "Spotlight for everyone",
     "addSpotlightVideoTileMenuLabel": "Add spotlight",
+    "spotlightLimitReachedMenuTitle": "Spotlight limit reached",
     "stopSpotlightVideoTileMenuLabel": "Stop spotlighting",
     "stopSpotlightOnSelfVideoTileMenuLabel": "Exit spotlight"
   },

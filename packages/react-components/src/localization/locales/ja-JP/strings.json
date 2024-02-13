@@ -200,7 +200,8 @@
     "failedToJoinCallGeneric": "通話に参加できませんでした",
     "failedToJoinCallInvalidMeetingLink": "会議に参加できません。リンクが無効です。",
     "cameraFrozenForRemoteParticipants": "通話のユーザーにビデオの表示で問題が発生しています。デバイスとネットワークを確認してください。",
-    "unableToStartVideoEffect": "ビデオ効果を適用できません。"
+    "unableToStartVideoEffect": "ビデオ効果を適用できません。",
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "Cannot start spotlight on participant(s) because the maximum number of participants are already spotlighted."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "画面を共有しています",
@@ -218,7 +219,12 @@
     "pinParticipantMenuItemAriaLabel": "{participantName} さんをピン留めする",
     "unpinParticipantMenuItemAriaLabel": "{participantName} さんのピンを外す",
     "pinnedParticipantAnnouncementAriaLabel": "{participantName} さんをピン留めしました",
-    "unpinnedParticipantAnnouncementAriaLabel": "{participantName} さんのピンを外しました"
+    "unpinnedParticipantAnnouncementAriaLabel": "{participantName} さんのピンを外しました",
+    "startSpotlightVideoTileMenuLabel": "全員にスポットライトを設定",
+    "addSpotlightVideoTileMenuLabel": "スポットライトを追加",
+    "spotlightLimitReachedMenuTitle": "Spotlight limit reached",
+    "stopSpotlightVideoTileMenuLabel": "スポットライトの設定を解除",
+    "stopSpotlightOnSelfVideoTileMenuLabel": "スポットライトを終了"
   },
   "dialpad": {
     "placeholderText": "電話番号を入力してください",
