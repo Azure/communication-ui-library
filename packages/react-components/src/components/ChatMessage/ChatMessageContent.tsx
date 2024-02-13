@@ -191,11 +191,11 @@ const messageContentAriaText = (props: ChatMessageContentProps): string | undefi
     });
 
     parsedContent.childNodes.forEach((child) => {
-      if (child.nodeName !== 'IMG') {
+      if (child.nodeName.toLowerCase() !== 'img') {
         return;
       }
       const imageTextNode = document.createElement('div');
-      imageTextNode.innerHTML = 'image';
+      imageTextNode.innerHTML = 'image ';
       parsedContent.replaceChild(imageTextNode, child);
     });
 
