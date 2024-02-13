@@ -149,14 +149,11 @@ const generateCallWithChatArgs = async (
   teamsLocator =
     teamsLocator ?? getTeamsLinkFromUrl() ?? /* @conditional-compile-remove(meeting-id) */ getMeetingIdFromUrl();
   if (teamsLocator) {
-    if ('meetingLink' in teamsLocator) {
-      locator = teamsLocator;
-    }
-    /* @conditional-compile-remove(meeting-id) */
-    if ('meetingId' in teamsLocator) {
-      const chatThreadId = threadId ?? getThreadIdFromUrl();
-      locator = { callLocator: teamsLocator, chatThreadId: chatThreadId ? chatThreadId : '' };
-    }
+    locator =
+      getTeamsLocator(teamsLocator, threadId) ??
+      (() => {
+        throw new Error('Invalid teams meeting locator, must be a meeting link or meeting id');
+      })();
     if ('meetingLink' in teamsLocator) {
       ensureJoinableTeamsLinkPushedToUrl(teamsLocator);
     }
@@ -199,4 +196,19 @@ const callLocatorGen = (
   const callLocator = getGroupIdFromUrl() || createGroupId();
   ensureJoinableCallLocatorPushedToUrl(callLocator);
   return callLocator;
+};
+
+const getTeamsLocator = (
+  teamsLocator: TeamsMeetingLinkLocator | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator,
+  threadId?: string
+): CallAndChatLocator | TeamsMeetingLinkLocator | undefined => {
+  if ('meetingLink' in teamsLocator) {
+    return teamsLocator;
+  }
+  /* @conditional-compile-remove(meeting-id) */
+  if ('meetingId' in teamsLocator) {
+    const chatThreadId = threadId ?? getThreadIdFromUrl();
+    return { callLocator: teamsLocator, chatThreadId: chatThreadId ? chatThreadId : '' };
+  }
+  return undefined;
 };
