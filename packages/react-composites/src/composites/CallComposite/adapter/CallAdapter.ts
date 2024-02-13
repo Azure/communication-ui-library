@@ -405,7 +405,7 @@ export type IsSpokenLanguageChangedListener = (event: { activeSpokenLanguage: st
 /**
  * Callback for {@link CallAdapterSubscribers} 'transferRequested' event.
  *
- * @beta
+ * @public
  */
 export type TransferAcceptedListener = (event: TransferEventArgs) => void;
 
