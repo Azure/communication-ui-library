@@ -60,6 +60,11 @@
     "removedFromCallMoreDetails": "另一名參與者已將您自通話中移除。",
     "removedFromCallTitle": "您已遭移除",
     "removeMenuLabel": "移除",
+    "startSpotlightParticipantListMenuLabel": "設為每個人的焦點",
+    "addSpotlightParticipantListMenuLabel": "新增焦點",
+    "stopSpotlightParticipantListMenuLabel": "停止聚焦",
+    "stopSpotlightOnSelfParticipantListMenuLabel": "結束聚焦",
+    "spotlightLimitReachedParticipantListMenuTitle": "已達焦點限制",
     "returnToCallButtonAriaDescription": "返回通話",
     "returnToCallButtonAriaLabel": "返回",
     "roomNotFoundDetails": "找不到提供的會議室識別碼。",
@@ -120,6 +125,13 @@
     "callRejectedMoreDetails": "您嘗試連絡的人員無法使用。請稍後再試。",
     "callTimeoutTitle": "無法完成通話",
     "callTimeoutDetails": "您嘗試連絡的人員無法使用。請稍後再試。",
+    "callTimeoutBotTitle": "無法完成通話",
+    "callTimeoutBotDetails": "您嘗試連線的服務無法使用。請稍後再試。",
+    "dtmfDialerButtonLabel": "撥號鍵台",
+    "dtmfDialerButtonTooltipOn": "顯示撥號盤",
+    "dtmfDialerButtonTooltipOff": "隱藏撥號盤",
+    "dtmfDialerMoreButtonLabelOn": "顯示撥號盤",
+    "dtmfDialerMoreButtonLabelOff": "隱藏撥號盤",
     "spokenLanguageStrings": {
       "ar-ae": "阿拉伯文 - 阿拉伯聯合大公國",
       "ar-sa": "阿拉伯文 - 沙烏地阿拉伯",
@@ -232,7 +244,7 @@
         "grantedDueToRoleChangeToPresenter": "您就是簡報者。您可以分享內容並協助會議。"
       }
     },
-    "surveyQuestion": "今天通话進行的如何?",
+    "surveyTitle": "協助我們改善",
     "starSurveyHelperText": "通話的品質如何?",
     "starSurveyOneStarText": "品質劣等。",
     "starSurveyTwoStarText": "品質差。",
@@ -241,11 +253,12 @@
     "starSurveyFiveStarText": "品質極佳。",
     "surveyConfirmButtonLabel": "傳送意見反應",
     "starRatingAriaLabel": "選取 {0} / {1} 顆星",
-    "surveyCancelButtonAriaLabel": "取消",
+    "surveySkipButtonLabel": "跳過",
     "tagsSurveyQuestion": "什麼部分本來能做得更好?",
     "tagsSurveyTextFieldDefaultText": "其他，請註明",
     "tagsSurveyHelperText": "檢查您遇到的任何問題",
     "surveyTextboxDefaultText": "其他，請註明",
+    "endOfSurveyText": "感謝您提供意見反應!",
     "surveyIssues": {
       "overallRating": {
         "callCannotJoin": "我無法加入通話",
@@ -291,6 +304,20 @@
       "audioRating": "音訊",
       "videoRating": "影片",
       "screenshareRating": "正在進行簡報"
+    },
+    "spotlightPrompt": {
+      "startSpotlightHeading": "要設為每個人的精選嗎?",
+      "startSpotlightText": "您將向會議中的每個人醒目提示此影片。",
+      "startSpotlightOnSelfText": "您將向會議中的每個人醒目提示您的影片。",
+      "startSpotlightConfirmButtonLabel": "設為每個人的精選",
+      "startSpotlightCancelButtonLabel": "取消",
+      "stopSpotlightHeading": "停止選為精選?",
+      "stopSpotlightOnSelfHeading": "結束精選?",
+      "stopSpotlightText": "不會再向會議中的每個人醒目提示該影片。",
+      "stopSpotlightOnSelfText": "不會再向會議中的每個人醒目提示您的影片。",
+      "stopSpotlightConfirmButtonLabel": "停止選為精選",
+      "stopSpotlightOnSelfConfirmButtonLabel": "結束精選",
+      "stopSpotlightCancelButtonLabel": "取消"
     }
   },
   "chat": {
