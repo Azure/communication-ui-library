@@ -60,6 +60,11 @@
     "removedFromCallMoreDetails": "En annen deltaker fjernet deg fra samtalen.",
     "removedFromCallTitle": "Du ble fjernet",
     "removeMenuLabel": "Fjern",
+    "startSpotlightParticipantListMenuLabel": "Sett i rampelyset for alle",
+    "addSpotlightParticipantListMenuLabel": "Legg til rampelys",
+    "stopSpotlightParticipantListMenuLabel": "Fjern fra rampelyset",
+    "stopSpotlightOnSelfParticipantListMenuLabel": "Rampelys av",
+    "spotlightLimitReachedParticipantListMenuTitle": "Rampelys-grensen er nådd",
     "returnToCallButtonAriaDescription": "Gå tilbake til samtale",
     "returnToCallButtonAriaLabel": "Tilbake",
     "roomNotFoundDetails": "Finner ikke den angitte rom-IDen.",
@@ -120,6 +125,13 @@
     "callRejectedMoreDetails": "Personen du prøver å nå, er ikke tilgjengelig. Prøv på nytt senere.",
     "callTimeoutTitle": "Kan ikke fullføre samtalen",
     "callTimeoutDetails": "Personen du prøver å nå, er ikke tilgjengelig. Prøv på nytt senere.",
+    "callTimeoutBotTitle": "Kan ikke fullføre samtalen",
+    "callTimeoutBotDetails": "Tjenesten du prøver å nå, er ikke tilgjengelig. Prøv på nytt senere.",
+    "dtmfDialerButtonLabel": "Numerisk tastatur",
+    "dtmfDialerButtonTooltipOn": "Vis numerisk tastatur",
+    "dtmfDialerButtonTooltipOff": "Skjul numerisk tastatur",
+    "dtmfDialerMoreButtonLabelOn": "Vis numerisk tastatur",
+    "dtmfDialerMoreButtonLabelOff": "Skjul numerisk tastatur",
     "spokenLanguageStrings": {
       "ar-ae": "Arabisk – De forente arabiske emirater",
       "ar-sa": "Arabisk – Saudi-Arabia",
@@ -232,7 +244,7 @@
         "grantedDueToRoleChangeToPresenter": "Du er presentatør. Du kan dele innhold og tilrettelegge møtet."
       }
     },
-    "surveyQuestion": "Hvordan var samtalen i dag?",
+    "surveyTitle": "Hjelp oss med å bli bedre",
     "starSurveyHelperText": "Hvordan var kvaliteten på samtalen?",
     "starSurveyOneStarText": "Kvaliteten var dårlig.",
     "starSurveyTwoStarText": "Kvaliteten var dårlig.",
@@ -241,11 +253,12 @@
     "starSurveyFiveStarText": "Kvaliteten var meget bra.",
     "surveyConfirmButtonLabel": "Send tilbakemelding",
     "starRatingAriaLabel": "Velg {0} av {1} stjerner",
-    "surveyCancelButtonAriaLabel": "Avbryt",
+    "surveySkipButtonLabel": "Hopp over",
     "tagsSurveyQuestion": "Hva kunne ha vært bedre?",
     "tagsSurveyTextFieldDefaultText": "Annet, spesifiser",
     "tagsSurveyHelperText": "Merk eventuelle problemer du har opplevd.",
     "surveyTextboxDefaultText": "Annet, spesifiser",
+    "endOfSurveyText": "Takk for tilbakemeldingen!",
     "surveyIssues": {
       "overallRating": {
         "callCannotJoin": "Jeg kunne ikke bli i samtalen",
@@ -291,6 +304,20 @@
       "audioRating": "Lyd",
       "videoRating": "Video",
       "screenshareRating": "Presentering"
+    },
+    "spotlightPrompt": {
+      "startSpotlightHeading": "Sett i rampelyset for alle?",
+      "startSpotlightText": "Du merker denne videoen for alle i møtet.",
+      "startSpotlightOnSelfText": "Du merker videoen for alle i møtet.",
+      "startSpotlightConfirmButtonLabel": "Sett i rampelyset for alle",
+      "startSpotlightCancelButtonLabel": "Avbryt",
+      "stopSpotlightHeading": "Stoppe rampelyset?",
+      "stopSpotlightOnSelfHeading": "Fjern rampelyset?",
+      "stopSpotlightText": "Denne videoen vil ikke lenger være uthevet for alle i møtet.",
+      "stopSpotlightOnSelfText": "Videoen vil ikke lenger være uthevet for alle i møtet.",
+      "stopSpotlightConfirmButtonLabel": "Fjern fra rampelyset",
+      "stopSpotlightOnSelfConfirmButtonLabel": "Rampelys av",
+      "stopSpotlightCancelButtonLabel": "Avbryt"
     }
   },
   "chat": {

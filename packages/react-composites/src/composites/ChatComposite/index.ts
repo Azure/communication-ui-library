@@ -29,6 +29,9 @@ export type {
   TopicChangedListener
 } from './adapter/ChatAdapter';
 
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+export type { ResourceDetails } from './adapter/ChatAdapter';
+
 export * from './Strings';
 
 /* @conditional-compile-remove(file-sharing) */

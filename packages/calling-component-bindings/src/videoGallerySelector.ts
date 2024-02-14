@@ -39,7 +39,7 @@ import { getLocalParticipantReactionState } from './baseSelectors';
 import { memoizedConvertToVideoTileReaction } from './utils/participantListSelectorUtils';
 import { getRemoteParticipantsExcludingConsumers } from './getRemoteParticipantsExcludingConsumers';
 /* @conditional-compile-remove(spotlight) */
-import { getSpotlightedParticipants } from './baseSelectors';
+import { getSpotlightedParticipants, getMaxParticipantsToSpotlight } from './baseSelectors';
 
 /**
  * Selector type for {@link VideoGallery} component.
@@ -58,6 +58,8 @@ export type VideoGallerySelector = (
   optimalVideoCount?: number;
   /* @conditional-compile-remove(spotlight) */
   spotlightedParticipants?: string[];
+  /* @conditional-compile-remove(spotlight) */
+  maxParticipantsToSpotlight?: number;
 };
 
 /**
@@ -85,7 +87,9 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     /* @conditional-compile-remove(reaction) */
     getLocalParticipantReactionState,
     /* @conditional-compile-remove(spotlight) */
-    getSpotlightedParticipants
+    getSpotlightedParticipants,
+    /* @conditional-compile-remove(spotlight) */
+    getMaxParticipantsToSpotlight
   ],
   (
     screenShareRemoteParticipantId,
@@ -107,7 +111,9 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     /* @conditional-compile-remove(reaction) */
     localParticipantReaction,
     /* @conditional-compile-remove(spotlight) */
-    spotlightedParticipants
+    spotlightedParticipants,
+    /* @conditional-compile-remove(spotlight) */
+    maxParticipantsToSpotlight
   ) => {
     const screenShareRemoteParticipant =
       screenShareRemoteParticipantId && remoteParticipants
@@ -134,7 +140,9 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
             screenShareRemoteParticipant.state,
             screenShareRemoteParticipant.displayName,
             /* @conditional-compile-remove(raise-hand) */
-            screenShareRemoteParticipant.raisedHand
+            screenShareRemoteParticipant.raisedHand,
+            /* @conditional-compile-remove(spotlight) */
+            screenShareRemoteParticipant.spotlight
           )
         : undefined,
       localParticipant: memoizeLocalParticipant(
@@ -161,7 +169,9 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
       /* @conditional-compile-remove(optimal-video-count) */
       maxRemoteVideoStreams: optimalVideoCount,
       /* @conditional-compile-remove(spotlight) */
-      spotlightedParticipants: spotlightedParticipantIds
+      spotlightedParticipants: spotlightedParticipantIds,
+      /* @conditional-compile-remove(spotlight) */
+      maxParticipantsToSpotlight: maxParticipantsToSpotlight
     };
   }
 );
