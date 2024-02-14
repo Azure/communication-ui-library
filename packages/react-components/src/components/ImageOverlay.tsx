@@ -21,6 +21,7 @@ import {
   overlayStyles,
   scrollableContentStyle,
   smallDownloadButtonContainerStyle,
+  themeProviderRootStyle,
   titleBarContainerStyle,
   titleStyle
 } from './styles/ImageOverlay.style';
@@ -176,7 +177,7 @@ export const ImageOverlay = (props: ImageOverlayProps): JSX.Element => {
       styles={{ main: focusTrapZoneStyle, scrollableContent: scrollableContentStyle }}
       isDarkOverlay={true}
     >
-      <FluentThemeProvider fluentTheme={imageOverlayTheme} rootStyle={{ background: 'transparent' }}>
+      <FluentThemeProvider fluentTheme={imageOverlayTheme} rootStyle={themeProviderRootStyle}>
         {renderHeaderBar()}
         {renderBodyWithLightDismiss()}
       </FluentThemeProvider>

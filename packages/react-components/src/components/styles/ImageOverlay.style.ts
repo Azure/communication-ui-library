@@ -57,6 +57,15 @@ export const scrollableContentStyle: IStyle = {
 /**
  * @private
  */
+export const themeProviderRootStyle: React.CSSProperties = {
+  background: 'transparent',
+  display: 'flex',
+  flexDirection: 'column'
+};
+
+/**
+ * @private
+ */
 export const headerStyle: IStyle = {
   fontSize: 'inherit',
   margin: '0',
