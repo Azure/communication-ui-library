@@ -8,12 +8,7 @@ import { Features } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(call-transfer) */
-import {
-  AcceptTransferOptions,
-  TransferCallFeature,
-  TransferRequestedEvent,
-  TransferRequestedEventArgs
-} from '@azure/communication-calling';
+import { TransferCallFeature, TransferAcceptedEvent, TransferEventArgs } from '@azure/communication-calling';
 /* @conditional-compile-remove(spotlight) */
 import { SpotlightCallFeature } from '@azure/communication-calling';
 /**
@@ -220,24 +215,17 @@ class ProxyTransferCallFeature implements ProxyHandler<TransferCallFeature> {
     switch (prop) {
       case 'on':
         return (...args: Parameters<TransferCallFeature['on']>): void => {
-          const isTransferRequested = args[0] === 'transferRequested';
-          if (isTransferRequested) {
-            const listener = args[1] as TransferRequestedEvent;
-            const newListener = (args: TransferRequestedEventArgs): void => {
-              const newArgs = {
-                ...args,
-                accept: (acceptOptions?: AcceptTransferOptions) => {
-                  const acceptedTransferCall = args.accept(acceptOptions);
-                  this._context.setAcceptedTransfer(this._call.id, {
-                    callId: acceptedTransferCall.id,
-                    timestamp: new Date()
-                  });
-                  return acceptedTransferCall;
-                }
-              };
-              listener(newArgs);
+          const isTransferAccepted = args[0] === 'transferAccepted';
+          if (isTransferAccepted) {
+            const listener = args[1] as TransferAcceptedEvent;
+            const newListener = (args: TransferEventArgs): void => {
+              this._context.setAcceptedTransfer(this._call.id, {
+                callId: args.targetCall.id,
+                timestamp: new Date()
+              });
+              listener(args);
             };
-            return target.on('transferRequested', newListener);
+            return target.on('transferAccepted', newListener);
           }
         };
       default:
