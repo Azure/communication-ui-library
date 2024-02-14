@@ -39,4 +39,11 @@ const stopServer = (): Promise<void> =>
     server.close(() => {
       resolve();
     });
+
+    // closeAllConnections() is only available from Node v18.02
+    if (server.closeAllConnections) {
+      server.closeAllConnections();
+    } else {
+      setTimeout(() => resolve(), 5000);
+    }
   });
