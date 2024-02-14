@@ -148,7 +148,7 @@ export type AzureCommunicationCallWithChatAdapterArgs = {
     userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
-    locator: CallAndChatLocator | TeamsMeetingLinkLocator;
+    locator: CommunicationLocator;
     callAdapterOptions?: AzureCommunicationCallAdapterOptions;
 };
 
@@ -1562,6 +1562,9 @@ export interface CommonCallingHandlers {
 export type CommonProperties<A, B> = {
     [P in keyof A & keyof B]: A[P] extends B[P] ? P : never;
 }[keyof A & keyof B];
+
+// @public
+export type CommunicationLocator = CallAndChatLocator | TeamsMeetingLinkLocator;
 
 // @public
 export type CommunicationParticipant = {
