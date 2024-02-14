@@ -159,7 +159,9 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
     return supportedCaptionLanguages.map((languageCode) => {
       return {
         key: languageCode,
-        text: captionLanguageStrings ? captionLanguageStrings[languageCode as keyof CaptionLanguageStrings] : languageCode
+        text: captionLanguageStrings
+          ? captionLanguageStrings[languageCode as keyof CaptionLanguageStrings]
+          : languageCode
       };
     });
   }, [supportedCaptionLanguages, captionLanguageStrings]);

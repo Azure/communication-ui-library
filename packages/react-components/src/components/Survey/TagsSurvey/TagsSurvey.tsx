@@ -98,8 +98,12 @@ export const _TagsSurvey = (props: _TagsSurveyProps): JSX.Element => {
     Object.keys(callIssuesToTag).forEach((category) => {
       const issueCategory = category as keyof SurveyIssues;
       Object.keys(callIssuesToTag[issueCategory]).map((i) => {
-        const issue = i as keyof keyof SurveyIssues as string;
-        const issueCapitalized = (issue?.charAt(0).toUpperCase() + issue?.slice(1)) as _AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue;
+        const issue = i as keyof (keyof SurveyIssues) as string;
+        const issueCapitalized = (issue?.charAt(0).toUpperCase() + issue?.slice(1)) as
+          | _AudioIssue
+          | _OverallIssue
+          | _ScreenshareIssue
+          | _VideoIssue;
 
         const issueMessages = callIssuesToTag[issueCategory] as { [key: string]: string };
         if (tags[issueCategory]) {
@@ -124,7 +128,7 @@ export const _TagsSurvey = (props: _TagsSurveyProps): JSX.Element => {
     (issueCategory: keyof SurveyIssues, checked: boolean, issue?: string): void => {
       if (checked) {
         if (issue) {
-          setSelectedTags((prevState: {[key: string]: {score: number, issues: string[]}}) => {
+          setSelectedTags((prevState: { [key: string]: { score: number; issues: string[] } }) => {
             if (prevState[issueCategory]) {
               prevState[issueCategory].issues.push(issue);
             } else {
@@ -141,7 +145,7 @@ export const _TagsSurvey = (props: _TagsSurveyProps): JSX.Element => {
         }
       } else {
         if (issue) {
-          setSelectedTags((prevState: {[key: string]: {score: number, issues: string[]}}) => {
+          setSelectedTags((prevState: { [key: string]: { score: number; issues: string[] } }) => {
             if (prevState[issueCategory]) {
               prevState[issueCategory].issues = prevState[issueCategory].issues.filter(function (value) {
                 return value !== issue;

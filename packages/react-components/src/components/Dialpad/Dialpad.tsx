@@ -195,7 +195,11 @@ const DialpadButton = (props: {
   const [buttonPressed, setButtonPressed] = useState(false);
 
   const dtmfToneSound = useRef<Tone>(
-    new Tone(dtmfToneAudioContext, dtmfFrequencies[digit as dtmfFrequenciesKeys].f1, dtmfFrequencies[digit as dtmfFrequenciesKeys].f2)
+    new Tone(
+      dtmfToneAudioContext,
+      dtmfFrequencies[digit as dtmfFrequenciesKeys].f1,
+      dtmfFrequencies[digit as dtmfFrequenciesKeys].f2
+    )
   );
 
   const useLongPressProps = React.useMemo(

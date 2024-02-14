@@ -190,7 +190,9 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
   return { gridParticipants, overflowGalleryParticipants: overflowGalleryParticipants };
 };
 
-interface sortedRemoteParticipants {[key: string]: VideoGalleryRemoteParticipant}
+interface sortedRemoteParticipants {
+  [key: string]: VideoGalleryRemoteParticipant;
+}
 
 const _useOrganizedParticipantsWithFocusedParticipants = (
   props: OrganizedParticipantsArgs
