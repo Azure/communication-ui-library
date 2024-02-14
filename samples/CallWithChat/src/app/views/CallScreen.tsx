@@ -29,7 +29,10 @@ export interface CallScreenProps {
   userId: CommunicationUserIdentifier;
   displayName: string;
   endpoint: string;
-  locator: CallAndChatLocator | TeamsMeetingLinkLocator;
+  locator:
+    | CallAndChatLocator
+    | TeamsMeetingLinkLocator
+    | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
   /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId?: string;
 }
 

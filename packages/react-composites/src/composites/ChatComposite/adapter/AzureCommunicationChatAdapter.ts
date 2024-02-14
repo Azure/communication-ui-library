@@ -587,7 +587,13 @@ export const createAzureCommunicationChatAdapter = async ({
   credential,
   threadId
 }: AzureCommunicationChatAdapterArgs): Promise<ChatAdapter> => {
-  return _createAzureCommunicationChatAdapterInner(endpointUrl, userId, displayName, credential, threadId);
+  return _createAzureCommunicationChatAdapterInner(
+    endpointUrl,
+    userId,
+    displayName,
+    credential,
+    new Promise((r) => r(threadId))
+  );
 };
 
 /**
@@ -600,7 +606,7 @@ export const _createAzureCommunicationChatAdapterInner = async (
   userId: CommunicationUserIdentifier,
   displayName: string,
   credential: CommunicationTokenCredential,
-  threadId: string,
+  threadId: Promise<string>,
   telemetryImplementationHint: _TelemetryImplementationHint = 'Chat'
 ): Promise<ChatAdapter> => {
   if (!_isValidIdentifier(userId)) {
@@ -617,18 +623,20 @@ export const _createAzureCommunicationChatAdapterInner = async (
     undefined,
     telemetryImplementationHint
   );
-  const chatThreadClient = await chatClient.getChatThreadClient(threadId);
-  await chatClient.startRealtimeNotifications();
+  return threadId.then(async (threadId) => {
+    const chatThreadClient = await chatClient.getChatThreadClient(threadId);
+    await chatClient.startRealtimeNotifications();
 
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  const options = { credential: credential };
-  const adapter = await createAzureCommunicationChatAdapterFromClient(
-    chatClient,
-    chatThreadClient,
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ options
-  );
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    const options = { credential: credential };
+    const adapter = await createAzureCommunicationChatAdapterFromClient(
+      chatClient,
+      chatThreadClient,
+      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ options
+    );
 
-  return adapter;
+    return adapter;
+  });
 };
 
 /**

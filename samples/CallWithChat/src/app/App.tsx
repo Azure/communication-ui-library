@@ -25,7 +25,7 @@ import {
   isOnIphoneAndNotSafari
 } from './utils/AppUtils';
 /* @conditional-compile-remove(meeting-id) */
-import { ensureJoinableMeetingIdPushedToUrl, getMeetingIdFromUrl, getThreadIdFromUrl } from './utils/AppUtils';
+import { ensureJoinableMeetingIdPushedToUrl, getMeetingIdFromUrl } from './utils/AppUtils';
 import { CallScreen } from './views/CallScreen';
 import { HomeScreen } from './views/HomeScreen';
 import { UnsupportedBrowserPage } from './views/UnsupportedBrowserPage';
@@ -50,7 +50,10 @@ interface CallWithChatArgs {
   credentials: Credentials;
   endpointUrl: string;
   displayName: string;
-  locator: CallAndChatLocator | TeamsMeetingLinkLocator;
+  locator:
+    | CallAndChatLocator
+    | TeamsMeetingLinkLocator
+    | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
   /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId?: string;
 }
 type AppPages = 'home' | 'call' | 'error';
@@ -143,14 +146,17 @@ const generateCallWithChatArgs = async (
   const credentials = { userId: user, token: token };
   const endpointUrl = await getEndpointUrl();
 
-  let locator: CallAndChatLocator | TeamsMeetingLinkLocator;
+  let locator:
+    | CallAndChatLocator
+    | TeamsMeetingLinkLocator
+    | /** /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
 
   // Check if we should join a teams meeting, or an ACS CallWithChat
   teamsLocator =
     teamsLocator ?? getTeamsLinkFromUrl() ?? /* @conditional-compile-remove(meeting-id) */ getMeetingIdFromUrl();
   if (teamsLocator) {
     locator =
-      getTeamsLocator(teamsLocator, threadId) ??
+      getTeamsLocator(teamsLocator) ??
       (() => {
         throw new Error('Invalid teams meeting locator, must be a meeting link or meeting id');
       })();
@@ -160,9 +166,6 @@ const generateCallWithChatArgs = async (
     /* @conditional-compile-remove(meeting-id) */
     if ('meetingId' in teamsLocator) {
       ensureJoinableMeetingIdPushedToUrl(teamsLocator);
-      if (threadId) {
-        ensureJoinableChatThreadPushedToUrl(threadId);
-      }
     }
   } else {
     const callLocator = callLocatorGen(outboundParticipants);
@@ -199,16 +202,18 @@ const callLocatorGen = (
 };
 
 const getTeamsLocator = (
-  teamsLocator: TeamsMeetingLinkLocator | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator,
-  threadId?: string
-): CallAndChatLocator | TeamsMeetingLinkLocator | undefined => {
+  teamsLocator: TeamsMeetingLinkLocator | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator
+):
+  | CallAndChatLocator
+  | TeamsMeetingLinkLocator
+  | /** @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator
+  | undefined => {
   if ('meetingLink' in teamsLocator) {
     return teamsLocator;
   }
   /* @conditional-compile-remove(meeting-id) */
   if ('meetingId' in teamsLocator) {
-    const chatThreadId = threadId ?? getThreadIdFromUrl();
-    return { callLocator: teamsLocator, chatThreadId: chatThreadId ? chatThreadId : '' };
+    return teamsLocator;
   }
   return undefined;
 };

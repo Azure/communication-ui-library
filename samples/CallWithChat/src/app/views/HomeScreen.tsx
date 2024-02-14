@@ -78,9 +78,6 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
     TeamsMeetingLinkLocator | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator
   >();
 
-  /* @conditional-compile-remove(meeting-id) */
-  const [threadId, setThreadId] = useState<string>();
-
   /* @conditional-compile-remove(PSTN-calls) */
   const [alternateCallerId, setAlternateCallerId] = useState<string>();
   /* @conditional-compile-remove(one-to-n-calling)  */
@@ -189,17 +186,6 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
               )
             }
             {
-              /* @conditional-compile-remove(meeting-id) */ teamsCallChosen && (
-                <TextField
-                  className={teamsItemStyle}
-                  iconProps={{ iconName: 'ChatThreadId' }}
-                  label={'Chat Thread Id'}
-                  placeholder={'Enter a chat thread id'}
-                  onChange={(_, newValue) => newValue && setThreadId(newValue)}
-                />
-              )
-            }
-            {
               /* @conditional-compile-remove(one-to-n-calling) */ acsCallChosen && (
                 <Stack>
                   <TextField
@@ -288,7 +274,6 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 startCallHandler({
                   displayName,
                   meetingLocator,
-                  /* @conditional-compile-remove(meeting-id) */ threadId,
                   /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
                   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling)  */
                   outboundParticipants: acsParticipantsToCall ? acsParticipantsToCall : dialpadParticipantToCall

@@ -9,7 +9,7 @@ import { CallAdapter, CallAdapterState, CallCompositePage } from '../../CallComp
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
-import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
+import { ChatAdapterState } from '../../ChatComposite';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadsUiState } from '../../ChatComposite';
 import { AdapterErrors } from '../../common/adapters';
@@ -116,15 +116,15 @@ export interface CallWithChatAdapterState extends CallWithChatAdapterUiState, Ca
  * @private
  */
 export function callWithChatAdapterStateFromBackingStates(
-  callAdapter: CallAdapter,
-  chatAdapter: ChatAdapter
+  callAdapter: CallAdapter
+  //  chatAdapter: ChatAdapter
 ): CallWithChatAdapterState {
   const callAdapterState = callAdapter.getState();
-  const chatAdapterState = chatAdapter.getState();
+  //  const chatAdapterState = chatAdapter.getState();
 
   return {
     call: callAdapterState.call,
-    chat: chatAdapterState.thread,
+    chat: undefined, // chatAdapterState.thread,
     userId: callAdapterState.userId,
     page: callAdapterState.page,
     displayName: callAdapterState.displayName,
@@ -132,9 +132,9 @@ export function callWithChatAdapterStateFromBackingStates(
     isLocalPreviewMicrophoneEnabled: callAdapterState.isLocalPreviewMicrophoneEnabled,
     isTeamsCall: callAdapterState.isTeamsCall,
     latestCallErrors: callAdapterState.latestErrors,
-    latestChatErrors: chatAdapterState.latestErrors,
+    latestChatErrors: {}, // chatAdapterState.latestErrors,
     /* @conditional-compile-remove(file-sharing) */
-    fileUploads: chatAdapterState.fileUploads,
+    fileUploads: {}, // chatAdapterState.fileUploads,
     /* @conditional-compile-remove(PSTN-calls) */
     alternateCallerId: callAdapterState.alternateCallerId,
     /* @conditional-compile-remove(unsupported-browser) */
