@@ -1,11 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
+
 /* @conditional-compile-remove(end-of-call-survey) */
 import { Theme, mergeStyles } from '@fluentui/react';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { _pxToRem } from '@internal/acs-ui-common';
 
 /* @conditional-compile-remove(end-of-call-survey) */
+/**
+ * @private
+ */
 export const questionTextStyle = (theme: Theme): string =>
   mergeStyles({
     fontWeight: 600,
@@ -15,6 +19,9 @@ export const questionTextStyle = (theme: Theme): string =>
   });
 
 /* @conditional-compile-remove(end-of-call-survey) */
+/**
+ * @private
+ */
 export const surveyContainerStyle = (isMobile): string =>
   mergeStyles(
     isMobile
