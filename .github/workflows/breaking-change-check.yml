@@ -79,7 +79,7 @@ jobs:
         run: rush switch-flavor:beta-release
       - name: Install stable dependencies
         if: ${{ matrix.flavor == 'stable' && github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}
-        run: rush switch-flavor:stable
+        run: rush update:stable && rush switch-flavor:stable
       # Build base branch to generate base api file
       - name: Build base api file
         if: ${{ github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}
