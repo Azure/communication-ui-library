@@ -218,7 +218,7 @@ class ProxyTransferCallFeature implements ProxyHandler<TransferCallFeature> {
           const isTransferAccepted = args[0] === 'transferAccepted';
           if (isTransferAccepted) {
             const listener = args[1] as TransferAcceptedEvent;
-            const newListener = (args: TransferEventArgs) => {
+            const newListener = (args: TransferEventArgs): void => {
               this._context.setAcceptedTransfer(this._call.id, {
                 callId: args.targetCall.id,
                 timestamp: new Date()
