@@ -113,4 +113,10 @@ export const darkTheme: PartialTheme & CallingTheme = {
  *
  * @beta
  */
-export const imageOverlayTheme: PartialTheme = { palette: darkTheme.palette };
+export const imageOverlayTheme: PartialTheme = {
+  palette: darkTheme.palette,
+  semanticColors: {
+    ...darkTheme.semanticColors,
+    bodyBackground: 'rgba(0, 0, 0, 0.85)'
+  }
+};

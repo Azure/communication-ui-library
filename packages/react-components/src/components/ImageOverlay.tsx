@@ -168,18 +168,18 @@ export const ImageOverlay = (props: ImageOverlayProps): JSX.Element => {
   };
 
   return (
-    <FluentThemeProvider fluentTheme={imageOverlayTheme}>
-      <Modal
-        titleAriaId={title}
-        isOpen={isOpen}
-        onDismiss={onDismiss}
-        overlay={{ styles: { ...overlayStyles(imageOverlayTheme) } }}
-        styles={{ main: focusTrapZoneStyle, scrollableContent: scrollableContentStyle }}
-        isDarkOverlay={true}
-      >
+    <Modal
+      titleAriaId={title}
+      isOpen={isOpen}
+      onDismiss={onDismiss}
+      overlay={{ styles: { ...overlayStyles(imageOverlayTheme) } }}
+      styles={{ main: focusTrapZoneStyle, scrollableContent: scrollableContentStyle }}
+      isDarkOverlay={true}
+    >
+      <FluentThemeProvider fluentTheme={imageOverlayTheme} rootStyle={{ background: 'transparent' }}>
         {renderHeaderBar()}
         {renderBodyWithLightDismiss()}
-      </Modal>
-    </FluentThemeProvider>
+      </FluentThemeProvider>
+    </Modal>
   );
 };

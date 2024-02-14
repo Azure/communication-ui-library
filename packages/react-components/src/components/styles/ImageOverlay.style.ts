@@ -24,8 +24,7 @@ export const downloadIcon: IIconProps = {
 export const overlayStyles = (theme: PartialTheme): IOverlayStyles => {
   return {
     root: {
-      background: theme.palette?.white,
-      opacity: '0.95'
+      background: theme.semanticColors?.bodyBackground
     }
   };
 };
