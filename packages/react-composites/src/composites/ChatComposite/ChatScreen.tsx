@@ -90,30 +90,69 @@ export type ChatScreenStyles = {
  */
 export interface FileSharingOptions {
   /**
+   * @beta
+   */
+  uploadOptions?: FileUploadOptions;
+  /**
+   * @beta
+   */
+  downloadOptions?: FileDownloadOptions;
+}
+
+/**
+ * @beta
+ */
+export interface FileUploadOptions {
+  /**
    * A string containing the comma separated list of accepted file types.
    * Similar to the `accept` attribute of the `<input type="file" />` element.
    * Accepts any type of file if not specified.
    * @beta
    */
-  accept?: string;
+  acceptedFileTypes?: string;
   /**
    * Allows multiple files to be selected if set to `true`.
    * Similar to the `multiple` attribute of the `<input type="file" />` element.
    * @defaultValue false
    * @beta
    */
-  multiple?: boolean;
+  canBatchUpload?: boolean;
   /**
    * A function of type {@link FileUploadHandler} for handling file uploads.
    * @beta
    */
-  uploadHandler: FileUploadHandler;
+  handler: FileUploadHandler;
+}
+
+/**
+ * @beta
+ */
+export interface FileDownloadOptions {
+  /**
+   * A list of download actions.
+   * @beta
+   */
+  acceptedDownloadActions?: FileDownloadActionType[];
   /**
    * A function of type {@link FileDownloadHandler} for handling file downloads.
    * If the function is not specified, the file's `url` will be opened in a new tab to
    * initiate the download.
    */
-  downloadHandler?: FileDownloadHandler;
+  handler?: FileDownloadHandler;
+}
+
+/**
+ * @beta
+ */
+export enum FileDownloadActionType {
+  /**
+   * A file download action that opens the file in a new tab.
+   */
+  openInNewTab = 'openInNewTab',
+  /**
+   * A file download action that initiates a download.
+   */
+  download = 'download'
 }
 
 /**
@@ -200,7 +239,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       /* @conditional-compile-remove(file-sharing) */
       const fileUploads = adapter.registerActiveFileUploads(Array.from(files));
       /* @conditional-compile-remove(file-sharing) */
-      fileSharing?.uploadHandler(userId, fileUploads);
+      fileSharing?.uploadOptions?.handler(userId, fileUploads);
     },
     [adapter, fileSharing, userId]
   );
@@ -211,13 +250,13 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       <_FileDownloadCards
         userId={userId}
         fileMetadata={message.files || []}
-        downloadHandler={fileSharing?.downloadHandler}
+        downloadHandler={fileSharing?.downloadOptions?.handler}
         onDownloadErrorMessage={(errorMessage: string) => {
           setDownloadErrorMessage(errorMessage);
         }}
       />
     ),
-    [fileSharing?.downloadHandler]
+    [fileSharing?..downloadOptions?.handler]
   );
 
   /* @conditional-compile-remove(image-overlay) */
