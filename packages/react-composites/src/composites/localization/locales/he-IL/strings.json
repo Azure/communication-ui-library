@@ -60,6 +60,11 @@
     "removedFromCallMoreDetails": "משתתף אחר הסיר אותך מהשיחה.",
     "removedFromCallTitle": "הוסרת",
     "removeMenuLabel": "הסר",
+    "startSpotlightParticipantListMenuLabel": "הצבת זרקור עבור כולם",
+    "addSpotlightParticipantListMenuLabel": "הוסף זרקור",
+    "stopSpotlightParticipantListMenuLabel": "הפסק להציב זרקור",
+    "stopSpotlightOnSelfParticipantListMenuLabel": "צא מזרקור",
+    "spotlightLimitReachedParticipantListMenuTitle": "הגעת למגבלת הזרקורים",
     "returnToCallButtonAriaDescription": "חזור לשיחה",
     "returnToCallButtonAriaLabel": "הקודם",
     "roomNotFoundDetails": "מזהה החדר שסופק לא נמצא.",
@@ -120,6 +125,13 @@
     "callRejectedMoreDetails": "האדם שאליו אתה מנסה להגיע אינו זמין. נסה שוב מאוחר יותר.",
     "callTimeoutTitle": "לא הייתה אפשרות להשלים את השיחה.",
     "callTimeoutDetails": "האדם שאליו אתה מנסה להגיע אינו זמין. נסה שוב מאוחר יותר.",
+    "callTimeoutBotTitle": "לא הייתה אפשרות להשלים את השיחה.",
+    "callTimeoutBotDetails": "השירות אליו אתה מנסה להגיע אינו זמין. נסה שוב מאוחר יותר.",
+    "dtmfDialerButtonLabel": "לוח חיוג",
+    "dtmfDialerButtonTooltipOn": "הצג לוח חיוג",
+    "dtmfDialerButtonTooltipOff": "הסתר לוח חיוג",
+    "dtmfDialerMoreButtonLabelOn": "הצג לוח חיוג",
+    "dtmfDialerMoreButtonLabelOff": "הסתר לוח חיוג",
     "spokenLanguageStrings": {
       "ar-ae": "ערבית - איחוד האמירויות",
       "ar-sa": "ערבית - ערב הסעודית",
@@ -232,7 +244,7 @@
         "grantedDueToRoleChangeToPresenter": "אתה מציג. באפשרותך לשתף תוכן ולסייע בפגישה."
       }
     },
-    "surveyQuestion": "איך הייתה השיחה שלך היום?",
+    "surveyTitle": "עזור לנו להשתפר",
     "starSurveyHelperText": "מה היתה האיכות של שיחה זו?",
     "starSurveyOneStarText": "האיכות הייתה גרועה.",
     "starSurveyTwoStarText": "האיכות הייתה ירודה.",
@@ -241,11 +253,12 @@
     "starSurveyFiveStarText": "האיכות הייתה מצוינת.",
     "surveyConfirmButtonLabel": "שלח משוב",
     "starRatingAriaLabel": "בחר {0} מתוך {1} כוכבים",
-    "surveyCancelButtonAriaLabel": "ביטול",
+    "surveySkipButtonLabel": "דלג",
     "tagsSurveyQuestion": "מה יכול היה להיות טוב יותר?",
     "tagsSurveyTextFieldDefaultText": "אחר, נא לציין",
     "tagsSurveyHelperText": "בדוק את כל הבעיות שבהן נתקלת",
     "surveyTextboxDefaultText": "אחר, נא לציין",
+    "endOfSurveyText": "תודה על המשוב!",
     "surveyIssues": {
       "overallRating": {
         "callCannotJoin": "לא הצלחתי להצטרף לשיחה",
@@ -291,6 +304,20 @@
       "audioRating": "שם ציוד השמע",
       "videoRating": "סרטון",
       "screenshareRating": "מציג"
+    },
+    "spotlightPrompt": {
+      "startSpotlightHeading": "לסמן בזרקור עבור כולם?",
+      "startSpotlightText": "תסמן סרטון וידאו זה עבור כל האנשים בפגישה.",
+      "startSpotlightOnSelfText": "תסמן את סרטון הווידאו שלך עבור כל האנשים בפגישה.",
+      "startSpotlightConfirmButtonLabel": "הצבת זרקור עבור כולם",
+      "startSpotlightCancelButtonLabel": "ביטול",
+      "stopSpotlightHeading": "להפסיק להציב זרקור?",
+      "stopSpotlightOnSelfHeading": "לצאת מזרקור?",
+      "stopSpotlightText": "וידאו זה לא יסומן עוד עבור כל האנשים בפגישה.",
+      "stopSpotlightOnSelfText": "סרטון הווידאו שלך לא יסומן עוד עבור כל האנשים בפגישה.",
+      "stopSpotlightConfirmButtonLabel": "הפסק להציב זרקור",
+      "stopSpotlightOnSelfConfirmButtonLabel": "צא מזרקור",
+      "stopSpotlightCancelButtonLabel": "ביטול"
     }
   },
   "chat": {

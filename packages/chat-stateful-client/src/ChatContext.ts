@@ -22,14 +22,14 @@ import { chatStatefulLogger } from './Logger';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import type { CommunicationTokenCredential } from '@azure/communication-common';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { ResourceDownloadQueue, requestAttachments } from './ResourceDownloadQueue';
+import { ResourceDownloadQueue, fetchImageSource } from './ResourceDownloadQueue';
 
 enableMapSet();
 // Needed to generate state diff for verbose logging.
 enablePatches();
 
 /**
- * @private
+ * @internal
  */
 export class ChatContext {
   private _state: ChatClientState = {
@@ -43,8 +43,9 @@ export class ChatContext {
   private _emitter: EventEmitter;
   private typingIndicatorInterval: number | undefined = undefined;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  private _messageQueue: ResourceDownloadQueue | undefined = undefined;
-
+  private _inlineImageQueue: ResourceDownloadQueue | undefined = undefined;
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  private _fullsizeImageQueue: ResourceDownloadQueue | undefined = undefined;
   constructor(
     maxListeners?: number,
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ credential?: CommunicationTokenCredential
@@ -53,7 +54,8 @@ export class ChatContext {
     this._emitter = new EventEmitter();
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     if (credential) {
-      this._messageQueue = new ResourceDownloadQueue(this, credential);
+      this._inlineImageQueue = new ResourceDownloadQueue(this, credential);
+      this._fullsizeImageQueue = new ResourceDownloadQueue(this, credential);
     }
     if (maxListeners) {
       this._emitter.setMaxListeners(maxListeners);
@@ -75,6 +77,51 @@ export class ChatContext {
     if (!this._batchMode && this._state !== priorState) {
       this._emitter.emit('stateChanged', this._state);
     }
+  }
+
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  public dispose(): void {
+    this.modifyState((draft: ChatClientState) => {
+      Object.keys(draft.threads).forEach((threadId) => {
+        const thread = draft.threads[threadId];
+        Object.keys(thread.chatMessages).forEach((messageId) => {
+          const cache = thread.chatMessages[messageId].resourceCache;
+          if (cache) {
+            Object.keys(cache).forEach((resourceUrl) => {
+              const blobUrl = cache[resourceUrl];
+              URL.revokeObjectURL(blobUrl);
+            });
+          }
+          thread.chatMessages[messageId].resourceCache = undefined;
+        });
+      });
+    });
+    // Any item in queue should be removed.
+  }
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  public downloadResourceToCache(threadId: string, messageId: string, resourceUrl: string): void {
+    this.modifyState((draft: ChatClientState) => {
+      const message = draft.threads[threadId]?.chatMessages[messageId];
+      if (message && this._fullsizeImageQueue) {
+        if (!message.resourceCache) {
+          message.resourceCache = {};
+        }
+        // Need to discuss retry logic in case of failure
+        this._fullsizeImageQueue.addMessage(message);
+        this._fullsizeImageQueue.startQueue(threadId, fetchImageSource, { singleUrl: resourceUrl });
+      }
+    });
+  }
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  public removeResourceFromCache(threadId: string, messageId: string, resourceUrl: string): void {
+    this.modifyState((draft: ChatClientState) => {
+      const message = draft.threads[threadId]?.chatMessages[messageId];
+      if (message && message.resourceCache) {
+        const blobUrl = message.resourceCache[resourceUrl];
+        URL.revokeObjectURL(blobUrl);
+        delete message.resourceCache[resourceUrl];
+      }
+    });
   }
 
   public setThread(threadId: string, threadState: ChatThreadClientState): void {
@@ -295,7 +342,6 @@ export class ChatContext {
   public setChatMessage(threadId: string, message: ChatMessageWithStatus): void {
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     this.parseAttachments(threadId, message);
-
     const { id: messageId, clientMessageId } = message;
     if (messageId || clientMessageId) {
       this.modifyState((draft: ChatClientState) => {
@@ -321,13 +367,13 @@ export class ChatContext {
     const attachments = message.content?.attachments;
     if (message.type === 'html' && attachments && attachments.length > 0) {
       if (
-        this._messageQueue &&
-        !this._messageQueue.containsMessageWithSameAttachments(message) &&
+        this._inlineImageQueue &&
+        !this._inlineImageQueue.containsMessageWithSameAttachments(message) &&
         message.resourceCache === undefined
       ) {
         // Need to discuss retry logic in case of failure
-        this._messageQueue.addMessage(message);
-        this._messageQueue.startQueue(threadId, requestAttachments);
+        this._inlineImageQueue.addMessage(message);
+        this._inlineImageQueue.startQueue(threadId, fetchImageSource);
       }
     }
   }

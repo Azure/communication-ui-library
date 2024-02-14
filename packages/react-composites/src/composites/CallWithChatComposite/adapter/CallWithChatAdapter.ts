@@ -23,6 +23,8 @@ import {
   ParticipantsAddedListener,
   ParticipantsRemovedListener
 } from '../../ChatComposite';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { ResourceDetails } from '../../ChatComposite';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 import type { AdapterError, AdapterState, Disposable } from '../../common/adapters';
 import {
@@ -68,6 +70,8 @@ import {
 } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(capabilities) */
 import { CapabilitiesChangedListener } from '../../CallComposite/adapter/CallAdapter';
+/* @conditional-compile-remove(spotlight) */
+import { SpotlightChangedListener } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 
@@ -400,7 +404,11 @@ export interface CallWithChatAdapterManagement {
   /** @beta */
   updateFileUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  downloadAttachment: (options: { attachmentUrl: string }) => Promise<AttachmentDownloadResult>;
+  downloadAttachment: (options: { attachmentUrl: string }) => Promise<AttachmentDownloadResult>; // ToDo: This method is to be removed
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  downloadResourceToCache(resourceDetails: ResourceDetails): void;
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  removeResourceFromCache(resourceDetails: ResourceDetails): void;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Puts the Call in a Localhold.
@@ -500,17 +508,13 @@ export interface CallWithChatAdapterManagement {
   /* @conditional-compile-remove(spotlight) */
   /**
    * Start spotlight
-   *
-   * @beta
    */
-  startSpotlight(userId: string): Promise<void>;
+  startSpotlight(userIds?: string[]): Promise<void>;
   /* @conditional-compile-remove(spotlight) */
   /**
    * Stop spotlight
-   *
-   * @beta
    */
-  stopSpotlight(userId: string): Promise<void>;
+  stopSpotlight(userIds?: string[]): Promise<void>;
 }
 
 /**
@@ -540,6 +544,8 @@ export interface CallWithChatAdapterSubscriptions {
   on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
   /* @conditional-compile-remove(capabilities) */
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
+  /* @conditional-compile-remove(spotlight) */
+  on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
 
   off(event: 'callEnded', listener: CallEndedListener): void;
   off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -562,6 +568,8 @@ export interface CallWithChatAdapterSubscriptions {
   off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
   /* @conditional-compile-remove(capabilities) */
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
+  /* @conditional-compile-remove(spotlight) */
+  off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
 
   // Chat subscriptions
   on(event: 'messageReceived', listener: MessageReceivedListener): void;
@@ -617,6 +625,7 @@ export type CallWithChatEvent =
   | /* @conditional-compile-remove(close-captions) */ 'isCaptionLanguageChanged'
   | /* @conditional-compile-remove(close-captions) */ 'isSpokenLanguageChanged'
   | /* @conditional-compile-remove(capabilities) */ 'capabilitiesChanged'
+  | /* @conditional-compile-remove(spotlight) */ 'spotlightChanged'
   | 'messageReceived'
   | 'messageEdited'
   | 'messageDeleted'
