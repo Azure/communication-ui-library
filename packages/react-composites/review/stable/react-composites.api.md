@@ -110,7 +110,7 @@ export type AzureCommunicationCallWithChatAdapterArgs = {
     userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
-    locator: CallAndChatLocator | TeamsMeetingLinkLocator;
+    locator: CommunicationLocator;
     callAdapterOptions?: AzureCommunicationCallAdapterOptions;
 };
 
@@ -1015,6 +1015,9 @@ export type CommonCallControlOptions = {
         disabled: boolean;
     };
 };
+
+// @public
+export type CommunicationLocator = CallAndChatLocator | TeamsMeetingLinkLocator;
 
 // @public
 export const COMPOSITE_LOCALE_AR_SA: CompositeLocale;

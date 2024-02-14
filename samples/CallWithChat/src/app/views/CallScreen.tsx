@@ -8,11 +8,11 @@ import { CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   toFlatCommunicationIdentifier,
   useAzureCommunicationCallWithChatAdapter,
-  CallAndChatLocator,
   CallWithChatAdapterState,
   CallWithChatComposite,
   CallWithChatAdapter,
-  CallWithChatCompositeOptions
+  CallWithChatCompositeOptions,
+  CommunicationLocator
 } from '@azure/communication-react';
 /* @conditional-compile-remove(video-background-effects) */
 import { onResolveVideoEffectDependencyLazy, AzureCommunicationCallAdapterOptions } from '@azure/communication-react';
@@ -29,10 +29,7 @@ export interface CallScreenProps {
   userId: CommunicationUserIdentifier;
   displayName: string;
   endpoint: string;
-  locator:
-    | CallAndChatLocator
-    | TeamsMeetingLinkLocator
-    | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
+  locator: CommunicationLocator;
   /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId?: string;
 }
 
@@ -218,27 +215,15 @@ const convertPageStateToString = (state: CallWithChatAdapterState): string => {
   }
 };
 
-const isTeamsMeetingLinkLocator = (
-  locator:
-    | TeamsMeetingLinkLocator
-    | CallAndChatLocator
-    | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator
-): locator is TeamsMeetingLinkLocator => {
+const isTeamsMeetingLinkLocator = (locator: CommunicationLocator): locator is TeamsMeetingLinkLocator => {
   return 'meetingLink' in locator;
 };
 
 /* @conditional-compile-remove(meeting-id) */
-const isTeamsMeetingIdLocator = (
-  locator: TeamsMeetingLinkLocator | CallAndChatLocator | TeamsMeetingIdLocator
-): locator is TeamsMeetingIdLocator => {
+const isTeamsMeetingIdLocator = (locator: CommunicationLocator): locator is TeamsMeetingIdLocator => {
   return 'meetingId' in locator;
 };
 
-const isGroupCallLocator = (
-  locator:
-    | TeamsMeetingLinkLocator
-    | CallAndChatLocator
-    | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator
-): boolean => {
+const isGroupCallLocator = (locator: CommunicationLocator): boolean => {
   return 'callLocator' in locator && 'groupId' in locator.callLocator;
 };

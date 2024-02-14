@@ -898,10 +898,23 @@ export class TeamsMeetingIdAdapter implements ChatThreadLocator {
   }
 }
 
+/**
+ * Combination of available adapters for use in {@link createAzureCommunicationCallWithChatAdapter}.
+ * @public
+ */
 export type CommunicationAdapter =
   | CallAndChatAdapter
   | TeamsMeetingLinkAdapter
   | /** @conditional-compile-remove(meeting-id) */ TeamsMeetingIdAdapter;
+
+/**
+ * Combination of available locators for use in {@link createAzureCommunicationCallWithChatAdapter}.
+ * @public
+ */
+export type CommunicationLocator =
+  | CallAndChatLocator
+  | TeamsMeetingLinkLocator
+  | /** @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
 
 /**
  * Arguments for {@link createAzureCommunicationCallWithChatAdapter}
@@ -913,10 +926,7 @@ export type AzureCommunicationCallWithChatAdapterArgs = {
   userId: CommunicationUserIdentifier;
   displayName: string;
   credential: CommunicationTokenCredential;
-  locator:
-    | CallAndChatLocator
-    | TeamsMeetingLinkLocator
-    | /** @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
+  locator: CommunicationLocator;
   /* @conditional-compile-remove(PSTN-calls) */
   alternateCallerId?: string;
   /* @conditional-compile-remove(video-background-effects) */
@@ -1166,21 +1176,12 @@ export const _createAzureCommunicationCallWithChatAdapterFromAdapters = (
   new AzureCommunicationCallWithChatAdapter(callAdapter, new Promise((resolve) => resolve(chatAdapter)));
 
 const isTeamsMeetingLocator = (
-  locator:
-    | CallAndChatLocator
-    | TeamsMeetingLinkLocator
-    | /*@conditional-compile-remove(meeting-id)  */ TeamsMeetingIdLocator
+  locator: CommunicationLocator
 ): locator is TeamsMeetingLinkLocator | /** @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator => {
   return 'meetingLink' in locator || 'meetingId' in locator;
 };
 
-const _createChatThreadAdapterInner = (
-  locator:
-    | CallAndChatLocator
-    | TeamsMeetingLinkLocator
-    | /** @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator,
-  adapter: CallAdapter
-): ChatThreadLocator => {
+const _createChatThreadAdapterInner = (locator: CommunicationLocator, adapter: CallAdapter): ChatThreadLocator => {
   if ('meetingLink' in locator) {
     return new TeamsMeetingLinkAdapter(locator);
   }

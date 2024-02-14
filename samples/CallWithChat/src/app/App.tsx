@@ -5,7 +5,7 @@ import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-
 /* @conditional-compile-remove(meeting-id) */
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
-import { CallAndChatLocator } from '@azure/communication-react';
+import { CommunicationLocator } from '@azure/communication-react';
 import { setLogLevel } from '@azure/logger';
 import { initializeIcons, Spinner } from '@fluentui/react';
 import React, { useState } from 'react';
@@ -50,10 +50,7 @@ interface CallWithChatArgs {
   credentials: Credentials;
   endpointUrl: string;
   displayName: string;
-  locator:
-    | CallAndChatLocator
-    | TeamsMeetingLinkLocator
-    | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
+  locator: CommunicationLocator;
   /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId?: string;
 }
 type AppPages = 'home' | 'call' | 'error';
@@ -146,10 +143,7 @@ const generateCallWithChatArgs = async (
   const credentials = { userId: user, token: token };
   const endpointUrl = await getEndpointUrl();
 
-  let locator:
-    | CallAndChatLocator
-    | TeamsMeetingLinkLocator
-    | /** /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
+  let locator: CommunicationLocator;
 
   // Check if we should join a teams meeting, or an ACS CallWithChat
   teamsLocator =
@@ -203,11 +197,7 @@ const callLocatorGen = (
 
 const getTeamsLocator = (
   teamsLocator: TeamsMeetingLinkLocator | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator
-):
-  | CallAndChatLocator
-  | TeamsMeetingLinkLocator
-  | /** @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator
-  | undefined => {
+): CommunicationLocator | undefined => {
   if ('meetingLink' in teamsLocator) {
     return teamsLocator;
   }

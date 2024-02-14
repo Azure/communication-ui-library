@@ -13,7 +13,8 @@ export type {
 export type {
   AzureCommunicationCallWithChatAdapterArgs,
   AzureCommunicationCallWithChatAdapterFromClientArgs,
-  CallAndChatLocator
+  CallAndChatLocator,
+  CommunicationLocator
 } from './adapter/AzureCommunicationCallWithChatAdapter';
 export {
   createAzureCommunicationCallWithChatAdapter,
