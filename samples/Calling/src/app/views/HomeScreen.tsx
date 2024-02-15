@@ -21,9 +21,9 @@ import {
   teamsItemStyle,
   buttonStyle
 } from '../styles/HomeScreen.styles';
+import { outboundTextField } from '../styles/HomeScreen.styles';
 /* @conditional-compile-remove(PSTN-calls) */
 import {
-  outboundTextField,
   dialpadOptionStyles,
   alternateCallerIdCalloutStyles,
   alternateCallerIdCalloutTitleStyles,
@@ -56,7 +56,7 @@ export type CallOption =
   | /* @conditional-compile-remove(teams-identity-support) */ 'TeamsIdentity'
   | /* @conditional-compile-remove(one-to-n-calling) */ '1:N'
   | /* @conditional-compile-remove(PSTN-calls) */ 'PSTN'
-  | /* @conditional-compile-remove(teams-adhoc-call) */ 'TeamsAdhoc';
+  | 'TeamsAdhoc';
 
 export interface HomeScreenProps {
   startCallHandler(callDetails: {
@@ -73,7 +73,6 @@ export interface HomeScreenProps {
     teamsToken?: string;
     /* @conditional-compile-remove(teams-identity-support) */
     teamsId?: string;
-    /* @conditional-compile-remove(teams-adhoc-call) */
     outboundTeamsUsers?: string[];
   }): void;
   joiningExistingCall: boolean;
@@ -99,8 +98,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
     { key: '1:N', text: 'Start a 1:N ACS Call' },
     /* @conditional-compile-remove(PSTN-calls) */
     { key: 'PSTN', text: 'Start a PSTN Call' },
-    /* @conditional-compile-remove(teams-adhoc-call) */
-    { key: 'TeamsAdhoc', text: 'Call a Teams User' }
+    { key: 'TeamsAdhoc', text: 'Call a Teams User or voice application' }
   ];
   /* @conditional-compile-remove(rooms) */
   const roomIdLabel = 'Room ID';
@@ -137,7 +135,6 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const [teamsToken, setTeamsToken] = useState<string>();
   /* @conditional-compile-remove(teams-identity-support) */
   const [teamsId, setTeamsId] = useState<string>();
-  /* @conditional-compile-remove(teams-adhoc-call) */
   const [outboundTeamsUsers, setOutboundTeamsUsers] = useState<string | undefined>();
 
   /* @conditional-compile-remove(PSTN-calls) */
@@ -151,7 +148,6 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const pstnCallChosen: boolean = chosenCallOption.key === 'PSTN';
   /* @conditional-compile-remove(PSTN-calls) */
   const acsCallChosen: boolean = chosenCallOption.key === '1:N';
-  /* @conditional-compile-remove(teams-adhoc-call) */
   const teamsAdhocChosen: boolean = chosenCallOption.key === 'TeamsAdhoc';
 
   const buttonEnabled =
@@ -162,7 +158,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
       (((chosenCallOption.key === 'Rooms' && callLocator) || chosenCallOption.key === 'StartRooms') &&
         chosenRoomsRoleOption) ||
       /* @conditional-compile-remove(PSTN-calls) */ (pstnCallChosen && dialPadParticipant && alternateCallerId) ||
-      /* @conditional-compile-remove(teams-adhoc-call) */ (teamsAdhocChosen && outboundTeamsUsers) ||
+      (teamsAdhocChosen && outboundTeamsUsers) ||
       /* @conditional-compile-remove(one-to-n-calling) */ (outboundParticipants && acsCallChosen) ||
       /* @conditional-compile-remove(teams-identity-support) */ (teamsIdentityChosen &&
         callLocator &&
@@ -179,8 +175,6 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   /* @conditional-compile-remove(teams-identity-support) */
   showDisplayNameField = !teamsIdentityChosen;
 
-  /* @conditional-compile-remove(teams-adhoc-call) */
-  /* @conditional-compile-remove(teams-identity-support) */
   const [teamsIdFormatError, setTeamsIdFormatError] = useState<boolean>(false);
 
   return (
@@ -305,33 +299,31 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 </Stack>
               )
             }
-            {
-              /* @conditional-compile-remove(teams-adhoc-call) */ teamsAdhocChosen && (
-                <Stack>
-                  <TextField
-                    className={outboundTextField}
-                    label={'Teams user ID'}
-                    required
-                    placeholder={'Enter a Teams user ID (8:orgid:<UUID>)'}
-                    errorMessage={
-                      teamsIdFormatError ? `Teams user ID should be in the format '8:orgid:<UUID>'` : undefined
+            {teamsAdhocChosen && (
+              <Stack>
+                <TextField
+                  className={outboundTextField}
+                  label={'Teams user ID'}
+                  required
+                  placeholder={'Enter a Teams user ID (8:orgid:<UUID>)'}
+                  errorMessage={
+                    teamsIdFormatError ? `Teams user ID should be in the format '8:orgid:<UUID>'` : undefined
+                  }
+                  onChange={(_, newValue) => {
+                    if (!newValue) {
+                      setTeamsIdFormatError(false);
+                      setOutboundTeamsUsers(undefined);
+                    } else if (newValue.match(/8:orgid:[a-zA-Z0-9-]+/)) {
+                      setTeamsIdFormatError(false);
+                      setOutboundTeamsUsers(newValue);
+                    } else {
+                      setTeamsIdFormatError(true);
+                      setOutboundTeamsUsers(undefined);
                     }
-                    onChange={(_, newValue) => {
-                      if (!newValue) {
-                        setTeamsIdFormatError(false);
-                        setOutboundTeamsUsers(undefined);
-                      } else if (newValue.match(/8:orgid:[a-zA-Z0-9-]+/)) {
-                        setTeamsIdFormatError(false);
-                        setOutboundTeamsUsers(newValue);
-                      } else {
-                        setTeamsIdFormatError(true);
-                        setOutboundTeamsUsers(undefined);
-                      }
-                    }}
-                  />
-                </Stack>
-              )
-            }
+                  }}
+                />
+              </Stack>
+            )}
             {
               /* @conditional-compile-remove(PSTN-calls) */ pstnCallChosen && (
                 <Stack>
@@ -398,7 +390,6 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 displayName && saveDisplayNameToLocalStorage(displayName);
                 /* @conditional-compile-remove(one-to-n-calling) */
                 const acsParticipantsToCall = parseParticipants(outboundParticipants);
-                /* @conditional-compile-remove(teams-adhoc-call) */
                 const teamsParticipantsToCall = parseParticipants(outboundTeamsUsers);
                 /* @conditional-compile-remove(PSTN-calls) */
                 const dialpadParticipantToCall = parseParticipants(dialPadParticipant);
@@ -418,7 +409,6 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                   teamsToken,
                   /* @conditional-compile-remove(teams-identity-support) */
                   teamsId,
-                  /* @conditional-compile-remove(teams-adhoc-call) */
                   outboundTeamsUsers: teamsParticipantsToCall
                 });
               }
@@ -433,7 +423,6 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   );
 };
 
-/* @conditional-compile-remove(one-to-n-calling)  */ /* @conditional-compile-remove(PSTN-calls) */
 /**
  * splits the participant Id's so we can call multiple people.
  */

@@ -163,7 +163,11 @@ const expectNoRemoveParticipantMenuItem = async (page: Page): Promise<void> => {
     }
     await page.hover(dataUiId('participant-item'));
     const menuButton = await page.$$(dataUiId('participant-item-menu-button'));
-    expect(menuButton.length).toBe(0);
+    if (menuButton.length > 0) {
+      await pageClick(page, dataUiId('participant-item-menu-button'));
+      const removeParticipantButton = await page.$$(dataUiId('participant-list-remove-participant-button'));
+      expect(removeParticipantButton.length).toBe(0);
+    }
   } else {
     // Click the more button to show the people button on the new control bar
     // in case we are on mobile
@@ -174,7 +178,7 @@ const expectNoRemoveParticipantMenuItem = async (page: Page): Promise<void> => {
     await waitForSelector(page, dataUiId('participant-list'));
     await waitForSelector(page, dataUiId('participant-item'));
     await pageClick(page, dataUiId('participant-item'));
-    const drawerMenu = await page.$$(dataUiId('drawer-menu'));
-    expect(drawerMenu.length).toBe(0);
+    const removeParticipantButton = await page.$$(dataUiId('participant-list-remove-participant-button'));
+    expect(removeParticipantButton.length).toBe(0);
   }
 };

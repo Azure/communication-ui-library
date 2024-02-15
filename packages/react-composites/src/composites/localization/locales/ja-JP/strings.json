@@ -60,6 +60,11 @@
     "removedFromCallMoreDetails": "別の参加者があなたを通話から削除しました。",
     "removedFromCallTitle": "削除されました",
     "removeMenuLabel": "削除",
+    "startSpotlightParticipantListMenuLabel": "全員にスポットライトを設定",
+    "addSpotlightParticipantListMenuLabel": "スポットライトを追加",
+    "stopSpotlightParticipantListMenuLabel": "スポットライトの設定を解除",
+    "stopSpotlightOnSelfParticipantListMenuLabel": "スポットライトを終了",
+    "spotlightLimitReachedParticipantListMenuTitle": "Spotlight limit reached",
     "returnToCallButtonAriaDescription": "通話に戻る",
     "returnToCallButtonAriaLabel": "戻る",
     "roomNotFoundDetails": "指定されたルーム ID が見つかりませんでした。",
@@ -120,6 +125,13 @@
     "callRejectedMoreDetails": "連絡を取ろうとしているユーザーは利用できません。後でもう一度お試しください。",
     "callTimeoutTitle": "通話を完了できませんでした",
     "callTimeoutDetails": "連絡を取ろうとしているユーザーは利用できません。後でもう一度お試しください。",
+    "callTimeoutBotTitle": "通話を完了できませんでした",
+    "callTimeoutBotDetails": "接続しようとしているサービスは利用できません。後でもう一度お試しください。",
+    "dtmfDialerButtonLabel": "ダイヤルパッド",
+    "dtmfDialerButtonTooltipOn": "ダイヤルパッドを表示",
+    "dtmfDialerButtonTooltipOff": "ダイヤル パッドを非表示",
+    "dtmfDialerMoreButtonLabelOn": "ダイヤルパッドを表示",
+    "dtmfDialerMoreButtonLabelOff": "ダイヤル パッドを非表示",
     "spokenLanguageStrings": {
       "ar-ae": "アラビア語 - U.A.E.",
       "ar-sa": "アラビア語 - サウジアラビア",
@@ -232,7 +244,7 @@
         "grantedDueToRoleChangeToPresenter": "あなたは発表者です。コンテンツの共有と会議の進行を行うことができます。"
       }
     },
-    "surveyQuestion": "今日の通話はいかがでしたか?",
+    "surveyTitle": "品質向上にご協力ください",
     "starSurveyHelperText": "通話の音質はどうでしたか?",
     "starSurveyOneStarText": "品質が悪かった。",
     "starSurveyTwoStarText": "品質は低かった。",
@@ -241,11 +253,12 @@
     "starSurveyFiveStarText": "品質は非常に優れていた。",
     "surveyConfirmButtonLabel": "フィードバックの送信",
     "starRatingAriaLabel": "{1} 個中 {0} 個の星を選択する",
-    "surveyCancelButtonAriaLabel": "キャンセル",
+    "surveySkipButtonLabel": "スキップ",
     "tagsSurveyQuestion": "何が良くなりましたか?",
     "tagsSurveyTextFieldDefaultText": "その他、特定してください",
     "tagsSurveyHelperText": "発生した問題を確認する",
     "surveyTextboxDefaultText": "その他 (明記してください)",
+    "endOfSurveyText": "フィードバックをお送りいただき、ありがとうございます。",
     "surveyIssues": {
       "overallRating": {
         "callCannotJoin": "通話に参加できなかった",
@@ -291,6 +304,20 @@
       "audioRating": "オーディオ",
       "videoRating": "動画",
       "screenshareRating": "発表中"
+    },
+    "spotlightPrompt": {
+      "startSpotlightHeading": "全員にスポットライトを設定しますか?",
+      "startSpotlightText": "会議の全員にこのビデオをハイライトします。",
+      "startSpotlightOnSelfText": "会議の全員にビデオをハイライトします。",
+      "startSpotlightConfirmButtonLabel": "全員にスポットライトを設定",
+      "startSpotlightCancelButtonLabel": "キャンセル",
+      "stopSpotlightHeading": "スポットライトの設定を解除しますか?",
+      "stopSpotlightOnSelfHeading": "スポットライトを終了しますか?",
+      "stopSpotlightText": "このビデオは、会議の全員に対して強調表示されなくなります。",
+      "stopSpotlightOnSelfText": "ビデオは、会議の全員に対して強調表示されなくなります。",
+      "stopSpotlightConfirmButtonLabel": "スポットライトの設定を解除",
+      "stopSpotlightOnSelfConfirmButtonLabel": "スポットライトを終了",
+      "stopSpotlightCancelButtonLabel": "キャンセル"
     }
   },
   "chat": {

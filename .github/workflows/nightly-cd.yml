@@ -60,7 +60,8 @@ jobs:
     needs: checkForChanges
     if: needs.checkForChanges.outputs.hasChanged == 'true'
     runs-on: ubuntu-latest
-    permissions: read-all
+    permissions:
+      contents: write
     steps:
       # Check-out repo
       - uses: actions/checkout@v3

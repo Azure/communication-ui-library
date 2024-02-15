@@ -161,6 +161,10 @@ export interface SpotlightCallFeatureState {
    * Ordered array of spotlighted participants in call
    */
   spotlightedParticipants: SpotlightedParticipant[];
+  /**
+   * Proxy of {@link @azure/communication-calling#SpotlightCallFeature.maxParticipantsToSpotlight}.
+   */
+  maxParticipantsToSpotlight: number;
 }
 
 /* @conditional-compile-remove(spotlight) */
@@ -317,7 +321,6 @@ export interface RemoteVideoStreamState {
    * API. This can be undefined if the stream has not yet been rendered and defined after createView creates the view.
    */
   view?: VideoStreamRendererViewState;
-  /* @conditional-compile-remove(pinned-participants) */
   /**
    * Proxy of {@link @azure/communication-calling#RemoteVideoStream.size}.
    */
@@ -403,7 +406,7 @@ export interface RemoteParticipantState {
   /**
    * Proxy of {@link @azure/communication-calling#SpotlightCallFeature.spotlightedParticipants}.
    */
-  spotlighted?: SpotlightState;
+  spotlight?: SpotlightState;
 }
 
 /**
@@ -561,7 +564,7 @@ export interface CallState {
 /**
  * Transfer feature state
  *
- * @beta
+ * @public
  */
 export interface TransferFeatureState {
   /**
@@ -574,7 +577,7 @@ export interface TransferFeatureState {
 /**
  * Transfer feature state
  *
- * @beta
+ * @public
  */
 export interface AcceptedTransfer {
   /**

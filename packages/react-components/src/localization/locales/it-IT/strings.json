@@ -31,7 +31,7 @@
   "mentionPopover": {
     "mentionPopoverHeader": "Suggerimenti"
   },
-  "imageGallery": {
+  "imageOverlay": {
     "downloadButtonLabel": "Scarica",
     "dismissButtonAriaLabel": "Chiudi"
   },
@@ -126,7 +126,12 @@
   "reactionButton": {
     "label": "Reagisci",
     "tooltipDisabledContent": "L'azione di reazione è disabilitata",
-    "tooltipContent": "Invia una reazione"
+    "tooltipContent": "Invia una reazione",
+    "likeReactionTooltipContent": "Mi piace",
+    "heartReactionTooltipContent": "Amore",
+    "laughReactionTooltipContent": "Risata",
+    "applauseReactionTooltipContent": "Applauso",
+    "surprisedReactionTooltipContent": "Sorpresa"
   },
   "messageThread": {
     "yesterday": "Ieri",
@@ -195,7 +200,8 @@
     "failedToJoinCallGeneric": "Non è stato possibile partecipare alla chiamata.",
     "failedToJoinCallInvalidMeetingLink": "Impossibile partecipare alla riunione. Collegamento non valido.",
     "cameraFrozenForRemoteParticipants": "Gli utenti della chiamata hanno problemi a visualizzare il video. Controllare i dispositivi e la rete.",
-    "unableToStartVideoEffect": "Non è possibile applicare l'effetto video."
+    "unableToStartVideoEffect": "Non è possibile applicare l'effetto video.",
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "Non è possibile avviare i contenuti in evidenza sui partecipanti perché il numero massimo di partecipanti è già in evidenza."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Stai condividendo lo schermo",
@@ -213,7 +219,12 @@
     "pinParticipantMenuItemAriaLabel": "Aggiungi {participantName}",
     "unpinParticipantMenuItemAriaLabel": "Rimuovi {participantName}",
     "pinnedParticipantAnnouncementAriaLabel": "{participantName} aggiunto",
-    "unpinnedParticipantAnnouncementAriaLabel": "{participantName} sbloccato"
+    "unpinnedParticipantAnnouncementAriaLabel": "{participantName} sbloccato",
+    "startSpotlightVideoTileMenuLabel": "Metti in evidenza per tutti",
+    "addSpotlightVideoTileMenuLabel": "Metti in evidenza",
+    "spotlightLimitReachedMenuTitle": "È stato raggiunto il limite di contenuti in evidenza",
+    "stopSpotlightVideoTileMenuLabel": "Interrompi la posizione in evidenza",
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Chiudi visualizzazione in evidenza"
   },
   "dialpad": {
     "placeholderText": "Inserisci numero di telefono",

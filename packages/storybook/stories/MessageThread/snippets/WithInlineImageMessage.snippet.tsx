@@ -2,15 +2,16 @@ import {
   FluentThemeProvider,
   MessageThread,
   Message,
-  ImageGalleryImageProps,
-  ImageGallery,
-  ChatMessage
+  ImageOverlay,
+  ChatMessage,
+  InlineImage
 } from '@azure/communication-react';
 import { Persona, PersonaSize } from '@fluentui/react';
 import React, { useState } from 'react';
 
 export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
-  const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps>>([]);
+  const [overlayImageItem, setOverlayImageItem] =
+    useState<{ imageSrc: string; title: string; titleIcon: JSX.Element; downloadFilename: string }>();
 
   const onInlineImageClicked = (attachmentId: string, messageId: string): Promise<void> => {
     const filteredMessages = messages?.filter((message) => {
@@ -34,14 +35,37 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
     const titleIcon = (
       <Persona text={chatMessage.senderDisplayName} size={PersonaSize.size32} hidePersonaDetails={true} />
     );
-    const galleryImage: ImageGalleryImageProps = {
+    const overlayImage = {
       title,
       titleIcon,
       downloadFilename: attachment.id,
-      imageUrl: attachment.url
+      imageSrc: attachment.url
     };
-    setGalleryImages([galleryImage]);
+    setOverlayImageItem(overlayImage);
     return Promise.resolve();
+  };
+
+  /* @conditional-compile-remove(image-overlay) */
+  const inlineImageOptions = {
+    onRenderInlineImage: (
+      inlineImage: InlineImage,
+      defaultOnRender: (inlineImage: InlineImage) => JSX.Element
+    ): JSX.Element => {
+      return (
+        <span
+          onClick={() => onInlineImageClicked(inlineImage.imgAttrs.id || '', inlineImage.messageId)}
+          tabIndex={0}
+          role="button"
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              onInlineImageClicked(inlineImage.imgAttrs.id || '', inlineImage.messageId);
+            }
+          }}
+        >
+          {defaultOnRender(inlineImage)}
+        </span>
+      );
+    }
   };
 
   const messages: Message[] = [
@@ -85,13 +109,16 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
   ];
   return (
     <FluentThemeProvider>
-      <MessageThread userId={'1'} messages={messages} onInlineImageClicked={onInlineImageClicked} />
+      <MessageThread userId={'1'} messages={messages} inlineImageOptions={inlineImageOptions} />
       {
-        <ImageGallery
-          isOpen={galleryImages.length > 0}
-          images={galleryImages}
-          onDismiss={() => setGalleryImages([])}
-          onImageDownloadButtonClicked={() => {
+        <ImageOverlay
+          isOpen={overlayImageItem !== undefined}
+          imageSrc={overlayImageItem?.imageSrc || ''}
+          title="Image"
+          onDismiss={() => {
+            setOverlayImageItem(undefined);
+          }}
+          onDownloadButtonClicked={() => {
             alert('Download button clicked');
           }}
         />
