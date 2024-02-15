@@ -59,7 +59,7 @@ export function NoticePage(props: NoticePageProps): JSX.Element {
           <Stack styles={rejoinCallButtonContainerStyles}>
             <StartCallButton
               onClick={() => {
-                if (callees) {
+                if (callees.length > 0) {
                   adapter.startCall(callees);
                 } else {
                   adapter.joinCall();
