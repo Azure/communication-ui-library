@@ -190,7 +190,6 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
   return { gridParticipants, overflowGalleryParticipants: overflowGalleryParticipants };
 };
 
-/* @conditional-compile-remove(pinned-participants) */
 const _useOrganizedParticipantsWithFocusedParticipants = (
   props: OrganizedParticipantsArgs
 ): OrganizedParticipantsResult => {
@@ -262,9 +261,7 @@ const putVideoParticipantsFirst = (
  * @private
  */
 export const useOrganizedParticipants = (args: OrganizedParticipantsArgs): OrganizedParticipantsResult => {
-  /* @conditional-compile-remove(pinned-participants) */
   return _useOrganizedParticipantsWithFocusedParticipants(args);
-  return _useOrganizedParticipants(args);
 };
 
 /* @conditional-compile-remove(reaction) */

@@ -60,6 +60,11 @@
     "removedFromCallMoreDetails": "다른 참가자가 귀하를 통화에서 제거했습니다.",
     "removedFromCallTitle": "통화에서 제거됐습니다.",
     "removeMenuLabel": "제거",
+    "startSpotlightParticipantListMenuLabel": "모두를 위한 스포트라이트",
+    "addSpotlightParticipantListMenuLabel": "스포트라이트 추가",
+    "stopSpotlightParticipantListMenuLabel": "스포트라이트 중지",
+    "stopSpotlightOnSelfParticipantListMenuLabel": "스포트라이트 종료",
+    "spotlightLimitReachedParticipantListMenuTitle": "스포트라이트 한도 도달",
     "returnToCallButtonAriaDescription": "통화로 돌아가기",
     "returnToCallButtonAriaLabel": "뒤로",
     "roomNotFoundDetails": "제공된 소회의실 ID를 찾을 수 없습니다.",
@@ -120,6 +125,13 @@
     "callRejectedMoreDetails": "연결하려는 사용자와 지금 대화할 수 없습니다. 나중에 다시 시도하세요.",
     "callTimeoutTitle": "통화를 완료할 수 없습니다.",
     "callTimeoutDetails": "연결하려는 사용자와 지금 대화할 수 없습니다. 나중에 다시 시도하세요.",
+    "callTimeoutBotTitle": "통화를 완료할 수 없습니다.",
+    "callTimeoutBotDetails": "연결하려는 서비스를 사용할 수 없습니다. 나중에 다시 시도하세요.",
+    "dtmfDialerButtonLabel": "다이얼패드",
+    "dtmfDialerButtonTooltipOn": "다이얼패드 표시",
+    "dtmfDialerButtonTooltipOff": "다이얼패드 숨기기",
+    "dtmfDialerMoreButtonLabelOn": "다이얼패드 표시",
+    "dtmfDialerMoreButtonLabelOff": "다이얼패드 숨기기",
     "spokenLanguageStrings": {
       "ar-ae": "아랍어 - 아랍에미리트",
       "ar-sa": "아라비아어 - 사우디 아라비아",
@@ -232,7 +244,7 @@
         "grantedDueToRoleChangeToPresenter": "귀하는 발표자입니다. 콘텐츠를 공유하고 모임을 활성화할 수 있습니다."
       }
     },
-    "surveyQuestion": "오늘 통화는 어땠나요?",
+    "surveyTitle": "사용자 환경 개선",
     "starSurveyHelperText": "통화 품질은 어떠했습니까?",
     "starSurveyOneStarText": "품질이 매우 나쁩니다.",
     "starSurveyTwoStarText": "품질이 나쁩니다.",
@@ -241,11 +253,12 @@
     "starSurveyFiveStarText": "품질이 매우 좋았습니다.",
     "surveyConfirmButtonLabel": "피드백 보내기",
     "starRatingAriaLabel": "별 {0}/{1}개 선택",
-    "surveyCancelButtonAriaLabel": "취소",
+    "surveySkipButtonLabel": "건너뛰기",
     "tagsSurveyQuestion": "개선할 사항을 알려주세요.",
     "tagsSurveyTextFieldDefaultText": "기타(구체적으로)",
     "tagsSurveyHelperText": "발생한 문제를 확인하세요.",
     "surveyTextboxDefaultText": "기타(구체적으로)",
+    "endOfSurveyText": "피드백을 보내주셔서 감사합니다!",
     "surveyIssues": {
       "overallRating": {
         "callCannotJoin": "통화에 참가할 수 없습니다.",
@@ -291,6 +304,20 @@
       "audioRating": "오디오",
       "videoRating": "비디오",
       "screenshareRating": "프레젠테이션 중"
+    },
+    "spotlightPrompt": {
+      "startSpotlightHeading": "모든 사용자에게 스포트라이트하시겠습니까?",
+      "startSpotlightText": "모임에 참석한 모든 사용자에 대해 이 비디오를 강조합니다.",
+      "startSpotlightOnSelfText": "모임에 참석한 모든 사용자에 대해 비디오를 강조합니다.",
+      "startSpotlightConfirmButtonLabel": "모든 사용자에게 스포트라이트",
+      "startSpotlightCancelButtonLabel": "취소",
+      "stopSpotlightHeading": "스포트라이트를 중지하시겠습니까?",
+      "stopSpotlightOnSelfHeading": "스포트라이트를 종료하시겠습니까?",
+      "stopSpotlightText": "모임에 참석한 모든 사용자에게 이 비디오가 더 이상 강조되지 않습니다.",
+      "stopSpotlightOnSelfText": "모임에 참석한 모든 사용자에 대해 비디오가 더 이상 강조되지 않습니다.",
+      "stopSpotlightConfirmButtonLabel": "스포트라이트 중지",
+      "stopSpotlightOnSelfConfirmButtonLabel": "스포트라이트 종료",
+      "stopSpotlightCancelButtonLabel": "취소"
     }
   },
   "chat": {

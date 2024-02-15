@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "area": "improvement",
+  "workstream": "Improving cc application for build",
+  "comment": "Conditional compilation tags imposing to get successful builds",
+  "packageName": "@azure/communication-react",
+  "email": "mbellah@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -9,17 +9,17 @@ export interface CallSurveyImprovementSuggestions {
   /**
    * Improvement suggestions for overall call
    */
-  overall?: string;
+  overallRating?: string;
   /**
    * Improvement suggestions for audio experience
    */
-  audio?: string;
+  audioRating?: string;
   /**
    * Improvement suggestions for video experience
    */
-  video?: string;
+  videoRating?: string;
   /**
    * Improvement suggestions for screenshare experience
    */
-  screenshare?: string;
+  screenshareRating?: string;
 }

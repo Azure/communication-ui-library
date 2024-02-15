@@ -13,7 +13,8 @@ jobs:
   build_and_test:
     name: Build and Test
     runs-on: ubuntu-latest
-    permissions: read-all
+    permissions:
+      contents: write
     steps:
       # Check-out repo
       - uses: actions/checkout@v3

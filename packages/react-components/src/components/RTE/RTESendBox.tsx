@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { RTEInputBoxComponent } from './RTEInputBoxComponent';
 import { Icon, Stack, useTheme } from '@fluentui/react';
 import { useLocale } from '../../localization';
@@ -11,6 +11,12 @@ import { InputBoxButton } from '../InputBoxButton';
 import { RTESendBoxErrors, RTESendBoxErrorsProps } from './RTESendBoxErrors';
 /* @conditional-compile-remove(file-sharing) */
 import { ActiveFileUpload } from '../FileUploadCards';
+/* @conditional-compile-remove(file-sharing) */
+import { SendBoxErrorBarError } from '../SendBoxErrorBar';
+import { exceedsMaxAllowedLength, sanitizeText } from '../utils/SendBoxUtils';
+/* @conditional-compile-remove(file-sharing) */
+import { hasCompletedFileUploads } from '../utils/SendBoxUtils';
+import { RichTextEditorComponentRef } from './RichTextEditor';
 
 /**
  * Props for {@link RTESendBox}.
@@ -28,7 +34,7 @@ export interface RTESendBoxProps {
    */
   strings?: Partial<SendBoxStrings>;
   /**
-   * Optional text for system message below text box
+   * Optional text for system message above the text box
    */
   systemMessage?: string;
   /* @conditional-compile-remove(file-sharing) */
@@ -53,6 +59,10 @@ export interface RTESendBoxProps {
    * @beta
    */
   onCancelFileUpload?: (fileId: string) => void;
+  /**
+   * Callback function used when the send button is clicked.
+   */
+  onSendMessage: (content: string) => Promise<void>;
 }
 
 /**
@@ -61,23 +71,81 @@ export interface RTESendBoxProps {
  * @beta
  */
 export const RTESendBox = (props: RTESendBoxProps): JSX.Element => {
-  const { disabled, systemMessage } = props;
+  const {
+    disabled = false,
+    systemMessage,
+    onSendMessage,
+    /* @conditional-compile-remove(file-sharing) */
+    activeFileUploads
+  } = props;
 
   const theme = useTheme();
   const localeStrings = useLocale().strings.sendBox;
   const strings = { ...localeStrings, ...props.strings };
 
-  const [contentValue] = useState('');
-  const [contentValueOverflow] = useState(false);
+  const [contentValue, setContentValue] = useState('');
+  const [contentValueOverflow, setContentValueOverflow] = useState(false);
+  /* @conditional-compile-remove(file-sharing) */
+  const [fileUploadsPendingError, setFileUploadsPendingError] = useState<SendBoxErrorBarError | undefined>(undefined);
+  const editorComponentRef = useRef<RichTextEditorComponentRef>(null);
 
-  const contentTooLongMessage = contentValueOverflow ? strings.textTooLong : undefined;
-  const errorMessage = systemMessage ?? contentTooLongMessage;
+  const contentTooLongMessage = useMemo(
+    () => (contentValueOverflow ? strings.textTooLong : undefined),
+    [contentValueOverflow, strings.textTooLong]
+  );
+
+  const setContent = (newValue?: string): void => {
+    if (newValue === undefined) {
+      return;
+    }
+
+    setContentValueOverflow(exceedsMaxAllowedLength(newValue.length));
+    setContentValue(newValue);
+  };
 
   const sendMessageOnClick = (): void => {
     if (disabled || contentValueOverflow) {
       return;
     }
+    // Don't send message until all files have been uploaded successfully
+    /* @conditional-compile-remove(file-sharing) */
+    setFileUploadsPendingError(undefined);
+
+    // if (hasIncompleteFileUploads(activeFileUploads)) {
+    //   setFileUploadsPendingError({ message: strings.fileUploadsPendingError, timestamp: Date.now() });
+    //   return;
+    // }
+
+    const message = contentValue;
+    // we don't want to send empty messages including spaces, newlines, tabs
+    // Message can be empty if there is a valid file upload
+    if (
+      sanitizeText(message).length > 0 ||
+      /* @conditional-compile-remove(file-sharing) */ hasCompletedFileUploads(activeFileUploads)
+    ) {
+      onSendMessage(message);
+      setContentValue('');
+    }
+    editorComponentRef.current?.focus();
   };
+
+  const hasErrorMessage = useMemo(() => {
+    return (
+      !!systemMessage ||
+      !!contentTooLongMessage ||
+      /* @conditional-compile-remove(file-sharing) */
+      !!fileUploadsPendingError ||
+      /* @conditional-compile-remove(file-sharing) */
+      !!activeFileUploads?.filter((fileUpload) => fileUpload.error).pop()?.error
+    );
+  }, [
+    /* @conditional-compile-remove(file-sharing) */
+    activeFileUploads,
+    contentTooLongMessage,
+    /* @conditional-compile-remove(file-sharing) */
+    fileUploadsPendingError,
+    systemMessage
+  ]);
 
   const onRenderSendIcon = useCallback(
     (isHover: boolean) => (
@@ -86,44 +154,64 @@ export const RTESendBox = (props: RTESendBoxProps): JSX.Element => {
         className={sendIconStyle({
           theme,
           hasText: !!contentValue,
-          /* @conditional-compile-remove(file-sharing) */ hasFile: false,
-          hasErrorMessage: !!errorMessage
+          /* @conditional-compile-remove(file-sharing) */
+          hasFile: false,
+          hasErrorMessage: hasErrorMessage
         })}
       />
     ),
-    [contentValue, errorMessage, theme]
+    [contentValue, hasErrorMessage, theme]
   );
 
-  const sendBoxErrorsProps = useMemo<RTESendBoxErrorsProps>(() => {
+  const sendBoxErrorsProps: RTESendBoxErrorsProps = useMemo(() => {
     return {
-      fileUploadsPendingError: undefined,
-      fileUploadError: undefined,
-      systemError: systemMessage ? { message: systemMessage, timestamp: Date.now() } : undefined,
-      messageTooLongError: contentValueOverflow ? { message: strings.textTooLong, timestamp: Date.now() } : undefined
+      /* @conditional-compile-remove(file-sharing) */
+      fileUploadsPendingError: fileUploadsPendingError,
+      /* @conditional-compile-remove(file-sharing) */
+      fileUploadError: activeFileUploads?.filter((fileUpload) => fileUpload.error).pop()?.error,
+      systemMessage: systemMessage,
+      textTooLongMessage: contentTooLongMessage
     };
-  }, [contentValueOverflow, strings.textTooLong, systemMessage]);
+  }, [
+    /* @conditional-compile-remove(file-sharing) */
+    activeFileUploads,
+    contentTooLongMessage,
+    /* @conditional-compile-remove(file-sharing) */
+    fileUploadsPendingError,
+    systemMessage
+  ]);
 
   return (
-    <Stack
-      className={borderAndBoxShadowStyle({
-        theme: theme,
-        hasErrorMessage: !!errorMessage,
-        disabled: !!disabled
-      })}
-    >
+    <Stack>
       <RTESendBoxErrors {...sendBoxErrorsProps} />
-      <RTEInputBoxComponent placeholderText={strings.placeholderText} content={contentValue} />
-      <InputBoxButton
-        onRenderIcon={onRenderSendIcon}
-        onClick={(e) => {
-          sendMessageOnClick();
-          e.stopPropagation(); // Prevents the click from bubbling up and triggering a focus event on the chat.
-        }}
-        className={sendButtonStyle}
-        ariaLabel={localeStrings.sendButtonAriaLabel}
-        tooltipContent={localeStrings.sendButtonAriaLabel}
-      />
-      {/* File Upload */}
+      <div
+        className={borderAndBoxShadowStyle({
+          theme: theme,
+          // should always be false as we don't want to show the border when there is an error
+          hasErrorMessage: false,
+          disabled: !!disabled
+        })}
+      >
+        <RTEInputBoxComponent
+          placeholderText={strings.placeholderText}
+          content={contentValue}
+          onChange={setContent}
+          editorComponentRef={editorComponentRef}
+        />
+        {/* File Upload */}
+      </div>
+      <Stack.Item align="end">
+        <InputBoxButton
+          onRenderIcon={onRenderSendIcon}
+          onClick={(e) => {
+            sendMessageOnClick();
+            e.stopPropagation(); // Prevents the click from bubbling up and triggering a focus event on the chat.
+          }}
+          className={sendButtonStyle}
+          ariaLabel={localeStrings.sendButtonAriaLabel}
+          tooltipContent={localeStrings.sendButtonAriaLabel}
+        />
+      </Stack.Item>
     </Stack>
   );
 };

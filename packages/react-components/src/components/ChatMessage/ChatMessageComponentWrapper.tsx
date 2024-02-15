@@ -14,6 +14,8 @@ import { MentionOptions } from '../MentionPopover';
 import { MessageStatusIndicatorProps } from '../MessageStatusIndicator';
 import { FluentChatMessageComponentWrapper } from './FluentChatMessageComponentWrapper';
 import { DefaultSystemMessage } from './DefaultSystemMessage';
+/* @conditional-compile-remove(image-overlay) */
+import { InlineImageOptions } from './ChatMessageContent';
 
 /**
  * Props for {@link ChatMessageComponentWrapper}
@@ -54,8 +56,8 @@ export type ChatMessageComponentWrapperProps = _ChatMessageProps & {
   fileDownloadHandler?: FileDownloadHandler;
   /* @conditional-compile-remove(date-time-customization) */
   onDisplayDateTimeString?: (messageDate: Date) => string;
-  /* @conditional-compile-remove(image-gallery) */
-  onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
+  /* @conditional-compile-remove(image-overlay) */
+  inlineImageOptions?: InlineImageOptions;
   /* @conditional-compile-remove(mention) */
   mentionOptions?: MentionOptions;
 };

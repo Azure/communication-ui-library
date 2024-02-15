@@ -3,7 +3,6 @@
 
 import { IContextualMenuProps, Layer, Stack } from '@fluentui/react';
 import React, { useMemo } from 'react';
-/* @conditional-compile-remove(pinned-participants) */
 import { KeyboardEvent, useCallback } from 'react';
 import {
   CreateVideoStreamViewResult,
@@ -63,7 +62,11 @@ export const _RemoteVideoTile = React.memo(
     onUnpinParticipant?: (userId: string) => void;
     onUpdateScalingMode?: (userId: string, scalingMode: ViewScalingMode) => void;
     isPinned?: boolean;
+    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds?: string[];
     /* @conditional-compile-remove(spotlight) */ isSpotlighted?: boolean;
+    /* @conditional-compile-remove(spotlight) */ onStartSpotlight?: (userIds: string[]) => void;
+    /* @conditional-compile-remove(spotlight) */ onStopSpotlight?: (userIds: string[]) => void;
+    /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight?: number;
     disablePinMenuItem?: boolean;
     toggleAnnouncerString?: (announcerString: string) => void;
     /* @conditional-compile-remove(reaction) */ reactionResources?: ReactionResources;
@@ -85,7 +88,11 @@ export const _RemoteVideoTile = React.memo(
       isPinned,
       onPinParticipant,
       onUnpinParticipant,
+      /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds,
       /* @conditional-compile-remove(spotlight) */ isSpotlighted,
+      /* @conditional-compile-remove(spotlight) */ onStartSpotlight,
+      /* @conditional-compile-remove(spotlight) */ onStopSpotlight,
+      /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight,
       onUpdateScalingMode,
       disablePinMenuItem,
       toggleAnnouncerString,
@@ -123,21 +130,27 @@ export const _RemoteVideoTile = React.memo(
     const contextualMenuProps = useVideoTileContextualMenuProps({
       remoteParticipant,
       view: createVideoStreamResult?.view,
-      /* @conditional-compile-remove(pinned-participants) */
       strings: { ...props.strings },
       isPinned,
       onPinParticipant,
       onUnpinParticipant,
       onUpdateScalingMode,
       disablePinMenuItem,
-      toggleAnnouncerString
+      toggleAnnouncerString,
+      /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds,
+      /* @conditional-compile-remove(spotlight) */ isSpotlighted,
+      /* @conditional-compile-remove(spotlight) */ onStartSpotlight,
+      /* @conditional-compile-remove(spotlight) */ onStopSpotlight,
+      /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight
     });
 
     const videoTileContextualMenuProps = useMemo(() => {
-      if (menuKind !== 'contextual') {
+      if (menuKind !== 'contextual' || !contextualMenuProps) {
         return {};
       }
-      return videoTileContextualMenuPropsTrampoline(contextualMenuProps);
+      return {
+        contextualMenu: contextualMenuProps
+      };
     }, [contextualMenuProps, menuKind]);
 
     const showLoadingIndicator = isAvailable && isReceiving === false && participantState !== 'Disconnected';
@@ -157,7 +170,6 @@ export const _RemoteVideoTile = React.memo(
       );
     }, [renderElement, showLoadingIndicator]);
 
-    /* @conditional-compile-remove(pinned-participants) */
     const onKeyDown = useCallback(
       (e: KeyboardEvent) => {
         if (e.key === 'Enter') {
@@ -185,9 +197,7 @@ export const _RemoteVideoTile = React.memo(
     displayName = formatDisplayName();
     return (
       <Stack
-        /* @conditional-compile-remove(pinned-participants) */
         tabIndex={menuKind === 'drawer' ? 0 : undefined}
-        /* @conditional-compile-remove(pinned-participants) */
         onKeyDown={menuKind === 'drawer' ? onKeyDown : undefined}
         style={remoteVideoTileWrapperStyle}
       >
@@ -211,9 +221,7 @@ export const _RemoteVideoTile = React.memo(
           /* @conditional-compile-remove(PSTN-calls) */
           participantState={participantState}
           {...videoTileContextualMenuProps}
-          /* @conditional-compile-remove(pinned-participants) */
           isPinned={props.isPinned}
-          /* @conditional-compile-remove(pinned-participants) */
           onLongTouch={() =>
             setDrawerMenuItemProps(
               convertContextualMenuItemsToDrawerMenuItemProps(contextualMenuProps, () => setDrawerMenuItemProps([]))
@@ -240,21 +248,6 @@ export const _RemoteVideoTile = React.memo(
   }
 );
 
-const videoTileContextualMenuPropsTrampoline = (
-  contextualMenuProps?: IContextualMenuProps
-): { contextualMenu?: IContextualMenuProps } => {
-  if (!contextualMenuProps) {
-    return {};
-  }
-  /* @conditional-compile-remove(pinned-participants) */
-  return {
-    contextualMenu: contextualMenuProps
-  };
-
-  return {};
-};
-
-/* @conditional-compile-remove(pinned-participants) */
 const convertContextualMenuItemsToDrawerMenuItemProps = (
   contextualMenuProps?: IContextualMenuProps,
   onLightDismiss?: () => void

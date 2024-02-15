@@ -138,7 +138,6 @@ describe('useOrganizedParticipants hook tests', () => {
   });
 });
 
-/* @conditional-compile-remove(pinned-participants) */
 describe('useOrganizedParticipants hook tests with pinned participants', () => {
   test('pinned participants should in grid and video participants should be at the start of overflow gallery', () => {
     // 10 remote participants. First 5 with their video on.

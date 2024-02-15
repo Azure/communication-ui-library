@@ -151,19 +151,27 @@ const extractAttachmentUrl = (attachment: ChatAttachment): string => {
 const processChatMessageContent = (message: ChatMessageWithStatus): string | undefined => {
   let content = message.content?.message;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  if (content && message.content?.attachments && sanitizedMessageContentType(message.type).includes('html')) {
+
+  if (
+    message.content?.attachments &&
+    message.content?.attachments.length > 0 &&
+    sanitizedMessageContentType(message.type).includes('html')
+  ) {
     const attachments: ChatAttachment[] = message.content?.attachments;
     // Fill in the src here
-    const document = new DOMParser().parseFromString(content, 'text/html');
-    document.querySelectorAll('img').forEach((img) => {
-      const attachmentPreviewUrl = attachments.find((attachment) => attachment.id === img.id)?.previewUrl;
-      if (attachmentPreviewUrl) {
-        const src = message.resourceCache?.[attachmentPreviewUrl] ?? '';
-        img.src = src;
-      }
-    });
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-    content = document.documentElement.innerHTML;
+    if (content) {
+      const document = new DOMParser().parseFromString(content ?? '', 'text/html');
+      document.querySelectorAll('img').forEach((img) => {
+        const attachmentPreviewUrl = attachments.find((attachment) => attachment.id === img.id)?.previewUrl;
+        if (attachmentPreviewUrl) {
+          const src = message.resourceCache?.[attachmentPreviewUrl] ?? '';
+          img.src = src;
+        }
+      });
+      content = document.body.innerHTML;
+    }
+
     const teamsImageHtmlContent = attachments
       .filter(
         (attachment) =>

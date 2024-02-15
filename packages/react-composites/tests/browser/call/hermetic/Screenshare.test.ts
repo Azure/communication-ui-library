@@ -80,7 +80,6 @@ test.describe('Screenshare tests', async () => {
 
     expect(await stableScreenshot(page)).toMatchSnapshot('remote-screenshare-horizontal-gallery-page-1.png');
 
-    /* @conditional-compile-remove(pinned-participants) */
     if (await existsOnPage(page, dataUiId('scrollable-horizontal-gallery'))) {
       await dragToRight(page, dataUiId('scrollable-horizontal-gallery'));
       expect(await stableScreenshot(page)).toMatchSnapshot(

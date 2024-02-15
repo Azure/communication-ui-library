@@ -1,8 +1,38 @@
 # Change Log - @azure/communication-react
 
-This log was last generated on Mon, 20 Nov 2023 21:42:07 GMT and should not be manually modified.
+This log was last generated on Mon, 29 Jan 2024 17:18:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.13.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.13.0-beta.1)
+
+Mon, 29 Jan 2024 17:18:22 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.12.0...1.13.0-beta.1)
+
+### Custom Branding - Public Preivew
+
+The CallComposite and CallWithChatComposite now support applying a background image and logo to the Configuration Page. This allows developers to unify their customers' joining experiences if they have a Teams Premium feature enabled called Teams Meeting Themes.
+
+### Features
+- Include ability to set background image and logo in CallComposites in beta packages ([PR #3968](https://github.com/azure/communication-ui-library/pull/3968) by 2684369+JamesBurnside@users.noreply.github.com)
+
+### Improvements
+- Change onInlineImageClicked API to inlineImageOptions ([PR #4050](https://github.com/azure/communication-ui-library/pull/4050) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
+- Introduce new queue system to download images ([PR #4044](https://github.com/azure/communication-ui-library/pull/4044) by 9044372+JoshuaLai@users.noreply.github.com)
+- Update dependencies that had a patch bump available ([PR #4036](https://github.com/azure/communication-ui-library/pull/4036) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Add license field for package.json files ([PR #4018](https://github.com/azure/communication-ui-library/pull/4018) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Update to TypeScript 4.6.3 minimum ([PR #3862](https://github.com/azure/communication-ui-library/pull/3862) by 3941071+emlynmac@users.noreply.github.com)
+- Update to rollup 4.7.0 ([PR #3894](https://github.com/azure/communication-ui-library/pull/3894) by 3941071+emlynmac@users.noreply.github.com)
+- Update localized strings for aria label when message is deleted ([PR #3899](https://github.com/azure/communication-ui-library/pull/3899) by miguelgamis@microsoft.com)
+- update minor packages ([PR #4039](https://github.com/azure/communication-ui-library/pull/4039) by 94866715+dmceachernmsft@users.noreply.github.com)
+- update to new Calling beta ([PR #4008](https://github.com/azure/communication-ui-library/pull/4008) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Update calling dependency ([PR #4055](https://github.com/azure/communication-ui-library/pull/4055) by 96077406+carocao-msft@users.noreply.github.com)
+- Upgrade rooms client to versions 1.1.0-beta.1 and 1.1.0 ([PR #3819](https://github.com/azure/communication-ui-library/pull/3819) by 79475487+mgamis-msft@users.noreply.github.com)
+- TDBuild - updating localized resource files. ([PR #4025](https://github.com/azure/communication-ui-library/pull/4025) by edwardlee@microsoft.com)
+### Bug Fixes
+- Stop the ringing sound from playing when the call disconnects before the callee answers ([PR #3889](https://github.com/azure/communication-ui-library/pull/3889) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Enable the ability for user to edit value in text field with keyboard ([PR #3970](https://github.com/azure/communication-ui-library/pull/3970) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Introduce new endcall screen for when a outbound call times out ([PR #3914](https://github.com/azure/communication-ui-library/pull/3914) by 94866715+dmceachernmsft@users.noreply.github.com)
 
 ## [1.11.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.11.0-beta.1)
 

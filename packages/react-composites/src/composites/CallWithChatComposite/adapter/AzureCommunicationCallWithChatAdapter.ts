@@ -20,7 +20,9 @@ import { Reaction } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
-import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
+/* @conditional-compile-remove(dtmf-dialer) */
+import { DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AttachmentDownloadResult } from '@internal/react-components';
@@ -48,6 +50,8 @@ import {
   MessageEditedListener,
   MessageDeletedListener
 } from '../../ChatComposite';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { ResourceDetails } from '../../ChatComposite';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadManager } from '../../ChatComposite';
 import { CallWithChatAdapter, CallWithChatEvent } from './CallWithChatAdapter';
@@ -88,7 +92,7 @@ import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { useEffect, useRef, useState } from 'react';
 import { _toCommunicationIdentifier, _TelemetryImplementationHint } from '@internal/acs-ui-common';
-import { JoinCallOptions } from '../../CallComposite/adapter/CallAdapter';
+import { JoinCallOptions, StartCallIdentifier } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 import { AzureCommunicationCallAdapterOptions } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(close-captions) */
@@ -100,6 +104,8 @@ import {
 } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(capabilities) */
 import { CapabilitiesChangedListener } from '../../CallComposite/adapter/CallAdapter';
+/* @conditional-compile-remove(spotlight) */
+import { SpotlightChangedListener } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 /* @conditional-compile-remove(end-of-call-survey) */
@@ -232,14 +238,18 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     /* @conditional-compile-remove(file-sharing) */
     this.updateFileUploadMetadata = this.updateFileUploadMetadata.bind(this);
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-    this.downloadAttachments = this.downloadAttachments.bind(this);
+    this.downloadAttachment = this.downloadAttachment.bind(this); // ToDo: This method is to be removed
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    this.downloadResourceToCache = this.downloadResourceToCache.bind(this);
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    this.removeResourceFromCache = this.removeResourceFromCache.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
     this.holdCall.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
     this.resumeCall.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
     this.addParticipant.bind(this);
-    /* @conditional-compile-remove(PSTN-calls) */
+    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(dtmf-dialer) */
     this.sendDtmfTone.bind(this);
     /* @conditional-compile-remove(unsupported-browser) */
     this.allowUnsupportedBrowserVersion.bind(this);
@@ -270,15 +280,21 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     // Only remove self from the GroupCall. Contoso must manage access to Chat.
     await this.callAdapter.leaveCall(forEveryone);
   }
+
   /** Start a new Call. */
-  public startCall(
-    participants: string[] | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier[],
-    options?: StartCallOptions
-  ): Call | undefined {
-    let communicationParticipants = participants;
-    /* @conditional-compile-remove(PSTN-calls) */
-    communicationParticipants = participants.map(_toCommunicationIdentifier);
-    return this.callAdapter.startCall(communicationParticipants, options);
+  public startCall(participants: string[], options?: StartCallOptions): Call | undefined;
+  /** Start a new Call. */
+  public startCall(participants: StartCallIdentifier[], options?: StartCallOptions): Call | undefined;
+  /** Start a new Call. */
+  public startCall(participants: string[] | StartCallIdentifier[], options?: StartCallOptions): Call | undefined {
+    if (participants.length === 0) {
+      throw new Error('At least one participant is required to start a call');
+    }
+    if (typeof participants[0] === 'string') {
+      return this.callAdapter.startCall(participants as string[], options);
+    } else {
+      return this.callAdapter.startCall(participants as StartCallIdentifier[], options);
+    }
   }
   /**
    * Subscribe to state change events.
@@ -472,8 +488,17 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.chatAdapter.updateFileUploadMetadata(id, metadata);
   };
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  async downloadAttachments(options: { attachmentUrls: Record<string, string> }): Promise<AttachmentDownloadResult[]> {
-    return await this.chatAdapter.downloadAttachments(options);
+  // ToDo: This method is to be removed
+  async downloadAttachment(options: { attachmentUrl: string }): Promise<AttachmentDownloadResult> {
+    return await this.chatAdapter.downloadAttachment(options);
+  }
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  public downloadResourceToCache(resourceDetails: ResourceDetails): void {
+    this.chatAdapter.downloadResourceToCache(resourceDetails);
+  }
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  public removeResourceFromCache(resourceDetails: ResourceDetails): void {
+    this.chatAdapter.removeResourceFromCache(resourceDetails);
   }
   /* @conditional-compile-remove(PSTN-calls) */
   public async holdCall(): Promise<void> {
@@ -499,7 +524,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     }
   }
 
-  /* @conditional-compile-remove(PSTN-calls) */
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(dtmf-dialer) */
   public async sendDtmfTone(dtmfTone: DtmfTone): Promise<void> {
     return await this.callAdapter.sendDtmfTone(dtmfTone);
   }
@@ -554,13 +579,13 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   }
 
   /* @conditional-compile-remove(spotlight) */
-  public async startSpotlight(userId: string): Promise<void> {
-    return this.callAdapter.startSpotlight(userId);
+  public async startSpotlight(userIds?: string[]): Promise<void> {
+    return this.callAdapter.startSpotlight(userIds);
   }
 
   /* @conditional-compile-remove(spotlight) */
-  public async stopSpotlight(userId: string): Promise<void> {
-    return this.callAdapter.stopSpotlight(userId);
+  public async stopSpotlight(userIds?: string[]): Promise<void> {
+    return this.callAdapter.stopSpotlight(userIds);
   }
 
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
@@ -592,6 +617,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
   /* @conditional-compile-remove(capabilities) */
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
+  /* @conditional-compile-remove(spotlight) */
+  on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   on(event: CallWithChatEvent, listener: any): void {
@@ -704,6 +731,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
   /* @conditional-compile-remove(capabilities) */
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
+  /* @conditional-compile-remove(spotlight) */
+  off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   off(event: CallWithChatEvent, listener: any): void {

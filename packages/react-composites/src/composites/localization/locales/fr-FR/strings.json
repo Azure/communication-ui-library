@@ -60,6 +60,11 @@
     "removedFromCallMoreDetails": "Un autre participant vous a supprimé de l’appel.",
     "removedFromCallTitle": "Vous avez été supprimé.",
     "removeMenuLabel": "Supprimer",
+    "startSpotlightParticipantListMenuLabel": "Mettre en évidence pour tout le monde",
+    "addSpotlightParticipantListMenuLabel": "Ajouter la mise en évidence",
+    "stopSpotlightParticipantListMenuLabel": "Arrêter la mise en évidence",
+    "stopSpotlightOnSelfParticipantListMenuLabel": "Quitter la mise en évidence",
+    "spotlightLimitReachedParticipantListMenuTitle": "Limite Spotlight atteinte",
     "returnToCallButtonAriaDescription": "Revenir à l’appel",
     "returnToCallButtonAriaLabel": "Précédent",
     "roomNotFoundDetails": "L’ID de la salle fourni est introuvable.",
@@ -120,6 +125,13 @@
     "callRejectedMoreDetails": "La personne que vous essayez de rejoindre n’est pas disponible. Veuillez réessayer plus tard.",
     "callTimeoutTitle": "Nous n’avons pas pu effectuer l’appel",
     "callTimeoutDetails": "La personne que vous essayez de rejoindre n’est pas disponible. Veuillez réessayer plus tard.",
+    "callTimeoutBotTitle": "Nous n’avons pas pu effectuer l’appel",
+    "callTimeoutBotDetails": "Le service que vous essayez d’atteindre n’est pas disponible. Veuillez réessayer plus tard.",
+    "dtmfDialerButtonLabel": "Clavier",
+    "dtmfDialerButtonTooltipOn": "Afficher le pavé numérique",
+    "dtmfDialerButtonTooltipOff": "Masquez le pavé de numérotation",
+    "dtmfDialerMoreButtonLabelOn": "Afficher le pavé numérique",
+    "dtmfDialerMoreButtonLabelOff": "Masquez le pavé de numérotation",
     "spokenLanguageStrings": {
       "ar-ae": "Arabe – E.A.U.",
       "ar-sa": "Arabe – Arabie saoudite",
@@ -232,7 +244,7 @@
         "grantedDueToRoleChangeToPresenter": "Vous êtes présentateur. Vous pouvez partager du contenu et organiser la réunion."
       }
     },
-    "surveyQuestion": "Comment s’est passé votre appel aujourd’hui ?",
+    "surveyTitle": "Aidez-nous à nous améliorer",
     "starSurveyHelperText": "Quelle a été la qualité globale de cet appel ?",
     "starSurveyOneStarText": "La qualité était mauvaise.",
     "starSurveyTwoStarText": "La qualité était mauvaise.",
@@ -241,11 +253,12 @@
     "starSurveyFiveStarText": "La qualité était excellente.",
     "surveyConfirmButtonLabel": "Envoyer des commentaires",
     "starRatingAriaLabel": "Sélectionner {0} étoiles sur {1}",
-    "surveyCancelButtonAriaLabel": "Annuler",
+    "surveySkipButtonLabel": "Ignorer",
     "tagsSurveyQuestion": "Que pouvons-nous améliorer ?",
     "tagsSurveyTextFieldDefaultText": "Autre, veuillez préciser",
     "tagsSurveyHelperText": "Cochez les problèmes que vous avez rencontrés",
     "surveyTextboxDefaultText": "Autre, veuillez préciser",
+    "endOfSurveyText": "Merci pour vos commentaires !",
     "surveyIssues": {
       "overallRating": {
         "callCannotJoin": "Je n’ai pas pu rejoindre l’appel",
@@ -291,6 +304,20 @@
       "audioRating": "Audio",
       "videoRating": "Vidéo",
       "screenshareRating": "En présentation"
+    },
+    "spotlightPrompt": {
+      "startSpotlightHeading": "Mettre en évidence pour tout le monde ?",
+      "startSpotlightText": "Votre vidéo ne sera plus mise en surbrillance pour tous les participants à la réunion.",
+      "startSpotlightOnSelfText": "Vous mettez en surbrillance votre vidéo pour tous les participants à la réunion.",
+      "startSpotlightConfirmButtonLabel": "Mettre en évidence pour tout le monde",
+      "startSpotlightCancelButtonLabel": "Annuler",
+      "stopSpotlightHeading": "Arrêter la mise en évidence ?",
+      "stopSpotlightOnSelfHeading": "Quitter la mise en évidence ?",
+      "stopSpotlightText": "Cette vidéo ne sera plus mise en évidence pour tous les participants à la réunion.",
+      "stopSpotlightOnSelfText": "Votre vidéo ne sera plus mise en surbrillance pour tous les participants à la réunion.",
+      "stopSpotlightConfirmButtonLabel": "Arrêter la mise en évidence",
+      "stopSpotlightOnSelfConfirmButtonLabel": "Quitter la mise en évidence",
+      "stopSpotlightCancelButtonLabel": "Annuler"
     }
   },
   "chat": {
