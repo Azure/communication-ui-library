@@ -55,6 +55,7 @@ import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { _TelemetryImplementationHint } from '@internal/acs-ui-common';
 import { Theme } from '@fluentui/react';
+import { TransferEventArgs } from '@azure/communication-calling';
 import { UnknownIdentifier } from '@azure/communication-common';
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 import { VideoDeviceInfo } from '@azure/communication-calling';
@@ -218,6 +219,7 @@ export type CallAdapterClientState = {
     videoBackgroundImages?: VideoBackgroundImage[];
     onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
+    acceptedTransferCallState?: CallState;
     sounds?: CallingSounds;
 };
 
@@ -256,6 +258,7 @@ export interface CallAdapterSubscribers {
     off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
     off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
     off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
+    off(event: 'transferAccepted', listener: TransferAcceptedListener): void;
     off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     off(event: 'roleChanged', listener: PropertyChangedEvent): void;
     on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
@@ -274,6 +277,7 @@ export interface CallAdapterSubscribers {
     on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
     on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
     on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
+    on(event: 'transferAccepted', listener: TransferAcceptedListener): void;
     on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     on(event: 'roleChanged', listener: PropertyChangedEvent): void;
 }
@@ -377,7 +381,7 @@ export type CallCompositeOptions = {
 };
 
 // @public
-export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'leaving' | 'lobby' | 'removedFromCall';
+export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'leaving' | 'lobby' | 'removedFromCall' | /* @conditional-compile-remove(call-transfer) */ 'transferring';
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
@@ -479,6 +483,7 @@ export interface CallCompositeStrings {
     noSpeakersLabel: string;
     notInvitedToRoomDetails?: string;
     notInvitedToRoomTitle: string;
+    outboundCallingNoticeString: string;
     participantJoinedNoticeString: string;
     participantLeftNoticeString: string;
     peopleButtonLabel: string;
@@ -505,6 +510,11 @@ export interface CallCompositeStrings {
     startCaptionsButtonTooltipOnContent?: string;
     threeParticipantJoinedNoticeString: string;
     threeParticipantLeftNoticeString: string;
+    transferPageNoticeString: string;
+    transferPageTransferorText: string;
+    transferPageTransferTargetText: string;
+    transferPageUnknownTransferorDisplayName: string;
+    transferPageUnknownTransferTargetDisplayName: string;
     twoParticipantJoinedNoticeString: string;
     twoParticipantLeftNoticeString: string;
     unableToStartVideoEffect?: string;
@@ -1566,6 +1576,9 @@ export type TeamsAdapterOptions = CommonCallAdapterOptions;
 export type TopicChangedListener = (event: {
     topic: string;
 }) => void;
+
+// @public
+export type TransferAcceptedListener = (event: TransferEventArgs) => void;
 
 // @public
 export const useAzureCommunicationCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs | AzureCommunicationOutboundCallAdapterArgs>, afterCreate?: ((adapter: CallAdapter) => Promise<CallAdapter>) | undefined, beforeDispose?: ((adapter: CallAdapter) => Promise<void>) | undefined) => CallAdapter | undefined;

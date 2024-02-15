@@ -38,6 +38,12 @@ import { VideoStreamRenderer } from '@azure/communication-calling';
 import { VideoStreamRendererView } from '@azure/communication-calling';
 
 // @public
+export interface AcceptedTransfer {
+    callId: string;
+    timestamp: Date;
+}
+
+// @public
 export type CallAgentCommon = CallAgent;
 
 // @public
@@ -112,6 +118,7 @@ export interface CallState {
     startTime: Date;
     state: CallState_2;
     transcription: TranscriptionCallFeature;
+    transfer: TransferFeature;
 }
 
 // @public
@@ -305,6 +312,13 @@ export type TeamsCallAgent = never;
 // @public
 export interface TranscriptionCallFeature {
     isTranscriptionActive: boolean;
+}
+
+// @public
+export interface TransferFeature {
+    acceptedTransfers: {
+        [key: string]: AcceptedTransfer;
+    };
 }
 
 // @public

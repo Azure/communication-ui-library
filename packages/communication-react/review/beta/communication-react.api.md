@@ -87,12 +87,11 @@ import { SendMessageOptions } from '@azure/communication-chat';
 import { SpotlightedParticipant } from '@azure/communication-calling';
 import { StartCallOptions } from '@azure/communication-calling';
 import { StartCaptionsOptions } from '@azure/communication-calling';
-import { SyntheticEvent } from 'react';
 import { TeamsCall } from '@azure/communication-calling';
 import { TeamsCallAgent } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
-import { TransferRequestedEventArgs } from '@azure/communication-calling';
+import { TransferEventArgs } from '@azure/communication-calling';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-chat';
 import { UnknownIdentifier } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
@@ -100,7 +99,7 @@ import { VideoEffectName } from '@azure/communication-calling';
 import { VideoStreamRenderer } from '@azure/communication-calling';
 import { VideoStreamRendererView } from '@azure/communication-calling';
 
-// @beta
+// @public
 export interface AcceptedTransfer {
     callId: string;
     timestamp: Date;
@@ -438,7 +437,7 @@ export interface CallAdapterSubscribers {
     off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
     off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
     off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
-    off(event: 'transferRequested', listener: TransferRequestedListener): void;
+    off(event: 'transferAccepted', listener: TransferAcceptedListener): void;
     off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     off(event: 'roleChanged', listener: PropertyChangedEvent): void;
     off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
@@ -458,7 +457,7 @@ export interface CallAdapterSubscribers {
     on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
     on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
     on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
-    on(event: 'transferRequested', listener: TransferRequestedListener): void;
+    on(event: 'transferAccepted', listener: TransferAcceptedListener): void;
     on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     on(event: 'roleChanged', listener: PropertyChangedEvent): void;
     on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
@@ -1813,17 +1812,6 @@ export type ChatParticipantListSelector = (state: ChatClientState, props: ChatBa
 // @public
 export type ChatReturnProps<Component extends (props: any) => JSX.Element> = GetChatSelector<Component> extends (state: ChatClientState, props: any) => any ? ReturnType<GetChatSelector<Component>> & Common<ChatHandlers, Parameters<Component>[0]> : never;
 
-// @beta
-export interface ChatTheme {
-    chatPalette: {
-        modalOverlayBlack: string;
-        modalTitleWhite: string;
-        modalButtonBackground: string;
-        modalButtonBackgroundHover: string;
-        modalButtonBackgroundActive: string;
-    };
-}
-
 // @public
 export const ChatThreadClientProvider: (props: ChatThreadClientProviderProps) => JSX.Element;
 
@@ -2392,7 +2380,7 @@ export interface CustomMessage extends MessageCommon {
 }
 
 // @public
-export const darkTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-overlay) */ ChatTheme;
+export const darkTheme: PartialTheme & CallingTheme;
 
 // @beta
 export type DeclarativeCallAgent = CallAgent & IncomingCallManagement;
@@ -2931,6 +2919,7 @@ export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Eleme
 export interface FluentThemeProviderProps {
     children: React_2.ReactNode;
     fluentTheme?: PartialTheme | Theme;
+    rootStyle?: React_2.CSSProperties | undefined;
     rtl?: boolean;
 }
 
@@ -3035,8 +3024,7 @@ export interface ImageOverlayProps {
     imageSrc: string;
     isOpen: boolean;
     onDismiss: () => void;
-    onDownloadButtonClicked: (imageSrc: string) => void;
-    onError?: (event: SyntheticEvent<HTMLImageElement, Event>) => void;
+    onDownloadButtonClicked?: (imageSrc: string) => void;
     title?: string;
     titleIcon?: JSX.Element;
 }
@@ -3046,6 +3034,9 @@ export interface ImageOverlayStrings {
     dismissButtonAriaLabel: string;
     downloadButtonLabel: string;
 }
+
+// @beta
+export const imageOverlayTheme: PartialTheme;
 
 // @beta
 export type IncomingCallManagement = {
@@ -3127,7 +3118,7 @@ export interface JumpToNewMessageButtonProps {
 }
 
 // @public
-export const lightTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-overlay) */ ChatTheme;
+export const lightTheme: PartialTheme & CallingTheme;
 
 // @public
 export type LoadingState = 'loading' | 'none';
@@ -4238,15 +4229,15 @@ export interface TranscriptionCallFeature {
     isTranscriptionActive: boolean;
 }
 
-// @beta
+// @public
+export type TransferAcceptedListener = (event: TransferEventArgs) => void;
+
+// @public
 export interface TransferFeature {
     acceptedTransfers: {
         [key: string]: AcceptedTransfer;
     };
 }
-
-// @beta
-export type TransferRequestedListener = (event: TransferRequestedEventArgs) => void;
 
 // @public
 export const TypingIndicator: (props: TypingIndicatorProps) => JSX.Element;
