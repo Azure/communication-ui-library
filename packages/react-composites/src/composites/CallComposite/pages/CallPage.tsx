@@ -10,8 +10,6 @@ import { VideoGalleryLayout } from '@internal/react-components';
 import React from 'react';
 /* @conditional-compile-remove(dtmf-dialer) */ /* @conditional-compile-remove(spotlight) */
 import { useState } from 'react';
-/* @conditional-compile-remove(dtmf-dialer) */
-import { useEffect, useRef } from 'react';
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { useLocale } from '../../localization';
 import { CallCompositeOptions } from '../CallComposite';
@@ -105,24 +103,12 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   /* @conditional-compile-remove(dtmf-dialer) */
   const callees = useSelector(getTargetCallees);
   /* @conditional-compile-remove(dtmf-dialer) */
-  const renderDtmfDialerFromStart = showDtmfDialer(callees);
-
+  const renderDtmfDialerFromStart = showDtmfDialer(callees, remoteParticipantsConnected);
+  console.log('renderDtmfDialerFromStart', renderDtmfDialerFromStart);
   /* @conditional-compile-remove(dtmf-dialer) */
   const [dtmfDialerPresent, setDtmfDialerPresent] = useState<boolean>(renderDtmfDialerFromStart);
   /* @conditional-compile-remove(dtmf-dialer) */
-  const dialerShouldAutoDismiss = useRef<boolean>(renderDtmfDialerFromStart);
-
-  /* @conditional-compile-remove(dtmf-dialer) */
-  /**
-   * This useEffect is about clearing the dtmf dialer should there be a new participant that joins the call.
-   * This will only happen the first time should the dialer be present when the call starts.
-   */
-  useEffect(() => {
-    if (remoteParticipantsConnected.length > 1 && dtmfDialerPresent && dialerShouldAutoDismiss.current) {
-      setDtmfDialerPresent(false);
-      dialerShouldAutoDismiss.current = false;
-    }
-  }, [dtmfDialerPresent, remoteParticipantsConnected, setDtmfDialerPresent]);
+  // const dialerShouldAutoDismiss = useRef<boolean>(renderDtmfDialerFromStart);
 
   const strings = useLocale().strings.call;
 
