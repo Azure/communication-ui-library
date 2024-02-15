@@ -15,7 +15,6 @@ import {
   buildUrlWithMockAdapter,
   defaultMockCallAdapterState,
   defaultMockRemotePSTNParticipant,
-  defaultMockRemoteParticipant,
   test
 } from './fixture';
 
