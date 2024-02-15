@@ -104,11 +104,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   const callees = useSelector(getTargetCallees);
   /* @conditional-compile-remove(dtmf-dialer) */
   const renderDtmfDialerFromStart = showDtmfDialer(callees, remoteParticipantsConnected);
-  console.log('renderDtmfDialerFromStart', renderDtmfDialerFromStart);
   /* @conditional-compile-remove(dtmf-dialer) */
   const [dtmfDialerPresent, setDtmfDialerPresent] = useState<boolean>(renderDtmfDialerFromStart);
-  /* @conditional-compile-remove(dtmf-dialer) */
-  // const dialerShouldAutoDismiss = useRef<boolean>(renderDtmfDialerFromStart);
 
   const strings = useLocale().strings.call;
 
