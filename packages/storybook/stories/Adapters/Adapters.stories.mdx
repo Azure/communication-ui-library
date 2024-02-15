@@ -22,9 +22,15 @@ These adapters make use of the stateful clients for calling and chat in conjunct
 ## Setting Up Adapters
 
 To setup the adapters, you will need to provide the adapter with key metadata required.
-This includes most importantly an access token for your Azure Communication Services resource and context information for the call or chat thread you want to join.
+This most importantly includes an access token for your Azure Communication Services resource and context information for the call or chat thread you want to join.
 To create the adapters we will use the `useAzureCommunicationCallAdapter` and `useAzureCommunicationChatAdapter` hooks we provide from the UI library.
-These hooks use their own internal logic using react hooks to create an adapter for use with our composites.
+These hooks use their own internal logic using React hooks, to create an adapter for use with the composites.
+
+One of the key functions of the `use...Adapter` hooks is to call `dispose()` on the adapter when it is no longer needed. The adapters implement the `Disposable` interface and this method needs to be called
+to cleanup resources used by the adapter.
+
+- When using the `useAzureCommunication...Adapter` hooks, clean up is automatic
+- When using the `createAzureCommunication...Adapter` methods directly, you _must_ call `dispose()` on the adapter prior to setting it to `undefined`.
 
 ### Call Adapter
 
