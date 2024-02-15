@@ -112,9 +112,9 @@ export interface CommonCallingHandlers {
   /* @conditional-compile-remove(end-of-call-survey) */
   onSubmitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
   /* @conditional-compile-remove(spotlight) */
-  onStartSpotlight: (userId: string) => Promise<void>;
+  onStartSpotlight: (userIds?: string[]) => Promise<void>;
   /* @conditional-compile-remove(spotlight) */
-  onStopSpotlight: (userId: string) => Promise<void>;
+  onStopSpotlight: (userIds?: string[]) => Promise<void>;
 }
 
 /**
@@ -614,14 +614,14 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     const onSubmitSurvey = async (survey: CallSurvey): Promise<CallSurveyResponse | undefined> =>
       await call?.feature(Features.CallSurvey).submitSurvey(survey);
     /* @conditional-compile-remove(spotlight) */
-    const onStartSpotlight = async (userId: string): Promise<void> => {
-      const participant = _toCommunicationIdentifier(userId);
-      await call?.feature(Features.Spotlight).startSpotlight([participant]);
+    const onStartSpotlight = async (userIds?: string[]): Promise<void> => {
+      const participants = userIds?.map((userId) => _toCommunicationIdentifier(userId));
+      await call?.feature(Features.Spotlight).startSpotlight(participants);
     };
     /* @conditional-compile-remove(spotlight) */
-    const onStopSpotlight = async (userId: string): Promise<void> => {
-      const participant = _toCommunicationIdentifier(userId);
-      await call?.feature(Features.Spotlight).stopSpotlight([participant]);
+    const onStopSpotlight = async (userIds?: string[]): Promise<void> => {
+      const participants = userIds?.map((userId) => _toCommunicationIdentifier(userId));
+      await call?.feature(Features.Spotlight).stopSpotlight(participants);
     };
 
     return {

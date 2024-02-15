@@ -200,7 +200,8 @@
     "failedToJoinCallGeneric": "Nie można dołączyć do rozmowy.",
     "failedToJoinCallInvalidMeetingLink": "Nie można dołączyć do spotkania. Nieprawidłowy link.",
     "cameraFrozenForRemoteParticipants": "Użytkownicy w trakcie rozmowy mają problemy z wyświetleniem Twojego wideo. Sprawdź urządzenia i sieć.",
-    "unableToStartVideoEffect": "Nie można zastosować efektu wideo."
+    "unableToStartVideoEffect": "Nie można zastosować efektu wideo.",
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "Nie można rozpocząć wyróżnienia uczestników, ponieważ maksymalna liczba uczestników jest już wyróżniona."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Udostępniasz ekran",
@@ -218,7 +219,12 @@
     "pinParticipantMenuItemAriaLabel": "Przypnij uczestnika {participantName}",
     "unpinParticipantMenuItemAriaLabel": "Odepnij uczestnika {participantName}",
     "pinnedParticipantAnnouncementAriaLabel": "Przypięty uczestnik {participantName}",
-    "unpinnedParticipantAnnouncementAriaLabel": "Odpięty uczestnik {participantName}"
+    "unpinnedParticipantAnnouncementAriaLabel": "Odpięty uczestnik {participantName}",
+    "startSpotlightVideoTileMenuLabel": "Wyróżnij dla wszystkich",
+    "addSpotlightVideoTileMenuLabel": "Dodaj wyróżnienie",
+    "spotlightLimitReachedMenuTitle": "Osiągnięto limit wyróżnienia",
+    "stopSpotlightVideoTileMenuLabel": "Zatrzymaj wyróżnianie",
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Zakończ wyróżnienie"
   },
   "dialpad": {
     "placeholderText": "Wprowadź numer telefonu",

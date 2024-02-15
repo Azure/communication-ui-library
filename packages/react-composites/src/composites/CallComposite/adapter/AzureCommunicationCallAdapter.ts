@@ -36,18 +36,20 @@ import {
   VideoOptions,
   Call
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(spotlight) */
+import { SpotlightedParticipant } from '@azure/communication-calling';
 /* @conditional-compile-remove(reaction) */
 import { Reaction } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(call-transfer) */
-import { AcceptTransferOptions, TransferRequestedEventArgs } from '@azure/communication-calling';
+import { TransferEventArgs } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { StartCaptionsOptions, TeamsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
 import type { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
 /* @conditional-compile-remove(capabilities) */
-import type { CapabilitiesChangeHandler, CapabilitiesChangeInfo } from '@azure/communication-calling';
+import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support)) */
 import { TeamsCallAgent } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
@@ -79,9 +81,11 @@ import {
 /* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '@internal/react-components';
 /* @conditional-compile-remove(call-transfer) */
-import { TransferRequestedListener } from './CallAdapter';
+import { TransferAcceptedListener } from './CallAdapter';
 /* @conditional-compile-remove(capabilities) */
 import { CapabilitiesChangedListener } from './CallAdapter';
+/* @conditional-compile-remove(spotlight) */
+import { SpotlightChangedListener } from './CallAdapter';
 /* @conditional-compile-remove(close-captions) */
 import {
   CaptionsReceivedListener,
@@ -456,35 +460,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       }
 
       this.context.updateClientState(clientState);
-
-      /* @conditional-compile-remove(call-transfer) */
-      const acceptedTransferCallState = this.context.getState().acceptedTransferCallState;
-
-      /* @conditional-compile-remove(call-transfer) */
-      // TODO: Remove this if statement when Calling SDK prevents accepting transfer requests that have timed out
-      // This is to handle the case when there has been an accepted transfer call that is now in the connected state
-      // AND is not the current call. Ensure we leave the current call.
-      if (
-        acceptedTransferCallState &&
-        acceptedTransferCallState.state === 'Connected' &&
-        this.call?.id &&
-        acceptedTransferCallState.id !== this.call.id
-      ) {
-        const cAgent = callAgent as CallAgent;
-        const transferCall = cAgent.calls.find((call) => (call as Call).id === acceptedTransferCallState.id);
-        if (transferCall) {
-          const oldCall = this.call;
-          this.processNewCall(transferCall);
-          // Arbitrary wait time before hanging up. 2 seconds is derived from manual testing. This is to allow
-          // transferor to hang up themselves. If the transferor has not hung up, we hang up because we are now
-          // in the transfer call
-          setTimeout(() => {
-            if (oldCall?.state === 'Connected') {
-              oldCall.hangUp();
-            }
-          }, 2000);
-        }
-      }
     };
 
     this.handlers = createHandlers(
@@ -1090,13 +1065,13 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   }
 
   /* @conditional-compile-remove(spotlight) */
-  public async startSpotlight(userId: string): Promise<void> {
-    this.handlers.onStartSpotlight(userId);
+  public async startSpotlight(userIds: string[]): Promise<void> {
+    this.handlers.onStartSpotlight(userIds);
   }
 
   /* @conditional-compile-remove(spotlight) */
-  public async stopSpotlight(userId: string): Promise<void> {
-    this.handlers.onStopSpotlight(userId);
+  public async stopSpotlight(userIds: string[]): Promise<void> {
+    this.handlers.onStopSpotlight(userIds);
   }
 
   public getState(): CallAdapterState {
@@ -1132,11 +1107,13 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   /* @conditional-compile-remove(close-captions) */
   on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
   /* @conditional-compile-remove(call-transfer) */
-  on(event: 'transferRequested', listener: TransferRequestedListener): void;
+  on(event: 'transferAccepted', listener: TransferAcceptedListener): void;
   /* @conditional-compile-remove(capabilities) */
-  on(event: 'capabilitiesChanged', listener: CapabilitiesChangeHandler): void;
+  on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   /* @conditional-compile-remove(capabilities) */
   on(event: 'roleChanged', listener: PropertyChangedEvent): void;
+  /* @conditional-compile-remove(spotlight) */
+  on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public on(event: string, listener: (e: any) => void): void {
@@ -1184,9 +1161,11 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     /* @conditional-compile-remove(rooms) */
     this.call?.on('roleChanged', this.roleChanged.bind(this));
     /* @conditional-compile-remove(call-transfer) */
-    this.call?.feature(Features.Transfer).on('transferRequested', this.transferRequested.bind(this));
+    this.call?.feature(Features.Transfer).on('transferAccepted', this.transferAccepted.bind(this));
     /* @conditional-compile-remove(capabilities) */
     this.call?.feature(Features.Capabilities).on('capabilitiesChanged', this.capabilitiesChanged.bind(this));
+    /* @conditional-compile-remove(spotlight) */
+    this.call?.feature(Features.Spotlight).on('spotlightChanged', this.spotlightChanged.bind(this));
   }
 
   private unsubscribeCallEvents(): void {
@@ -1278,23 +1257,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   }
 
   /* @conditional-compile-remove(call-transfer) */
-  private transferRequested(args: TransferRequestedEventArgs): void {
-    const newArgs = {
-      ...args,
-      accept: (options: AcceptTransferOptions) => {
-        const videoSource = this.context.getState().call?.localVideoStreams?.[0]?.source;
-        args.accept({
-          audioOptions: options?.audioOptions ?? /* maintain audio state if options.audioOptions is not defined */ {
-            muted: !!this.context.getState().call?.isMuted
-          },
-          videoOptions:
-            options?.videoOptions ??
-            /* maintain video state if options.videoOptions is not defined */
-            (videoSource ? { localVideoStreams: [new SDKLocalVideoStream(videoSource)] } : undefined)
-        });
-      }
-    };
-    this.emitter.emit('transferRequested', newArgs);
+  private transferAccepted(args: TransferEventArgs): void {
+    this.emitter.emit('transferAccepted', args);
   }
 
   /* @conditional-compile-remove(capabilities) */
@@ -1322,6 +1286,11 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       this.call?.feature(Features.RaiseHand).lowerHand();
     }
     this.emitter.emit('roleChanged');
+  }
+
+  /* @conditional-compile-remove(spotlight) */
+  private spotlightChanged(args: { added: SpotlightedParticipant[]; removed: SpotlightedParticipant[] }): void {
+    this.emitter.emit('spotlightChanged', args);
   }
 
   private callIdChanged(): void {
@@ -1358,11 +1327,13 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   /* @conditional-compile-remove(close-captions) */
   off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
   /* @conditional-compile-remove(call-transfer) */
-  off(event: 'transferRequested', listener: TransferRequestedListener): void;
+  off(event: 'transferAccepted', listener: TransferAcceptedListener): void;
   /* @conditional-compile-remove(capabilities) */
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   /* @conditional-compile-remove(rooms) */
   off(event: 'roleChanged', listener: PropertyChangedEvent): void;
+  /* @conditional-compile-remove(spotlight) */
+  off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public off(event: string, listener: (e: any) => void): void {

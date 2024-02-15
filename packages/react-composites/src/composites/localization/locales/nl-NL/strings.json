@@ -60,6 +60,11 @@
     "removedFromCallMoreDetails": "Een andere deelnemer heeft u uit het gesprek verwijderd.",
     "removedFromCallTitle": "U bent verwijderd",
     "removeMenuLabel": "Verwijderen",
+    "startSpotlightParticipantListMenuLabel": "Spotlight voor iedereen",
+    "addSpotlightParticipantListMenuLabel": "Spotlight toevoegen",
+    "stopSpotlightParticipantListMenuLabel": "Spotlighten stoppen",
+    "stopSpotlightOnSelfParticipantListMenuLabel": "Spotlight afsluiten",
+    "spotlightLimitReachedParticipantListMenuTitle": "Spotlightlimiet bereikt",
     "returnToCallButtonAriaDescription": "Terug naar gesprek",
     "returnToCallButtonAriaLabel": "Terug",
     "roomNotFoundDetails": "Kan de opgegeven ruimte-id niet vinden.",
@@ -120,6 +125,13 @@
     "callRejectedMoreDetails": "De persoon die u probeert te bereiken, is niet beschikbaar. Probeer het later opnieuw.",
     "callTimeoutTitle": "De aanroep kan niet worden voltooid",
     "callTimeoutDetails": "De persoon die u probeert te bereiken, is niet beschikbaar. Probeer het later opnieuw.",
+    "callTimeoutBotTitle": "De aanroep kan niet worden voltooid",
+    "callTimeoutBotDetails": "De service die u probeert te bereiken, is niet beschikbaar. Probeer het later opnieuw.",
+    "dtmfDialerButtonLabel": "Toetsenblok",
+    "dtmfDialerButtonTooltipOn": "Toetsenblok weergeven",
+    "dtmfDialerButtonTooltipOff": "Toetsenblok verbergen",
+    "dtmfDialerMoreButtonLabelOn": "Toetsenblok weergeven",
+    "dtmfDialerMoreButtonLabelOff": "Toetsenblok verbergen",
     "spokenLanguageStrings": {
       "ar-ae": "Arabisch - Verenigde Arabische Emiraten",
       "ar-sa": "Arabisch - Saudi-Arabië",
@@ -232,7 +244,7 @@
         "grantedDueToRoleChangeToPresenter": "U bent een presentator. U kunt inhoud delen en de vergadering vergemakkelijken."
       }
     },
-    "surveyQuestion": "Hoe was uw oproep vandaag?",
+    "surveyTitle": "Help mee met verbeteren",
     "starSurveyHelperText": "Wat was de kwaliteit van het gesprek?",
     "starSurveyOneStarText": "De kwaliteit was erg slecht.",
     "starSurveyTwoStarText": "De kwaliteit was slecht.",
@@ -241,11 +253,12 @@
     "starSurveyFiveStarText": "De kwaliteit was uitstekend.",
     "surveyConfirmButtonLabel": "Feedback verzenden",
     "starRatingAriaLabel": "Selecteer {0} van {1} sterren",
-    "surveyCancelButtonAriaLabel": "Annuleren",
+    "surveySkipButtonLabel": "Overslaan",
     "tagsSurveyQuestion": "Wat had beter kunnen zijn?",
     "tagsSurveyTextFieldDefaultText": "Overig, geef een toelichting",
     "tagsSurveyHelperText": "Controleer eventuele problemen die u hebt ondervonden",
     "surveyTextboxDefaultText": "Overige, geef een toelichting",
+    "endOfSurveyText": "Hartelijk dank voor uw feedback.",
     "surveyIssues": {
       "overallRating": {
         "callCannotJoin": "Ik kan niet deelnemen aan de oproep",
@@ -291,6 +304,20 @@
       "audioRating": "Audio",
       "videoRating": "Video",
       "screenshareRating": "Presenteren"
+    },
+    "spotlightPrompt": {
+      "startSpotlightHeading": "Spotlight voor iedereen?",
+      "startSpotlightText": "U markeert deze video voor iedereen in de vergadering.",
+      "startSpotlightOnSelfText": "U markeert deze video voor iedereen in de vergadering.",
+      "startSpotlightConfirmButtonLabel": "Spotlight voor iedereen",
+      "startSpotlightCancelButtonLabel": "Annuleren",
+      "stopSpotlightHeading": "Spotlighten stoppen?",
+      "stopSpotlightOnSelfHeading": "Spotlight afsluiten?",
+      "stopSpotlightText": "Deze video wordt niet meer gemarkeerd voor iedereen in de vergadering.",
+      "stopSpotlightOnSelfText": "Uw video wordt niet meer gemarkeerd voor iedereen in de vergadering.",
+      "stopSpotlightConfirmButtonLabel": "Spotlighten stoppen",
+      "stopSpotlightOnSelfConfirmButtonLabel": "Spotlight afsluiten",
+      "stopSpotlightCancelButtonLabel": "Annuleren"
     }
   },
   "chat": {

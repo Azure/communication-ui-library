@@ -69,10 +69,13 @@ export type {
 } from './CallAdapter';
 
 /* @conditional-compile-remove(call-transfer) */
-export type { TransferRequestedListener } from './CallAdapter';
+export type { TransferAcceptedListener } from './CallAdapter';
 
 /* @conditional-compile-remove(capabilities) */
 export type { CapabilitiesChangedListener } from './CallAdapter';
+
+/* @conditional-compile-remove(spotlight) */
+export type { SpotlightChangedListener } from './CallAdapter';
 
 /* @conditional-compile-remove(teams-identity-support) */
 export type { TeamsCallAdapter } from './CallAdapter';

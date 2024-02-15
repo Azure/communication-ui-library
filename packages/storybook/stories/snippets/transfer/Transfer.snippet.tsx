@@ -44,9 +44,10 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
   );
 
   const afterCallAdapterCreate = useCallback(async (adapter: CallAdapter): Promise<CallAdapter> => {
-    adapter.on('transferRequested', (transferArgs) => {
-      transferArgs.accept();
-    });
+    // Clearing this to avoid errors new storybook updates fix this in the next PR
+    // adapter.on('transferRequested', (transferArgs) => {
+    //   transferArgs.accept();
+    // });
     return adapter;
   }, []);
 

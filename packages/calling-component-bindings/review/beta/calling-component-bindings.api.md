@@ -203,13 +203,13 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onStartScreenShare: () => Promise<void>;
     // (undocumented)
-    onStartSpotlight: (userId: string) => Promise<void>;
+    onStartSpotlight: (userIds?: string[]) => Promise<void>;
     // (undocumented)
     onStopCaptions: () => Promise<void>;
     // (undocumented)
     onStopScreenShare: () => Promise<void>;
     // (undocumented)
-    onStopSpotlight: (userId: string) => Promise<void>;
+    onStopSpotlight: (userIds?: string[]) => Promise<void>;
     // (undocumented)
     onSubmitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
     // (undocumented)
@@ -401,6 +401,7 @@ export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSe
     dominantSpeakers?: string[];
     optimalVideoCount?: number;
     spotlightedParticipants?: string[];
+    maxParticipantsToSpotlight?: number;
 };
 
 // (No @packageDocumentation comment for this package)

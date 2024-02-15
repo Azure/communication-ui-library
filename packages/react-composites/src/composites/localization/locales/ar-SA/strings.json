@@ -60,6 +60,11 @@
     "removedFromCallMoreDetails": "قام مشارك آخر بإزالتك من المكالمة.",
     "removedFromCallTitle": "تمت إزالتك",
     "removeMenuLabel": "إزالة",
+    "startSpotlightParticipantListMenuLabel": "تسليط الضوء لدى الجميع",
+    "addSpotlightParticipantListMenuLabel": "إضافة تسليط ضوء",
+    "stopSpotlightParticipantListMenuLabel": "التوقف عن تسليط الضوء",
+    "stopSpotlightOnSelfParticipantListMenuLabel": "الخروج من وضع تسليط الضوء",
+    "spotlightLimitReachedParticipantListMenuTitle": "تم الوصول إلى الحد الأقصى لتسليط الضوء",
     "returnToCallButtonAriaDescription": "رجوع إلى المكالمة",
     "returnToCallButtonAriaLabel": "رجوع",
     "roomNotFoundDetails": "تعذر العثور على معرف الغرفة الذي تم توفيره.",
@@ -120,6 +125,13 @@
     "callRejectedMoreDetails": "الشخص الذي تحاول الوصول إليه غير متوفر. الرجاء المحاولة مرة أخرى لاحقا.",
     "callTimeoutTitle": "إكمال المكالمة غير ممكن",
     "callTimeoutDetails": "الشخص الذي تحاول الوصول إليه غير متوفر. الرجاء المحاولة مرة أخرى لاحقا.",
+    "callTimeoutBotTitle": "إكمال المكالمة غير ممكن",
+    "callTimeoutBotDetails": "الخدمة التي تحاول الوصول إليها غير متوفرة. الرجاء المحاولة مرة أخرى لاحقا.",
+    "dtmfDialerButtonLabel": "لوحة الطلب",
+    "dtmfDialerButtonTooltipOn": "عرض لوحة الطلب",
+    "dtmfDialerButtonTooltipOff": "إخفاء لوحة الطلب",
+    "dtmfDialerMoreButtonLabelOn": "عرض لوحة الطلب",
+    "dtmfDialerMoreButtonLabelOff": "إخفاء لوحة الطلب",
     "spokenLanguageStrings": {
       "ar-ae": "العربية - الإمارات العربية المتحدة",
       "ar-sa": "العربية - السعودية",
@@ -232,7 +244,7 @@
         "grantedDueToRoleChangeToPresenter": "أنت مقدم العرض. يمكنك مشاركة المحتوى وتسهيل الاجتماع."
       }
     },
-    "surveyQuestion": "كيف كانت مكالمتك اليوم؟",
+    "surveyTitle": "ساعدنا في تحسين خدماتنا",
     "starSurveyHelperText": "كيف كانت جودة المكالمة؟",
     "starSurveyOneStarText": "كانت الجودة سيئة.",
     "starSurveyTwoStarText": "كانت الجودة رديئة.",
@@ -241,11 +253,12 @@
     "starSurveyFiveStarText": "كانت الجودة ممتازة.",
     "surveyConfirmButtonLabel": "إرسال ملاحظات",
     "starRatingAriaLabel": "حدد {0} من {1} نجوم",
-    "surveyCancelButtonAriaLabel": "إلغاء الأمر",
+    "surveySkipButtonLabel": "تخطٍ",
     "tagsSurveyQuestion": "ما الذي كان يمكن أن يكون أفضل؟",
     "tagsSurveyTextFieldDefaultText": "أخرى، يُرجى التحديد",
     "tagsSurveyHelperText": "تحقق من أي مشاكل واجهتك",
     "surveyTextboxDefaultText": "أخرى، يُرجى التحديد",
+    "endOfSurveyText": "شكراً لك على تقديم ملاحظاتك!",
     "surveyIssues": {
       "overallRating": {
         "callCannotJoin": "تعذر علي الانضمام إلى المكالمة",
@@ -291,6 +304,20 @@
       "audioRating": "صوت",
       "videoRating": "فيديو",
       "screenshareRating": "تقديم"
+    },
+    "spotlightPrompt": {
+      "startSpotlightHeading": "هل تريد تسليط الضوء للجميع؟",
+      "startSpotlightText": "ستسلط الضوء على هذا الفيديو لجميع المشاركين في الاجتماع.",
+      "startSpotlightOnSelfText": "ستبرز مقطع الفيديو الخاص بك لجميع المشاركين في الاجتماع.",
+      "startSpotlightConfirmButtonLabel": "تسليط الضوء للجميع",
+      "startSpotlightCancelButtonLabel": "إلغاء",
+      "stopSpotlightHeading": "هل تريد إيقاف تسليط الضوء؟",
+      "stopSpotlightOnSelfHeading": "هل تريد إنهاء تسليط الضوء؟",
+      "stopSpotlightText": "لن يتم تمييز الفيديو الخاص بك بعد الآن لجميع المشاركين في الاجتماع.",
+      "stopSpotlightOnSelfText": "لن يتم تمييز الفيديو الخاص بك بعد الآن لجميع المشاركين في الاجتماع.",
+      "stopSpotlightConfirmButtonLabel": "التوقف عن تسليط الضوء",
+      "stopSpotlightOnSelfConfirmButtonLabel": "الخروج من وضع تسليط الضوء",
+      "stopSpotlightCancelButtonLabel": "إلغاء"
     }
   },
   "chat": {

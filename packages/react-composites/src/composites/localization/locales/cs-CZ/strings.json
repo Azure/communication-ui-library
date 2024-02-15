@@ -60,6 +60,11 @@
     "removedFromCallMoreDetails": "Jiný účastník vás odebral z hovoru.",
     "removedFromCallTitle": "Byli jste odebráni",
     "removeMenuLabel": "Odebrat",
+    "startSpotlightParticipantListMenuLabel": "Přidat do hlavního výběru všem",
+    "addSpotlightParticipantListMenuLabel": "Přidat do hlavního výběru",
+    "stopSpotlightParticipantListMenuLabel": "Zastavit přidávání do hlavního výběru",
+    "stopSpotlightOnSelfParticipantListMenuLabel": "Ukončit hlavní výběr",
+    "spotlightLimitReachedParticipantListMenuTitle": "Dosáhlo se limitu hlavního výběru",
     "returnToCallButtonAriaDescription": "Pokračovat v hovoru",
     "returnToCallButtonAriaLabel": "Zpět",
     "roomNotFoundDetails": "Zadané ID místnosti se nepovedlo najít.",
@@ -120,6 +125,13 @@
     "callRejectedMoreDetails": "Osoba, se kterou se pokoušíte spojit, není k dispozici. Zkuste to prosím znovu později.",
     "callTimeoutTitle": "Hovor nešlo spojit.",
     "callTimeoutDetails": "Osoba, se kterou se pokoušíte spojit, není k dispozici. Zkuste to prosím znovu později.",
+    "callTimeoutBotTitle": "Hovor nešlo spojit.",
+    "callTimeoutBotDetails": "Služba, ke které se pokoušíte získat přístup, není k dispozici. Zkuste to prosím znovu později.",
+    "dtmfDialerButtonLabel": "Číselník",
+    "dtmfDialerButtonTooltipOn": "Zobrazit číselník",
+    "dtmfDialerButtonTooltipOff": "Skrýt číselník",
+    "dtmfDialerMoreButtonLabelOn": "Zobrazit číselník",
+    "dtmfDialerMoreButtonLabelOff": "Skrýt číselník",
     "spokenLanguageStrings": {
       "ar-ae": "Arabština - Spojené arabské emiráty",
       "ar-sa": "Arabština - Saúdská Arábie",
@@ -232,7 +244,7 @@
         "grantedDueToRoleChangeToPresenter": "Jste prezentující. Můžete sdílet obsah a moderovat schůzku."
       }
     },
-    "surveyQuestion": "Jaký byl váš dnešní hovor?",
+    "surveyTitle": "Pomozte nám se zlepšovat",
     "starSurveyHelperText": "Jaká byla kvalita hovoru?",
     "starSurveyOneStarText": "Kvalita byla špatná.",
     "starSurveyTwoStarText": "Kvalita byla slabá.",
@@ -241,11 +253,12 @@
     "starSurveyFiveStarText": "Kvalita byla vynikající.",
     "surveyConfirmButtonLabel": "Poslat zpětnou vazbu",
     "starRatingAriaLabel": "Vybrat {0} z(e) {1} hvězdiček",
-    "surveyCancelButtonAriaLabel": "Zrušit",
+    "surveySkipButtonLabel": "Přeskočit",
     "tagsSurveyQuestion": "Co by mohlo být lepší?",
     "tagsSurveyTextFieldDefaultText": "Jiné, upřesněte prosím",
     "tagsSurveyHelperText": "Zkontrolujte všechny problémy, se které jste zaznamenali.",
     "surveyTextboxDefaultText": "Jiné, upřesněte prosím",
+    "endOfSurveyText": "Děkujeme za váš názor!",
     "surveyIssues": {
       "overallRating": {
         "callCannotJoin": "Nepovedlo se mi připojit se k hovoru",
@@ -291,6 +304,20 @@
       "audioRating": "Zvuk",
       "videoRating": "Video",
       "screenshareRating": "Prezentování"
+    },
+    "spotlightPrompt": {
+      "startSpotlightHeading": "Přidat do hlavního výběru všem?",
+      "startSpotlightText": "Toto video se zvýrazní všem účastníkům schůzky.",
+      "startSpotlightOnSelfText": "Vaše video se zvýrazní všem účastníkům schůzky.",
+      "startSpotlightConfirmButtonLabel": "Přidat do hlavního výběru všem",
+      "startSpotlightCancelButtonLabel": "Zrušit",
+      "stopSpotlightHeading": "Zastavit přidávání do hlavního výběru?",
+      "stopSpotlightOnSelfHeading": "Ukončit hlavní výběr?",
+      "stopSpotlightText": "Účastníkům se už toto video nebude zvýrazňovat.",
+      "stopSpotlightOnSelfText": "Účastníkům se už vaše video nebude zvýrazňovat.",
+      "stopSpotlightConfirmButtonLabel": "Zastavit přidávání do hlavního výběru",
+      "stopSpotlightOnSelfConfirmButtonLabel": "Ukončit hlavní výběr",
+      "stopSpotlightCancelButtonLabel": "Zrušit"
     }
   },
   "chat": {
