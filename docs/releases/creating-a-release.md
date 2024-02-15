@@ -71,8 +71,6 @@ Create a release thread in the WebUI channel and keep it up to date so the whole
 
 ### Step 0.4: Create an Async Bug Bash Meeting
 
-Set it for Tuesday or Wednesday.
-
 Ex.
 
 ![image](https://github.com/Azure/communication-ui-library/assets/73612854/79634dd3-d9bb-482c-a83a-a87159d06a20)
@@ -80,9 +78,9 @@ Ex.
 
 ### step 0.5: ARB Review of any public API changes (Required for Stable | Recommended for Beta)
 
-1. Create a APIView showing changes (include link)
-1. Create a post in ARB channel with APIView link to request review
-    1. Example of arb post
+1. Create an APIView showing changes.
+1. Create a post in `Language - JavaScript - Reviews` channel with APIView link to request review.
+    1. Use a previous review request as an example.
 
 ## Step 1: Creating a Release Branch
 
@@ -113,7 +111,7 @@ Use the [create-prerelease-branch](https://github.com/Azure/communication-ui-lib
 This section describes what the workflow above does. Understanding the workflow actions is useful in case the workflow fails.
 
 1. Create a `prerelease/<release-tag>` branch, bump the package version for `@azure/communication-react` as appropriate and collect all change files into a changelog.
-1. Creates another branch for manually summarizing the changes collected in the changelog
+1. Creates another branch for manually summarizing the changes collected in the changelog.
 
 For example, when creating a release off of `main` tagged `3.3.0`, the following branches are created
 
