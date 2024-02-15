@@ -4238,17 +4238,10 @@ export interface TranscriptionCallFeature {
     isTranscriptionActive: boolean;
 }
 
-<<<<<<< HEAD
 // @public
 export type TransferAcceptedListener = (event: TransferEventArgs) => void;
 
 // @public
-=======
-// @beta
-export type TransferAcceptedListener = (event: TransferEventArgs) => void;
-
-// @beta
->>>>>>> d6e9eef04b3e0b2919750e45a25acfa9323b4d44
 export interface TransferFeature {
     acceptedTransfers: {
         [key: string]: AcceptedTransfer;

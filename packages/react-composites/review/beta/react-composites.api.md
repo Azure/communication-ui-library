@@ -1990,11 +1990,7 @@ export type TopicChangedListener = (event: {
     topic: string;
 }) => void;
 
-<<<<<<< HEAD
 // @public
-=======
-// @beta
->>>>>>> d6e9eef04b3e0b2919750e45a25acfa9323b4d44
 export type TransferAcceptedListener = (event: TransferEventArgs) => void;
 
 // @public
