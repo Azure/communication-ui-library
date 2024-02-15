@@ -579,7 +579,11 @@ export interface CallCompositeStrings {
     noSpeakersLabel: string;
     notInvitedToRoomDetails?: string;
     notInvitedToRoomTitle: string;
+<<<<<<< HEAD
     outboundCallingNoticeString: string;
+=======
+    outboundCallingNoticeString?: string;
+>>>>>>> 351142517 ([Cherry pick] start call imp cp (#4144))
     participantJoinedNoticeString: string;
     participantLeftNoticeString: string;
     peopleButtonLabel: string;

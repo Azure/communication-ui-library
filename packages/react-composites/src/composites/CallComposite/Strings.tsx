@@ -437,7 +437,7 @@ export interface CallCompositeStrings {
   /**
    * Label disaplayed on the lobby screen during a 1:1 outbound call.
    */
-  outboundCallingNoticeString: string;
+  outboundCallingNoticeString?: string;
   /**
    * Notice to be announced by narrator when a participant joins a call
    */
