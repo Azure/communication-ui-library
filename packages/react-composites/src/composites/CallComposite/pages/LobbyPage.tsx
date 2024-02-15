@@ -129,16 +129,11 @@ const overlayPropsOutboundCall = (
   if (isPhoneNumberIdentifier(participant.identifier)) {
     return {
       title: (participant.identifier as PhoneNumberIdentifier).phoneNumber,
-      moreDetails: outboundCallStringsTrampoline(strings)
+      moreDetails: strings.outboundCallingNoticeString
     };
   } else {
     return {
-      title: outboundCallStringsTrampoline(strings)
+      title: strings.outboundCallingNoticeString ?? ''
     };
   }
-};
-
-const outboundCallStringsTrampoline = (strings: CallCompositeStrings): string => {
-  return strings.outboundCallingNoticeString;
-  return '';
 };

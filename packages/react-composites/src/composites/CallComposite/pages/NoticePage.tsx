@@ -36,7 +36,7 @@ export interface NoticePageProps {
 export function NoticePage(props: NoticePageProps): JSX.Element {
   const adapter = useAdapter();
 
-  const callees = useSelector(getTargetCallees) as StartCallIdentifier[];
+  const callees = useSelector(getTargetCallees) as StartCallIdentifier[] | undefined;
 
   return (
     <Stack
@@ -59,7 +59,7 @@ export function NoticePage(props: NoticePageProps): JSX.Element {
           <Stack styles={rejoinCallButtonContainerStyles}>
             <StartCallButton
               onClick={() => {
-                if (callees.length > 0) {
+                if (callees && callees.length > 0) {
                   adapter.startCall(callees);
                 } else {
                   adapter.joinCall();
