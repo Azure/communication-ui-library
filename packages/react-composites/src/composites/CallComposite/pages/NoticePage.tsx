@@ -21,7 +21,9 @@ import { useHandlers } from '../hooks/useHandlers';
 import { SurveyPane } from '../../common/SurveyPane';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurveyImprovementSuggestions } from '@internal/react-components';
-
+import { useSelector } from '../hooks/useSelector';
+import { getTargetCallees } from '../selectors/baseSelectors';
+import { StartCallIdentifier } from '../adapter';
 /**
  * @private
  */
@@ -82,6 +84,7 @@ export function NoticePage(props: NoticePageProps): JSX.Element {
 
   /* @conditional-compile-remove(end-of-call-survey) */
   const handlers = useHandlers(SurveyPane);
+  const callees = useSelector(getTargetCallees) as StartCallIdentifier[];
 
   return (
     <Stack
@@ -102,7 +105,18 @@ export function NoticePage(props: NoticePageProps): JSX.Element {
         </Text>
         {!props.disableStartCallButton && (
           <Stack styles={rejoinCallButtonContainerStyles}>
-            <StartCallButton onClick={() => adapter.joinCall()} disabled={false} rejoinCall={true} autoFocus />
+            <StartCallButton
+              onClick={() => {
+                if (callees) {
+                  adapter.startCall(callees);
+                } else {
+                  adapter.joinCall();
+                }
+              }}
+              disabled={false}
+              rejoinCall={true}
+              autoFocus
+            />
           </Stack>
         )}
       </Stack>

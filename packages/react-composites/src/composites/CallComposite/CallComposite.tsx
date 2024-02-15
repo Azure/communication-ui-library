@@ -513,7 +513,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         <NoticePage
           iconName={iconName}
           title={title}
-          moreDetails={moreDetails}
+          moreDetails={callees ? '' : moreDetails}
           dataUiId={'left-call-page'}
           disableStartCallButton={disableStartCallButton}
           /* @conditional-compile-remove(end-of-call-survey) */
