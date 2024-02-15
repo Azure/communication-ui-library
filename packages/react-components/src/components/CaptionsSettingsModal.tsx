@@ -108,10 +108,8 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
   });
 
   const [selectedCaptionLanguage, setSelectedCaptionLanguage] = useState<CaptionLanguageDropdownOptions>({
-    key:
-      currentCaptionLanguage ?? _spokenLanguageToCaptionLanguage[selectedSpokenLanguage.key],
-    text:
-      currentCaptionLanguage ?? _spokenLanguageToCaptionLanguage[selectedSpokenLanguage.key]
+    key: currentCaptionLanguage ?? _spokenLanguageToCaptionLanguage[selectedSpokenLanguage.key],
+    text: currentCaptionLanguage ?? _spokenLanguageToCaptionLanguage[selectedSpokenLanguage.key]
   });
 
   useEffect(() => {
@@ -163,9 +161,7 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
     return supportedCaptionLanguages.map((languageCode) => {
       return {
         key: languageCode,
-        text: captionLanguageStrings
-          ? captionLanguageStrings[languageCode]
-          : languageCode
+        text: captionLanguageStrings ? captionLanguageStrings[languageCode] : languageCode
       };
     });
   }, [supportedCaptionLanguages, captionLanguageStrings]);

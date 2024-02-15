@@ -120,7 +120,8 @@ export const ModalLocalAndRemotePIP = (props: {
     onKeyDown,
     pictureInPictureProps,
     props,
-    pictureInPictureHandlers
+    pictureInPictureHandlers,
+    locale.component.strings.videoGallery
   ]);
 
   /* @conditional-compile-remove(rooms) */

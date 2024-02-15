@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { IDropdownOption } from "@fluentui/react";
+import { IDropdownOption } from '@fluentui/react';
 
 /**
  * @public
@@ -146,18 +146,18 @@ export type _SupportedSpokenLanguage = keyof SpokenLanguageStrings;
 /**
  * @internal
  */
-export type _SupportedCaptionLanguage = keyof CaptionLanguageStrings
+export type _SupportedCaptionLanguage = keyof CaptionLanguageStrings;
 
 /**
  * @internal
  */
 export type SpokenLanguageDropdownOptions = IDropdownOption<SpokenLanguageStrings> & {
-  key: keyof SpokenLanguageStrings
+  key: keyof SpokenLanguageStrings;
 };
 
 /**
  * @internal
  */
 export type CaptionLanguageDropdownOptions = IDropdownOption<CaptionLanguageStrings> & {
-  key: keyof CaptionLanguageStrings
+  key: keyof CaptionLanguageStrings;
 };

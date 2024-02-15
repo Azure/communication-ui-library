@@ -225,7 +225,7 @@ export function chunk<T>(options: T[], itemsPerRow: number): T[][] {
 /**
  * @private
  */
-export const defaultSpokenLanguage : _SupportedSpokenLanguage = 'en-us';
+export const defaultSpokenLanguage: _SupportedSpokenLanguage = 'en-us';
 
 /**
  * @private
@@ -249,7 +249,7 @@ export const nullToUndefined = <T>(value: T | null): T | undefined => (value ===
 
 /**
  * Helper function to get the keys of an object
- * 
+ *
  * @private
  */
 export function getKeys<T extends object>(obj: T): (keyof T)[] {
