@@ -15,8 +15,6 @@ _This document applies to normal releases, off of `main`. For hotfixing a prior 
 
 ## Timeline
 
-2 Week sprint. Release on 2nd week of sprint.
-
 ### First week of sprint
 
 - [Step 0.1: Ensure strings are Updated on Main](#step-01-ensure-strings-are-updated-on-main)
