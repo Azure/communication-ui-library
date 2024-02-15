@@ -135,7 +135,9 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const [teamsToken, setTeamsToken] = useState<string>();
   /* @conditional-compile-remove(teams-identity-support) */
   const [teamsId, setTeamsId] = useState<string>();
-  const [outboundTeamsUsers, setOutboundTeamsUsers] = useState<string | undefined>();
+  const [outboundTeamsUsers, setOutboundTeamsUsers] = useState<string | undefined>(
+    '28:orgid:19b01e96-c923-433a-83e4-bda54446bad7'
+  );
 
   /* @conditional-compile-remove(PSTN-calls) */
   const [alternateCallerIdCalloutVisible, setAlternateCallerIdCalloutVisible] = useState<boolean>(false);
@@ -305,7 +307,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                   className={outboundTextField}
                   label={'Teams user ID'}
                   required
-                  placeholder={'Enter a Teams user ID (8:orgid:<UUID>)'}
+                  placeholder={'28:orgid:19b01e96-c923-433a-83e4-bda54446bad7'}
                   errorMessage={
                     teamsIdFormatError ? `Teams user ID should be in the format '8:orgid:<UUID>'` : undefined
                   }
