@@ -88,7 +88,7 @@ export interface _TagsSurveyProps {
 export const _TagsSurvey = (props: _TagsSurveyProps): JSX.Element => {
   const { callIssuesToTag, categoryHeadings, onConfirm, strings, showFreeFormTextField } = props;
 
-  const [selectedTags, setSelectedTags] = useState<Partial<_CallSurvey>>({});
+  const [selectedTags, setSelectedTags] = useState<_CallSurvey>({});
 
   const [textResponse, setTextResponse] = useState<CallSurveyImprovementSuggestions>({});
 
@@ -131,15 +131,19 @@ export const _TagsSurvey = (props: _TagsSurveyProps): JSX.Element => {
   }, [callIssuesToTag]);
 
   const onChange = React.useCallback(
-    (issueCategory: _IssueCategory, checked: boolean, issue?: _AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue): void => {
+    (
+      issueCategory: _IssueCategory,
+      checked: boolean,
+      issue?: _AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue
+    ): void => {
       if (checked) {
         if (issue) {
           setSelectedTags((prevState) => {
             const existingIssues = prevState?.[issueCategory]?.issues;
-            if (prevState[issueCategory]?.issues && prevState[issueCategory]?.issues?.length > 0) {
-              prevState[issueCategory].issues.push(issue);
+            if (existingIssues) {
+              (prevState[issueCategory]!.issues as unknown[]) = [...existingIssues, issue];
             } else {
-              prevState[issueCategory].issues?.push(issue);
+              (prevState[issueCategory] as { issues: unknown[] }) = { issues: [issue] };
             }
             return prevState;
           });
@@ -153,11 +157,13 @@ export const _TagsSurvey = (props: _TagsSurveyProps): JSX.Element => {
       } else {
         if (issue) {
           setSelectedTags((prevState) => {
-            if (prevState[issueCategory]) {
-              prevState[issueCategory].issues = prevState[issueCategory].issues.filter(function (value) {
+            if (prevState[issueCategory]?.issues) {
+              (prevState[issueCategory]!.issues as unknown[]) = prevState[issueCategory]!.issues!.filter(function (
+                value
+              ) {
                 return value !== issue;
               });
-              if (prevState[issueCategory].issues.length === 0) {
+              if (prevState[issueCategory]!.issues!.length === 0) {
                 delete prevState[issueCategory];
               }
             }
@@ -219,7 +225,6 @@ export const _TagsSurvey = (props: _TagsSurveyProps): JSX.Element => {
 
       <Pivot>
         {getKeys(tags).map((key, i) => {
-          // const key = k as keyof SurveyIssuesHeadingStrings;
           return (
             <PivotItem
               key={`key-${i}`}

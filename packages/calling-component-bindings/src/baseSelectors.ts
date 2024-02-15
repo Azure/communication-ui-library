@@ -23,6 +23,7 @@ import { ReactionState } from '@internal/calling-stateful-client';
 import { CaptionsInfo } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(raise-hand) */
 import { RaisedHandState } from '@internal/calling-stateful-client';
+import { _SupportedCaptionLanguage, _SupportedSpokenLanguage } from '@internal/react-components';
 
 /**
  * Common props used to reference calling declarative client state.
@@ -246,8 +247,8 @@ export const getStartCaptionsInProgress = (
 export const getCurrentCaptionLanguage = (
   state: CallClientState,
   props: CallingBaseSelectorProps
-): string | undefined => {
-  return state.calls[props.callId]?.captionsFeature.currentCaptionLanguage;
+): _SupportedCaptionLanguage | undefined => {
+  return state.calls[props.callId]?.captionsFeature.currentCaptionLanguage as _SupportedCaptionLanguage;
 };
 
 /* @conditional-compile-remove(close-captions) */
@@ -255,8 +256,8 @@ export const getCurrentCaptionLanguage = (
 export const getCurrentSpokenLanguage = (
   state: CallClientState,
   props: CallingBaseSelectorProps
-): string | undefined => {
-  return state.calls[props.callId]?.captionsFeature.currentSpokenLanguage;
+): _SupportedSpokenLanguage | undefined => {
+  return state.calls[props.callId]?.captionsFeature.currentSpokenLanguage as _SupportedSpokenLanguage;
 };
 
 /* @conditional-compile-remove(close-captions) */
@@ -264,8 +265,8 @@ export const getCurrentSpokenLanguage = (
 export const getSupportedCaptionLanguages = (
   state: CallClientState,
   props: CallingBaseSelectorProps
-): string[] | undefined => {
-  return state.calls[props.callId]?.captionsFeature.supportedCaptionLanguages;
+): _SupportedCaptionLanguage[] | undefined => {
+  return state.calls[props.callId]?.captionsFeature.supportedCaptionLanguages as _SupportedCaptionLanguage[];
 };
 
 /* @conditional-compile-remove(close-captions) */
@@ -273,6 +274,6 @@ export const getSupportedCaptionLanguages = (
 export const getSupportedSpokenLanguages = (
   state: CallClientState,
   props: CallingBaseSelectorProps
-): string[] | undefined => {
-  return state.calls[props.callId]?.captionsFeature.supportedSpokenLanguages;
+): _SupportedSpokenLanguage[] | undefined => {
+  return state.calls[props.callId]?.captionsFeature.supportedSpokenLanguages as _SupportedSpokenLanguage[];
 };

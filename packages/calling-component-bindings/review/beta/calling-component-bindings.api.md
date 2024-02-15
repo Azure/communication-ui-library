@@ -50,6 +50,8 @@ import { ScreenShareButton } from '@internal/react-components';
 import { StartCallOptions } from '@azure/communication-calling';
 import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulDeviceManager } from '@internal/calling-stateful-client';
+import { _SupportedCaptionLanguage } from '@internal/react-components';
+import { _SupportedSpokenLanguage } from '@internal/react-components';
 import { TeamsCall } from '@azure/communication-calling';
 import { TeamsCallAgent } from '@azure/communication-calling';
 import { VideoDeviceInfo } from '@azure/communication-calling';
@@ -129,10 +131,10 @@ export const _captionsBannerSelector: _CaptionsBannerSelector;
 
 // @internal
 export type _CaptionSettingsSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
-    supportedCaptionLanguages: string[];
-    currentCaptionLanguage: string;
-    supportedSpokenLanguages: string[];
-    currentSpokenLanguage: string;
+    supportedCaptionLanguages: _SupportedCaptionLanguage[];
+    currentCaptionLanguage: _SupportedCaptionLanguage;
+    supportedSpokenLanguages: _SupportedSpokenLanguage[];
+    currentSpokenLanguage: _SupportedSpokenLanguage;
     isCaptionsFeatureActive: boolean;
 };
 

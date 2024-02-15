@@ -406,17 +406,17 @@ export interface _CaptionsSettingsModalProps {
     // (undocumented)
     changeCaptionLanguage?: boolean;
     // (undocumented)
-    currentCaptionLanguage: string;
+    currentCaptionLanguage: _SupportedCaptionLanguage;
     // (undocumented)
-    currentSpokenLanguage: string;
+    currentSpokenLanguage: _SupportedSpokenLanguage;
     // (undocumented)
     isCaptionsFeatureActive?: boolean;
     // (undocumented)
     onDismissCaptionsSettings?: () => void;
     // (undocumented)
-    onSetCaptionLanguage: (language: string) => Promise<void>;
+    onSetCaptionLanguage: (language: _SupportedCaptionLanguage) => Promise<void>;
     // (undocumented)
-    onSetSpokenLanguage: (language: string) => Promise<void>;
+    onSetSpokenLanguage: (language: _SupportedSpokenLanguage) => Promise<void>;
     // (undocumented)
     onStartCaptions: (options?: _captionsOptions) => Promise<void>;
     // (undocumented)
@@ -426,9 +426,9 @@ export interface _CaptionsSettingsModalProps {
     // (undocumented)
     strings?: _CaptionsSettingsModalStrings;
     // (undocumented)
-    supportedCaptionLanguages: string[];
+    supportedCaptionLanguages: _SupportedCaptionLanguage[];
     // (undocumented)
-    supportedSpokenLanguages: string[];
+    supportedSpokenLanguages: _SupportedSpokenLanguage[];
 }
 
 // @internal
@@ -638,7 +638,6 @@ export type ComponentSlotStyle = Omit<IRawStyle, 'animation'>;
 
 // @public
 export interface ComponentStrings {
-    AttendeeRole: string;
     BrowserPermissionDenied: BrowserPermissionDeniedStrings;
     BrowserPermissionDeniedIOS: BrowserPermissionDeniedIOSStrings;
     CameraAndMicrophoneSitePermissionsCheck: SitePermissionsStrings;
@@ -1734,6 +1733,7 @@ export interface ParticipantItemProps {
 
 // @public
 export interface ParticipantItemStrings {
+    attendeeRole: string;
     displayNamePlaceholder?: string;
     isMeText: string;
     menuTitle: string;
@@ -1975,7 +1975,7 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     showMuteIndicator?: boolean | undefined;
     showLabel?: boolean | undefined;
     personaMinSize?: number | undefined;
-    strings?: VideoGalleryStrings | undefined;
+    strings: VideoGalleryStrings;
     participantState?: ParticipantState | undefined;
     menuKind?: "contextual" | "drawer" | undefined;
     drawerMenuHostId?: string | undefined;
@@ -2283,6 +2283,12 @@ export interface StreamMediaProps {
     videoStreamElement: HTMLElement | null;
 }
 
+// @internal (undocumented)
+export type _SupportedCaptionLanguage = keyof CaptionLanguageStrings;
+
+// @internal (undocumented)
+export type _SupportedSpokenLanguage = keyof SpokenLanguageStrings;
+
 // @beta
 export interface SurveyIssues {
     // (undocumented)
@@ -2342,12 +2348,10 @@ export interface SurveyIssuesHeadingStrings {
 }
 
 // @internal
-export type _SurveyTag = {
-    [issueCategory: string]: {
-        message: string;
-        issue: _AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue;
-    }[];
-};
+export type _SurveyTag = Record<_IssueCategory, {
+    message: string;
+    issue: _AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue;
+}[]>;
 
 // @public
 export type SystemMessage = ParticipantAddedSystemMessage | ParticipantRemovedSystemMessage | TopicUpdatedSystemMessage | ContentSystemMessage;
@@ -2676,6 +2680,7 @@ export interface VideoGalleryStream {
 // @public
 export interface VideoGalleryStrings {
     addSpotlightVideoTileMenuLabel: string;
+    attendeeRole: string;
     displayNamePlaceholder: string;
     fillRemoteParticipantFrame: string;
     fitRemoteParticipantToFrame: string;
