@@ -114,7 +114,7 @@ graph LR
 
 ### Step 1.2: Groom changelog
 
-1. Previous steps workflow creates a `groom-changelog/<release-tag>`.
+1. Previous step's workflow creates a `groom-changelog/<release-tag>` branch.
 1. Follow steps to [groom changelog](./pruning-a-changelog.md).
 1. Remove the `GROOMME.md` file created from previous workflow to signify that the changelog has been manually groomed.
 1. Create PR to merge grooming branch into pre-release branch (`prerelease/<release-tag>`).
