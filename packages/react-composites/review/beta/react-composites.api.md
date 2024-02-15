@@ -131,7 +131,7 @@ export type AzureCommunicationCallWithChatAdapterArgs = {
     userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
-    locator: CommunicationLocator;
+    locator: CallAndChatAdapterLocator;
     alternateCallerId?: string;
     callAdapterOptions?: AzureCommunicationCallAdapterOptions;
 };
@@ -340,6 +340,9 @@ export type CallAdapterUiState = {
     page: CallCompositePage;
     unsupportedBrowserVersionsAllowed?: boolean;
 };
+
+// @public
+export type CallAndChatAdapterLocator = CallAndChatLocator | TeamsMeetingLinkLocator | /** @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
 
 // @public
 export interface CallAndChatLocator {
@@ -1281,9 +1284,6 @@ export type CommonCallControlOptions = {
         disabled: boolean;
     };
 };
-
-// @public
-export type CommunicationLocator = CallAndChatLocator | TeamsMeetingLinkLocator | /** @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
 
 // @public
 export const COMPOSITE_LOCALE_AR_SA: CompositeLocale;

@@ -879,9 +879,9 @@ export class TeamsMeetingLinkAdapter implements ChatThreadLocator {
  */
 export class TeamsMeetingIdAdapter implements ChatThreadLocator {
   public locator: TeamsMeetingIdLocator;
-  private callAdapter: CallAdapter;
+  private callAdapter: Promise<CallAdapter>;
 
-  constructor(locator: TeamsMeetingIdLocator, callAdapter: CallAdapter) {
+  constructor(locator: TeamsMeetingIdLocator, callAdapter: Promise<CallAdapter>) {
     this.locator = locator;
     this.callAdapter = callAdapter;
   }
@@ -890,10 +890,12 @@ export class TeamsMeetingIdAdapter implements ChatThreadLocator {
     return new Promise<string>((resolve) => {
       const stateChangeListener = (state: CallAdapterState): void => {
         if (state.call?.state === 'Connected') {
-          resolve('19:meeting_MTA4ZTQ2ZmMtMzUzNS00OGJjLWE5NjMtZjk3OTMyY2UyM2Iz@thread.v2');
+          resolve('19:meeting_YjFlMWVhNjAtMDBmYy00OGFkLWI3NjUtNTk5ZTM4NmE0OTA2@thread.v2');
         }
       };
-      this.callAdapter.onStateChange(stateChangeListener);
+      this.callAdapter.then((adapter) => {
+        adapter.onStateChange(stateChangeListener);
+      });
     });
   }
 }
@@ -911,7 +913,7 @@ export type CommunicationAdapter =
  * Combination of available locators for use in {@link createAzureCommunicationCallWithChatAdapter}.
  * @public
  */
-export type CommunicationLocator =
+export type CallAndChatAdapterLocator =
   | CallAndChatLocator
   | TeamsMeetingLinkLocator
   | /** @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
@@ -926,7 +928,7 @@ export type AzureCommunicationCallWithChatAdapterArgs = {
   userId: CommunicationUserIdentifier;
   displayName: string;
   credential: CommunicationTokenCredential;
-  locator: CommunicationLocator;
+  locator: CallAndChatAdapterLocator;
   /* @conditional-compile-remove(PSTN-calls) */
   alternateCallerId?: string;
   /* @conditional-compile-remove(video-background-effects) */
@@ -950,7 +952,7 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
 }: AzureCommunicationCallWithChatAdapterArgs): Promise<CallWithChatAdapter> => {
   const callAdapterLocator = isTeamsMeetingLocator(locator) ? locator : locator.callLocator;
 
-  const callAdapter = await _createAzureCommunicationCallAdapterInner({
+  const callAdapter = _createAzureCommunicationCallAdapterInner({
     userId,
     displayName,
     credential,
@@ -970,7 +972,7 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
     'CallWithChat' as _TelemetryImplementationHint
   );
 
-  return new AzureCommunicationCallWithChatAdapter(callAdapter, chatAdapter);
+  return new AzureCommunicationCallWithChatAdapter(await callAdapter, chatAdapter);
 };
 
 /**
@@ -1176,12 +1178,15 @@ export const _createAzureCommunicationCallWithChatAdapterFromAdapters = (
   new AzureCommunicationCallWithChatAdapter(callAdapter, new Promise((resolve) => resolve(chatAdapter)));
 
 const isTeamsMeetingLocator = (
-  locator: CommunicationLocator
+  locator: CallAndChatAdapterLocator
 ): locator is TeamsMeetingLinkLocator | /** @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator => {
   return 'meetingLink' in locator || 'meetingId' in locator;
 };
 
-const _createChatThreadAdapterInner = (locator: CommunicationLocator, adapter: CallAdapter): ChatThreadLocator => {
+const _createChatThreadAdapterInner = (
+  locator: CallAndChatAdapterLocator,
+  adapter: Promise<CallAdapter>
+): ChatThreadLocator => {
   if ('meetingLink' in locator) {
     return new TeamsMeetingLinkAdapter(locator);
   }

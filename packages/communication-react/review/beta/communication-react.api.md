@@ -190,7 +190,7 @@ export type AzureCommunicationCallWithChatAdapterArgs = {
     userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
-    locator: CommunicationLocator;
+    locator: CallAndChatAdapterLocator;
     alternateCallerId?: string;
     callAdapterOptions?: AzureCommunicationCallAdapterOptions;
 };
@@ -487,6 +487,9 @@ export interface CallAgentProviderProps {
 export interface CallAgentState {
     displayName?: string;
 }
+
+// @public
+export type CallAndChatAdapterLocator = CallAndChatLocator | TeamsMeetingLinkLocator | /** @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
 
 // @public
 export interface CallAndChatLocator {
@@ -2012,9 +2015,6 @@ export interface CommonSitePermissionsProps {
     onTroubleshootingClick?: () => void;
     styles?: SitePermissionsStyles;
 }
-
-// @public
-export type CommunicationLocator = CallAndChatLocator | TeamsMeetingLinkLocator | /** @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
 
 // @public
 export type CommunicationParticipant = {

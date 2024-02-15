@@ -45,7 +45,6 @@ export interface HomeScreenProps {
   startCallHandler(callDetails: {
     displayName: string;
     meetingLocator?: TeamsMeetingLinkLocator | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
-    threadId?: string;
     /* @conditional-compile-remove(one-to-n-calling)  */
     outboundParticipants?: string[];
     /* @conditional-compile-remove(PSTN-calls) */

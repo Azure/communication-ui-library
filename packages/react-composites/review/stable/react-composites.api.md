@@ -110,7 +110,7 @@ export type AzureCommunicationCallWithChatAdapterArgs = {
     userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
-    locator: CommunicationLocator;
+    locator: CallAndChatAdapterLocator;
     callAdapterOptions?: AzureCommunicationCallAdapterOptions;
 };
 
@@ -283,6 +283,9 @@ export type CallAdapterUiState = {
     isLocalPreviewMicrophoneEnabled: boolean;
     page: CallCompositePage;
 };
+
+// @public
+export type CallAndChatAdapterLocator = CallAndChatLocator | TeamsMeetingLinkLocator;
 
 // @public
 export interface CallAndChatLocator {
@@ -1015,9 +1018,6 @@ export type CommonCallControlOptions = {
         disabled: boolean;
     };
 };
-
-// @public
-export type CommunicationLocator = CallAndChatLocator | TeamsMeetingLinkLocator;
 
 // @public
 export const COMPOSITE_LOCALE_AR_SA: CompositeLocale;

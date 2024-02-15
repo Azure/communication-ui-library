@@ -12,7 +12,7 @@ import {
   CallWithChatComposite,
   CallWithChatAdapter,
   CallWithChatCompositeOptions,
-  CommunicationLocator
+  CallAndChatAdapterLocator
 } from '@azure/communication-react';
 /* @conditional-compile-remove(video-background-effects) */
 import { onResolveVideoEffectDependencyLazy, AzureCommunicationCallAdapterOptions } from '@azure/communication-react';
@@ -29,7 +29,7 @@ export interface CallScreenProps {
   userId: CommunicationUserIdentifier;
   displayName: string;
   endpoint: string;
-  locator: CommunicationLocator;
+  locator: CallAndChatAdapterLocator;
   /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId?: string;
 }
 
@@ -215,15 +215,15 @@ const convertPageStateToString = (state: CallWithChatAdapterState): string => {
   }
 };
 
-const isTeamsMeetingLinkLocator = (locator: CommunicationLocator): locator is TeamsMeetingLinkLocator => {
+const isTeamsMeetingLinkLocator = (locator: CallAndChatAdapterLocator): locator is TeamsMeetingLinkLocator => {
   return 'meetingLink' in locator;
 };
 
 /* @conditional-compile-remove(meeting-id) */
-const isTeamsMeetingIdLocator = (locator: CommunicationLocator): locator is TeamsMeetingIdLocator => {
+const isTeamsMeetingIdLocator = (locator: CallAndChatAdapterLocator): locator is TeamsMeetingIdLocator => {
   return 'meetingId' in locator;
 };
 
-const isGroupCallLocator = (locator: CommunicationLocator): boolean => {
+const isGroupCallLocator = (locator: CallAndChatAdapterLocator): boolean => {
   return 'callLocator' in locator && 'groupId' in locator.callLocator;
 };
