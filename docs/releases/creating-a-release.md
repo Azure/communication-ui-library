@@ -20,12 +20,12 @@ _This document applies to normal releases, off of `main`. For hotfixing a prior 
 ### First week of sprint
 
 - [Step 0.1: Ensure strings are Updated](#step-01-ensure-strings-are-updated-on-main)
-- [](#step-02-pre-release-changelog-and-update-feature-list)
-- Step 0.3
-- Step 0.4
-- Step 0.5
+- [Step 0.2: Pre-Release ChangeLog and Update Feature List](#step-02-pre-release-changelog-and-update-feature-list)
+- [Step 0.3: Create a Thread in the WebUI channel to Track Release Progress](#step-03-create-a-thread-in-the-webui-channel-to-track-release-progress)
+- [Step 0.4: Create an Async Bug Bash Meeting](#step-04-create-an-async-bug-bash-meeting)
+- [Step 0.5: ARB Review of any public API changes (Required for Stable | Recommended for Beta)](#step-05-arb-review-of-any-public-api-changes-required-for-stable--recommended-for-beta)
 
-Second week of sprint:
+### Second week of sprint
 
 Monday - 
 Tuesday - 
