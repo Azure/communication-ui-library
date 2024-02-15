@@ -564,7 +564,7 @@ export interface CallState {
 /**
  * Transfer feature state
  *
- * @beta
+ * @public
  */
 export interface TransferFeatureState {
   /**
@@ -577,7 +577,7 @@ export interface TransferFeatureState {
 /**
  * Transfer feature state
  *
- * @beta
+ * @public
  */
 export interface AcceptedTransfer {
   /**
