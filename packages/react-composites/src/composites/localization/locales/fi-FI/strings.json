@@ -60,6 +60,11 @@
     "removedFromCallMoreDetails": "Toinen osallistuja poisti sinut puhelusta.",
     "removedFromCallTitle": "Sinut on poistettu",
     "removeMenuLabel": "Poista",
+    "startSpotlightParticipantListMenuLabel": "Lisää valokeilaan kaikille",
+    "addSpotlightParticipantListMenuLabel": "Lisää valokeilaan",
+    "stopSpotlightParticipantListMenuLabel": "Poista valokeilasta",
+    "stopSpotlightOnSelfParticipantListMenuLabel": "Valokeila",
+    "spotlightLimitReachedParticipantListMenuTitle": "Spotlight-raja saavutettu",
     "returnToCallButtonAriaDescription": "Palaa puheluun",
     "returnToCallButtonAriaLabel": "Takaisin",
     "roomNotFoundDetails": "Annettua huonetunnusta ei löydy.",
@@ -120,6 +125,13 @@
     "callRejectedMoreDetails": "Henkilö, jota yrität tavoittaa, ei ole tavoitettavissa. Yritä myöhemmin uudelleen.",
     "callTimeoutTitle": "Puhelua ei voitu soittaa",
     "callTimeoutDetails": "Henkilö, jota yrität tavoittaa, ei ole tavoitettavissa. Yritä myöhemmin uudelleen.",
+    "callTimeoutBotTitle": "Puhelua ei voitu soittaa",
+    "callTimeoutBotDetails": "Palvelu, jota yrität tavoittaa, ei ole käytettävissä. Yritä myöhemmin uudelleen.",
+    "dtmfDialerButtonLabel": "Valintapaneeli",
+    "dtmfDialerButtonTooltipOn": "Näytä valintapaneeli",
+    "dtmfDialerButtonTooltipOff": "Piilota valintapaneeli",
+    "dtmfDialerMoreButtonLabelOn": "Näytä valintapaneeli",
+    "dtmfDialerMoreButtonLabelOff": "Piilota valintapaneeli",
     "spokenLanguageStrings": {
       "ar-ae": "arabia – Arabiemiirikunnat",
       "ar-sa": "arabia – Saudi-Arabia",
@@ -232,7 +244,7 @@
         "grantedDueToRoleChangeToPresenter": "Olet esittäjä. Voit jakaa sisältöä ja johtaa kokousta."
       }
     },
-    "surveyQuestion": "Millainen puhelusi oli tänään?",
+    "surveyTitle": "Auta kehittämään tuotetta",
     "starSurveyHelperText": "Millainen oli puhelun äänenlaatu?",
     "starSurveyOneStarText": "Laatu oli huono.",
     "starSurveyTwoStarText": "Laatu oli erittäin huono.",
@@ -241,11 +253,12 @@
     "starSurveyFiveStarText": "Laatu oli erinomainen.",
     "surveyConfirmButtonLabel": "Lähetä palautetta",
     "starRatingAriaLabel": "Valitse {0}/{1} tähteä",
-    "surveyCancelButtonAriaLabel": "Peruuta",
+    "surveySkipButtonLabel": "Ohita",
     "tagsSurveyQuestion": "Mikä olisi voinut olla paremmin?",
     "tagsSurveyTextFieldDefaultText": "Muu, anna kuvaus",
     "tagsSurveyHelperText": "Tarkista havaitsematsi ongelmat",
     "surveyTextboxDefaultText": "Muu, anna kuvaus",
+    "endOfSurveyText": "Kiitos palautteestasi!",
     "surveyIssues": {
       "overallRating": {
         "callCannotJoin": "En pystynyt liittymään puheluun",
@@ -291,6 +304,20 @@
       "audioRating": "Äänet",
       "videoRating": "Video",
       "screenshareRating": "Esitys käynnissä"
+    },
+    "spotlightPrompt": {
+      "startSpotlightHeading": "Lisätäänkö valokeilaan kaikille?",
+      "startSpotlightText": "Korostat videon kaikille kokouksen osallistujille.",
+      "startSpotlightOnSelfText": "Korostat videosi kaikille kokouksen osallistujille.",
+      "startSpotlightConfirmButtonLabel": "Lisää valokeilaan kaikille",
+      "startSpotlightCancelButtonLabel": "Peruuta",
+      "stopSpotlightHeading": "Poistetaanko valokeilasta?",
+      "stopSpotlightOnSelfHeading": "Haluatko poistua valokeilasta?",
+      "stopSpotlightText": "Videota ei enää korosteta kaikille kokouksen osallistujille.",
+      "stopSpotlightOnSelfText": "Videota ei enää korosteta kaikille kokouksen osallistujille.",
+      "stopSpotlightConfirmButtonLabel": "Poista valokeilasta",
+      "stopSpotlightOnSelfConfirmButtonLabel": "Valokeila",
+      "stopSpotlightCancelButtonLabel": "Peruuta"
     }
   },
   "chat": {

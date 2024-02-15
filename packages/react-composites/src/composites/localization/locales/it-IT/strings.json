@@ -60,6 +60,11 @@
     "removedFromCallMoreDetails": "Un altro partecipante ti ha rimosso dalla chiamata.",
     "removedFromCallTitle": "Sei stato rimosso",
     "removeMenuLabel": "Rimuovi",
+    "startSpotlightParticipantListMenuLabel": "Metti in evidenza per tutti",
+    "addSpotlightParticipantListMenuLabel": "Metti in evidenza",
+    "stopSpotlightParticipantListMenuLabel": "Interrompi la posizione in evidenza",
+    "stopSpotlightOnSelfParticipantListMenuLabel": "Chiudi visualizzazione in evidenza",
+    "spotlightLimitReachedParticipantListMenuTitle": "È stato raggiunto il limite di contenuti in evidenza",
     "returnToCallButtonAriaDescription": "Torna alla chiamata",
     "returnToCallButtonAriaLabel": "Indietro",
     "roomNotFoundDetails": "L'ID stanza specificato non è stato trovato.",
@@ -120,6 +125,13 @@
     "callRejectedMoreDetails": "La persona che stai tentando di raggiungere non è disponibile. Riprovare più tardi.",
     "callTimeoutTitle": "Non è stato possibile completare la chiamata",
     "callTimeoutDetails": "La persona che stai tentando di raggiungere non è disponibile. Riprovare più tardi.",
+    "callTimeoutBotTitle": "Non è stato possibile completare la chiamata",
+    "callTimeoutBotDetails": "Il servizio che si sta tentando di raggiungere non è disponibile. Riprovare più tardi.",
+    "dtmfDialerButtonLabel": "Tastiera",
+    "dtmfDialerButtonTooltipOn": "Mostra tastiera",
+    "dtmfDialerButtonTooltipOff": "Nascondi tastierino",
+    "dtmfDialerMoreButtonLabelOn": "Mostra tastiera",
+    "dtmfDialerMoreButtonLabelOff": "Nascondi tastierino",
     "spokenLanguageStrings": {
       "ar-ae": "Arabo - Emirati Arabi Uniti",
       "ar-sa": "Arabo - Arabia Saudita",
@@ -232,7 +244,7 @@
         "grantedDueToRoleChangeToPresenter": "Sei un relatore. Puoi condividere i contenuti e facilitare la riunione."
       }
     },
-    "surveyQuestion": "Come è stata la chiamata oggi?",
+    "surveyTitle": "Aiutaci a migliorare",
     "starSurveyHelperText": "Come valuti la qualità della chiamata?",
     "starSurveyOneStarText": "La qualità era pessima.",
     "starSurveyTwoStarText": "La qualità era scadente.",
@@ -241,11 +253,12 @@
     "starSurveyFiveStarText": "La qualità è stata eccellente.",
     "surveyConfirmButtonLabel": "Invia feedback",
     "starRatingAriaLabel": "Seleziona {0} di {1} stelle",
-    "surveyCancelButtonAriaLabel": "Annulla",
+    "surveySkipButtonLabel": "Salta",
     "tagsSurveyQuestion": "Cosa avrebbe potuto essere migliore?",
     "tagsSurveyTextFieldDefaultText": "Altro, specifica",
     "tagsSurveyHelperText": "Controlla eventuali problemi riscontrati",
     "surveyTextboxDefaultText": "Altro, specifica",
+    "endOfSurveyText": "Grazie per il feedback!",
     "surveyIssues": {
       "overallRating": {
         "callCannotJoin": "Non sono riuscito a partecipare alla chiamata",
@@ -291,6 +304,20 @@
       "audioRating": "Audio",
       "videoRating": "Video",
       "screenshareRating": "Presentazione in corso"
+    },
+    "spotlightPrompt": {
+      "startSpotlightHeading": "Mettere in evidenza per tutti?",
+      "startSpotlightText": "Questo video sarà in evidenza per tutti i partecipanti alla riunione.",
+      "startSpotlightOnSelfText": "Il tuo video sarà in evidenza per tutti i partecipanti alla riunione.",
+      "startSpotlightConfirmButtonLabel": "Metti in evidenza per tutti",
+      "startSpotlightCancelButtonLabel": "Annulla",
+      "stopSpotlightHeading": "Interrompere la messa in evidenza?",
+      "stopSpotlightOnSelfHeading": "Uscire dalla messa in evidenza?",
+      "stopSpotlightText": "Questo video non sarà più in evidenza per tutti i partecipanti alla riunione.",
+      "stopSpotlightOnSelfText": "Il tuo video non sarà più in evidenza per tutti i partecipanti alla riunione.",
+      "stopSpotlightConfirmButtonLabel": "Smetti di mettere in evidenza",
+      "stopSpotlightOnSelfConfirmButtonLabel": "Esci da visualizzazione in evidenza",
+      "stopSpotlightCancelButtonLabel": "Annulla"
     }
   },
   "chat": {

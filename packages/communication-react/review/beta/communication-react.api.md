@@ -92,7 +92,7 @@ import { TeamsCall } from '@azure/communication-calling';
 import { TeamsCallAgent } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
-import { TransferRequestedEventArgs } from '@azure/communication-calling';
+import { TransferEventArgs } from '@azure/communication-calling';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-chat';
 import { UnknownIdentifier } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
@@ -438,9 +438,10 @@ export interface CallAdapterSubscribers {
     off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
     off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
     off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
-    off(event: 'transferRequested', listener: TransferRequestedListener): void;
+    off(event: 'transferAccepted', listener: TransferAcceptedListener): void;
     off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     off(event: 'roleChanged', listener: PropertyChangedEvent): void;
+    off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
     on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
     on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
     on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -457,9 +458,10 @@ export interface CallAdapterSubscribers {
     on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
     on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
     on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
-    on(event: 'transferRequested', listener: TransferRequestedListener): void;
+    on(event: 'transferAccepted', listener: TransferAcceptedListener): void;
     on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     on(event: 'roleChanged', listener: PropertyChangedEvent): void;
+    on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
 }
 
 // @public
@@ -975,10 +977,10 @@ export interface CallState {
 
 // @beta
 export interface CallSurveyImprovementSuggestions {
-    audio?: string;
-    overall?: string;
-    screenshare?: string;
-    video?: string;
+    audioRating?: string;
+    overallRating?: string;
+    screenshareRating?: string;
+    videoRating?: string;
 }
 
 // @public
@@ -1007,6 +1009,8 @@ export interface CallWithChatAdapterManagement {
     downloadAttachment: (options: {
         attachmentUrl: string;
     }) => Promise<AttachmentDownloadResult>;
+    // (undocumented)
+    downloadResourceToCache(resourceDetails: ResourceDetails): void;
     fetchInitialData(): Promise<void>;
     // @beta
     holdCall: () => Promise<void>;
@@ -1030,6 +1034,8 @@ export interface CallWithChatAdapterManagement {
     removeParticipant(userId: string): Promise<void>;
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
+    // (undocumented)
+    removeResourceFromCache(resourceDetails: ResourceDetails): void;
     // @beta
     resumeCall: () => Promise<void>;
     sendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
@@ -1106,6 +1112,8 @@ export interface CallWithChatAdapterSubscriptions {
     // (undocumented)
     off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     // (undocumented)
+    off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
+    // (undocumented)
     off(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
     off(event: 'messageEdited', listener: MessageEditedListener): void;
@@ -1153,6 +1161,8 @@ export interface CallWithChatAdapterSubscriptions {
     on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
     // (undocumented)
     on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
+    // (undocumented)
+    on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
     // (undocumented)
     on(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
@@ -1372,7 +1382,7 @@ export interface CallWithChatControlOptions extends CommonCallControlOptions {
 }
 
 // @public
-export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | /* @conditional-compile-remove(close-captions) */ 'isCaptionsActiveChanged' | /* @conditional-compile-remove(close-captions) */ 'captionsReceived' | /* @conditional-compile-remove(close-captions) */ 'isCaptionLanguageChanged' | /* @conditional-compile-remove(close-captions) */ 'isSpokenLanguageChanged' | /* @conditional-compile-remove(capabilities) */ 'capabilitiesChanged' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
+export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | /* @conditional-compile-remove(close-captions) */ 'isCaptionsActiveChanged' | /* @conditional-compile-remove(close-captions) */ 'captionsReceived' | /* @conditional-compile-remove(close-captions) */ 'isCaptionLanguageChanged' | /* @conditional-compile-remove(close-captions) */ 'isSpokenLanguageChanged' | /* @conditional-compile-remove(capabilities) */ 'capabilitiesChanged' | /* @conditional-compile-remove(spotlight) */ 'spotlightChanged' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
 
 // @beta
 export const CameraAndMicrophoneSitePermissions: (props: CameraAndMicrophoneSitePermissionsProps) => JSX.Element;
@@ -1618,9 +1628,11 @@ export interface ChatAdapterThreadManagement {
     downloadAttachment: (options: {
         attachmentUrl: string;
     }) => Promise<AttachmentDownloadResult>;
+    downloadResourceToCache(resourceDetails: ResourceDetails): void;
     fetchInitialData(): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     removeParticipant(userId: string): Promise<void>;
+    removeResourceFromCache(resourceDetails: ResourceDetails): void;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
@@ -3809,6 +3821,13 @@ export interface RemoteVideoTileMenuOptions {
 }
 
 // @public
+export type ResourceDetails = {
+    threadId: string;
+    messageId: string;
+    resourceUrl: string;
+};
+
+// @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
 
 // @public
@@ -4009,6 +4028,12 @@ export interface SpotlightCallFeatureState {
     maxParticipantsToSpotlight: number;
     spotlightedParticipants: SpotlightedParticipant[];
 }
+
+// @public
+export type SpotlightChangedListener = (args: {
+    added: SpotlightedParticipant[];
+    removed: SpotlightedParticipant[];
+}) => void;
 
 // @beta
 export interface SpotlightPromptStrings {
@@ -4215,14 +4240,14 @@ export interface TranscriptionCallFeature {
 }
 
 // @beta
+export type TransferAcceptedListener = (event: TransferEventArgs) => void;
+
+// @beta
 export interface TransferFeature {
     acceptedTransfers: {
         [key: string]: AcceptedTransfer;
     };
 }
-
-// @beta
-export type TransferRequestedListener = (event: TransferRequestedEventArgs) => void;
 
 // @public
 export const TypingIndicator: (props: TypingIndicatorProps) => JSX.Element;

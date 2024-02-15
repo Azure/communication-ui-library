@@ -200,7 +200,8 @@
     "failedToJoinCallGeneric": "הצטרפות לשיחה נכשלה.",
     "failedToJoinCallInvalidMeetingLink": "לא ניתן להצטרף לפגישה. קישור לא חוקי.",
     "cameraFrozenForRemoteParticipants": "משתמשים בשיחה נתקלים בבעיות בהצגת הווידאו שלך. בדוק את המכשירים ואת הרשת שלך.",
-    "unableToStartVideoEffect": "לא ניתן להחיל אפקט וידאו."
+    "unableToStartVideoEffect": "לא ניתן להחיל אפקט וידאו.",
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "אין אפשרות להפעיל זרקור על משתתפים מכיוון שכבר יש זרקורים על המספר המרבי של משתתפים."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "אתה משתף את המסך שלך",
@@ -218,7 +219,12 @@
     "pinParticipantMenuItemAriaLabel": "הצמד את {participantName}",
     "unpinParticipantMenuItemAriaLabel": "בטל את הצמדת {participantName}",
     "pinnedParticipantAnnouncementAriaLabel": "{participantName} הוצמד",
-    "unpinnedParticipantAnnouncementAriaLabel": "הצמדת {participantName} בוטלה"
+    "unpinnedParticipantAnnouncementAriaLabel": "הצמדת {participantName} בוטלה",
+    "startSpotlightVideoTileMenuLabel": "הצבת זרקור עבור כולם",
+    "addSpotlightVideoTileMenuLabel": "הוסף זרקור",
+    "spotlightLimitReachedMenuTitle": "הגעת למגבלת הזרקורים",
+    "stopSpotlightVideoTileMenuLabel": "הפסק להציב זרקור",
+    "stopSpotlightOnSelfVideoTileMenuLabel": "צא מזרקור"
   },
   "dialpad": {
     "placeholderText": "הזן מספר טלפון",

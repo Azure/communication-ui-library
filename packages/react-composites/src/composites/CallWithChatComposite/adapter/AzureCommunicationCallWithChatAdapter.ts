@@ -50,6 +50,8 @@ import {
   MessageEditedListener,
   MessageDeletedListener
 } from '../../ChatComposite';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { ResourceDetails } from '../../ChatComposite';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadManager } from '../../ChatComposite';
 import { CallWithChatAdapter, CallWithChatEvent } from './CallWithChatAdapter';
@@ -102,6 +104,8 @@ import {
 } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(capabilities) */
 import { CapabilitiesChangedListener } from '../../CallComposite/adapter/CallAdapter';
+/* @conditional-compile-remove(spotlight) */
+import { SpotlightChangedListener } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 /* @conditional-compile-remove(end-of-call-survey) */
@@ -234,7 +238,11 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     /* @conditional-compile-remove(file-sharing) */
     this.updateFileUploadMetadata = this.updateFileUploadMetadata.bind(this);
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-    this.downloadAttachment = this.downloadAttachment.bind(this);
+    this.downloadAttachment = this.downloadAttachment.bind(this); // ToDo: This method is to be removed
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    this.downloadResourceToCache = this.downloadResourceToCache.bind(this);
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    this.removeResourceFromCache = this.removeResourceFromCache.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
     this.holdCall.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
@@ -480,8 +488,17 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.chatAdapter.updateFileUploadMetadata(id, metadata);
   };
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  // ToDo: This method is to be removed
   async downloadAttachment(options: { attachmentUrl: string }): Promise<AttachmentDownloadResult> {
     return await this.chatAdapter.downloadAttachment(options);
+  }
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  public downloadResourceToCache(resourceDetails: ResourceDetails): void {
+    this.chatAdapter.downloadResourceToCache(resourceDetails);
+  }
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  public removeResourceFromCache(resourceDetails: ResourceDetails): void {
+    this.chatAdapter.removeResourceFromCache(resourceDetails);
   }
   /* @conditional-compile-remove(PSTN-calls) */
   public async holdCall(): Promise<void> {
@@ -600,6 +617,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
   /* @conditional-compile-remove(capabilities) */
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
+  /* @conditional-compile-remove(spotlight) */
+  on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   on(event: CallWithChatEvent, listener: any): void {
@@ -712,6 +731,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
   /* @conditional-compile-remove(capabilities) */
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
+  /* @conditional-compile-remove(spotlight) */
+  off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   off(event: CallWithChatEvent, listener: any): void {
