@@ -13,6 +13,9 @@ import {
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { StartCallButton } from '../components/StartCallButton';
 import { CallCompositeIcon, CallCompositeIcons } from '../../common/icons';
+import { useSelector } from '../hooks/useSelector';
+import { getTargetCallees } from '../selectors/baseSelectors';
+import { StartCallIdentifier } from '../adapter';
 /**
  * @private
  */
@@ -33,6 +36,8 @@ export interface NoticePageProps {
 export function NoticePage(props: NoticePageProps): JSX.Element {
   const adapter = useAdapter();
 
+  const callees = useSelector(getTargetCallees) as StartCallIdentifier[] | undefined;
+
   return (
     <Stack
       className={mergeStyles(props.pageStyle)}
@@ -52,7 +57,18 @@ export function NoticePage(props: NoticePageProps): JSX.Element {
         </Text>
         {!props.disableStartCallButton && (
           <Stack styles={rejoinCallButtonContainerStyles}>
-            <StartCallButton onClick={() => adapter.joinCall()} disabled={false} rejoinCall={true} autoFocus />
+            <StartCallButton
+              onClick={() => {
+                if (callees && callees.length > 0) {
+                  adapter.startCall(callees);
+                } else {
+                  adapter.joinCall();
+                }
+              }}
+              disabled={false}
+              rejoinCall={true}
+              autoFocus
+            />
           </Stack>
         )}
       </Stack>

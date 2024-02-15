@@ -20,6 +20,9 @@ export interface FluentThemeProviderProps {
    * @defaultValue `false`
    */
   rtl?: boolean;
+  /* @conditional-compile-remove(image-overlay) */
+  /** Optional style to change the root style of the ThemeProvider */
+  rootStyle?: React.CSSProperties | undefined;
 }
 
 const wrapper = mergeStyles({
@@ -58,14 +61,18 @@ const ThemeContext = createContext<Theme>(defaultTheme);
  * @public
  */
 export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Element => {
-  const { fluentTheme, rtl, children } = props;
+  const { fluentTheme, rtl, children, /* @conditional-compile-remove(image-overlay) */ rootStyle } = props;
 
   let fluentV8Theme: Theme = mergeThemes(defaultTheme, fluentTheme);
   fluentV8Theme = mergeThemes(fluentV8Theme, { rtl });
 
   return (
     <ThemeContext.Provider value={fluentV8Theme}>
-      <ThemeProvider theme={fluentV8Theme} className={wrapper}>
+      <ThemeProvider
+        theme={fluentV8Theme}
+        className={wrapper}
+        /* @conditional-compile-remove(image-overlay) */ style={rootStyle}
+      >
         {children}
       </ThemeProvider>
     </ThemeContext.Provider>
