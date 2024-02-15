@@ -19,7 +19,7 @@ _This document applies to normal releases, off of `main`. For hotfixing a prior 
 
 ### First week of sprint
 
-- [Step 0.1: Ensure strings are Updated](#step-01-ensure-strings-are-updated-on-main)
+- [Step 0.1: Ensure strings are Updated on Main](#step-01-ensure-strings-are-updated-on-main)
 - [Step 0.2: Pre-Release ChangeLog and Update Feature List](#step-02-pre-release-changelog-and-update-feature-list)
 - [Step 0.3: Create a Thread in the WebUI channel to Track Release Progress](#step-03-create-a-thread-in-the-webui-channel-to-track-release-progress)
 - [Step 0.4: Create an Async Bug Bash Meeting](#step-04-create-an-async-bug-bash-meeting)
@@ -27,11 +27,22 @@ _This document applies to normal releases, off of `main`. For hotfixing a prior 
 
 ### Second week of sprint
 
-Monday - 
-Tuesday - 
-Wednesday - 
-Thursday - 
-Friday - 
+- Monday
+  - [Step 1.1: Create a Pre-release Branch](#step-11-create-a-pre-release-branch)
+  - [Step 1.2: Groom changelog](#step-12-groom-changelog)
+  - [Step 1.3: Create Release branch](#step-13-create-release-branch)
+  - [Step 1.4: (Beta Only): Update the UI Snapshot](#step-14-beta-only-update-the-ui-snapshot)
+  - [Step 1.5: (Beta Only): Notify the Release Thread About api.md Update and UI Snapshot Update](#step-15-beta-only-notify-the-release-thread-about-apimd-update-and-ui-snapshot-update)
+- Tuesday / Wednesday
+  - [Step 2.1: (Stable Only): API approval from Azure REST API stewardship board](#step-21-stable-only-api-approval-from-azure-rest-api-stewardship-board)
+  - [Step 2.2: Bug Bash](#step-22-bug-bash)
+  - [Step 2.3: Fetch translated strings](#step-23-fetch-translated-strings)
+- Thursday
+  - [Step 3.1: Pre-release Checklist](#step-31-pre-release-checklist)
+  - [Step 3.2: Publish to NPM (Pair up with a teammate)](#step-32-publish-to-npm-pair-up-with-a-teammate)
+  - [Step 3.3: (Beta Only): Deploy Storybook](#step-33-beta-only-deploy-storybook)
+  - [Step 3.4: Clean up and Merge Pre-Release Branch Back to Main](#step-34-clean-up-and-merge-pre-release-branch-back-to-main)
+  - [Step 3.5: Post-release Checklist](#step-35-post-release-checklist)
 
 ## Step 0: Preparation
 
@@ -150,7 +161,7 @@ Copy links to those snapshot commits and UI snapshot PR link, and post them in t
 
 ## Step 2: Prepare for release
 
-### Step 2.1 (Stable): API approval from Azure REST API stewardship board]
+### Step 2.1 (Stable Only): API approval from Azure REST API stewardship board
 
 For stable release, we must get any API changes approved by the Azure REST API Stewardship board. See the [internal documentation](https://skype.visualstudio.com/SPOOL/_wiki/wikis/SPOOL.wiki/27654/Scheduling-an-Azure-Review-Board-%28ARB%29-Review) for how to reach out to the API stewardship board.
 
