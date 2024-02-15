@@ -262,8 +262,8 @@ class CallContext {
     const newPage = getCallCompositePage(
       call,
       latestEndedCall,
-      /* @conditional-compile-remove(unsupported-browser) */ environmentInfo,
-      /* @conditional-compile-remove(call-transfer) */ transferCall
+      /* @conditional-compile-remove(call-transfer) */ transferCall,
+      /* @conditional-compile-remove(unsupported-browser) */ environmentInfo
     );
     if (!IsCallEndedPage(oldPage) && IsCallEndedPage(newPage)) {
       this.emitter.emit('callEnded', { callId: this.callId });
