@@ -510,7 +510,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
             iconName={iconName}
             title={title}
             moreDetails={moreDetails}
-            disableStartCallButton={!!callees ?? disableStartCallButton}
+            disableStartCallButton={disableStartCallButton}
             mobileView={props.mobileView}
           />
         );
@@ -522,7 +522,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           title={title}
           moreDetails={callees ? '' : moreDetails}
           dataUiId={'left-call-page'}
-          disableStartCallButton={!!callees ?? disableStartCallButton}
+          disableStartCallButton={disableStartCallButton}
         />
       );
 
