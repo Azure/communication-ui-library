@@ -153,7 +153,7 @@ After finishing creating a release branch, follow these steps to create a UI sna
 
 ### Step 1.5 (Beta Only): Notify the Release Thread About api.md Update and UI Snapshot Update
 
-After you finish step 1.3, you can check recent latest commits on the release branch, there should be 
+After you finish step 1.3, you can check recent latest commits on the release branch, there should be
 
 1. One Api snapshot update commit
 1. 0 or several UI snapshot commits, all in the snapshot PR
