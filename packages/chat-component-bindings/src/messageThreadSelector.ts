@@ -45,6 +45,10 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
     isLargeGroup: boolean
   ): Message => {
     const messageType = chatMessage.type.toLowerCase();
+    if (chatMessage.resourceCache) {
+      console.log('chatMessage', chatMessage.resourceCache);
+    }
+
     /* @conditional-compile-remove(data-loss-prevention) */
     if (chatMessage.policyViolation) {
       return convertToUiBlockedMessage(chatMessage, userId, isSeen, isLargeGroup);
@@ -76,7 +80,8 @@ const extractAttachedFilesMetadata = (metadata: Record<string, string>): FileMet
 };
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 const extractTeamsAttachmentsMetadata = (
-  attachments: ChatAttachment[]
+  attachments: ChatAttachment[],
+  resourceCache?: Record<string, string>
 ): { /* @conditional-compile-remove(file-sharing) */ files: FileMetadata[]; inlineImages: InlineImageMetadata[] } => {
   /* @conditional-compile-remove(file-sharing) */
   const files: FileMetadata[] = [];
@@ -90,7 +95,8 @@ const extractTeamsAttachmentsMetadata = (
         attachmentType: attachmentType,
         id: attachment.id,
         url: extractAttachmentUrl(attachment),
-        previewUrl: attachment.previewUrl
+        previewUrl: attachment.previewUrl,
+        fullSizeImageSrc: resourceCache?.[attachment.url ?? ''] ?? ''
       });
     }
     /* @conditional-compile-remove(file-sharing) */
@@ -227,7 +233,7 @@ const extractAttachmentsMetadata = (
 
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   if (message.content?.attachments) {
-    const teamsAttachments = extractTeamsAttachmentsMetadata(message.content?.attachments);
+    const teamsAttachments = extractTeamsAttachmentsMetadata(message.content?.attachments, message.resourceCache);
     /* @conditional-compile-remove(file-sharing) */
     files = files.concat(teamsAttachments.files);
     inlineImages = inlineImages.concat(teamsAttachments.inlineImages);

@@ -1353,6 +1353,7 @@ export interface InlineImageMetadata {
     // (undocumented)
     previewUrl?: string;
     url: string;
+    fullSizeImageSrc?: string;
 }
 
 // @beta

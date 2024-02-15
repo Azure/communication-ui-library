@@ -108,7 +108,7 @@ export class ChatContext {
         }
         // Need to discuss retry logic in case of failure
         this._fullsizeImageQueue.addMessage(message);
-        this._fullsizeImageQueue.startQueue(threadId, fetchImageSource, { singleUrl: resourceUrl });
+        this._fullsizeImageQueue.startQueue(threadId, fetchImageSource, { singleUrl: resourceUrl }, draft);
       }
     });
   }

@@ -201,6 +201,7 @@ const messageContentAriaText = (props: ChatMessageContentProps): string | undefi
 const defaultOnRenderInlineImage = (inlineImage: InlineImage): JSX.Element => {
   return (
     <img
+      key={inlineImage.imgAttrs.id}
       {...inlineImage.imgAttrs}
       data-ui-id={inlineImage.imgAttrs.id}
       tabIndex={0}
@@ -249,7 +250,7 @@ const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
             ? props.inlineImageOptions.onRenderInlineImage(inlineImageProps, defaultOnRenderInlineImage)
             : defaultOnRenderInlineImage(inlineImageProps);
 
-          return <img {...imgProps} />;
+          return <img key={imgProps.id as string} {...imgProps} />;
         }
       }
       // Pass through the original node

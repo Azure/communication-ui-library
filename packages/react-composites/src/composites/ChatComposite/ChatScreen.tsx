@@ -134,10 +134,16 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   /* @conditional-compile-remove(file-sharing) */
   const [downloadErrorMessage, setDownloadErrorMessage] = React.useState('');
   /* @conditional-compile-remove(image-overlay) */
-  const [fullSizeAttachments, setFullSizeAttachments] = useState<Record<string, string>>({});
+  // const [fullSizeAttachments, setFullSizeAttachments] = useState<Record<string, string>>({});
   /* @conditional-compile-remove(image-overlay) */
-  const [overlayImageItem, setOverlayImageItem] =
-    useState<{ imageSrc: string; title: string; titleIcon: JSX.Element; downloadFilename: string }>();
+  const [overlayImageItem, setOverlayImageItem] = useState<{
+    imageSrc: string;
+    title: string;
+    titleIcon: JSX.Element;
+    attachmentId: string;
+    imageUrl: string;
+    messageId: string;
+  }>();
   /* @conditional-compile-remove(image-overlay) */
   const [isImageOverlayOpen, setIsImageOverlayOpen] = useState<boolean>(false);
 
@@ -160,6 +166,35 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const typingIndicatorProps = usePropsFor(TypingIndicator);
   const headerProps = useAdaptedSelector(getHeaderProps);
   const errorBarProps = usePropsFor(ErrorBar);
+  // const imageOverlayProps = usePropsFor(ImageOverlay);
+  // const chatThreadClient = useChatThreadClient();
+
+  useEffect(() => {
+    const messages = messageThreadProps.messages.filter((message) => {
+      return message.messageId === overlayImageItem?.messageId;
+    });
+    if (messages.length <= 0 || messages[0].messageType !== 'chat') {
+      return;
+    }
+    const message = messages[0] as ChatMessage;
+    if (
+      overlayImageItem?.imageSrc === undefined &&
+      messages.length > 0 &&
+      message.inlineImages &&
+      message.inlineImages?.length > 0
+    ) {
+      const inlineImage = message.inlineImages.filter((attachment) => {
+        return attachment.id === overlayImageItem?.attachmentId;
+      });
+      if (inlineImage.length <= 0) {
+        return;
+      }
+      setOverlayImageItem({
+        ...overlayImageItem,
+        imageSrc: inlineImages[0].fullsizeImageSrc ?? ''
+      });
+    }
+  }, [messageThreadProps.messages, overlayImageItem]);
 
   const onRenderAvatarCallback = useCallback(
     (userId?: string, defaultOptions?: AvatarPersonaProps) => {
@@ -251,33 +286,35 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       const overlayImage = {
         title: chatMessage.senderDisplayName || '',
         titleIcon: titleIcon,
-        downloadFilename: attachment.id,
-        imageSrc: ''
+        attachmentId: attachment.id,
+        imageSrc: '',
+        imageUrl: attachment.url,
+        messageId: messageId
       };
       setIsImageOverlayOpen(true);
 
-      if (attachment.id in fullSizeAttachments) {
-        setOverlayImageItem({
-          ...overlayImage,
-          imageSrc: fullSizeAttachments[attachment.id]
-        });
-        return;
-      }
+      // if (attachment.id in fullSizeAttachments) {
+      setOverlayImageItem(overlayImage);
+      //   return;
+      // }
 
       if (attachment.attachmentType === 'inlineImage' && attachment.url) {
-        // ToDo: This method is to be removed
-        const blob = await adapter.downloadAttachment({ attachmentUrl: attachment.url });
-        if (blob) {
-          const blobUrl = blob.blobUrl;
-          setFullSizeAttachments((prev) => ({ ...prev, [attachment.id]: blobUrl }));
-          setOverlayImageItem({
-            ...overlayImage,
-            imageSrc: blobUrl
-          });
-        }
+        adapter.downloadResourceToCache({
+          threadId: adapter.getState().thread.threadId,
+          messageId: messageId,
+          resourceUrl: attachment.url
+        });
+        // if (blob) {
+        //   const blobUrl = blob.blobUrl;
+        //   setFullSizeAttachments((prev) => ({ ...prev, [attachment.id]: blobUrl }));
+        //   setOverlayImageItem({
+        //     ...overlayImage,
+        //     imageSrc: blobUrl
+        //   });
+        // }
       }
     },
-    [adapter, fullSizeAttachments, messageThreadProps.messages, onRenderAvatarCallback]
+    [adapter, messageThreadProps, onRenderAvatarCallback]
   );
 
   /* @conditional-compile-remove(image-overlay) */
@@ -288,6 +325,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     ): JSX.Element => {
       return (
         <span
+          key={inlineImage.imgAttrs.id}
           onClick={() => onInlineImageClicked(inlineImage.imgAttrs.id || '', inlineImage.messageId)}
           tabIndex={0}
           role="button"
@@ -316,7 +354,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         const a = document.createElement('a');
         // Set the href and download attributes for the anchor element
         a.href = imageSrc;
-        a.download = overlayImageItem?.downloadFilename || '';
+        a.download = overlayImageItem?.attachmentId || '';
         a.rel = 'noopener noreferrer';
         a.target = '_blank';
 
@@ -326,7 +364,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         document.body.removeChild(a);
       }
     },
-    [overlayImageItem?.downloadFilename]
+    [overlayImageItem?.attachmentId]
   );
 
   const AttachFileButton = useCallback(() => {

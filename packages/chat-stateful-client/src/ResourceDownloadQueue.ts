@@ -3,7 +3,7 @@
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatContext } from './ChatContext';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { ChatError } from './ChatClientState';
+import { ChatClientState, ChatError } from './ChatClientState';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
@@ -46,7 +46,12 @@ export class ResourceDownloadQueue {
     this._messagesNeedingResourceRetrieval.push(copy);
   }
 
-  public async startQueue(threadId: string, operation: ImageRequest, options?: { singleUrl: string }): Promise<void> {
+  public async startQueue(
+    threadId: string,
+    operation: ImageRequest,
+    options?: { singleUrl: string },
+    draft?: ChatClientState
+  ): Promise<void> {
     if (this.isActive) {
       return;
     }
@@ -62,7 +67,7 @@ export class ResourceDownloadQueue {
       try {
         if (options) {
           const singleUrl = options.singleUrl;
-          message = await this.downloadSingleUrl(message, singleUrl, operation);
+          message = await this.downloadSingleUrl(message, singleUrl, operation, draft, threadId);
         } else {
           message = await this.downloadAllPreviewUrls(message, operation);
         }
@@ -71,6 +76,7 @@ export class ResourceDownloadQueue {
         this._context.setChatMessage(threadId, message);
       } catch (error) {
         console.log('Downloading Resource error: ', error);
+        this.isActive = false;
       }
     }
   }
@@ -78,15 +84,27 @@ export class ResourceDownloadQueue {
   private async downloadSingleUrl(
     message: ChatMessageWithStatus,
     resourceUrl: string,
-    operation: ImageRequest
+    operation: ImageRequest,
+    draft?: ChatClientState,
+    threadId?: string
   ): Promise<ChatMessageWithStatus> {
     if (message.resourceCache === undefined) {
       message.resourceCache = {};
     }
 
+    const messageId = message.id;
     const blobUrl = await operation(resourceUrl, this._credential);
-    message.resourceCache[resourceUrl] = blobUrl;
-    return message;
+
+    // Error: TypeError: Cannot perform 'ownKeys' on a proxy that has been revoked
+    // message.resourceCache[resourceUrl] = blobUrl;
+
+    const newMessage = draft?.threads[threadId || '']?.chatMessages[messageId];
+    if (newMessage && newMessage.resourceCache) {
+      newMessage.resourceCache[resourceUrl] = blobUrl;
+    }
+    // const resourceCache = { [resourceUrl]: blobUrl };
+    // const newMessage = { ...message, resourceCache };
+    return newMessage ?? message;
   }
 
   private async downloadAllPreviewUrls(
