@@ -30,7 +30,7 @@ import {
 import { formatPhoneNumber } from '../utils/formatPhoneNumber';
 import useLongPress from '../utils/useLongPress';
 
-import { dtmfFrequencies, dtmfFrequenciesKeys, Tone } from './DTMFToneGenerator';
+import { dtmfFrequencies, DtmfFrequenciesKeys, Tone } from './DTMFToneGenerator';
 
 /**
  * Strings of {@link Dialpad} that can be overridden.
@@ -143,7 +143,7 @@ export interface DialpadProps {
 
 type DialpadButtonContent = {
   /** Number displayed on each dialpad button */
-  digit: string;
+  digit: DtmfFrequenciesKeys;
   /** Letters displayed on each dialpad button */
   letter?: string;
 };
@@ -179,7 +179,7 @@ const DtmfTones: DtmfTone[] = [
 ];
 
 const DialpadButton = (props: {
-  digit: string;
+  digit: DtmfFrequenciesKeys;
   letter?: string;
   styles?: DialpadStyles;
   index: number;
@@ -197,8 +197,8 @@ const DialpadButton = (props: {
   const dtmfToneSound = useRef<Tone>(
     new Tone(
       dtmfToneAudioContext,
-      dtmfFrequencies[digit as dtmfFrequenciesKeys].f1,
-      dtmfFrequencies[digit as dtmfFrequenciesKeys].f2
+      dtmfFrequencies[digit].f1,
+      dtmfFrequencies[digit].f2
     )
   );
 

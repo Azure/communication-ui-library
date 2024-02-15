@@ -3,6 +3,7 @@
 
 import { IIconProps, MessageBarType } from '@fluentui/react';
 import { ActiveErrorMessage, ErrorType } from './ErrorBar';
+import { _SupportedSpokenLanguage } from '../types';
 
 /**
  * @private
@@ -224,7 +225,7 @@ export function chunk<T>(options: T[], itemsPerRow: number): T[][] {
 /**
  * @private
  */
-export const defaultSpokenLanguage = 'en-us';
+export const defaultSpokenLanguage : _SupportedSpokenLanguage = 'en-us';
 
 /**
  * @private
@@ -245,3 +246,12 @@ export const isEnterKeyEventFromCompositionSession = (e: React.KeyboardEvent<HTM
  * @private
  */
 export const nullToUndefined = <T>(value: T | null): T | undefined => (value === null ? undefined : value);
+
+/**
+ * Helper function to get the keys of an object
+ * 
+ * @private
+ */
+export function getKeys<T extends object>(obj: T): (keyof T)[] {
+  return Object.keys(obj) as Array<keyof T>;
+}

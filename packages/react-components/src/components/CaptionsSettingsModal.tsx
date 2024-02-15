@@ -28,7 +28,15 @@ import {
 } from './styles/CaptionsSettingsModal.styles';
 import { _captionsOptions } from './StartCaptionsButton';
 import { defaultSpokenLanguage } from './utils';
-import { SpokenLanguageStrings, CaptionLanguageStrings, _spokenLanguageToCaptionLanguage } from '../types';
+import {
+  SpokenLanguageStrings,
+  CaptionLanguageStrings,
+  _spokenLanguageToCaptionLanguage,
+  _SupportedSpokenLanguage,
+  _SupportedCaptionLanguage,
+  SpokenLanguageDropdownOptions,
+  CaptionLanguageDropdownOptions
+} from '../types';
 import { _preventDismissOnEvent } from '@internal/acs-ui-common';
 
 /**
@@ -52,13 +60,13 @@ export interface _CaptionsSettingsModalStrings {
  * _CaptionsSettingsModal Component Props.
  */
 export interface _CaptionsSettingsModalProps {
-  supportedSpokenLanguages: string[];
-  supportedCaptionLanguages: string[];
-  onSetSpokenLanguage: (language: string) => Promise<void>;
-  onSetCaptionLanguage: (language: string) => Promise<void>;
+  supportedSpokenLanguages: _SupportedSpokenLanguage[];
+  supportedCaptionLanguages: _SupportedCaptionLanguage[];
+  onSetSpokenLanguage: (language: _SupportedSpokenLanguage) => Promise<void>;
+  onSetCaptionLanguage: (language: _SupportedCaptionLanguage) => Promise<void>;
   onStartCaptions: (options?: _captionsOptions) => Promise<void>;
-  currentSpokenLanguage: string;
-  currentCaptionLanguage: string;
+  currentSpokenLanguage: _SupportedSpokenLanguage;
+  currentCaptionLanguage: _SupportedCaptionLanguage;
   spokenLanguageStrings?: SpokenLanguageStrings;
   captionLanguageStrings?: CaptionLanguageStrings;
   isCaptionsFeatureActive?: boolean;
@@ -94,27 +102,23 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
 
   const [hasSetSpokenLanguage, setHasSetSpokenLanguage] = useState(false);
 
-  const [selectedSpokenLanguage, setSelectedSpokenLanguage] = useState<IDropdownOption>({
-    key: currentSpokenLanguage !== '' ? currentSpokenLanguage : defaultSpokenLanguage,
-    text: currentSpokenLanguage !== '' ? currentSpokenLanguage : defaultSpokenLanguage
+  const [selectedSpokenLanguage, setSelectedSpokenLanguage] = useState<SpokenLanguageDropdownOptions>({
+    key: currentSpokenLanguage ?? defaultSpokenLanguage,
+    text: currentSpokenLanguage ?? defaultSpokenLanguage
   });
 
-  const [selectedCaptionLanguage, setSelectedCaptionLanguage] = useState<IDropdownOption>({
+  const [selectedCaptionLanguage, setSelectedCaptionLanguage] = useState<CaptionLanguageDropdownOptions>({
     key:
-      currentCaptionLanguage !== ''
-        ? currentCaptionLanguage
-        : _spokenLanguageToCaptionLanguage[selectedSpokenLanguage.key as keyof SpokenLanguageStrings],
+      currentCaptionLanguage ?? _spokenLanguageToCaptionLanguage[selectedSpokenLanguage.key],
     text:
-      currentCaptionLanguage !== ''
-        ? currentCaptionLanguage
-        : _spokenLanguageToCaptionLanguage[selectedSpokenLanguage.key as keyof SpokenLanguageStrings]
+      currentCaptionLanguage ?? _spokenLanguageToCaptionLanguage[selectedSpokenLanguage.key]
   });
 
   useEffect(() => {
     // set spoken language when start captions with a spoken language specified.
     // this is to fix the bug when a second user starts captions with a new spoken language, captions bot ignore that spoken language
     if (isCaptionsFeatureActive && !hasSetSpokenLanguage) {
-      onSetSpokenLanguage(selectedSpokenLanguage.key.toString());
+      onSetSpokenLanguage(selectedSpokenLanguage.key);
       // we only need to call set spoken language once when first starting captions
       setHasSetSpokenLanguage(true);
     }
@@ -127,8 +131,8 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
   }, [onDismissCaptionsSettings]);
 
   const onConfirm = useCallback(async (): Promise<void> => {
-    const spokenLanguageCode = selectedSpokenLanguage.key.toString();
-    const captionLanguageCode = selectedCaptionLanguage.key.toString();
+    const spokenLanguageCode = selectedSpokenLanguage.key;
+    const captionLanguageCode = selectedCaptionLanguage.key;
     if (isCaptionsFeatureActive) {
       onSetSpokenLanguage(spokenLanguageCode);
       onSetCaptionLanguage(captionLanguageCode);
@@ -150,7 +154,7 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
     return supportedSpokenLanguages.map((languageCode) => {
       return {
         key: languageCode,
-        text: spokenLanguageStrings ? spokenLanguageStrings[languageCode as keyof SpokenLanguageStrings] : languageCode
+        text: spokenLanguageStrings ? spokenLanguageStrings[languageCode] : languageCode
       };
     });
   }, [supportedSpokenLanguages, spokenLanguageStrings]);
@@ -160,7 +164,7 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
       return {
         key: languageCode,
         text: captionLanguageStrings
-          ? captionLanguageStrings[languageCode as keyof CaptionLanguageStrings]
+          ? captionLanguageStrings[languageCode]
           : languageCode
       };
     });
@@ -178,7 +182,7 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
 
   const onSpokenLanguageChange = (
     event: React.FormEvent<HTMLDivElement>,
-    option: IDropdownOption | undefined
+    option: SpokenLanguageDropdownOptions | undefined
   ): void => {
     if (option) {
       setSelectedSpokenLanguage(option);
@@ -187,7 +191,7 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
 
   const onCaptionLanguageChange = (
     event: React.FormEvent<HTMLDivElement>,
-    option: IDropdownOption | undefined
+    option: CaptionLanguageDropdownOptions | undefined
   ): void => {
     if (option) {
       setSelectedCaptionLanguage(option);
@@ -202,17 +206,15 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
   );
 
   const CaptionsSettingsComponent = useCallback((): JSX.Element => {
-    const placeholderSpokenLanguage = currentSpokenLanguage !== '' ? currentSpokenLanguage : defaultSpokenLanguage;
+    const placeholderSpokenLanguage = currentSpokenLanguage ?? defaultSpokenLanguage;
     const placeholderCaptionLanguage =
-      currentCaptionLanguage !== ''
-        ? currentCaptionLanguage
-        : _spokenLanguageToCaptionLanguage[placeholderSpokenLanguage as keyof SpokenLanguageStrings];
+      currentCaptionLanguage ?? _spokenLanguageToCaptionLanguage[placeholderSpokenLanguage];
     return (
       <Stack>
         <Dropdown
           label={strings?.captionsSettingsSpokenLanguageDropdownLabel}
           selectedKey={selectedSpokenLanguage ? selectedSpokenLanguage.key : undefined}
-          onChange={onSpokenLanguageChange}
+          onChange={(ev, option) => onSpokenLanguageChange(ev, option as SpokenLanguageDropdownOptions)}
           calloutProps={calloutProps}
           placeholder={placeholderSpokenLanguage}
           options={sortedSpokenLanguageDropdownOptions}
@@ -224,7 +226,7 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
             <Dropdown
               label={strings?.captionsSettingsCaptionLanguageDropdownLabel}
               selectedKey={selectedCaptionLanguage ? selectedCaptionLanguage.key : undefined}
-              onChange={onCaptionLanguageChange}
+              onChange={(ev, option) => onCaptionLanguageChange(ev, option as CaptionLanguageDropdownOptions)}
               calloutProps={calloutProps}
               placeholder={placeholderCaptionLanguage}
               options={sortedCaptionLanguageDropdownOptions}

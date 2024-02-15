@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+import { IDropdownOption } from "@fluentui/react";
+
 /**
  * @public
  * spoken language strings for captions setting modal
@@ -134,4 +136,28 @@ export const _spokenLanguageToCaptionLanguage = {
   'ro-ro': 'ro',
   'sk-sk': 'sk',
   'zh-tw': 'zh-Hant'
+};
+
+/**
+ * @internal
+ */
+export type _SupportedSpokenLanguage = keyof SpokenLanguageStrings;
+
+/**
+ * @internal
+ */
+export type _SupportedCaptionLanguage = keyof CaptionLanguageStrings
+
+/**
+ * @internal
+ */
+export type SpokenLanguageDropdownOptions = IDropdownOption<SpokenLanguageStrings> & {
+  key: keyof SpokenLanguageStrings
+};
+
+/**
+ * @internal
+ */
+export type CaptionLanguageDropdownOptions = IDropdownOption<CaptionLanguageStrings> & {
+  key: keyof CaptionLanguageStrings
 };

@@ -13,6 +13,7 @@ import {
 } from './TagsSurvey.styles';
 import {
   _AudioIssue,
+  _CallRating,
   _CallSurvey,
   _CallSurveyResponse,
   _OverallIssue,
@@ -20,6 +21,7 @@ import {
   _VideoIssue
 } from '../SurveyTypes';
 import { SurveyIssuesHeadingStrings, SurveyIssues, CallSurveyImprovementSuggestions } from '../../../types';
+import { getKeys } from '../../utils';
 /**
  * Strings of {@link TagsSurvey} that can be overridden.
  *
@@ -52,12 +54,13 @@ export type _IssueCategory = 'overallRating' | 'audioRating' | 'videoRating' | '
  *
  * @internal
  */
-export type _SurveyTag = {
-  [issueCategory: string]: {
+export type _SurveyTag = Record<
+  _IssueCategory,
+  {
     message: string;
     issue: _AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue;
-  }[];
-};
+  }[]
+>;
 
 /**
  * Props for {@link TagsSurvey} component.
@@ -85,27 +88,30 @@ export interface _TagsSurveyProps {
 export const _TagsSurvey = (props: _TagsSurveyProps): JSX.Element => {
   const { callIssuesToTag, categoryHeadings, onConfirm, strings, showFreeFormTextField } = props;
 
-  const [selectedTags, setSelectedTags] = useState({});
+  const [selectedTags, setSelectedTags] = useState<Partial<_CallSurvey>>({});
 
   const [textResponse, setTextResponse] = useState<CallSurveyImprovementSuggestions>({});
 
   const [selectedTextResponse, setSelectedTextResponse] = useState<CallSurveyImprovementSuggestions>({});
 
-  const [checkedTextFields, setCheckedTextFields] = useState<string[]>([]);
+  const [checkedTextFields, setCheckedTextFields] = useState<_IssueCategory[]>([]);
 
   const tags: _SurveyTag = useMemo(() => {
-    const tags: _SurveyTag = {};
-    Object.keys(callIssuesToTag).forEach((category) => {
-      const issueCategory = category as keyof SurveyIssues;
-      Object.keys(callIssuesToTag[issueCategory]).map((i) => {
-        const issue = i as keyof (keyof SurveyIssues) as string;
+    const tags: _SurveyTag = {
+      overallRating: [],
+      audioRating: [],
+      videoRating: [],
+      screenshareRating: []
+    };
+    getKeys(callIssuesToTag).forEach((issueCategory) => {
+      getKeys(callIssuesToTag[issueCategory]).map((issue) => {
         const issueCapitalized = (issue?.charAt(0).toUpperCase() + issue?.slice(1)) as
           | _AudioIssue
           | _OverallIssue
           | _ScreenshareIssue
           | _VideoIssue;
 
-        const issueMessages = callIssuesToTag[issueCategory] as { [key: string]: string };
+        const issueMessages = callIssuesToTag[issueCategory];
         if (tags[issueCategory]) {
           tags[issueCategory].push({
             message: issueMessages[issue],
@@ -125,14 +131,15 @@ export const _TagsSurvey = (props: _TagsSurveyProps): JSX.Element => {
   }, [callIssuesToTag]);
 
   const onChange = React.useCallback(
-    (issueCategory: keyof SurveyIssues, checked: boolean, issue?: string): void => {
+    (issueCategory: _IssueCategory, checked: boolean, issue?: _AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue): void => {
       if (checked) {
         if (issue) {
-          setSelectedTags((prevState: { [key: string]: { score: number; issues: string[] } }) => {
-            if (prevState[issueCategory]) {
+          setSelectedTags((prevState) => {
+            const existingIssues = prevState?.[issueCategory]?.issues;
+            if (prevState[issueCategory]?.issues && prevState[issueCategory]?.issues?.length > 0) {
               prevState[issueCategory].issues.push(issue);
             } else {
-              prevState[issueCategory] = { score: 1, issues: [issue] };
+              prevState[issueCategory].issues?.push(issue);
             }
             return prevState;
           });
@@ -145,7 +152,7 @@ export const _TagsSurvey = (props: _TagsSurveyProps): JSX.Element => {
         }
       } else {
         if (issue) {
-          setSelectedTags((prevState: { [key: string]: { score: number; issues: string[] } }) => {
+          setSelectedTags((prevState) => {
             if (prevState[issueCategory]) {
               prevState[issueCategory].issues = prevState[issueCategory].issues.filter(function (value) {
                 return value !== issue;
@@ -171,7 +178,7 @@ export const _TagsSurvey = (props: _TagsSurveyProps): JSX.Element => {
   const theme = useTheme();
 
   const onRenderLabel = useCallback(
-    (issueCategory: keyof SurveyIssues) => {
+    (issueCategory: _IssueCategory) => {
       return (
         <TextField
           key={issueCategory}
@@ -211,8 +218,8 @@ export const _TagsSurvey = (props: _TagsSurveyProps): JSX.Element => {
       </Stack>
 
       <Pivot>
-        {Object.keys(tags).map((k, i) => {
-          const key = k as keyof SurveyIssuesHeadingStrings;
+        {getKeys(tags).map((key, i) => {
+          // const key = k as keyof SurveyIssuesHeadingStrings;
           return (
             <PivotItem
               key={`key-${i}`}

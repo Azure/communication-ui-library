@@ -85,4 +85,4 @@ export const dtmfFrequencies = {
  *
  * @internal
  */
-export type dtmfFrequenciesKeys = keyof typeof dtmfFrequencies;
+export type DtmfFrequenciesKeys = keyof typeof dtmfFrequencies;
