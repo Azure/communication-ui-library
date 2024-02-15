@@ -45,13 +45,16 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
     [props.userId, credential, props.microsoftTeamsAppId]
   );
 
-  const afterCallAdapterCreate = useCallback(async (adapter: CallAdapter): Promise<CallAdapter> => {
-    adapter.on('transferAccepted', (transferArgs) => {
-      const oldIds = transferredCallIds;
-      setTransferredCallIds(oldIds.concat([transferArgs.targetCall.id]));
-    });
-    return adapter;
-  }, []);
+  const afterCallAdapterCreate = useCallback(
+    async (adapter: CallAdapter): Promise<CallAdapter> => {
+      adapter.on('transferAccepted', (transferArgs) => {
+        const oldIds = transferredCallIds;
+        setTransferredCallIds(oldIds.concat([transferArgs.targetCall.id]));
+      });
+      return adapter;
+    },
+    [transferredCallIds]
+  );
 
   const leaveCall = async (adapter: CallAdapter): Promise<void> => {
     await adapter.leaveCall().catch((e) => {
