@@ -20,110 +20,62 @@ export const richTextEditorStyle = mergeStyles({
  */
 export const ribbonButtonStyle = (theme: Theme): Partial<IButtonStyles> => {
   return {
-    // icon: { color: theme.palette.neutralSecondary, ':active': { color: 'red' } },
-    // root: { ':active': { color: 'red' } },
-    // rootCheckedPressed: { color: 'red' },
-    // rootExpanded: {
-    //   '.ms-Button-icon': {
-    //     color: 'red'
-    //   }
-    // },
-    // rootChecked: {
-    //   '.ms-Button-icon': {
-    //     color: 'red'
-    //   }
-    // },
-    // rootPressed: {
-    //   '.ms-Button-icon': {
-    //     color: 'red'
-    //   }
-    // },
-    // iconChecked: { color: 'red' }, //theme.palette.themePrimary }
-    // iconHovered: { color: 'green' },
-    // iconPressed: { color: 'red' },
-    // iconDisabled: { color: 'red' },
-    // iconExpanded: { color: 'red' },
-    // iconExpandedHovered: { color: 'red' }
-    // // rootChecked: { color: 'red' },
-    // labelChecked: { color: 'red' }
-    // rootPressed: { color: 'red' }
-    // iconHovered: { color: theme.palette.redDark }
-    // rootExpanded: {
-    //   selectors: {
-    //     '.ms-Button-icon': {
-    //       color: 'red'
-    //     },
-    //     '.ms-Button-menuIcon': {
-    //       color: 'red'
-    //     }
-    //   }
-    // }
-    // rootExpandedHovered: {
-    //   selectors: {
-    //     '.ms-Button-icon': {
-    //       color: 'red'
-    //     },
-    //     '.ms-Button-menuIcon': {
-    //       color: 'red'
-    //     }
-    //   }
-    // },
-    // rootHovered: {
-    //   selectors: {
-    //     '.ms-Button-icon': {
-    //       color: 'red'
-    //     },
-    //     '.ms-Button-menuIcon': {
-    //       color: 'red'
-    //     }
-    //   }
-    // }
-    // rootPressed: {
-    //   selectors: {
-    //     '.ms-Button-icon': {
-    //       color: 'red'
-    //     },
-    //     '.ms-Button-menuIcon': {
-    //       color: 'red'
-    //     }
-    //   }
-    // },
-    // rootChecked: {
-    //   selectors: {
-    //     '.ms-Button-icon': {
-    //       color: 'red'
-    //     },
-    //     '.ms-Button-menuIcon': {
-    //       color: 'red'
-    //     }
-    //   }
-    // }
-    // rootDisabled: {
-    //   selectors: {
-    //     '.ms-Button-icon': {
-    //       color: 'red'
-    //     },
-    //     '.ms-Button-menuIcon': {
-    //       color: 'red'
-    //     }
-    //   }
-    // },
-    // rootFocused: {
-    //   selectors: {
-    //     '.ms-Button-icon': {
-    //       color: 'red'
-    //     },
-    //     '.ms-Button-menuIcon': {
-    //       color: 'red'
-    //     }
-    //   }
-    // }
+    icon: { color: theme.palette.neutralSecondary },
+    root: { minWidth: 'auto' },
+    rootChecked: {
+      backgroundColor: 'transparent',
+      selectors: {
+        //iconChecked is not working here because of the specificity
+        '.ms-Button-icon': {
+          color: theme.palette.themePrimary
+        }
+      }
+    },
+    rootHovered: {
+      backgroundColor: 'transparent',
+      selectors: {
+        //iconChecked is not working here because of the specificity
+        '.ms-Button-icon': {
+          color: theme.palette.themePrimary
+        }
+      }
+    },
+    rootCheckedHovered: {
+      backgroundColor: 'transparent',
+      selectors: {
+        //iconChecked is not working here because of the specificity
+        '.ms-Button-icon': {
+          color: theme.palette.themePrimary
+        }
+      }
+    },
+    rootCheckedPressed: {
+      backgroundColor: 'transparent',
+      selectors: {
+        //iconChecked is not working here because of the specificity
+        '.ms-Button-icon': {
+          color: theme.palette.themePrimary
+        }
+      }
+    },
+    rootPressed: {
+      backgroundColor: 'transparent',
+      selectors: {
+        //iconChecked is not working here because of the specificity
+        '.ms-Button-icon': {
+          color: theme.palette.themePrimary
+        }
+      }
+    }
   };
 };
 
 /**
  * @private
  */
-export const ribbonSeparatorStyle = mergeStyles({
-  margin: '0.5rem 0rem'
-});
+export const ribbonDividerStyle = (theme: Theme): Partial<IButtonStyles> => {
+  return {
+    icon: { margin: '0', color: theme.palette.neutralQuaternaryAlt },
+    root: { margin: '0', padding: '0', minWidth: 'auto' }
+  };
+};

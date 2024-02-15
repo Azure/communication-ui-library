@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-import React, { useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
 import { ContentEdit, Watermark } from 'roosterjs-editor-plugins';
 import { Editor } from 'roosterjs-editor-core';
 import { EditorOptions, IEditor } from 'roosterjs-editor-types-compatible';
@@ -14,8 +14,8 @@ import {
   Ribbon,
   RibbonButton
 } from 'roosterjs-react';
-import { richTextEditorStyle } from '../styles/RichTextEditor.styles';
-import { Stack, useTheme, ContextualMenuItemType } from '@fluentui/react';
+import { ribbonButtonStyle, ribbonDividerStyle, richTextEditorStyle } from '../styles/RichTextEditor.styles';
+import { useTheme, ContextualMenuItemType } from '@fluentui/react';
 /**
  * Props for {@link RichTextEditor}.
  *
@@ -65,43 +65,46 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     }
   }, [content]);
 
-  const ribbonPlugin = React.useMemo(() => createRibbonPlugin(), []);
+  const ribbonPlugin = React.useMemo(() => {
+    return createRibbonPlugin();
+  }, []);
 
-  const editorCreator = useMemo(() => {
-    return (div: HTMLDivElement) => {
-      const contentEdit = new ContentEdit();
-      const placeholderPlugin = new Watermark(placeholderText || '');
-      const updateContentPlugin = createUpdateContentPlugin(
-        UpdateMode.OnContentChangedEvent | UpdateMode.OnUserInput,
-        (content: string) => {
-          onChange && onChange(content);
-        }
-      );
+  const editorCreator = useCallback((div: HTMLDivElement, options: EditorOptions) => {
+    editor.current = new Editor(div, options);
+    return editor.current;
+  }, []);
 
-      const options: EditorOptions = {
-        plugins: [ribbonPlugin, placeholderPlugin, contentEdit, updateContentPlugin],
-        imageSelectionBorderColor: 'blue'
-      };
-
-      editor.current = new Editor(div, options);
-      return editor.current;
-    };
+  const plugins = useMemo(() => {
+    const contentEdit = new ContentEdit();
+    const placeholderPlugin = new Watermark(placeholderText || '');
+    const updateContentPlugin = createUpdateContentPlugin(
+      UpdateMode.OnContentChangedEvent | UpdateMode.OnUserInput,
+      (content: string) => {
+        onChange && onChange(content);
+      }
+    );
+    // TODO: need to check how to do this during inline images
+    // const selectionPlugin = createSelectionPlugin(
+    //   imageSelectionBorderColor: 'blue'
+    // );
+    return [contentEdit, placeholderPlugin, updateContentPlugin, ribbonPlugin];
   }, [onChange, placeholderText, ribbonPlugin]);
 
   const ribbon = useMemo(() => {
+    //TODO: add more styles for ... button (small screen size)
+    const dividerKey = 'Divider';
     const divider: RibbonButton<string> = {
-      key: 'Divider',
+      key: dividerKey,
       iconName: 'separator',
       unlocalizedText: '',
       onClick: () => {},
       isDisabled: () => true,
       commandBarProperties: {
-        // ...commandBarProperties,
         itemType: ContextualMenuItemType.Divider
       }
     };
     // TODO: add styles!
-    let buttons = getButtons([
+    const buttons: RibbonButton<string>[] = getButtons([
       KnownRibbonButtonKey.Bold,
       KnownRibbonButtonKey.Italic,
       KnownRibbonButtonKey.Underline,
@@ -110,25 +113,28 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
       KnownRibbonButtonKey.NumberedList,
       KnownRibbonButtonKey.DecreaseIndent,
       KnownRibbonButtonKey.IncreaseIndent
-    ]) as RibbonButton<string>[];
-    buttons = buttons.map((button) => {
+    ]);
+
+    for (const button of buttons) {
       button.commandBarProperties = {
-        ...button.commandBarProperties
-        // buttonStyles: { ...button.commandBarProperties?.buttonStyles, ...ribbonButtonStyle(theme) }
+        ...button.commandBarProperties,
+        buttonStyles: {
+          ...button.commandBarProperties?.buttonStyles,
+          ...(button.key === dividerKey ? ribbonDividerStyle(theme) : ribbonButtonStyle(theme))
+        }
       };
-      return button;
-    });
+    }
 
     return (
       //TODO: Add localization */}
       <Ribbon buttons={buttons} plugin={ribbonPlugin} />
     );
-  }, [ribbonPlugin]);
+  }, [ribbonPlugin, theme]);
 
   return (
     <div>
       {ribbon}
-      <Rooster plugins={[ribbonPlugin]} className={richTextEditorStyle} editorCreator={editorCreator} />
+      <Rooster plugins={[...plugins, ribbonPlugin]} className={richTextEditorStyle} editorCreator={editorCreator} />
     </div>
   );
 });

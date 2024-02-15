@@ -94,14 +94,14 @@ export const RTESendBox = (props: RTESendBoxProps): JSX.Element => {
     [contentValueOverflow, strings.textTooLong]
   );
 
-  const setContent = (newValue?: string): void => {
+  const setContent = useCallback((newValue?: string): void => {
     if (newValue === undefined) {
       return;
     }
 
     setContentValueOverflow(exceedsMaxAllowedLength(newValue.length));
     setContentValue(newValue);
-  };
+  }, []);
 
   const sendMessageOnClick = (): void => {
     if (disabled || contentValueOverflow) {
