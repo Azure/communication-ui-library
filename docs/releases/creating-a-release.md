@@ -19,7 +19,7 @@ _This document applies to normal releases, off of `main`. For hotfixing a prior 
 
 ### First week of sprint
 
-- (#step-01-ensure-strings-are-updated-on-main)
+- [Step 0.1: Ensure strings are Updated](#step-01-ensure-strings-are-updated-on-main)
 - Step 0.2
 - Step 0.3
 - Step 0.4
