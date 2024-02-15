@@ -19,7 +19,7 @@ _This document applies to normal releases, off of `main`. For hotfixing a prior 
 
 ### First week of sprint
 
-- Step 0.1
+- (#step-01-ensure-strings-are-updated-on-main)
 - Step 0.2
 - Step 0.3
 - Step 0.4
@@ -35,7 +35,7 @@ Friday -
 
 ## Step 0: Preparation
 
-### Step 0.1: Update Strings on Main
+### Step 0.1: Ensure Strings are updated on Main
 
 - String translation take up to 5 working days to complete. **Any PR changing strings needs to be complete 5 working days before release.**
 - [Update the strings on `main`](../references/string-translations.md)
