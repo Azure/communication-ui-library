@@ -575,7 +575,7 @@ export interface CallCompositeStrings {
     notInvitedToRoomTitle: string;
     openDialpadButtonLabel: string;
     openDtmfDialpadLabel: string;
-    outboundCallingNoticeString: string;
+    outboundCallingNoticeString?: string;
     participantCouldNotBeReachedMoreDetails?: string;
     participantCouldNotBeReachedTitle?: string;
     participantIdIsMalformedMoreDetails?: string;
@@ -1990,7 +1990,7 @@ export type TopicChangedListener = (event: {
     topic: string;
 }) => void;
 
-// @beta
+// @public
 export type TransferAcceptedListener = (event: TransferEventArgs) => void;
 
 // @public
