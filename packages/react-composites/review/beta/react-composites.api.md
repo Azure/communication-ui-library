@@ -1990,7 +1990,7 @@ export type TopicChangedListener = (event: {
     topic: string;
 }) => void;
 
-// @beta
+// @public
 export type TransferAcceptedListener = (event: TransferEventArgs) => void;
 
 // @public
