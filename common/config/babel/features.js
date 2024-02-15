@@ -156,5 +156,13 @@ module.exports = {
     "rooms",
     // feature for calling sounds
     "calling-sounds",
+    // Feature for the DTMF dialer for Teams voice apps
+    "dtmf-dialer",
+    // dialpad
+    "dialpad",
+    // Feature for updates needed for Click to Call (C2C) scenarios
+    "click-to-call",
+    // Feature for call transfer
+    "call-transfer"
   ]
 }

@@ -95,7 +95,7 @@ import { VideoEffectName } from '@azure/communication-calling';
 import { VideoStreamRenderer } from '@azure/communication-calling';
 import { VideoStreamRendererView } from '@azure/communication-calling';
 
-// @beta
+// @public
 export interface AcceptedTransfer {
     callId: string;
     timestamp: Date;
@@ -3947,10 +3947,10 @@ export interface TranscriptionCallFeature {
     isTranscriptionActive: boolean;
 }
 
-// @beta
+// @public
 export type TransferAcceptedListener = (event: TransferEventArgs) => void;
 
-// @beta
+// @public
 export interface TransferFeature {
     acceptedTransfers: {
         [key: string]: AcceptedTransfer;
