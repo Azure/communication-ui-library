@@ -171,9 +171,14 @@ export const createAnnouncementString = (
 /**
  * determines if the media gallery should be replaced by the dtmf dialer
  * @param callees Target callees to determine if the dtmf dialer should be shown
+ * @param remoteParticipants Remote participants to determine if the dtmf dialer should be shown if there are participants in the call
+ * when joining
  * @returns whether the dialer should be the gallery content or not
  */
-export const showDtmfDialer = (callees?: CommunicationIdentifier[]): boolean => {
+export const showDtmfDialer = (
+  callees?: CommunicationIdentifier[],
+  remoteParticipants?: RemoteParticipantState[]
+): boolean => {
   let showDtmfDialer = false;
   callees?.forEach((callee) => {
     if (isMicrosoftTeamsAppIdentifier(callee)) {
@@ -182,5 +187,12 @@ export const showDtmfDialer = (callees?: CommunicationIdentifier[]): boolean => 
       showDtmfDialer = true;
     }
   });
+  if (remoteParticipants) {
+    remoteParticipants.forEach((participant) => {
+      if (!('phoneNumber' in participant.identifier || 'teamsAppId' in participant.identifier)) {
+        showDtmfDialer = false;
+      }
+    });
+  }
   return showDtmfDialer;
 };

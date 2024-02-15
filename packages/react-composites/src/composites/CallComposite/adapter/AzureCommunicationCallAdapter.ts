@@ -262,8 +262,8 @@ class CallContext {
     const newPage = getCallCompositePage(
       call,
       latestEndedCall,
-      /* @conditional-compile-remove(unsupported-browser) */ environmentInfo,
-      /* @conditional-compile-remove(call-transfer) */ transferCall
+      /* @conditional-compile-remove(call-transfer) */ transferCall,
+      /* @conditional-compile-remove(unsupported-browser) */ environmentInfo
     );
     if (!IsCallEndedPage(oldPage) && IsCallEndedPage(newPage)) {
       this.emitter.emit('callEnded', { callId: this.callId });
@@ -494,7 +494,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
         }
       };
       (this.callAgent as CallAgent).on('callsUpdated', onCallsUpdated);
-    } else if (this.callAgent.kind === 'TeamsCallAgent') {
+    }
+    /* @conditional-compile-remove(teams-identity-support) */
+    if (this.callAgent.kind === 'TeamsCallAgent') {
       const onTeamsCallsUpdated = (args: { added: TeamsCall[]; removed: TeamsCall[] }): void => {
         if (this.call?.id) {
           const removedCall = args.removed.find((call) => call.id === this.call?.id);
