@@ -45,10 +45,6 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
     isLargeGroup: boolean
   ): Message => {
     const messageType = chatMessage.type.toLowerCase();
-    if (chatMessage.resourceCache) {
-      console.log('chatMessage', chatMessage.resourceCache);
-    }
-
     /* @conditional-compile-remove(data-loss-prevention) */
     if (chatMessage.policyViolation) {
       return convertToUiBlockedMessage(chatMessage, userId, isSeen, isLargeGroup);
