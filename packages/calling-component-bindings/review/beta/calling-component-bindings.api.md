@@ -378,7 +378,7 @@ export const useCallClient: () => StatefulCallClient;
 export const useCallingHandlers: <PropsT>(component: (props: PropsT) => ReactElement | null) => Common<CommonCallingHandlers, PropsT> | undefined;
 
 // @public
-export const useCallingPropsFor: <Component extends (props: any) => JSX.Element>(component: Component) => GetCallingSelector<Component> extends (props: any) => any ? ReturnType<GetCallingSelector<Component>> & Common<CommonCallingHandlers, Parameters<Component>[0]> : undefined;
+export const useCallingPropsFor: <Component extends (props: any) => JSX.Element>(component: Component) => GetCallingSelector<Component> extends (props: any) => any ? ReturnType<GetCallingSelector<Component>> & Common<CommonCallingHandlers & _ComponentCallingHandlers, Parameters<Component>[0]> : undefined;
 
 // @public
 export const useCallingSelector: <SelectorT extends (state: CallClientState, props: any) => any, ParamT extends SelectorT | undefined>(selector: ParamT, selectorProps?: Parameters<SelectorT>[1] | undefined) => ParamT extends SelectorT ? ReturnType<SelectorT> : undefined;
