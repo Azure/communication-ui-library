@@ -1,7 +1,7 @@
 {
   "extends": "../../common/config/tsc/tsconfig.json",
   "compilerOptions": {
-    "noImplicitAny": false, // TODO: MAKE THIS true
+    "noImplicitAny": true,
     "outDir": "./dist/dist-esm"
   },
   "typeRoots": ["./node_modules/@types", "./@types"],

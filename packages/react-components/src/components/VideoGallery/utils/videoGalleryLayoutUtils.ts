@@ -190,6 +190,10 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
   return { gridParticipants, overflowGalleryParticipants: overflowGalleryParticipants };
 };
 
+interface SortedRemoteParticipants {
+  [key: string]: VideoGalleryRemoteParticipant;
+}
+
 const _useOrganizedParticipantsWithFocusedParticipants = (
   props: OrganizedParticipantsArgs
 ): OrganizedParticipantsResult => {
@@ -197,7 +201,7 @@ const _useOrganizedParticipantsWithFocusedParticipants = (
   const remoteParticipantMap = props.remoteParticipants.reduce((map, remoteParticipant) => {
     map[remoteParticipant.userId] = remoteParticipant;
     return map;
-  }, {});
+  }, {} as SortedRemoteParticipants);
 
   const spotlightedParticipantUserIds = props.spotlightedParticipantUserIds ?? [];
   // declare focused participant user ids as spotlighted participants user ids followed by
