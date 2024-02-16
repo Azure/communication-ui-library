@@ -1,8 +1,8 @@
 {
   "type": "none",
   "area": "improvement",
-  "workstream": "Improved storybook wording and make sure code snippets do not include return statements",
-  "comment": "storybook",
+  "workstream": "storybook",
+  "comment": "Improved storybook wording and make sure code snippets do not include return statements",
   "packageName": "@azure/communication-react",
   "email": "96077406+carocao-msft@users.noreply.github.com",
   "dependentChangeType": "none"
