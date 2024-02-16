@@ -28,6 +28,11 @@ export const stubCommunicationTokenCredential = (): CommunicationTokenCredential
     }
   };
 };
+describe('ResourceDownloadQueue api functions Conditional-compilation needs', () => {
+  test('test for fufill need for test in file due to Conditional Compilation', () => {
+    expect(true).toBeTruthy();
+  });
+});
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 describe('ResourceDownloadQueue api functions', () => {
   test('should add a message to the queue and contains message', () => {
