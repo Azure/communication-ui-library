@@ -6,7 +6,7 @@ import * as path from 'path';
 const appSettingsPath = path.join(__dirname, '../../appsettings.json');
 if (!fs.existsSync(appSettingsPath)) {
   throw new Error(
-    'No appsettings.json found. Please provide an appsettings.json file by renaming appsettings.json.sample'
+    'No appsettings.json found. Please provide an appsettings.json file by copying appsettings.json.sample and removing the .sample extension'
   );
 }
 const appSettings = require(appSettingsPath);
