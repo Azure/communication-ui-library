@@ -184,12 +184,13 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const { setPromptProps, setIsPromptOpen } = props;
 
   /* @conditional-compile-remove(spotlight) */
-  const { onStartSpotlight, onStopSpotlight, spotlightedParticipants, maxParticipantsToSpotlight } = videoGalleryProps;
+  const { onStartRemoteSpotlight, onStopRemoteSpotlight, spotlightedParticipants, maxParticipantsToSpotlight } =
+    videoGalleryProps;
 
   /* @conditional-compile-remove(spotlight) */
   const { onStartSpotlightWithPrompt, onStopSpotlightWithPrompt } = useSpotlightCallbacksWithPrompt(
-    onStartSpotlight,
-    onStopSpotlight,
+    onStartRemoteSpotlight,
+    onStopRemoteSpotlight,
     setIsPromptOpen,
     setPromptProps
   );

@@ -154,12 +154,12 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   ]);
 
   /* @conditional-compile-remove(spotlight) */
-  const { onStartSpotlight, onStopSpotlight } = videoGalleryProps;
+  const { onStartRemoteSpotlight, onStopRemoteSpotlight } = videoGalleryProps;
 
   /* @conditional-compile-remove(spotlight) */
   const { onStartSpotlightWithPrompt, onStopSpotlightWithPrompt } = useSpotlightCallbacksWithPrompt(
-    onStartSpotlight,
-    onStopSpotlight,
+    onStartRemoteSpotlight,
+    onStopRemoteSpotlight,
     setIsPromptOpen,
     setPromptProps
   );
@@ -195,9 +195,13 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         /* @conditional-compile-remove(reaction) */
         reactionResources={reactionResources}
         /* @conditional-compile-remove(spotlight) */
-        onStartSpotlight={onStartSpotlightWithPrompt}
+        onStartLocalSpotlight={onStartSpotlightWithPrompt}
         /* @conditional-compile-remove(spotlight) */
-        onStopSpotlight={onStopSpotlightWithPrompt}
+        onStopLocalSpotlight={onStopSpotlightWithPrompt}
+        /* @conditional-compile-remove(spotlight) */
+        onStartRemoteSpotlight={onStartSpotlightWithPrompt}
+        /* @conditional-compile-remove(spotlight) */
+        onStopRemoteSpotlight={onStopSpotlightWithPrompt}
       />
     );
   }, [

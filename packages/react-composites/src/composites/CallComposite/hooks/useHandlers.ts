@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 import { CommonCallingHandlers } from '@internal/calling-component-bindings';
+/* @conditional-compile-remove(spotlight) */
+import { _ComponentCallingHandlers } from '@internal/calling-component-bindings';
 import { CommonProperties, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { ReactElement } from 'react';
 import memoizeOne from 'memoize-one';
@@ -31,7 +33,9 @@ export const useHandlers = <PropsT>(
 };
 
 const createCompositeHandlers = memoizeOne(
-  (adapter: CommonCallAdapter): CommonCallingHandlers => ({
+  (
+    adapter: CommonCallAdapter
+  ): CommonCallingHandlers & /* @conditional-compile-remove(spotlight) */ _ComponentCallingHandlers => ({
     onCreateLocalStreamView: async (options) => {
       return await adapter.createStreamView(undefined, options);
     },
@@ -171,6 +175,22 @@ const createCompositeHandlers = memoizeOne(
     },
     /* @conditional-compile-remove(spotlight) */
     onStopSpotlight: async (userIds?: string[]): Promise<void> => {
+      await adapter.stopSpotlight(userIds);
+    },
+    /* @conditional-compile-remove(spotlight) */
+    onStartLocalSpotlight: async (): Promise<void> => {
+      await adapter.startSpotlight();
+    },
+    /* @conditional-compile-remove(spotlight) */
+    onStopLocalSpotlight: async (): Promise<void> => {
+      await adapter.stopSpotlight();
+    },
+    /* @conditional-compile-remove(spotlight) */
+    onStartRemoteSpotlight: async (userIds?: string[]): Promise<void> => {
+      await adapter.startSpotlight(userIds);
+    },
+    /* @conditional-compile-remove(spotlight) */
+    onStopRemoteSpotlight: async (userIds?: string[]): Promise<void> => {
       await adapter.stopSpotlight(userIds);
     }
   })

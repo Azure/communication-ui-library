@@ -4440,11 +4440,6 @@ export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | /* @conditio
 
 // @public
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
-    capabilities?: {
-        spotlightParticipant?: {
-            isPresent: boolean;
-        };
-    };
     raisedHand?: RaisedHand;
     // @beta
     reaction?: Reaction;
@@ -4481,8 +4476,10 @@ export interface VideoGalleryProps {
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
-    onStartSpotlight?: (userIds?: string[]) => Promise<void>;
-    onStopSpotlight?: (userIds?: string[]) => Promise<void>;
+    onStartLocalSpotlight?: () => Promise<void>;
+    onStartRemoteSpotlight?: (userIds?: string[]) => Promise<void>;
+    onStopLocalSpotlight?: () => Promise<void>;
+    onStopRemoteSpotlight?: (userIds?: string[]) => Promise<void>;
     onUnpinParticipant?: (userId: string) => void;
     overflowGalleryPosition?: OverflowGalleryPosition;
     pinnedParticipants?: string[];

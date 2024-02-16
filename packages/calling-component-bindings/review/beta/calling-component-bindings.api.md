@@ -224,6 +224,14 @@ export interface CommonCallingHandlers {
     onToggleScreenShare: () => Promise<void>;
 }
 
+// @internal
+export interface _ComponentCallingHandlers {
+    onStartLocalSpotlight: () => Promise<void>;
+    onStartRemoteSpotlight: (userIds?: string[]) => Promise<void>;
+    onStopLocalSpotlight: () => Promise<void>;
+    onStopRemoteSpotlight: (userIds?: string[]) => Promise<void>;
+}
+
 // @public
 export type CreateDefaultCallingHandlers = (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, options?: CallingHandlersOptions) => CallingHandlers;
 

@@ -271,12 +271,22 @@ export interface VideoGalleryProps {
   /**
    * This callback will be called when spotlight is started for participant video tiles.
    */
-  onStartSpotlight?: (userIds?: string[]) => Promise<void>;
+  onStartLocalSpotlight?: () => Promise<void>;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * This callback will be called when spotlight is started for participant video tiles.
+   */
+  onStartRemoteSpotlight?: (userIds?: string[]) => Promise<void>;
   /* @conditional-compile-remove(spotlight) */
   /**
    * This callback will be called when spotlight is stopped for participant video tiles.
    */
-  onStopSpotlight?: (userIds?: string[]) => Promise<void>;
+  onStopLocalSpotlight?: () => Promise<void>;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * This callback will be called when spotlight is stopped for participant video tiles.
+   */
+  onStopRemoteSpotlight?: (userIds?: string[]) => Promise<void>;
   /* @conditional-compile-remove(spotlight) */
   /**
    * Maximum participants that can be spotlighted
@@ -376,9 +386,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(spotlight) */
     spotlightedParticipants,
     /* @conditional-compile-remove(spotlight) */
-    onStartSpotlight,
+    onStartLocalSpotlight,
     /* @conditional-compile-remove(spotlight) */
-    onStopSpotlight,
+    onStartRemoteSpotlight,
+    /* @conditional-compile-remove(spotlight) */
+    onStopLocalSpotlight,
+    /* @conditional-compile-remove(spotlight) */
+    onStopRemoteSpotlight,
     /* @conditional-compile-remove(spotlight) */
     maxParticipantsToSpotlight,
     /* @conditional-compile-remove(reaction) */
@@ -505,11 +519,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           /* @conditional-compile-remove(spotlight) */
           isSpotlighted={isSpotlighted}
           /* @conditional-compile-remove(spotlight) */
-          onStartSpotlight={
-            localParticipant.capabilities?.spotlightParticipant?.isPresent ? onStartSpotlight : undefined
-          }
+          onStartSpotlight={onStartLocalSpotlight}
           /* @conditional-compile-remove(spotlight) */
-          onStopSpotlight={onStopSpotlight}
+          onStopSpotlight={onStopLocalSpotlight}
           /* @conditional-compile-remove(spotlight) */
           maxParticipantsToSpotlight={maxParticipantsToSpotlight}
           /* @conditional-compile-remove(spotlight) */
@@ -545,9 +557,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(spotlight) */
     spotlightedParticipants,
     /* @conditional-compile-remove(spotlight) */
-    onStartSpotlight,
+    onStartLocalSpotlight,
     /* @conditional-compile-remove(spotlight) */
-    onStopSpotlight,
+    onStopLocalSpotlight,
     /* @conditional-compile-remove(spotlight) */
     maxParticipantsToSpotlight,
     /* @conditional-compile-remove(spotlight) */
@@ -657,11 +669,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           /* @conditional-compile-remove(spotlight) */
           isSpotlighted={isSpotlighted}
           /* @conditional-compile-remove(spotlight) */
-          onStartSpotlight={
-            localParticipant.capabilities?.spotlightParticipant?.isPresent ? onStartSpotlight : undefined
-          }
+          onStartSpotlight={onStartRemoteSpotlight}
           /* @conditional-compile-remove(spotlight) */
-          onStopSpotlight={localParticipant.capabilities?.spotlightParticipant?.isPresent ? onStopSpotlight : undefined}
+          onStopSpotlight={onStopRemoteSpotlight}
           /* @conditional-compile-remove(spotlight) */
           maxParticipantsToSpotlight={maxParticipantsToSpotlight}
           /* @conditional-compile-remove(reaction) */
@@ -686,8 +696,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       toggleAnnouncerString,
       onUpdateScalingMode,
       /* @conditional-compile-remove(spotlight) */ spotlightedParticipants,
-      /* @conditional-compile-remove(spotlight) */ onStartSpotlight,
-      /* @conditional-compile-remove(spotlight) */ onStopSpotlight,
+      /* @conditional-compile-remove(spotlight) */ onStartRemoteSpotlight,
+      /* @conditional-compile-remove(spotlight) */ onStopRemoteSpotlight,
       /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight,
       /* @conditional-compile-remove(reaction) */ reactionResources
     ]

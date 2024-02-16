@@ -1423,8 +1423,8 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
     reaction?: Reaction | undefined;
     spotlightedParticipantUserIds?: string[] | undefined;
     isSpotlighted?: boolean | undefined;
-    onStartSpotlight?: ((userIds?: string[]) => void) | undefined;
-    onStopSpotlight?: ((userIds?: string[]) => void) | undefined;
+    onStartSpotlight?: (() => void) | undefined;
+    onStopSpotlight?: (() => void) | undefined;
     maxParticipantsToSpotlight?: number | undefined;
     menuKind?: "contextual" | "drawer" | undefined;
     drawerMenuHostId?: string | undefined;
@@ -2602,11 +2602,6 @@ export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | /* @conditio
 
 // @public
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
-    capabilities?: {
-        spotlightParticipant?: {
-            isPresent: boolean;
-        };
-    };
     raisedHand?: RaisedHand;
     // @beta
     reaction?: Reaction;
@@ -2643,8 +2638,10 @@ export interface VideoGalleryProps {
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
-    onStartSpotlight?: (userIds?: string[]) => Promise<void>;
-    onStopSpotlight?: (userIds?: string[]) => Promise<void>;
+    onStartLocalSpotlight?: () => Promise<void>;
+    onStartRemoteSpotlight?: (userIds?: string[]) => Promise<void>;
+    onStopLocalSpotlight?: () => Promise<void>;
+    onStopRemoteSpotlight?: (userIds?: string[]) => Promise<void>;
     onUnpinParticipant?: (userId: string) => void;
     overflowGalleryPosition?: OverflowGalleryPosition;
     pinnedParticipants?: string[];

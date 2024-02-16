@@ -66,9 +66,9 @@ export const _LocalVideoTile = React.memo(
     /* @conditional-compile-remove(spotlight) */
     isSpotlighted?: boolean;
     /* @conditional-compile-remove(spotlight) */
-    onStartSpotlight?: (userIds?: string[]) => void;
+    onStartSpotlight?: () => void;
     /* @conditional-compile-remove(spotlight) */
-    onStopSpotlight?: (userIds?: string[]) => void;
+    onStopSpotlight?: () => void;
     /* @conditional-compile-remove(spotlight) */
     maxParticipantsToSpotlight?: number;
     /* @conditional-compile-remove(spotlight) */

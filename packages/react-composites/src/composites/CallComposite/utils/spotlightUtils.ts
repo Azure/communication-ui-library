@@ -19,13 +19,13 @@ import { useAdapter } from '../adapter/CallAdapterProvider';
  * @internal
  */
 export const useSpotlightCallbacksWithPrompt = (
-  onStartSpotlight: (userIds?: string[]) => Promise<void>,
-  onStopSpotlight: (userIds?: string[]) => Promise<void>,
+  onStartSpotlight?: (userIds?: string[]) => Promise<void>,
+  onStopSpotlight?: (userIds?: string[]) => Promise<void>,
   setIsPromptOpen?: (isOpen: boolean) => void,
   setPromptProps?: (promptProps: PromptProps) => void
 ): {
-  onStartSpotlightWithPrompt: (userIds?: string[]) => Promise<void>;
-  onStopSpotlightWithPrompt: (userIds?: string[]) => Promise<void>;
+  onStartSpotlightWithPrompt?: (userIds?: string[]) => Promise<void>;
+  onStopSpotlightWithPrompt?: (userIds?: string[]) => Promise<void>;
 } => {
   const myUserId = toFlatCommunicationIdentifier(useAdapter().getState().userId);
 
@@ -36,20 +36,12 @@ export const useSpotlightCallbacksWithPrompt = (
       return { onStartSpotlightWithPrompt: onStartSpotlight, onStopSpotlightWithPrompt: onStopSpotlight };
     }
     return {
-      onStartSpotlightWithPrompt: getStartSpotlightWithPromptCallback(
-        myUserId,
-        onStartSpotlight,
-        setIsPromptOpen,
-        setPromptProps,
-        strings
-      ),
-      onStopSpotlightWithPrompt: getStopSpotlightWithPromptCallback(
-        myUserId,
-        onStopSpotlight,
-        setIsPromptOpen,
-        setPromptProps,
-        strings
-      )
+      onStartSpotlightWithPrompt: onStartSpotlight
+        ? getStartSpotlightWithPromptCallback(myUserId, onStartSpotlight, setIsPromptOpen, setPromptProps, strings)
+        : undefined,
+      onStopSpotlightWithPrompt: onStopSpotlight
+        ? getStopSpotlightWithPromptCallback(myUserId, onStopSpotlight, setIsPromptOpen, setPromptProps, strings)
+        : undefined
     };
   }, [myUserId, onStartSpotlight, onStopSpotlight, setIsPromptOpen, setPromptProps, strings]);
 };
