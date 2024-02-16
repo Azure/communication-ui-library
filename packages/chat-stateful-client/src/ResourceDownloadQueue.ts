@@ -70,10 +70,10 @@ export class ResourceDownloadQueue {
           message = await this.downloadSingleUrl(message, singleUrl, operation, draft, threadId);
         } else {
           message = await this.downloadAllPreviewUrls(message, operation);
+          this._context.setChatMessage(threadId, message);
         }
 
         this.isActive = false;
-        this._context.setChatMessage(threadId, message);
       } catch (error) {
         console.log('Downloading Resource error: ', error);
         this.isActive = false;
@@ -93,18 +93,19 @@ export class ResourceDownloadQueue {
     }
 
     const messageId = message.id;
-    const blobUrl = await operation(resourceUrl, this._credential);
+    const blobUrl = operation(resourceUrl, this._credential);
 
     // Error: TypeError: Cannot perform 'ownKeys' on a proxy that has been revoked
     // message.resourceCache[resourceUrl] = blobUrl;
 
     const newMessage = draft?.threads[threadId || '']?.chatMessages[messageId];
     if (newMessage && newMessage.resourceCache) {
-      newMessage.resourceCache[resourceUrl] = blobUrl;
+      newMessage.resourceCache[resourceUrl] = 'https://www.kasandbox.org/programming-images/avatars/leaf-blue.png';
     }
+
     // const resourceCache = { [resourceUrl]: blobUrl };
     // const newMessage = { ...message, resourceCache };
-    return newMessage ?? message;
+    return newMessage || message;
   }
 
   private async downloadAllPreviewUrls(
