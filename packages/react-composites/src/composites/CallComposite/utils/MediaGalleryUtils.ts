@@ -181,9 +181,7 @@ export const showDtmfDialer = (
 ): boolean => {
   let showDtmfDialer = false;
   callees?.forEach((callee) => {
-    if (isMicrosoftTeamsAppIdentifier(callee)) {
-      showDtmfDialer = true;
-    } else if (isPhoneNumberIdentifier(callee)) {
+    if (isMicrosoftTeamsAppIdentifier(callee) || isPhoneNumberIdentifier(callee)) {
       showDtmfDialer = true;
     }
   });

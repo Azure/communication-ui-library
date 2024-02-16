@@ -754,7 +754,7 @@ export interface CallCompositeStrings {
     notInvitedToRoomTitle: string;
     openDialpadButtonLabel: string;
     openDtmfDialpadLabel: string;
-    outboundCallingNoticeString: string;
+    outboundCallingNoticeString?: string;
     participantCouldNotBeReachedMoreDetails?: string;
     participantCouldNotBeReachedTitle?: string;
     participantIdIsMalformedMoreDetails?: string;
