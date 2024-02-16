@@ -24,8 +24,6 @@ import { AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(dtmf-dialer) */
 import { DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { AttachmentDownloadResult } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { AttachmentMetadata } from '@internal/react-components';
 import {
@@ -237,8 +235,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.updateFileUploadErrorMessage = this.updateFileUploadErrorMessage.bind(this);
     /* @conditional-compile-remove(file-sharing) */
     this.updateFileUploadMetadata = this.updateFileUploadMetadata.bind(this);
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-    this.downloadAttachment = this.downloadAttachment.bind(this); // ToDo: This method is to be removed
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     this.downloadResourceToCache = this.downloadResourceToCache.bind(this);
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
@@ -487,11 +483,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   public updateFileUploadMetadata = (id: string, metadata: AttachmentMetadata): void => {
     this.chatAdapter.updateFileUploadMetadata(id, metadata);
   };
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  // ToDo: This method is to be removed
-  async downloadAttachment(options: { attachmentUrl: string }): Promise<AttachmentDownloadResult> {
-    return await this.chatAdapter.downloadAttachment(options);
-  }
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   public downloadResourceToCache(resourceDetails: ResourceDetails): void {
     this.chatAdapter.downloadResourceToCache(resourceDetails);
@@ -1056,9 +1047,7 @@ export const createAzureCommunicationCallWithChatAdapterFromClients = async ({
   chatClient,
   chatThreadClient,
   /* @conditional-compile-remove(video-background-effects) */
-  callAdapterOptions,
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  chatAdapterOptions
+  callAdapterOptions
 }: AzureCommunicationCallWithChatAdapterFromClientArgs): Promise<CallWithChatAdapter> => {
   const createCallAdapterPromise = createAzureCommunicationCallAdapterFromClient(
     callClient,
@@ -1067,12 +1056,7 @@ export const createAzureCommunicationCallWithChatAdapterFromClients = async ({
     /* @conditional-compile-remove(video-background-effects) */
     callAdapterOptions
   );
-  const createChatAdapterPromise = createAzureCommunicationChatAdapterFromClient(
-    chatClient,
-    chatThreadClient,
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-    chatAdapterOptions
-  );
+  const createChatAdapterPromise = createAzureCommunicationChatAdapterFromClient(chatClient, chatThreadClient);
   const [callAdapter, chatAdapter] = await Promise.all([createCallAdapterPromise, createChatAdapterPromise]);
   return new AzureCommunicationCallWithChatAdapter(callAdapter, chatAdapter);
 };

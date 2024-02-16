@@ -46,8 +46,6 @@ import { DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { SendMessageOptions } from '@azure/communication-chat';
 import { JoinCallOptions } from '../../CallComposite/adapter/CallAdapter';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { AttachmentDownloadResult } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AttachmentMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
@@ -403,8 +401,6 @@ export interface CallWithChatAdapterManagement {
   /* @conditional-compile-remove(file-sharing) */
   /** @beta */
   updateFileUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  downloadAttachment: (options: { attachmentUrl: string }) => Promise<AttachmentDownloadResult>; // ToDo: This method is to be removed
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   downloadResourceToCache(resourceDetails: ResourceDetails): void;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */

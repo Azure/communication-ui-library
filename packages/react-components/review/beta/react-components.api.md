@@ -67,11 +67,6 @@ export type AnnouncerProps = {
 };
 
 // @beta
-export interface AttachmentDownloadResult {
-    blobUrl: string;
-}
-
-// @beta
 export type AttachmentMetadata = FileMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ InlineImageMetadata;
 
 // @internal
@@ -1349,11 +1344,12 @@ export interface InlineImage {
 export interface InlineImageMetadata {
     // (undocumented)
     attachmentType: 'inlineImage';
+    // (undocumented)
+    fullSizeImageSrc?: string;
     id: string;
     // (undocumented)
     previewUrl?: string;
     url: string;
-    fullSizeImageSrc?: string;
 }
 
 // @beta

@@ -183,15 +183,15 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       message.inlineImages &&
       message.inlineImages?.length > 0
     ) {
-      const inlineImage = message.inlineImages.filter((attachment) => {
+      const inlineImages = message.inlineImages.filter((attachment) => {
         return attachment.id === overlayImageItem?.attachmentId;
       });
-      if (inlineImage.length <= 0) {
+      if (inlineImages.length <= 0 || overlayImageItem === undefined) {
         return;
       }
       setOverlayImageItem({
         ...overlayImageItem,
-        imageSrc: inlineImages[0].fullsizeImageSrc ?? ''
+        imageSrc: inlineImages[0].fullSizeImageSrc ?? ''
       });
     }
   }, [messageThreadProps.messages, overlayImageItem]);
