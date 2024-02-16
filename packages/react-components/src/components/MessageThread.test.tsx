@@ -137,6 +137,50 @@ describe('onDisplayDateTimeString passed through messagethread should overwrite 
   });
 });
 
+describe('Message should display status of edited if message is edited', () => {
+  test('Received message should display "Edited" if message is edited', async () => {
+    const testLocale = {
+      strings: COMPONENT_LOCALE_EN_US.strings,
+      onDisplayDateTimeString: onDisplayDateTimeStringLocale
+    };
+    const sampleMessage: ChatMessage = {
+      messageType: 'chat',
+      senderId: 'user3',
+      senderDisplayName: 'Sam Fisher',
+      messageId: Math.random().toString(),
+      content: 'Thanks for making my job easier.',
+      createdOn: twentyFourHoursAgo(),
+      mine: false,
+      attached: false,
+      contentType: 'text',
+      editedOn: new Date()
+    };
+    renderWithLocalization(<MessageThread userId="user1" messages={[sampleMessage]} />, testLocale);
+    expect(screen.getByText('Edited')).toBeTruthy();
+  });
+
+  test('Sent message should display "Edited" if message is edited', async () => {
+    const testLocale = {
+      strings: COMPONENT_LOCALE_EN_US.strings,
+      onDisplayDateTimeString: onDisplayDateTimeStringLocale
+    };
+    const sampleMessage: ChatMessage = {
+      messageType: 'chat',
+      senderId: 'user1',
+      senderDisplayName: 'Kat Larsson',
+      messageId: Math.random().toString(),
+      content: 'Thanks for making my job easier.',
+      createdOn: twentyFourHoursAgo(),
+      mine: true,
+      attached: false,
+      contentType: 'text',
+      editedOn: new Date()
+    };
+    renderWithLocalization(<MessageThread userId="user1" messages={[sampleMessage]} />, testLocale);
+    expect(screen.getByText('Edited')).toBeTruthy();
+  });
+});
+
 /* @conditional-compile-remove(data-loss-prevention) */
 describe('Message blocked should display default blocked text correctly', () => {
   beforeAll(() => {
