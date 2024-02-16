@@ -8,6 +8,9 @@ import { ResourceDownloadQueue } from './ResourceDownloadQueue';
 import { messageTemplate, messageTemplateWithResourceCache } from './TestHelpers';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { MockCommunicationUserCredential } from './mocks/MockCommunicationUserCredential';
+test('Test to fufill need for test in file due to Conditional Compilation', () => {
+  expect(true).toBeTruthy();
+});
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 describe('ChatContext api funcations', () => {
   let context: ChatContext;
@@ -17,6 +20,7 @@ describe('ChatContext api funcations', () => {
   beforeEach(() => {
     context = new ChatContext(0, new MockCommunicationUserCredential());
   });
+
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   test('dispose method clears the message resourceCache', () => {
     context.createThreadIfNotExist(threadId);
