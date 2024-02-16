@@ -31,7 +31,7 @@
   "mentionPopover": {
     "mentionPopoverHeader": "Öneriler"
   },
-  "imageGallery": {
+  "imageOverlay": {
     "downloadButtonLabel": "İndir",
     "dismissButtonAriaLabel": "Kapat"
   },
@@ -200,7 +200,8 @@
     "failedToJoinCallGeneric": "Aramaya katılınamadı.",
     "failedToJoinCallInvalidMeetingLink": "Toplantıya katılınamıyor. Geçersiz Bağlantı.",
     "cameraFrozenForRemoteParticipants": "Aramadaki kullanıcılar videonuzu görmekte sorun yaşıyor. Lütfen cihazlarınızı ve ağlarınızı kontrol edin.",
-    "unableToStartVideoEffect": "Video efekti uygulanamıyor."
+    "unableToStartVideoEffect": "Video efekti uygulanamıyor.",
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "Öne çıkarılan katılımcı sayısı zaten üst sınırı geçtiğinden katılımcılarda öne çıkarma özelliği başlatılamıyor."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Ekranınızı paylaşıyorsunuz.",
@@ -218,7 +219,12 @@
     "pinParticipantMenuItemAriaLabel": "{participantName} adlı katılımcıyı sabitle",
     "unpinParticipantMenuItemAriaLabel": "{participantName} adlı katılımcının sabitlemesini kaldır",
     "pinnedParticipantAnnouncementAriaLabel": "{participantName} adlı katılımcı sabitlendi",
-    "unpinnedParticipantAnnouncementAriaLabel": "{participantName} adlı katılımcının sabitlemesi kaldırıldı"
+    "unpinnedParticipantAnnouncementAriaLabel": "{participantName} adlı katılımcının sabitlemesi kaldırıldı",
+    "startSpotlightVideoTileMenuLabel": "Herkes için öne çıkar",
+    "addSpotlightVideoTileMenuLabel": "Öne çıkarma ekle",
+    "spotlightLimitReachedMenuTitle": "Öne çıkarma sınırına ulaşıldı",
+    "stopSpotlightVideoTileMenuLabel": "Öne çıkarmayı durdur",
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Öne çıkarmadan çık"
   },
   "dialpad": {
     "placeholderText": "Telefon numarası gir",

@@ -25,7 +25,9 @@ import { MicProhibited20Filled, VideoProhibited20Filled } from '@fluentui/react-
 /* @conditional-compile-remove(gallery-layouts) */
 import { Grid20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
-import { PersonAdd20Regular, Dialpad20Regular, Call20Regular } from '@fluentui/react-icons';
+import { PersonAdd20Regular, Call20Regular } from '@fluentui/react-icons';
+/* @conditional-compile-remove(dtmf-dialer) */
+import { Dialpad20Regular } from '@fluentui/react-icons';
 import { DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
 import React from 'react';
 // eslint-disable-next-line no-restricted-imports

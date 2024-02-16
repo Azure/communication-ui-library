@@ -8,10 +8,7 @@ import {
   CustomMessage,
   SystemMessage,
   MessageRenderer,
-  AttachmentMetadata,
-  AttachmentDownloadResult,
-  ImageGalleryImageProps,
-  ImageGallery,
+  ImageOverlay,
   InlineImage
 } from '@azure/communication-react';
 import {
@@ -447,19 +444,8 @@ const MessageThreadStory = (args): JSX.Element => {
     return Promise.resolve();
   };
 
-  const onFetchAttachments = async (attachments: AttachmentMetadata[]): Promise<AttachmentDownloadResult[]> => {
-    // Mocking promise
-    const delay = (): Promise<void> => new Promise((resolve) => setTimeout(resolve, 3000));
-    return await delay().then(() => {
-      return [
-        {
-          attachmentId: attachments[0].id,
-          blobUrl: attachments[0].previewUrl ?? ''
-        }
-      ];
-    });
-  };
-  const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps>>([]);
+  const [overlayImageItem, setOverlayImageItem] =
+    useState<{ imageSrc: string; title: string; titleIcon: JSX.Element; downloadFilename: string }>();
 
   const onInlineImageClicked = (attachmentId: string, messageId: string): Promise<void> => {
     const messages = chatMessages?.filter((message) => {
@@ -483,17 +469,17 @@ const MessageThreadStory = (args): JSX.Element => {
     const titleIcon = (
       <Persona text={chatMessage.senderDisplayName} size={PersonaSize.size32} hidePersonaDetails={true} />
     );
-    const galleryImage: ImageGalleryImageProps = {
+    const overlayImage = {
       title,
       titleIcon,
       downloadFilename: attachment.id,
-      imageUrl: attachment.url
+      imageSrc: attachment.url
     };
-    setGalleryImages([galleryImage]);
+    setOverlayImageItem(overlayImage);
     return Promise.resolve();
   };
 
-  /* @conditional-compile-remove(image-gallery) */
+  /* @conditional-compile-remove(image-overlay) */
   const inlineImageOptions = {
     onRenderInlineImage: (
       inlineImage: InlineImage,
@@ -554,7 +540,6 @@ const MessageThreadStory = (args): JSX.Element => {
         disableJumpToNewMessageButton={!args.enableJumpToNewMessageButton}
         onLoadPreviousChatMessages={onLoadPreviousMessages}
         onRenderMessage={onRenderMessage}
-        onFetchAttachments={onFetchAttachments}
         inlineImageOptions={inlineImageOptions}
         onUpdateMessage={onUpdateMessageCallback}
         onRenderAvatar={(userId?: string) => {
@@ -571,11 +556,14 @@ const MessageThreadStory = (args): JSX.Element => {
         }}
       />
       {
-        <ImageGallery
-          isOpen={galleryImages.length > 0}
-          images={galleryImages}
-          onDismiss={() => setGalleryImages([])}
-          onImageDownloadButtonClicked={() => {
+        <ImageOverlay
+          isOpen={overlayImageItem !== undefined}
+          imageSrc={overlayImageItem?.imageSrc || ''}
+          title="Image"
+          onDismiss={() => {
+            setOverlayImageItem(undefined);
+          }}
+          onDownloadButtonClicked={() => {
             alert('Download button clicked');
           }}
         />

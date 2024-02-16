@@ -80,6 +80,10 @@ import {
 import { useLocale } from '../../localization';
 /* @conditional-compile-remove(spotlight) */
 import { usePropsFor } from '../hooks/usePropsFor';
+/* @conditional-compile-remove(spotlight) */
+import { PromptProps } from './Prompt';
+/* @conditional-compile-remove(spotlight) */
+import { useSpotlightCallbacksWithPrompt } from '../utils/spotlightUtils';
 
 /**
  * @private
@@ -113,6 +117,10 @@ export interface CallArrangementProps {
   onSetDialpadPage?: () => void;
   /* @conditional-compile-remove(dtmf-dialer) */
   dtmfDialerPresent?: boolean;
+  /* @conditional-compile-remove(spotlight) */
+  setIsPromptOpen?: (isOpen: boolean) => void;
+  /* @conditional-compile-remove(spotlight) */
+  setPromptProps?: (props: PromptProps) => void;
 }
 
 /**
@@ -166,16 +174,34 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       peopleButtonRef
     ]
   );
+
+  const locale = useLocale();
+
   /* @conditional-compile-remove(spotlight) */
   const videoGalleryProps = usePropsFor(VideoGallery);
+
+  /* @conditional-compile-remove(spotlight) */
+  const { setPromptProps, setIsPromptOpen } = props;
+
+  /* @conditional-compile-remove(spotlight) */
+  const { onStartSpotlight, onStopSpotlight, spotlightedParticipants, maxParticipantsToSpotlight } = videoGalleryProps;
+
+  /* @conditional-compile-remove(spotlight) */
+  const { onStartSpotlightWithPrompt, onStopSpotlightWithPrompt } = useSpotlightCallbacksWithPrompt(
+    onStartSpotlight,
+    onStopSpotlight,
+    setIsPromptOpen,
+    setPromptProps
+  );
+
   const { isPeoplePaneOpen, openPeoplePane, closePeoplePane } = usePeoplePane({
     ...peoplePaneProps,
-    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds:
-      videoGalleryProps.spotlightedParticipants,
-    /* @conditional-compile-remove(spotlight) */ onStartSpotlight: videoGalleryProps.onStartSpotlight,
-    /* @conditional-compile-remove(spotlight) */ onStopSpotlight: videoGalleryProps.onStopSpotlight,
+    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds: spotlightedParticipants,
+    /* @conditional-compile-remove(spotlight) */ onStartSpotlight: onStartSpotlightWithPrompt,
+    /* @conditional-compile-remove(spotlight) */ onStopSpotlight: onStopSpotlightWithPrompt,
     /* @conditional-compile-remove(spotlight) */ ableToSpotlight:
-      adapter.getState().call?.capabilitiesFeature?.capabilities.spotlightParticipant.isPresent
+      adapter.getState().call?.capabilitiesFeature?.capabilities.spotlightParticipant.isPresent,
+    /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight
   });
   const togglePeoplePane = useCallback(() => {
     if (isPeoplePaneOpen) {
@@ -205,7 +231,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     }
   }, [props.mobileView, isSidePaneOpen]);
 
-  const locale = useLocale();
   const modalStrings = { dismissModalAriaLabel: locale.strings.call.dismissModalAriaLabel };
 
   const isMobileWithActivePane = props.mobileView && isSidePaneOpen;

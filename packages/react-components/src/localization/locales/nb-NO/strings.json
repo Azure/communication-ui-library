@@ -31,7 +31,7 @@
   "mentionPopover": {
     "mentionPopoverHeader": "Forslag"
   },
-  "imageGallery": {
+  "imageOverlay": {
     "downloadButtonLabel": "Last ned",
     "dismissButtonAriaLabel": "Lukk"
   },
@@ -200,7 +200,8 @@
     "failedToJoinCallGeneric": "Kan ikke bli med i samtalen.",
     "failedToJoinCallInvalidMeetingLink": "Kan ikke bli med i møtet. Ugyldig kobling.",
     "cameraFrozenForRemoteParticipants": "Brukere i samtalen har problemer med å se videoen. Kontroller enhetene og nettverket.",
-    "unableToStartVideoEffect": "Kan ikke bruke videoeffekt."
+    "unableToStartVideoEffect": "Kan ikke bruke videoeffekt.",
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "Kan ikke starte rampelys på deltaker(e) fordi maksimalt antall deltakere allerede er satt i rampelyset."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Du deler skjermen",
@@ -218,7 +219,12 @@
     "pinParticipantMenuItemAriaLabel": "Fest {participantName}",
     "unpinParticipantMenuItemAriaLabel": "Løsne {participantName}",
     "pinnedParticipantAnnouncementAriaLabel": "Festet {participantName}",
-    "unpinnedParticipantAnnouncementAriaLabel": "Løsnet {participantName}"
+    "unpinnedParticipantAnnouncementAriaLabel": "Løsnet {participantName}",
+    "startSpotlightVideoTileMenuLabel": "Sett i rampelyset for alle",
+    "addSpotlightVideoTileMenuLabel": "Legg til rampelys",
+    "spotlightLimitReachedMenuTitle": "Rampelys-grensen er nådd",
+    "stopSpotlightVideoTileMenuLabel": "Fjern fra rampelyset",
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Rampelys av"
   },
   "dialpad": {
     "placeholderText": "Skriv inn telefonnummeret",

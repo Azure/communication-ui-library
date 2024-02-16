@@ -75,7 +75,7 @@ export const LargeGalleryLayout = (props: LargeGalleryProps): JSX.Element => {
     maxOverflowGalleryDominantSpeakers: screenShareComponent
       ? childrenPerPage.current - ((pinnedParticipantUserIds.length + 1) % childrenPerPage.current)
       : childrenPerPage.current,
-    /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds,
+    pinnedParticipantUserIds,
     /* @conditional-compile-remove(large-gallery) */ layout: 'largeGallery'
   });
   let activeVideoStreams = 0;

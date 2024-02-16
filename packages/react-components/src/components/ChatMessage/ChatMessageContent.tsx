@@ -27,7 +27,7 @@ type ChatMessageContentProps = {
   strings: MessageThreadStrings;
   /* @conditional-compile-remove(mention) */
   mentionDisplayOptions?: MentionDisplayOptions;
-  /* @conditional-compile-remove(image-gallery) */
+  /* @conditional-compile-remove(image-overlay) */
   inlineImageOptions?: InlineImageOptions;
 };
 
@@ -44,7 +44,7 @@ type MessageContentWithLiveAriaProps = {
   content: JSX.Element;
 };
 
-/* @conditional-compile-remove(image-gallery) */
+/* @conditional-compile-remove(image-overlay) */
 /**
  * InlineImage's state, as reflected in the UI.
  *
@@ -57,7 +57,7 @@ export interface InlineImage {
   imgAttrs: React.ImgHTMLAttributes<HTMLImageElement>;
 }
 
-/* @conditional-compile-remove(image-gallery) */
+/* @conditional-compile-remove(image-overlay) */
 /**
  * Options to display inline image in the inline image scenario.
  *
@@ -183,34 +183,40 @@ const generateLiveMessage = (props: ChatMessageContentProps): string => {
 };
 
 const messageContentAriaText = (props: ChatMessageContentProps): string | undefined => {
-  // Strip all html tags from the content for aria.
+  if (props.message.content) {
+    // Replace all <img> tags with 'image' for aria.
+    const parsedContent = DOMPurify.sanitize(props.message.content, {
+      ALLOWED_TAGS: ['img'],
+      RETURN_DOM_FRAGMENT: true
+    });
 
-  return props.message.content
-    ? props.message.mine
+    parsedContent.childNodes.forEach((child) => {
+      if (child.nodeName.toLowerCase() !== 'img') {
+        return;
+      }
+      const imageTextNode = document.createElement('div');
+      imageTextNode.innerHTML = 'image ';
+      parsedContent.replaceChild(imageTextNode, child);
+    });
+
+    // Strip all html tags from the content for aria.
+    const message = DOMPurify.sanitize(parsedContent, { ALLOWED_TAGS: [] });
+
+    return props.message.mine
       ? _formatString(props.strings.messageContentMineAriaText, {
-          message: DOMPurify.sanitize(props.message.content, { ALLOWED_TAGS: [] })
+          message: message
         })
       : _formatString(props.strings.messageContentAriaText, {
           author: `${props.message.senderDisplayName}`,
-          message: DOMPurify.sanitize(props.message.content, { ALLOWED_TAGS: [] })
-        })
-    : undefined;
+          message: message
+        });
+  }
+  return undefined;
 };
 
-/* @conditional-compile-remove(image-gallery) */
+/* @conditional-compile-remove(image-overlay) */
 const defaultOnRenderInlineImage = (inlineImage: InlineImage): JSX.Element => {
-  return (
-    <img
-      {...inlineImage.imgAttrs}
-      data-ui-id={inlineImage.imgAttrs.id}
-      tabIndex={0}
-      role="button"
-      style={{
-        cursor: 'pointer',
-        ...inlineImage.imgAttrs.style
-      }}
-    />
-  );
+  return <img tabIndex={0} data-ui-id={inlineImage.imgAttrs.id} {...inlineImage.imgAttrs} />;
 };
 
 const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
@@ -241,10 +247,10 @@ const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
         ) {
           domNode.attribs['aria-label'] = domNode.attribs.name;
           const imgProps = attributesToProps(domNode.attribs);
-          /* @conditional-compile-remove(image-gallery) */
+          /* @conditional-compile-remove(image-overlay) */
           const inlineImageProps: InlineImage = { messageId: props.message.messageId, imgAttrs: imgProps };
 
-          /* @conditional-compile-remove(image-gallery) */
+          /* @conditional-compile-remove(image-overlay) */
           return props.inlineImageOptions?.onRenderInlineImage
             ? props.inlineImageOptions.onRenderInlineImage(inlineImageProps, defaultOnRenderInlineImage)
             : defaultOnRenderInlineImage(inlineImageProps);

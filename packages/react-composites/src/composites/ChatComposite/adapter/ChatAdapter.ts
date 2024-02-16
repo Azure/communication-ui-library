@@ -110,8 +110,30 @@ export interface ChatAdapterThreadManagement {
    */
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  downloadAttachments: (options: { attachmentUrls: Record<string, string> }) => Promise<AttachmentDownloadResult[]>;
+  // ToDo: This method is to be removed
+  downloadAttachment: (options: { attachmentUrl: string }) => Promise<AttachmentDownloadResult>;
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /**
+   * Downloads a resource into the cache for the given message.
+   */
+  downloadResourceToCache(resourceDetails: ResourceDetails): void;
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /**
+   * Removes a resource from the cache for the given message.
+   */
+  removeResourceFromCache(resourceDetails: ResourceDetails): void;
 }
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/**
+ * Details required for download a resource to cache.
+ *
+ * @public
+ */
+export type ResourceDetails = {
+  threadId: string;
+  messageId: string;
+  resourceUrl: string;
+};
 
 /**
  * Chat composite events that can be subscribed to.

@@ -16,6 +16,8 @@ import { isHideAttendeeNamesEnabled } from './baseSelectors';
 import { CallParticipantListParticipant } from '@internal/react-components';
 import { _isRingingPSTNParticipant, _updateUserDisplayNames } from './utils/callUtils';
 import { memoizedConvertAllremoteParticipants } from './utils/participantListSelectorUtils';
+/* @conditional-compile-remove(spotlight) */
+import { memoizedConvertAllremoteParticipantsBetaSpotlight } from './utils/participantListSelectorUtils';
 /* @conditional-compile-remove(reaction) */
 import { memoizedConvertToVideoTileReaction } from './utils/participantListSelectorUtils';
 /* @conditional-compile-remove(rooms) */
@@ -118,6 +120,8 @@ const convertRemoteParticipantsToParticipantListParticipants = (
         })
     );
   };
+  /* @conditional-compile-remove(spotlight) */
+  return memoizedConvertAllremoteParticipantsBetaSpotlight(conversionCallback);
   /* @conditional-compile-remove(reaction) */
   return memoizedConvertAllremoteParticipantsBeta(conversionCallback);
   /* @conditional-compile-remove(rooms) */
@@ -211,7 +215,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
       /* @conditional-compile-remove(reaction) */
       reaction: localParticipantReaction,
       /* @conditional-compile-remove(spotlight) */
-      isSpotlighted: memoizedSpotlight(spotlightedParticipants, userId)
+      spotlight: memoizedSpotlight(spotlightedParticipants, userId)
     });
     /* @conditional-compile-remove(total-participant-count) */
     const totalParticipantCount = partitipantCount;

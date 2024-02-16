@@ -10,7 +10,7 @@ import { CommonCallAdapter } from '..';
 import { VideoBackgroundBlurEffect, VideoBackgroundReplacementEffect } from '..';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isCameraOn } from '../utils';
-/* @conditional-compile-remove(PSTN-calls) */
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(dtmf-dialer) */
 import { DtmfTone } from '@azure/communication-calling';
 /* @conditional-compile-remove(reaction) */
 import { Reaction } from '@azure/communication-calling';
@@ -49,7 +49,7 @@ const createCompositeHandlers = memoizeOne(
     onAddParticipant: async (participant, options?) => {
       return await adapter.addParticipant(participant, options);
     },
-    /* @conditional-compile-remove(PSTN-calls) */
+    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(dtmf-dialer) */
     onSendDtmfTone: async (dtmfTone: DtmfTone) => {
       await adapter.sendDtmfTone(dtmfTone);
     },
@@ -166,12 +166,12 @@ const createCompositeHandlers = memoizeOne(
       return await adapter.submitSurvey(survey);
     },
     /* @conditional-compile-remove(spotlight) */
-    onStartSpotlight: async (userId: string): Promise<void> => {
-      await adapter.startSpotlight(userId);
+    onStartSpotlight: async (userIds?: string[]): Promise<void> => {
+      await adapter.startSpotlight(userIds);
     },
     /* @conditional-compile-remove(spotlight) */
-    onStopSpotlight: async (userId: string): Promise<void> => {
-      await adapter.stopSpotlight(userId);
+    onStopSpotlight: async (userIds?: string[]): Promise<void> => {
+      await adapter.stopSpotlight(userIds);
     }
   })
 );

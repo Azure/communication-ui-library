@@ -14,10 +14,10 @@ export { SendBox } from './SendBox';
 /* @conditional-compile-remove(mention) */
 export { _MentionPopover } from './MentionPopover';
 
-/* @conditional-compile-remove(image-gallery) */
-export { ImageGallery } from './ImageGallery';
-/* @conditional-compile-remove(image-gallery) */
-export type { ImageGalleryStrings } from './ImageGallery';
+/* @conditional-compile-remove(image-overlay) */
+export { ImageOverlay } from './ImageOverlay';
+/* @conditional-compile-remove(image-overlay) */
+export type { ImageOverlayStrings } from './ImageOverlay';
 
 export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox';
 
@@ -36,10 +36,10 @@ export type {
   MentionPopoverStrings
 } from './MentionPopover';
 
-/* @conditional-compile-remove(image-gallery) */
-export type { ImageGalleryProps, ImageGalleryImageProps } from './ImageGallery';
+/* @conditional-compile-remove(image-overlay) */
+export type { ImageOverlayProps } from './ImageOverlay';
 
-/* @conditional-compile-remove(image-gallery) */
+/* @conditional-compile-remove(image-overlay) */
 export type { InlineImageOptions, InlineImage } from './ChatMessage/ChatMessageContent';
 
 /* @conditional-compile-remove(file-sharing) */
@@ -82,9 +82,14 @@ export { Announcer } from './Announcer';
 export type { AnnouncerProps } from './Announcer';
 
 export { VideoGallery } from './VideoGallery';
-export type { VideoGalleryProps, VideoGalleryStrings, VideoGalleryStyles, VideoGalleryLayout } from './VideoGallery';
-/* @conditional-compile-remove(pinned-participants) */
-export type { VideoTileContextualMenuProps, VideoTileDrawerMenuProps } from './VideoGallery';
+export type {
+  VideoGalleryProps,
+  VideoGalleryStrings,
+  VideoGalleryStyles,
+  VideoGalleryLayout,
+  VideoTileContextualMenuProps,
+  VideoTileDrawerMenuProps
+} from './VideoGallery';
 /* @conditional-compile-remove(vertical-gallery) */
 export type { OverflowGalleryPosition } from './VideoGallery';
 /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */

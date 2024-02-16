@@ -116,10 +116,40 @@ export const memoizedConvertAllremoteParticipantsBeta = memoizeFnAll(
     isSpeaking: boolean,
     raisedHand: RaisedHandState | undefined,
     localUserCanRemoveOthers: boolean,
+    reaction: Reaction | undefined
+  ): CallParticipantListParticipant => {
+    return convertRemoteParticipantToParticipantListParticipantBeta(
+      userId,
+      displayName,
+      state,
+      isMuted,
+      isScreenSharing,
+      isSpeaking,
+      raisedHand,
+      localUserCanRemoveOthers,
+      reaction
+    );
+  }
+);
+
+/* @conditional-compile-remove(spotlight) */
+/**
+ * @private
+ */
+export const memoizedConvertAllremoteParticipantsBetaSpotlight = memoizeFnAll(
+  (
+    userId: string,
+    displayName: string | undefined,
+    state: RemoteParticipantState,
+    isMuted: boolean,
+    isScreenSharing: boolean,
+    isSpeaking: boolean,
+    raisedHand: RaisedHandState | undefined,
+    localUserCanRemoveOthers: boolean,
     reaction: Reaction | undefined,
     isSpotlighted: Spotlight | undefined
   ): CallParticipantListParticipant => {
-    return convertRemoteParticipantToParticipantListParticipantBeta(
+    return convertRemoteParticipantToParticipantListParticipantBetaSpotlight(
       userId,
       displayName,
       state,
@@ -149,7 +179,7 @@ export const memoizedConvertToVideoTileReaction = memoizeOne(
   }
 );
 
-/* @conditional-compile-remove(reaction) */
+/* @conditional-compile-remove(spotlight) */
 /**
  * @private
  */
@@ -158,7 +188,7 @@ export const memoizedSpotlight = memoizeOne(
     const spotlightOrder = spotlightedParticipants?.find(
       (spotlightedParticipant) => toFlatCommunicationIdentifier(spotlightedParticipant.identifier) === userId
     );
-    return spotlightOrder ? { spotlightOrderPosition: spotlightOrder.order } : undefined;
+    return spotlightOrder ? { spotlightedOrderPosition: spotlightOrder.order } : undefined;
   }
 );
 
@@ -197,8 +227,35 @@ const convertRemoteParticipantToParticipantListParticipantBeta = (
   isSpeaking: boolean,
   raisedHand: RaisedHandState | undefined,
   localUserCanRemoveOthers: boolean,
+  reaction: Reaction | undefined
+): CallParticipantListParticipant => {
+  return {
+    ...convertRemoteParticipantToParticipantListParticipant(
+      userId,
+      displayName,
+      state,
+      isMuted,
+      isScreenSharing,
+      isSpeaking,
+      raisedHand,
+      localUserCanRemoveOthers
+    ),
+    reaction
+  };
+};
+
+/* @conditional-compile-remove(spotlight) */
+const convertRemoteParticipantToParticipantListParticipantBetaSpotlight = (
+  userId: string,
+  displayName: string | undefined,
+  state: RemoteParticipantState,
+  isMuted: boolean,
+  isScreenSharing: boolean,
+  isSpeaking: boolean,
+  raisedHand: RaisedHandState | undefined,
+  localUserCanRemoveOthers: boolean,
   reaction: Reaction | undefined,
-  isSpotlighted: Spotlight | undefined
+  spotlight: Spotlight | undefined
 ): CallParticipantListParticipant => {
   return {
     ...convertRemoteParticipantToParticipantListParticipant(
@@ -212,6 +269,6 @@ const convertRemoteParticipantToParticipantListParticipantBeta = (
       localUserCanRemoveOthers
     ),
     reaction,
-    isSpotlighted
+    spotlight
   };
 };

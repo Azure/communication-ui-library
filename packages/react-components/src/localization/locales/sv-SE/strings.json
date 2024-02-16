@@ -31,7 +31,7 @@
   "mentionPopover": {
     "mentionPopoverHeader": "Förslag"
   },
-  "imageGallery": {
+  "imageOverlay": {
     "downloadButtonLabel": "Ladda ner",
     "dismissButtonAriaLabel": "Stäng"
   },
@@ -200,7 +200,8 @@
     "failedToJoinCallGeneric": "Det gick inte att ansluta till samtalet.",
     "failedToJoinCallInvalidMeetingLink": "Det går inte att ansluta till mötet. Ogiltig länk.",
     "cameraFrozenForRemoteParticipants": "Användare i samtalet har problem med att se din video. Kontrollera dina enheter och nätverk.",
-    "unableToStartVideoEffect": "Det går inte att tillämpa videoeffekten."
+    "unableToStartVideoEffect": "Det går inte att tillämpa videoeffekten.",
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "Det går inte att starta spotlight på deltagare eftersom det maximala antalet deltagare redan är uppmärksammat."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Du delar din skärm",
@@ -218,7 +219,12 @@
     "pinParticipantMenuItemAriaLabel": "Fäst {participantName}",
     "unpinParticipantMenuItemAriaLabel": "Ta bort {participantName}",
     "pinnedParticipantAnnouncementAriaLabel": "Fäst {participantName}",
-    "unpinnedParticipantAnnouncementAriaLabel": "Borttagen {participantName}"
+    "unpinnedParticipantAnnouncementAriaLabel": "Borttagen {participantName}",
+    "startSpotlightVideoTileMenuLabel": "Uppmärksamma för alla",
+    "addSpotlightVideoTileMenuLabel": "Lägg till uppmärksammande",
+    "spotlightLimitReachedMenuTitle": "Spotlight-gränsen har nåtts",
+    "stopSpotlightVideoTileMenuLabel": "Sluta uppmärksamma",
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Spotlight"
   },
   "dialpad": {
     "placeholderText": "Ange telefonnummer",

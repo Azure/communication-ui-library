@@ -7,6 +7,8 @@ import { SpokenLanguageStrings, CaptionLanguageStrings } from '@internal/react-c
 import { SurveyIssues, SurveyIssuesHeadingStrings } from '@internal/react-components';
 /* @conditional-compile-remove(capabilities) */
 import { CapabilityChangedNotificationStrings } from './components/CapabilitiesChangedNotificationBar';
+/* @conditional-compile-remove(spotlight) */
+import { SpotlightPromptStrings } from './components/Prompt';
 
 /**
  * Strings used by the {@link CallComposite} directly.
@@ -264,6 +266,11 @@ export interface CallCompositeStrings {
    * Label for menu item to stop spotlight on local user
    */
   stopSpotlightOnSelfParticipantListMenuLabel: string;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Label for menu item to stop spotlight on local user
+   */
+  spotlightLimitReachedParticipantListMenuTitle: string;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Label for add people dropdown
@@ -427,11 +434,10 @@ export interface CallCompositeStrings {
    * Control bar People button ToolTipContent
    */
   peopleButtonTooltipClose: string;
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   /**
    * Label disaplayed on the lobby screen during a 1:1 outbound call.
    */
-  outboundCallingNoticeString: string;
+  outboundCallingNoticeString?: string;
   /**
    * Notice to be announced by narrator when a participant joins a call
    */
@@ -683,9 +689,9 @@ export interface CallCompositeStrings {
   capabilityChangedNotification?: CapabilityChangedNotificationStrings;
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
-   * Question for the survey
+   * Title for the survey
    */
-  surveyQuestion: string;
+  surveyTitle: string;
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Helper text to explain what the survey is for
@@ -743,14 +749,19 @@ export interface CallCompositeStrings {
   surveyConfirmButtonLabel: string;
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
-   * Aria Label for cancel button
+   * Cancel button label for survey
    */
-  surveyCancelButtonAriaLabel: string;
+  surveySkipButtonLabel: string;
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Default text for free form text box
    */
   surveyTextboxDefaultText: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Thank you text appeared on screen after survey is submitted
+   */
+  endOfSurveyText: string;
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Corresponding texts to each call issue
@@ -780,9 +791,17 @@ export interface CallCompositeStrings {
    */
   callTimeoutTitle?: string;
   /**
+   * String for title when the call times out when calling a bot.
+   */
+  callTimeoutBotTitle?: string;
+  /**
    * String for more details when the call times out because the remote user does not answer
    */
   callTimeoutDetails?: string;
+  /**
+   * String for more details when the call times out when calling a bot
+   */
+  callTimeoutBotDetails?: string;
   /* @conditional-compile-remove(dtmf-dialer) */
   /**
    * Label for the control bar button to show the dtmf dialer when the more button is disabled
@@ -808,4 +827,9 @@ export interface CallCompositeStrings {
    * Label to hide the dtmf dialer in the more button menu
    */
   dtmfDialerMoreButtonLabelOff?: string;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Strings for spotlight prompt
+   */
+  spotlightPrompt: SpotlightPromptStrings;
 }

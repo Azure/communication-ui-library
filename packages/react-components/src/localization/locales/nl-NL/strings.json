@@ -31,7 +31,7 @@
   "mentionPopover": {
     "mentionPopoverHeader": "Suggesties"
   },
-  "imageGallery": {
+  "imageOverlay": {
     "downloadButtonLabel": "Downloaden",
     "dismissButtonAriaLabel": "Sluiten"
   },
@@ -200,7 +200,8 @@
     "failedToJoinCallGeneric": "Deelnemen aan gesprek mislukt.",
     "failedToJoinCallInvalidMeetingLink": "Kan niet deelnemen aan vergadering. Ongeldige koppeling.",
     "cameraFrozenForRemoteParticipants": "Gebruikers in het gesprek ondervinden problemen bij het zien van uw video. Controleer uw apparaten en netwerk.",
-    "unableToStartVideoEffect": "Kan video-effect niet toepassen."
+    "unableToStartVideoEffect": "Kan video-effect niet toepassen.",
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "Kan de deelnemer(s) niet in de spotlight plaatsen omdat het maximum aantal deelnemers in de spotlight is bereikt."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "U deelt uw scherm",
@@ -218,7 +219,12 @@
     "pinParticipantMenuItemAriaLabel": "{participantName} vastmaken",
     "unpinParticipantMenuItemAriaLabel": "{participantName} losmaken",
     "pinnedParticipantAnnouncementAriaLabel": "{participantName} vastgemaakt",
-    "unpinnedParticipantAnnouncementAriaLabel": "{participantName} losgemaakt"
+    "unpinnedParticipantAnnouncementAriaLabel": "{participantName} losgemaakt",
+    "startSpotlightVideoTileMenuLabel": "Spotlight voor iedereen",
+    "addSpotlightVideoTileMenuLabel": "Spotlight toevoegen",
+    "spotlightLimitReachedMenuTitle": "Spotlightlimiet bereikt",
+    "stopSpotlightVideoTileMenuLabel": "Spotlighten stoppen",
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Spotlight afsluiten"
   },
   "dialpad": {
     "placeholderText": "Telefoonnummer invoeren",

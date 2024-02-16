@@ -27,6 +27,7 @@ import { AdapterErrors } from '../../common/adapters';
 /* @conditional-compile-remove(raise-hand) */
 import { RaisedHandState } from '@internal/calling-stateful-client';
 import { CommunicationIdentifier } from '@azure/communication-common';
+
 /**
  * @private
  */

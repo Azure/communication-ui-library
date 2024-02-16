@@ -31,7 +31,7 @@
   "mentionPopover": {
     "mentionPopoverHeader": "Suggestions"
   },
-  "imageGallery": {
+  "imageOverlay": {
     "downloadButtonLabel": "Télécharger",
     "dismissButtonAriaLabel": "Fermer"
   },
@@ -200,7 +200,8 @@
     "failedToJoinCallGeneric": "Nous n’avons pas pu rejoindre l’appel.",
     "failedToJoinCallInvalidMeetingLink": "Impossible de rejoindre la réunion. Lien non valide.",
     "cameraFrozenForRemoteParticipants": "Les utilisateurs de l’appel rencontrent des problèmes pour voir votre vidéo. Vérifiez vos appareils et votre réseau.",
-    "unableToStartVideoEffect": "Impossible d’appliquer l’effet vidéo."
+    "unableToStartVideoEffect": "Impossible d’appliquer l’effet vidéo.",
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "Impossible de lancer la mise en lumière sur le(s) participant(s), car le nombre maximum de participants est déjà mis en lumière."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Vous partagez votre écran.",
@@ -218,7 +219,12 @@
     "pinParticipantMenuItemAriaLabel": "Épingler {participantName}",
     "unpinParticipantMenuItemAriaLabel": "Détacher {participantName}",
     "pinnedParticipantAnnouncementAriaLabel": "{participantName} a été épinglé",
-    "unpinnedParticipantAnnouncementAriaLabel": "{participantName} a été détaché"
+    "unpinnedParticipantAnnouncementAriaLabel": "{participantName} a été détaché",
+    "startSpotlightVideoTileMenuLabel": "Mettre en évidence pour tout le monde",
+    "addSpotlightVideoTileMenuLabel": "Ajouter la mise en évidence",
+    "spotlightLimitReachedMenuTitle": "Limite Spotlight atteinte",
+    "stopSpotlightVideoTileMenuLabel": "Arrêter la mise en évidence",
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Quitter la mise en évidence"
   },
   "dialpad": {
     "placeholderText": "Entrer un numéro de téléphone",

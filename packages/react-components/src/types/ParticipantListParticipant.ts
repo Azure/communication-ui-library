@@ -28,12 +28,8 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
    * */
   reaction?: Reaction;
   /* @conditional-compile-remove(spotlight) */
-  /**
-   * Whether calling participant is spotlighted
-   *
-   * @beta
-   * */
-  isSpotlighted?: Spotlight;
+  /** Whether calling participant is spotlighted **/
+  spotlight?: Spotlight;
 };
 
 /* @conditional-compile-remove(spotlight) */
@@ -46,7 +42,7 @@ export type Spotlight = {
   /**
    * Specifies the order position of the spotlight
    */
-  spotlightOrderPosition?: number;
+  spotlightedOrderPosition?: number;
 };
 
 /* @conditional-compile-remove(raise-hand) */

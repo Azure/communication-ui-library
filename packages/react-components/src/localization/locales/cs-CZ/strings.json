@@ -31,7 +31,7 @@
   "mentionPopover": {
     "mentionPopoverHeader": "Návrhy"
   },
-  "imageGallery": {
+  "imageOverlay": {
     "downloadButtonLabel": "Stáhnout",
     "dismissButtonAriaLabel": "Zavřít"
   },
@@ -200,7 +200,8 @@
     "failedToJoinCallGeneric": "K hovoru se nepovedlo připojit.",
     "failedToJoinCallInvalidMeetingLink": "Ke schůzce se nelze připojit. Neplatný odkaz.",
     "cameraFrozenForRemoteParticipants": "Uživatelé v hovoru mají problémy s zobrazením vašeho videa. Zkontrolujte prosím svá zařízení a síť.",
-    "unableToStartVideoEffect": "Nelze použít efekt videa."
+    "unableToStartVideoEffect": "Nelze použít efekt videa.",
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "Nelze zahájit vytváření hlavního výběru účastníků, protože je již v hlavním výběru maximální počet účastníků."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Sdílíte obrazovku",
@@ -218,7 +219,12 @@
     "pinParticipantMenuItemAriaLabel": "Připnout {participantName}",
     "unpinParticipantMenuItemAriaLabel": "Odepnout {participantName}",
     "pinnedParticipantAnnouncementAriaLabel": "Připnutý účastník {participantName}",
-    "unpinnedParticipantAnnouncementAriaLabel": "{participantName} odepnut"
+    "unpinnedParticipantAnnouncementAriaLabel": "{participantName} odepnut",
+    "startSpotlightVideoTileMenuLabel": "Přidat do hlavního výběru všem",
+    "addSpotlightVideoTileMenuLabel": "Přidat do hlavního výběru",
+    "spotlightLimitReachedMenuTitle": "Dosáhlo se limitu hlavního výběru",
+    "stopSpotlightVideoTileMenuLabel": "Zastavit přidávání do hlavního výběru",
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Ukončit hlavní výběr"
   },
   "dialpad": {
     "placeholderText": "Zadejte telefonní číslo",

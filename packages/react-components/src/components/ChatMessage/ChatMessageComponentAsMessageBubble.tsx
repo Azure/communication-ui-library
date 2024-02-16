@@ -16,7 +16,7 @@ import { useIdentifiers } from '../../identifiers/IdentifierProvider';
 import { useTheme } from '../../theming';
 import { ChatMessageActionFlyout } from './ChatMessageActionsFlyout';
 import { ChatMessageContent } from './ChatMessageContent';
-/* @conditional-compile-remove(image-gallery) */
+/* @conditional-compile-remove(image-overlay) */
 import { InlineImageOptions } from './ChatMessageContent';
 import { ChatMessage } from '../../types/ChatMessage';
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -96,7 +96,7 @@ type ChatMessageComponentAsMessageBubbleProps = {
    * @internal
    */
   mentionDisplayOptions?: MentionDisplayOptions;
-  /* @conditional-compile-remove(image-gallery) */
+  /* @conditional-compile-remove(image-overlay) */
   /**
    * Optional callback called when an inline image is clicked.
    * @beta
@@ -153,7 +153,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     messageStatus,
     /* @conditional-compile-remove(file-sharing) */
     fileDownloadHandler,
-    /* @conditional-compile-remove(image-gallery) */
+    /* @conditional-compile-remove(image-overlay) */
     inlineImageOptions,
     shouldOverlapAvatarAndMessage
   } = props;
@@ -255,7 +255,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           strings={strings}
           /* @conditional-compile-remove(mention) */
           mentionDisplayOptions={props.mentionDisplayOptions}
-          /* @conditional-compile-remove(image-gallery) */
+          /* @conditional-compile-remove(image-overlay) */
           inlineImageOptions={inlineImageOptions}
         />
         {
@@ -267,7 +267,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     );
   }, [
     defaultOnRenderFileDownloads,
-    /* @conditional-compile-remove(image-gallery) */ inlineImageOptions,
+    /* @conditional-compile-remove(image-overlay) */ inlineImageOptions,
     message,
     props,
     strings,

@@ -31,7 +31,7 @@
   "mentionPopover": {
     "mentionPopoverHeader": "Ehdotuksia"
   },
-  "imageGallery": {
+  "imageOverlay": {
     "downloadButtonLabel": "Lataa",
     "dismissButtonAriaLabel": "Sulje"
   },
@@ -200,7 +200,8 @@
     "failedToJoinCallGeneric": "Puheluun liittyminen epäonnistui.",
     "failedToJoinCallInvalidMeetingLink": "Kokoukseen liittyminen ei onnistu. Linkki on virheellinen.",
     "cameraFrozenForRemoteParticipants": "Puhelun käyttäjillä on videokuvan näkymiseen liittyviä ongelmia. Tarkista laitteesi ja verkkosi.",
-    "unableToStartVideoEffect": "Videotehosteen käyttäminen ei onnistu."
+    "unableToStartVideoEffect": "Videotehosteen käyttäminen ei onnistu.",
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "Osallistujien korostusta ei voi aloittaa, koska enimmäismäärä osallistujia on jo valokeilassa."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Näyttösi jaetaan parhaillaan",
@@ -218,7 +219,12 @@
     "pinParticipantMenuItemAriaLabel": "Kiinnitä {participantName}",
     "unpinParticipantMenuItemAriaLabel": "Poista henkilön {participantName} kiinnitys",
     "pinnedParticipantAnnouncementAriaLabel": "Kiinnitetty {participantName}",
-    "unpinnedParticipantAnnouncementAriaLabel": "Poistettu henkilön {participantName} kiinnitys"
+    "unpinnedParticipantAnnouncementAriaLabel": "Poistettu henkilön {participantName} kiinnitys",
+    "startSpotlightVideoTileMenuLabel": "Lisää valokeilaan kaikille",
+    "addSpotlightVideoTileMenuLabel": "Lisää valokeilaan",
+    "spotlightLimitReachedMenuTitle": "Spotlight-raja saavutettu",
+    "stopSpotlightVideoTileMenuLabel": "Poista valokeilasta",
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Valokeila"
   },
   "dialpad": {
     "placeholderText": "Anna puhelinnumero",

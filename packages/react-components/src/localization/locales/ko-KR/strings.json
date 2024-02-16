@@ -31,7 +31,7 @@
   "mentionPopover": {
     "mentionPopoverHeader": "제안"
   },
-  "imageGallery": {
+  "imageOverlay": {
     "downloadButtonLabel": "다운로드",
     "dismissButtonAriaLabel": "닫기"
   },
@@ -200,7 +200,8 @@
     "failedToJoinCallGeneric": "통화에 참가하지 못했습니다.",
     "failedToJoinCallInvalidMeetingLink": "모임에 참가할 수 없습니다. 잘못된 링크입니다.",
     "cameraFrozenForRemoteParticipants": "통화 중인 사용자에게 영상이 표시되는 데 문제가 있습니다. 장치와 네트워크를 확인하세요.",
-    "unableToStartVideoEffect": "비디오 효과를 적용할 수 없습니다."
+    "unableToStartVideoEffect": "비디오 효과를 적용할 수 없습니다.",
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "최대 참가자 수가 이미 스포트라이트되었으므로 참가자에서 스포트라이트를 시작할 수 없습니다."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "화면을 공유 중입니다.",
@@ -218,7 +219,12 @@
     "pinParticipantMenuItemAriaLabel": "{participantName} 고정",
     "unpinParticipantMenuItemAriaLabel": "{participantName} 고정 해제",
     "pinnedParticipantAnnouncementAriaLabel": "{participantName} 고정함",
-    "unpinnedParticipantAnnouncementAriaLabel": "{participantName} 고정 해제함"
+    "unpinnedParticipantAnnouncementAriaLabel": "{participantName} 고정 해제함",
+    "startSpotlightVideoTileMenuLabel": "모두를 위한 스포트라이트",
+    "addSpotlightVideoTileMenuLabel": "스포트라이트 추가",
+    "spotlightLimitReachedMenuTitle": "스포트라이트 한도 도달",
+    "stopSpotlightVideoTileMenuLabel": "스포트라이트 중지",
+    "stopSpotlightOnSelfVideoTileMenuLabel": "스포트라이트 종료"
   },
   "dialpad": {
     "placeholderText": "전화 번호를 입력하세요.",
