@@ -472,7 +472,7 @@ export class CallContext {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        call.spotlight = { spotlightedParticipants, maxParticipantsToSpotlight };
+        call.spotlight = { ...call.spotlight, spotlightedParticipants, maxParticipantsToSpotlight };
       }
     });
   }
