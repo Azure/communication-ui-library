@@ -99,18 +99,18 @@ export class ChatContext {
     // Any item in queue should be removed.
   }
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  public downloadResourceToCache(threadId: string, messageId: string, resourceUrl: string): void {
-    this.modifyState((draft: ChatClientState) => {
-      const message = draft.threads[threadId]?.chatMessages[messageId];
-      if (message && this._fullsizeImageQueue) {
-        if (!message.resourceCache) {
-          message.resourceCache = {};
-        }
-        // Need to discuss retry logic in case of failure
-        this._fullsizeImageQueue.addMessage(message);
-        this._fullsizeImageQueue.startQueue(threadId, fetchImageSource, { singleUrl: resourceUrl }, draft);
+  public async downloadResourceToCache(threadId: string, messageId: string, resourceUrl: string): Promise<void> {
+    let message = this.getState().threads[threadId]?.chatMessages[messageId];
+    if (message && this._fullsizeImageQueue) {
+      if (!message.resourceCache) {
+        message = { ...message, resourceCache: {} };
       }
-    });
+      // Need to discuss retry logic in case of failure
+      this._fullsizeImageQueue.addMessage(message);
+      await this._fullsizeImageQueue.startQueue(threadId, fetchImageSource, {
+        singleUrl: resourceUrl
+      });
+    }
   }
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   public removeResourceFromCache(threadId: string, messageId: string, resourceUrl: string): void {

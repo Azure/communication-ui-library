@@ -49,16 +49,16 @@ export class ResourceDownloadQueue {
   public async startQueue(
     threadId: string,
     operation: ImageRequest,
-    options?: { singleUrl: string },
-    draft?: ChatClientState
-  ): Promise<void> {
+    options?: { singleUrl: string }
+  ): Promise<ChatMessageWithStatus | void> {
     if (this.isActive) {
       return;
     }
+    let message: ChatMessageWithStatus | undefined;
 
     while (this._messagesNeedingResourceRetrieval.length > 0) {
       this.isActive = true;
-      let message = this._messagesNeedingResourceRetrieval.shift();
+      message = this._messagesNeedingResourceRetrieval.shift();
       if (!message) {
         this.isActive = false;
         continue;
@@ -67,45 +67,28 @@ export class ResourceDownloadQueue {
       try {
         if (options) {
           const singleUrl = options.singleUrl;
-          message = await this.downloadSingleUrl(message, singleUrl, operation, draft, threadId);
+          message = await this.downloadSingleUrl(message, singleUrl, operation);
         } else {
           message = await this.downloadAllPreviewUrls(message, operation);
-          this._context.setChatMessage(threadId, message);
         }
-
+        this._context.setChatMessage(threadId, message);
         this.isActive = false;
       } catch (error) {
         console.log('Downloading Resource error: ', error);
         this.isActive = false;
       }
     }
+    return message;
   }
 
   private async downloadSingleUrl(
     message: ChatMessageWithStatus,
     resourceUrl: string,
-    operation: ImageRequest,
-    draft?: ChatClientState,
-    threadId?: string
+    operation: ImageRequest
   ): Promise<ChatMessageWithStatus> {
-    if (message.resourceCache === undefined) {
-      message.resourceCache = {};
-    }
-
-    const messageId = message.id;
-    const blobUrl = operation(resourceUrl, this._credential);
-
-    // Error: TypeError: Cannot perform 'ownKeys' on a proxy that has been revoked
-    // message.resourceCache[resourceUrl] = blobUrl;
-
-    const newMessage = draft?.threads[threadId || '']?.chatMessages[messageId];
-    if (newMessage && newMessage.resourceCache) {
-      newMessage.resourceCache[resourceUrl] = 'https://www.kasandbox.org/programming-images/avatars/leaf-blue.png';
-    }
-
-    // const resourceCache = { [resourceUrl]: blobUrl };
-    // const newMessage = { ...message, resourceCache };
-    return newMessage || message;
+    const blobUrl = await operation(resourceUrl, this._credential);
+    message = { ...message, resourceCache: { ...message.resourceCache, [resourceUrl]: blobUrl } };
+    return message;
   }
 
   private async downloadAllPreviewUrls(
