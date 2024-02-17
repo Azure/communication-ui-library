@@ -119,6 +119,17 @@ export interface FileSharingOptions {
 /**
  * @private
  */
+interface OverlayImageItem {
+  imageSrc: string;
+  title: string;
+  titleIcon: JSX.Element;
+  attachmentId: string;
+  messageId: string;
+}
+
+/**
+ * @private
+ */
 export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const {
     onFetchAvatarPersonaData,
@@ -134,13 +145,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   /* @conditional-compile-remove(file-sharing) */
   const [downloadErrorMessage, setDownloadErrorMessage] = React.useState('');
   /* @conditional-compile-remove(image-overlay) */
-  const [overlayImageItem, setOverlayImageItem] = useState<{
-    imageSrc: string;
-    title: string;
-    titleIcon: JSX.Element;
-    attachmentId: string;
-    messageId: string;
-  }>();
+  const [overlayImageItem, setOverlayImageItem] = useState<OverlayImageItem>();
   /* @conditional-compile-remove(image-overlay) */
   const [isImageOverlayOpen, setIsImageOverlayOpen] = useState<boolean>(false);
 
@@ -165,6 +170,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const errorBarProps = usePropsFor(ErrorBar);
 
   useEffect(() => {
+    if (overlayImageItem === undefined) {
+      return;
+    }
     const messages = messageThreadProps.messages.filter((message) => {
       return message.messageId === overlayImageItem?.messageId;
     });
@@ -172,21 +180,21 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       return;
     }
     const message = messages[0] as ChatMessage;
-    if (
-      overlayImageItem?.imageSrc === '' &&
-      messages.length > 0 &&
-      message.inlineImages &&
-      message.inlineImages?.length > 0
-    ) {
+    if (overlayImageItem.imageSrc === '' && message.inlineImages && message.inlineImages?.length > 0) {
       const inlineImages = message.inlineImages.filter((attachment) => {
         return attachment.id === overlayImageItem?.attachmentId;
       });
-      if (inlineImages.length <= 0 || overlayImageItem === undefined || inlineImages[0].fullSizeImageSrc === '') {
+      if (
+        inlineImages.length <= 0 ||
+        inlineImages[0].fullSizeImageSrc === undefined ||
+        inlineImages[0].fullSizeImageSrc === '' ||
+        overlayImageItem.imageSrc === inlineImages[0].fullSizeImageSrc
+      ) {
         return;
       }
       setOverlayImageItem({
         ...overlayImageItem,
-        imageSrc: inlineImages[0].fullSizeImageSrc ?? ''
+        imageSrc: inlineImages[0].fullSizeImageSrc
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -279,7 +287,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         imageAlt: chatMessage.senderDisplayName
       };
       const titleIcon = onRenderAvatarCallback && onRenderAvatarCallback(chatMessage.senderId, titleIconRenderOptions);
-      const overlayImage = {
+      const overlayImage: OverlayImageItem = {
         title: chatMessage.senderDisplayName || '',
         titleIcon: titleIcon,
         attachmentId: attachment.id,

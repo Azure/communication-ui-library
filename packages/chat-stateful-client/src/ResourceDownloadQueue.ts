@@ -3,7 +3,7 @@
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatContext } from './ChatContext';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { ChatClientState, ChatError } from './ChatClientState';
+import { ChatError } from './ChatClientState';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
@@ -46,19 +46,13 @@ export class ResourceDownloadQueue {
     this._messagesNeedingResourceRetrieval.push(copy);
   }
 
-  public async startQueue(
-    threadId: string,
-    operation: ImageRequest,
-    options?: { singleUrl: string }
-  ): Promise<ChatMessageWithStatus | void> {
+  public async startQueue(threadId: string, operation: ImageRequest, options?: { singleUrl: string }): Promise<void> {
     if (this.isActive) {
       return;
     }
-    let message: ChatMessageWithStatus | undefined;
-
     while (this._messagesNeedingResourceRetrieval.length > 0) {
       this.isActive = true;
-      message = this._messagesNeedingResourceRetrieval.shift();
+      let message = this._messagesNeedingResourceRetrieval.shift();
       if (!message) {
         this.isActive = false;
         continue;
@@ -71,14 +65,13 @@ export class ResourceDownloadQueue {
         } else {
           message = await this.downloadAllPreviewUrls(message, operation);
         }
-        this._context.setChatMessage(threadId, message);
         this.isActive = false;
+        this._context.setChatMessage(threadId, message);
       } catch (error) {
         console.log('Downloading Resource error: ', error);
         this.isActive = false;
       }
     }
-    return message;
   }
 
   private async downloadSingleUrl(
