@@ -6,7 +6,7 @@ import { Description, Heading, Source, Subheading, Title } from '@storybook/addo
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
-import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
+import { COMPONENT_FOLDER_PREFIX, EXAMPLES_FOLDER_PREFIX } from '../../constants';
 import { SurveyExample } from './components/SurveyExample';
 import { exampleDisableSurvey, exampleOnSurveyClosed, exampleOnSurveySubmitted } from './SurveyDocs';
 
@@ -94,8 +94,8 @@ const SurveyStory = (): JSX.Element => {
 export const Survey = SurveyStory.bind({});
 
 export default {
-  id: `${EXAMPLES_FOLDER_PREFIX}-Survey`,
-  title: `${EXAMPLES_FOLDER_PREFIX}/Survey`,
+  id: `${COMPONENT_FOLDER_PREFIX}-internal-Survey`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Internal/Survey`,
   component: SurveyExample,
   parameters: {
     docs: {
