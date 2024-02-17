@@ -197,7 +197,6 @@ export type AzureCommunicationCallWithChatAdapterFromClientArgs = {
     chatClient: StatefulChatClient;
     chatThreadClient: ChatThreadClient;
     callAdapterOptions?: AzureCommunicationCallAdapterOptions;
-    chatAdapterOptions?: AzureCommunicationChatAdapterOptions;
 };
 
 // @public
@@ -207,11 +206,6 @@ export type AzureCommunicationChatAdapterArgs = {
     displayName: string;
     credential: CommunicationTokenCredential;
     threadId: string;
-};
-
-// @beta
-export type AzureCommunicationChatAdapterOptions = {
-    credential?: CommunicationTokenCredential;
 };
 
 // @public

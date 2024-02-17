@@ -63,8 +63,6 @@ import {
   _createAzureCommunicationChatAdapterInner,
   createAzureCommunicationChatAdapterFromClient
 } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { AzureCommunicationChatAdapterOptions } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
 import { EventEmitter } from 'events';
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -1027,8 +1025,6 @@ export type AzureCommunicationCallWithChatAdapterFromClientArgs = {
   chatThreadClient: ChatThreadClient;
   /* @conditional-compile-remove(video-background-effects) */
   callAdapterOptions?: AzureCommunicationCallAdapterOptions;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  chatAdapterOptions?: AzureCommunicationChatAdapterOptions;
 };
 
 /**
