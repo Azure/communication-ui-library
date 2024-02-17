@@ -69,7 +69,7 @@ export type {
 } from './CallAdapter';
 
 /* @conditional-compile-remove(call-transfer) */
-export type { TransferRequestedListener } from './CallAdapter';
+export type { TransferAcceptedListener } from './CallAdapter';
 
 /* @conditional-compile-remove(capabilities) */
 export type { CapabilitiesChangedListener } from './CallAdapter';

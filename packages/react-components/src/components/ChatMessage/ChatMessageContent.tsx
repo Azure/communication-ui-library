@@ -183,34 +183,41 @@ const generateLiveMessage = (props: ChatMessageContentProps): string => {
 };
 
 const messageContentAriaText = (props: ChatMessageContentProps): string | undefined => {
-  // Strip all html tags from the content for aria.
+  if (props.message.content) {
+    // Replace all <img> tags with 'image' for aria.
+    const parsedContent = DOMPurify.sanitize(props.message.content, {
+      ALLOWED_TAGS: ['img'],
+      RETURN_DOM_FRAGMENT: true
+    });
 
-  return props.message.content
-    ? props.message.mine
+    parsedContent.childNodes.forEach((child) => {
+      if (child.nodeName.toLowerCase() !== 'img') {
+        return;
+      }
+      const imageTextNode = document.createElement('div');
+      imageTextNode.innerHTML = 'image ';
+      parsedContent.replaceChild(imageTextNode, child);
+    });
+
+    // Strip all html tags from the content for aria.
+    const message = DOMPurify.sanitize(parsedContent, { ALLOWED_TAGS: [] });
+
+    return props.message.mine
       ? _formatString(props.strings.messageContentMineAriaText, {
-          message: DOMPurify.sanitize(props.message.content, { ALLOWED_TAGS: [] })
+          message: message
         })
       : _formatString(props.strings.messageContentAriaText, {
           author: `${props.message.senderDisplayName}`,
-          message: DOMPurify.sanitize(props.message.content, { ALLOWED_TAGS: [] })
-        })
-    : undefined;
+          message: message
+        });
+  }
+  return undefined;
 };
 
 /* @conditional-compile-remove(image-overlay) */
 const defaultOnRenderInlineImage = (inlineImage: InlineImage): JSX.Element => {
   return (
-    <img
-      key={inlineImage.imgAttrs.id}
-      {...inlineImage.imgAttrs}
-      data-ui-id={inlineImage.imgAttrs.id}
-      tabIndex={0}
-      role="button"
-      style={{
-        cursor: 'pointer',
-        ...inlineImage.imgAttrs.style
-      }}
-    />
+    <img key={inlineImage.imgAttrs.id} tabIndex={0} data-ui-id={inlineImage.imgAttrs.id} {...inlineImage.imgAttrs} />
   );
 };
 
