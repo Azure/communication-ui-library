@@ -83,15 +83,10 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
         onChange && onChange(content);
       }
     );
-    // TODO: need to check how to do this during inline images
-    // const selectionPlugin = createSelectionPlugin(
-    //   imageSelectionBorderColor: 'blue'
-    // );
     return [contentEdit, placeholderPlugin, updateContentPlugin, ribbonPlugin];
   }, [onChange, placeholderText, ribbonPlugin]);
 
   const ribbon = useMemo(() => {
-    //TODO: add more styles for ... button (small screen size)
     const dividerKey = 'Divider';
     const divider: RibbonButton<string> = {
       key: dividerKey,
@@ -103,8 +98,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
         itemType: ContextualMenuItemType.Divider
       }
     };
-    // TODO: add styles!
-    const buttons: RibbonButton<string>[] = getButtons([
+    const buttons = getButtons([
       KnownRibbonButtonKey.Bold,
       KnownRibbonButtonKey.Italic,
       KnownRibbonButtonKey.Underline,
@@ -113,7 +107,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
       KnownRibbonButtonKey.NumberedList,
       KnownRibbonButtonKey.DecreaseIndent,
       KnownRibbonButtonKey.IncreaseIndent
-    ]);
+    ]) as RibbonButton<string>[];
 
     for (const button of buttons) {
       button.commandBarProperties = {
@@ -127,14 +121,30 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
 
     return (
       //TODO: Add localization */}
-      <Ribbon buttons={buttons} plugin={ribbonPlugin} />
+      <Ribbon
+        buttons={buttons}
+        plugin={ribbonPlugin}
+        overflowButtonProps={{
+          styles: ribbonButtonStyle(theme),
+          menuProps: {
+            items: [], // CommandBar will determine items rendered in overflow
+            isBeakVisible: false
+          }
+        }}
+      />
     );
   }, [ribbonPlugin, theme]);
 
   return (
     <div>
       {ribbon}
-      <Rooster plugins={[...plugins, ribbonPlugin]} className={richTextEditorStyle} editorCreator={editorCreator} />
+      <Rooster
+        plugins={[...plugins, ribbonPlugin]}
+        className={richTextEditorStyle}
+        editorCreator={editorCreator}
+        // TODO: confirm the color during inline images implementation
+        imageSelectionBorderColor={'blue'}
+      />
     </div>
   );
 });

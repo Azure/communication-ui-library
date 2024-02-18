@@ -21,12 +21,16 @@ export const richTextEditorStyle = mergeStyles({
 export const ribbonButtonStyle = (theme: Theme): Partial<IButtonStyles> => {
   return {
     icon: { color: theme.palette.neutralSecondary },
-    root: { minWidth: 'auto' },
+    menuIcon: { color: theme.palette.neutralSecondary },
+    root: { minWidth: 'auto', backgroundColor: 'transparent' },
     rootChecked: {
       backgroundColor: 'transparent',
       selectors: {
         //iconChecked is not working here because of the specificity
         '.ms-Button-icon': {
+          color: theme.palette.themePrimary
+        },
+        '.ms-Button-menuIcon': {
           color: theme.palette.themePrimary
         }
       }
@@ -37,6 +41,9 @@ export const ribbonButtonStyle = (theme: Theme): Partial<IButtonStyles> => {
         //iconChecked is not working here because of the specificity
         '.ms-Button-icon': {
           color: theme.palette.themePrimary
+        },
+        '.ms-Button-menuIcon': {
+          color: theme.palette.themePrimary
         }
       }
     },
@@ -45,6 +52,9 @@ export const ribbonButtonStyle = (theme: Theme): Partial<IButtonStyles> => {
       selectors: {
         //iconChecked is not working here because of the specificity
         '.ms-Button-icon': {
+          color: theme.palette.themePrimary
+        },
+        '.ms-Button-menuIcon': {
           color: theme.palette.themePrimary
         }
       }
@@ -55,6 +65,9 @@ export const ribbonButtonStyle = (theme: Theme): Partial<IButtonStyles> => {
         //iconChecked is not working here because of the specificity
         '.ms-Button-icon': {
           color: theme.palette.themePrimary
+        },
+        '.ms-Button-menuIcon': {
+          color: theme.palette.themePrimary
         }
       }
     },
@@ -63,6 +76,33 @@ export const ribbonButtonStyle = (theme: Theme): Partial<IButtonStyles> => {
       selectors: {
         //iconChecked is not working here because of the specificity
         '.ms-Button-icon': {
+          color: theme.palette.themePrimary
+        },
+        '.ms-Button-menuIcon': {
+          color: theme.palette.themePrimary
+        }
+      }
+    },
+    rootExpanded: {
+      backgroundColor: 'transparent',
+      selectors: {
+        //iconChecked is not working here because of the specificity
+        '.ms-Button-icon': {
+          color: theme.palette.themePrimary
+        },
+        '.ms-Button-menuIcon': {
+          color: theme.palette.themePrimary
+        }
+      }
+    },
+    rootExpandedHovered: {
+      backgroundColor: 'transparent',
+      selectors: {
+        //iconChecked is not working here because of the specificity
+        '.ms-Button-icon': {
+          color: theme.palette.themePrimary
+        },
+        '.ms-Button-menuIcon': {
           color: theme.palette.themePrimary
         }
       }
