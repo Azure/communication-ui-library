@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-import { IButtonStyles, Theme, mergeStyles } from '@fluentui/react';
+import { IButtonStyles, ICommandBarStyles, Theme, merge, mergeStyles } from '@fluentui/react';
 
 /**
  * @private
@@ -20,8 +20,8 @@ export const richTextEditorStyle = mergeStyles({
  */
 export const ribbonButtonStyle = (theme: Theme): Partial<IButtonStyles> => {
   return {
-    icon: { color: theme.palette.neutralSecondary },
-    menuIcon: { color: theme.palette.neutralSecondary },
+    icon: { color: theme.palette.neutralPrimary, height: 'auto' },
+    menuIcon: { color: theme.palette.neutralPrimary, height: 'auto' },
     root: { minWidth: 'auto', backgroundColor: 'transparent' },
     rootChecked: {
       backgroundColor: 'transparent',
@@ -115,7 +115,17 @@ export const ribbonButtonStyle = (theme: Theme): Partial<IButtonStyles> => {
  */
 export const ribbonDividerStyle = (theme: Theme): Partial<IButtonStyles> => {
   return {
-    icon: { margin: '0', color: theme.palette.neutralQuaternaryAlt },
+    icon: { color: theme.palette.neutralQuaternaryAlt, margin: '0 -0.5rem', height: 'auto' },
     root: { margin: '0', padding: '0', minWidth: 'auto' }
+  };
+};
+
+/**
+ * @private
+ */
+export const ribbonStyle = (): Partial<ICommandBarStyles> => {
+  return {
+    // Override for the default white color of the Ribbon component
+    root: { backgroundColor: 'transparent' }
   };
 };

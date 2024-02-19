@@ -4,18 +4,11 @@ import React, { useCallback, useEffect, useImperativeHandle, useMemo, useRef } f
 import { ContentEdit, Watermark } from 'roosterjs-editor-plugins';
 import { Editor } from 'roosterjs-editor-core';
 import { EditorOptions, IEditor } from 'roosterjs-editor-types-compatible';
-import {
-  Rooster,
-  createUpdateContentPlugin,
-  UpdateMode,
-  createRibbonPlugin,
-  getButtons,
-  KnownRibbonButtonKey,
-  Ribbon,
-  RibbonButton
-} from 'roosterjs-react';
-import { ribbonButtonStyle, ribbonDividerStyle, richTextEditorStyle } from '../styles/RichTextEditor.styles';
-import { useTheme, ContextualMenuItemType } from '@fluentui/react';
+import { Rooster, createUpdateContentPlugin, UpdateMode, createRibbonPlugin, Ribbon } from 'roosterjs-react';
+import { ribbonButtonStyle, ribbonStyle, richTextEditorStyle } from '../styles/RichTextEditor.styles';
+import { useTheme } from '@fluentui/react';
+import { getRibbonButtons } from './RTERibbonButtons';
+
 /**
  * Props for {@link RichTextEditor}.
  *
@@ -87,41 +80,13 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   }, [onChange, placeholderText, ribbonPlugin]);
 
   const ribbon = useMemo(() => {
-    const dividerKey = 'Divider';
-    const divider: RibbonButton<string> = {
-      key: dividerKey,
-      iconName: 'separator',
-      unlocalizedText: '',
-      onClick: () => {},
-      isDisabled: () => true,
-      commandBarProperties: {
-        itemType: ContextualMenuItemType.Divider
-      }
-    };
-    const buttons = getButtons([
-      KnownRibbonButtonKey.Bold,
-      KnownRibbonButtonKey.Italic,
-      KnownRibbonButtonKey.Underline,
-      divider,
-      KnownRibbonButtonKey.BulletedList,
-      KnownRibbonButtonKey.NumberedList,
-      KnownRibbonButtonKey.DecreaseIndent,
-      KnownRibbonButtonKey.IncreaseIndent
-    ]) as RibbonButton<string>[];
-
-    for (const button of buttons) {
-      button.commandBarProperties = {
-        ...button.commandBarProperties,
-        buttonStyles: {
-          ...button.commandBarProperties?.buttonStyles,
-          ...(button.key === dividerKey ? ribbonDividerStyle(theme) : ribbonButtonStyle(theme))
-        }
-      };
-    }
+    const buttons = getRibbonButtons(theme);
 
     return (
-      //TODO: Add localization */}
+      //TODO: Add localization
+      //TODO: add theme for ribbon and editor
       <Ribbon
+        styles={ribbonStyle()}
         buttons={buttons}
         plugin={ribbonPlugin}
         overflowButtonProps={{
