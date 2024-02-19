@@ -119,6 +119,7 @@ export interface FileSharingOptions {
 /**
  * @private
  */
+/* @conditional-compile-remove(image-overlay) */
 interface OverlayImageItem {
   imageSrc: string;
   title: string;
@@ -169,6 +170,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const headerProps = useAdaptedSelector(getHeaderProps);
   const errorBarProps = usePropsFor(ErrorBar);
 
+  /* @conditional-compile-remove(image-overlay) */
   useEffect(() => {
     if (overlayImageItem === undefined) {
       return;
