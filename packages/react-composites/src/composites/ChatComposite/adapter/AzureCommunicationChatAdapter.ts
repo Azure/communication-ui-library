@@ -324,7 +324,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  downloadResourceToCache(resourceDetails: ResourceDetails): void {
+  async downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void> {
     this.chatClient.downloadResourceToCache(
       resourceDetails.threadId,
       resourceDetails.messageId,

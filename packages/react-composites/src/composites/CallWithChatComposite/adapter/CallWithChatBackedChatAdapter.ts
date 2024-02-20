@@ -130,7 +130,7 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
   };
 
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  public downloadResourceToCache(resourceDetails: ResourceDetails): void {
+  public async downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void> {
     this.callWithChatAdapter.downloadResourceToCache(resourceDetails);
   }
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */

@@ -78,6 +78,9 @@ export interface InlineImageMetadata {
    * Download URL for the full resolution version.
    */
   url: string;
+  /**
+   * Optional fetched Image source fot the full resolution version.
+   */
   fullSizeImageSrc?: string;
 }
 

@@ -1335,7 +1335,6 @@ export interface InlineImage {
 export interface InlineImageMetadata {
     // (undocumented)
     attachmentType: 'inlineImage';
-    // (undocumented)
     fullSizeImageSrc?: string;
     id: string;
     // (undocumented)

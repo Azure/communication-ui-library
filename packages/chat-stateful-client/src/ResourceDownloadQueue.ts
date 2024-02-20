@@ -65,10 +65,10 @@ export class ResourceDownloadQueue {
         } else {
           message = await this.downloadAllPreviewUrls(message, operation);
         }
-        this.isActive = false;
         this._context.setChatMessage(threadId, message);
       } catch (error) {
         console.log('Downloading Resource error: ', error);
+      } finally {
         this.isActive = false;
       }
     }

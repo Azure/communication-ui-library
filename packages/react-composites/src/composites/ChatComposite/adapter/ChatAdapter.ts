@@ -111,7 +111,7 @@ export interface ChatAdapterThreadManagement {
   /**
    * Downloads a resource into the cache for the given message.
    */
-  downloadResourceToCache(resourceDetails: ResourceDetails): void;
+  downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /**
    * Removes a resource from the cache for the given message.
