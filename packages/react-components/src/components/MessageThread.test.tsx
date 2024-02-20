@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import React from 'react';
+import { render, screen } from '@testing-library/react';
 /* @conditional-compile-remove(mention) */
 import { v1 as generateGUID } from 'uuid';
 import { MessageThread } from './MessageThread';
@@ -11,10 +12,8 @@ import { BlockedMessage } from '../types';
 import { createTestLocale, renderWithLocalization } from './utils/testUtils';
 /* @conditional-compile-remove(date-time-customization) @conditional-compile-remove(data-loss-prevention) */
 import { COMPONENT_LOCALE_EN_US } from '../localization/locales';
-/* @conditional-compile-remove(date-time-customization) */
-import { screen } from '@testing-library/react';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { render, waitFor } from '@testing-library/react';
+import { waitFor } from '@testing-library/react';
 /* @conditional-compile-remove(data-loss-prevention) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { registerIcons } from '@fluentui/react';
 /* @conditional-compile-remove(mention) */
@@ -134,6 +133,42 @@ describe('onDisplayDateTimeString passed through messagethread should overwrite 
       testLocale
     );
     expect(screen.getByText('Yesterday')).toBeTruthy();
+  });
+});
+
+describe('Message should display status of edited if message is edited', () => {
+  test('Received message should display "Edited" if message is edited', async () => {
+    const sampleMessage: ChatMessage = {
+      messageType: 'chat',
+      senderId: 'user3',
+      senderDisplayName: 'Sam Fisher',
+      messageId: Math.random().toString(),
+      content: 'Thanks for making my job easier.',
+      createdOn: twentyFourHoursAgo(),
+      mine: false,
+      attached: false,
+      contentType: 'text',
+      editedOn: new Date()
+    };
+    render(<MessageThread userId="user1" messages={[sampleMessage]} />);
+    expect(screen.getByText('Edited')).toBeTruthy();
+  });
+
+  test('Sent message should display "Edited" if message is edited', async () => {
+    const sampleMessage: ChatMessage = {
+      messageType: 'chat',
+      senderId: 'user1',
+      senderDisplayName: 'Kat Larsson',
+      messageId: Math.random().toString(),
+      content: 'Thanks for making my job easier.',
+      createdOn: twentyFourHoursAgo(),
+      mine: true,
+      attached: false,
+      contentType: 'text',
+      editedOn: new Date()
+    };
+    render(<MessageThread userId="user1" messages={[sampleMessage]} />);
+    expect(screen.getByText('Edited')).toBeTruthy();
   });
 });
 

@@ -408,6 +408,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
                 {formattedTimestamp}
               </Text>
             }
+            details={getMessageDetails()}
           >
             {getContent()}
           </FluentChatMessage>
