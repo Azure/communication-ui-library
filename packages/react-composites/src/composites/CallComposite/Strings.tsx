@@ -832,4 +832,14 @@ export interface CallCompositeStrings {
    * Strings for spotlight prompt
    */
   spotlightPrompt: SpotlightPromptStrings;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Label for button to exit spotlight
+   */
+  exitSpotlightButtonLabel: string;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Tooltop for button to exit spotlight
+   */
+  exitSpotlightButtonTooltip: string;
 }
