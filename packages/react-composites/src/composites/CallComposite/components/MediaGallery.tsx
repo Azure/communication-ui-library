@@ -32,7 +32,7 @@ import { useAdapter } from '../adapter/CallAdapterProvider';
 /* @conditional-compile-remove(spotlight) */
 import { PromptProps } from './Prompt';
 /* @conditional-compile-remove(spotlight) */
-import { useSpotlightCallbacksWithPrompt } from '../utils/spotlightUtils';
+import { useLocalSpotlightCallbacksWithPrompt, useRemoteSpotlightCallbacksWithPrompt } from '../utils/spotlightUtils';
 
 const VideoGalleryStyles = {
   root: {
@@ -154,10 +154,19 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   ]);
 
   /* @conditional-compile-remove(spotlight) */
-  const { onStartRemoteSpotlight, onStopRemoteSpotlight } = videoGalleryProps;
+  const { onStartLocalSpotlight, onStopLocalSpotlight, onStartRemoteSpotlight, onStopRemoteSpotlight } =
+    videoGalleryProps;
 
   /* @conditional-compile-remove(spotlight) */
-  const { onStartSpotlightWithPrompt, onStopSpotlightWithPrompt } = useSpotlightCallbacksWithPrompt(
+  const { onStartLocalSpotlightWithPrompt, onStopLocalSpotlightWithPrompt } = useLocalSpotlightCallbacksWithPrompt(
+    onStartLocalSpotlight,
+    onStopLocalSpotlight,
+    setIsPromptOpen,
+    setPromptProps
+  );
+
+  /* @conditional-compile-remove(spotlight) */
+  const { onStartRemoteSpotlightWithPrompt, onStopRemoteSpotlightWithPrompt } = useRemoteSpotlightCallbacksWithPrompt(
     onStartRemoteSpotlight,
     onStopRemoteSpotlight,
     setIsPromptOpen,
@@ -195,13 +204,13 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         /* @conditional-compile-remove(reaction) */
         reactionResources={reactionResources}
         /* @conditional-compile-remove(spotlight) */
-        onStartLocalSpotlight={onStartSpotlightWithPrompt}
+        onStartLocalSpotlight={onStartLocalSpotlightWithPrompt}
         /* @conditional-compile-remove(spotlight) */
-        onStopLocalSpotlight={onStopSpotlightWithPrompt}
+        onStopLocalSpotlight={onStopLocalSpotlightWithPrompt}
         /* @conditional-compile-remove(spotlight) */
-        onStartRemoteSpotlight={onStartSpotlightWithPrompt}
+        onStartRemoteSpotlight={onStartRemoteSpotlightWithPrompt}
         /* @conditional-compile-remove(spotlight) */
-        onStopRemoteSpotlight={onStopSpotlightWithPrompt}
+        onStopRemoteSpotlight={onStopRemoteSpotlightWithPrompt}
       />
     );
   }, [
@@ -226,9 +235,13 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(reaction) */
     reactionResources,
     /* @conditional-compile-remove(spotlight) */
-    onStartSpotlightWithPrompt,
+    onStartLocalSpotlightWithPrompt,
     /* @conditional-compile-remove(spotlight) */
-    onStopSpotlightWithPrompt
+    onStopLocalSpotlightWithPrompt,
+    /* @conditional-compile-remove(spotlight) */
+    onStartRemoteSpotlightWithPrompt,
+    /* @conditional-compile-remove(spotlight) */
+    onStopRemoteSpotlightWithPrompt
   ]);
 
   return (

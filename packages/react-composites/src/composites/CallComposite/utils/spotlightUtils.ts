@@ -8,47 +8,126 @@ import { CallCompositeStrings } from '../Strings';
 /* @conditional-compile-remove(spotlight) */
 import { PromptProps } from '../components/Prompt';
 /* @conditional-compile-remove(spotlight) */
-import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(spotlight) */
 import { useLocale } from '../../localization';
-/* @conditional-compile-remove(spotlight) */
-import { useAdapter } from '../adapter/CallAdapterProvider';
 
 /* @conditional-compile-remove(spotlight) */
 /**
  * @internal
  */
-export const useSpotlightCallbacksWithPrompt = (
-  onStartSpotlight?: (userIds?: string[]) => Promise<void>,
-  onStopSpotlight?: (userIds?: string[]) => Promise<void>,
+export const useLocalSpotlightCallbacksWithPrompt = (
+  onStartLocalSpotlight?: () => Promise<void>,
+  onStopLocalSpotlight?: () => Promise<void>,
   setIsPromptOpen?: (isOpen: boolean) => void,
   setPromptProps?: (promptProps: PromptProps) => void
 ): {
-  onStartSpotlightWithPrompt?: (userIds?: string[]) => Promise<void>;
-  onStopSpotlightWithPrompt?: (userIds?: string[]) => Promise<void>;
+  onStartLocalSpotlightWithPrompt?: () => Promise<void>;
+  onStopLocalSpotlightWithPrompt?: () => Promise<void>;
 } => {
-  const myUserId = toFlatCommunicationIdentifier(useAdapter().getState().userId);
-
   const strings = useLocale().strings.call;
 
   return useMemo(() => {
     if (!setIsPromptOpen || !setPromptProps) {
-      return { onStartSpotlightWithPrompt: onStartSpotlight, onStopSpotlightWithPrompt: onStopSpotlight };
+      return {
+        onStartLocalSpotlightWithPrompt: onStartLocalSpotlight,
+        onStopLocalSpotlightWithPrompt: onStopLocalSpotlight
+      };
     }
     return {
-      onStartSpotlightWithPrompt: onStartSpotlight
-        ? getStartSpotlightWithPromptCallback(myUserId, onStartSpotlight, setIsPromptOpen, setPromptProps, strings)
+      onStartLocalSpotlightWithPrompt: onStartLocalSpotlight
+        ? getStartLocalSpotlightWithPromptCallback(onStartLocalSpotlight, setIsPromptOpen, setPromptProps, strings)
         : undefined,
-      onStopSpotlightWithPrompt: onStopSpotlight
-        ? getStopSpotlightWithPromptCallback(myUserId, onStopSpotlight, setIsPromptOpen, setPromptProps, strings)
+      onStopLocalSpotlightWithPrompt: onStopLocalSpotlight
+        ? getStopLocalSpotlightWithPromptCallback(onStopLocalSpotlight, setIsPromptOpen, setPromptProps, strings)
         : undefined
     };
-  }, [myUserId, onStartSpotlight, onStopSpotlight, setIsPromptOpen, setPromptProps, strings]);
+  }, [onStartLocalSpotlight, onStopLocalSpotlight, setIsPromptOpen, setPromptProps, strings]);
 };
 
 /* @conditional-compile-remove(spotlight) */
-const getStartSpotlightWithPromptCallback = (
-  myUserId: string,
+const getStartLocalSpotlightWithPromptCallback = (
+  onStartSpotlight: (userIds?: string[]) => void,
+  setIsPromptOpen: (isOpen: boolean) => void,
+  setPromptProps: (promptProps: PromptProps) => void,
+  strings: CallCompositeStrings
+): ((userIds?: string[]) => Promise<void>) => {
+  return async (): Promise<void> => {
+    setPromptProps({
+      heading: strings.spotlightPrompt.startSpotlightHeading,
+      text: strings.spotlightPrompt.startSpotlightOnSelfText,
+      confirmButtonLabel: strings.spotlightPrompt.startSpotlightConfirmButtonLabel,
+      cancelButtonLabel: strings.spotlightPrompt.startSpotlightCancelButtonLabel,
+      onConfirm: () => {
+        onStartSpotlight();
+        setIsPromptOpen(false);
+      },
+      onCancel: () => setIsPromptOpen(false)
+    });
+    setIsPromptOpen(true);
+  };
+};
+
+/* @conditional-compile-remove(spotlight) */
+const getStopLocalSpotlightWithPromptCallback = (
+  onStopSpotlight: (userIds?: string[]) => void,
+  setIsPromptOpen: (isOpen: boolean) => void,
+  setPromptProps: (promptProps: PromptProps) => void,
+  strings: CallCompositeStrings
+): (() => Promise<void>) => {
+  return async (userIds?: string[]): Promise<void> => {
+    if (userIds && userIds.length > 1) {
+      onStopSpotlight(userIds);
+    }
+
+    setPromptProps({
+      heading: strings.spotlightPrompt.stopSpotlightOnSelfHeading,
+      text: strings.spotlightPrompt.stopSpotlightOnSelfText,
+      confirmButtonLabel: strings.spotlightPrompt.stopSpotlightOnSelfConfirmButtonLabel,
+      cancelButtonLabel: strings.spotlightPrompt.stopSpotlightCancelButtonLabel,
+      onConfirm: () => {
+        onStopSpotlight(userIds);
+        setIsPromptOpen(false);
+      },
+      onCancel: () => setIsPromptOpen(false)
+    });
+    setIsPromptOpen(true);
+  };
+};
+
+/* @conditional-compile-remove(spotlight) */
+/**
+ * @internal
+ */
+export const useRemoteSpotlightCallbacksWithPrompt = (
+  onStartRemoteSpotlight?: (userIds?: string[]) => Promise<void>,
+  onStopRemoteSpotlight?: (userIds?: string[]) => Promise<void>,
+  setIsPromptOpen?: (isOpen: boolean) => void,
+  setPromptProps?: (promptProps: PromptProps) => void
+): {
+  onStartRemoteSpotlightWithPrompt?: (userIds?: string[]) => Promise<void>;
+  onStopRemoteSpotlightWithPrompt?: (userIds?: string[]) => Promise<void>;
+} => {
+  const strings = useLocale().strings.call;
+
+  return useMemo(() => {
+    if (!setIsPromptOpen || !setPromptProps) {
+      return {
+        onStartRemoteSpotlightWithPrompt: onStartRemoteSpotlight,
+        onStopRemoteSpotlightWithPrompt: onStopRemoteSpotlight
+      };
+    }
+    return {
+      onStartRemoteSpotlightWithPrompt: onStartRemoteSpotlight
+        ? getStartRemoteSpotlightWithPromptCallback(onStartRemoteSpotlight, setIsPromptOpen, setPromptProps, strings)
+        : undefined,
+      onStopRemoteSpotlightWithPrompt: onStopRemoteSpotlight
+        ? getStopRemoteSpotlightWithPromptCallback(onStopRemoteSpotlight, setIsPromptOpen, setPromptProps, strings)
+        : undefined
+    };
+  }, [onStartRemoteSpotlight, onStopRemoteSpotlight, setIsPromptOpen, setPromptProps, strings]);
+};
+
+/* @conditional-compile-remove(spotlight) */
+const getStartRemoteSpotlightWithPromptCallback = (
   onStartSpotlight: (userIds?: string[]) => void,
   setIsPromptOpen: (isOpen: boolean) => void,
   setPromptProps: (promptProps: PromptProps) => void,
@@ -58,13 +137,9 @@ const getStartSpotlightWithPromptCallback = (
     if (userIds && userIds.length > 1) {
       onStartSpotlight(userIds);
     }
-    const startSpotlightPromptText =
-      userIds === undefined || userIds[0] === myUserId
-        ? strings.spotlightPrompt.startSpotlightOnSelfText
-        : strings.spotlightPrompt.startSpotlightText;
     setPromptProps({
       heading: strings.spotlightPrompt.startSpotlightHeading,
-      text: startSpotlightPromptText,
+      text: strings.spotlightPrompt.startSpotlightText,
       confirmButtonLabel: strings.spotlightPrompt.startSpotlightConfirmButtonLabel,
       cancelButtonLabel: strings.spotlightPrompt.startSpotlightCancelButtonLabel,
       onConfirm: () => {
@@ -78,8 +153,7 @@ const getStartSpotlightWithPromptCallback = (
 };
 
 /* @conditional-compile-remove(spotlight) */
-const getStopSpotlightWithPromptCallback = (
-  myUserId: string,
+const getStopRemoteSpotlightWithPromptCallback = (
   onStopSpotlight: (userIds?: string[]) => void,
   setIsPromptOpen: (isOpen: boolean) => void,
   setPromptProps: (promptProps: PromptProps) => void,
@@ -89,23 +163,11 @@ const getStopSpotlightWithPromptCallback = (
     if (userIds && userIds.length > 1) {
       onStopSpotlight(userIds);
     }
-    const stopSpotlightPromptHeading =
-      userIds === undefined || userIds[0] === myUserId
-        ? strings.spotlightPrompt.stopSpotlightOnSelfHeading
-        : strings.spotlightPrompt.stopSpotlightHeading;
-    const stopSpotlightPromptText =
-      userIds === undefined || userIds[0] === myUserId
-        ? strings.spotlightPrompt.stopSpotlightOnSelfText
-        : strings.spotlightPrompt.stopSpotlightText;
-    const stopSpotlightPromptConfirmButtonLabel =
-      userIds === undefined || userIds[0] === myUserId
-        ? strings.spotlightPrompt.stopSpotlightOnSelfConfirmButtonLabel
-        : strings.spotlightPrompt.stopSpotlightConfirmButtonLabel;
 
     setPromptProps({
-      heading: stopSpotlightPromptHeading,
-      text: stopSpotlightPromptText,
-      confirmButtonLabel: stopSpotlightPromptConfirmButtonLabel,
+      heading: strings.spotlightPrompt.stopSpotlightHeading,
+      text: strings.spotlightPrompt.stopSpotlightText,
+      confirmButtonLabel: strings.spotlightPrompt.stopSpotlightConfirmButtonLabel,
       cancelButtonLabel: strings.spotlightPrompt.stopSpotlightCancelButtonLabel,
       onConfirm: () => {
         onStopSpotlight(userIds);
