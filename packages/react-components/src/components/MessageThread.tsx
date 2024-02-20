@@ -27,7 +27,7 @@ import {
 } from '../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../types';
-import { MessageStatusIndicator, MessageStatusIndicatorProps } from './MessageStatusIndicator';
+import { MessageStatusIndicatorProps } from './MessageStatusIndicator';
 import { memoizeFnAll, MessageStatus } from '@internal/acs-ui-common';
 import { useLocale } from '../localization/LocalizationProvider';
 import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
@@ -49,6 +49,9 @@ import {
 import { Announcer } from './Announcer';
 /* @conditional-compile-remove(image-overlay) */
 import { InlineImageOptions } from './ChatMessage/ChatMessageContent';
+import LiveMessage from './Announcer/LiveMessage';
+import { MessageStatusIndicatorInternal } from './MessageStatusIndicatorInternal';
+import { MessageStatusIndicatorIconStyle } from './styles/MessageStatusIndicator.styles';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (
@@ -700,9 +703,13 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
         return;
       }
       try {
+        setTimeout(() => {
+          setDeletedMessageAriaLabel(strings.messageDeletedAnnouncementAriaLabel);
+        }, 200);
         // reset deleted message label in case if there was a value already (messages are deleted 1 after another)
         setDeletedMessageAriaLabel(undefined);
         setLatestDeletedMessageId(messageId);
+        lastChatMessageStatus.current = 'deleted';
         // we should set up latestDeletedMessageId before the onDeleteMessage call
         // as otherwise in very rare cases the messages array can be updated before latestDeletedMessageId
         await onDeleteMessage(messageId);
@@ -710,7 +717,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
         console.log('onDeleteMessage failed: messageId', messageId, 'error', e);
       }
     },
-    [onDeleteMessage]
+    [onDeleteMessage, strings.messageDeletedAnnouncementAriaLabel]
   );
 
   const isAllChatMessagesLoadedRef = useRef(false);
@@ -957,6 +964,23 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages]);
 
+  useEffect(() => {
+    // only chat message has status indicator
+    const newStatus = (messagesRef.current[messagesRef.current.length - 1] as ChatMessage)?.status;
+
+    if (lastChatMessageStatus.current === 'deleted' && newStatus === 'sending') {
+      // enforce message life cycle
+      // message status should always be [ sending -> delivered -> seen (optional) -> deleted ] or [sending -> failed -> deleted]
+      // not any other way around
+      // therefore, if current message status is deleted, we should only update it if newStatus is sending
+      lastChatMessageStatus.current = newStatus;
+    } else if (lastChatMessageStatus.current !== 'deleted') {
+      lastChatMessageStatus.current = newStatus;
+    }
+    console.log('last status = ' + lastChatMessageStatus.current + ' new status = ' + newStatus);
+  }, [messages, latestDeletedMessageId]);
+
+  const lastChatMessageStatus = useRef('');
   const participantCountRef = useRef(participantCount);
   const readReceiptsBySenderIdRef = useRef(readReceiptsBySenderId);
 
@@ -979,6 +1003,11 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
       readCount: number,
       status?: MessageStatus
     ) => {
+      // we should only announce label if the message status is deleted
+      // because after message is deleted, we now need to render statusIndicator for previous messages
+      // and their status has been announced already and we should not announce them again
+      const shouldAnnounce = lastChatMessageStatus.current !== 'deleted';
+
       const onToggleToolTip = (isToggled: boolean): void => {
         if (isToggled && readReceiptsBySenderIdRef.current) {
           setReadCountForHoveredIndicator(
@@ -989,13 +1018,16 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
         }
       };
       return (
-        <MessageStatusIndicator
-          status={status}
-          readCount={readCount}
-          onToggleToolTip={onToggleToolTip}
-          // -1 because participant count does not include myself
-          remoteParticipantsCount={participantCount ? participantCount - 1 : 0}
-        />
+        <>
+          <MessageStatusIndicatorInternal
+            status={status}
+            readCount={readCount}
+            onToggleToolTip={onToggleToolTip}
+            // -1 because participant count does not include myself
+            remoteParticipantsCount={participantCount ? participantCount - 1 : 0}
+            shouldAnnounce={shouldAnnounce}
+          />
+        </>
       );
     },
     []
@@ -1056,12 +1088,13 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
       )}
       <LiveAnnouncer>
         <FluentV9ThemeProvider v8Theme={theme}>
-          <Announcer announcementString={deletedMessageAriaLabel} ariaLive={'assertive'} />
+          <LiveMessage message={deletedMessageAriaLabel ?? ''} ariaLive={'polite'} />
           <Chat
             // styles?.chatContainer used in className and style prop as style prop can't handle CSS selectors
             className={mergeClasses(classes.root, mergeStyles(styles?.chatContainer))}
             ref={chatScrollDivRef}
             style={{ ...createStyleFromV8Style(styles?.chatContainer) }}
+            aria-label={deletedMessageAriaLabel ?? ''}
           >
             {messagesToDisplay.map((message: _ChatMessageProps): JSX.Element => {
               return (
