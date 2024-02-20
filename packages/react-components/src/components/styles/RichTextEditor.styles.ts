@@ -26,7 +26,7 @@ export const ribbonButtonStyle = (theme: Theme): Partial<IButtonStyles> => {
     rootChecked: {
       backgroundColor: 'transparent',
       selectors: {
-        //iconChecked is not working here because of the specificity
+        // Icon's color doesn't work here because of the specificity
         '.ms-Button-icon': {
           color: theme.palette.themePrimary
         },
@@ -38,7 +38,7 @@ export const ribbonButtonStyle = (theme: Theme): Partial<IButtonStyles> => {
     rootHovered: {
       backgroundColor: 'transparent',
       selectors: {
-        //iconChecked is not working here because of the specificity
+        // Icon's color doesn't work here because of the specificity
         '.ms-Button-icon': {
           color: theme.palette.themePrimary
         },
@@ -50,7 +50,7 @@ export const ribbonButtonStyle = (theme: Theme): Partial<IButtonStyles> => {
     rootCheckedHovered: {
       backgroundColor: 'transparent',
       selectors: {
-        //iconChecked is not working here because of the specificity
+        // Icon's color doesn't work here because of the specificity
         '.ms-Button-icon': {
           color: theme.palette.themePrimary
         },
@@ -62,7 +62,7 @@ export const ribbonButtonStyle = (theme: Theme): Partial<IButtonStyles> => {
     rootCheckedPressed: {
       backgroundColor: 'transparent',
       selectors: {
-        //iconChecked is not working here because of the specificity
+        // Icon's color doesn't work here because of the specificity
         '.ms-Button-icon': {
           color: theme.palette.themePrimary
         },
@@ -74,7 +74,7 @@ export const ribbonButtonStyle = (theme: Theme): Partial<IButtonStyles> => {
     rootPressed: {
       backgroundColor: 'transparent',
       selectors: {
-        //iconChecked is not working here because of the specificity
+        // Icon's color doesn't work here because of the specificity
         '.ms-Button-icon': {
           color: theme.palette.themePrimary
         },
@@ -86,7 +86,7 @@ export const ribbonButtonStyle = (theme: Theme): Partial<IButtonStyles> => {
     rootExpanded: {
       backgroundColor: 'transparent',
       selectors: {
-        //iconChecked is not working here because of the specificity
+        // Icon's color doesn't work here because of the specificity
         '.ms-Button-icon': {
           color: theme.palette.themePrimary
         },
@@ -98,7 +98,7 @@ export const ribbonButtonStyle = (theme: Theme): Partial<IButtonStyles> => {
     rootExpandedHovered: {
       backgroundColor: 'transparent',
       selectors: {
-        //iconChecked is not working here because of the specificity
+        //icon color is not working here because of the specificity
         '.ms-Button-icon': {
           color: theme.palette.themePrimary
         },

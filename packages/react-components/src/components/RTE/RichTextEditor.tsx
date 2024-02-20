@@ -84,7 +84,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
 
     return (
       //TODO: Add localization
-      //TODO: add theme for ribbon and editor
+      //TODO: add theme for editor
       <Ribbon
         styles={ribbonStyle()}
         buttons={buttons}
