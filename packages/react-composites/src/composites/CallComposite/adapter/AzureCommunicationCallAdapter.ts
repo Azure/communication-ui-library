@@ -742,6 +742,17 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   }
 
   public async leaveCall(forEveryone?: boolean): Promise<void> {
+    const page = getCallCompositePage(
+      this.getState().call,
+      this.getState().endedCall,
+      this.getState().acceptedTransferCallState
+    );
+    if (page === 'transferring') {
+      const transferCall = this.callAgent.calls.filter(
+        (call) => call.id === this.getState().acceptedTransferCallState?.id
+      )[0];
+      transferCall?.hangUp();
+    }
     await this.handlers.onHangUp(forEveryone);
     this.unsubscribeCallEvents();
     this.handlers = createHandlers(
