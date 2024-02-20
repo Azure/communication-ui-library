@@ -93,9 +93,11 @@ export const usePeoplePane = (props: {
           : localeStrings.stopSpotlightParticipantListMenuLabel;
         const onStopSpotlight = isMe
           ? onStopLocalSpotlight
-          : () => {
-              onStopRemoteSpotlight?.([participantId]);
-            };
+          : onStopRemoteSpotlight
+          ? () => {
+              onStopRemoteSpotlight([participantId]);
+            }
+          : undefined;
         if (onStopSpotlight && stopSpotlightMenuText) {
           _defaultMenuItems.push({
             key: 'stop-spotlight',
@@ -120,9 +122,11 @@ export const usePeoplePane = (props: {
           : false;
         const onStartSpotlight = isMe
           ? onStartLocalSpotlight
-          : () => {
-              onStartRemoteSpotlight?.([participantId]);
-            };
+          : onStartRemoteSpotlight
+          ? () => {
+              onStartRemoteSpotlight([participantId]);
+            }
+          : undefined;
         if (onStartSpotlight && startSpotlightMenuText) {
           _defaultMenuItems.push({
             key: 'start-spotlight',
