@@ -178,15 +178,8 @@ export const _LocalVideoTile = React.memo(
         return concatStyleSets(
           {
             root: {
-              '&::after': {
-                content: `''`,
-                position: 'absolute',
-                border: `0.25rem solid ${theme.palette.neutralTertiaryAlt}`,
-                borderRadius: theme.effects.roundedCorner4,
-                width: '100%',
-                height: '100%',
-                pointerEvents: 'none'
-              }
+              outline: `0.25rem solid ${theme.palette.neutralTertiaryAlt}`,
+              outlineOffset: '-0.25rem'
             }
           },
           styles
@@ -196,7 +189,6 @@ export const _LocalVideoTile = React.memo(
     }, [
       /* @conditional-compile-remove(spotlight) */ isSpotlighted,
       /* @conditional-compile-remove(spotlight) */ theme.palette.neutralTertiaryAlt,
-      /* @conditional-compile-remove(spotlight) */ theme.effects.roundedCorner4,
       styles
     ]);
 
