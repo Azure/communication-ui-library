@@ -199,6 +199,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         imageSrc: inlineImages[0].fullSizeImageSrc
       });
     }
+    // Disable eslint because we are using the overlayImageItem in this effect but don't want to have it as a dependency, as it will cause an infinite loop.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messageThreadProps.messages]);
 
