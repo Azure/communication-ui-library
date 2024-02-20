@@ -28,6 +28,11 @@ export const stubCommunicationTokenCredential = (): CommunicationTokenCredential
     }
   };
 };
+
+describe('ResourceDownloadQueue api functions', () => {
+  test('Placeholder test. Please remove this when stabilizing teams-inline-images-and-file-sharing', () => {});
+});
+
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 describe('ResourceDownloadQueue api functions', () => {
   test('should add a message to the queue and contains message', () => {
@@ -217,5 +222,30 @@ describe('ResourceDownloadQueue api functions', () => {
     queue.addMessage(third);
     await queue.startQueue('threadId', operation);
     expect(operation).toHaveBeenCalledTimes(3);
+  });
+
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  test('startQueue method should update the resourceCache', async () => {
+    const threadId = 'threadId';
+    const messageId = 'messageId';
+    const context = new ChatContext();
+    context.createThreadIfNotExist(threadId);
+    context.setChatMessages(threadId, { messageId1: messageTemplate });
+    const tokenCredential = stubCommunicationTokenCredential();
+
+    const first = { ...messageTemplate };
+    first.id = messageId;
+    const firstAttachments = [
+      { id: '1', attachmentType: 'image' as ChatAttachmentType, name: 'image1', url: 'url1', previewUrl: 'previewUrl1' }
+    ];
+    first.content = { message: 'new message', attachments: firstAttachments };
+
+    const queue = new ResourceDownloadQueue(context, tokenCredential);
+    const operation = jest.fn();
+    queue.addMessage(first);
+    await queue.startQueue(threadId, operation);
+    expect(operation).toHaveBeenCalledTimes(1);
+    const resourceCache = context.getState().threads[threadId].chatMessages[messageId].resourceCache;
+    expect(resourceCache).toBeDefined();
   });
 });
