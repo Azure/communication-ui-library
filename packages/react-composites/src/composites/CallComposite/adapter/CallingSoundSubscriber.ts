@@ -16,7 +16,7 @@ type CallingSoundsLoaded = {
 const CALL_REJECTED_CODE = 603;
 
 const CALL_ENDED_CODE = 0;
-const CALL_ENDED_SUBCODE = 0;
+const CALL_TRANSFER_SUBCODE = 7015;
 
 /**
  * @private
@@ -51,7 +51,7 @@ export class CallingSoundSubscriber {
         } else if (
           this.soundsLoaded?.callEndedSound &&
           this.call.callEndReason?.code === CALL_ENDED_CODE &&
-          this.call.callEndReason?.subCode === CALL_ENDED_SUBCODE
+          this.call.callEndReason?.subCode !== CALL_TRANSFER_SUBCODE
         ) {
           this.playSound(this.soundsLoaded.callEndedSound);
         }
