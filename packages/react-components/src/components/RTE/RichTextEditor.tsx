@@ -3,12 +3,14 @@
 import React, { useCallback, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
 import { ContentEdit, Watermark } from 'roosterjs-editor-plugins';
 import { Editor } from 'roosterjs-editor-core';
-import { EditorOptions, IEditor } from 'roosterjs-editor-types-compatible';
+import type { DefaultFormat, EditorOptions, IEditor } from 'roosterjs-editor-types-compatible';
 import { Rooster, createUpdateContentPlugin, UpdateMode, createRibbonPlugin, Ribbon } from 'roosterjs-react';
 import { ribbonButtonStyle, ribbonStyle, richTextEditorStyle } from '../styles/RichTextEditor.styles';
 import { useTheme } from '@fluentui/react';
 import { ribbonButtons, ribbonButtonsStrings } from './RTERibbonButtons';
 import { RTESendBoxStrings } from './RTESendBox';
+import { isDarkThemed } from '../../theming/themeUtils';
+import { darkTheme, lightTheme } from '../../theming';
 
 /**
  * Props for {@link RichTextEditor}.
@@ -66,6 +68,8 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
 
   const editorCreator = useCallback((div: HTMLDivElement, options: EditorOptions) => {
     editor.current = new Editor(div, options);
+    // Remove the background color of the editor
+    div.style.backgroundColor = 'transparent';
     return editor.current;
   }, []);
 
@@ -86,7 +90,6 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
 
     return (
       //TODO: Add localization for watermark plugin https://github.com/microsoft/roosterjs/issues/2430
-      //TODO: add theme for editor
       <Ribbon
         styles={ribbonStyle()}
         buttons={buttons}
@@ -103,15 +106,27 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     );
   }, [strings, ribbonPlugin, theme]);
 
+  const defaultFormat: DefaultFormat = useMemo(() => {
+    return {
+      textColors: {
+        lightModeColor: lightTheme.palette?.neutralPrimary ?? 'black',
+        darkModeColor: darkTheme.palette?.neutralPrimary ?? 'white'
+      }
+    };
+  }, []);
+
   return (
     <div>
       {ribbon}
       <Rooster
+        inDarkMode={isDarkThemed(theme)}
         plugins={[...plugins]}
         className={richTextEditorStyle}
         editorCreator={editorCreator}
         // TODO: confirm the color during inline images implementation
         imageSelectionBorderColor={'blue'}
+        defaultFormat={defaultFormat}
+        doNotAdjustEditorColor={true}
       />
     </div>
   );
