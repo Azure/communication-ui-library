@@ -49,6 +49,7 @@ import { MentionPopoverStrings } from '../components/MentionPopover';
 import { ImageOverlayStrings } from '../components/ImageOverlay';
 /* @conditional-compile-remove(reaction) */
 import { ReactionButtonStrings } from '../components';
+/* @conditional-compile-remove(rich-text-editor) */
 import { RTESendBoxStrings } from '../components/RTE/RTESendBox';
 
 /**
