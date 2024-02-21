@@ -7,8 +7,6 @@ import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import type { AdapterError, AdapterErrors, AdapterState, Disposable } from '../../common/adapters';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadAdapter, FileUploadsUiState } from './AzureCommunicationFileUploadAdapter';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { AttachmentDownloadResult } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AttachmentMetadata } from '@internal/react-components';
 
@@ -110,13 +108,10 @@ export interface ChatAdapterThreadManagement {
    */
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  // ToDo: This method is to be removed
-  downloadAttachment: (options: { attachmentUrl: string }) => Promise<AttachmentDownloadResult>;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /**
    * Downloads a resource into the cache for the given message.
    */
-  downloadResourceToCache(resourceDetails: ResourceDetails): void;
+  downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /**
    * Removes a resource from the cache for the given message.
