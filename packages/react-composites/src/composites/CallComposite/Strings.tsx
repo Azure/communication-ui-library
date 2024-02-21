@@ -839,7 +839,7 @@ export interface CallCompositeStrings {
   exitSpotlightButtonLabel: string;
   /* @conditional-compile-remove(spotlight) */
   /**
-   * Tooltop for button to exit spotlight
+   * Tooltip for button to exit spotlight
    */
   exitSpotlightButtonTooltip: string;
 }
