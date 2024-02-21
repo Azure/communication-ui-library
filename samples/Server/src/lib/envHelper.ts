@@ -11,9 +11,18 @@ let appSettings: {
   AzureBlobStorageConnectionString: string;
 };
 if (!fs.existsSync(appSettingsPath)) {
-  console.log(
-    'No appsettings.json found. Please provide an appsettings.json file by copying appsettings.json.sample and removing the .sample extension'
-  );
+  if (
+    !(
+      process.env['ResourceConnectionString'] ||
+      process.env['EndpointUrl'] ||
+      process.env['AdminUserId'] ||
+      process.env['AzureBlobStorageConnectionString']
+    )
+  ) {
+    throw new Error(
+      'No appsettings.json found. Please provide an appsettings.json file by copying appsettings.json.sample and removing the .sample extension'
+    );
+  }
 } else {
   appSettings = require(appSettingsPath);
 }
