@@ -28,6 +28,22 @@
     "uploading": "Uploading",
     "uploadCompleted": "Upload completed"
   },
+  "rteSendBox": {
+    "placeholderText": "Enter a message",
+    "textTooLong": "Your message length is over the maximum limit.",
+    "sendButtonAriaLabel": "Send message",
+    "fileUploadsPendingError": "Uploading... Please wait.",
+    "removeFile": "Remove file",
+    "uploading": "Uploading",
+    "uploadCompleted": "Upload completed",
+    "boldTooltip": "Bold",
+    "italicTooltip": "Italic",
+    "underlineTooltip": "Underline",
+    "bulletListTooltip": "Bulleted list",
+    "numberListTooltip": "Numbered list",
+    "increaseIndentTooltip": "Increase indent",
+    "decreaseIndentTooltip": "Decrease indent"
+  },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggestions"
   },

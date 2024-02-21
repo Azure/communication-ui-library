@@ -7,7 +7,8 @@ import { EditorOptions, IEditor } from 'roosterjs-editor-types-compatible';
 import { Rooster, createUpdateContentPlugin, UpdateMode, createRibbonPlugin, Ribbon } from 'roosterjs-react';
 import { ribbonButtonStyle, ribbonStyle, richTextEditorStyle } from '../styles/RichTextEditor.styles';
 import { useTheme } from '@fluentui/react';
-import { getRibbonButtons } from './RTERibbonButtons';
+import { ribbonButtons, ribbonButtonsStrings } from './RTERibbonButtons';
+import { RTESendBoxStrings } from './RTESendBox';
 
 /**
  * Props for {@link RichTextEditor}.
@@ -18,6 +19,7 @@ export interface RichTextEditorProps {
   content?: string;
   onChange: (newValue?: string) => void;
   placeholderText?: string;
+  strings: Partial<RTESendBoxStrings>;
 }
 
 /**
@@ -35,7 +37,7 @@ export interface RichTextEditorComponentRef {
  * @beta
  */
 export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichTextEditorProps>((props, ref) => {
-  const { content, onChange, placeholderText } = props;
+  const { content, onChange, placeholderText, strings } = props;
   const editor = useRef<IEditor | null>(null);
   const theme = useTheme();
   useImperativeHandle(
@@ -80,10 +82,10 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   }, [onChange, placeholderText, ribbonPlugin]);
 
   const ribbon = useMemo(() => {
-    const buttons = getRibbonButtons(theme);
+    const buttons = ribbonButtons(theme);
 
     return (
-      //TODO: Add localization
+      //TODO: Add localization for watermark plugin https://github.com/microsoft/roosterjs/issues/2430
       //TODO: add theme for editor
       <Ribbon
         styles={ribbonStyle()}
@@ -96,15 +98,16 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
             isBeakVisible: false
           }
         }}
+        strings={ribbonButtonsStrings(strings)}
       />
     );
-  }, [ribbonPlugin, theme]);
+  }, [strings, ribbonPlugin, theme]);
 
   return (
     <div>
       {ribbon}
       <Rooster
-        plugins={[...plugins, ribbonPlugin]}
+        plugins={[...plugins]}
         className={richTextEditorStyle}
         editorCreator={editorCreator}
         // TODO: confirm the color during inline images implementation

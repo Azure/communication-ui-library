@@ -2,8 +2,9 @@
 // Licensed under the MIT License.
 
 import { Theme } from '@fluentui/react';
-import { KnownRibbonButtonKey, RibbonButton, getButtons } from 'roosterjs-react';
+import { KnownRibbonButtonKey, LocalizedStrings, RibbonButton, getButtons } from 'roosterjs-react';
 import { ribbonButtonStyle, ribbonDividerStyle } from '../styles/RichTextEditor.styles';
+import { RTESendBoxStrings } from './RTESendBox';
 
 const dividerRibbonButton = (theme: Theme): RibbonButton<string> => {
   return {
@@ -47,7 +48,9 @@ const indentDecreaseButton = (theme: Theme): RibbonButton<string> => {
 };
 
 const createKnownRibbonButton = (key: KnownRibbonButtonKey, theme: Theme, icon: string): RibbonButton<string> => {
-  const button = getButtons([key])[0] as RibbonButton<string>;
+  const button = getButtons([key])[0];
+  // AllButtonStringKeys is a union of all the string keys of all the buttons
+  const result = button as RibbonButton<typeof button.key>;
   button.iconName = icon;
   button.commandBarProperties = {
     ...button.commandBarProperties,
@@ -56,13 +59,13 @@ const createKnownRibbonButton = (key: KnownRibbonButtonKey, theme: Theme, icon: 
       ...ribbonButtonStyle(theme)
     }
   };
-  return button;
+  return result;
 };
 
 /**
  * @private
  */
-export const getRibbonButtons = (theme: Theme): RibbonButton<string>[] => {
+export const ribbonButtons = (theme: Theme): RibbonButton<string>[] => {
   return [
     boldButton(theme),
     italicButton(theme),
@@ -73,4 +76,19 @@ export const getRibbonButtons = (theme: Theme): RibbonButton<string>[] => {
     indentIncreaseButton(theme),
     indentDecreaseButton(theme)
   ];
+};
+
+/**
+ * @private
+ */
+export const ribbonButtonsStrings = (strings: Partial<RTESendBoxStrings>): LocalizedStrings<string> => {
+  return {
+    buttonNameBold: strings.boldTooltip,
+    buttonNameItalic: strings.italicTooltip,
+    buttonNameUnderline: strings.underlineTooltip,
+    buttonNameBulletedList: strings.bulletListTooltip,
+    buttonNameNumberedList: strings.numberListTooltip,
+    buttonNameIncreaseIndent: strings.increaseIndentTooltip,
+    buttonNameDecreaseIndent: strings.decreaseIndentTooltip
+  };
 };

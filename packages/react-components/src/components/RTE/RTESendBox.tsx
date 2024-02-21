@@ -19,6 +19,42 @@ import { hasCompletedFileUploads } from '../utils/SendBoxUtils';
 import { RichTextEditorComponentRef } from './RichTextEditor';
 
 /**
+ * Strings of {@link RTESendBox} that can be overridden.
+ *
+ * @beta
+ */
+export interface RTESendBoxStrings extends SendBoxStrings {
+  /**
+   * Tooltip text for the bold button.
+   */
+  boldTooltip: string;
+  /**
+   * Tooltip text for the italic button.
+   */
+  italicTooltip: string;
+  /**
+   * Tooltip text for the underline button.
+   */
+  underlineTooltip: string;
+  /**
+   * Tooltip text for the bullet list button.
+   */
+  bulletListTooltip: string;
+  /**
+   * Tooltip text for the number list button.
+   */
+  numberListTooltip: string;
+  /**
+   * Tooltip text for the increase indent button.
+   */
+  increaseIndentTooltip: string;
+  /**
+   * Tooltip text for the decrease indent button.
+   */
+  decreaseIndentTooltip: string;
+}
+
+/**
  * Props for {@link RTESendBox}.
  *
  * @beta
@@ -32,7 +68,7 @@ export interface RTESendBoxProps {
   /**
    * Optional strings to override in component
    */
-  strings?: Partial<SendBoxStrings>;
+  strings?: Partial<RTESendBoxStrings>;
   /**
    * Optional text for system message above the text box
    */
@@ -80,7 +116,7 @@ export const RTESendBox = (props: RTESendBoxProps): JSX.Element => {
   } = props;
 
   const theme = useTheme();
-  const localeStrings = useLocale().strings.sendBox;
+  const localeStrings = useLocale().strings.rteSendBox;
   const strings = { ...localeStrings, ...props.strings };
 
   const [contentValue, setContentValue] = useState('');
@@ -197,6 +233,7 @@ export const RTESendBox = (props: RTESendBoxProps): JSX.Element => {
           content={contentValue}
           onChange={setContent}
           editorComponentRef={editorComponentRef}
+          strings={strings}
         />
         {/* File Upload */}
       </div>
