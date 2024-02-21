@@ -46,12 +46,11 @@ import {
   ChatMessageComponentWrapper,
   ChatMessageComponentWrapperProps
 } from './ChatMessage/ChatMessageComponentWrapper';
-import { Announcer } from './Announcer';
 /* @conditional-compile-remove(image-overlay) */
 import { InlineImageOptions } from './ChatMessage/ChatMessageContent';
 import LiveMessage from './Announcer/LiveMessage';
 import { MessageStatusIndicatorInternal } from './MessageStatusIndicatorInternal';
-import { MessageStatusIndicatorIconStyle } from './styles/MessageStatusIndicator.styles';
+import { Announcer } from './Announcer';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (
@@ -703,9 +702,9 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
         return;
       }
       try {
-        setTimeout(() => {
-          setDeletedMessageAriaLabel(strings.messageDeletedAnnouncementAriaLabel);
-        }, 200);
+        // setTimeout(() => {
+        //   setDeletedMessageAriaLabel(strings.messageDeletedAnnouncementAriaLabel);
+        // }, 200);
         // reset deleted message label in case if there was a value already (messages are deleted 1 after another)
         setDeletedMessageAriaLabel(undefined);
         setLatestDeletedMessageId(messageId);
@@ -1018,16 +1017,14 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
         }
       };
       return (
-        <>
-          <MessageStatusIndicatorInternal
-            status={status}
-            readCount={readCount}
-            onToggleToolTip={onToggleToolTip}
-            // -1 because participant count does not include myself
-            remoteParticipantsCount={participantCount ? participantCount - 1 : 0}
-            shouldAnnounce={shouldAnnounce}
-          />
-        </>
+        <MessageStatusIndicatorInternal
+          status={status}
+          readCount={readCount}
+          onToggleToolTip={onToggleToolTip}
+          // -1 because participant count does not include myself
+          remoteParticipantsCount={participantCount ? participantCount - 1 : 0}
+          shouldAnnounce={shouldAnnounce}
+        />
       );
     },
     []
@@ -1088,13 +1085,12 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
       )}
       <LiveAnnouncer>
         <FluentV9ThemeProvider v8Theme={theme}>
-          <LiveMessage message={deletedMessageAriaLabel ?? ''} ariaLive={'polite'} />
+          <Announcer announcementString={deletedMessageAriaLabel} ariaLive={'assertive'} />
           <Chat
             // styles?.chatContainer used in className and style prop as style prop can't handle CSS selectors
             className={mergeClasses(classes.root, mergeStyles(styles?.chatContainer))}
             ref={chatScrollDivRef}
             style={{ ...createStyleFromV8Style(styles?.chatContainer) }}
-            aria-label={deletedMessageAriaLabel ?? ''}
           >
             {messagesToDisplay.map((message: _ChatMessageProps): JSX.Element => {
               return (
