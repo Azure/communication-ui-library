@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { CallCommon } from '@azure/communication-calling';
-import { CallCompositePage, CallingSounds } from './CallAdapter';
+import { CallingSounds } from './CallAdapter';
 /* @conditional-compile-remove(calling-sounds) */
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifier } from '@azure/communication-common';
@@ -15,6 +15,9 @@ type CallingSoundsLoaded = {
 
 const CALL_REJECTED_CODE = 603;
 
+const CALL_ENDED_CODE = 0;
+const CALL_ENDED_SUBCODE = 0;
+
 /**
  * @private
  */
@@ -22,16 +25,9 @@ export class CallingSoundSubscriber {
   private call: CallCommon;
   private soundsLoaded?: CallingSoundsLoaded;
   private callee: CommunicationIdentifier[] | undefined;
-  private callCompositePage: CallCompositePage;
 
-  constructor(
-    call: CallCommon,
-    callCompositePage: CallCompositePage,
-    callee?: CommunicationIdentifier[],
-    sounds?: CallingSounds
-  ) {
+  constructor(call: CallCommon, callee?: CommunicationIdentifier[], sounds?: CallingSounds) {
     this.call = call;
-    this.callCompositePage = callCompositePage;
     this.callee = callee;
     if (sounds) {
       this.soundsLoaded = this.loadSounds(sounds);
@@ -52,7 +48,11 @@ export class CallingSoundSubscriber {
       if (this.call.state === 'Disconnected') {
         if (this.soundsLoaded?.callBusySound && this.call.callEndReason?.code === CALL_REJECTED_CODE) {
           this.playSound(this.soundsLoaded.callBusySound);
-        } else if (this.soundsLoaded?.callEndedSound && this.callCompositePage !== 'transferring') {
+        } else if (
+          this.soundsLoaded?.callEndedSound &&
+          this.call.callEndReason?.code === CALL_ENDED_CODE &&
+          this.call.callEndReason?.subCode === CALL_ENDED_SUBCODE
+        ) {
           this.playSound(this.soundsLoaded.callEndedSound);
         }
       }
@@ -61,10 +61,6 @@ export class CallingSoundSubscriber {
 
   private subscribeCallSoundEvents(): void {
     this.onCallStateChanged();
-  }
-
-  public updateCallCompositePage(callCompositePage: CallCompositePage): void {
-    this.callCompositePage = callCompositePage;
   }
 
   public unsubscribeAll(): void {
