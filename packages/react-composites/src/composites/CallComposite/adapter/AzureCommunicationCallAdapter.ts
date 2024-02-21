@@ -439,6 +439,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
         callClient.offStateChange(onStateChange);
         return;
       }
+      if (this.callingSoundSubscriber) {
+        this.callingSoundSubscriber.updateCallCompositePage(this.getState().page);
+      }
 
       // `updateClientState` searches for the current call from all the calls in the state using a cached `call.id`
       // from the call object. `call.id` can change during a call. We must update the cached `call.id` before
@@ -1150,6 +1153,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     if (this.call) {
       this.callingSoundSubscriber = new CallingSoundSubscriber(
         this.call,
+        this.getState().page,
         this.getState().targetCallees,
         this.getState().sounds
       );

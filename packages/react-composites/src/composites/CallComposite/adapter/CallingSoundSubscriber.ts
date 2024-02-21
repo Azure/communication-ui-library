@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { CallCommon } from '@azure/communication-calling';
-import { CallingSounds } from './CallAdapter';
+import { CallCompositePage, CallingSounds } from './CallAdapter';
 /* @conditional-compile-remove(calling-sounds) */
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifier } from '@azure/communication-common';
@@ -22,9 +22,16 @@ export class CallingSoundSubscriber {
   private call: CallCommon;
   private soundsLoaded?: CallingSoundsLoaded;
   private callee: CommunicationIdentifier[] | undefined;
+  private callCompositePage: CallCompositePage;
 
-  constructor(call: CallCommon, callee?: CommunicationIdentifier[], sounds?: CallingSounds) {
+  constructor(
+    call: CallCommon,
+    callCompositePage: CallCompositePage,
+    callee?: CommunicationIdentifier[],
+    sounds?: CallingSounds
+  ) {
     this.call = call;
+    this.callCompositePage = callCompositePage;
     this.callee = callee;
     if (sounds) {
       this.soundsLoaded = this.loadSounds(sounds);
@@ -45,7 +52,7 @@ export class CallingSoundSubscriber {
       if (this.call.state === 'Disconnected') {
         if (this.soundsLoaded?.callBusySound && this.call.callEndReason?.code === CALL_REJECTED_CODE) {
           this.playSound(this.soundsLoaded.callBusySound);
-        } else if (this.soundsLoaded?.callEndedSound) {
+        } else if (this.soundsLoaded?.callEndedSound && this.callCompositePage !== 'transferring') {
           this.playSound(this.soundsLoaded.callEndedSound);
         }
       }
@@ -54,6 +61,10 @@ export class CallingSoundSubscriber {
 
   private subscribeCallSoundEvents(): void {
     this.onCallStateChanged();
+  }
+
+  public updateCallCompositePage(callCompositePage: CallCompositePage): void {
+    this.callCompositePage = callCompositePage;
   }
 
   public unsubscribeAll(): void {
