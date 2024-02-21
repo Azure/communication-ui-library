@@ -162,6 +162,10 @@ export interface SpotlightCallFeatureState {
    */
   spotlightedParticipants: SpotlightedParticipant[];
   /**
+   * Local participant spotlight
+   */
+  localParticipantSpotlight?: SpotlightState;
+  /**
    * Proxy of {@link @azure/communication-calling#SpotlightCallFeature.maxParticipantsToSpotlight}.
    */
   maxParticipantsToSpotlight: number;
@@ -564,7 +568,7 @@ export interface CallState {
 /**
  * Transfer feature state
  *
- * @beta
+ * @public
  */
 export interface TransferFeatureState {
   /**
@@ -577,7 +581,7 @@ export interface TransferFeatureState {
 /**
  * Transfer feature state
  *
- * @beta
+ * @public
  */
 export interface AcceptedTransfer {
   /**

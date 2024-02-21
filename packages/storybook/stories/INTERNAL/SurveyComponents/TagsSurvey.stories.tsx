@@ -110,7 +110,7 @@ export const TagsSurvey = TagsSurveyStory.bind({});
 
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-internal-tags-survey`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Internal/Survey/Tags Survey`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Internal/SurveyComponents/Tags Survey`,
   component: TagsSurveyComponent,
   argTypes: {
     callIssuesToTag: hiddenControl,

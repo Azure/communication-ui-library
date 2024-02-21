@@ -13,18 +13,53 @@ _This document applies to beta and stable releases. Alpha releases are created n
 
 _This document applies to normal releases, off of `main`. For hotfixing a prior release on NPM, see [documentation on creating hotfixes](./hotfix-release.md)._
 
+## Timeline
+
+### First week of sprint
+
+- [Step 0.1: Ensure strings are Updated on Main](#step-01-ensure-strings-are-updated-on-main)
+- [Step 0.2: Pre-Release ChangeLog and Update Feature List](#step-02-pre-release-changelog-and-update-feature-list)
+- [Step 0.3: Create a Thread in the WebUI channel to Track Release Progress](#step-03-create-a-thread-in-the-webui-channel-to-track-release-progress)
+- [Step 0.4: Create an Async Bug Bash Meeting](#step-04-create-an-async-bug-bash-meeting)
+- [Step 0.5: ARB Review of any public API changes (Required for Stable | Recommended for Beta)](#step-05-arb-review-of-any-public-api-changes-required-for-stable--recommended-for-beta)
+
+### Second week of sprint
+
+#### Monday
+
+- [Step 1.1: Create a Pre-release Branch](#step-11-create-a-pre-release-branch)
+- [Step 1.2: Groom changelog](#step-12-groom-changelog)
+- [Step 1.3: Create Release branch](#step-13-create-release-branch)
+- [Step 1.4: (Beta Only): Update the UI Snapshot](#step-14-beta-only-update-the-ui-snapshot)
+- [Step 1.5: (Beta Only): Notify the Release Thread About api.md Update and UI Snapshot Update](#step-15-beta-only-notify-the-release-thread-about-apimd-update-and-ui-snapshot-update)
+
+#### Tuesday / Wednesday
+
+- [Step 2.1: (Stable Only): API approval from Azure REST API stewardship board](#step-21-stable-only-api-approval-from-azure-rest-api-stewardship-board)
+- [Step 2.2: Bug Bash](#step-22-bug-bash)
+- [Step 2.3: Fetch translated strings](#step-23-fetch-translated-strings)
+
+#### Thursday
+
+- [Step 3.1: Pre-release Checklist](#step-31-pre-release-checklist)
+- [Step 3.2: Publish to NPM (Pair up with a teammate)](#step-32-publish-to-npm-pair-up-with-a-teammate)
+- [Step 3.3: (Beta Only): Deploy Storybook](#step-33-beta-only-deploy-storybook)
+- [Step 3.4: Clean up and Merge Pre-Release Branch Back to Main](#step-34-clean-up-and-merge-pre-release-branch-back-to-main)
+- [Step 3.5: Post-release Checklist](#step-35-post-release-checklist)
+
 ## Step 0: Preparation
 
-### Step 0.1: Update Strings on Main
+### Step 0.1: Ensure Strings are updated on Main
 
-- String translation can take up to 5 working days to complete. **This needs to be done the week before release.**
+- String translation take up to 5 working days to complete. **Any PR changing strings needs to be complete 5 working days before release.**
 - [Update the strings on `main`](../references/string-translations.md)
- 
+
 ### Step 0.2: Pre-Release ChangeLog and Update Feature List
 
 Ask feature owners to create a PR to add a pre-release changelog and remove the feature from the in-progress-feature/feature list.
 
 For all the features that are going into this release, ask the feature owners to:
+
 - Remove the feature from the inProgressFeatures array or the feature array in the [feature list](../../common/config/babel/features.js)
 - Create a change log summarizing the feature and set the change as 'prerelease'
   
@@ -33,6 +68,19 @@ For all the features that are going into this release, ask the feature owners to
 ### Step 0.3: Create a Thread in the WebUI channel to Track Release Progress
 
 Create a release thread in the WebUI channel and keep it up to date so the whole team knows where we are at.
+
+### Step 0.4: Create an Async Bug Bash Meeting
+
+Ex.
+
+![image](https://github.com/Azure/communication-ui-library/assets/73612854/79634dd3-d9bb-482c-a83a-a87159d06a20)
+![image](https://github.com/Azure/communication-ui-library/assets/73612854/40516359-5d31-403a-a70a-a55eb40081cb)
+
+### step 0.5: ARB Review of any public API changes (Required for Stable | Recommended for Beta)
+
+1. Create an APIView showing changes.
+1. Create a post in `Language - JavaScript - Reviews` channel with APIView link to request review.
+    1. Use a previous review request as an example.
 
 ## Step 1: Creating a Release Branch
 
@@ -63,24 +111,28 @@ Use the [create-prerelease-branch](https://github.com/Azure/communication-ui-lib
 This section describes what the workflow above does. Understanding the workflow actions is useful in case the workflow fails.
 
 1. Create a `prerelease/<release-tag>` branch, bump the package version for `@azure/communication-react` as appropriate and collect all change files into a changelog.
-1. Creates another branch for manually summarizing the changes collected in the changelog and ~~opens a Pull Request into the `prerelease/<release-tag>`~~ per [security policy](https://aka.ms/opensource/actions-changes-230217) you must open a PR manually of this new branch (`groom-changelog/<release-tag>`) into the prerelease branch (`prerelease/<release-tag>`). **Merge this PR before going to `Step 1.2: Create release branch`**.
-    1. This step will also create a file called `GROOMME.md` which should be deleted when completing the PR back into the pre-release branch to signify that the changelog has been manually groomed.
-    1. See [tips for how to prune the generated changelog](./pruning-a-changelog.md) into a readable summary of the release.
+1. Creates another branch for manually summarizing the changes collected in the changelog.
 
-For example, when creating a release off of `main` tagged `3.3.0`, the following branches and Pull Requests will be created:
+For example, when creating a release off of `main` tagged `3.3.0`, the following branches are created
 
 ```mermaid
 graph LR
   main[branch: main]
   prerelease[branch: prerelease/3.3.0<br/>- bump version to 3.3.0<br/>- collect changelog]
-  pr[branch:groom_changelog_3.0.0]
 
   main -->|Create Branch| prerelease
   prerelease -->|Create Branch| pr
-  pr -.-o|Create Pull Request| prerelease
 ```
 
-### Step 1.2: Create Release branch
+### Step 1.2: Groom changelog
+
+1. Previous step's workflow creates a `groom-changelog/<release-tag>` branch.
+1. Follow steps to [groom changelog](./pruning-a-changelog.md).
+1. Remove the `GROOMME.md` file created from previous workflow to signify that the changelog has been manually groomed.
+1. Create PR to merge grooming branch into pre-release branch (`prerelease/<release-tag>`).
+1. **Merge this PR before going to `Step 1.3: Create release branch`**.
+
+### Step 1.3: Create Release branch
 
 Use the [create-release-branch](https://github.com/Azure/communication-ui-library/actions/workflows/create-release-branch.yml) github action to trigger the release branch creation workflow.
 
@@ -89,7 +141,7 @@ Use the [create-release-branch](https://github.com/Azure/communication-ui-librar
 
 ![Trigger release branch creation](../images/trigger-create-release-branch.png)
 
-### Step 1.3 (Beta Only): Update the UI Snapshot
+### Step 1.4 (Beta Only): Update the UI Snapshot
 
 After finishing creating a release branch, follow these steps to create a UI snapshot PR (generate beta-release only snapshot diff from main branch):
 
@@ -99,9 +151,10 @@ After finishing creating a release branch, follow these steps to create a UI sna
 1. Once the snapshot update is finished, you might or might not see changes for the UI snapshot, if there are any updates, open a PR to merge that new branch back to the release branch
 1. Merge the PR if everything looks fine, or notify the feature owner if something looks not 100% correct.
 
-### Step 1.4 (Beta Only): Notify the Release Thread About api.md Update and UI Snapshot Update
+### Step 1.5 (Beta Only): Notify the Release Thread About api.md Update and UI Snapshot Update
 
-After you finish step 1.3, you can check recent latest commits on the release branch, there should be 
+After you finish step 1.3, you can check recent latest commits on the release branch, there should be
+
 1. One Api snapshot update commit
 1. 0 or several UI snapshot commits, all in the snapshot PR
 
@@ -109,7 +162,7 @@ Copy links to those snapshot commits and UI snapshot PR link, and post them in t
 
 ## Step 2: Prepare for release
 
-### Step 2.1 (Stable): API approval from Azure REST API stewardship board]
+### Step 2.1 (Stable Only): API approval from Azure REST API stewardship board
 
 For stable release, we must get any API changes approved by the Azure REST API Stewardship board. See the [internal documentation](https://skype.visualstudio.com/SPOOL/_wiki/wikis/SPOOL.wiki/27654/Scheduling-an-Azure-Review-Board-%28ARB%29-Review) for how to reach out to the API stewardship board.
 
@@ -119,7 +172,7 @@ Once the release branch has been created, we must make sure that the package we 
 
 - Set up a bug bash with the team to shake out any issues. See [internal documentation](https://skype.visualstudio.com/SPOOL/_wiki/wikis/SPOOL.wiki/31350/WebUI-Setting-up-a-bug-bash) for setting up a bug bash.
   - Triage bugs found via bug bash and manage merging of fixes into the release branch, as described in the section below.
-  - 
+
 #### Cherry-picking changes
 
 While the release branch is active, some changes might be merged into the branch (for bug fixes, or features deemed necessary for the release). PRs into the release branch should follow this process when possible:
@@ -132,7 +185,7 @@ While the release branch is active, some changes might be merged into the branch
 This process has the following benefits:
 
 - The release branch never diverges off of `main`. In theory, it is possible to abandon the release branch at any point and create a new one off of `main` without losing work.
--  All PR reviews happen on `main`, and the cherry-pick PR simply requires a sign-off.
+- All PR reviews happen on `main`, and the cherry-pick PR simply requires a sign-off.
 
 ### Step 2.3: Fetch translated strings
 
@@ -180,9 +233,9 @@ Update the hero samples to use the newly released stable package. See [instructi
 
 Samples should be updated within a week of the package release.
 
-# Appendix
+## Appendix
 
-## Releasing a hotfix for an older release
+### Releasing a hotfix for an older release
 
 There is currently no GitHub action for creating a hotfix and must be done manually.
 
@@ -215,13 +268,13 @@ There is currently no GitHub action for creating a hotfix and must be done manua
 
 1. Publish the package. _documentation to follow on publishing packages._
 
-## Creating alpha releases
+### Creating alpha releases
 
 Alpha releases are created nightly using the [.github/workflows/nightly-ci.yml](https://github.com/Azure/communication-ui-library/blob/main/.github/workflows/nightly-ci.yml) GitHub action.
 
 They use Beachball's `canary` CLI command to temporarily set all package versions to \<version\>-alpha-yyyymmddHHMM, then package up the npm packages and upload the packages to the azure release pipeline.
 
-## NPM publish pipeline
+### NPM publish pipeline
 
 To ensure our packages are part of the `@azure` organization our packages are published using [Azure's publishing pipeline](https://dev.azure.com/azure-sdk/internal/_wiki/wikis/internal.wiki/1/Partner-Release-Pipeline).
 

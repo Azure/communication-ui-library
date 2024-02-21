@@ -7,7 +7,6 @@
 /// <reference types="react" />
 
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
-import { AttachmentDownloadResult } from '@internal/react-components';
 import { AttachmentMetadata } from '@internal/react-components';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import type { BackgroundBlurConfig } from '@azure/communication-calling';
@@ -72,7 +71,7 @@ import { TeamsCallAgent } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { _TelemetryImplementationHint } from '@internal/acs-ui-common';
 import { Theme } from '@fluentui/react';
-import { TransferRequestedEventArgs } from '@azure/communication-calling';
+import { TransferEventArgs } from '@azure/communication-calling';
 import { UnknownIdentifier } from '@azure/communication-common';
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 import { VideoDeviceInfo } from '@azure/communication-calling';
@@ -143,7 +142,6 @@ export type AzureCommunicationCallWithChatAdapterFromClientArgs = {
     chatClient: StatefulChatClient;
     chatThreadClient: ChatThreadClient;
     callAdapterOptions?: AzureCommunicationCallAdapterOptions;
-    chatAdapterOptions?: AzureCommunicationChatAdapterOptions;
 };
 
 // @public
@@ -153,11 +151,6 @@ export type AzureCommunicationChatAdapterArgs = {
     displayName: string;
     credential: CommunicationTokenCredential;
     threadId: string;
-};
-
-// @beta
-export type AzureCommunicationChatAdapterOptions = {
-    credential?: CommunicationTokenCredential;
 };
 
 // @public
@@ -307,7 +300,7 @@ export interface CallAdapterSubscribers {
     off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
     off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
     off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
-    off(event: 'transferRequested', listener: TransferRequestedListener): void;
+    off(event: 'transferAccepted', listener: TransferAcceptedListener): void;
     off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     off(event: 'roleChanged', listener: PropertyChangedEvent): void;
     off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
@@ -327,7 +320,7 @@ export interface CallAdapterSubscribers {
     on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
     on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
     on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
-    on(event: 'transferRequested', listener: TransferRequestedListener): void;
+    on(event: 'transferAccepted', listener: TransferAcceptedListener): void;
     on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     on(event: 'roleChanged', listener: PropertyChangedEvent): void;
     on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
@@ -575,7 +568,7 @@ export interface CallCompositeStrings {
     notInvitedToRoomTitle: string;
     openDialpadButtonLabel: string;
     openDtmfDialpadLabel: string;
-    outboundCallingNoticeString: string;
+    outboundCallingNoticeString?: string;
     participantCouldNotBeReachedMoreDetails?: string;
     participantCouldNotBeReachedTitle?: string;
     participantIdIsMalformedMoreDetails?: string;
@@ -706,12 +699,8 @@ export interface CallWithChatAdapterManagement {
     disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
     disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
-    // (undocumented)
-    downloadAttachment: (options: {
-        attachmentUrl: string;
-    }) => Promise<AttachmentDownloadResult>;
-    // (undocumented)
-    downloadResourceToCache(resourceDetails: ResourceDetails): void;
+    // @beta (undocumented)
+    downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
     fetchInitialData(): Promise<void>;
     // @beta
     holdCall: () => Promise<void>;
@@ -735,7 +724,7 @@ export interface CallWithChatAdapterManagement {
     removeParticipant(userId: string): Promise<void>;
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
-    // (undocumented)
+    // @beta (undocumented)
     removeResourceFromCache(resourceDetails: ResourceDetails): void;
     // @beta
     resumeCall: () => Promise<void>;
@@ -1140,11 +1129,7 @@ export interface ChatAdapterSubscribers {
 // @public
 export interface ChatAdapterThreadManagement {
     deleteMessage(messageId: string): Promise<void>;
-    // (undocumented)
-    downloadAttachment: (options: {
-        attachmentUrl: string;
-    }) => Promise<AttachmentDownloadResult>;
-    downloadResourceToCache(resourceDetails: ResourceDetails): void;
+    downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
     fetchInitialData(): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     removeParticipant(userId: string): Promise<void>;
@@ -1394,15 +1379,13 @@ export const createAzureCommunicationCallWithChatAdapter: ({ userId, displayName
 export const _createAzureCommunicationCallWithChatAdapterFromAdapters: (callAdapter: CallAdapter, chatAdapter: ChatAdapter) => CallWithChatAdapter;
 
 // @public
-export const createAzureCommunicationCallWithChatAdapterFromClients: ({ callClient, callAgent, callLocator, chatClient, chatThreadClient, callAdapterOptions, chatAdapterOptions }: AzureCommunicationCallWithChatAdapterFromClientArgs) => Promise<CallWithChatAdapter>;
+export const createAzureCommunicationCallWithChatAdapterFromClients: ({ callClient, callAgent, callLocator, chatClient, chatThreadClient, callAdapterOptions }: AzureCommunicationCallWithChatAdapterFromClientArgs) => Promise<CallWithChatAdapter>;
 
 // @public
 export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
 
 // @public
-export function createAzureCommunicationChatAdapterFromClient(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient, options?: {
-    credential?: CommunicationTokenCredential;
-}): Promise<ChatAdapter>;
+export function createAzureCommunicationChatAdapterFromClient(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient): Promise<ChatAdapter>;
 
 // @internal
 export const _createAzureCommunicationChatAdapterInner: (endpoint: string, userId: CommunicationUserIdentifier, displayName: string, credential: CommunicationTokenCredential, threadId: string, telemetryImplementationHint?: _TelemetryImplementationHint) => Promise<ChatAdapter>;
@@ -1990,8 +1973,8 @@ export type TopicChangedListener = (event: {
     topic: string;
 }) => void;
 
-// @beta
-export type TransferRequestedListener = (event: TransferRequestedEventArgs) => void;
+// @public
+export type TransferAcceptedListener = (event: TransferEventArgs) => void;
 
 // @public
 export const useAzureCommunicationCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs | AzureCommunicationOutboundCallAdapterArgs>, afterCreate?: ((adapter: CallAdapter) => Promise<CallAdapter>) | undefined, beforeDispose?: ((adapter: CallAdapter) => Promise<void>) | undefined) => CallAdapter | undefined;
