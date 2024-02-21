@@ -6,7 +6,7 @@ import { Description, Heading, Source, Subheading, Title } from '@storybook/addo
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
-import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
+import { COMPONENT_FOLDER_PREFIX } from '../../constants';
 import { SurveyExample } from './components/SurveyExample';
 import { exampleDisableSurvey, exampleOnSurveyClosed, exampleOnSurveySubmitted } from './SurveyDocs';
 
@@ -21,10 +21,11 @@ const getDocs: () => JSX.Element = () => {
         Azure Communication Services UI Library is adding support for End of Call Survey. With this new feature, call
         participants will be able to share feedback on the quality and reliability of Audio and Video calls.
       </Description>
-      <Description>
-        Participants will be able to submit feedback based on four categories: Overall Call, Audio, Video, and Screen
-        Share.
-      </Description>
+      <Description>Participants will be able to submit feedback based on four categories:</Description>
+      <Description>- Overall Call</Description>
+      <Description>- Audio</Description>
+      <Description>- Video</Description>
+      <Description>- Screen Share</Description>
       <Description>
         They can rate their call experience on a star based numerical survey and provide additional detail as to the
         specifics of each category if they wish. The feedback feature will enable developers to collect subjective
@@ -33,9 +34,9 @@ const getDocs: () => JSX.Element = () => {
 
       <Subheading>Handling Survey Results</Subheading>
       <Description>
-        Survey feedbacks are automatically sent to Azure Monitor. To send survey results to your own service, you can
-        also gain access to the survey results by passing in a custom function utilizing the `onSurveySubmitted` prop
-        inside `surveyOptions`.
+        Survey feedback is automatically sent to Azure Monitor. To send survey results to your own service, you can also
+        gain access to the survey results by passing in a custom function utilizing the `onSurveySubmitted` prop inside
+        `surveyOptions`.
       </Description>
       <Description>
         With `onSurveySubmitted` populated, a free form text survey is available to the call users at end of call to
@@ -93,8 +94,8 @@ const SurveyStory = (): JSX.Element => {
 export const Survey = SurveyStory.bind({});
 
 export default {
-  id: `${EXAMPLES_FOLDER_PREFIX}-Survey`,
-  title: `${EXAMPLES_FOLDER_PREFIX}/Survey`,
+  id: `${COMPONENT_FOLDER_PREFIX}-internal-Survey`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Internal/Survey`,
   component: SurveyExample,
   parameters: {
     docs: {

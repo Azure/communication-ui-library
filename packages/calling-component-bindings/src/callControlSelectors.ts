@@ -15,7 +15,7 @@ import {
 /* @conditional-compile-remove(reaction) */
 import { getLocalParticipantReactionState } from './baseSelectors';
 /* @conditional-compile-remove(capabilities) */
-import { getCapabilites, getRole } from './baseSelectors';
+import { getCapabilities, getRole } from './baseSelectors';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(raise-hand) */
 import { getCallState } from './baseSelectors';
 import { _isPreviewOn } from './utils/callUtils';
@@ -48,7 +48,7 @@ export const microphoneButtonSelector: MicrophoneButtonSelector = reselect.creat
     getCallExists,
     getIsMuted,
     getDeviceManager,
-    /* @conditional-compile-remove(capabilities) */ getCapabilites,
+    /* @conditional-compile-remove(capabilities) */ getCapabilities,
     /* @conditional-compile-remove(capabilities) */ getRole
   ],
   (
@@ -98,7 +98,7 @@ export const cameraButtonSelector: CameraButtonSelector = reselect.createSelecto
   [
     getLocalVideoStreams,
     getDeviceManager,
-    /* @conditional-compile-remove(capabilities) */ getCapabilites,
+    /* @conditional-compile-remove(capabilities) */ getCapabilities,
     /* @conditional-compile-remove(capabilities) */ getRole
   ],
   (
@@ -209,7 +209,7 @@ export const screenShareButtonSelector: ScreenShareButtonSelector = reselect.cre
   [
     getIsScreenSharingOn,
     /* @conditional-compile-remove(PSTN-calls) */ getCallState,
-    /* @conditional-compile-remove(capabilities) */ getCapabilites,
+    /* @conditional-compile-remove(capabilities) */ getCapabilities,
     /* @conditional-compile-remove(capabilities) */ getRole
   ],
   (

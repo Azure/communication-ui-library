@@ -60,7 +60,7 @@ export const StarSurvey = StarSurveyStory.bind({});
 
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-internal-star-survey`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Internal/Survey/Star Survey`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Internal/SurveyComponents/Star Survey`,
   component: StarSurveyComponent,
   argTypes: {
     selectedIcon: hiddenControl,
