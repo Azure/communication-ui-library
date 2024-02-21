@@ -520,13 +520,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     });
   };
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  // ToDo: This method is to be removed
-  async downloadAttachment(options: { attachmentUrl: string }): Promise<AttachmentDownloadResult> {
-    return this.chatAdapterPromise.then((adapter) => {
-      return adapter.downloadAttachment(options);
-    });
-  }
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   public async downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void> {
     this.chatAdapterPromise.then((adapter) => {
       adapter.downloadResourceToCache(resourceDetails);
@@ -1213,12 +1206,7 @@ export const createAzureCommunicationCallWithChatAdapterFromClients = async ({
     /* @conditional-compile-remove(video-background-effects) */
     callAdapterOptions
   );
-  const chatAdapterPromise = createAzureCommunicationChatAdapterFromClient(
-    chatClient,
-    chatThreadClient,
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-    chatAdapterOptions
-  );
+  const chatAdapterPromise = createAzureCommunicationChatAdapterFromClient(chatClient, chatThreadClient);
   return new AzureCommunicationCallWithChatAdapter(callAdapter, chatAdapterPromise);
 };
 
