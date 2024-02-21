@@ -1,7 +1,31 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-const appSettings = require('../../appsettings.json');
+import * as fs from 'fs';
+import * as path from 'path';
+const appSettingsPath = path.join(__dirname, '../../appsettings.json');
+let appSettings: {
+  ResourceConnectionString: string;
+  EndpointUrl: string;
+  AdminUserId: string;
+  AzureBlobStorageConnectionString: string;
+};
+if (
+  !(
+    process.env['ResourceConnectionString'] ||
+    process.env['EndpointUrl'] ||
+    process.env['AdminUserId'] ||
+    process.env['AzureBlobStorageConnectionString']
+  )
+) {
+  if (!fs.existsSync(appSettingsPath)) {
+    throw new Error(
+      'No appsettings.json found. Please provide an appsettings.json file by copying appsettings.json.sample and removing the .sample extension'
+    );
+  } else {
+    appSettings = require(appSettingsPath);
+  }
+}
 
 export const getResourceConnectionString = (): string => {
   const resourceConnectionString = process.env['ResourceConnectionString'] || appSettings.ResourceConnectionString;
