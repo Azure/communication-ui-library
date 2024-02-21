@@ -45,6 +45,8 @@ import { CommonCallingHandlers } from '../handlers/createCommonHandlers';
 import { reactionButtonSelector } from '../callControlSelectors';
 /* @conditional-compile-remove(reaction) */
 import { ReactionButton } from '@internal/react-components';
+/* @conditional-compile-remove(spotlight) */
+import { _ComponentCallingHandlers } from '../handlers/createHandlers';
 
 /**
  * Primary hook to get all hooks necessary for a calling Component.
@@ -67,7 +69,11 @@ import { ReactionButton } from '@internal/react-components';
 export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   component: Component
 ): GetSelector<Component> extends (props: any) => any
-  ? ReturnType<GetSelector<Component>> & Common<CommonCallingHandlers, Parameters<Component>[0]>
+  ? ReturnType<GetSelector<Component>> &
+      Common<
+        CommonCallingHandlers & /* @conditional-compile-remove(spotlight) */ _ComponentCallingHandlers,
+        Parameters<Component>[0]
+      >
   : undefined => {
   const selector = getSelector(component);
   const props = useSelector(selector);

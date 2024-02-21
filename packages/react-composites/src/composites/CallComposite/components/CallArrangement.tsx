@@ -83,7 +83,7 @@ import { usePropsFor } from '../hooks/usePropsFor';
 /* @conditional-compile-remove(spotlight) */
 import { PromptProps } from './Prompt';
 /* @conditional-compile-remove(spotlight) */
-import { useSpotlightCallbacksWithPrompt } from '../utils/spotlightUtils';
+import { useLocalSpotlightCallbacksWithPrompt, useRemoteSpotlightCallbacksWithPrompt } from '../utils/spotlightUtils';
 
 /**
  * @private
@@ -184,12 +184,27 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const { setPromptProps, setIsPromptOpen } = props;
 
   /* @conditional-compile-remove(spotlight) */
-  const { onStartSpotlight, onStopSpotlight, spotlightedParticipants, maxParticipantsToSpotlight } = videoGalleryProps;
+  const {
+    onStartLocalSpotlight,
+    onStopLocalSpotlight,
+    onStartRemoteSpotlight,
+    onStopRemoteSpotlight,
+    spotlightedParticipants,
+    maxParticipantsToSpotlight
+  } = videoGalleryProps;
 
   /* @conditional-compile-remove(spotlight) */
-  const { onStartSpotlightWithPrompt, onStopSpotlightWithPrompt } = useSpotlightCallbacksWithPrompt(
-    onStartSpotlight,
-    onStopSpotlight,
+  const { onStartLocalSpotlightWithPrompt, onStopLocalSpotlightWithPrompt } = useLocalSpotlightCallbacksWithPrompt(
+    onStartLocalSpotlight,
+    onStopLocalSpotlight,
+    setIsPromptOpen,
+    setPromptProps
+  );
+
+  /* @conditional-compile-remove(spotlight) */
+  const { onStartRemoteSpotlightWithPrompt, onStopRemoteSpotlightWithPrompt } = useRemoteSpotlightCallbacksWithPrompt(
+    onStartRemoteSpotlight,
+    onStopRemoteSpotlight,
     setIsPromptOpen,
     setPromptProps
   );
@@ -197,10 +212,10 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const { isPeoplePaneOpen, openPeoplePane, closePeoplePane } = usePeoplePane({
     ...peoplePaneProps,
     /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds: spotlightedParticipants,
-    /* @conditional-compile-remove(spotlight) */ onStartSpotlight: onStartSpotlightWithPrompt,
-    /* @conditional-compile-remove(spotlight) */ onStopSpotlight: onStopSpotlightWithPrompt,
-    /* @conditional-compile-remove(spotlight) */ ableToSpotlight:
-      adapter.getState().call?.capabilitiesFeature?.capabilities.spotlightParticipant.isPresent,
+    /* @conditional-compile-remove(spotlight) */ onStartLocalSpotlight: onStartLocalSpotlightWithPrompt,
+    /* @conditional-compile-remove(spotlight) */ onStopLocalSpotlight: onStopLocalSpotlightWithPrompt,
+    /* @conditional-compile-remove(spotlight) */ onStartRemoteSpotlight: onStartRemoteSpotlightWithPrompt,
+    /* @conditional-compile-remove(spotlight) */ onStopRemoteSpotlight: onStopRemoteSpotlightWithPrompt,
     /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight
   });
   const togglePeoplePane = useCallback(() => {

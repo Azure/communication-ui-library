@@ -1408,7 +1408,14 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
     personaMinSize?: number | undefined;
     raisedHand?: RaisedHand | undefined;
     reaction?: Reaction | undefined;
+    spotlightedParticipantUserIds?: string[] | undefined;
     isSpotlighted?: boolean | undefined;
+    onStartSpotlight?: (() => void) | undefined;
+    onStopSpotlight?: (() => void) | undefined;
+    maxParticipantsToSpotlight?: number | undefined;
+    menuKind?: "contextual" | "drawer" | undefined;
+    drawerMenuHostId?: string | undefined;
+    strings?: VideoGalleryStrings | undefined;
     reactionResources?: ReactionResources | undefined;
 }) => React_2.JSX.Element>;
 
@@ -2618,8 +2625,10 @@ export interface VideoGalleryProps {
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
-    onStartSpotlight?: (userIds?: string[]) => Promise<void>;
-    onStopSpotlight?: (userIds?: string[]) => Promise<void>;
+    onStartLocalSpotlight?: () => Promise<void>;
+    onStartRemoteSpotlight?: (userIds?: string[]) => Promise<void>;
+    onStopLocalSpotlight?: () => Promise<void>;
+    onStopRemoteSpotlight?: (userIds?: string[]) => Promise<void>;
     onUnpinParticipant?: (userId: string) => void;
     overflowGalleryPosition?: OverflowGalleryPosition;
     pinnedParticipants?: string[];
