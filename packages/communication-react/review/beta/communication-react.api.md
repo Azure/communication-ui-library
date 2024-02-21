@@ -2100,6 +2100,7 @@ export interface ComponentStrings {
     raiseHandButton: RaiseHandButtonStrings;
     // @beta
     reactionButton: ReactionButtonStrings;
+    rteSendBox: RTESendBoxStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
@@ -2462,6 +2463,14 @@ export const DEFAULT_COMPONENT_ICONS: {
     StartSpotlightContextualMenuItem: React_2.JSX.Element;
     StopSpotlightContextualMenuItem: React_2.JSX.Element;
     VideoSpotlighted: React_2.JSX.Element;
+    RTEBoldButtonIcon: React_2.JSX.Element;
+    RTEItalicButtonIcon: React_2.JSX.Element;
+    RTEUnderlineButtonIcon: React_2.JSX.Element;
+    RTEBulletListButtonIcon: React_2.JSX.Element;
+    RTEtNumberListButtonIcon: React_2.JSX.Element;
+    RTEIndentDecreaseButtonIcon: React_2.JSX.Element;
+    RTEIndentIncreaseButtonIcon: React_2.JSX.Element;
+    RTEDividerIcon: React_2.JSX.Element;
 };
 
 // @public
@@ -2606,6 +2615,14 @@ export const DEFAULT_COMPOSITE_ICONS: {
     StartSpotlightContextualMenuItem: React_2.JSX.Element;
     StopSpotlightContextualMenuItem: React_2.JSX.Element;
     VideoSpotlighted: React_2.JSX.Element;
+    RTEBoldButtonIcon: React_2.JSX.Element;
+    RTEItalicButtonIcon: React_2.JSX.Element;
+    RTEUnderlineButtonIcon: React_2.JSX.Element;
+    RTEBulletListButtonIcon: React_2.JSX.Element;
+    RTEtNumberListButtonIcon: React_2.JSX.Element;
+    RTEIndentDecreaseButtonIcon: React_2.JSX.Element;
+    RTEIndentIncreaseButtonIcon: React_2.JSX.Element;
+    RTEDividerIcon: React_2.JSX.Element;
 };
 
 // @beta

@@ -653,6 +653,7 @@ export interface ComponentStrings {
     raiseHandButton: RaiseHandButtonStrings;
     // @beta
     reactionButton: ReactionButtonStrings;
+    rteSendBox: RTESendBoxStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
@@ -841,6 +842,14 @@ export const DEFAULT_COMPONENT_ICONS: {
     StartSpotlightContextualMenuItem: React_2.JSX.Element;
     StopSpotlightContextualMenuItem: React_2.JSX.Element;
     VideoSpotlighted: React_2.JSX.Element;
+    RTEBoldButtonIcon: React_2.JSX.Element;
+    RTEItalicButtonIcon: React_2.JSX.Element;
+    RTEUnderlineButtonIcon: React_2.JSX.Element;
+    RTEBulletListButtonIcon: React_2.JSX.Element;
+    RTEtNumberListButtonIcon: React_2.JSX.Element;
+    RTEIndentDecreaseButtonIcon: React_2.JSX.Element;
+    RTEIndentIncreaseButtonIcon: React_2.JSX.Element;
+    RTEDividerIcon: React_2.JSX.Element;
 };
 
 // @internal
@@ -1997,8 +2006,19 @@ export interface RTESendBoxProps {
     onCancelFileUpload?: (fileId: string) => void;
     onRenderFileUploads?: () => JSX.Element;
     onSendMessage: (content: string) => Promise<void>;
-    strings?: Partial<SendBoxStrings>;
+    strings?: Partial<RTESendBoxStrings>;
     systemMessage?: string;
+}
+
+// @beta
+export interface RTESendBoxStrings extends SendBoxStrings {
+    boldTooltip: string;
+    bulletListTooltip: string;
+    decreaseIndentTooltip: string;
+    increaseIndentTooltip: string;
+    italicTooltip: string;
+    numberListTooltip: string;
+    underlineTooltip: string;
 }
 
 // @public

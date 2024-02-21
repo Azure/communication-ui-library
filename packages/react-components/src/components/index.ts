@@ -24,7 +24,7 @@ export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox
 /* @conditional-compile-remove(rich-text-editor) */
 export { RTESendBox } from './RTE/RTESendBox';
 /* @conditional-compile-remove(rich-text-editor) */
-export type { RTESendBoxProps } from './RTE/RTESendBox';
+export type { RTESendBoxProps, RTESendBoxStrings } from './RTE/RTESendBox';
 
 /* @conditional-compile-remove(mention) */
 export type {
