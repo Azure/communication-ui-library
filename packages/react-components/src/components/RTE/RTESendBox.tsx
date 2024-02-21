@@ -116,7 +116,14 @@ export const RTESendBox = (props: RTESendBoxProps): JSX.Element => {
   } = props;
 
   const theme = useTheme();
-  const localeStrings = useLocale().strings.rteSendBox;
+  const locale = useLocale();
+
+  const localeStrings = useMemo(() => {
+    /* @conditional-compile-remove(rich-text-editor) */
+    return locale.strings.rteSendBox;
+    return locale.strings.sendBox;
+  }, [/* @conditional-compile-remove(rich-text-editor) */ locale.strings.rteSendBox, locale.strings.sendBox]);
+
   const strings = { ...localeStrings, ...props.strings };
 
   const [contentValue, setContentValue] = useState('');
