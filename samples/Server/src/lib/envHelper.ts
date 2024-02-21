@@ -4,8 +4,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
 const appSettingsPath = path.join(__dirname, '../../appsettings.json');
-// If path doesn't exist then log a message and set the appSettings to undefined
-// if path does exist set appSettings to the appsettings.json file
 let appSettings: {
   ResourceConnectionString: string;
   EndpointUrl: string;
