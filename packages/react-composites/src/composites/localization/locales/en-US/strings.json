@@ -318,7 +318,9 @@
       "stopSpotlightConfirmButtonLabel": "Stop spotlighting",
       "stopSpotlightOnSelfConfirmButtonLabel": "Exit spotlight",
       "stopSpotlightCancelButtonLabel": "Cancel"
-    }
+    },
+    "exitSpotlightButtonLabel": "Exit spotlight",
+    "exitSpotlightButtonTooltip": "Exit spotlight"
   },
   "chat": {
     "chatListHeader": "In this chat",
