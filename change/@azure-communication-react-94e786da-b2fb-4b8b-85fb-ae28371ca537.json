@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "area": "feature",
+  "workstream": "InlineImage",
+  "comment": "Rename ImageGallery to ImageOverlay and breaking API changes for ImageOverlay, themes, and ChatAdaper",
+  "packageName": "@azure/communication-react",
+  "email": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
