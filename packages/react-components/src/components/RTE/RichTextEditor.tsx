@@ -120,7 +120,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
       {ribbon}
       <Rooster
         inDarkMode={isDarkThemed(theme)}
-        plugins={[...plugins]}
+        plugins={plugins}
         className={richTextEditorStyle}
         editorCreator={editorCreator}
         // TODO: confirm the color during inline images implementation
