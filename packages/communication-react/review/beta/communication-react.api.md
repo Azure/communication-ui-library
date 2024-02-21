@@ -3995,6 +3995,7 @@ export type Spotlight = {
 
 // @beta
 export interface SpotlightCallFeatureState {
+    localParticipantSpotlight?: SpotlightState;
     maxParticipantsToSpotlight: number;
     spotlightedParticipants: SpotlightedParticipant[];
 }
@@ -4446,8 +4447,10 @@ export interface VideoGalleryProps {
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
-    onStartSpotlight?: (userIds?: string[]) => Promise<void>;
-    onStopSpotlight?: (userIds?: string[]) => Promise<void>;
+    onStartLocalSpotlight?: () => Promise<void>;
+    onStartRemoteSpotlight?: (userIds?: string[]) => Promise<void>;
+    onStopLocalSpotlight?: () => Promise<void>;
+    onStopRemoteSpotlight?: (userIds?: string[]) => Promise<void>;
     onUnpinParticipant?: (userId: string) => void;
     overflowGalleryPosition?: OverflowGalleryPosition;
     pinnedParticipants?: string[];
