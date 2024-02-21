@@ -45,7 +45,10 @@ import {
   Pin16Regular,
   PinOff16Regular,
   ScaleFit20Regular,
-  ScaleFill20Regular,
+  ScaleFill20Regular
+} from '@fluentui/react-icons';
+/* @conditional-compile-remove(rich-text-editor) */
+import {
   TextBold20Regular,
   TextItalic20Regular,
   TextUnderlineCharacterU20Regular,
