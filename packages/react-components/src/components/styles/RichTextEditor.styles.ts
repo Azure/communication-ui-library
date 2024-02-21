@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-import { IButtonStyles, ICommandBarStyles, Theme, merge, mergeStyles } from '@fluentui/react';
+import { IButtonStyles, ICommandBarStyles, Theme, mergeStyles } from '@fluentui/react';
 
 /**
  * @private
