@@ -115,16 +115,12 @@ export interface CallWithChatAdapterState extends CallWithChatAdapterUiState, Ca
 /**
  * @private
  */
-export function callWithChatAdapterStateFromBackingStates(
-  callAdapter: CallAdapter
-  //  chatAdapter: ChatAdapter
-): CallWithChatAdapterState {
+export function callWithChatAdapterStateFromBackingStates(callAdapter: CallAdapter): CallWithChatAdapterState {
   const callAdapterState = callAdapter.getState();
-  //  const chatAdapterState = chatAdapter.getState();
 
   return {
     call: callAdapterState.call,
-    chat: undefined, // chatAdapterState.thread,
+    chat: undefined,
     userId: callAdapterState.userId,
     page: callAdapterState.page,
     displayName: callAdapterState.displayName,
@@ -132,9 +128,9 @@ export function callWithChatAdapterStateFromBackingStates(
     isLocalPreviewMicrophoneEnabled: callAdapterState.isLocalPreviewMicrophoneEnabled,
     isTeamsCall: callAdapterState.isTeamsCall,
     latestCallErrors: callAdapterState.latestErrors,
-    latestChatErrors: {}, // chatAdapterState.latestErrors,
+    latestChatErrors: {},
     /* @conditional-compile-remove(file-sharing) */
-    fileUploads: {}, // chatAdapterState.fileUploads,
+    fileUploads: {},
     /* @conditional-compile-remove(PSTN-calls) */
     alternateCallerId: callAdapterState.alternateCallerId,
     /* @conditional-compile-remove(unsupported-browser) */

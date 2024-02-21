@@ -161,6 +161,7 @@ class CallWithChatContext {
  */
 export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapter {
   private callAdapter: CallAdapter;
+  private chatAdapterPromise: Promise<ChatAdapter>;
   private chatAdapter: ChatAdapter | undefined;
   private context: CallWithChatContext;
   private onChatStateChange: (newChatAdapterState: ChatAdapterState) => void;
@@ -178,6 +179,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
 
     this.onChatStateChange = onChatStateChange;
 
+    this.chatAdapterPromise = chatAdapter;
     chatAdapter.then((chatAdapter) => {
       chatAdapter.onStateChange(this.onChatStateChange);
       this.chatAdapter = chatAdapter;
@@ -324,10 +326,14 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   }
   /** Dispose of the current CallWithChatAdapter. */
   public dispose(): void {
-    this.chatAdapter?.offStateChange(this.onChatStateChange);
+    this.chatAdapterPromise.then((adapter) => {
+      adapter.offStateChange(this.onChatStateChange);
+    });
     this.callAdapter.offStateChange(this.onCallStateChange);
 
-    this.chatAdapter?.dispose();
+    this.chatAdapterPromise.then((adapter) => {
+      adapter.dispose();
+    });
     this.callAdapter.dispose();
   }
   /** Remove a participant from the Call only. */
@@ -428,23 +434,33 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   }
   /** Fetch initial Call and Chat data such as chat messages. */
   public async fetchInitialData(): Promise<void> {
-    await this.chatAdapter?.fetchInitialData();
+    return this.chatAdapterPromise.then((adapter) => {
+      return adapter.fetchInitialData();
+    });
   }
   /** Send a chat message. */
   public async sendMessage(content: string): Promise<void> {
-    await this.chatAdapter?.sendMessage(content);
+    return this.chatAdapterPromise.then((adapter) => {
+      return adapter.sendMessage(content);
+    });
   }
   /** Send a chat read receipt. */
   public async sendReadReceipt(chatMessageId: string): Promise<void> {
-    await this.chatAdapter?.sendReadReceipt(chatMessageId);
+    return this.chatAdapterPromise.then((adapter) => {
+      return adapter.sendReadReceipt(chatMessageId);
+    });
   }
   /** Send an isTyping indicator. */
   public async sendTypingIndicator(): Promise<void> {
-    await this.chatAdapter?.sendTypingIndicator();
+    return this.chatAdapterPromise.then((adapter) => {
+      return adapter.sendTypingIndicator();
+    });
   }
   /** Load previous Chat messages. */
   public async loadPreviousChatMessages(messagesToLoad: number): Promise<boolean> {
-    return (await this.chatAdapter?.loadPreviousChatMessages(messagesToLoad)) ?? false;
+    return this.chatAdapterPromise.then((adapter) => {
+      return adapter.loadPreviousChatMessages(messagesToLoad);
+    });
   }
   /** Update an existing message. */
   public async updateMessage(
@@ -456,16 +472,20 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
       attachmentMetadata?: AttachmentMetadata[];
     }
   ): Promise<void> {
-    return await this.chatAdapter?.updateMessage(
-      messageId,
-      content,
-      metadata,
-      /* @conditional-compile-remove(file-sharing) */ options
-    );
+    return this.chatAdapterPromise.then((adapter) => {
+      return adapter.updateMessage(
+        messageId,
+        content,
+        metadata,
+        /* @conditional-compile-remove(file-sharing) */ options
+      );
+    });
   }
   /** Delete an existing message. */
   public async deleteMessage(messageId: string): Promise<void> {
-    return await this.chatAdapter?.deleteMessage(messageId);
+    return this.chatAdapterPromise.then((adapter) => {
+      return adapter.deleteMessage(messageId);
+    });
   }
   /* @conditional-compile-remove(file-sharing) */
   public registerActiveFileUploads = (files: File[]): FileUploadManager[] => {
@@ -477,36 +497,52 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   };
   /* @conditional-compile-remove(file-sharing) */
   public clearFileUploads = (): void => {
-    this.chatAdapter?.clearFileUploads();
+    this.chatAdapterPromise.then((adapter) => {
+      adapter.clearFileUploads();
+    });
   };
   /* @conditional-compile-remove(file-sharing) */
   public cancelFileUpload = (id: string): void => {
-    this.chatAdapter?.cancelFileUpload(id);
+    this.chatAdapterPromise.then((adapter) => {
+      adapter.cancelFileUpload(id);
+    });
   };
   /* @conditional-compile-remove(file-sharing) */
   public updateFileUploadProgress = (id: string, progress: number): void => {
-    this.chatAdapter?.updateFileUploadProgress(id, progress);
+    this.chatAdapterPromise.then((adapter) => {
+      adapter.updateFileUploadProgress(id, progress);
+    });
   };
   /* @conditional-compile-remove(file-sharing) */
   public updateFileUploadErrorMessage = (id: string, errorMessage: string): void => {
-    this.chatAdapter?.updateFileUploadErrorMessage(id, errorMessage);
+    this.chatAdapterPromise.then((adapter) => {
+      adapter.updateFileUploadErrorMessage(id, errorMessage);
+    });
   };
   /* @conditional-compile-remove(file-sharing) */
   public updateFileUploadMetadata = (id: string, metadata: AttachmentMetadata): void => {
-    this.chatAdapter?.updateFileUploadMetadata(id, metadata);
+    this.chatAdapterPromise.then((adapter) => {
+      adapter.updateFileUploadMetadata(id, metadata);
+    });
   };
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   // ToDo: This method is to be removed
   async downloadAttachment(options: { attachmentUrl: string }): Promise<AttachmentDownloadResult> {
-    return (await this.chatAdapter?.downloadAttachment(options)) ?? { blobUrl: '' };
+    return this.chatAdapterPromise.then((adapter) => {
+      return adapter.downloadAttachment(options);
+    });
   }
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   public downloadResourceToCache(resourceDetails: ResourceDetails): void {
-    this.chatAdapter?.downloadResourceToCache(resourceDetails);
+    this.chatAdapterPromise.then((adapter) => {
+      adapter.downloadResourceToCache(resourceDetails);
+    });
   }
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   public removeResourceFromCache(resourceDetails: ResourceDetails): void {
-    this.chatAdapter?.removeResourceFromCache(resourceDetails);
+    this.chatAdapterPromise.then((adapter) => {
+      adapter.removeResourceFromCache(resourceDetails);
+    });
   }
   /* @conditional-compile-remove(PSTN-calls) */
   public async holdCall(): Promise<void> {
@@ -678,31 +714,47 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         this.callAdapter.on('isSpokenLanguageChanged', listener);
         break;
       case 'messageReceived':
-        this.chatAdapter?.on('messageReceived', listener);
+        this.chatAdapterPromise.then((adapter) => {
+          adapter.on('messageReceived', listener);
+        });
         break;
       case 'messageEdited':
-        this.chatAdapter?.on('messageEdited', listener);
+        this.chatAdapterPromise.then((adapter) => {
+          adapter.on('messageEdited', listener);
+        });
         break;
       case 'messageDeleted':
-        this.chatAdapter?.on('messageDeleted', listener);
+        this.chatAdapterPromise.then((adapter) => {
+          adapter.on('messageDeleted', listener);
+        });
         break;
       case 'messageSent':
-        this.chatAdapter?.on('messageSent', listener);
+        this.chatAdapterPromise.then((adapter) => {
+          adapter.on('messageSent', listener);
+        });
         break;
       case 'messageRead':
-        this.chatAdapter?.on('messageRead', listener);
+        this.chatAdapterPromise.then((adapter) => {
+          adapter.on('messageRead', listener);
+        });
         break;
       case 'chatParticipantsAdded':
-        this.chatAdapter?.on('participantsAdded', listener);
+        this.chatAdapterPromise.then((adapter) => {
+          adapter.on('participantsAdded', listener);
+        });
         break;
       case 'chatParticipantsRemoved':
-        this.chatAdapter?.on('participantsRemoved', listener);
+        this.chatAdapterPromise.then((adapter) => {
+          adapter.on('participantsRemoved', listener);
+        });
         break;
       case 'callError':
         this.callAdapter.on('error', listener);
         break;
       case 'chatError':
-        this.chatAdapter?.on('error', listener);
+        this.chatAdapterPromise.then((adapter) => {
+          adapter.on('error', listener);
+        });
         break;
 
       default:
@@ -792,31 +844,47 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         this.callAdapter.off('isSpokenLanguageChanged', listener);
         break;
       case 'messageReceived':
-        this.chatAdapter?.off('messageReceived', listener);
+        this.chatAdapterPromise.then((adapter) => {
+          adapter.off('messageReceived', listener);
+        });
         break;
       case 'messageEdited':
-        this.chatAdapter?.off('messageEdited', listener);
+        this.chatAdapterPromise.then((adapter) => {
+          adapter.off('messageEdited', listener);
+        });
         break;
       case 'messageDeleted':
-        this.chatAdapter?.off('messageDeleted', listener);
+        this.chatAdapterPromise.then((adapter) => {
+          adapter.off('messageDeleted', listener);
+        });
         break;
       case 'messageSent':
-        this.chatAdapter?.off('messageSent', listener);
+        this.chatAdapterPromise.then((adapter) => {
+          adapter.off('messageSent', listener);
+        });
         break;
       case 'messageRead':
-        this.chatAdapter?.off('messageRead', listener);
+        this.chatAdapterPromise.then((adapter) => {
+          adapter.off('messageRead', listener);
+        });
         break;
       case 'chatParticipantsAdded':
-        this.chatAdapter?.off('participantsAdded', listener);
+        this.chatAdapterPromise.then((adapter) => {
+          adapter.off('participantsAdded', listener);
+        });
         break;
       case 'chatParticipantsRemoved':
-        this.chatAdapter?.off('participantsRemoved', listener);
+        this.chatAdapterPromise.then((adapter) => {
+          adapter.off('participantsRemoved', listener);
+        });
         break;
       case 'callError':
         this.callAdapter.off('error', listener);
         break;
       case 'chatError':
-        this.chatAdapter?.off('error', listener);
+        this.chatAdapterPromise.then((adapter) => {
+          adapter.off('error', listener);
+        });
         break;
       default:
         throw `Unknown AzureCommunicationCallWithChatAdapter Event: ${event}`;
@@ -890,7 +958,7 @@ export class TeamsMeetingIdAdapter implements ChatThreadLocator {
     return new Promise<string>((resolve) => {
       const stateChangeListener = (state: CallAdapterState): void => {
         if (state.call?.state === 'Connected') {
-          resolve('19:meeting_YjFlMWVhNjAtMDBmYy00OGFkLWI3NjUtNTk5ZTM4NmE0OTA2@thread.v2');
+          resolve('19:meeting_MTMzZDcxZGMtNmY2ZC00MjZmLWJiYWUtNjc5ZDU3ZTYwZmFm@thread.v2');
         }
       };
       this.callAdapter.then((adapter) => {
