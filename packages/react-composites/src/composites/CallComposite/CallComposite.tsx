@@ -316,6 +316,19 @@ export type CallCompositeOptions = {
       url: string;
     };
   };
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Options for settings related to spotlight.
+   */
+  spotlight?: {
+    /**
+     * Flag to hide the menu buttons to start and stop spotlight for remote participants and menu button
+     * to start spotlight for the local participant. The menu button to stop spotlight for the local
+     * participant will not be hidden.
+     * @defaultValue false
+     */
+    hideSpotlight?: boolean;
+  };
 };
 
 type MainScreenProps = {

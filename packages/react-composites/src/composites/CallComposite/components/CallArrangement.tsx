@@ -121,6 +121,8 @@ export interface CallArrangementProps {
   setIsPromptOpen?: (isOpen: boolean) => void;
   /* @conditional-compile-remove(spotlight) */
   setPromptProps?: (props: PromptProps) => void;
+  /* @conditional-compile-remove(spotlight) */
+  hideSpotlightFeature?: boolean;
 }
 
 /**
@@ -181,7 +183,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const videoGalleryProps = usePropsFor(VideoGallery);
 
   /* @conditional-compile-remove(spotlight) */
-  const { setPromptProps, setIsPromptOpen } = props;
+  const { setPromptProps, setIsPromptOpen, hideSpotlightFeature } = props;
 
   /* @conditional-compile-remove(spotlight) */
   const {
@@ -213,10 +215,16 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const { isPeoplePaneOpen, openPeoplePane, closePeoplePane } = usePeoplePane({
     ...peoplePaneProps,
     /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds: spotlightedParticipants,
-    /* @conditional-compile-remove(spotlight) */ onStartLocalSpotlight: onStartLocalSpotlightWithPrompt,
+    /* @conditional-compile-remove(spotlight) */ onStartLocalSpotlight: hideSpotlightFeature
+      ? undefined
+      : onStartLocalSpotlightWithPrompt,
     /* @conditional-compile-remove(spotlight) */ onStopLocalSpotlight: onStopLocalSpotlightWithPrompt,
-    /* @conditional-compile-remove(spotlight) */ onStartRemoteSpotlight: onStartRemoteSpotlightWithPrompt,
-    /* @conditional-compile-remove(spotlight) */ onStopRemoteSpotlight: onStopRemoteSpotlightWithPrompt,
+    /* @conditional-compile-remove(spotlight) */ onStartRemoteSpotlight: hideSpotlightFeature
+      ? undefined
+      : onStartRemoteSpotlightWithPrompt,
+    /* @conditional-compile-remove(spotlight) */ onStopRemoteSpotlight: hideSpotlightFeature
+      ? undefined
+      : onStopRemoteSpotlightWithPrompt,
     /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight
   });
   const togglePeoplePane = useCallback(() => {
