@@ -157,6 +157,8 @@ module.exports = {
     // dialpad
     "dialpad",
     // Feature for updates needed for Click to Call (C2C) scenarios
-    "click-to-call"
+    "click-to-call",
+    // Feature for call transfer
+    "call-transfer"
   ]
 }

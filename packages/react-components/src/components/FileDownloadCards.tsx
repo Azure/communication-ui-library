@@ -78,6 +78,10 @@ export interface InlineImageMetadata {
    * Download URL for the full resolution version.
    */
   url: string;
+  /**
+   * Optional fetched Image source fot the full resolution version.
+   */
+  fullSizeImageSrc?: string;
 }
 
 /**
@@ -87,18 +91,6 @@ export interface InlineImageMetadata {
 export type AttachmentMetadata =
   | FileMetadata
   | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ InlineImageMetadata;
-
-/* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-/**
- * Metadata of the attachment object returned by the ACS SDK.
- * @beta
- */
-export interface AttachmentDownloadResult {
-  /**
-   * Blob URL for the attachment.
-   */
-  blobUrl: string;
-}
 
 /**
  * Strings of _FileDownloadCards that can be overridden.

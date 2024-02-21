@@ -35,7 +35,6 @@ import { PropsWithChildren } from 'react';
 import { default as React_2 } from 'react';
 import * as React_3 from 'react';
 import { RefObject } from 'react';
-import { SyntheticEvent } from 'react';
 import { Theme } from '@fluentui/react';
 
 // @public
@@ -65,11 +64,6 @@ export type AnnouncerProps = {
     announcementString?: string;
     ariaLive: 'off' | 'polite' | 'assertive' | undefined;
 };
-
-// @beta
-export interface AttachmentDownloadResult {
-    blobUrl: string;
-}
 
 // @beta
 export type AttachmentMetadata = FileMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ InlineImageMetadata;
@@ -490,17 +484,6 @@ export interface ChatMessage extends MessageCommon {
 }
 
 // @beta
-export interface ChatTheme {
-    chatPalette: {
-        modalOverlayBlack: string;
-        modalTitleWhite: string;
-        modalButtonBackground: string;
-        modalButtonBackgroundHover: string;
-        modalButtonBackgroundActive: string;
-    };
-}
-
-// @beta
 export interface CommonSitePermissionsProps {
     appName: string;
     browserHint?: 'safari' | 'unset';
@@ -761,7 +744,7 @@ export interface CustomMessage extends MessageCommon {
 }
 
 // @public
-export const darkTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-overlay) */ ChatTheme;
+export const darkTheme: PartialTheme & CallingTheme;
 
 // @public
 export const DEFAULT_COMPONENT_ICONS: {
@@ -1220,6 +1203,7 @@ export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Eleme
 export interface FluentThemeProviderProps {
     children: React_2.ReactNode;
     fluentTheme?: PartialTheme | Theme;
+    rootStyle?: React_2.CSSProperties | undefined;
     rtl?: boolean;
 }
 
@@ -1327,8 +1311,7 @@ export interface ImageOverlayProps {
     imageSrc: string;
     isOpen: boolean;
     onDismiss: () => void;
-    onDownloadButtonClicked: (imageSrc: string) => void;
-    onError?: (event: SyntheticEvent<HTMLImageElement, Event>) => void;
+    onDownloadButtonClicked?: (imageSrc: string) => void;
     title?: string;
     titleIcon?: JSX.Element;
 }
@@ -1340,6 +1323,9 @@ export interface ImageOverlayStrings {
 }
 
 // @beta
+export const imageOverlayTheme: PartialTheme;
+
+// @beta
 export interface InlineImage {
     imgAttrs: React_2.ImgHTMLAttributes<HTMLImageElement>;
     messageId: string;
@@ -1349,6 +1335,7 @@ export interface InlineImage {
 export interface InlineImageMetadata {
     // (undocumented)
     attachmentType: 'inlineImage';
+    fullSizeImageSrc?: string;
     id: string;
     // (undocumented)
     previewUrl?: string;
@@ -1370,7 +1357,7 @@ export interface JumpToNewMessageButtonProps {
 }
 
 // @public
-export const lightTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-overlay) */ ChatTheme;
+export const lightTheme: PartialTheme & CallingTheme;
 
 // @public
 export type LoadingState = 'loading' | 'none';
@@ -1421,7 +1408,14 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
     personaMinSize?: number | undefined;
     raisedHand?: RaisedHand | undefined;
     reaction?: Reaction | undefined;
+    spotlightedParticipantUserIds?: string[] | undefined;
     isSpotlighted?: boolean | undefined;
+    onStartSpotlight?: (() => void) | undefined;
+    onStopSpotlight?: (() => void) | undefined;
+    maxParticipantsToSpotlight?: number | undefined;
+    menuKind?: "contextual" | "drawer" | undefined;
+    drawerMenuHostId?: string | undefined;
+    strings?: VideoGalleryStrings | undefined;
     reactionResources?: ReactionResources | undefined;
 }) => React_2.JSX.Element>;
 
@@ -2631,8 +2625,10 @@ export interface VideoGalleryProps {
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
-    onStartSpotlight?: (userIds?: string[]) => Promise<void>;
-    onStopSpotlight?: (userIds?: string[]) => Promise<void>;
+    onStartLocalSpotlight?: () => Promise<void>;
+    onStartRemoteSpotlight?: (userIds?: string[]) => Promise<void>;
+    onStopLocalSpotlight?: () => Promise<void>;
+    onStopRemoteSpotlight?: (userIds?: string[]) => Promise<void>;
     onUnpinParticipant?: (userId: string) => void;
     overflowGalleryPosition?: OverflowGalleryPosition;
     pinnedParticipants?: string[];
