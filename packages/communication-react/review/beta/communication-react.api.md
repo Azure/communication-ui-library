@@ -3815,6 +3815,17 @@ export type ResourceDetails = {
     resourceUrl: string;
 };
 
+// @beta
+export interface RTESendBoxStrings extends SendBoxStrings {
+    boldTooltip: string;
+    bulletListTooltip: string;
+    decreaseIndentTooltip: string;
+    increaseIndentTooltip: string;
+    italicTooltip: string;
+    numberListTooltip: string;
+    underlineTooltip: string;
+}
+
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
 
