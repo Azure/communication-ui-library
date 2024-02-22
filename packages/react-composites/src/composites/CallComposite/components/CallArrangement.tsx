@@ -190,7 +190,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     onStartRemoteSpotlight,
     onStopRemoteSpotlight,
     spotlightedParticipants,
-    maxParticipantsToSpotlight
+    maxParticipantsToSpotlight,
+    localParticipant
   } = videoGalleryProps;
 
   /* @conditional-compile-remove(spotlight) */
@@ -392,6 +393,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   dtmfDialerPresent={props.dtmfDialerPresent}
                   peopleButtonRef={peopleButtonRef}
                   cameraButtonRef={cameraButtonRef}
+                  /* @conditional-compile-remove(spotlight) */
+                  onStopLocalSpotlight={localParticipant.spotlight ? onStopLocalSpotlight : undefined}
                 />
               )}
             </Stack>
