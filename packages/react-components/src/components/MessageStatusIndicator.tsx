@@ -68,7 +68,7 @@ export interface MessageStatusIndicatorProps {
 export const MessageStatusIndicator = (props: MessageStatusIndicatorProps): JSX.Element => {
   const internalProps: MessageStatusIndicatorInternalProps = {
     ...props,
-    shouldAnnouce: true
+    shouldAnnounce: true
   };
 
   return <MessageStatusIndicatorInternal {...internalProps}></MessageStatusIndicatorInternal>;

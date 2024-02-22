@@ -935,6 +935,22 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     // Only scroll to bottom if isAtBottomOfScrollRef is true
     isAtBottomOfScrollRef.current && scrollToBottom();
   }, [clientHeight, forceUpdate, scrollToBottom, chatMessagesInitialized]);
+  useEffect(() => {
+    const newStatus = getLastChatMessageForCurrentUser(newMessages)?.status;
+    if (newStatus !== undefined) {
+      if (lastChatMessageStatus.current === 'deleted' && newStatus === 'sending') {
+        // enforce message life cycle
+        // message status should always be [ sending -> delivered -> seen (optional) -> deleted ] or [sending -> failed -> deleted]
+        // not any other way around
+        // therefore, if current message status is deleted, we should only update it if newStatus is sending
+        lastChatMessageStatus.current = newStatus;
+      } else if (lastChatMessageStatus.current !== 'deleted') {
+        lastChatMessageStatus.current = newStatus;
+      }
+    }
+    console.log('last status = ' + lastChatMessageStatus.current + ' new status = ' + newStatus);
+    // The hook should depend on newMessages not on messages as otherwise it will skip the sending status for a first message
+  }, [newMessages]);
 
   /**
    * This needs to run to update latestPreviousChatMessage & latestCurrentChatMessage.
@@ -968,22 +984,6 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages]);
-
-  useEffect(() => {
-    const newStatus = getLastChatMessageForCurrentUser(newMessages)?.status;
-    if (newStatus !== undefined) {
-      if (lastChatMessageStatus.current === 'deleted' && newStatus === 'sending') {
-        // enforce message life cycle
-        // message status should always be [ sending -> delivered -> seen (optional) -> deleted ] or [sending -> failed -> deleted]
-        // not any other way around
-        // therefore, if current message status is deleted, we should only update it if newStatus is sending
-        lastChatMessageStatus.current = newStatus;
-      } else if (lastChatMessageStatus.current !== 'deleted') {
-        lastChatMessageStatus.current = newStatus;
-      }
-    }
-    // The hook should depend on newMessages not on messages as otherwise it will skip the sending status for a first message
-  }, [newMessages]);
 
   const lastChatMessageStatus = useRef<string | undefined>(undefined);
   const participantCountRef = useRef(participantCount);
