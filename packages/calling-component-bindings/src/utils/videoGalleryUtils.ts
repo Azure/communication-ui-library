@@ -42,7 +42,7 @@ export const _videoGalleryRemoteParticipantsMemo: (
 ) => VideoGalleryRemoteParticipant[] = (
   remoteParticipants: RemoteParticipantState[] | undefined,
   isHideAttendeeNamesEnabled?: boolean,
-  localUserRole?
+  /* @conditional-compile-remove(hide-attendee-name) */ localUserRole?: ParticipantRole
 ): VideoGalleryRemoteParticipant[] => {
   if (!remoteParticipants) {
     return [];
