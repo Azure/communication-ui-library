@@ -62,3 +62,4 @@ export { _updateUserDisplayNames } from './utils/callUtils';
 export { _getEnvironmentInfo } from './utils/callUtils';
 
 export { _videoGalleryRemoteParticipantsMemo, _dominantSpeakersWithFlatId } from './utils/videoGalleryUtils';
+export type { VideoGalleryRemoteParticipantsMemoFn } from './utils/videoGalleryUtils';
