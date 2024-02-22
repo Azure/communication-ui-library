@@ -22,6 +22,8 @@ import {
 } from '@internal/react-components';
 /* @conditional-compile-remove(image-overlay) */ /* @conditional-compile-remove(file-sharing) */
 import { ChatMessage } from '@internal/react-components';
+/* @conditional-compile-remove(rich-text-editor) */
+import { RTESendBox } from '@internal/react-components';
 
 import React, { useCallback, useEffect, useMemo } from 'react';
 /* @conditional-compile-remove(image-overlay) */
@@ -423,6 +425,16 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                   /* @conditional-compile-remove(file-sharing) */
                   onCancelFileUpload={adapter.cancelFileUpload}
                 />
+                {
+                  /* @conditional-compile-remove(rich-text-editor) */
+                  options?.richTextEditor && (
+                    <RTESendBox
+                      onSendMessage={function (content: string): Promise<void> {
+                        throw new Error('Function not implemented.');
+                      }}
+                    />
+                  )
+                }
               </Stack>
               {formFactor !== 'mobile' && <AttachFileButton />}
             </Stack>

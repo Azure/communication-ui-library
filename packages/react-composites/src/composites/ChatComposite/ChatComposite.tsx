@@ -84,6 +84,15 @@ export type ChatCompositeOptions = {
    * @beta
    */
   fileSharing?: FileSharingOptions;
+
+  /* @conditional-compile-remove(rich-text-editor) */
+  /**
+   * Show or hide the Rich Text Editor feature.
+   * @defaultValue true
+   *
+   * @beta
+   */
+  richTextEditor?: boolean;
 };
 
 /**
