@@ -541,7 +541,7 @@ export interface CallState {
   screenShareRemoteParticipant?: string;
   /* @conditional-compile-remove(ppt-live) */
   /**
-   * Stores the currently active pptlive participant's key. If there is no screenshare active, then this will be
+   * Stores the currently active pptlive participant's key. Will be reused by White board etc. If there is no screenshare active, then this will be
    * undefined. You can use this key to access the remoteParticipant data in {@link CallState.remoteParticipants} object.
    *
    * Note this only applies to PPTLive in RemoteParticipant.
