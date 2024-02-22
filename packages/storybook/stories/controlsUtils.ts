@@ -358,6 +358,8 @@ export const controlsToAdd = {
   showMuteIndicator: { control: 'boolean', defaultValue: true, name: 'Show Mute/UnMute Indicator' },
   speakers: { control: 'object', defaultValue: defaultControlsSpeakers, name: 'Speakers' },
   teamsMeetingLink: { control: 'text', defaultValue: '', name: 'Teams meeting link' },
+  teamsMeetingId: { control: 'text', defaultValue: '', name: 'Teams meeting Id' },
+  teamsMeetingPasscode: { control: 'text', defaultValue: '', name: 'Teams meeting passcode' },
   theme: { control: 'radio', options: themeChoices, defaultValue: 'Default', name: 'Theme' },
   token: { control: 'text', defaultValue: '', name: 'Valid token for user', type: { name: 'string', required: true } },
   typingUsers: { control: 'object', defaultValue: defaultTypingUsers, name: 'Typing users' },

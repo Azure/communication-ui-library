@@ -18,6 +18,8 @@ const storyControls = {
   endpointUrl: controlsToAdd.endpointUrl,
   displayName: controlsToAdd.requiredDisplayName,
   teamsMeetingLink: controlsToAdd.teamsMeetingLink,
+  teamsMeetingId: controlsToAdd.teamsMeetingId,
+  teamsMeetingPasscode: controlsToAdd.teamsMeetingPasscode,
   formFactor: controlsToAdd.formFactor
 };
 
@@ -34,12 +36,36 @@ const JoinTeamsMeetingStory = (args: ArgsFrom<typeof storyControls>, context): J
           endpointUrl: args.endpointUrl,
           locator: { meetingLink: args.teamsMeetingLink }
         });
+      }
+      if (
+        !!args.token &&
+        !!args.userId &&
+        !!args.endpointUrl &&
+        !!args.displayName &&
+        !!args.teamsMeetingId &&
+        !!args.teamsMeetingPasscode
+      ) {
+        setMeetingProps({
+          userId: { communicationUserId: args.userId },
+          token: args.token,
+          displayName: args.displayName,
+          endpointUrl: args.endpointUrl,
+          locator: { meetingId: args.teamsMeetingId, passcode: args.teamsMeetingPasscode }
+        });
       } else {
         setMeetingProps(undefined);
       }
     };
     fetchToken();
-  }, [args.token, args.userId, args.endpointUrl, args.displayName, args.teamsMeetingLink]);
+  }, [
+    args.token,
+    args.userId,
+    args.endpointUrl,
+    args.displayName,
+    args.teamsMeetingLink,
+    args.teamsMeetingId,
+    args.teamsMeetingPasscode
+  ]);
 
   return (
     <>
