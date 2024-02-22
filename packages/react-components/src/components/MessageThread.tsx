@@ -948,7 +948,6 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
         lastChatMessageStatus.current = newStatus;
       }
     }
-    console.log('last status = ' + lastChatMessageStatus.current + ' new status = ' + newStatus);
     // The hook should depend on newMessages not on messages as otherwise it will skip the sending status for a first message
   }, [newMessages]);
 
