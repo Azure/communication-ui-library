@@ -62,7 +62,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     });
     /* @conditional-compile-remove(call-transfer) */
     adapter.on('transferAccepted', (e) => {
-      console.log('Call being trransferred to: ' + e);
+      console.log('Call being transferred to: ' + e);
     });
   }, []);
 
