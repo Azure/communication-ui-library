@@ -33,16 +33,19 @@ export const _dominantSpeakersWithFlatId = (dominantSpeakers?: DominantSpeakersI
 };
 
 /** @internal */
-export const _videoGalleryRemoteParticipantsMemo: (
+export type VideoGalleryRemoteParticipantsMemoFn = (
   remoteParticipants: RemoteParticipantState[] | undefined,
   /* @conditional-compile-remove(hide-attendee-name) */
   isHideAttendeeNamesEnabled?: boolean,
   /* @conditional-compile-remove(hide-attendee-name) */
   localUserRole?: ParticipantRole
-) => VideoGalleryRemoteParticipant[] = (
+) => VideoGalleryRemoteParticipant[];
+
+/** @internal */
+export const _videoGalleryRemoteParticipantsMemo: VideoGalleryRemoteParticipantsMemoFn = (
   remoteParticipants: RemoteParticipantState[] | undefined,
   isHideAttendeeNamesEnabled?: boolean,
-  /* @conditional-compile-remove(hide-attendee-name) */ localUserRole?: ParticipantRole
+  /* @conditional-compile-remove(hide-attendee-name) */ localUserRole?
 ): VideoGalleryRemoteParticipant[] => {
   if (!remoteParticipants) {
     return [];

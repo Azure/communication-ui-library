@@ -322,7 +322,12 @@ export type VideoBackgroundEffectsDependency = {
 };
 
 // @internal (undocumented)
-export const _videoGalleryRemoteParticipantsMemo: (remoteParticipants: RemoteParticipantState[] | undefined) => VideoGalleryRemoteParticipant[];
+export const _videoGalleryRemoteParticipantsMemo: VideoGalleryRemoteParticipantsMemoFn;
+
+// Warning: (ae-internal-missing-underscore) The name "VideoGalleryRemoteParticipantsMemoFn" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export type VideoGalleryRemoteParticipantsMemoFn = (remoteParticipants: RemoteParticipantState[] | undefined) => VideoGalleryRemoteParticipant[];
 
 // @public
 export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
