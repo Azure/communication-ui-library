@@ -935,12 +935,12 @@ export interface CallState {
     callerInfo: CallerInfo;
     capabilitiesFeature?: CapabilitiesFeatureState;
     captionsFeature: CaptionsCallFeatureState;
+    contentSharingRemoteParticipant?: string;
     diagnostics: DiagnosticsCallFeatureState;
     direction: CallDirection;
     dominantSpeakers?: DominantSpeakersInfo;
     endTime: Date | undefined;
     hideAttendeeNames?: boolean;
-    htmlShareRemoteParticipant?: string;
     id: string;
     isMuted: boolean;
     isScreenSharingOn: boolean;
@@ -3769,8 +3769,8 @@ export interface RecordingCallFeature {
 // @public
 export interface RemoteParticipantState {
     callEndReason?: CallEndReason;
+    contentSharingStream?: HTMLElement;
     displayName?: string;
-    htmlStream?: HTMLElement;
     identifier: CommunicationIdentifierKind;
     isMuted: boolean;
     isSpeaking: boolean;
