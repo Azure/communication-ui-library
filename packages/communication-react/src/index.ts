@@ -334,7 +334,7 @@ export type { AttachmentMetadata } from '../../react-components/src';
 /* @conditional-compile-remove(file-sharing) */
 export type { FileMetadata } from '../../react-components/src';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-export type { ChatAttachmentType, AttachmentDownloadResult, InlineImageMetadata } from '../../react-components/src';
+export type { ChatAttachmentType, InlineImageMetadata } from '../../react-components/src';
 /* @conditional-compile-remove(image-overlay) */
 export type { InlineImageOptions, InlineImage } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */

@@ -126,7 +126,7 @@ export const _RemoteVideoTile = React.memo(
     // Handle creating, destroying and updating the video stream as necessary
     const createVideoStreamResult = useRemoteVideoStreamLifecycleMaintainer(remoteVideoStreamProps);
     const contextualMenuProps = useVideoTileContextualMenuProps({
-      remoteParticipant,
+      participant: remoteParticipant,
       view: createVideoStreamResult?.view,
       strings: { ...props.strings },
       isPinned,

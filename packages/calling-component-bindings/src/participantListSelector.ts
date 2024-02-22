@@ -31,7 +31,7 @@ import { getLocalParticipantRaisedHand } from './baseSelectors';
 /* @conditional-compile-remove(reaction) */
 import { getLocalParticipantReactionState } from './baseSelectors';
 /* @conditional-compile-remove(spotlight) */
-import { getSpotlightedParticipants } from './baseSelectors';
+import { getSpotlightCallFeature } from './baseSelectors';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { getParticipantCount } from './baseSelectors';
 import { isMicrosoftTeamsAppIdentifier, isPhoneNumberIdentifier } from '@azure/communication-common';
@@ -164,7 +164,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     /* @conditional-compile-remove(reaction) */
     getLocalParticipantReactionState,
     /* @conditional-compile-remove(spotlight) */
-    getSpotlightedParticipants
+    getSpotlightCallFeature
   ],
   (
     userId,
@@ -181,7 +181,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     /* @conditional-compile-remove(reaction) */
     localParticipantReactionState,
     /* @conditional-compile-remove(spotlight) */
-    spotlightedParticipants
+    spotlightCallFeature
   ): {
     participants: CallParticipantListParticipant[];
     myUserId: string;
@@ -197,7 +197,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
           /* @conditional-compile-remove(hide-attendee-name) */
           role,
           /* @conditional-compile-remove(spotlight) */
-          spotlightedParticipants
+          spotlightCallFeature?.spotlightedParticipants
         )
       : [];
     /* @conditional-compile-remove(reaction) */
@@ -215,7 +215,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
       /* @conditional-compile-remove(reaction) */
       reaction: localParticipantReaction,
       /* @conditional-compile-remove(spotlight) */
-      spotlight: memoizedSpotlight(spotlightedParticipants, userId)
+      spotlight: memoizedSpotlight(spotlightCallFeature?.spotlightedParticipants, userId)
     });
     /* @conditional-compile-remove(total-participant-count) */
     const totalParticipantCount = partitipantCount;
