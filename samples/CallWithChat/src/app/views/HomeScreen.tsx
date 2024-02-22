@@ -132,7 +132,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 onChange={(_, option) => option && setChosenCallOption(option)}
               />
             )}
-            {(teamsCallChosen || /* @conditional-compile-remove(teams-identity-support) */ teamsCallChosen) && (
+            {teamsCallChosen && (
               <TextField
                 className={teamsItemStyle}
                 iconProps={{ iconName: 'Link' }}

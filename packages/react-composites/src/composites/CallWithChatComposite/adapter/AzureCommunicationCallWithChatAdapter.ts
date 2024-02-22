@@ -171,7 +171,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.context = new CallWithChatContext(callWithChatAdapterStateFromBackingStates(callAdapter));
 
     const onChatStateChange = (newChatAdapterState: ChatAdapterState): void => {
-      this.context?.updateClientStateWithChatState(newChatAdapterState);
+      this.context.updateClientStateWithChatState(newChatAdapterState);
     };
 
     this.onChatStateChange = onChatStateChange;
@@ -185,7 +185,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     });
 
     const onCallStateChange = (newCallAdapterState: CallAdapterState): void => {
-      this.context?.updateClientStateWithCallState(newCallAdapterState);
+      this.context.updateClientStateWithCallState(newCallAdapterState);
     };
     this.callAdapter.onStateChange(onCallStateChange);
     this.onCallStateChange = onCallStateChange;
