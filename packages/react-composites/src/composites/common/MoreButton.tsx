@@ -19,7 +19,7 @@ export const MoreButton = (props: ControlBarButtonProps): JSX.Element => {
       onRenderOnIcon={icon}
       onRenderOffIcon={icon}
       onClick={props.onClick}
-      data-ui-id={(props)['data-ui-id' as keyof ControlBarButtonProps]}
+      data-ui-id={props['data-ui-id' as keyof ControlBarButtonProps]}
     />
   );
 };

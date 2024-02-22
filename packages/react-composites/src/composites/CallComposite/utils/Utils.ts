@@ -367,11 +367,11 @@ export const disableCallControls = (
   // Ensure we clone the prop if it is an object to ensure we do not mutate the original prop.
   let newOptions: CallControlOptions | boolean | undefined =
     (callControlOptions instanceof Object ? ({ ...callControlOptions } as CallControlOptions) : callControlOptions) ??
-    {} as Partial<CallControlOptions>;
+    ({} as Partial<CallControlOptions>);
   if (newOptions === true || newOptions === undefined) {
     newOptions = disabledControls.reduce((acc, key) => {
       // @ts-expect-error TODO: fix noImplicitAny error here
-      // Not solveable at this time due to typescript limitations. The typing is too complex for typescript to 
+      // Not solveable at this time due to typescript limitations. The typing is too complex for typescript to
       // understand. Will need to revisit when either typescript or the calling component bindings are updated.
       acc[key] = { disabled: true };
       return acc;
@@ -487,10 +487,9 @@ export const createParticipantModifier = (
         [keys: string]: RemoteParticipantState;
       }
     | undefined = undefined;
-  let modifiedParticipants: 
-    | {
-      [keys: string]: RemoteParticipantState;
-    } = {};
+  let modifiedParticipants: {
+    [keys: string]: RemoteParticipantState;
+  } = {};
   const memoizedParticipants: {
     [id: string]: { originalRef: RemoteParticipantState; newParticipant: RemoteParticipantState };
   } = {};

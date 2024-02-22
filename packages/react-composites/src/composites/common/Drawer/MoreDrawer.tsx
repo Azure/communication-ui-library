@@ -212,7 +212,10 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   const raiseHandButtonProps = usePropsFor(RaiseHandButton) as RaiseHandButtonProps;
 
   const onSpeakerItemClick = useCallback(
-    (_ev: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement> | undefined, itemKey: string | undefined) => {
+    (
+      _ev: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement> | undefined,
+      itemKey: string | undefined
+    ) => {
       const selected = speakers?.find((speaker) => speaker.id === itemKey);
       if (selected) {
         // This is unsafe - we're only passing in part of the argument to the handler.
@@ -249,7 +252,10 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
 
   const { microphones, onSelectMicrophone } = props;
   const onMicrophoneItemClick = useCallback(
-    (_ev: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement> | undefined, itemKey: string | undefined) => {
+    (
+      _ev: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement> | undefined,
+      itemKey: string | undefined
+    ) => {
       const selected = microphones?.find((mic) => mic.id === itemKey);
       if (selected) {
         // This is unsafe - we're only passing in part of the argument to the handler.

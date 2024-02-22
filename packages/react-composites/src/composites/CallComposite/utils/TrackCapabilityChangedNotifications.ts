@@ -166,7 +166,8 @@ const updateLatestCapabilityChangedNotificationMap = (
     if (
       activeNotifications[capabilityName] &&
       newCapabilityValue.isPresent === activeNotifications[capabilityName]?.isPresent &&
-      capabilitiesChangedInfoAndRole.capabilitiesChangeInfo.reason === activeNotifications[capabilityName]?.changedReason
+      capabilitiesChangedInfoAndRole.capabilitiesChangeInfo.reason ===
+        activeNotifications[capabilityName]?.changedReason
     ) {
       continue;
     }

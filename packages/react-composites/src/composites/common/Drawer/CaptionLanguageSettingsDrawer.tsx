@@ -5,7 +5,7 @@ import React from 'react';
 /* @conditional-compile-remove(close-captions) */
 import { useMemo, useCallback } from 'react';
 /* @conditional-compile-remove(close-captions) */
-import { _CaptionsSettingsModal, CaptionLanguageStrings, useTheme} from '@internal/react-components';
+import { _CaptionsSettingsModal, CaptionLanguageStrings, useTheme } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
 import {
   _DrawerMenu as DrawerMenu,
@@ -29,7 +29,9 @@ export interface CaptionSettingsDrawerStrings {
 /** @private */
 export const CaptionLanguageSettingsDrawer = (props: {
   /* @conditional-compile-remove(close-captions) */ selectLanguage: (language: keyof CaptionLanguageStrings) => void;
-  /* @conditional-compile-remove(close-captions) */ setCurrentLanguage: (language: keyof CaptionLanguageStrings) => void;
+  /* @conditional-compile-remove(close-captions) */ setCurrentLanguage: (
+    language: keyof CaptionLanguageStrings
+  ) => void;
   /* @conditional-compile-remove(close-captions) */ currentLanguage: keyof CaptionLanguageStrings;
   /* @conditional-compile-remove(close-captions) */ onLightDismiss: () => void;
   /* @conditional-compile-remove(close-captions) */ strings?: CaptionSettingsDrawerStrings;
