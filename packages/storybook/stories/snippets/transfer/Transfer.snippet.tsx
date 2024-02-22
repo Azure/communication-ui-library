@@ -1,13 +1,18 @@
-import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+import {
+  AzureCommunicationTokenCredential,
+  CommunicationUserIdentifier,
+  MicrosoftTeamsAppIdentifier
+} from '@azure/communication-common';
 import {
   CallAdapter,
   CallComposite,
   CallCompositeOptions,
   CompositeLocale,
+  fromFlatCommunicationIdentifier,
   useAzureCommunicationCallAdapter
 } from '@azure/communication-react';
 import { PartialTheme, Theme } from '@fluentui/react';
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
 export type ContainerProps = {
   userId: CommunicationUserIdentifier;
@@ -16,11 +21,12 @@ export type ContainerProps = {
   fluentTheme?: PartialTheme | Theme;
   locale?: CompositeLocale;
   options?: CallCompositeOptions;
-  // Teams user ids need to be in format '8:orgid:<UUID>'. For example, '8:orgid:87d349ed-44d7-43e1-9a83-5f2406dee5bd'
-  microsoftTeamsUserId?: string;
+  // Teams user ids need to be in format '28:orgid:<UUID>'. For example, '28:orgid:87d349ed-44d7-43e1-9a83-5f2406dee5bd'
+  microsoftTeamsAppId: string;
 };
 
 export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
+  const [transferredCallIds, setTransferredCallIds] = useState<string[]>([]);
   const credential = useMemo(() => {
     try {
       return new AzureCommunicationTokenCredential(props.token);
@@ -34,26 +40,36 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
     () => ({
       userId: props.userId,
       credential,
-      locator: props.microsoftTeamsUserId
-        ? {
-            participantIds: [props.microsoftTeamsUserId]
-          }
-        : undefined
+      targetCallees: [fromFlatCommunicationIdentifier(props.microsoftTeamsAppId)] as MicrosoftTeamsAppIdentifier[]
     }),
-    [props.userId, credential, props.microsoftTeamsUserId]
+    [props.userId, credential, props.microsoftTeamsAppId]
   );
 
-  const afterCallAdapterCreate = useCallback(async (adapter: CallAdapter): Promise<CallAdapter> => {
-    adapter.on('transferRequested', (transferArgs) => {
-      transferArgs.accept();
+  const afterCallAdapterCreate = useCallback(
+    async (adapter: CallAdapter): Promise<CallAdapter> => {
+      adapter.on('transferAccepted', (transferArgs) => {
+        const oldIds = transferredCallIds;
+        setTransferredCallIds(oldIds.concat([transferArgs.targetCall.id]));
+      });
+      return adapter;
+    },
+    [transferredCallIds]
+  );
+
+  const leaveCall = async (adapter: CallAdapter): Promise<void> => {
+    await adapter.leaveCall().catch((e) => {
+      console.error('Failed to leave call', e);
     });
-    return adapter;
-  }, []);
+    /**
+     * Following the end of the call
+     */
+    console.log('these are the calls you were transferred to: ', transferredCallIds);
+  };
 
   const adapter = useAzureCommunicationCallAdapter(callAdapterArgs, afterCallAdapterCreate, leaveCall);
 
-  if (!props.microsoftTeamsUserId) {
-    return <>Microsoft Teams user id is not provided.</>;
+  if (!props.microsoftTeamsAppId) {
+    return <>Microsoft Teams App id is not provided.</>;
   }
 
   if (adapter) {
@@ -73,10 +89,4 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
     return <>Failed to construct credential. Provided token is malformed.</>;
   }
   return <>Initializing...</>;
-};
-
-const leaveCall = async (adapter: CallAdapter): Promise<void> => {
-  await adapter.leaveCall().catch((e) => {
-    console.error('Failed to leave call', e);
-  });
 };

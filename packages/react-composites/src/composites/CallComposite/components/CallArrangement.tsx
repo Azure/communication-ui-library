@@ -17,6 +17,8 @@ import {
 } from '@internal/react-components';
 /* @conditional-compile-remove(gallery-layouts) */
 import { VideoGalleryLayout } from '@internal/react-components';
+/* @conditional-compile-remove(spotlight) */
+import { VideoGallery } from '@internal/react-components';
 import React, { useMemo, useRef, useState } from 'react';
 import { useEffect } from 'react';
 import { useCallback } from 'react';
@@ -46,10 +48,6 @@ import { useSelector } from '../hooks/useSelector';
 import { callStatusSelector } from '../selectors/callStatusSelector';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { PreparedMoreDrawer } from '../../common/Drawer/PreparedMoreDrawer';
-/* @conditional-compile-remove(PSTN-calls) */
-import { SendDtmfDialpad } from '../../common/SendDtmfDialpad';
-/* @conditional-compile-remove(PSTN-calls) */
-import { useCallWithChatCompositeStrings } from '../../CallWithChatComposite/hooks/useCallWithChatCompositeStrings';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { getPage } from '../selectors/baseSelectors';
 /* @conditional-compile-remove(close-captions) */
@@ -80,6 +78,12 @@ import {
   CapabilitiesChangeNotificationBarProps
 } from './CapabilitiesChangedNotificationBar';
 import { useLocale } from '../../localization';
+/* @conditional-compile-remove(spotlight) */
+import { usePropsFor } from '../hooks/usePropsFor';
+/* @conditional-compile-remove(spotlight) */
+import { PromptProps } from './Prompt';
+/* @conditional-compile-remove(spotlight) */
+import { useLocalSpotlightCallbacksWithPrompt, useRemoteSpotlightCallbacksWithPrompt } from '../utils/spotlightUtils';
 
 /**
  * @private
@@ -109,6 +113,14 @@ export interface CallArrangementProps {
   /* @conditional-compile-remove(capabilities) */
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
   onCloseChatPane?: () => void;
+  /* @conditional-compile-remove(dtmf-dialer) */
+  onSetDialpadPage?: () => void;
+  /* @conditional-compile-remove(dtmf-dialer) */
+  dtmfDialerPresent?: boolean;
+  /* @conditional-compile-remove(spotlight) */
+  setIsPromptOpen?: (isOpen: boolean) => void;
+  /* @conditional-compile-remove(spotlight) */
+  setPromptProps?: (props: PromptProps) => void;
 }
 
 /**
@@ -162,7 +174,51 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       peopleButtonRef
     ]
   );
-  const { isPeoplePaneOpen, openPeoplePane, closePeoplePane } = usePeoplePane(peoplePaneProps);
+
+  const locale = useLocale();
+
+  /* @conditional-compile-remove(spotlight) */
+  const videoGalleryProps = usePropsFor(VideoGallery);
+
+  /* @conditional-compile-remove(spotlight) */
+  const { setPromptProps, setIsPromptOpen } = props;
+
+  /* @conditional-compile-remove(spotlight) */
+  const {
+    onStartLocalSpotlight,
+    onStopLocalSpotlight,
+    onStartRemoteSpotlight,
+    onStopRemoteSpotlight,
+    spotlightedParticipants,
+    maxParticipantsToSpotlight,
+    localParticipant
+  } = videoGalleryProps;
+
+  /* @conditional-compile-remove(spotlight) */
+  const { onStartLocalSpotlightWithPrompt, onStopLocalSpotlightWithPrompt } = useLocalSpotlightCallbacksWithPrompt(
+    onStartLocalSpotlight,
+    onStopLocalSpotlight,
+    setIsPromptOpen,
+    setPromptProps
+  );
+
+  /* @conditional-compile-remove(spotlight) */
+  const { onStartRemoteSpotlightWithPrompt, onStopRemoteSpotlightWithPrompt } = useRemoteSpotlightCallbacksWithPrompt(
+    onStartRemoteSpotlight,
+    onStopRemoteSpotlight,
+    setIsPromptOpen,
+    setPromptProps
+  );
+
+  const { isPeoplePaneOpen, openPeoplePane, closePeoplePane } = usePeoplePane({
+    ...peoplePaneProps,
+    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds: spotlightedParticipants,
+    /* @conditional-compile-remove(spotlight) */ onStartLocalSpotlight: onStartLocalSpotlightWithPrompt,
+    /* @conditional-compile-remove(spotlight) */ onStopLocalSpotlight: onStopLocalSpotlightWithPrompt,
+    /* @conditional-compile-remove(spotlight) */ onStartRemoteSpotlight: onStartRemoteSpotlightWithPrompt,
+    /* @conditional-compile-remove(spotlight) */ onStopRemoteSpotlight: onStopRemoteSpotlightWithPrompt,
+    /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight
+  });
   const togglePeoplePane = useCallback(() => {
     if (isPeoplePaneOpen) {
       closePeoplePane();
@@ -191,7 +247,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     }
   }, [props.mobileView, isSidePaneOpen]);
 
-  const locale = useLocale();
   const modalStrings = { dismissModalAriaLabel: locale.strings.call.dismissModalAriaLabel };
 
   const isMobileWithActivePane = props.mobileView && isSidePaneOpen;
@@ -205,19 +260,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       position: 'relative'
     };
   }, [isMobileWithActivePane, props.mobileView]);
-
-  /* @conditional-compile-remove(PSTN-calls) */
-  const callWithChatStrings = useCallWithChatCompositeStrings();
-
-  /* @conditional-compile-remove(PSTN-calls) */
-  const dialpadStrings = useMemo(
-    () => ({
-      dialpadModalAriaLabel: callWithChatStrings.dialpadModalAriaLabel,
-      dialpadCloseModalButtonAriaLabel: callWithChatStrings.dialpadCloseModalButtonAriaLabel,
-      placeholderText: callWithChatStrings.dtmfDialpadPlaceholderText
-    }),
-    [callWithChatStrings]
-  );
 
   /* @conditional-compile-remove(video-background-effects) */
   const onResolveVideoEffectDependency = adapter.getState().onResolveVideoEffectDependency;
@@ -241,22 +283,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     setShowDrawer(false);
     togglePeoplePane();
   }, [togglePeoplePane]);
-
-  /* @conditional-compile-remove(PSTN-calls) */
-  const alternateCallerId = useAdapter().getState().alternateCallerId;
-
-  /* @conditional-compile-remove(PSTN-calls) */
-  const [showDtmfDialpad, setShowDtmfDialpad] = useState(false);
-
-  /* @conditional-compile-remove(PSTN-calls) */
-  const onDismissDtmfDialpad = (): void => {
-    setShowDtmfDialpad(false);
-  };
-
-  /* @conditional-compile-remove(PSTN-calls) */
-  const onClickShowDialpad = (): void => {
-    setShowDtmfDialpad(true);
-  };
 
   const drawerContainerStylesValue = useMemo(() => drawerContainerStyles(DRAWER_Z_INDEX), []);
 
@@ -354,8 +380,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   isCaptionsOn={isCaptionsOn}
                   /* @conditional-compile-remove(video-background-effects) */
                   onClickVideoEffects={onResolveVideoEffectDependency ? openVideoEffectsPane : undefined}
-                  /* @conditional-compile-remove(PSTN-calls) */
-                  onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
                   displayVertical={verticalControlBar}
                   /* @conditional-compile-remove(gallery-layouts) */
                   onUserSetOverflowGalleryPositionChange={props.onUserSetOverflowGalleryPositionChange}
@@ -363,8 +387,14 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   onUserSetGalleryLayout={props.onUserSetGalleryLayoutChange}
                   /* @conditional-compile-remove(gallery-layouts) */
                   userSetGalleryLayout={props.userSetGalleryLayout}
+                  /* @conditional-compile-remove(dtmf-dialer) */
+                  onSetDialpadPage={props.onSetDialpadPage}
+                  /* @conditional-compile-remove(dtmf-dialer) */
+                  dtmfDialerPresent={props.dtmfDialerPresent}
                   peopleButtonRef={peopleButtonRef}
                   cameraButtonRef={cameraButtonRef}
+                  /* @conditional-compile-remove(spotlight) */
+                  onStopLocalSpotlight={localParticipant.spotlight ? onStopLocalSpotlight : undefined}
                 />
               )}
             </Stack>
@@ -375,8 +405,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 callControls={props.callControlProps.options}
                 onLightDismiss={closeDrawer}
                 onPeopleButtonClicked={onMoreDrawerPeopleClicked}
-                /* @conditional-compile-remove(PSTN-calls) */
-                onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
                 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
                 disableButtonsForHoldScreen={isInLocalHold}
                 /* @conditional-compile-remove(close-captions) */
@@ -385,23 +413,13 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 onUserSetGalleryLayout={props.onUserSetGalleryLayoutChange}
                 /* @conditional-compile-remove(gallery-layouts) */
                 userSetGalleryLayout={props.userSetGalleryLayout}
+                /* @conditional-compile-remove(dtmf-dialer) */
+                onSetDialpadPage={props.onSetDialpadPage}
+                /* @conditional-compile-remove(dtmf-dialer) */
+                dtmfDialerPresent={props.dtmfDialerPresent}
               />
             </Stack>
           )}
-
-          {
-            /* @conditional-compile-remove(PSTN-calls) */
-            props.callControlProps?.options !== false && showDtmfDialpad && (
-              <Stack styles={drawerContainerStylesValue}>
-                <SendDtmfDialpad
-                  isMobile={props.mobileView}
-                  strings={dialpadStrings}
-                  showDialpad={showDtmfDialpad}
-                  onDismissDialpad={onDismissDtmfDialpad}
-                />
-              </Stack>
-            )
-          }
           <Stack horizontal grow>
             <Stack.Item style={callCompositeContainerCSS}>
               <Stack.Item styles={callGalleryStyles} grow>

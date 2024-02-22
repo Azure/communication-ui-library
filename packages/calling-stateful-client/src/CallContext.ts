@@ -55,6 +55,8 @@ import { convertFromSDKToCaptionInfoState } from './Converter';
 import { convertFromSDKToRaisedHandState } from './Converter';
 /* @conditional-compile-remove(reaction) */
 import { ReactionMessage } from '@azure/communication-calling';
+/* @conditional-compile-remove(spotlight) */
+import { SpotlightedParticipant } from '@azure/communication-calling';
 
 enableMapSet();
 // Needed to generate state diff for verbose logging.
@@ -487,6 +489,58 @@ export class CallContext {
     });
   }
 
+  /* @conditional-compile-remove(spotlight) */
+  public setSpotlight(
+    callId: string,
+    spotlightedParticipants: SpotlightedParticipant[],
+    maxParticipantsToSpotlight: number
+  ): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.spotlight = { ...call.spotlight, spotlightedParticipants, maxParticipantsToSpotlight };
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(spotlight) */
+  public setParticipantSpotlighted(callId: string, spotlightedParticipant: SpotlightedParticipant): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        const participant = call.remoteParticipants[toFlatCommunicationIdentifier(spotlightedParticipant.identifier)];
+        if (participant) {
+          participant.spotlight = { spotlightedOrderPosition: spotlightedParticipant.order };
+        } else if (
+          call.spotlight &&
+          toFlatCommunicationIdentifier(draft.userId) ===
+            toFlatCommunicationIdentifier(spotlightedParticipant.identifier)
+        ) {
+          call.spotlight.localParticipantSpotlight = { spotlightedOrderPosition: spotlightedParticipant.order };
+        }
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(spotlight) */
+  public setParticipantNotSpotlighted(callId: string, spotlightedParticipant: SpotlightedParticipant): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        const participant = call.remoteParticipants[toFlatCommunicationIdentifier(spotlightedParticipant.identifier)];
+        if (participant) {
+          participant.spotlight = undefined;
+        } else if (
+          call.spotlight &&
+          toFlatCommunicationIdentifier(draft.userId) ===
+            toFlatCommunicationIdentifier(spotlightedParticipant.identifier)
+        ) {
+          call.spotlight.localParticipantSpotlight = undefined;
+        }
+      }
+    });
+  }
+
   public setCallScreenShareParticipant(callId: string, participantKey: string | undefined): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -648,7 +702,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(pinned-participants) */
   public setRemoteVideoStreamSize(
     callId: string,
     participantKey: string,

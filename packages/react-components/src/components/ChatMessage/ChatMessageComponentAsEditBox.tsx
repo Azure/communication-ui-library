@@ -8,7 +8,8 @@ import { _formatString } from '@internal/acs-ui-common';
 import { useTheme } from '../../theming/FluentThemeProvider';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { editBoxStyle, inputBoxIcon, editingButtonStyle, editBoxStyleSet } from '../styles/EditBox.styles';
-import { InputBoxButton, InputBoxComponent } from '../InputBoxComponent';
+import { InputBoxComponent } from '../InputBoxComponent';
+import { InputBoxButton } from '../InputBoxButton';
 import { MessageThreadStrings } from '../MessageThread';
 import { useChatMyMessageStyles } from '../styles/MessageThread.styles';
 import { ChatMessage } from '../../types';
@@ -209,17 +210,19 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
     );
   };
 
-  const bodyClassName = mergeClasses(
-    editContainerStyles.body,
-    message.failureReason !== undefined ? editContainerStyles.bodyError : editContainerStyles.bodyDefault
-  );
+  const attached = message.attached === true ? 'center' : message.attached === 'bottom' ? 'bottom' : 'top';
   return (
     <ChatMyMessage
+      attached={attached}
       root={{
-        className: mergeClasses(chatMyMessageStyles.root, editContainerStyles.root)
+        className: chatMyMessageStyles.root
       }}
       body={{
-        className: bodyClassName
+        className: mergeClasses(
+          editContainerStyles.body,
+          message.failureReason !== undefined ? editContainerStyles.bodyError : editContainerStyles.bodyDefault,
+          attached !== 'top' ? editContainerStyles.bodyAttached : undefined
+        )
       }}
     >
       {getContent()}

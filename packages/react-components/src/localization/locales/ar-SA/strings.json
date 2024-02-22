@@ -31,7 +31,7 @@
   "mentionPopover": {
     "mentionPopoverHeader": "الاقتراحات"
   },
-  "imageGallery": {
+  "imageOverlay": {
     "downloadButtonLabel": "تنزيل",
     "dismissButtonAriaLabel": "إغلاق"
   },
@@ -123,6 +123,16 @@
     "tooltipOnContent": "خفض يد",
     "tooltipOffContent": "رفع يد"
   },
+  "reactionButton": {
+    "label": "تفاعل",
+    "tooltipDisabledContent": "تم تعطيل إجراء التفاعل",
+    "tooltipContent": "إرسال تفاعل",
+    "likeReactionTooltipContent": "إعجاب",
+    "heartReactionTooltipContent": "حب",
+    "laughReactionTooltipContent": "ضحك",
+    "applauseReactionTooltipContent": "تصفيق",
+    "surprisedReactionTooltipContent": "مندهش"
+  },
   "messageThread": {
     "yesterday": "أمس",
     "sunday": "الأحد",
@@ -190,7 +200,8 @@
     "failedToJoinCallGeneric": "فشل في الانضمام إلى المكالمة.",
     "failedToJoinCallInvalidMeetingLink": "تعذر الانضمام إلى الاجتماع. ارتباط غير صالح.",
     "cameraFrozenForRemoteParticipants": "يواجه المستخدمون في المكالمة مشكلات في رؤية الفيديو الخاص بك. الرجاء التحقق من أجهزتك وشبكتك.",
-    "unableToStartVideoEffect": "يتعذر تطبيق تأثير الفيديو."
+    "unableToStartVideoEffect": "يتعذر تطبيق تأثير الفيديو.",
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "لا يمكن بدء تسليط الضوء على المشاركين (المشاركين) لأنه تم بالفعل تسليط الضوء على الحد الأقصى لعدد المشاركين."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "أنت تشارك شاشتك",
@@ -208,7 +219,12 @@
     "pinParticipantMenuItemAriaLabel": "تثبيت {participantName}",
     "unpinParticipantMenuItemAriaLabel": "إزالة تثبيت {participantName}",
     "pinnedParticipantAnnouncementAriaLabel": "تم تثبيت {participantName}",
-    "unpinnedParticipantAnnouncementAriaLabel": "تم إلغاء تثبيت {participantName}"
+    "unpinnedParticipantAnnouncementAriaLabel": "تم إلغاء تثبيت {participantName}",
+    "startSpotlightVideoTileMenuLabel": "تسليط الضوء لدى الجميع",
+    "addSpotlightVideoTileMenuLabel": "إضافة تسليط ضوء",
+    "spotlightLimitReachedMenuTitle": "تم الوصول إلى الحد الأقصى لتسليط الضوء",
+    "stopSpotlightVideoTileMenuLabel": "التوقف عن تسليط الضوء",
+    "stopSpotlightOnSelfVideoTileMenuLabel": "الخروج من وضع تسليط الضوء"
   },
   "dialpad": {
     "placeholderText": "أدخل رقم الهاتف",

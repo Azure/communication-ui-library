@@ -15,6 +15,8 @@ import {
   CallErrors,
   DiagnosticsCallFeatureState
 } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(spotlight) */
+import { SpotlightCallFeatureState } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(reaction) */
 import { ReactionState } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(close-captions) */
@@ -58,7 +60,7 @@ export const isHideAttendeeNamesEnabled = (state: CallClientState, props: Callin
 /**
  * @private
  */
-export const getCapabilites = (
+export const getCapabilities = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ): ParticipantCapabilities | undefined => state.calls[props.callId]?.capabilitiesFeature?.capabilities;
@@ -100,6 +102,17 @@ export const getLocalParticipantRaisedHand = (
   props: CallingBaseSelectorProps
 ): RaisedHandState | undefined => {
   return state.calls[props.callId]?.raiseHand?.localParticipantRaisedHand;
+};
+
+/* @conditional-compile-remove(spotlight) */
+/**
+ * @private
+ */
+export const getSpotlightCallFeature = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): SpotlightCallFeatureState | undefined => {
+  return state.calls[props.callId]?.spotlight;
 };
 
 /* @conditional-compile-remove(reaction) */

@@ -31,7 +31,7 @@
   "mentionPopover": {
     "mentionPopoverHeader": "Рекомендации"
   },
-  "imageGallery": {
+  "imageOverlay": {
     "downloadButtonLabel": "Скачать",
     "dismissButtonAriaLabel": "Закрыть"
   },
@@ -123,6 +123,16 @@
     "tooltipOnContent": "Опустить руку",
     "tooltipOffContent": "Поднять руку"
   },
+  "reactionButton": {
+    "label": "Отреагировать",
+    "tooltipDisabledContent": "Действие реакции отключено",
+    "tooltipContent": "Отправка реакции",
+    "likeReactionTooltipContent": "Нравится",
+    "heartReactionTooltipContent": "Люблю",
+    "laughReactionTooltipContent": "Смеюсь",
+    "applauseReactionTooltipContent": "Аплодисменты",
+    "surprisedReactionTooltipContent": "Удивляюсь"
+  },
   "messageThread": {
     "yesterday": "Вчера",
     "sunday": "Воскресенье",
@@ -190,7 +200,8 @@
     "failedToJoinCallGeneric": "Не удалось присоединиться к звонку.",
     "failedToJoinCallInvalidMeetingLink": "Не удалось присоединиться к собранию. Недопустимая ссылка.",
     "cameraFrozenForRemoteParticipants": "У участников звонка возникают проблемы с просмотром вашего видео. Проверьте свои устройства и сеть.",
-    "unableToStartVideoEffect": "Не удалось применить эффект видео."
+    "unableToStartVideoEffect": "Не удалось применить эффект видео.",
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "Не удается запустить закрепление участников, так как достигнуто предельное число закрепленных участников."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Вы демонстрируете свой экран",
@@ -208,7 +219,12 @@
     "pinParticipantMenuItemAriaLabel": "Закрепить участника {participantName}",
     "unpinParticipantMenuItemAriaLabel": "Открепить участника {participantName}",
     "pinnedParticipantAnnouncementAriaLabel": "Участник {participantName} закреплен",
-    "unpinnedParticipantAnnouncementAriaLabel": "Участник {participantName} откреплен"
+    "unpinnedParticipantAnnouncementAriaLabel": "Участник {participantName} откреплен",
+    "startSpotlightVideoTileMenuLabel": "Закрепить видео для всех",
+    "addSpotlightVideoTileMenuLabel": "Добавить закрепление",
+    "spotlightLimitReachedMenuTitle": "Достигнуто предельное число закреплений",
+    "stopSpotlightVideoTileMenuLabel": "Не закреплять",
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Открепить"
   },
   "dialpad": {
     "placeholderText": "Введите номер телефона",

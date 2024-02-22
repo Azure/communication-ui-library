@@ -8,6 +8,8 @@ import { ActiveErrorMessage, ErrorBar, ParticipantMenuItemsCallback } from '@int
 /* @conditional-compile-remove(gallery-layouts) */
 import { VideoGalleryLayout } from '@internal/react-components';
 import React from 'react';
+/* @conditional-compile-remove(dtmf-dialer) */ /* @conditional-compile-remove(spotlight) */
+import { useState } from 'react';
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { useLocale } from '../../localization';
 import { CallCompositeOptions } from '../CallComposite';
@@ -20,6 +22,8 @@ import { useSelector } from '../hooks/useSelector';
 import { callStatusSelector } from '../selectors/callStatusSelector';
 import { complianceBannerSelector } from '../selectors/complianceBannerSelector';
 import { mediaGallerySelector } from '../selectors/mediaGallerySelector';
+/* @conditional-compile-remove(dtmf-dialer) */
+import { getRemoteParticipantsConnectedSelector } from '../selectors/mediaGallerySelector';
 import { mutedNotificationSelector } from '../selectors/mutedNotificationSelector';
 import { networkReconnectTileSelector } from '../selectors/networkReconnectTileSelector';
 import { reduceCallControlsForMobile } from '../utils';
@@ -27,6 +31,14 @@ import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
 import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
 /* @conditional-compile-remove(capabilities) */
 import { CapabilitiesChangeNotificationBarProps } from '../components/CapabilitiesChangedNotificationBar';
+/* @conditional-compile-remove(dtmf-dialer) */
+import { DtmfDialpadPage } from './DtmfDialpadPage';
+/* @conditional-compile-remove(dtmf-dialer) */
+import { showDtmfDialer } from '../utils/MediaGalleryUtils';
+/* @conditional-compile-remove(dtmf-dialer) */
+import { getTargetCallees } from '../selectors/baseSelectors';
+/* @conditional-compile-remove(spotlight) */
+import { Prompt, PromptProps } from '../components/Prompt';
 
 /**
  * @private
@@ -85,6 +97,15 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   const errorBarProps = usePropsFor(ErrorBar);
   const mutedNotificationProps = useSelector(mutedNotificationSelector);
   const networkReconnectTileProps = useSelector(networkReconnectTileSelector);
+  /* @conditional-compile-remove(dtmf-dialer) */
+  const remoteParticipantsConnected = useSelector(getRemoteParticipantsConnectedSelector);
+
+  /* @conditional-compile-remove(dtmf-dialer) */
+  const callees = useSelector(getTargetCallees);
+  /* @conditional-compile-remove(dtmf-dialer) */
+  const renderDtmfDialerFromStart = showDtmfDialer(callees, remoteParticipantsConnected);
+  /* @conditional-compile-remove(dtmf-dialer) */
+  const [dtmfDialerPresent, setDtmfDialerPresent] = useState<boolean>(renderDtmfDialerFromStart);
 
   const strings = useLocale().strings.call;
 
@@ -92,63 +113,129 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   const callControlOptions = mobileView ? reduceCallControlsForMobile(options?.callControls) : options?.callControls;
 
   const drawerMenuHostId = useId('drawerMenuHost');
+  /* @conditional-compile-remove(spotlight) */
+  const [isPromptOpen, setIsPromptOpen] = useState<boolean>(false);
+  /* @conditional-compile-remove(spotlight) */
+  const [promptProps, setPromptProps] = useState<PromptProps>();
+
+  const onRenderGalleryContentTrampoline = (): JSX.Element => {
+    /* @conditional-compile-remove(dtmf-dialer) */
+    if (dtmfDialerPresent) {
+      return (
+        <DtmfDialpadPage
+          mobileView={props.mobileView}
+          modalLayerHostId={props.modalLayerHostId}
+          options={props.options}
+          updateSidePaneRenderer={props.updateSidePaneRenderer}
+          mobileChatTabHeader={props.mobileChatTabHeader}
+          latestErrors={props.latestErrors}
+          onDismissError={props.onDismissError}
+          /* @conditional-compile-remove(capabilities) */
+          capabilitiesChangedNotificationBarProps={props.capabilitiesChangedNotificationBarProps}
+          onSetDialpadPage={() => setDtmfDialerPresent(!dtmfDialerPresent)}
+          dtmfDialerPresent={dtmfDialerPresent}
+        />
+      );
+    } else {
+      return (
+        <MediaGallery
+          isMobile={mobileView}
+          {...mediaGalleryProps}
+          {...mediaGalleryHandlers}
+          onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+          remoteVideoTileMenuOptions={options?.remoteVideoTileMenuOptions}
+          drawerMenuHostId={drawerMenuHostId}
+          /* @conditional-compile-remove(click-to-call) */
+          localVideoTileOptions={options?.localVideoTile}
+          /* @conditional-compile-remove(gallery-layouts) */
+          userSetOverflowGalleryPosition={userSetOverflowGalleryPosition}
+          /* @conditional-compile-remove(gallery-layouts) */
+          userSetGalleryLayout={galleryLayout}
+          /* @conditional-compile-remove(spotlight) */
+          setIsPromptOpen={setIsPromptOpen}
+          /* @conditional-compile-remove(spotlight) */
+          setPromptProps={setPromptProps}
+        />
+      );
+    }
+    return (
+      <MediaGallery
+        isMobile={mobileView}
+        {...mediaGalleryProps}
+        {...mediaGalleryHandlers}
+        onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+        remoteVideoTileMenuOptions={options?.remoteVideoTileMenuOptions}
+        drawerMenuHostId={drawerMenuHostId}
+        /* @conditional-compile-remove(click-to-call) */
+        localVideoTileOptions={options?.localVideoTile}
+        /* @conditional-compile-remove(gallery-layouts) */
+        userSetOverflowGalleryPosition={userSetOverflowGalleryPosition}
+        /* @conditional-compile-remove(gallery-layouts) */
+        userSetGalleryLayout={galleryLayout}
+        /* @conditional-compile-remove(spotlight) */
+        setIsPromptOpen={setIsPromptOpen}
+        /* @conditional-compile-remove(spotlight) */
+        setPromptProps={setPromptProps}
+      />
+    );
+  };
 
   return (
-    <CallArrangement
-      id={drawerMenuHostId}
-      complianceBannerProps={{ ...complianceBannerProps, strings }}
-      errorBarProps={options?.errorBar !== false && errorBarProps}
-      mutedNotificationProps={mutedNotificationProps}
-      callControlProps={{
-        callInvitationURL: callInvitationURL,
-        onFetchParticipantMenuItems: onFetchParticipantMenuItems,
-        options: callControlOptions,
-        increaseFlyoutItemSize: mobileView
-      }}
-      /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
-      onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-      mobileView={mobileView}
-      modalLayerHostId={props.modalLayerHostId}
-      onRenderGalleryContent={() =>
-        _isInCall(callStatus) ? (
-          isNetworkHealthy(networkReconnectTileProps.networkReconnectValue) ? (
-            <MediaGallery
-              isMobile={mobileView}
-              {...mediaGalleryProps}
-              {...mediaGalleryHandlers}
-              onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-              /* @conditional-compile-remove(pinned-participants) */
-              remoteVideoTileMenuOptions={options?.remoteVideoTileMenuOptions}
-              drawerMenuHostId={drawerMenuHostId}
-              /* @conditional-compile-remove(click-to-call) */
-              localVideoTileOptions={options?.localVideoTile}
-              /* @conditional-compile-remove(gallery-layouts) */
-              userSetOverflowGalleryPosition={userSetOverflowGalleryPosition}
-              /* @conditional-compile-remove(gallery-layouts) */
-              userSetGalleryLayout={galleryLayout}
-            />
+    <>
+      <CallArrangement
+        id={drawerMenuHostId}
+        complianceBannerProps={{ ...complianceBannerProps, strings }}
+        errorBarProps={options?.errorBar !== false && errorBarProps}
+        mutedNotificationProps={mutedNotificationProps}
+        callControlProps={{
+          callInvitationURL: callInvitationURL,
+          onFetchParticipantMenuItems: onFetchParticipantMenuItems,
+          options: callControlOptions,
+          increaseFlyoutItemSize: mobileView
+        }}
+        /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
+        onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+        mobileView={mobileView}
+        modalLayerHostId={props.modalLayerHostId}
+        onRenderGalleryContent={() =>
+          _isInCall(callStatus) ? (
+            isNetworkHealthy(networkReconnectTileProps.networkReconnectValue) ? (
+              onRenderGalleryContentTrampoline()
+            ) : (
+              <NetworkReconnectTile {...networkReconnectTileProps} />
+            )
           ) : (
-            <NetworkReconnectTile {...networkReconnectTileProps} />
+            <></>
           )
-        ) : (
-          <></>
-        )
+        }
+        updateSidePaneRenderer={props.updateSidePaneRenderer}
+        mobileChatTabHeader={props.mobileChatTabHeader}
+        onCloseChatPane={onCloseChatPane}
+        dataUiId={'call-page'}
+        latestErrors={props.latestErrors}
+        onDismissError={props.onDismissError}
+        /* @conditional-compile-remove(gallery-layouts) */
+        onUserSetOverflowGalleryPositionChange={onSetUserSetOverflowGalleryPosition}
+        /* @conditional-compile-remove(gallery-layouts) */
+        onUserSetGalleryLayoutChange={onUserSetGalleryLayoutChange}
+        /* @conditional-compile-remove(gallery-layouts) */
+        userSetGalleryLayout={galleryLayout}
+        /* @conditional-compile-remove(capabilities) */
+        capabilitiesChangedNotificationBarProps={props.capabilitiesChangedNotificationBarProps}
+        /* @conditional-compile-remove(dtmf-dialer) */
+        onSetDialpadPage={() => setDtmfDialerPresent(!dtmfDialerPresent)}
+        /* @conditional-compile-remove(dtmf-dialer) */
+        dtmfDialerPresent={dtmfDialerPresent}
+        /* @conditional-compile-remove(spotlight) */
+        setIsPromptOpen={setIsPromptOpen}
+        /* @conditional-compile-remove(spotlight) */
+        setPromptProps={setPromptProps}
+      />
+      {
+        /* @conditional-compile-remove(spotlight) */
+        <Prompt isOpen={isPromptOpen} onDismiss={() => setIsPromptOpen(false)} {...promptProps} />
       }
-      updateSidePaneRenderer={props.updateSidePaneRenderer}
-      mobileChatTabHeader={props.mobileChatTabHeader}
-      onCloseChatPane={onCloseChatPane}
-      dataUiId={'call-page'}
-      latestErrors={props.latestErrors}
-      onDismissError={props.onDismissError}
-      /* @conditional-compile-remove(gallery-layouts) */
-      onUserSetOverflowGalleryPositionChange={onSetUserSetOverflowGalleryPosition}
-      /* @conditional-compile-remove(gallery-layouts) */
-      onUserSetGalleryLayoutChange={onUserSetGalleryLayoutChange}
-      /* @conditional-compile-remove(gallery-layouts) */
-      userSetGalleryLayout={galleryLayout}
-      /* @conditional-compile-remove(capabilities) */
-      capabilitiesChangedNotificationBarProps={props.capabilitiesChangedNotificationBarProps}
-    />
+    </>
   );
 };
 

@@ -60,6 +60,11 @@
     "removedFromCallMoreDetails": "Outro participante removeu você da chamada.",
     "removedFromCallTitle": "Você foi removido",
     "removeMenuLabel": "Remover",
+    "startSpotlightParticipantListMenuLabel": "Destacar para todos",
+    "addSpotlightParticipantListMenuLabel": "Adicionar destaque",
+    "stopSpotlightParticipantListMenuLabel": "Parar de destacar",
+    "stopSpotlightOnSelfParticipantListMenuLabel": "Sair de destaque",
+    "spotlightLimitReachedParticipantListMenuTitle": "Limite de destaque atingido",
     "returnToCallButtonAriaDescription": "Retornar à Chamada",
     "returnToCallButtonAriaLabel": "Voltar",
     "roomNotFoundDetails": "Não foi possível encontrar a ID da sala fornecida.",
@@ -118,6 +123,15 @@
     "dismissModalAriaLabel": "Imagem e imagem local e remota, pressione Enter para retornar à chamada",
     "callRejectedTitle": "Não foi possível concluir a chamada",
     "callRejectedMoreDetails": "A pessoa que você está tentando acessar não está disponível. Tente novamente mais tarde.",
+    "callTimeoutTitle": "Não foi possível concluir a chamada",
+    "callTimeoutDetails": "A pessoa que você está tentando acessar não está disponível. Tente novamente mais tarde.",
+    "callTimeoutBotTitle": "Não foi possível concluir a chamada",
+    "callTimeoutBotDetails": "O serviço que você está tentando acessar não está disponível. Tente novamente mais tarde.",
+    "dtmfDialerButtonLabel": "Teclado de discagem",
+    "dtmfDialerButtonTooltipOn": "Mostrar teclado de discagem",
+    "dtmfDialerButtonTooltipOff": "Ocultar teclado de discagem",
+    "dtmfDialerMoreButtonLabelOn": "Mostrar teclado de discagem",
+    "dtmfDialerMoreButtonLabelOff": "Ocultar teclado de discagem",
     "spokenLanguageStrings": {
       "ar-ae": "Árabe - Emirados Árabes Unidos",
       "ar-sa": "Árabe - Arábia Saudita",
@@ -229,6 +243,81 @@
         "lostDueToRoleChangeToAttendee": "Sua função foi alterada. Algumas ações, como o compartilhamento de conteúdo, não estarão disponíveis para você.",
         "grantedDueToRoleChangeToPresenter": "Você é um apresentador. Você pode compartilhar conteúdo e facilitar a reunião."
       }
+    },
+    "surveyTitle": "Ajude-nos a melhorar",
+    "starSurveyHelperText": "Como estava a qualidade da chamada?",
+    "starSurveyOneStarText": "A qualidade era ruim.",
+    "starSurveyTwoStarText": "A qualidade era ruim.",
+    "starSurveyThreeStarText": "A qualidade era boa.",
+    "starSurveyFourStarText": "A qualidade era ótima.",
+    "starSurveyFiveStarText": "A qualidade estava excelente.",
+    "surveyConfirmButtonLabel": "Enviar Comentários",
+    "starRatingAriaLabel": "Selecione {0} de {1} estrelas",
+    "surveySkipButtonLabel": "Ignorar",
+    "tagsSurveyQuestion": "O que poderia ter sido melhor?",
+    "tagsSurveyTextFieldDefaultText": "Outro; especifique",
+    "tagsSurveyHelperText": "Marque quaisquer problemas que você tenha enfrentado.",
+    "surveyTextboxDefaultText": "Outro. Especifique",
+    "endOfSurveyText": "Agradecemos seus comentários!",
+    "surveyIssues": {
+      "overallRating": {
+        "callCannotJoin": "Não foi possível ingressar na chamada",
+        "callCannotInvite": "Não foi possível convidar outras pessoas para a chamada",
+        "hadToRejoin": "Eu tive que reingressar na chamada",
+        "callEndedUnexpectedly": "A chamada foi encerrada inesperadamente para mim",
+        "otherIssues": "Eu tive outros problemas com a chamada"
+      },
+      "audioRating": {
+        "noLocalAudio": "O outro lado não conseguiu ouvir nenhum som",
+        "noRemoteAudio": "Não consegui ouvir o som",
+        "echo": "Ouvi ecos na chamada",
+        "audioNoise": "Ouvi ruído na chamada",
+        "lowVolume": "O volume estava baixo",
+        "audioStoppedUnexpectedly": "O áudio foi interrompido inesperadamente",
+        "distortedSpeech": "O áudio estava distorcido",
+        "audioInterruption": "O áudio foi interrompido",
+        "otherIssues": "Eu tive outros problemas de áudio nesta chamada"
+      },
+      "videoRating": {
+        "noVideoReceived": "Não consegui ver o vídeo",
+        "noVideoSent": "Outras pessoas não puderam me ver",
+        "lowQuality": "A qualidade do vídeo estava baixa",
+        "freezes": "O vídeo ficou congelado",
+        "stoppedUnexpectedly": "O vídeo foi interrompido inesperadamente",
+        "darkVideoReceived": "Só consigo ver telas escuras quando outras pessoas ativam a câmera",
+        "audioVideoOutOfSync": "O Áudio e o Vídeo estavam fora de sincronia",
+        "otherIssues": "Eu tive outros problemas de vídeo nesta chamada"
+      },
+      "screenshareRating": {
+        "noContentLocal": "Outras pessoas não puderam ver meu compartilhamento de tela",
+        "noContentRemote": "Não foi possível ver o compartilhamento de tela de outras pessoas",
+        "cannotPresent": "Não foi possível apresentar minha tela",
+        "lowQuality": "A qualidade do compartilhamento de tela estava baixa",
+        "freezes": "O compartilhamento de tela ficou congelado",
+        "stoppedUnexpectedly": "O compartilhamento de tela foi interrompido inesperadamente",
+        "largeDelay": "O compartilhamento de tela tem um grande atraso",
+        "otherIssues": "Eu estava tendo outros problemas de compartilhamento de tela nesta chamada"
+      }
+    },
+    "SurveyIssuesHeadingStrings": {
+      "overallRating": "De modo geral",
+      "audioRating": "Áudio",
+      "videoRating": "Vídeo",
+      "screenshareRating": "Apresentando"
+    },
+    "spotlightPrompt": {
+      "startSpotlightHeading": "Destacar para todo mundo?",
+      "startSpotlightText": "Você vai realçar este vídeo para todos os participantes da reunião.",
+      "startSpotlightOnSelfText": "Você realçará seu vídeo para todos os participantes da reunião.",
+      "startSpotlightConfirmButtonLabel": "Destacar para todo mundo",
+      "startSpotlightCancelButtonLabel": "Cancelar",
+      "stopSpotlightHeading": "Parar de destacar?",
+      "stopSpotlightOnSelfHeading": "Sair do destaque?",
+      "stopSpotlightText": "Esse vídeo não será mais realçado para todos os participantes da reunião.",
+      "stopSpotlightOnSelfText": "Seu vídeo não será mais realçado para todos os participantes da reunião.",
+      "stopSpotlightConfirmButtonLabel": "Parar de destacar",
+      "stopSpotlightOnSelfConfirmButtonLabel": "Sair do destaque",
+      "stopSpotlightCancelButtonLabel": "Cancelar"
     }
   },
   "chat": {

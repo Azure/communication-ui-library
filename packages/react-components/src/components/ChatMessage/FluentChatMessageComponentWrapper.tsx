@@ -52,9 +52,8 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
     onActionButtonClick,
     /* @conditional-compile-remove(date-time-customization) */
     onDisplayDateTimeString,
-    onFetchInlineAttachment,
-    onInlineImageClicked,
-    inlineAttachments,
+    /* @conditional-compile-remove(image-overlay) */
+    inlineImageOptions,
     /* @conditional-compile-remove(mention) */
     mentionOptions,
     /* @conditional-compile-remove(file-sharing) */
@@ -98,9 +97,8 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
             onActionButtonClick={onActionButtonClick}
             /* @conditional-compile-remove(date-time-customization) */
             onDisplayDateTimeString={onDisplayDateTimeString}
-            onFetchAttachments={onFetchInlineAttachment}
-            onInlineImageClicked={onInlineImageClicked}
-            attachmentsMap={inlineAttachments[messageProps.message.messageId] ?? {}}
+            /* @conditional-compile-remove(image-overlay) */
+            inlineImageOptions={inlineImageOptions}
             /* @conditional-compile-remove(mention) */
             mentionOptions={mentionOptions}
             /* @conditional-compile-remove(file-sharing) */
@@ -120,9 +118,8 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
       userId,
       /* @conditional-compile-remove(date-time-customization) */
       onDisplayDateTimeString,
-      onFetchInlineAttachment,
-      onInlineImageClicked,
-      inlineAttachments,
+      /* @conditional-compile-remove(image-overlay) */
+      inlineImageOptions,
       /* @conditional-compile-remove(mention) */
       mentionOptions,
       /* @conditional-compile-remove(file-sharing) */

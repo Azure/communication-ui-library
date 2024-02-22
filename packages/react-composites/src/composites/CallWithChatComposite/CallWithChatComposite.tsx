@@ -31,7 +31,6 @@ import { FileSharingOptions } from '../ChatComposite';
 import { containerDivStyles } from '../common/ContainerRectProps';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { CallCompositeInner, CallCompositeOptions } from '../CallComposite/CallComposite';
-/* @conditional-compile-remove(pinned-participants) */
 import { RemoteVideoTileMenuOptions } from '../CallComposite/CallComposite';
 /* @conditional-compile-remove(click-to-call) */
 import { LocalVideoTileOptions } from '../CallComposite/CallComposite';
@@ -166,7 +165,6 @@ export type CallWithChatCompositeOptions = {
    * if this is not supplied, the composite will not show a unsupported browser page.
    */
   onEnvironmentInfoTroubleshootingClick?: () => void;
-  /* @conditional-compile-remove(pinned-participants) */
   /**
    * Remote participant video tile menu options
    */
@@ -194,10 +192,15 @@ export type CallWithChatCompositeOptions = {
    */
   surveyOptions?: {
     /**
-     * Hide call survey at the end of a call.
+     * Disable call survey at the end of a call.
      * @defaultValue false
      */
-    hideSurvey?: boolean;
+    disableSurvey?: boolean;
+    /**
+     * Optional callback to redirect users to custom screens when survey is done, note that default end call screen will be shown if this callback is not provided
+     * This callback can be used to redirect users to different screens depending on survey state, whether it is submitted, skipped or has a problem when submitting the survey
+     */
+    onSurveyClosed?: (surveyState: 'sent' | 'skipped' | 'error', surveyError?: string) => void;
     /**
      * Optional callback to handle survey data including free form text response
      * Note that free form text response survey option is only going to be enabled when this callback is provided
@@ -286,7 +289,6 @@ type CallWithChatScreenProps = {
   onNetworkingTroubleShootingClick?: () => void;
   /* @conditional-compile-remove(unsupported-browser) */
   onEnvironmentInfoTroubleshootingClick?: () => void;
-  /* @conditional-compile-remove(pinned-participants) */
   remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
   /* @conditional-compile-remove(click-to-call) */
   localVideoTile?: boolean | LocalVideoTileOptions;
@@ -300,10 +302,15 @@ type CallWithChatScreenProps = {
    */
   surveyOptions?: {
     /**
-     * Hide call survey at the end of a call.
+     * Disable call survey at the end of a call.
      * @defaultValue false
      */
-    hideSurvey?: boolean;
+    disableSurvey?: boolean;
+    /**
+     * Optional callback to redirect users to custom screens when survey is done, note that default end call screen will be shown if this callback is not provided
+     * This callback can be used to redirect users to different screens depending on survey state, whether it is submitted, skipped or has a problem when submitting the survey
+     */
+    onSurveyClosed?: (surveyState: 'sent' | 'skipped' | 'error', surveyError?: string) => void;
     /**
      * Optional callback to handle survey data including free form text response
      * Note that free form text response survey option is only going to be enabled when this callback is provided
@@ -509,7 +516,6 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       onPermissionsTroubleshootingClick: props.onPermissionsTroubleshootingClick,
       /* @conditional-compile-remove(unsupported-browser) */
       onEnvironmentInfoTroubleshootingClick: props.onEnvironmentInfoTroubleshootingClick,
-      /* @conditional-compile-remove(pinned-participants) */
       remoteVideoTileMenuOptions: props.remoteVideoTileMenuOptions,
       /* @conditional-compile-remove(gallery-layouts) */
       galleryOptions: props.galleryOptions,
@@ -541,7 +547,6 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       props.galleryOptions,
       /* @conditional-compile-remove(click-to-call) */
       props.localVideoTile,
-      /* @conditional-compile-remove(pinned-participants) */
       props.remoteVideoTileMenuOptions,
       /* @conditional-compile-remove(end-of-call-survey) */
       surveyOptions,
@@ -670,7 +675,6 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         callControls={options?.callControls}
         joinInvitationURL={joinInvitationURL}
         fluentTheme={fluentTheme}
-        /* @conditional-compile-remove(pinned-participants) */
         remoteVideoTileMenuOptions={options?.remoteVideoTileMenuOptions}
         /* @conditional-compile-remove(file-sharing) */
         fileSharing={options?.fileSharing}

@@ -12,8 +12,10 @@ import {
   getIsScreenSharingOn,
   getLocalVideoStreams
 } from './baseSelectors';
+/* @conditional-compile-remove(reaction) */
+import { getLocalParticipantReactionState } from './baseSelectors';
 /* @conditional-compile-remove(capabilities) */
-import { getCapabilites, getRole } from './baseSelectors';
+import { getCapabilities, getRole } from './baseSelectors';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(raise-hand) */
 import { getCallState } from './baseSelectors';
 import { _isPreviewOn } from './utils/callUtils';
@@ -46,7 +48,7 @@ export const microphoneButtonSelector: MicrophoneButtonSelector = reselect.creat
     getCallExists,
     getIsMuted,
     getDeviceManager,
-    /* @conditional-compile-remove(capabilities) */ getCapabilites,
+    /* @conditional-compile-remove(capabilities) */ getCapabilities,
     /* @conditional-compile-remove(capabilities) */ getRole
   ],
   (
@@ -96,7 +98,7 @@ export const cameraButtonSelector: CameraButtonSelector = reselect.createSelecto
   [
     getLocalVideoStreams,
     getDeviceManager,
-    /* @conditional-compile-remove(capabilities) */ getCapabilites,
+    /* @conditional-compile-remove(capabilities) */ getCapabilities,
     /* @conditional-compile-remove(capabilities) */ getRole
   ],
   (
@@ -168,6 +170,36 @@ export const raiseHandButtonSelector: RaiseHandButtonSelector = reselect.createS
   }
 );
 
+/* @conditional-compile-remove(reaction) */
+/**
+ * Selector type for {@link ReactionButton} component.
+ *
+ * @beta
+ */
+export type ReactionButtonSelector = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+) => {
+  checked?: boolean;
+  disabled?: boolean;
+};
+
+/* @conditional-compile-remove(reaction) */
+/**
+ * Selector for {@link ReactionButton} component.
+ *
+ * @beta
+ */
+export const reactionButtonSelector: ReactionButtonSelector = reselect.createSelector(
+  [getLocalParticipantReactionState, getCallState],
+  (reaction, callState) => {
+    return {
+      checked: reaction ? true : false,
+      disabled: callState !== 'Connected'
+    };
+  }
+);
+
 /**
  * Selector for {@link ScreenShareButton} component.
  *
@@ -177,7 +209,7 @@ export const screenShareButtonSelector: ScreenShareButtonSelector = reselect.cre
   [
     getIsScreenSharingOn,
     /* @conditional-compile-remove(PSTN-calls) */ getCallState,
-    /* @conditional-compile-remove(capabilities) */ getCapabilites,
+    /* @conditional-compile-remove(capabilities) */ getCapabilities,
     /* @conditional-compile-remove(capabilities) */ getRole
   ],
   (

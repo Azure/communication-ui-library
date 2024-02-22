@@ -38,6 +38,7 @@ import { ParticipantRole } from '@azure/communication-calling';
 import { ReactionMessage } from '@azure/communication-calling';
 import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/communication-calling';
 import { ScalingMode } from '@azure/communication-calling';
+import { SpotlightedParticipant } from '@azure/communication-calling';
 import { TeamsCall as TeamsCall_2 } from '@azure/communication-calling';
 import { TeamsCallAgent as TeamsCallAgent_2 } from '@azure/communication-calling';
 import { _TelemetryImplementationHint } from '@internal/acs-ui-common';
@@ -46,7 +47,7 @@ import { VideoEffectName } from '@azure/communication-calling';
 import { VideoStreamRenderer } from '@azure/communication-calling';
 import { VideoStreamRendererView } from '@azure/communication-calling';
 
-// @beta
+// @public
 export interface AcceptedTransfer {
     callId: string;
     timestamp: Date;
@@ -132,6 +133,7 @@ export interface CallState {
     };
     role?: ParticipantRole;
     screenShareRemoteParticipant?: string;
+    spotlight?: SpotlightCallFeatureState;
     startTime: Date;
     state: CallState_2;
     totalParticipantCount?: number;
@@ -302,6 +304,7 @@ export interface RemoteParticipantState {
     // @beta
     reactionState?: ReactionState;
     role?: ParticipantRole;
+    spotlight?: SpotlightState;
     state: RemoteParticipantState_2;
     videoStreams: {
         [key: number]: RemoteVideoStreamState;
@@ -320,6 +323,18 @@ export interface RemoteVideoStreamState {
         height: number;
     };
     view?: VideoStreamRendererViewState;
+}
+
+// @beta
+export interface SpotlightCallFeatureState {
+    localParticipantSpotlight?: SpotlightState;
+    maxParticipantsToSpotlight: number;
+    spotlightedParticipants: SpotlightedParticipant[];
+}
+
+// @beta
+export interface SpotlightState {
+    spotlightedOrderPosition?: number;
 }
 
 // @public
@@ -361,7 +376,7 @@ export interface TranscriptionCallFeature {
     isTranscriptionActive: boolean;
 }
 
-// @beta
+// @public
 export interface TransferFeature {
     acceptedTransfers: {
         [key: string]: AcceptedTransfer;

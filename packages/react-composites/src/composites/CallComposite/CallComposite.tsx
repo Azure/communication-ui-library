@@ -10,13 +10,13 @@ import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons } from '../common/icons';
 import { useLocale } from '../localization';
-import { CommonCallAdapter } from './adapter/CallAdapter';
+import { CommonCallAdapter, StartCallIdentifier } from './adapter/CallAdapter';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
 import { CallPage } from './pages/CallPage';
 import { ConfigurationPage } from './pages/ConfigurationPage';
 import { NoticePage } from './pages/NoticePage';
 import { useSelector } from './hooks/useSelector';
-import { getEndedCall, getPage } from './selectors/baseSelectors';
+import { getEndedCall, getPage, getTargetCallees } from './selectors/baseSelectors';
 import { LobbyPage } from './pages/LobbyPage';
 /* @conditional-compile-remove(call-transfer) */
 import { TransferPage } from './pages/TransferPage';
@@ -57,6 +57,8 @@ import { capabilitiesChangedInfoAndRoleSelector } from './selectors/capabilities
 /* @conditional-compile-remove(capabilities) */
 import { useTrackedCapabilityChangedNotifications } from './utils/TrackCapabilityChangedNotifications';
 import { useEndedCallConsoleErrors } from './utils/useConsoleErrors';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { SurveyPage } from './pages/SurveyPage';
 
 /**
  * Props for {@link CallComposite}.
@@ -110,7 +112,6 @@ export interface DeviceCheckOptions {
   microphone: 'required' | 'optional' | 'doNotPrompt';
 }
 
-/* @conditional-compile-remove(pinned-participants) */
 /**
  * Menu options for remote video tiles in {@link VideoGallery}.
  *
@@ -129,7 +130,7 @@ export interface RemoteVideoTileMenuOptions {
 /**
  * Options for the local video tile in the Call composite.
  *
- * @beta
+ * @public
  */
 export interface LocalVideoTileOptions {
   /**
@@ -215,7 +216,6 @@ export type CallCompositeOptions = {
    * if this is not supplied, the composite will not show a unsupported browser page.
    */
   onEnvironmentInfoTroubleshootingClick?: () => void;
-  /* @conditional-compile-remove(pinned-participants) */
   /**
    * Remote participant video tile menu options
    */
@@ -243,10 +243,15 @@ export type CallCompositeOptions = {
    */
   surveyOptions?: {
     /**
-     * Hide call survey at the end of a call.
+     * Disable call survey at the end of a call.
      * @defaultValue false
      */
-    hideSurvey?: boolean;
+    disableSurvey?: boolean;
+    /**
+     * Optional callback to redirect users to custom screens when survey is done, note that default end call screen will be shown if this callback is not provided
+     * This callback can be used to redirect users to different screens depending on survey state, whether it is submitted, skipped or has a problem when submitting the survey
+     */
+    onSurveyClosed?: (surveyState: 'sent' | 'skipped' | 'error', surveyError?: string) => void;
     /**
      * Optional callback to handle survey data including free form text response
      * Note that free form text response survey option is only going to be enabled when this callback is provided
@@ -360,7 +365,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
 
   const [sidePaneRenderer, setSidePaneRenderer] = React.useState<SidePaneRenderer | undefined>();
   const [injectedSidePaneProps, setInjectedSidePaneProps] = React.useState<InjectedSidePaneProps>();
-
   /* @conditional-compile-remove(gallery-layouts) */
   const [userSetGalleryLayout, setUserSetGalleryLayout] = useState<VideoGalleryLayout>(
     props.options?.galleryOptions?.layout ?? 'floatingLocalVideo'
@@ -416,7 +420,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     setTrackedErrors((prev) => trackErrorAsDismissed(error.type, prev));
   }, []);
   const latestErrors = useMemo(() => filterLatestErrors(activeErrors, trackedErrors), [activeErrors, trackedErrors]);
-
+  const callees = useSelector(getTargetCallees) as StartCallIdentifier[];
   const locale = useLocale();
   const palette = useTheme().palette;
   const leavePageStyle = useMemo(() => leavingPageStyle(palette), [palette]);
@@ -427,10 +431,14 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         <ConfigurationPage
           mobileView={props.mobileView}
           startCallHandler={(): void => {
-            adapter.joinCall({
-              microphoneOn: 'keep',
-              cameraOn: 'keep'
-            });
+            if (callees) {
+              adapter.startCall(callees);
+            } else {
+              adapter.joinCall({
+                microphoneOn: 'keep',
+                cameraOn: 'keep'
+              });
+            }
           }}
           updateSidePaneRenderer={setSidePaneRenderer}
           latestErrors={latestErrors}
@@ -458,8 +466,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           title={locale.strings.call.failedToJoinTeamsMeetingReasonAccessDeniedTitle}
           moreDetails={locale.strings.call.failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails}
           dataUiId={'access-denied-teams-meeting-page'}
-          /* @conditional-compile-remove(end-of-call-survey) */
-          surveyOptions={{ hideSurvey: true }}
         />
       );
       break;
@@ -470,8 +476,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           title={locale.strings.call.removedFromCallTitle}
           moreDetails={locale.strings.call.removedFromCallMoreDetails}
           dataUiId={'removed-from-call-page'}
-          /* @conditional-compile-remove(end-of-call-survey) */
-          surveyOptions={{ hideSurvey: true }}
         />
       );
       break;
@@ -482,8 +486,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           title={locale.strings.call.failedToJoinCallDueToNoNetworkTitle}
           moreDetails={locale.strings.call.failedToJoinCallDueToNoNetworkMoreDetails}
           dataUiId={'join-call-failed-due-to-no-network-page'}
-          /* @conditional-compile-remove(end-of-call-survey) */
-          surveyOptions={{ hideSurvey: true }}
         />
       );
       break;
@@ -494,24 +496,36 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           dataUiId={'leaving-page'}
           pageStyle={leavePageStyle}
           disableStartCallButton={true}
-          /* @conditional-compile-remove(end-of-call-survey) */
-          surveyOptions={{ hideSurvey: true }}
         />
       );
       break;
     case 'leftCall': {
       const { title, moreDetails, disableStartCallButton, iconName } = getEndedCallPageProps(locale, endedCall);
+      /* @conditional-compile-remove(end-of-call-survey) */
+      if (!props.options?.surveyOptions?.disableSurvey) {
+        pageElement = (
+          <SurveyPage
+            dataUiId={'left-call-page'}
+            surveyOptions={props.options?.surveyOptions}
+            iconName={iconName}
+            title={title}
+            moreDetails={moreDetails}
+            disableStartCallButton={disableStartCallButton}
+            mobileView={props.mobileView}
+          />
+        );
+        break;
+      }
       pageElement = (
         <NoticePage
           iconName={iconName}
           title={title}
-          moreDetails={moreDetails}
+          moreDetails={callees ? '' : moreDetails}
           dataUiId={'left-call-page'}
           disableStartCallButton={disableStartCallButton}
-          /* @conditional-compile-remove(end-of-call-survey) */
-          surveyOptions={props.options?.surveyOptions}
         />
       );
+
       break;
     }
     case 'lobby':

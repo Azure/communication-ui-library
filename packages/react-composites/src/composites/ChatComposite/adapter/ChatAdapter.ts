@@ -6,11 +6,8 @@ import type { CommunicationIdentifierKind, CommunicationUserKind } from '@azure/
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import type { AdapterError, AdapterErrors, AdapterState, Disposable } from '../../common/adapters';
 /* @conditional-compile-remove(file-sharing) */
-import { FileUploadAdapter } from './AzureCommunicationFileUploadAdapter';
-/* @conditional-compile-remove(file-sharing) */
-import { FileUploadsUiState } from './AzureCommunicationFileUploadAdapter';
-import { AttachmentDownloadResult } from '@internal/react-components';
-/* @conditional-compile-remove(file-sharing) */
+import { FileUploadAdapter, FileUploadsUiState } from './AzureCommunicationFileUploadAdapter';
+/* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AttachmentMetadata } from '@internal/react-components';
 
 /**
@@ -110,8 +107,28 @@ export interface ChatAdapterThreadManagement {
    *
    */
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
-  downloadAttachments: (options: { attachmentUrls: Record<string, string> }) => Promise<AttachmentDownloadResult[]>;
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /**
+   * Downloads a resource into the cache for the given message.
+   */
+  downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /**
+   * Removes a resource from the cache for the given message.
+   */
+  removeResourceFromCache(resourceDetails: ResourceDetails): void;
 }
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/**
+ * Details required for download a resource to cache.
+ *
+ * @public
+ */
+export type ResourceDetails = {
+  threadId: string;
+  messageId: string;
+  resourceUrl: string;
+};
 
 /**
  * Chat composite events that can be subscribed to.

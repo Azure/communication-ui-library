@@ -20,12 +20,16 @@ import {
   WifiWarning20Filled,
   Circle20Regular
 } from '@fluentui/react-icons';
+/* @conditional-compile-remove(spotlight) */
+import { VideoPersonStarOff20Filled } from '@fluentui/react-icons';
 /* @conditional-compile-remove(capabilities) */
 import { MicProhibited20Filled, VideoProhibited20Filled } from '@fluentui/react-icons';
 /* @conditional-compile-remove(gallery-layouts) */
 import { Grid20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
-import { PersonAdd20Regular, Dialpad20Regular, Call20Regular } from '@fluentui/react-icons';
+import { PersonAdd20Regular, Call20Regular } from '@fluentui/react-icons';
+/* @conditional-compile-remove(dtmf-dialer) */
+import { Dialpad20Regular } from '@fluentui/react-icons';
 import { DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
 import React from 'react';
 // eslint-disable-next-line no-restricted-imports
@@ -67,6 +71,8 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   ControlButtonCameraProhibited: <VideoProhibited20Filled />,
   /* @conditional-compile-remove(capabilities) */
   ControlButtonMicProhibited: <MicProhibited20Filled />,
+  /* @conditional-compile-remove(spotlight) */
+  ControlButtonExitSpotlight: <VideoPersonStarOff20Filled />,
   ControlBarPeopleButton: <People20Regular />,
   MoreDrawerMicrophones: <Mic20Regular />,
   MoreDrawerPeople: <People20Regular />,
@@ -117,7 +123,9 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   /* @conditional-compile-remove(gallery-layouts) */
   LargeGalleryLayout: <Table20Regular />,
   /* @conditional-compile-remove(control-bar-button-injection) */
-  DefaultCustomButton: <Circle20Regular />
+  DefaultCustomButton: <Circle20Regular />,
+  /* @conditional-compile-remove(dtmf-dialer) */
+  DtmfDialpadButton: <Dialpad20Regular />
 };
 
 /**
@@ -190,10 +198,15 @@ export type CallCompositeIcons = {
   ControlButtonRaiseHand?: JSX.Element;
   /* @conditional-compile-remove(raise-hand) */
   ControlButtonLowerHand?: JSX.Element;
+  /* @conditional-compile-remove(spotlight) */
+  ControlButtonExitSpotlight?: JSX.Element;
   /* @conditional-compile-remove(raise-hand) */
   RaiseHandContextualMenuItem?: JSX.Element;
-  /* @conditional-compile-remove(raise-hand) */
+  /* @conditional-compile-remove(reaction) */
+  ReactionContextualMenuItem?: JSX.Element;
   LowerHandContextualMenuItem?: JSX.Element;
+  /* @conditional-compile-remove(reaction) */
+  ReactionButtonIcon?: JSX.Element;
   ErrorBarCallCameraAccessDenied?: JSX.Element;
   ErrorBarCallCameraAlreadyInUse?: JSX.Element;
   ErrorBarCallLocalVideoFreeze?: JSX.Element;
@@ -266,6 +279,8 @@ export type CallCompositeIcons = {
   LargeGalleryLayout?: JSX.Element;
   /* @conditional-compile-remove(control-bar-button-injection) */
   DefaultCustomButton?: JSX.Element;
+  /* @conditional-compile-remove(dtmf-dialer) */
+  DtmfDialpadButton?: JSX.Element;
 };
 
 /**
@@ -351,6 +366,8 @@ export type CallWithChatCompositeIcons = {
   DialpadStartCall?: JSX.Element;
   /* @conditional-compile-remove(control-bar-button-injection) */
   DefaultCustomButton?: JSX.Element;
+  /* @conditional-compile-remove(dtmf-dialer) */
+  DtmfDialpadButton?: JSX.Element;
 
   // Chat icons
   EditBoxCancel?: JSX.Element;

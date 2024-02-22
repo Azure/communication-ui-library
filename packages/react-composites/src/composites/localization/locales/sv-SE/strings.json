@@ -60,6 +60,11 @@
     "removedFromCallMoreDetails": "En annan deltagare tog bort dig från samtalet.",
     "removedFromCallTitle": "Du har tagits bort",
     "removeMenuLabel": "Ta bort",
+    "startSpotlightParticipantListMenuLabel": "Uppmärksamma för alla",
+    "addSpotlightParticipantListMenuLabel": "Lägg till uppmärksammande",
+    "stopSpotlightParticipantListMenuLabel": "Sluta uppmärksamma",
+    "stopSpotlightOnSelfParticipantListMenuLabel": "Spotlight",
+    "spotlightLimitReachedParticipantListMenuTitle": "Spotlight-gränsen har nåtts",
     "returnToCallButtonAriaDescription": "Återgå till samtal",
     "returnToCallButtonAriaLabel": "Tillbaka",
     "roomNotFoundDetails": "Det gick inte att hitta det angivna rums-ID:t.",
@@ -118,6 +123,15 @@
     "dismissModalAriaLabel": "Lokal bild och fjärrbild och bild, tryck på Retur för att återgå till samtalet",
     "callRejectedTitle": "Det gick inte att slutföra samtalet",
     "callRejectedMoreDetails": "Personen du försöker nå är inte tillgänglig. Försök igen senare.",
+    "callTimeoutTitle": "Det gick inte att slutföra samtalet",
+    "callTimeoutDetails": "Personen du försöker nå är inte tillgänglig. Försök igen senare.",
+    "callTimeoutBotTitle": "Det gick inte att slutföra samtalet",
+    "callTimeoutBotDetails": "Tjänsten som du försöker nå är inte tillgänglig. Försök igen senare.",
+    "dtmfDialerButtonLabel": "Knappsats",
+    "dtmfDialerButtonTooltipOn": "Visa knappsats",
+    "dtmfDialerButtonTooltipOff": "Dölj knappsatsen",
+    "dtmfDialerMoreButtonLabelOn": "Visa knappsats",
+    "dtmfDialerMoreButtonLabelOff": "Dölj knappsatsen",
     "spokenLanguageStrings": {
       "ar-ae": "Arabiska – Förenade Arabemiraten",
       "ar-sa": "Arabiska – Saudiarabien",
@@ -229,6 +243,81 @@
         "lostDueToRoleChangeToAttendee": "Din roll har ändrats. Vissa åtgärder, som att dela innehåll, är inte tillgängliga för dig.",
         "grantedDueToRoleChangeToPresenter": "Du är presentatör. Du kan dela innehåll och underlätta mötet."
       }
+    },
+    "surveyTitle": "Hjälp oss att förbättra",
+    "starSurveyHelperText": "Hur var kvaliteten på samtalet?",
+    "starSurveyOneStarText": "Kvaliteten var dålig.",
+    "starSurveyTwoStarText": "Kvaliteten var inte bra.",
+    "starSurveyThreeStarText": "Kvaliteten var bra.",
+    "starSurveyFourStarText": "Kvaliteten var utmärkt.",
+    "starSurveyFiveStarText": "Kvaliteten var mycket bra.",
+    "surveyConfirmButtonLabel": "Skicka feedback",
+    "starRatingAriaLabel": "Markera {0} av {1} stjärnor",
+    "surveySkipButtonLabel": "Hoppa över",
+    "tagsSurveyQuestion": "Vad kan förbättras?",
+    "tagsSurveyTextFieldDefaultText": "Annat, specificera",
+    "tagsSurveyHelperText": "Kontrollera eventuella problem som du har upplevt",
+    "surveyTextboxDefaultText": "Annat, specificera",
+    "endOfSurveyText": "Tack för din feedback!",
+    "surveyIssues": {
+      "overallRating": {
+        "callCannotJoin": "Jag kunde inte ansluta till samtalet",
+        "callCannotInvite": "Jag kunde inte bjuda in andra till samtalet",
+        "hadToRejoin": "Jag var tvungen att återansluta till samtalet",
+        "callEndedUnexpectedly": "Samtalet avslutades oväntat åt mig",
+        "otherIssues": "Jag hade andra problem med samtalet"
+      },
+      "audioRating": {
+        "noLocalAudio": "Den jag talade med kunde inte höra något alls",
+        "noRemoteAudio": "Jag kunde inte höra något alls",
+        "echo": "Jag hörde eko i samtalet",
+        "audioNoise": "Jag hörde störande ljud i samtalet",
+        "lowVolume": "Volymen var för låg",
+        "audioStoppedUnexpectedly": "Ljudet avbröts plötsligt",
+        "distortedSpeech": "Ljudet förvrängdes",
+        "audioInterruption": "Ljudet avbröts",
+        "otherIssues": "Jag hade andra ljudproblem i det här samtalet"
+      },
+      "videoRating": {
+        "noVideoReceived": "Jag kunde inte se någon video",
+        "noVideoSent": "De andra deltagarna kunde inte se mig",
+        "lowQuality": "Videokvaliteten var låg",
+        "freezes": "Videon är frusen",
+        "stoppedUnexpectedly": "Videon avbröts plötsligt",
+        "darkVideoReceived": "Jag kan bara se mörka skärmar när andra aktiverar kameran",
+        "audioVideoOutOfSync": "Ljud och video var inte synkroniserade",
+        "otherIssues": "Jag hade andra videoproblem i det här samtalet"
+      },
+      "screenshareRating": {
+        "noContentLocal": "Andra personer kunde inte se min skärmdelning",
+        "noContentRemote": "Jag kunde inte se andra personers skärmdelning",
+        "cannotPresent": "Jag kunde inte presentera min skärm",
+        "lowQuality": "Skärmdelningskvaliteten var låg",
+        "freezes": "Skärmdelningen är frusen",
+        "stoppedUnexpectedly": "Skärmdelningen stoppades oväntat",
+        "largeDelay": "Skärmdelningen har en stor fördröjning",
+        "otherIssues": "Jag hade andra skärmdelningsproblem i det här samtalet"
+      }
+    },
+    "SurveyIssuesHeadingStrings": {
+      "overallRating": "Övergripande",
+      "audioRating": "Ljud",
+      "videoRating": "Video",
+      "screenshareRating": "Presenterar"
+    },
+    "spotlightPrompt": {
+      "startSpotlightHeading": "Uppmärksamma för alla?",
+      "startSpotlightText": "Du kommer markera den här videon för alla i mötet.",
+      "startSpotlightOnSelfText": "Du kommer att markera din video för alla i mötet.",
+      "startSpotlightConfirmButtonLabel": "Uppmärksamma för alla",
+      "startSpotlightCancelButtonLabel": "Avbryt",
+      "stopSpotlightHeading": "Vill du sluta uppmärksamma?",
+      "stopSpotlightOnSelfHeading": "Avsluta uppmärksammande?",
+      "stopSpotlightText": "Den här videon markeras inte längre för alla i mötet.",
+      "stopSpotlightOnSelfText": "Din video kommer inte längre vara markerad för alla i mötet.",
+      "stopSpotlightConfirmButtonLabel": "Sluta uppmärksamma",
+      "stopSpotlightOnSelfConfirmButtonLabel": "Spotlight",
+      "stopSpotlightCancelButtonLabel": "Avbryt"
     }
   },
   "chat": {

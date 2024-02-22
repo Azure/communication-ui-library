@@ -60,6 +60,11 @@
     "removedFromCallMoreDetails": "Een andere deelnemer heeft u uit het gesprek verwijderd.",
     "removedFromCallTitle": "U bent verwijderd",
     "removeMenuLabel": "Verwijderen",
+    "startSpotlightParticipantListMenuLabel": "Spotlight voor iedereen",
+    "addSpotlightParticipantListMenuLabel": "Spotlight toevoegen",
+    "stopSpotlightParticipantListMenuLabel": "Spotlighten stoppen",
+    "stopSpotlightOnSelfParticipantListMenuLabel": "Spotlight afsluiten",
+    "spotlightLimitReachedParticipantListMenuTitle": "Spotlightlimiet bereikt",
     "returnToCallButtonAriaDescription": "Terug naar gesprek",
     "returnToCallButtonAriaLabel": "Terug",
     "roomNotFoundDetails": "Kan de opgegeven ruimte-id niet vinden.",
@@ -118,6 +123,15 @@
     "dismissModalAriaLabel": "Lokale en externe afbeelding en afbeelding, druk op Enter om terug te keren naar het gesprek",
     "callRejectedTitle": "De aanroep kan niet worden voltooid",
     "callRejectedMoreDetails": "De persoon die u probeert te bereiken, is niet beschikbaar. Probeer het later opnieuw.",
+    "callTimeoutTitle": "De aanroep kan niet worden voltooid",
+    "callTimeoutDetails": "De persoon die u probeert te bereiken, is niet beschikbaar. Probeer het later opnieuw.",
+    "callTimeoutBotTitle": "De aanroep kan niet worden voltooid",
+    "callTimeoutBotDetails": "De service die u probeert te bereiken, is niet beschikbaar. Probeer het later opnieuw.",
+    "dtmfDialerButtonLabel": "Toetsenblok",
+    "dtmfDialerButtonTooltipOn": "Toetsenblok weergeven",
+    "dtmfDialerButtonTooltipOff": "Toetsenblok verbergen",
+    "dtmfDialerMoreButtonLabelOn": "Toetsenblok weergeven",
+    "dtmfDialerMoreButtonLabelOff": "Toetsenblok verbergen",
     "spokenLanguageStrings": {
       "ar-ae": "Arabisch - Verenigde Arabische Emiraten",
       "ar-sa": "Arabisch - Saudi-Arabië",
@@ -229,6 +243,81 @@
         "lostDueToRoleChangeToAttendee": "Uw rol is gewijzigd. Sommige acties, zoals het delen van inhoud, zijn niet beschikbaar voor u.",
         "grantedDueToRoleChangeToPresenter": "U bent een presentator. U kunt inhoud delen en de vergadering vergemakkelijken."
       }
+    },
+    "surveyTitle": "Help mee met verbeteren",
+    "starSurveyHelperText": "Wat was de kwaliteit van het gesprek?",
+    "starSurveyOneStarText": "De kwaliteit was erg slecht.",
+    "starSurveyTwoStarText": "De kwaliteit was slecht.",
+    "starSurveyThreeStarText": "De kwaliteit was goed.",
+    "starSurveyFourStarText": "De kwaliteit was geweldig.",
+    "starSurveyFiveStarText": "De kwaliteit was uitstekend.",
+    "surveyConfirmButtonLabel": "Feedback verzenden",
+    "starRatingAriaLabel": "Selecteer {0} van {1} sterren",
+    "surveySkipButtonLabel": "Overslaan",
+    "tagsSurveyQuestion": "Wat had beter kunnen zijn?",
+    "tagsSurveyTextFieldDefaultText": "Overig, geef een toelichting",
+    "tagsSurveyHelperText": "Controleer eventuele problemen die u hebt ondervonden",
+    "surveyTextboxDefaultText": "Overige, geef een toelichting",
+    "endOfSurveyText": "Hartelijk dank voor uw feedback.",
+    "surveyIssues": {
+      "overallRating": {
+        "callCannotJoin": "Ik kan niet deelnemen aan de oproep",
+        "callCannotInvite": "Ik kan niet iemand uitnodigen voor de oproep",
+        "hadToRejoin": "Ik moest opnieuw deelnemen aan de oproep",
+        "callEndedUnexpectedly": "Oproep is onverwacht beëindigd voor mij",
+        "otherIssues": "Ik had andere problemen met de oproep"
+      },
+      "audioRating": {
+        "noLocalAudio": "De ander kon geen geluid horen",
+        "noRemoteAudio": "Ik kon geen geluid horen",
+        "echo": "Ik hoorde echo's tijdens de oproep",
+        "audioNoise": "Ik hoorde een ruis tijdens de oproep",
+        "lowVolume": "Het volume was laag",
+        "audioStoppedUnexpectedly": "Audio is onverwacht gestopt",
+        "distortedSpeech": "Audio is vervormd",
+        "audioInterruption": "Audio is onderbroken",
+        "otherIssues": "Ik had andere audioproblemen in deze oproep"
+      },
+      "videoRating": {
+        "noVideoReceived": "Ik kon geen video zien",
+        "noVideoSent": "Anderen konden mij niet zien",
+        "lowQuality": "Videokwaliteit was laag",
+        "freezes": "Video bevroren",
+        "stoppedUnexpectedly": "De video stopte onverwacht",
+        "darkVideoReceived": "Ik zie alleen donkere schermen wanneer anderen hun camera inschakelen",
+        "audioVideoOutOfSync": "Audio en video niet gesynchroniseerd",
+        "otherIssues": "Ik had andere audioproblemen in deze oproep"
+      },
+      "screenshareRating": {
+        "noContentLocal": "Anderen kunnen mijn gedeelde scherm niet zien",
+        "noContentRemote": "Ik kon het gedeelde scherm van anderen niet zien",
+        "cannotPresent": "Ik kon mijn scherm niet presenteren",
+        "lowQuality": "De kwaliteit van scherm delen was laag",
+        "freezes": "Scherm delen bevroren",
+        "stoppedUnexpectedly": "Scherm delen is onverwacht gestopt",
+        "largeDelay": "Scherm dele heeft een grote vertraging",
+        "otherIssues": "Ik had andere problemen met het delen van het scherm in dit gesprek"
+      }
+    },
+    "SurveyIssuesHeadingStrings": {
+      "overallRating": "Algemeen",
+      "audioRating": "Audio",
+      "videoRating": "Video",
+      "screenshareRating": "Presenteren"
+    },
+    "spotlightPrompt": {
+      "startSpotlightHeading": "Spotlight voor iedereen?",
+      "startSpotlightText": "U markeert deze video voor iedereen in de vergadering.",
+      "startSpotlightOnSelfText": "U markeert deze video voor iedereen in de vergadering.",
+      "startSpotlightConfirmButtonLabel": "Spotlight voor iedereen",
+      "startSpotlightCancelButtonLabel": "Annuleren",
+      "stopSpotlightHeading": "Spotlighten stoppen?",
+      "stopSpotlightOnSelfHeading": "Spotlight afsluiten?",
+      "stopSpotlightText": "Deze video wordt niet meer gemarkeerd voor iedereen in de vergadering.",
+      "stopSpotlightOnSelfText": "Uw video wordt niet meer gemarkeerd voor iedereen in de vergadering.",
+      "stopSpotlightConfirmButtonLabel": "Spotlighten stoppen",
+      "stopSpotlightOnSelfConfirmButtonLabel": "Spotlight afsluiten",
+      "stopSpotlightCancelButtonLabel": "Annuleren"
     }
   },
   "chat": {

@@ -44,6 +44,7 @@ import { PermissionConstraints } from '@azure/communication-calling';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
+import { Reaction } from '@azure/communication-calling';
 import { RemoteParticipantState } from '@internal/calling-stateful-client';
 import { ScreenShareButton } from '@internal/react-components';
 import { StartCallOptions } from '@azure/communication-calling';
@@ -171,6 +172,8 @@ export interface CommonCallingHandlers {
     onLowerHand: () => Promise<void>;
     // (undocumented)
     onRaiseHand: () => Promise<void>;
+    // @beta (undocumented)
+    onReactionClicked: (reaction: Reaction) => Promise<void>;
     // (undocumented)
     onRemoveParticipant(userId: string): Promise<void>;
     // (undocumented)
@@ -200,9 +203,13 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onStartScreenShare: () => Promise<void>;
     // (undocumented)
+    onStartSpotlight: (userIds?: string[]) => Promise<void>;
+    // (undocumented)
     onStopCaptions: () => Promise<void>;
     // (undocumented)
     onStopScreenShare: () => Promise<void>;
+    // (undocumented)
+    onStopSpotlight: (userIds?: string[]) => Promise<void>;
     // (undocumented)
     onSubmitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
     // (undocumented)
@@ -215,6 +222,14 @@ export interface CommonCallingHandlers {
     onToggleRaiseHand: () => Promise<void>;
     // (undocumented)
     onToggleScreenShare: () => Promise<void>;
+}
+
+// @internal
+export interface _ComponentCallingHandlers {
+    onStartLocalSpotlight: () => Promise<void>;
+    onStartRemoteSpotlight: (userIds?: string[]) => Promise<void>;
+    onStopLocalSpotlight: () => Promise<void>;
+    onStopRemoteSpotlight: (userIds?: string[]) => Promise<void>;
 }
 
 // @public
@@ -313,6 +328,15 @@ export type RaiseHandButtonSelector = (state: CallClientState, props: CallingBas
 // @public
 export const raiseHandButtonSelector: RaiseHandButtonSelector;
 
+// @beta
+export type ReactionButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
+    checked?: boolean;
+    disabled?: boolean;
+};
+
+// @beta
+export const reactionButtonSelector: ReactionButtonSelector;
+
 // @public
 export type ScreenShareButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     checked?: boolean;
@@ -354,7 +378,7 @@ export const useCallClient: () => StatefulCallClient;
 export const useCallingHandlers: <PropsT>(component: (props: PropsT) => ReactElement | null) => Common<CommonCallingHandlers, PropsT> | undefined;
 
 // @public
-export const useCallingPropsFor: <Component extends (props: any) => JSX.Element>(component: Component) => GetCallingSelector<Component> extends (props: any) => any ? ReturnType<GetCallingSelector<Component>> & Common<CommonCallingHandlers, Parameters<Component>[0]> : undefined;
+export const useCallingPropsFor: <Component extends (props: any) => JSX.Element>(component: Component) => GetCallingSelector<Component> extends (props: any) => any ? ReturnType<GetCallingSelector<Component>> & Common<CommonCallingHandlers & _ComponentCallingHandlers, Parameters<Component>[0]> : undefined;
 
 // @public
 export const useCallingSelector: <SelectorT extends (state: CallClientState, props: any) => any, ParamT extends SelectorT | undefined>(selector: ParamT, selectorProps?: Parameters<SelectorT>[1] | undefined) => ParamT extends SelectorT ? ReturnType<SelectorT> : undefined;
@@ -384,6 +408,8 @@ export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSe
     remoteParticipants: VideoGalleryRemoteParticipant[];
     dominantSpeakers?: string[];
     optimalVideoCount?: number;
+    spotlightedParticipants?: string[];
+    maxParticipantsToSpotlight?: number;
 };
 
 // (No @packageDocumentation comment for this package)

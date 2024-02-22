@@ -3,17 +3,21 @@
 
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { ChatClient, ChatMessage } from '@azure/communication-chat';
-import { CommunicationGetTokenOptions } from '@azure/communication-common';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import {
   createAzureCommunicationChatAdapter,
   createAzureCommunicationChatAdapterFromClient
 } from './AzureCommunicationChatAdapter';
-import { AzureCommunicationChatAdapterOptions } from './AzureCommunicationChatAdapter';
 import { ChatAdapter, ChatAdapterState } from './ChatAdapter';
 import { StubChatClient, StubChatThreadClient, failingPagedAsyncIterator, pagedAsyncIterator } from './StubChatClient';
 import { createStatefulChatClientMock } from '../../../mocks';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { MockStatefulChatClient } from '../../../mocks';
 import { AdapterError } from '../../common/adapters';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { StatefulChatClient } from '@internal/chat-stateful-client';
 
 jest.useFakeTimers();
 jest.mock('@azure/communication-chat');
@@ -22,23 +26,9 @@ const ChatClientMock = ChatClient as jest.MockedClass<typeof ChatClient>;
 
 describe('Adapter is created as expected', () => {
   it('when creating a new adapter from stateful client', async () => {
-    const fakeToken: CommunicationTokenCredential = {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      getToken: (options?: CommunicationGetTokenOptions): Promise<MockAccessToken> => {
-        return new Promise<MockAccessToken>((resolve) => {
-          resolve({ token: 'anyToken', expiresOnTimestamp: Date.now() });
-        });
-      },
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-empty-function
-      dispose(): any {}
-    };
-
     const statefulChatClient = createStatefulChatClientMock(new StubChatThreadClient());
     const threadClient = statefulChatClient.getChatThreadClient('threadId');
-
-    const options: AzureCommunicationChatAdapterOptions = { credential: fakeToken };
-
-    const adapter = await createAzureCommunicationChatAdapterFromClient(statefulChatClient, threadClient, options);
+    const adapter = await createAzureCommunicationChatAdapterFromClient(statefulChatClient, threadClient);
     expect(adapter).toBeDefined();
   });
 });
@@ -158,46 +148,42 @@ describe('Error is reflected in state and events', () => {
     expect(errorListener.errors[0].target).toBe('ChatThreadClient.sendTypingNotification');
   });
 
-  it('when downloadAttachments with no access token fails', async () => {
-    const threadClient = new StubChatThreadClient();
-    const adapter = await createChatAdapterWithStubs(new StubChatClient(threadClient));
-    const errorListener = new ErrorListener(adapter);
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  it('when downloadResourceToCache is called should call to stateful client', async () => {
+    const threadClient = new StubChatThreadClient('threadId') as unknown as ChatThreadClient;
+    const statefulChatClient = new MockStatefulChatClient(threadClient) as unknown as StatefulChatClient;
+    const mockDownloadResourceToCache = jest
+      .spyOn(MockStatefulChatClient.prototype, 'downloadResourceToCache')
+      .mockImplementation();
+    const adapter = await createAzureCommunicationChatAdapterFromClient(statefulChatClient, threadClient);
 
-    await expect(adapter.downloadAttachments({ attachmentUrls: { ['somefakeid']: 'somefakeurl' } })).rejects.toThrow();
-    expect(errorListener.errors.length).toBe(1);
-    expect(errorListener.errors[0].target).toBe('ChatThreadClient.getMessage');
-    expect(errorListener.errors[0].innerError.message).toBe('AccessToken is null');
+    adapter.downloadResourceToCache({ threadId: 'threadId', messageId: 'messageId', resourceUrl: 'attachmentId' });
+    expect(mockDownloadResourceToCache).toHaveBeenCalled();
   });
 
-  it('when downloadAttachments fails with bad respnse', async () => {
-    const threadClient = new StubChatThreadClient();
-    const fakeToken: CommunicationTokenCredential = {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      getToken: (options?: CommunicationGetTokenOptions): Promise<MockAccessToken> => {
-        return new Promise<MockAccessToken>((resolve) => {
-          resolve({ token: 'anyToken', expiresOnTimestamp: Date.now() });
-        });
-      },
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-empty-function
-      dispose(): any {}
-    };
-    const adapter = await createChatAdapterWithStubs(new StubChatClient(threadClient), fakeToken);
-    const errorListener = new ErrorListener(adapter);
-    {
-      await expect(
-        adapter.downloadAttachments({ attachmentUrls: { ['somefakeid']: 'somefakeurl' } })
-      ).rejects.toThrow();
-      expect(errorListener.errors.length).toBe(1);
-      expect(errorListener.errors[0].target).toBe('ChatThreadClient.getMessage');
-      expect(errorListener.errors[0].innerError.message).toBe('fetch is not defined');
-    }
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  it('when dispose is called should call to stateful client dispose', async () => {
+    const threadClient = new StubChatThreadClient('threadId') as unknown as ChatThreadClient;
+    const statefulChatClient = new MockStatefulChatClient(threadClient) as unknown as StatefulChatClient;
+    const mockStatefulDispose = jest.spyOn(MockStatefulChatClient.prototype, 'dispose').mockImplementation();
+    const adapter = await createAzureCommunicationChatAdapterFromClient(statefulChatClient, threadClient);
+
+    adapter.dispose();
+    expect(mockStatefulDispose).toHaveBeenCalledTimes(1);
+  });
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  it('when removeResourceFromCache is called should call to stateful client removeResourceFromCache', async () => {
+    const threadClient = new StubChatThreadClient('threadId') as unknown as ChatThreadClient;
+    const statefulChatClient = new MockStatefulChatClient(threadClient) as unknown as StatefulChatClient;
+    const mockStatefulDispose = jest
+      .spyOn(MockStatefulChatClient.prototype, 'removeResourceFromCache')
+      .mockImplementation();
+    const adapter = await createAzureCommunicationChatAdapterFromClient(statefulChatClient, threadClient);
+
+    adapter.removeResourceFromCache({ threadId: 'threadId', messageId: 'messageId', resourceUrl: 'attachmentId' });
+    expect(mockStatefulDispose).toHaveBeenCalledTimes(1);
   });
 });
-
-type MockAccessToken = {
-  token: string;
-  expiresOnTimestamp: number;
-};
 
 const createChatAdapterWithStubs = async (
   chatClient: StubChatClient,

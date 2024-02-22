@@ -35,7 +35,6 @@ import { PropsWithChildren } from 'react';
 import { default as React_2 } from 'react';
 import * as React_3 from 'react';
 import { RefObject } from 'react';
-import { SyntheticEvent } from 'react';
 import { Theme } from '@fluentui/react';
 
 // @public
@@ -66,14 +65,8 @@ export type AnnouncerProps = {
     ariaLive: 'off' | 'polite' | 'assertive' | undefined;
 };
 
-// @public
-export interface AttachmentDownloadResult {
-    attachmentId: string;
-    blobUrl: string;
-}
-
-// @public
-export type AttachmentMetadata = InlineImageMetadata | /* @conditional-compile-remove(file-sharing) */ FileMetadata;
+// @beta
+export type AttachmentMetadata = FileMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ InlineImageMetadata;
 
 // @internal
 export type _AudioIssue = 'NoLocalAudio' | 'NoRemoteAudio' | 'Echo' | 'AudioNoise' | 'LowVolume' | 'AudioStoppedUnexpectedly' | 'DistortedSpeech' | 'AudioInterruption' | 'OtherIssues';
@@ -176,6 +169,7 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     isSpeaking?: boolean;
     raisedHand?: RaisedHand;
     reaction?: Reaction;
+    spotlight?: Spotlight;
 };
 
 // @internal
@@ -195,10 +189,10 @@ export interface _CallSurvey {
 
 // @beta
 export interface CallSurveyImprovementSuggestions {
-    audio?: string;
-    overall?: string;
-    screenshare?: string;
-    video?: string;
+    audioRating?: string;
+    overallRating?: string;
+    screenshareRating?: string;
+    videoRating?: string;
 }
 
 // @internal
@@ -453,8 +447,8 @@ export interface _CaptionsSettingsModalStrings {
     captionsSettingsSpokenLanguageDropdownLabel?: string;
 }
 
-// @public
-export type ChatAttachmentType = 'inlineImage' | /* @conditional-compile-remove(file-sharing) */ 'file' | 'unknown';
+// @beta
+export type ChatAttachmentType = 'unknown' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | /* @conditional-compile-remove(file-sharing) */ 'file';
 
 // @public
 export interface ChatMessage extends MessageCommon {
@@ -474,6 +468,7 @@ export interface ChatMessage extends MessageCommon {
     failureReason?: string;
     // @beta
     files?: FileMetadata[];
+    // @beta
     inlineImages?: InlineImageMetadata[];
     // (undocumented)
     messageType: 'chat';
@@ -486,17 +481,6 @@ export interface ChatMessage extends MessageCommon {
     senderId?: string;
     // (undocumented)
     status?: MessageStatus;
-}
-
-// @public
-export interface ChatTheme {
-    chatPalette: {
-        imageGalleryOverlayBlack: string;
-        imageGalleryTitleWhite: string;
-        imageGalleryDefaultButtonBackground: string;
-        imageGalleryButtonBackgroundHover: string;
-        imageGalleryButtonBackgroundActive: string;
-    };
 }
 
 // @beta
@@ -654,7 +638,7 @@ export interface ComponentStrings {
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
     holdButton: HoldButtonStrings;
-    imageGallery: ImageGalleryStrings;
+    imageOverlay: ImageOverlayStrings;
     mentionPopover: MentionPopoverStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
@@ -667,6 +651,8 @@ export interface ComponentStrings {
     ParticipantList: ParticipantListStrings;
     participantsButton: ParticipantsButtonStrings;
     raiseHandButton: RaiseHandButtonStrings;
+    // @beta
+    reactionButton: ReactionButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
@@ -758,7 +744,7 @@ export interface CustomMessage extends MessageCommon {
 }
 
 // @public
-export const darkTheme: PartialTheme & CallingTheme & ChatTheme;
+export const darkTheme: PartialTheme & CallingTheme;
 
 // @public
 export const DEFAULT_COMPONENT_ICONS: {
@@ -777,6 +763,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     ControlButtonLowerHand: React_2.JSX.Element;
     RaiseHandContextualMenuItem: React_2.JSX.Element;
     LowerHandContextualMenuItem: React_2.JSX.Element;
+    ReactionButtonIcon: React_2.JSX.Element;
     CancelFileUpload: React_2.JSX.Element;
     DownloadFile: React_2.JSX.Element;
     DataLossPreventionProhibited: React_2.JSX.Element;
@@ -812,6 +799,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     ParticipantItemOptions: React_2.JSX.Element;
     ParticipantItemOptionsHovered: React_2.JSX.Element;
     ParticipantItemScreenShareStart: React_2.JSX.Element;
+    ParticipantItemSpotlighted: React_2.JSX.Element;
     HoldCallContextualMenuItem: React_2.JSX.Element;
     HoldCallButton: React_2.JSX.Element;
     ResumeCall: React_2.JSX.Element;
@@ -850,6 +838,9 @@ export const DEFAULT_COMPONENT_ICONS: {
     ContextMenuSpeakerIcon: React_2.JSX.Element;
     SurveyStarIcon: React_2.JSX.Element;
     SurveyStarIconFilled: React_2.JSX.Element;
+    StartSpotlightContextualMenuItem: React_2.JSX.Element;
+    StopSpotlightContextualMenuItem: React_2.JSX.Element;
+    VideoSpotlighted: React_2.JSX.Element;
 };
 
 // @internal
@@ -955,25 +946,28 @@ export interface DevicesButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<DevicesButtonContextualMenuStyles>;
 }
 
-// @beta
+// @public
 export const Dialpad: (props: DialpadProps) => JSX.Element;
 
-// @beta
+// @public
+export type DialpadMode = 'dtmf' | 'dialer';
+
+// @public
 export interface DialpadProps {
+    dialpadMode?: DialpadMode;
     disableDtmfPlayback?: boolean;
-    isMobile?: boolean;
+    longPressTrigger?: LongPressTrigger;
     onChange?: (input: string) => void;
     onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
     onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
     showDeleteButton?: boolean;
     // (undocumented)
     strings?: DialpadStrings;
-    // (undocumented)
     styles?: DialpadStyles;
     textFieldValue?: string;
 }
 
-// @beta
+// @public
 export interface DialpadStrings {
     // (undocumented)
     deleteButtonAriaLabel?: string;
@@ -981,7 +975,7 @@ export interface DialpadStrings {
     placeholderText: string;
 }
 
-// @beta
+// @public
 export interface DialpadStyles {
     // (undocumented)
     button?: IButtonStyles;
@@ -1055,7 +1049,7 @@ export interface _DrawerSurfaceStyles extends BaseCustomStyles {
     lightDismissRoot?: BaseCustomStyles;
 }
 
-// @beta
+// @public
 export type DtmfTone = 'A' | 'B' | 'C' | 'D' | 'Flash' | 'Num0' | 'Num1' | 'Num2' | 'Num3' | 'Num4' | 'Num5' | 'Num6' | 'Num7' | 'Num8' | 'Num9' | 'Pound' | 'Star';
 
 // @public
@@ -1111,6 +1105,7 @@ export interface ErrorBarStrings {
     sendMessageGeneric: string;
     sendMessageNotInChatThread: string;
     startScreenShareGeneric: string;
+    startSpotlightWhileMaxParticipantsAreSpotlighted: string;
     startVideoGeneric: string;
     stopScreenShareGeneric: string;
     stopVideoGeneric: string;
@@ -1208,6 +1203,7 @@ export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Eleme
 export interface FluentThemeProviderProps {
     children: React_2.ReactNode;
     fluentTheme?: PartialTheme | Theme;
+    rootStyle?: React_2.CSSProperties | undefined;
     rtl?: boolean;
 }
 
@@ -1306,42 +1302,49 @@ export interface _Identifiers {
     videoTile: string;
 }
 
-// @public
-export const ImageGallery: (props: ImageGalleryProps) => JSX.Element;
+// @beta
+export const ImageOverlay: (props: ImageOverlayProps) => JSX.Element;
 
-// @public
-export interface ImageGalleryImageProps {
+// @beta
+export interface ImageOverlayProps {
     altText?: string;
-    downloadFilename: string;
-    imageUrl: string;
+    imageSrc: string;
+    isOpen: boolean;
+    onDismiss: () => void;
+    onDownloadButtonClicked?: (imageSrc: string) => void;
     title?: string;
     titleIcon?: JSX.Element;
 }
 
-// @public
-export interface ImageGalleryProps {
-    images: Array<ImageGalleryImageProps>;
-    isOpen: boolean;
-    onDismiss: () => void;
-    onError?: (event: SyntheticEvent<HTMLImageElement, Event>) => void;
-    onImageDownloadButtonClicked: (imageUrl: string, downloadFilename: string) => void;
-    startIndex?: number;
-}
-
-// @public
-export interface ImageGalleryStrings {
+// @beta
+export interface ImageOverlayStrings {
     dismissButtonAriaLabel: string;
     downloadButtonLabel: string;
 }
 
-// @public
+// @beta
+export const imageOverlayTheme: PartialTheme;
+
+// @beta
+export interface InlineImage {
+    imgAttrs: React_2.ImgHTMLAttributes<HTMLImageElement>;
+    messageId: string;
+}
+
+// @beta
 export interface InlineImageMetadata {
     // (undocumented)
     attachmentType: 'inlineImage';
+    fullSizeImageSrc?: string;
     id: string;
     // (undocumented)
     previewUrl?: string;
     url: string;
+}
+
+// @beta
+export interface InlineImageOptions {
+    onRenderInlineImage?: (inlineImage: InlineImage, defaultOnRender: (inlineImage: InlineImage) => JSX.Element) => JSX.Element;
 }
 
 // @internal
@@ -1354,7 +1357,7 @@ export interface JumpToNewMessageButtonProps {
 }
 
 // @public
-export const lightTheme: PartialTheme & CallingTheme & ChatTheme;
+export const lightTheme: PartialTheme & CallingTheme;
 
 // @public
 export type LoadingState = 'loading' | 'none';
@@ -1405,10 +1408,22 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
     personaMinSize?: number | undefined;
     raisedHand?: RaisedHand | undefined;
     reaction?: Reaction | undefined;
+    spotlightedParticipantUserIds?: string[] | undefined;
+    isSpotlighted?: boolean | undefined;
+    onStartSpotlight?: (() => void) | undefined;
+    onStopSpotlight?: (() => void) | undefined;
+    maxParticipantsToSpotlight?: number | undefined;
+    menuKind?: "contextual" | "drawer" | undefined;
+    drawerMenuHostId?: string | undefined;
+    strings?: VideoGalleryStrings | undefined;
+    reactionResources?: ReactionResources | undefined;
 }) => React_2.JSX.Element>;
 
 // @public
 export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'followDeviceOrientation';
+
+// @public
+export type LongPressTrigger = 'mouseAndTouch' | 'touch';
 
 // @beta
 export interface Mention {
@@ -1541,7 +1556,6 @@ export type MessageThreadProps = {
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
     onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
-    onFetchAttachments?: (attachments: AttachmentMetadata[]) => Promise<AttachmentDownloadResult[]>;
     onUpdateMessage?: UpdateMessageCallback;
     onCancelEditMessage?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
@@ -1551,7 +1565,7 @@ export type MessageThreadProps = {
     fileDownloadHandler?: FileDownloadHandler;
     onDisplayDateTimeString?: (messageDate: Date) => string;
     mentionOptions?: MentionOptions;
-    onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
+    inlineImageOptions?: InlineImageOptions;
 };
 
 // @public
@@ -1894,6 +1908,44 @@ export type Reaction = {
     receivedAt: Date;
 };
 
+// @beta
+export const ReactionButton: (props: ReactionButtonProps) => JSX.Element;
+
+// @beta
+export interface ReactionButtonProps extends ControlBarButtonProps {
+    onReactionClicked: (reaction: string) => Promise<void>;
+    reactionResources: ReactionResources;
+    strings?: Partial<ReactionButtonStrings>;
+}
+
+// @beta
+export interface ReactionButtonStrings {
+    applauseReactionTooltipContent?: string;
+    heartReactionTooltipContent?: string;
+    label: string;
+    laughReactionTooltipContent?: string;
+    likeReactionTooltipContent?: string;
+    surprisedReactionTooltipContent?: string;
+    tooltipContent?: string;
+    tooltipDisabledContent?: string;
+}
+
+// @beta
+export interface ReactionResources {
+    applauseReaction?: ReactionSprite;
+    heartReaction?: ReactionSprite;
+    laughReaction?: ReactionSprite;
+    likeReaction?: ReactionSprite;
+    surprisedReaction?: ReactionSprite;
+}
+
+// @beta
+export type ReactionSprite = {
+    url: string;
+    frameCount: number;
+    size?: number;
+};
+
 // @public
 export type ReadReceiptsBySenderId = {
     [key: string]: {
@@ -1925,8 +1977,14 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     onUnpinParticipant?: ((userId: string) => void) | undefined;
     onUpdateScalingMode?: ((userId: string, scalingMode: ViewScalingMode) => void) | undefined;
     isPinned?: boolean | undefined;
+    spotlightedParticipantUserIds?: string[] | undefined;
+    isSpotlighted?: boolean | undefined;
+    onStartSpotlight?: ((userIds: string[]) => void) | undefined;
+    onStopSpotlight?: ((userIds: string[]) => void) | undefined;
+    maxParticipantsToSpotlight?: number | undefined;
     disablePinMenuItem?: boolean | undefined;
     toggleAnnouncerString?: ((announcerString: string) => void) | undefined;
+    reactionResources?: ReactionResources | undefined;
 }) => React_2.JSX.Element>;
 
 // @beta
@@ -1934,8 +1992,13 @@ export const RTESendBox: (props: RTESendBoxProps) => JSX.Element;
 
 // @beta
 export interface RTESendBoxProps {
-    // (undocumented)
-    valueToDisplay?: string;
+    activeFileUploads?: ActiveFileUpload[];
+    disabled?: boolean;
+    onCancelFileUpload?: (fileId: string) => void;
+    onRenderFileUploads?: () => JSX.Element;
+    onSendMessage: (content: string) => Promise<void>;
+    strings?: Partial<SendBoxStrings>;
+    systemMessage?: string;
 }
 
 // @public
@@ -2154,6 +2217,11 @@ export const _spokenLanguageToCaptionLanguage: {
     'ro-ro': string;
     'sk-sk': string;
     'zh-tw': string;
+};
+
+// @beta
+export type Spotlight = {
+    spotlightedOrderPosition?: number;
 };
 
 // @internal
@@ -2533,6 +2601,7 @@ export type VideoGalleryParticipant = {
     displayName?: string;
     videoStream?: VideoGalleryStream;
     isScreenSharingOn?: boolean;
+    spotlight?: Spotlight;
 };
 
 // @public
@@ -2543,6 +2612,7 @@ export interface VideoGalleryProps {
     localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
     localVideoTileSize?: LocalVideoTileSize;
     localVideoViewOptions?: VideoStreamOptions;
+    maxParticipantsToSpotlight?: number;
     maxRemoteVideoStreams?: number;
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
@@ -2555,14 +2625,21 @@ export interface VideoGalleryProps {
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
+    onStartLocalSpotlight?: () => Promise<void>;
+    onStartRemoteSpotlight?: (userIds?: string[]) => Promise<void>;
+    onStopLocalSpotlight?: () => Promise<void>;
+    onStopRemoteSpotlight?: (userIds?: string[]) => Promise<void>;
     onUnpinParticipant?: (userId: string) => void;
     overflowGalleryPosition?: OverflowGalleryPosition;
     pinnedParticipants?: string[];
+    // @beta
+    reactionResources?: ReactionResources;
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoTileMenu?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
     remoteVideoViewOptions?: VideoStreamOptions;
     showCameraSwitcherInLocalPreview?: boolean;
     showMuteIndicator?: boolean;
+    spotlightedParticipants?: string[];
     strings?: Partial<VideoGalleryStrings>;
     styles?: VideoGalleryStyles;
 }
@@ -2594,6 +2671,7 @@ export interface VideoGalleryStream {
 
 // @public
 export interface VideoGalleryStrings {
+    addSpotlightVideoTileMenuLabel: string;
     displayNamePlaceholder: string;
     fillRemoteParticipantFrame: string;
     fitRemoteParticipantToFrame: string;
@@ -2606,6 +2684,10 @@ export interface VideoGalleryStrings {
     pinParticipantMenuItemAriaLabel: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;
+    spotlightLimitReachedMenuTitle: string;
+    startSpotlightVideoTileMenuLabel: string;
+    stopSpotlightOnSelfVideoTileMenuLabel: string;
+    stopSpotlightVideoTileMenuLabel: string;
     unpinnedParticipantAnnouncementAriaLabel: string;
     unpinParticipantForMe: string;
     unpinParticipantMenuItemAriaLabel: string;
@@ -2652,6 +2734,7 @@ export interface VideoTileProps {
     isMuted?: boolean;
     isPinned?: boolean;
     isSpeaking?: boolean;
+    isSpotlighted?: boolean;
     noVideoAvailableAriaLabel?: string;
     onLongTouch?: () => void;
     onRenderPlaceholder?: OnRenderAvatarCallback;
@@ -2659,7 +2742,10 @@ export interface VideoTileProps {
     personaMaxSize?: number;
     personaMinSize?: number;
     raisedHand?: RaisedHand;
+    // @beta
     reaction?: Reaction;
+    // @beta
+    reactionResources?: ReactionResources;
     renderElement?: JSX.Element | null;
     showLabel?: boolean;
     showMuteIndicator?: boolean;

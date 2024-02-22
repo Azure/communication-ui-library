@@ -60,6 +60,11 @@
     "removedFromCallMoreDetails": "另一名参与者已将你从通话中删除。",
     "removedFromCallTitle": "你已被删除",
     "removeMenuLabel": "删除",
+    "startSpotlightParticipantListMenuLabel": "对所有人聚焦",
+    "addSpotlightParticipantListMenuLabel": "添加聚焦",
+    "stopSpotlightParticipantListMenuLabel": "停止聚焦",
+    "stopSpotlightOnSelfParticipantListMenuLabel": "退出聚焦",
+    "spotlightLimitReachedParticipantListMenuTitle": "已达到聚焦限制",
     "returnToCallButtonAriaDescription": "返回通话",
     "returnToCallButtonAriaLabel": "返回",
     "roomNotFoundDetails": "找不到提供的会议室 ID。",
@@ -118,6 +123,15 @@
     "dismissModalAriaLabel": "本地和远程图片和图像，按 Enter 返回呼叫",
     "callRejectedTitle": "无法完成呼叫",
     "callRejectedMoreDetails": "您尝试联系的人员不可用。请稍后重试。",
+    "callTimeoutTitle": "无法完成呼叫",
+    "callTimeoutDetails": "您尝试联系的人员不可用。请稍后重试。",
+    "callTimeoutBotTitle": "无法完成呼叫",
+    "callTimeoutBotDetails": "你尝试访问的服务不可用。请稍后重试。",
+    "dtmfDialerButtonLabel": "拨号盘",
+    "dtmfDialerButtonTooltipOn": "显示拨号盘",
+    "dtmfDialerButtonTooltipOff": "隐藏拨号盘",
+    "dtmfDialerMoreButtonLabelOn": "显示拨号盘",
+    "dtmfDialerMoreButtonLabelOff": "隐藏拨号盘",
     "spokenLanguageStrings": {
       "ar-ae": "阿拉伯语 - 阿拉伯联合酋长国",
       "ar-sa": "阿拉伯语 - 沙特阿拉伯",
@@ -229,6 +243,81 @@
         "lostDueToRoleChangeToAttendee": "你的角色已更改。某些操作，如共享内容，对你不可用。",
         "grantedDueToRoleChangeToPresenter": "你是演示者。你可以共享内容并促进会议。"
       }
+    },
+    "surveyTitle": "帮助我们改进",
+    "starSurveyHelperText": "通话质量如何?",
+    "starSurveyOneStarText": "质量很差。",
+    "starSurveyTwoStarText": "质量较差。",
+    "starSurveyThreeStarText": "质量良好。",
+    "starSurveyFourStarText": "质量很棒。",
+    "starSurveyFiveStarText": "质量很好。",
+    "surveyConfirmButtonLabel": "发送反馈",
+    "starRatingAriaLabel": "选择 {0} 星(共 {1} 星)",
+    "surveySkipButtonLabel": "跳过",
+    "tagsSurveyQuestion": "如何改进?",
+    "tagsSurveyTextFieldDefaultText": "其他，请说明",
+    "tagsSurveyHelperText": "检查遇到的任何问题",
+    "surveyTextboxDefaultText": "其他，请说明",
+    "endOfSurveyText": "感谢你的反馈!",
+    "surveyIssues": {
+      "overallRating": {
+        "callCannotJoin": "我无法加入通话",
+        "callCannotInvite": "我无法邀请其他人加入通话",
+        "hadToRejoin": "我不得不重新加入通话",
+        "callEndedUnexpectedly": "通话意外结束",
+        "otherIssues": "我在通话时遇到其他问题"
+      },
+      "audioRating": {
+        "noLocalAudio": "对方听不到任何声音",
+        "noRemoteAudio": "我听不到任何声音",
+        "echo": "我在通话中听到回音",
+        "audioNoise": "我在通话时听到噪音",
+        "lowVolume": "音量太低",
+        "audioStoppedUnexpectedly": "视频意外停止",
+        "distortedSpeech": "音频已失真",
+        "audioInterruption": "音频已中断",
+        "otherIssues": "我在此通话中遇到其他音频问题"
+      },
+      "videoRating": {
+        "noVideoReceived": "我看不到视频",
+        "noVideoSent": "其他人看不到我",
+        "lowQuality": "视频质量低",
+        "freezes": "视频已冻结",
+        "stoppedUnexpectedly": "视频意外停止",
+        "darkVideoReceived": "我只能在其他人打开相机时看到深色屏幕",
+        "audioVideoOutOfSync": "音频和视频不同步",
+        "otherIssues": "我在此通话中遇到其他视频问题"
+      },
+      "screenshareRating": {
+        "noContentLocal": "其他人看不到我的屏幕共享",
+        "noContentRemote": "我看不到其他人的屏幕共享",
+        "cannotPresent": "我无法显示我的屏幕",
+        "lowQuality": "屏幕共享质量低",
+        "freezes": "屏幕共享已冻结",
+        "stoppedUnexpectedly": "屏幕共享意外停止",
+        "largeDelay": "屏幕共享具有较大的延迟",
+        "otherIssues": "我在此通话中遇到其他屏幕共享问题"
+      }
+    },
+    "SurveyIssuesHeadingStrings": {
+      "overallRating": "整体",
+      "audioRating": "音频",
+      "videoRating": "视频",
+      "screenshareRating": "正在演示"
+    },
+    "spotlightPrompt": {
+      "startSpotlightHeading": "对所有人聚焦?",
+      "startSpotlightText": "你将对会议中的每个人突出显示此视频。",
+      "startSpotlightOnSelfText": "你将对会议中的每个人突出显示你的视频。",
+      "startSpotlightConfirmButtonLabel": "对所有人聚焦",
+      "startSpotlightCancelButtonLabel": "取消",
+      "stopSpotlightHeading": "停止聚焦?",
+      "stopSpotlightOnSelfHeading": "退出聚焦?",
+      "stopSpotlightText": "将不再为会议中的每个人突出显示此视频。",
+      "stopSpotlightOnSelfText": "将不再对会议中的每个人突出显示你的视频。",
+      "stopSpotlightConfirmButtonLabel": "停止聚焦",
+      "stopSpotlightOnSelfConfirmButtonLabel": "退出聚焦",
+      "stopSpotlightCancelButtonLabel": "取消"
     }
   },
   "chat": {

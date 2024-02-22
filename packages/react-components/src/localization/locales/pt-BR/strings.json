@@ -31,7 +31,7 @@
   "mentionPopover": {
     "mentionPopoverHeader": "Sugestões"
   },
-  "imageGallery": {
+  "imageOverlay": {
     "downloadButtonLabel": "Baixar",
     "dismissButtonAriaLabel": "Fechar"
   },
@@ -123,6 +123,16 @@
     "tooltipOnContent": "Baixar a Mão",
     "tooltipOffContent": "Levantar a Mão"
   },
+  "reactionButton": {
+    "label": "Reagir",
+    "tooltipDisabledContent": "A ação de reação está desabilitada",
+    "tooltipContent": "Enviar uma reação",
+    "likeReactionTooltipContent": "Curtir",
+    "heartReactionTooltipContent": "Amor",
+    "laughReactionTooltipContent": "Gargalhada",
+    "applauseReactionTooltipContent": "Aplausos",
+    "surprisedReactionTooltipContent": "Surpreso"
+  },
   "messageThread": {
     "yesterday": "Ontem",
     "sunday": "Domingo",
@@ -190,7 +200,8 @@
     "failedToJoinCallGeneric": "Ocorreu um erro ao ingressar na chamada.",
     "failedToJoinCallInvalidMeetingLink": "Não é possível ingressar na Reunião. Link Inválido.",
     "cameraFrozenForRemoteParticipants": "Os usuários na chamada estão enfrentando problemas para ver seu vídeo. Verifique seus dispositivos e a rede.",
-    "unableToStartVideoEffect": "Não é possível aplicar o efeito de vídeo."
+    "unableToStartVideoEffect": "Não é possível aplicar o efeito de vídeo.",
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "Não é possível iniciar o destaque nos participantes porque o número máximo de participantes já está em destaque."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Você está compartilhando sua tela",
@@ -208,7 +219,12 @@
     "pinParticipantMenuItemAriaLabel": "Fixar {participantName}",
     "unpinParticipantMenuItemAriaLabel": "Desafixar {participantName}",
     "pinnedParticipantAnnouncementAriaLabel": "Fixado {participantName}",
-    "unpinnedParticipantAnnouncementAriaLabel": "Desafixado {participantName}"
+    "unpinnedParticipantAnnouncementAriaLabel": "Desafixado {participantName}",
+    "startSpotlightVideoTileMenuLabel": "Destacar para todos",
+    "addSpotlightVideoTileMenuLabel": "Adicionar destaque",
+    "spotlightLimitReachedMenuTitle": "Limite de destaque atingido",
+    "stopSpotlightVideoTileMenuLabel": "Parar de destacar",
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Sair de destaque"
   },
   "dialpad": {
     "placeholderText": "Inserir o número do telefone",

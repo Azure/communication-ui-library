@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { CallAdapterState, CallCompositePage, END_CALL_PAGES } from '../adapter/CallAdapter';
+import { CallAdapterState, CallCompositePage, END_CALL_PAGES, StartCallIdentifier } from '../adapter/CallAdapter';
 import { _isInCall, _isPreviewOn, _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { CallState, RemoteParticipantState } from '@internal/calling-stateful-client';
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
-import { AdapterStateModifier } from '../adapter/AzureCommunicationCallAdapter';
+import { AdapterStateModifier, CallAdapterLocator } from '../adapter/AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 /* @conditional-compile-remove(video-background-effects) */
@@ -40,6 +40,10 @@ export const INVITE_TO_ROOM_REMOVED_SUB_CODE = 5317;
 export const CALL_TIMEOUT_SUB_CODE = 10004;
 /** @private */
 export const CALL_TIMEOUT_CODE = 487;
+/** @private */
+export const BOT_TIMEOUT_CODE = 486;
+/** @private */
+export const BOT_TIMEOUT_SUB_CODE = 10321;
 
 /**
  * @private
@@ -177,6 +181,15 @@ export const getEndedCallPageProps = (
         disableStartCallButton = true;
         iconName = 'NoticePageCallTimeout';
       }
+      break;
+    case BOT_TIMEOUT_SUB_CODE:
+      if (endedCall?.callEndReason?.code === BOT_TIMEOUT_CODE && locale.strings.call.callTimeoutBotTitle) {
+        title = locale.strings.call.callTimeoutBotTitle;
+        moreDetails = locale.strings.call.callTimeoutBotDetails;
+        disableStartCallButton = true;
+        iconName = 'NoticePageCallTimeout';
+      }
+      break;
   }
   /* @conditional-compile-remove(calling-sounds) */
   switch (endedCall?.callEndReason?.code) {
@@ -233,11 +246,11 @@ type GetCallCompositePageFunction = ((
   ((
     call: CallState | undefined,
     previousCall: CallState | undefined,
+    /* @conditional-compile-remove(call-transfer) */ transferCall?: CallState,
     /* @conditional-compile-remove(unsupported-browser) */ unsupportedBrowserInfo?: {
       environmentInfo?: EnvironmentInfo;
       unsupportedBrowserVersionOptedIn?: boolean;
-    },
-    /* @conditional-compile-remove(call-transfer) */ transferCall?: CallState
+    }
   ) => CallCompositePage);
 /**
  * Get the current call composite page based on the current call composite state
@@ -255,14 +268,14 @@ type GetCallCompositePageFunction = ((
 export const getCallCompositePage: GetCallCompositePageFunction = (
   call,
   previousCall?,
-  unsupportedBrowserInfo?,
-  transferCall?: CallState
+  transferCall?: CallState,
+  unsupportedBrowserInfo?
 ): CallCompositePage => {
   /* @conditional-compile-remove(unsupported-browser) */
   if (
     isUnsupportedEnvironment(
-      unsupportedBrowserInfo.environmentInfo,
-      unsupportedBrowserInfo.unsupportedBrowserVersionOptedIn
+      unsupportedBrowserInfo?.environmentInfo,
+      unsupportedBrowserInfo?.unsupportedBrowserVersionOptedIn
     )
   ) {
     return 'unsupportedEnvironment';
@@ -529,3 +542,15 @@ export const getBackgroundEffectFromSelectedEffect = (
  */
 export const getSelectedCameraFromAdapterState = (state: CallAdapterState): VideoDeviceInfo | undefined =>
   state.devices.selectedCamera || state.devices.cameras[0];
+
+/**
+ * Helper to determine if the adapter has a locator or targetCallees
+ * @param locatorOrTargetCallees
+ * @returns boolean to determine if the adapter has a locator or targetCallees, true is locator, false is targetCallees
+ * @private
+ */
+export const getLocatorOrTargetCallees = (
+  locatorOrTargetCallees: CallAdapterLocator | StartCallIdentifier[]
+): locatorOrTargetCallees is StartCallIdentifier[] => {
+  return !!Array.isArray(locatorOrTargetCallees);
+};

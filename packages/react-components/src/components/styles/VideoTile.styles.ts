@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { IButtonStyles, IStyle, keyframes, memoizeFunction, mergeStyles, Theme, ITheme } from '@fluentui/react';
+import { IButtonStyles, IStyle, mergeStyles, Theme, ITheme } from '@fluentui/react';
+/* @conditional-compile-remove(reaction) */
+import { keyframes, memoizeFunction } from '@fluentui/react';
 
 /**
  * @private
@@ -174,6 +176,7 @@ export const raiseHandLimitedSpaceStyles: IStyle = {
   bottom: 0
 };
 
+/* @conditional-compile-remove(reaction) */
 /**
  * @private
  */
@@ -187,17 +190,19 @@ export const playFrames = memoizeFunction(() =>
     }
   })
 );
+
 /* @conditional-compile-remove(reaction) */
 /**
  * @private
  */
-export const reactionRenderingStyle = (args: { backgroundImageUrl?: string; personaSize: number }): string =>
-  mergeStyles({
+export const reactionRenderingStyle = (args: { spriteImageUrl: string; personaSize: number }): string => {
+  const imageUrl = `url(${args.spriteImageUrl})`;
+  return mergeStyles({
     height: '100%',
     width: '100%',
     overflow: 'hidden',
     animationName: playFrames(),
-    backgroundImage: args.backgroundImageUrl,
+    backgroundImage: imageUrl,
     animationDuration: '5.12s',
     animationTimingFunction: `steps(102)`,
     backgroundSize: `cover`,
@@ -208,3 +213,4 @@ export const reactionRenderingStyle = (args: { backgroundImageUrl?: string; pers
     backgroundPosition: `center`,
     transform: `scale(${84 < args.personaSize ? 84 / args.personaSize : args.personaSize / 84})`
   });
+};

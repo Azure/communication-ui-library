@@ -14,8 +14,10 @@ export { SendBox } from './SendBox';
 /* @conditional-compile-remove(mention) */
 export { _MentionPopover } from './MentionPopover';
 
-export { ImageGallery } from './ImageGallery';
-export type { ImageGalleryStrings } from './ImageGallery';
+/* @conditional-compile-remove(image-overlay) */
+export { ImageOverlay } from './ImageOverlay';
+/* @conditional-compile-remove(image-overlay) */
+export type { ImageOverlayStrings } from './ImageOverlay';
 
 export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox';
 
@@ -34,10 +36,14 @@ export type {
   MentionPopoverStrings
 } from './MentionPopover';
 
-export type { ImageGalleryProps, ImageGalleryImageProps } from './ImageGallery';
+/* @conditional-compile-remove(image-overlay) */
+export type { ImageOverlayProps } from './ImageOverlay';
+
+/* @conditional-compile-remove(image-overlay) */
+export type { InlineImageOptions, InlineImage } from './ChatMessage/ChatMessageContent';
 
 /* @conditional-compile-remove(file-sharing) */
-export type { ActiveFileUpload } from './SendBox';
+export type { ActiveFileUpload } from './FileUploadCards';
 
 export { MessageStatusIndicator } from './MessageStatusIndicator';
 export type { MessageStatusIndicatorProps, MessageStatusIndicatorStrings } from './MessageStatusIndicator';
@@ -76,9 +82,14 @@ export { Announcer } from './Announcer';
 export type { AnnouncerProps } from './Announcer';
 
 export { VideoGallery } from './VideoGallery';
-export type { VideoGalleryProps, VideoGalleryStrings, VideoGalleryStyles, VideoGalleryLayout } from './VideoGallery';
-/* @conditional-compile-remove(pinned-participants) */
-export type { VideoTileContextualMenuProps, VideoTileDrawerMenuProps } from './VideoGallery';
+export type {
+  VideoGalleryProps,
+  VideoGalleryStrings,
+  VideoGalleryStyles,
+  VideoGalleryLayout,
+  VideoTileContextualMenuProps,
+  VideoTileDrawerMenuProps
+} from './VideoGallery';
 /* @conditional-compile-remove(vertical-gallery) */
 export type { OverflowGalleryPosition } from './VideoGallery';
 /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
@@ -174,7 +185,10 @@ export type { ScreenShareButtonProps, ScreenShareButtonStrings } from './ScreenS
 export { RaiseHandButton } from './RaiseHandButton';
 /* @conditional-compile-remove(raise-hand) */
 export type { RaiseHandButtonProps, RaiseHandButtonStrings } from './RaiseHandButton';
-
+/* @conditional-compile-remove(reaction) */
+export { ReactionButton } from './ReactionButton';
+/* @conditional-compile-remove(reaction) */
+export type { ReactionButtonProps, ReactionButtonStrings } from './ReactionButton';
 export { VideoTile } from './VideoTile';
 export type { VideoTileProps, VideoTileStylesProps } from './VideoTile';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -205,6 +219,7 @@ export { _ComplianceBanner } from './ComplianceBanner';
 export type { _ComplianceBannerProps, _ComplianceBannerStrings } from './ComplianceBanner';
 export { Dialpad } from './Dialpad/Dialpad';
 export type { DialpadProps, DialpadStrings, DialpadStyles, DtmfTone } from './Dialpad/Dialpad';
+export type { DialpadMode, LongPressTrigger } from './Dialpad/Dialpad';
 /* @conditional-compile-remove(end-of-call-survey) */
 export { _StarSurvey } from './Survey/StarSurvey/StarSurvey';
 /* @conditional-compile-remove(end-of-call-survey) */

@@ -35,7 +35,7 @@ const Start1toNCallStory = (args: ArgsFrom<typeof storyControls>, context): JSX.
             <ContosoCallContainer1toN
               fluentTheme={context.theme}
               rtl={context.globals.rtl === 'rtl'}
-              locator={[args.calleeUserId]}
+              targetCallees={[args.calleeUserId]}
               userId={{ communicationUserId: args.userId }}
               token={args.token}
               displayName={args.displayName}

@@ -34,8 +34,8 @@ import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
 import getParticipantsWhoHaveReadMessage from './utils/getParticipantsWhoHaveReadMessage';
 /* @conditional-compile-remove(file-sharing) */
 import { FileDownloadHandler } from './FileDownloadCards';
+/* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AttachmentMetadata } from './FileDownloadCards';
-import { AttachmentDownloadResult } from './FileDownloadCards';
 import { useTheme } from '../theming';
 import { FluentV9ThemeProvider } from './../theming/FluentV9ThemeProvider';
 import LiveAnnouncer from './Announcer/LiveAnnouncer';
@@ -47,6 +47,8 @@ import {
   ChatMessageComponentWrapperProps
 } from './ChatMessage/ChatMessageComponentWrapper';
 import { Announcer } from './Announcer';
+/* @conditional-compile-remove(image-overlay) */
+import { InlineImageOptions } from './ChatMessage/ChatMessageContent';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (
@@ -219,7 +221,7 @@ export interface MessageThreadStrings {
   /* @conditional-compile-remove(data-loss-prevention) */
   /** String for policy violation message removal details link */
   blockedWarningLinkText: string;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /** String for aria text in file attachment group*/
   fileCardGroupMessage: string;
 }
@@ -454,12 +456,6 @@ export type MessageThreadProps = {
    */
   onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
   /**
-   * Optional callback to retrieve the inline image in a message.
-   * @param attachment - AttachmentMetadata object we want to render
-   * @public
-   */
-  onFetchAttachments?: (attachments: AttachmentMetadata[]) => Promise<AttachmentDownloadResult[]>;
-  /**
    * Optional callback to edit a message.
    *
    * @param messageId - message id from chatClient
@@ -526,11 +522,12 @@ export type MessageThreadProps = {
    * @beta
    */
   mentionOptions?: MentionOptions;
+  /* @conditional-compile-remove(image-overlay) */
   /**
    * Optional callback called when an inline image is clicked.
-   * @public
+   * @beta
    */
-  onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
+  inlineImageOptions?: InlineImageOptions;
 };
 
 /**
@@ -659,10 +656,10 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     onSendMessage,
     /* @conditional-compile-remove(date-time-customization) */
     onDisplayDateTimeString,
-    onFetchAttachments,
     /* @conditional-compile-remove(mention) */
     mentionOptions,
-    onInlineImageClicked,
+    /* @conditional-compile-remove(image-overlay) */
+    inlineImageOptions,
     /* @conditional-compile-remove(file-sharing) */
     onRenderFileDownloads
   } = props;
@@ -683,31 +680,6 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
 
   // readCount and participantCount will only need to be updated on-fly when user hover on an indicator
   const [readCountForHoveredIndicator, setReadCountForHoveredIndicator] = useState<number | undefined>(undefined);
-
-  const [inlineAttachments, setInlineAttachments] = useState<Record<string, Record<string, string>>>({});
-
-  const onFetchInlineAttachment = useCallback(
-    async (attachments: AttachmentMetadata[], messageId: string): Promise<void> => {
-      if (!onFetchAttachments || attachments.length === 0) {
-        return;
-      }
-      const attachmentDownloadResult = await onFetchAttachments(attachments);
-
-      if (attachmentDownloadResult.length > 0) {
-        setInlineAttachments((prev) => {
-          // The new state should always be based on the previous one
-          // otherwise there can be issues with renders
-          const listOfAttachments = prev[messageId] ?? {};
-          for (const result of attachmentDownloadResult) {
-            const { attachmentId, blobUrl } = result;
-            listOfAttachments[attachmentId] = blobUrl;
-          }
-          return { ...prev, [messageId]: listOfAttachments };
-        });
-      }
-    },
-    [onFetchAttachments]
-  );
 
   const localeStrings = useLocale().strings.messageThread;
   const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
@@ -1109,9 +1081,8 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
                   participantCount={participantCount}
                   /* @conditional-compile-remove(file-sharing) */
                   fileDownloadHandler={props.fileDownloadHandler}
-                  onFetchInlineAttachment={onFetchInlineAttachment}
-                  inlineAttachments={inlineAttachments}
-                  onInlineImageClicked={onInlineImageClicked}
+                  /* @conditional-compile-remove(image-overlay) */
+                  inlineImageOptions={inlineImageOptions}
                   /* @conditional-compile-remove(date-time-customization) */
                   onDisplayDateTimeString={onDisplayDateTimeString}
                   /* @conditional-compile-remove(mention) */

@@ -1,6 +1,6 @@
 {
   "name": "@internal/chat-component-bindings",
-  "version": "1.11.1-beta.0",
+  "version": "1.13.0-beta.1",
   "description": "Component bindings specific to components that integrate with the Azure Communication Services Chat JavaScript SDK",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
@@ -30,12 +30,13 @@
     "_current-flavor": "echo You are running under COMMUNICATION_REACT_FLAVOR: && env-cmd -f ../../common/config/env/.env node -p process.env.COMMUNICATION_REACT_FLAVOR",
     "_test:by-flavor": "(npm run _if-preprocess && rushx preprocess || if-env COMMUNICATION_REACT_FLAVOR=beta && echo \"skip preprocess\") && jest"
   },
+  "license": "MIT",
   "dependencies": {
     "@azure/communication-common": "^2.3.0",
     "@azure/core-paging": "^1.5.0",
-    "@internal/acs-ui-common": "1.11.1-beta.0",
-    "@internal/chat-stateful-client": "1.11.1-beta.0",
-    "@internal/react-components": "1.11.1-beta.0",
+    "@internal/acs-ui-common": "1.13.0-beta.1",
+    "@internal/chat-stateful-client": "1.13.0-beta.1",
+    "@internal/react-components": "1.13.0-beta.1",
     "reselect": "^4.0.0",
     "memoize-one": "^5.2.1"
   },
@@ -46,12 +47,12 @@
   },
   "devDependencies": {
     "@azure/communication-chat": "1.5.0-beta.1 || ^1.4.0",
-    "@babel/cli": "^7.23.4",
-    "@babel/core": "^7.23.5",
-    "@microsoft/api-documenter": "~7.23.14",
-    "@microsoft/api-extractor": "~7.38.5",
+    "@babel/cli": "^7.23.9",
+    "@babel/core": "^7.23.9",
+    "@microsoft/api-documenter": "~7.23.20",
+    "@microsoft/api-extractor": "~7.39.4",
     "@types/jest": "^29.5.11",
-    "@types/react": "18.2.42",
+    "@types/react": "18.2.48",
     "copyfiles": "^2.4.1",
     "cpx": "^1.5.0",
     "cross-env": "^7.0.3",
@@ -67,7 +68,7 @@
     "prettier": "2.3.1",
     "react": "18.2.0",
     "rimraf": "^2.6.2",
-    "rollup": "^4.7.0",
+    "rollup": "^4.9.6",
     "typescript": "5.3.3"
   }
 }

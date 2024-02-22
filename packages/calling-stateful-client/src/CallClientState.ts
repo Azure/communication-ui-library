@@ -31,6 +31,8 @@ import { ParticipantRole } from '@azure/communication-calling';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 /* @conditional-compile-remove(reaction) */
 import { ReactionMessage } from '@azure/communication-calling';
+/* @conditional-compile-remove(spotlight) */
+import { SpotlightedParticipant } from '@azure/communication-calling';
 
 /**
  * State only version of {@link @azure/communication-calling#CallAgent} except calls is moved to be a child directly of
@@ -146,6 +148,40 @@ export interface CapabilitiesFeatureState {
    * Proxy of the latest {@link @azure/communication-calling#CapabilitiesChangeInfo}
    */
   latestCapabilitiesChangeInfo: CapabilitiesChangeInfo;
+}
+
+/* @conditional-compile-remove(spotlight) */
+/**
+ * State only version of {@link @azure/communication-calling#SpotlightCallFeature}
+ *
+ * @beta
+ */
+export interface SpotlightCallFeatureState {
+  /**
+   * Ordered array of spotlighted participants in call
+   */
+  spotlightedParticipants: SpotlightedParticipant[];
+  /**
+   * Local participant spotlight
+   */
+  localParticipantSpotlight?: SpotlightState;
+  /**
+   * Proxy of {@link @azure/communication-calling#SpotlightCallFeature.maxParticipantsToSpotlight}.
+   */
+  maxParticipantsToSpotlight: number;
+}
+
+/* @conditional-compile-remove(spotlight) */
+/**
+ * Spotlight state with order
+ *
+ * @beta
+ */
+export interface SpotlightState {
+  /**
+   * Order position of spotlight in call
+   */
+  spotlightedOrderPosition?: number;
 }
 
 /**
@@ -302,7 +338,6 @@ export interface RemoteVideoStreamState {
    * API. This can be undefined if the stream has not yet been rendered and defined after createView creates the view.
    */
   view?: VideoStreamRendererViewState;
-  /* @conditional-compile-remove(pinned-participants) */
   /**
    * Proxy of {@link @azure/communication-calling#RemoteVideoStream.size}.
    */
@@ -389,6 +424,11 @@ export interface RemoteParticipantState {
    * @beta
    */
   reactionState?: ReactionState;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Proxy of {@link @azure/communication-calling#SpotlightCallFeature.spotlightedParticipants}.
+   */
+  spotlight?: SpotlightState;
 }
 
 /**
@@ -550,13 +590,18 @@ export interface CallState {
    * Hide attendee names in teams meeting
    */
   hideAttendeeNames?: boolean;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Proxy of {@link @azure/communication-calling#SpotlightCallFeature}.
+   */
+  spotlight?: SpotlightCallFeatureState;
 }
 
 /* @conditional-compile-remove(call-transfer) */
 /**
  * Transfer feature state
  *
- * @beta
+ * @public
  */
 export interface TransferFeatureState {
   /**
@@ -569,7 +614,7 @@ export interface TransferFeatureState {
 /**
  * Transfer feature state
  *
- * @beta
+ * @public
  */
 export interface AcceptedTransfer {
   /**

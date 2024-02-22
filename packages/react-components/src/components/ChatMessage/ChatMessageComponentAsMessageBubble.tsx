@@ -16,8 +16,9 @@ import { useIdentifiers } from '../../identifiers/IdentifierProvider';
 import { useTheme } from '../../theming';
 import { ChatMessageActionFlyout } from './ChatMessageActionsFlyout';
 import { ChatMessageContent } from './ChatMessageContent';
+/* @conditional-compile-remove(image-overlay) */
+import { InlineImageOptions } from './ChatMessageContent';
 import { ChatMessage } from '../../types/ChatMessage';
-import { AttachmentMetadata } from '../FileDownloadCards';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessageContent } from './ChatMessageContent';
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -62,6 +63,7 @@ type ChatMessageComponentAsMessageBubbleProps = {
    * Whether to overlap avatar and message when the view is width constrained.
    */
   shouldOverlapAvatarAndMessage: boolean;
+  /* @conditional-compile-remove(file-sharing) */
   /**
    * Optional callback to render uploaded files in the message component.
    */
@@ -94,19 +96,12 @@ type ChatMessageComponentAsMessageBubbleProps = {
    * @internal
    */
   mentionDisplayOptions?: MentionDisplayOptions;
-  /**
-   * Optional function to fetch attachments.
-   */
-  onFetchAttachments?: (attachment: AttachmentMetadata[], messageId: string) => Promise<void>;
+  /* @conditional-compile-remove(image-overlay) */
   /**
    * Optional callback called when an inline image is clicked.
-   * @public
+   * @beta
    */
-  onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
-  /**
-   * Optional map of attachment ids to blob urls.
-   */
-  attachmentsMap?: Record<string, string>;
+  inlineImageOptions?: InlineImageOptions;
 };
 
 const generateDefaultTimestamp = (
@@ -158,7 +153,8 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     messageStatus,
     /* @conditional-compile-remove(file-sharing) */
     fileDownloadHandler,
-    onInlineImageClicked,
+    /* @conditional-compile-remove(image-overlay) */
+    inlineImageOptions,
     shouldOverlapAvatarAndMessage
   } = props;
 
@@ -216,20 +212,20 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     return (
       <_FileDownloadCards
         userId={userId}
-        /* @conditional-compile-remove(file-sharing) */
+        /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
         fileMetadata={(message as ChatMessage).files || []}
         /* @conditional-compile-remove(file-sharing) */
         downloadHandler={fileDownloadHandler}
+        /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
         strings={{ downloadFile: strings.downloadFile, fileCardGroupMessage: strings.fileCardGroupMessage }}
       />
     );
-    return <></>;
   }, [
     userId,
     message,
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
     strings,
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
     fileDownloadHandler
   ]);
 
@@ -242,16 +238,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     }
     return undefined;
   }, [editedOn, message.messageType, messageStatus, strings.editedTag, strings.failToSendTag, theme]);
-
-  const handleOnInlineImageClicked = useCallback(
-    async (attachmentId: string): Promise<void> => {
-      if (onInlineImageClicked === undefined) {
-        return;
-      }
-      await onInlineImageClicked(attachmentId, message.messageId);
-    },
-    [message, onInlineImageClicked]
-  );
 
   const getContent = useCallback(() => {
     /* @conditional-compile-remove(data-loss-prevention) */
@@ -267,16 +253,26 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
         <ChatMessageContent
           message={message}
           strings={strings}
-          onFetchAttachments={props.onFetchAttachments}
-          attachmentsMap={props.attachmentsMap}
           /* @conditional-compile-remove(mention) */
           mentionDisplayOptions={props.mentionDisplayOptions}
-          onInlineImageClicked={handleOnInlineImageClicked}
+          /* @conditional-compile-remove(image-overlay) */
+          inlineImageOptions={inlineImageOptions}
         />
-        {props.onRenderFileDownloads ? props.onRenderFileDownloads(userId, message) : defaultOnRenderFileDownloads()}
+        {
+          /* @conditional-compile-remove(file-sharing) */ props.onRenderFileDownloads
+            ? props.onRenderFileDownloads(userId, message)
+            : defaultOnRenderFileDownloads()
+        }
       </div>
     );
-  }, [defaultOnRenderFileDownloads, message, props, strings, userId, handleOnInlineImageClicked]);
+  }, [
+    defaultOnRenderFileDownloads,
+    /* @conditional-compile-remove(image-overlay) */ inlineImageOptions,
+    message,
+    props,
+    strings,
+    userId
+  ]);
 
   const isBlockedMessage =
     false || /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked';
@@ -287,6 +283,8 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
   const chatItemMessageContainerClassName = mergeClasses(
     // messageContainerStyle used in className and style prop as style prop can't handle CSS selectors
     chatMessageStyles.body,
+    // disable placeholder functionality for GA releases as it might confuse users
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     chatMessageStyles.bodyWithPlaceholderImage,
     isBlockedMessage
       ? chatMessageCommonStyles.blocked
@@ -410,6 +408,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
                 {formattedTimestamp}
               </Text>
             }
+            details={getMessageDetails()}
           >
             {getContent()}
           </FluentChatMessage>

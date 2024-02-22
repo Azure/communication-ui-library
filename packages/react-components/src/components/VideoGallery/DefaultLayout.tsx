@@ -40,7 +40,8 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     /* @conditional-compile-remove(vertical-gallery) */
     parentHeight,
     pinnedParticipantUserIds = [],
-    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'horizontalBottom'
+    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'horizontalBottom',
+    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds
   } = props;
 
   const isNarrow = parentWidth ? isNarrowWidth(parentWidth) : false;
@@ -61,13 +62,14 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     maxOverflowGalleryDominantSpeakers: screenShareComponent
       ? childrenPerPage.current - ((pinnedParticipantUserIds.length + 1) % childrenPerPage.current)
       : childrenPerPage.current,
-    /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds,
-    /* @conditional-compile-remove(gallery-layouts) */ layout: 'default'
+    pinnedParticipantUserIds,
+    /* @conditional-compile-remove(gallery-layouts) */ layout: 'default',
+    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds
   });
 
   let activeVideoStreams = 0;
 
-  const gridTiles = gridParticipants.map((p) => {
+  let gridTiles = gridParticipants.map((p) => {
     return onRenderRemoteParticipant(
       p,
       maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
@@ -85,7 +87,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
    */
   const [indexesToRender, setIndexesToRender] = useState<number[]>([]);
 
-  const overflowGalleryTiles = overflowGalleryParticipants.map((p, i) => {
+  let overflowGalleryTiles = overflowGalleryParticipants.map((p, i) => {
     return onRenderRemoteParticipant(
       p,
       maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
@@ -95,7 +97,11 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
   });
 
   if (localVideoComponent) {
-    gridTiles.push(localVideoComponent);
+    if (screenShareComponent) {
+      overflowGalleryTiles = [localVideoComponent].concat(overflowGalleryTiles);
+    } else {
+      gridTiles = [localVideoComponent].concat(gridTiles);
+    }
   }
 
   const overflowGallery = useMemo(() => {

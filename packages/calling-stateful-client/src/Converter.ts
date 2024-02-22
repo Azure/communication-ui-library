@@ -69,7 +69,6 @@ export function convertSdkRemoteStreamToDeclarativeRemoteStream(
     /* @conditional-compile-remove(video-stream-is-receiving-flag) */
     isReceiving: stream.isReceiving,
     view: undefined,
-    /* @conditional-compile-remove(pinned-participants) */
     streamSize: stream.size
   };
 }
@@ -95,7 +94,9 @@ export function convertSdkParticipantToDeclarativeParticipant(
     /* @conditional-compile-remove(raise-hand) */
     raisedHand: undefined,
     /* @conditional-compile-remove(hide-attendee-name) */
-    role: participant.role
+    role: participant.role,
+    /* @conditional-compile-remove(spotlight) */
+    spotlight: undefined
   };
 }
 
@@ -164,7 +165,7 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     },
     /* @conditional-compile-remove(hide-attendee-name) */
     // TODO: Replace this once the SDK supports hide attendee name
-    hideAttendeeNames: true
+    hideAttendeeNames: false
   };
 }
 

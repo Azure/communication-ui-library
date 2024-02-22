@@ -3,7 +3,9 @@
 
 import { GroupLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
-import { RoomLocator, ParticipantRole } from '@azure/communication-calling';
+import { RoomCallLocator } from '@azure/communication-calling';
+/* @conditional-compile-remove(rooms) */
+import { ParticipantRole } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */
 import { CallParticipantsLocator } from '@azure/communication-react';
 import { v1 as generateGUID } from 'uuid';
@@ -98,7 +100,7 @@ export const getIsCTE = (): boolean | undefined => {
 /**
  * Get room id from the url's query params.
  */
-export const getRoomIdFromUrl = (): RoomLocator | undefined => {
+export const getRoomIdFromUrl = (): RoomCallLocator | undefined => {
   const urlParams = new URLSearchParams(window.location.search);
   const roomId = urlParams.get('roomId');
   return roomId ? { roomId } : undefined;
@@ -140,3 +142,6 @@ export const callingSDKVersion = __CALLINGVERSION__;
 
 declare let __COMMUNICATIONREACTVERSION__: string; //Injected by webpack
 export const communicationReactSDKVersion = __COMMUNICATIONREACTVERSION__;
+
+declare let __COMMITID__: string; //Injected by webpack
+export const commitID = __COMMITID__;

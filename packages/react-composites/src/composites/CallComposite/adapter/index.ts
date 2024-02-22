@@ -20,7 +20,11 @@ export type { TeamsAdapterOptions } from './AzureCommunicationCallAdapter';
 export type { TeamsCallAdapterArgs } from './AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(teams-identity-support) */
 export type { OnFetchProfileCallback, Profile } from './OnFetchProfileCallback';
-export type { AzureCommunicationCallAdapterArgs, CallAdapterLocator } from './AzureCommunicationCallAdapter';
+export type {
+  AzureCommunicationCallAdapterArgs,
+  CallAdapterLocator,
+  AzureCommunicationOutboundCallAdapterArgs
+} from './AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 export type { AzureCommunicationCallAdapterOptions } from './AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
@@ -52,7 +56,8 @@ export type {
   NetworkDiagnosticChangedEvent,
   ParticipantsJoinedListener,
   ParticipantsLeftListener,
-  JoinCallOptions
+  JoinCallOptions,
+  StartCallIdentifier
 } from './CallAdapter';
 
 /* @conditional-compile-remove(close-captions) */
@@ -64,10 +69,13 @@ export type {
 } from './CallAdapter';
 
 /* @conditional-compile-remove(call-transfer) */
-export type { TransferRequestedListener } from './CallAdapter';
+export type { TransferAcceptedListener } from './CallAdapter';
 
 /* @conditional-compile-remove(capabilities) */
 export type { CapabilitiesChangedListener } from './CallAdapter';
+
+/* @conditional-compile-remove(spotlight) */
+export type { SpotlightChangedListener } from './CallAdapter';
 
 /* @conditional-compile-remove(teams-identity-support) */
 export type { TeamsCallAdapter } from './CallAdapter';
