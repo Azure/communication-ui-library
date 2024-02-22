@@ -15,9 +15,10 @@ import { DtmfTone } from '@azure/communication-calling';
 /* @conditional-compile-remove(reaction) */
 import { Reaction } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
-import type { BackgroundReplacementConfig, BackgroundBlurConfig } from '@azure/communication-calling';
+import type { BackgroundReplacementConfig, BackgroundBlurConfig, AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
+import { CommunicationIdentifier, CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 
 /**
  * @private
@@ -46,15 +47,23 @@ const createCompositeHandlers = memoizeOne(
       return adapter.getState().call?.state === 'LocalHold' ? await adapter.resumeCall() : await adapter.holdCall();
     },
     /* @conditional-compile-remove(PSTN-calls) */
-    onAddParticipant: async (participant, options?) => {
-      return await adapter.addParticipant(participant, options);
+    onAddParticipant: async (participant: Partial<(CommunicationUserIdentifier & PhoneNumberIdentifier)>, options?: AddPhoneNumberOptions) => {
+      if ('communicationUserId' in participant) {
+        return await adapter.addParticipant(participant as CommunicationUserIdentifier);
+      } else if ('phoneNumber' in participant) {
+        return await adapter.addParticipant(participant as PhoneNumberIdentifier, options);
+      }
     },
     /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(dtmf-dialer) */
     onSendDtmfTone: async (dtmfTone: DtmfTone) => {
       await adapter.sendDtmfTone(dtmfTone);
     },
-    onRemoveParticipant: async (userId) => {
-      await adapter.removeParticipant(userId);
+    onRemoveParticipant: async (userId: CommunicationIdentifier | string) => {
+      if (typeof userId === 'string') {
+        await adapter.removeParticipant(userId);
+      } else {
+        await adapter.removeParticipant(userId);
+      }
     },
     /* @conditional-compile-remove(raise-hand) */
     onRaiseHand: async () => {

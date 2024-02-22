@@ -369,7 +369,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   private participantSubscribers = new Map<string, ParticipantSubscriber>();
   private emitter: EventEmitter = new EventEmitter();
   /* @conditional-compile-remove(calling-sounds) */
-  private callingSoundSubscriber;
+  private callingSoundSubscriber: CallingSoundSubscriber = new CallingSoundSubscriber();
   private onClientStateChange: (clientState: CallClientState) => void;
   /* @conditional-compile-remove(video-background-effects) */
   private onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
@@ -931,8 +931,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       if (typeof participant === 'string') {
         backendId = _toCommunicationIdentifier(participant);
       }
-
-      if (backendId.phoneNumber) {
+      if ((<PhoneNumberIdentifier>backendId).phoneNumber) {
         if (options?.alternateCallerId === undefined) {
           throw new Error('Unable to start call, PSTN user present with no alternateCallerId.');
         }
@@ -2017,5 +2016,5 @@ export const createTeamsCallAdapterFromClient = async (
 };
 
 const isCallError = (e: Error): e is CallError => {
-  return e['target'] !== undefined && e['innerError'] !== undefined;
+  return (e as CallError)['target'] !== undefined && (e as CallError)['innerError'] !== undefined;
 };

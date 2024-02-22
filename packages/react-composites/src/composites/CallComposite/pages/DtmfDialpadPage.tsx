@@ -61,7 +61,7 @@ const DtmfDialpadPageContent = (props: DialpadPageContentProps): JSX.Element => 
     <Stack style={{ height: '100%', width: '100%', background: theme.palette.white }}>
       <Stack verticalAlign={'center'} style={{ margin: 'auto' }}>
         <DtmfDialerContentTimer />
-        <Text style={{ margin: 'auto' }}>{calleeName !== 'Unnamed participant' ? calleeName : ''}</Text>
+        <Text style={{ margin: 'auto' }}>{calleeName !== 'Unnamed participant' ? calleeName?.toString() : ''}</Text>
         <Dialpad
           onSendDtmfTone={async (tone: DtmfTone) => {
             /* @conditional-compile-remove(dtmf-dialer) */

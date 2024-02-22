@@ -269,13 +269,16 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
   call,
   previousCall?,
   transferCall?: CallState,
-  unsupportedBrowserInfo?
+  unsupportedBrowserInfo?: {
+    environmentInfo?: EnvironmentInfo;
+    unsupportedBrowserVersionOptedIn?: boolean;
+  }
 ): CallCompositePage => {
   /* @conditional-compile-remove(unsupported-browser) */
   if (
     isUnsupportedEnvironment(
-      unsupportedBrowserInfo.environmentInfo,
-      unsupportedBrowserInfo.unsupportedBrowserVersionOptedIn
+      unsupportedBrowserInfo?.environmentInfo,
+      unsupportedBrowserInfo?.unsupportedBrowserVersionOptedIn
     )
   ) {
     return 'unsupportedEnvironment';
@@ -362,17 +365,22 @@ export const disableCallControls = (
     return false;
   }
   // Ensure we clone the prop if it is an object to ensure we do not mutate the original prop.
-  let newOptions =
+  let newOptions: CallControlOptions | boolean | undefined =
     (callControlOptions instanceof Object ? ({ ...callControlOptions } as CallControlOptions) : callControlOptions) ??
-    {};
+    {} as Partial<CallControlOptions>;
   if (newOptions === true || newOptions === undefined) {
     newOptions = disabledControls.reduce((acc, key) => {
+      // @ts-expect-error TODO: fix noImplicitAny error here
+      // Not solveable at this time due to typescript limitations. The typing is too complex for typescript to 
+      // understand. Will need to revisit when either typescript or the calling component bindings are updated.
       acc[key] = { disabled: true };
       return acc;
-    }, {});
+    }, {} as Partial<CallControlOptions>);
   } else {
     disabledControls.forEach((key) => {
+      // @ts-expect-error refer to above comment
       if (newOptions[key] !== false) {
+        // @ts-expect-error refer to above comment
         newOptions[key] = { disabled: true };
       }
     });
@@ -479,7 +487,10 @@ export const createParticipantModifier = (
         [keys: string]: RemoteParticipantState;
       }
     | undefined = undefined;
-  let modifiedParticipants = {};
+  let modifiedParticipants: 
+    | {
+      [keys: string]: RemoteParticipantState;
+    } = {};
   const memoizedParticipants: {
     [id: string]: { originalRef: RemoteParticipantState; newParticipant: RemoteParticipantState };
   } = {};

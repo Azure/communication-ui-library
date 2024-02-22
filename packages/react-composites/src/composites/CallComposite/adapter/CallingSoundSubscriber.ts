@@ -19,11 +19,11 @@ const CALL_REJECTED_CODE = 603;
  * @private
  */
 export class CallingSoundSubscriber {
-  private call: CallCommon;
+  private call?: CallCommon;
   private soundsLoaded?: CallingSoundsLoaded;
   private callee: CommunicationIdentifier[] | undefined;
 
-  constructor(call: CallCommon, callee?: CommunicationIdentifier[], sounds?: CallingSounds) {
+  constructor(call?: CallCommon, callee?: CommunicationIdentifier[], sounds?: CallingSounds) {
     this.call = call;
     this.callee = callee;
     if (sounds) {
@@ -33,16 +33,16 @@ export class CallingSoundSubscriber {
   }
 
   private onCallStateChanged = (): void => {
-    this.call.on('stateChanged', () => {
-      if (shouldPlayRinging(this.call, this.callee) && this.soundsLoaded?.callRingingSound) {
+    this.call?.on('stateChanged', () => {
+      if (this.call && shouldPlayRinging(this.call, this.callee) && this.soundsLoaded?.callRingingSound) {
         this.soundsLoaded.callRingingSound.loop = true;
         this.playSound(this.soundsLoaded.callRingingSound);
       }
-      if (!shouldPlayRinging(this.call, this.callee) && this.soundsLoaded?.callRingingSound) {
+      if (this.call && !shouldPlayRinging(this.call, this.callee) && this.soundsLoaded?.callRingingSound) {
         this.soundsLoaded.callRingingSound.loop = false;
         this.soundsLoaded.callRingingSound.pause();
       }
-      if (this.call.state === 'Disconnected') {
+      if (this.call?.state === 'Disconnected') {
         if (this.soundsLoaded?.callBusySound && this.call.callEndReason?.code === CALL_REJECTED_CODE) {
           this.playSound(this.soundsLoaded.callBusySound);
         } else if (this.soundsLoaded?.callEndedSound) {
@@ -57,7 +57,7 @@ export class CallingSoundSubscriber {
   }
 
   public unsubscribeAll(): void {
-    this.call.off('stateChanged', this.onCallStateChanged);
+    this.call?.off('stateChanged', this.onCallStateChanged);
     if (this.soundsLoaded?.callRingingSound) {
       this.soundsLoaded.callRingingSound.pause();
     }
