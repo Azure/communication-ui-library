@@ -111,7 +111,7 @@
     "@internal/react-components": "1.13.0-beta.1",
     "@internal/react-composites": "1.13.0-beta.1",
     "@microsoft/api-documenter": "~7.23.30",
-    "@microsoft/api-extractor": "~7.39.4",
+    "@microsoft/api-extractor": "~7.40.6",
     "@rollup/plugin-json": "^6.0.1",
     "@testing-library/jest-dom": "^6.3.0",
     "@testing-library/react": "^14.1.2",
