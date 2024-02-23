@@ -22,12 +22,9 @@ import {
 } from '@internal/react-components';
 /* @conditional-compile-remove(image-overlay) */ /* @conditional-compile-remove(file-sharing) */
 import { ChatMessage } from '@internal/react-components';
-/* @conditional-compile-remove(rich-text-editor) */
-import { RTESendBox } from '@internal/react-components';
-
 import React, { useCallback, useEffect, useMemo } from 'react';
 /* @conditional-compile-remove(image-overlay) */
-import { useState } from 'react';
+import { useState, lazy } from 'react';
 import { AvatarPersona, AvatarPersonaDataCallback, AvatarPersonaProps } from '../common/AvatarPersona';
 import { useAdapter } from './adapter/ChatAdapterProvider';
 import { ChatCompositeOptions } from './ChatComposite';
@@ -61,6 +58,10 @@ import { _FileDownloadCards } from '@internal/react-components';
 import { ImageOverlay } from '@internal/react-components';
 /* @conditional-compile-remove(image-overlay) */
 import { InlineImage } from '@internal/react-components';
+
+/* @conditional-compile-remove(rich-text-editor) */
+import { RTESendBox } from '@internal/react-components';
+// const RTESendBox = lazy(() => import('@internal/react-components').then((module) => ({ default: module.RTESendBox })));
 
 /**
  * @private
@@ -383,9 +384,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   const SelectedSendBox = (): JSX.Element => {
     /* @conditional-compile-remove(rich-text-editor) */
-    if (options?.richTextEditor !== false) {
-      return <RTESendBox {...rteSendBoxProps} />;
-    }
+    // if (options?.richTextEditor !== false) {
+    //   return <RTESendBox {...rteSendBoxProps} />;
+    // }
     return (
       <SendBox
         {...sendBoxProps}
