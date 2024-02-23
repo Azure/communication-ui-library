@@ -341,7 +341,7 @@ export interface CallAdapterCallOperations {
     lowerHand(): Promise<void>;
     mute(): Promise<void>;
     // @beta
-    onReactionClicked(reaction: Reaction_2): Promise<void>;
+    onReactionClick(reaction: Reaction_2): Promise<void>;
     raiseHand(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
     // @beta
@@ -1009,7 +1009,7 @@ export interface CallWithChatAdapterManagement {
     lowerHand(): Promise<void>;
     mute(): Promise<void>;
     // @beta
-    onReactionClicked(reaction: Reaction_2): Promise<void>;
+    onReactionClick(reaction: Reaction_2): Promise<void>;
     queryCameras(): Promise<VideoDeviceInfo[]>;
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
     querySpeakers(): Promise<AudioDeviceInfo[]>;
@@ -1919,7 +1919,7 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onRaiseHand: () => Promise<void>;
     // @beta (undocumented)
-    onReactionClicked: (reaction: Reaction_2) => Promise<void>;
+    onReactionClick: (reaction: Reaction_2) => Promise<void>;
     // (undocumented)
     onRemoveParticipant(userId: string): Promise<void>;
     // (undocumented)
@@ -2072,7 +2072,6 @@ export type ComponentSlotStyle = Omit<IRawStyle, 'animation'>;
 
 // @public
 export interface ComponentStrings {
-    AttendeeRole: string;
     BrowserPermissionDenied: BrowserPermissionDeniedStrings;
     BrowserPermissionDeniedIOS: BrowserPermissionDeniedIOSStrings;
     CameraAndMicrophoneSitePermissionsCheck: SitePermissionsStrings;
@@ -2104,6 +2103,7 @@ export interface ComponentStrings {
     raiseHandButton: RaiseHandButtonStrings;
     // @beta
     reactionButton: ReactionButtonStrings;
+    richTextSendBox: RichTextSendBoxStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
@@ -2466,6 +2466,14 @@ export const DEFAULT_COMPONENT_ICONS: {
     StartSpotlightContextualMenuItem: React_2.JSX.Element;
     StopSpotlightContextualMenuItem: React_2.JSX.Element;
     VideoSpotlighted: React_2.JSX.Element;
+    RTEBoldButtonIcon: React_2.JSX.Element;
+    RTEItalicButtonIcon: React_2.JSX.Element;
+    RTEUnderlineButtonIcon: React_2.JSX.Element;
+    RTEBulletListButtonIcon: React_2.JSX.Element;
+    RTEtNumberListButtonIcon: React_2.JSX.Element;
+    RTEIndentDecreaseButtonIcon: React_2.JSX.Element;
+    RTEIndentIncreaseButtonIcon: React_2.JSX.Element;
+    RTEDividerIcon: React_2.JSX.Element;
 };
 
 // @public
@@ -2611,6 +2619,14 @@ export const DEFAULT_COMPOSITE_ICONS: {
     StartSpotlightContextualMenuItem: React_2.JSX.Element;
     StopSpotlightContextualMenuItem: React_2.JSX.Element;
     VideoSpotlighted: React_2.JSX.Element;
+    RTEBoldButtonIcon: React_2.JSX.Element;
+    RTEItalicButtonIcon: React_2.JSX.Element;
+    RTEUnderlineButtonIcon: React_2.JSX.Element;
+    RTEBulletListButtonIcon: React_2.JSX.Element;
+    RTEtNumberListButtonIcon: React_2.JSX.Element;
+    RTEIndentDecreaseButtonIcon: React_2.JSX.Element;
+    RTEIndentIncreaseButtonIcon: React_2.JSX.Element;
+    RTEDividerIcon: React_2.JSX.Element;
 };
 
 // @beta
@@ -3505,6 +3521,7 @@ export interface ParticipantItemProps {
 
 // @public
 export interface ParticipantItemStrings {
+    attendeeRole: string;
     displayNamePlaceholder?: string;
     isMeText: string;
     menuTitle: string;
@@ -3702,12 +3719,12 @@ export interface RaiseHandCallFeature {
 // @beta
 export type Reaction = {
     reactionType: string;
-    receivedAt: Date;
+    receivedOn: Date;
 };
 
 // @beta
 export interface ReactionButtonProps extends ControlBarButtonProps {
-    onReactionClicked: (reaction: string) => Promise<void>;
+    onReactionClick: (reaction: string) => Promise<void>;
     reactionResources: ReactionResources;
     strings?: Partial<ReactionButtonStrings>;
 }
@@ -3743,7 +3760,7 @@ export type ReactionSprite = {
 // @beta
 export type ReactionState = {
     reactionMessage: ReactionMessage;
-    receivedAt: Date;
+    receivedOn: Date;
 };
 
 // @public
@@ -3802,6 +3819,17 @@ export type ResourceDetails = {
     messageId: string;
     resourceUrl: string;
 };
+
+// @beta
+export interface RichTextSendBoxStrings extends SendBoxStrings {
+    boldTooltip: string;
+    bulletListTooltip: string;
+    decreaseIndentTooltip: string;
+    increaseIndentTooltip: string;
+    italicTooltip: string;
+    numberListTooltip: string;
+    underlineTooltip: string;
+}
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
@@ -4510,6 +4538,7 @@ export interface VideoGalleryStream {
 // @public
 export interface VideoGalleryStrings {
     addSpotlightVideoTileMenuLabel: string;
+    attendeeRole: string;
     displayNamePlaceholder: string;
     fillRemoteParticipantFrame: string;
     fitRemoteParticipantToFrame: string;

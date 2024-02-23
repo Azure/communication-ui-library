@@ -378,7 +378,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   /* @conditional-compile-remove(reaction) */
   const currentUnixTimeStamp = Math.floor(currentTimestamp.getTime() / 1000);
   /* @conditional-compile-remove(reaction) */
-  const receivedUnixTimestamp = reaction ? Math.floor(reaction.receivedAt.getTime() / 1000) : undefined;
+  const receivedUnixTimestamp = reaction ? Math.floor(reaction.receivedOn.getTime() / 1000) : undefined;
   /* @conditional-compile-remove(reaction) */
   const canRenderReaction =
     (receivedUnixTimestamp ? currentUnixTimeStamp - receivedUnixTimestamp < 3000 : false) &&
