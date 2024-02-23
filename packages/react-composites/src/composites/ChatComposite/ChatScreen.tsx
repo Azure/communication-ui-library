@@ -375,6 +375,11 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       />
     );
   }, [fileSharing?.accept, fileSharing?.multiple, fileSharing?.uploadHandler, fileUploadButtonOnChange]);
+
+  const activeFileUploads = useSelector(fileUploadsSelector).files;
+
+  console.log('options', options);
+
   return (
     <Stack className={chatContainer} grow>
       {options?.topic !== false && <ChatHeader {...headerProps} />}
@@ -416,18 +421,22 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                 </Stack>
               )}
               <Stack grow>
-                <SendBox
-                  {...sendBoxProps}
-                  autoFocus={options?.autoFocus}
-                  styles={sendBoxStyles}
-                  /* @conditional-compile-remove(file-sharing) */
-                  activeFileUploads={useSelector(fileUploadsSelector).files}
-                  /* @conditional-compile-remove(file-sharing) */
-                  onCancelFileUpload={adapter.cancelFileUpload}
-                />
                 {
-                  /* @conditional-compile-remove(rich-text-editor) */
-                  options?.richTextEditor && (
+                  /* @conditional-compile-remove(rich-text-editor) */ options?.richTextEditor === false && (
+                    <SendBox
+                      {...sendBoxProps}
+                      autoFocus={options?.autoFocus}
+                      styles={sendBoxStyles}
+                      /* @conditional-compile-remove(file-sharing) */
+                      activeFileUploads={activeFileUploads}
+                      /* @conditional-compile-remove(file-sharing) */
+                      onCancelFileUpload={adapter.cancelFileUpload}
+                    />
+                  )
+                }
+                {
+                  /* @conditional-compile-remove(rich-text-editor) */ options?.richTextEditor === true && (
+                    /* @conditional-compile-remove(rich-text-editor) */
                     <RTESendBox
                       onSendMessage={function (content: string): Promise<void> {
                         throw new Error('Function not implemented.');

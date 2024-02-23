@@ -88,7 +88,7 @@ export type ChatCompositeOptions = {
   /* @conditional-compile-remove(rich-text-editor) */
   /**
    * Show or hide the Rich Text Editor feature.
-   * @defaultValue true
+   * @defaultValue false
    *
    * @beta
    */
