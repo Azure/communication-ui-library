@@ -47,6 +47,17 @@ import {
   ScaleFit20Regular,
   ScaleFill20Regular
 } from '@fluentui/react-icons';
+/* @conditional-compile-remove(rich-text-editor) */
+import {
+  TextBold20Regular,
+  TextItalic20Regular,
+  TextUnderlineCharacterU20Regular,
+  TextBulletList20Regular,
+  TextNumberListLtr20Regular,
+  TextIndentDecrease20Regular,
+  TextIndentIncrease20Regular,
+  DividerTall24Regular
+} from '@fluentui/react-icons';
 /* @conditional-compile-remove(reaction) */
 import { Emoji20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(end-of-call-survey) */
@@ -377,5 +388,21 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(spotlight) */
   StopSpotlightContextualMenuItem: <VideoPersonStarOff20Filled />,
   /* @conditional-compile-remove(spotlight) */
-  VideoSpotlighted: <VideoPersonStar20Filled style={{ height: '16px', width: '16px' }} />
+  VideoSpotlighted: <VideoPersonStar20Filled style={{ height: '16px', width: '16px' }} />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RTEBoldButtonIcon: <TextBold20Regular />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RTEItalicButtonIcon: <TextItalic20Regular />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RTEUnderlineButtonIcon: <TextUnderlineCharacterU20Regular />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RTEBulletListButtonIcon: <TextBulletList20Regular />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RTEtNumberListButtonIcon: <TextNumberListLtr20Regular />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RTEIndentDecreaseButtonIcon: <TextIndentDecrease20Regular />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RTEIndentIncreaseButtonIcon: <TextIndentIncrease20Regular />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RTEDividerIcon: <DividerTall24Regular />
 };
