@@ -13,7 +13,7 @@ import {
   MessageStatusIndicatorIconStyle
 } from './styles/MessageStatusIndicator.styles';
 import { MessageStatusIndicatorStrings } from './MessageStatusIndicator';
-import { MessageStatusIcon } from './MessageStatusIcon';
+import { MessageStatusIcon, MessageStatusIconProps } from './MessageStatusIcon';
 
 /**
  * Props for {@link MessageStatusIndicatorInternal}.
@@ -77,7 +77,7 @@ export const MessageStatusIndicatorInternal = (props: MessageStatusIndicatorInte
           calloutProps={{ ...calloutProps }}
           styles={hostStyles}
         >
-          <MessageStatusIcon
+          <MemoMessageStatusIcon
             shouldAnnounce={shouldAnnounce}
             iconName="MessageFailed"
             iconClassName={mergeStyles(
@@ -97,7 +97,7 @@ export const MessageStatusIndicatorInternal = (props: MessageStatusIndicatorInte
           calloutProps={{ ...calloutProps }}
           styles={hostStyles}
         >
-          <MessageStatusIcon
+          <MemoMessageStatusIcon
             shouldAnnounce={shouldAnnounce}
             iconName="MessageSending"
             iconClassName={mergeStyles(
@@ -137,7 +137,7 @@ export const MessageStatusIndicatorInternal = (props: MessageStatusIndicatorInte
             }
           }}
         >
-          <MessageStatusIcon
+          <MemoMessageStatusIcon
             shouldAnnounce={shouldAnnounce}
             iconName="MessageSeen"
             iconClassName={mergeStyles({ color: theme.palette.themePrimary }, styles?.root)}
@@ -153,7 +153,7 @@ export const MessageStatusIndicatorInternal = (props: MessageStatusIndicatorInte
           data-ui-id="chat-composite-message-tooltip"
           styles={hostStyles}
         >
-          <MessageStatusIcon
+          <MemoMessageStatusIcon
             shouldAnnounce={shouldAnnounce}
             iconName="MessageDelivered"
             iconClassName={mergeStyles(
@@ -174,3 +174,7 @@ export const MessageStatusIndicatorInternal = (props: MessageStatusIndicatorInte
 // To prevent sizing issues or tooltip positioning issues, we override to inline-block.
 // For more details see "Icon Button with Tooltip" on https://developer.microsoft.com/en-us/fluentui#/controls/web/button
 const hostStyles: Partial<ITooltipHostStyles> = { root: { display: 'inline-block' } };
+
+const MemoMessageStatusIcon = React.memo((obj: MessageStatusIconProps): JSX.Element => {
+  return <MessageStatusIcon {...obj} />;
+});
