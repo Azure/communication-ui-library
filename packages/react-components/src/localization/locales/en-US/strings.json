@@ -7,7 +7,8 @@
     "mutedIconLabel": "Muted",
     "displayNamePlaceholder": "Unnamed participant",
     "participantStateRinging": "Calling...",
-    "participantStateHold": "On hold"
+    "participantStateHold": "On hold",
+    "attendeeRole": "Attendee"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} more"
@@ -240,7 +241,8 @@
     "addSpotlightVideoTileMenuLabel": "Add spotlight",
     "spotlightLimitReachedMenuTitle": "Spotlight limit reached",
     "stopSpotlightVideoTileMenuLabel": "Stop spotlighting",
-    "stopSpotlightOnSelfVideoTileMenuLabel": "Exit spotlight"
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Exit spotlight",
+    "attendeeRole": "Attendee"
   },
   "dialpad": {
     "placeholderText": "Enter phone number",
@@ -374,6 +376,5 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "previous page",
     "rightNavButtonAriaLabel": "next page"
-  },
-  "AttendeeRole": "Attendee"
+  }
 }
