@@ -30,7 +30,7 @@ export class MockCallAdapter implements CallAdapter {
   }
 
   /* @conditional-compile-remove(reaction) */
-  onReactionClicked(emoji: string): Promise<void> {
+  onReactionClick(emoji: string): Promise<void> {
     throw new Error(`Method could not send ${emoji}.`);
   }
   addParticipant(): Promise<void> {
