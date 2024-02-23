@@ -168,6 +168,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   const messageThreadProps = usePropsFor(MessageThread);
   const sendBoxProps = usePropsFor(SendBox);
+  /* @conditional-compile-remove(rich-text-editor) */
+  const rteSendBoxProps = usePropsFor(SendBox);
   const typingIndicatorProps = usePropsFor(TypingIndicator);
   const headerProps = useAdaptedSelector(getHeaderProps);
   const errorBarProps = usePropsFor(ErrorBar);
@@ -376,7 +378,26 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     );
   }, [fileSharing?.accept, fileSharing?.multiple, fileSharing?.uploadHandler, fileUploadButtonOnChange]);
 
+  /* @conditional-compile-remove(file-sharing) */
   const activeFileUploads = useSelector(fileUploadsSelector).files;
+
+  const SelectedSendBox = (): JSX.Element => {
+    /* @conditional-compile-remove(rich-text-editor) */
+    if (options?.richTextEditor !== false) {
+      return <RTESendBox {...rteSendBoxProps} />;
+    }
+    return (
+      <SendBox
+        {...sendBoxProps}
+        autoFocus={options?.autoFocus}
+        styles={sendBoxStyles}
+        /* @conditional-compile-remove(file-sharing) */
+        activeFileUploads={activeFileUploads}
+        /* @conditional-compile-remove(file-sharing) */
+        onCancelFileUpload={adapter.cancelFileUpload}
+      />
+    );
+  };
 
   console.log('options', options);
 
@@ -421,29 +442,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                 </Stack>
               )}
               <Stack grow>
-                {
-                  /* @conditional-compile-remove(rich-text-editor) */ options?.richTextEditor === false && (
-                    <SendBox
-                      {...sendBoxProps}
-                      autoFocus={options?.autoFocus}
-                      styles={sendBoxStyles}
-                      /* @conditional-compile-remove(file-sharing) */
-                      activeFileUploads={activeFileUploads}
-                      /* @conditional-compile-remove(file-sharing) */
-                      onCancelFileUpload={adapter.cancelFileUpload}
-                    />
-                  )
-                }
-                {
-                  /* @conditional-compile-remove(rich-text-editor) */ options?.richTextEditor === true && (
-                    /* @conditional-compile-remove(rich-text-editor) */
-                    <RTESendBox
-                      onSendMessage={function (content: string): Promise<void> {
-                        throw new Error('Function not implemented.');
-                      }}
-                    />
-                  )
-                }
+                <SelectedSendBox />
               </Stack>
               {formFactor !== 'mobile' && <AttachFileButton />}
             </Stack>
