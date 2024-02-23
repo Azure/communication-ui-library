@@ -212,7 +212,7 @@ export interface CallWithChatAdapterManagement {
    *
    * @beta
    */
-  onReactionClicked(reaction: Reaction): Promise<void>;
+  onReactionClick(reaction: Reaction): Promise<void>;
   /**
    * Create the html view for a stream.
    *

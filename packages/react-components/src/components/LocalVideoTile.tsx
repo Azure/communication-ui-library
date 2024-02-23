@@ -24,13 +24,13 @@ import { RaisedHand } from '../types';
 import { useTheme } from '../theming';
 /* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '../types/ReactionTypes';
-/* @conditional-compile-remove(reaction) */
+/* @conditional-compile-remove(spotlight) */
 import { useVideoTileContextualMenuProps } from './VideoGallery/useVideoTileContextualMenuProps';
-/* @conditional-compile-remove(reaction) */
+/* @conditional-compile-remove(spotlight) */
 import { VideoGalleryStrings } from './VideoGallery';
-/* @conditional-compile-remove(reaction) */
+/* @conditional-compile-remove(spotlight) */
 import { _DrawerMenu, _DrawerMenuItemProps } from './Drawer';
-/* @conditional-compile-remove(reaction) */
+/* @conditional-compile-remove(spotlight) */
 import { drawerMenuWrapperStyles } from './VideoGallery/styles/RemoteVideoTile.styles';
 /**
  * A memoized version of VideoTile for rendering local participant.
