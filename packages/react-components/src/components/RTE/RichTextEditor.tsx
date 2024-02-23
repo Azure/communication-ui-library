@@ -1,16 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-import React, { useCallback, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { ContentEdit, Watermark } from 'roosterjs-editor-plugins';
 import { Editor } from 'roosterjs-editor-core';
-import type { DefaultFormat, EditorOptions, IEditor } from 'roosterjs-editor-types-compatible';
+import type { EditorOptions, IEditor } from 'roosterjs-editor-types-compatible';
 import { Rooster, createUpdateContentPlugin, UpdateMode, createRibbonPlugin, Ribbon } from 'roosterjs-react';
 import { ribbonButtonStyle, ribbonStyle, richTextEditorStyle } from '../styles/RichTextEditor.styles';
 import { useTheme } from '@fluentui/react';
 import { ribbonButtons, ribbonButtonsStrings } from './RTERibbonButtons';
 import { RichTextSendBoxStrings } from './RTESendBox';
 import { isDarkThemed } from '../../theming/themeUtils';
-import { darkTheme, lightTheme } from '../../theming';
 
 /**
  * Props for {@link RichTextEditor}.
@@ -41,6 +40,7 @@ export interface RichTextEditorComponentRef {
 export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichTextEditorProps>((props, ref) => {
   const { content, onChange, placeholderText, strings } = props;
   const editor = useRef<IEditor | null>(null);
+  const [divComponent, setDivComponent] = useState<HTMLDivElement | null>(null);
   const theme = useTheme();
   useImperativeHandle(
     ref,
@@ -62,12 +62,21 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     }
   }, [content]);
 
+  useEffect(() => {
+    if (divComponent !== null && theme.palette.neutralPrimary !== undefined) {
+      // Adjust color prop for the div component when theme is updated
+      // because doNotAdjustEditorColor is set for Rooster
+      divComponent.style.color = theme.palette.neutralPrimary;
+    }
+  }, [divComponent, theme]);
+
   const ribbonPlugin = React.useMemo(() => {
     return createRibbonPlugin();
   }, []);
 
   const editorCreator = useCallback((div: HTMLDivElement, options: EditorOptions) => {
     editor.current = new Editor(div, options);
+    setDivComponent(div);
     // Remove the background color of the editor
     div.style.backgroundColor = 'transparent';
     return editor.current;
@@ -106,15 +115,6 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     );
   }, [strings, ribbonPlugin, theme]);
 
-  const defaultFormat: DefaultFormat = useMemo(() => {
-    return {
-      textColors: {
-        lightModeColor: lightTheme.palette?.neutralPrimary ?? 'black',
-        darkModeColor: darkTheme.palette?.neutralPrimary ?? 'white'
-      }
-    };
-  }, []);
-
   return (
     <div>
       {ribbon}
@@ -125,7 +125,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
         editorCreator={editorCreator}
         // TODO: confirm the color during inline images implementation
         imageSelectionBorderColor={'blue'}
-        defaultFormat={defaultFormat}
+        // doNotAdjustEditorColor is used to fix the default background color for Rooster component
         doNotAdjustEditorColor={true}
       />
     </div>
