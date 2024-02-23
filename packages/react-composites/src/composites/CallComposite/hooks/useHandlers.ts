@@ -108,8 +108,8 @@ const createCompositeHandlers = memoizeOne(
           : await adapter.raiseHand();
       },
       /* @conditional-compile-remove(reaction) */
-      onReactionClicked: async (reaction: Reaction) => {
-        await adapter.onReactionClicked(reaction);
+      onReactionClick: async (reaction: Reaction) => {
+        await adapter.onReactionClick(reaction);
       },
       onSelectCamera: async (deviceInfo, options) => {
         await adapter.setCamera(deviceInfo, options);

@@ -33,7 +33,7 @@ export const _dominantSpeakersWithFlatId = (dominantSpeakers?: DominantSpeakersI
 };
 
 /** @internal */
-export type VideoGalleryRemoteParticipantsMemoFn = (
+export type _VideoGalleryRemoteParticipantsMemoFn = (
   remoteParticipants: RemoteParticipantState[] | undefined,
   /* @conditional-compile-remove(hide-attendee-name) */
   isHideAttendeeNamesEnabled?: boolean,
@@ -42,7 +42,7 @@ export type VideoGalleryRemoteParticipantsMemoFn = (
 ) => VideoGalleryRemoteParticipant[];
 
 /** @internal */
-export const _videoGalleryRemoteParticipantsMemo: VideoGalleryRemoteParticipantsMemoFn = (
+export const _videoGalleryRemoteParticipantsMemo: _VideoGalleryRemoteParticipantsMemoFn = (
   remoteParticipants: RemoteParticipantState[] | undefined,
   isHideAttendeeNamesEnabled?: boolean,
   /* @conditional-compile-remove(hide-attendee-name) */ localUserRole?
@@ -107,7 +107,7 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     raisedHand?: unknown, // temp unknown type to build stable
     /* @conditional-compile-remove(reaction) */
     reaction?: unknown, // temp unknown type to build stable
-    /* @conditional-compile-remove(reaction) */
+    /* @conditional-compile-remove(spotlight) */
     spotlight?: unknown // temp unknown type to build stable
   ): VideoGalleryRemoteParticipant => {
     return convertRemoteParticipantToVideoGalleryRemoteParticipant(
@@ -121,7 +121,7 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
       raisedHand as RaisedHandState,
       /* @conditional-compile-remove(reaction) */
       reaction as Reaction,
-      /* @conditional-compile-remove(reaction) */
+      /* @conditional-compile-remove(spotlight) */
       spotlight as Spotlight
     );
   }
@@ -139,7 +139,7 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   raisedHand?: unknown, // temp unknown type to build stable
   /* @conditional-compile-remove(reaction) */
   reaction?: unknown, // temp unknown type to build stable
-  /* @conditional-compile-remove(reaction) */
+  /* @conditional-compile-remove(spotlight) */
   spotlight?: unknown // temp unknown type to build stable
 ): VideoGalleryRemoteParticipant => {
   const rawVideoStreamsArray = Object.values(videoStreams);

@@ -175,7 +175,7 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onRaiseHand: () => Promise<void>;
     // @beta (undocumented)
-    onReactionClicked: (reaction: Reaction) => Promise<void>;
+    onReactionClick: (reaction: Reaction) => Promise<void>;
     // (undocumented)
     onRemoveParticipant(userId: string): Promise<void>;
     // (undocumented)
@@ -401,7 +401,10 @@ export type VideoBackgroundEffectsDependency = {
 };
 
 // @internal (undocumented)
-export const _videoGalleryRemoteParticipantsMemo: (remoteParticipants: RemoteParticipantState[] | undefined, isHideAttendeeNamesEnabled?: boolean, localUserRole?: ParticipantRole) => VideoGalleryRemoteParticipant[];
+export const _videoGalleryRemoteParticipantsMemo: _VideoGalleryRemoteParticipantsMemoFn;
+
+// @internal (undocumented)
+export type _VideoGalleryRemoteParticipantsMemoFn = (remoteParticipants: RemoteParticipantState[] | undefined, isHideAttendeeNamesEnabled?: boolean, localUserRole?: ParticipantRole) => VideoGalleryRemoteParticipant[];
 
 // @public
 export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSelectorProps) => {

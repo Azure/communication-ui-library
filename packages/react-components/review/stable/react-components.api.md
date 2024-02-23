@@ -2062,7 +2062,6 @@ export interface VideoGalleryStream {
 
 // @public
 export interface VideoGalleryStrings {
-    attendeeRole: string;
     displayNamePlaceholder: string;
     fillRemoteParticipantFrame: string;
     fitRemoteParticipantToFrame: string;

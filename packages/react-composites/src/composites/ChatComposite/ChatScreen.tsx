@@ -328,6 +328,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
               onInlineImageClicked(inlineImage.imgAttrs.id || '', inlineImage.messageId);
             }
           }}
+          style={{ cursor: 'pointer' }}
         >
           {defaultOnRender(inlineImage)}
         </span>

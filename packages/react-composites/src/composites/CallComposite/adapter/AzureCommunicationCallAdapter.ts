@@ -549,7 +549,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     /* @conditional-compile-remove(raise-hand) */
     this.raiseHand.bind(this);
     /* @conditional-compile-remove(reaction) */
-    this.onReactionClicked.bind(this);
+    this.onReactionClick.bind(this);
     this.lowerHand.bind(this);
     this.removeParticipant.bind(this);
     this.createStreamView.bind(this);
@@ -870,9 +870,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   }
 
   /* @conditional-compile-remove(reaction) */
-  public async onReactionClicked(reaction: Reaction): Promise<void> {
+  public async onReactionClick(reaction: Reaction): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      await this.handlers.onReactionClicked(reaction);
+      await this.handlers.onReactionClick(reaction);
     });
   }
 
