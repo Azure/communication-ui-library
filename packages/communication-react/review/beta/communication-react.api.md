@@ -2474,6 +2474,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     RTEIndentDecreaseButtonIcon: React_2.JSX.Element;
     RTEIndentIncreaseButtonIcon: React_2.JSX.Element;
     RTEDividerIcon: React_2.JSX.Element;
+    RTEInsertTableRegularIcon: React_2.JSX.Element;
+    RTEInsertTableFilledIcon: React_2.JSX.Element;
 };
 
 // @public
@@ -2627,6 +2629,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     RTEIndentDecreaseButtonIcon: React_2.JSX.Element;
     RTEIndentIncreaseButtonIcon: React_2.JSX.Element;
     RTEDividerIcon: React_2.JSX.Element;
+    RTEInsertTableRegularIcon: React_2.JSX.Element;
+    RTEInsertTableFilledIcon: React_2.JSX.Element;
 };
 
 // @beta

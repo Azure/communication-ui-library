@@ -3,8 +3,8 @@
 
 import { Theme } from '@fluentui/react';
 import { KnownRibbonButtonKey, LocalizedStrings, RibbonButton, getButtons } from 'roosterjs-react';
-import { ribbonButtonStyle, ribbonDividerStyle } from '../styles/RichTextEditor.styles';
-import { RichTextSendBoxStrings } from './RTESendBox';
+import { ribbonButtonStyle, ribbonDividerStyle } from '../../styles/RichTextEditor.styles';
+import { RichTextSendBoxStrings } from '../RTESendBox';
 
 const dividerRibbonButton = (theme: Theme): RibbonButton<string> => {
   return {
@@ -47,6 +47,10 @@ const indentDecreaseButton = (theme: Theme): RibbonButton<string> | undefined =>
   return createKnownRibbonButton(KnownRibbonButtonKey.DecreaseIndent, theme, 'RTEIndentDecreaseButtonIcon');
 };
 
+const insertTableButton = (theme: Theme): RibbonButton<string> | undefined => {
+  return createKnownRibbonButton(KnownRibbonButtonKey.InsertTable, theme, 'RTEInsertTableRegularIcon');
+};
+
 const createKnownRibbonButton = (
   key: KnownRibbonButtonKey,
   theme: Theme,
@@ -83,7 +87,9 @@ export const ribbonButtons = (theme: Theme): RibbonButton<string>[] => {
     bulletListButton(theme),
     numberListButton(theme),
     indentIncreaseButton(theme),
-    indentDecreaseButton(theme)
+    indentDecreaseButton(theme),
+    dividerRibbonButton(theme),
+    insertTableButton(theme)
   ].forEach((item) => {
     if (item !== undefined) {
       buttons.push(item);

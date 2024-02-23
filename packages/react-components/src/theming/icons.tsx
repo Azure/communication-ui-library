@@ -56,7 +56,9 @@ import {
   TextNumberListLtr20Regular,
   TextIndentDecrease20Regular,
   TextIndentIncrease20Regular,
-  DividerTall24Regular
+  DividerTall24Regular,
+  Table20Filled,
+  Table20Regular
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(reaction) */
 import { Emoji20Regular } from '@fluentui/react-icons';
@@ -404,5 +406,9 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(rich-text-editor) */
   RTEIndentIncreaseButtonIcon: <TextIndentIncrease20Regular />,
   /* @conditional-compile-remove(rich-text-editor) */
-  RTEDividerIcon: <DividerTall24Regular />
+  RTEDividerIcon: <DividerTall24Regular />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RTEInsertTableRegularIcon: <Table20Regular />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RTEInsertTableFilledIcon: <Table20Filled />
 };
