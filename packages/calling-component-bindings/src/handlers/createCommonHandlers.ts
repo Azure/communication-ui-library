@@ -70,7 +70,7 @@ export interface CommonCallingHandlers {
   /**
    * @beta
    */
-  onReactionClicked: (reaction: Reaction) => Promise<void>;
+  onReactionClick: (reaction: Reaction) => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   onToggleHold: () => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
@@ -332,7 +332,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     };
 
     /* @conditional-compile-remove(reaction) */
-    const onReactionClicked = async (reaction: Reaction): Promise<void> => {
+    const onReactionClick = async (reaction: Reaction): Promise<void> => {
       if (
         reaction === 'like' ||
         reaction === 'applause' ||
@@ -678,7 +678,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       /* @conditional-compile-remove(raise-hand) */
       onToggleRaiseHand,
       /* @conditional-compile-remove(reaction) */
-      onReactionClicked,
+      onReactionClick: onReactionClick,
       /* @conditional-compile-remove(PSTN-calls) */
       onAddParticipant: notImplemented,
       onRemoveParticipant: notImplemented,

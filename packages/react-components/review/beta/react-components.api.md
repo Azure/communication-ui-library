@@ -1914,7 +1914,7 @@ export interface _RatingScale {
 // @beta
 export type Reaction = {
     reactionType: string;
-    receivedAt: Date;
+    receivedOn: Date;
 };
 
 // @beta
@@ -1922,7 +1922,7 @@ export const ReactionButton: (props: ReactionButtonProps) => JSX.Element;
 
 // @beta
 export interface ReactionButtonProps extends ControlBarButtonProps {
-    onReactionClicked: (reaction: string) => Promise<void>;
+    onReactionClick: (reaction: string) => Promise<void>;
     reactionResources: ReactionResources;
     strings?: Partial<ReactionButtonStrings>;
 }

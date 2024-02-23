@@ -341,7 +341,7 @@ export interface CallAdapterCallOperations {
     lowerHand(): Promise<void>;
     mute(): Promise<void>;
     // @beta
-    onReactionClicked(reaction: Reaction_2): Promise<void>;
+    onReactionClick(reaction: Reaction_2): Promise<void>;
     raiseHand(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
     // @beta
@@ -533,6 +533,7 @@ export type CallCompositeIcons = {
     ControlButtonMicProhibited?: JSX.Element;
     ControlButtonRaiseHand?: JSX.Element;
     ControlButtonLowerHand?: JSX.Element;
+    ControlButtonExitSpotlight?: JSX.Element;
     RaiseHandContextualMenuItem?: JSX.Element;
     ReactionContextualMenuItem?: JSX.Element;
     LowerHandContextualMenuItem?: JSX.Element;
@@ -703,6 +704,8 @@ export interface CallCompositeStrings {
     dtmfDialerMoreButtonLabelOn?: string;
     dtmfDialpadPlaceholderText: string;
     endOfSurveyText: string;
+    exitSpotlightButtonLabel: string;
+    exitSpotlightButtonTooltip: string;
     failedToJoinCallDueToNoNetworkMoreDetails?: string;
     failedToJoinCallDueToNoNetworkTitle: string;
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
@@ -1006,7 +1009,7 @@ export interface CallWithChatAdapterManagement {
     lowerHand(): Promise<void>;
     mute(): Promise<void>;
     // @beta
-    onReactionClicked(reaction: Reaction_2): Promise<void>;
+    onReactionClick(reaction: Reaction_2): Promise<void>;
     queryCameras(): Promise<VideoDeviceInfo[]>;
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
     querySpeakers(): Promise<AudioDeviceInfo[]>;
@@ -1884,6 +1887,7 @@ export type CommonCallControlOptions = {
     dtmfDialerButton?: boolean | {
         disabled: boolean;
     };
+    exitSpotlightButton?: boolean;
 };
 
 // @public
@@ -1915,7 +1919,7 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onRaiseHand: () => Promise<void>;
     // @beta (undocumented)
-    onReactionClicked: (reaction: Reaction_2) => Promise<void>;
+    onReactionClick: (reaction: Reaction_2) => Promise<void>;
     // (undocumented)
     onRemoveParticipant(userId: string): Promise<void>;
     // (undocumented)
@@ -2502,6 +2506,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ControlButtonMicProhibited?: JSX.Element | undefined;
     ControlButtonRaiseHand: JSX.Element;
     ControlButtonLowerHand: JSX.Element;
+    ControlButtonExitSpotlight?: JSX.Element | undefined;
     RaiseHandContextualMenuItem: JSX.Element;
     ReactionContextualMenuItem?: JSX.Element | undefined;
     LowerHandContextualMenuItem: JSX.Element;
@@ -3714,12 +3719,12 @@ export interface RaiseHandCallFeature {
 // @beta
 export type Reaction = {
     reactionType: string;
-    receivedAt: Date;
+    receivedOn: Date;
 };
 
 // @beta
 export interface ReactionButtonProps extends ControlBarButtonProps {
-    onReactionClicked: (reaction: string) => Promise<void>;
+    onReactionClick: (reaction: string) => Promise<void>;
     reactionResources: ReactionResources;
     strings?: Partial<ReactionButtonStrings>;
 }
@@ -3755,7 +3760,7 @@ export type ReactionSprite = {
 // @beta
 export type ReactionState = {
     reactionMessage: ReactionMessage;
-    receivedAt: Date;
+    receivedOn: Date;
 };
 
 // @public
