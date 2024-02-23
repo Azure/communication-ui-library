@@ -444,7 +444,7 @@ const ModalBase: React.FunctionComponent<_ExtendedIModalProps> = React.forwardRe
         firstFocusableSelector={firstFocusableSelector}
         focusPreviouslyFocusedInnerElement
         onBlur={internalState.isInKeyboardMoveMode ? handleExitKeyboardMoveMode : undefined}
-        data-ui-id={props['data-ui-id']}
+        data-ui-id={props['data-ui-id' as keyof _ExtendedIModalProps]}
         // enableAriaHiddenSiblings is handled by the Popup
       >
         {dragOptions && internalState.isInKeyboardMoveMode && (

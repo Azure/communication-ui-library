@@ -183,8 +183,6 @@ export interface ComponentStrings {
   /** Strings for the participant list component */
   ParticipantList: ParticipantListStrings;
   /* @conditional-compile-remove(hide-attendee-name) */
-  /** Strings for the attendee role */
-  AttendeeRole: string;
 }
 
 /**
