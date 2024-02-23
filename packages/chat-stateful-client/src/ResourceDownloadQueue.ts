@@ -89,7 +89,7 @@ export class ResourceDownloadQueue {
         message.resourceCache = {};
       }
       for (const attachment of attachments) {
-        if (attachment.previewUrl) {
+        if (attachment.previewUrl && attachment.attachmentType === 'image') {
           const blobUrl = await this.downloadResource(operation, attachment.previewUrl);
           message.resourceCache[attachment.previewUrl] = blobUrl;
         }
