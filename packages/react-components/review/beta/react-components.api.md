@@ -653,7 +653,7 @@ export interface ComponentStrings {
     raiseHandButton: RaiseHandButtonStrings;
     // @beta
     reactionButton: ReactionButtonStrings;
-    rteSendBox: RTESendBoxStrings;
+    richTextSendBox: RichTextSendBoxStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
@@ -1997,21 +1997,21 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
 }) => React_2.JSX.Element>;
 
 // @beta
-export const RTESendBox: (props: RTESendBoxProps) => JSX.Element;
+export const RichTextSendBox: (props: RichTextSendBoxProps) => JSX.Element;
 
 // @beta
-export interface RTESendBoxProps {
+export interface RichTextSendBoxProps {
     activeFileUploads?: ActiveFileUpload[];
     disabled?: boolean;
     onCancelFileUpload?: (fileId: string) => void;
     onRenderFileUploads?: () => JSX.Element;
     onSendMessage: (content: string) => Promise<void>;
-    strings?: Partial<RTESendBoxStrings>;
+    strings?: Partial<RichTextSendBoxStrings>;
     systemMessage?: string;
 }
 
 // @beta
-export interface RTESendBoxStrings extends SendBoxStrings {
+export interface RichTextSendBoxStrings extends SendBoxStrings {
     boldTooltip: string;
     bulletListTooltip: string;
     decreaseIndentTooltip: string;

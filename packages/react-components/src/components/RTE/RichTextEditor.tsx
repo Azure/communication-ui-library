@@ -8,7 +8,7 @@ import { Rooster, createUpdateContentPlugin, UpdateMode, createRibbonPlugin, Rib
 import { ribbonButtonStyle, ribbonStyle, richTextEditorStyle } from '../styles/RichTextEditor.styles';
 import { useTheme } from '@fluentui/react';
 import { ribbonButtons, ribbonButtonsStrings } from './RTERibbonButtons';
-import { RTESendBoxStrings } from './RTESendBox';
+import { RichTextSendBoxStrings } from './RTESendBox';
 import { isDarkThemed } from '../../theming/themeUtils';
 import { darkTheme, lightTheme } from '../../theming';
 
@@ -21,7 +21,7 @@ export interface RichTextEditorProps {
   content?: string;
   onChange: (newValue?: string) => void;
   placeholderText?: string;
-  strings: Partial<RTESendBoxStrings>;
+  strings: Partial<RichTextSendBoxStrings>;
 }
 
 /**

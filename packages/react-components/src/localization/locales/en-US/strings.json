@@ -28,7 +28,7 @@
     "uploading": "Uploading",
     "uploadCompleted": "Upload completed"
   },
-  "rteSendBox": {
+  "richTextSendBox": {
     "placeholderText": "Enter a message",
     "textTooLong": "Your message length is over the maximum limit.",
     "sendButtonAriaLabel": "Send message",

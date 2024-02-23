@@ -19,11 +19,11 @@ import { hasCompletedFileUploads } from '../utils/SendBoxUtils';
 import { RichTextEditorComponentRef } from './RichTextEditor';
 
 /**
- * Strings of {@link RTESendBox} that can be overridden.
+ * Strings of {@link RichTextSendBox} that can be overridden.
  *
  * @beta
  */
-export interface RTESendBoxStrings extends SendBoxStrings {
+export interface RichTextSendBoxStrings extends SendBoxStrings {
   /**
    * Tooltip text for the bold button.
    */
@@ -55,11 +55,11 @@ export interface RTESendBoxStrings extends SendBoxStrings {
 }
 
 /**
- * Props for {@link RTESendBox}.
+ * Props for {@link RichTextSendBox}.
  *
  * @beta
  */
-export interface RTESendBoxProps {
+export interface RichTextSendBoxProps {
   /**
    * Optional boolean to disable text box
    * @defaultValue false
@@ -68,7 +68,7 @@ export interface RTESendBoxProps {
   /**
    * Optional strings to override in component
    */
-  strings?: Partial<RTESendBoxStrings>;
+  strings?: Partial<RichTextSendBoxStrings>;
   /**
    * Optional text for system message above the text box
    */
@@ -106,7 +106,7 @@ export interface RTESendBoxProps {
  *
  * @beta
  */
-export const RTESendBox = (props: RTESendBoxProps): JSX.Element => {
+export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   const {
     disabled = false,
     systemMessage,
@@ -120,9 +120,9 @@ export const RTESendBox = (props: RTESendBoxProps): JSX.Element => {
 
   const localeStrings = useMemo(() => {
     /* @conditional-compile-remove(rich-text-editor) */
-    return locale.strings.rteSendBox;
+    return locale.strings.richTextSendBox;
     return locale.strings.sendBox;
-  }, [/* @conditional-compile-remove(rich-text-editor) */ locale.strings.rteSendBox, locale.strings.sendBox]);
+  }, [/* @conditional-compile-remove(rich-text-editor) */ locale.strings.richTextSendBox, locale.strings.sendBox]);
 
   const strings = { ...localeStrings, ...props.strings };
 

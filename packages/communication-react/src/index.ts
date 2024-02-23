@@ -308,7 +308,7 @@ export type {
   ReactionSprite
 } from '../../react-components/src';
 /* @conditional-compile-remove(rich-text-editor) */
-export type { RTESendBoxStrings } from '../../react-components/src';
+export type { RichTextSendBoxStrings } from '../../react-components/src';
 /* @conditional-compile-remove(spotlight) */
 export type { Spotlight } from '../../react-components/src';
 /* @conditional-compile-remove(image-overlay) */

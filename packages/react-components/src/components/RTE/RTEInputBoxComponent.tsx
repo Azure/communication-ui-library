@@ -4,7 +4,7 @@
 import React from 'react';
 import { BaseCustomStyles } from '../../types';
 import { RichTextEditor, RichTextEditorComponentRef } from './RichTextEditor';
-import { RTESendBoxStrings } from './RTESendBox';
+import { RichTextSendBoxStrings } from './RTESendBox';
 
 /**
  * @private
@@ -19,7 +19,7 @@ export interface RTEInputBoxComponentProps {
   content: string;
   onChange: (newValue?: string) => void;
   editorComponentRef: React.RefObject<RichTextEditorComponentRef>;
-  strings: Partial<RTESendBoxStrings>;
+  strings: Partial<RichTextSendBoxStrings>;
 }
 
 /**
