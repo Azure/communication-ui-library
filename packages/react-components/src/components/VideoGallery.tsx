@@ -131,6 +131,9 @@ export interface VideoGalleryStrings {
   /* @conditional-compile-remove(spotlight) */
   /** Menu text shown in Video Tile contextual menu to stop spotlight on local user's video tile */
   stopSpotlightOnSelfVideoTileMenuLabel: string;
+  /* @conditional-compile-remove(hide-attendee-name) */
+  /** String for the attendee role */
+  attendeeRole: string;
 }
 
 /**
@@ -597,7 +600,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
    * sets the announcement string for VideoGallery actions so that the screenreader will trigger
    */
   const toggleAnnouncerString = useCallback(
-    (announcement) => {
+    (announcement: string) => {
       setAnnouncementString(announcement);
       /**
        * Clears the announcer string after VideoGallery action allowing it to be re-announced.

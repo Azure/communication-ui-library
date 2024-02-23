@@ -284,7 +284,7 @@ export interface RaiseHandCallFeature {
 // @beta
 export type ReactionState = {
     reactionMessage: ReactionMessage;
-    receivedAt: Date;
+    receivedOn: Date;
 };
 
 // @public
