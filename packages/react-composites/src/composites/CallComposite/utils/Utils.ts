@@ -270,6 +270,7 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
   previousCall?,
   transferCall?: CallState,
   unsupportedBrowserInfo?: {
+    /* @conditional-compile-remove(unsupported-browser) */
     environmentInfo?: EnvironmentInfo;
     unsupportedBrowserVersionOptedIn?: boolean;
   }

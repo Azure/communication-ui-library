@@ -8,6 +8,8 @@ import { ReactElement } from 'react';
 import memoizeOne from 'memoize-one';
 import { ChatAdapter } from '../adapter/ChatAdapter';
 import { useAdapter } from '../adapter/ChatAdapterProvider';
+/* @conditional-compile-remove(file-sharing) */
+import { AttachmentMetadata } from '@internal/react-components';
 
 /**
  * @private
@@ -28,7 +30,15 @@ const createCompositeHandlers = memoizeOne(
     onTyping: adapter.sendTypingIndicator,
     onRemoveParticipant: adapter.removeParticipant,
     updateThreadTopicName: adapter.setTopic,
-    onUpdateMessage: (messageId, content, options?) => {
+    onUpdateMessage: (
+      messageId: string,
+      content: string,
+      /* @conditional-compile-remove(file-sharing) */ 
+      options?: {
+        metadata?: Record<string, string>;
+        /* @conditional-compile-remove(file-sharing) */
+        attachmentMetadata?: AttachmentMetadata[];
+    }) => {
       const metadata = options?.metadata;
       /* @conditional-compile-remove(file-sharing) */
       const updatedOptions = options?.attachmentMetadata ? { ...options.attachmentMetadata } : {};

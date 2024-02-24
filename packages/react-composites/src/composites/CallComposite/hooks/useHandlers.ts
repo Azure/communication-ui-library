@@ -14,21 +14,21 @@ import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isCameraOn } from '../utils';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(dtmf-dialer) */
 import { DtmfTone } from '@azure/communication-calling';
+/* @conditional-compile-remove(PSTN-calls) */
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(reaction) */
 import { Reaction } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
 import type {
   BackgroundReplacementConfig,
-  BackgroundBlurConfig,
-  AddPhoneNumberOptions
+  BackgroundBlurConfig
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
-import {
-  CommunicationIdentifier,
-  CommunicationUserIdentifier,
-  PhoneNumberIdentifier
-} from '@azure/communication-common';
+/* @conditional-compile-remove(PSTN-calls) */
+import { CommunicationIdentifier, CommunicationUserIdentifier, PhoneNumberIdentifier} from '@azure/communication-common';
+/* @conditional-compile-remove(PSTN-calls) */
+import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 
 /**
  * @private
@@ -86,11 +86,13 @@ const createCompositeHandlers = memoizeOne(
       onSendDtmfTone: async (dtmfTone: DtmfTone) => {
         await adapter.sendDtmfTone(dtmfTone);
       },
-      onRemoveParticipant: async (userId: CommunicationIdentifier | string) => {
+      onRemoveParticipant: async (userId: string | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier) => {
         if (typeof userId === 'string') {
           await adapter.removeParticipant(userId);
-        } else {
-          await adapter.removeParticipant(userId);
+        }
+        else {
+          /* @conditional-compile-remove(PSTN-calls) */
+          await adapter.removeParticipant(_toCommunicationIdentifier(userId));
         }
       },
       /* @conditional-compile-remove(raise-hand) */

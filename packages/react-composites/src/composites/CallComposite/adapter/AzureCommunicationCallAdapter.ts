@@ -933,17 +933,13 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     const combinedCallOptions = { ...startCallVideoOptions, ...options };
 
     const idsToAdd = participants.map((participant) => {
-      let backendId = participant;
-      if (typeof participant === 'string') {
-        backendId = _toCommunicationIdentifier(participant);
-      }
-      if ((<PhoneNumberIdentifier>backendId).phoneNumber) {
+      const backendId: CommunicationIdentifier = _toCommunicationIdentifier(participant);
+      if ('phoneNumber' in (backendId)) {
         if (options?.alternateCallerId === undefined) {
           throw new Error('Unable to start call, PSTN user present with no alternateCallerId.');
         }
-        return backendId as CommunicationIdentifier;
       }
-      return backendId as CommunicationIdentifier;
+      return backendId;
     });
 
     /* @conditional-compile-remove(calling-sounds) */
