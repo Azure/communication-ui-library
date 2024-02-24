@@ -43,7 +43,7 @@ import type { RibbonButton, InsertTableButtonStringKey } from 'roosterjs-react';
  * "Insert table" button for the RoosterJS ribbon
  */
 export const insertTable: RibbonButton<string> = {
-  key: 'buttonNameInsertTable',
+  key: 'buttonNameInsertTable1',
   unlocalizedText: 'Insert table',
   // Icon will be set in onRenderIcon callback
   iconName: '',
