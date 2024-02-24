@@ -18,6 +18,7 @@ import {
 } from './styles/ModalLocalAndRemotePIP.styles';
 /* @conditional-compile-remove(rooms) */
 import { useAdapter } from '../CallComposite/adapter/CallAdapterProvider';
+import { useLocale } from '../localization';
 
 /**
  * Drag options for Modal in {@link ModalLocalAndRemotePIP} component
@@ -60,6 +61,8 @@ export const ModalLocalAndRemotePIP = (props: {
   /* @conditional-compile-remove(rooms) */
   const role = adapter.getState().call?.role;
 
+  const locale = useLocale();
+
   const pictureInPictureProps = useSelector(localAndRemotePIPSelector);
 
   const [touchStartTouches, setTouchStartTouches] = useState<React.TouchList | null>(null);
@@ -100,6 +103,7 @@ export const ModalLocalAndRemotePIP = (props: {
       return (
         <Stack tabIndex={0} aria-label={props.strings?.dismissModalAriaLabel ?? ''} onKeyDown={onKeyDown}>
           <_RemoteVideoTile
+            strings={locale.component.strings.videoGallery}
             {...pictureInPictureProps.dominantRemoteParticipant}
             remoteParticipant={pictureInPictureProps.dominantRemoteParticipant}
           />
@@ -116,7 +120,8 @@ export const ModalLocalAndRemotePIP = (props: {
     onKeyDown,
     pictureInPictureProps,
     props,
-    pictureInPictureHandlers
+    pictureInPictureHandlers,
+    locale.component.strings.videoGallery
   ]);
 
   /* @conditional-compile-remove(rooms) */
