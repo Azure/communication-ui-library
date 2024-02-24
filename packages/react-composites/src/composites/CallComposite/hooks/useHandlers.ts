@@ -19,14 +19,15 @@ import { AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(reaction) */
 import { Reaction } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
-import type {
-  BackgroundReplacementConfig,
-  BackgroundBlurConfig
-} from '@azure/communication-calling';
+import type { BackgroundReplacementConfig, BackgroundBlurConfig } from '@azure/communication-calling';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
-import { CommunicationIdentifier, CommunicationUserIdentifier, PhoneNumberIdentifier} from '@azure/communication-common';
+import {
+  CommunicationIdentifier,
+  CommunicationUserIdentifier,
+  PhoneNumberIdentifier
+} from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 
@@ -86,11 +87,12 @@ const createCompositeHandlers = memoizeOne(
       onSendDtmfTone: async (dtmfTone: DtmfTone) => {
         await adapter.sendDtmfTone(dtmfTone);
       },
-      onRemoveParticipant: async (userId: string | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier) => {
+      onRemoveParticipant: async (
+        userId: string | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier
+      ) => {
         if (typeof userId === 'string') {
           await adapter.removeParticipant(userId);
-        }
-        else {
+        } else {
           /* @conditional-compile-remove(PSTN-calls) */
           await adapter.removeParticipant(_toCommunicationIdentifier(userId));
         }
