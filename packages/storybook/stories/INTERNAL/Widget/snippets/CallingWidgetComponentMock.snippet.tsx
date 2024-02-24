@@ -29,7 +29,7 @@ export type WidgetAdapterArgs = {
  * Widget for Calling Widget
  * @param props
  */
-export const CallingWidgetComponent = (): JSX.Element => {
+export const CallingWidgetComponentMock = (): JSX.Element => {
   const [widgetState, setWidgetState] = useState<'new' | 'setup' | 'inCall'>('new');
   const [displayName, setDisplayName] = useState<string>();
   const [consentToData, setConsentToData] = useState<boolean>(false);
@@ -42,23 +42,6 @@ export const CallingWidgetComponent = (): JSX.Element => {
 
   useEffect(() => {
     if (adapter) {
-      adapter.on('callEnded', () => {
-        /**
-         * We only want to reset the widget state if the call that ended is the same as the current call.
-         */
-        if (
-          adapter.getState().acceptedTransferCallState &&
-          adapter.getState().acceptedTransferCallState?.id !== callIdRef.current
-        ) {
-          return;
-        }
-        setDisplayName(undefined);
-        setWidgetState('new');
-        setConsentToData(false);
-        setAdapter(undefined);
-        adapter.dispose();
-      });
-
       adapter.on('transferAccepted', (e) => {
         console.log('transferAccepted', e);
       });
@@ -67,6 +50,19 @@ export const CallingWidgetComponent = (): JSX.Element => {
         if (state?.call?.id && callIdRef.current !== state?.call?.id) {
           callIdRef.current = state?.call?.id;
           console.log(`Call Id: ${callIdRef.current}`);
+        }
+        /**
+         * We only want to reset the widget state if the call that ended is the same as the current call.
+         */
+        if (state.acceptedTransferCallState && state.acceptedTransferCallState?.id !== callIdRef.current) {
+          return;
+        }
+        if (state?.call?.state === 'Disconnected') {
+          setDisplayName(undefined);
+          setWidgetState('new');
+          setConsentToData(false);
+          setAdapter(undefined);
+          adapter.dispose();
         }
       });
     }
@@ -122,6 +118,7 @@ export const CallingWidgetComponent = (): JSX.Element => {
           onClick={() => {
             if (displayName && consentToData && adapter) {
               setWidgetState('inCall');
+              adapter.startCall([{ teamsAppId: '28:orgid:test' }]);
             }
           }}
         >

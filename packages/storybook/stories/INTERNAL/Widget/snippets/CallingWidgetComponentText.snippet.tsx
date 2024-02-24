@@ -32,22 +32,28 @@ import { callingWidgetInCallContainerStyles } from './CallingWidgetComponent.sty
  * Properties needed for our widget to start a call.
  */
 export type WidgetAdapterArgs = {
+  /**
+   * Token for the local user to join the call
+   */
   token: string;
+  /**
+   * User ID for the local user to join the call
+   */
   userId: CommunicationUserIdentifier;
+  /**
+   * Teams app identifier initiating the call
+   */
   teamsAppIdentifier: MicrosoftTeamsAppIdentifier;
 };
 
 export interface CallingWidgetComponentProps {
   /**
-     *  Arguments for creating an AzureCommunicationCallAdapter for your Calling experience
-  
-     */
+   *  Arguments for creating an AzureCommunicationCallAdapter for your Calling experience
+   */
   widgetAdapterArgs: WidgetAdapterArgs;
   /**
-     * Custom render function for displaying logo
-     * 
-  
-     */
+   * Custom render function for displaying logo
+   */
   onRenderLogo?: () => JSX.Element;
 }
 
@@ -68,7 +74,6 @@ export const CallingWidgetComponent = (props: CallingWidgetComponentProps): JSX.
 
   const theme = useTheme();
 
-  // add this before the React template
   const credential = useMemo(() => {
     try {
       return new AzureCommunicationTokenCredential(widgetAdapterArgs.token);
