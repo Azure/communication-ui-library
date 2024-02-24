@@ -526,13 +526,7 @@ export const createAzureCommunicationChatAdapter = async ({
   credential,
   threadId
 }: AzureCommunicationChatAdapterArgs): Promise<ChatAdapter> => {
-  return _createAzureCommunicationChatAdapterInner(
-    endpointUrl,
-    userId,
-    displayName,
-    credential,
-    new Promise((r) => r(threadId))
-  );
+  return _createAzureCommunicationChatAdapterInner(endpointUrl, userId, displayName, credential, threadId);
 };
 
 /**
@@ -541,6 +535,39 @@ export const createAzureCommunicationChatAdapter = async ({
  * @internal
  */
 export const _createAzureCommunicationChatAdapterInner = async (
+  endpoint: string,
+  userId: CommunicationUserIdentifier,
+  displayName: string,
+  credential: CommunicationTokenCredential,
+  threadId: string,
+  telemetryImplementationHint: _TelemetryImplementationHint = 'Chat'
+): Promise<ChatAdapter> => {
+  if (!_isValidIdentifier(userId)) {
+    throw new Error('Provided userId is invalid. Please provide valid identifier object.');
+  }
+
+  const chatClient = _createStatefulChatClientInner(
+    {
+      userId,
+      displayName,
+      endpoint,
+      credential
+    },
+    undefined,
+    telemetryImplementationHint
+  );
+  const chatThreadClient = await chatClient.getChatThreadClient(threadId);
+  await chatClient.startRealtimeNotifications();
+  const adapter = await createAzureCommunicationChatAdapterFromClient(chatClient, chatThreadClient);
+  return adapter;
+};
+
+/**
+ * This inner function is used to allow injection of TelemetryImplementationHint without changing the public API.
+ * ThreadId is a promise to allow for lazy initialization of the adapter.
+ * @internal
+ */
+export const _createLazyAzureCommunicationChatAdapterInner = async (
   endpoint: string,
   userId: CommunicationUserIdentifier,
   displayName: string,

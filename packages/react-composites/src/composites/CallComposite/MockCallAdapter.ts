@@ -261,7 +261,9 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
       /* @conditional-compile-remove(optimal-video-count) */
       optimalVideoCount: {
         maxRemoteVideoStreams: 4
-      }
+      },
+      /* @conditional-compile-remove(meeting-id) */
+      info: undefined
     },
     userId: { kind: 'communicationUser', communicationUserId: '1' },
     devices: {

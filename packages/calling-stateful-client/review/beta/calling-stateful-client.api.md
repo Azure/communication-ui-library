@@ -14,6 +14,7 @@ import { CallCommon as CallCommon_2 } from '@azure/communication-calling';
 import { CallDirection } from '@azure/communication-calling';
 import { CallEndReason } from '@azure/communication-calling';
 import { CallerInfo } from '@azure/communication-calling';
+import { CallInfoCommon } from '@azure/communication-calling';
 import { CallKind } from '@azure/communication-calling';
 import { CallState as CallState_2 } from '@azure/communication-calling';
 import { CapabilitiesChangeInfo } from '@azure/communication-calling';
@@ -114,6 +115,7 @@ export interface CallState {
     endTime: Date | undefined;
     hideAttendeeNames?: boolean;
     id: string;
+    info?: CallInfoCommon;
     isMuted: boolean;
     isScreenSharingOn: boolean;
     kind: CallKind;

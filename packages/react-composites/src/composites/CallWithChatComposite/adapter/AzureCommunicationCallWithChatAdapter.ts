@@ -63,6 +63,7 @@ import {
 } from '../state/CallWithChatAdapterState';
 import {
   _createAzureCommunicationChatAdapterInner,
+  _createLazyAzureCommunicationChatAdapterInner,
   createAzureCommunicationChatAdapterFromClient
 } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
 import { EventEmitter } from 'events';
@@ -946,8 +947,8 @@ export class TeamsMeetingIdAdapter implements ChatThreadLocator {
   public async getChatThread(): Promise<string> {
     return new Promise<string>((resolve) => {
       const stateChangeListener = (state: CallAdapterState): void => {
-        if (state.call?.state === 'Connected') {
-          resolve('19:meeting_MTMzZDcxZGMtNmY2ZC00MjZmLWJiYWUtNjc5ZDU3ZTYwZmFm@thread.v2');
+        if (state.call?.state === 'Connected' && state.call.info?.threadId) {
+          resolve(state.call.info?.threadId);
         }
       };
       this.callAdapter.then((adapter) => {
@@ -1020,7 +1021,7 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
   });
 
   const chatThreadAdapter = _createChatThreadAdapterInner(locator, callAdapter);
-  const chatAdapter = _createAzureCommunicationChatAdapterInner(
+  const chatAdapter = _createLazyAzureCommunicationChatAdapterInner(
     endpoint,
     userId,
     displayName,
