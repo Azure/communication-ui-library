@@ -43,6 +43,8 @@ import {
 } from './CallClientState';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from './CallClientState';
+/* @conditional-compile-remove(reaction) */
+import { ReactionState } from './CallClientState';
 /* @conditional-compile-remove(call-transfer) */
 import { AcceptedTransfer } from './CallClientState';
 import { callingStatefulLogger } from './Logger';
@@ -424,8 +426,8 @@ export class CallContext {
       clearTimeout(this._timeOutId[participantKey]);
 
       const participant = call.remoteParticipants[participantKey];
-      const newReactionState = reactionMessage
-        ? { reactionMessage: reactionMessage, receivedAt: new Date() }
+      const newReactionState: ReactionState | undefined = reactionMessage
+        ? { reactionMessage: reactionMessage, receivedOn: new Date() }
         : undefined;
 
       if (participantKey === toFlatCommunicationIdentifier(this._state.userId)) {

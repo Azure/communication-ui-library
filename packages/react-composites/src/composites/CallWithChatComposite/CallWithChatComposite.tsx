@@ -265,6 +265,17 @@ export type CallWithChatCompositeOptions = {
       url: string;
     };
   };
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Options for settings related to spotlight.
+   */
+  spotlight?: {
+    /**
+     * Flag to hide the menu buttons to start and stop spotlight for remote participants and the local participant.
+     * @defaultValue false
+     */
+    hideSpotlightButtons?: boolean;
+  };
 };
 
 type CallWithChatScreenProps = {
@@ -343,6 +354,10 @@ type CallWithChatScreenProps = {
   /* @conditional-compile-remove(custom-branding) */
   backgroundImage?: {
     url: string;
+  };
+  /* @conditional-compile-remove(spotlight) */
+  spotlight?: {
+    hideSpotlightButtons?: boolean;
   };
 };
 
@@ -527,7 +542,9 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       branding: {
         logo: props.logo,
         backgroundImage: props.backgroundImage
-      }
+      },
+      /* @conditional-compile-remove(spotlight) */
+      spotlight: props.spotlight
     }),
     [
       props.callControls,
@@ -553,7 +570,9 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       /* @conditional-compile-remove(custom-branding) */
       props.logo,
       /* @conditional-compile-remove(custom-branding) */
-      props.backgroundImage
+      props.backgroundImage,
+      /* @conditional-compile-remove(spotlight) */
+      props.spotlight
     ]
   );
 
@@ -688,6 +707,8 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         backgroundImage={options?.branding?.backgroundImage}
         /* @conditional-compile-remove(end-of-call-survey) */
         surveyOptions={options?.surveyOptions}
+        /* @conditional-compile-remove(spotlight) */
+        spotlight={options?.spotlight}
       />
     </BaseProvider>
   );

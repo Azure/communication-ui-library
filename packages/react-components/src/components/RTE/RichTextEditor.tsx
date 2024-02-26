@@ -1,11 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-import React, { useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { ContentEdit, Watermark } from 'roosterjs-editor-plugins';
 import { Editor } from 'roosterjs-editor-core';
-import { EditorOptions, IEditor } from 'roosterjs-editor-types-compatible';
-import { Rooster, createUpdateContentPlugin, UpdateMode } from 'roosterjs-react';
-import { richTextEditorStyle } from '../styles/RichTextEditor.styles';
+import type { EditorOptions, IEditor } from 'roosterjs-editor-types-compatible';
+import { Rooster, createUpdateContentPlugin, UpdateMode, createRibbonPlugin, Ribbon } from 'roosterjs-react';
+import { ribbonButtonStyle, ribbonStyle, richTextEditorStyle } from '../styles/RichTextEditor.styles';
+import { useTheme } from '@fluentui/react';
+import { ribbonButtons, ribbonButtonsStrings } from './RTERibbonButtons';
+import { RichTextSendBoxStrings } from './RTESendBox';
+import { isDarkThemed } from '../../theming/themeUtils';
+
 /**
  * Props for {@link RichTextEditor}.
  *
@@ -15,6 +20,7 @@ export interface RichTextEditorProps {
   content?: string;
   onChange: (newValue?: string) => void;
   placeholderText?: string;
+  strings: Partial<RichTextSendBoxStrings>;
 }
 
 /**
@@ -32,9 +38,10 @@ export interface RichTextEditorComponentRef {
  * @beta
  */
 export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichTextEditorProps>((props, ref) => {
-  const { content, onChange, placeholderText } = props;
+  const { content, onChange, placeholderText, strings } = props;
   const editor = useRef<IEditor | null>(null);
-
+  const [divComponent, setDivComponent] = useState<HTMLDivElement | null>(null);
+  const theme = useTheme();
   useImperativeHandle(
     ref,
     () => {
@@ -55,30 +62,72 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     }
   }, [content]);
 
-  const editorCreator = useMemo(() => {
-    return (div: HTMLDivElement) => {
-      const contentEdit = new ContentEdit();
-      const placeholderPlugin = new Watermark(placeholderText || '');
-      const updateContentPlugin = createUpdateContentPlugin(
-        UpdateMode.OnContentChangedEvent | UpdateMode.OnUserInput,
-        (content: string) => {
-          onChange && onChange(content);
-        }
-      );
+  useEffect(() => {
+    if (divComponent !== null && theme.palette.neutralPrimary !== undefined) {
+      // Adjust color prop for the div component when theme is updated
+      // because doNotAdjustEditorColor is set for Rooster
+      divComponent.style.color = theme.palette.neutralPrimary;
+    }
+  }, [divComponent, theme]);
 
-      const options: EditorOptions = {
-        plugins: [placeholderPlugin, contentEdit, updateContentPlugin],
-        imageSelectionBorderColor: 'blue'
-      };
+  const ribbonPlugin = React.useMemo(() => {
+    return createRibbonPlugin();
+  }, []);
 
-      editor.current = new Editor(div, options);
-      return editor.current;
-    };
-  }, [onChange, placeholderText]);
+  const editorCreator = useCallback((div: HTMLDivElement, options: EditorOptions) => {
+    editor.current = new Editor(div, options);
+    setDivComponent(div);
+    // Remove the background color of the editor
+    div.style.backgroundColor = 'transparent';
+    return editor.current;
+  }, []);
+
+  const plugins = useMemo(() => {
+    const contentEdit = new ContentEdit();
+    const placeholderPlugin = new Watermark(placeholderText || '');
+    const updateContentPlugin = createUpdateContentPlugin(
+      UpdateMode.OnContentChangedEvent | UpdateMode.OnUserInput,
+      (content: string) => {
+        onChange && onChange(content);
+      }
+    );
+    return [contentEdit, placeholderPlugin, updateContentPlugin, ribbonPlugin];
+  }, [onChange, placeholderText, ribbonPlugin]);
+
+  const ribbon = useMemo(() => {
+    const buttons = ribbonButtons(theme);
+
+    return (
+      //TODO: Add localization for watermark plugin https://github.com/microsoft/roosterjs/issues/2430
+      <Ribbon
+        styles={ribbonStyle()}
+        buttons={buttons}
+        plugin={ribbonPlugin}
+        overflowButtonProps={{
+          styles: ribbonButtonStyle(theme),
+          menuProps: {
+            items: [], // CommandBar will determine items rendered in overflow
+            isBeakVisible: false
+          }
+        }}
+        strings={ribbonButtonsStrings(strings)}
+      />
+    );
+  }, [strings, ribbonPlugin, theme]);
 
   return (
     <div>
-      <Rooster className={richTextEditorStyle} editorCreator={editorCreator} />
+      {ribbon}
+      <Rooster
+        inDarkMode={isDarkThemed(theme)}
+        plugins={plugins}
+        className={richTextEditorStyle}
+        editorCreator={editorCreator}
+        // TODO: confirm the color during inline images implementation
+        imageSelectionBorderColor={'blue'}
+        // doNotAdjustEditorColor is used to fix the default background color for Rooster component
+        doNotAdjustEditorColor={true}
+      />
     </div>
   );
 });

@@ -103,4 +103,9 @@ export type CommonCallControlOptions = {
    * Show or hide the dialpad button in the composite control bar.
    */
   dtmfDialerButton?: boolean | { disabled: boolean };
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Show or hide the exit spotlight button in the composite control bar when local participant is spotlighted.
+   */
+  exitSpotlightButton?: boolean;
 };
