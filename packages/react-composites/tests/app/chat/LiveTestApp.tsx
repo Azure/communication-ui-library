@@ -56,7 +56,8 @@ export const LiveTestApp = (): JSX.Element => {
 
   React.useEffect(() => {
     if (adapter && uploadedFiles.length) {
-      uploadedFiles.forEach((file) => {
+      // es-lint-disable-next-line @typescript-eslint/no-explicit-any
+      uploadedFiles.forEach((file: any) => {
         if (file.uploadComplete) {
           const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
           fileUploads[0].notifyUploadCompleted({

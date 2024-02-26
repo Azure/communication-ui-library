@@ -86,10 +86,10 @@ test.describe('VideoGalleryLayout tests', async () => {
     }
     expect(await stableScreenshot(page)).toMatchSnapshot('video-tile-pinned.png');
 
-    await videoTile.hover();
-    moreButton = await videoTile.waitForSelector(dataUiId(IDS.videoTileMoreOptionsButton));
-    await moreButton.hover();
-    await moreButton.click();
+    await videoTile?.hover();
+    moreButton = await videoTile?.waitForSelector(dataUiId(IDS.videoTileMoreOptionsButton));
+    await moreButton?.hover();
+    await moreButton?.click();
 
     expect(await stableScreenshot(page)).toMatchSnapshot('video-tile-unpin.png');
   });

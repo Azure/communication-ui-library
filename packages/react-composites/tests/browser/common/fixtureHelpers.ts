@@ -16,8 +16,20 @@ import { buildUrl } from './utils';
  * To be used in a playwright fixture's 'pages'.
  */
 // eslint-disable-next-line no-empty-pattern, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
-export const usePagePerParticipant = async ({ serverUrl, users, browser }, use) => {
-  const pages = await Promise.all(users.map(async (user) => await loadNewPage(browser, buildUrl(serverUrl, user))));
+export const usePagePerParticipant = async (
+  {
+    serverUrl,
+    users,
+    browser
+  }: { serverUrl: string; users: Array<ChatUserType | CallUserType | CallWithChatUserType>; browser: Browser },
+  use: (pages: Page[]) => Promise<void>
+) => {
+  const pages = await Promise.all(
+    users.map(
+      async (user: ChatUserType | CallUserType | CallWithChatUserType) =>
+        await loadNewPage(browser, buildUrl(serverUrl, user))
+    )
+  );
   await use(pages);
 };
 
@@ -49,7 +61,14 @@ const shouldIgnoreConsoleError = (error: ConsoleMessage): boolean => {
  * To be used in a playwright fixture's 'pages'.
  */
 // eslint-disable-next-line no-empty-pattern, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
-export const usePagePerParticipantWithCallPermissions = async ({ browser, serverUrl, users }, use) => {
+export const usePagePerParticipantWithCallPermissions = async (
+  {
+    browser,
+    serverUrl,
+    users
+  }: { serverUrl: string; users: Array<ChatUserType | CallUserType | CallWithChatUserType>; browser: Browser },
+  use: (pages: Page[]) => Promise<void>
+) => {
   const pages = await Promise.all(
     users.map(async (user) => {
       const page = await loadNewPageWithPermissionsForCalls(browser, buildUrl(serverUrl, user));
@@ -117,7 +136,7 @@ const createCallingUserAndToken = async (): Promise<CallUserType> => {
 export const createCallUsers =
   (testParticipants: string[]) =>
   // eslint-disable-next-line no-empty-pattern, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
-  async ({}, use) => {
+  async ({}, use: (users: Array<CallUserType>) => Promise<void>) => {
     const groupId = v1();
     const users: Array<CallUserType> = [];
     for (const displayName of testParticipants) {

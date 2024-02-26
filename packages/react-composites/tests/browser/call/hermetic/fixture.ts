@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { Page, test as base } from '@playwright/test';
+import { Browser, Page, test as base } from '@playwright/test';
 import path from 'path';
 import { createTestServer } from '../../common/server';
 import { loadNewPageWithPermissionsForCalls } from '../../common/fixtureHelpers';
@@ -47,7 +47,7 @@ export interface TestFixture {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const usePage = async ({ browser }, use) => {
+const usePage = async ({ browser }: { browser: Browser }, use: (page: Page) => Promise<void>) => {
   await use(await loadNewPageWithPermissionsForCalls(browser));
 };
 
