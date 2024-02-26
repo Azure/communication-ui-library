@@ -35,10 +35,8 @@ import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { ParticipantCapabilities } from '@azure/communication-calling';
 import { ParticipantRole } from '@azure/communication-calling';
-import { ReactionMessage } from '@azure/communication-calling';
 import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/communication-calling';
 import { ScalingMode } from '@azure/communication-calling';
-import { SpotlightedParticipant } from '@azure/communication-calling';
 import { TeamsCall as TeamsCall_2 } from '@azure/communication-calling';
 import { TeamsCallAgent as TeamsCallAgent_2 } from '@azure/communication-calling';
 import { _TelemetryImplementationHint } from '@internal/acs-ui-common';
@@ -112,13 +110,10 @@ export interface CallState {
     direction: CallDirection;
     dominantSpeakers?: DominantSpeakersInfo;
     endTime: Date | undefined;
-    hideAttendeeNames?: boolean;
     id: string;
     isMuted: boolean;
     isScreenSharingOn: boolean;
     kind: CallKind;
-    // @beta
-    localParticipantReaction?: ReactionState;
     localVideoStreams: LocalVideoStreamState[];
     optimalVideoCount: OptimalVideoCountFeatureState;
     raiseHand: RaiseHandCallFeature;
@@ -131,7 +126,6 @@ export interface CallState {
     };
     role?: ParticipantRole;
     screenShareRemoteParticipant?: string;
-    spotlight?: SpotlightCallFeatureState;
     startTime: Date;
     state: CallState_2;
     totalParticipantCount?: number;
@@ -180,7 +174,7 @@ export type CreateViewResult = {
 };
 
 // @beta
-export type DeclarativeCallAgent = CallAgent & IncomingCallManagement;
+export type DeclarativeCallAgent = CallAgent & /* @conditional-compile-remove(one-to-n-calling) */ IncomingCallManagement;
 
 // @beta
 export type DeclarativeIncomingCall = IncomingCall;
@@ -274,12 +268,6 @@ export interface RaiseHandCallFeature {
     raisedHands: RaisedHandState[];
 }
 
-// @beta
-export type ReactionState = {
-    reactionMessage: ReactionMessage;
-    receivedOn: Date;
-};
-
 // @public
 export interface RecordingCallFeature {
     isRecordingActive: boolean;
@@ -293,10 +281,7 @@ export interface RemoteParticipantState {
     isMuted: boolean;
     isSpeaking: boolean;
     raisedHand?: RaisedHandState;
-    // @beta
-    reactionState?: ReactionState;
     role?: ParticipantRole;
-    spotlight?: SpotlightState;
     state: RemoteParticipantState_2;
     videoStreams: {
         [key: number]: RemoteVideoStreamState;
@@ -315,18 +300,6 @@ export interface RemoteVideoStreamState {
         height: number;
     };
     view?: VideoStreamRendererViewState;
-}
-
-// @beta
-export interface SpotlightCallFeatureState {
-    localParticipantSpotlight?: SpotlightState;
-    maxParticipantsToSpotlight: number;
-    spotlightedParticipants: SpotlightedParticipant[];
-}
-
-// @beta
-export interface SpotlightState {
-    spotlightedOrderPosition?: number;
 }
 
 // @public
