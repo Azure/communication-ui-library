@@ -883,9 +883,11 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
 }
 
 /**
+ * Provides a way to get the chat thread ID for a given locator.
+ *
  * @public
  */
-export interface ChatThreadLocator {
+export interface ChatThreadProvider {
   getChatThread(): Promise<string>;
 }
 
@@ -902,9 +904,10 @@ export interface CallAndChatLocator {
 }
 
 /**
+ * Arguments for use in {@link createAzureCommunicationCallWithChatAdapter} to join a Group Call with an associated Chat thread.
  * @public
  */
-export class CallAndChatAdapter implements ChatThreadLocator {
+export class CallAndChatProvider implements ChatThreadProvider {
   public locator: CallAndChatLocator;
 
   constructor(locator: CallAndChatLocator) {
@@ -917,9 +920,11 @@ export class CallAndChatAdapter implements ChatThreadLocator {
 }
 
 /**
+ * Arguments for use in {@link createAzureCommunicationCallWithChatAdapter} to join a Teams meeting with an associated Chat thread.
+ *
  * @public
  */
-export class TeamsMeetingLinkAdapter implements ChatThreadLocator {
+export class TeamsMeetingLinkProvider implements ChatThreadProvider {
   public locator: TeamsMeetingLinkLocator;
 
   constructor(locator: TeamsMeetingLinkLocator) {
@@ -932,10 +937,12 @@ export class TeamsMeetingLinkAdapter implements ChatThreadLocator {
 }
 
 /** @conditional-compile-remove(meeting-id) */
-/**
+/*
+ * Arguments for use in {@link createAzureCommunicationCallWithChatAdapter} to join a Teams meeting using meeting id.
+ *
  * @public
  */
-export class TeamsMeetingIdAdapter implements ChatThreadLocator {
+export class TeamsMeetingIdProvider implements ChatThreadProvider {
   public locator: TeamsMeetingIdLocator;
   private callAdapter: Promise<CallAdapter>;
 
@@ -963,9 +970,9 @@ export class TeamsMeetingIdAdapter implements ChatThreadLocator {
  * @public
  */
 export type CommunicationAdapter =
-  | CallAndChatAdapter
-  | TeamsMeetingLinkAdapter
-  | /** @conditional-compile-remove(meeting-id) */ TeamsMeetingIdAdapter;
+  | CallAndChatProvider
+  | TeamsMeetingLinkProvider
+  | /** @conditional-compile-remove(meeting-id) */ TeamsMeetingIdProvider;
 
 /**
  * Combination of available locators for use in {@link createAzureCommunicationCallWithChatAdapter}.
@@ -1235,13 +1242,13 @@ const isTeamsMeetingLocator = (
 const _createChatThreadAdapterInner = (
   locator: CallAndChatAdapterLocator,
   adapter: Promise<CallAdapter>
-): ChatThreadLocator => {
+): ChatThreadProvider => {
   if ('meetingLink' in locator) {
-    return new TeamsMeetingLinkAdapter(locator);
+    return new TeamsMeetingLinkProvider(locator);
   }
   /** @conditional-compile-remove(meeting-id) */
   if ('meetingId' in locator) {
-    return new TeamsMeetingIdAdapter(locator, adapter);
+    return new TeamsMeetingIdProvider(locator, adapter);
   }
-  return new CallAndChatAdapter(locator);
+  return new CallAndChatProvider(locator);
 };
