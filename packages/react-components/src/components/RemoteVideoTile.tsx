@@ -24,8 +24,6 @@ import { useVideoTileContextualMenuProps } from './VideoGallery/useVideoTileCont
 import { VideoTile } from './VideoTile';
 /* @conditional-compile-remove(hide-attendee-name) */
 import { _formatString } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(hide-attendee-name) */
-import { useLocale } from '../localization';
 /* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '../types/ReactionTypes';
 
@@ -54,7 +52,7 @@ export const _RemoteVideoTile = React.memo(
     showMuteIndicator?: boolean;
     showLabel?: boolean;
     personaMinSize?: number;
-    strings?: VideoGalleryStrings;
+    strings: VideoGalleryStrings;
     participantState?: ParticipantState;
     menuKind?: 'contextual' | 'drawer';
     drawerMenuHostId?: string;
@@ -181,12 +179,12 @@ export const _RemoteVideoTile = React.memo(
       [setDrawerMenuItemProps, contextualMenuProps]
     );
 
-    let displayName = remoteParticipant.displayName || strings?.displayNamePlaceholder;
+    let displayName = remoteParticipant.displayName || strings.displayNamePlaceholder;
     /* @conditional-compile-remove(hide-attendee-name) */
-    const attendeeRoleString = useLocale().strings.AttendeeRole;
+    const attendeeRoleString = props.strings?.attendeeRole;
 
     /* @conditional-compile-remove(hide-attendee-name) */
-    const formatDisplayName = (): string | undefined => {
+    const formatDisplayName = (): string => {
       if (displayName && attendeeRoleString) {
         return _formatString(displayName, { AttendeeRole: attendeeRoleString });
       }

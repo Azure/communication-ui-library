@@ -69,7 +69,7 @@ export type Reaction = {
   /**
    * Received timestamp for the message as default Date format.
    */
-  receivedAt: Date;
+  receivedOn: Date;
 };
 
 /**

@@ -155,6 +155,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
           setIsPromptOpen={setIsPromptOpen}
           /* @conditional-compile-remove(spotlight) */
           setPromptProps={setPromptProps}
+          /* @conditional-compile-remove(spotlight) */
+          hideSpotlightButtons={options?.spotlight?.hideSpotlightButtons}
         />
       );
     }
@@ -230,6 +232,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         setIsPromptOpen={setIsPromptOpen}
         /* @conditional-compile-remove(spotlight) */
         setPromptProps={setPromptProps}
+        /* @conditional-compile-remove(spotlight) */
+        hideSpotlightButtons={options?.spotlight?.hideSpotlightButtons}
       />
       {
         /* @conditional-compile-remove(spotlight) */

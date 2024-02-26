@@ -549,7 +549,7 @@ export interface CallAdapterCallOperations {
    *
    * @beta
    */
-  onReactionClicked(reaction: Reaction): Promise<void>;
+  onReactionClick(reaction: Reaction): Promise<void>;
   /**
    * Stop sharing the screen
    *

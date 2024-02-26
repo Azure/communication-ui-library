@@ -449,14 +449,12 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
 
   /* @conditional-compile-remove(close-captions) */
   const [currentSpokenLanguage, setCurrentSpokenLanguage] = useState<string>(
-    captionSettingsProp.currentSpokenLanguage !== '' ? captionSettingsProp.currentSpokenLanguage : 'en-us'
+    captionSettingsProp.currentSpokenLanguage ?? 'en-us'
   );
 
   /* @conditional-compile-remove(close-captions) */
   const [currentCaptionLanguage, setCurrentCaptionLanguage] = useState<string>(
-    captionSettingsProp.currentCaptionLanguage !== ''
-      ? captionSettingsProp.currentCaptionLanguage
-      : _spokenLanguageToCaptionLanguage[currentSpokenLanguage]
+    captionSettingsProp.currentCaptionLanguage ?? _spokenLanguageToCaptionLanguage[currentSpokenLanguage]
   );
 
   /* @conditional-compile-remove(close-captions) */
