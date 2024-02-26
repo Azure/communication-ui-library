@@ -628,6 +628,9 @@ export type CallCompositeOptions = {
             url: string;
         };
     };
+    spotlight?: {
+        hideSpotlightButtons?: boolean;
+    };
 };
 
 // @public
@@ -1308,6 +1311,9 @@ export type CallWithChatCompositeOptions = {
         backgroundImage?: {
             url: string;
         };
+    };
+    spotlight?: {
+        hideSpotlightButtons?: boolean;
     };
 };
 
