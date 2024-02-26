@@ -31,7 +31,7 @@ Mon, 26 Feb 2024 16:19:15 GMT
 - Fix for a deleted message accessibility announcement ([PR #4169](https://github.com/azure/communication-ui-library/pull/4169) by 98852890+vhuseinova-msft@users.noreply.github.com)
 - Replace Inline Image tag with image text for aria text ([PR #4128](https://github.com/azure/communication-ui-library/pull/4128) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
 - Set hide attendee name option to 'False' until replaced by sdk ([PR #4111](https://github.com/azure/communication-ui-library/pull/4111) by 97124699+prabhjot-msft@users.noreply.github.com)
-- Resolved issue where edited label is missing from received messages ([PR #4150](https://github.com/azure/communication-ui-library/pull/4150) by 73612854+palatter@users.noreply.github.com)
+- Resolve issue where edited label is missing from received messages ([PR #4150](https://github.com/azure/communication-ui-library/pull/4150) by 73612854+palatter@users.noreply.github.com)
 - Fix offset of message edit box ([PR #4112](https://github.com/azure/communication-ui-library/pull/4112) by 3941071+emlynmac@users.noreply.github.com)
 
 ## [1.13.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.13.0-beta.1)
