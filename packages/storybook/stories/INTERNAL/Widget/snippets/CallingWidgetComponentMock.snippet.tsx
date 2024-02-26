@@ -14,7 +14,7 @@ import { CommunicationUserIdentifier, MicrosoftTeamsAppIdentifier } from '@azure
 import { CallAdapter, CallAdapterState, CallComposite } from '@azure/communication-react';
 
 import { callingWidgetInCallContainerStyles } from './CallingWidgetComponent.styles';
-import { _MockCallAdapter } from '@internal/react-composites';
+import { _MockCallingWidgetCallAdapter } from '@internal/react-composites';
 
 /**
  * Properties needed for our widget to start a call.
@@ -110,7 +110,7 @@ export const CallingWidgetComponentMock = (): JSX.Element => {
           }
           onChange={async (_, checked?: boolean | undefined) => {
             setConsentToData(!!checked);
-            setAdapter(new _MockCallAdapter({}));
+            setAdapter(new _MockCallingWidgetCallAdapter({}));
           }}
         ></Checkbox>
         <PrimaryButton

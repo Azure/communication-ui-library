@@ -14,10 +14,9 @@ import { CallKind } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { EventEmitter } from 'events';
-import type { CallAdapter, CallAdapterState, StartCallIdentifier } from './adapter';
+import type { CallAdapter, CallAdapterState } from '../adapter';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
-import { CommunicationIdentifier } from '@azure/communication-common';
 
 /**
  * Temporary copy of the packages/react-composites/tests/browser/call/app/mocks/MockCallAdapter.ts
@@ -41,30 +40,6 @@ export class _MockCallAdapter implements CallAdapter {
   state: CallAdapterState;
 
   private emitter = new EventEmitter();
-
-  setTransfer(state: CallAdapterState): void {
-    this.state.page = 'transferring';
-    this.setState(state);
-    setTimeout(() => {
-      this.state.page = 'call';
-      if (this.state.call) {
-        this.state.call = {
-          ...this.state.call,
-          remoteParticipants: {
-            '2': {
-              identifier: { communicationUserId: '8:orgid:mock', kind: 'communicationUser' },
-              displayName: 'Agent',
-              state: 'Connected',
-              isMuted: true,
-              isSpeaking: false,
-              videoStreams: []
-            }
-          }
-        };
-      }
-      this.setState(state);
-    }, 5000);
-  }
 
   setState(state: CallAdapterState): void {
     this.state = state;
@@ -93,13 +68,7 @@ export class _MockCallAdapter implements CallAdapter {
     throw Error('joinCall not implemented');
   }
   leaveCall(): Promise<void> {
-    const call = this.state.call;
-    if (call) {
-      call.state = 'Disconnected';
-      this.state.page = 'leftCall';
-      this.setState(this.state);
-    }
-    return Promise.resolve();
+    throw Error('leaveCall not implemented');
   }
   startCamera(): Promise<void> {
     throw Error('leaveCall not implemented');
@@ -113,33 +82,7 @@ export class _MockCallAdapter implements CallAdapter {
   unmute(): Promise<void> {
     throw Error('unmute not implemented');
   }
-  startCall(participants: string[] | StartCallIdentifier[]): Call | undefined {
-    this.state.targetCallees = participants as CommunicationIdentifier[];
-    this.state.page = 'lobby';
-    if (this.state.call) {
-      this.state.call = { ...this.state.call, state: 'Connecting' };
-    }
-    this.setState(this.state);
-    setTimeout(() => {
-      this.state.page = 'call';
-      if (this.state.call) {
-        this.state.call = {
-          ...this.state.call,
-          state: 'Connected',
-          remoteParticipants: {
-            '2': {
-              identifier: { teamsAppId: '28:orgid:mock', kind: 'microsoftTeamsApp' },
-              displayName: 'Unknown User',
-              state: 'Connected',
-              isMuted: true,
-              isSpeaking: false,
-              videoStreams: []
-            }
-          }
-        };
-      }
-      this.setState(this.state);
-    }, 5000);
+  startCall(): Call | undefined {
     throw Error('startCall not implemented');
   }
   holdCall(): Promise<void> {
@@ -207,8 +150,7 @@ export class _MockCallAdapter implements CallAdapter {
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   sendDtmfTone(dtmfTone: DtmfTone): Promise<void> {
-    this.setTransfer(this.state);
-    return Promise.resolve();
+    throw Error('sendDtmfTone not implemented');
   }
   on(): void {
     return;
@@ -287,7 +229,7 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
       direction: 'Incoming',
       transcription: { isTranscriptionActive: false },
       recording: { isRecordingActive: false },
-      startTime: new Date(),
+      startTime: new Date(500000000000),
       endTime: new Date(500000000000),
       diagnostics: { network: { latest: {} }, media: { latest: {} } },
       state: 'Connected',

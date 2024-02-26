@@ -3,7 +3,7 @@
 
 import { registerIcons } from '@fluentui/react';
 import React from 'react';
-import { _MockCallAdapter } from './MockCallAdapter';
+import { _MockCallAdapter } from './MockAdapters/MockCallAdapter';
 import { CallComposite } from './CallComposite';
 import { render } from '@testing-library/react';
 
