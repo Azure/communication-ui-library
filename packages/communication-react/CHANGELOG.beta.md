@@ -23,7 +23,7 @@ Mon, 26 Feb 2024 16:19:15 GMT
 - Fix for an issue when head and body tags were added to messages with html type ([PR #4106](https://github.com/azure/communication-ui-library/pull/4106) by 98852890+vhuseinova-msft@users.noreply.github.com)
 - Fixing defect when a img is shared via drag and drop and there is no message content ([PR #4084](https://github.com/azure/communication-ui-library/pull/4084) by 9044372+JoshuaLai@users.noreply.github.com)
 - Fix color loss of raised hand icon on iOS ([PR #4089](https://github.com/azure/communication-ui-library/pull/4089) by 79475487+mgamis-msft@users.noreply.github.com)
-- Resolve issue where images previews would not sure in a message if the message also had a file attachment. ([PR #4167](https://github.com/azure/communication-ui-library/pull/4167) by 73612854+palatter@users.noreply.github.com)
+- Resolve issue where images previews would not show in a message if the message also had a file attachment. ([PR #4167](https://github.com/azure/communication-ui-library/pull/4167) by 73612854+palatter@users.noreply.github.com)
 - Update gallery logic to not include local participant in grid calculations. ([PR #4136](https://github.com/azure/communication-ui-library/pull/4136) by dmceachern@microsoft.com)
 - Change inline image cursor to pointer ([PR #4164](https://github.com/azure/communication-ui-library/pull/4164) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
 - Hangup Call to transfer target when leaving in mid-transfer ([PR #4155](https://github.com/azure/communication-ui-library/pull/4155) by dmceachern@microsoft.com)
