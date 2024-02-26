@@ -20,6 +20,8 @@ import {
   WifiWarning20Filled,
   Circle20Regular
 } from '@fluentui/react-icons';
+/* @conditional-compile-remove(spotlight) */
+import { VideoPersonStarOff20Filled } from '@fluentui/react-icons';
 /* @conditional-compile-remove(capabilities) */
 import { MicProhibited20Filled, VideoProhibited20Filled } from '@fluentui/react-icons';
 /* @conditional-compile-remove(gallery-layouts) */
@@ -69,6 +71,8 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   ControlButtonCameraProhibited: <VideoProhibited20Filled />,
   /* @conditional-compile-remove(capabilities) */
   ControlButtonMicProhibited: <MicProhibited20Filled />,
+  /* @conditional-compile-remove(spotlight) */
+  ControlButtonExitSpotlight: <VideoPersonStarOff20Filled />,
   ControlBarPeopleButton: <People20Regular />,
   MoreDrawerMicrophones: <Mic20Regular />,
   MoreDrawerPeople: <People20Regular />,
@@ -194,6 +198,8 @@ export type CallCompositeIcons = {
   ControlButtonRaiseHand?: JSX.Element;
   /* @conditional-compile-remove(raise-hand) */
   ControlButtonLowerHand?: JSX.Element;
+  /* @conditional-compile-remove(spotlight) */
+  ControlButtonExitSpotlight?: JSX.Element;
   /* @conditional-compile-remove(raise-hand) */
   RaiseHandContextualMenuItem?: JSX.Element;
   /* @conditional-compile-remove(reaction) */

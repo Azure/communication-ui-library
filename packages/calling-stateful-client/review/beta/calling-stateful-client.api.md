@@ -277,7 +277,7 @@ export interface RaiseHandCallFeature {
 // @beta
 export type ReactionState = {
     reactionMessage: ReactionMessage;
-    receivedAt: Date;
+    receivedOn: Date;
 };
 
 // @public
@@ -319,6 +319,7 @@ export interface RemoteVideoStreamState {
 
 // @beta
 export interface SpotlightCallFeatureState {
+    localParticipantSpotlight?: SpotlightState;
     maxParticipantsToSpotlight: number;
     spotlightedParticipants: SpotlightedParticipant[];
 }

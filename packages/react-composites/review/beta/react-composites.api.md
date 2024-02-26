@@ -7,7 +7,6 @@
 /// <reference types="react" />
 
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
-import { AttachmentDownloadResult } from '@internal/react-components';
 import { AttachmentMetadata } from '@internal/react-components';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import type { BackgroundBlurConfig } from '@azure/communication-calling';
@@ -143,7 +142,6 @@ export type AzureCommunicationCallWithChatAdapterFromClientArgs = {
     chatClient: StatefulChatClient;
     chatThreadClient: ChatThreadClient;
     callAdapterOptions?: AzureCommunicationCallAdapterOptions;
-    chatAdapterOptions?: AzureCommunicationChatAdapterOptions;
 };
 
 // @public
@@ -153,11 +151,6 @@ export type AzureCommunicationChatAdapterArgs = {
     displayName: string;
     credential: CommunicationTokenCredential;
     threadId: string;
-};
-
-// @beta
-export type AzureCommunicationChatAdapterOptions = {
-    credential?: CommunicationTokenCredential;
 };
 
 // @public
@@ -222,7 +215,7 @@ export interface CallAdapterCallOperations {
     lowerHand(): Promise<void>;
     mute(): Promise<void>;
     // @beta
-    onReactionClicked(reaction: Reaction): Promise<void>;
+    onReactionClick(reaction: Reaction): Promise<void>;
     raiseHand(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
     // @beta
@@ -365,6 +358,7 @@ export type CallCompositeIcons = {
     ControlButtonMicProhibited?: JSX.Element;
     ControlButtonRaiseHand?: JSX.Element;
     ControlButtonLowerHand?: JSX.Element;
+    ControlButtonExitSpotlight?: JSX.Element;
     RaiseHandContextualMenuItem?: JSX.Element;
     ReactionContextualMenuItem?: JSX.Element;
     LowerHandContextualMenuItem?: JSX.Element;
@@ -459,6 +453,9 @@ export type CallCompositeOptions = {
             url: string;
         };
     };
+    spotlight?: {
+        hideSpotlightButtons?: boolean;
+    };
 };
 
 // @public
@@ -535,6 +532,8 @@ export interface CallCompositeStrings {
     dtmfDialerMoreButtonLabelOn?: string;
     dtmfDialpadPlaceholderText: string;
     endOfSurveyText: string;
+    exitSpotlightButtonLabel: string;
+    exitSpotlightButtonTooltip: string;
     failedToJoinCallDueToNoNetworkMoreDetails?: string;
     failedToJoinCallDueToNoNetworkTitle: string;
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
@@ -706,12 +705,8 @@ export interface CallWithChatAdapterManagement {
     disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
     disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
-    // (undocumented)
-    downloadAttachment: (options: {
-        attachmentUrl: string;
-    }) => Promise<AttachmentDownloadResult>;
-    // (undocumented)
-    downloadResourceToCache(resourceDetails: ResourceDetails): void;
+    // @beta (undocumented)
+    downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
     fetchInitialData(): Promise<void>;
     // @beta
     holdCall: () => Promise<void>;
@@ -723,7 +718,7 @@ export interface CallWithChatAdapterManagement {
     lowerHand(): Promise<void>;
     mute(): Promise<void>;
     // @beta
-    onReactionClicked(reaction: Reaction): Promise<void>;
+    onReactionClick(reaction: Reaction): Promise<void>;
     queryCameras(): Promise<VideoDeviceInfo[]>;
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
     querySpeakers(): Promise<AudioDeviceInfo[]>;
@@ -735,7 +730,7 @@ export interface CallWithChatAdapterManagement {
     removeParticipant(userId: string): Promise<void>;
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
-    // (undocumented)
+    // @beta (undocumented)
     removeResourceFromCache(resourceDetails: ResourceDetails): void;
     // @beta
     resumeCall: () => Promise<void>;
@@ -1023,6 +1018,9 @@ export type CallWithChatCompositeOptions = {
             url: string;
         };
     };
+    spotlight?: {
+        hideSpotlightButtons?: boolean;
+    };
 };
 
 // @public
@@ -1140,11 +1138,7 @@ export interface ChatAdapterSubscribers {
 // @public
 export interface ChatAdapterThreadManagement {
     deleteMessage(messageId: string): Promise<void>;
-    // (undocumented)
-    downloadAttachment: (options: {
-        attachmentUrl: string;
-    }) => Promise<AttachmentDownloadResult>;
-    downloadResourceToCache(resourceDetails: ResourceDetails): void;
+    downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
     fetchInitialData(): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     removeParticipant(userId: string): Promise<void>;
@@ -1279,6 +1273,7 @@ export type CommonCallControlOptions = {
     dtmfDialerButton?: boolean | {
         disabled: boolean;
     };
+    exitSpotlightButton?: boolean;
 };
 
 // @public
@@ -1394,15 +1389,13 @@ export const createAzureCommunicationCallWithChatAdapter: ({ userId, displayName
 export const _createAzureCommunicationCallWithChatAdapterFromAdapters: (callAdapter: CallAdapter, chatAdapter: ChatAdapter) => CallWithChatAdapter;
 
 // @public
-export const createAzureCommunicationCallWithChatAdapterFromClients: ({ callClient, callAgent, callLocator, chatClient, chatThreadClient, callAdapterOptions, chatAdapterOptions }: AzureCommunicationCallWithChatAdapterFromClientArgs) => Promise<CallWithChatAdapter>;
+export const createAzureCommunicationCallWithChatAdapterFromClients: ({ callClient, callAgent, callLocator, chatClient, chatThreadClient, callAdapterOptions }: AzureCommunicationCallWithChatAdapterFromClientArgs) => Promise<CallWithChatAdapter>;
 
 // @public
 export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
 
 // @public
-export function createAzureCommunicationChatAdapterFromClient(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient, options?: {
-    credential?: CommunicationTokenCredential;
-}): Promise<ChatAdapter>;
+export function createAzureCommunicationChatAdapterFromClient(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient): Promise<ChatAdapter>;
 
 // @internal
 export const _createAzureCommunicationChatAdapterInner: (endpoint: string, userId: CommunicationUserIdentifier, displayName: string, credential: CommunicationTokenCredential, threadId: string, telemetryImplementationHint?: _TelemetryImplementationHint) => Promise<ChatAdapter>;
@@ -1472,6 +1465,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ControlButtonMicProhibited?: JSX.Element | undefined;
     ControlButtonRaiseHand: JSX.Element;
     ControlButtonLowerHand: JSX.Element;
+    ControlButtonExitSpotlight?: JSX.Element | undefined;
     RaiseHandContextualMenuItem: JSX.Element;
     ReactionContextualMenuItem?: JSX.Element | undefined;
     LowerHandContextualMenuItem: JSX.Element;
@@ -1585,6 +1579,14 @@ export const DEFAULT_COMPOSITE_ICONS: {
     StartSpotlightContextualMenuItem: React_2.JSX.Element;
     StopSpotlightContextualMenuItem: React_2.JSX.Element;
     VideoSpotlighted: React_2.JSX.Element;
+    RTEBoldButtonIcon: React_2.JSX.Element;
+    RTEItalicButtonIcon: React_2.JSX.Element;
+    RTEUnderlineButtonIcon: React_2.JSX.Element;
+    RTEBulletListButtonIcon: React_2.JSX.Element;
+    RTEtNumberListButtonIcon: React_2.JSX.Element;
+    RTEIndentDecreaseButtonIcon: React_2.JSX.Element;
+    RTEIndentIncreaseButtonIcon: React_2.JSX.Element;
+    RTEDividerIcon: React_2.JSX.Element;
 };
 
 // @beta
@@ -1810,7 +1812,7 @@ export class _MockCallAdapter implements CallAdapter {
     // (undocumented)
     on(): void;
     // (undocumented)
-    onReactionClicked(emoji: string): Promise<void>;
+    onReactionClick(emoji: string): Promise<void>;
     // (undocumented)
     onStateChange(handler: (state: CallAdapterState) => void): void;
     // (undocumented)

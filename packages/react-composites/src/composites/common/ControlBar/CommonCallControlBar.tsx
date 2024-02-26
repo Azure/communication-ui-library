@@ -51,6 +51,10 @@ import { useSelector } from '../../CallComposite/hooks/useSelector';
 import { capabilitySelector } from '../../CallComposite/selectors/capabilitySelector';
 /* @conditional-compile-remove(dtmf-dialer) */
 import { DtmfDialpadButton } from './DtmfDialerButton';
+/* @conditional-compile-remove(spotlight) */
+import { ExitSpotlightButton } from '../ExitSpotlightButton';
+/* @conditional-compile-remove(spotlight) */
+import { useLocale } from '../../localization';
 /**
  * @private
  */
@@ -86,6 +90,8 @@ export interface CommonCallControlBarProps {
   onSetDialpadPage?: () => void;
   /* @conditional-compile-remove(dtmf-dialer) */
   dtmfDialerPresent?: boolean;
+  /* @conditional-compile-remove(spotlight) */
+  onStopLocalSpotlight?: () => void;
 }
 
 const inferCommonCallControlOptions = (
@@ -188,6 +194,16 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
     }),
     [callWithChatStrings]
   );
+  /* @conditional-compile-remove(spotlight) */
+  const callStrings = useLocale().strings.call;
+  /* @conditional-compile-remove(spotlight) */
+  const exitSpotlightButtonStrings = useMemo(
+    () => ({
+      label: callStrings.exitSpotlightButtonLabel,
+      tooltipContent: callStrings.exitSpotlightButtonTooltip
+    }),
+    [callStrings]
+  );
 
   const centerContainerStyles = useMemo(() => {
     const styles: BaseCustomStyles = !props.mobileView ? desktopControlBarStyles : {};
@@ -251,6 +267,9 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   const microphoneButtonIsEnabled = isEnabled(options?.microphoneButton);
 
   const cameraButtonIsEnabled = isEnabled(options?.cameraButton);
+
+  /* @conditional-compile-remove(spotlight) */
+  const showExitSpotlightButton = options?.exitSpotlightButton !== false;
 
   const showDesktopMoreButton =
     /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */ isEnabled(
@@ -373,6 +392,17 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                                 props.onSetDialpadPage();
                               }
                             }}
+                          />
+                        )
+                    }
+                    {
+                      /* @conditional-compile-remove(spotlight) */ showExitSpotlightButton &&
+                        props.onStopLocalSpotlight && (
+                          <ExitSpotlightButton
+                            displayType={options.displayType}
+                            onClick={props.onStopLocalSpotlight}
+                            styles={commonButtonStyles}
+                            strings={exitSpotlightButtonStrings}
                           />
                         )
                     }

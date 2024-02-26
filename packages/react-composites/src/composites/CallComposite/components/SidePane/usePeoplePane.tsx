@@ -26,11 +26,13 @@ export const usePeoplePane = (props: {
   /* @conditional-compile-remove(spotlight) */
   spotlightedParticipantUserIds?: string[];
   /* @conditional-compile-remove(spotlight) */
-  onStartSpotlight?: (userIds?: string[]) => Promise<void>;
+  onStartLocalSpotlight?: () => Promise<void>;
   /* @conditional-compile-remove(spotlight) */
-  onStopSpotlight?: (userIds?: string[]) => Promise<void>;
+  onStopLocalSpotlight?: () => Promise<void>;
   /* @conditional-compile-remove(spotlight) */
-  ableToSpotlight?: boolean;
+  onStartRemoteSpotlight?: (userIds?: string[]) => Promise<void>;
+  /* @conditional-compile-remove(spotlight) */
+  onStopRemoteSpotlight?: (userIds?: string[]) => Promise<void>;
   /* @conditional-compile-remove(spotlight) */
   maxParticipantsToSpotlight?: number;
 }): {
@@ -49,11 +51,13 @@ export const usePeoplePane = (props: {
     /* @conditional-compile-remove(spotlight) */
     spotlightedParticipantUserIds,
     /* @conditional-compile-remove(spotlight) */
-    onStartSpotlight,
+    onStartLocalSpotlight,
     /* @conditional-compile-remove(spotlight) */
-    onStopSpotlight,
+    onStopLocalSpotlight,
     /* @conditional-compile-remove(spotlight) */
-    ableToSpotlight,
+    onStartRemoteSpotlight,
+    /* @conditional-compile-remove(spotlight) */
+    onStopRemoteSpotlight,
     /* @conditional-compile-remove(spotlight) */
     maxParticipantsToSpotlight
   } = props;
@@ -82,18 +86,23 @@ export const usePeoplePane = (props: {
     (participantId: string, myUserId?: string, defaultMenuItems?: IContextualMenuItem[]): IContextualMenuItem[] => {
       const _defaultMenuItems: IContextualMenuItem[] = defaultMenuItems ?? [];
       const isSpotlighted = spotlightedParticipantUserIds?.find((p) => p === participantId);
+      const isMe = myUserId === participantId;
       if (isSpotlighted) {
-        const stopSpotlightMenuText =
-          myUserId === participantId
-            ? localeStrings.stopSpotlightOnSelfParticipantListMenuLabel
-            : localeStrings.stopSpotlightParticipantListMenuLabel;
-        if (onStopSpotlight && stopSpotlightMenuText && (ableToSpotlight || myUserId === participantId)) {
+        const stopSpotlightMenuText = isMe
+          ? localeStrings.stopSpotlightOnSelfParticipantListMenuLabel
+          : localeStrings.stopSpotlightParticipantListMenuLabel;
+        const onStopSpotlight = isMe
+          ? onStopLocalSpotlight
+          : onStopRemoteSpotlight
+          ? () => {
+              onStopRemoteSpotlight([participantId]);
+            }
+          : undefined;
+        if (onStopSpotlight && stopSpotlightMenuText) {
           _defaultMenuItems.push({
             key: 'stop-spotlight',
             text: stopSpotlightMenuText,
-            onClick: () => {
-              onStopSpotlight?.([participantId]);
-            },
+            onClick: onStopSpotlight,
             iconProps: {
               iconName: 'StopSpotlightContextualMenuItem',
               styles: { root: { lineHeight: 0 } }
@@ -111,13 +120,18 @@ export const usePeoplePane = (props: {
             ? spotlightedParticipantUserIds.length >= maxParticipantsToSpotlight
             : false
           : false;
-        if (onStartSpotlight && startSpotlightMenuText && ableToSpotlight) {
+        const onStartSpotlight = isMe
+          ? onStartLocalSpotlight
+          : onStartRemoteSpotlight
+          ? () => {
+              onStartRemoteSpotlight([participantId]);
+            }
+          : undefined;
+        if (onStartSpotlight && startSpotlightMenuText) {
           _defaultMenuItems.push({
             key: 'start-spotlight',
             text: startSpotlightMenuText,
-            onClick: () => {
-              onStartSpotlight?.([participantId]);
-            },
+            onClick: onStartSpotlight,
             iconProps: {
               iconName: 'StartSpotlightContextualMenuItem',
               styles: { root: { lineHeight: 0 } }
@@ -136,15 +150,16 @@ export const usePeoplePane = (props: {
     },
     [
       spotlightedParticipantUserIds,
-      onStartSpotlight,
-      onStopSpotlight,
+      onStartLocalSpotlight,
+      onStopLocalSpotlight,
+      onStartRemoteSpotlight,
+      onStopRemoteSpotlight,
       onFetchParticipantMenuItems,
       localeStrings.stopSpotlightParticipantListMenuLabel,
       localeStrings.stopSpotlightOnSelfParticipantListMenuLabel,
       localeStrings.addSpotlightParticipantListMenuLabel,
       localeStrings.startSpotlightParticipantListMenuLabel,
       localeStrings.spotlightLimitReachedParticipantListMenuTitle,
-      ableToSpotlight,
       maxParticipantsToSpotlight
     ]
   );

@@ -23,16 +23,6 @@ const onSurveySubmitted = (callId, surveyId, submittedSurvey, improvementSuggest
       onSurveySubmitted: onSurveySubmitted
     }
   };
-  return (
-    <CallWithChatComposite
-      adapter={adapter}
-      fluentTheme={currentTheme.theme}
-      rtl={currentRtl}
-      joinInvitationURL={callInvitationUrl}
-      options={options}
-      formFactor={isMobileSession ? 'mobile' : 'desktop'}
-    />
-  );
 `;
 
 export const exampleOnSurveyClosed = `
@@ -51,16 +41,6 @@ const onSurveyClosed = (surveyState, surveyError) => {
       onSurveyClosed: onSurveyClosed
     }
   };
-  return (
-    <CallWithChatComposite
-      adapter={adapter}
-      fluentTheme={currentTheme.theme}
-      rtl={currentRtl}
-      joinInvitationURL={callInvitationUrl}
-      options={options}
-      formFactor={isMobileSession ? 'mobile' : 'desktop'}
-    />
-  );
 `;
 
 export const exampleDisableSurvey = `
@@ -69,14 +49,4 @@ const options: CallWithChatCompositeOptions = {
         disableSurvey: true
     }
   };
-  return (
-    <CallWithChatComposite
-      adapter={adapter}
-      fluentTheme={currentTheme.theme}
-      rtl={currentRtl}
-      joinInvitationURL={callInvitationUrl}
-      options={options}
-      formFactor={isMobileSession ? 'mobile' : 'desktop'}
-    />
-  );
 `;
