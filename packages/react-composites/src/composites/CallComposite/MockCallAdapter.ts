@@ -47,6 +47,21 @@ export class _MockCallAdapter implements CallAdapter {
     this.setState(state);
     setTimeout(() => {
       this.state.page = 'call';
+      if (this.state.call) {
+        this.state.call = {
+          ...this.state.call,
+          remoteParticipants: {
+            '2': {
+              identifier: { communicationUserId: '8:orgid:mock', kind: 'communicationUser' },
+              displayName: 'Agent',
+              state: 'Connected',
+              isMuted: true,
+              isSpeaking: false,
+              videoStreams: []
+            }
+          }
+        };
+      }
       this.setState(state);
     }, 5000);
   }
@@ -100,8 +115,31 @@ export class _MockCallAdapter implements CallAdapter {
   }
   startCall(participants: string[] | StartCallIdentifier[]): Call | undefined {
     this.state.targetCallees = participants as CommunicationIdentifier[];
-    this.state.page = 'call';
+    this.state.page = 'lobby';
+    if (this.state.call) {
+      this.state.call = { ...this.state.call, state: 'Connecting' };
+    }
     this.setState(this.state);
+    setTimeout(() => {
+      this.state.page = 'call';
+      if (this.state.call) {
+        this.state.call = {
+          ...this.state.call,
+          state: 'Connected',
+          remoteParticipants: {
+            '2': {
+              identifier: { teamsAppId: '28:orgid:mock', kind: 'microsoftTeamsApp' },
+              displayName: 'Unknown User',
+              state: 'Connected',
+              isMuted: true,
+              isSpeaking: false,
+              videoStreams: []
+            }
+          }
+        };
+      }
+      this.setState(this.state);
+    }, 5000);
     throw Error('startCall not implemented');
   }
   holdCall(): Promise<void> {
