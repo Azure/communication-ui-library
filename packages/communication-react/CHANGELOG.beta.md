@@ -21,7 +21,7 @@ Mon, 26 Feb 2024 16:19:15 GMT
 - Update styling to include space for back button ([PR #4079](https://github.com/azure/communication-ui-library/pull/4079) by 94866715+dmceachernmsft@users.noreply.github.com)
 - Defect fixing the src of the inline image ([PR #4104](https://github.com/azure/communication-ui-library/pull/4104) by 9044372+JoshuaLai@users.noreply.github.com)
 - Fix for an issue when head and body tags were added to messages with html type ([PR #4106](https://github.com/azure/communication-ui-library/pull/4106) by 98852890+vhuseinova-msft@users.noreply.github.com)
-- Fixing defect when a img is shared via drag and drop and there is no message content ([PR #4084](https://github.com/azure/communication-ui-library/pull/4084) by 9044372+JoshuaLai@users.noreply.github.com)
+- Fix message rendering of inline image when there is no message text ([PR #4084](https://github.com/azure/communication-ui-library/pull/4084) by 9044372+JoshuaLai@users.noreply.github.com)
 - Fix color loss of raised hand icon on iOS ([PR #4089](https://github.com/azure/communication-ui-library/pull/4089) by 79475487+mgamis-msft@users.noreply.github.com)
 - Resolve issue where images previews would not show in a message if the message also had a file attachment. ([PR #4167](https://github.com/azure/communication-ui-library/pull/4167) by 73612854+palatter@users.noreply.github.com)
 - Update gallery logic to not include local participant in grid calculations. ([PR #4136](https://github.com/azure/communication-ui-library/pull/4136) by dmceachern@microsoft.com)
@@ -35,7 +35,7 @@ Mon, 26 Feb 2024 16:19:15 GMT
 
 ## [1.13.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.13.0-beta.1)
 
-Mon, 29 Jan 2024 17:18:22 GMT 
+Mon, 29 Jan 2024 17:18:22 GMT
 [Compare changes](https://github.com/azure/communication-ui-library/compare/1.12.0...1.13.0-beta.1)
 
 ### Custom Branding - Public Preivew
