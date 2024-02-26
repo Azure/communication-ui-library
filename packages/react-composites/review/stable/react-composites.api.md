@@ -1461,7 +1461,7 @@ export class _MockCallAdapter implements CallAdapter {
     // (undocumented)
     on(): void;
     // (undocumented)
-    onReactionClicked(emoji: string): Promise<void>;
+    onReactionClick(emoji: string): Promise<void>;
     // (undocumented)
     onStateChange(handler: (state: CallAdapterState) => void): void;
     // (undocumented)

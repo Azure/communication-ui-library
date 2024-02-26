@@ -229,7 +229,7 @@ export type RaisedHandState = {
 
 /* @conditional-compile-remove(reaction) */
 /**
- * State only version of {@link @azure/communication-calling#Call.ReactionMessage} with UI helper props receivedAt.
+ * State only version of {@link @azure/communication-calling#Call.ReactionMessage} with UI helper props receivedOn.
  * Reaction state with a timestamp which helps UI to decide to render the reaction accordingly.
  *
  * @beta
@@ -242,7 +242,7 @@ export type ReactionState = {
   /**
    * Received timestamp of the reaction message in a meeting.
    */
-  receivedAt: Date;
+  receivedOn: Date;
 };
 
 /**
@@ -403,7 +403,7 @@ export interface RemoteParticipantState {
   /* @conditional-compile-remove(reaction) */
   /**
    * Proxy of {@link @azure/communication-calling#Call.ReactionMessage} with
-   * UI helper props receivedAt which indicates the timestamp when the message was received.
+   * UI helper props receivedOn which indicates the timestamp when the message was received.
    *
    * @beta
    */
@@ -503,7 +503,7 @@ export interface CallState {
   /* @conditional-compile-remove(reaction) */
   /**
    * Proxy of {@link @azure/communication-calling#Call.ReactionMessage} with
-   * UI helper props receivedAt which indicates the timestamp when the message was received.
+   * UI helper props receivedOn which indicates the timestamp when the message was received.
    *
    * @beta
    */

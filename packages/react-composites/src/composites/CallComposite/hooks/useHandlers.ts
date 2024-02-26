@@ -28,16 +28,26 @@ import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 export const useHandlers = <PropsT>(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _component: (props: PropsT) => ReactElement | null
-): Pick<CommonCallingHandlers, CommonProperties<CommonCallingHandlers, PropsT>> => {
-  return createCompositeHandlers(useAdapter());
+): Pick<CommonCallingHandlers, CommonProperties<CommonCallingHandlers, PropsT>> &
+  /* @conditional-compile-remove(spotlight) */ Partial<_ComponentCallingHandlers> => {
+  const adapter = useAdapter();
+  const compositeHandlers = createCompositeHandlers(adapter);
+  /* @conditional-compile-remove(spotlight) */
+  const canSpotlight = adapter.getState().call?.capabilitiesFeature?.capabilities.spotlightParticipant.isPresent;
+  /* @conditional-compile-remove(spotlight) */
+  return {
+    ...compositeHandlers,
+    ...(canSpotlight
+      ? {}
+      : { onStartLocalSpotlight: undefined, onStartRemoteSpotlight: undefined, onStopRemoteSpotlight: undefined })
+  };
+  return compositeHandlers;
 };
 
 const createCompositeHandlers = memoizeOne(
   (
     adapter: CommonCallAdapter
   ): CommonCallingHandlers & /* @conditional-compile-remove(spotlight) */ Partial<_ComponentCallingHandlers> => {
-    /* @conditional-compile-remove(spotlight) */
-    const canSpotlight = adapter.getState().call?.capabilitiesFeature?.capabilities.spotlightParticipant.isPresent;
     return {
       onCreateLocalStreamView: async (options) => {
         return await adapter.createStreamView(undefined, options);
@@ -78,8 +88,8 @@ const createCompositeHandlers = memoizeOne(
           : await adapter.raiseHand();
       },
       /* @conditional-compile-remove(reaction) */
-      onReactionClicked: async (reaction: Reaction) => {
-        await adapter.onReactionClicked(reaction);
+      onReactionClick: async (reaction: Reaction) => {
+        await adapter.onReactionClick(reaction);
       },
       onSelectCamera: async (deviceInfo, options) => {
         await adapter.setCamera(deviceInfo, options);
@@ -181,27 +191,21 @@ const createCompositeHandlers = memoizeOne(
         await adapter.stopSpotlight(userIds);
       },
       /* @conditional-compile-remove(spotlight) */
-      onStartLocalSpotlight: canSpotlight
-        ? async (): Promise<void> => {
-            await adapter.startSpotlight();
-          }
-        : undefined,
+      onStartLocalSpotlight: async (): Promise<void> => {
+        await adapter.startSpotlight();
+      },
       /* @conditional-compile-remove(spotlight) */
       onStopLocalSpotlight: async (): Promise<void> => {
         await adapter.stopSpotlight();
       },
       /* @conditional-compile-remove(spotlight) */
-      onStartRemoteSpotlight: canSpotlight
-        ? async (userIds?: string[]): Promise<void> => {
-            await adapter.startSpotlight(userIds);
-          }
-        : undefined,
+      onStartRemoteSpotlight: async (userIds?: string[]): Promise<void> => {
+        await adapter.startSpotlight(userIds);
+      },
       /* @conditional-compile-remove(spotlight) */
-      onStopRemoteSpotlight: canSpotlight
-        ? async (userIds?: string[]): Promise<void> => {
-            await adapter.stopSpotlight(userIds);
-          }
-        : undefined
+      onStopRemoteSpotlight: async (userIds?: string[]): Promise<void> => {
+        await adapter.stopSpotlight(userIds);
+      }
     };
   }
 );

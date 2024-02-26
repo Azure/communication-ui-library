@@ -173,7 +173,7 @@ export const memoizedConvertToVideoTileReaction = memoizeOne(
     return reactionState && reactionState.reactionMessage
       ? {
           reactionType: reactionState.reactionMessage.reactionType,
-          receivedAt: reactionState.receivedAt
+          receivedOn: reactionState.receivedOn
         }
       : undefined;
   }
