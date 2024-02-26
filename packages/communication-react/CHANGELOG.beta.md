@@ -4,12 +4,13 @@ This log was last generated on Mon, 26 Feb 2024 16:19:15 GMT and should not be m
 
 <!-- Start content -->
 
-## [1.14.0-beta.1](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.14.0-beta.1)
+## [1.14.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.14.0-beta.1)
 
-Mon, 26 Feb 2024 16:19:15 GMT 
-[Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.13.0-beta.1...@azure/communication-react_v1.14.0-beta.1)
+Mon, 26 Feb 2024 16:19:15 GMT
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.13.0...1.14.0-beta.1)
 
 ### Features
+
 - Disable start spotlight menu when maximum spotlight is reached ([PR #4098](https://github.com/azure/communication-ui-library/pull/4098) by 79475487+mgamis-msft@users.noreply.github.com)
 - Update the CallAdapter creation functions to be able to start outbound calls to Teams voice applications ([PR #4075](https://github.com/azure/communication-ui-library/pull/4075) by 94866715+dmceachernmsft@users.noreply.github.com)
 - Tag spotlight strings and participant list props for conditional compilation ([PR #4100](https://github.com/azure/communication-ui-library/pull/4100) by 79475487+mgamis-msft@users.noreply.github.com)
@@ -38,7 +39,9 @@ Mon, 26 Feb 2024 16:19:15 GMT
 - Playwright components testing setup ([PR #4096](https://github.com/azure/communication-ui-library/pull/4096) by 98852890+vhuseinova-msft@users.noreply.github.com)
 - Add Ribbon toolbar for rich text editor ([PR #4160](https://github.com/azure/communication-ui-library/pull/4160) by 98852890+vhuseinova-msft@users.noreply.github.com)
 - Update storybook to include snippets for up to date Call-transfer ([PR #4122](https://github.com/azure/communication-ui-library/pull/4122) by 94866715+dmceachernmsft@users.noreply.github.com)
+
 ### Improvements
+
 - API naming update from ARB feedback ([PR #4165](https://github.com/azure/communication-ui-library/pull/4165) by mbellah@microsoft.com)
 - Adding concept storybook section for Reaction feature ([PR #4113](https://github.com/azure/communication-ui-library/pull/4113) by mbellah@microsoft.com)
 - Update API signature for common adapter and common handler ([PR #4094](https://github.com/azure/communication-ui-library/pull/4094) by mbellah@microsoft.com)
@@ -57,12 +60,14 @@ Mon, 26 Feb 2024 16:19:15 GMT
 - Add messageThreadSelector tests ([PR #4107](https://github.com/azure/communication-ui-library/pull/4107) by 98852890+vhuseinova-msft@users.noreply.github.com)
 - Improved storybook wording and make sure code snippets do not include return statements, and move survey story to internal folder  ([PR #4153](https://github.com/azure/communication-ui-library/pull/4153) by 96077406+carocao-msft@users.noreply.github.com)
 - Use appSettings.json.sample ([PR #4152](https://github.com/azure/communication-ui-library/pull/4152) by 73612854+palatter@users.noreply.github.com)
-- update stable calling SDK ([PR #4109](https://github.com/azure/communication-ui-library/pull/4109) by dmceachern@microsoft.com)
+- Update stable calling SDK ([PR #4109](https://github.com/azure/communication-ui-library/pull/4109) by dmceachern@microsoft.com)
 - Update the Storybook for the adapter changes for inline image ([PR #4156](https://github.com/azure/communication-ui-library/pull/4156) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
 - Update storybook docs on adapter disposal ([PR #4142](https://github.com/azure/communication-ui-library/pull/4142) by 3941071+emlynmac@users.noreply.github.com)
 - Add commitID to console logged message for azure deployed sample apps. ([PR #4067](https://github.com/azure/communication-ui-library/pull/4067) by 73612854+palatter@users.noreply.github.com)
 - Update localization strings ([PR #4130](https://github.com/azure/communication-ui-library/pull/4130) by 2684369+JamesBurnside@users.noreply.github.com)
+
 ### Bug Fixes
+
 - update styling to include space for back button ([PR #4079](https://github.com/azure/communication-ui-library/pull/4079) by 94866715+dmceachernmsft@users.noreply.github.com)
 - Add missing permissions to storybook deploy action ([PR #4090](https://github.com/azure/communication-ui-library/pull/4090) by 73612854+palatter@users.noreply.github.com)
 - Defect fixing the src of the inline image ([PR #4104](https://github.com/azure/communication-ui-library/pull/4104) by 9044372+JoshuaLai@users.noreply.github.com)
@@ -83,7 +88,6 @@ Mon, 26 Feb 2024 16:19:15 GMT
 - Set hide attendee name option to 'False' until replaced by sdk ([PR #4111](https://github.com/azure/communication-ui-library/pull/4111) by 97124699+prabhjot-msft@users.noreply.github.com)
 - Resolved issue where edited label is missing from received messages ([PR #4150](https://github.com/azure/communication-ui-library/pull/4150) by 73612854+palatter@users.noreply.github.com)
 - Fix offset of message edit box ([PR #4112](https://github.com/azure/communication-ui-library/pull/4112) by 3941071+emlynmac@users.noreply.github.com)
-
 
 ## [1.13.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.13.0-beta.1)
 
