@@ -23,7 +23,7 @@ export const usePagePerParticipant = async (
     browser
   }: { serverUrl: string; users: Array<ChatUserType | CallUserType | CallWithChatUserType>; browser: Browser },
   use: (pages: Page[]) => Promise<void>
-) => {
+): Promise<void> => {
   const pages = await Promise.all(
     users.map(
       async (user: ChatUserType | CallUserType | CallWithChatUserType) =>
@@ -68,7 +68,7 @@ export const usePagePerParticipantWithCallPermissions = async (
     users
   }: { serverUrl: string; users: Array<ChatUserType | CallUserType | CallWithChatUserType>; browser: Browser },
   use: (pages: Page[]) => Promise<void>
-) => {
+): Promise<void> => {
   const pages = await Promise.all(
     users.map(async (user) => {
       const page = await loadNewPageWithPermissionsForCalls(browser, buildUrl(serverUrl, user));

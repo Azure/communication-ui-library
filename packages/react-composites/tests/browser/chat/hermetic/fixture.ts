@@ -47,7 +47,10 @@ export const DEFAULT_FAKE_CHAT_ADAPTER_ARGS = {
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const usePage = async ({ serverUrl, browser }: { serverUrl: string, browser: Browser }, use: (page: Page) => Promise<void>) => {
+const usePage = async (
+  { serverUrl, browser }: { serverUrl: string; browser: Browser },
+  use: (page: Page) => Promise<void>
+) => {
   const page = await loadNewPage(
     browser,
     buildUrlForChatAppUsingFakeAdapter(serverUrl, DEFAULT_FAKE_CHAT_ADAPTER_ARGS)
