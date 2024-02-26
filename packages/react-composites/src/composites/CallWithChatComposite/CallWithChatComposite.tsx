@@ -271,12 +271,10 @@ export type CallWithChatCompositeOptions = {
    */
   spotlight?: {
     /**
-     * Flag to hide the menu buttons to start and stop spotlight for remote participants and menu button
-     * to start spotlight for the local participant. The menu button to stop spotlight for the local
-     * participant will not be hidden.
+     * Flag to hide the menu buttons to start and stop spotlight for remote participants and the local participant.
      * @defaultValue false
      */
-    hideSpotlight?: boolean;
+    hideSpotlightButtons?: boolean;
   };
 };
 
@@ -359,7 +357,7 @@ type CallWithChatScreenProps = {
   };
   /* @conditional-compile-remove(spotlight) */
   spotlight?: {
-    hideSpotlight?: boolean;
+    hideSpotlightButtons?: boolean;
   };
 };
 

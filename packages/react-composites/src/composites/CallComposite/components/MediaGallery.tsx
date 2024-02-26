@@ -73,7 +73,7 @@ export interface MediaGalleryProps {
   /* @conditional-compile-remove(spotlight) */
   setPromptProps: (props: PromptProps) => void;
   /* @conditional-compile-remove(spotlight) */
-  hideSpotlightFeature?: boolean;
+  hideSpotlightButtons?: boolean;
 }
 
 /**
@@ -81,7 +81,7 @@ export interface MediaGalleryProps {
  */
 export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   /* @conditional-compile-remove(spotlight) */
-  const { setIsPromptOpen, setPromptProps, hideSpotlightFeature } = props;
+  const { setIsPromptOpen, setPromptProps, hideSpotlightButtons } = props;
 
   const videoGalleryProps = usePropsFor(VideoGallery);
   const cameraSwitcherCameras = useSelector(localVideoCameraCycleButtonSelector);
@@ -206,13 +206,13 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         /* @conditional-compile-remove(reaction) */
         reactionResources={reactionResources}
         /* @conditional-compile-remove(spotlight) */
-        onStartLocalSpotlight={hideSpotlightFeature ? undefined : onStartLocalSpotlightWithPrompt}
+        onStartLocalSpotlight={hideSpotlightButtons ? undefined : onStartLocalSpotlightWithPrompt}
         /* @conditional-compile-remove(spotlight) */
-        onStopLocalSpotlight={onStopLocalSpotlightWithPrompt}
+        onStopLocalSpotlight={hideSpotlightButtons ? undefined : onStopLocalSpotlightWithPrompt}
         /* @conditional-compile-remove(spotlight) */
-        onStartRemoteSpotlight={hideSpotlightFeature ? undefined : onStartRemoteSpotlightWithPrompt}
+        onStartRemoteSpotlight={hideSpotlightButtons ? undefined : onStartRemoteSpotlightWithPrompt}
         /* @conditional-compile-remove(spotlight) */
-        onStopRemoteSpotlight={hideSpotlightFeature ? undefined : onStopRemoteSpotlightWithPrompt}
+        onStopRemoteSpotlight={hideSpotlightButtons ? undefined : onStopRemoteSpotlightWithPrompt}
       />
     );
   }, [
@@ -245,7 +245,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(spotlight) */
     onStopRemoteSpotlightWithPrompt,
     /* @conditional-compile-remove(spotlight) */
-    hideSpotlightFeature
+    hideSpotlightButtons
   ]);
 
   return (

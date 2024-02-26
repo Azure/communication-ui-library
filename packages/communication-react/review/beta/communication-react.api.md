@@ -629,7 +629,7 @@ export type CallCompositeOptions = {
         };
     };
     spotlight?: {
-        hideSpotlight?: boolean;
+        hideSpotlightButtons?: boolean;
     };
 };
 
@@ -1313,7 +1313,7 @@ export type CallWithChatCompositeOptions = {
         };
     };
     spotlight?: {
-        hideSpotlight?: boolean;
+        hideSpotlightButtons?: boolean;
     };
 };
 
