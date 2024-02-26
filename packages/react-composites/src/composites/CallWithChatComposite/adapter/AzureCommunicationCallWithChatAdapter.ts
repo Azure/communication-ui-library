@@ -937,7 +937,7 @@ export class TeamsMeetingLinkProvider implements ChatThreadProvider {
 }
 
 /** @conditional-compile-remove(meeting-id) */
-/*
+/**
  * Arguments for use in {@link createAzureCommunicationCallWithChatAdapter} to join a Teams meeting using meeting id.
  *
  * @public
@@ -951,6 +951,10 @@ export class TeamsMeetingIdProvider implements ChatThreadProvider {
     this.callAdapter = callAdapter;
   }
 
+  /**
+   * Wait call to be connected to get thread ID.
+   * @returns the chat thread ID for the given meeting ID.
+   */
   public async getChatThread(): Promise<string> {
     return new Promise<string>((resolve) => {
       const stateChangeListener = (state: CallAdapterState): void => {
