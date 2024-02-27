@@ -1,0 +1,14 @@
+{
+    "include": [
+        {
+            "flavor": "stable"
+        },
+        {
+            "flavor": "beta"
+        },
+        {
+            "flavor": "beta-release"
+        }
+
+    ]
+}

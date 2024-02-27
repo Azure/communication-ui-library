@@ -57,7 +57,11 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20.x'
-      - id: get-matrix
+      - id: get-matrix-release
+        if: ${{ contains('release', github.ref_name) }}
+        run: echo "matrix=$(node ./common/scripts/workflow-read-release-matrix.mjs)" >> $GITHUB_OUTPUT
+      - id: get-matrix-non-release
+        if: ${{ !contains('release', github.ref_name) }}
         run: echo "matrix=$(node ./common/scripts/workflow-read-matrix.mjs)" >> $GITHUB_OUTPUT
 
   component_examples:
