@@ -201,7 +201,7 @@
     "failedToJoinCallInvalidMeetingLink": "会議に参加できません。リンクが無効です。",
     "cameraFrozenForRemoteParticipants": "通話のユーザーにビデオの表示で問題が発生しています。デバイスとネットワークを確認してください。",
     "unableToStartVideoEffect": "ビデオ効果を適用できません。",
-    "startSpotlightWhileMaxParticipantsAreSpotlighted": "Cannot start spotlight on participant(s) because the maximum number of participants are already spotlighted."
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "最大数の参加者に既にスポットライトが設定されているため、参加者にスポットライトを開始できません。"
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "画面を共有しています",
@@ -222,7 +222,7 @@
     "unpinnedParticipantAnnouncementAriaLabel": "{participantName} さんのピンを外しました",
     "startSpotlightVideoTileMenuLabel": "全員にスポットライトを設定",
     "addSpotlightVideoTileMenuLabel": "スポットライトを追加",
-    "spotlightLimitReachedMenuTitle": "Spotlight limit reached",
+    "spotlightLimitReachedMenuTitle": "スポットライトの上限に達しました",
     "stopSpotlightVideoTileMenuLabel": "スポットライトの設定を解除",
     "stopSpotlightOnSelfVideoTileMenuLabel": "スポットライトを終了"
   },
