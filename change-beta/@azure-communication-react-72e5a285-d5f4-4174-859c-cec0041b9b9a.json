@@ -1,8 +1,8 @@
 {
   "type": "patch",
-  "area": "fix",
-  "workstream": "Chat Fixes",
-  "comment": "Fix offset of message edit box",
+  "area": "improvement",
+  "workstream": "String updates",
+  "comment": "Update localized strings",
   "packageName": "@azure/communication-react",
   "email": "3941071+emlynmac@users.noreply.github.com",
   "dependentChangeType": "patch"
