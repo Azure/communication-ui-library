@@ -133,15 +133,15 @@ const generateCustomControlBarButtons = (
         .filter((buttonProps) => buttonProps.placement === placement)
         .map((buttonProps, i) => (internalProps) => {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          // @ts-expect-error TODO: fix noImplicitAny error here
+          // @ts-ignore
           // onRenderButton is a custom prop that can be passed to override the default rendering of the button
           // This is useful for custom buttons that need to render more than just an icon and label and is used
           // for CallWithChat button notification badge. However, onRenderButton is not a public prop and is
           // not documented in the API. This is a temporary solution and will need to be revisited.
-          if (buttonProps['onRenderButton']) {
+          if (buttonProps['onRenderButton' as any]) {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            // @ts-expect-error refer to above comment
-            return buttonProps['onRenderButton'](internalProps);
+            // @ts-ignore refer to above comment
+            return buttonProps['onRenderButton' as any](internalProps);
           }
           return (
             <ControlBarButton
