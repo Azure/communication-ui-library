@@ -128,8 +128,8 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   /* @conditional-compile-remove(raise-hand) */
   public lowerHand = async (): Promise<void> => await this.callWithChatAdapter.lowerHand();
   /* @conditional-compile-remove(reaction) */
-  public onReactionClicked = async (reaction: Reaction): Promise<void> =>
-    await this.callWithChatAdapter.onReactionClicked(reaction);
+  public onReactionClick = async (reaction: Reaction): Promise<void> =>
+    await this.callWithChatAdapter.onReactionClick(reaction);
   public removeParticipant = async (
     userId: string | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier
   ): Promise<void> => {

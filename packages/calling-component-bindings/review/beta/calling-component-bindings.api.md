@@ -50,6 +50,8 @@ import { ScreenShareButton } from '@internal/react-components';
 import { StartCallOptions } from '@azure/communication-calling';
 import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulDeviceManager } from '@internal/calling-stateful-client';
+import { _SupportedCaptionLanguage } from '@internal/react-components';
+import { _SupportedSpokenLanguage } from '@internal/react-components';
 import { TeamsCall } from '@azure/communication-calling';
 import { TeamsCallAgent } from '@azure/communication-calling';
 import { VideoDeviceInfo } from '@azure/communication-calling';
@@ -129,10 +131,10 @@ export const _captionsBannerSelector: _CaptionsBannerSelector;
 
 // @internal
 export type _CaptionSettingsSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
-    supportedCaptionLanguages: string[];
-    currentCaptionLanguage: string;
-    supportedSpokenLanguages: string[];
-    currentSpokenLanguage: string;
+    supportedCaptionLanguages: _SupportedCaptionLanguage[];
+    currentCaptionLanguage: _SupportedCaptionLanguage;
+    supportedSpokenLanguages: _SupportedSpokenLanguage[];
+    currentSpokenLanguage: _SupportedSpokenLanguage;
     isCaptionsFeatureActive: boolean;
 };
 
@@ -173,7 +175,7 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onRaiseHand: () => Promise<void>;
     // @beta (undocumented)
-    onReactionClicked: (reaction: Reaction) => Promise<void>;
+    onReactionClick: (reaction: Reaction) => Promise<void>;
     // (undocumented)
     onRemoveParticipant(userId: string): Promise<void>;
     // (undocumented)
@@ -399,7 +401,10 @@ export type VideoBackgroundEffectsDependency = {
 };
 
 // @internal (undocumented)
-export const _videoGalleryRemoteParticipantsMemo: (remoteParticipants: RemoteParticipantState[] | undefined, isHideAttendeeNamesEnabled?: boolean, localUserRole?: ParticipantRole) => VideoGalleryRemoteParticipant[];
+export const _videoGalleryRemoteParticipantsMemo: _VideoGalleryRemoteParticipantsMemoFn;
+
+// @internal (undocumented)
+export type _VideoGalleryRemoteParticipantsMemoFn = (remoteParticipants: RemoteParticipantState[] | undefined, isHideAttendeeNamesEnabled?: boolean, localUserRole?: ParticipantRole) => VideoGalleryRemoteParticipant[];
 
 // @public
 export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
