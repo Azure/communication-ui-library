@@ -1,9 +1,0 @@
-{
-  "type": "minor",
-  "area": "feature",
-  "workstream": "Reaction resource API implementation",
-  "comment": "Reaction Resource API implementation",
-  "packageName": "@azure/communication-react",
-  "email": "mbellah@microsoft.com",
-  "dependentChangeType": "patch"
-}

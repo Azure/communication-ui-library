@@ -1,9 +1,0 @@
-{
-  "type": "minor",
-  "area": "improvement",
-  "workstream": "Applying capability for reaction feature",
-  "comment": "Applying meeting capability for reaction feature",
-  "packageName": "@azure/communication-react",
-  "email": "mbellah@microsoft.com",
-  "dependentChangeType": "patch"
-}
