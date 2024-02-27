@@ -155,8 +155,8 @@ export const fetchImageSource = async (src: string, credential: CommunicationTok
     resource: string | URL | Request,
     options: { timeout?: number; headers?: Headers }
   ): Promise<Response> {
-    // default timeout is 4 seconds
-    const { timeout = 4000 } = options;
+    // default timeout is 30 seconds
+    const { timeout = 30000 } = options;
 
     const controller = new AbortController();
     const id = setTimeout(() => controller.abort(), timeout);
