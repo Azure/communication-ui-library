@@ -58,10 +58,8 @@ import { _FileDownloadCards } from '@internal/react-components';
 import { ImageOverlay } from '@internal/react-components';
 /* @conditional-compile-remove(image-overlay) */
 import { InlineImage } from '@internal/react-components';
-
 /* @conditional-compile-remove(rich-text-editor) */
 import { RichTextSendBox } from '@internal/react-components';
-// const RichTextSendBox = lazy(() => import('@internal/react-components').then((module) => ({ RichTextEditor module.RichTextEditorSendBox })));
 
 /**
  * @private
@@ -400,8 +398,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       />
     );
   };
-
-  console.log('options', options);
 
   return (
     <Stack className={chatContainer} grow>
