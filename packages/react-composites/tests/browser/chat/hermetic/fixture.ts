@@ -50,7 +50,7 @@ export const DEFAULT_FAKE_CHAT_ADAPTER_ARGS = {
 const usePage = async (
   { serverUrl, browser }: { serverUrl: string; browser: Browser },
   use: (page: Page) => Promise<void>
-) => {
+): Promise<void> => {
   const page = await loadNewPage(
     browser,
     buildUrlForChatAppUsingFakeAdapter(serverUrl, DEFAULT_FAKE_CHAT_ADAPTER_ARGS)
