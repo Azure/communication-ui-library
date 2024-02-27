@@ -55,6 +55,11 @@ describe('Calling sound subscriber tests', () => {
     const soundSubscriber = new CallingSoundSubscriber(call, callee, sounds);
     expect(soundSubscriber).toBeDefined();
     call.testHelperSetCallState('Disconnected');
+    call.testHelperSetCallEndReason({
+      code: 0,
+      subCode: 0,
+      /* @conditional-compile-remove(calling-beta-sdk) */ resultCategories: ['Success']
+    });
     expect(audioMocks.Audio.play).toHaveBeenCalled();
   });
 
@@ -86,6 +91,22 @@ describe('Calling sound subscriber tests', () => {
       subCode: 0,
       /* @conditional-compile-remove(calling-beta-sdk) */ resultCategories: []
     });
+    expect(audioMocks.Audio.play).not.toHaveBeenCalled();
+  });
+  test('should not play sound when call is ended because of a succesful transfer', () => {
+    const callee: CommunicationIdentifier[] = [{ phoneNumber: '+14045554444' }];
+    const call = createMockCall();
+    const sounds: CallingSounds = {
+      callEnded: { url: 'test/url/ended' }
+    };
+    const soundSubscriber = new CallingSoundSubscriber(call, callee, sounds);
+    expect(soundSubscriber).toBeDefined();
+    call.testHelperSetCallEndReason({
+      code: 0,
+      subCode: 7015,
+      /* @conditional-compile-remove(calling-beta-sdk) */ resultCategories: ['Success']
+    });
+    call.testHelperSetCallState('Disconnected');
     expect(audioMocks.Audio.play).not.toHaveBeenCalled();
   });
 });
