@@ -24,7 +24,7 @@ import {
 import { ChatMessage } from '@internal/react-components';
 import React, { useCallback, useEffect, useMemo } from 'react';
 /* @conditional-compile-remove(image-overlay) */
-import { useState, lazy } from 'react';
+import { useState } from 'react';
 import { AvatarPersona, AvatarPersonaDataCallback, AvatarPersonaProps } from '../common/AvatarPersona';
 import { useAdapter } from './adapter/ChatAdapterProvider';
 import { ChatCompositeOptions } from './ChatComposite';
@@ -60,8 +60,8 @@ import { ImageOverlay } from '@internal/react-components';
 import { InlineImage } from '@internal/react-components';
 
 /* @conditional-compile-remove(rich-text-editor) */
-import { RTESendBox } from '@internal/react-components';
-// const RTESendBox = lazy(() => import('@internal/react-components').then((module) => ({ default: module.RTESendBox })));
+import { RichTextSendBox } from '@internal/react-components';
+// const RichTextSendBox = lazy(() => import('@internal/react-components').then((module) => ({ RichTextEditor module.RichTextEditorSendBox })));
 
 /**
  * @private
@@ -170,7 +170,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const messageThreadProps = usePropsFor(MessageThread);
   const sendBoxProps = usePropsFor(SendBox);
   /* @conditional-compile-remove(rich-text-editor) */
-  const rteSendBoxProps = usePropsFor(SendBox);
+  const richTextSendBoxProps = usePropsFor(SendBox);
   const typingIndicatorProps = usePropsFor(TypingIndicator);
   const headerProps = useAdaptedSelector(getHeaderProps);
   const errorBarProps = usePropsFor(ErrorBar);
@@ -385,9 +385,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   const SelectedSendBox = (): JSX.Element => {
     /* @conditional-compile-remove(rich-text-editor) */
-    // if (options?.richTextEditor !== false) {
-    //   return <RTESendBox {...rteSendBoxProps} />;
-    // }
+    if (options?.richTextEditor !== false) {
+      return <RichTextSendBox {...richTextSendBoxProps} />;
+    }
     return (
       <SendBox
         {...sendBoxProps}

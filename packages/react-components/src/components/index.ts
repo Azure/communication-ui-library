@@ -22,9 +22,9 @@ export type { ImageOverlayStrings } from './ImageOverlay';
 export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox';
 
 /* @conditional-compile-remove(rich-text-editor) */
-export { RichTextSendBox } from './RTE/RTESendBox';
+export { RichTextSendBox } from './RichTextEditor/RichTextSendBox';
 /* @conditional-compile-remove(rich-text-editor) */
-export type { RichTextSendBoxProps, RichTextSendBoxStrings } from './RTE/RTESendBox';
+export type { RichTextSendBoxProps, RichTextSendBoxStrings } from './RichTextEditor/RichTextSendBox';
 
 /* @conditional-compile-remove(mention) */
 export type {

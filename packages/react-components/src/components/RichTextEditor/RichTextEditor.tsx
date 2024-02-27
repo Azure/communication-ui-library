@@ -7,8 +7,8 @@ import type { EditorOptions, IEditor } from 'roosterjs-editor-types-compatible';
 import { Rooster, createUpdateContentPlugin, UpdateMode, createRibbonPlugin, Ribbon } from 'roosterjs-react';
 import { ribbonButtonStyle, ribbonStyle, richTextEditorStyle } from '../styles/RichTextEditor.styles';
 import { useTheme } from '@fluentui/react';
-import { ribbonButtons, ribbonButtonsStrings } from './RTERibbonButtons';
-import { RichTextSendBoxStrings } from './RTESendBox';
+import { ribbonButtons, ribbonButtonsStrings } from './RichTextRibbonButtons';
+import { RichTextSendBoxStrings } from './RichTextSendBox';
 import { isDarkThemed } from '../../theming/themeUtils';
 
 /**

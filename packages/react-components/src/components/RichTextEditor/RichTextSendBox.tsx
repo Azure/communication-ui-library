@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { RTEInputBoxComponent } from './RTEInputBoxComponent';
+import { RichTextInputBoxComponent } from './RichTextInputBoxComponent';
 import { Icon, Stack, useTheme } from '@fluentui/react';
 import { useLocale } from '../../localization';
 import { SendBoxStrings } from '../SendBox';
 import { borderAndBoxShadowStyle, sendButtonStyle, sendIconStyle } from '../styles/SendBox.styles';
 import { InputBoxButton } from '../InputBoxButton';
-import { RTESendBoxErrors, RTESendBoxErrorsProps } from './RTESendBoxErrors';
+import { RichTextSendBoxErrors, RichTextSendBoxErrorsProps } from './RichTextSendBoxErrors';
 /* @conditional-compile-remove(file-sharing) */
 import { ActiveFileUpload } from '../FileUploadCards';
 /* @conditional-compile-remove(file-sharing) */
@@ -206,7 +206,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     [contentValue, hasErrorMessage, theme]
   );
 
-  const sendBoxErrorsProps: RTESendBoxErrorsProps = useMemo(() => {
+  const sendBoxErrorsProps: RichTextSendBoxErrorsProps = useMemo(() => {
     return {
       /* @conditional-compile-remove(file-sharing) */
       fileUploadsPendingError: fileUploadsPendingError,
@@ -226,7 +226,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
 
   return (
     <Stack>
-      <RTESendBoxErrors {...sendBoxErrorsProps} />
+      <RichTextSendBoxErrors {...sendBoxErrorsProps} />
       <div
         className={borderAndBoxShadowStyle({
           theme: theme,
@@ -235,7 +235,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
           disabled: !!disabled
         })}
       >
-        <RTEInputBoxComponent
+        <RichTextInputBoxComponent
           placeholderText={strings.placeholderText}
           content={contentValue}
           onChange={setContent}
