@@ -5,11 +5,12 @@ import { Theme } from '@fluentui/react';
 import { KnownRibbonButtonKey, LocalizedStrings, RibbonButton, getButtons } from 'roosterjs-react';
 import { ribbonButtonStyle, ribbonDividerStyle } from '../../styles/RichTextEditor.styles';
 import { RichTextSendBoxStrings } from '../RTESendBox';
-import { insertTable } from './RTERibbonInsertTableButton';
+import { insertTableButton } from './RTERibbonInsertTableButton';
 
-const dividerRibbonButton = (theme: Theme): RibbonButton<string> => {
+// Key value can'e be the same as it will cause React key duplication error
+const dividerRibbonButton = (theme: Theme, key: string): RibbonButton<string> => {
   return {
-    key: 'Divider',
+    key: key,
     iconName: 'RTEDividerIcon',
     unlocalizedText: '',
     onClick: () => {},
@@ -48,10 +49,6 @@ const indentDecreaseButton = (theme: Theme): RibbonButton<string> | undefined =>
   return createKnownRibbonButton(KnownRibbonButtonKey.DecreaseIndent, theme, 'RTEIndentDecreaseButtonIcon');
 };
 
-const insertTableButton = (theme: Theme): RibbonButton<string> | undefined => {
-  return createKnownRibbonButton(KnownRibbonButtonKey.InsertTable, theme, 'RTEInsertTableRegularIcon');
-};
-
 const createKnownRibbonButton = (
   key: KnownRibbonButtonKey,
   theme: Theme,
@@ -84,14 +81,13 @@ export const ribbonButtons = (theme: Theme): RibbonButton<string>[] => {
     boldButton(theme),
     italicButton(theme),
     underlineButton(theme),
-    dividerRibbonButton(theme),
+    dividerRibbonButton(theme, 'RichTextRibbonDivider1'),
     bulletListButton(theme),
     numberListButton(theme),
     indentIncreaseButton(theme),
     indentDecreaseButton(theme),
-    dividerRibbonButton(theme),
-    insertTableButton(theme),
-    insertTable
+    dividerRibbonButton(theme, 'RichTextRibbonDivider2'),
+    insertTableButton(theme)
   ].forEach((item) => {
     if (item !== undefined) {
       buttons.push(item);

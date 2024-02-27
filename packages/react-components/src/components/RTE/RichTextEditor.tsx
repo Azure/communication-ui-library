@@ -4,12 +4,20 @@ import React, { useCallback, useEffect, useImperativeHandle, useMemo, useRef, us
 import { ContentEdit, Watermark } from 'roosterjs-editor-plugins';
 import { Editor } from 'roosterjs-editor-core';
 import type { EditorOptions, IEditor } from 'roosterjs-editor-types-compatible';
-import { Rooster, createUpdateContentPlugin, UpdateMode, createRibbonPlugin, Ribbon } from 'roosterjs-react';
+import {
+  Rooster,
+  createUpdateContentPlugin,
+  UpdateMode,
+  createRibbonPlugin,
+  Ribbon,
+  createContextMenuPlugin
+} from 'roosterjs-react';
 import { ribbonButtonStyle, ribbonStyle, richTextEditorStyle } from '../styles/RichTextEditor.styles';
 import { useTheme } from '@fluentui/react';
 import { ribbonButtons, ribbonButtonsStrings } from './Buttons/RTERibbonButtons';
 import { RichTextSendBoxStrings } from './RTESendBox';
 import { isDarkThemed } from '../../theming/themeUtils';
+import { createTableEditMenuProvider } from './Buttons/RTETableContextMenu';
 
 /**
  * Props for {@link RichTextEditor}.
@@ -83,6 +91,8 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   }, []);
 
   const plugins = useMemo(() => {
+    const contextPlugin = createContextMenuPlugin();
+    const tableMenuProvider = createTableEditMenuProvider();
     const contentEdit = new ContentEdit();
     const placeholderPlugin = new Watermark(placeholderText || '');
     const updateContentPlugin = createUpdateContentPlugin(
@@ -91,7 +101,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
         onChange && onChange(content);
       }
     );
-    return [contentEdit, placeholderPlugin, updateContentPlugin, ribbonPlugin];
+    return [contextPlugin, contentEdit, placeholderPlugin, updateContentPlugin, ribbonPlugin, tableMenuProvider];
   }, [onChange, placeholderText, ribbonPlugin]);
 
   const ribbon = useMemo(() => {

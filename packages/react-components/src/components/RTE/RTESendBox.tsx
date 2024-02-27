@@ -138,6 +138,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   );
 
   const setContent = useCallback((newValue?: string): void => {
+    console.log('newValue:', newValue);
     if (newValue === undefined) {
       return;
     }
