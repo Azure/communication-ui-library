@@ -85,7 +85,11 @@ export interface MentionLookupOptions {
   /**
    * Optional callback to render an item of the mention suggestions list.
    */
-  onRenderSuggestionItem?: (suggestion: Mention, onSuggestionSelected: (suggestion: Mention) => void) => JSX.Element;
+  onRenderSuggestionItem?: (
+    suggestion: Mention,
+    onSuggestionSelected: (suggestion: Mention) => void,
+    isActive: boolean
+  ) => JSX.Element;
 }
 
 /**
