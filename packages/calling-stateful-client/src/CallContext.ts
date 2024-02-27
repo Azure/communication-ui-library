@@ -174,7 +174,7 @@ export class CallContext {
         /* @conditional-compile-remove(raise-hand) */
         existingCall.raiseHand.raisedHands = call.raiseHand.raisedHands;
         /* @conditional-compile-remove(ppt-live) */
-        existingCall.pptLive.isActivated = call.pptLive.isActivated;
+        existingCall.pptLive.isActive = call.pptLive.isActive;
         /* @conditional-compile-remove(raise-hand) */
         existingCall.raiseHand.localParticipantRaisedHand = call.raiseHand.localParticipantRaisedHand;
         /* @conditional-compile-remove(rooms) */
@@ -381,7 +381,7 @@ export class CallContext {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        call.pptLive.isActivated = isActive;
+        call.pptLive.isActive = isActive;
       }
     });
   }

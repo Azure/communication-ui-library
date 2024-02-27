@@ -226,7 +226,7 @@ export interface PPTLiveCallFeatureState {
   /**
    * Proxy of {@link @azure/communication-calling#PPTLiveCallFeature.isActive}.
    */
-  isActivated: boolean;
+  isActive: boolean;
 }
 /* @conditional-compile-remove(raise-hand) */
 /**

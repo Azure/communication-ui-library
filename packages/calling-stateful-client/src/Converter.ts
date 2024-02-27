@@ -134,7 +134,7 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     remoteParticipantsEnded: {},
     recording: { isRecordingActive: false },
     /* @conditional-compile-remove(ppt-live) */
-    pptLive: { isActivated: false },
+    pptLive: { isActive: false },
     /* @conditional-compile-remove(raise-hand) */
     raiseHand: { raisedHands: [] },
     /* @conditional-compile-remove(reaction) */

@@ -3681,7 +3681,7 @@ export type ParticipantState = 'Idle' | 'Connecting' | 'Ringing' | 'Connected' |
 
 // @beta
 export interface PPTLiveCallFeatureState {
-    isActivated: boolean;
+    isActive: boolean;
 }
 
 // @beta
