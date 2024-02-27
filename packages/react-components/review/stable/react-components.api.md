@@ -256,17 +256,17 @@ export interface _CaptionsSettingsModalProps {
     // (undocumented)
     changeCaptionLanguage?: boolean;
     // (undocumented)
-    currentCaptionLanguage: string;
+    currentCaptionLanguage: _SupportedCaptionLanguage;
     // (undocumented)
-    currentSpokenLanguage: string;
+    currentSpokenLanguage: _SupportedSpokenLanguage;
     // (undocumented)
     isCaptionsFeatureActive?: boolean;
     // (undocumented)
     onDismissCaptionsSettings?: () => void;
     // (undocumented)
-    onSetCaptionLanguage: (language: string) => Promise<void>;
+    onSetCaptionLanguage: (language: _SupportedCaptionLanguage) => Promise<void>;
     // (undocumented)
-    onSetSpokenLanguage: (language: string) => Promise<void>;
+    onSetSpokenLanguage: (language: _SupportedSpokenLanguage) => Promise<void>;
     // (undocumented)
     onStartCaptions: (options?: _captionsOptions) => Promise<void>;
     // (undocumented)
@@ -276,9 +276,9 @@ export interface _CaptionsSettingsModalProps {
     // (undocumented)
     strings?: _CaptionsSettingsModalStrings;
     // (undocumented)
-    supportedCaptionLanguages: string[];
+    supportedCaptionLanguages: _SupportedCaptionLanguage[];
     // (undocumented)
-    supportedSpokenLanguages: string[];
+    supportedSpokenLanguages: _SupportedSpokenLanguage[];
 }
 
 // @internal
@@ -1540,7 +1540,7 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     showMuteIndicator?: boolean | undefined;
     showLabel?: boolean | undefined;
     personaMinSize?: number | undefined;
-    strings?: VideoGalleryStrings | undefined;
+    strings: VideoGalleryStrings;
     participantState?: ParticipantState | undefined;
     menuKind?: "contextual" | "drawer" | undefined;
     drawerMenuHostId?: string | undefined;
@@ -1764,6 +1764,12 @@ export interface StreamMediaProps {
     styles?: BaseCustomStyles;
     videoStreamElement: HTMLElement | null;
 }
+
+// @internal (undocumented)
+export type _SupportedCaptionLanguage = keyof CaptionLanguageStrings;
+
+// @internal (undocumented)
+export type _SupportedSpokenLanguage = keyof SpokenLanguageStrings;
 
 // @public
 export type SystemMessage = ParticipantAddedSystemMessage | ParticipantRemovedSystemMessage | TopicUpdatedSystemMessage | ContentSystemMessage;

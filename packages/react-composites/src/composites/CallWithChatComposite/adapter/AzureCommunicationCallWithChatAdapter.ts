@@ -205,7 +205,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     /* @conditional-compile-remove(raise-hand) */
     this.lowerHand.bind(this);
     /* @conditional-compile-remove(reaction) */
-    this.onReactionClicked.bind(this);
+    this.onReactionClick.bind(this);
     this.removeParticipant.bind(this);
     this.createStreamView.bind(this);
     this.disposeStreamView.bind(this);
@@ -386,8 +386,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     await this.callAdapter.lowerHand();
   }
   /* @conditional-compile-remove(reaction) */
-  public async onReactionClicked(reaction: Reaction): Promise<void> {
-    await this.callAdapter.onReactionClicked(reaction);
+  public async onReactionClick(reaction: Reaction): Promise<void> {
+    await this.callAdapter.onReactionClick(reaction);
   }
   /** Create a stream view for a remote participants video feed. */
   public async createStreamView(

@@ -19,11 +19,47 @@ import { hasCompletedFileUploads } from '../utils/SendBoxUtils';
 import { RichTextEditorComponentRef } from './RichTextEditor';
 
 /**
- * Props for {@link RTESendBox}.
+ * Strings of {@link RichTextSendBox} that can be overridden.
  *
  * @beta
  */
-export interface RTESendBoxProps {
+export interface RichTextSendBoxStrings extends SendBoxStrings {
+  /**
+   * Tooltip text for the bold button.
+   */
+  boldTooltip: string;
+  /**
+   * Tooltip text for the italic button.
+   */
+  italicTooltip: string;
+  /**
+   * Tooltip text for the underline button.
+   */
+  underlineTooltip: string;
+  /**
+   * Tooltip text for the bullet list button.
+   */
+  bulletListTooltip: string;
+  /**
+   * Tooltip text for the number list button.
+   */
+  numberListTooltip: string;
+  /**
+   * Tooltip text for the increase indent button.
+   */
+  increaseIndentTooltip: string;
+  /**
+   * Tooltip text for the decrease indent button.
+   */
+  decreaseIndentTooltip: string;
+}
+
+/**
+ * Props for {@link RichTextSendBox}.
+ *
+ * @beta
+ */
+export interface RichTextSendBoxProps {
   /**
    * Optional boolean to disable text box
    * @defaultValue false
@@ -32,7 +68,7 @@ export interface RTESendBoxProps {
   /**
    * Optional strings to override in component
    */
-  strings?: Partial<SendBoxStrings>;
+  strings?: Partial<RichTextSendBoxStrings>;
   /**
    * Optional text for system message above the text box
    */
@@ -70,7 +106,7 @@ export interface RTESendBoxProps {
  *
  * @beta
  */
-export const RTESendBox = (props: RTESendBoxProps): JSX.Element => {
+export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   const {
     disabled = false,
     systemMessage,
@@ -80,7 +116,14 @@ export const RTESendBox = (props: RTESendBoxProps): JSX.Element => {
   } = props;
 
   const theme = useTheme();
-  const localeStrings = useLocale().strings.sendBox;
+  const locale = useLocale();
+
+  const localeStrings = useMemo(() => {
+    /* @conditional-compile-remove(rich-text-editor) */
+    return locale.strings.richTextSendBox;
+    return locale.strings.sendBox;
+  }, [/* @conditional-compile-remove(rich-text-editor) */ locale.strings.richTextSendBox, locale.strings.sendBox]);
+
   const strings = { ...localeStrings, ...props.strings };
 
   const [contentValue, setContentValue] = useState('');
@@ -94,14 +137,14 @@ export const RTESendBox = (props: RTESendBoxProps): JSX.Element => {
     [contentValueOverflow, strings.textTooLong]
   );
 
-  const setContent = (newValue?: string): void => {
+  const setContent = useCallback((newValue?: string): void => {
     if (newValue === undefined) {
       return;
     }
 
     setContentValueOverflow(exceedsMaxAllowedLength(newValue.length));
     setContentValue(newValue);
-  };
+  }, []);
 
   const sendMessageOnClick = (): void => {
     if (disabled || contentValueOverflow) {
@@ -197,6 +240,7 @@ export const RTESendBox = (props: RTESendBoxProps): JSX.Element => {
           content={contentValue}
           onChange={setContent}
           editorComponentRef={editorComponentRef}
+          strings={strings}
         />
         {/* File Upload */}
       </div>
