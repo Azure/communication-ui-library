@@ -5,8 +5,10 @@ import {
   AudioDeviceInfo,
   Call,
   DtmfTone,
+  MediaStreamType,
   ParticipantRole,
   PermissionConstraints,
+  ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
@@ -43,6 +45,17 @@ export class _MockCallingWidgetCallAdapter implements CallAdapter {
   private emitter = new EventEmitter();
 
   setTransfer(state: CallAdapterState): void {
+    const mockVideoElement = document.createElement('div');
+    mockVideoElement.innerHTML = '<span />';
+    mockVideoElement.style.width = decodeURIComponent('100%25');
+    mockVideoElement.style.height = decodeURIComponent('100%25');
+    mockVideoElement.style.backgroundPosition = 'center';
+
+    mockVideoElement.style.background =
+      'url(https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExemo1Ym9zaTJqMHh3d2RxYnJxM245c3RwZWJiY3FmbWp4aTcxNnA5dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/NmGbJwLl7Y4lG/giphy.gif)';
+    mockVideoElement.style.backgroundRepeat = 'no-repeat';
+    mockVideoElement.style.backgroundSize = 'cover';
+
     this.state.page = 'transferring';
     this.setState(state);
     setTimeout(() => {
@@ -57,7 +70,19 @@ export class _MockCallingWidgetCallAdapter implements CallAdapter {
               state: 'Connected',
               isMuted: true,
               isSpeaking: false,
-              videoStreams: []
+              videoStreams: [
+                {
+                  mediaStreamType: 'Video' as MediaStreamType,
+                  isAvailable: true,
+                  isReceiving: true,
+                  id: 1,
+                  view: {
+                    target: mockVideoElement,
+                    scalingMode: 'Crop' as ScalingMode,
+                    isMirrored: true
+                  }
+                }
+              ]
             }
           }
         };
@@ -102,10 +127,40 @@ export class _MockCallingWidgetCallAdapter implements CallAdapter {
     return Promise.resolve();
   }
   startCamera(): Promise<void> {
-    throw Error('leaveCall not implemented');
+    if (this.state.call && this.state.devices.selectedCamera) {
+      const mockVideoElement = document.createElement('div');
+      mockVideoElement.innerHTML = '<span />';
+      mockVideoElement.style.width = decodeURIComponent('100%25');
+      mockVideoElement.style.height = decodeURIComponent('100%25');
+      mockVideoElement.style.backgroundPosition = 'center';
+      mockVideoElement.style.background = 'url(https://media.giphy.com/media/mokQK7oyiR8Sk/giphy.gif)';
+      mockVideoElement.style.backgroundRepeat = 'no-repeat';
+
+      const newCallState = {
+        ...this.state.call,
+        localVideoStreams: [
+          {
+            mediaStreamType: 'Video' as MediaStreamType,
+            source: { ...this.state.devices.selectedCamera },
+            view: {
+              target: mockVideoElement,
+              scalingMode: 'Crop' as ScalingMode,
+              isMirrored: true
+            }
+          }
+        ]
+      };
+      this.setState({ ...this.state, call: newCallState });
+    }
+
+    return Promise.resolve();
   }
   stopCamera(): Promise<void> {
-    throw Error('stopCamera not implemented');
+    if (this.state.call) {
+      const newCallState = { ...this.state.call, localVideoStreams: [] };
+      this.setState({ ...this.state, call: newCallState });
+    }
+    return Promise.resolve();
   }
   mute(): Promise<void> {
     throw Error('mute not implemented');
