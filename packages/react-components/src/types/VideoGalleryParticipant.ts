@@ -9,6 +9,8 @@ import { ParticipantState } from './ParticipantListParticipant';
 import { RaisedHand } from './ParticipantListParticipant';
 /* @conditional-compile-remove(reaction) */
 import { Reaction } from './ParticipantListParticipant';
+/* @conditional-compile-remove(spotlight) */
+import { Spotlight } from './ParticipantListParticipant';
 /**
  * Scaling mode of a {@link VideoGalleryStream}.
  *
@@ -44,6 +46,9 @@ export type VideoGalleryParticipant = {
   videoStream?: VideoGalleryStream;
   /** Whether participant is screen sharing or not */
   isScreenSharingOn?: boolean;
+  /* @conditional-compile-remove(spotlight) */
+  /** Whether participant is spotlighted **/
+  spotlight?: Spotlight;
 };
 
 /**
@@ -62,10 +67,8 @@ export interface VideoGalleryStream {
   isMirrored?: boolean;
   /** Render element of the video stream */
   renderElement?: HTMLElement;
-  /* @conditional-compile-remove(pinned-participants) */
   /** Scaling mode of the video stream */
   scalingMode?: ViewScalingMode;
-  /* @conditional-compile-remove(pinned-participants) */
   /** Stream Size of the video stream */
   streamSize?: { width: number; height: number };
 }

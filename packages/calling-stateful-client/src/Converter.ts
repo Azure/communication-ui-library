@@ -69,7 +69,6 @@ export function convertSdkRemoteStreamToDeclarativeRemoteStream(
     /* @conditional-compile-remove(video-stream-is-receiving-flag) */
     isReceiving: stream.isReceiving,
     view: undefined,
-    /* @conditional-compile-remove(pinned-participants) */
     streamSize: stream.size
   };
 }
@@ -97,7 +96,7 @@ export function convertSdkParticipantToDeclarativeParticipant(
     /* @conditional-compile-remove(hide-attendee-name) */
     role: participant.role,
     /* @conditional-compile-remove(spotlight) */
-    spotlighted: undefined
+    spotlight: undefined
   };
 }
 
@@ -135,7 +134,9 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     remoteParticipantsEnded: {},
     recording: { isRecordingActive: false },
     /* @conditional-compile-remove(ppt-live) */
-    pptLive: { isActive: false },
+    pptLive: {
+      isActivated: false
+    },
     /* @conditional-compile-remove(raise-hand) */
     raiseHand: { raisedHands: [] },
     /* @conditional-compile-remove(reaction) */
@@ -166,7 +167,7 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     },
     /* @conditional-compile-remove(hide-attendee-name) */
     // TODO: Replace this once the SDK supports hide attendee name
-    hideAttendeeNames: true
+    hideAttendeeNames: false
   };
 }
 

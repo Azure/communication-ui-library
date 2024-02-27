@@ -7,7 +7,8 @@
     "mutedIconLabel": "Muted",
     "displayNamePlaceholder": "Unnamed participant",
     "participantStateRinging": "Calling...",
-    "participantStateHold": "On hold"
+    "participantStateHold": "On hold",
+    "attendeeRole": "Attendee"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} more"
@@ -28,10 +29,26 @@
     "uploading": "Uploading",
     "uploadCompleted": "Upload completed"
   },
+  "richTextSendBox": {
+    "placeholderText": "Enter a message",
+    "textTooLong": "Your message length is over the maximum limit.",
+    "sendButtonAriaLabel": "Send message",
+    "fileUploadsPendingError": "Uploading... Please wait.",
+    "removeFile": "Remove file",
+    "uploading": "Uploading",
+    "uploadCompleted": "Upload completed",
+    "boldTooltip": "Bold",
+    "italicTooltip": "Italic",
+    "underlineTooltip": "Underline",
+    "bulletListTooltip": "Bulleted list",
+    "numberListTooltip": "Numbered list",
+    "increaseIndentTooltip": "Increase indent",
+    "decreaseIndentTooltip": "Decrease indent"
+  },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggestions"
   },
-  "imageGallery": {
+  "imageOverlay": {
     "downloadButtonLabel": "Download",
     "dismissButtonAriaLabel": "Close"
   },
@@ -126,7 +143,12 @@
   "reactionButton": {
     "label": "React",
     "tooltipDisabledContent": "Reaction action is disabled",
-    "tooltipContent": "Send a reaction"
+    "tooltipContent": "Send a reaction",
+    "likeReactionTooltipContent": "Like",
+    "heartReactionTooltipContent": "Love",
+    "laughReactionTooltipContent": "Laugh",
+    "applauseReactionTooltipContent": "Applause",
+    "surprisedReactionTooltipContent": "Surprised"
   },
   "messageThread": {
     "yesterday": "Yesterday",
@@ -195,7 +217,8 @@
     "failedToJoinCallGeneric": "Failed to join call.",
     "failedToJoinCallInvalidMeetingLink": "Unable to join Meeting. Invalid Link.",
     "cameraFrozenForRemoteParticipants": "Users in the call are having issues seeing your video. Please check your devices and network.",
-    "unableToStartVideoEffect": "Unable to apply video effect."
+    "unableToStartVideoEffect": "Unable to apply video effect.",
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "Cannot start spotlight on participant(s) because the maximum number of participants are already spotlighted."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "You are sharing your screen",
@@ -213,7 +236,13 @@
     "pinParticipantMenuItemAriaLabel": "Pin {participantName}",
     "unpinParticipantMenuItemAriaLabel": "Unpin {participantName}",
     "pinnedParticipantAnnouncementAriaLabel": "Pinned {participantName}",
-    "unpinnedParticipantAnnouncementAriaLabel": "Unpinned {participantName}"
+    "unpinnedParticipantAnnouncementAriaLabel": "Unpinned {participantName}",
+    "startSpotlightVideoTileMenuLabel": "Spotlight for everyone",
+    "addSpotlightVideoTileMenuLabel": "Add spotlight",
+    "spotlightLimitReachedMenuTitle": "Spotlight limit reached",
+    "stopSpotlightVideoTileMenuLabel": "Stop spotlighting",
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Exit spotlight",
+    "attendeeRole": "Attendee"
   },
   "dialpad": {
     "placeholderText": "Enter phone number",
@@ -347,6 +376,5 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "previous page",
     "rightNavButtonAriaLabel": "next page"
-  },
-  "AttendeeRole": "Attendee"
+  }
 }

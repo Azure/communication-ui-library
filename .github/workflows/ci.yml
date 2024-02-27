@@ -14,6 +14,8 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions: read-all
+
 jobs:
   # get matrix for ci-jobs
   get_matrix:
@@ -127,6 +129,8 @@ jobs:
     needs: [get_matrix, build_packages]
     name: 'Jest Test Coverage (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
@@ -157,15 +161,22 @@ jobs:
         env:
           NODE_OPTIONS: '--max_old_space_size=4096'
       - name: Merge all jest test coverage reports from the current branch
+        # No need to run this step when the base is a release branch
+        # but it's still needed for the upload bundle report step when main is updated
+        if: ${{ !startsWith(github.event.pull_request.base.ref, 'release/') }}
         run: npx nyc merge temp/jest/coverage/detailed-report/ temp/jest/current/merge/detailed-full/coverage-report.json
       - name: Create a summary report from the detailed report
+        # No need to run this step when the base is a release branch
+        # but it's still needed for the upload bundle report step when main is updated
+        if: ${{ !startsWith(github.event.pull_request.base.ref, 'release/') }}
         run: npx nyc report --temp-dir temp/jest/current/merge/detailed-full/ --report-dir temp/jest/current/merge/summary/ --reporter json-summary
 
       # Pull requests show details of coverage changes
       - name: Get jest tests coverage of main from gist
-        if: ${{ github.event_name == 'pull_request' }}
+        if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
         run: curl -o temp/jest/base/coverage-report.json "https://gist.github.com/communication-ui-bot/${{ matrix.coverage_gist_id }}/raw/communication-react-jest-report-${{ matrix.flavor }}.json" --create-dirs -L
       - name: Calculate coverage change
+        if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
         id: coverage
         run: |
           node ./common/config/workflows/coverage-utils.js ../../../temp/jest/base/coverage-report.json ../../../temp/jest/current/merge/summary/coverage-summary.json lines
@@ -173,7 +184,7 @@ jobs:
           node ./common/config/workflows/coverage-utils.js ../../../temp/jest/base/coverage-report.json ../../../temp/jest/current/merge/summary/coverage-summary.json functions
           node ./common/config/workflows/coverage-utils.js ../../../temp/jest/base/coverage-report.json ../../../temp/jest/current/merge/summary/coverage-summary.json branches
       - name: Find Comment
-        if: ${{ github.event_name == 'pull_request' }}
+        if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
         uses: peter-evans/find-comment@v2
         id: fc
         with:
@@ -181,7 +192,7 @@ jobs:
           comment-author: 'github-actions[bot]'
           body-includes: '## @azure/communication-react jest test coverage for ***${{ matrix.flavor }}'
       - name: Create or update comment
-        if: ${{ github.event_name == 'pull_request' }}
+        if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
         uses: peter-evans/create-or-update-comment@v2
         with:
           comment-id: ${{ steps.fc.outputs.comment-id }}
@@ -263,6 +274,8 @@ jobs:
     needs: get_matrix
     name: 'Call Composite automation test (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
@@ -341,6 +354,8 @@ jobs:
     needs: get_matrix
     name: 'Chat Composite automation test (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
@@ -419,6 +434,8 @@ jobs:
     needs: get_matrix
     name: 'Call With Chat Composite automation test (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
@@ -491,6 +508,67 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: 'Failed to pass the composite UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "update_snapshots" label to the PR for updating the snapshot.'
+            })
+  components_automation_test:
+    needs: get_matrix
+    name: 'Components automation test (${{ matrix.flavor }})'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+      - name: Restore node_modules from cache
+        uses: actions/cache@v3
+        with:
+          path: common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+      - name: Install rush
+        run: npm install -g @microsoft/rush
+      - name: Install dependencies
+        run: rush install --max-install-attempts 3
+      - uses: browser-actions/setup-chrome@v1
+        id: setup-chrome
+        with:
+          chrome-version: 120.0.6099
+      - name: Switch flavor for build
+        id: switch-flavor
+        if: ${{ matrix.flavor != 'beta' }}
+        run: |
+          rush switch-flavor:${{ matrix.flavor }}
+          node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
+      - name: Run dependency update for stable
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush update:stable
+      - name: Components Visual Regression Tests
+        id: visualregressiontests
+        run: |
+          cd packages/react-components
+          rushx test:components
+        env:
+          CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
+      - name: Upload snapshot diff
+        if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: snapshots
+          path: packages/react-components/tests/
+      - name: Comment on PR
+        if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'Failed to pass the UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "update_snapshots" label to the PR for updating the snapshot.'
             })
 
   build_storybook:
@@ -661,6 +739,8 @@ jobs:
     needs: get_matrix
     name: 'Build And Test Static HTML Composites Sample (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
@@ -723,6 +803,8 @@ jobs:
     needs: get_matrix
     name: 'Build And Test Component+Binding Examples (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
@@ -783,7 +865,9 @@ jobs:
 
   compare_base_bundle_stats:
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'pull_request' }}
+    permissions:
+      pull-requests: write
+    if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
     name: Compare bundle size from pr head ref to base ref - ${{ matrix.app }}
     needs: [build_calling_sample, build_chat_sample, build_call_with_chat_sample]
     strategy:
@@ -863,6 +947,8 @@ jobs:
 
   check_failure:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
     needs:
       [build_packages, build_calling_sample, build_chat_sample, build_static_html_composites_sample, build_storybook]
     if: failure() && github.ref == 'refs/heads/main'

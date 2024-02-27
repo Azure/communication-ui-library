@@ -4,8 +4,6 @@
 import { memoizeFunction, Stack, useTheme } from '@fluentui/react';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(raise-hand) */
 import { IContextualMenuItem } from '@fluentui/react';
-/* @conditional-compile-remove(PSTN-calls) */
-import { useState } from 'react';
 import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { ControlBar, DevicesButton, ParticipantMenuItemsCallback } from '@internal/react-components';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
@@ -29,8 +27,6 @@ import { MoreButton } from '../../common/MoreButton';
 import { usePropsFor } from '../hooks/usePropsFor';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(raise-hand) */
 import { buttonFlyoutIncreasedSizeStyles } from '../styles/Buttons.styles';
-/* @conditional-compile-remove(PSTN-calls) */
-import { SendDtmfDialpad } from '../../common/SendDtmfDialpad';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(rooms) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isDisabled } from '../utils';
@@ -49,6 +45,11 @@ import {
 } from '../../common/ControlBar/CustomButton';
 /* @conditional-compile-remove(reaction) */
 import { Reaction } from './buttons/Reaction';
+/* @conditional-compile-remove(reaction) */
+import { useSelector } from '../hooks/useSelector';
+/* @conditional-compile-remove(reaction) */
+import { capabilitySelector } from '../../CallComposite/selectors/capabilitySelector';
+
 /**
  * @private
  */
@@ -121,24 +122,17 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     [localeStrings]
   );
 
-  /* @conditional-compile-remove(PSTN-calls) */
-  const dialpadStrings = useMemo(
-    () => ({
-      dialpadModalAriaLabel: localeStrings.strings.call.dialpadModalAriaLabel,
-      dialpadCloseModalButtonAriaLabel: localeStrings.strings.call.dialpadCloseModalButtonAriaLabel,
-      placeholderText: localeStrings.strings.call.dtmfDialpadPlaceholderText
-    }),
-    [localeStrings]
-  );
-
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const holdButtonProps = usePropsFor(HoldButton);
 
   /* @conditional-compile-remove(raise-hand) */
   const raiseHandButtonProps = usePropsFor(RaiseHandButton) as RaiseHandButtonProps;
 
-  /* @conditional-compile-remove(PSTN-calls) */
-  const alternateCallerId = useAdapter().getState().alternateCallerId;
+  /* @conditional-compile-remove(reaction) */
+  const capabilitiesSelector = useSelector(capabilitySelector);
+  /* @conditional-compile-remove(reaction) */
+  const isReactionAllowed =
+    !capabilitiesSelector?.capabilities || capabilitiesSelector.capabilities.useReactions.isPresent;
 
   const devicesButtonProps = usePropsFor(DevicesButton);
 
@@ -172,7 +166,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   }
 
   /* @conditional-compile-remove(reaction) */
-  const showReactionButtonInControlBar = isEnabled(options?.reactionButton) && !props.isMobile;
+  const showReactionButtonInControlBar = isEnabled(options?.reactionButton) && isReactionAllowed && !props.isMobile;
   /* @conditional-compile-remove(reaction) */
   if (showReactionButtonInControlBar) {
     numberOfButtons++;
@@ -215,22 +209,6 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
         ['data-ui-id']: 'hold-button'
       });
     }
-
-    /* @conditional-compile-remove(PSTN-calls) */
-    // dtmf tone sending only works for 1:1 PSTN call
-    if (alternateCallerId) {
-      items.push({
-        key: 'showDialpadKey',
-        text: localeStrings.strings.call.openDtmfDialpadLabel,
-        onClick: () => {
-          setShowDialpad(true);
-        },
-        iconProps: { iconName: 'PeoplePaneOpenDialpad', styles: { root: { lineHeight: 0 } } },
-        itemProps: {
-          styles: buttonFlyoutIncreasedSizeStyles
-        }
-      });
-    }
     return items;
   };
 
@@ -265,6 +243,8 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     showMoreButton = isEnabled(options?.moreButton);
   }
 
+  /* @conditional-compile-remove(reaction) */
+  const reactionResources = adapter.getState().reactions;
   /* @conditional-compile-remove(raise-hand) */
   const raiseHandButtonIsEnabled = isEnabled(options?.raiseHandButton);
   /* @conditional-compile-remove(raise-hand) */
@@ -360,9 +340,6 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     });
   }
 
-  /* @conditional-compile-remove(PSTN-calls) */
-  const [showDialpad, setShowDialpad] = useState(false);
-
   const theme = useTheme();
 
   // when props.options is false then we want to hide the whole control bar.
@@ -370,22 +347,8 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     return <></>;
   }
 
-  /* @conditional-compile-remove(PSTN-calls) */
-  const onDismissDialpad = (): void => {
-    setShowDialpad(false);
-  };
-
   return (
     <Stack horizontalAlign="center" className={callControlsContainerStyles}>
-      {
-        /* @conditional-compile-remove(PSTN-calls) */
-        <SendDtmfDialpad
-          isMobile={!!props.isMobile}
-          strings={dialpadStrings}
-          showDialpad={showDialpad}
-          onDismissDialpad={onDismissDialpad}
-        />
-      }
       <Stack.Item>
         {/*
             Note: We use the layout="horizontal" instead of dockedBottom because of how we position the
@@ -406,7 +369,9 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
           )}
           {
             /* @conditional-compile-remove(reaction) */
-            showReactionButtonInControlBar && <Reaction displayType={options?.displayType} />
+            showReactionButtonInControlBar && reactionResources && (
+              <Reaction displayType={options?.displayType} reactionResource={reactionResources} />
+            )
           }
           {
             /* @conditional-compile-remove(raise-hand) */ showRaiseHandButtonInControlBar &&

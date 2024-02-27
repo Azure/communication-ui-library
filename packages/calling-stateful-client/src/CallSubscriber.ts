@@ -207,6 +207,8 @@ export class CallSubscriber {
     this._transcriptionSubscriber.unsubscribe();
     /* @conditional-compile-remove(optimal-video-count) */
     this._optimalVideoCountSubscriber.unsubscribe();
+    /* @conditional-compile-remove(ppt-live) */
+    this._pptLiveSubscriber.unsubscribe();
     /* @conditional-compile-remove(close-captions) */
     this._captionsSubscriber?.unsubscribe();
     /* @conditional-compile-remove(raise-hand) */

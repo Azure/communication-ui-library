@@ -40,7 +40,23 @@ import {
   WifiWarning20Filled,
   SpeakerMute16Filled,
   MicProhibited16Filled,
-  VideoProhibited16Filled
+  VideoProhibited16Filled,
+  Pin16Filled,
+  Pin16Regular,
+  PinOff16Regular,
+  ScaleFit20Regular,
+  ScaleFill20Regular
+} from '@fluentui/react-icons';
+/* @conditional-compile-remove(rich-text-editor) */
+import {
+  TextBold20Regular,
+  TextItalic20Regular,
+  TextUnderlineCharacterU20Regular,
+  TextBulletList20Regular,
+  TextNumberListLtr20Regular,
+  TextIndentDecrease20Regular,
+  TextIndentIncrease20Regular,
+  DividerTall24Regular
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(reaction) */
 import { Emoji20Regular } from '@fluentui/react-icons';
@@ -65,14 +81,6 @@ import {
 import { Important20Filled } from '@fluentui/react-icons';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundEffect20Filled, VideoBackgroundEffect20Regular } from '@fluentui/react-icons';
-/* @conditional-compile-remove(pinned-participants) */
-import {
-  Pin16Filled,
-  Pin16Regular,
-  PinOff16Regular,
-  ScaleFit20Regular,
-  ScaleFill20Regular
-} from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { Backspace20Regular } from '@fluentui/react-icons';
@@ -83,13 +91,19 @@ import { Sparkle20Filled, VideoProhibited20Filled, MicProhibited20Filled } from 
 /* @conditional-compile-remove(file-sharing) */
 import { ArrowDownload16Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
-import { CallPause20Regular, CallPause20Filled, Play20Regular, People20Regular } from '@fluentui/react-icons';
+import { CallPause20Regular, CallPause20Filled, Play20Regular } from '@fluentui/react-icons';
+/* @conditional-compile-remove(dialpad) */
+import { People20Regular } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(data-loss-prevention) */
 import { Prohibited16Regular } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(unsupported-browser) */
 import { Warning20Filled } from '@fluentui/react-icons';
+
+/* @conditional-compile-remove(spotlight) */
+import { VideoPersonStar20Filled, VideoPersonStarOff20Filled } from '@fluentui/react-icons';
+
 import { _pxToRem } from '@internal/acs-ui-common';
 
 import React from 'react';
@@ -307,6 +321,8 @@ export const DEFAULT_COMPONENT_ICONS = {
   ParticipantItemOptions: <></>,
   ParticipantItemOptionsHovered: <MoreHorizontal20Filled />,
   ParticipantItemScreenShareStart: <ShareScreenStart20Filled />,
+  /* @conditional-compile-remove(spotlight) */
+  ParticipantItemSpotlighted: <VideoPersonStar20Filled />,
   /* @conditional-compile-remove(PSTN-calls) */
   HoldCallContextualMenuItem: <CallPause20Regular />,
   /* @conditional-compile-remove(PSTN-calls) */
@@ -332,17 +348,11 @@ export const DEFAULT_COMPONENT_ICONS = {
   UnsupportedEnvironmentWarning: <UnsupportedEnvironmentWarning />,
   /* @conditional-compile-remove(call-readiness) */
   BrowserPermissionDeniedError: <BrowserPermissionDenied20Filled />,
-  /* @conditional-compile-remove(pinned-participants) */
   VideoTilePinned: <Pin16Filled />,
-  /* @conditional-compile-remove(pinned-participants) */
   VideoTileMoreOptions: <MoreHorizontal20Filled />,
-  /* @conditional-compile-remove(pinned-participants) */
   VideoTileScaleFit: <ScaleFit20Regular />,
-  /* @conditional-compile-remove(pinned-participants) */
   VideoTileScaleFill: <ScaleFill20Regular />,
-  /* @conditional-compile-remove(pinned-participants) */
   PinParticipant: <Pin16Regular />,
-  /* @conditional-compile-remove(pinned-participants) */
   UnpinParticipant: <PinOff16Regular />,
   SplitButtonPrimaryActionCameraOn: <Video20Filled />,
   SplitButtonPrimaryActionCameraOff: <VideoOff20Filled />,
@@ -372,5 +382,27 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(end-of-call-survey) */
   SurveyStarIcon: <Star28Regular />,
   /* @conditional-compile-remove(end-of-call-survey) */
-  SurveyStarIconFilled: <Star28Filled />
+  SurveyStarIconFilled: <Star28Filled />,
+  /* @conditional-compile-remove(spotlight) */
+  StartSpotlightContextualMenuItem: <VideoPersonStar20Filled />,
+  /* @conditional-compile-remove(spotlight) */
+  StopSpotlightContextualMenuItem: <VideoPersonStarOff20Filled />,
+  /* @conditional-compile-remove(spotlight) */
+  VideoSpotlighted: <VideoPersonStar20Filled style={{ height: '16px', width: '16px' }} />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RTEBoldButtonIcon: <TextBold20Regular />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RTEItalicButtonIcon: <TextItalic20Regular />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RTEUnderlineButtonIcon: <TextUnderlineCharacterU20Regular />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RTEBulletListButtonIcon: <TextBulletList20Regular />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RTEtNumberListButtonIcon: <TextNumberListLtr20Regular />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RTEIndentDecreaseButtonIcon: <TextIndentDecrease20Regular />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RTEIndentIncreaseButtonIcon: <TextIndentIncrease20Regular />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RTEDividerIcon: <DividerTall24Regular />
 };

@@ -64,8 +64,8 @@ module.exports = {
     "capabilities",
     // Feature for custom video gallery layouts
     "gallery-layouts",
-    // Feature image gallery
-    "image-gallery",
+    // Feature image overlay
+    "image-overlay",
     // Feature for large Gallery layout
     "large-gallery",
     // feature for positioning the overflowGallery at the top of the screen in the composite
@@ -82,16 +82,18 @@ module.exports = {
     "calling-sounds",
     // Feature for end of call survey
     'end-of-call-survey',
-    // Feature for end of call survey self host version
-    'end-of-call-survey-self-host',
     // Feature for the DTMF dialer for Teams voice apps
     'dtmf-dialer',
+    // Feature for PPT Live for teams meeting
+    'ppt-live',
     // Feature for meeting reactions
     'reaction',
     // Feature for Rich Text Editor (RTE) support
     'rich-text-editor',
     // Feature for spotlight
-    'spotlight'
+    'spotlight',
+    // Feature for tracking beta start call identifier
+    'start-call-beta'
   ],
   // A list of in progress beta feature.
   // These features are still beta feature but "in progress"
@@ -113,10 +115,10 @@ module.exports = {
     "custom-branding",
     // Feature for end of call survey
     'end-of-call-survey',
+    // Feature for PPT Live for teams meeting
+    'ppt-live',
     // Feature for end of call survey self host version
     'end-of-call-survey-self-host',
-    // Feature for the DTMF dialer for Teams voice apps
-    'dtmf-dialer',
     // Feature for meeting reactions
     'reaction',
     // Feature for Rich Text Editor (RTE) support
@@ -133,8 +135,6 @@ module.exports = {
     "stabilizedDemo",
     // feature for blurred background and replace background effects
     "video-background-effects",
-    // Pinned Participants
-    "pinned-participants",
     // Feature for capabilities
     "capabilities",
     // Closed captions
@@ -154,5 +154,13 @@ module.exports = {
     "rooms",
     // feature for calling sounds
     "calling-sounds",
+    // Feature for the DTMF dialer for Teams voice apps
+    "dtmf-dialer",
+    // dialpad
+    "dialpad",
+    // Feature for updates needed for Click to Call (C2C) scenarios
+    "click-to-call",
+    // Feature for call transfer
+    "call-transfer"
   ]
 }

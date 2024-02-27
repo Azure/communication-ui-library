@@ -55,7 +55,7 @@ import { videoStreamRendererViewDeclaratify } from './VideoStreamRendererViewDec
  *   - RecordingCallFeature 'isRecordingActiveChanged'
  *   - RaiseHandCallFeature 'raisedHandEvent'
  *   - RaiseHandCallFeature 'loweredHandEvent'
- *   - PPPTLiveCallFeature 'isAciveChanged'
+ *   - PPTLiveCallFeature 'isAciveChanged'
  *   - ReactionCallFeature 'reaction'
  *
  * @public

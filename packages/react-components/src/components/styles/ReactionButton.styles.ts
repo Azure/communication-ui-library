@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(reaction) */
-import { keyframes, memoizeFunction } from '@fluentui/react';
+import { ITooltipHostStyles, keyframes, memoizeFunction } from '@fluentui/react';
 /* @conditional-compile-remove(reaction) */
 import React from 'react';
 
@@ -28,13 +28,14 @@ export const playFrames = memoizeFunction(() =>
  *
  * @private
  */
-export const emojiStyles = (backgroundImage?: string, animationPlayState?: string): React.CSSProperties => {
+export const emojiStyles = (backgroundImage: string, animationPlayState: string): React.CSSProperties => {
+  const imageResourceUrl = `url(${backgroundImage})`;
   return {
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
     width: '100%',
-    backgroundImage: backgroundImage,
+    backgroundImage: imageResourceUrl,
     animationName: playFrames(),
     animationDuration: '8.12s',
     animationTimingFunction: `steps(102)`,
@@ -46,7 +47,7 @@ export const emojiStyles = (backgroundImage?: string, animationPlayState?: strin
     backgroundSize: `44px 2142px`,
     transition: 'opacity 2s',
     backgroundColor: 'transparent',
-    transform: `scale(0.6)`
+    transform: `${animationPlayState === 'running' ? 'scale(0.8)' : 'scale(0.6)'}`
   };
 };
 
@@ -63,5 +64,21 @@ export const reactionEmojiMenuStyles = (): React.CSSProperties => {
     flexDirection: 'row',
     width: '220px',
     height: '42px'
+  };
+};
+
+/* @conditional-compile-remove(reaction) */
+/**
+ *
+ * @private
+ */
+export const reactionToolTipHostStyle = (): ITooltipHostStyles => {
+  return {
+    root: {
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100%',
+      width: '100%'
+    }
   };
 };

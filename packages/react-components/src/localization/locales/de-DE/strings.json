@@ -31,7 +31,7 @@
   "mentionPopover": {
     "mentionPopoverHeader": "Vorschläge"
   },
-  "imageGallery": {
+  "imageOverlay": {
     "downloadButtonLabel": "Herunterladen",
     "dismissButtonAriaLabel": "Schließen"
   },
@@ -126,7 +126,12 @@
   "reactionButton": {
     "label": "Reagieren",
     "tooltipDisabledContent": "Reaktionsaktion ist deaktiviert",
-    "tooltipContent": "Reaktion senden"
+    "tooltipContent": "Reaktion senden",
+    "likeReactionTooltipContent": "Gefällt mir",
+    "heartReactionTooltipContent": "Liebe",
+    "laughReactionTooltipContent": "Lachen",
+    "applauseReactionTooltipContent": "Applaus",
+    "surprisedReactionTooltipContent": "Überrascht"
   },
   "messageThread": {
     "yesterday": "Gestern",
@@ -195,7 +200,8 @@
     "failedToJoinCallGeneric": "Fehler bei der Teilnahme am Anruf.",
     "failedToJoinCallInvalidMeetingLink": "Teilnahme an Besprechung nicht möglich. Ungültiger Link.",
     "cameraFrozenForRemoteParticipants": "Benutzer im Anruf haben Probleme, Ihr Video zu sehen. Überprüfen Sie Ihre Geräte und Ihr Netzwerk.",
-    "unableToStartVideoEffect": "Videoeffekt kann nicht angewendet werden."
+    "unableToStartVideoEffect": "Videoeffekt kann nicht angewendet werden.",
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "Das Spotlight für Teilnehmer*innen kann nicht gestartet werden, da die maximale Anzahl von Teilnehmer*innen bereits im Spotlight ist."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Sie teilen Ihren Bildschirm",
@@ -213,7 +219,12 @@
     "pinParticipantMenuItemAriaLabel": "{participantName} anheften",
     "unpinParticipantMenuItemAriaLabel": "{participantName} lösen",
     "pinnedParticipantAnnouncementAriaLabel": "{participantName} angeheftet",
-    "unpinnedParticipantAnnouncementAriaLabel": "{participantName} gelöst"
+    "unpinnedParticipantAnnouncementAriaLabel": "{participantName} gelöst",
+    "startSpotlightVideoTileMenuLabel": "Spotlight für alle",
+    "addSpotlightVideoTileMenuLabel": "Spotlight hinzufügen",
+    "spotlightLimitReachedMenuTitle": "Spotlight-Limit erreicht",
+    "stopSpotlightVideoTileMenuLabel": "Spotlight beenden",
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Spotlight beenden"
   },
   "dialpad": {
     "placeholderText": "Telefonnummer eingeben",

@@ -161,6 +161,14 @@ export interface SpotlightCallFeatureState {
    * Ordered array of spotlighted participants in call
    */
   spotlightedParticipants: SpotlightedParticipant[];
+  /**
+   * Local participant spotlight
+   */
+  localParticipantSpotlight?: SpotlightState;
+  /**
+   * Proxy of {@link @azure/communication-calling#SpotlightCallFeature.maxParticipantsToSpotlight}.
+   */
+  maxParticipantsToSpotlight: number;
 }
 
 /* @conditional-compile-remove(spotlight) */
@@ -200,7 +208,7 @@ export interface PPTLiveCallFeatureState {
   /**
    * Proxy of {@link @azure/communication-calling#PPTLiveCallFeature.isActive}.
    */
-  isActive: boolean;
+  isActivated: boolean;
 }
 
 /* @conditional-compile-remove(raise-hand) */
@@ -221,6 +229,19 @@ export interface RaiseHandCallFeatureState {
   localParticipantRaisedHand?: RaisedHandState;
 }
 
+/* @conditional-compile-remove(ppt-live) */
+/**
+ * State only version of {@link @azure/communication-calling#PPTLiveCallFeature}. {@link StatefulCallClient} will
+ * automatically listen for pptLive on the call and update the state exposed by {@link StatefulCallClient} accordingly.
+ *
+ * @beta
+ */
+export interface PPTLiveCallFeatureState {
+  /**
+   * Proxy of {@link @azure/communication-calling#PPTLiveCallFeature.isActive}.
+   */
+  isActivated: boolean;
+}
 /* @conditional-compile-remove(raise-hand) */
 /**
  * Raised hand state with order
@@ -233,7 +254,7 @@ export type RaisedHandState = {
 
 /* @conditional-compile-remove(reaction) */
 /**
- * State only version of {@link @azure/communication-calling#Call.ReactionMessage} with UI helper props receivedAt.
+ * State only version of {@link @azure/communication-calling#Call.ReactionMessage} with UI helper props receivedOn.
  * Reaction state with a timestamp which helps UI to decide to render the reaction accordingly.
  *
  * @beta
@@ -246,7 +267,7 @@ export type ReactionState = {
   /**
    * Received timestamp of the reaction message in a meeting.
    */
-  receivedAt: Date;
+  receivedOn: Date;
 };
 
 /**
@@ -331,7 +352,6 @@ export interface RemoteVideoStreamState {
    * API. This can be undefined if the stream has not yet been rendered and defined after createView creates the view.
    */
   view?: VideoStreamRendererViewState;
-  /* @conditional-compile-remove(pinned-participants) */
   /**
    * Proxy of {@link @azure/communication-calling#RemoteVideoStream.size}.
    */
@@ -405,16 +425,15 @@ export interface RemoteParticipantState {
    * Proxy of {@link @azure/communication-calling#Call.RaisedHand.raisedHands}.
    */
   raisedHand?: RaisedHandState;
-
   /* @conditional-compile-remove(ppt-live) */
   /**
    * Proxy of {@link @azure/communication-calling#Call.PPTLive.target}.
    */
-  htmlStream?: HTMLElement;
+  contentSharingStream?: HTMLElement;
   /* @conditional-compile-remove(reaction) */
   /**
    * Proxy of {@link @azure/communication-calling#Call.ReactionMessage} with
-   * UI helper props receivedAt which indicates the timestamp when the message was received.
+   * UI helper props receivedOn which indicates the timestamp when the message was received.
    *
    * @beta
    */
@@ -423,7 +442,7 @@ export interface RemoteParticipantState {
   /**
    * Proxy of {@link @azure/communication-calling#SpotlightCallFeature.spotlightedParticipants}.
    */
-  spotlighted?: SpotlightState;
+  spotlight?: SpotlightState;
 }
 
 /**
@@ -508,10 +527,9 @@ export interface CallState {
   recording: RecordingCallFeatureState;
   /* @conditional-compile-remove(ppt-live) */
   /**
-   * Proxy of {@link @azure/communication-calling#RaiseHandCallFeature}.
+   * Proxy of {@link @azure/communication-calling#PPTLiveCallFeature}.
    */
   pptLive: PPTLiveCallFeatureState;
-  /**
   /* @conditional-compile-remove(raise-hand) */
   /**
    * Proxy of {@link @azure/communication-calling#RaiseHandCallFeature}.
@@ -520,7 +538,7 @@ export interface CallState {
   /* @conditional-compile-remove(reaction) */
   /**
    * Proxy of {@link @azure/communication-calling#Call.ReactionMessage} with
-   * UI helper props receivedAt which indicates the timestamp when the message was received.
+   * UI helper props receivedOn which indicates the timestamp when the message was received.
    *
    * @beta
    */
@@ -537,14 +555,14 @@ export interface CallState {
   screenShareRemoteParticipant?: string;
   /* @conditional-compile-remove(ppt-live) */
   /**
-   * Stores the currently active pptlive participant's key. If there is no screenshare active, then this will be
+   * Stores the currently active pptlive participant's key. Will be reused by White board etc. If there is no screenshare active, then this will be
    * undefined. You can use this key to access the remoteParticipant data in {@link CallState.remoteParticipants} object.
    *
    * Note this only applies to PPTLive in RemoteParticipant.
    *
    * This property is added by the stateful layer and is not a proxy of SDK state
    */
-  htmlShareRemoteParticipant?: string;
+  contentSharingRemoteParticipant?: string;
   /**
    * Stores the local date when the call started on the client. This property is added by the stateful layer and is not
    * a proxy of SDK state.
@@ -597,7 +615,7 @@ export interface CallState {
 /**
  * Transfer feature state
  *
- * @beta
+ * @public
  */
 export interface TransferFeatureState {
   /**
@@ -610,7 +628,7 @@ export interface TransferFeatureState {
 /**
  * Transfer feature state
  *
- * @beta
+ * @public
  */
 export interface AcceptedTransfer {
   /**

@@ -129,17 +129,11 @@ const overlayPropsOutboundCall = (
   if (isPhoneNumberIdentifier(participant.identifier)) {
     return {
       title: (participant.identifier as PhoneNumberIdentifier).phoneNumber,
-      moreDetails: outboundCallStringsTrampoline(strings)
+      moreDetails: strings.outboundCallingNoticeString
     };
   } else {
     return {
-      title: outboundCallStringsTrampoline(strings)
+      title: strings.outboundCallingNoticeString ?? ''
     };
   }
-};
-
-const outboundCallStringsTrampoline = (strings: CallCompositeStrings): string => {
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-  return strings.outboundCallingNoticeString;
-  return '';
 };

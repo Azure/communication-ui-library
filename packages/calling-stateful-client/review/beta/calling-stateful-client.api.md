@@ -47,7 +47,7 @@ import { VideoEffectName } from '@azure/communication-calling';
 import { VideoStreamRenderer } from '@azure/communication-calling';
 import { VideoStreamRendererView } from '@azure/communication-calling';
 
-// @beta
+// @public
 export interface AcceptedTransfer {
     callId: string;
     timestamp: Date;
@@ -108,12 +108,12 @@ export interface CallState {
     callerInfo: CallerInfo;
     capabilitiesFeature?: CapabilitiesFeatureState;
     captionsFeature: CaptionsCallFeatureState;
+    contentSharingRemoteParticipant?: string;
     diagnostics: DiagnosticsCallFeatureState;
     direction: CallDirection;
     dominantSpeakers?: DominantSpeakersInfo;
     endTime: Date | undefined;
     hideAttendeeNames?: boolean;
-    htmlShareRemoteParticipant?: string;
     id: string;
     isMuted: boolean;
     isScreenSharingOn: boolean;
@@ -267,7 +267,12 @@ export interface OptimalVideoCountFeatureState {
 
 // @public
 export interface PPTLiveCallFeatureState {
-    isActive: boolean;
+    isActivated: boolean;
+}
+
+// @beta
+export interface PPTLiveCallFeatureState {
+    isActivated: boolean;
 }
 
 // @public
@@ -284,7 +289,7 @@ export interface RaiseHandCallFeature {
 // @beta
 export type ReactionState = {
     reactionMessage: ReactionMessage;
-    receivedAt: Date;
+    receivedOn: Date;
 };
 
 // @public
@@ -295,8 +300,8 @@ export interface RecordingCallFeature {
 // @public
 export interface RemoteParticipantState {
     callEndReason?: CallEndReason;
+    contentSharingStream?: HTMLElement;
     displayName?: string;
-    htmlStream?: HTMLElement;
     identifier: CommunicationIdentifierKind;
     isMuted: boolean;
     isSpeaking: boolean;
@@ -304,7 +309,7 @@ export interface RemoteParticipantState {
     // @beta
     reactionState?: ReactionState;
     role?: ParticipantRole;
-    spotlighted?: SpotlightState;
+    spotlight?: SpotlightState;
     state: RemoteParticipantState_2;
     videoStreams: {
         [key: number]: RemoteVideoStreamState;
@@ -327,6 +332,8 @@ export interface RemoteVideoStreamState {
 
 // @beta
 export interface SpotlightCallFeatureState {
+    localParticipantSpotlight?: SpotlightState;
+    maxParticipantsToSpotlight: number;
     spotlightedParticipants: SpotlightedParticipant[];
 }
 
@@ -374,7 +381,7 @@ export interface TranscriptionCallFeature {
     isTranscriptionActive: boolean;
 }
 
-// @beta
+// @public
 export interface TransferFeature {
     acceptedTransfers: {
         [key: string]: AcceptedTransfer;

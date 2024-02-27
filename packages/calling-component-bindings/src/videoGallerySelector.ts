@@ -14,7 +14,7 @@ import {
   getIsPPTLiveOn,
   getIsScreenSharingOn,
   getLocalVideoStreams,
-  getHtmlShareRemoteParticipant,
+  getContentSharingRemoteParticipant,
   getScreenShareRemoteParticipant
 } from './baseSelectors';
 /* @conditional-compile-remove(rooms) */
@@ -41,7 +41,7 @@ import { getLocalParticipantReactionState } from './baseSelectors';
 import { memoizedConvertToVideoTileReaction } from './utils/participantListSelectorUtils';
 import { getRemoteParticipantsExcludingConsumers } from './getRemoteParticipantsExcludingConsumers';
 /* @conditional-compile-remove(spotlight) */
-import { getSpotlightedParticipants } from './baseSelectors';
+import { getSpotlightCallFeature, getCapabilities } from './baseSelectors';
 
 /**
  * Selector type for {@link VideoGallery} component.
@@ -61,6 +61,8 @@ export type VideoGallerySelector = (
   optimalVideoCount?: number;
   /* @conditional-compile-remove(spotlight) */
   spotlightedParticipants?: string[];
+  /* @conditional-compile-remove(spotlight) */
+  maxParticipantsToSpotlight?: number;
 };
 
 /**
@@ -88,11 +90,13 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     /* @conditional-compile-remove(ppt-live) */
     getIsPPTLiveOn,
     /* @conditional-compile-remove(ppt-live) */
-    getHtmlShareRemoteParticipant,
+    getContentSharingRemoteParticipant,
     /* @conditional-compile-remove(reaction) */
     getLocalParticipantReactionState,
     /* @conditional-compile-remove(spotlight) */
-    getSpotlightedParticipants
+    getSpotlightCallFeature,
+    /* @conditional-compile-remove(spotlight) */
+    getCapabilities
   ],
   (
     screenShareRemoteParticipantId,
@@ -117,7 +121,9 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     /* @conditional-compile-remove(reaction) */
     localParticipantReaction,
     /* @conditional-compile-remove(spotlight) */
-    spotlightedParticipants
+    spotlightCallFeature,
+    /* @conditional-compile-remove(spotlight) */
+    capabilities
   ) => {
     const screenShareRemoteParticipant =
       screenShareRemoteParticipantId && remoteParticipants
@@ -134,7 +140,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     /* @conditional-compile-remove(reaction) */
     const localParticipantReactionState = memoizedConvertToVideoTileReaction(localParticipantReaction);
     /* @conditional-compile-remove(spotlight) */
-    const spotlightedParticipantIds = memoizeSpotlightedParticipantIds(spotlightedParticipants);
+    const spotlightedParticipantIds = memoizeSpotlightedParticipantIds(spotlightCallFeature?.spotlightedParticipants);
 
     return {
       screenShareParticipant: screenShareRemoteParticipant
@@ -145,9 +151,12 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
             screenShareRemoteParticipant.videoStreams,
             screenShareRemoteParticipant.state,
             screenShareRemoteParticipant.displayName,
-            /* @conditional-compile-remove(raise-hand) */
-            screenShareRemoteParticipant.htmlStream,
-            screenShareRemoteParticipant.raisedHand
+            /* @conditional-compile-remove(ppt-live) */
+            screenShareRemoteParticipant.contentSharingStream,
+            screenShareRemoteParticipant.raisedHand,
+            screenShareRemoteParticipant.raisedHand,
+            /* @conditional-compile-remove(spotlight) */
+            screenShareRemoteParticipant.spotlight
           )
         : undefined,
       localParticipant: memoizeLocalParticipant(
@@ -161,7 +170,11 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
         /* @conditional-compile-remove(raise-hand) */
         raisedHand,
         /* @conditional-compile-remove(reaction) */
-        localParticipantReactionState
+        localParticipantReactionState,
+        /* @conditional-compile-remove(spotlight) */
+        spotlightCallFeature?.localParticipantSpotlight,
+        /* @conditional-compile-remove(spotlight) */
+        capabilities
       ),
       remoteParticipants: _videoGalleryRemoteParticipantsMemo(
         updateUserDisplayNamesTrampoline(remoteParticipants ? Object.values(remoteParticipants) : noRemoteParticipants),
@@ -182,12 +195,14 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
             htmlRemoteParticipant.state,
             htmlRemoteParticipant.displayName,
             /* @conditional-compile-remove(ppt-live) */
-            htmlRemoteParticipant.htmlStream,
+            htmlRemoteParticipant.contentSharingStream,
             htmlRemoteParticipant.raisedHand
           )
         : undefined,
       /* @conditional-compile-remove(spotlight) */
-      spotlightedParticipants: spotlightedParticipantIds
+      spotlightedParticipants: spotlightedParticipantIds,
+      /* @conditional-compile-remove(spotlight) */
+      maxParticipantsToSpotlight: spotlightCallFeature?.maxParticipantsToSpotlight
     };
   }
 );

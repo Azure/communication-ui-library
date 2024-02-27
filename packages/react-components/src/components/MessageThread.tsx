@@ -27,7 +27,7 @@ import {
 } from '../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../types';
-import { MessageStatusIndicator, MessageStatusIndicatorProps } from './MessageStatusIndicator';
+import { MessageStatusIndicatorProps } from './MessageStatusIndicator';
 import { memoizeFnAll, MessageStatus } from '@internal/acs-ui-common';
 import { useLocale } from '../localization/LocalizationProvider';
 import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
@@ -36,8 +36,6 @@ import getParticipantsWhoHaveReadMessage from './utils/getParticipantsWhoHaveRea
 import { FileDownloadHandler } from './FileDownloadCards';
 /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AttachmentMetadata } from './FileDownloadCards';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { AttachmentDownloadResult } from './FileDownloadCards';
 import { useTheme } from '../theming';
 import { FluentV9ThemeProvider } from './../theming/FluentV9ThemeProvider';
 import LiveAnnouncer from './Announcer/LiveAnnouncer';
@@ -48,6 +46,9 @@ import {
   ChatMessageComponentWrapper,
   ChatMessageComponentWrapperProps
 } from './ChatMessage/ChatMessageComponentWrapper';
+/* @conditional-compile-remove(image-overlay) */
+import { InlineImageOptions } from './ChatMessage/ChatMessageContent';
+import { MessageStatusIndicatorInternal } from './MessageStatusIndicatorInternal';
 import { Announcer } from './Announcer';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
@@ -330,6 +331,16 @@ const getLastChatMessageIdWithStatus = (messages: Message[], status: MessageStat
   return undefined;
 };
 
+const getLastChatMessageForCurrentUser = (messages: Message[]): ChatMessage | undefined => {
+  for (let i = messages.length - 1; i >= 0; i--) {
+    const message = messages[i];
+    if (message.messageType === 'chat' && message.mine) {
+      return message;
+    }
+  }
+  return undefined;
+};
+
 /**
  * @public
  * Callback function run when a message is updated.
@@ -455,13 +466,6 @@ export type MessageThreadProps = {
    * @beta
    */
   onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  /**
-   * Optional callback to retrieve the inline image in a message.
-   * @param attachment - AttachmentMetadata object we want to render
-   * @beta
-   */
-  onFetchAttachments?: (attachments: AttachmentMetadata[]) => Promise<AttachmentDownloadResult[]>;
   /**
    * Optional callback to edit a message.
    *
@@ -529,12 +533,12 @@ export type MessageThreadProps = {
    * @beta
    */
   mentionOptions?: MentionOptions;
-  /* @conditional-compile-remove(image-gallery) */
+  /* @conditional-compile-remove(image-overlay) */
   /**
    * Optional callback called when an inline image is clicked.
    * @beta
    */
-  onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
+  inlineImageOptions?: InlineImageOptions;
 };
 
 /**
@@ -663,12 +667,10 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     onSendMessage,
     /* @conditional-compile-remove(date-time-customization) */
     onDisplayDateTimeString,
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-    onFetchAttachments,
     /* @conditional-compile-remove(mention) */
     mentionOptions,
-    /* @conditional-compile-remove(image-gallery) */
-    onInlineImageClicked,
+    /* @conditional-compile-remove(image-overlay) */
+    inlineImageOptions,
     /* @conditional-compile-remove(file-sharing) */
     onRenderFileDownloads
   } = props;
@@ -689,32 +691,6 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
 
   // readCount and participantCount will only need to be updated on-fly when user hover on an indicator
   const [readCountForHoveredIndicator, setReadCountForHoveredIndicator] = useState<number | undefined>(undefined);
-
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  const [inlineAttachments, setInlineAttachments] = useState<Record<string, Record<string, string>>>({});
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  const onFetchInlineAttachment = useCallback(
-    async (attachments: AttachmentMetadata[], messageId: string): Promise<void> => {
-      if (!onFetchAttachments || attachments.length === 0) {
-        return;
-      }
-      const attachmentDownloadResult = await onFetchAttachments(attachments);
-
-      if (attachmentDownloadResult.length > 0) {
-        setInlineAttachments((prev) => {
-          // The new state should always be based on the previous one
-          // otherwise there can be issues with renders
-          const listOfAttachments = prev[messageId] ?? {};
-          for (const result of attachmentDownloadResult) {
-            const { attachmentId, blobUrl } = result;
-            listOfAttachments[attachmentId] = blobUrl;
-          }
-          return { ...prev, [messageId]: listOfAttachments };
-        });
-      }
-    },
-    [onFetchAttachments]
-  );
 
   const localeStrings = useLocale().strings.messageThread;
   const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
@@ -738,6 +714,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
         // reset deleted message label in case if there was a value already (messages are deleted 1 after another)
         setDeletedMessageAriaLabel(undefined);
         setLatestDeletedMessageId(messageId);
+        lastChatMessageStatus.current = 'deleted';
         // we should set up latestDeletedMessageId before the onDeleteMessage call
         // as otherwise in very rare cases the messages array can be updated before latestDeletedMessageId
         await onDeleteMessage(messageId);
@@ -958,6 +935,21 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     // Only scroll to bottom if isAtBottomOfScrollRef is true
     isAtBottomOfScrollRef.current && scrollToBottom();
   }, [clientHeight, forceUpdate, scrollToBottom, chatMessagesInitialized]);
+  useEffect(() => {
+    const newStatus = getLastChatMessageForCurrentUser(newMessages)?.status;
+    if (newStatus !== undefined) {
+      if (lastChatMessageStatus.current === 'deleted' && newStatus === 'sending') {
+        // enforce message life cycle
+        // message status should always be [ sending -> delivered -> seen (optional) -> deleted ] or [sending -> failed -> deleted]
+        // not any other way around
+        // therefore, if current message status is deleted, we should only update it if newStatus is sending
+        lastChatMessageStatus.current = newStatus;
+      } else if (lastChatMessageStatus.current !== 'deleted') {
+        lastChatMessageStatus.current = newStatus;
+      }
+    }
+    // The hook should depend on newMessages not on messages as otherwise it will skip the sending status for a first message
+  }, [newMessages]);
 
   /**
    * This needs to run to update latestPreviousChatMessage & latestCurrentChatMessage.
@@ -992,6 +984,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages]);
 
+  const lastChatMessageStatus = useRef<string | undefined>(undefined);
   const participantCountRef = useRef(participantCount);
   const readReceiptsBySenderIdRef = useRef(readReceiptsBySenderId);
 
@@ -1014,6 +1007,11 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
       readCount: number,
       status?: MessageStatus
     ) => {
+      // we should only announce label if the message status isn't deleted
+      // because after message is deleted, we now need to render statusIndicator for previous messages
+      // and their status has been announced already and we should not announce them again
+      const shouldAnnounce = lastChatMessageStatus.current !== 'deleted';
+
       const onToggleToolTip = (isToggled: boolean): void => {
         if (isToggled && readReceiptsBySenderIdRef.current) {
           setReadCountForHoveredIndicator(
@@ -1024,12 +1022,13 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
         }
       };
       return (
-        <MessageStatusIndicator
+        <MessageStatusIndicatorInternal
           status={status}
           readCount={readCount}
           onToggleToolTip={onToggleToolTip}
           // -1 because participant count does not include myself
           remoteParticipantsCount={participantCount ? participantCount - 1 : 0}
+          shouldAnnounce={shouldAnnounce}
         />
       );
     },
@@ -1091,7 +1090,13 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
       )}
       <LiveAnnouncer>
         <FluentV9ThemeProvider v8Theme={theme}>
-          <Announcer announcementString={deletedMessageAriaLabel} ariaLive={'assertive'} />
+          {latestDeletedMessageId && (
+            <Announcer
+              key={latestDeletedMessageId}
+              announcementString={deletedMessageAriaLabel}
+              ariaLive={'assertive'}
+            />
+          )}
           <Chat
             // styles?.chatContainer used in className and style prop as style prop can't handle CSS selectors
             className={mergeClasses(classes.root, mergeStyles(styles?.chatContainer))}
@@ -1116,12 +1121,8 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
                   participantCount={participantCount}
                   /* @conditional-compile-remove(file-sharing) */
                   fileDownloadHandler={props.fileDownloadHandler}
-                  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-                  onFetchInlineAttachment={onFetchInlineAttachment}
-                  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-                  inlineAttachments={inlineAttachments}
-                  /* @conditional-compile-remove(image-gallery) */
-                  onInlineImageClicked={onInlineImageClicked}
+                  /* @conditional-compile-remove(image-overlay) */
+                  inlineImageOptions={inlineImageOptions}
                   /* @conditional-compile-remove(date-time-customization) */
                   onDisplayDateTimeString={onDisplayDateTimeString}
                   /* @conditional-compile-remove(mention) */

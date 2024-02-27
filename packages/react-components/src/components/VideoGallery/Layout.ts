@@ -53,4 +53,9 @@ export interface LayoutProps {
    * @defaultValue 'horizontalBottom'
    */
   overflowGalleryPosition?: OverflowGalleryPosition;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * List of spotlighted participant userIds
+   */
+  spotlightedParticipantUserIds?: string[];
 }

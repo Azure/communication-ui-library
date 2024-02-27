@@ -113,7 +113,8 @@ function createMockCall(mockCallId: string): CallState {
     optimalVideoCount: {
       maxRemoteVideoStreams: 4
     },
-    pptLive: { isActive: false }
+    /* @conditional-compile-remove(ppt-live) */
+    pptLive: { isActivated: false }
   };
   return call;
 }

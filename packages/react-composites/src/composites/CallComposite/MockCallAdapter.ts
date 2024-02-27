@@ -105,7 +105,7 @@ export class _MockCallAdapter implements CallAdapter {
   lowerHand(): Promise<void> {
     throw Error('lowerHand not implemented');
   }
-  onReactionClicked(emoji: string): Promise<void> {
+  onReactionClick(emoji: string): Promise<void> {
     throw Error(`Reaction of type ${emoji} send not successful`);
   }
   removeParticipant(): Promise<void> {
@@ -204,11 +204,11 @@ export class _MockCallAdapter implements CallAdapter {
     throw Error('submitStarSurvey not implemented');
   }
   /* @conditional-compile-remove(spotlight) */ // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  startSpotlight(userId: string): Promise<void> {
+  startSpotlight(userIds?: string[]): Promise<void> {
     throw Error('startSpotlight not implemented');
   }
   /* @conditional-compile-remove(spotlight) */ // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  stopSpotlight(userId: string): Promise<void> {
+  stopSpotlight(userIds?: string[]): Promise<void> {
     throw Error('stopSpotlight not implemented');
   }
 }
@@ -241,7 +241,7 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
       /* @conditional-compile-remove(raise-hand) */
       raiseHand: { raisedHands: [] },
       /* @conditional-compile-remove(ppt-live) */
-      pptLive: { isActive: false },
+      pptLive: { isActivated: false },
       /* @conditional-compile-remove(reaction) */
       localParticipantReaction: undefined,
       /* @conditional-compile-remove(rooms) */

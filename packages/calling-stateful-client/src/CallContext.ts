@@ -43,6 +43,8 @@ import {
 } from './CallClientState';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from './CallClientState';
+/* @conditional-compile-remove(reaction) */
+import { ReactionState } from './CallClientState';
 /* @conditional-compile-remove(call-transfer) */
 import { AcceptedTransfer } from './CallClientState';
 import { callingStatefulLogger } from './Logger';
@@ -169,10 +171,10 @@ export class CallContext {
         /* @conditional-compile-remove(optimal-video-count) */
         existingCall.optimalVideoCount.maxRemoteVideoStreams = call.optimalVideoCount.maxRemoteVideoStreams;
         existingCall.recording.isRecordingActive = call.recording.isRecordingActive;
-        /* @conditional-compile-remove(ppt-live) */
-        existingCall.pptLive.isActive = call.pptLive.isActive;
         /* @conditional-compile-remove(raise-hand) */
         existingCall.raiseHand.raisedHands = call.raiseHand.raisedHands;
+        /* @conditional-compile-remove(ppt-live) */
+        existingCall.pptLive.isActivated = call.pptLive.isActivated;
         /* @conditional-compile-remove(raise-hand) */
         existingCall.raiseHand.localParticipantRaisedHand = call.raiseHand.localParticipantRaisedHand;
         /* @conditional-compile-remove(rooms) */
@@ -266,7 +268,7 @@ export class CallContext {
           call.remoteParticipants[toFlatCommunicationIdentifier(participant.identifier)] = participant;
         });
         // add the fake logic.
-        call.htmlShareRemoteParticipant = toFlatCommunicationIdentifier(addRemoteParticipant[0].identifier);
+        call.contentSharingRemoteParticipant = toFlatCommunicationIdentifier(addRemoteParticipant[0].identifier);
       }
     });
   }
@@ -381,7 +383,7 @@ export class CallContext {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        call.pptLive.isActive = isActive;
+        call.pptLive.isActivated = isActive;
       }
     });
   }
@@ -390,11 +392,11 @@ export class CallContext {
   public setCallParticipantPPTLive(callId: string, target: HTMLElement | undefined): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
-      const participantKey = call.htmlShareRemoteParticipant;
+      const participantKey = call.contentSharingRemoteParticipant;
       if (call && participantKey) {
         const participant = call.remoteParticipants[participantKey];
         if (participant) {
-          participant.htmlStream = target;
+          participant.contentSharingStream = target;
         }
       }
     });
@@ -450,8 +452,8 @@ export class CallContext {
       clearTimeout(this._timeOutId[participantKey]);
 
       const participant = call.remoteParticipants[participantKey];
-      const newReactionState = reactionMessage
-        ? { reactionMessage: reactionMessage, receivedAt: new Date() }
+      const newReactionState: ReactionState | undefined = reactionMessage
+        ? { reactionMessage: reactionMessage, receivedOn: new Date() }
         : undefined;
 
       if (participantKey === toFlatCommunicationIdentifier(this._state.userId)) {
@@ -492,11 +494,15 @@ export class CallContext {
   }
 
   /* @conditional-compile-remove(spotlight) */
-  public setSpotlight(callId: string, spotlightedParticipants: SpotlightedParticipant[]): void {
+  public setSpotlight(
+    callId: string,
+    spotlightedParticipants: SpotlightedParticipant[],
+    maxParticipantsToSpotlight: number
+  ): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        call.spotlight = { spotlightedParticipants };
+        call.spotlight = { ...call.spotlight, spotlightedParticipants, maxParticipantsToSpotlight };
       }
     });
   }
@@ -508,7 +514,32 @@ export class CallContext {
       if (call) {
         const participant = call.remoteParticipants[toFlatCommunicationIdentifier(spotlightedParticipant.identifier)];
         if (participant) {
-          participant.spotlighted = { spotlightedOrderPosition: spotlightedParticipant.order };
+          participant.spotlight = { spotlightedOrderPosition: spotlightedParticipant.order };
+        } else if (
+          call.spotlight &&
+          toFlatCommunicationIdentifier(draft.userId) ===
+            toFlatCommunicationIdentifier(spotlightedParticipant.identifier)
+        ) {
+          call.spotlight.localParticipantSpotlight = { spotlightedOrderPosition: spotlightedParticipant.order };
+        }
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(spotlight) */
+  public setParticipantNotSpotlighted(callId: string, spotlightedParticipant: SpotlightedParticipant): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        const participant = call.remoteParticipants[toFlatCommunicationIdentifier(spotlightedParticipant.identifier)];
+        if (participant) {
+          participant.spotlight = undefined;
+        } else if (
+          call.spotlight &&
+          toFlatCommunicationIdentifier(draft.userId) ===
+            toFlatCommunicationIdentifier(spotlightedParticipant.identifier)
+        ) {
+          call.spotlight.localParticipantSpotlight = undefined;
         }
       }
     });
@@ -675,7 +706,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(pinned-participants) */
   public setRemoteVideoStreamSize(
     callId: string,
     participantKey: string,

@@ -256,17 +256,17 @@ export interface _CaptionsSettingsModalProps {
     // (undocumented)
     changeCaptionLanguage?: boolean;
     // (undocumented)
-    currentCaptionLanguage: string;
+    currentCaptionLanguage: _SupportedCaptionLanguage;
     // (undocumented)
-    currentSpokenLanguage: string;
+    currentSpokenLanguage: _SupportedSpokenLanguage;
     // (undocumented)
     isCaptionsFeatureActive?: boolean;
     // (undocumented)
     onDismissCaptionsSettings?: () => void;
     // (undocumented)
-    onSetCaptionLanguage: (language: string) => Promise<void>;
+    onSetCaptionLanguage: (language: _SupportedCaptionLanguage) => Promise<void>;
     // (undocumented)
-    onSetSpokenLanguage: (language: string) => Promise<void>;
+    onSetSpokenLanguage: (language: _SupportedSpokenLanguage) => Promise<void>;
     // (undocumented)
     onStartCaptions: (options?: _captionsOptions) => Promise<void>;
     // (undocumented)
@@ -276,9 +276,9 @@ export interface _CaptionsSettingsModalProps {
     // (undocumented)
     strings?: _CaptionsSettingsModalStrings;
     // (undocumented)
-    supportedCaptionLanguages: string[];
+    supportedCaptionLanguages: _SupportedCaptionLanguage[];
     // (undocumented)
-    supportedSpokenLanguages: string[];
+    supportedSpokenLanguages: _SupportedSpokenLanguage[];
 }
 
 // @internal
@@ -460,6 +460,7 @@ export type ComponentSlotStyle = Omit<IRawStyle, 'animation'>;
 export interface ComponentStrings {
     cameraButton: CameraButtonStrings;
     devicesButton: DevicesButtonStrings;
+    dialpad: DialpadStrings;
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
@@ -565,6 +566,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     ControlButtonMicOn: React_2.JSX.Element;
     ControlButtonOptions: React_2.JSX.Element;
     ControlButtonParticipants: React_2.JSX.Element;
+    ControlButtonParticipantsContextualMenuItem: React_2.JSX.Element;
     ControlButtonScreenShareStart: React_2.JSX.Element;
     ControlButtonScreenShareStop: React_2.JSX.Element;
     ControlButtonRaiseHand: React_2.JSX.Element;
@@ -606,6 +608,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     SendBoxSend: React_2.JSX.Element;
     SendBoxSendHovered: React_2.JSX.Element;
     VideoTileMicOff: React_2.JSX.Element;
+    DialpadBackspace: React_2.JSX.Element;
     VideoTilePinned: React_2.JSX.Element;
     VideoTileMoreOptions: React_2.JSX.Element;
     VideoTileScaleFit: React_2.JSX.Element;
@@ -733,14 +736,17 @@ export interface DevicesButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<DevicesButtonContextualMenuStyles>;
 }
 
-// @beta
+// @public
 export const Dialpad: (props: DialpadProps) => JSX.Element;
 
-// @beta
+// @public
+export type DialpadMode = 'dtmf' | 'dialer';
+
+// @public
 export interface DialpadProps {
+    dialpadMode?: DialpadMode;
     disableDtmfPlayback?: boolean;
-    enableInputEditing?: boolean;
-    isMobile?: boolean;
+    longPressTrigger?: LongPressTrigger;
     onChange?: (input: string) => void;
     onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
     onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
@@ -751,7 +757,7 @@ export interface DialpadProps {
     textFieldValue?: string;
 }
 
-// @beta
+// @public
 export interface DialpadStrings {
     // (undocumented)
     deleteButtonAriaLabel?: string;
@@ -759,7 +765,7 @@ export interface DialpadStrings {
     placeholderText: string;
 }
 
-// @beta
+// @public
 export interface DialpadStyles {
     // (undocumented)
     button?: IButtonStyles;
@@ -833,7 +839,7 @@ export interface _DrawerSurfaceStyles extends BaseCustomStyles {
     lightDismissRoot?: BaseCustomStyles;
 }
 
-// @beta
+// @public
 export type DtmfTone = 'A' | 'B' | 'C' | 'D' | 'Flash' | 'Num0' | 'Num1' | 'Num2' | 'Num3' | 'Num4' | 'Num5' | 'Num6' | 'Num7' | 'Num8' | 'Num9' | 'Pound' | 'Star';
 
 // @public
@@ -1121,6 +1127,9 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
 
 // @public
 export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'followDeviceOrientation';
+
+// @public
+export type LongPressTrigger = 'mouseAndTouch' | 'touch';
 
 // @public
 export type Message = ChatMessage | SystemMessage | CustomMessage;
@@ -1531,7 +1540,7 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     showMuteIndicator?: boolean | undefined;
     showLabel?: boolean | undefined;
     personaMinSize?: number | undefined;
-    strings?: VideoGalleryStrings | undefined;
+    strings: VideoGalleryStrings;
     participantState?: ParticipantState | undefined;
     menuKind?: "contextual" | "drawer" | undefined;
     drawerMenuHostId?: string | undefined;
@@ -1755,6 +1764,12 @@ export interface StreamMediaProps {
     styles?: BaseCustomStyles;
     videoStreamElement: HTMLElement | null;
 }
+
+// @internal (undocumented)
+export type _SupportedCaptionLanguage = keyof CaptionLanguageStrings;
+
+// @internal (undocumented)
+export type _SupportedSpokenLanguage = keyof SpokenLanguageStrings;
 
 // @public
 export type SystemMessage = ParticipantAddedSystemMessage | ParticipantRemovedSystemMessage | TopicUpdatedSystemMessage | ContentSystemMessage;

@@ -28,6 +28,8 @@ test.describe('Page state tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('call-failed-due-to-network-page.png');
   });
   test('Page when local participant left call', async ({ page, serverUrl }) => {
+    /* @conditional-compile-remove(end-of-call-survey) */
+    test.skip();
     const initialState = defaultMockCallAdapterState();
     initialState.page = 'leftCall';
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
@@ -41,6 +43,15 @@ test.describe('Page state tests', async () => {
     await waitForPageFontsLoaded(page);
     await waitForSelector(page, dataUiId('call-composite-start-call-button'));
     expect(await stableScreenshot(page)).toMatchSnapshot('removed-from-call-page.png');
+  });
+
+  /* @conditional-compile-remove(end-of-call-survey) */
+  test('Page when local participant left call and see end of call survey', async ({ page, serverUrl }) => {
+    const initialState = defaultMockCallAdapterState();
+    initialState.page = 'leftCall';
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+    await waitForSelector(page, dataUiId('call-composite-survey'));
+    expect(await stableScreenshot(page)).toMatchSnapshot('survey-page.png');
   });
 
   /* @conditional-compile-remove(rooms) */

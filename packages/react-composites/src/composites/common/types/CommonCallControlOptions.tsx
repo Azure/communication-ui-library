@@ -98,4 +98,14 @@ export type CommonCallControlOptions = {
    * @defaultValue true
    */
   peopleButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ { disabled: boolean };
+  /* @conditional-compile-remove(dtmf-dialer) */
+  /**
+   * Show or hide the dialpad button in the composite control bar.
+   */
+  dtmfDialerButton?: boolean | { disabled: boolean };
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Show or hide the exit spotlight button in the composite control bar when local participant is spotlighted.
+   */
+  exitSpotlightButton?: boolean;
 };

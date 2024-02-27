@@ -92,6 +92,8 @@ export function defaultMockCallAdapterState(
       remoteParticipantsEnded: {},
       /** @conditional-compile-remove(raise-hand) */
       raiseHand: { raisedHands: [] },
+      /** @conditional-compile-remove(ppt-live) */
+      pptLive: { isActivated: false },
       role: role ?? 'Unknown',
       dominantSpeakers: dominantSpeakers,
       totalParticipantCount:
@@ -145,7 +147,8 @@ export function defaultMockCallAdapterState(
     },
     isTeamsCall: false,
     isRoomsCall: isRoomsCall ?? false,
-    latestErrors: {}
+    latestErrors: {},
+    targetCallees: undefined
   };
 }
 
@@ -432,6 +435,8 @@ const defaultEndedCallState: CallState = {
   remoteParticipantsEnded: {},
   /** @conditional-compile-remove(raise-hand) */
   raiseHand: { raisedHands: [] },
+  /** @conditional-compile-remove(ppt-live) */
+  pptLive: { isActivated: false },
   captionsFeature: {
     captions: [],
     supportedSpokenLanguages: [],

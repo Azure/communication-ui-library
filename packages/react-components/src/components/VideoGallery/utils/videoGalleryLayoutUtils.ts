@@ -4,6 +4,8 @@
 import { useCallback, useRef } from 'react';
 import { smartDominantSpeakerParticipants } from '../../../gallery';
 import { VideoGalleryParticipant, VideoGalleryRemoteParticipant } from '../../../types';
+/* @conditional-compile-remove(reaction) */
+import { ReactionResources } from '../../..';
 /* @conditional-compile-remove(gallery-layouts) */
 import { VideoGalleryLayout } from '../../VideoGallery';
 
@@ -22,6 +24,7 @@ export interface OrganizedParticipantsArgs {
   pinnedParticipantUserIds?: string[];
   /* @conditional-compile-remove(gallery-layouts) */
   layout?: VideoGalleryLayout;
+  spotlightedParticipantUserIds?: string[];
 }
 
 /**
@@ -44,7 +47,6 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
 
   const {
     remoteParticipants = [],
-    localParticipant,
     dominantSpeakers = [],
     maxRemoteVideoStreams = DEFAULT_MAX_VIDEO_SREAMS,
     maxOverflowGalleryDominantSpeakers = DEFAULT_MAX_OVERFLOW_GALLERY_DOMINANT_SPEAKERS,
@@ -148,15 +150,7 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
     | VideoGalleryParticipant
     | VideoGalleryRemoteParticipant
   )[] => {
-    if ((isScreenShareActive || isPPTLiveActive) && localParticipant) {
-      const localParticipantPlusOverflow = [localParticipant].concat(
-        visibleGridParticipants.current.concat(visibleOverflowGalleryParticipants.current)
-      );
-      // If screen sharing is active, assign video and audio participants as overflow gallery participants
-      /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-      return localParticipantPlusOverflow.concat(callingParticipants);
-      return localParticipantPlusOverflow;
-    } else if (isScreenShareActive || isPPTLiveActive) {
+    if (isScreenShareActive || isPPTLiveActive) {
       // If screen sharing is active, assign video and audio participants as overflow gallery participants
       /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
       return visibleGridParticipants.current.concat(
@@ -182,7 +176,6 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
     /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ callingParticipants,
     isScreenShareActive,
     isPPTLiveActive,
-    localParticipant,
     maxRemoteVideoStreamsToUse
   ]);
 
@@ -191,49 +184,57 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
   return { gridParticipants, overflowGalleryParticipants: overflowGalleryParticipants };
 };
 
-/* @conditional-compile-remove(pinned-participants) */
-const _useOrganizedParticipantsWithPinnedParticipants = (
+interface SortedRemoteParticipants {
+  [key: string]: VideoGalleryRemoteParticipant;
+}
+
+const _useOrganizedParticipantsWithFocusedParticipants = (
   props: OrganizedParticipantsArgs
 ): OrganizedParticipantsResult => {
   // map remote participants by userId
   const remoteParticipantMap = props.remoteParticipants.reduce((map, remoteParticipant) => {
     map[remoteParticipant.userId] = remoteParticipant;
     return map;
-  }, {});
+  }, {} as SortedRemoteParticipants);
 
-  // get pinned participants in the same order of pinned participant user ids using remoteParticipantMap
-  const pinnedParticipants: VideoGalleryRemoteParticipant[] = [];
-  props.pinnedParticipantUserIds?.forEach((id) => {
+  const spotlightedParticipantUserIds = props.spotlightedParticipantUserIds ?? [];
+  // declare focused participant user ids as spotlighted participants user ids followed by
+  // pinned participants user ids
+  const focusedParticipantUserIds = [
+    ...new Set(spotlightedParticipantUserIds.concat(props.pinnedParticipantUserIds ?? []))
+  ];
+  // get focused participants from map of remote participants in the order of the user ids
+  const focusedParticipants: VideoGalleryRemoteParticipant[] = [];
+  focusedParticipantUserIds.forEach((id) => {
     const pinnedParticipant = remoteParticipantMap[id];
     if (pinnedParticipant) {
-      pinnedParticipants.push(pinnedParticipant);
+      focusedParticipants.push(pinnedParticipant);
     }
   });
 
-  // get unpinned participants by filtering all remote participants using a set of pinned participant user ids
-  const pinnedParticipantUserIdSet = new Set(props.pinnedParticipantUserIds);
-  const unpinnedParticipants = props.remoteParticipants.filter((p) => !pinnedParticipantUserIdSet.has(p.userId));
+  // get unfocused participants by filtering out set of focused participant user ids from all remote participants
+  const focusedParticipantUserIdSet = new Set(focusedParticipantUserIds);
+  const unfocusedParticipants = props.remoteParticipants.filter((p) => !focusedParticipantUserIdSet.has(p.userId));
 
   const useOrganizedParticipantsProps = {
     ...props,
     // if there are pinned participants then we should only consider unpinned participants
-    remoteParticipants: unpinnedParticipants
+    remoteParticipants: unfocusedParticipants
   };
 
   const useOrganizedParticipantsResult = _useOrganizedParticipants(useOrganizedParticipantsProps);
 
-  if (pinnedParticipants.length === 0) {
+  if (focusedParticipants.length === 0) {
     return useOrganizedParticipantsResult;
   }
 
   return {
-    gridParticipants: props.isScreenShareActive || props.isPPTLiveActive ? [] : pinnedParticipants,
-    overflowGalleryParticipants:
-      props.isScreenShareActive || props.isPPTLiveActive
-        ? pinnedParticipants.concat(useOrganizedParticipantsResult.overflowGalleryParticipants)
-        : useOrganizedParticipantsResult.gridParticipants.concat(
-            useOrganizedParticipantsResult.overflowGalleryParticipants
-          )
+    gridParticipants: props.isScreenShareActive || props.isPPTLiveActive ? [] : focusedParticipants,
+    overflowGalleryParticipants: props.isScreenShareActive
+      ? focusedParticipants.concat(useOrganizedParticipantsResult.overflowGalleryParticipants)
+      : useOrganizedParticipantsResult.gridParticipants.concat(
+          useOrganizedParticipantsResult.overflowGalleryParticipants
+        )
   };
 };
 
@@ -258,7 +259,25 @@ const putVideoParticipantsFirst = (
  * @private
  */
 export const useOrganizedParticipants = (args: OrganizedParticipantsArgs): OrganizedParticipantsResult => {
-  /* @conditional-compile-remove(pinned-participants) */
-  return _useOrganizedParticipantsWithPinnedParticipants(args);
-  return _useOrganizedParticipants(args);
+  return _useOrganizedParticipantsWithFocusedParticipants(args);
+};
+
+/* @conditional-compile-remove(reaction) */
+/**
+ * @private
+ */
+export const getEmojiResource = (reactionName: string, reactionResources: ReactionResources): string | undefined => {
+  switch (reactionName) {
+    case 'like':
+      return reactionResources.likeReaction?.url;
+    case 'heart':
+      return reactionResources.heartReaction?.url;
+    case 'laugh':
+      return reactionResources.laughReaction?.url;
+    case 'applause':
+      return reactionResources.applauseReaction?.url;
+    case 'surprised':
+      return reactionResources.surprisedReaction?.url;
+  }
+  return '';
 };

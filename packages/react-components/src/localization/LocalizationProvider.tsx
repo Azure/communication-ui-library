@@ -45,10 +45,12 @@ import { VerticalGalleryStrings } from '../components/VerticalGallery';
 import { ParticipantListStrings } from '../components/ParticipantList';
 /* @conditional-compile-remove(mention) */
 import { MentionPopoverStrings } from '../components/MentionPopover';
-/* @conditional-compile-remove(image-gallery) */
-import { ImageGalleryStrings } from '../components/ImageGallery';
+/* @conditional-compile-remove(image-overlay) */
+import { ImageOverlayStrings } from '../components/ImageOverlay';
 /* @conditional-compile-remove(reaction) */
 import { ReactionButtonStrings } from '../components';
+/* @conditional-compile-remove(rich-text-editor) */
+import { RichTextSendBoxStrings } from '../components/RTE/RTESendBox';
 
 /**
  * Locale information for all components exported from this library.
@@ -92,18 +94,24 @@ export interface ComponentStrings {
   /** Strings for RaiseHandButton */
   raiseHandButton: RaiseHandButtonStrings;
   /* @conditional-compile-remove(reaction) */
-  /** Strings for ReactionButton */
+  /**
+   * Strings for ReactionButton
+   * @beta
+   * */
   reactionButton: ReactionButtonStrings;
   /** Strings for TypingIndicator */
   typingIndicator: TypingIndicatorStrings;
   /** Strings for SendBox */
   sendBox: SendBoxStrings;
+  /* @conditional-compile-remove(rich-text-editor) */
+  /** Strings for RTESendBox */
+  richTextSendBox: RichTextSendBoxStrings;
   /* @conditional-compile-remove(mention) */
   /** Strings for MentionPopover */
   mentionPopover: MentionPopoverStrings;
-  /* @conditional-compile-remove(image-gallery) */
-  /** Strings for ImageGallery */
-  imageGallery: ImageGalleryStrings;
+  /* @conditional-compile-remove(image-overlay) */
+  /** Strings for ImageOverlay */
+  imageOverlay: ImageOverlayStrings;
   /** Strings for MessageStatusIndicator */
   messageStatusIndicator: MessageStatusIndicatorStrings;
   /** Strings for ErroBar */
@@ -180,8 +188,6 @@ export interface ComponentStrings {
   /** Strings for the participant list component */
   ParticipantList: ParticipantListStrings;
   /* @conditional-compile-remove(hide-attendee-name) */
-  /** Strings for the attendee role */
-  AttendeeRole: string;
 }
 
 /**

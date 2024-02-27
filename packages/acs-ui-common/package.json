@@ -1,6 +1,6 @@
 {
   "name": "@internal/acs-ui-common",
-  "version": "1.11.1-beta.0",
+  "version": "1.13.0-beta.1",
   "description": "Common types and utilities for all Azure Communication Serves UI libraries",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
@@ -32,7 +32,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@azure/communication-common": "^2.3.0",
+    "@azure/communication-common": "^2.3.1",
     "@azure/logger": "^1.0.4"
   },
   "peerDependencies": {
@@ -40,14 +40,14 @@
     "@types/react": ">=16.8.0 <19.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.23.4",
-    "@babel/core": "^7.23.5",
-    "@microsoft/api-documenter": "~7.23.14",
-    "@microsoft/api-extractor": "~7.38.5",
+    "@babel/cli": "^7.23.9",
+    "@babel/core": "^7.23.9",
+    "@microsoft/api-documenter": "~7.23.30",
+    "@microsoft/api-extractor": "~7.40.6",
     "@types/jest": "^29.5.11",
-    "@types/react": "18.2.42",
-    "@typescript-eslint/eslint-plugin": "^6.13.2",
-    "@typescript-eslint/parser": "^6.13.2",
+    "@types/react": "18.2.57",
+    "@typescript-eslint/eslint-plugin": "^6.19.1",
+    "@typescript-eslint/parser": "^6.19.1",
     "copyfiles": "^2.4.1",
     "cpx": "^1.5.0",
     "cross-env": "^7.0.3",
@@ -63,8 +63,8 @@
     "prettier": "2.3.1",
     "react": "18.2.0",
     "rimraf": "^2.6.2",
-    "rollup": "^4.7.0",
-    "ts-jest": "^29.1.0",
+    "rollup": "^4.9.6",
+    "ts-jest": "^29.1.2",
     "typescript": "5.3.3"
   }
 }

@@ -3,8 +3,8 @@ import {
   CallAdapter,
   CallComposite,
   CallCompositeOptions,
-  CallParticipantsLocator,
   CompositeLocale,
+  fromFlatCommunicationIdentifier,
   useAzureCommunicationCallAdapter
 } from '@azure/communication-react';
 import { PartialTheme, Theme } from '@fluentui/react';
@@ -13,7 +13,7 @@ import React, { useMemo } from 'react';
 export type ContainerProps = {
   userId: CommunicationUserIdentifier;
   token: string;
-  locator: string[];
+  targetCallees: string[];
   displayName: string;
   formFactor?: 'desktop' | 'mobile';
   fluentTheme?: PartialTheme | Theme;
@@ -23,12 +23,8 @@ export type ContainerProps = {
   options?: CallCompositeOptions;
 };
 
-const createCallAdapterLocator = (locator: string[]): CallParticipantsLocator | undefined => {
-  if (locator && locator.length > 0) {
-    // Change to participantIds once api is updated
-    return { participantIds: locator };
-  }
-  return undefined;
+const createTargetCallees = (targetCallees: string[]): CommunicationUserIdentifier[] => {
+  return targetCallees.map((c) => fromFlatCommunicationIdentifier(c) as CommunicationUserIdentifier);
 };
 
 export const ContosoCallContainer1toN = (props: ContainerProps): JSX.Element => {
@@ -41,21 +37,21 @@ export const ContosoCallContainer1toN = (props: ContainerProps): JSX.Element => 
     }
   }, [props.token]);
 
-  const locator = useMemo(() => createCallAdapterLocator(props.locator), [props.locator]);
+  const targetCallees = useMemo(() => createTargetCallees(props.targetCallees), [props.targetCallees]);
 
   const adapter = useAzureCommunicationCallAdapter(
     {
       userId: props.userId,
       displayName: props.displayName, // Max 256 Characters
       credential,
-      locator
+      targetCallees
     },
     undefined,
     leaveCall
   );
 
-  if (!locator) {
-    return <>Provided call locator '{props.locator}' is not recognized.</>;
+  if (!targetCallees) {
+    return <>Please provide the identities of people you would like to call</>;
   }
 
   if (adapter) {

@@ -16,9 +16,9 @@ import { useIdentifiers } from '../../identifiers/IdentifierProvider';
 import { useTheme } from '../../theming';
 import { ChatMessageActionFlyout } from './ChatMessageActionsFlyout';
 import { ChatMessageContent } from './ChatMessageContent';
+/* @conditional-compile-remove(image-overlay) */
+import { InlineImageOptions } from './ChatMessageContent';
 import { ChatMessage } from '../../types/ChatMessage';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { AttachmentMetadata } from '../FileDownloadCards';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessageContent } from './ChatMessageContent';
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -96,22 +96,12 @@ type ChatMessageComponentAsMessageBubbleProps = {
    * @internal
    */
   mentionDisplayOptions?: MentionDisplayOptions;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  /**
-   * Optional function to fetch attachments.
-   */
-  onFetchAttachments?: (attachment: AttachmentMetadata[], messageId: string) => Promise<void>;
-  /* @conditional-compile-remove(image-gallery) */
+  /* @conditional-compile-remove(image-overlay) */
   /**
    * Optional callback called when an inline image is clicked.
    * @beta
    */
-  onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  /**
-   * Optional map of attachment ids to blob urls.
-   */
-  attachmentsMap?: Record<string, string>;
+  inlineImageOptions?: InlineImageOptions;
 };
 
 const generateDefaultTimestamp = (
@@ -163,8 +153,8 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     messageStatus,
     /* @conditional-compile-remove(file-sharing) */
     fileDownloadHandler,
-    /* @conditional-compile-remove(image-gallery) */
-    onInlineImageClicked,
+    /* @conditional-compile-remove(image-overlay) */
+    inlineImageOptions,
     shouldOverlapAvatarAndMessage
   } = props;
 
@@ -249,17 +239,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     return undefined;
   }, [editedOn, message.messageType, messageStatus, strings.editedTag, strings.failToSendTag, theme]);
 
-  /* @conditional-compile-remove(image-gallery) */
-  const handleOnInlineImageClicked = useCallback(
-    async (attachmentId: string): Promise<void> => {
-      if (onInlineImageClicked === undefined) {
-        return;
-      }
-      await onInlineImageClicked(attachmentId, message.messageId);
-    },
-    [message, onInlineImageClicked]
-  );
-
   const getContent = useCallback(() => {
     /* @conditional-compile-remove(data-loss-prevention) */
     if (message.messageType === 'blocked') {
@@ -274,14 +253,10 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
         <ChatMessageContent
           message={message}
           strings={strings}
-          /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-          onFetchAttachments={props.onFetchAttachments}
-          /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-          attachmentsMap={props.attachmentsMap}
           /* @conditional-compile-remove(mention) */
           mentionDisplayOptions={props.mentionDisplayOptions}
-          /* @conditional-compile-remove(image-gallery) */
-          onInlineImageClicked={handleOnInlineImageClicked}
+          /* @conditional-compile-remove(image-overlay) */
+          inlineImageOptions={inlineImageOptions}
         />
         {
           /* @conditional-compile-remove(file-sharing) */ props.onRenderFileDownloads
@@ -292,12 +267,11 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     );
   }, [
     defaultOnRenderFileDownloads,
+    /* @conditional-compile-remove(image-overlay) */ inlineImageOptions,
     message,
     props,
     strings,
-    userId,
-    /* @conditional-compile-remove(image-gallery) */
-    handleOnInlineImageClicked
+    userId
   ]);
 
   const isBlockedMessage =
@@ -434,6 +408,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
                 {formattedTimestamp}
               </Text>
             }
+            details={getMessageDetails()}
           >
             {getContent()}
           </FluentChatMessage>
