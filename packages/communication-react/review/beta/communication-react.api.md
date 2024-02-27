@@ -3040,7 +3040,7 @@ export interface MentionDisplayOptions {
 // @beta
 export interface MentionLookupOptions {
     onQueryUpdated: (query: string) => Promise<Mention[]>;
-    onRenderSuggestionItem?: (suggestion: Mention, onSuggestionSelected: (suggestion: Mention) => void) => JSX.Element;
+    onRenderSuggestionItem?: (suggestion: Mention, onSuggestionSelected: (suggestion: Mention) => void, isActive: boolean) => JSX.Element;
     trigger?: string;
 }
 
