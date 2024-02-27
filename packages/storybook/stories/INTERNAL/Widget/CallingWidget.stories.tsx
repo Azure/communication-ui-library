@@ -22,7 +22,8 @@ const getDocs: () => JSX.Element = () => {
       <Title>Calling Widget</Title>
       <Description>
         The Calling Widget is a wrapper around our `CallComposite` to better facilitate calling experiences that begin
-        with one click.
+        with one click. Please check out our tutorial on how to build this from scratch on [Microsoft
+        Learn](https://learn.microsoft.com/en-us/azure/communication-services/tutorials/calling-widget/calling-widget-tutorial)
       </Description>
       <Canvas mdxSource={CallingWidgetComponentText}>
         <Stack horizontalAlign="center" style={{}}>

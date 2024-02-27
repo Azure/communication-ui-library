@@ -1876,6 +1876,116 @@ export class _MockCallAdapter implements CallAdapter {
 }
 
 // @internal
+export class _MockCallingWidgetCallAdapter implements CallAdapter {
+    constructor(testState: {
+        askDevicePermission?: (constrain: PermissionConstraints) => Promise<void>;
+        localParticipantRole?: ParticipantRole;
+    });
+    // (undocumented)
+    addParticipant(): Promise<void>;
+    // (undocumented)
+    allowUnsupportedBrowserVersion(): void;
+    // (undocumented)
+    askDevicePermission(constrain: PermissionConstraints): Promise<void>;
+    // (undocumented)
+    createStreamView(): Promise<void>;
+    // (undocumented)
+    dispose(): void;
+    // (undocumented)
+    disposeLocalVideoStreamView(): Promise<void>;
+    // (undocumented)
+    disposeRemoteVideoStreamView(): Promise<void>;
+    // (undocumented)
+    disposeScreenShareStreamView(): Promise<void>;
+    // (undocumented)
+    disposeStreamView(): Promise<void>;
+    // (undocumented)
+    getEnvironmentInfo(): Promise<EnvironmentInfo>;
+    // (undocumented)
+    getState(): CallAdapterState;
+    // (undocumented)
+    holdCall(): Promise<void>;
+    // (undocumented)
+    joinCall(): Call | undefined;
+    // (undocumented)
+    leaveCall(): Promise<void>;
+    // (undocumented)
+    lowerHand(): Promise<void>;
+    // (undocumented)
+    mute(): Promise<void>;
+    // (undocumented)
+    off(): void;
+    // (undocumented)
+    offStateChange(handler: (state: CallAdapterState) => void): void;
+    // (undocumented)
+    on(): void;
+    // (undocumented)
+    onReactionClick(emoji: string): Promise<void>;
+    // (undocumented)
+    onStateChange(handler: (state: CallAdapterState) => void): void;
+    // (undocumented)
+    queryCameras(): Promise<VideoDeviceInfo[]>;
+    // (undocumented)
+    queryMicrophones(): Promise<AudioDeviceInfo[]>;
+    // (undocumented)
+    querySpeakers(): Promise<AudioDeviceInfo[]>;
+    // (undocumented)
+    raiseHand(): Promise<void>;
+    // (undocumented)
+    removeParticipant(): Promise<void>;
+    // (undocumented)
+    resumeCall(): Promise<void>;
+    // (undocumented)
+    sendDtmfTone(dtmfTone: DtmfTone): Promise<void>;
+    // (undocumented)
+    setCamera(): Promise<void>;
+    // (undocumented)
+    setCaptionLanguage(): Promise<void>;
+    // (undocumented)
+    setMicrophone(): Promise<void>;
+    // (undocumented)
+    setSpeaker(): Promise<void>;
+    // (undocumented)
+    setSpokenLanguage(): Promise<void>;
+    // (undocumented)
+    setState(state: CallAdapterState): void;
+    // (undocumented)
+    setTransfer(state: CallAdapterState): void;
+    // (undocumented)
+    startCall(participants: string[] | StartCallIdentifier[]): Call | undefined;
+    // (undocumented)
+    startCamera(): Promise<void>;
+    // (undocumented)
+    startCaptions(): Promise<void>;
+    // (undocumented)
+    startScreenShare(): Promise<void>;
+    // (undocumented)
+    startSpotlight(userIds?: string[]): Promise<void>;
+    // (undocumented)
+    startVideoBackgroundEffect(): Promise<void>;
+    // (undocumented)
+    state: CallAdapterState;
+    // (undocumented)
+    stopCamera(): Promise<void>;
+    // (undocumented)
+    stopCaptions(): Promise<void>;
+    // (undocumented)
+    stopScreenShare(): Promise<void>;
+    // (undocumented)
+    stopSpotlight(userIds?: string[]): Promise<void>;
+    // (undocumented)
+    stopVideoBackgroundEffects(): Promise<void>;
+    // (undocumented)
+    submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
+    // (undocumented)
+    unmute(): Promise<void>;
+    // (undocumented)
+    updateBackgroundPickerImages(): void;
+    // (undocumented)
+    updateSelectedVideoBackgroundEffect(): void;
+}
+
+// @internal
 export type _MockFileUpload = FileMetadata & {
     uploadComplete?: boolean;
     error?: string;
