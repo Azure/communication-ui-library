@@ -1,11 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Stack } from '@fluentui/react';
+import { mergeStyles, Stack } from '@fluentui/react';
 /* @conditional-compile-remove(spotlight) */
-import { mergeStyles } from '@fluentui/react';
+import { concatStyleSets, IContextualMenuProps, Layer } from '@fluentui/react';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useMemo } from 'react';
+/* @conditional-compile-remove(spotlight) */
+import { KeyboardEvent, useCallback } from 'react';
 import { OnRenderAvatarCallback, VideoStreamOptions, CreateVideoStreamViewResult } from '../types';
 /* @conditional-compile-remove(reaction) */
 import { Reaction } from '../types';
@@ -22,6 +24,14 @@ import { RaisedHand } from '../types';
 import { useTheme } from '../theming';
 /* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '../types/ReactionTypes';
+/* @conditional-compile-remove(spotlight) */
+import { useVideoTileContextualMenuProps } from './VideoGallery/useVideoTileContextualMenuProps';
+/* @conditional-compile-remove(spotlight) */
+import { VideoGalleryStrings } from './VideoGallery';
+/* @conditional-compile-remove(spotlight) */
+import { _DrawerMenu, _DrawerMenuItemProps } from './Drawer';
+/* @conditional-compile-remove(spotlight) */
+import { drawerMenuWrapperStyles } from './VideoGallery/styles/RemoteVideoTile.styles';
 /**
  * A memoized version of VideoTile for rendering local participant.
  *
@@ -52,7 +62,21 @@ export const _LocalVideoTile = React.memo(
     /* @conditional-compile-remove(reaction) */
     reaction?: Reaction;
     /* @conditional-compile-remove(spotlight) */
+    spotlightedParticipantUserIds?: string[];
+    /* @conditional-compile-remove(spotlight) */
     isSpotlighted?: boolean;
+    /* @conditional-compile-remove(spotlight) */
+    onStartSpotlight?: () => void;
+    /* @conditional-compile-remove(spotlight) */
+    onStopSpotlight?: () => void;
+    /* @conditional-compile-remove(spotlight) */
+    maxParticipantsToSpotlight?: number;
+    /* @conditional-compile-remove(spotlight) */
+    menuKind?: 'contextual' | 'drawer';
+    /* @conditional-compile-remove(spotlight) */
+    drawerMenuHostId?: string;
+    /* @conditional-compile-remove(spotlight) */
+    strings?: VideoGalleryStrings;
     /* @conditional-compile-remove(reaction) */
     reactionResources?: ReactionResources;
   }) => {
@@ -80,6 +104,18 @@ export const _LocalVideoTile = React.memo(
       reaction,
       /* @conditional-compile-remove(spotlight) */
       isSpotlighted,
+      /* @conditional-compile-remove(spotlight) */
+      spotlightedParticipantUserIds,
+      /* @conditional-compile-remove(spotlight) */
+      onStartSpotlight,
+      /* @conditional-compile-remove(spotlight) */
+      onStopSpotlight,
+      /* @conditional-compile-remove(spotlight) */
+      maxParticipantsToSpotlight,
+      /* @conditional-compile-remove(spotlight) */
+      menuKind,
+      /* @conditional-compile-remove(spotlight) */
+      strings,
       /* @conditional-compile-remove(reaction) */
       reactionResources
     } = props;
@@ -110,19 +146,65 @@ export const _LocalVideoTile = React.memo(
     useLocalVideoStreamLifecycleMaintainer(localVideoStreamProps);
 
     /* @conditional-compile-remove(spotlight) */
-    const spotlightBorder = useMemo(
-      () => (
-        <Stack
-          className={mergeStyles({
-            position: 'absolute',
-            height: '100%',
-            width: '100%',
-            zIndex: 100,
-            border: `0.25rem solid ${theme.palette.black}`
-          })}
-        />
-      ),
-      [theme.palette.black]
+    const contextualMenuProps = useVideoTileContextualMenuProps({
+      participant: { userId: userId ?? '' },
+      strings: { ...strings },
+      spotlightedParticipantUserIds,
+      isSpotlighted,
+      onStartSpotlight,
+      onStopSpotlight,
+      maxParticipantsToSpotlight,
+      myUserId: userId
+    });
+
+    const videoTileContextualMenuProps = useMemo(() => {
+      /* @conditional-compile-remove(spotlight) */
+      if (menuKind !== 'contextual' || !contextualMenuProps) {
+        return {};
+      }
+      /* @conditional-compile-remove(spotlight) */
+      return {
+        contextualMenu: contextualMenuProps
+      };
+      return {};
+    }, [
+      /* @conditional-compile-remove(spotlight) */ contextualMenuProps,
+      /* @conditional-compile-remove(spotlight) */ menuKind
+    ]);
+
+    const videoTileStyles = useMemo(() => {
+      /* @conditional-compile-remove(spotlight) */
+      if (isSpotlighted) {
+        return concatStyleSets(
+          {
+            root: {
+              outline: `0.25rem solid ${theme.palette.neutralTertiaryAlt}`,
+              outlineOffset: '-0.25rem'
+            }
+          },
+          styles
+        );
+      }
+      return styles;
+    }, [
+      /* @conditional-compile-remove(spotlight) */ isSpotlighted,
+      /* @conditional-compile-remove(spotlight) */ theme.palette.neutralTertiaryAlt,
+      styles
+    ]);
+
+    /* @conditional-compile-remove(spotlight) */
+    const [drawerMenuItemProps, setDrawerMenuItemProps] = React.useState<_DrawerMenuItemProps[]>([]);
+
+    /* @conditional-compile-remove(spotlight) */
+    const onKeyDown = useCallback(
+      (e: KeyboardEvent) => {
+        if (e.key === 'Enter') {
+          setDrawerMenuItemProps(
+            convertContextualMenuItemsToDrawerMenuItemProps(contextualMenuProps, () => setDrawerMenuItemProps([]))
+          );
+        }
+      },
+      [setDrawerMenuItemProps, contextualMenuProps]
     );
 
     const renderVideoStreamElement = useMemo(() => {
@@ -142,7 +224,6 @@ export const _LocalVideoTile = React.memo(
             localVideoSelectedDescription={localVideoSelectedDescription}
           />
           <StreamMedia videoStreamElement={renderElement} isMirrored={true} />
-          {/* @conditional-compile-remove(spotlight) */ isSpotlighted && spotlightBorder}
         </>
       );
     }, [
@@ -150,13 +231,14 @@ export const _LocalVideoTile = React.memo(
       localVideoCameraSwitcherLabel,
       localVideoSelectedDescription,
       renderElement,
-      showCameraSwitcherInLocalPreview,
-      /* @conditional-compile-remove(spotlight) */ isSpotlighted,
-      /* @conditional-compile-remove(spotlight) */ spotlightBorder
+      showCameraSwitcherInLocalPreview
     ]);
 
     return (
-      <>
+      <Stack
+        className={mergeStyles({ width: '100%', height: '100%' })}
+        /* @conditional-compile-remove(spotlight) */ onKeyDown={menuKind === 'drawer' ? onKeyDown : undefined}
+      >
         <VideoTile
           key={userId ?? 'local-video-tile'}
           userId={userId}
@@ -164,7 +246,7 @@ export const _LocalVideoTile = React.memo(
           showLabel={showLabel}
           displayName={displayName}
           initialsName={initialsName}
-          styles={styles}
+          styles={videoTileStyles}
           onRenderPlaceholder={onRenderAvatar}
           isMuted={isMuted}
           showMuteIndicator={showMuteIndicator}
@@ -175,11 +257,27 @@ export const _LocalVideoTile = React.memo(
           reaction={reaction}
           /* @conditional-compile-remove(spotlight) */
           isSpotlighted={isSpotlighted}
+          {...videoTileContextualMenuProps}
+          /* @conditional-compile-remove(spotlight) */
+          onLongTouch={() =>
+            setDrawerMenuItemProps(
+              convertContextualMenuItemsToDrawerMenuItemProps(contextualMenuProps, () => setDrawerMenuItemProps([]))
+            )
+          }
           /* @conditional-compile-remove(reaction) */
           reactionResources={reactionResources}
-        />
-        {/* @conditional-compile-remove(spotlight) */ isSpotlighted && spotlightBorder}
-      </>
+        >
+          {
+            /* @conditional-compile-remove(spotlight) */ drawerMenuItemProps.length > 0 && (
+              <Layer hostId={props.drawerMenuHostId}>
+                <Stack styles={drawerMenuWrapperStyles}>
+                  <_DrawerMenu onLightDismiss={() => setDrawerMenuItemProps([])} items={drawerMenuItemProps} />
+                </Stack>
+              </Layer>
+            )
+          }
+        </VideoTile>
+      </Stack>
     );
   }
 );
@@ -218,4 +316,26 @@ const FloatingLocalCameraCycleButton = (props: {
         )}
     </Stack>
   );
+};
+
+/* @conditional-compile-remove(spotlight) */
+const convertContextualMenuItemsToDrawerMenuItemProps = (
+  contextualMenuProps?: IContextualMenuProps,
+  onLightDismiss?: () => void
+): _DrawerMenuItemProps[] => {
+  if (!contextualMenuProps) {
+    return [];
+  }
+  return contextualMenuProps.items.map((item) => {
+    return {
+      itemKey: item.key,
+      text: item.text,
+      iconProps: item.iconProps,
+      disabled: item.disabled,
+      onItemClick: () => {
+        item.onClick?.();
+        onLightDismiss?.();
+      }
+    };
+  });
 };

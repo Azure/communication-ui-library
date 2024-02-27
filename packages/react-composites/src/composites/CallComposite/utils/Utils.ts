@@ -246,11 +246,11 @@ type GetCallCompositePageFunction = ((
   ((
     call: CallState | undefined,
     previousCall: CallState | undefined,
+    /* @conditional-compile-remove(call-transfer) */ transferCall?: CallState,
     /* @conditional-compile-remove(unsupported-browser) */ unsupportedBrowserInfo?: {
       environmentInfo?: EnvironmentInfo;
       unsupportedBrowserVersionOptedIn?: boolean;
-    },
-    /* @conditional-compile-remove(call-transfer) */ transferCall?: CallState
+    }
   ) => CallCompositePage);
 /**
  * Get the current call composite page based on the current call composite state
@@ -268,14 +268,14 @@ type GetCallCompositePageFunction = ((
 export const getCallCompositePage: GetCallCompositePageFunction = (
   call,
   previousCall?,
-  unsupportedBrowserInfo?,
-  transferCall?: CallState
+  transferCall?: CallState,
+  unsupportedBrowserInfo?
 ): CallCompositePage => {
   /* @conditional-compile-remove(unsupported-browser) */
   if (
     isUnsupportedEnvironment(
-      unsupportedBrowserInfo.environmentInfo,
-      unsupportedBrowserInfo.unsupportedBrowserVersionOptedIn
+      unsupportedBrowserInfo?.environmentInfo,
+      unsupportedBrowserInfo?.unsupportedBrowserVersionOptedIn
     )
   ) {
     return 'unsupportedEnvironment';

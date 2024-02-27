@@ -33,16 +33,19 @@ export const _dominantSpeakersWithFlatId = (dominantSpeakers?: DominantSpeakersI
 };
 
 /** @internal */
-export const _videoGalleryRemoteParticipantsMemo: (
+export type _VideoGalleryRemoteParticipantsMemoFn = (
   remoteParticipants: RemoteParticipantState[] | undefined,
   /* @conditional-compile-remove(hide-attendee-name) */
   isHideAttendeeNamesEnabled?: boolean,
   /* @conditional-compile-remove(hide-attendee-name) */
   localUserRole?: ParticipantRole
-) => VideoGalleryRemoteParticipant[] = (
+) => VideoGalleryRemoteParticipant[];
+
+/** @internal */
+export const _videoGalleryRemoteParticipantsMemo: _VideoGalleryRemoteParticipantsMemoFn = (
   remoteParticipants: RemoteParticipantState[] | undefined,
   isHideAttendeeNamesEnabled?: boolean,
-  localUserRole?
+  /* @conditional-compile-remove(hide-attendee-name) */ localUserRole?
 ): VideoGalleryRemoteParticipant[] => {
   if (!remoteParticipants) {
     return [];
@@ -104,7 +107,7 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     raisedHand?: unknown, // temp unknown type to build stable
     /* @conditional-compile-remove(reaction) */
     reaction?: unknown, // temp unknown type to build stable
-    /* @conditional-compile-remove(reaction) */
+    /* @conditional-compile-remove(spotlight) */
     spotlight?: unknown // temp unknown type to build stable
   ): VideoGalleryRemoteParticipant => {
     return convertRemoteParticipantToVideoGalleryRemoteParticipant(
@@ -118,7 +121,7 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
       raisedHand as RaisedHandState,
       /* @conditional-compile-remove(reaction) */
       reaction as Reaction,
-      /* @conditional-compile-remove(reaction) */
+      /* @conditional-compile-remove(spotlight) */
       spotlight as Spotlight
     );
   }
@@ -136,7 +139,7 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   raisedHand?: unknown, // temp unknown type to build stable
   /* @conditional-compile-remove(reaction) */
   reaction?: unknown, // temp unknown type to build stable
-  /* @conditional-compile-remove(reaction) */
+  /* @conditional-compile-remove(spotlight) */
   spotlight?: unknown // temp unknown type to build stable
 ): VideoGalleryRemoteParticipant => {
   const rawVideoStreamsArray = Object.values(videoStreams);
@@ -173,7 +176,7 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     raisedHand: raisedHand as RaisedHandState,
     /* @conditional-compile-remove(reaction) */
     reaction: reaction as Reaction,
-    /* @conditional-compile-remove(reaction) */
+    /* @conditional-compile-remove(spotlight) */
     spotlight: spotlight as Spotlight
   };
 };
@@ -201,7 +204,9 @@ export const memoizeLocalParticipant = memoizeOne(
     localVideoStream,
     /* @conditional-compile-remove(rooms) */ role,
     /* @conditional-compile-remove(raise-hand) */ raisedHand,
-    /* @conditional-compile-remove(reaction) */ reaction
+    /* @conditional-compile-remove(reaction) */ reaction,
+    /* @conditional-compile-remove(spotlight) */ localSpotlight,
+    /* @conditional-compile-remove(spotlight) */ capabilities
   ) => ({
     userId: identifier,
     displayName: displayName ?? '',
@@ -217,7 +222,11 @@ export const memoizeLocalParticipant = memoizeOne(
     /* @conditional-compile-remove(raise-hand) */
     raisedHand: raisedHand,
     /* @conditional-compile-remove(reaction) */
-    reaction: reaction
+    reaction: reaction,
+    /* @conditional-compile-remove(spotlight) */
+    spotlight: localSpotlight,
+    /* @conditional-compile-remove(spotlight) */
+    capabilities
   })
 );
 

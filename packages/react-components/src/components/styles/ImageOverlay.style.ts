@@ -24,8 +24,7 @@ export const downloadIcon: IIconProps = {
 export const overlayStyles = (theme: PartialTheme): IOverlayStyles => {
   return {
     root: {
-      background: theme.palette?.white,
-      opacity: '0.95'
+      background: theme.semanticColors?.bodyBackground
     }
   };
 };
@@ -53,6 +52,15 @@ export const scrollableContentStyle: IStyle = {
   maxHeight: '100%',
   flexDirection: 'column',
   flexWrap: 'nowrap'
+};
+
+/**
+ * @private
+ */
+export const themeProviderRootStyle: React.CSSProperties = {
+  background: 'transparent',
+  display: 'flex',
+  flexDirection: 'column'
 };
 
 /**

@@ -76,6 +76,9 @@ export interface ParticipantItemStrings {
   /* @conditional-compile-remove(PSTN-calls) */
   /** String shown when `participantState` is `Hold` */
   participantStateHold?: string;
+  /* @conditional-compile-remove(hide-attendee-name) */
+  /** String for the attendee role */
+  attendeeRole: string;
 }
 
 /**

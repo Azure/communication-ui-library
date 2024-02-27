@@ -46,7 +46,6 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
 
   const {
     remoteParticipants = [],
-    localParticipant,
     dominantSpeakers = [],
     maxRemoteVideoStreams = DEFAULT_MAX_VIDEO_SREAMS,
     maxOverflowGalleryDominantSpeakers = DEFAULT_MAX_OVERFLOW_GALLERY_DOMINANT_SPEAKERS,
@@ -148,15 +147,7 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
     | VideoGalleryParticipant
     | VideoGalleryRemoteParticipant
   )[] => {
-    if (isScreenShareActive && localParticipant) {
-      const localParticipantPlusOverflow = [localParticipant].concat(
-        visibleGridParticipants.current.concat(visibleOverflowGalleryParticipants.current)
-      );
-      // If screen sharing is active, assign video and audio participants as overflow gallery participants
-      /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-      return localParticipantPlusOverflow.concat(callingParticipants);
-      return localParticipantPlusOverflow;
-    } else if (isScreenShareActive) {
+    if (isScreenShareActive) {
       // If screen sharing is active, assign video and audio participants as overflow gallery participants
       /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
       return visibleGridParticipants.current.concat(
@@ -181,7 +172,6 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
   }, [
     /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ callingParticipants,
     isScreenShareActive,
-    localParticipant,
     maxRemoteVideoStreamsToUse
   ]);
 
@@ -190,6 +180,10 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
   return { gridParticipants, overflowGalleryParticipants: overflowGalleryParticipants };
 };
 
+interface SortedRemoteParticipants {
+  [key: string]: VideoGalleryRemoteParticipant;
+}
+
 const _useOrganizedParticipantsWithFocusedParticipants = (
   props: OrganizedParticipantsArgs
 ): OrganizedParticipantsResult => {
@@ -197,7 +191,7 @@ const _useOrganizedParticipantsWithFocusedParticipants = (
   const remoteParticipantMap = props.remoteParticipants.reduce((map, remoteParticipant) => {
     map[remoteParticipant.userId] = remoteParticipant;
     return map;
-  }, {});
+  }, {} as SortedRemoteParticipants);
 
   const spotlightedParticipantUserIds = props.spotlightedParticipantUserIds ?? [];
   // declare focused participant user ids as spotlighted participants user ids followed by

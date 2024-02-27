@@ -50,7 +50,6 @@ export class ResourceDownloadQueue {
     if (this.isActive) {
       return;
     }
-
     while (this._messagesNeedingResourceRetrieval.length > 0) {
       this.isActive = true;
       let message = this._messagesNeedingResourceRetrieval.shift();
@@ -66,11 +65,11 @@ export class ResourceDownloadQueue {
         } else {
           message = await this.downloadAllPreviewUrls(message, operation);
         }
-
-        this.isActive = false;
         this._context.setChatMessage(threadId, message);
       } catch (error) {
         console.log('Downloading Resource error: ', error);
+      } finally {
+        this.isActive = false;
       }
     }
   }
@@ -80,12 +79,8 @@ export class ResourceDownloadQueue {
     resourceUrl: string,
     operation: ImageRequest
   ): Promise<ChatMessageWithStatus> {
-    if (message.resourceCache === undefined) {
-      message.resourceCache = {};
-    }
-
     const blobUrl = await operation(resourceUrl, this._credential);
-    message.resourceCache[resourceUrl] = blobUrl;
+    message = { ...message, resourceCache: { ...message.resourceCache, [resourceUrl]: blobUrl } };
     return message;
   }
 
@@ -99,7 +94,7 @@ export class ResourceDownloadQueue {
         message.resourceCache = {};
       }
       for (const attachment of attachments) {
-        if (attachment.previewUrl) {
+        if (attachment.previewUrl && attachment.attachmentType === 'image') {
           const blobUrl = await operation(attachment.previewUrl, this._credential);
           message.resourceCache[attachment.previewUrl] = blobUrl;
         }

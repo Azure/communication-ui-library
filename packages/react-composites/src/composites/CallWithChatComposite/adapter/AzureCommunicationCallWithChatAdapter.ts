@@ -24,8 +24,6 @@ import { AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(dtmf-dialer) */
 import { DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { AttachmentDownloadResult } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { AttachmentMetadata } from '@internal/react-components';
 import {
@@ -50,6 +48,8 @@ import {
   MessageEditedListener,
   MessageDeletedListener
 } from '../../ChatComposite';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { ResourceDetails } from '../../ChatComposite';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadManager } from '../../ChatComposite';
 import { CallWithChatAdapter, CallWithChatEvent } from './CallWithChatAdapter';
@@ -63,8 +63,6 @@ import {
   _createAzureCommunicationChatAdapterInner,
   createAzureCommunicationChatAdapterFromClient
 } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { AzureCommunicationChatAdapterOptions } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
 import { EventEmitter } from 'events';
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -207,7 +205,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     /* @conditional-compile-remove(raise-hand) */
     this.lowerHand.bind(this);
     /* @conditional-compile-remove(reaction) */
-    this.onReactionClicked.bind(this);
+    this.onReactionClick.bind(this);
     this.removeParticipant.bind(this);
     this.createStreamView.bind(this);
     this.disposeStreamView.bind(this);
@@ -236,7 +234,9 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     /* @conditional-compile-remove(file-sharing) */
     this.updateFileUploadMetadata = this.updateFileUploadMetadata.bind(this);
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-    this.downloadAttachment = this.downloadAttachment.bind(this);
+    this.downloadResourceToCache = this.downloadResourceToCache.bind(this);
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    this.removeResourceFromCache = this.removeResourceFromCache.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
     this.holdCall.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
@@ -386,8 +386,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     await this.callAdapter.lowerHand();
   }
   /* @conditional-compile-remove(reaction) */
-  public async onReactionClicked(reaction: Reaction): Promise<void> {
-    await this.callAdapter.onReactionClicked(reaction);
+  public async onReactionClick(reaction: Reaction): Promise<void> {
+    await this.callAdapter.onReactionClick(reaction);
   }
   /** Create a stream view for a remote participants video feed. */
   public async createStreamView(
@@ -482,8 +482,12 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.chatAdapter.updateFileUploadMetadata(id, metadata);
   };
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  async downloadAttachment(options: { attachmentUrl: string }): Promise<AttachmentDownloadResult> {
-    return await this.chatAdapter.downloadAttachment(options);
+  public async downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void> {
+    this.chatAdapter.downloadResourceToCache(resourceDetails);
+  }
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  public removeResourceFromCache(resourceDetails: ResourceDetails): void {
+    this.chatAdapter.removeResourceFromCache(resourceDetails);
   }
   /* @conditional-compile-remove(PSTN-calls) */
   public async holdCall(): Promise<void> {
@@ -1021,8 +1025,6 @@ export type AzureCommunicationCallWithChatAdapterFromClientArgs = {
   chatThreadClient: ChatThreadClient;
   /* @conditional-compile-remove(video-background-effects) */
   callAdapterOptions?: AzureCommunicationCallAdapterOptions;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  chatAdapterOptions?: AzureCommunicationChatAdapterOptions;
 };
 
 /**
@@ -1041,9 +1043,7 @@ export const createAzureCommunicationCallWithChatAdapterFromClients = async ({
   chatClient,
   chatThreadClient,
   /* @conditional-compile-remove(video-background-effects) */
-  callAdapterOptions,
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  chatAdapterOptions
+  callAdapterOptions
 }: AzureCommunicationCallWithChatAdapterFromClientArgs): Promise<CallWithChatAdapter> => {
   const createCallAdapterPromise = createAzureCommunicationCallAdapterFromClient(
     callClient,
@@ -1052,12 +1052,7 @@ export const createAzureCommunicationCallWithChatAdapterFromClients = async ({
     /* @conditional-compile-remove(video-background-effects) */
     callAdapterOptions
   );
-  const createChatAdapterPromise = createAzureCommunicationChatAdapterFromClient(
-    chatClient,
-    chatThreadClient,
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-    chatAdapterOptions
-  );
+  const createChatAdapterPromise = createAzureCommunicationChatAdapterFromClient(chatClient, chatThreadClient);
   const [callAdapter, chatAdapter] = await Promise.all([createCallAdapterPromise, createChatAdapterPromise]);
   return new AzureCommunicationCallWithChatAdapter(callAdapter, chatAdapter);
 };

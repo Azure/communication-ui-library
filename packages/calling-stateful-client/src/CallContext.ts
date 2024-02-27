@@ -43,6 +43,8 @@ import {
 } from './CallClientState';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from './CallClientState';
+/* @conditional-compile-remove(reaction) */
+import { ReactionState } from './CallClientState';
 /* @conditional-compile-remove(call-transfer) */
 import { AcceptedTransfer } from './CallClientState';
 import { callingStatefulLogger } from './Logger';
@@ -422,8 +424,8 @@ export class CallContext {
       clearTimeout(this._timeOutId[participantKey]);
 
       const participant = call.remoteParticipants[participantKey];
-      const newReactionState = reactionMessage
-        ? { reactionMessage: reactionMessage, receivedAt: new Date() }
+      const newReactionState: ReactionState | undefined = reactionMessage
+        ? { reactionMessage: reactionMessage, receivedOn: new Date() }
         : undefined;
 
       if (participantKey === toFlatCommunicationIdentifier(this._state.userId)) {
@@ -472,7 +474,7 @@ export class CallContext {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        call.spotlight = { spotlightedParticipants, maxParticipantsToSpotlight };
+        call.spotlight = { ...call.spotlight, spotlightedParticipants, maxParticipantsToSpotlight };
       }
     });
   }
@@ -485,6 +487,12 @@ export class CallContext {
         const participant = call.remoteParticipants[toFlatCommunicationIdentifier(spotlightedParticipant.identifier)];
         if (participant) {
           participant.spotlight = { spotlightedOrderPosition: spotlightedParticipant.order };
+        } else if (
+          call.spotlight &&
+          toFlatCommunicationIdentifier(draft.userId) ===
+            toFlatCommunicationIdentifier(spotlightedParticipant.identifier)
+        ) {
+          call.spotlight.localParticipantSpotlight = { spotlightedOrderPosition: spotlightedParticipant.order };
         }
       }
     });
@@ -498,6 +506,12 @@ export class CallContext {
         const participant = call.remoteParticipants[toFlatCommunicationIdentifier(spotlightedParticipant.identifier)];
         if (participant) {
           participant.spotlight = undefined;
+        } else if (
+          call.spotlight &&
+          toFlatCommunicationIdentifier(draft.userId) ===
+            toFlatCommunicationIdentifier(spotlightedParticipant.identifier)
+        ) {
+          call.spotlight.localParticipantSpotlight = undefined;
         }
       }
     });

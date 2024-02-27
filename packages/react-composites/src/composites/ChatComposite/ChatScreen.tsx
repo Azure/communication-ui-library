@@ -119,6 +119,18 @@ export interface FileSharingOptions {
 /**
  * @private
  */
+/* @conditional-compile-remove(image-overlay) */
+interface OverlayImageItem {
+  imageSrc: string;
+  title: string;
+  titleIcon: JSX.Element;
+  attachmentId: string;
+  messageId: string;
+}
+
+/**
+ * @private
+ */
 export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const {
     onFetchAvatarPersonaData,
@@ -134,10 +146,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   /* @conditional-compile-remove(file-sharing) */
   const [downloadErrorMessage, setDownloadErrorMessage] = React.useState('');
   /* @conditional-compile-remove(image-overlay) */
-  const [fullSizeAttachments, setFullSizeAttachments] = useState<Record<string, string>>({});
-  /* @conditional-compile-remove(image-overlay) */
-  const [overlayImageItem, setOverlayImageItem] =
-    useState<{ imageSrc: string; title: string; titleIcon: JSX.Element; downloadFilename: string }>();
+  const [overlayImageItem, setOverlayImageItem] = useState<OverlayImageItem>();
   /* @conditional-compile-remove(image-overlay) */
   const [isImageOverlayOpen, setIsImageOverlayOpen] = useState<boolean>(false);
 
@@ -160,6 +169,39 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const typingIndicatorProps = usePropsFor(TypingIndicator);
   const headerProps = useAdaptedSelector(getHeaderProps);
   const errorBarProps = usePropsFor(ErrorBar);
+
+  /* @conditional-compile-remove(image-overlay) */
+  useEffect(() => {
+    if (overlayImageItem === undefined) {
+      return;
+    }
+    const messages = messageThreadProps.messages.filter((message) => {
+      return message.messageId === overlayImageItem?.messageId;
+    });
+    if (messages.length <= 0 || messages[0].messageType !== 'chat') {
+      return;
+    }
+    const message = messages[0] as ChatMessage;
+    if (overlayImageItem.imageSrc === '' && message.inlineImages && message.inlineImages?.length > 0) {
+      const inlineImages = message.inlineImages.filter((attachment) => {
+        return attachment.id === overlayImageItem?.attachmentId;
+      });
+      if (
+        inlineImages.length <= 0 ||
+        inlineImages[0].fullSizeImageSrc === undefined ||
+        inlineImages[0].fullSizeImageSrc === '' ||
+        overlayImageItem.imageSrc === inlineImages[0].fullSizeImageSrc
+      ) {
+        return;
+      }
+      setOverlayImageItem({
+        ...overlayImageItem,
+        imageSrc: inlineImages[0].fullSizeImageSrc
+      });
+    }
+    // Disable eslint because we are using the overlayImageItem in this effect but don't want to have it as a dependency, as it will cause an infinite loop.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [messageThreadProps.messages]);
 
   const onRenderAvatarCallback = useCallback(
     (userId?: string, defaultOptions?: AvatarPersonaProps) => {
@@ -248,36 +290,25 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         imageAlt: chatMessage.senderDisplayName
       };
       const titleIcon = onRenderAvatarCallback && onRenderAvatarCallback(chatMessage.senderId, titleIconRenderOptions);
-      const overlayImage = {
+      const overlayImage: OverlayImageItem = {
         title: chatMessage.senderDisplayName || '',
         titleIcon: titleIcon,
-        downloadFilename: attachment.id,
-        imageSrc: ''
+        attachmentId: attachment.id,
+        imageSrc: attachment.fullSizeImageSrc || '',
+        messageId: messageId
       };
       setIsImageOverlayOpen(true);
-
-      if (attachment.id in fullSizeAttachments) {
-        setOverlayImageItem({
-          ...overlayImage,
-          imageSrc: fullSizeAttachments[attachment.id]
-        });
-        return;
-      }
+      setOverlayImageItem(overlayImage);
 
       if (attachment.attachmentType === 'inlineImage' && attachment.url) {
-        // TBD: Need to begin investigating how to download HQ images.
-        const blob = await adapter.downloadAttachment({ attachmentUrl: attachment.url });
-        if (blob) {
-          const blobUrl = blob.blobUrl;
-          setFullSizeAttachments((prev) => ({ ...prev, [attachment.id]: blobUrl }));
-          setOverlayImageItem({
-            ...overlayImage,
-            imageSrc: blobUrl
-          });
-        }
+        adapter.downloadResourceToCache({
+          threadId: adapter.getState().thread.threadId,
+          messageId: messageId,
+          resourceUrl: attachment.url
+        });
       }
     },
-    [adapter, fullSizeAttachments, messageThreadProps.messages, onRenderAvatarCallback]
+    [adapter, messageThreadProps, onRenderAvatarCallback]
   );
 
   /* @conditional-compile-remove(image-overlay) */
@@ -288,6 +319,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     ): JSX.Element => {
       return (
         <span
+          key={inlineImage.imgAttrs.id}
           onClick={() => onInlineImageClicked(inlineImage.imgAttrs.id || '', inlineImage.messageId)}
           tabIndex={0}
           role="button"
@@ -296,6 +328,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
               onInlineImageClicked(inlineImage.imgAttrs.id || '', inlineImage.messageId);
             }
           }}
+          style={{ cursor: 'pointer' }}
         >
           {defaultOnRender(inlineImage)}
         </span>
@@ -316,7 +349,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         const a = document.createElement('a');
         // Set the href and download attributes for the anchor element
         a.href = imageSrc;
-        a.download = overlayImageItem?.downloadFilename || '';
+        a.download = overlayImageItem?.attachmentId || '';
         a.rel = 'noopener noreferrer';
         a.target = '_blank';
 
@@ -326,7 +359,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         document.body.removeChild(a);
       }
     },
-    [overlayImageItem?.downloadFilename]
+    [overlayImageItem?.attachmentId]
   );
 
   const AttachFileButton = useCallback(() => {

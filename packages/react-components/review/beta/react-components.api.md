@@ -66,11 +66,6 @@ export type AnnouncerProps = {
 };
 
 // @beta
-export interface AttachmentDownloadResult {
-    blobUrl: string;
-}
-
-// @beta
 export type AttachmentMetadata = FileMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ InlineImageMetadata;
 
 // @internal
@@ -194,10 +189,10 @@ export interface _CallSurvey {
 
 // @beta
 export interface CallSurveyImprovementSuggestions {
-    audio?: string;
-    overall?: string;
-    screenshare?: string;
-    video?: string;
+    audioRating?: string;
+    overallRating?: string;
+    screenshareRating?: string;
+    videoRating?: string;
 }
 
 // @internal
@@ -405,17 +400,17 @@ export interface _CaptionsSettingsModalProps {
     // (undocumented)
     changeCaptionLanguage?: boolean;
     // (undocumented)
-    currentCaptionLanguage: string;
+    currentCaptionLanguage: _SupportedCaptionLanguage;
     // (undocumented)
-    currentSpokenLanguage: string;
+    currentSpokenLanguage: _SupportedSpokenLanguage;
     // (undocumented)
     isCaptionsFeatureActive?: boolean;
     // (undocumented)
     onDismissCaptionsSettings?: () => void;
     // (undocumented)
-    onSetCaptionLanguage: (language: string) => Promise<void>;
+    onSetCaptionLanguage: (language: _SupportedCaptionLanguage) => Promise<void>;
     // (undocumented)
-    onSetSpokenLanguage: (language: string) => Promise<void>;
+    onSetSpokenLanguage: (language: _SupportedSpokenLanguage) => Promise<void>;
     // (undocumented)
     onStartCaptions: (options?: _captionsOptions) => Promise<void>;
     // (undocumented)
@@ -425,9 +420,9 @@ export interface _CaptionsSettingsModalProps {
     // (undocumented)
     strings?: _CaptionsSettingsModalStrings;
     // (undocumented)
-    supportedCaptionLanguages: string[];
+    supportedCaptionLanguages: _SupportedCaptionLanguage[];
     // (undocumented)
-    supportedSpokenLanguages: string[];
+    supportedSpokenLanguages: _SupportedSpokenLanguage[];
 }
 
 // @internal
@@ -626,7 +621,6 @@ export type ComponentSlotStyle = Omit<IRawStyle, 'animation'>;
 
 // @public
 export interface ComponentStrings {
-    AttendeeRole: string;
     BrowserPermissionDenied: BrowserPermissionDeniedStrings;
     BrowserPermissionDeniedIOS: BrowserPermissionDeniedIOSStrings;
     CameraAndMicrophoneSitePermissionsCheck: SitePermissionsStrings;
@@ -658,6 +652,7 @@ export interface ComponentStrings {
     raiseHandButton: RaiseHandButtonStrings;
     // @beta
     reactionButton: ReactionButtonStrings;
+    richTextSendBox: RichTextSendBoxStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
@@ -846,6 +841,14 @@ export const DEFAULT_COMPONENT_ICONS: {
     StartSpotlightContextualMenuItem: React_2.JSX.Element;
     StopSpotlightContextualMenuItem: React_2.JSX.Element;
     VideoSpotlighted: React_2.JSX.Element;
+    RTEBoldButtonIcon: React_2.JSX.Element;
+    RTEItalicButtonIcon: React_2.JSX.Element;
+    RTEUnderlineButtonIcon: React_2.JSX.Element;
+    RTEBulletListButtonIcon: React_2.JSX.Element;
+    RTEtNumberListButtonIcon: React_2.JSX.Element;
+    RTEIndentDecreaseButtonIcon: React_2.JSX.Element;
+    RTEIndentIncreaseButtonIcon: React_2.JSX.Element;
+    RTEDividerIcon: React_2.JSX.Element;
 };
 
 // @internal
@@ -1208,6 +1211,7 @@ export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Eleme
 export interface FluentThemeProviderProps {
     children: React_2.ReactNode;
     fluentTheme?: PartialTheme | Theme;
+    rootStyle?: React_2.CSSProperties | undefined;
     rtl?: boolean;
 }
 
@@ -1339,6 +1343,7 @@ export interface InlineImage {
 export interface InlineImageMetadata {
     // (undocumented)
     attachmentType: 'inlineImage';
+    fullSizeImageSrc?: string;
     id: string;
     // (undocumented)
     previewUrl?: string;
@@ -1411,7 +1416,14 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
     personaMinSize?: number | undefined;
     raisedHand?: RaisedHand | undefined;
     reaction?: Reaction | undefined;
+    spotlightedParticipantUserIds?: string[] | undefined;
     isSpotlighted?: boolean | undefined;
+    onStartSpotlight?: (() => void) | undefined;
+    onStopSpotlight?: (() => void) | undefined;
+    maxParticipantsToSpotlight?: number | undefined;
+    menuKind?: "contextual" | "drawer" | undefined;
+    drawerMenuHostId?: string | undefined;
+    strings?: VideoGalleryStrings | undefined;
     reactionResources?: ReactionResources | undefined;
 }) => React_2.JSX.Element>;
 
@@ -1724,6 +1736,7 @@ export interface ParticipantItemProps {
 
 // @public
 export interface ParticipantItemStrings {
+    attendeeRole: string;
     displayNamePlaceholder?: string;
     isMeText: string;
     menuTitle: string;
@@ -1901,7 +1914,7 @@ export interface _RatingScale {
 // @beta
 export type Reaction = {
     reactionType: string;
-    receivedAt: Date;
+    receivedOn: Date;
 };
 
 // @beta
@@ -1909,7 +1922,7 @@ export const ReactionButton: (props: ReactionButtonProps) => JSX.Element;
 
 // @beta
 export interface ReactionButtonProps extends ControlBarButtonProps {
-    onReactionClicked: (reaction: string) => Promise<void>;
+    onReactionClick: (reaction: string) => Promise<void>;
     reactionResources: ReactionResources;
     strings?: Partial<ReactionButtonStrings>;
 }
@@ -1965,7 +1978,7 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     showMuteIndicator?: boolean | undefined;
     showLabel?: boolean | undefined;
     personaMinSize?: number | undefined;
-    strings?: VideoGalleryStrings | undefined;
+    strings: VideoGalleryStrings;
     participantState?: ParticipantState | undefined;
     menuKind?: "contextual" | "drawer" | undefined;
     drawerMenuHostId?: string | undefined;
@@ -1984,17 +1997,28 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
 }) => React_2.JSX.Element>;
 
 // @beta
-export const RTESendBox: (props: RTESendBoxProps) => JSX.Element;
+export const RichTextSendBox: (props: RichTextSendBoxProps) => JSX.Element;
 
 // @beta
-export interface RTESendBoxProps {
+export interface RichTextSendBoxProps {
     activeFileUploads?: ActiveFileUpload[];
     disabled?: boolean;
     onCancelFileUpload?: (fileId: string) => void;
     onRenderFileUploads?: () => JSX.Element;
     onSendMessage: (content: string) => Promise<void>;
-    strings?: Partial<SendBoxStrings>;
+    strings?: Partial<RichTextSendBoxStrings>;
     systemMessage?: string;
+}
+
+// @beta
+export interface RichTextSendBoxStrings extends SendBoxStrings {
+    boldTooltip: string;
+    bulletListTooltip: string;
+    decreaseIndentTooltip: string;
+    increaseIndentTooltip: string;
+    italicTooltip: string;
+    numberListTooltip: string;
+    underlineTooltip: string;
 }
 
 // @public
@@ -2273,6 +2297,12 @@ export interface StreamMediaProps {
     videoStreamElement: HTMLElement | null;
 }
 
+// @internal (undocumented)
+export type _SupportedCaptionLanguage = keyof CaptionLanguageStrings;
+
+// @internal (undocumented)
+export type _SupportedSpokenLanguage = keyof SpokenLanguageStrings;
+
 // @beta
 export interface SurveyIssues {
     // (undocumented)
@@ -2332,12 +2362,10 @@ export interface SurveyIssuesHeadingStrings {
 }
 
 // @internal
-export type _SurveyTag = {
-    [issueCategory: string]: {
-        message: string;
-        issue: _AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue;
-    }[];
-};
+export type _SurveyTag = Record<_IssueCategory, {
+    message: string;
+    issue: _AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue;
+}[]>;
 
 // @public
 export type SystemMessage = ParticipantAddedSystemMessage | ParticipantRemovedSystemMessage | TopicUpdatedSystemMessage | ContentSystemMessage;
@@ -2621,8 +2649,10 @@ export interface VideoGalleryProps {
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
-    onStartSpotlight?: (userIds?: string[]) => Promise<void>;
-    onStopSpotlight?: (userIds?: string[]) => Promise<void>;
+    onStartLocalSpotlight?: () => Promise<void>;
+    onStartRemoteSpotlight?: (userIds?: string[]) => Promise<void>;
+    onStopLocalSpotlight?: () => Promise<void>;
+    onStopRemoteSpotlight?: (userIds?: string[]) => Promise<void>;
     onUnpinParticipant?: (userId: string) => void;
     overflowGalleryPosition?: OverflowGalleryPosition;
     pinnedParticipants?: string[];
@@ -2666,6 +2696,7 @@ export interface VideoGalleryStream {
 // @public
 export interface VideoGalleryStrings {
     addSpotlightVideoTileMenuLabel: string;
+    attendeeRole: string;
     displayNamePlaceholder: string;
     fillRemoteParticipantFrame: string;
     fitRemoteParticipantToFrame: string;

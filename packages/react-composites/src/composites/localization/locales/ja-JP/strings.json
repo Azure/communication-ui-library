@@ -64,7 +64,7 @@
     "addSpotlightParticipantListMenuLabel": "スポットライトを追加",
     "stopSpotlightParticipantListMenuLabel": "スポットライトの設定を解除",
     "stopSpotlightOnSelfParticipantListMenuLabel": "スポットライトを終了",
-    "spotlightLimitReachedParticipantListMenuTitle": "Spotlight limit reached",
+    "spotlightLimitReachedParticipantListMenuTitle": "スポットライトの上限に達しました",
     "returnToCallButtonAriaDescription": "通話に戻る",
     "returnToCallButtonAriaLabel": "戻る",
     "roomNotFoundDetails": "指定されたルーム ID が見つかりませんでした。",

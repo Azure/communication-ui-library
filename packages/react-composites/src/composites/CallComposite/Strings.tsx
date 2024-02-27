@@ -434,11 +434,10 @@ export interface CallCompositeStrings {
    * Control bar People button ToolTipContent
    */
   peopleButtonTooltipClose: string;
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   /**
    * Label disaplayed on the lobby screen during a 1:1 outbound call.
    */
-  outboundCallingNoticeString: string;
+  outboundCallingNoticeString?: string;
   /**
    * Notice to be announced by narrator when a participant joins a call
    */
@@ -833,4 +832,14 @@ export interface CallCompositeStrings {
    * Strings for spotlight prompt
    */
   spotlightPrompt: SpotlightPromptStrings;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Label for button to exit spotlight
+   */
+  exitSpotlightButtonLabel: string;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Tooltip for button to exit spotlight
+   */
+  exitSpotlightButtonTooltip: string;
 }

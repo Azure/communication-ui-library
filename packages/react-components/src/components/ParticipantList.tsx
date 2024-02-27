@@ -125,8 +125,7 @@ const onRenderParticipantDefault = (
   onParticipantClick?: (participant?: ParticipantListParticipant) => void,
   showParticipantOverflowTooltip?: boolean,
   participantAriaLabelledBy?: string,
-  theme?: Theme,
-  attendeeRoleString?: string
+  theme?: Theme
 ): JSX.Element | null => {
   const callingParticipant = participant as CallParticipantListParticipant;
 
@@ -141,8 +140,8 @@ const onRenderParticipantDefault = (
 
   /* @conditional-compile-remove(hide-attendee-name) */
   const formatDisplayName = (): string | undefined => {
-    if (displayName && attendeeRoleString) {
-      return _formatString(displayName, { AttendeeRole: attendeeRoleString });
+    if (displayName && strings.attendeeRole) {
+      return _formatString(displayName, { AttendeeRole: strings.attendeeRole });
     }
     return displayName;
   };
@@ -315,8 +314,6 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
   const participantItemStrings = useLocale().strings.participantItem;
   /* @conditional-compile-remove(total-participant-count) */
   const participantListStrings = useLocale().strings.ParticipantList;
-  /* @conditional-compile-remove(hide-attendee-name) */
-  const attendeeRoleString = useLocale().strings.AttendeeRole;
 
   const displayedParticipants: ParticipantListParticipant[] = useMemo(() => {
     return onRenderParticipant ? participants : getParticipantsForDefaultRender(participants, excludeMe, myUserId);
@@ -387,9 +384,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
               showParticipantOverflowTooltip,
               participantAriaLabelledBy,
               /* @conditional-compile-remove(raise-hand) */
-              theme,
-              /* @conditional-compile-remove(hide-attendee-name) */
-              attendeeRoleString
+              theme
             )
       )}
       {

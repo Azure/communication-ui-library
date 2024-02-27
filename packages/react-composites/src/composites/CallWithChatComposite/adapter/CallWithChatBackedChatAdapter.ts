@@ -3,10 +3,10 @@
 
 import { CallWithChatAdapter } from './CallWithChatAdapter';
 import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { ResourceDetails } from '../../ChatComposite';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadManager } from '../../ChatComposite';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { AttachmentDownloadResult } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { AttachmentMetadata } from '@internal/react-components';
 import { ErrorBarStrings } from '@internal/react-components';
@@ -130,8 +130,12 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
   };
 
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  public async downloadAttachment(options: { attachmentUrl: string }): Promise<AttachmentDownloadResult> {
-    return await this.callWithChatAdapter.downloadAttachment(options);
+  public async downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void> {
+    this.callWithChatAdapter.downloadResourceToCache(resourceDetails);
+  }
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  public removeResourceFromCache(resourceDetails: ResourceDetails): void {
+    this.callWithChatAdapter.removeResourceFromCache(resourceDetails);
   }
 }
 
