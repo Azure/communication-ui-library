@@ -18,6 +18,33 @@ export const richTextEditorStyle = mergeStyles({
 /**
  * @private
  */
+export const richTextEditorWrapperStyle = (theme: Theme): string => {
+  return mergeStyles({
+    '& table': {
+      background: 'transparent',
+      borderCollapse: 'collapse',
+      tableLayout: 'auto',
+      width: '100%',
+      borderSpacing: '0',
+
+      '& tr': {
+        background: 'transparent',
+        border: `1px solid ${theme.palette.neutralLight}`,
+
+        '& td': {
+          background: 'transparent',
+          border: `1px solid ${theme.palette.neutralLight}`,
+          wordBreak: 'normal',
+          padding: '0.125rem 0.25rem'
+        }
+      }
+    }
+  });
+};
+
+/**
+ * @private
+ */
 export const ribbonButtonStyle = (theme: Theme): Partial<IButtonStyles> => {
   return {
     icon: { color: theme.palette.neutralPrimary, height: 'auto' },

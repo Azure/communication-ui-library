@@ -2,12 +2,14 @@
 // Licensed under the MIT License.
 import React, { useState } from 'react';
 import { FocusZone, FocusZoneDirection, Icon } from '@fluentui/react';
-import { insertTable as insertTableApi } from 'roosterjs-editor-api';
+// import { insertTable as insertTableApi } from 'roosterjs-editor-api';
+
+import { insertTable as insertTableApi } from './insertTable';
 import { mergeStyleSets } from '@fluentui/react';
 // import { safeInstanceOf } from 'roosterjs-editor-dom';
 import type { RibbonButton } from 'roosterjs-react';
 import type { IContextualMenuItem, Theme } from '@fluentui/react';
-import { ribbonButtonStyle } from '../../styles/RichTextEditor.styles';
+import { ribbonButtonStyle } from '../../../styles/RichTextEditor.styles';
 
 const MaxRows = 5;
 const MaxCols = 5;
@@ -68,6 +70,7 @@ export const insertTableButton = (theme: Theme): RibbonButton<string> => {
         hidden: true
       },
       onRenderIcon: () => {
+        //TODO: add item handling here!
         return <TableIcon />;
       },
       buttonStyles: ribbonButtonStyle(theme)

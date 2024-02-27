@@ -4,7 +4,7 @@ import { editTable } from 'roosterjs-editor-api';
 import { CompatibleTableOperation, EditorPlugin, IEditor } from 'roosterjs-editor-types-compatible';
 import { ContextMenuItem, createContextMenuProvider, LocalizedStrings } from 'roosterjs-react';
 
-const onClick = (key: string, editor: IEditor) => {
+const onClick = (key: string, editor: IEditor): void => {
   editor.focus();
   const operation = TableEditOperationMap[key];
   if (typeof operation === 'number') {

@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Theme } from '@fluentui/react';
+import { ContextualMenuItemType, Theme } from '@fluentui/react';
 import { KnownRibbonButtonKey, LocalizedStrings, RibbonButton, getButtons } from 'roosterjs-react';
 import { ribbonButtonStyle, ribbonDividerStyle } from '../../styles/RichTextEditor.styles';
 import { RichTextSendBoxStrings } from '../RTESendBox';
-import { insertTableButton } from './RTERibbonInsertTableButton';
+import { insertTableButton } from './Table/RTERibbonInsertTableButton';
 
 // Key value can'e be the same as it will cause React key duplication error
 const dividerRibbonButton = (theme: Theme, key: string): RibbonButton<string> => {
@@ -16,6 +16,7 @@ const dividerRibbonButton = (theme: Theme, key: string): RibbonButton<string> =>
     onClick: () => {},
     isDisabled: () => true,
     commandBarProperties: {
+      itemType: ContextualMenuItemType.Divider,
       buttonStyles: ribbonDividerStyle(theme)
     }
   };
