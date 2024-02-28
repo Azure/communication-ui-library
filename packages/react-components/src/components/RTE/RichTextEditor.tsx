@@ -23,7 +23,7 @@ import { setBackgroundColor, setTextColor } from 'roosterjs-editor-api';
  * @beta
  */
 export interface RichTextEditorProps {
-  content?: string;
+  initialContent?: string;
   onChange: (newValue?: string) => void;
   placeholderText?: string;
   strings: Partial<RichTextSendBoxStrings>;
@@ -44,7 +44,7 @@ export interface RichTextEditorComponentRef {
  * @beta
  */
 export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichTextEditorProps>((props, ref) => {
-  const { content, onChange, placeholderText, strings } = props;
+  const { initialContent, onChange, placeholderText, strings } = props;
   const editor = useRef<IEditor | null>(null);
   const theme = useTheme();
   useImperativeHandle(
@@ -60,12 +60,6 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     },
     []
   );
-
-  useEffect(() => {
-    if (content !== editor.current?.getContent()) {
-      editor.current?.setContent(content || '');
-    }
-  }, [content]);
 
   useEffect(() => {
     if (editor.current !== null) {
@@ -124,6 +118,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     <div>
       {ribbon}
       <Rooster
+        initialContent={initialContent}
         inDarkMode={isDarkThemed(theme)}
         plugins={plugins}
         className={richTextEditorStyle}

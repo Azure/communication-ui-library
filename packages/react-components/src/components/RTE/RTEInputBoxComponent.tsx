@@ -16,7 +16,7 @@ export interface RTEInputBoxComponentStylesProps extends BaseCustomStyles {}
  */
 export interface RTEInputBoxComponentProps {
   placeholderText?: string;
-  content: string;
+  initialContent?: string;
   onChange: (newValue?: string) => void;
   editorComponentRef: React.RefObject<RichTextEditorComponentRef>;
   strings: Partial<RichTextSendBoxStrings>;
@@ -26,12 +26,12 @@ export interface RTEInputBoxComponentProps {
  * @private
  */
 export const RTEInputBoxComponent = (props: RTEInputBoxComponentProps): JSX.Element => {
-  const { placeholderText, content, onChange, editorComponentRef } = props;
+  const { placeholderText, initialContent, onChange, editorComponentRef } = props;
 
   return (
     <div>
       <RichTextEditor
-        content={content}
+        initialContent={initialContent}
         placeholderText={placeholderText}
         onChange={onChange}
         ref={editorComponentRef}

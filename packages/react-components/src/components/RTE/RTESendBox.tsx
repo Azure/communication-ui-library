@@ -237,7 +237,6 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       >
         <RTEInputBoxComponent
           placeholderText={strings.placeholderText}
-          content={contentValue}
           onChange={setContent}
           editorComponentRef={editorComponentRef}
           strings={strings}
