@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "area": "improvement",
-  "workstream": "API update from ARB feedback",
-  "comment": "API naming update from ARB feedback",
-  "packageName": "@azure/communication-react",
-  "email": "mbellah@microsoft.com",
-  "dependentChangeType": "patch"
-}
