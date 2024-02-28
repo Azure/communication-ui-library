@@ -7,13 +7,11 @@ import {
   callingWidgetContainerStyles,
   callIconStyles,
   logoContainerStyles,
-  collapseButtonStyles
+  collapseButtonStyles,
+  callingWidgetInCallContainerStyles
 } from './CallingWidgetComponent.styles';
-
 import { CommunicationUserIdentifier, MicrosoftTeamsAppIdentifier } from '@azure/communication-common';
 import { CallAdapter, CallAdapterState, CallComposite } from '@azure/communication-react';
-
-import { callingWidgetInCallContainerStyles } from './CallingWidgetComponent.styles';
 import { _MockCallingWidgetCallAdapter } from '@internal/react-composites';
 
 /**

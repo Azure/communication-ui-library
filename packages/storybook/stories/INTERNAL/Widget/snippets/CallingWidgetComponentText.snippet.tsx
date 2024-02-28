@@ -1,5 +1,5 @@
 import { IconButton, PrimaryButton, Stack, TextField, useTheme, Checkbox, Icon, Spinner } from '@fluentui/react';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 import {
   callingWidgetSetupContainerStyles,
   checkboxStyles,
@@ -7,7 +7,8 @@ import {
   callingWidgetContainerStyles,
   callIconStyles,
   logoContainerStyles,
-  collapseButtonStyles
+  collapseButtonStyles,
+  callingWidgetInCallContainerStyles
 } from './CallingWidgetComponent.styles';
 
 import {
@@ -23,10 +24,6 @@ import {
   StartCallIdentifier,
   createAzureCommunicationCallAdapter
 } from '@azure/communication-react';
-// lets add to our react imports as well
-import { useMemo } from 'react';
-
-import { callingWidgetInCallContainerStyles } from './CallingWidgetComponent.styles';
 
 /**
  * Properties needed for our widget to start a call.
@@ -102,7 +99,7 @@ export const CallingWidgetComponent = (props: CallingWidgetComponentProps): JSX.
       displayName: displayName,
       options: adapterOptions
     };
-  }, [widgetAdapterArgs.userId, widgetAdapterArgs.teamsAppIdentifier.teamsAppId, credential, displayName]);
+  }, [widgetAdapterArgs.userId, widgetAdapterArgs.teamsAppIdentifier, credential, displayName, adapterOptions]);
 
   useEffect(() => {
     if (adapter) {
