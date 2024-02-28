@@ -78,14 +78,19 @@ const extractAttachedFilesMetadata = (metadata: Record<string, string>): FileMet
 const extractTeamsAttachmentsMetadata = (
   attachments: ChatAttachment[],
   resourceCache?: Record<string, string>
-): { /* @conditional-compile-remove(file-sharing) */ files: FileMetadata[]; inlineImages: InlineImageMetadata[] } => {
+): {
+  /* @conditional-compile-remove(file-sharing) */ files: FileMetadata[];
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ inlineImages: InlineImageMetadata[];
+} => {
   /* @conditional-compile-remove(file-sharing) */
   const files: FileMetadata[] = [];
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const inlineImages: InlineImageMetadata[] = [];
   attachments.forEach((attachment) => {
     const attachmentType = mapAttachmentType(attachment.attachmentType);
     /* @conditional-compile-remove(file-sharing) */
     const contentType = extractAttachmentContentTypeFromName(attachment.name);
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     if (attachmentType === 'inlineImage') {
       inlineImages.push({
         attachmentType: attachmentType,
@@ -107,7 +112,10 @@ const extractTeamsAttachmentsMetadata = (
       });
     }
   });
-  return { /* @conditional-compile-remove(file-sharing) */ files, inlineImages };
+  return {
+    /* @conditional-compile-remove(file-sharing) */ files,
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ inlineImages
+  };
 };
 
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -217,9 +225,13 @@ const extractAttachmentContentTypeFromName = (name?: string): string => {
 /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 const extractAttachmentsMetadata = (
   message: ChatMessageWithStatus
-): { /* @conditional-compile-remove(file-sharing) */ files: FileMetadata[]; inlineImages: InlineImageMetadata[] } => {
+): {
+  /* @conditional-compile-remove(file-sharing) */ files: FileMetadata[];
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ inlineImages: InlineImageMetadata[];
+} => {
   /* @conditional-compile-remove(file-sharing) */
   let files: FileMetadata[] = [];
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   let inlineImages: InlineImageMetadata[] = [];
 
   /* @conditional-compile-remove(file-sharing) */
@@ -232,10 +244,14 @@ const extractAttachmentsMetadata = (
     const teamsAttachments = extractTeamsAttachmentsMetadata(message.content?.attachments, message.resourceCache);
     /* @conditional-compile-remove(file-sharing) */
     files = files.concat(teamsAttachments.files);
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     inlineImages = inlineImages.concat(teamsAttachments.inlineImages);
   }
 
-  return { /* @conditional-compile-remove(file-sharing) */ files, inlineImages };
+  return {
+    /* @conditional-compile-remove(file-sharing) */ files,
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ inlineImages
+  };
 };
 const convertToUiChatMessage = (
   message: ChatMessageWithStatus,
