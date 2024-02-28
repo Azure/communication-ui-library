@@ -1,5 +1,5 @@
 {
-  "type": "minor",
+  "type": "prerelease",
   "area": "feature",
   "workstream": "UI Library supports receiving a Powerpoint Live stream",
   "comment": "pptlive component",
