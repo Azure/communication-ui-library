@@ -1,0 +1,59 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+import React, { useMemo } from 'react';
+import { SendBoxStylesProps, SendBox as SimpleSendBox } from '@internal/react-components';
+import { usePropsFor } from '../ChatComposite/hooks/usePropsFor';
+import { ChatAdapter, ChatCompositeOptions } from '../ChatComposite';
+/* @conditional-compile-remove(file-sharing) */
+import { fileUploadsSelector } from '../ChatComposite/selectors/fileUploadsSelector';
+/* @conditional-compile-remove(file-sharing) */
+import { useSelector } from '../ChatComposite/hooks/useSelector';
+
+/* @conditional-compile-remove(rich-text-editor) */
+const RichTextSendBox = React.lazy(() =>
+  import('@internal/react-components').then((module) => ({ default: module.RichTextSendBox }))
+);
+
+/**
+ * @private
+ */
+export type SendBoxProps = {
+  options?: ChatCompositeOptions;
+  styles?: SendBoxStylesProps;
+  adapter: ChatAdapter;
+};
+
+/**
+ * @private
+ */
+export const SendBox = (props: SendBoxProps): JSX.Element => {
+  const { options, styles, adapter } = props;
+
+  const sendBoxProps = usePropsFor(SendBox);
+  /* @conditional-compile-remove(rich-text-editor) */
+  const richTextSendBoxProps = usePropsFor(SendBox);
+
+  /* @conditional-compile-remove(file-sharing) */
+  const activeFileUploads = useSelector(fileUploadsSelector).files;
+
+  const sendBoxStyles = useMemo(() => {
+    return Object.assign({}, styles);
+  }, [styles]);
+
+  /* @conditional-compile-remove(rich-text-editor) */
+  if (options?.richTextEditor !== false) {
+    return <RichTextSendBox {...richTextSendBoxProps} />;
+  }
+  return (
+    <SimpleSendBox
+      {...sendBoxProps}
+      autoFocus={options?.autoFocus}
+      styles={sendBoxStyles}
+      /* @conditional-compile-remove(file-sharing) */
+      activeFileUploads={activeFileUploads}
+      /* @conditional-compile-remove(file-sharing) */
+      onCancelFileUpload={adapter.cancelFileUpload}
+    />
+  );
+};

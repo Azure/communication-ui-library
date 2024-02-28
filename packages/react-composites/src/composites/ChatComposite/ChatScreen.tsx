@@ -14,7 +14,6 @@ import {
   MessageThread,
   MessageThreadStyles,
   ParticipantMenuItemsCallback,
-  SendBox,
   SendBoxStylesProps,
   TypingIndicator,
   TypingIndicatorStylesProps,
@@ -47,10 +46,6 @@ import { participantListContainerPadding } from '../common/styles/ParticipantCon
 import { ChatScreenPeoplePane } from './ChatScreenPeoplePane';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(file-sharing) */
-import { fileUploadsSelector } from './selectors/fileUploadsSelector';
-/* @conditional-compile-remove(file-sharing) */
-import { useSelector } from './hooks/useSelector';
-/* @conditional-compile-remove(file-sharing) */
 import { FileDownloadErrorBar } from './FileDownloadErrorBar';
 /* @conditional-compile-remove(file-sharing) */
 import { _FileDownloadCards } from '@internal/react-components';
@@ -58,8 +53,7 @@ import { _FileDownloadCards } from '@internal/react-components';
 import { ImageOverlay } from '@internal/react-components';
 /* @conditional-compile-remove(image-overlay) */
 import { InlineImage } from '@internal/react-components';
-/* @conditional-compile-remove(rich-text-editor) */
-import { RichTextSendBox } from '@internal/react-components';
+import { SendBox } from '../common/SendBox';
 
 /**
  * @private
@@ -71,7 +65,6 @@ export type ChatScreenProps = {
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   styles?: ChatScreenStyles;
-  hasFocusOnMount?: 'sendBoxTextField';
   fileSharing?: FileSharingOptions;
   formFactor?: 'desktop' | 'mobile';
 };
@@ -166,9 +159,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   }, [adapter]);
 
   const messageThreadProps = usePropsFor(MessageThread);
-  const sendBoxProps = usePropsFor(SendBox);
-  /* @conditional-compile-remove(rich-text-editor) */
-  const richTextSendBoxProps = usePropsFor(SendBox);
   const typingIndicatorProps = usePropsFor(TypingIndicator);
   const headerProps = useAdaptedSelector(getHeaderProps);
   const errorBarProps = usePropsFor(ErrorBar);
@@ -231,9 +221,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const typingIndicatorStyles = useMemo(() => {
     return Object.assign({}, styles?.typingIndicator);
   }, [styles?.typingIndicator]);
-  const sendBoxStyles = useMemo(() => {
-    return Object.assign({}, styles?.sendBox);
-  }, [styles?.sendBox]);
+
   const userId = toFlatCommunicationIdentifier(adapter.getState().userId);
 
   const fileUploadButtonOnChange = useCallback(
@@ -378,27 +366,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     );
   }, [fileSharing?.accept, fileSharing?.multiple, fileSharing?.uploadHandler, fileUploadButtonOnChange]);
 
-  /* @conditional-compile-remove(file-sharing) */
-  const activeFileUploads = useSelector(fileUploadsSelector).files;
-
-  const SelectedSendBox = (): JSX.Element => {
-    /* @conditional-compile-remove(rich-text-editor) */
-    if (options?.richTextEditor !== false) {
-      return <RichTextSendBox {...richTextSendBoxProps} />;
-    }
-    return (
-      <SendBox
-        {...sendBoxProps}
-        autoFocus={options?.autoFocus}
-        styles={sendBoxStyles}
-        /* @conditional-compile-remove(file-sharing) */
-        activeFileUploads={activeFileUploads}
-        /* @conditional-compile-remove(file-sharing) */
-        onCancelFileUpload={adapter.cancelFileUpload}
-      />
-    );
-  };
-
   return (
     <Stack className={chatContainer} grow>
       {options?.topic !== false && <ChatHeader {...headerProps} />}
@@ -440,7 +407,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                 </Stack>
               )}
               <Stack grow>
-                <SelectedSendBox />
+                <SendBox adapter={adapter} options={options} styles={styles?.sendBox} />
               </Stack>
               {formFactor !== 'mobile' && <AttachFileButton />}
             </Stack>
