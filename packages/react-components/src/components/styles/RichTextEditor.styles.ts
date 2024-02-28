@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-import { IButtonStyles, ICommandBarStyles, Theme, mergeStyles } from '@fluentui/react';
+import { IButtonStyles, ICommandBarStyles, IContextualMenuStyles, IStyle, Theme, mergeStyles } from '@fluentui/react';
 
 /**
  * @private
@@ -18,95 +18,64 @@ export const richTextEditorStyle = mergeStyles({
 /**
  * @private
  */
+export const ribbonOverflowButtonStyle = (theme: Theme): Partial<IContextualMenuStyles> => {
+  return {
+    subComponentStyles: {
+      menuItem: {
+        icon: { color: theme.palette.neutralPrimary, height: 'auto' },
+        menuIcon: { color: theme.palette.neutralPrimary, height: 'auto' },
+        root: ribbonOverflowButtonRootStyles(theme)
+      },
+      callout: {}
+    }
+  };
+};
+
+const ribbonOverflowButtonRootStyles = (theme: Theme): IStyle => {
+  return {
+    selectors: {
+      // Icon's color doesn't work here because of the specificity
+      '&:hover': {
+        selectors: {
+          '.ms-ContextualMenu-icon': {
+            color: theme.palette.neutralPrimary
+          }
+        }
+      }
+    }
+  };
+};
+
+const ribbonButtonRootStyles = (theme: Theme): IStyle => {
+  return {
+    backgroundColor: 'transparent',
+    selectors: {
+      // Icon's color doesn't work here because of the specificity
+      '.ms-Button-icon': {
+        color: theme.palette.themePrimary
+      },
+      '.ms-Button-menuIcon': {
+        color: theme.palette.themePrimary
+      }
+    }
+  };
+};
+
+/**
+ * @private
+ */
 export const ribbonButtonStyle = (theme: Theme): Partial<IButtonStyles> => {
   return {
     icon: { color: theme.palette.neutralPrimary, height: 'auto' },
     menuIcon: { color: theme.palette.neutralPrimary, height: 'auto' },
     root: { minWidth: 'auto', backgroundColor: 'transparent' },
-    rootChecked: {
-      backgroundColor: 'transparent',
-      selectors: {
-        // Icon's color doesn't work here because of the specificity
-        '.ms-Button-icon': {
-          color: theme.palette.themePrimary
-        },
-        '.ms-Button-menuIcon': {
-          color: theme.palette.themePrimary
-        }
-      }
-    },
-    rootHovered: {
-      backgroundColor: 'transparent',
-      selectors: {
-        // Icon's color doesn't work here because of the specificity
-        '.ms-Button-icon': {
-          color: theme.palette.themePrimary
-        },
-        '.ms-Button-menuIcon': {
-          color: theme.palette.themePrimary
-        }
-      }
-    },
-    rootCheckedHovered: {
-      backgroundColor: 'transparent',
-      selectors: {
-        // Icon's color doesn't work here because of the specificity
-        '.ms-Button-icon': {
-          color: theme.palette.themePrimary
-        },
-        '.ms-Button-menuIcon': {
-          color: theme.palette.themePrimary
-        }
-      }
-    },
-    rootCheckedPressed: {
-      backgroundColor: 'transparent',
-      selectors: {
-        // Icon's color doesn't work here because of the specificity
-        '.ms-Button-icon': {
-          color: theme.palette.themePrimary
-        },
-        '.ms-Button-menuIcon': {
-          color: theme.palette.themePrimary
-        }
-      }
-    },
-    rootPressed: {
-      backgroundColor: 'transparent',
-      selectors: {
-        // Icon's color doesn't work here because of the specificity
-        '.ms-Button-icon': {
-          color: theme.palette.themePrimary
-        },
-        '.ms-Button-menuIcon': {
-          color: theme.palette.themePrimary
-        }
-      }
-    },
-    rootExpanded: {
-      backgroundColor: 'transparent',
-      selectors: {
-        // Icon's color doesn't work here because of the specificity
-        '.ms-Button-icon': {
-          color: theme.palette.themePrimary
-        },
-        '.ms-Button-menuIcon': {
-          color: theme.palette.themePrimary
-        }
-      }
-    },
-    rootExpandedHovered: {
-      backgroundColor: 'transparent',
-      selectors: {
-        //icon color is not working here because of the specificity
-        '.ms-Button-icon': {
-          color: theme.palette.themePrimary
-        },
-        '.ms-Button-menuIcon': {
-          color: theme.palette.themePrimary
-        }
-      }
-    }
+    rootChecked: ribbonButtonRootStyles(theme),
+    rootHovered: ribbonButtonRootStyles(theme),
+    rootCheckedHovered: ribbonButtonRootStyles(theme),
+    rootCheckedPressed: ribbonButtonRootStyles(theme),
+    rootPressed: ribbonButtonRootStyles(theme),
+    rootExpanded: ribbonButtonRootStyles(theme),
+    rootExpandedHovered: ribbonButtonRootStyles(theme)
   };
 };
 
