@@ -71,10 +71,9 @@ test.describe('VideoGalleryLayout tests', async () => {
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
     const videoGallery = await waitForSelector(page, dataUiId(IDS.videoGallery));
-    let videoTile;
     let moreButton;
 
-    videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=${i}`);
+    const videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=${i}`);
     await videoTile.hover();
     moreButton = await videoTile.waitForSelector(dataUiId(IDS.videoTileMoreOptionsButton));
     await moreButton.hover();

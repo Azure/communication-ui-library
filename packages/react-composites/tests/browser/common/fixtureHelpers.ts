@@ -62,11 +62,7 @@ const shouldIgnoreConsoleError = (error: ConsoleMessage): boolean => {
  */
 // eslint-disable-next-line no-empty-pattern, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
 export const usePagePerParticipantWithCallPermissions = async (
-  {
-    browser,
-    serverUrl,
-    users
-  }: PlaywrightWorkerArgs & WorkerFixture<CallUserType>,
+  { browser, serverUrl, users }: PlaywrightWorkerArgs & WorkerFixture<CallUserType>,
   use: (pages: Page[]) => Promise<void>
 ): Promise<void> => {
   const pages = await Promise.all(

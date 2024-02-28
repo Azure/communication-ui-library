@@ -111,9 +111,9 @@ export interface CustomCallControlButtonStrings {
 
 /**
  * onRenderButton is a custom prop that can be passed to override the default rendering of the button
- * This is useful for custom buttons that need to render more than just an icon and label and is used 
+ * This is useful for custom buttons that need to render more than just an icon and label and is used
  * for CallWithChat button notification badge.
- * 
+ *
  * @private
  */
 export type _InternalCustomButtonType = (props: ControlBarButtonProps) => JSX.Element;
