@@ -278,6 +278,7 @@ export class MockCallAgent implements CallAgent {
   connectionState = 'Disconnected' as ConnectionState;
   kind = 'CallAgent' as CallAgentKind;
   emitter = new EventEmitter();
+  /* @conditional-compile-remove(calling-beta-sdk) */
   feature: CallAgent['feature'] = () => {
     throw Error('Method not implemented.');
   };
