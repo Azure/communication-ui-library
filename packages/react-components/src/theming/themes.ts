@@ -107,7 +107,6 @@ export const darkTheme: PartialTheme & CallingTheme = {
   }
 };
 
-/* @conditional-compile-remove(image-overlay) */
 /**
  * Preset dark theme for the ImageOverlay component.
  *

@@ -46,7 +46,6 @@ import {
   ChatMessageComponentWrapper,
   ChatMessageComponentWrapperProps
 } from './ChatMessage/ChatMessageComponentWrapper';
-/* @conditional-compile-remove(image-overlay) */
 import { InlineImageOptions } from './ChatMessage/ChatMessageContent';
 import { MessageStatusIndicatorInternal } from './MessageStatusIndicatorInternal';
 import { Announcer } from './Announcer';
@@ -222,7 +221,7 @@ export interface MessageThreadStrings {
   /* @conditional-compile-remove(data-loss-prevention) */
   /** String for policy violation message removal details link */
   blockedWarningLinkText: string;
-  /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /* @conditional-compile-remove(file-sharing) */
   /** String for aria text in file attachment group*/
   fileCardGroupMessage: string;
 }
@@ -533,7 +532,6 @@ export type MessageThreadProps = {
    * @beta
    */
   mentionOptions?: MentionOptions;
-  /* @conditional-compile-remove(image-overlay) */
   /**
    * Optional callback called when an inline image is clicked.
    * @beta
@@ -669,7 +667,6 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     onDisplayDateTimeString,
     /* @conditional-compile-remove(mention) */
     mentionOptions,
-    /* @conditional-compile-remove(image-overlay) */
     inlineImageOptions,
     /* @conditional-compile-remove(file-sharing) */
     onRenderFileDownloads
@@ -1121,7 +1118,6 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
                   participantCount={participantCount}
                   /* @conditional-compile-remove(file-sharing) */
                   fileDownloadHandler={props.fileDownloadHandler}
-                  /* @conditional-compile-remove(image-overlay) */
                   inlineImageOptions={inlineImageOptions}
                   /* @conditional-compile-remove(date-time-customization) */
                   onDisplayDateTimeString={onDisplayDateTimeString}

@@ -157,10 +157,6 @@ module.exports = {
     // Feature for updates needed for Click to Call (C2C) scenarios
     "click-to-call",
     // Feature for call transfer
-    "call-transfer",
-    // Feature image overlay
-    "image-overlay",
-    // Chat teams interop to display images and file attachments in chat messages
-    "teams-inline-images-and-file-sharing"
+    "call-transfer"
   ]
 }

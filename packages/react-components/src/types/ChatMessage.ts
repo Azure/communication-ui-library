@@ -5,7 +5,6 @@ import { MessageStatus } from '@internal/acs-ui-common';
 import { CommunicationParticipant } from './CommunicationParticipant';
 /* @conditional-compile-remove(file-sharing) */
 import { FileMetadata } from '../components/FileDownloadCards';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { InlineImageMetadata } from '../components/FileDownloadCards';
 
 /**
@@ -80,7 +79,6 @@ export interface ChatMessage extends MessageCommon {
    * {@link FileMetadata}
    */
   files?: FileMetadata[];
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /**
    * @beta
    * A list of inline images embedded in the message.

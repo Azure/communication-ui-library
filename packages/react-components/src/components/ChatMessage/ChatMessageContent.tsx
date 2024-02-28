@@ -4,7 +4,6 @@
 import React from 'react';
 import { _formatString } from '@internal/acs-ui-common';
 import parse, { HTMLReactParserOptions, Element as DOMElement } from 'html-react-parser';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { attributesToProps } from 'html-react-parser';
 import Linkify from 'react-linkify';
 import { ChatMessage } from '../../types/ChatMessage';
@@ -27,7 +26,6 @@ type ChatMessageContentProps = {
   strings: MessageThreadStrings;
   /* @conditional-compile-remove(mention) */
   mentionDisplayOptions?: MentionDisplayOptions;
-  /* @conditional-compile-remove(image-overlay) */
   inlineImageOptions?: InlineImageOptions;
 };
 
@@ -44,7 +42,6 @@ type MessageContentWithLiveAriaProps = {
   content: JSX.Element;
 };
 
-/* @conditional-compile-remove(image-overlay) */
 /**
  * InlineImage's state, as reflected in the UI.
  *
@@ -57,7 +54,6 @@ export interface InlineImage {
   imgAttrs: React.ImgHTMLAttributes<HTMLImageElement>;
 }
 
-/* @conditional-compile-remove(image-overlay) */
 /**
  * Options to display inline image in the inline image scenario.
  *
@@ -214,7 +210,6 @@ const messageContentAriaText = (props: ChatMessageContentProps): string | undefi
   return undefined;
 };
 
-/* @conditional-compile-remove(image-overlay) */
 const defaultOnRenderInlineImage = (inlineImage: InlineImage): JSX.Element => {
   return (
     <img key={inlineImage.imgAttrs.id} tabIndex={0} data-ui-id={inlineImage.imgAttrs.id} {...inlineImage.imgAttrs} />
@@ -237,7 +232,6 @@ const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
         }
 
         // Transform inline images
-        /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
         if (
           domNode.name &&
           domNode.name === 'img' &&
@@ -249,10 +243,8 @@ const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
         ) {
           domNode.attribs['aria-label'] = domNode.attribs.name;
           const imgProps = attributesToProps(domNode.attribs);
-          /* @conditional-compile-remove(image-overlay) */
           const inlineImageProps: InlineImage = { messageId: props.message.messageId, imgAttrs: imgProps };
 
-          /* @conditional-compile-remove(image-overlay) */
           return props.inlineImageOptions?.onRenderInlineImage
             ? props.inlineImageOptions.onRenderInlineImage(inlineImageProps, defaultOnRenderInlineImage)
             : defaultOnRenderInlineImage(inlineImageProps);

@@ -16,7 +16,6 @@ import { useIdentifiers } from '../../identifiers/IdentifierProvider';
 import { useTheme } from '../../theming';
 import { ChatMessageActionFlyout } from './ChatMessageActionsFlyout';
 import { ChatMessageContent } from './ChatMessageContent';
-/* @conditional-compile-remove(image-overlay) */
 import { InlineImageOptions } from './ChatMessageContent';
 import { ChatMessage } from '../../types/ChatMessage';
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -96,7 +95,6 @@ type ChatMessageComponentAsMessageBubbleProps = {
    * @internal
    */
   mentionDisplayOptions?: MentionDisplayOptions;
-  /* @conditional-compile-remove(image-overlay) */
   /**
    * Optional callback called when an inline image is clicked.
    * @beta
@@ -153,7 +151,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     messageStatus,
     /* @conditional-compile-remove(file-sharing) */
     fileDownloadHandler,
-    /* @conditional-compile-remove(image-overlay) */
     inlineImageOptions,
     shouldOverlapAvatarAndMessage
   } = props;
@@ -255,7 +252,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           strings={strings}
           /* @conditional-compile-remove(mention) */
           mentionDisplayOptions={props.mentionDisplayOptions}
-          /* @conditional-compile-remove(image-overlay) */
           inlineImageOptions={inlineImageOptions}
         />
         {
@@ -265,14 +261,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
         }
       </div>
     );
-  }, [
-    defaultOnRenderFileDownloads,
-    /* @conditional-compile-remove(image-overlay) */ inlineImageOptions,
-    message,
-    props,
-    strings,
-    userId
-  ]);
+  }, [defaultOnRenderFileDownloads, inlineImageOptions, message, props, strings, userId]);
 
   const isBlockedMessage =
     false || /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked';
@@ -284,7 +273,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     // messageContainerStyle used in className and style prop as style prop can't handle CSS selectors
     chatMessageStyles.body,
     // disable placeholder functionality for GA releases as it might confuse users
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     chatMessageStyles.bodyWithPlaceholderImage,
     isBlockedMessage
       ? chatMessageCommonStyles.blocked

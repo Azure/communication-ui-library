@@ -4,21 +4,18 @@
 import { Icon, IconButton, Spinner, SpinnerSize, TooltipHost } from '@fluentui/react';
 import React, { useCallback, useState } from 'react';
 import { useMemo } from 'react';
+/* @conditional-compile-remove(file-sharing) */
 import { useLocale } from '../localization';
 import { _FileCard } from './FileCard';
 import { _FileCardGroup } from './FileCardGroup';
 import { iconButtonClassName } from './styles/IconButton.styles';
 import { _formatString } from '@internal/acs-ui-common';
 
-/* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * Represents the type of attachment
- * @beta
+ * @public
  */
-export type ChatAttachmentType =
-  | 'unknown'
-  | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage'
-  | /* @conditional-compile-remove(file-sharing) */ 'file';
+export type ChatAttachmentType = 'unknown' | 'inlineImage' | /* @conditional-compile-remove(file-sharing) */ 'file';
 
 /**
  * Metadata containing basic information about the uploaded file.
@@ -54,7 +51,6 @@ export interface FileMetadata {
   payload?: Record<string, string>;
 }
 
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * Metadata for rendering images inline with a message.
  * This does not include images attached as files.
@@ -87,9 +83,7 @@ export interface InlineImageMetadata {
  * Metadata containing information about the uploaded file.
  * @beta
  */
-export type AttachmentMetadata =
-  | FileMetadata
-  | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ InlineImageMetadata;
+export type AttachmentMetadata = FileMetadata | InlineImageMetadata;
 
 /**
  * Strings of _FileDownloadCards that can be overridden.
@@ -202,7 +196,6 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
     return false;
   }, []);
 
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const isShowDownloadIcon = useCallback((attachment: AttachmentMetadata): boolean => {
     /* @conditional-compile-remove(file-sharing) */
     return attachment.attachmentType === 'file' && attachment.payload?.teamsFileAttachment !== 'true';
@@ -244,11 +237,7 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
     },
     [props]
   );
-  if (
-    !fileMetadata ||
-    fileMetadata.length === 0 ||
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ !fileMetadata.some(isFileSharingAttachment)
-  ) {
+  if (!fileMetadata || fileMetadata.length === 0 || !fileMetadata.some(isFileSharingAttachment)) {
     return <></>;
   }
 
@@ -272,10 +261,7 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
                   actionIcon={
                     showSpinner ? (
                       <Spinner size={SpinnerSize.medium} aria-live={'polite'} role={'status'} />
-                    ) : true &&
-                      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ isShowDownloadIcon(
-                        file as unknown as AttachmentMetadata
-                      ) ? (
+                    ) : true && isShowDownloadIcon(file as unknown as AttachmentMetadata) ? (
                       <IconButton className={iconButtonClassName} ariaLabel={downloadFileButtonString()}>
                         <DownloadIconTrampoline />
                       </IconButton>
@@ -303,5 +289,5 @@ const DownloadIconTrampoline = (): JSX.Element => {
 const useLocaleStringsTrampoline = (): _FileDownloadCardsStrings => {
   /* @conditional-compile-remove(file-sharing) */
   return useLocale().strings.messageThread;
-  return { downloadFile: '', fileCardGroupMessage: useLocale().strings.messageThread.fileCardGroupMessage };
+  return { downloadFile: '', fileCardGroupMessage: '' };
 };

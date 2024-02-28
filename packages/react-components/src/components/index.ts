@@ -14,9 +14,7 @@ export { SendBox } from './SendBox';
 /* @conditional-compile-remove(mention) */
 export { _MentionPopover } from './MentionPopover';
 
-/* @conditional-compile-remove(image-overlay) */
 export { ImageOverlay } from './ImageOverlay';
-/* @conditional-compile-remove(image-overlay) */
 export type { ImageOverlayStrings } from './ImageOverlay';
 export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox';
 
@@ -35,10 +33,8 @@ export type {
   MentionPopoverStrings
 } from './MentionPopover';
 
-/* @conditional-compile-remove(image-overlay) */
 export type { ImageOverlayProps } from './ImageOverlay';
 
-/* @conditional-compile-remove(image-overlay) */
 export type { InlineImageOptions, InlineImage } from './ChatMessage/ChatMessageContent';
 
 /* @conditional-compile-remove(file-sharing) */

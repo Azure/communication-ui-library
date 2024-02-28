@@ -1294,8 +1294,8 @@ export type ChatAdapterUiState = {
     error?: Error;
 };
 
-// @beta
-export type ChatAttachmentType = 'unknown' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage';
+// @public
+export type ChatAttachmentType = 'unknown' | 'inlineImage';
 
 // @public
 export type ChatBaseSelectorProps = {
@@ -2697,7 +2697,6 @@ export interface MessageThreadStrings {
     editedTag: string;
     editMessage: string;
     failToSendTag?: string;
-    fileCardGroupMessage: string;
     friday: string;
     liveAuthorIntro: string;
     messageContentAriaText: string;

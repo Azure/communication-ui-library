@@ -1,20 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatAttachmentType } from '@azure/communication-chat';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { CommunicationTokenCredential } from '@azure/communication-common';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatContext } from './ChatContext';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ResourceDownloadError, ResourceDownloadQueue } from './ResourceDownloadQueue';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { messageTemplate } from './mocks/createMockChatThreadClient';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { resolve } from 'path';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 jest.mock('@azure/communication-chat');
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * @private
  */
@@ -29,11 +21,6 @@ export const stubCommunicationTokenCredential = (): CommunicationTokenCredential
   };
 };
 
-describe('ResourceDownloadQueue api functions', () => {
-  test('Placeholder test. Please remove this when stabilizing teams-inline-images-and-file-sharing', () => {});
-});
-
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 describe('ResourceDownloadQueue api functions', () => {
   // URL.createObjectURL is not available in jest-dom
   // so we need to mock it in tests
@@ -233,7 +220,6 @@ describe('ResourceDownloadQueue api functions', () => {
     expect(operation).toHaveBeenCalledTimes(3);
   });
 
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   test('startQueue method should update the resourceCache', async () => {
     const threadId = 'threadId';
     const messageId = 'messageId';

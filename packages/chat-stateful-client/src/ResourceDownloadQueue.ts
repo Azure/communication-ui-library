@@ -1,15 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatContext } from './ChatContext';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatError } from './ChatClientState';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import type { CommunicationTokenCredential } from '@azure/communication-common';
 
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * @private
  */
@@ -109,7 +104,6 @@ export class ResourceDownloadQueue {
     return blobUrl;
   }
 }
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * @private
  */
@@ -137,7 +131,6 @@ export const requestPreviewUrl = async (
 
   return message;
 };
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * @private
  */
@@ -173,12 +166,10 @@ export const fetchImageSource = async (src: string, credential: CommunicationTok
   const blob = await response.blob();
   return URL.createObjectURL(blob);
 };
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 interface ImageRequest {
   (request: string, credential: CommunicationTokenCredential): Promise<string>;
 }
 
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * @private
  */
