@@ -50,6 +50,7 @@ import { CallControlOptions } from '../CallComposite/types/CallControlOptions';
 import { useUnreadMessagesTracker } from './ChatButton/useUnreadMessagesTracker';
 /* @conditional-compile-remove(gallery-layouts) */
 import { VideoGalleryLayout } from '@internal/react-components';
+import { _InternalCustomButtonType } from '../common/ControlBar/CustomButton';
 
 /**
  * Props required for the {@link CallWithChatComposite}

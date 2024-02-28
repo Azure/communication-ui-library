@@ -369,7 +369,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   private participantSubscribers = new Map<string, ParticipantSubscriber>();
   private emitter: EventEmitter = new EventEmitter();
   /* @conditional-compile-remove(calling-sounds) */
-  private callingSoundSubscriber: CallingSoundSubscriber = new CallingSoundSubscriber();
+  private callingSoundSubscriber: CallingSoundSubscriber | undefined;
   private onClientStateChange: (clientState: CallClientState) => void;
   /* @conditional-compile-remove(video-background-effects) */
   private onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
@@ -2018,5 +2018,5 @@ export const createTeamsCallAdapterFromClient = async (
 };
 
 const isCallError = (e: Error): e is CallError => {
-  return (e as CallError)['target'] !== undefined && (e as CallError)['innerError'] !== undefined;
+  return 'target' in e && 'innerError' in e;
 };

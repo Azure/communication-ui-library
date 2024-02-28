@@ -26,7 +26,7 @@ export class CallingSoundSubscriber {
   private soundsLoaded?: CallingSoundsLoaded;
   private callee: CommunicationIdentifier[] | undefined;
 
-  constructor(call?: CallCommon, callee?: CommunicationIdentifier[], sounds?: CallingSounds) {
+  constructor(call: CallCommon, callee?: CommunicationIdentifier[], sounds?: CallingSounds) {
     this.call = call;
     this.callee = callee;
     if (sounds) {

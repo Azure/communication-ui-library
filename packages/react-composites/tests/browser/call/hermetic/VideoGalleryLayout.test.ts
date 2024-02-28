@@ -74,19 +74,17 @@ test.describe('VideoGalleryLayout tests', async () => {
     let videoTile;
     let moreButton;
 
-    for (let i = 1; i < 2; i++) {
-      videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=${i}`);
-      await videoTile.hover();
-      moreButton = await videoTile.waitForSelector(dataUiId(IDS.videoTileMoreOptionsButton));
-      await moreButton.hover();
-      await moreButton.click();
+    videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=${i}`);
+    await videoTile.hover();
+    moreButton = await videoTile.waitForSelector(dataUiId(IDS.videoTileMoreOptionsButton));
+    await moreButton.hover();
+    await moreButton.click();
 
-      await waitForSelector(page, dataUiId('video-tile-pin-participant-button'));
-      await pageClick(page, dataUiId('video-tile-pin-participant-button'));
-    }
+    await waitForSelector(page, dataUiId('video-tile-pin-participant-button'));
+    await pageClick(page, dataUiId('video-tile-pin-participant-button'));
     expect(await stableScreenshot(page)).toMatchSnapshot('video-tile-pinned.png');
 
-    await videoTile?.hover();
+    await videoTile.hover();
     moreButton = await videoTile?.waitForSelector(dataUiId(IDS.videoTileMoreOptionsButton));
     await moreButton?.hover();
     await moreButton?.click();

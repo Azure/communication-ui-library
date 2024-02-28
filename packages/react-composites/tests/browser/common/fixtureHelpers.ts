@@ -4,11 +4,11 @@
 import { ChatClient } from '@azure/communication-chat';
 import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-identity';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
-import { Browser, ConsoleMessage, Page } from '@playwright/test';
+import { Browser, ConsoleMessage, Page, PlaywrightWorkerArgs } from '@playwright/test';
 import { v1 } from 'uuid';
 import { CHAT_TOPIC_NAME } from './constants';
 import { CONNECTION_STRING } from './nodeConstants';
-import { ChatUserType, CallUserType, CallWithChatUserType } from './fixtureTypes';
+import { ChatUserType, CallUserType, CallWithChatUserType, WorkerFixture } from './fixtureTypes';
 import { buildUrl } from './utils';
 
 /**
@@ -21,7 +21,7 @@ export const usePagePerParticipant = async (
     serverUrl,
     users,
     browser
-  }: { serverUrl: string; users: Array<ChatUserType | CallUserType | CallWithChatUserType>; browser: Browser },
+  }: PlaywrightWorkerArgs & WorkerFixture<ChatUserType | CallUserType | CallWithChatUserType>,
   use: (pages: Page[]) => Promise<void>
 ): Promise<void> => {
   const pages = await Promise.all(
@@ -66,7 +66,7 @@ export const usePagePerParticipantWithCallPermissions = async (
     browser,
     serverUrl,
     users
-  }: { serverUrl: string; users: Array<ChatUserType | CallUserType | CallWithChatUserType>; browser: Browser },
+  }: PlaywrightWorkerArgs & WorkerFixture<CallUserType>,
   use: (pages: Page[]) => Promise<void>
 ): Promise<void> => {
   const pages = await Promise.all(

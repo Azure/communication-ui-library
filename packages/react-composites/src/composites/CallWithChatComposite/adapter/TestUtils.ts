@@ -276,8 +276,9 @@ export class MockCallAgent implements CallAgent {
   connectionState = 'Disconnected' as ConnectionState;
   kind = 'CallAgent' as CallAgentKind;
   emitter = new EventEmitter();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  feature: any;
+  feature: CallAgent['feature'] = () => {
+    throw Error('Method not implemented.');
+  };
   startCall(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],

@@ -14,7 +14,7 @@ import {
 } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
 import { captionSettingsDrawerStyles } from './captionSettingsDrawer.styles';
-import { getKeys } from '../utils';
+import { _getKeys } from '@internal/acs-ui-common';
 
 /** @private */
 export interface CaptionSettingsDrawerStrings {
@@ -50,7 +50,7 @@ export const CaptionLanguageSettingsDrawer = (props: {
 
   /* @conditional-compile-remove(close-captions) */
   const drawerItems: DrawerMenuItemProps[] = useMemo(() => {
-    return getKeys(props.supportedLanguageStrings ?? []).map((languageCode) => ({
+    return _getKeys(props.supportedLanguageStrings ?? []).map((languageCode) => ({
       itemKey: languageCode,
       text: props.supportedLanguageStrings ? props.supportedLanguageStrings[languageCode] : languageCode,
       onItemClick: () => onDrawerItemClick(languageCode),

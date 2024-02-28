@@ -53,12 +53,3 @@ export const useMinMaxDragPosition = (modalLayerHostId: string, rtl?: boolean): 
  * @private
  */
 export const defaultSpokenLanguage = 'en-us';
-
-/**
- * Helper function to get the keys of an object
- *
- * @private
- */
-export function getKeys<T extends object>(obj: T): (keyof T)[] {
-  return Object.keys(obj) as Array<keyof T>;
-}
