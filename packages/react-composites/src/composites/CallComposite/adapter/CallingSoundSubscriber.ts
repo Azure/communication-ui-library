@@ -22,7 +22,7 @@ const CALL_TRANSFER_SUBCODE = 7015;
  * @private
  */
 export class CallingSoundSubscriber {
-  private call?: CallCommon;
+  private call: CallCommon;
   private soundsLoaded?: CallingSoundsLoaded;
   private callee: CommunicationIdentifier[] | undefined;
 
