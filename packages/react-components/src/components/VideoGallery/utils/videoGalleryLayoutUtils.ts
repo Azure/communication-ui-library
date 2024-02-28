@@ -20,6 +20,8 @@ export interface OrganizedParticipantsArgs {
   maxRemoteVideoStreams?: number;
   maxOverflowGalleryDominantSpeakers?: number;
   isScreenShareActive?: boolean;
+  /* @conditional-compile-remove(ppt-live) */
+  isContentSharingActive?: boolean;
   pinnedParticipantUserIds?: string[];
   /* @conditional-compile-remove(gallery-layouts) */
   layout?: VideoGalleryLayout;
@@ -50,6 +52,8 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
     maxRemoteVideoStreams = DEFAULT_MAX_VIDEO_SREAMS,
     maxOverflowGalleryDominantSpeakers = DEFAULT_MAX_OVERFLOW_GALLERY_DOMINANT_SPEAKERS,
     isScreenShareActive = false,
+    /* @conditional-compile-remove(ppt-live) */
+    isContentSharingActive = false,
     pinnedParticipantUserIds = [],
     /* @conditional-compile-remove(gallery-layouts) */
     layout
@@ -76,7 +80,9 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
   };
 
   visibleGridParticipants.current =
-    pinnedParticipantUserIds.length > 0 || isScreenShareActive
+    pinnedParticipantUserIds.length > 0 ||
+    isScreenShareActive /* @conditional-compile-remove(ppt-live) */ ||
+    isContentSharingActive
       ? []
       : smartDominantSpeakerParticipants({
           participants: participantsToSortTrampoline(),
@@ -120,7 +126,7 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
   });
 
   const getGridParticipants = useCallback((): VideoGalleryRemoteParticipant[] => {
-    if (isScreenShareActive) {
+    if (isScreenShareActive /* @conditional-compile-remove(ppt-live) */ || isContentSharingActive) {
       return [];
     }
     // if we have no grid participants we need to cap the max number of overflowGallery participants in the grid
@@ -138,6 +144,8 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
   }, [
     /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ callingParticipants,
     isScreenShareActive,
+    /* @conditional-compile-remove(ppt-live) */
+    isContentSharingActive,
     maxRemoteVideoStreamsToUse
   ]);
 
@@ -147,7 +155,7 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
     | VideoGalleryParticipant
     | VideoGalleryRemoteParticipant
   )[] => {
-    if (isScreenShareActive) {
+    if (isScreenShareActive /* @conditional-compile-remove(ppt-live) */ || isContentSharingActive) {
       // If screen sharing is active, assign video and audio participants as overflow gallery participants
       /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
       return visibleGridParticipants.current.concat(
@@ -172,6 +180,8 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
   }, [
     /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ callingParticipants,
     isScreenShareActive,
+    /* @conditional-compile-remove(ppt-live) */
+    isContentSharingActive,
     maxRemoteVideoStreamsToUse
   ]);
 
@@ -225,7 +235,10 @@ const _useOrganizedParticipantsWithFocusedParticipants = (
   }
 
   return {
-    gridParticipants: props.isScreenShareActive ? [] : focusedParticipants,
+    gridParticipants:
+      props.isScreenShareActive /* @conditional-compile-remove(ppt-live) */ || props.isContentSharingActive
+        ? []
+        : focusedParticipants,
     overflowGalleryParticipants: props.isScreenShareActive
       ? focusedParticipants.concat(useOrganizedParticipantsResult.overflowGalleryParticipants)
       : useOrganizedParticipantsResult.gridParticipants.concat(

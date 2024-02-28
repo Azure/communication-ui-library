@@ -83,6 +83,8 @@ export const _videoGalleryRemoteParticipantsMemo: _VideoGalleryRemoteParticipant
             participant.videoStreams,
             state,
             displayName,
+            /* @conditional-compile-remove(ppt-live) */
+            participant.contentSharingStream,
             /* @conditional-compile-remove(raise-hand) */
             participant.raisedHand,
             /* @conditional-compile-remove(reaction) */
@@ -103,6 +105,8 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     videoStreams: { [key: number]: RemoteVideoStreamState },
     state: RemoteParticipantConnectionState,
     displayName?: string,
+    /* @conditional-compile-remove(ppt-live) */
+    contentSharingStream?: HTMLElement,
     /* @conditional-compile-remove(raise-hand) */
     raisedHand?: unknown, // temp unknown type to build stable
     /* @conditional-compile-remove(reaction) */
@@ -117,6 +121,8 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
       videoStreams,
       state,
       displayName,
+      /* @conditional-compile-remove(ppt-live) */
+      contentSharingStream,
       /* @conditional-compile-remove(raise-hand) */
       raisedHand as RaisedHandState,
       /* @conditional-compile-remove(reaction) */
@@ -135,6 +141,8 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   videoStreams: { [key: number]: RemoteVideoStreamState },
   state: RemoteParticipantConnectionState,
   displayName?: string,
+  /* @conditional-compile-remove(ppt-live) */
+  contentSharingStream?: HTMLElement,
   /* @conditional-compile-remove(raise-hand) */
   raisedHand?: unknown, // temp unknown type to build stable
   /* @conditional-compile-remove(reaction) */
@@ -168,6 +176,8 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     isSpeaking,
     videoStream,
     screenShareStream,
+    /* @conditional-compile-remove(ppt-live) */
+    contentSharingStream,
     isScreenSharingOn: screenShareStream !== undefined && screenShareStream.isAvailable,
     /* @conditional-compile-remove(one-to-n-calling) */
     /* @conditional-compile-remove(PSTN-calls) */

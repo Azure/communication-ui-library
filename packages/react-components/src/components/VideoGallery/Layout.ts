@@ -28,6 +28,9 @@ export interface LayoutProps {
   localVideoComponent?: JSX.Element;
   /** Component that contains screen share content */
   screenShareComponent?: JSX.Element;
+  /* @conditional-compile-remove(ppt-live) */
+  /** Component that contains content share content */
+  contentSharingComponent?: JSX.Element;
   /**
    * Maximum number of participant remote video streams that is rendered.
    * @defaultValue 4

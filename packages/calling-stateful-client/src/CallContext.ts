@@ -383,6 +383,8 @@ export class CallContext {
       if (call) {
         call.pptLive.isActive = isActive;
       }
+      // add the fake logic.
+      call.contentSharingRemoteParticipant = toFlatCommunicationIdentifier(call.remoteParticipants[0].identifier);
     });
   }
 

@@ -409,6 +409,7 @@ export type _VideoGalleryRemoteParticipantsMemoFn = (remoteParticipants: RemoteP
 // @public
 export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
+    contentSharingParticipant: VideoGalleryRemoteParticipant | undefined;
     localParticipant: VideoGalleryLocalParticipant;
     remoteParticipants: VideoGalleryRemoteParticipant[];
     dominantSpeakers?: string[];

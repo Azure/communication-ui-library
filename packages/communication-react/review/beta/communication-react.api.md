@@ -4515,6 +4515,7 @@ export interface VideoGalleryProps {
 
 // @public
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
+    contentSharingStream?: HTMLElement;
     isSpeaking?: boolean;
     raisedHand?: RaisedHand;
     // @beta
@@ -4527,6 +4528,7 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
 // @public
 export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
+    contentSharingParticipant: VideoGalleryRemoteParticipant | undefined;
     localParticipant: VideoGalleryLocalParticipant;
     remoteParticipants: VideoGalleryRemoteParticipant[];
     dominantSpeakers?: string[];

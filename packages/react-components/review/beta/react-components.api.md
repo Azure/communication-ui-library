@@ -2670,6 +2670,7 @@ export interface VideoGalleryProps {
 
 // @public
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
+    contentSharingStream?: HTMLElement;
     isSpeaking?: boolean;
     raisedHand?: RaisedHand;
     // @beta
