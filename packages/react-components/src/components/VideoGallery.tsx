@@ -729,7 +729,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const contentSharingRemoteComponent = contentSharingParticipant && (
     <RemoteContentSharing
       {...contentSharingParticipant}
-      renderElement={contentSharingParticipant.contentSharingStream}
+      renderElement={contentSharingParticipant.contentSharingStream?.renderElement}
     />
   );
   /* @conditional-compile-remove(ppt-live) */

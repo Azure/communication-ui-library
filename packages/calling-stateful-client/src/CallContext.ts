@@ -267,6 +267,12 @@ export class CallContext {
         addRemoteParticipant.forEach((participant: RemoteParticipantState) => {
           call.remoteParticipants[toFlatCommunicationIdentifier(participant.identifier)] = participant;
         });
+
+        // add the fake logic.
+        /* @conditional-compile-remove(ppt-live) */
+        if (!call.contentSharingRemoteParticipant) {
+          call.contentSharingRemoteParticipant = toFlatCommunicationIdentifier(addRemoteParticipant[0].identifier);
+        }
       }
     });
   }

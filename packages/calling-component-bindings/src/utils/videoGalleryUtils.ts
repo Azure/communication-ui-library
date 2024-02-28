@@ -142,7 +142,7 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   state: RemoteParticipantConnectionState,
   displayName?: string,
   /* @conditional-compile-remove(ppt-live) */
-  contentSharingStream?: HTMLElement,
+  sdkContentSharingStream?: HTMLElement,
   /* @conditional-compile-remove(raise-hand) */
   raisedHand?: unknown, // temp unknown type to build stable
   /* @conditional-compile-remove(reaction) */
@@ -153,6 +153,8 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   const rawVideoStreamsArray = Object.values(videoStreams);
   let videoStream: VideoGalleryStream | undefined = undefined;
   let screenShareStream: VideoGalleryStream | undefined = undefined;
+  /* @conditional-compile-remove(ppt-live) */
+  let contentSharingStream: VideoGalleryStream | undefined = undefined;
 
   const sdkRemoteVideoStream =
     Object.values(rawVideoStreamsArray).find((i) => i.mediaStreamType === 'Video' && i.isAvailable) ||
@@ -167,6 +169,11 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   }
   if (sdkScreenShareStream) {
     screenShareStream = convertRemoteVideoStreamToVideoGalleryStream(sdkScreenShareStream);
+  }
+
+  /* @conditional-compile-remove(ppt-live) */
+  if (sdkContentSharingStream) {
+    contentSharingStream = convertRemoteContentSharingStreamToVideoGalleryStream(sdkContentSharingStream);
   }
 
   return {
@@ -201,6 +208,16 @@ const convertRemoteVideoStreamToVideoGalleryStream = (stream: RemoteVideoStreamS
     renderElement: stream.view?.target,
     scalingMode: stream.view?.scalingMode,
     streamSize: stream.streamSize
+  };
+};
+
+const convertRemoteContentSharingStreamToVideoGalleryStream = (stream: HTMLElement): VideoGalleryStream => {
+  return {
+    isAvailable: false,
+    /* @conditional-compile-remove(video-stream-is-receiving-flag) */
+    isReceiving: false,
+    isMirrored: false,
+    renderElement: stream
   };
 };
 
