@@ -12,7 +12,8 @@ export const richTextEditorStyle = mergeStyles({
   outline: 'none',
   bottom: '0',
   minHeight: '2.25rem',
-  maxHeight: '8.25rem'
+  maxHeight: '8.25rem',
+  flexGrow: 1
 });
 
 /**

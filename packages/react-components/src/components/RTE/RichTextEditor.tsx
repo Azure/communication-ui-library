@@ -6,10 +6,12 @@ import { Editor } from 'roosterjs-editor-core';
 import type { EditorOptions, IEditor } from 'roosterjs-editor-types-compatible';
 import { Rooster, createUpdateContentPlugin, UpdateMode, createRibbonPlugin, Ribbon } from 'roosterjs-react';
 import { ribbonButtonStyle, ribbonStyle, richTextEditorStyle } from '../styles/RichTextEditor.styles';
-import { useTheme } from '@fluentui/react';
+import { Icon, Stack, useTheme } from '@fluentui/react';
 import { ribbonButtons, ribbonButtonsStrings } from './RTERibbonButtons';
 import { RichTextSendBoxStrings } from './RTESendBox';
 import { isDarkThemed } from '../../theming/themeUtils';
+import { InputBoxButton } from '../InputBoxButton';
+import { sendIconStyle } from '../styles/SendBox.styles';
 
 /**
  * Props for {@link RichTextEditor}.
@@ -76,6 +78,9 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
 
   const editorCreator = useCallback((div: HTMLDivElement, options: EditorOptions) => {
     editor.current = new Editor(div, options);
+    const offsetHeight = div.offsetHeight;
+    console.log('offsetHeight', offsetHeight);
+
     setDivComponent(div);
     // Remove the background color of the editor
     div.style.backgroundColor = 'transparent';
@@ -115,19 +120,74 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     );
   }, [strings, ribbonPlugin, theme]);
 
+  const onRenderIcon = useCallback(
+    (isHover: boolean, iconName: string) => (
+      <Icon
+        iconName={iconName}
+        className={sendIconStyle({
+          theme,
+          hasText: true,
+          /* @conditional-compile-remove(file-sharing) */
+          hasFile: false,
+          hasErrorMessage: false
+        })}
+      />
+    ),
+    [theme]
+  );
+
+  const onRenderSendIcon = useCallback(
+    (isHover: boolean) => (
+      <Icon
+        iconName={'SendBoxSend'}
+        className={sendIconStyle({
+          theme,
+          hasText: true,
+          /* @conditional-compile-remove(file-sharing) */
+          hasFile: false,
+          hasErrorMessage: false
+        })}
+      />
+    ),
+    [theme]
+  );
+
   return (
     <div>
       {ribbon}
-      <Rooster
-        inDarkMode={isDarkThemed(theme)}
-        plugins={plugins}
-        className={richTextEditorStyle}
-        editorCreator={editorCreator}
-        // TODO: confirm the color during inline images implementation
-        imageSelectionBorderColor={'blue'}
-        // doNotAdjustEditorColor is used to fix the default background color for Rooster component
-        doNotAdjustEditorColor={true}
-      />
+      <div style={{ display: 'flex', flexDirection: 'row' }}>
+        <Rooster
+          inDarkMode={isDarkThemed(theme)}
+          plugins={plugins}
+          className={richTextEditorStyle}
+          editorCreator={editorCreator}
+          // TODO: confirm the color during inline images implementation
+          imageSelectionBorderColor={'blue'}
+          // doNotAdjustEditorColor is used to fix the default background color for Rooster component
+          doNotAdjustEditorColor={true}
+        />
+        <Stack.Item
+          align="end"
+          style={{ height: divComponent?.offsetHeight, display: 'flex', paddingRight: '8px', paddingLeft: '8px' }}
+        >
+          <InputBoxButton
+            onRenderIcon={(isHover) => onRenderIcon(isHover, 'SendBoxSend')}
+            onClick={(e) => {
+              e.stopPropagation(); // Prevents the click from bubbling up and triggering a focus event on the chat.
+            }}
+          />
+          <InputBoxButton
+            onRenderIcon={(isHover) => onRenderIcon(isHover, 'SendBoxSend')}
+            onClick={(e) => {
+              // sendMessageOnClick();
+              e.stopPropagation(); // Prevents the click from bubbling up and triggering a focus event on the chat.
+            }}
+            // className={sendButtonStyle}
+            // ariaLabel={localeStrings.sendButtonAriaLabel}
+            // tooltipContent={localeStrings.sendButtonAriaLabel}
+          />
+        </Stack.Item>
+      </div>
     </div>
   );
 });
