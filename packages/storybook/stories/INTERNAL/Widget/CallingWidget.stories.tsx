@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Stack, registerIcons } from '@fluentui/react';
+import { MessageBar, MessageBarType, Stack, registerIcons } from '@fluentui/react';
 import React from 'react';
 import { COMPOSITE_FOLDER_PREFIX } from '../../constants';
 import { CallComposite } from '@azure/communication-react';
 import { Meta } from '@storybook/react/types-6-0';
 import { CallingWidgetComponentMock } from './snippets/CallingWidgetComponentMock.snippet';
 import { CallAdd20Regular, Dismiss20Regular } from '@fluentui/react-icons';
-import { Canvas, Description, Heading, Source, Subheading, Title } from '@storybook/addon-docs';
+import { Canvas, Description, Heading, Props, Source, Subheading, Title } from '@storybook/addon-docs';
 
 registerIcons({
   icons: { dismiss: <Dismiss20Regular />, callAdd: <CallAdd20Regular /> }
@@ -18,45 +18,84 @@ const CallingWidgetComponentText = require('!!raw-loader!./snippets/CallingWidge
 
 const endCallSubscriptionText = `
 useEffect(() => {
-    if (adapter) {
-      adapter.on('callEnded', () => {
-        /**
-         * you will want to add your custom code here for after call behavior
-         * from the widget
-         */ 
-      });
-    }
-  }, [adapter]);
+  if (adapter) {
+    adapter.on('callEnded', () => {
+      /**
+       * you will want to add your custom code here for after call behavior
+       * from the widget
+       */ 
+    });
+  }
+}, [adapter]);
 `;
 
 const endCallAdapterDisposeText = `
 useEffect(() => {
-    if (adapter) {
-      adapter.on('callEnded', () => {
-        /**
-         * This is where you will do any cleanup needed to reset the experience for the user 
-         */ 
-        adapter.dispose();
-      });
-    }
-  }, [adapter]);
+  if (adapter) {
+    adapter.on('callEnded', () => {
+      /**
+       * This is where you will do any cleanup needed to reset the experience for the user 
+       */ 
+      adapter.dispose();
+    });
+  }
+}, [adapter]);
 `;
 
 const compositeConfigurationSnippet = `
 <CallComposite
-    adapter={adapter}
-    options={{
-        callControls: {
-            cameraButton: true,
-            screenShareButton: true, // useful for scenarios like software support, users can share their whole screen
-            moreButton: false,
-            peopleButton: false,
-            displayType: 'compact' // this makes the controls icons only and is highly recommended for the widget
-        },
-        // this should be enabled if you are using the camera button, floating forces the tile to be setup for desktop
-        localVideoTile: { position: 'floating' }
-    }}
+  adapter={adapter}
+  options={{
+    callControls: {
+      cameraButton: true,
+      screenShareButton: true, // useful for scenarios like software support, users can share their whole screen
+      moreButton: false,
+      peopleButton: false,
+      displayType: 'compact' // this makes the controls icons only and is highly recommended for the widget
+    },
+      // this should be enabled if you are using the camera button, floating forces the tile to be setup for desktop
+      localVideoTile: { position: 'floating' }
+  }}
 />`;
+
+const callAdapterSetupSnippet = `
+/**
+ * create your arguments to give to your AzureCommunicationServicesCallAdapter
+ * 
+ * Note: it is important that these arguments are memoized  
+ */
+const callAdapterArgs = useMemo(() => {
+  return {
+    userId: props.userId,
+    credential: credential,
+    targetCallees: [props.teamsAppIdentifier] as StartCallIdentifier[],
+    displayName: props.displayName,
+    options: props.options
+  };
+}, [props.userId, props.teamsAppIdentifier.teamsAppId, credential, displayName]);
+
+/**
+ * create your adapter
+ */
+const adapter = createAzureCommunicationCallAdapter(callAdapterArgs);
+
+return (
+  // other widget code is needed we are just focusing on the start call button
+  <PrimaryButton
+    onClick={() => {
+      if (displayName && adapter) {
+        // Here we use the TartgetCallees to start the call
+        adapter?.startCall(callAdapterArgs.targetCallees, {
+          audioOptions: { muted: false }
+        });
+      }
+    }}
+  >
+    StartCall
+  </PrimaryButton>
+)
+
+`;
 
 const getDocs: () => JSX.Element = () => {
   return (
@@ -71,6 +110,18 @@ const getDocs: () => JSX.Element = () => {
         Quickstarts](https://github.com/Azure-Samples/communication-services-javascript-quickstarts/tree/main/ui-library-click-to-call)
         repo.
       </Description>
+      <MessageBar messageBarType={MessageBarType.warning}>
+        Note: Due to the complex nature of the widget all snippets are generalized for conceptual understanding. If you
+        are wanting to checkout the full code for the widget please check out the{' '}
+        <a
+          href={
+            'https://github.com/Azure-Samples/communication-services-javascript-quickstarts/tree/main/ui-library-click-to-call'
+          }
+        >
+          Calling Widget
+        </a>{' '}
+        quickstart
+      </MessageBar>
       <Canvas mdxSource={CallingWidgetComponentText}>
         <Stack horizontalAlign="center" style={{}}>
           <Stack
@@ -219,6 +270,14 @@ const getDocs: () => JSX.Element = () => {
         `CallComposite` configuration screen. If you are collecting information from the user you will want to make sure
         that you are storing that information in a secure way.
       </Description>
+      <Subheading>Starting the Call</Subheading>
+      <Description>
+        Since our widget is best utilized working with Teams Voice applications to start the call you will want to use
+        our `AzureCommunicationServicesCallAdapter` with one of our adhoc approaches. This involves using an array of
+        `TargetCallees` this will start an [Adhoc](./?path=/docs/adhoc-calling--page) call the Teams Voice Application
+        you provide the identifier for. This can be done in the following way:
+      </Description>
+      <Source code={callAdapterSetupSnippet}></Source>
       <Subheading>After the Call</Subheading>
       <Description>
         Following the call you can provide many different options for the user. Using the `onCallEnded` event from the
@@ -237,6 +296,8 @@ const getDocs: () => JSX.Element = () => {
         dispose the adapter and reset the widget state. This code snippet shows how to do that.
       </Description>
       <Source code={endCallAdapterDisposeText}></Source>
+      <Heading>CallComposite Props</Heading>
+      <Props of={CallComposite} />
     </div>
   );
 };
