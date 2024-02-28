@@ -36,16 +36,16 @@ export class CallingSoundSubscriber {
   }
 
   private onCallStateChanged = (): void => {
-    this.call?.on('stateChanged', () => {
-      if (this.call && shouldPlayRinging(this.call, this.callee) && this.soundsLoaded?.callRingingSound) {
+    this.call.on('stateChanged', () => {
+      if (shouldPlayRinging(this.call, this.callee) && this.soundsLoaded?.callRingingSound) {
         this.soundsLoaded.callRingingSound.loop = true;
         this.playSound(this.soundsLoaded.callRingingSound);
       }
-      if (this.call && !shouldPlayRinging(this.call, this.callee) && this.soundsLoaded?.callRingingSound) {
+      if (!shouldPlayRinging(this.call, this.callee) && this.soundsLoaded?.callRingingSound) {
         this.soundsLoaded.callRingingSound.loop = false;
         this.soundsLoaded.callRingingSound.pause();
       }
-      if (this.call?.state === 'Disconnected') {
+      if (this.call.state === 'Disconnected') {
         if (this.soundsLoaded?.callBusySound && this.call.callEndReason?.code === CALL_REJECTED_CODE) {
           this.playSound(this.soundsLoaded.callBusySound);
         } else if (
