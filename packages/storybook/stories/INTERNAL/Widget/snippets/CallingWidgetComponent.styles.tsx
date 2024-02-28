@@ -21,6 +21,7 @@ export const callingWidgetContainerStyles = (theme: Theme): IStackStyles => {
       position: 'absolute',
       overflow: 'hidden',
       cursor: 'pointer',
+      background: theme.palette.white,
       ':hover': {
         boxShadow: theme.effects.elevation64
       }

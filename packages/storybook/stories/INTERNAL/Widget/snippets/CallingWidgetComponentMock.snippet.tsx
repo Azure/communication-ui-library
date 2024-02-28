@@ -83,7 +83,9 @@ export const CallingWidgetComponentMock = (): JSX.Element => {
           }}
         />
         <Stack tokens={{ childrenGap: '1rem' }} styles={logoContainerStyles}>
-          {/* <Stack style={{ transform: 'scale(1.8)' }}>{onRenderLogo && onRenderLogo()}</Stack> */}
+          <Stack style={{ transform: 'scale(1.8)' }}>
+            <img src="/images/logo.svg" alt="acs logo" />
+          </Stack>
         </Stack>
         <TextField
           label={'Name'}

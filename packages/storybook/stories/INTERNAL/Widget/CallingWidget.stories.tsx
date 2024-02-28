@@ -29,6 +29,35 @@ useEffect(() => {
   }, [adapter]);
 `;
 
+const endCallAdapterDisposeText = `
+useEffect(() => {
+    if (adapter) {
+      adapter.on('callEnded', () => {
+        /**
+         * This is where you will do any cleanup needed to reset the experience for the user 
+         */ 
+        adapter.dispose();
+      });
+    }
+  }, [adapter]);
+`;
+
+const compositeConfigurationSnippet = `
+<CallComposite
+    adapter={adapter}
+    options={{
+        callControls: {
+            cameraButton: true,
+            screenShareButton: true, // useful for scenarios like software support, users can share their whole screen
+            moreButton: false,
+            peopleButton: false,
+            displayType: 'compact' // this makes the controls icons only and is highly recommended for the widget
+        },
+        // this should be enabled if you are using the camera button, floating forces the tile to be setup for desktop
+        localVideoTile: { position: 'floating' }
+    }}
+/>`;
+
 const getDocs: () => JSX.Element = () => {
   return (
     <div>
@@ -36,11 +65,24 @@ const getDocs: () => JSX.Element = () => {
       <Description>
         The Calling Widget is a wrapper around our `CallComposite` to better facilitate calling experiences that begin
         with one click. Please check out our tutorial on how to build this from scratch on [Microsoft
-        Learn](https://learn.microsoft.com/en-us/azure/communication-services/tutorials/calling-widget/calling-widget-tutorial)
+        Learn](https://learn.microsoft.com/en-us/azure/communication-services/tutorials/calling-widget/calling-widget-tutorial).
+        To see the completed sample from this tutorial you can also checkout the Calling Widget in the [Azure
+        Communication Services Javascript
+        Quickstarts](https://github.com/Azure-Samples/communication-services-javascript-quickstarts/tree/main/ui-library-click-to-call)
+        repo.
       </Description>
       <Canvas mdxSource={CallingWidgetComponentText}>
         <Stack horizontalAlign="center" style={{}}>
-          <Stack style={{ width: '25rem', height: '25rem', position: 'relative', margin: 'auto' }}>
+          <Stack
+            style={{
+              width: '100%',
+              height: '25rem',
+              position: 'relative',
+              margin: 'auto',
+              background:
+                'url(https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYmk3aWR2Nm5hNWYydDhwdHpjcmt0bWN5aXJjM2hyaGtpMjlwZGd1NCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9JrkkDoJuU0FbdbUZU/giphy.gif)'
+            }}
+          >
             <CallingWidgetComponentMock />
           </Stack>
         </Stack>
@@ -70,8 +112,8 @@ const getDocs: () => JSX.Element = () => {
         </li>
 
         <li>
-          An Azure account with an active subscription. [Create an account for
-          free](https://azure.microsoft.com/free/?WT.mc_id=A261C142F).
+          An Azure account with an active subscription.{' '}
+          <a href={'https://azure.microsoft.com/free/?WT.mc_id=A261C142F'}>Create an account for free</a>.
         </li>
         <li>
           <a href={'https://nodejs.org/'}>Node.js</a> Active LTS and Maintenance LTS versions (Node 18.0.0 and above).
@@ -143,6 +185,15 @@ const getDocs: () => JSX.Element = () => {
         <li>Height: `352px`</li>
         <li>Width: `480px`</li>
       </ul>
+      <Subheading>Configurating the CallComposite</Subheading>
+      <Description>
+        Since the widget is a wrapper around the
+        [CallComposite](./?path=/docs/composites-call-basicexample--basic-example) you can use any of the different
+        properties that exist on the composite to make your widget experience unique to your needs. Keeping in mind the
+        minimum sizes for the composite you will want to make sure that you are picking the correct call controls for
+        your scenario.
+      </Description>
+      <Source code={compositeConfigurationSnippet}></Source>
       <Subheading>Using Mobile</Subheading>
       <Description>
         If you are wanting to create this experience on mobile, the recommendation here is to use the composite in the
@@ -178,9 +229,14 @@ const getDocs: () => JSX.Element = () => {
       <Heading>Cleaning up</Heading>
       <Description>
         After the call is over it is important to clean up the widget and make sure that the user is ready to start a
-        new call. This includes cleaning up the adapter and the state of the widget. This is important so that the user
-        is ready to start a new call.
+        new call. This includes disposing of the `CallAdapter` and setting the state of the widget to the appropriate
+        mode. This is important so that the user is always ready to start a new call.
       </Description>
+      <Description>
+        Like in the section after the call to do this cleanup we want to take a look at the `onCallEnded` event to
+        dispose the adapter and reset the widget state. This code snippet shows how to do that.
+      </Description>
+      <Source code={endCallAdapterDisposeText}></Source>
     </div>
   );
 };
