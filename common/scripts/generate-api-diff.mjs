@@ -92,7 +92,7 @@ async function cleanup() {
 
   // restore the initial development flavor used before the cmd started
   if (initialDevelopmentFlavor) {
-    await exec(`rush switch-flavor:${initialDevelopmentFlavor}`);
+    await execInternal(`rush switch-flavor:${initialDevelopmentFlavor}`);
   }
 }
 
@@ -122,12 +122,11 @@ async function generateApiJsons() {
   }
 
   console.log(`Generating baseline.api.json file`);
-  exec(`rush stage-feature -f ${feature} -o ${isAlphaFeature ? 'alphaToBeta' : 'betaToStable'}`);
-  const baselineFilePath = await generateApiFile(false);
+  const baselineFilePath = await generateApiFile('baseline.api.json');
 
   console.log(`Generating feature.api.json file`);
-  exec(`rush stage-feature -f ${feature} -o ${isAlphaFeature ? 'betaToAlpha' : 'stableToBeta'}`);
-  const featureFilePath = await generateApiFile(true);
+  exec(`rush stage-feature -f ${feature} -o ${isAlphaFeature ? 'alphaToBeta' : 'betaToStable'}`);
+  const featureFilePath = await generateApiFile('feature.api.json');
 
   return { baselineFilePath, featureFilePath };
 }
@@ -140,13 +139,13 @@ async function exec(cmd) {
 /**
  * @returns {Promise<string>} The path to the generated api.json file
  */
-async function generateApiFile(isBaseline) {
+async function generateApiFile(filename) {
   await exec('rush build -v -o @azure/communication-react');
   if (!fs.existsSync(destinationDir)) {
     fs.mkdirSync(destinationDir, { recursive: true });
   }
 
-  const destinationFile = `${destinationDir}/${isBaseline ? 'baseline.api.json' : 'feature.api.json'}`;
+  const destinationFile = `${destinationDir}/${filename}`;
   fs.copyFileSync(
     path.join(__dirname, '../../packages/communication-react/temp/communication-react.api.json'),
     destinationFile
