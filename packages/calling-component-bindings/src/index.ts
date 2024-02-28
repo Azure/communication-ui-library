@@ -31,6 +31,8 @@ export type { CommonCallingHandlers } from './handlers/createCommonHandlers';
 export type { CaptionsOptions } from './handlers/createCommonHandlers';
 /* @conditional-compile-remove(video-background-effects) */
 export type { VideoBackgroundEffectsDependency } from './handlers/createCommonHandlers';
+/* @conditional-compile-remove(spotlight) */
+export type { _ComponentCallingHandlers } from './handlers/createHandlers';
 /* @conditional-compile-remove(video-background-effects) */
 export type { CallingHandlersOptions } from './handlers/createHandlers';
 /* @conditional-compile-remove(teams-identity-support) */
@@ -60,3 +62,4 @@ export { _updateUserDisplayNames } from './utils/callUtils';
 export { _getEnvironmentInfo } from './utils/callUtils';
 
 export { _videoGalleryRemoteParticipantsMemo, _dominantSpeakersWithFlatId } from './utils/videoGalleryUtils';
+export type { _VideoGalleryRemoteParticipantsMemoFn } from './utils/videoGalleryUtils';

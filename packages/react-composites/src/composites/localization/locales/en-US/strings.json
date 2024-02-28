@@ -311,14 +311,16 @@
       "startSpotlightOnSelfText": "You'll highlight your video for everyone in the meeting.",
       "startSpotlightConfirmButtonLabel": "Spotlight for everyone",
       "startSpotlightCancelButtonLabel": "Cancel",
-      "stopSpotlightHeading": "Stop spotlighting?",
+      "stopSpotlightHeading": "Stop spotlighting this video?",
       "stopSpotlightOnSelfHeading": "Exit spotlight?",
       "stopSpotlightText": "This video will no longer be highlighted for everyone in the meeting.",
       "stopSpotlightOnSelfText": "Your video will no longer be highlighted for everyone in the meeting.",
       "stopSpotlightConfirmButtonLabel": "Stop spotlighting",
       "stopSpotlightOnSelfConfirmButtonLabel": "Exit spotlight",
       "stopSpotlightCancelButtonLabel": "Cancel"
-    }
+    },
+    "exitSpotlightButtonLabel": "Exit spotlight",
+    "exitSpotlightButtonTooltip": "Exit spotlight"
   },
   "chat": {
     "chatListHeader": "In this chat",

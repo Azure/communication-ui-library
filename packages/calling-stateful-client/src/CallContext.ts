@@ -43,6 +43,8 @@ import {
 } from './CallClientState';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from './CallClientState';
+/* @conditional-compile-remove(reaction) */
+import { ReactionState } from './CallClientState';
 /* @conditional-compile-remove(call-transfer) */
 import { AcceptedTransfer } from './CallClientState';
 import { callingStatefulLogger } from './Logger';
@@ -171,6 +173,8 @@ export class CallContext {
         existingCall.recording.isRecordingActive = call.recording.isRecordingActive;
         /* @conditional-compile-remove(raise-hand) */
         existingCall.raiseHand.raisedHands = call.raiseHand.raisedHands;
+        /* @conditional-compile-remove(ppt-live) */
+        existingCall.pptLive.isActive = call.pptLive.isActive;
         /* @conditional-compile-remove(raise-hand) */
         existingCall.raiseHand.localParticipantRaisedHand = call.raiseHand.localParticipantRaisedHand;
         /* @conditional-compile-remove(rooms) */
@@ -372,6 +376,30 @@ export class CallContext {
     });
   }
 
+  /* @conditional-compile-remove(ppt-live) */
+  public setCallPPTLiveActive(callId: string, isActive: boolean): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.pptLive.isActive = isActive;
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(ppt-live) */
+  public setCallParticipantPPTLive(callId: string, target: HTMLElement | undefined): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      const participantKey = call.contentSharingRemoteParticipant;
+      if (call && participantKey) {
+        const participant = call.remoteParticipants[participantKey];
+        if (participant) {
+          participant.contentSharingStream = target;
+        }
+      }
+    });
+  }
+
   /* @conditional-compile-remove(raise-hand) */
   public setCallRaisedHands(callId: string, raisedHands: RaisedHand[]): void {
     this.modifyState((draft: CallClientState) => {
@@ -422,8 +450,8 @@ export class CallContext {
       clearTimeout(this._timeOutId[participantKey]);
 
       const participant = call.remoteParticipants[participantKey];
-      const newReactionState = reactionMessage
-        ? { reactionMessage: reactionMessage, receivedAt: new Date() }
+      const newReactionState: ReactionState | undefined = reactionMessage
+        ? { reactionMessage: reactionMessage, receivedOn: new Date() }
         : undefined;
 
       if (participantKey === toFlatCommunicationIdentifier(this._state.userId)) {
@@ -472,7 +500,7 @@ export class CallContext {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        call.spotlight = { spotlightedParticipants, maxParticipantsToSpotlight };
+        call.spotlight = { ...call.spotlight, spotlightedParticipants, maxParticipantsToSpotlight };
       }
     });
   }
@@ -485,6 +513,12 @@ export class CallContext {
         const participant = call.remoteParticipants[toFlatCommunicationIdentifier(spotlightedParticipant.identifier)];
         if (participant) {
           participant.spotlight = { spotlightedOrderPosition: spotlightedParticipant.order };
+        } else if (
+          call.spotlight &&
+          toFlatCommunicationIdentifier(draft.userId) ===
+            toFlatCommunicationIdentifier(spotlightedParticipant.identifier)
+        ) {
+          call.spotlight.localParticipantSpotlight = { spotlightedOrderPosition: spotlightedParticipant.order };
         }
       }
     });
@@ -498,6 +532,12 @@ export class CallContext {
         const participant = call.remoteParticipants[toFlatCommunicationIdentifier(spotlightedParticipant.identifier)];
         if (participant) {
           participant.spotlight = undefined;
+        } else if (
+          call.spotlight &&
+          toFlatCommunicationIdentifier(draft.userId) ===
+            toFlatCommunicationIdentifier(spotlightedParticipant.identifier)
+        ) {
+          call.spotlight.localParticipantSpotlight = undefined;
         }
       }
     });

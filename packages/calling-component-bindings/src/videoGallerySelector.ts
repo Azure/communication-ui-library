@@ -39,7 +39,7 @@ import { getLocalParticipantReactionState } from './baseSelectors';
 import { memoizedConvertToVideoTileReaction } from './utils/participantListSelectorUtils';
 import { getRemoteParticipantsExcludingConsumers } from './getRemoteParticipantsExcludingConsumers';
 /* @conditional-compile-remove(spotlight) */
-import { getSpotlightedParticipants, getMaxParticipantsToSpotlight } from './baseSelectors';
+import { getSpotlightCallFeature, getCapabilities } from './baseSelectors';
 
 /**
  * Selector type for {@link VideoGallery} component.
@@ -87,9 +87,9 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     /* @conditional-compile-remove(reaction) */
     getLocalParticipantReactionState,
     /* @conditional-compile-remove(spotlight) */
-    getSpotlightedParticipants,
+    getSpotlightCallFeature,
     /* @conditional-compile-remove(spotlight) */
-    getMaxParticipantsToSpotlight
+    getCapabilities
   ],
   (
     screenShareRemoteParticipantId,
@@ -111,9 +111,9 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     /* @conditional-compile-remove(reaction) */
     localParticipantReaction,
     /* @conditional-compile-remove(spotlight) */
-    spotlightedParticipants,
+    spotlightCallFeature,
     /* @conditional-compile-remove(spotlight) */
-    maxParticipantsToSpotlight
+    capabilities
   ) => {
     const screenShareRemoteParticipant =
       screenShareRemoteParticipantId && remoteParticipants
@@ -128,7 +128,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     /* @conditional-compile-remove(reaction) */
     const localParticipantReactionState = memoizedConvertToVideoTileReaction(localParticipantReaction);
     /* @conditional-compile-remove(spotlight) */
-    const spotlightedParticipantIds = memoizeSpotlightedParticipantIds(spotlightedParticipants);
+    const spotlightedParticipantIds = memoizeSpotlightedParticipantIds(spotlightCallFeature?.spotlightedParticipants);
 
     return {
       screenShareParticipant: screenShareRemoteParticipant
@@ -156,7 +156,11 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
         /* @conditional-compile-remove(raise-hand) */
         raisedHand,
         /* @conditional-compile-remove(reaction) */
-        localParticipantReactionState
+        localParticipantReactionState,
+        /* @conditional-compile-remove(spotlight) */
+        spotlightCallFeature?.localParticipantSpotlight,
+        /* @conditional-compile-remove(spotlight) */
+        capabilities
       ),
       remoteParticipants: _videoGalleryRemoteParticipantsMemo(
         updateUserDisplayNamesTrampoline(remoteParticipants ? Object.values(remoteParticipants) : noRemoteParticipants),
@@ -171,7 +175,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
       /* @conditional-compile-remove(spotlight) */
       spotlightedParticipants: spotlightedParticipantIds,
       /* @conditional-compile-remove(spotlight) */
-      maxParticipantsToSpotlight: maxParticipantsToSpotlight
+      maxParticipantsToSpotlight: spotlightCallFeature?.maxParticipantsToSpotlight
     };
   }
 );

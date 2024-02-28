@@ -131,6 +131,9 @@ export interface VideoGalleryStrings {
   /* @conditional-compile-remove(spotlight) */
   /** Menu text shown in Video Tile contextual menu to stop spotlight on local user's video tile */
   stopSpotlightOnSelfVideoTileMenuLabel: string;
+  /* @conditional-compile-remove(hide-attendee-name) */
+  /** String for the attendee role */
+  attendeeRole: string;
 }
 
 /**
@@ -269,14 +272,24 @@ export interface VideoGalleryProps {
   spotlightedParticipants?: string[];
   /* @conditional-compile-remove(spotlight) */
   /**
-   * This callback will be called when spotlight is started for participant video tiles.
+   * This callback will be called when spotlight is started for the local participant video tile.
    */
-  onStartSpotlight?: (userIds?: string[]) => Promise<void>;
+  onStartLocalSpotlight?: () => Promise<void>;
   /* @conditional-compile-remove(spotlight) */
   /**
-   * This callback will be called when spotlight is stopped for participant video tiles.
+   * This callback will be called when spotlight is started for the local participant video tile.
    */
-  onStopSpotlight?: (userIds?: string[]) => Promise<void>;
+  onStartRemoteSpotlight?: (userIds?: string[]) => Promise<void>;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * This callback will be called when spotlight is stopped for remote participant video tiles.
+   */
+  onStopLocalSpotlight?: () => Promise<void>;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * This callback will be called when spotlight is stopped for remote participant video tiles.
+   */
+  onStopRemoteSpotlight?: (userIds?: string[]) => Promise<void>;
   /* @conditional-compile-remove(spotlight) */
   /**
    * Maximum participants that can be spotlighted
@@ -376,9 +389,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(spotlight) */
     spotlightedParticipants,
     /* @conditional-compile-remove(spotlight) */
-    onStartSpotlight,
+    onStartLocalSpotlight,
     /* @conditional-compile-remove(spotlight) */
-    onStopSpotlight,
+    onStartRemoteSpotlight,
+    /* @conditional-compile-remove(spotlight) */
+    onStopLocalSpotlight,
+    /* @conditional-compile-remove(spotlight) */
+    onStopRemoteSpotlight,
     /* @conditional-compile-remove(spotlight) */
     maxParticipantsToSpotlight,
     /* @conditional-compile-remove(reaction) */
@@ -501,7 +518,21 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           /* @conditional-compile-remove(reaction) */
           reaction={localParticipant.reaction}
           /* @conditional-compile-remove(spotlight) */
+          spotlightedParticipantUserIds={spotlightedParticipants}
+          /* @conditional-compile-remove(spotlight) */
           isSpotlighted={isSpotlighted}
+          /* @conditional-compile-remove(spotlight) */
+          onStartSpotlight={onStartLocalSpotlight}
+          /* @conditional-compile-remove(spotlight) */
+          onStopSpotlight={onStopLocalSpotlight}
+          /* @conditional-compile-remove(spotlight) */
+          maxParticipantsToSpotlight={maxParticipantsToSpotlight}
+          /* @conditional-compile-remove(spotlight) */
+          menuKind={remoteVideoTileMenu ? (remoteVideoTileMenu.kind === 'drawer' ? 'drawer' : 'contextual') : undefined}
+          /* @conditional-compile-remove(spotlight) */
+          drawerMenuHostId={drawerMenuHostId}
+          /* @conditional-compile-remove(spotlight) */
+          strings={strings}
           /* @conditional-compile-remove(reaction) */
           reactionResources={reactionResources}
         />
@@ -519,10 +550,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     localTileNotInGrid,
     showCameraSwitcherInLocalPreview,
     showMuteIndicator,
-    strings.localVideoCameraSwitcherLabel,
-    strings.localVideoLabel,
-    strings.localVideoMovementLabel,
-    strings.localVideoSelectedDescription,
     styles?.localVideo,
     theme.effects.roundedCorner4,
     /*@conditional-compile-remove(click-to-call) */
@@ -530,6 +557,20 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(gallery-layouts) */
     layout,
     showLocalVideoTileLabel,
+    /* @conditional-compile-remove(spotlight) */
+    spotlightedParticipants,
+    /* @conditional-compile-remove(spotlight) */
+    onStartLocalSpotlight,
+    /* @conditional-compile-remove(spotlight) */
+    onStopLocalSpotlight,
+    /* @conditional-compile-remove(spotlight) */
+    maxParticipantsToSpotlight,
+    /* @conditional-compile-remove(spotlight) */
+    remoteVideoTileMenu,
+    /* @conditional-compile-remove(spotlight) */
+    strings,
+    /* @conditional-compile-remove(spotlight) */
+    drawerMenuHostId,
     /* @conditional-compile-remove(reaction) */
     reactionResources
   ]);
@@ -559,7 +600,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
    * sets the announcement string for VideoGallery actions so that the screenreader will trigger
    */
   const toggleAnnouncerString = useCallback(
-    (announcement) => {
+    (announcement: string) => {
       setAnnouncementString(announcement);
       /**
        * Clears the announcer string after VideoGallery action allowing it to be re-announced.
@@ -631,9 +672,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           /* @conditional-compile-remove(spotlight) */
           isSpotlighted={isSpotlighted}
           /* @conditional-compile-remove(spotlight) */
-          onStartSpotlight={onStartSpotlight}
+          onStartSpotlight={onStartRemoteSpotlight}
           /* @conditional-compile-remove(spotlight) */
-          onStopSpotlight={onStopSpotlight}
+          onStopSpotlight={onStopRemoteSpotlight}
           /* @conditional-compile-remove(spotlight) */
           maxParticipantsToSpotlight={maxParticipantsToSpotlight}
           /* @conditional-compile-remove(reaction) */
@@ -658,8 +699,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       toggleAnnouncerString,
       onUpdateScalingMode,
       /* @conditional-compile-remove(spotlight) */ spotlightedParticipants,
-      /* @conditional-compile-remove(spotlight) */ onStartSpotlight,
-      /* @conditional-compile-remove(spotlight) */ onStopSpotlight,
+      /* @conditional-compile-remove(spotlight) */ onStartRemoteSpotlight,
+      /* @conditional-compile-remove(spotlight) */ onStopRemoteSpotlight,
       /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight,
       /* @conditional-compile-remove(reaction) */ reactionResources
     ]
