@@ -102,6 +102,10 @@ jobs:
         run: rush test
         env:
           CI: true
+          ResourceConnectionString: 'endpointString'
+          EndpointUrl: 'https://endpointUrl'
+          AdminUserId: 'adminUserId'
+          AzureBlobStorageConnectionString: 'StorageId'
 
       # Retrieve version to tag and publish release with
       - name: Retrieve version from package.json
