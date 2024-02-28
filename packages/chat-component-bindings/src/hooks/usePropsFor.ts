@@ -1,6 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-import { ErrorBar, MessageThread, ParticipantList, SendBox, TypingIndicator } from '@internal/react-components';
+import {
+  ErrorBar,
+  MessageThread,
+  ParticipantList,
+  RichTextSendBox,
+  SendBox,
+  TypingIndicator
+} from '@internal/react-components';
 
 import { useHandlers } from './useHandlers';
 import { useSelector } from './useSelector';
@@ -56,6 +63,8 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
   typeof SendBox
 > extends true
   ? SendBoxSelector
+  : AreEqual<Component, typeof RichTextSendBox> extends true
+  ? SendBoxSelector
   : AreEqual<Component, typeof MessageThread> extends true
   ? MessageThreadSelector
   : AreEqual<Component, typeof TypingIndicator> extends true
@@ -98,6 +107,8 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
 
   switch (component) {
     case SendBox:
+      return sendBoxSelector;
+    case RichTextSendBox:
       return sendBoxSelector;
     case MessageThread:
       return getMessageThreadSelector();
