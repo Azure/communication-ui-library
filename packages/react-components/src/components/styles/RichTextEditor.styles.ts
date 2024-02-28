@@ -22,8 +22,7 @@ export const ribbonOverflowButtonStyle = (theme: Theme): Partial<IContextualMenu
   return {
     subComponentStyles: {
       menuItem: {
-        icon: { color: theme.palette.neutralPrimary, height: 'auto' },
-        menuIcon: { color: theme.palette.neutralPrimary, height: 'auto' },
+        icon: { color: theme.palette.neutralPrimary, paddingTop: '0.5rem' },
         root: ribbonOverflowButtonRootStyles(theme)
       },
       callout: {}
