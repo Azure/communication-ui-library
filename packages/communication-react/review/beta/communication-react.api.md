@@ -938,6 +938,7 @@ export interface CallState {
     callerInfo: CallerInfo;
     capabilitiesFeature?: CapabilitiesFeatureState;
     captionsFeature: CaptionsCallFeatureState;
+    // @beta
     contentSharingRemoteParticipant?: string;
     diagnostics: DiagnosticsCallFeatureState;
     direction: CallDirection;
@@ -952,6 +953,7 @@ export interface CallState {
     localParticipantReaction?: ReactionState;
     localVideoStreams: LocalVideoStreamState[];
     optimalVideoCount: OptimalVideoCountFeatureState;
+    // @beta
     pptLive: PPTLiveCallFeatureState;
     raiseHand: RaiseHandCallFeature;
     recording: RecordingCallFeature;
@@ -3792,6 +3794,7 @@ export interface RecordingCallFeature {
 // @public
 export interface RemoteParticipantState {
     callEndReason?: CallEndReason;
+    // @beta
     contentSharingStream?: HTMLElement;
     displayName?: string;
     identifier: CommunicationIdentifierKind;
