@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+import { WorkerInfo } from '@playwright/test';
 import express from 'express';
 import { Server } from 'http';
 import path from 'path';
@@ -11,7 +12,7 @@ const app = express();
 export const createTestServer =
   (props: { appDir: string; serverUrl: string }) =>
   // eslint-disable-next-line no-empty-pattern, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
-  async ({}, use: (r: string) => Promise<void>, workerInfo) => {
+  async ({}, use: (r: string) => Promise<void>, workerInfo: WorkerInfo) => {
     const port = 3000 + workerInfo.workerIndex;
     await startServer(props.appDir, port);
     try {

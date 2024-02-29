@@ -35,7 +35,7 @@ export const CallReadinessModal = (props: {
   /* @conditional-compile-remove(unsupported-browser) */
   environmentInfo?: EnvironmentInfo;
   isPermissionsModalDismissed: boolean;
-  setIsPermissionsModalDismissed: (boolean) => void;
+  setIsPermissionsModalDismissed: (dismissedState: boolean) => void;
   onPermissionsTroubleshootingClick?: (permissionsState: {
     camera: PermissionState;
     microphone: PermissionState;
@@ -236,7 +236,7 @@ export const CallReadinessModalFallBack = (props: {
   /* @conditional-compile-remove(unsupported-browser) */
   environmentInfo?: EnvironmentInfo;
   isPermissionsModalDismissed: boolean;
-  setIsPermissionsModalDismissed: (boolean) => void;
+  setIsPermissionsModalDismissed: (dismissedState: boolean) => void;
   onPermissionsTroubleshootingClick?: (permissionsState: {
     camera: PermissionState;
     microphone: PermissionState;

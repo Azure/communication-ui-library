@@ -72,7 +72,7 @@ export interface ImageOverlayProps {
 /**
  * Strings of {@link ImageOverlay} that can be overridden.
  *
- * @beta
+ * @public
  */
 export interface ImageOverlayStrings {
   /**
