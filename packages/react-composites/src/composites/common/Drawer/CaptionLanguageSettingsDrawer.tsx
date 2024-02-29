@@ -5,9 +5,7 @@ import React from 'react';
 /* @conditional-compile-remove(close-captions) */
 import { useMemo, useCallback } from 'react';
 /* @conditional-compile-remove(close-captions) */
-import { useTheme } from '@internal/react-components';
-/* @conditional-compile-remove(close-captions) */
-import { _CaptionsSettingsModal, SpokenLanguageStrings, CaptionLanguageStrings } from '@internal/react-components';
+import { _CaptionsSettingsModal, CaptionLanguageStrings, useTheme } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
 import {
   _DrawerMenu as DrawerMenu,
@@ -16,6 +14,7 @@ import {
 } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
 import { captionSettingsDrawerStyles } from './captionSettingsDrawer.styles';
+import { _getKeys } from '@internal/acs-ui-common';
 
 /** @private */
 export interface CaptionSettingsDrawerStrings {
@@ -28,22 +27,22 @@ export interface CaptionSettingsDrawerStrings {
 }
 
 /** @private */
-export const CaptionSettingsDrawer = (props: {
-  /* @conditional-compile-remove(close-captions) */ selectLanguage: (language: string) => void;
-  /* @conditional-compile-remove(close-captions) */ setCurrentLanguage: (language: string) => void;
-  /* @conditional-compile-remove(close-captions) */ currentLanguage: string;
+export const CaptionLanguageSettingsDrawer = (props: {
+  /* @conditional-compile-remove(close-captions) */ selectLanguage: (language: keyof CaptionLanguageStrings) => void;
+  /* @conditional-compile-remove(close-captions) */ setCurrentLanguage: (
+    language: keyof CaptionLanguageStrings
+  ) => void;
+  /* @conditional-compile-remove(close-captions) */ currentLanguage: keyof CaptionLanguageStrings;
   /* @conditional-compile-remove(close-captions) */ onLightDismiss: () => void;
   /* @conditional-compile-remove(close-captions) */ strings?: CaptionSettingsDrawerStrings;
-  /* @conditional-compile-remove(close-captions) */ supportedLanguageStrings?:
-    | SpokenLanguageStrings
-    | CaptionLanguageStrings;
+  /* @conditional-compile-remove(close-captions) */ supportedLanguageStrings?: CaptionLanguageStrings;
 }): JSX.Element => {
   /* @conditional-compile-remove(close-captions) */
   const theme = useTheme();
 
   /* @conditional-compile-remove(close-captions) */
   const onDrawerItemClick = useCallback(
-    (languageCode: string) => {
+    (languageCode: keyof CaptionLanguageStrings) => {
       props.selectLanguage(languageCode);
     },
     [props]
@@ -51,7 +50,7 @@ export const CaptionSettingsDrawer = (props: {
 
   /* @conditional-compile-remove(close-captions) */
   const drawerItems: DrawerMenuItemProps[] = useMemo(() => {
-    return Object.keys(props.supportedLanguageStrings ?? []).map((languageCode) => ({
+    return _getKeys(props.supportedLanguageStrings ?? []).map((languageCode) => ({
       itemKey: languageCode,
       text: props.supportedLanguageStrings ? props.supportedLanguageStrings[languageCode] : languageCode,
       onItemClick: () => onDrawerItemClick(languageCode),

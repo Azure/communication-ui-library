@@ -10,7 +10,9 @@ import {
   OptionsDevice,
   _DrawerMenu as DrawerMenu,
   _DrawerMenuItemProps as DrawerMenuItemProps,
-  _DrawerMenuStyles
+  _DrawerMenuStyles,
+  SpokenLanguageStrings,
+  CaptionLanguageStrings
 } from '@internal/react-components';
 /* @conditional-compile-remove(gallery-layouts) */
 import { VideoGalleryLayout } from '@internal/react-components';
@@ -45,7 +47,7 @@ import { _captionSettingsSelector, _startCaptionsButtonSelector } from '@interna
 /* @conditional-compile-remove(close-captions) */
 import { useHandlers } from '../../CallComposite/hooks/useHandlers';
 /* @conditional-compile-remove(close-captions) */
-import { CaptionSettingsDrawer } from './CaptionSettingsDrawer';
+import { CaptionLanguageSettingsDrawer } from './CaptionLanguageSettingsDrawer';
 /* @conditional-compile-remove(close-captions) */
 import { themedToggleButtonStyle } from './MoreDrawer.styles';
 /* @conditional-compile-remove(close-captions) */
@@ -58,6 +60,7 @@ import { useSelector } from '../../CallComposite/hooks/useSelector';
 import { getTargetCallees } from '../../CallComposite/selectors/baseSelectors';
 /* @conditional-compile-remove(dtmf-dialer) */
 import { showDtmfDialer } from '../../CallComposite/utils/MediaGalleryUtils';
+import { SpokenLanguageSettingsDrawer } from './SpokenLanguageSettingsDrawer';
 
 /** @private */
 export interface MoreDrawerStrings {
@@ -209,7 +212,10 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   const raiseHandButtonProps = usePropsFor(RaiseHandButton) as RaiseHandButtonProps;
 
   const onSpeakerItemClick = useCallback(
-    (_ev, itemKey) => {
+    (
+      _ev: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement> | undefined,
+      itemKey: string | undefined
+    ) => {
       const selected = speakers?.find((speaker) => speaker.id === itemKey);
       if (selected) {
         // This is unsafe - we're only passing in part of the argument to the handler.
@@ -246,7 +252,10 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
 
   const { microphones, onSelectMicrophone } = props;
   const onMicrophoneItemClick = useCallback(
-    (_ev, itemKey) => {
+    (
+      _ev: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement> | undefined,
+      itemKey: string | undefined
+    ) => {
       const selected = microphones?.find((mic) => mic.id === itemKey);
       if (selected) {
         // This is unsafe - we're only passing in part of the argument to the handler.
@@ -448,12 +457,12 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   const [isCaptionLanguageDrawerOpen, setIsCaptionLanguageDrawerOpen] = useState<boolean>(false);
 
   /* @conditional-compile-remove(close-captions) */
-  const [currentSpokenLanguage, setCurrentSpokenLanguage] = useState<string>(
+  const [currentSpokenLanguage, setCurrentSpokenLanguage] = useState<keyof SpokenLanguageStrings>(
     captionSettingsProp.currentSpokenLanguage ?? 'en-us'
   );
 
   /* @conditional-compile-remove(close-captions) */
-  const [currentCaptionLanguage, setCurrentCaptionLanguage] = useState<string>(
+  const [currentCaptionLanguage, setCurrentCaptionLanguage] = useState<keyof CaptionLanguageStrings>(
     captionSettingsProp.currentCaptionLanguage ?? _spokenLanguageToCaptionLanguage[currentSpokenLanguage]
   );
 
@@ -576,7 +585,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   return (
     <>
       {isSpokenLanguageDrawerOpen && props.isCaptionsSupported && (
-        <CaptionSettingsDrawer
+        <SpokenLanguageSettingsDrawer
           onLightDismiss={props.onLightDismiss}
           selectLanguage={setCurrentSpokenLanguage}
           setCurrentLanguage={captionSettingsHandlers.onSetSpokenLanguage}
@@ -586,7 +595,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         />
       )}
       {isCaptionLanguageDrawerOpen && props.isCaptionsSupported && (
-        <CaptionSettingsDrawer
+        <CaptionLanguageSettingsDrawer
           onLightDismiss={props.onLightDismiss}
           selectLanguage={setCurrentCaptionLanguage}
           setCurrentLanguage={captionSettingsHandlers.onSetCaptionLanguage}

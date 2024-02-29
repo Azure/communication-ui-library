@@ -154,20 +154,25 @@ const updateLatestCapabilityChangedNotificationMap = (
     return activeNotifications;
   }
 
-  for (const [capabilityName, newCapabilityValue] of Object.entries(
+  for (const [capabilityKey, newCapabilityValue] of Object.entries(
     capabilitiesChangedInfoAndRole.capabilitiesChangeInfo.newValue
   )) {
+    // Cast is safe because we are iterating over the enum keys on the object.entries where
+    // newCapabilityValue typing is correctly returned. Object.entries limitations
+    // always returns string for the key
+    const capabilityName = capabilityKey as ParticipantCapabilityName;
     // If the active notification for a capability has the same `isPresent` value and the same reason as the new
     // capability value from the SDK then we will not create a new notification to avoid redundancy
     if (
       activeNotifications[capabilityName] &&
-      newCapabilityValue.isPresent === activeNotifications[capabilityName].isPresent &&
-      capabilitiesChangedInfoAndRole.capabilitiesChangeInfo.reason === activeNotifications[capabilityName].changedReason
+      newCapabilityValue.isPresent === activeNotifications[capabilityName]?.isPresent &&
+      capabilitiesChangedInfoAndRole.capabilitiesChangeInfo.reason ===
+        activeNotifications[capabilityName]?.changedReason
     ) {
       continue;
     }
     const newCapabilityChangeNotification: CapabalityChangedNotification = {
-      capabilityName: capabilityName as ParticipantCapabilityName,
+      capabilityName: capabilityName,
       isPresent: newCapabilityValue.isPresent,
       changedReason: capabilitiesChangedInfoAndRole.capabilitiesChangeInfo.reason,
       role: capabilitiesChangedInfoAndRole.participantRole,
