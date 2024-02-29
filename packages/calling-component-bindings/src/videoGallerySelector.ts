@@ -53,8 +53,6 @@ export type VideoGallerySelector = (
   props: CallingBaseSelectorProps
 ) => {
   screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
-  /* @conditional-compile-remove(ppt-live) */
-  contentSharingParticipant: VideoGalleryRemoteParticipant | undefined;
   localParticipant: VideoGalleryLocalParticipant;
   remoteParticipants: VideoGalleryRemoteParticipant[];
   dominantSpeakers?: string[];
