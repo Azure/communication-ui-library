@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "area": "fix",
-  "workstream": "",
-  "comment": "Resolve issue where envHelper would return early on error throw when appsettings.json doesn't exist",
-  "packageName": "@azure/communication-react",
-  "email": "73612854+palatter@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

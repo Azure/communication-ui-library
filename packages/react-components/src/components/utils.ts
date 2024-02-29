@@ -246,12 +246,3 @@ export const isEnterKeyEventFromCompositionSession = (e: React.KeyboardEvent<HTM
  * @private
  */
 export const nullToUndefined = <T>(value: T | null): T | undefined => (value === null ? undefined : value);
-
-/**
- * Helper function to get the keys of an object
- *
- * @private
- */
-export function getKeys<T extends object>(obj: T): (keyof T)[] {
-  return Object.keys(obj) as Array<keyof T>;
-}
