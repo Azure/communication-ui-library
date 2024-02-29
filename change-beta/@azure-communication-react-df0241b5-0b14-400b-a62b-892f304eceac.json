@@ -2,8 +2,8 @@
   "type": "none",
   "area": "improvement",
   "workstream": "",
-  "comment": "Use appSettings.json.sample",
+  "comment": "run CI on release branches",
   "packageName": "@azure/communication-react",
-  "email": "73612854+palatter@users.noreply.github.com",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
   "dependentChangeType": "none"
 }

@@ -1,8 +1,8 @@
 {
   "type": "patch",
   "area": "fix",
-  "workstream": "InlineImage",
-  "comment": "Replace Inline Image tag with image text for aria text",
+  "workstream": "Mention",
+  "comment": "Add key to MsftMention tag",
   "packageName": "@azure/communication-react",
   "email": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
   "dependentChangeType": "patch"

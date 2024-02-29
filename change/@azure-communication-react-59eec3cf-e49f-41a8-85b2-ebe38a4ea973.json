@@ -1,9 +1,9 @@
 {
-  "type": "minor",
+  "type": "none",
   "area": "improvement",
   "workstream": "InlineImage",
-  "comment": "Rerender ImageOverlay when selected image is fetched in the queue",
+  "comment": "Add more CCs for inline image",
   "packageName": "@azure/communication-react",
   "email": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
-  "dependentChangeType": "patch"
+  "dependentChangeType": "none"
 }
