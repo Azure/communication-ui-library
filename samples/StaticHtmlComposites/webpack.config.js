@@ -8,11 +8,28 @@ const config = {
     chatComposite: './src/chatComposite.js',
     callComposite: './src/callComposite.js',
     callWithChatComposite: './src/callWithChatComposite.js',
+    callingWidget: './src/callingWidget.jsx',
     service: './src/service.js'
   },
   mode: 'development', // change to 'production' for optimization
   resolve: {
-    extensions: ['.js']
+    extensions: ['.js', '.jsx', '.ts', '.tsx']
+  },
+  module: {
+    rules: [
+      {
+        test: /\.jsx?$/,
+        use: { loader: 'babel-loader', options: { presets: ['@babel/preset-react', '@babel/preset-env'] } },
+        exclude: /dist/,
+        exclude: /node_modules/
+      },
+      {
+        test: /\.ts?$/,
+        loader: 'ts-loader',
+        exclude: /dist/,
+        exclude: /node_modules/
+      }
+    ]
   },
   output: {
     filename: '[name].js',
@@ -56,6 +73,10 @@ const config = {
     new HtmlWebpackPlugin({
       template: './chatComposite.html',
       filename: 'chatComposite.html'
+    }),
+    new HtmlWebpackPlugin({
+      template: './callingWidget.html',
+      filename: 'callingWidget.html'
     }),
     new HtmlWebpackPlugin({
       template: './callWithChatComposite.html',

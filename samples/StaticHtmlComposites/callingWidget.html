@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Embedded call composite basic example</title>
+
+  <!-- Ensure that fonts have loaded before tests are run -->
+  <link rel="preload" href="./fonts/segoeui-regular.woff2" as="font" crossorigin="anonymous" />
+  <link rel="preload" href="./fonts/segoeui-semibold.woff2" as="font" crossorigin="anonymous" />
+  <link rel="preload" href="./fonts/segoeui-bold.woff2" as="font" crossorigin="anonymous" />
+  <link rel="stylesheet" href="index.css" />
+</head>
+
+<body>
+  <div id="calling-widget-container"></div>
+  <!-- replace with https://github.com/Azure/communication-ui-library/releases/latest/download/callComposite.js for development and prototyping -->
+  <script src="./callingWidget.js"></script>
+  <script src="./service.js"></script>
+  <script type="module">
+    const testParams = service.loadConfigFromUrlQuery();
+    const { user, token } = testParams.token
+      ? { token: testParams.token, user: { communicationUserId: testParams.userId } }
+      : { ...(await service.createUserWithToken()) };
+    const groupId = await service.createGUID();
+
+    const callAdapter = await callingWidget.loadCallingWidget(
+      {
+        userId: user,
+        token: token,
+        targetCallees: [{ teamsAppId: '19b01e96-c923-433a-83e4-bda54446bad7', cloud: 'public' }]
+      },
+      document.getElementById('calling-widget-container')
+    );
+
+    window.onbeforeunload = () => {
+      callAdapter.dispose();
+    };
+  </script>
+</body>
