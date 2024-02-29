@@ -8,7 +8,9 @@ export {
 } from './adapter/AzureCommunicationChatAdapter';
 export type { AzureCommunicationChatAdapterArgs } from './adapter/AzureCommunicationChatAdapter';
 export { ChatComposite } from './ChatComposite';
-export type { ChatCompositeProps, ChatCompositeOptions, RichTextEditorOptions } from './ChatComposite';
+export type { ChatCompositeProps, ChatCompositeOptions } from './ChatComposite';
+/* @conditional-compile-remove(rich-text-editor) */
+export type { RichTextEditorOptions } from './ChatComposite';
 
 export type {
   ChatAdapter,
