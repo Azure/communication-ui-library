@@ -93,8 +93,38 @@ return (
   >
     StartCall
   </PrimaryButton>
-)
+`;
 
+const callAdapterTransferSnippet = `
+useEffect(() => {
+    if (adapter) {
+      adapter.on('callEnded', () => {
+        /**
+         * We only want to reset the widget state if the call that ended is the same as the current call.
+         * 
+         * We will see that there is a acceptedTransfer in the CallAdapter by checking state like so and not closing the
+         * widget if the callee is being a transferred.
+         */
+        if (
+          adapter.getState().acceptedTransferCallState &&
+          adapter.getState().acceptedTransferCallState?.id !== callIdRef.current
+        ) {
+          return;
+        }
+        /**
+         * We will only reset the widget here if the call that ended is the same as the current call.
+         */ 
+        setWidgetState('new');
+      });
+    
+      /**
+       * Here you can get any information from the call that the user is being transferred to.
+       */
+      adapter.on('transferAccepted', (e: TransferEventArgs) => {
+        console.log('transferAccepted', e);
+      });
+    }
+  }, [adapter]);
 `;
 
 const getDocs: () => JSX.Element = () => {
@@ -112,7 +142,7 @@ const getDocs: () => JSX.Element = () => {
       </Description>
       <MessageBar messageBarType={MessageBarType.warning}>
         Note: Due to the complex nature of the widget all snippets are generalized for conceptual understanding. If you
-        are wanting to checkout the full code for the widget please check out the{' '}
+        are wanting to checkout the full code for the widget please check out the
         <a
           href={
             'https://github.com/Azure-Samples/communication-services-javascript-quickstarts/tree/main/ui-library-click-to-call'
@@ -122,6 +152,7 @@ const getDocs: () => JSX.Element = () => {
         </a>{' '}
         quickstart
       </MessageBar>
+      <Subheading>Try It Out</Subheading>
       <Canvas mdxSource={CallingWidgetComponentText}>
         <Stack horizontalAlign="center" style={{}}>
           <Stack
@@ -278,6 +309,13 @@ const getDocs: () => JSX.Element = () => {
         you provide the identifier for. This can be done in the following way:
       </Description>
       <Source code={callAdapterSetupSnippet}></Source>
+      <Subheading>Handling Transfers</Subheading>
+      <Description>
+        Depending on your scenario with your widget you might have to have the user transferred to an Agent or other
+        support entity. Our Composite knows how to do this on its own, but you will want to make sure that you are
+        handling the transfer in your widget. This can be done with the following code:
+      </Description>
+      <Source code={callAdapterTransferSnippet}></Source>
       <Subheading>After the Call</Subheading>
       <Description>
         Following the call you can provide many different options for the user. Using the `onCallEnded` event from the

@@ -24,6 +24,7 @@ import {
   StartCallIdentifier,
   createAzureCommunicationCallAdapter
 } from '@azure/communication-react';
+import { TransferEventArgs } from '@azure/communication-calling';
 
 /**
  * Properties needed for our widget to start a call.
@@ -120,7 +121,7 @@ export const CallingWidgetComponent = (props: CallingWidgetComponentProps): JSX.
         adapter.dispose();
       });
 
-      adapter.on('transferAccepted', (e) => {
+      adapter.on('transferAccepted', (e: TransferEventArgs) => {
         console.log('transferAccepted', e);
       });
 
