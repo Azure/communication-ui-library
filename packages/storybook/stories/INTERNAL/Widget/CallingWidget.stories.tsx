@@ -231,8 +231,9 @@ const getDocs: () => JSX.Element = () => {
       </Description>
       <ul className={'sbdocs sbdocs-p'}>
         <li>
-          Adhoc calling to Teams Voice applications - Teams provides solutions using a series of Call Queues and Auto
-          Attendants to allow your customers connect with your agents in your{' '}
+          <a href={'./?path=/docs/adhoc-calling--page'}>Adhoc calling to Teams Voice applications</a> - Teams provides
+          solutions using a series of Call Queues and Auto Attendants to allow your customers connect with your agents
+          in your{' '}
           <a
             className="sbdocs sbdocs-a"
             href="https://learn.microsoft.com/en-us/azure/communication-services/tutorials/contact-center"
@@ -240,11 +241,17 @@ const getDocs: () => JSX.Element = () => {
             Contact Center
           </a>{' '}
         </li>
-        <li>Call Transfer</li>
-        <li>DTMF Dialer - This is so your users can interact with Teams voice applications with DTMF or voice</li>
         <li>
-          Calling sounds - We provide with the `CallComposite` the ability to set calling event sounds to provide a more
-          enriching experience for your users
+          <a href={'./?path=/docs/transfer--page'}>Call Transfer</a>
+        </li>
+        <li>
+          {' '}
+          <a href={'./?path=/docs/ui-components-dialpad--dialpad'}>DTMF Dialer</a> - This is so your users can interact
+          with Teams voice applications with DTMF or voice
+        </li>
+        <li>
+          <a href={'./?path=/docs/addingsounds--page'}>Calling sounds</a> - We provide with the `CallComposite` the
+          ability to set calling event sounds to provide a more enriching experience for your users
         </li>
       </ul>
       <Heading>How does it fit into my application? </Heading>
