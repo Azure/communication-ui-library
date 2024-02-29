@@ -35,6 +35,15 @@ describe('ResourceDownloadQueue api functions', () => {
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 describe('ResourceDownloadQueue api functions', () => {
+  // URL.createObjectURL is not available in jest-dom
+  // so we need to mock it in tests
+  if (typeof URL.createObjectURL === 'undefined') {
+    Object.defineProperty(window.URL, 'createObjectURL', {
+      value: () => {
+        return 'http://mocked-url';
+      }
+    });
+  }
   test('should add a message to the queue and contains message', () => {
     const context = new ChatContext();
     const tokenCredential = stubCommunicationTokenCredential();

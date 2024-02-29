@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "area": "feature",
-  "workstream": "End of call survey",
-  "comment": "Add new API to expose survey state (dismissed, sent , error) so contoso can redirect to their own screen after survey ends, updated survey UI to be it's own page appearing before end call page, added default page after survey is dismissed/sent",
-  "packageName": "@azure/communication-react",
-  "email": "96077406+carocao-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

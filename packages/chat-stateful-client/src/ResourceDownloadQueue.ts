@@ -58,19 +58,14 @@ export class ResourceDownloadQueue {
         continue;
       }
 
-      try {
-        if (options) {
-          const singleUrl = options.singleUrl;
-          message = await this.downloadSingleUrl(message, singleUrl, operation);
-        } else {
-          message = await this.downloadAllPreviewUrls(message, operation);
-        }
-        this._context.setChatMessage(threadId, message);
-      } catch (error) {
-        console.log('Downloading Resource error: ', error);
-      } finally {
-        this.isActive = false;
+      if (options) {
+        const singleUrl = options.singleUrl;
+        message = await this.downloadSingleUrl(message, singleUrl, operation);
+      } else {
+        message = await this.downloadAllPreviewUrls(message, operation);
       }
+      this._context.setChatMessage(threadId, message);
+      this.isActive = false;
     }
   }
 
@@ -79,7 +74,7 @@ export class ResourceDownloadQueue {
     resourceUrl: string,
     operation: ImageRequest
   ): Promise<ChatMessageWithStatus> {
-    const blobUrl = await operation(resourceUrl, this._credential);
+    const blobUrl = await this.downloadResource(operation, resourceUrl);
     message = { ...message, resourceCache: { ...message.resourceCache, [resourceUrl]: blobUrl } };
     return message;
   }
@@ -95,13 +90,23 @@ export class ResourceDownloadQueue {
       }
       for (const attachment of attachments) {
         if (attachment.previewUrl && attachment.attachmentType === 'image') {
-          const blobUrl = await operation(attachment.previewUrl, this._credential);
+          const blobUrl = await this.downloadResource(operation, attachment.previewUrl);
           message.resourceCache[attachment.previewUrl] = blobUrl;
         }
       }
     }
 
     return message;
+  }
+
+  private async downloadResource(operation: ImageRequest, url: string): Promise<string> {
+    let blobUrl = URL.createObjectURL(new Blob());
+    try {
+      blobUrl = await operation(url, this._credential);
+    } catch (error) {
+      console.log('Downloading Resource error: ', error);
+    }
+    return blobUrl;
   }
 }
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
@@ -141,10 +146,27 @@ export const fetchImageSource = async (src: string, credential: CommunicationTok
     const headers = new Headers();
     headers.append('Authorization', `Bearer ${token}`);
     try {
-      return await fetch(url, { headers });
+      return await fetchWithTimeout(url, { headers });
     } catch (err) {
       throw new ChatError('ChatThreadClient.getMessage', err as Error);
     }
+  }
+  async function fetchWithTimeout(
+    resource: string | URL | Request,
+    options: { timeout?: number; headers?: Headers }
+  ): Promise<Response> {
+    // default timeout is 30 seconds
+    const { timeout = 30000 } = options;
+
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), timeout);
+
+    const response = await fetch(resource, {
+      ...options,
+      signal: controller.signal
+    });
+    clearTimeout(id);
+    return response;
   }
   const accessToken = await credential.getToken();
   const response = await fetchWithAuthentication(src, accessToken.token);

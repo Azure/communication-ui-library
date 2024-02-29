@@ -2,6 +2,36 @@
   "name": "@internal/react-components",
   "entries": [
     {
+      "date": "Mon, 26 Feb 2024 16:19:20 GMT",
+      "tag": "@internal/react-components_v1.14.0-beta.1",
+      "version": "1.14.0-beta.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/react-components",
+            "comment": "Bump @internal/acs-ui-common to v1.14.0-beta.1",
+            "commit": "bf04cd93b96b0f0a3494b5b35321c649ee1c0947"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 12 Feb 2024 18:52:34 GMT",
+      "tag": "@internal/react-components_v1.13.0",
+      "version": "1.13.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/react-components",
+            "comment": "Bump @internal/acs-ui-common to v1.13.0",
+            "commit": "68e9662fe9f7058606a939f9daa2b8815118c606"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 30 Jan 2024 19:19:27 GMT",
       "tag": "@internal/react-components_v1.13.0-beta.1",
       "version": "1.13.0-beta.1",
