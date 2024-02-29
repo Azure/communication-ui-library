@@ -43,6 +43,7 @@ import { LargeGalleryLayout } from './VideoGallery/LargeGalleryLayout';
 import { LayoutProps } from './VideoGallery/Layout';
 /* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '../types/ReactionTypes';
+
 /**
  * @private
  * Currently the Calling JS SDK supports up to 4 remote video streams
@@ -706,6 +707,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   );
 
   const screenShareParticipant = remoteParticipants.find((participant) => participant.screenShareStream?.isAvailable);
+
   const localScreenShareStreamComponent = <LocalScreenShare localParticipant={localParticipant} />;
 
   const remoteScreenShareComponent = screenShareParticipant && (
@@ -718,6 +720,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       participantVideoScalingMode={selectedScalingModeState[screenShareParticipant.userId]}
     />
   );
+
   const screenShareComponent = remoteScreenShareComponent
     ? remoteScreenShareComponent
     : localParticipant.isScreenSharingOn
