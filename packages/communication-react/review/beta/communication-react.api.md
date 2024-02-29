@@ -3037,7 +3037,7 @@ export interface ImageOverlayProps {
     titleIcon?: JSX.Element;
 }
 
-// @beta
+// @public
 export interface ImageOverlayStrings {
     dismissButtonAriaLabel: string;
     downloadButtonLabel: string;
