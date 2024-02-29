@@ -87,13 +87,21 @@ export type ChatCompositeOptions = {
 
   /* @conditional-compile-remove(rich-text-editor) */
   /**
-   * Show or hide the Rich Text Editor feature.
+   * Properties for configuring the richTextEditor feature.
    * @defaultValue false
    *
    * @beta
    */
-  richTextEditor?: boolean;
+  richTextEditor?: boolean | RichTextEditorOptions;
 };
+
+/* @conditional-compile-remove(rich-text-editor) */
+/**
+ * Options for configuring the rich text editor.
+ *
+ * @public
+ */
+export interface RichTextEditorOptions {}
 
 /**
  * A customizable UI composite for the chat experience.
