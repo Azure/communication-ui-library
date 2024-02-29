@@ -48,6 +48,9 @@ export type FunctionWithKey<KeyT, ArgsT extends unknown[], RetT> = (key: KeyT, .
 // @internal
 export const _getApplicationId: (telemetryImplementationHint: _TelemetryImplementationHint) => string;
 
+// @internal
+export function _getKeys<T extends object>(obj: T): (keyof T)[];
+
 // @internal (undocumented)
 export interface _IObjectMap<T> {
     // (undocumented)
