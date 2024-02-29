@@ -35,7 +35,7 @@ export const PeoplePaneContent = (props: {
   inviteLink?: string;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
-  setDrawerMenuItems: (_DrawerMenuItemProps) => void;
+  setDrawerMenuItems: (drawerMenuItems: _DrawerMenuItemProps[]) => void;
   mobileView?: boolean;
 }): JSX.Element => {
   const { inviteLink, onFetchParticipantMenuItems, setDrawerMenuItems } = props;
