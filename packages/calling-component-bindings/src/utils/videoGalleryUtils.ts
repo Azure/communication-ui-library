@@ -190,9 +190,7 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     /* @conditional-compile-remove(reaction) */
     reaction: reaction as Reaction,
     /* @conditional-compile-remove(spotlight) */
-    spotlight: spotlight as Spotlight,
-    /* @conditional-compile-remove(ppt-live) */
-    contentSharingStream
+    spotlight: spotlight as Spotlight
   };
 };
 
