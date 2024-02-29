@@ -33,18 +33,23 @@ export const RTESendBoxErrors = (props: RTESendBoxErrorsProps): JSX.Element => {
   useEffect(() => {
     if (systemMessage && !isMessageEmpty(systemMessage)) {
       setSendBoxError({ message: systemMessage, timestamp: Date.now() });
-    } else {
-      setSendBoxError(undefined);
     }
   }, [systemMessage]);
 
   useEffect(() => {
     if (textTooLongMessage && !isMessageEmpty(textTooLongMessage)) {
       setSendBoxError({ message: textTooLongMessage, timestamp: Date.now() });
-    } else {
-      setSendBoxError(undefined);
     }
   }, [textTooLongMessage]);
+
+  useEffect(() => {
+    if (
+      (textTooLongMessage === undefined || isMessageEmpty(textTooLongMessage)) &&
+      (systemMessage === undefined || isMessageEmpty(systemMessage))
+    ) {
+      setSendBoxError(undefined);
+    }
+  }, [systemMessage, textTooLongMessage]);
 
   useEffect(() => {
     setSendBoxError((prev) => {
