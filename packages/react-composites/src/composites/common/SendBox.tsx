@@ -50,16 +50,19 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   }, [styles]);
 
   /* @conditional-compile-remove(rich-text-editor) */
-  const simpleSendBox = (
-    <SimpleSendBox
-      {...sendBoxProps}
-      autoFocus={options?.autoFocus}
-      styles={sendBoxStyles}
-      /* @conditional-compile-remove(file-sharing) */
-      activeFileUploads={activeFileUploads}
-      /* @conditional-compile-remove(file-sharing) */
-      onCancelFileUpload={adapter.cancelFileUpload}
-    />
+  const simpleSendBox = useMemo(
+    () => (
+      <SimpleSendBox
+        {...sendBoxProps}
+        autoFocus={options?.autoFocus}
+        styles={sendBoxStyles}
+        /* @conditional-compile-remove(file-sharing) */
+        activeFileUploads={activeFileUploads}
+        /* @conditional-compile-remove(file-sharing) */
+        onCancelFileUpload={adapter.cancelFileUpload}
+      />
+    ),
+    [sendBoxProps, options, sendBoxStyles, activeFileUploads, adapter]
   );
 
   if (options?.richTextEditor !== false) {
