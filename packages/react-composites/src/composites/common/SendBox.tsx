@@ -5,6 +5,8 @@ import React, { useMemo } from 'react';
 import { SendBoxStylesProps, SendBox as SimpleSendBox } from '@internal/react-components';
 import { usePropsFor } from '../ChatComposite/hooks/usePropsFor';
 import { ChatCompositeOptions } from '../ChatComposite';
+/* @conditional-compile-remove(rich-text-editor) */
+import { Suspense } from 'react';
 /* @conditional-compile-remove(file-sharing) */
 import { ChatAdapter } from '../ChatComposite';
 /* @conditional-compile-remove(file-sharing) */
@@ -48,11 +50,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   }, [styles]);
 
   /* @conditional-compile-remove(rich-text-editor) */
-  if (options?.richTextEditor !== false) {
-    return <RichTextSendBoxWrapper />;
-  }
-
-  return (
+  const simpleSendBox = (
     <SimpleSendBox
       {...sendBoxProps}
       autoFocus={options?.autoFocus}
@@ -63,4 +61,13 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       onCancelFileUpload={adapter.cancelFileUpload}
     />
   );
+
+  if (options?.richTextEditor !== false) {
+    return (
+      <Suspense fallback={simpleSendBox}>
+        <RichTextSendBoxWrapper />;
+      </Suspense>
+    );
+  }
+  return simpleSendBox;
 };
