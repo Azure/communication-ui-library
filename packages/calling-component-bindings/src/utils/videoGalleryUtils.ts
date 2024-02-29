@@ -83,14 +83,14 @@ export const _videoGalleryRemoteParticipantsMemo: _VideoGalleryRemoteParticipant
             participant.videoStreams,
             state,
             displayName,
-            /* @conditional-compile-remove(ppt-live) */
-            participant.contentSharingStream,
             /* @conditional-compile-remove(raise-hand) */
             participant.raisedHand,
             /* @conditional-compile-remove(reaction) */
             remoteParticipantReaction,
             /* @conditional-compile-remove(spotlight) */
-            participant.spotlight
+            participant.spotlight,
+            /* @conditional-compile-remove(ppt-live) */
+            participant.contentSharingStream
           );
         })
     );
@@ -105,14 +105,14 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     videoStreams: { [key: number]: RemoteVideoStreamState },
     state: RemoteParticipantConnectionState,
     displayName?: string,
-    /* @conditional-compile-remove(ppt-live) */
-    contentSharingStream?: HTMLElement,
     /* @conditional-compile-remove(raise-hand) */
     raisedHand?: unknown, // temp unknown type to build stable
     /* @conditional-compile-remove(reaction) */
     reaction?: unknown, // temp unknown type to build stable
     /* @conditional-compile-remove(spotlight) */
-    spotlight?: unknown // temp unknown type to build stable
+    spotlight?: unknown, // temp unknown type to build stable
+    /* @conditional-compile-remove(ppt-live) */
+    contentSharingStream?: HTMLElement
   ): VideoGalleryRemoteParticipant => {
     return convertRemoteParticipantToVideoGalleryRemoteParticipant(
       userId,
@@ -121,14 +121,14 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
       videoStreams,
       state,
       displayName,
-      /* @conditional-compile-remove(ppt-live) */
-      contentSharingStream,
       /* @conditional-compile-remove(raise-hand) */
       raisedHand as RaisedHandState,
       /* @conditional-compile-remove(reaction) */
       reaction as Reaction,
       /* @conditional-compile-remove(spotlight) */
-      spotlight as Spotlight
+      spotlight as Spotlight,
+      /* @conditional-compile-remove(ppt-live) */
+      contentSharingStream
     );
   }
 );
@@ -141,14 +141,14 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   videoStreams: { [key: number]: RemoteVideoStreamState },
   state: RemoteParticipantConnectionState,
   displayName?: string,
-  /* @conditional-compile-remove(ppt-live) */
-  sdkContentSharingStream?: HTMLElement,
   /* @conditional-compile-remove(raise-hand) */
   raisedHand?: unknown, // temp unknown type to build stable
   /* @conditional-compile-remove(reaction) */
   reaction?: unknown, // temp unknown type to build stable
   /* @conditional-compile-remove(spotlight) */
-  spotlight?: unknown // temp unknown type to build stable
+  spotlight?: unknown, // temp unknown type to build stable
+  /* @conditional-compile-remove(ppt-live) */
+  sdkContentSharingStream?: HTMLElement
 ): VideoGalleryRemoteParticipant => {
   const rawVideoStreamsArray = Object.values(videoStreams);
   let videoStream: VideoGalleryStream | undefined = undefined;
@@ -183,8 +183,6 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     isSpeaking,
     videoStream,
     screenShareStream,
-    /* @conditional-compile-remove(ppt-live) */
-    contentSharingStream,
     isScreenSharingOn: screenShareStream !== undefined && screenShareStream.isAvailable,
     /* @conditional-compile-remove(one-to-n-calling) */
     /* @conditional-compile-remove(PSTN-calls) */
@@ -194,7 +192,9 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     /* @conditional-compile-remove(reaction) */
     reaction: reaction as Reaction,
     /* @conditional-compile-remove(spotlight) */
-    spotlight: spotlight as Spotlight
+    spotlight: spotlight as Spotlight,
+    /* @conditional-compile-remove(ppt-live) */
+    contentSharingStream
   };
 };
 
