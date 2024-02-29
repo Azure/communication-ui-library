@@ -64,7 +64,7 @@ export class CallingSoundSubscriber {
   }
 
   public unsubscribeAll(): void {
-    this.call.off('stateChanged', this.onCallStateChanged);
+    this.call?.off('stateChanged', this.onCallStateChanged);
     if (this.soundsLoaded?.callRingingSound) {
       this.soundsLoaded.callRingingSound.pause();
     }
