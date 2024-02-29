@@ -86,7 +86,6 @@ async function setup() {
 
 /** To be called at the end of the script to restore the files that were modified by the build process */
 async function cleanup() {
-  console.log('Running cleanup');
   // Restore the files that were modified by the build process
   restoreFiles(filesToBackup);
 
