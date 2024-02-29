@@ -1193,7 +1193,7 @@ export type ChatCompositeOptions = {
     topic?: boolean;
     autoFocus?: 'sendBoxTextField';
     fileSharing?: FileSharingOptions;
-    richTextEditor?: boolean;
+    richTextEditor?: boolean | RichTextEditorOptions;
 };
 
 // @public
@@ -1936,6 +1936,10 @@ export type ResourceDetails = {
     messageId: string;
     resourceUrl: string;
 };
+
+// @public
+export interface RichTextEditorOptions {
+}
 
 // @public
 export type SoundEffect = {
