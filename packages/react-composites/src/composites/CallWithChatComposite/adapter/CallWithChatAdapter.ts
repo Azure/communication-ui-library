@@ -400,9 +400,9 @@ export interface CallWithChatAdapterManagement {
   /* @conditional-compile-remove(file-sharing) */
   /** @beta */
   updateFileUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
-  /** @beta */
+  /** @public */
   downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
-  /** @beta */
+  /** @public */
   removeResourceFromCache(resourceDetails: ResourceDetails): void;
   /* @conditional-compile-remove(PSTN-calls) */
   /**

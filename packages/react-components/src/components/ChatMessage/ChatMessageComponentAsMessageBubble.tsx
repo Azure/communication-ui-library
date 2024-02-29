@@ -97,7 +97,7 @@ type ChatMessageComponentAsMessageBubbleProps = {
   mentionDisplayOptions?: MentionDisplayOptions;
   /**
    * Optional callback called when an inline image is clicked.
-   * @beta
+   * @public
    */
   inlineImageOptions?: InlineImageOptions;
 };

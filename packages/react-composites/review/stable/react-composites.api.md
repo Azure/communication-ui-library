@@ -562,7 +562,7 @@ export interface CallWithChatAdapterManagement {
     disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
     disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
-    // @beta (undocumented)
+    // (undocumented)
     downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
     fetchInitialData(): Promise<void>;
     // @deprecated
@@ -577,7 +577,7 @@ export interface CallWithChatAdapterManagement {
     querySpeakers(): Promise<AudioDeviceInfo[]>;
     raiseHand(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
-    // @beta (undocumented)
+    // (undocumented)
     removeResourceFromCache(resourceDetails: ResourceDetails): void;
     sendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;

@@ -2,9 +2,13 @@
 // Licensed under the MIT License.
 
 import React from 'react';
+/* @conditional-compile-remove(file-sharing) */
 import { AttachmentMetadata, _FileDownloadCards } from './FileDownloadCards';
+/* @conditional-compile-remove(file-sharing) */
 import { FileMetadata } from './FileDownloadCards';
+/* @conditional-compile-remove(file-sharing) */
 import { InlineImageMetadata } from './FileDownloadCards';
+/* @conditional-compile-remove(file-sharing) */
 import { render, screen } from '@testing-library/react';
 import { registerIcons } from '@fluentui/react';
 
@@ -19,6 +23,7 @@ describe('FileDownloadCards should be rendered properly', () => {
     });
   });
 
+  /* @conditional-compile-remove(file-sharing) */
   it('should render if it is FileSharingMetadata', async () => {
     const metadata = {
       name: 'MockFileCard',
@@ -37,6 +42,7 @@ describe('FileDownloadCards should be rendered properly', () => {
     expect(card).toBeDefined();
   });
 
+  /* @conditional-compile-remove(file-sharing) */
   it('should not render if it is ImageFileMetadata', async () => {
     const metadata = {
       url: 'mockUrl',
@@ -55,10 +61,12 @@ describe('FileDownloadCards should be rendered properly', () => {
   });
 });
 
+/* @conditional-compile-remove(file-sharing) */
 const renderFileDownloadCardsWithDefaults = (props: MockDownloadCardProps): void => {
   render(<_FileDownloadCards userId={props.userId} fileMetadata={props.fileMetadata} />);
 };
 
+/* @conditional-compile-remove(file-sharing) */
 interface MockDownloadCardProps {
   userId: string;
   fileMetadata: AttachmentMetadata[];

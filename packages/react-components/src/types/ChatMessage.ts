@@ -80,7 +80,7 @@ export interface ChatMessage extends MessageCommon {
    */
   files?: FileMetadata[];
   /**
-   * @beta
+   * @public
    * A list of inline images embedded in the message.
    * {@link InlineImageMetadata}
    */

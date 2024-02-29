@@ -761,7 +761,7 @@ export interface CallWithChatAdapterManagement {
     disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
     disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
-    // @beta (undocumented)
+    // (undocumented)
     downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
     fetchInitialData(): Promise<void>;
     // @deprecated
@@ -776,7 +776,7 @@ export interface CallWithChatAdapterManagement {
     querySpeakers(): Promise<AudioDeviceInfo[]>;
     raiseHand(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
-    // @beta (undocumented)
+    // (undocumented)
     removeResourceFromCache(resourceDetails: ResourceDetails): void;
     sendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
@@ -1417,7 +1417,6 @@ export interface ChatMessage extends MessageCommon {
     editedOn?: Date;
     // (undocumented)
     failureReason?: string;
-    // @beta
     inlineImages?: InlineImageMetadata[];
     // (undocumented)
     messageType: 'chat';
@@ -2409,10 +2408,10 @@ export interface _Identifiers {
     videoTile: string;
 }
 
-// @beta
+// @public
 export const ImageOverlay: (props: ImageOverlayProps) => JSX.Element;
 
-// @beta
+// @public
 export interface ImageOverlayProps {
     altText?: string;
     imageSrc: string;
@@ -2429,7 +2428,7 @@ export interface ImageOverlayStrings {
     downloadButtonLabel: string;
 }
 
-// @beta
+// @public
 export const imageOverlayTheme: PartialTheme;
 
 // @public
@@ -2441,13 +2440,13 @@ export interface IncomingCallState {
     startTime: Date;
 }
 
-// @beta
+// @public
 export interface InlineImage {
     imgAttrs: React_2.ImgHTMLAttributes<HTMLImageElement>;
     messageId: string;
 }
 
-// @beta
+// @public
 export interface InlineImageMetadata {
     // (undocumented)
     attachmentType: 'inlineImage';
@@ -2458,7 +2457,7 @@ export interface InlineImageMetadata {
     url: string;
 }
 
-// @beta
+// @public
 export interface InlineImageOptions {
     onRenderInlineImage?: (inlineImage: InlineImage, defaultOnRender: (inlineImage: InlineImage) => JSX.Element) => JSX.Element;
 }

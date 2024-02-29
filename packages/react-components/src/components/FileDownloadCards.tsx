@@ -54,7 +54,7 @@ export interface FileMetadata {
 /**
  * Metadata for rendering images inline with a message.
  * This does not include images attached as files.
- * @beta
+ * @public
  */
 export interface InlineImageMetadata {
   /*
@@ -81,9 +81,9 @@ export interface InlineImageMetadata {
 
 /**
  * Metadata containing information about the uploaded file.
- * @beta
+ * @public
  */
-export type AttachmentMetadata = FileMetadata | InlineImageMetadata;
+export type AttachmentMetadata = InlineImageMetadata | /* @conditional-compile-remove(file-sharing) */ FileMetadata;
 
 /**
  * Strings of _FileDownloadCards that can be overridden.
