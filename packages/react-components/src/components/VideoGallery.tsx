@@ -43,9 +43,6 @@ import { LargeGalleryLayout } from './VideoGallery/LargeGalleryLayout';
 import { LayoutProps } from './VideoGallery/Layout';
 /* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '../types/ReactionTypes';
-/* @conditional-compile-remove(ppt-live) */
-import { RemoteContentSharing } from './VideoGallery/RemoteContentSharing';
-
 /**
  * @private
  * Currently the Calling JS SDK supports up to 4 remote video streams
@@ -709,10 +706,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   );
 
   const screenShareParticipant = remoteParticipants.find((participant) => participant.screenShareStream?.isAvailable);
-  /* @conditional-compile-remove(ppt-live) */
-  const contentSharingParticipant = remoteParticipants.find(
-    (participant) => participant.contentSharingStream !== undefined
-  );
   const localScreenShareStreamComponent = <LocalScreenShare localParticipant={localParticipant} />;
 
   const remoteScreenShareComponent = screenShareParticipant && (
@@ -725,15 +718,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       participantVideoScalingMode={selectedScalingModeState[screenShareParticipant.userId]}
     />
   );
-  /* @conditional-compile-remove(ppt-live) */
-  const contentSharingRemoteComponent = contentSharingParticipant && (
-    <RemoteContentSharing
-      {...contentSharingParticipant}
-      renderElement={contentSharingParticipant.contentSharingStream?.renderElement}
-    />
-  );
-  /* @conditional-compile-remove(ppt-live) */
-  const contentSharingComponent = contentSharingRemoteComponent ? contentSharingRemoteComponent : undefined;
   const screenShareComponent = remoteScreenShareComponent
     ? remoteScreenShareComponent
     : localParticipant.isScreenSharingOn
@@ -745,7 +729,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       remoteParticipants,
       localParticipant,
       screenShareComponent,
-      /* @conditional-compile-remove(ppt-live) */ contentSharingComponent,
       showCameraSwitcherInLocalPreview,
       maxRemoteVideoStreams,
       dominantSpeakers,
@@ -763,7 +746,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       remoteParticipants,
       localParticipant,
       screenShareComponent,
-      /* @conditional-compile-remove(ppt-live) */ contentSharingComponent,
       showCameraSwitcherInLocalPreview,
       maxRemoteVideoStreams,
       dominantSpeakers,
@@ -785,10 +767,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     if (screenShareParticipant && layout === 'focusedContent') {
       return <FocusedContentLayout {...layoutProps} />;
     }
-    /* @conditional-compile-remove(ppt-live) */
-    if (contentSharingParticipant && layout === 'focusedContent') {
-      return <FocusedContentLayout {...layoutProps} />;
-    }
     if (layout === 'floatingLocalVideo') {
       return <FloatingLocalVideoLayout {...layoutProps} />;
     }
@@ -801,12 +779,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       return <LargeGalleryLayout {...layoutProps} />;
     }
     return <DefaultLayout {...layoutProps} />;
-  }, [
-    layout,
-    layoutProps,
-    /* @conditional-compile-remove(ppt-live) */ contentSharingParticipant,
-    /* @conditional-compile-remove(gallery-layouts) */ screenShareParticipant
-  ]);
+  }, [layout, layoutProps, /* @conditional-compile-remove(gallery-layouts) */ screenShareParticipant]);
 
   return (
     <div

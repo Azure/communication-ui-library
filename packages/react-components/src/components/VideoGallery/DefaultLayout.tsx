@@ -33,8 +33,6 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     dominantSpeakers,
     localVideoComponent,
     screenShareComponent,
-    /* @conditional-compile-remove(ppt-live) */
-    contentSharingComponent,
     onRenderRemoteParticipant,
     styles,
     maxRemoteVideoStreams,
@@ -55,27 +53,13 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
   // This number will be used for the maxOverflowGalleryDominantSpeakers when organizing the remote participants.
   // We need to add the local participant to the pinned participant count so we are placing the speakers correctly.
   const childrenPerPage = useRef(4);
-  const isShareComponentAvailableTrampoline = (): boolean => {
-    /* @conditional-compile-remove(ppt-live) */
-    return !!screenShareComponent || !!contentSharingComponent;
-    return !!screenShareComponent;
-  };
-
-  const sharingComponentTrampoline = (): JSX.Element | undefined => {
-    /* @conditional-compile-remove(ppt-live) */
-    return screenShareComponent || contentSharingComponent;
-    return screenShareComponent;
-  };
-
   const { gridParticipants, overflowGalleryParticipants } = useOrganizedParticipants({
     remoteParticipants,
     localParticipant,
     dominantSpeakers,
     maxRemoteVideoStreams,
     isScreenShareActive: !!screenShareComponent,
-    /* @conditional-compile-remove(ppt-live) */
-    isContentSharingActive: !!contentSharingComponent,
-    maxOverflowGalleryDominantSpeakers: isShareComponentAvailableTrampoline()
+    maxOverflowGalleryDominantSpeakers: screenShareComponent
       ? childrenPerPage.current - ((pinnedParticipantUserIds.length + 1) % childrenPerPage.current)
       : childrenPerPage.current,
     pinnedParticipantUserIds,
@@ -168,8 +152,8 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
           <></>
         )
       }
-      {isShareComponentAvailableTrampoline() ? (
-        sharingComponentTrampoline()
+      {screenShareComponent ? (
+        screenShareComponent
       ) : (
         <GridLayout key="grid-layout" styles={styles?.gridLayout}>
           {gridTiles}

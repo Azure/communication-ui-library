@@ -148,13 +148,11 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   /* @conditional-compile-remove(spotlight) */
   spotlight?: unknown, // temp unknown type to build stable
   /* @conditional-compile-remove(ppt-live) */
-  sdkContentSharingStream?: HTMLElement
+  contentSharingStream?: HTMLElement
 ): VideoGalleryRemoteParticipant => {
   const rawVideoStreamsArray = Object.values(videoStreams);
   let videoStream: VideoGalleryStream | undefined = undefined;
   let screenShareStream: VideoGalleryStream | undefined = undefined;
-  /* @conditional-compile-remove(ppt-live) */
-  let contentSharingStream: VideoGalleryStream | undefined = undefined;
 
   const sdkRemoteVideoStream =
     Object.values(rawVideoStreamsArray).find((i) => i.mediaStreamType === 'Video' && i.isAvailable) ||
@@ -172,8 +170,8 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   }
 
   /* @conditional-compile-remove(ppt-live) */
-  if (sdkContentSharingStream) {
-    contentSharingStream = convertRemoteContentSharingStreamToVideoGalleryStream(sdkContentSharingStream);
+  if (contentSharingStream) {
+    screenShareStream = convertRemoteContentSharingStreamToVideoGalleryStream(contentSharingStream);
   }
 
   return {
@@ -214,9 +212,8 @@ const convertRemoteVideoStreamToVideoGalleryStream = (stream: RemoteVideoStreamS
 /* @conditional-compile-remove(ppt-live) */
 const convertRemoteContentSharingStreamToVideoGalleryStream = (stream: HTMLElement): VideoGalleryStream => {
   return {
-    isAvailable: false,
-    /* @conditional-compile-remove(video-stream-is-receiving-flag) */
-    isReceiving: false,
+    isAvailable: !!stream,
+    isReceiving: true,
     isMirrored: false,
     renderElement: stream
   };

@@ -15,8 +15,6 @@ import {
   getLocalVideoStreams,
   getScreenShareRemoteParticipant
 } from './baseSelectors';
-/* @conditional-compile-remove(ppt-live) */
-import { getIsContentSharingOn, getContentSharingRemoteParticipant } from './baseSelectors';
 /* @conditional-compile-remove(rooms) */
 import { getRole } from './baseSelectors';
 /* @conditional-compile-remove(hide-attendee-name) */
@@ -86,10 +84,6 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     getLocalParticipantRaisedHand,
     /* @conditional-compile-remove(hide-attendee-name) */
     isHideAttendeeNamesEnabled,
-    /* @conditional-compile-remove(ppt-live) */
-    getIsContentSharingOn,
-    /* @conditional-compile-remove(ppt-live) */
-    getContentSharingRemoteParticipant,
     /* @conditional-compile-remove(reaction) */
     getLocalParticipantReactionState,
     /* @conditional-compile-remove(spotlight) */
@@ -115,9 +109,6 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     /* @conditional-compile-remove(hide-attendee-name) */
     isHideAttendeeNamesEnabled,
     /* @conditional-compile-remove(ppt-live) */
-    isContentSharingOn,
-    /* @conditional-compile-remove(ppt-live) */
-    contentSharingParticipantId,
     /* @conditional-compile-remove(reaction) */
     localParticipantReaction,
     /* @conditional-compile-remove(spotlight) */
@@ -129,10 +120,6 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
       screenShareRemoteParticipantId && remoteParticipants
         ? remoteParticipants[screenShareRemoteParticipantId]
         : undefined;
-    /* @conditional-compile-remove(ppt-live) */
-    const contentSharingRemoteParticipant =
-      contentSharingParticipantId && remoteParticipants ? remoteParticipants[contentSharingParticipantId] : undefined;
-
     const localVideoStream = localVideoStreams?.find((i) => i.mediaStreamType === 'Video');
 
     const dominantSpeakerIds = _dominantSpeakersWithFlatId(dominantSpeakers);
@@ -143,12 +130,6 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     const localParticipantReactionState = memoizedConvertToVideoTileReaction(localParticipantReaction);
     /* @conditional-compile-remove(spotlight) */
     const spotlightedParticipantIds = memoizeSpotlightedParticipantIds(spotlightCallFeature?.spotlightedParticipants);
-
-    const isShareComponentAvailableTrampoline = (): boolean => {
-      /* @conditional-compile-remove(ppt-live) */
-      return !!isScreenSharingOn && !!isContentSharingOn;
-      return !!isScreenSharingOn;
-    };
 
     return {
       screenShareParticipant: screenShareRemoteParticipant
@@ -162,16 +143,14 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
             /* @conditional-compile-remove(raise-hand) */
             screenShareRemoteParticipant.raisedHand,
             /* @conditional-compile-remove(spotlight) */
-            screenShareRemoteParticipant.spotlight,
-            /* @conditional-compile-remove(ppt-live) */
-            contentSharingRemoteParticipant?.contentSharingStream
+            screenShareRemoteParticipant.spotlight
           )
         : undefined,
       localParticipant: memoizeLocalParticipant(
         identifier,
         displayName,
         isMuted,
-        isShareComponentAvailableTrampoline(),
+        isScreenSharingOn,
         localVideoStream,
         /* @conditional-compile-remove(rooms) */
         role,
@@ -194,19 +173,6 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
       dominantSpeakers: dominantSpeakerIds,
       /* @conditional-compile-remove(optimal-video-count) */
       maxRemoteVideoStreams: optimalVideoCount,
-      /* @conditional-compile-remove(ppt-live) */
-      contentSharingParticipant: contentSharingRemoteParticipant
-        ? convertRemoteParticipantToVideoGalleryRemoteParticipant(
-            toFlatCommunicationIdentifier(contentSharingRemoteParticipant.identifier),
-            contentSharingRemoteParticipant.isMuted,
-            checkIsSpeaking(contentSharingRemoteParticipant),
-            contentSharingRemoteParticipant.videoStreams,
-            contentSharingRemoteParticipant.state,
-            contentSharingRemoteParticipant.displayName,
-            contentSharingRemoteParticipant.contentSharingStream,
-            contentSharingRemoteParticipant.raisedHand
-          )
-        : undefined,
       /* @conditional-compile-remove(spotlight) */
       spotlightedParticipants: spotlightedParticipantIds,
       /* @conditional-compile-remove(spotlight) */

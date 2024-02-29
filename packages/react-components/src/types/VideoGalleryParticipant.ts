@@ -130,12 +130,6 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
   /* @conditional-compile-remove(raise-hand) */
   /** Whether participant is raised a hand */
   raisedHand?: RaisedHand;
-  /* @conditional-compile-remove(ppt-live) */
-  /**
-   * Proxy of {@link @azure/communication-calling#Call.PPTLive.target}.
-   * @beta
-   */
-  contentSharingStream?: VideoGalleryStream;
   /* @conditional-compile-remove(reaction) */
   /**
    * Whether participant has reacted

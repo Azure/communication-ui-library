@@ -63,8 +63,6 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     dominantSpeakers,
     localVideoComponent,
     screenShareComponent,
-    /* @conditional-compile-remove(ppt-live) */
-    contentSharingComponent,
     onRenderRemoteParticipant,
     styles,
     maxRemoteVideoStreams,
@@ -92,8 +90,6 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     dominantSpeakers,
     maxRemoteVideoStreams,
     isScreenShareActive: !!screenShareComponent,
-    /* @conditional-compile-remove(ppt-live) */
-    isContentSharingActive: !!contentSharingComponent,
     maxOverflowGalleryDominantSpeakers: screenShareComponent
       ? childrenPerPage.current - (pinnedParticipantUserIds.length % childrenPerPage.current)
       : childrenPerPage.current,
@@ -147,14 +143,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
       return SMALL_FLOATING_MODAL_SIZE_REM;
     }
     /* @conditional-compile-remove(vertical-gallery) */
-    if (
-      (overflowGalleryTiles.length > 0 ||
-        isShareComponentAvailableTrampoline(
-          screenShareComponent,
-          /* @conditional-compile-remove(ppt-live) */ contentSharingComponent
-        )) &&
-      overflowGalleryPosition === 'verticalRight'
-    ) {
+    if ((overflowGalleryTiles.length > 0 || screenShareComponent) && overflowGalleryPosition === 'verticalRight') {
       return isNarrow
         ? SMALL_FLOATING_MODAL_SIZE_REM
         : isShort
@@ -162,14 +151,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
         : VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM;
     }
     /*@conditional-compile-remove(click-to-call) */
-    if (
-      (overflowGalleryTiles.length > 0 ||
-        isShareComponentAvailableTrampoline(
-          screenShareComponent,
-          /* @conditional-compile-remove(ppt-live) */ contentSharingComponent
-        )) &&
-      overflowGalleryPosition === 'horizontalBottom'
-    ) {
+    if ((overflowGalleryTiles.length > 0 || screenShareComponent) && overflowGalleryPosition === 'horizontalBottom') {
       return localVideoTileSize === '16:9' || !isNarrow ? LARGE_FLOATING_MODAL_SIZE_REM : SMALL_FLOATING_MODAL_SIZE_REM;
     }
     return LARGE_FLOATING_MODAL_SIZE_REM;
@@ -177,8 +159,6 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     overflowGalleryTiles.length,
     isNarrow,
     screenShareComponent,
-    /* @conditional-compile-remove(ppt-live) */
-    contentSharingComponent,
     /* @conditional-compile-remove(vertical-gallery) */ isShort,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
     /* @conditional-compile-remove(click-to-call) */ localVideoTileSize
@@ -196,11 +176,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
         >
           {localVideoComponent}
         </Stack>
-      ) : overflowGalleryTiles.length > 0 ||
-        isShareComponentAvailableTrampoline(
-          screenShareComponent,
-          /* @conditional-compile-remove(ppt-live) */ contentSharingComponent
-        ) ? (
+      ) : overflowGalleryTiles.length > 0 || screenShareComponent ? (
         <Stack
           className={mergeStyles(
             localVideoTileContainerStyle(
@@ -225,13 +201,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     ) : undefined;
 
   const overflowGallery = useMemo(() => {
-    if (
-      overflowGalleryTiles.length === 0 &&
-      !isShareComponentAvailableTrampoline(
-        screenShareComponent,
-        /* @conditional-compile-remove(ppt-live) */ contentSharingComponent
-      )
-    ) {
+    if (overflowGalleryTiles.length === 0 && !screenShareComponent) {
       return null;
     }
     return (
@@ -257,8 +227,6 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     isNarrow,
     /* @conditional-compile-remove(vertical-gallery) */ isShort,
     screenShareComponent,
-    /* @conditional-compile-remove(ppt-live) */
-    contentSharingComponent,
     overflowGalleryTiles,
     styles?.horizontalGallery,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
@@ -285,14 +253,8 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
             <></>
           )
         }
-        {isShareComponentAvailableTrampoline(
-          screenShareComponent,
-          /* @conditional-compile-remove(ppt-live) */ contentSharingComponent
-        ) ? (
-          sharingComponentTrampoline(
-            screenShareComponent,
-            /* @conditional-compile-remove(ppt-live) */ contentSharingComponent
-          )
+        {screenShareComponent ? (
+          screenShareComponent
         ) : (
           <GridLayout key="grid-layout" styles={styles?.gridLayout}>
             {gridTiles}
@@ -314,22 +276,4 @@ const overflowGalleryTrampoline = (
   /* @conditional-compile-remove(gallery-layouts) */
   return galleryPosition !== 'horizontalTop' ? gallery : <></>;
   return gallery;
-};
-
-const isShareComponentAvailableTrampoline = (
-  screenShareComponent?: JSX.Element,
-  contentSharingComponent?: JSX.Element
-): boolean => {
-  /* @conditional-compile-remove(ppt-live) */
-  return !!screenShareComponent || !!contentSharingComponent;
-  return !!screenShareComponent;
-};
-
-const sharingComponentTrampoline = (
-  screenShareComponent?: JSX.Element,
-  contentSharingComponent?: JSX.Element
-): JSX.Element | undefined => {
-  /* @conditional-compile-remove(ppt-live) */
-  return screenShareComponent || contentSharingComponent;
-  return screenShareComponent;
 };
