@@ -10,11 +10,6 @@ export default [
   {
     ...commonConfig(packageJson),
     input: './dist/dist-esm/communication-react/src/index.js',
-    // output: {
-    //   file: './dist/dist-cjs/communication-react/index.js',
-    //   format: 'cjs',
-    //   sourcemap: true
-    // }
     output: {
       dir: './dist/dist-cjs/communication-react',
       format: 'cjs',
