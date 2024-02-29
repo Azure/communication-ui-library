@@ -30,9 +30,9 @@ export const usePeoplePane = (props: {
   /* @conditional-compile-remove(spotlight) */
   onStopLocalSpotlight?: () => Promise<void>;
   /* @conditional-compile-remove(spotlight) */
-  onStartRemoteSpotlight?: (userIds?: string[]) => Promise<void>;
+  onStartRemoteSpotlight?: (userIds: string[]) => Promise<void>;
   /* @conditional-compile-remove(spotlight) */
-  onStopRemoteSpotlight?: (userIds?: string[]) => Promise<void>;
+  onStopRemoteSpotlight?: (userIds: string[]) => Promise<void>;
   /* @conditional-compile-remove(spotlight) */
   onStopAllSpotlight?: () => Promise<void>;
   /* @conditional-compile-remove(spotlight) */
