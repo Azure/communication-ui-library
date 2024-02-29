@@ -211,6 +211,7 @@ const convertRemoteVideoStreamToVideoGalleryStream = (stream: RemoteVideoStreamS
   };
 };
 
+/* @conditional-compile-remove(ppt-live) */
 const convertRemoteContentSharingStreamToVideoGalleryStream = (stream: HTMLElement): VideoGalleryStream => {
   return {
     isAvailable: false,

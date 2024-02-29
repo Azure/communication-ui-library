@@ -745,8 +745,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       remoteParticipants,
       localParticipant,
       screenShareComponent,
-      /* @conditional-compile-remove(ppt-live) */
-      contentSharingComponent,
+      /* @conditional-compile-remove(ppt-live) */ contentSharingComponent,
       showCameraSwitcherInLocalPreview,
       maxRemoteVideoStreams,
       dominantSpeakers,
@@ -764,8 +763,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       remoteParticipants,
       localParticipant,
       screenShareComponent,
-      /* @conditional-compile-remove(ppt-live) */
-      contentSharingComponent,
+      /* @conditional-compile-remove(ppt-live) */ contentSharingComponent,
       showCameraSwitcherInLocalPreview,
       maxRemoteVideoStreams,
       dominantSpeakers,
@@ -787,7 +785,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     if (screenShareParticipant && layout === 'focusedContent') {
       return <FocusedContentLayout {...layoutProps} />;
     }
-    /* @conditional-compile-remove(gallery-layouts) */
     /* @conditional-compile-remove(ppt-live) */
     if (contentSharingParticipant && layout === 'focusedContent') {
       return <FocusedContentLayout {...layoutProps} />;

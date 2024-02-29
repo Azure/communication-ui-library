@@ -28,17 +28,22 @@ export interface FocusedContentLayoutProps extends LayoutProps {
  * Video gallery layout to focus on the screenshare stream that is present in the call.
  */
 export const FocusedContentLayout = (props: FocusedContentLayoutProps): JSX.Element => {
-  const { screenShareComponent /* @conditional-compile-remove(ppt-live) */, contentSharingComponent } = props;
+  const { screenShareComponent, /* @conditional-compile-remove(ppt-live) */ contentSharingComponent } = props;
 
   const layerHostId = useId('layerhost');
 
-  const contentComponent = screenShareComponent /* @conditional-compile-remove(ppt-live) */ ||
-    contentSharingComponent || <></>;
+  const contentComponentTrampoline = (): JSX.Element => {
+    /* @conditional-compile-remove(ppt-live) */
+    return screenShareComponent || contentSharingComponent || <></>;
+
+    return screenShareComponent || <></>;
+  };
+
   return (
     <Stack styles={rootLayoutStyle}>
       <LayerHost id={layerHostId} className={mergeStyles(layerHostStyle)} />
       <Stack styles={innerLayoutStyle} tokens={videoGalleryLayoutGap}>
-        {contentComponent}
+        {contentComponentTrampoline()}
       </Stack>
     </Stack>
   );

@@ -11,14 +11,12 @@ import {
   getDominantSpeakers,
   getIdentifier,
   getIsMuted,
-  /* @conditional-compile-remove(ppt-live) */
-  getIsContentSharingOn,
   getIsScreenSharingOn,
   getLocalVideoStreams,
-  /* @conditional-compile-remove(ppt-live) */
-  getContentSharingRemoteParticipant,
   getScreenShareRemoteParticipant
 } from './baseSelectors';
+/* @conditional-compile-remove(ppt-live) */
+import { getIsContentSharingOn, getContentSharingRemoteParticipant } from './baseSelectors';
 /* @conditional-compile-remove(rooms) */
 import { getRole } from './baseSelectors';
 /* @conditional-compile-remove(hide-attendee-name) */
@@ -148,6 +146,12 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     /* @conditional-compile-remove(spotlight) */
     const spotlightedParticipantIds = memoizeSpotlightedParticipantIds(spotlightCallFeature?.spotlightedParticipants);
 
+    const isShareComponentAvailableTrampoline = (): boolean => {
+      /* @conditional-compile-remove(ppt-live) */
+      return !!isScreenSharingOn && !!isContentSharingOn;
+      return !!isScreenSharingOn;
+    };
+
     return {
       screenShareParticipant: screenShareRemoteParticipant
         ? convertRemoteParticipantToVideoGalleryRemoteParticipant(
@@ -169,7 +173,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
         identifier,
         displayName,
         isMuted,
-        isScreenSharingOn /* @conditional-compile-remove(ppt-live) */ && isContentSharingOn,
+        isShareComponentAvailableTrampoline(),
         localVideoStream,
         /* @conditional-compile-remove(rooms) */
         role,
