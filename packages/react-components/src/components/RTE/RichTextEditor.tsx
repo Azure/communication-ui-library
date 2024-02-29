@@ -11,7 +11,7 @@ import {
   ribbonStyle,
   richTextEditorStyle
 } from '../styles/RichTextEditor.styles';
-import { useTheme } from '@fluentui/react';
+import { useTheme } from '../../theming';
 import { ribbonButtons, ribbonButtonsStrings } from './RTERibbonButtons';
 import { RichTextSendBoxStrings } from './RTESendBox';
 import { isDarkThemed } from '../../theming/themeUtils';
