@@ -46,7 +46,7 @@ import { DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { SendMessageOptions } from '@azure/communication-chat';
 import { JoinCallOptions } from '../../CallComposite/adapter/CallAdapter';
-/* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/* @conditional-compile-remove(file-sharing) */
 import { AttachmentMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadManager } from '../../ChatComposite';
