@@ -60,7 +60,7 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
 > extends true
   ? SendBoxSelector
   : AreEqual<Component, typeof RichTextSendBox> extends true
-  ? /* @conditional-compile-remove(PSTN-calls) */ SendBoxSelector
+  ? /* @conditional-compile-remove(rich-text-editor) */ SendBoxSelector
   : AreEqual<Component, typeof MessageThread> extends true
   ? MessageThreadSelector
   : AreEqual<Component, typeof TypingIndicator> extends true
