@@ -4,6 +4,7 @@
 import { Icon, IconButton, Spinner, SpinnerSize, TooltipHost } from '@fluentui/react';
 import React, { useCallback, useState } from 'react';
 import { useMemo } from 'react';
+/* @conditional-compile-remove(file-sharing) */
 import { useLocale } from '../localization';
 import { _FileCard } from './FileCard';
 import { _FileCardGroup } from './FileCardGroup';
@@ -303,5 +304,5 @@ const DownloadIconTrampoline = (): JSX.Element => {
 const useLocaleStringsTrampoline = (): _FileDownloadCardsStrings => {
   /* @conditional-compile-remove(file-sharing) */
   return useLocale().strings.messageThread;
-  return { downloadFile: '', fileCardGroupMessage: useLocale().strings.messageThread.fileCardGroupMessage };
+  return { downloadFile: '', fileCardGroupMessage: '' };
 };
