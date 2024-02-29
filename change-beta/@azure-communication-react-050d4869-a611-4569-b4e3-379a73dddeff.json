@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "area": "fix",
-  "workstream": "DTMF Dialer",
-  "comment": "update styling to include space for back button",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
