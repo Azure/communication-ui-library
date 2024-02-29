@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "area": "feature",
+  "workstream": "Click to Call",
+  "comment": "Create widget JS bundle",
+  "packageName": "@azure/communication-react",
+  "email": "dmceachern@microsoft.com",
+  "dependentChangeType": "patch"
+}
