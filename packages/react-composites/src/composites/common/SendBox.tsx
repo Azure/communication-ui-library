@@ -65,7 +65,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   if (options?.richTextEditor !== false) {
     return (
       <Suspense fallback={simpleSendBox}>
-        <RichTextSendBoxWrapper />;
+        <RichTextSendBoxWrapper />
       </Suspense>
     );
   }
