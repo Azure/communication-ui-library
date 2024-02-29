@@ -69,7 +69,7 @@ function parseArgs(argv) {
       feature: {
         alias: 'f',
         type: 'string',
-        describe: 'Feature name to generate api files for. This should match the name in the babelrc file'
+        describe: 'Feature name to generate api files for. This should match the name in the features.js'
       },
       option: {
         alias: 'o',

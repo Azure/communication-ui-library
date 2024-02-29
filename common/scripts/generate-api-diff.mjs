@@ -65,7 +65,7 @@ async function main() {
     console.log(`  - ${result.featureFilePath}`);
     console.log(`Please upload these files to https://apiview.dev/ for review.`);
   } else {
-    console.error(`\nScript failed to generate api.json files.\nInspect the logs above for more information on errors.\nAlternatively, this tool ran the following commands you can run locally to reproduce the error: \n${commandsRun.map(c => `  - ${c}`).join('\n')}`);
+    console.error(`\nScript failed to generate api.json files.\nInspect the logs above for more information on errors.\nAlternatively, this tool ran the following commands that you can run locally to reproduce the error: \n${commandsRun.map(c => `  - ${c}`).join('\n')}`);
     exit(1);
   }
 }
@@ -178,7 +178,7 @@ function parseArgs(argv) {
       feature: {
         alias: 'f',
         type: 'string',
-        describe: 'Feature name to generate api files for. This should match the name in the babelrc file'
+        describe: 'Feature name to generate api files for. This should match the name in the features.js file'
       }
     })
     .parseSync();
