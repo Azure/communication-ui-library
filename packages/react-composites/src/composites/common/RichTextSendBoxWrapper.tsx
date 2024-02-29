@@ -1,10 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+/* @conditional-compile-remove(rich-text-editor) */
 import React from 'react';
+/* @conditional-compile-remove(rich-text-editor) */
 import { usePropsFor } from '../ChatComposite/hooks/usePropsFor';
 /* @conditional-compile-remove(rich-text-editor) */
 import { RichTextSendBox } from '@internal/react-components';
+
+/* @conditional-compile-remove(rich-text-editor) */
 /**
  * @private
  *
@@ -12,7 +16,6 @@ import { RichTextSendBox } from '@internal/react-components';
  * before lazyLoading is done
  */
 export const RichTextSendBoxWrapper = (): JSX.Element => {
-  /* @conditional-compile-remove(rich-text-editor) */
   const richTextSendBoxProps = usePropsFor(RichTextSendBox);
 
   return <RichTextSendBox {...richTextSendBoxProps} />;

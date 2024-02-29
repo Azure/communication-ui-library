@@ -407,7 +407,12 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                 </Stack>
               )}
               <Stack grow>
-                <SendBox adapter={adapter} options={options} styles={styles?.sendBox} />
+                <SendBox
+                  options={options}
+                  styles={styles?.sendBox}
+                  /* @conditional-compile-remove(file-sharing) */
+                  adapter={adapter}
+                />
               </Stack>
               {formFactor !== 'mobile' && <AttachFileButton />}
             </Stack>

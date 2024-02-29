@@ -4,7 +4,9 @@
 import React, { useMemo } from 'react';
 import { SendBoxStylesProps, SendBox as SimpleSendBox } from '@internal/react-components';
 import { usePropsFor } from '../ChatComposite/hooks/usePropsFor';
-import { ChatAdapter, ChatCompositeOptions } from '../ChatComposite';
+import { ChatCompositeOptions } from '../ChatComposite';
+/* @conditional-compile-remove(file-sharing) */
+import { ChatAdapter } from '../ChatComposite';
 /* @conditional-compile-remove(file-sharing) */
 import { fileUploadsSelector } from '../ChatComposite/selectors/fileUploadsSelector';
 /* @conditional-compile-remove(file-sharing) */
@@ -21,6 +23,7 @@ const RichTextSendBoxWrapper = React.lazy(() =>
 export type SendBoxProps = {
   options?: ChatCompositeOptions;
   styles?: SendBoxStylesProps;
+  /* @conditional-compile-remove(file-sharing) */
   adapter: ChatAdapter;
 };
 
@@ -28,7 +31,12 @@ export type SendBoxProps = {
  * @private
  */
 export const SendBox = (props: SendBoxProps): JSX.Element => {
-  const { options, styles, adapter } = props;
+  const {
+    options,
+    styles,
+    /* @conditional-compile-remove(file-sharing) */
+    adapter
+  } = props;
 
   const sendBoxProps = usePropsFor(SimpleSendBox);
 
@@ -43,6 +51,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   if (options?.richTextEditor !== false) {
     return <RichTextSendBoxWrapper />;
   }
+
   return (
     <SimpleSendBox
       {...sendBoxProps}

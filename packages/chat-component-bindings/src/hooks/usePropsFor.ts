@@ -1,13 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-import {
-  ErrorBar,
-  MessageThread,
-  ParticipantList,
-  RichTextSendBox,
-  SendBox,
-  TypingIndicator
-} from '@internal/react-components';
+import { ErrorBar, MessageThread, ParticipantList, SendBox, TypingIndicator } from '@internal/react-components';
+
+/* @conditional-compile-remove(rich-text-editor) */
+import { RichTextSendBox } from '@internal/react-components';
 
 import { useHandlers } from './useHandlers';
 import { useSelector } from './useSelector';
@@ -64,7 +60,7 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
 > extends true
   ? SendBoxSelector
   : AreEqual<Component, typeof RichTextSendBox> extends true
-  ? SendBoxSelector
+  ? /* @conditional-compile-remove(PSTN-calls) */ SendBoxSelector
   : AreEqual<Component, typeof MessageThread> extends true
   ? MessageThreadSelector
   : AreEqual<Component, typeof TypingIndicator> extends true
@@ -108,6 +104,7 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
   switch (component) {
     case SendBox:
       return sendBoxSelector;
+    /* @conditional-compile-remove(rich-text-editor) */
     case RichTextSendBox:
       return sendBoxSelector;
     case MessageThread:
