@@ -73,7 +73,7 @@ export interface ChatMessage extends MessageCommon {
    * {@link @azure/communication-chat#ChatMessage.metadata}
    */
   metadata?: Record<string, string>;
-  /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /* @conditional-compile-remove(file-sharing) */
   /**
    * @beta
    * A list of file attachments for the message.
