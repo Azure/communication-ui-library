@@ -2492,7 +2492,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     SurveyStarIconFilled: React_2.JSX.Element;
     StartSpotlightContextualMenuItem: React_2.JSX.Element;
     StopSpotlightContextualMenuItem: React_2.JSX.Element;
-    VideoSpotlighted: React_2.JSX.Element;
+    VideoTileSpotlighted: React_2.JSX.Element;
     RichTextBoldButtonIcon: React_2.JSX.Element;
     RichTextItalicButtonIcon: React_2.JSX.Element;
     RichTextUnderlineButtonIcon: React_2.JSX.Element;
@@ -2649,7 +2649,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     SurveyStarIconFilled: React_2.JSX.Element;
     StartSpotlightContextualMenuItem: React_2.JSX.Element;
     StopSpotlightContextualMenuItem: React_2.JSX.Element;
-    VideoSpotlighted: React_2.JSX.Element;
+    VideoTileSpotlighted: React_2.JSX.Element;
     RichTextBoldButtonIcon: React_2.JSX.Element;
     RichTextItalicButtonIcon: React_2.JSX.Element;
     RichTextUnderlineButtonIcon: React_2.JSX.Element;
