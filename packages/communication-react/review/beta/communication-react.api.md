@@ -4529,7 +4529,7 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
 
 // @public
 export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
-    screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
+    screenShareParticipant?: VideoGalleryRemoteParticipant;
     localParticipant: VideoGalleryLocalParticipant;
     remoteParticipants: VideoGalleryRemoteParticipant[];
     dominantSpeakers?: string[];
