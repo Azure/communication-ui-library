@@ -98,8 +98,8 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public leaveCall = async (forEveryone?: boolean): Promise<void> =>
     await this.callWithChatAdapter.leaveCall(forEveryone);
 
-  public startCall = (participants: string[] | StartCallIdentifier[], options: StartCallOptions): Call | undefined => {
-    if (participants.every((participant) => typeof participant === 'string')) {
+  public startCall = (participants: (string | StartCallIdentifier)[], options: StartCallOptions): Call | undefined => {
+    if (participants.every((participant: string | StartCallIdentifier) => typeof participant === 'string')) {
       return this.callWithChatAdapter.startCall(participants as string[], options);
     } else {
       return this.callWithChatAdapter.startCall(participants as StartCallIdentifier[], options);

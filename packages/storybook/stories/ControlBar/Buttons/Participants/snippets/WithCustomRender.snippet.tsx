@@ -1,6 +1,7 @@
 import {
   CallParticipantListParticipant,
   ControlBarButtonStyles,
+  CustomAvatarOptions,
   FluentThemeProvider,
   ParticipantsButton
 } from '@azure/communication-react';
@@ -42,7 +43,7 @@ const mockParticipants: CallParticipantListParticipant[] = [
   }
 ];
 
-const customOnRenderAvatar = (userId?: string, options?): JSX.Element => {
+const customOnRenderAvatar = (userId?: string, options?: CustomAvatarOptions): JSX.Element => {
   if (userId === 'user2') {
     return (
       <img
@@ -64,7 +65,7 @@ const customOnRenderAvatar = (userId?: string, options?): JSX.Element => {
 
   return (
     <Persona
-      text={options.displayName}
+      text={options?.text}
       hidePersonaDetails={true}
       size={PersonaSize.size32}
       showOverflowTooltip={false}

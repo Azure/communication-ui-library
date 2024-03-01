@@ -16,7 +16,7 @@ export const CustomUserRenderSnippet: () => JSX.Element = () => {
   const onRenderUser = (user: CommunicationParticipant): JSX.Element => {
     return (
       <>
-        <img src={imageMap[user.userId]} style={avatarStyle} /> {user.displayName}
+        <img src={imageMap[user.userId as keyof typeof imageMap]} style={avatarStyle} /> {user.displayName}
       </>
     );
   };
