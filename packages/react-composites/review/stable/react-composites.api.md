@@ -487,6 +487,7 @@ export interface CallCompositeStrings {
     participantJoinedNoticeString: string;
     participantLeftNoticeString: string;
     peopleButtonLabel: string;
+    peoplePaneMoreButtonAriaLabel: string;
     peoplePaneTitle: string;
     privacyPolicy: string;
     rejoinCallButtonLabel: string;

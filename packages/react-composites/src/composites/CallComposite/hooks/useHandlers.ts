@@ -191,6 +191,10 @@ const createCompositeHandlers = memoizeOne(
         await adapter.stopSpotlight(userIds);
       },
       /* @conditional-compile-remove(spotlight) */
+      onStopAllSpotlight: async (): Promise<void> => {
+        await adapter.stopAllSpotlight();
+      },
+      /* @conditional-compile-remove(spotlight) */
       onStartLocalSpotlight: async (): Promise<void> => {
         await adapter.startSpotlight();
       },

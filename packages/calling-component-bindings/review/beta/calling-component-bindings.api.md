@@ -207,6 +207,8 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onStartSpotlight: (userIds?: string[]) => Promise<void>;
     // (undocumented)
+    onStopAllSpotlight: () => Promise<void>;
+    // (undocumented)
     onStopCaptions: () => Promise<void>;
     // (undocumented)
     onStopScreenShare: () => Promise<void>;

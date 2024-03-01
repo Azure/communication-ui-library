@@ -589,6 +589,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.startSpotlight.bind(this);
     /* @conditional-compile-remove(spotlight) */
     this.stopSpotlight.bind(this);
+    /* @conditional-compile-remove(spotlight) */
+    this.stopAllSpotlight.bind(this);
   }
 
   public dispose(): void {
@@ -1080,6 +1082,11 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   /* @conditional-compile-remove(spotlight) */
   public async stopSpotlight(userIds: string[]): Promise<void> {
     this.handlers.onStopSpotlight(userIds);
+  }
+
+  /* @conditional-compile-remove(spotlight) */
+  public async stopAllSpotlight(): Promise<void> {
+    this.handlers.onStopAllSpotlight();
   }
 
   public getState(): CallAdapterState {
