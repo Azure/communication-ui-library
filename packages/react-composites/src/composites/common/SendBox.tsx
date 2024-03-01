@@ -15,9 +15,9 @@ import { fileUploadsSelector } from '../ChatComposite/selectors/fileUploadsSelec
 import { useSelector } from '../ChatComposite/hooks/useSelector';
 
 /* @conditional-compile-remove(rich-text-editor) */
-// const RichTextSendBox = React.lazy(() =>
-//   import('@internal/react-components').then((module) => ({ default: module.RichTextSendBox }))
-// );
+const RichTextSendBox = React.lazy(() =>
+  import('@internal/react-components').then((module) => ({ default: module.RichTextSendBox }))
+);
 
 /**
  * @private
@@ -66,12 +66,12 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     [sendBoxProps, options, sendBoxStyles, activeFileUploads, adapter]
   );
 
-  // if (options?.richTextEditor === false) {
-  //   return (
-  //     <Suspense fallback={simpleSendBox}>
-  //       <RichTextSendBox {...richTextSendBoxProps} />
-  //     </Suspense>
-  //   );
-  // }
+  if (options?.richTextEditor === false) {
+    return (
+      <Suspense fallback={simpleSendBox}>
+        <RichTextSendBox {...richTextSendBoxProps} />
+      </Suspense>
+    );
+  }
   return simpleSendBox;
 };

@@ -43,7 +43,8 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
           options: {
             transpileOnly: true
           },
-          exclude: /dist/
+          exclude: /dist/,
+          sideEffects: false
         },
         {
           test: /\.css$/i,
