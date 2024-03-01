@@ -414,6 +414,8 @@ export interface RemoteParticipantState {
   /* @conditional-compile-remove(ppt-live) */
   /**
    * Proxy of {@link @azure/communication-calling#Call.PPTLive.target}.
+   *
+   * @beta
    */
   contentSharingStream?: HTMLElement;
   /* @conditional-compile-remove(reaction) */
@@ -514,6 +516,8 @@ export interface CallState {
   /* @conditional-compile-remove(ppt-live) */
   /**
    * Proxy of {@link @azure/communication-calling#PPTLiveCallFeature}.
+   *
+   *@beta
    */
   pptLive: PPTLiveCallFeatureState;
   /* @conditional-compile-remove(raise-hand) */
@@ -547,6 +551,8 @@ export interface CallState {
    * Note this only applies to PPTLive in RemoteParticipant.
    *
    * This property is added by the stateful layer and is not a proxy of SDK state
+   *
+   *@beta
    */
   contentSharingRemoteParticipant?: string;
   /**
