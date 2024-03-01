@@ -43,6 +43,15 @@ export const RTESendBoxErrors = (props: RTESendBoxErrorsProps): JSX.Element => {
   }, [textTooLongMessage]);
 
   useEffect(() => {
+    if (
+      (textTooLongMessage === undefined || isMessageEmpty(textTooLongMessage)) &&
+      (systemMessage === undefined || isMessageEmpty(systemMessage))
+    ) {
+      setSendBoxError(undefined);
+    }
+  }, [systemMessage, textTooLongMessage]);
+
+  useEffect(() => {
     setSendBoxError((prev) => {
       const errors: SendBoxErrorBarError[] = [];
       if (prev) {
