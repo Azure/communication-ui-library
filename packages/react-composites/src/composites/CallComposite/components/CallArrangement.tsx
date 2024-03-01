@@ -359,19 +359,21 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       return undefined;
     }
     const headerMenuItems: _DrawerMenuItemProps[] = [];
-    if (spotlightedParticipants && spotlightedParticipants.length > 0 && !hideSpotlightButtons) {
-      headerMenuItems.push({
-        itemKey: 'stopAllSpotlightKey',
-        text: locale.strings.call.stopAllSpotlightMenuLabel,
-        iconProps: {
-          iconName: 'StopAllSpotlightMenuButton',
-          styles: { root: { lineHeight: 0 } }
-        },
-        onItemClick: () => {
-          adapter.stopAllSpotlight();
-          setDrawerMenuItems([]);
-        }
-      });
+    if (isPeoplePaneOpen) {
+      if (spotlightedParticipants && spotlightedParticipants.length > 0 && !hideSpotlightButtons) {
+        headerMenuItems.push({
+          itemKey: 'stopAllSpotlightKey',
+          text: locale.strings.call.stopAllSpotlightMenuLabel,
+          iconProps: {
+            iconName: 'StopAllSpotlightMenuButton',
+            styles: { root: { lineHeight: 0 } }
+          },
+          onItemClick: () => {
+            adapter.stopAllSpotlight();
+            setDrawerMenuItems([]);
+          }
+        });
+      }
     }
     return headerMenuItems.length > 0
       ? () => {
@@ -380,6 +382,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       : undefined;
   }, [
     props.mobileView,
+    isPeoplePaneOpen,
     spotlightedParticipants,
     hideSpotlightButtons,
     locale.strings.call.stopAllSpotlightMenuLabel,
