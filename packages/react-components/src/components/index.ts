@@ -18,7 +18,6 @@ export { _MentionPopover } from './MentionPopover';
 export { ImageOverlay } from './ImageOverlay';
 /* @conditional-compile-remove(image-overlay) */
 export type { ImageOverlayStrings } from './ImageOverlay';
-
 export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox';
 
 /* @conditional-compile-remove(rich-text-editor) */

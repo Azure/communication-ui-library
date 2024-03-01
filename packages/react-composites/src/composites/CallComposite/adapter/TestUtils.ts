@@ -21,13 +21,13 @@ import EventEmitter from 'events';
  */
 export interface MockEmitter {
   emitter: EventEmitter;
-  emit(event: any, data?: any);
+  emit(event: any, data?: any): void;
 }
 /**
  * @private
  */
 export interface MockCall extends Mutable<CallCommon>, MockEmitter {
-  testHelperPushRemoteParticipant(participant: RemoteParticipant);
+  testHelperPushRemoteParticipant(participant: RemoteParticipant): void;
   testHelperPopRemoteParticipant(): RemoteParticipant;
   testHelperPushLocalVideoStream(stream: LocalVideoStream): void;
   testHelperPopLocalVideoStream(): LocalVideoStream;

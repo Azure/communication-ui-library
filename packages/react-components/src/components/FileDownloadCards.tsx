@@ -302,7 +302,7 @@ const DownloadIconTrampoline = (): JSX.Element => {
 };
 
 const useLocaleStringsTrampoline = (): _FileDownloadCardsStrings => {
-  /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
+  /* @conditional-compile-remove(file-sharing) */
   return useLocale().strings.messageThread;
   return { downloadFile: '', fileCardGroupMessage: '' };
 };
