@@ -3843,20 +3843,6 @@ export interface RichTextEditorOptions {
 }
 
 // @beta
-export const RichTextSendBox: (props: RichTextSendBoxProps) => JSX.Element;
-
-// @beta
-export interface RichTextSendBoxProps {
-    activeFileUploads?: ActiveFileUpload[];
-    disabled?: boolean;
-    onCancelFileUpload?: (fileId: string) => void;
-    onRenderFileUploads?: () => JSX.Element;
-    onSendMessage: (content: string) => Promise<void>;
-    strings?: Partial<RichTextSendBoxStrings>;
-    systemMessage?: string;
-}
-
-// @beta
 export interface RichTextSendBoxStrings extends SendBoxStrings {
     boldTooltip: string;
     bulletListTooltip: string;
