@@ -64,12 +64,7 @@ const customOnRenderAvatar = (userId?: string, options?: CustomAvatarOptions): J
   }
 
   return (
-    <Persona
-      text={options?.text}
-      hidePersonaDetails={true}
-      size={PersonaSize.size32}
-      showOverflowTooltip={false}
-    />
+    <Persona text={options?.text} hidePersonaDetails={true} size={PersonaSize.size32} showOverflowTooltip={false} />
   );
 };
 
