@@ -63,7 +63,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
       ? childrenPerPage.current - ((pinnedParticipantUserIds.length + 1) % childrenPerPage.current)
       : childrenPerPage.current,
     pinnedParticipantUserIds,
-    /* @conditional-compile-remove(gallery-layouts) */ layout: 'default',
+    layout: 'default',
     /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds
   });
 
@@ -146,7 +146,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
       tokens={videoGalleryLayoutGap}
     >
       {
-        /* @conditional-compile-remove(gallery-layouts) */ props.overflowGalleryPosition === 'horizontalTop' ? (
+        /* @conditional-compile-remove(overflow-top-composite) */ props.overflowGalleryPosition === 'horizontalTop' ? (
           overflowGallery
         ) : (
           <></>
@@ -159,10 +159,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
           {gridTiles}
         </GridLayout>
       )}
-      {overflowGalleryTrampoline(
-        overflowGallery,
-        /* @conditional-compile-remove(gallery-layouts) */ props.overflowGalleryPosition
-      )}
+      {overflowGalleryTrampoline(overflowGallery, props.overflowGalleryPosition)}
     </Stack>
   );
 };
@@ -171,7 +168,7 @@ const overflowGalleryTrampoline = (
   gallery: JSX.Element | null,
   galleryPosition?: 'horizontalBottom' | 'verticalRight' | 'horizontalTop'
 ): JSX.Element | null => {
-  /* @conditional-compile-remove(gallery-layouts) */
+  /* @conditional-compile-remove(overflow-top-composite) */
   return galleryPosition !== 'horizontalTop' ? gallery : <></>;
   return gallery;
 };
