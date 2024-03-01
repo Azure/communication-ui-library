@@ -41,6 +41,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   } = props;
 
   const sendBoxProps = usePropsFor(SimpleSendBox);
+  /* @conditional-compile-remove(file-sharing) */
   const richTextSendBoxProps = usePropsFor(SimpleSendBox);
 
   /* @conditional-compile-remove(file-sharing) */
@@ -50,7 +51,6 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     return Object.assign({}, styles);
   }, [styles]);
 
-  /* @conditional-compile-remove(rich-text-editor) */
   const simpleSendBox = useMemo(
     () => (
       <SimpleSendBox
@@ -63,9 +63,16 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
         onCancelFileUpload={adapter.cancelFileUpload}
       />
     ),
-    [sendBoxProps, options, sendBoxStyles, activeFileUploads, adapter]
+    [
+      sendBoxProps,
+      options,
+      sendBoxStyles,
+      /* @conditional-compile-remove(file-sharing) */ activeFileUploads,
+      /* @conditional-compile-remove(file-sharing) */ adapter
+    ]
   );
 
+  /* @conditional-compile-remove(rich-text-editor) */
   if (options?.richTextEditor === false) {
     return (
       <Suspense fallback={simpleSendBox}>
