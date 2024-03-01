@@ -99,7 +99,7 @@ export type ChatCompositeOptions = {
 /**
  * Options for configuring the rich text editor.
  *
- * @public
+ * @beta
  */
 export interface RichTextEditorOptions {}
 

@@ -1937,7 +1937,7 @@ export type ResourceDetails = {
     resourceUrl: string;
 };
 
-// @public
+// @beta
 export interface RichTextEditorOptions {
 }
 
