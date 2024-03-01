@@ -71,25 +71,22 @@ test.describe('VideoGalleryLayout tests', async () => {
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
     const videoGallery = await waitForSelector(page, dataUiId(IDS.videoGallery));
-    let videoTile;
     let moreButton;
 
-    for (let i = 1; i < 2; i++) {
-      videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=${i}`);
-      await videoTile.hover();
-      moreButton = await videoTile.waitForSelector(dataUiId(IDS.videoTileMoreOptionsButton));
-      await moreButton.hover();
-      await moreButton.click();
-
-      await waitForSelector(page, dataUiId('video-tile-pin-participant-button'));
-      await pageClick(page, dataUiId('video-tile-pin-participant-button'));
-    }
-    expect(await stableScreenshot(page)).toMatchSnapshot('video-tile-pinned.png');
-
+    const videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=1`);
     await videoTile.hover();
     moreButton = await videoTile.waitForSelector(dataUiId(IDS.videoTileMoreOptionsButton));
     await moreButton.hover();
     await moreButton.click();
+
+    await waitForSelector(page, dataUiId('video-tile-pin-participant-button'));
+    await pageClick(page, dataUiId('video-tile-pin-participant-button'));
+    expect(await stableScreenshot(page)).toMatchSnapshot('video-tile-pinned.png');
+
+    await videoTile.hover();
+    moreButton = await videoTile?.waitForSelector(dataUiId(IDS.videoTileMoreOptionsButton));
+    await moreButton?.hover();
+    await moreButton?.click();
 
     expect(await stableScreenshot(page)).toMatchSnapshot('video-tile-unpin.png');
   });

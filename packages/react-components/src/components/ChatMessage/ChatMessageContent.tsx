@@ -227,13 +227,16 @@ const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
       if (domNode instanceof DOMElement && domNode.attribs) {
         // Transform custom rendering of mentions
         /* @conditional-compile-remove(mention) */
-        if (props.mentionDisplayOptions?.onRenderMention && domNode.name === 'msft-mention') {
+        if (domNode.name === 'msft-mention') {
           const { id } = domNode.attribs;
           const mention: Mention = {
             id: id,
             displayText: (domNode.children[0] as unknown as Text).nodeValue ?? ''
           };
-          return props.mentionDisplayOptions.onRenderMention(mention, defaultOnMentionRender);
+          if (props.mentionDisplayOptions?.onRenderMention) {
+            return props.mentionDisplayOptions.onRenderMention(mention, defaultOnMentionRender);
+          }
+          return defaultOnMentionRender(mention);
         }
 
         // Transform inline images

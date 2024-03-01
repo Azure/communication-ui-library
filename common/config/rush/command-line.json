@@ -92,6 +92,14 @@
       "safeForSimultaneousRushProcesses": true
     },
     {
+      "commandKind": "global",
+      "name": "stage-feature",
+      "summary": "Promote/demote a beta feature to/from alpha or stable",
+      "description": "Supply a feature name and an option and adjust the features.js file to appropriately promote/demote the feature.",
+      "shellCommand": "node common/scripts/stage-feature.mjs",
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
       "commandKind": "bulk",
       "name": "build",
       "summary": "Build all projects that haven't been built, or have changed since they were last built",
@@ -177,7 +185,16 @@
       "required": true,
       "argumentName": "FEATURE_NAME",
       "description": "Feature name. Note: This must match the name given in features.js",
-      "associatedCommands": ["generate-api-diff"]
+      "associatedCommands": ["generate-api-diff", "stage-feature"]
+    },
+    {
+      "parameterKind": "string",
+      "longName": "--option",
+      "shortName": "-o",
+      "required": true,
+      "argumentName": "OPTION",
+      "description": "Option to promote/demote a feature. Options: 'alphaToBeta', 'betaToAlpha', 'betaToStable', 'stableToBeta'",
+      "associatedCommands": ["stage-feature"]
     }
   ]
 }

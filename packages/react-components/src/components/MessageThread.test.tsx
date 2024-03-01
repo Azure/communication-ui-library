@@ -12,9 +12,9 @@ import { BlockedMessage } from '../types';
 import { createTestLocale, renderWithLocalization } from './utils/testUtils';
 /* @conditional-compile-remove(date-time-customization) @conditional-compile-remove(data-loss-prevention) */
 import { COMPONENT_LOCALE_EN_US } from '../localization/locales';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/* @conditional-compile-remove(mention) */
 import { waitFor } from '@testing-library/react';
-/* @conditional-compile-remove(data-loss-prevention) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/* @conditional-compile-remove(data-loss-prevention) */
 import { registerIcons } from '@fluentui/react';
 /* @conditional-compile-remove(mention) */
 import { MessageStatus } from '@internal/acs-ui-common';
