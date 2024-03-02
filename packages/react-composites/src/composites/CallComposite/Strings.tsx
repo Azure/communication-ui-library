@@ -203,6 +203,10 @@ export interface CallCompositeStrings {
    */
   peoplePaneTitle: string;
   /**
+   * Aria label of more button in people pane
+   */
+  peoplePaneMoreButtonAriaLabel: string;
+  /**
    * Aria label string for return to call back button
    */
   returnToCallButtonAriaLabel?: string;
@@ -271,6 +275,11 @@ export interface CallCompositeStrings {
    * Label for menu item to stop spotlight on local user
    */
   spotlightLimitReachedParticipantListMenuTitle: string;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Label for menu item to stop all spotlight
+   */
+  stopAllSpotlightMenuLabel: string;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Label for add people dropdown
