@@ -66,6 +66,11 @@ export const PeoplePaneContent = (props: {
     [adapter]
   );
 
+  // dismiss drawers when participant leaves
+  adapter.on('participantsLeft', () => {
+    setDrawerMenuItems([]);
+  });
+
   /* @conditional-compile-remove(PSTN-calls) */
   const alternateCallerId = adapter.getState().alternateCallerId;
 
