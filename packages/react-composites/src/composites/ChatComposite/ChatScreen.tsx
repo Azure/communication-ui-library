@@ -9,6 +9,7 @@ import { PersonaSize } from '@fluentui/react';
 import {
   CommunicationParticipant,
   ErrorBar,
+  imageOverlayTheme,
   MessageProps,
   MessageRenderer,
   MessageThread,
@@ -126,6 +127,7 @@ interface OverlayImageItem {
   titleIcon: JSX.Element;
   attachmentId: string;
   messageId: string;
+  imageUrl: string;
 }
 
 /**
@@ -176,15 +178,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       return;
     }
     const message = adapter.getState().thread.chatMessages[overlayImageItem?.messageId];
-    if (overlayImageItem.imageSrc === '' && message.content?.attachments && message.content?.attachments.length > 0) {
-      const resourceCache = message.resourceCache;
-      const inlineImages = message.content?.attachments.filter((attachment) => {
-        return attachment.attachmentType === 'image' && attachment.id === overlayImageItem?.attachmentId;
-      });
-      if (inlineImages.length <= 0 || resourceCache === undefined || inlineImages[0].url === undefined) {
-        return;
-      }
-      const fullSizeImageSrc = resourceCache[inlineImages[0].url];
+    const resourceCache = message.resourceCache;
+    if (overlayImageItem.imageSrc === '' && resourceCache) {
+      const fullSizeImageSrc = resourceCache[overlayImageItem.imageUrl];
       if (fullSizeImageSrc === undefined || fullSizeImageSrc === '' || overlayImageItem.imageSrc === fullSizeImageSrc) {
         return;
       }
@@ -298,7 +294,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         titleIcon: titleIcon,
         attachmentId: attachment.id,
         imageSrc: imageSrc,
-        messageId: messageId
+        messageId: messageId,
+        imageUrl: attachment.url || ''
       };
 
       setIsImageOverlayOpen(true);
@@ -445,6 +442,11 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             onDismiss={() => {
               setOverlayImageItem(undefined);
               setIsImageOverlayOpen(false);
+              adapter.removeResourceFromCache({
+                threadId: adapter.getState().thread.threadId,
+                messageId: overlayImageItem.messageId,
+                resourceUrl: overlayImageItem.imageUrl
+              });
             }}
             onDownloadButtonClicked={onDownloadButtonClicked}
           />
