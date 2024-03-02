@@ -212,6 +212,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     setPromptProps
   );
 
+  /* @conditional-compile-remove(spotlight) */
+  const canSpotlight = adapter.getState().call?.capabilitiesFeature?.capabilities.spotlightParticipant.isPresent;
+
   const spotlightPeoplePaneProps = useMemo(() => {
     /* @conditional-compile-remove(spotlight) */
     return {
@@ -220,7 +223,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       onStopLocalSpotlight: hideSpotlightButtons ? undefined : onStopLocalSpotlightWithPrompt,
       onStartRemoteSpotlight: hideSpotlightButtons ? undefined : onStartRemoteSpotlightWithPrompt,
       onStopRemoteSpotlight: hideSpotlightButtons ? undefined : onStopRemoteSpotlightWithPrompt,
-      onStopAllSpotlight: hideSpotlightButtons ? undefined : () => adapter.stopAllSpotlight(),
+      onStopAllSpotlight: hideSpotlightButtons || !canSpotlight ? undefined : () => adapter.stopAllSpotlight(),
       maxParticipantsToSpotlight
     };
     return {};
@@ -232,7 +235,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     /* @conditional-compile-remove(spotlight) */ onStartRemoteSpotlightWithPrompt,
     /* @conditional-compile-remove(spotlight) */ onStopLocalSpotlightWithPrompt,
     /* @conditional-compile-remove(spotlight) */ onStopRemoteSpotlightWithPrompt,
-    /* @conditional-compile-remove(spotlight) */ spotlightedParticipants
+    /* @conditional-compile-remove(spotlight) */ spotlightedParticipants,
+    /* @conditional-compile-remove(spotlight) */ canSpotlight
   ]);
 
   const { isPeoplePaneOpen, openPeoplePane, closePeoplePane } = usePeoplePane({
@@ -360,7 +364,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     }
     const headerMenuItems: _DrawerMenuItemProps[] = [];
     if (isPeoplePaneOpen) {
-      if (spotlightedParticipants && spotlightedParticipants.length > 0 && !hideSpotlightButtons) {
+      if (spotlightedParticipants && spotlightedParticipants.length > 0 && !hideSpotlightButtons && canSpotlight) {
         headerMenuItems.push({
           itemKey: 'stopAllSpotlightKey',
           text: locale.strings.call.stopAllSpotlightMenuLabel,
@@ -385,6 +389,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     isPeoplePaneOpen,
     spotlightedParticipants,
     hideSpotlightButtons,
+    canSpotlight,
     locale.strings.call.stopAllSpotlightMenuLabel,
     adapter
   ]);
