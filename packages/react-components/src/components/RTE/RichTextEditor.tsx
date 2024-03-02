@@ -9,6 +9,7 @@ import {
   ribbonButtonStyle,
   ribbonOverflowButtonStyle,
   ribbonStyle,
+  richTextEditorStackStyle,
   richTextEditorStyle
 } from '../styles/RichTextEditor.styles';
 import { useTheme } from '../../theming';
@@ -16,17 +17,30 @@ import { ribbonButtons, ribbonButtonsStrings } from './RTERibbonButtons';
 import { RichTextSendBoxStrings } from './RTESendBox';
 import { isDarkThemed } from '../../theming/themeUtils';
 import { setBackgroundColor, setTextColor } from 'roosterjs-editor-api';
+import { Stack, mergeStyles } from '@fluentui/react';
 
 /**
  * Props for {@link RichTextEditor}.
  *
- * @beta
+ * @private
+ */
+export interface RichTextEditorStyleProps {
+  minHeight: string;
+  maxHeight: string;
+}
+
+/**
+ * Props for {@link RichTextEditor}.
+ *
+ * @private
  */
 export interface RichTextEditorProps {
   initialContent?: string;
   onChange: (newValue?: string) => void;
   placeholderText?: string;
   strings: Partial<RichTextSendBoxStrings>;
+  showRichTextEditorFormatting: boolean;
+  styles: RichTextEditorStyleProps;
 }
 
 /**
@@ -44,7 +58,7 @@ export interface RichTextEditorComponentRef {
  * @beta
  */
 export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichTextEditorProps>((props, ref) => {
-  const { initialContent, onChange, placeholderText, strings } = props;
+  const { initialContent, onChange, placeholderText, strings, showRichTextEditorFormatting } = props;
   const editor = useRef<IEditor | null>(null);
   const theme = useTheme();
   useImperativeHandle(
@@ -115,19 +129,21 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   }, [strings, ribbonPlugin, theme]);
 
   return (
-    <div>
-      {ribbon}
-      <Rooster
-        initialContent={initialContent}
-        inDarkMode={isDarkThemed(theme)}
-        plugins={plugins}
-        className={richTextEditorStyle}
-        editorCreator={editorCreator}
-        // TODO: confirm the color during inline images implementation
-        imageSelectionBorderColor={'blue'}
-        // doNotAdjustEditorColor is used to fix the default background color for Rooster component
-        doNotAdjustEditorColor={true}
-      />
+    <div className={mergeStyles({ maxWidth: '100%' })}>
+      {showRichTextEditorFormatting && ribbon}
+      <div className={richTextEditorStackStyle(!showRichTextEditorFormatting, showRichTextEditorFormatting)}>
+        <Rooster
+          initialContent={initialContent}
+          inDarkMode={isDarkThemed(theme)}
+          plugins={plugins}
+          className={richTextEditorStyle({ minHeight: props.styles.minHeight, maxHeight: props.styles.maxHeight })}
+          editorCreator={editorCreator}
+          // TODO: confirm the color during inline images implementation
+          imageSelectionBorderColor={'blue'}
+          // doNotAdjustEditorColor is used to fix the default background color for Rooster component
+          doNotAdjustEditorColor={true}
+        />
+      </div>
     </div>
   );
 });

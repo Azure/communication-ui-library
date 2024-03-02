@@ -42,13 +42,15 @@ export const sendIconStyle = (props: {
   /* @conditional-compile-remove(file-sharing) */ hasFile: boolean;
   hasErrorMessage: boolean;
   customSendIconStyle?: IStyle;
+  defaultTextColor?: string;
 }): string => {
   const {
     theme,
     hasText,
     /* @conditional-compile-remove(file-sharing) */ hasFile,
     hasErrorMessage,
-    customSendIconStyle
+    customSendIconStyle,
+    defaultTextColor = theme.palette.neutralTertiary
   } = props;
   const hasNoContent = !hasText && /* @conditional-compile-remove(file-sharing) */ !hasFile;
   return mergeStyles(
@@ -56,7 +58,7 @@ export const sendIconStyle = (props: {
       width: '1.25rem',
       height: '1.25rem',
       margin: 'auto',
-      color: hasErrorMessage || hasNoContent ? theme.palette.neutralTertiary : theme.palette.themePrimary
+      color: hasErrorMessage || hasNoContent ? defaultTextColor : theme.palette.themePrimary
     },
     customSendIconStyle
   );
@@ -93,11 +95,12 @@ export const defaultSendBoxActiveBorderThicknessREM = 0.125;
  */
 export const borderAndBoxShadowStyle = (props: {
   theme: Theme;
+  defaultBorderColor?: string;
   hasErrorMessage: boolean;
   disabled: boolean;
 }): string => {
-  const { theme, hasErrorMessage, disabled } = props;
-  const borderColor = hasErrorMessage ? theme.semanticColors.errorText : theme.palette.neutralSecondary;
+  const { theme, hasErrorMessage, disabled, defaultBorderColor = theme.palette.neutralSecondary } = props;
+  const borderColor = hasErrorMessage ? theme.semanticColors.errorText : defaultBorderColor;
   const borderColorActive = hasErrorMessage ? theme.semanticColors.errorText : theme.palette.themePrimary;
 
   const borderThickness = disabled ? 0 : defaultSendBoxInactiveBorderThicknessREM;
