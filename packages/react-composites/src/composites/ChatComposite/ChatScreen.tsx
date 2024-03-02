@@ -20,9 +20,8 @@ import {
   TypingIndicatorStylesProps,
   useTheme
 } from '@internal/react-components';
-/* @conditional-compile-remove(image-overlay) */ /* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(file-sharing) */
 import { ChatMessage } from '@internal/react-components';
-
 import React, { useCallback, useEffect, useMemo } from 'react';
 /* @conditional-compile-remove(image-overlay) */
 import { useState } from 'react';
