@@ -9,7 +9,6 @@ import { PersonaSize } from '@fluentui/react';
 import {
   CommunicationParticipant,
   ErrorBar,
-  imageOverlayTheme,
   MessageProps,
   MessageRenderer,
   MessageThread,
