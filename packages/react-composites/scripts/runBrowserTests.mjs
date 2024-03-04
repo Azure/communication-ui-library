@@ -124,7 +124,7 @@ async function runOne(testRoot, args, composite, hermeticity) {
     TEST_DIR: testRoot,
     // Snapshots are always stored with the original test sources, even when the test root
     // is different due to preprocessed test files.
-    SNAPSHOT_DIR: path.join(SNAPSHOT_ROOT, needPreprocess() ? 'stable' : 'beta'),
+    SNAPSHOT_DIR: path.join(SNAPSHOT_ROOT, needPreprocess() ? 'beta' : 'stable'),
     PLAYWRIGHT_OUTPUT_DIR: path.join(BASE_OUTPUT_DIR, Date.now().toString())
   };
 
