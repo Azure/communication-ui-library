@@ -2944,7 +2944,7 @@ export type GetCallingSelector<Component extends (props: any) => JSX.Element | u
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
 
 // @public
-export type GetChatSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof SendBox> extends true ? SendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? MessageThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? TypingIndicatorSelector : AreEqual<Component, typeof ParticipantList> extends true ? ChatParticipantListSelector : AreEqual<Component, typeof ErrorBar> extends true ? ChatErrorBarSelector : undefined;
+export type GetChatSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof SendBox> extends true ? SendBoxSelector : AreEqual<Component, typeof RichTextSendBox> extends true ? SendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? MessageThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? TypingIndicatorSelector : AreEqual<Component, typeof ParticipantList> extends true ? ChatParticipantListSelector : AreEqual<Component, typeof ErrorBar> extends true ? ChatErrorBarSelector : undefined;
 
 // @public
 export const getChatSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetChatSelector<Component>;
@@ -3840,6 +3840,20 @@ export type ResourceDetails = {
 
 // @beta
 export interface RichTextEditorOptions {
+}
+
+// @beta
+export const RichTextSendBox: (props: RichTextSendBoxProps) => JSX.Element;
+
+// @beta
+export interface RichTextSendBoxProps {
+    activeFileUploads?: ActiveFileUpload[];
+    disabled?: boolean;
+    onCancelFileUpload?: (fileId: string) => void;
+    onRenderFileUploads?: () => JSX.Element;
+    onSendMessage: (content: string) => Promise<void>;
+    strings?: Partial<RichTextSendBoxStrings>;
+    systemMessage?: string;
 }
 
 // @beta
