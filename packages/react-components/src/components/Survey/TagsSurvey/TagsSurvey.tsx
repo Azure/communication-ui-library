@@ -156,9 +156,9 @@ export const _TagsSurvey = (props: _TagsSurveyProps): JSX.Element => {
       } else {
         if (issue) {
           setSelectedTags((prevState) => {
-              // 'prevState[issueCategory]?.issues as ...' typing is required here to avoid a typescript limitation
-              // "This expression is not callable" caused by filter().
-              // More information can be found here: https://github.com/microsoft/TypeScript/issues/44373
+            // 'prevState[issueCategory]?.issues as ...' typing is required here to avoid a typescript limitation
+            // "This expression is not callable" caused by filter().
+            // More information can be found here: https://github.com/microsoft/TypeScript/issues/44373
             const categoryIssues = (
               prevState[issueCategory]?.issues as (_AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue)[]
             )?.filter((value: _AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue) => value !== issue);
