@@ -563,7 +563,7 @@ export const _createAzureCommunicationChatAdapterInner = async (
 };
 
 /**
- * This inner function is used to allow injection of TelemetryImplementationHint without changing the public API.
+ * This inner function to create ChatAdapterPromise in case when threadID is not avaialble.
  * ThreadId is a promise to allow for lazy initialization of the adapter.
  * @internal
  */

@@ -165,7 +165,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   private onChatStateChange: (newChatAdapterState: ChatAdapterState) => void;
   private onCallStateChange: (newChatAdapterState: CallAdapterState) => void;
 
-  constructor(callAdapter: CallAdapter, chatAdapter: Promise<ChatAdapter>) {
+  constructor(callAdapter: CallAdapter, chatAdapterPromise: Promise<ChatAdapter>) {
     this.bindPublicMethods();
     this.callAdapter = callAdapter;
 
@@ -177,8 +177,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
 
     this.onChatStateChange = onChatStateChange;
 
-    this.chatAdapterPromise = chatAdapter;
-    chatAdapter.then((chatAdapter) => {
+    this.chatAdapterPromise = chatAdapterPromise;
+    this.chatAdapterPromise.then((chatAdapter) => {
       chatAdapter.onStateChange(this.onChatStateChange);
       /* @conditional-compile-remove(file-sharing) */
       this.chatAdapter = chatAdapter;
@@ -322,13 +322,13 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return this.context.getState();
   }
   /** Dispose of the current CallWithChatAdapter. */
-  public dispose(): void {
+  public async dispose(): Promise<void> {
     this.chatAdapterPromise.then((adapter) => {
       adapter.offStateChange(this.onChatStateChange);
     });
     this.callAdapter.offStateChange(this.onCallStateChange);
 
-    this.chatAdapterPromise.then((adapter) => {
+    await this.chatAdapterPromise.then((adapter) => {
       adapter.dispose();
     });
     this.callAdapter.dispose();
@@ -431,31 +431,31 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   }
   /** Fetch initial Call and Chat data such as chat messages. */
   public async fetchInitialData(): Promise<void> {
-    return this.chatAdapterPromise.then((adapter) => {
+    return await this.chatAdapterPromise.then((adapter) => {
       return adapter.fetchInitialData();
     });
   }
   /** Send a chat message. */
   public async sendMessage(content: string): Promise<void> {
-    return this.chatAdapterPromise.then((adapter) => {
+    return await this.chatAdapterPromise.then((adapter) => {
       return adapter.sendMessage(content);
     });
   }
   /** Send a chat read receipt. */
   public async sendReadReceipt(chatMessageId: string): Promise<void> {
-    return this.chatAdapterPromise.then((adapter) => {
+    return await this.chatAdapterPromise.then((adapter) => {
       return adapter.sendReadReceipt(chatMessageId);
     });
   }
   /** Send an isTyping indicator. */
   public async sendTypingIndicator(): Promise<void> {
-    return this.chatAdapterPromise.then((adapter) => {
+    return await this.chatAdapterPromise.then((adapter) => {
       return adapter.sendTypingIndicator();
     });
   }
   /** Load previous Chat messages. */
   public async loadPreviousChatMessages(messagesToLoad: number): Promise<boolean> {
-    return this.chatAdapterPromise.then((adapter) => {
+    return await this.chatAdapterPromise.then((adapter) => {
       return adapter.loadPreviousChatMessages(messagesToLoad);
     });
   }
@@ -480,7 +480,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   }
   /** Delete an existing message. */
   public async deleteMessage(messageId: string): Promise<void> {
-    return this.chatAdapterPromise.then((adapter) => {
+    return await this.chatAdapterPromise.then((adapter) => {
       return adapter.deleteMessage(messageId);
     });
   }
