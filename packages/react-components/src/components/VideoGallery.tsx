@@ -166,10 +166,7 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
  *
  * @public
  */
-export type OverflowGalleryPosition =
-  | 'horizontalBottom'
-  | 'verticalRight'
-  | /* @conditional-compile-remove(overflow-top-composite) */ 'horizontalTop';
+export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | 'horizontalTop';
 
 /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
 /**
