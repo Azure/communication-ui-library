@@ -21,7 +21,7 @@ import {
   Circle20Regular
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(spotlight) */
-import { VideoPersonStarOff20Filled } from '@fluentui/react-icons';
+import { MoreHorizontal20Filled, VideoPersonStarOff20Filled } from '@fluentui/react-icons';
 /* @conditional-compile-remove(capabilities) */
 import { MicProhibited20Filled, VideoProhibited20Filled } from '@fluentui/react-icons';
 /* @conditional-compile-remove(gallery-layouts) */
@@ -125,7 +125,11 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   /* @conditional-compile-remove(control-bar-button-injection) */
   DefaultCustomButton: <Circle20Regular />,
   /* @conditional-compile-remove(dtmf-dialer) */
-  DtmfDialpadButton: <Dialpad20Regular />
+  DtmfDialpadButton: <Dialpad20Regular />,
+  /* @conditional-compile-remove(spotlight) */
+  PeoplePaneMoreButton: <MoreHorizontal20Filled />,
+  /* @conditional-compile-remove(spotlight) */
+  StopAllSpotlightMenuButton: <VideoPersonStarOff20Filled />
 };
 
 /**
@@ -281,6 +285,10 @@ export type CallCompositeIcons = {
   DefaultCustomButton?: JSX.Element;
   /* @conditional-compile-remove(dtmf-dialer) */
   DtmfDialpadButton?: JSX.Element;
+  /* @conditional-compile-remove(spotlight) */
+  PeoplePaneMoreButton?: JSX.Element;
+  /* @conditional-compile-remove(spotlight) */
+  StopAllSpotlightMenuButton?: JSX.Element;
 };
 
 /**
@@ -385,6 +393,11 @@ export type CallWithChatCompositeIcons = {
   // Icons common to Call and Chat.
   ParticipantItemOptions?: JSX.Element;
   ParticipantItemOptionsHovered?: JSX.Element;
+
+  /* @conditional-compile-remove(spotlight) */
+  PeoplePaneMoreButton?: JSX.Element;
+  /* @conditional-compile-remove(spotlight) */
+  StopAllSpotlightMenuButton?: JSX.Element;
 };
 
 /**

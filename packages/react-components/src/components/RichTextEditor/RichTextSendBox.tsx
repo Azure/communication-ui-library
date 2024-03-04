@@ -3,10 +3,10 @@
 
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { RichTextInputBoxComponent } from './RichTextInputBoxComponent';
-import { Icon, Stack, useTheme } from '@fluentui/react';
+import { Icon, Stack } from '@fluentui/react';
 import { useLocale } from '../../localization';
 import { SendBoxStrings } from '../SendBox';
-import { borderAndBoxShadowStyle, sendButtonStyle, sendIconStyle } from '../styles/SendBox.styles';
+import { sendButtonStyle, sendIconStyle } from '../styles/SendBox.styles';
 import { InputBoxButton } from '../InputBoxButton';
 import { RichTextSendBoxErrors, RichTextSendBoxErrorsProps } from './RichTextSendBoxErrors';
 /* @conditional-compile-remove(file-sharing) */
@@ -17,6 +17,7 @@ import { exceedsMaxAllowedLength, sanitizeText } from '../utils/SendBoxUtils';
 /* @conditional-compile-remove(file-sharing) */
 import { hasCompletedFileUploads } from '../utils/SendBoxUtils';
 import { RichTextEditorComponentRef } from './RichTextEditor';
+import { useTheme } from '../../theming';
 
 /**
  * Strings of {@link RichTextSendBox} that can be overridden.
@@ -227,23 +228,13 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   return (
     <Stack>
       <RichTextSendBoxErrors {...sendBoxErrorsProps} />
-      <div
-        className={borderAndBoxShadowStyle({
-          theme: theme,
-          // should always be false as we don't want to show the border when there is an error
-          hasErrorMessage: false,
-          disabled: !!disabled
-        })}
-      >
-        <RichTextInputBoxComponent
-          placeholderText={strings.placeholderText}
-          content={contentValue}
-          onChange={setContent}
-          editorComponentRef={editorComponentRef}
-          strings={strings}
-        />
-        {/* File Upload */}
-      </div>
+      <RichTextInputBoxComponent
+        placeholderText={strings.placeholderText}
+        onChange={setContent}
+        editorComponentRef={editorComponentRef}
+        strings={strings}
+        disabled={disabled}
+      />
       <Stack.Item align="end">
         <InputBoxButton
           onRenderIcon={onRenderSendIcon}

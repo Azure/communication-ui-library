@@ -63,7 +63,8 @@ const createKnownRibbonButton = (
       buttonStyles: {
         ...button.commandBarProperties?.buttonStyles,
         ...ribbonButtonStyle(theme)
-      }
+      },
+      canCheck: false
     };
     return result;
   }

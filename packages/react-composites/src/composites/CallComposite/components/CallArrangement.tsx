@@ -212,22 +212,36 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     setPromptProps
   );
 
+  /* @conditional-compile-remove(spotlight) */
+  const canSpotlight = adapter.getState().call?.capabilitiesFeature?.capabilities.spotlightParticipant.isPresent;
+
+  const spotlightPeoplePaneProps = useMemo(() => {
+    /* @conditional-compile-remove(spotlight) */
+    return {
+      spotlightedParticipantUserIds: spotlightedParticipants,
+      onStartLocalSpotlight: hideSpotlightButtons ? undefined : onStartLocalSpotlightWithPrompt,
+      onStopLocalSpotlight: hideSpotlightButtons ? undefined : onStopLocalSpotlightWithPrompt,
+      onStartRemoteSpotlight: hideSpotlightButtons ? undefined : onStartRemoteSpotlightWithPrompt,
+      onStopRemoteSpotlight: hideSpotlightButtons ? undefined : onStopRemoteSpotlightWithPrompt,
+      onStopAllSpotlight: hideSpotlightButtons || !canSpotlight ? undefined : () => adapter.stopAllSpotlight(),
+      maxParticipantsToSpotlight
+    };
+    return {};
+  }, [
+    /* @conditional-compile-remove(spotlight) */ adapter,
+    /* @conditional-compile-remove(spotlight) */ hideSpotlightButtons,
+    /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight,
+    /* @conditional-compile-remove(spotlight) */ onStartLocalSpotlightWithPrompt,
+    /* @conditional-compile-remove(spotlight) */ onStartRemoteSpotlightWithPrompt,
+    /* @conditional-compile-remove(spotlight) */ onStopLocalSpotlightWithPrompt,
+    /* @conditional-compile-remove(spotlight) */ onStopRemoteSpotlightWithPrompt,
+    /* @conditional-compile-remove(spotlight) */ spotlightedParticipants,
+    /* @conditional-compile-remove(spotlight) */ canSpotlight
+  ]);
+
   const { isPeoplePaneOpen, openPeoplePane, closePeoplePane } = usePeoplePane({
     ...peoplePaneProps,
-    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds: spotlightedParticipants,
-    /* @conditional-compile-remove(spotlight) */ onStartLocalSpotlight: hideSpotlightButtons
-      ? undefined
-      : onStartLocalSpotlightWithPrompt,
-    /* @conditional-compile-remove(spotlight) */ onStopLocalSpotlight: hideSpotlightButtons
-      ? undefined
-      : onStopLocalSpotlightWithPrompt,
-    /* @conditional-compile-remove(spotlight) */ onStartRemoteSpotlight: hideSpotlightButtons
-      ? undefined
-      : onStartRemoteSpotlightWithPrompt,
-    /* @conditional-compile-remove(spotlight) */ onStopRemoteSpotlight: hideSpotlightButtons
-      ? undefined
-      : onStopRemoteSpotlightWithPrompt,
-    /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight
+    ...spotlightPeoplePaneProps
   });
   const togglePeoplePane = useCallback(() => {
     if (isPeoplePaneOpen) {
@@ -342,6 +356,43 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
         (notification) => notification.capabilityName !== 'shareScreen'
       )
     : props.capabilitiesChangedNotificationBarProps?.capabilitiesChangedNotifications;
+
+  /* @conditional-compile-remove(spotlight) */
+  const onHeaderMenuClick = useMemo(() => {
+    if (!props.mobileView) {
+      return undefined;
+    }
+    const headerMenuItems: _DrawerMenuItemProps[] = [];
+    if (isPeoplePaneOpen) {
+      if (spotlightedParticipants && spotlightedParticipants.length > 0 && !hideSpotlightButtons && canSpotlight) {
+        headerMenuItems.push({
+          itemKey: 'stopAllSpotlightKey',
+          text: locale.strings.call.stopAllSpotlightMenuLabel,
+          iconProps: {
+            iconName: 'StopAllSpotlightMenuButton',
+            styles: { root: { lineHeight: 0 } }
+          },
+          onItemClick: () => {
+            adapter.stopAllSpotlight();
+            setDrawerMenuItems([]);
+          }
+        });
+      }
+    }
+    return headerMenuItems.length > 0
+      ? () => {
+          setDrawerMenuItems(headerMenuItems);
+        }
+      : undefined;
+  }, [
+    props.mobileView,
+    isPeoplePaneOpen,
+    spotlightedParticipants,
+    hideSpotlightButtons,
+    canSpotlight,
+    locale.strings.call.stopAllSpotlightMenuLabel,
+    adapter
+  ]);
 
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)} id={props.id}>
@@ -494,6 +545,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
               }
               onChatButtonClicked={props.mobileChatTabHeader?.onClick}
               disableChatButton={props.mobileChatTabHeader?.disabled}
+              /* @conditional-compile-remove(spotlight) */
+              onHeaderMenuClick={onHeaderMenuClick}
             />
             {props.mobileView && (
               <ModalLocalAndRemotePIP
