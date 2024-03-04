@@ -842,4 +842,9 @@ export interface CallCompositeStrings {
    * Tooltip for button to exit spotlight
    */
   exitSpotlightButtonTooltip: string;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Tooltip for button to exit spotlight
+   */
+  invalidMeetingIdentifier: string;
 }
