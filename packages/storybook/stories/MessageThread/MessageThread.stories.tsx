@@ -471,13 +471,6 @@ const MessageThreadStory = (args): JSX.Element => {
         });
       }
     });
-    // const overlayImage = {
-    //   title,
-    //   titleIcon,
-    //   downloadFilename: attachmentId,
-    //   imageSrc: ''
-    // };
-    // setOverlayImageItem(overlayImage);
     return Promise.resolve();
   };
 
