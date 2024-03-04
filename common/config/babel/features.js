@@ -107,8 +107,6 @@ module.exports = {
     "gallery-layout-composite",
     // feature for hiding attendee name in the teams meeting
     "hide-attendee-name",
-    // custom branding for the composites
-    "custom-branding",
     // Feature for end of call survey
     'end-of-call-survey',
     // Feature for PPT Live for teams meeting
@@ -161,6 +159,8 @@ module.exports = {
     // Feature image overlay
     "image-overlay",
     // Chat teams interop to display images and file attachments in chat messages
-    "teams-inline-images-and-file-sharing"
+    "teams-inline-images-and-file-sharing",
+    // custom branding for the composites
+    "custom-branding"
   ]
 }
