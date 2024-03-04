@@ -156,24 +156,19 @@ export const _TagsSurvey = (props: _TagsSurveyProps): JSX.Element => {
       } else {
         if (issue) {
           setSelectedTags((prevState) => {
-            if (prevState[issueCategory]?.issues) {
-              // 'prevState[issueCategory]!.issues as ...' typing is required here to avoid a typescript limitation
+              // 'prevState[issueCategory]?.issues as ...' typing is required here to avoid a typescript limitation
               // "This expression is not callable" caused by filter().
               // More information can be found here: https://github.com/microsoft/TypeScript/issues/44373
-              (prevState[issueCategory]!.issues as (_AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue)[]) =
-                (prevState[issueCategory]!.issues as (
-                  | _AudioIssue
-                  | _OverallIssue
-                  | _ScreenshareIssue
-                  | _VideoIssue
-                )[])!.filter(function (value: _AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue) {
-                  return value !== issue;
-                });
-              if (prevState[issueCategory]!.issues!.length === 0) {
-                delete prevState[issueCategory];
+            const categoryIssues = (
+              prevState[issueCategory]?.issues as (_AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue)[]
+            )?.filter((value: _AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue) => value !== issue);
+            return {
+              ...prevState,
+              [issueCategory]: {
+                ...(prevState[issueCategory] || {}),
+                issues: categoryIssues
               }
-            }
-            return prevState;
+            };
           });
         } else {
           setCheckedTextFields(checkedTextFields.filter((id) => id !== issueCategory));
