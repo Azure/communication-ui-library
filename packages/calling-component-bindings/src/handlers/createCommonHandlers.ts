@@ -117,6 +117,8 @@ export interface CommonCallingHandlers {
   onStartSpotlight: (userIds?: string[]) => Promise<void>;
   /* @conditional-compile-remove(spotlight) */
   onStopSpotlight: (userIds?: string[]) => Promise<void>;
+  /* @conditional-compile-remove(spotlight) */
+  onStopAllSpotlight: () => Promise<void>;
 }
 
 /**
@@ -626,6 +628,10 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       await call?.feature(Features.Spotlight).stopSpotlight(participants);
     };
     /* @conditional-compile-remove(spotlight) */
+    const onStopAllSpotlight = async (): Promise<void> => {
+      await call?.feature(Features.Spotlight).stopAllSpotlight();
+    };
+    /* @conditional-compile-remove(spotlight) */
     const canSpotlight = call?.feature(Features.Capabilities).capabilities.spotlightParticipant.isPresent;
     /* @conditional-compile-remove(spotlight) */
     const onStartLocalSpotlight = canSpotlight
@@ -706,6 +712,8 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onStartSpotlight,
       /* @conditional-compile-remove(spotlight) */
       onStopSpotlight,
+      /* @conditional-compile-remove(spotlight) */
+      onStopAllSpotlight,
       /* @conditional-compile-remove(spotlight) */
       onStartLocalSpotlight,
       /* @conditional-compile-remove(spotlight) */
