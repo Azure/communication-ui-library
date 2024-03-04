@@ -6,7 +6,7 @@ import { SendBoxStylesProps, SendBox as SimpleSendBox } from '@internal/react-co
 import { usePropsFor } from '../ChatComposite/hooks/usePropsFor';
 import { ChatCompositeOptions } from '../ChatComposite';
 /* @conditional-compile-remove(rich-text-editor) */
-import { Suspense } from 'react';
+// import { Suspense } from 'react';
 /* @conditional-compile-remove(file-sharing) */
 import { ChatAdapter } from '../ChatComposite';
 /* @conditional-compile-remove(file-sharing) */
@@ -15,8 +15,8 @@ import { fileUploadsSelector } from '../ChatComposite/selectors/fileUploadsSelec
 import { useSelector } from '../ChatComposite/hooks/useSelector';
 
 /* @conditional-compile-remove(rich-text-editor) */
-const RichTextSendBox = React.lazy(() =>
-  import('@internal/react-components').then((module) => ({ default: module.RichTextSendBox }))
+const RichTextSendBoxWrapper = React.lazy(() =>
+  import('./RichTextSendBoxWrapper').then((module) => ({ default: module.RichTextSendBoxWrapper }))
 );
 
 /**
@@ -41,8 +41,6 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   } = props;
 
   const sendBoxProps = usePropsFor(SimpleSendBox);
-  /* @conditional-compile-remove(file-sharing) */
-  const richTextSendBoxProps = usePropsFor(SimpleSendBox);
 
   /* @conditional-compile-remove(file-sharing) */
   const activeFileUploads = useSelector(fileUploadsSelector).files;
@@ -72,13 +70,9 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     ]
   );
 
-  /* @conditional-compile-remove(rich-text-editor) */
-  if (options?.richTextEditor === false) {
-    return (
-      <Suspense fallback={simpleSendBox}>
-        <RichTextSendBox {...richTextSendBoxProps} />
-      </Suspense>
-    );
+  // /* @conditional-compile-remove(rich-text-editor) */
+  if (options?.richTextEditor === true) {
+    return <RichTextSendBoxWrapper />;
   }
   return simpleSendBox;
 };
