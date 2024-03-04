@@ -10,7 +10,6 @@ export const richTextEditorStyle = (props: { minHeight: string; maxHeight: strin
     border: 'none',
     overflow: 'auto',
     outline: 'none',
-    paddingTop: '0.5rem',
     minHeight: props.minHeight,
     maxHeight: props.maxHeight,
     maxWidth: '100%'
@@ -20,9 +19,9 @@ export const richTextEditorStyle = (props: { minHeight: string; maxHeight: strin
 /**
  * @private
  */
-export const richTextEditorStackStyle = (addTopOffset: boolean, addRightOffset: boolean): string => {
+export const richTextEditorWrapperStyle = (addTopOffset: boolean, addRightOffset: boolean): string => {
   return mergeStyles({
-    padding: `${addTopOffset ? '0rem' : '0'} ${addRightOffset ? '0.75rem' : '0'} 0 0.75rem`,
+    padding: `${addTopOffset ? '0.5rem' : '0'} ${addRightOffset ? '0.75rem' : '0'} 0 0.75rem`,
     lineHeight: '1.25rem',
     maxWidth: '100%'
   });

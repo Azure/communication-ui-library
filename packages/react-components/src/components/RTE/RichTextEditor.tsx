@@ -9,7 +9,7 @@ import {
   ribbonButtonStyle,
   ribbonOverflowButtonStyle,
   ribbonStyle,
-  richTextEditorStackStyle,
+  richTextEditorWrapperStyle,
   richTextEditorStyle
 } from '../styles/RichTextEditor.styles';
 import { useTheme } from '../../theming';
@@ -17,7 +17,6 @@ import { ribbonButtons, ribbonButtonsStrings } from './RTERibbonButtons';
 import { RichTextSendBoxStrings } from './RTESendBox';
 import { isDarkThemed } from '../../theming/themeUtils';
 import { setBackgroundColor, setTextColor } from 'roosterjs-editor-api';
-import { Stack, mergeStyles } from '@fluentui/react';
 
 /**
  * Props for {@link RichTextEditor}.
@@ -129,9 +128,9 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   }, [strings, ribbonPlugin, theme]);
 
   return (
-    <div className={mergeStyles({ maxWidth: '100%' })}>
+    <div>
       {showRichTextEditorFormatting && ribbon}
-      <div className={richTextEditorStackStyle(!showRichTextEditorFormatting, showRichTextEditorFormatting)}>
+      <div className={richTextEditorWrapperStyle(!showRichTextEditorFormatting, showRichTextEditorFormatting)}>
         <Rooster
           initialContent={initialContent}
           inDarkMode={isDarkThemed(theme)}

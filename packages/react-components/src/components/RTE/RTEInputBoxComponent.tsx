@@ -7,7 +7,7 @@ import { RichTextEditor, RichTextEditorComponentRef, RichTextEditorStyleProps } 
 import { RichTextSendBoxStrings } from './RTESendBox';
 import { borderAndBoxShadowStyle } from '../styles/SendBox.styles';
 import { useTheme } from '../../theming';
-import { Icon, Stack, mergeStyles } from '@fluentui/react';
+import { Icon, Stack } from '@fluentui/react';
 import { InputBoxButton } from '../InputBoxButton';
 import {
   richTextActionButtonsDividerStyle,
@@ -15,6 +15,7 @@ import {
   richTextActionButtonsStyle,
   richTextFormatButtonIconStyle
 } from '../styles/RichTextEditor.styles';
+import { inputBoxContentStackStyle, inputBoxRichTextStackStyle } from '../styles/RichTextInputBoxComponent.styles';
 
 /**
  * @private
@@ -32,6 +33,8 @@ export interface RTEInputBoxComponentProps {
   strings: Partial<RichTextSendBoxStrings>;
   disabled: boolean;
   actionComponents: ReactNode;
+  // props for min and max height for the rich text editor
+  // otherwise the editor will grow to fit the content
   richTextEditorStyleProps: (isExpanded: boolean) => RichTextEditorStyleProps;
 }
 
@@ -94,13 +97,9 @@ export const RTEInputBoxComponent = (props: RTEInputBoxComponentProps): JSX.Elem
         defaultBorderColor: theme.palette.neutralQuaternaryAlt
       })}
     >
-      <Stack
-        grow
-        horizontal={!showRichTextEditorFormatting}
-        className={mergeStyles({ minWidth: '0', minHeight: '0', maxWidth: '100%' })}
-      >
+      <Stack grow horizontal={!showRichTextEditorFormatting} className={inputBoxContentStackStyle}>
         {/* fixes the issue when flex box can grow to be bigger than parent */}
-        <Stack grow className={mergeStyles({ minWidth: '0', minHeight: '0', paddingBottom: '0.375rem' })}>
+        <Stack grow className={inputBoxRichTextStackStyle}>
           <RichTextEditor
             initialContent={initialContent}
             placeholderText={placeholderText}
