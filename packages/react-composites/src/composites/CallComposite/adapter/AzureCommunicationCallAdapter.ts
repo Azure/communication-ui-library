@@ -417,7 +417,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
         ? (locatorOrTargetCalless as CallAdapterLocator)
         : undefined;
     this.deviceManager = deviceManager;
-    const isTeamsMeeting = this.locator ? 'meetingLink' in this.locator : false;
+    const isTeamsMeeting = this.locator
+      ? 'meetingLink' in this.locator || /* @conditional-compile-remove(meeting-id) */ 'meetingId' in this.locator
+      : false;
 
     /* @conditional-compile-remove(rooms) */
     const isRoomsCall = this.locator ? 'roomId' in this.locator : false;
