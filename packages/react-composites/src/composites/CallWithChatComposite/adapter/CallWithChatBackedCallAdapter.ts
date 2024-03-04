@@ -237,6 +237,11 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public async stopSpotlight(userIds?: string[]): Promise<void> {
     return this.callWithChatAdapter.stopSpotlight(userIds);
   }
+
+  /* @conditional-compile-remove(spotlight) */
+  public async stopAllSpotlight(): Promise<void> {
+    return this.callWithChatAdapter.stopAllSpotlight();
+  }
 }
 
 function callAdapterStateFromCallWithChatAdapterState(

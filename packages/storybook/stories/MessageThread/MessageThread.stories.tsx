@@ -479,7 +479,6 @@ const MessageThreadStory = (args): JSX.Element => {
     return Promise.resolve();
   };
 
-  /* @conditional-compile-remove(image-overlay) */
   const inlineImageOptions = {
     onRenderInlineImage: (
       inlineImage: InlineImage,

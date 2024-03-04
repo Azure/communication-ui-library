@@ -25,7 +25,14 @@ export const mobilePaneControlBarStyle: IStackStyles = { root: { height: '3rem' 
  * @private
  */
 export const mobilePaneBackButtonStyles: IButtonStyles = {
-  root: { border: 'none', minWidth: '2.5rem', height: '100%', background: 'none', padding: '0 1rem' },
+  root: {
+    border: 'none',
+    minWidth: '2.5rem',
+    maxWidth: '2.875rem',
+    height: '100%',
+    background: 'none',
+    padding: '0 1rem'
+  },
   rootChecked: { background: 'none' },
   rootCheckedHovered: { background: 'none' }
 };
