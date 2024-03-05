@@ -31,6 +31,9 @@ export const CallCompositeContainer = (props: CallCompositeContainerProps): JSX.
           url: '/assets/branding/contoso-logo.png',
           shape: 'circle',
           alt: 'Contoso logo'
+        },
+        backgroundImage: {
+          url: '/assets/branding/contoso-background.jpeg'
         }
       }
     }),

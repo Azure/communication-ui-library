@@ -169,7 +169,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
           alt: 'Contoso logo'
         },
         backgroundImage: {
-          url: '/assets/branding/contoso-background.png'
+          url: '/assets/branding/contoso-background.jpeg'
         }
       }
     }),
