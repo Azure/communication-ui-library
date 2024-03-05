@@ -88,7 +88,7 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
       ? childrenPerPage.current - (pinnedParticipantUserIds.length % childrenPerPage.current)
       : childrenPerPage.current,
     pinnedParticipantUserIds,
-    /* @conditional-compile-remove(gallery-layouts) */ layout: 'speaker'
+    layout: 'speaker'
   });
 
   let activeVideoStreams = 0;
@@ -161,12 +161,7 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
     localVideoComponent || (screenShareComponent && localVideoComponent) ? (
       <Stack
         className={mergeStyles(
-          localVideoTileContainerStyle(
-            theme,
-            localVideoSizeRem,
-            !!screenShareComponent,
-            /* @conditional-compile-remove(gallery-layouts) */ overflowGalleryPosition
-          )
+          localVideoTileContainerStyle(theme, localVideoSizeRem, !!screenShareComponent, overflowGalleryPosition)
         )}
       >
         {localVideoComponent}
@@ -219,13 +214,7 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
         styles={innerLayoutStyle}
         tokens={videoGalleryLayoutGap}
       >
-        {
-          /* @conditional-compile-remove(gallery-layouts) */ props.overflowGalleryPosition === 'horizontalTop' ? (
-            overflowGallery
-          ) : (
-            <></>
-          )
-        }
+        {props.overflowGalleryPosition === 'horizontalTop' ? overflowGallery : <></>}
         {screenShareComponent ? (
           screenShareComponent
         ) : (
@@ -233,10 +222,7 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
             {gridTiles}
           </GridLayout>
         )}
-        {overflowGalleryTrampoline(
-          overflowGallery,
-          /* @conditional-compile-remove(gallery-layouts) */ props.overflowGalleryPosition
-        )}
+        {overflowGalleryTrampoline(overflowGallery, props.overflowGalleryPosition)}
       </Stack>
     </Stack>
   );
@@ -246,7 +232,6 @@ const overflowGalleryTrampoline = (
   gallery: JSX.Element | null,
   galleryPosition?: 'horizontalBottom' | 'verticalRight' | 'horizontalTop'
 ): JSX.Element | null => {
-  /* @conditional-compile-remove(gallery-layouts) */
   return galleryPosition !== 'horizontalTop' ? gallery : <></>;
   return gallery;
 };
