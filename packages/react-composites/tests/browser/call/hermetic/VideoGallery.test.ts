@@ -131,7 +131,6 @@ test.describe('VideoGallery tests', async () => {
     // take snapshot to verify pin button is disabled
     expect(await stableScreenshot(page)).toMatchSnapshot('disabled-pin-menu-button.png');
   });
-  /* @conditional-compile-remove(gallery-layouts) */
   test('VideoGallery should show one tile when in speaker mode', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
     const paul = defaultMockRemoteParticipant('Paul Bridges');
@@ -148,7 +147,6 @@ test.describe('VideoGallery tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('video-gallery-with-one-speaker-participant.png');
   });
 
-  /* @conditional-compile-remove(gallery-layouts) */
   test('VideoGallery can switch between modes', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
     const paul = defaultMockRemoteParticipant('Paul Bridges');
@@ -180,7 +178,6 @@ test.describe('VideoGallery tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('floating-local-layout.png');
   });
 
-  /* @conditional-compile-remove(gallery-layouts) */
   test('VideoGallery only renders screenshare stream in focused content', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
     const paul = defaultMockRemoteParticipant('Paul Bridges');
@@ -247,7 +244,6 @@ test.describe('VideoGallery tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('default-layout-mobile.png');
   });
 
-  /* @conditional-compile-remove(gallery-layouts) */
   test('Gallery layouts vailable on mobile are correct', async ({ page, serverUrl }, testInfo) => {
     test.skip(!isTestProfileMobile(testInfo));
     const paul = defaultMockRemoteParticipant('Paul Bridges');
