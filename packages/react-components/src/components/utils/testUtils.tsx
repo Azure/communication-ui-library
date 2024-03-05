@@ -7,7 +7,7 @@ import { COMPONENT_LOCALE_EN_US } from '../../localization/locales';
 import { PartialDeep } from 'type-fest';
 import { render } from '@testing-library/react';
 import LiveAnnouncer from '../Announcer/LiveAnnouncer';
-import { getKeys } from '../utils';
+import { _getKeys } from '@internal/acs-ui-common';
 
 const withLiveAnnouncerContext = (node: React.ReactElement): React.ReactElement => (
   <LiveAnnouncer>{node}</LiveAnnouncer>
@@ -52,7 +52,7 @@ export const renderWithLocalization = (
  */
 export const createTestLocale = (testStrings: PartialDeep<ComponentStrings>): ComponentLocale => {
   const strings: ComponentStrings = COMPONENT_LOCALE_EN_US.strings;
-  getKeys(testStrings).forEach((key) => {
+  _getKeys(testStrings).forEach((key) => {
     // mark the value as unknown because the type changes based on the key.
     // this is unsafe at runtime as we could assign the wrong type based on the key here.
     // but typescript isn't smart enough to know that the key used across each access will result in the same type

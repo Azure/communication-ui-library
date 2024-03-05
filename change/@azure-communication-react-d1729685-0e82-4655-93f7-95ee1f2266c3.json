@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "area": "feature",
-  "workstream": "Start Call GA",
-  "comment": "Update storybook to reflect new start call API behavior",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

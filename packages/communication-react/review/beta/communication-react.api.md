@@ -348,6 +348,7 @@ export interface CallAdapterCallOperations {
     startCaptions(options?: StartCaptionsOptions): Promise<void>;
     startScreenShare(): Promise<void>;
     startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
+    stopAllSpotlight(): Promise<void>;
     stopCamera(): Promise<void>;
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
@@ -575,6 +576,8 @@ export type CallCompositeIcons = {
     LargeGalleryLayout?: JSX.Element;
     DefaultCustomButton?: JSX.Element;
     DtmfDialpadButton?: JSX.Element;
+    PeoplePaneMoreButton?: JSX.Element;
+    StopAllSpotlightMenuButton?: JSX.Element;
 };
 
 // @public
@@ -718,6 +721,7 @@ export interface CallCompositeStrings {
     peopleButtonTooltipClose: string;
     peopleButtonTooltipOpen: string;
     peoplePaneAddPeopleButtonLabel: string;
+    peoplePaneMoreButtonAriaLabel: string;
     peoplePaneSubTitle: string;
     peoplePaneTitle: string;
     permissionToReachTargetParticipantNotAllowedMoreDetails?: string;
@@ -747,6 +751,19 @@ export interface CallCompositeStrings {
     startCaptionsButtonOnLabel?: string;
     startCaptionsButtonTooltipOffContent?: string;
     startCaptionsButtonTooltipOnContent?: string;
+    startSpotlightParticipantListMenuLabel: string;
+    stopAllSpotlightMenuLabel: string;
+    stopSpotlightOnSelfParticipantListMenuLabel: string;
+    stopSpotlightParticipantListMenuLabel: string;
+    surveyConfirmButtonLabel: string;
+    surveyIssues: SurveyIssues;
+    SurveyIssuesHeadingStrings: SurveyIssuesHeadingStrings;
+    surveySkipButtonLabel: string;
+    surveyTextboxDefaultText: string;
+    surveyTitle: string;
+    tagsSurveyHelperText: string;
+    tagsSurveyQuestion: string;
+    tagsSurveyTextFieldDefaultText: string;
     threeParticipantJoinedNoticeString: string;
     threeParticipantLeftNoticeString: string;
     transferPageNoticeString: string;
@@ -873,6 +890,8 @@ export interface CallState {
     callerInfo: CallerInfo;
     capabilitiesFeature?: CapabilitiesFeatureState;
     captionsFeature: CaptionsCallFeatureState;
+    // @beta
+    contentSharingRemoteParticipant?: string;
     diagnostics: DiagnosticsCallFeatureState;
     direction: CallDirection;
     dominantSpeakers?: DominantSpeakersInfo;
@@ -883,6 +902,8 @@ export interface CallState {
     kind: CallKind;
     localVideoStreams: LocalVideoStreamState[];
     optimalVideoCount: OptimalVideoCountFeatureState;
+    // @beta
+    pptLive: PPTLiveCallFeatureState;
     raiseHand: RaiseHandCallFeature;
     recording: RecordingCallFeature;
     remoteParticipants: {
@@ -964,6 +985,7 @@ export interface CallWithChatAdapterManagement {
     startCaptions(options?: StartCaptionsOptions): Promise<void>;
     startScreenShare(): Promise<void>;
     startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
+    stopAllSpotlight(): Promise<void>;
     stopCamera(): Promise<void>;
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
@@ -1187,6 +1209,8 @@ export type CallWithChatCompositeIcons = {
     SendBoxAttachFile?: JSX.Element;
     ParticipantItemOptions?: JSX.Element;
     ParticipantItemOptionsHovered?: JSX.Element;
+    PeoplePaneMoreButton?: JSX.Element;
+    StopAllSpotlightMenuButton?: JSX.Element;
 };
 
 // @public
@@ -1838,6 +1862,10 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onStartScreenShare: () => Promise<void>;
     // (undocumented)
+    onStartSpotlight: (userIds?: string[]) => Promise<void>;
+    // (undocumented)
+    onStopAllSpotlight: () => Promise<void>;
+    // (undocumented)
     onStopCaptions: () => Promise<void>;
     // (undocumented)
     onStopScreenShare: () => Promise<void>;
@@ -2425,6 +2453,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     LargeGalleryLayout?: JSX.Element | undefined;
     DefaultCustomButton?: JSX.Element | undefined;
     DtmfDialpadButton?: JSX.Element | undefined;
+    PeoplePaneMoreButton?: JSX.Element | undefined;
+    StopAllSpotlightMenuButton?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;
@@ -2876,7 +2906,7 @@ export interface ImageOverlayProps {
     titleIcon?: JSX.Element;
 }
 
-// @beta
+// @public
 export interface ImageOverlayStrings {
     dismissButtonAriaLabel: string;
     downloadButtonLabel: string;
@@ -3336,7 +3366,7 @@ export interface OptionsDevice {
 }
 
 // @public
-export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | /* @conditional-compile-remove(gallery-layouts) */ 'horizontalTop';
+export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | 'horizontalTop';
 
 // @public
 export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
@@ -3518,6 +3548,11 @@ export type ParticipantsRemovedListener = (event: {
 export type ParticipantState = 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
 
 // @beta
+export interface PPTLiveCallFeatureState {
+    isActive: boolean;
+}
+
+// @beta
 export type Profile = {
     displayName?: string;
 };
@@ -3578,6 +3613,8 @@ export interface RecordingCallFeature {
 // @public
 export interface RemoteParticipantState {
     callEndReason?: CallEndReason;
+    // @beta
+    contentSharingStream?: HTMLElement;
     displayName?: string;
     identifier: CommunicationIdentifierKind;
     isMuted: boolean;
@@ -4128,7 +4165,7 @@ export interface VideoBackgroundReplacementEffect extends BackgroundReplacementC
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
 // @public (undocumented)
-export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | /* @conditional-compile-remove(gallery-layouts) */ 'speaker' | /* @conditional-compile-remove(gallery-layouts) */ 'focusedContent';
+export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | 'speaker' | /* @conditional-compile-remove(large-gallery) */ 'largeGallery' | 'focusedContent';
 
 // @public
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
@@ -4187,7 +4224,7 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
 
 // @public
 export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
-    screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
+    screenShareParticipant?: VideoGalleryRemoteParticipant;
     localParticipant: VideoGalleryLocalParticipant;
     remoteParticipants: VideoGalleryRemoteParticipant[];
     dominantSpeakers?: string[];

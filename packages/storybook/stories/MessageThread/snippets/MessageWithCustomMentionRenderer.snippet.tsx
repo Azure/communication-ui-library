@@ -4,6 +4,7 @@ import React from 'react';
 export const MessageWithCustomMentionRenderer: () => JSX.Element = () => {
   const user1Id = 'user1';
   const user2Id = 'user2';
+  const user3Id = 'user3';
 
   const messages: ChatMessage[] = [
     {
@@ -11,7 +12,7 @@ export const MessageWithCustomMentionRenderer: () => JSX.Element = () => {
       senderId: user1Id,
       senderDisplayName: 'Kat Larsson',
       messageId: Math.random().toString(),
-      content: `Hey <msft-mention id="${user2Id}">Robert Tolbert</msft-mention>, can you help me with my internet connection?`,
+      content: `Hey <msft-mention id="${user2Id}">Robert Tolbert</msft-mention> and <msft-mention id="${user3Id}">Milton Dyer</msft-mention>, can you help me with my internet connection?`,
       createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
       mine: false,
       attached: false,
@@ -31,7 +32,7 @@ export const MessageWithCustomMentionRenderer: () => JSX.Element = () => {
     }
   ];
 
-  const onUpdateMessageCallback = (messageId, content): Promise<void> => {
+  const onUpdateMessageCallback = (messageId: string, content: string): Promise<void> => {
     const msgIdx = messages.findIndex((m) => m.messageId === messageId);
     const message = messages[msgIdx];
     message.content = content;

@@ -25,7 +25,6 @@ Mon, 26 Feb 2024 16:19:15 GMT
 
 ### Bug Fixes
 
-- Update mention API to include `isActive` argument ([PR #4183](https://github.com/azure/communication-ui-library/pull/4183) by 73612854+palatter@users.noreply.github.com)
 - Update styling to include space for back button ([PR #4079](https://github.com/azure/communication-ui-library/pull/4079) by 94866715+dmceachernmsft@users.noreply.github.com)
 - Defect fixing the src of the inline image ([PR #4104](https://github.com/azure/communication-ui-library/pull/4104) by 9044372+JoshuaLai@users.noreply.github.com)
 - Fix for an issue when head and body tags were added to messages with html type ([PR #4106](https://github.com/azure/communication-ui-library/pull/4106) by 98852890+vhuseinova-msft@users.noreply.github.com)

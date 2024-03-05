@@ -106,6 +106,8 @@ export interface CallState {
     callerInfo: CallerInfo;
     capabilitiesFeature?: CapabilitiesFeatureState;
     captionsFeature: CaptionsCallFeatureState;
+    // @beta
+    contentSharingRemoteParticipant?: string;
     diagnostics: DiagnosticsCallFeatureState;
     direction: CallDirection;
     dominantSpeakers?: DominantSpeakersInfo;
@@ -116,6 +118,8 @@ export interface CallState {
     kind: CallKind;
     localVideoStreams: LocalVideoStreamState[];
     optimalVideoCount: OptimalVideoCountFeatureState;
+    // @beta
+    pptLive: PPTLiveCallFeatureState;
     raiseHand: RaiseHandCallFeature;
     recording: RecordingCallFeature;
     remoteParticipants: {
@@ -257,6 +261,11 @@ export interface OptimalVideoCountFeatureState {
     maxRemoteVideoStreams: number;
 }
 
+// @beta
+export interface PPTLiveCallFeatureState {
+    isActive: boolean;
+}
+
 // @public
 export type RaisedHandState = {
     raisedHandOrderPosition: number;
@@ -276,6 +285,8 @@ export interface RecordingCallFeature {
 // @public
 export interface RemoteParticipantState {
     callEndReason?: CallEndReason;
+    // @beta
+    contentSharingStream?: HTMLElement;
     displayName?: string;
     identifier: CommunicationIdentifierKind;
     isMuted: boolean;

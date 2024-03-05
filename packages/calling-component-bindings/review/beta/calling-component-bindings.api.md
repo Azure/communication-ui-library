@@ -199,6 +199,10 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onStartScreenShare: () => Promise<void>;
     // (undocumented)
+    onStartSpotlight: (userIds?: string[]) => Promise<void>;
+    // (undocumented)
+    onStopAllSpotlight: () => Promise<void>;
+    // (undocumented)
     onStopCaptions: () => Promise<void>;
     // (undocumented)
     onStopScreenShare: () => Promise<void>;
@@ -379,7 +383,7 @@ export type _VideoGalleryRemoteParticipantsMemoFn = (remoteParticipants: RemoteP
 
 // @public
 export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
-    screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
+    screenShareParticipant?: VideoGalleryRemoteParticipant;
     localParticipant: VideoGalleryLocalParticipant;
     remoteParticipants: VideoGalleryRemoteParticipant[];
     dominantSpeakers?: string[];

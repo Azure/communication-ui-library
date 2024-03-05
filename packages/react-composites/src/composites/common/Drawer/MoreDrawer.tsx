@@ -10,9 +10,10 @@ import {
   OptionsDevice,
   _DrawerMenu as DrawerMenu,
   _DrawerMenuItemProps as DrawerMenuItemProps,
-  _DrawerMenuStyles
+  _DrawerMenuStyles,
+  SpokenLanguageStrings,
+  CaptionLanguageStrings
 } from '@internal/react-components';
-/* @conditional-compile-remove(gallery-layouts) */
 import { VideoGalleryLayout } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
 import { _StartCaptionsButton, _CaptionsSettingsModal } from '@internal/react-components';
@@ -45,7 +46,7 @@ import { _captionSettingsSelector, _startCaptionsButtonSelector } from '@interna
 /* @conditional-compile-remove(close-captions) */
 import { useHandlers } from '../../CallComposite/hooks/useHandlers';
 /* @conditional-compile-remove(close-captions) */
-import { CaptionSettingsDrawer } from './CaptionSettingsDrawer';
+import { CaptionLanguageSettingsDrawer } from './CaptionLanguageSettingsDrawer';
 /* @conditional-compile-remove(close-captions) */
 import { themedToggleButtonStyle } from './MoreDrawer.styles';
 /* @conditional-compile-remove(close-captions) */
@@ -58,6 +59,7 @@ import { useSelector } from '../../CallComposite/hooks/useSelector';
 import { getTargetCallees } from '../../CallComposite/selectors/baseSelectors';
 /* @conditional-compile-remove(dtmf-dialer) */
 import { showDtmfDialer } from '../../CallComposite/utils/MediaGalleryUtils';
+import { SpokenLanguageSettingsDrawer } from './SpokenLanguageSettingsDrawer';
 
 /** @private */
 export interface MoreDrawerStrings {
@@ -109,7 +111,6 @@ export interface MoreDrawerStrings {
    */
   captionLanguageMenuTitle: string;
 
-  /* @conditional-compile-remove(gallery-layouts) */
   /**
    * Label for gallery options drawerMenuItem
    */
@@ -142,9 +143,7 @@ export interface MoreDrawerDevicesMenuProps {
    * Callback when a microphone is selected
    */
   onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
-  /* @conditional-compile-remove(gallery-layouts) */
   userSetGalleryLayout?: VideoGalleryLayout;
-  /* @conditional-compile-remove(gallery-layouts) */
   /**
    * Callback for when the gallery layout is changed
    */
@@ -209,7 +208,10 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   const raiseHandButtonProps = usePropsFor(RaiseHandButton) as RaiseHandButtonProps;
 
   const onSpeakerItemClick = useCallback(
-    (_ev, itemKey) => {
+    (
+      _ev: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement> | undefined,
+      itemKey: string | undefined
+    ) => {
       const selected = speakers?.find((speaker) => speaker.id === itemKey);
       if (selected) {
         // This is unsafe - we're only passing in part of the argument to the handler.
@@ -246,7 +248,10 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
 
   const { microphones, onSelectMicrophone } = props;
   const onMicrophoneItemClick = useCallback(
-    (_ev, itemKey) => {
+    (
+      _ev: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement> | undefined,
+      itemKey: string | undefined
+    ) => {
       const selected = microphones?.find((mic) => mic.id === itemKey);
       if (selected) {
         // This is unsafe - we're only passing in part of the argument to the handler.
@@ -310,7 +315,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   if (props.onSetDialpadPage && allowDtmfDialer) {
     drawerMenuItems.push(dtmfDialerScreenOption);
   }
-  /* @conditional-compile-remove(gallery-layouts) */
+
   const galleryLayoutOptions = {
     itemKey: 'galleryPositionKey',
     iconProps: {
@@ -367,7 +372,6 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   /* @conditional-compile-remove(gallery-layout-composite) */
   galleryLayoutOptions.subMenuProps?.push(galleryOption);
 
-  /* @conditional-compile-remove(gallery-layouts) */
   drawerMenuItems.push(galleryLayoutOptions);
 
   if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.peopleButton)) {
@@ -448,12 +452,12 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   const [isCaptionLanguageDrawerOpen, setIsCaptionLanguageDrawerOpen] = useState<boolean>(false);
 
   /* @conditional-compile-remove(close-captions) */
-  const [currentSpokenLanguage, setCurrentSpokenLanguage] = useState<string>(
+  const [currentSpokenLanguage, setCurrentSpokenLanguage] = useState<keyof SpokenLanguageStrings>(
     captionSettingsProp.currentSpokenLanguage ?? 'en-us'
   );
 
   /* @conditional-compile-remove(close-captions) */
-  const [currentCaptionLanguage, setCurrentCaptionLanguage] = useState<string>(
+  const [currentCaptionLanguage, setCurrentCaptionLanguage] = useState<keyof CaptionLanguageStrings>(
     captionSettingsProp.currentCaptionLanguage ?? _spokenLanguageToCaptionLanguage[currentSpokenLanguage]
   );
 
@@ -576,7 +580,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   return (
     <>
       {isSpokenLanguageDrawerOpen && props.isCaptionsSupported && (
-        <CaptionSettingsDrawer
+        <SpokenLanguageSettingsDrawer
           onLightDismiss={props.onLightDismiss}
           selectLanguage={setCurrentSpokenLanguage}
           setCurrentLanguage={captionSettingsHandlers.onSetSpokenLanguage}
@@ -586,7 +590,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         />
       )}
       {isCaptionLanguageDrawerOpen && props.isCaptionsSupported && (
-        <CaptionSettingsDrawer
+        <CaptionLanguageSettingsDrawer
           onLightDismiss={props.onLightDismiss}
           selectLanguage={setCurrentCaptionLanguage}
           setCurrentLanguage={captionSettingsHandlers.onSetCaptionLanguage}

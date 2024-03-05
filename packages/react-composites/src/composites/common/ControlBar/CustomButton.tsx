@@ -3,7 +3,7 @@
 
 // eslint-disable-next-line no-restricted-imports
 import { Icon, IContextualMenuItem, mergeStyleSets } from '@fluentui/react';
-import { ControlBarButton, _DrawerMenuItemProps } from '@internal/react-components';
+import { ControlBarButton, ControlBarButtonProps, _DrawerMenuItemProps } from '@internal/react-components';
 import React from 'react';
 import { CallControlDisplayType } from '../types/CommonCallControlOptions';
 import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
@@ -109,6 +109,15 @@ export interface CustomCallControlButtonStrings {
   ariaDescription?: string;
 }
 
+/**
+ * onRenderButton is a custom prop that can be passed to override the default rendering of the button
+ * This is useful for custom buttons that need to render more than just an icon and label and is used
+ * for CallWithChat button notification badge.
+ *
+ * @private
+ */
+export type _InternalCustomButtonType = (props: ControlBarButtonProps) => JSX.Element;
+
 /** @private */
 export const generateCustomCallControlBarButton = (
   onFetchCustomButtonProps?: CustomCallControlButtonCallback[],
@@ -132,8 +141,12 @@ const generateCustomControlBarButtons = (
     ? customButtons
         .filter((buttonProps) => buttonProps.placement === placement)
         .map((buttonProps, i) => (internalProps) => {
-          if (buttonProps['onRenderButton']) {
-            return buttonProps['onRenderButton'](internalProps);
+          // onRenderButton is a custom prop that can be passed to override the default rendering of the button
+          // This is useful for custom buttons that need to render more than just an icon and label and is used
+          // for CallWithChat button notification badge. However, onRenderButton is not a public prop and is
+          // not documented in the API. This is a temporary solution and will need to be revisited.
+          if ('onRenderButton' in buttonProps) {
+            return (buttonProps['onRenderButton'] as _InternalCustomButtonType)(internalProps);
           }
           return (
             <ControlBarButton

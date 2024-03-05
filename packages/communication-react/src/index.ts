@@ -331,7 +331,7 @@ export type {
   FileDownloadHandler,
   FileDownloadError
 } from '../../react-components/src';
-/* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/* @conditional-compile-remove(file-sharing) */
 export type { AttachmentMetadata } from '../../react-components/src';
 /* @conditional-compile-remove(file-sharing) */
 export type { FileMetadata } from '../../react-components/src';
