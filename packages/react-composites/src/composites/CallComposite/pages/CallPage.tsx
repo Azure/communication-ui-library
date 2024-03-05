@@ -5,7 +5,6 @@ import { DiagnosticQuality } from '@azure/communication-calling';
 import { useId } from '@fluentui/react-hooks';
 import { _isInCall } from '@internal/calling-component-bindings';
 import { ActiveErrorMessage, ErrorBar, ParticipantMenuItemsCallback } from '@internal/react-components';
-/* @conditional-compile-remove(gallery-layouts) */
 import { VideoGalleryLayout } from '@internal/react-components';
 import React from 'react';
 /* @conditional-compile-remove(dtmf-dialer) */ /* @conditional-compile-remove(spotlight) */
@@ -54,15 +53,11 @@ export interface CallPageProps {
   options?: CallCompositeOptions;
   latestErrors: ActiveErrorMessage[];
   onDismissError: (error: ActiveErrorMessage) => void;
-  /* @conditional-compile-remove(gallery-layouts) */
   galleryLayout: VideoGalleryLayout;
   /* @conditional-compile-remove(capabilities) */
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
-  /* @conditional-compile-remove(gallery-layouts) */
   onUserSetGalleryLayoutChange?: (layout: VideoGalleryLayout) => void;
-  /* @conditional-compile-remove(gallery-layouts) */
   userSetOverflowGalleryPosition?: 'Responsive' | 'horizontalTop';
-  /* @conditional-compile-remove(gallery-layouts) */
   onSetUserSetOverflowGalleryPosition?: (position: 'Responsive' | 'horizontalTop') => void;
   onCloseChatPane?: () => void;
 }
@@ -77,13 +72,9 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
     onFetchParticipantMenuItems,
     options,
     mobileView,
-    /* @conditional-compile-remove(gallery-layouts) */
     galleryLayout = 'floatingLocalVideo',
-    /* @conditional-compile-remove(gallery-layouts) */
     onUserSetGalleryLayoutChange,
-    /* @conditional-compile-remove(gallery-layouts) */
     userSetOverflowGalleryPosition = 'Responsive',
-    /* @conditional-compile-remove(gallery-layouts) */
     onSetUserSetOverflowGalleryPosition,
     onCloseChatPane
   } = props;
@@ -147,9 +138,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
           drawerMenuHostId={drawerMenuHostId}
           /* @conditional-compile-remove(click-to-call) */
           localVideoTileOptions={options?.localVideoTile}
-          /* @conditional-compile-remove(gallery-layouts) */
           userSetOverflowGalleryPosition={userSetOverflowGalleryPosition}
-          /* @conditional-compile-remove(gallery-layouts) */
           userSetGalleryLayout={galleryLayout}
           /* @conditional-compile-remove(spotlight) */
           setIsPromptOpen={setIsPromptOpen}
@@ -170,9 +159,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         drawerMenuHostId={drawerMenuHostId}
         /* @conditional-compile-remove(click-to-call) */
         localVideoTileOptions={options?.localVideoTile}
-        /* @conditional-compile-remove(gallery-layouts) */
         userSetOverflowGalleryPosition={userSetOverflowGalleryPosition}
-        /* @conditional-compile-remove(gallery-layouts) */
         userSetGalleryLayout={galleryLayout}
         /* @conditional-compile-remove(spotlight) */
         setIsPromptOpen={setIsPromptOpen}
@@ -216,11 +203,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         dataUiId={'call-page'}
         latestErrors={props.latestErrors}
         onDismissError={props.onDismissError}
-        /* @conditional-compile-remove(gallery-layouts) */
         onUserSetOverflowGalleryPositionChange={onSetUserSetOverflowGalleryPosition}
-        /* @conditional-compile-remove(gallery-layouts) */
         onUserSetGalleryLayoutChange={onUserSetGalleryLayoutChange}
-        /* @conditional-compile-remove(gallery-layouts) */
         userSetGalleryLayout={galleryLayout}
         /* @conditional-compile-remove(capabilities) */
         capabilitiesChangedNotificationBarProps={props.capabilitiesChangedNotificationBarProps}

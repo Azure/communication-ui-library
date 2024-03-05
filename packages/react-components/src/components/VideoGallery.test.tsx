@@ -320,7 +320,6 @@ describe('VideoGallery floating local video layout tests', () => {
   });
 });
 
-/* @conditional-compile-remove(gallery-layouts) */
 describe('VideoGallery Speaker layout tests', () => {
   beforeAll(() => {
     mockVideoGalleryInternalHelpers();
@@ -389,7 +388,6 @@ describe('VideoGallery Speaker layout tests', () => {
   });
 });
 
-/* @conditional-compile-remove(gallery-layouts) */
 describe('VideoGallery Focused Content layout tests', () => {
   beforeAll(() => {
     mockVideoGalleryInternalHelpers();

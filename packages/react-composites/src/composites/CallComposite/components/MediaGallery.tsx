@@ -64,9 +64,7 @@ export interface MediaGalleryProps {
   remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
   /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(vertical-gallery) */
   localVideoTileOptions?: boolean | LocalVideoTileOptions;
-  /* @conditional-compile-remove(gallery-layouts) */
   userSetOverflowGalleryPosition?: 'Responsive' | 'horizontalTop';
-  /* @conditional-compile-remove(gallery-layouts) */
   userSetGalleryLayout: VideoGalleryLayout;
   /* @conditional-compile-remove(spotlight) */
   setIsPromptOpen: (isOpen: boolean) => void;
@@ -142,7 +140,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
 
   /* @conditional-compile-remove(vertical-gallery) */
   const overflowGalleryPosition = useMemo(() => {
-    /* @conditional-compile-remove(gallery-layouts) */
+    /* @conditional-compile-remove(overflow-top-composite) */
     if (props.userSetOverflowGalleryPosition === 'horizontalTop') {
       return props.userSetOverflowGalleryPosition;
     }
@@ -150,7 +148,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
       ? 'verticalRight'
       : 'horizontalBottom';
   }, [
-    /* @conditional-compile-remove(gallery-layouts) */ props.userSetOverflowGalleryPosition,
+    /* @conditional-compile-remove(overflow-top-composite) */ props.userSetOverflowGalleryPosition,
     containerWidth,
     containerHeight
   ]);
@@ -177,7 +175,6 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
 
   const VideoGalleryMemoized = useMemo(() => {
     const layoutBasedOnUserSelection = (): VideoGalleryLayout => {
-      /* @conditional-compile-remove(gallery-layouts) */
       return props.localVideoTileOptions ? layoutBasedOnTilePosition : props.userSetGalleryLayout;
       return layoutBasedOnTilePosition;
     };
@@ -231,7 +228,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     isRoomsCall,
     /* @conditional-compile-remove(vertical-gallery) */
     containerAspectRatio,
-    /* @conditional-compile-remove(gallery-layouts) */
+
     props.userSetGalleryLayout,
     layoutBasedOnTilePosition,
     /* @conditional-compile-remove(reaction) */
