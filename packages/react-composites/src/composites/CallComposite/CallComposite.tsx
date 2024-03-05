@@ -50,7 +50,6 @@ import {
 import { TrackedErrors } from './types/ErrorTracking';
 import { usePropsFor } from './hooks/usePropsFor';
 import { deviceCountSelector } from './selectors/deviceCountSelector';
-/* @conditional-compile-remove(gallery-layouts) */
 import { VideoGalleryLayout } from '@internal/react-components';
 /* @conditional-compile-remove(capabilities) */
 import { capabilitiesChangedInfoAndRoleSelector } from './selectors/capabilitiesChangedInfoAndRoleSelector';
@@ -227,7 +226,6 @@ export type CallCompositeOptions = {
    * @remarks if 'false' the local video tile will not be rendered.
    */
   localVideoTile?: boolean | LocalVideoTileOptions;
-  /* @conditional-compile-remove(gallery-layouts) */
   /**
    * Options for controlling the starting layout of the composite's video gallery
    */
@@ -376,11 +374,9 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
 
   const [sidePaneRenderer, setSidePaneRenderer] = React.useState<SidePaneRenderer | undefined>();
   const [injectedSidePaneProps, setInjectedSidePaneProps] = React.useState<InjectedSidePaneProps>();
-  /* @conditional-compile-remove(gallery-layouts) */
   const [userSetGalleryLayout, setUserSetGalleryLayout] = useState<VideoGalleryLayout>(
     props.options?.galleryOptions?.layout ?? 'floatingLocalVideo'
   );
-  /* @conditional-compile-remove(gallery-layouts) */
   const [userSetOverflowGalleryPosition, setUserSetOverflowGalleryPosition] = useState<'Responsive' | 'horizontalTop'>(
     'Responsive'
   );
@@ -585,13 +581,9 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           onCloseChatPane={props.onCloseChatPane}
           latestErrors={latestErrors}
           onDismissError={onDismissError}
-          /* @conditional-compile-remove(gallery-layouts) */
           galleryLayout={userSetGalleryLayout}
-          /* @conditional-compile-remove(gallery-layouts) */
           onUserSetGalleryLayoutChange={setUserSetGalleryLayout}
-          /* @conditional-compile-remove(gallery-layouts) */
           onSetUserSetOverflowGalleryPosition={setUserSetOverflowGalleryPosition}
-          /* @conditional-compile-remove(gallery-layouts) */
           userSetOverflowGalleryPosition={userSetOverflowGalleryPosition}
           /* @conditional-compile-remove(capabilities) */
           capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
