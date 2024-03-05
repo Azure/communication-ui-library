@@ -9,7 +9,7 @@ import memoizeOne from 'memoize-one';
 import { ChatAdapter } from '../adapter/ChatAdapter';
 import { useAdapter } from '../adapter/ChatAdapterProvider';
 /* @conditional-compile-remove(file-sharing) */
-import { AttachmentMetadata } from '@internal/react-components';
+import { FileMetadata } from '@internal/react-components';
 
 /**
  * @private
@@ -37,7 +37,7 @@ const createCompositeHandlers = memoizeOne(
       options?: {
         metadata?: Record<string, string>;
         /* @conditional-compile-remove(file-sharing) */
-        attachmentMetadata?: AttachmentMetadata[];
+        attachmentMetadata?: FileMetadata[];
       }
     ) => {
       const metadata = options?.metadata;

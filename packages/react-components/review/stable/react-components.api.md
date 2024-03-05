@@ -55,9 +55,6 @@ export type AnnouncerProps = {
     ariaLive: 'off' | 'polite' | 'assertive' | undefined;
 };
 
-// @beta
-export type AttachmentMetadata = FileMetadata;
-
 // @public
 export interface BaseCustomStyles {
     root?: IStyle;
@@ -949,7 +946,7 @@ export const _FileDownloadCards: (props: _FileDownloadCardsProps) => JSX.Element
 // @internal (undocumented)
 export interface _FileDownloadCardsProps {
     downloadHandler?: FileDownloadHandler;
-    fileMetadata?: AttachmentMetadata[];
+    fileMetadata?: FileMetadata[];
     onDownloadErrorMessage?: (errMsg: string) => void;
     strings?: _FileDownloadCardsStrings;
     userId: string;
@@ -968,7 +965,7 @@ export interface FileDownloadError {
 }
 
 // @beta
-export type FileDownloadHandler = (userId: string, fileMetadata: AttachmentMetadata) => Promise<URL | FileDownloadError>;
+export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
 
 // @beta
 export interface FileMetadata {

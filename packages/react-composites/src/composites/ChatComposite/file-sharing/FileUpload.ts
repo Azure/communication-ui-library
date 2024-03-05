@@ -4,7 +4,7 @@
 import { EventEmitter } from 'events';
 import { nanoid } from 'nanoid';
 import { _MAX_EVENT_LISTENERS } from '@internal/acs-ui-common';
-import { AttachmentMetadata, FileMetadata } from '@internal/react-components';
+import { FileMetadata } from '@internal/react-components';
 
 /**
  * Contains the state attributes of a file upload like name, progress etc.
@@ -28,9 +28,9 @@ export interface FileUploadState {
   progress: number;
 
   /**
-   * Metadata {@link AttachmentMetadata} containing information about the uploaded file.
+   * Metadata {@link FileMetadata} containing information about the uploaded file.
    */
-  metadata?: AttachmentMetadata;
+  metadata?: FileMetadata;
 
   /**
    * Error message to be displayed to the user if the upload fails.
@@ -70,9 +70,9 @@ export interface FileUploadManager {
   /**
    * Mark the upload as complete.
    * Requires the `metadata` param containing uploaded file information.
-   * @param metadata - {@link AttachmentMetadata}
+   * @param metadata - {@link FileMetadata}
    */
-  notifyUploadCompleted: (metadata: AttachmentMetadata) => void;
+  notifyUploadCompleted: (metadata: FileMetadata) => void;
   /**
    * Mark the upload as failed.
    * @param message - An error message that can be displayed to the user.
@@ -94,11 +94,11 @@ export class FileUpload implements FileUploadManager, FileUploadEventEmitter {
    */
   public readonly fileName: string;
   /**
-   * Optional object of type {@link AttachmentMetadata}
+   * Optional object of type {@link FileMetadata}
    */
-  public metadata?: AttachmentMetadata;
+  public metadata?: FileMetadata;
 
-  constructor(data: File | AttachmentMetadata) {
+  constructor(data: File | FileMetadata) {
     this._emitter = new EventEmitter();
     this._emitter.setMaxListeners(_MAX_EVENT_LISTENERS);
     this.id = nanoid();
@@ -115,7 +115,7 @@ export class FileUpload implements FileUploadManager, FileUploadEventEmitter {
     this._emitter.emit('uploadProgressChange', this.id, value);
   }
 
-  notifyUploadCompleted(metadata: AttachmentMetadata): void {
+  notifyUploadCompleted(metadata: FileMetadata): void {
     this._emitter.emit('uploadComplete', this.id, metadata);
   }
 
@@ -169,7 +169,7 @@ type UploadProgressListener = (id: string, value: number) => void;
  * Listener for `uploadComplete` event.
  * @beta
  */
-type UploadCompleteListener = (id: string, metadata: AttachmentMetadata) => void;
+type UploadCompleteListener = (id: string, metadata: FileMetadata) => void;
 /**
  * Listener for `uploadFailed` event.
  * @beta

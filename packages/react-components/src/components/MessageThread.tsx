@@ -35,7 +35,7 @@ import getParticipantsWhoHaveReadMessage from './utils/getParticipantsWhoHaveRea
 /* @conditional-compile-remove(file-sharing) */
 import { FileDownloadHandler } from './FileDownloadCards';
 /* @conditional-compile-remove(file-sharing) */
-import { AttachmentMetadata } from './FileDownloadCards';
+import { FileMetadata } from './FileDownloadCards';
 import { useTheme } from '../theming';
 import { FluentV9ThemeProvider } from './../theming/FluentV9ThemeProvider';
 import LiveAnnouncer from './Announcer/LiveAnnouncer';
@@ -352,7 +352,7 @@ export type UpdateMessageCallback = (
   options?: {
     /* @conditional-compile-remove(file-sharing) */
     metadata?: Record<string, string>;
-    attachmentMetadata?: AttachmentMetadata[];
+    attachmentMetadata?: FileMetadata[];
   }
 ) => Promise<void>;
 /**

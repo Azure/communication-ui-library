@@ -8,7 +8,7 @@ import { ResourceDetails } from '../../ChatComposite';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadManager } from '../../ChatComposite';
 /* @conditional-compile-remove(file-sharing) */
-import { AttachmentMetadata } from '@internal/react-components';
+import { FileMetadata } from '@internal/react-components';
 import { ErrorBarStrings } from '@internal/react-components';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 
@@ -100,7 +100,7 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
   };
 
   /* @conditional-compile-remove(file-sharing) */
-  public registerCompletedFileUploads = (metadata: AttachmentMetadata[]): FileUploadManager[] => {
+  public registerCompletedFileUploads = (metadata: FileMetadata[]): FileUploadManager[] => {
     return this.callWithChatAdapter.registerCompletedFileUploads(metadata);
   };
 
@@ -125,7 +125,7 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
   };
 
   /* @conditional-compile-remove(file-sharing) */
-  public updateFileUploadMetadata = (id: string, metadata: AttachmentMetadata): void => {
+  public updateFileUploadMetadata = (id: string, metadata: FileMetadata): void => {
     this.callWithChatAdapter.updateFileUploadMetadata(id, metadata);
   };
 

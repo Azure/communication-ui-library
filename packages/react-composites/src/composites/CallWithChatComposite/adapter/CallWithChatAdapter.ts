@@ -47,7 +47,7 @@ import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react
 import { SendMessageOptions } from '@azure/communication-chat';
 import { JoinCallOptions } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(file-sharing) */
-import { AttachmentMetadata } from '@internal/react-components';
+import { FileMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadManager } from '../../ChatComposite';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -385,7 +385,7 @@ export interface CallWithChatAdapterManagement {
   registerActiveFileUploads: (files: File[]) => FileUploadManager[];
   /* @conditional-compile-remove(file-sharing) */
   /** @beta */
-  registerCompletedFileUploads: (metadata: AttachmentMetadata[]) => FileUploadManager[];
+  registerCompletedFileUploads: (metadata: FileMetadata[]) => FileUploadManager[];
   /* @conditional-compile-remove(file-sharing) */
   /** @beta */
   clearFileUploads: () => void;
@@ -400,7 +400,7 @@ export interface CallWithChatAdapterManagement {
   updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
   /* @conditional-compile-remove(file-sharing) */
   /** @beta */
-  updateFileUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
+  updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /** @beta */
   downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;

@@ -56,12 +56,6 @@ export interface FileMetadata {
 }
 
 /**
- * Metadata containing information about the uploaded file.
- * @beta
- */
-export type AttachmentMetadata = FileMetadata;
-
-/**
  * Strings of _FileDownloadCards that can be overridden.
  *
  * @internal
@@ -110,12 +104,9 @@ export interface FileDownloadError {
  *
  * ```
  * @param userId - The user ID of the user downloading the file.
- * @param fileMetadata - The {@link AttachmentMetadata} containing file `url`, `extension` and `name`.
+ * @param fileMetadata - The {@link FileMetadata} containing file `url`, `extension` and `name`.
  */
-export type FileDownloadHandler = (
-  userId: string,
-  fileMetadata: AttachmentMetadata
-) => Promise<URL | FileDownloadError>;
+export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
 
 /**
  * @internal
@@ -128,7 +119,7 @@ export interface _FileDownloadCardsProps {
   /**
    * A chat message metadata that includes file metadata
    */
-  fileMetadata?: AttachmentMetadata[];
+  fileMetadata?: FileMetadata[];
   /**
    * A function of type {@link FileDownloadHandler} for handling file downloads.
    * If the function is not specified, the file's `url` will be opened in a new tab to
@@ -166,14 +157,14 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
     [props.strings?.downloadFile, localeStrings.downloadFile]
   );
 
-  const isFileSharingAttachment = useCallback((attachment: AttachmentMetadata): boolean => {
+  const isFileSharingAttachment = useCallback((attachment: FileMetadata): boolean => {
     /* @conditional-compile-remove(file-sharing) */
     return attachment.attachmentType === 'file';
     return false;
   }, []);
 
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  const isShowDownloadIcon = useCallback((attachment: AttachmentMetadata): boolean => {
+  const isShowDownloadIcon = useCallback((attachment: FileMetadata): boolean => {
     /* @conditional-compile-remove(file-sharing) */
     return attachment.attachmentType === 'file' && attachment.payload?.teamsFileAttachment !== 'true';
     return true;
@@ -194,7 +185,7 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
   );
 
   const fileDownloadHandler = useCallback(
-    async (userId: string, file: AttachmentMetadata) => {
+    async (userId: string, file: FileMetadata) => {
       if (!props.downloadHandler) {
         window.open(file.url, '_blank', 'noopener,noreferrer');
       } else {
@@ -244,14 +235,14 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
                       <Spinner size={SpinnerSize.medium} aria-live={'polite'} role={'status'} />
                     ) : true &&
                       /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ isShowDownloadIcon(
-                        file as unknown as AttachmentMetadata
+                        file
                       ) ? (
                       <IconButton className={iconButtonClassName} ariaLabel={downloadFileButtonString()}>
                         <DownloadIconTrampoline />
                       </IconButton>
                     ) : undefined
                   }
-                  actionHandler={() => fileDownloadHandler(userId, file as unknown as AttachmentMetadata)}
+                  actionHandler={() => fileDownloadHandler(userId, file)}
                 />
               </TooltipHost>
             ))}
