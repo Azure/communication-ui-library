@@ -214,14 +214,7 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
         styles={innerLayoutStyle}
         tokens={videoGalleryLayoutGap}
       >
-        {
-          /* @conditional-compile-remove(overflow-top-composite) */ props.overflowGalleryPosition ===
-          'horizontalTop' ? (
-            overflowGallery
-          ) : (
-            <></>
-          )
-        }
+        {props.overflowGalleryPosition === 'horizontalTop' ? overflowGallery : <></>}
         {screenShareComponent ? (
           screenShareComponent
         ) : (
@@ -239,7 +232,6 @@ const overflowGalleryTrampoline = (
   gallery: JSX.Element | null,
   galleryPosition?: 'horizontalBottom' | 'verticalRight' | 'horizontalTop'
 ): JSX.Element | null => {
-  /* @conditional-compile-remove(overflow-top-composite) */
   return galleryPosition !== 'horizontalTop' ? gallery : <></>;
   return gallery;
 };
