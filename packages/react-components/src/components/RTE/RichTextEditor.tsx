@@ -49,6 +49,7 @@ export interface RichTextEditorProps {
  */
 export interface RichTextEditorComponentRef {
   focus: () => void;
+  setEmptyContent: () => void;
 }
 
 /**
@@ -67,6 +68,11 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
         focus() {
           if (editor.current) {
             editor.current.focus();
+          }
+        },
+        setEmptyContent() {
+          if (editor.current) {
+            editor.current.setContent('');
           }
         }
       };

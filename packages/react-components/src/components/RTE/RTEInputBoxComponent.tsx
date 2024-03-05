@@ -36,13 +36,24 @@ export interface RTEInputBoxComponentProps {
   // props for min and max height for the rich text editor
   // otherwise the editor will grow to fit the content
   richTextEditorStyleProps: (isExpanded: boolean) => RichTextEditorStyleProps;
+  supportHorizontalLayout?: boolean;
 }
 
 /**
  * @private
  */
 export const RTEInputBoxComponent = (props: RTEInputBoxComponentProps): JSX.Element => {
-  const { placeholderText, initialContent, onChange, editorComponentRef, disabled, strings, actionComponents } = props;
+  const {
+    placeholderText,
+    initialContent,
+    onChange,
+    editorComponentRef,
+    disabled,
+    strings,
+    actionComponents,
+    richTextEditorStyleProps,
+    supportHorizontalLayout = true
+  } = props;
   const theme = useTheme();
   const [showRichTextEditorFormatting, setShowRichTextEditorFormatting] = useState(false);
 
@@ -87,6 +98,10 @@ export const RTEInputBoxComponent = (props: RTEInputBoxComponentProps): JSX.Elem
     theme
   ]);
 
+  const richTextEditorStyle = useMemo(() => {
+    return richTextEditorStyleProps(showRichTextEditorFormatting);
+  }, [richTextEditorStyleProps, showRichTextEditorFormatting]);
+
   return (
     <div
       className={borderAndBoxShadowStyle({
@@ -97,7 +112,11 @@ export const RTEInputBoxComponent = (props: RTEInputBoxComponentProps): JSX.Elem
         defaultBorderColor: theme.palette.neutralQuaternaryAlt
       })}
     >
-      <Stack grow horizontal={!showRichTextEditorFormatting} className={inputBoxContentStackStyle}>
+      <Stack
+        grow
+        horizontal={supportHorizontalLayout && !showRichTextEditorFormatting}
+        className={inputBoxContentStackStyle}
+      >
         {/* fixes the issue when flex box can grow to be bigger than parent */}
         <Stack grow className={inputBoxRichTextStackStyle}>
           <RichTextEditor
@@ -107,7 +126,7 @@ export const RTEInputBoxComponent = (props: RTEInputBoxComponentProps): JSX.Elem
             ref={editorComponentRef}
             strings={strings}
             showRichTextEditorFormatting={showRichTextEditorFormatting}
-            styles={props.richTextEditorStyleProps(showRichTextEditorFormatting)}
+            styles={richTextEditorStyle}
           />
           {/* File Upload */}
         </Stack>

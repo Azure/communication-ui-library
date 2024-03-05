@@ -13,7 +13,7 @@ import { RTESendBoxErrors, RTESendBoxErrorsProps } from './RTESendBoxErrors';
 import { ActiveFileUpload } from '../FileUploadCards';
 /* @conditional-compile-remove(file-sharing) */
 import { SendBoxErrorBarError } from '../SendBoxErrorBar';
-import { exceedsMaxAllowedLength, sanitizeText } from '../utils/SendBoxUtils';
+import { isMessageTooLong, sanitizeText } from '../utils/SendBoxUtils';
 /* @conditional-compile-remove(file-sharing) */
 import { hasCompletedFileUploads } from '../utils/SendBoxUtils';
 import { RichTextEditorComponentRef, RichTextEditorStyleProps } from './RichTextEditor';
@@ -148,7 +148,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       return;
     }
 
-    setContentValueOverflow(exceedsMaxAllowedLength(newValue.length));
+    setContentValueOverflow(isMessageTooLong(newValue.length));
     setContentValue(newValue);
   }, []);
 
@@ -174,6 +174,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     ) {
       onSendMessage(message);
       setContentValue('');
+      editorComponentRef.current?.setEmptyContent();
     }
     editorComponentRef.current?.focus();
   }, [activeFileUploads, contentValue, contentValueOverflow, disabled, onSendMessage]);
