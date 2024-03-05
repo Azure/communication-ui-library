@@ -24,6 +24,14 @@ export const CallCompositeContainer = (props: CallCompositeContainerProps): JSX.
       /* @conditional-compile-remove(call-readiness) */ onNetworkingTroubleShootingClick,
       callControls: {
         screenShareButton: shouldHideScreenShare ? false : undefined
+      },
+      /* @conditional-compile-remove(custom-branding) */
+      branding: {
+        logo: {
+          url: '/assets/branding/contoso-logo.png',
+          shape: 'circle',
+          alt: 'Contoso logo'
+        }
       }
     }),
     [shouldHideScreenShare]

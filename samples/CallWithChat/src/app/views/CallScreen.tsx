@@ -160,6 +160,17 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     () => ({
       callControls: {
         screenShareButton: shouldHideScreenShare ? false : undefined
+      },
+      /* @conditional-compile-remove(custom-branding) */
+      branding: {
+        logo: {
+          url: '/assets/branding/contoso-logo.png',
+          shape: 'circle',
+          alt: 'Contoso logo'
+        },
+        backgroundImage: {
+          url: '/assets/branding/contoso-background.png'
+        }
       }
     }),
     [shouldHideScreenShare]
