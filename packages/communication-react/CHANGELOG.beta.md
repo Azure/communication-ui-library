@@ -4,6 +4,14 @@ This log was last generated on Mon, 26 Feb 2024 16:19:15 GMT and should not be m
 
 <!-- Start content -->
 
+## [1.14.0-beta.2](https://github.com/azure/communication-ui-library/tree/1.14.0-beta.2)
+
+Tue, 05 Mar 2024 16:19:15 GMT
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.14.0-beta.1...1.14.0-beta.2)
+
+Reinclude CallComposite `Branding` option.
+
+
 ## [1.14.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.14.0-beta.1)
 
 Mon, 26 Feb 2024 16:19:15 GMT
