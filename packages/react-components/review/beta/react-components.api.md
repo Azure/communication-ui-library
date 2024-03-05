@@ -68,6 +68,9 @@ export type AnnouncerProps = {
 // @beta
 export type AttachmentMetadata = FileMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ InlineImageMetadata;
 
+// @internal
+export type _AudioIssue = 'NoLocalAudio' | 'NoRemoteAudio' | 'Echo' | 'AudioNoise' | 'LowVolume' | 'AudioStoppedUnexpectedly' | 'DistortedSpeech' | 'AudioInterruption' | 'OtherIssues';
+
 // @public
 export interface BaseCustomStyles {
     root?: IStyle;
@@ -165,7 +168,39 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     isMuted?: boolean;
     isSpeaking?: boolean;
     raisedHand?: RaisedHand;
+    reaction?: Reaction;
+    spotlight?: Spotlight;
 };
+
+// @internal
+export interface _CallRating<TIssue extends _AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue> {
+    issues?: TIssue[];
+    scale?: _RatingScale;
+    score: number;
+}
+
+// @internal
+export interface _CallSurvey {
+    audioRating?: _CallRating<_AudioIssue>;
+    overallRating?: _CallRating<_OverallIssue>;
+    screenshareRating?: _CallRating<_ScreenshareIssue>;
+    videoRating?: _CallRating<_VideoIssue>;
+}
+
+// @beta
+export interface CallSurveyImprovementSuggestions {
+    audioRating?: string;
+    overallRating?: string;
+    screenshareRating?: string;
+    videoRating?: string;
+}
+
+// @internal
+export interface _CallSurveyResponse extends _CallSurvey {
+    readonly callId: string;
+    readonly id: string;
+    readonly localParticipantId: string;
+}
 
 // @beta
 export const CameraAndMicrophoneSitePermissions: (props: CameraAndMicrophoneSitePermissionsProps) => JSX.Element;
@@ -615,6 +650,9 @@ export interface ComponentStrings {
     ParticipantList: ParticipantListStrings;
     participantsButton: ParticipantsButtonStrings;
     raiseHandButton: RaiseHandButtonStrings;
+    // @beta
+    reactionButton: ReactionButtonStrings;
+    richTextSendBox: RichTextSendBoxStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
@@ -725,6 +763,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     ControlButtonLowerHand: React_2.JSX.Element;
     RaiseHandContextualMenuItem: React_2.JSX.Element;
     LowerHandContextualMenuItem: React_2.JSX.Element;
+    ReactionButtonIcon: React_2.JSX.Element;
     CancelFileUpload: React_2.JSX.Element;
     DownloadFile: React_2.JSX.Element;
     DataLossPreventionProhibited: React_2.JSX.Element;
@@ -760,6 +799,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     ParticipantItemOptions: React_2.JSX.Element;
     ParticipantItemOptionsHovered: React_2.JSX.Element;
     ParticipantItemScreenShareStart: React_2.JSX.Element;
+    ParticipantItemSpotlighted: React_2.JSX.Element;
     HoldCallContextualMenuItem: React_2.JSX.Element;
     HoldCallButton: React_2.JSX.Element;
     ResumeCall: React_2.JSX.Element;
@@ -796,6 +836,19 @@ export const DEFAULT_COMPONENT_ICONS: {
     ContextMenuCameraIcon: React_2.JSX.Element;
     ContextMenuMicIcon: React_2.JSX.Element;
     ContextMenuSpeakerIcon: React_2.JSX.Element;
+    SurveyStarIcon: React_2.JSX.Element;
+    SurveyStarIconFilled: React_2.JSX.Element;
+    StartSpotlightContextualMenuItem: React_2.JSX.Element;
+    StopSpotlightContextualMenuItem: React_2.JSX.Element;
+    VideoSpotlighted: React_2.JSX.Element;
+    RTEBoldButtonIcon: React_2.JSX.Element;
+    RTEItalicButtonIcon: React_2.JSX.Element;
+    RTEUnderlineButtonIcon: React_2.JSX.Element;
+    RTEBulletListButtonIcon: React_2.JSX.Element;
+    RTEtNumberListButtonIcon: React_2.JSX.Element;
+    RTEIndentDecreaseButtonIcon: React_2.JSX.Element;
+    RTEIndentIncreaseButtonIcon: React_2.JSX.Element;
+    RTEDividerIcon: React_2.JSX.Element;
 };
 
 // @internal
@@ -1060,6 +1113,7 @@ export interface ErrorBarStrings {
     sendMessageGeneric: string;
     sendMessageNotInChatThread: string;
     startScreenShareGeneric: string;
+    startSpotlightWhileMaxParticipantsAreSpotlighted: string;
     startVideoGeneric: string;
     stopScreenShareGeneric: string;
     stopVideoGeneric: string;
@@ -1301,6 +1355,9 @@ export interface InlineImageOptions {
     onRenderInlineImage?: (inlineImage: InlineImage, defaultOnRender: (inlineImage: InlineImage) => JSX.Element) => JSX.Element;
 }
 
+// @internal
+export type _IssueCategory = 'overallRating' | 'audioRating' | 'videoRating' | 'screenshareRating';
+
 // @public
 export interface JumpToNewMessageButtonProps {
     onClick: () => void;
@@ -1358,6 +1415,16 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
     styles?: VideoTileStylesProps | undefined;
     personaMinSize?: number | undefined;
     raisedHand?: RaisedHand | undefined;
+    reaction?: Reaction | undefined;
+    spotlightedParticipantUserIds?: string[] | undefined;
+    isSpotlighted?: boolean | undefined;
+    onStartSpotlight?: (() => void) | undefined;
+    onStopSpotlight?: (() => void) | undefined;
+    maxParticipantsToSpotlight?: number | undefined;
+    menuKind?: "contextual" | "drawer" | undefined;
+    drawerMenuHostId?: string | undefined;
+    strings?: VideoGalleryStrings | undefined;
+    reactionResources?: ReactionResources | undefined;
 }) => React_2.JSX.Element>;
 
 // @public
@@ -1633,6 +1700,9 @@ export interface OptionsDevice {
     name: string;
 }
 
+// @internal
+export type _OverallIssue = 'CallCannotJoin' | 'CallCannotInvite' | 'HadToRejoin' | 'CallEndedUnexpectedly' | 'OtherIssues';
+
 // @public
 export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | 'horizontalTop';
 
@@ -1666,6 +1736,7 @@ export interface ParticipantItemProps {
 
 // @public
 export interface ParticipantItemStrings {
+    attendeeRole: string;
     displayNamePlaceholder?: string;
     isMeText: string;
     menuTitle: string;
@@ -1833,6 +1904,57 @@ export interface RaiseHandButtonStrings {
     tooltipOnContent?: string;
 }
 
+// @internal
+export interface _RatingScale {
+    lowerBound: number;
+    lowScoreThreshold: number;
+    upperBound: number;
+}
+
+// @beta
+export type Reaction = {
+    reactionType: string;
+    receivedOn: Date;
+};
+
+// @beta
+export const ReactionButton: (props: ReactionButtonProps) => JSX.Element;
+
+// @beta
+export interface ReactionButtonProps extends ControlBarButtonProps {
+    onReactionClick: (reaction: string) => Promise<void>;
+    reactionResources: ReactionResources;
+    strings?: Partial<ReactionButtonStrings>;
+}
+
+// @beta
+export interface ReactionButtonStrings {
+    applauseReactionTooltipContent?: string;
+    heartReactionTooltipContent?: string;
+    label: string;
+    laughReactionTooltipContent?: string;
+    likeReactionTooltipContent?: string;
+    surprisedReactionTooltipContent?: string;
+    tooltipContent?: string;
+    tooltipDisabledContent?: string;
+}
+
+// @beta
+export interface ReactionResources {
+    applauseReaction?: ReactionSprite;
+    heartReaction?: ReactionSprite;
+    laughReaction?: ReactionSprite;
+    likeReaction?: ReactionSprite;
+    surprisedReaction?: ReactionSprite;
+}
+
+// @beta
+export type ReactionSprite = {
+    url: string;
+    frameCount: number;
+    size?: number;
+};
+
 // @public
 export type ReadReceiptsBySenderId = {
     [key: string]: {
@@ -1864,9 +1986,40 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     onUnpinParticipant?: ((userId: string) => void) | undefined;
     onUpdateScalingMode?: ((userId: string, scalingMode: ViewScalingMode) => void) | undefined;
     isPinned?: boolean | undefined;
+    spotlightedParticipantUserIds?: string[] | undefined;
+    isSpotlighted?: boolean | undefined;
+    onStartSpotlight?: ((userIds: string[]) => void) | undefined;
+    onStopSpotlight?: ((userIds: string[]) => void) | undefined;
+    maxParticipantsToSpotlight?: number | undefined;
     disablePinMenuItem?: boolean | undefined;
     toggleAnnouncerString?: ((announcerString: string) => void) | undefined;
+    reactionResources?: ReactionResources | undefined;
 }) => React_2.JSX.Element>;
+
+// @beta
+export const RichTextSendBox: (props: RichTextSendBoxProps) => JSX.Element;
+
+// @beta
+export interface RichTextSendBoxProps {
+    activeFileUploads?: ActiveFileUpload[];
+    disabled?: boolean;
+    onCancelFileUpload?: (fileId: string) => void;
+    onRenderFileUploads?: () => JSX.Element;
+    onSendMessage: (content: string) => Promise<void>;
+    strings?: Partial<RichTextSendBoxStrings>;
+    systemMessage?: string;
+}
+
+// @beta
+export interface RichTextSendBoxStrings extends SendBoxStrings {
+    boldTooltip: string;
+    bulletListTooltip: string;
+    decreaseIndentTooltip: string;
+    increaseIndentTooltip: string;
+    italicTooltip: string;
+    numberListTooltip: string;
+    underlineTooltip: string;
+}
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
@@ -1885,6 +2038,9 @@ export interface ScreenShareButtonStrings {
     tooltipOffContent?: string;
     tooltipOnContent?: string;
 }
+
+// @internal
+export type _ScreenshareIssue = 'NoContentLocal' | 'NoContentRemote' | 'CannotPresent' | 'LowQuality' | 'Freezes' | 'StoppedUnexpectedly' | 'LargeDelay' | 'OtherIssues';
 
 // @public
 export const SendBox: (props: SendBoxProps) => JSX.Element;
@@ -2083,6 +2239,33 @@ export const _spokenLanguageToCaptionLanguage: {
     'zh-tw': string;
 };
 
+// @beta
+export type Spotlight = {
+    spotlightedOrderPosition?: number;
+};
+
+// @internal
+export const _StarSurvey: (props: _StarSurveyProps) => JSX.Element;
+
+// @internal
+export interface _StarSurveyProps {
+    onStarRatingSelected?: (ratings: number) => void;
+    selectedIcon?: string;
+    strings?: _StarSurveyStrings;
+    unselectedIcon?: string;
+}
+
+// @internal
+export interface _StarSurveyStrings {
+    starRatingAriaLabel?: string;
+    starSurveyFiveStarText?: string;
+    starSurveyFourStarText?: string;
+    starSurveyHelperText?: string;
+    starSurveyOneStarText?: string;
+    starSurveyThreeStarText?: string;
+    starSurveyTwoStarText?: string;
+}
+
 // @internal
 export const _StartCaptionsButton: (props: _StartCaptionsButtonProps) => JSX.Element;
 
@@ -2120,6 +2303,70 @@ export type _SupportedCaptionLanguage = keyof CaptionLanguageStrings;
 // @internal (undocumented)
 export type _SupportedSpokenLanguage = keyof SpokenLanguageStrings;
 
+// @beta
+export interface SurveyIssues {
+    // (undocumented)
+    audioRating: {
+        noLocalAudio: string;
+        noRemoteAudio: string;
+        echo: string;
+        audioNoise: string;
+        lowVolume: string;
+        audioStoppedUnexpectedly: string;
+        distortedSpeech: string;
+        audioInterruption: string;
+        otherIssues: string;
+    };
+    // (undocumented)
+    overallRating: {
+        callCannotJoin: string;
+        callCannotInvite: string;
+        hadToRejoin: string;
+        callEndedUnexpectedly: string;
+        otherIssues: string;
+    };
+    // (undocumented)
+    screenshareRating: {
+        noContentLocal: string;
+        noContentRemote: string;
+        cannotPresent: string;
+        lowQuality: string;
+        freezes: string;
+        stoppedUnexpectedly: string;
+        largeDelay: string;
+        otherIssues: string;
+    };
+    // (undocumented)
+    videoRating: {
+        noVideoReceived: string;
+        noVideoSent: string;
+        lowQuality: string;
+        freezes: string;
+        stoppedUnexpectedly: string;
+        darkVideoReceived: string;
+        audioVideoOutOfSync: string;
+        otherIssues: string;
+    };
+}
+
+// @beta
+export interface SurveyIssuesHeadingStrings {
+    // (undocumented)
+    audioRating: string;
+    // (undocumented)
+    overallRating: string;
+    // (undocumented)
+    screenshareRating: string;
+    // (undocumented)
+    videoRating: string;
+}
+
+// @internal
+export type _SurveyTag = Record<_IssueCategory, {
+    message: string;
+    issue: _AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue;
+}[]>;
+
 // @public
 export type SystemMessage = ParticipantAddedSystemMessage | ParticipantRemovedSystemMessage | TopicUpdatedSystemMessage | ContentSystemMessage;
 
@@ -2129,6 +2376,25 @@ export interface SystemMessageCommon extends MessageCommon {
     iconName: string;
     // (undocumented)
     messageType: 'system';
+}
+
+// @internal
+export const _TagsSurvey: (props: _TagsSurveyProps) => JSX.Element;
+
+// @internal
+export interface _TagsSurveyProps {
+    callIssuesToTag: SurveyIssues;
+    categoryHeadings: SurveyIssuesHeadingStrings;
+    onConfirm?: (selectedTags: _CallSurvey, improvementSuggestions?: CallSurveyImprovementSuggestions) => void;
+    showFreeFormTextField?: boolean;
+    strings?: _TagsSurveyStrings;
+}
+
+// @internal
+export interface _TagsSurveyStrings {
+    tagsSurveyHelperText?: string;
+    tagsSurveyQuestion?: string;
+    tagsSurveyTextFieldDefaultText?: string;
 }
 
 // @internal (undocumented)
@@ -2246,7 +2512,7 @@ export interface UnsupportedOperatingSystemStrings {
 }
 
 // @public
-export type UpdateMessageCallback = (messageId: string, content: string, /* @conditional-compile-remove(file-sharing) */ options?: {
+export type UpdateMessageCallback = (messageId: string, content: string, options?: {
     metadata?: Record<string, string>;
     attachmentMetadata?: AttachmentMetadata[];
 }) => Promise<void>;
@@ -2348,6 +2614,8 @@ export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | 'speaker' | 
 // @public
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
     raisedHand?: RaisedHand;
+    // @beta
+    reaction?: Reaction;
 }
 
 // @public
@@ -2357,6 +2625,7 @@ export type VideoGalleryParticipant = {
     displayName?: string;
     videoStream?: VideoGalleryStream;
     isScreenSharingOn?: boolean;
+    spotlight?: Spotlight;
 };
 
 // @public
@@ -2367,6 +2636,7 @@ export interface VideoGalleryProps {
     localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
     localVideoTileSize?: LocalVideoTileSize;
     localVideoViewOptions?: VideoStreamOptions;
+    maxParticipantsToSpotlight?: number;
     maxRemoteVideoStreams?: number;
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
@@ -2379,14 +2649,21 @@ export interface VideoGalleryProps {
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
+    onStartLocalSpotlight?: () => Promise<void>;
+    onStartRemoteSpotlight?: (userIds?: string[]) => Promise<void>;
+    onStopLocalSpotlight?: () => Promise<void>;
+    onStopRemoteSpotlight?: (userIds?: string[]) => Promise<void>;
     onUnpinParticipant?: (userId: string) => void;
     overflowGalleryPosition?: OverflowGalleryPosition;
     pinnedParticipants?: string[];
+    // @beta
+    reactionResources?: ReactionResources;
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoTileMenu?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
     remoteVideoViewOptions?: VideoStreamOptions;
     showCameraSwitcherInLocalPreview?: boolean;
     showMuteIndicator?: boolean;
+    spotlightedParticipants?: string[];
     strings?: Partial<VideoGalleryStrings>;
     styles?: VideoGalleryStyles;
 }
@@ -2395,6 +2672,8 @@ export interface VideoGalleryProps {
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     isSpeaking?: boolean;
     raisedHand?: RaisedHand;
+    // @beta
+    reaction?: Reaction;
     screenShareStream?: VideoGalleryStream;
     // @beta
     state?: ParticipantState;
@@ -2416,6 +2695,8 @@ export interface VideoGalleryStream {
 
 // @public
 export interface VideoGalleryStrings {
+    addSpotlightVideoTileMenuLabel: string;
+    attendeeRole: string;
     displayNamePlaceholder: string;
     fillRemoteParticipantFrame: string;
     fitRemoteParticipantToFrame: string;
@@ -2428,6 +2709,10 @@ export interface VideoGalleryStrings {
     pinParticipantMenuItemAriaLabel: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;
+    spotlightLimitReachedMenuTitle: string;
+    startSpotlightVideoTileMenuLabel: string;
+    stopSpotlightOnSelfVideoTileMenuLabel: string;
+    stopSpotlightVideoTileMenuLabel: string;
     unpinnedParticipantAnnouncementAriaLabel: string;
     unpinParticipantForMe: string;
     unpinParticipantMenuItemAriaLabel: string;
@@ -2440,6 +2725,9 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
     localVideo?: IStyle;
     verticalGallery?: VerticalGalleryStyles;
 }
+
+// @internal
+export type _VideoIssue = 'NoVideoReceived' | 'NoVideoSent' | 'LowQuality' | 'Freezes' | 'StoppedUnexpectedly' | 'DarkVideoReceived' | 'AudioVideoOutOfSync' | 'OtherIssues';
 
 // @public
 export interface VideoStreamOptions {
@@ -2471,6 +2759,7 @@ export interface VideoTileProps {
     isMuted?: boolean;
     isPinned?: boolean;
     isSpeaking?: boolean;
+    isSpotlighted?: boolean;
     noVideoAvailableAriaLabel?: string;
     onLongTouch?: () => void;
     onRenderPlaceholder?: OnRenderAvatarCallback;
@@ -2478,6 +2767,10 @@ export interface VideoTileProps {
     personaMaxSize?: number;
     personaMinSize?: number;
     raisedHand?: RaisedHand;
+    // @beta
+    reaction?: Reaction;
+    // @beta
+    reactionResources?: ReactionResources;
     renderElement?: JSX.Element | null;
     showLabel?: boolean;
     showMuteIndicator?: boolean;
