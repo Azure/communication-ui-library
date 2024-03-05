@@ -434,6 +434,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const callees = useSelector(getTargetCallees) as StartCallIdentifier[];
   const locale = useLocale();
   const palette = useTheme().palette;
+  const alternateCallerId = adapter.getState().alternateCallerId;
   const leavePageStyle = useMemo(() => leavingPageStyle(palette), [palette]);
   let pageElement: JSX.Element | undefined;
   switch (page) {
@@ -443,7 +444,10 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           mobileView={props.mobileView}
           startCallHandler={(): void => {
             if (callees) {
-              adapter.startCall(callees);
+              adapter.startCall(
+                callees,
+                alternateCallerId ? { alternateCallerId: { phoneNumber: alternateCallerId } } : {}
+              );
             } else {
               adapter.joinCall({
                 microphoneOn: 'keep',
