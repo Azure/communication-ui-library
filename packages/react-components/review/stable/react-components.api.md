@@ -55,6 +55,13 @@ export type AnnouncerProps = {
     ariaLive: 'off' | 'polite' | 'assertive' | undefined;
 };
 
+// @beta
+export interface AttachmentMetadata {
+    extension: string;
+    name: string;
+    url: string;
+}
+
 // @public
 export interface BaseCustomStyles {
     root?: IStyle;
@@ -966,13 +973,6 @@ export interface FileDownloadError {
 
 // @beta
 export type FileDownloadHandler = (userId: string, fileMetadata: AttachmentMetadata) => Promise<URL | FileDownloadError>;
-
-// @beta
-export interface AttachmentMetadata {
-    extension: string;
-    name: string;
-    url: string;
-}
 
 // @internal
 export interface _FileUploadCardsStrings {
