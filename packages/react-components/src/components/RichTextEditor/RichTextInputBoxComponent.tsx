@@ -4,7 +4,7 @@
 import React, { ReactNode, useCallback, useMemo, useState } from 'react';
 import { BaseCustomStyles } from '../../types';
 import { RichTextEditor, RichTextEditorComponentRef, RichTextEditorStyleProps } from './RichTextEditor';
-import { RichTextSendBoxStrings } from './RTESendBox';
+import { RichTextSendBoxStrings } from './RichTextSendBox';
 import { richTextBorderBoxStyle } from '../styles/SendBox.styles';
 import { useTheme } from '../../theming';
 import { Icon, Stack } from '@fluentui/react';
@@ -20,12 +20,12 @@ import { inputBoxContentStackStyle, inputBoxRichTextStackStyle } from '../styles
 /**
  * @private
  */
-export interface RTEInputBoxComponentStylesProps extends BaseCustomStyles {}
+export interface RichTextInputBoxComponentStylesProps extends BaseCustomStyles {}
 
 /**
  * @private
  */
-export interface RTEInputBoxComponentProps {
+export interface RichTextInputBoxComponentProps {
   placeholderText?: string;
   initialContent?: string;
   onChange: (newValue?: string) => void;
@@ -42,7 +42,7 @@ export interface RTEInputBoxComponentProps {
 /**
  * @private
  */
-export const RTEInputBoxComponent = (props: RTEInputBoxComponentProps): JSX.Element => {
+export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps): JSX.Element => {
   const {
     placeholderText,
     initialContent,
@@ -84,7 +84,7 @@ export const RTEInputBoxComponent = (props: RTEInputBoxComponentProps): JSX.Elem
             tooltipContent={strings.richTextFormatButtonTooltip}
             className={richTextActionButtonsStyle}
           />
-          <Icon iconName="RTEDividerIcon" className={richTextActionButtonsDividerStyle(theme)} />
+          <Icon iconName="RichTextDividerIcon" className={richTextActionButtonsDividerStyle(theme)} />
           {actionComponents}
         </Stack>
       </Stack.Item>

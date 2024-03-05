@@ -14,15 +14,13 @@ import {
   MessageThread,
   MessageThreadStyles,
   ParticipantMenuItemsCallback,
-  SendBox,
   SendBoxStylesProps,
   TypingIndicator,
   TypingIndicatorStylesProps,
   useTheme
 } from '@internal/react-components';
-/* @conditional-compile-remove(image-overlay) */ /* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(file-sharing) */
 import { ChatMessage } from '@internal/react-components';
-
 import React, { useCallback, useEffect, useMemo } from 'react';
 /* @conditional-compile-remove(image-overlay) */
 import { useState } from 'react';
@@ -48,10 +46,6 @@ import { participantListContainerPadding } from '../common/styles/ParticipantCon
 import { ChatScreenPeoplePane } from './ChatScreenPeoplePane';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(file-sharing) */
-import { fileUploadsSelector } from './selectors/fileUploadsSelector';
-/* @conditional-compile-remove(file-sharing) */
-import { useSelector } from './hooks/useSelector';
-/* @conditional-compile-remove(file-sharing) */
 import { FileDownloadErrorBar } from './FileDownloadErrorBar';
 /* @conditional-compile-remove(file-sharing) */
 import { _FileDownloadCards } from '@internal/react-components';
@@ -59,6 +53,7 @@ import { _FileDownloadCards } from '@internal/react-components';
 import { ImageOverlay } from '@internal/react-components';
 /* @conditional-compile-remove(image-overlay) */
 import { InlineImage } from '@internal/react-components';
+import { SendBox } from '../common/SendBox';
 
 /**
  * @private
@@ -70,7 +65,6 @@ export type ChatScreenProps = {
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   styles?: ChatScreenStyles;
-  hasFocusOnMount?: 'sendBoxTextField';
   fileSharing?: FileSharingOptions;
   formFactor?: 'desktop' | 'mobile';
 };
@@ -126,6 +120,7 @@ interface OverlayImageItem {
   titleIcon: JSX.Element;
   attachmentId: string;
   messageId: string;
+  imageUrl: string;
 }
 
 /**
@@ -165,7 +160,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   }, [adapter]);
 
   const messageThreadProps = usePropsFor(MessageThread);
-  const sendBoxProps = usePropsFor(SendBox);
   const typingIndicatorProps = usePropsFor(TypingIndicator);
   const headerProps = useAdaptedSelector(getHeaderProps);
   const errorBarProps = usePropsFor(ErrorBar);
@@ -175,28 +169,16 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     if (overlayImageItem === undefined) {
       return;
     }
-    const messages = messageThreadProps.messages.filter((message) => {
-      return message.messageId === overlayImageItem?.messageId;
-    });
-    if (messages.length <= 0 || messages[0].messageType !== 'chat') {
-      return;
-    }
-    const message = messages[0] as ChatMessage;
-    if (overlayImageItem.imageSrc === '' && message.inlineImages && message.inlineImages?.length > 0) {
-      const inlineImages = message.inlineImages.filter((attachment) => {
-        return attachment.id === overlayImageItem?.attachmentId;
-      });
-      if (
-        inlineImages.length <= 0 ||
-        inlineImages[0].fullSizeImageSrc === undefined ||
-        inlineImages[0].fullSizeImageSrc === '' ||
-        overlayImageItem.imageSrc === inlineImages[0].fullSizeImageSrc
-      ) {
+    const message = adapter.getState().thread.chatMessages[overlayImageItem?.messageId];
+    const resourceCache = message.resourceCache;
+    if (overlayImageItem.imageSrc === '' && resourceCache) {
+      const fullSizeImageSrc = resourceCache[overlayImageItem.imageUrl];
+      if (fullSizeImageSrc === undefined || fullSizeImageSrc === '' || overlayImageItem.imageSrc === fullSizeImageSrc) {
         return;
       }
       setOverlayImageItem({
         ...overlayImageItem,
-        imageSrc: inlineImages[0].fullSizeImageSrc
+        imageSrc: fullSizeImageSrc
       });
     }
     // Disable eslint because we are using the overlayImageItem in this effect but don't want to have it as a dependency, as it will cause an infinite loop.
@@ -228,9 +210,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const typingIndicatorStyles = useMemo(() => {
     return Object.assign({}, styles?.typingIndicator);
   }, [styles?.typingIndicator]);
-  const sendBoxStyles = useMemo(() => {
-    return Object.assign({}, styles?.sendBox);
-  }, [styles?.sendBox]);
+
   const userId = toFlatCommunicationIdentifier(adapter.getState().userId);
 
   const fileUploadButtonOnChange = useCallback(
@@ -265,16 +245,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   /* @conditional-compile-remove(image-overlay) */
   const onInlineImageClicked = useCallback(
     async (attachmentId: string, messageId: string): Promise<void> => {
-      const messages = messageThreadProps.messages?.filter((message) => {
-        return message.messageId === messageId;
-      });
-      if (!messages || messages.length <= 0) {
-        return;
-      }
-      const chatMessage = messages[0] as ChatMessage;
-
-      const inlinedImages = chatMessage.inlineImages?.filter((attachment) => {
-        return attachment.id === attachmentId;
+      const message = adapter.getState().thread.chatMessages[messageId];
+      const inlinedImages = message.content?.attachments?.filter((attachment) => {
+        return attachment.attachmentType === 'image' && attachment.id === attachmentId;
       });
 
       if (!inlinedImages || inlinedImages.length <= 0) {
@@ -283,32 +256,43 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
       const attachment = inlinedImages[0];
 
+      const resourceCache = message.resourceCache;
+      let imageSrc = '';
+
+      if (attachment.url) {
+        if (resourceCache && resourceCache[attachment.url]) {
+          imageSrc = resourceCache[attachment.url];
+        } else {
+          adapter.downloadResourceToCache({
+            threadId: adapter.getState().thread.threadId,
+            messageId: messageId,
+            resourceUrl: attachment.url
+          });
+        }
+      }
+
       const titleIconRenderOptions = {
-        text: chatMessage.senderDisplayName,
+        text: message.senderDisplayName,
         size: PersonaSize.size32,
         showOverflowTooltip: false,
-        imageAlt: chatMessage.senderDisplayName
+        imageAlt: message.senderDisplayName
       };
-      const titleIcon = onRenderAvatarCallback && onRenderAvatarCallback(chatMessage.senderId, titleIconRenderOptions);
+
+      const messageSenderId = message.sender !== undefined ? toFlatCommunicationIdentifier(message.sender) : userId;
+      const titleIcon = onRenderAvatarCallback && onRenderAvatarCallback(messageSenderId, titleIconRenderOptions);
       const overlayImage: OverlayImageItem = {
-        title: chatMessage.senderDisplayName || '',
+        title: message.senderDisplayName || '',
         titleIcon: titleIcon,
         attachmentId: attachment.id,
-        imageSrc: attachment.fullSizeImageSrc || '',
-        messageId: messageId
+        imageSrc: imageSrc,
+        messageId: messageId,
+        imageUrl: attachment.url || ''
       };
+
       setIsImageOverlayOpen(true);
       setOverlayImageItem(overlayImage);
-
-      if (attachment.attachmentType === 'inlineImage' && attachment.url) {
-        adapter.downloadResourceToCache({
-          threadId: adapter.getState().thread.threadId,
-          messageId: messageId,
-          resourceUrl: attachment.url
-        });
-      }
     },
-    [adapter, messageThreadProps, onRenderAvatarCallback]
+    [adapter, onRenderAvatarCallback, userId]
   );
 
   /* @conditional-compile-remove(image-overlay) */
@@ -374,6 +358,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       />
     );
   }, [fileSharing?.accept, fileSharing?.multiple, fileSharing?.uploadHandler, fileUploadButtonOnChange]);
+
   return (
     <Stack className={chatContainer} grow>
       {options?.topic !== false && <ChatHeader {...headerProps} />}
@@ -416,13 +401,10 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
               )}
               <Stack grow>
                 <SendBox
-                  {...sendBoxProps}
-                  autoFocus={options?.autoFocus}
-                  styles={sendBoxStyles}
+                  options={options}
+                  styles={styles?.sendBox}
                   /* @conditional-compile-remove(file-sharing) */
-                  activeFileUploads={useSelector(fileUploadsSelector).files}
-                  /* @conditional-compile-remove(file-sharing) */
-                  onCancelFileUpload={adapter.cancelFileUpload}
+                  adapter={adapter}
                 />
               </Stack>
               {formFactor !== 'mobile' && <AttachFileButton />}
@@ -449,6 +431,11 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             onDismiss={() => {
               setOverlayImageItem(undefined);
               setIsImageOverlayOpen(false);
+              adapter.removeResourceFromCache({
+                threadId: adapter.getState().thread.threadId,
+                messageId: overlayImageItem.messageId,
+                resourceUrl: overlayImageItem.imageUrl
+              });
             }}
             onDownloadButtonClicked={onDownloadButtonClicked}
           />

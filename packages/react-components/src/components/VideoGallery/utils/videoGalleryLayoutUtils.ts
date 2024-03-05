@@ -6,7 +6,6 @@ import { smartDominantSpeakerParticipants } from '../../../gallery';
 import { VideoGalleryParticipant, VideoGalleryRemoteParticipant } from '../../../types';
 /* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '../../..';
-/* @conditional-compile-remove(gallery-layouts) */
 import { VideoGalleryLayout } from '../../VideoGallery';
 
 /**
@@ -21,7 +20,6 @@ export interface OrganizedParticipantsArgs {
   maxOverflowGalleryDominantSpeakers?: number;
   isScreenShareActive?: boolean;
   pinnedParticipantUserIds?: string[];
-  /* @conditional-compile-remove(gallery-layouts) */
   layout?: VideoGalleryLayout;
   spotlightedParticipantUserIds?: string[];
 }
@@ -37,7 +35,6 @@ export interface OrganizedParticipantsResult {
 
 const DEFAULT_MAX_OVERFLOW_GALLERY_DOMINANT_SPEAKERS = 6;
 const DEFAULT_MAX_VIDEO_SREAMS = 4;
-/* @conditional-compile-remove(gallery-layouts) */
 const MAX_GRID_PARTICIPANTS_NOT_LARGE_GALLERY = 9;
 
 const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedParticipantsResult => {
@@ -51,12 +48,10 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
     maxOverflowGalleryDominantSpeakers = DEFAULT_MAX_OVERFLOW_GALLERY_DOMINANT_SPEAKERS,
     isScreenShareActive = false,
     pinnedParticipantUserIds = [],
-    /* @conditional-compile-remove(gallery-layouts) */
     layout
   } = props;
 
   const calculateMaxRemoteVideoStreams = (): number => {
-    /* @conditional-compile-remove(gallery-layouts) */
     if (maxRemoteVideoStreams > MAX_GRID_PARTICIPANTS_NOT_LARGE_GALLERY) {
       return MAX_GRID_PARTICIPANTS_NOT_LARGE_GALLERY;
     } else {
@@ -70,7 +65,6 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
   const videoParticipants = remoteParticipants.filter((p) => p.videoStream?.isAvailable);
 
   const participantsToSortTrampoline = (): VideoGalleryRemoteParticipant[] => {
-    /* @conditional-compile-remove(gallery-layouts) */
     return layout !== 'floatingLocalVideo' ? putVideoParticipantsFirst(remoteParticipants) : videoParticipants;
     return videoParticipants;
   };
@@ -85,14 +79,12 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
           maxDominantSpeakers: maxRemoteVideoStreamsToUse
         }).slice(0, maxRemoteVideoStreamsToUse);
 
-  /* @conditional-compile-remove(gallery-layouts) */
   const dominantSpeakerToGrid =
     layout === 'speaker'
       ? dominantSpeakers && dominantSpeakers[0]
         ? visibleGridParticipants.current.filter((p) => p.userId === dominantSpeakers[0])
         : [visibleGridParticipants.current[0]]
       : [];
-  /* @conditional-compile-remove(gallery-layouts) */
   if (dominantSpeakerToGrid[0]) {
     visibleGridParticipants.current = dominantSpeakerToGrid;
   }

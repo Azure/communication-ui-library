@@ -150,6 +150,10 @@ export class MockCallAdapter implements CallAdapter {
   stopSpotlight(): Promise<void> {
     throw Error('stopSpotlight not implemented');
   }
+  /* @conditional-compile-remove(spotlight) */
+  stopAllSpotlight(): Promise<void> {
+    throw Error('stopAllSpotlight not implemented');
+  }
 
   async setCamera(sourceInfo: VideoDeviceInfo): Promise<void> {
     this.modifyState((draft: CallAdapterState) => {

@@ -41,8 +41,6 @@ module.exports = {
     "teams-adhoc-call",
     // Joining calls using teams token
     "teams-identity-support",
-    // Chat teams interop to display images and file attachments in chat messages
-    "teams-inline-images-and-file-sharing",
     "unsupported-browser",
     // Support Calling SDK isReceiving flag, shows a loading spinner on the video tile when isAvailable is true but isReceiving is false
     "video-stream-is-receiving-flag",
@@ -62,10 +60,6 @@ module.exports = {
     "optimal-video-count",
     // Feature for capabilities
     "capabilities",
-    // Feature for custom video gallery layouts
-    "gallery-layouts",
-    // Feature image overlay
-    "image-overlay",
     // Feature for large Gallery layout
     "large-gallery",
     // feature for positioning the overflowGallery at the top of the screen in the composite
@@ -111,8 +105,6 @@ module.exports = {
     "gallery-layout-composite",
     // feature for hiding attendee name in the teams meeting
     "hide-attendee-name",
-    // custom branding for the composites
-    "custom-branding",
     // Feature for end of call survey
     'end-of-call-survey',
     // Feature for PPT Live for teams meeting
@@ -143,8 +135,6 @@ module.exports = {
     "optimal-video-count",
     // raise hands feature
     "raise-hand",
-    // Feature for gallery layouts
-    "gallery-layouts",
     // feature  for vertical overflow gallery
     "vertical-gallery",
     // API for injecting custom buttons in he control bar for
@@ -161,6 +151,12 @@ module.exports = {
     // Feature for updates needed for Click to Call (C2C) scenarios
     "click-to-call",
     // Feature for call transfer
-    "call-transfer"
+    "call-transfer",
+    // Feature image overlay
+    "image-overlay",
+    // Chat teams interop to display images and file attachments in chat messages
+    "teams-inline-images-and-file-sharing",
+    // custom branding for the composites
+    "custom-branding"
   ]
 }

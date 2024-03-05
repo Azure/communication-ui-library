@@ -23,14 +23,14 @@ import {
   onRenderCancelIcon,
   onRenderSubmitIcon
 } from '../utils/ChatMessageComponentAsEditBoxUtils';
-import { RichTextEditorComponentRef, RichTextEditorStyleProps } from '../RTE/RichTextEditor';
-import { RTEInputBoxComponent } from '../RTE/RTEInputBoxComponent';
+import { RichTextEditorComponentRef, RichTextEditorStyleProps } from '../RichTextEditor/RichTextEditor';
+import { RichTextInputBoxComponent } from '../RichTextEditor/RichTextInputBoxComponent';
 import { richTextActionButtonsStyle } from '../styles/RichTextEditor.styles';
-import { RTESendBoxErrors } from '../RTE/RTESendBoxErrors';
+import { RichTextSendBoxErrors } from '../RichTextEditor/RichTextSendBoxErrors';
 import { useLocale } from '../../localization';
 
-/** @private */
-export type ChatMessageComponentAsEditBoxProps = {
+/** @beta */
+export type ChatMessageComponentAsRichTextEditBoxProps = {
   onCancel?: (messageId: string) => void;
   onSubmit: (
     text: string,
@@ -45,9 +45,11 @@ export type ChatMessageComponentAsEditBoxProps = {
 };
 
 /**
- * @private
+ * @beta
  */
-export const ChatMessageComponentAsRichTextEditBox = (props: ChatMessageComponentAsEditBoxProps): JSX.Element => {
+export const ChatMessageComponentAsRichTextEditBox = (
+  props: ChatMessageComponentAsRichTextEditBoxProps
+): JSX.Element => {
   const { onCancel, onSubmit, strings, message } = props;
 
   const [textValue, setTextValue] = useState<string>(message.content || '');
@@ -152,8 +154,8 @@ export const ChatMessageComponentAsRichTextEditBox = (props: ChatMessageComponen
   const getContent = (): JSX.Element => {
     return (
       <Stack className={mergeStyles(editBoxWidthStyles)}>
-        <RTESendBoxErrors textTooLongMessage={textTooLongMessage} systemMessage={message.failureReason} />
-        <RTEInputBoxComponent
+        <RichTextSendBoxErrors textTooLongMessage={textTooLongMessage} systemMessage={message.failureReason} />
+        <RichTextInputBoxComponent
           placeholderText={strings.editBoxPlaceholderText}
           onChange={setText}
           editorComponentRef={editTextFieldRef}

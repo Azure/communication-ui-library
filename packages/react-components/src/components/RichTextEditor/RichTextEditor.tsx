@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-import React, { useCallback, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import React, { useCallback, useImperativeHandle, useMemo, useRef } from 'react';
 import { ContentEdit, Watermark } from 'roosterjs-editor-plugins';
 import { Editor } from 'roosterjs-editor-core';
 import type { EditorOptions, IEditor } from 'roosterjs-editor-types-compatible';
@@ -13,10 +13,9 @@ import {
   richTextEditorStyle
 } from '../styles/RichTextEditor.styles';
 import { useTheme } from '../../theming';
-import { ribbonButtons, ribbonButtonsStrings } from './RTERibbonButtons';
-import { RichTextSendBoxStrings } from './RTESendBox';
+import { ribbonButtons, ribbonButtonsStrings } from './RichTextRibbonButtons';
+import { RichTextSendBoxStrings } from './RichTextSendBox';
 import { isDarkThemed } from '../../theming/themeUtils';
-import { setBackgroundColor, setTextColor } from 'roosterjs-editor-api';
 
 /**
  * Props for {@link RichTextEditor}.

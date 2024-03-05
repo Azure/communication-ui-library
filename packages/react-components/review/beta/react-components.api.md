@@ -66,7 +66,7 @@ export type AnnouncerProps = {
 };
 
 // @beta
-export type AttachmentMetadata = FileMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ InlineImageMetadata;
+export type AttachmentMetadata = FileMetadata;
 
 // @internal
 export type _AudioIssue = 'NoLocalAudio' | 'NoRemoteAudio' | 'Echo' | 'AudioNoise' | 'LowVolume' | 'AudioStoppedUnexpectedly' | 'DistortedSpeech' | 'AudioInterruption' | 'OtherIssues';
@@ -468,8 +468,6 @@ export interface ChatMessage extends MessageCommon {
     failureReason?: string;
     // @beta
     files?: FileMetadata[];
-    // @beta
-    inlineImages?: InlineImageMetadata[];
     // (undocumented)
     messageType: 'chat';
     metadata?: Record<string, string>;
@@ -482,6 +480,19 @@ export interface ChatMessage extends MessageCommon {
     // (undocumented)
     status?: MessageStatus;
 }
+
+// @beta (undocumented)
+export const ChatMessageComponentAsRichTextEditBox: (props: ChatMessageComponentAsRichTextEditBoxProps) => JSX.Element;
+
+// @beta (undocumented)
+export type ChatMessageComponentAsRichTextEditBoxProps = {
+    onCancel?: (messageId: string) => void;
+    onSubmit: (text: string, metadata?: Record<string, string>, options?: {
+        attachmentMetadata?: FileMetadata[];
+    }) => void;
+    message: ChatMessage;
+    strings: MessageThreadStrings;
+};
 
 // @beta
 export interface CommonSitePermissionsProps {
@@ -841,14 +852,16 @@ export const DEFAULT_COMPONENT_ICONS: {
     StartSpotlightContextualMenuItem: React_2.JSX.Element;
     StopSpotlightContextualMenuItem: React_2.JSX.Element;
     VideoSpotlighted: React_2.JSX.Element;
-    RTEBoldButtonIcon: React_2.JSX.Element;
-    RTEItalicButtonIcon: React_2.JSX.Element;
-    RTEUnderlineButtonIcon: React_2.JSX.Element;
-    RTEBulletListButtonIcon: React_2.JSX.Element;
-    RTEtNumberListButtonIcon: React_2.JSX.Element;
-    RTEIndentDecreaseButtonIcon: React_2.JSX.Element;
-    RTEIndentIncreaseButtonIcon: React_2.JSX.Element;
-    RTEDividerIcon: React_2.JSX.Element;
+    RichTextBoldButtonIcon: React_2.JSX.Element;
+    RichTextItalicButtonIcon: React_2.JSX.Element;
+    RichTextUnderlineButtonIcon: React_2.JSX.Element;
+    RichTextBulletListButtonIcon: React_2.JSX.Element;
+    RichTextNumberListButtonIcon: React_2.JSX.Element;
+    RichTextIndentDecreaseButtonIcon: React_2.JSX.Element;
+    RichTextIndentIncreaseButtonIcon: React_2.JSX.Element;
+    RichTextDividerIcon: React_2.JSX.Element;
+    RichTextEditorButtonIcon: React_2.JSX.Element;
+    RichTextEditorButtonIconFilled: React_2.JSX.Element;
 };
 
 // @internal
@@ -1324,7 +1337,7 @@ export interface ImageOverlayProps {
     titleIcon?: JSX.Element;
 }
 
-// @beta
+// @public
 export interface ImageOverlayStrings {
     dismissButtonAriaLabel: string;
     downloadButtonLabel: string;
@@ -1337,17 +1350,6 @@ export const imageOverlayTheme: PartialTheme;
 export interface InlineImage {
     imgAttrs: React_2.ImgHTMLAttributes<HTMLImageElement>;
     messageId: string;
-}
-
-// @beta
-export interface InlineImageMetadata {
-    // (undocumented)
-    attachmentType: 'inlineImage';
-    fullSizeImageSrc?: string;
-    id: string;
-    // (undocumented)
-    previewUrl?: string;
-    url: string;
 }
 
 // @beta
@@ -1704,7 +1706,7 @@ export interface OptionsDevice {
 export type _OverallIssue = 'CallCannotJoin' | 'CallCannotInvite' | 'HadToRejoin' | 'CallEndedUnexpectedly' | 'OtherIssues';
 
 // @public
-export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | /* @conditional-compile-remove(gallery-layouts) */ 'horizontalTop';
+export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | 'horizontalTop';
 
 // @public
 export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
@@ -2018,6 +2020,7 @@ export interface RichTextSendBoxStrings extends SendBoxStrings {
     increaseIndentTooltip: string;
     italicTooltip: string;
     numberListTooltip: string;
+    richTextFormatButtonTooltip: string;
     underlineTooltip: string;
 }
 
@@ -2609,7 +2612,7 @@ export interface _VideoEffectsItemStyles {
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
 // @public (undocumented)
-export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | /* @conditional-compile-remove(gallery-layouts) */ 'speaker' | /* @conditional-compile-remove(large-gallery) */ 'largeGallery' | /* @conditional-compile-remove(gallery-layouts) */ 'focusedContent';
+export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | 'speaker' | /* @conditional-compile-remove(large-gallery) */ 'largeGallery' | 'focusedContent';
 
 // @public
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
