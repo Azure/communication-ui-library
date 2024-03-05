@@ -26,7 +26,7 @@ export const ExitSpotlightButton = (props: {
       data-ui-id={'call-composite-exit-spotlight-button'}
       labelKey={'exitSpotlightButtonLabelKey'}
       showLabel={props.displayType !== 'compact'}
-      onRenderIcon={() => <_HighContrastAwareIcon iconName={'StopSpotlightContextualMenuItem'} />}
+      onRenderIcon={() => <_HighContrastAwareIcon iconName={'ControlButtonExitSpotlight'} />}
       onClick={props.onClick}
       {...props}
     />

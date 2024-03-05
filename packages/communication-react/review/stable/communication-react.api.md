@@ -583,6 +583,7 @@ export interface CallCompositeStrings {
     participantJoinedNoticeString: string;
     participantLeftNoticeString: string;
     peopleButtonLabel: string;
+    peoplePaneMoreButtonAriaLabel: string;
     peoplePaneTitle: string;
     privacyPolicy: string;
     rejoinCallButtonLabel: string;
@@ -3535,7 +3536,7 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
 
 // @public
 export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
-    screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
+    screenShareParticipant?: VideoGalleryRemoteParticipant;
     localParticipant: VideoGalleryLocalParticipant;
     remoteParticipants: VideoGalleryRemoteParticipant[];
     dominantSpeakers?: string[];

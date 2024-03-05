@@ -211,6 +211,10 @@ export class _MockCallAdapter implements CallAdapter {
   stopSpotlight(userIds?: string[]): Promise<void> {
     throw Error('stopSpotlight not implemented');
   }
+  /* @conditional-compile-remove(spotlight) */
+  stopAllSpotlight(): Promise<void> {
+    throw Error('stopAllSpotlight not implemented');
+  }
 }
 
 /**

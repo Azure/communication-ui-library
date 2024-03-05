@@ -356,6 +356,7 @@ export interface CallAdapterCallOperations {
     startScreenShare(): Promise<void>;
     startSpotlight(userIds?: string[]): Promise<void>;
     startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
+    stopAllSpotlight(): Promise<void>;
     stopCamera(): Promise<void>;
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
@@ -593,6 +594,8 @@ export type CallCompositeIcons = {
     LargeGalleryLayout?: JSX.Element;
     DefaultCustomButton?: JSX.Element;
     DtmfDialpadButton?: JSX.Element;
+    PeoplePaneMoreButton?: JSX.Element;
+    StopAllSpotlightMenuButton?: JSX.Element;
 };
 
 // @public
@@ -760,6 +763,7 @@ export interface CallCompositeStrings {
     peopleButtonTooltipClose: string;
     peopleButtonTooltipOpen: string;
     peoplePaneAddPeopleButtonLabel: string;
+    peoplePaneMoreButtonAriaLabel: string;
     peoplePaneSubTitle: string;
     peoplePaneTitle: string;
     permissionToReachTargetParticipantNotAllowedMoreDetails?: string;
@@ -799,6 +803,7 @@ export interface CallCompositeStrings {
     startCaptionsButtonTooltipOffContent?: string;
     startCaptionsButtonTooltipOnContent?: string;
     startSpotlightParticipantListMenuLabel: string;
+    stopAllSpotlightMenuLabel: string;
     stopSpotlightOnSelfParticipantListMenuLabel: string;
     stopSpotlightParticipantListMenuLabel: string;
     surveyConfirmButtonLabel: string;
@@ -1048,6 +1053,7 @@ export interface CallWithChatAdapterManagement {
     startScreenShare(): Promise<void>;
     startSpotlight(userIds?: string[]): Promise<void>;
     startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
+    stopAllSpotlight(): Promise<void>;
     stopCamera(): Promise<void>;
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
@@ -1281,6 +1287,8 @@ export type CallWithChatCompositeIcons = {
     SendBoxAttachFile?: JSX.Element;
     ParticipantItemOptions?: JSX.Element;
     ParticipantItemOptionsHovered?: JSX.Element;
+    PeoplePaneMoreButton?: JSX.Element;
+    StopAllSpotlightMenuButton?: JSX.Element;
 };
 
 // @public
@@ -1961,6 +1969,8 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onStartSpotlight: (userIds?: string[]) => Promise<void>;
     // (undocumented)
+    onStopAllSpotlight: () => Promise<void>;
+    // (undocumented)
     onStopCaptions: () => Promise<void>;
     // (undocumented)
     onStopScreenShare: () => Promise<void>;
@@ -2573,6 +2583,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     LargeGalleryLayout?: JSX.Element | undefined;
     DefaultCustomButton?: JSX.Element | undefined;
     DtmfDialpadButton?: JSX.Element | undefined;
+    PeoplePaneMoreButton?: JSX.Element | undefined;
+    StopAllSpotlightMenuButton?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;
@@ -4529,7 +4541,7 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
 
 // @public
 export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
-    screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
+    screenShareParticipant?: VideoGalleryRemoteParticipant;
     localParticipant: VideoGalleryLocalParticipant;
     remoteParticipants: VideoGalleryRemoteParticipant[];
     dominantSpeakers?: string[];
