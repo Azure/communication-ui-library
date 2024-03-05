@@ -2,6 +2,23 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Tue, 05 Mar 2024 16:27:14 GMT",
+      "tag": "@azure/communication-react_v1.14.0-beta.2",
+      "version": "1.14.0-beta.2",
+      "comments": {
+        "none": [
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "8a4c9298a6ee94cb89002bca0fcd4fd9fd609cdb",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Creating change files so prerelease github action does not fail"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 26 Feb 2024 16:19:15 GMT",
       "tag": "@azure/communication-react_v1.14.0-beta.1",
       "version": "1.14.0-beta.1",
