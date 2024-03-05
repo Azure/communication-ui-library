@@ -6,7 +6,7 @@ import { SendBoxStylesProps, SendBox as SimpleSendBox } from '@internal/react-co
 import { usePropsFor } from '../ChatComposite/hooks/usePropsFor';
 import { ChatCompositeOptions } from '../ChatComposite';
 /* @conditional-compile-remove(rich-text-editor) */
-// import { Suspense } from 'react';
+import { Suspense } from 'react';
 /* @conditional-compile-remove(file-sharing) */
 import { ChatAdapter } from '../ChatComposite';
 /* @conditional-compile-remove(file-sharing) */
@@ -72,7 +72,11 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
 
   // /* @conditional-compile-remove(rich-text-editor) */
   if (options?.richTextEditor === true) {
-    return <RichTextSendBoxWrapper />;
+    return (
+      <Suspense fallback={simpleSendBox}>
+        <RichTextSendBoxWrapper />;
+      </Suspense>
+    );
   }
   return simpleSendBox;
 };
