@@ -4,6 +4,7 @@
 import { EventEmitter } from 'events';
 import { nanoid } from 'nanoid';
 import { _MAX_EVENT_LISTENERS } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(file-sharing) */
 import { AttachmentMetadata, FileMetadata } from '@internal/react-components';
 
 /**

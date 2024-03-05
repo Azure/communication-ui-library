@@ -55,6 +55,7 @@ export interface FileMetadata {
   payload?: Record<string, string>;
 }
 
+/* @conditional-compile-remove(file-sharing) */
 /**
  * Metadata containing information about the uploaded file.
  * @beta
@@ -82,6 +83,7 @@ export interface FileDownloadError {
   errorMessage: string;
 }
 
+/* @conditional-compile-remove(file-sharing) */
 /**
  * @beta
  *
@@ -166,13 +168,14 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
     [props.strings?.downloadFile, localeStrings.downloadFile]
   );
 
+  /* @conditional-compile-remove(file-sharing) */
   const isFileSharingAttachment = useCallback((attachment: AttachmentMetadata): boolean => {
     /* @conditional-compile-remove(file-sharing) */
     return attachment.attachmentType === 'file';
     return false;
   }, []);
 
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /* @conditional-compile-remove(file-sharing) */
   const isShowDownloadIcon = useCallback((attachment: AttachmentMetadata): boolean => {
     /* @conditional-compile-remove(file-sharing) */
     return attachment.attachmentType === 'file' && attachment.payload?.teamsFileAttachment !== 'true';
@@ -193,6 +196,7 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
     [props.strings?.fileCardGroupMessage, localeStrings.fileCardGroupMessage, fileMetadata, isFileSharingAttachment]
   );
 
+  /* @conditional-compile-remove(file-sharing) */
   const fileDownloadHandler = useCallback(
     async (userId: string, file: AttachmentMetadata) => {
       if (!props.downloadHandler) {
@@ -243,7 +247,7 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
                     showSpinner ? (
                       <Spinner size={SpinnerSize.medium} aria-live={'polite'} role={'status'} />
                     ) : true &&
-                      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ isShowDownloadIcon(
+                      /* @conditional-compile-remove(file-sharing) */ isShowDownloadIcon(
                         file as unknown as AttachmentMetadata
                       ) ? (
                       <IconButton className={iconButtonClassName} ariaLabel={downloadFileButtonString()}>
@@ -251,6 +255,7 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
                       </IconButton>
                     ) : undefined
                   }
+                  /* @conditional-compile-remove(file-sharing) */
                   actionHandler={() => fileDownloadHandler(userId, file as unknown as AttachmentMetadata)}
                 />
               </TooltipHost>

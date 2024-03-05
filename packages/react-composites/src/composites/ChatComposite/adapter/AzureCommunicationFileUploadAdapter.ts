@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+/* @conditional-compile-remove(file-sharing) */
 import { AttachmentMetadata } from '@internal/react-components';
 import { FileUploadManager, FileUploadState } from '../file-sharing';
 /* @conditional-compile-remove(file-sharing) */
@@ -23,11 +24,13 @@ export type FileUploadsUiState = Record<string, FileUploadState>;
  */
 export interface FileUploadAdapter {
   registerActiveFileUploads: (files: File[]) => FileUploadManager[];
+  /* @conditional-compile-remove(file-sharing) */
   registerCompletedFileUploads: (metadata: AttachmentMetadata[]) => FileUploadManager[];
   clearFileUploads: () => void;
   cancelFileUpload: (id: string) => void;
   updateFileUploadProgress: (id: string, progress: number) => void;
   updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
+  /* @conditional-compile-remove(file-sharing) */
   updateFileUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
 }
 
@@ -123,6 +126,7 @@ export class AzureCommunicationFileUploadAdapter implements FileUploadAdapter {
     this.deleteFileUploads(ids);
   }
 
+  /* @conditional-compile-remove(file-sharing) */
   private registerFileUploads(files: File[] | AttachmentMetadata[]): FileUploadManager[] {
     this.deleteErroneousFileUploads();
     const fileUploads: FileUpload[] = [];
@@ -137,6 +141,7 @@ export class AzureCommunicationFileUploadAdapter implements FileUploadAdapter {
     return this.registerFileUploads(files);
   }
 
+  /* @conditional-compile-remove(file-sharing) */
   registerCompletedFileUploads(metadata: AttachmentMetadata[]): FileUploadManager[] {
     return this.registerFileUploads(metadata);
   }
@@ -167,6 +172,7 @@ export class AzureCommunicationFileUploadAdapter implements FileUploadAdapter {
     });
   }
 
+  /* @conditional-compile-remove(file-sharing) */
   updateFileUploadMetadata(id: string, metadata: AttachmentMetadata): void {
     this.context.updateFileUpload(id, { progress: 1, metadata });
   }
