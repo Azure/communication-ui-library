@@ -148,7 +148,7 @@ export const Docs: () => JSX.Element = () => {
       </Description>
 
       <Heading>Custom Branding</Heading>
-      <SingleLineBetaBanner version="1.13.0-beta.1" />
+      <SingleLineBetaBanner version="1.14.0-beta.2" />
       <Description>
         Along with applying a Fluent Theme to style the composites, you can also inject your own custom branding. You
         can inject a background and logo into the Composite configuration page to present to your users. This is done by
