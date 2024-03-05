@@ -37,3 +37,11 @@ export const _preventDismissOnEvent = (
 ): boolean => {
   return ev.type === 'resize' || ev.type === 'scroll';
 };
+
+/**
+ * @internal
+ * Helper function to get the keys of an object
+ */
+export function _getKeys<T extends object>(obj: T): (keyof T)[] {
+  return Object.keys(obj) as Array<keyof T>;
+}

@@ -22,7 +22,7 @@ export const questionTextStyle = (theme: Theme): string =>
 /**
  * @private
  */
-export const surveyContainerStyle = (isMobile): string =>
+export const surveyContainerStyle = (isMobile: boolean): string =>
   mergeStyles(
     isMobile
       ? {

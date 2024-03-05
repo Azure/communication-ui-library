@@ -18,6 +18,7 @@ import { setLogLevel, AzureLogger } from '@azure/logger';
 import { DefaultButton, Dialog, DialogFooter, DialogType, Link, PrimaryButton, Spinner, Text } from '@fluentui/react';
 import React from 'react';
 import { useEffect } from 'react';
+// @ts-expect-error No types available inside this package that was last updated 9 years ago
 import Shake from 'shake.js';
 import { useIsMobile } from './useIsMobile';
 
@@ -35,12 +36,14 @@ const storeLog = (logType: string, log: string | undefined): void => {
   log && logs.push(`${logType} ${new Date().toISOString()} ${log}`.slice(0, logLineCharacterLimit));
 };
 
+type ConsoleLogFuncType = 'log' | 'warn' | 'error' | 'info' | 'debug';
+
 /**
  * Track console logs for pushing to a debug location.
  * This is particularly useful on mobile devices where the console is not easily accessible.
  */
 const startRecordingLogs = (): void => {
-  function hookLogType(logType: string, outputToConsole: boolean): (...args: unknown[]) => void {
+  function hookLogType(logType: ConsoleLogFuncType, outputToConsole: boolean): (...args: unknown[]) => void {
     const original = console[logType].bind(console);
     return function (...args: unknown[]) {
       storeLog(logType, safeJSONStringify(args));

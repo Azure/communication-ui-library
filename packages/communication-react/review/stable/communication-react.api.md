@@ -583,6 +583,7 @@ export interface CallCompositeStrings {
     participantJoinedNoticeString: string;
     participantLeftNoticeString: string;
     peopleButtonLabel: string;
+    peoplePaneMoreButtonAriaLabel: string;
     peoplePaneTitle: string;
     privacyPolicy: string;
     rejoinCallButtonLabel: string;
@@ -761,6 +762,8 @@ export interface CallWithChatAdapterManagement {
     disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
     disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+    // @beta (undocumented)
+    downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
     fetchInitialData(): Promise<void>;
     // @deprecated
     joinCall(microphoneOn?: boolean): Call | undefined;
@@ -774,6 +777,8 @@ export interface CallWithChatAdapterManagement {
     querySpeakers(): Promise<AudioDeviceInfo[]>;
     raiseHand(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
+    // @beta (undocumented)
+    removeResourceFromCache(resourceDetails: ResourceDetails): void;
     sendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
@@ -1273,9 +1278,11 @@ export interface ChatAdapterSubscribers {
 // @public
 export interface ChatAdapterThreadManagement {
     deleteMessage(messageId: string): Promise<void>;
+    downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
     fetchInitialData(): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     removeParticipant(userId: string): Promise<void>;
+    removeResourceFromCache(resourceDetails: ResourceDetails): void;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
@@ -1287,6 +1294,9 @@ export interface ChatAdapterThreadManagement {
 export type ChatAdapterUiState = {
     error?: Error;
 };
+
+// @beta
+export type ChatAttachmentType = 'unknown' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage';
 
 // @public
 export type ChatBaseSelectorProps = {
@@ -1408,6 +1418,8 @@ export interface ChatMessage extends MessageCommon {
     editedOn?: Date;
     // (undocumented)
     failureReason?: string;
+    // @beta
+    inlineImages?: InlineImageMetadata[];
     // (undocumented)
     messageType: 'chat';
     metadata?: Record<string, string>;
@@ -1425,6 +1437,7 @@ export interface ChatMessage extends MessageCommon {
 export type ChatMessageWithStatus = ChatMessage_2 & {
     clientMessageId?: string;
     status: MessageStatus;
+    resourceCache?: Record<string, string>;
 };
 
 // @public
@@ -1670,6 +1683,7 @@ export interface ComponentStrings {
     dialpad: DialpadStrings;
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
+    imageOverlay: ImageOverlayStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
     microphoneButton: MicrophoneButtonStrings;
@@ -2324,6 +2338,7 @@ export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Eleme
 export interface FluentThemeProviderProps {
     children: React_2.ReactNode;
     fluentTheme?: PartialTheme | Theme;
+    rootStyle?: React_2.CSSProperties | undefined;
     rtl?: boolean;
 }
 
@@ -2395,6 +2410,29 @@ export interface _Identifiers {
     videoTile: string;
 }
 
+// @beta
+export const ImageOverlay: (props: ImageOverlayProps) => JSX.Element;
+
+// @beta
+export interface ImageOverlayProps {
+    altText?: string;
+    imageSrc: string;
+    isOpen: boolean;
+    onDismiss: () => void;
+    onDownloadButtonClicked?: (imageSrc: string) => void;
+    title?: string;
+    titleIcon?: JSX.Element;
+}
+
+// @public
+export interface ImageOverlayStrings {
+    dismissButtonAriaLabel: string;
+    downloadButtonLabel: string;
+}
+
+// @beta
+export const imageOverlayTheme: PartialTheme;
+
 // @public
 export interface IncomingCallState {
     callEndReason?: CallEndReason;
@@ -2402,6 +2440,28 @@ export interface IncomingCallState {
     endTime?: Date;
     id: string;
     startTime: Date;
+}
+
+// @beta
+export interface InlineImage {
+    imgAttrs: React_2.ImgHTMLAttributes<HTMLImageElement>;
+    messageId: string;
+}
+
+// @beta
+export interface InlineImageMetadata {
+    // (undocumented)
+    attachmentType: 'inlineImage';
+    fullSizeImageSrc?: string;
+    id: string;
+    // (undocumented)
+    previewUrl?: string;
+    url: string;
+}
+
+// @beta
+export interface InlineImageOptions {
+    onRenderInlineImage?: (inlineImage: InlineImage, defaultOnRender: (inlineImage: InlineImage) => JSX.Element) => JSX.Element;
 }
 
 // @public
@@ -2618,6 +2678,7 @@ export type MessageThreadProps = {
     onSendMessage?: (content: string) => Promise<void>;
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
+    inlineImageOptions?: InlineImageOptions;
 };
 
 // @public
@@ -2637,6 +2698,7 @@ export interface MessageThreadStrings {
     editedTag: string;
     editMessage: string;
     failToSendTag?: string;
+    fileCardGroupMessage: string;
     friday: string;
     liveAuthorIntro: string;
     messageContentAriaText: string;
@@ -3020,6 +3082,13 @@ export interface RemoteVideoTileMenuOptions {
 }
 
 // @public
+export type ResourceDetails = {
+    threadId: string;
+    messageId: string;
+    resourceUrl: string;
+};
+
+// @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
 
 // @public
@@ -3201,9 +3270,12 @@ export type StatefulCallClientOptions = {
 
 // @public
 export interface StatefulChatClient extends ChatClient {
+    dispose(): void;
+    downloadResourceToCache(threadId: string, messageId: string, resourceUrl: string): void;
     getState(): ChatClientState;
     offStateChange(handler: (state: ChatClientState) => void): void;
     onStateChange(handler: (state: ChatClientState) => void): void;
+    removeResourceFromCache(threadId: string, messageId: string, resourceUrl: string): void;
 }
 
 // @public
@@ -3464,7 +3536,7 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
 
 // @public
 export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
-    screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
+    screenShareParticipant?: VideoGalleryRemoteParticipant;
     localParticipant: VideoGalleryLocalParticipant;
     remoteParticipants: VideoGalleryRemoteParticipant[];
     dominantSpeakers?: string[];

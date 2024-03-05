@@ -208,20 +208,20 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     return (
       <_FileDownloadCards
         userId={userId}
-        /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
+        /* @conditional-compile-remove(file-sharing) */
         fileMetadata={(message as ChatMessage).files || []}
         /* @conditional-compile-remove(file-sharing) */
         menuActions={fileCardMenuAction}
-        /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
+        /* @conditional-compile-remove(file-sharing) */
         strings={{ downloadFile: strings.downloadFile, fileCardGroupMessage: strings.fileCardGroupMessage }}
       />
     );
   }, [
     userId,
     message,
-    /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
+    /* @conditional-compile-remove(file-sharing) */
     strings,
-    /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
+    /* @conditional-compile-remove(file-sharing) */
     fileCardMenuAction
   ]);
 
