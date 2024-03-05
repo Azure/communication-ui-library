@@ -33,7 +33,13 @@ export type { ResourceDetails } from './adapter/ChatAdapter';
 export * from './Strings';
 
 /* @conditional-compile-remove(file-sharing) */
-export type { FileUploadHandler, FileUploadManager, FileUploadState, FileUploadError } from './file-sharing';
+export type {
+  FileUploadOptions,
+  FileUploadHandler,
+  FileUploadManager,
+  FileUploadState,
+  FileUploadError
+} from './file-sharing';
 /* @conditional-compile-remove(file-sharing) */
 export type { FileSharingOptions } from './ChatScreen';
 /* @conditional-compile-remove(file-sharing) */

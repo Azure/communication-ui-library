@@ -57,7 +57,7 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
     /* @conditional-compile-remove(mention) */
     mentionOptions,
     /* @conditional-compile-remove(file-sharing) */
-    fileDownloadHandler,
+    fileCardMenuAction,
     userId,
     /* @conditional-compile-remove(file-sharing) */
     onRenderFileDownloads,
@@ -102,7 +102,7 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
             /* @conditional-compile-remove(mention) */
             mentionOptions={mentionOptions}
             /* @conditional-compile-remove(file-sharing) */
-            fileDownloadHandler={fileDownloadHandler}
+            fileCardMenuAction={fileCardMenuAction}
           />
         );
       }
@@ -123,7 +123,7 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
       /* @conditional-compile-remove(mention) */
       mentionOptions,
       /* @conditional-compile-remove(file-sharing) */
-      fileDownloadHandler,
+      fileCardMenuAction,
       // eslint-disable-next-line react-hooks/exhaustive-deps
       new Date().toDateString()
     ]

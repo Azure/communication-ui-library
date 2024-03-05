@@ -86,6 +86,35 @@ export const GenerateMockNewChatMessageWithInlineImage = (): ChatMessage => {
   };
 };
 
+export const GenerateMockNewChatMessageWithFileAttachment = (): ChatMessage => {
+  return {
+    messageType: 'chat',
+    ...UserThree,
+    messageId: Math.random().toString(),
+    content: '<p>Check out these files:&nbsp;</p>',
+    createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
+    mine: false,
+    attached: false,
+    contentType: 'html',
+    files: [
+      {
+        id: 'SomeUniqueId1',
+        name: 'Annual Report.xlsx',
+        extension: 'xlsx',
+        url: 'https://www.example.com/files/RouterConfig.xlsx',
+        attachmentType: 'file'
+      },
+      {
+        id: 'SomeUniqueId2',
+        name: 'Business Report.pdf',
+        extension: 'pdf',
+        url: 'https://www.example.com/files/RouterConfig.xlsx',
+        attachmentType: 'file'
+      }
+    ]
+  };
+};
+
 export const GenerateMockNewChatMessageWithMention = (): ChatMessage => {
   return {
     messageType: 'chat',

@@ -44,6 +44,8 @@ export type { InlineImageOptions, InlineImage } from './ChatMessage/ChatMessageC
 
 /* @conditional-compile-remove(file-sharing) */
 export type { ActiveFileUpload } from './FileUploadCards';
+/* @conditional-compile-remove(file-sharing) */
+export type { FileCardMenuAction, FileDownloadOptions } from './FileDownloadCards';
 
 export { MessageStatusIndicator } from './MessageStatusIndicator';
 export type { MessageStatusIndicatorProps, MessageStatusIndicatorStrings } from './MessageStatusIndicator';

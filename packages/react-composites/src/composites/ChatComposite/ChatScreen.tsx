@@ -13,6 +13,7 @@ import {
   MessageRenderer,
   MessageThread,
   MessageThreadStyles,
+  FileDownloadOptions,
   ParticipantMenuItemsCallback,
   SendBox,
   SendBoxStylesProps,
@@ -30,8 +31,7 @@ import { AvatarPersona, AvatarPersonaDataCallback, AvatarPersonaProps } from '..
 import { useAdapter } from './adapter/ChatAdapterProvider';
 import { ChatCompositeOptions } from './ChatComposite';
 import { ChatHeader, getHeaderProps } from './ChatHeader';
-import { FileDownloadHandler } from '@internal/react-components';
-import { FileUploadButtonWrapper as FileUploadButton, FileUploadHandler } from './file-sharing';
+import { FileUploadButtonWrapper as FileUploadButton, FileUploadOptions } from './file-sharing';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
 
@@ -71,7 +71,7 @@ export type ChatScreenProps = {
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   styles?: ChatScreenStyles;
   hasFocusOnMount?: 'sendBoxTextField';
-  fileSharing?: FileSharingOptions;
+  fileSharingOptions?: FileSharingOptions;
   formFactor?: 'desktop' | 'mobile';
 };
 
@@ -85,35 +85,11 @@ export type ChatScreenStyles = {
 };
 
 /**
- * Properties for configuring the File Sharing feature.
  * @beta
  */
 export interface FileSharingOptions {
-  /**
-   * A string containing the comma separated list of accepted file types.
-   * Similar to the `accept` attribute of the `<input type="file" />` element.
-   * Accepts any type of file if not specified.
-   * @beta
-   */
-  accept?: string;
-  /**
-   * Allows multiple files to be selected if set to `true`.
-   * Similar to the `multiple` attribute of the `<input type="file" />` element.
-   * @defaultValue false
-   * @beta
-   */
-  multiple?: boolean;
-  /**
-   * A function of type {@link FileUploadHandler} for handling file uploads.
-   * @beta
-   */
-  uploadHandler: FileUploadHandler;
-  /**
-   * A function of type {@link FileDownloadHandler} for handling file downloads.
-   * If the function is not specified, the file's `url` will be opened in a new tab to
-   * initiate the download.
-   */
-  downloadHandler?: FileDownloadHandler;
+  uploadOptions?: FileUploadOptions;
+  downloadOptions?: FileDownloadOptions;
 }
 
 /**
@@ -138,7 +114,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     onRenderTypingIndicator,
     options,
     styles,
-    fileSharing,
+    fileSharingOptions,
     formFactor
   } = props;
 
@@ -242,9 +218,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       /* @conditional-compile-remove(file-sharing) */
       const fileUploads = adapter.registerActiveFileUploads(Array.from(files));
       /* @conditional-compile-remove(file-sharing) */
-      fileSharing?.uploadHandler(userId, fileUploads);
+      fileSharingOptions?.uploadOptions?.handler(userId, fileUploads);
     },
-    [adapter, fileSharing, userId]
+    [adapter, fileSharingOptions, userId]
   );
 
   /* @conditional-compile-remove(file-sharing) */
@@ -253,13 +229,13 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       <_FileDownloadCards
         userId={userId}
         fileMetadata={message.files || []}
-        downloadHandler={fileSharing?.downloadHandler}
+        menuActions={fileSharingOptions?.downloadOptions?.menuActions}
         onDownloadErrorMessage={(errorMessage: string) => {
           setDownloadErrorMessage(errorMessage);
         }}
       />
     ),
-    [fileSharing?.downloadHandler]
+    [fileSharingOptions?.downloadOptions?.menuActions]
   );
 
   /* @conditional-compile-remove(image-overlay) */
@@ -363,17 +339,22 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   );
 
   const AttachFileButton = useCallback(() => {
-    if (!fileSharing?.uploadHandler) {
+    if (!fileSharingOptions?.uploadOptions?.handler) {
       return null;
     }
     return (
       <FileUploadButton
-        accept={fileSharing?.accept}
-        multiple={fileSharing?.multiple}
+        accept={fileSharingOptions?.uploadOptions?.accept}
+        multiple={fileSharingOptions?.uploadOptions?.multiple}
         onChange={fileUploadButtonOnChange}
       />
     );
-  }, [fileSharing?.accept, fileSharing?.multiple, fileSharing?.uploadHandler, fileUploadButtonOnChange]);
+  }, [
+    fileSharingOptions?.uploadOptions?.accept,
+    fileSharingOptions?.uploadOptions?.multiple,
+    fileSharingOptions?.uploadOptions?.handler,
+    fileUploadButtonOnChange
+  ]);
   return (
     <Stack className={chatContainer} grow>
       {options?.topic !== false && <ChatHeader {...headerProps} />}
@@ -397,6 +378,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             onRenderFileDownloads={onRenderFileDownloads}
             /* @conditional-compile-remove(image-overlay) */
             inlineImageOptions={inlineImageOptions}
+            fileCardMenuActions={fileSharingOptions?.downloadOptions?.menuActions}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
           />

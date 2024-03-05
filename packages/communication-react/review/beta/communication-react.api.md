@@ -1284,7 +1284,7 @@ export type CallWithChatCompositeIcons = {
 // @public
 export type CallWithChatCompositeOptions = {
     callControls?: boolean | CallWithChatControlOptions;
-    fileSharing?: FileSharingOptions;
+    fileSharingOptions?: FileSharingOptions;
     deviceChecks?: DeviceCheckOptions;
     onPermissionsTroubleshootingClick?: (permissionsState: {
         camera: PermissionState;
@@ -1700,7 +1700,7 @@ export type ChatCompositeOptions = {
     participantPane?: boolean;
     topic?: boolean;
     autoFocus?: 'sendBoxTextField';
-    fileSharing?: FileSharingOptions;
+    fileSharingOptions?: FileSharingOptions;
 };
 
 // @public
@@ -2844,13 +2844,26 @@ export interface ErrorBarStrings {
 // @public
 export type ErrorType = keyof ErrorBarStrings;
 
+// @beta (undocumented)
+export interface FileCardMenuAction {
+    // (undocumented)
+    icon: JSX.Element;
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    onClick: (file: FileMetadata | ActiveFileUpload, userId?: string) => void;
+}
+
 // @beta
 export interface FileDownloadError {
     errorMessage: string;
 }
 
-// @beta
-export type FileDownloadHandler = (userId: string, fileMetadata: AttachmentMetadata) => Promise<URL | FileDownloadError>;
+// @beta (undocumented)
+export interface FileDownloadOptions {
+    // (undocumented)
+    menuActions: FileCardMenuAction[];
+}
 
 // @beta
 export interface FileMetadata {
@@ -2864,12 +2877,12 @@ export interface FileMetadata {
     url: string;
 }
 
-// @beta
+// @beta (undocumented)
 export interface FileSharingOptions {
-    accept?: string;
-    downloadHandler?: FileDownloadHandler;
-    multiple?: boolean;
-    uploadHandler: FileUploadHandler;
+    // (undocumented)
+    downloadOptions?: FileDownloadOptions;
+    // (undocumented)
+    uploadOptions?: FileUploadOptions;
 }
 
 // @beta (undocumented)
@@ -2906,6 +2919,13 @@ export interface FileUploadManager {
     notifyUploadCompleted: (metadata: AttachmentMetadata) => void;
     notifyUploadFailed: (message: string) => void;
     notifyUploadProgressChanged: (value: number) => void;
+}
+
+// @beta (undocumented)
+export interface FileUploadOptions {
+    accept?: string;
+    handler: FileUploadHandler;
+    multiple?: boolean;
 }
 
 // @beta
@@ -3327,7 +3347,7 @@ export type MessageThreadProps = {
     onSendMessage?: (content: string) => Promise<void>;
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
-    fileDownloadHandler?: FileDownloadHandler;
+    fileCardMenuActions?: FileCardMenuAction[];
     onDisplayDateTimeString?: (messageDate: Date) => string;
     mentionOptions?: MentionOptions;
     inlineImageOptions?: InlineImageOptions;

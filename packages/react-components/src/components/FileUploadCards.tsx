@@ -5,7 +5,7 @@ import { Icon, IconButton } from '@fluentui/react';
 import React from 'react';
 import { _FileCard } from './FileCard';
 import { _FileCardGroup } from './FileCardGroup';
-import { extension } from './utils';
+// import { extension } from './utils';
 import { iconButtonClassName } from './styles/IconButton.styles';
 import { useMemo } from 'react';
 import { useLocaleFileCardStringsTrampoline } from './utils/common';
@@ -109,19 +109,22 @@ export const _FileUploadCards = (props: FileUploadCardsProps): JSX.Element => {
           .filter((file) => !file.error)
           .map((file) => (
             <_FileCard
-              fileName={file.filename}
+              file={file}
               progress={file.progress}
               key={file.id}
-              fileExtension={extension(file.filename)}
-              actionIcon={
-                <IconButton className={iconButtonClassName} ariaLabel={removeFileButtonString()}>
-                  <Icon iconName="CancelFileUpload" style={actionIconStyle} />
-                </IconButton>
-              }
-              actionHandler={() => {
-                props.onCancelFileUpload && props.onCancelFileUpload(file.id);
-              }}
-              strings={props.strings}
+              menuActions={[
+                {
+                  name: 'remove',
+                  icon: (
+                    <IconButton className={iconButtonClassName} ariaLabel={removeFileButtonString()}>
+                      <Icon iconName="CancelFileUpload" style={actionIconStyle} />
+                    </IconButton>
+                  ),
+                  onClick: () => {
+                    props.onCancelFileUpload && props.onCancelFileUpload(file.id);
+                  }
+                }
+              ]}
             />
           ))}
     </_FileCardGroup>

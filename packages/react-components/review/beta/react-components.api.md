@@ -851,6 +851,9 @@ export const DEFAULT_COMPONENT_ICONS: {
     RTEDividerIcon: React_2.JSX.Element;
 };
 
+// @beta (undocumented)
+export const defaultFileDownloadOptions: FileCardMenuAction;
+
 // @internal
 export interface _DeviceMenuProps {
     // (undocumented)
@@ -1148,14 +1151,26 @@ export interface _FileCardGroupProps {
     children: React_2.ReactNode;
 }
 
+// @beta (undocumented)
+export interface FileCardMenuAction {
+    // (undocumented)
+    icon: JSX.Element;
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    onClick: (file: FileMetadata | ActiveFileUpload, userId?: string) => void;
+}
+
 // @internal
 export interface _FileCardProps {
-    actionHandler?: () => void;
-    actionIcon?: JSX.Element;
-    fileExtension: string;
-    fileName: string;
+    file: FileMetadata | ActiveFileUpload;
+    // (undocumented)
+    menuActions: FileCardMenuAction[];
+    // (undocumented)
     progress?: number;
     strings?: _FileUploadCardsStrings;
+    // (undocumented)
+    userId?: string;
 }
 
 // @internal (undocumented)
@@ -1163,8 +1178,8 @@ export const _FileDownloadCards: (props: _FileDownloadCardsProps) => JSX.Element
 
 // @internal (undocumented)
 export interface _FileDownloadCardsProps {
-    downloadHandler?: FileDownloadHandler;
     fileMetadata?: AttachmentMetadata[];
+    menuActions?: FileCardMenuAction[];
     onDownloadErrorMessage?: (errMsg: string) => void;
     strings?: _FileDownloadCardsStrings;
     userId: string;
@@ -1182,8 +1197,11 @@ export interface FileDownloadError {
     errorMessage: string;
 }
 
-// @beta
-export type FileDownloadHandler = (userId: string, fileMetadata: AttachmentMetadata) => Promise<URL | FileDownloadError>;
+// @beta (undocumented)
+export interface FileDownloadOptions {
+    // (undocumented)
+    menuActions: FileCardMenuAction[];
+}
 
 // @beta
 export interface FileMetadata {
@@ -1570,7 +1588,7 @@ export type MessageThreadProps = {
     onSendMessage?: (content: string) => Promise<void>;
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
-    fileDownloadHandler?: FileDownloadHandler;
+    fileCardMenuActions?: FileCardMenuAction[];
     onDisplayDateTimeString?: (messageDate: Date) => string;
     mentionOptions?: MentionOptions;
     inlineImageOptions?: InlineImageOptions;

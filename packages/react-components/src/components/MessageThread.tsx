@@ -33,7 +33,7 @@ import { useLocale } from '../localization/LocalizationProvider';
 import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
 import getParticipantsWhoHaveReadMessage from './utils/getParticipantsWhoHaveReadMessage';
 /* @conditional-compile-remove(file-sharing) */
-import { FileDownloadHandler } from './FileDownloadCards';
+import { FileCardMenuAction } from './FileDownloadCards';
 /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AttachmentMetadata } from './FileDownloadCards';
 import { useTheme } from '../theming';
@@ -512,15 +512,7 @@ export type MessageThreadProps = {
    */
   strings?: Partial<MessageThreadStrings>;
 
-  /* @conditional-compile-remove(file-sharing) */
-  /**
-   * @beta
-   * Optional function called when someone clicks on the file download icon.
-   * If file attachments are defined in the `message.metadata` property using the `fileSharingMetadata` key,
-   * this function will be called with the data inside `fileSharingMetadata` key.
-   */
-  fileDownloadHandler?: FileDownloadHandler;
-
+  fileCardMenuActions?: FileCardMenuAction[];
   /* @conditional-compile-remove(date-time-customization) */
   /**
    * Optional function to provide customized date format.
@@ -1120,7 +1112,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
                   readCount={readCountForHoveredIndicator}
                   participantCount={participantCount}
                   /* @conditional-compile-remove(file-sharing) */
-                  fileDownloadHandler={props.fileDownloadHandler}
+                  fileCardMenuAction={props.fileCardMenuActions}
                   /* @conditional-compile-remove(image-overlay) */
                   inlineImageOptions={inlineImageOptions}
                   /* @conditional-compile-remove(date-time-customization) */

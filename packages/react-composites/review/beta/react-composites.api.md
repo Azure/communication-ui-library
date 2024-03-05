@@ -35,7 +35,7 @@ import { CreateVideoStreamViewResult } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
 import { DtmfTone } from '@azure/communication-calling';
 import { EnvironmentInfo } from '@azure/communication-calling';
-import { FileDownloadHandler } from '@internal/react-components';
+import { FileDownloadOptions } from '@internal/react-components';
 import type { FileMetadata } from '@internal/react-components';
 import { GroupCallLocator } from '@azure/communication-calling';
 import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
@@ -988,7 +988,7 @@ export type CallWithChatCompositeIcons = {
 // @public
 export type CallWithChatCompositeOptions = {
     callControls?: boolean | CallWithChatControlOptions;
-    fileSharing?: FileSharingOptions;
+    fileSharingOptions?: FileSharingOptions;
     deviceChecks?: DeviceCheckOptions;
     onPermissionsTroubleshootingClick?: (permissionsState: {
         camera: PermissionState;
@@ -1192,7 +1192,7 @@ export type ChatCompositeOptions = {
     participantPane?: boolean;
     topic?: boolean;
     autoFocus?: 'sendBoxTextField';
-    fileSharing?: FileSharingOptions;
+    fileSharingOptions?: FileSharingOptions;
 };
 
 // @public
@@ -1643,12 +1643,12 @@ export interface _FakeChatAdapters {
     };
 }
 
-// @beta
+// @beta (undocumented)
 export interface FileSharingOptions {
-    accept?: string;
-    downloadHandler?: FileDownloadHandler;
-    multiple?: boolean;
-    uploadHandler: FileUploadHandler;
+    // (undocumented)
+    downloadOptions?: FileDownloadOptions;
+    // (undocumented)
+    uploadOptions?: FileUploadOptions;
 }
 
 // @beta (undocumented)
@@ -1685,6 +1685,13 @@ export interface FileUploadManager {
     notifyUploadCompleted: (metadata: AttachmentMetadata) => void;
     notifyUploadFailed: (message: string) => void;
     notifyUploadProgressChanged: (value: number) => void;
+}
+
+// @beta (undocumented)
+export interface FileUploadOptions {
+    accept?: string;
+    handler: FileUploadHandler;
+    multiple?: boolean;
 }
 
 // @beta

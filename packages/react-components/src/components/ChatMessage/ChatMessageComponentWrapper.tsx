@@ -7,8 +7,6 @@ import { MessageProps, MessageRenderer, MessageThreadStyles, _ChatMessageProps }
 import { ChatMessage, OnRenderAvatarCallback } from '../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types';
-/* @conditional-compile-remove(file-sharing) */
-import { FileDownloadHandler } from '../FileDownloadCards';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from '../MentionPopover';
 import { MessageStatusIndicatorProps } from '../MessageStatusIndicator';
@@ -16,6 +14,7 @@ import { FluentChatMessageComponentWrapper } from './FluentChatMessageComponentW
 import { DefaultSystemMessage } from './DefaultSystemMessage';
 /* @conditional-compile-remove(image-overlay) */
 import { InlineImageOptions } from './ChatMessageContent';
+import { FileCardMenuAction } from '../FileDownloadCards';
 
 /**
  * Props for {@link ChatMessageComponentWrapper}
@@ -53,7 +52,7 @@ export type ChatMessageComponentWrapperProps = _ChatMessageProps & {
     ) => void
   ) => void;
   /* @conditional-compile-remove(file-sharing) */
-  fileDownloadHandler?: FileDownloadHandler;
+  fileCardMenuAction?: FileCardMenuAction[];
   /* @conditional-compile-remove(date-time-customization) */
   onDisplayDateTimeString?: (messageDate: Date) => string;
   /* @conditional-compile-remove(image-overlay) */

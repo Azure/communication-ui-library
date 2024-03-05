@@ -83,7 +83,7 @@ export type ChatCompositeOptions = {
    * If undefined, file sharing feature will be disabled.
    * @beta
    */
-  fileSharing?: FileSharingOptions;
+  fileSharingOptions?: FileSharingOptions;
 };
 
 /**
@@ -117,7 +117,7 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
             onRenderMessage={onRenderMessage}
             onFetchParticipantMenuItems={onFetchParticipantMenuItems}
             /* @conditional-compile-remove(file-sharing) */
-            fileSharing={options?.fileSharing}
+            fileSharingOptions={options?.fileSharingOptions}
           />
         </ChatAdapterProvider>
       </BaseProvider>

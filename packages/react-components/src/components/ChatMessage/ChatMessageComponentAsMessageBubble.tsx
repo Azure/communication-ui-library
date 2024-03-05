@@ -27,8 +27,7 @@ import { MessageThreadStrings } from '../MessageThread';
 import { chatMessageActionMenuProps } from './ChatMessageActionMenu';
 import { ComponentSlotStyle, OnRenderAvatarCallback } from '../../types';
 /* @conditional-compile-remove(file-sharing) */
-import { FileDownloadHandler } from '../FileDownloadCards';
-import { _FileDownloadCards } from '../FileDownloadCards';
+import { FileCardMenuAction, _FileDownloadCards } from '../FileDownloadCards';
 import { ComponentLocale, useLocale } from '../../localization';
 /* @conditional-compile-remove(mention) */
 import { MentionDisplayOptions } from '../MentionPopover';
@@ -69,10 +68,7 @@ type ChatMessageComponentAsMessageBubbleProps = {
    */
   onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
   /* @conditional-compile-remove(file-sharing) */
-  /**
-   * Optional function called when someone clicks on the file download icon.
-   */
-  fileDownloadHandler?: FileDownloadHandler;
+  fileCardMenuAction?: FileCardMenuAction[];
   remoteParticipantsCount?: number;
   onActionButtonClick: (
     message: ChatMessage,
@@ -152,7 +148,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     showMessageStatus,
     messageStatus,
     /* @conditional-compile-remove(file-sharing) */
-    fileDownloadHandler,
+    fileCardMenuAction,
     /* @conditional-compile-remove(image-overlay) */
     inlineImageOptions,
     shouldOverlapAvatarAndMessage
@@ -215,7 +211,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
         /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
         fileMetadata={(message as ChatMessage).files || []}
         /* @conditional-compile-remove(file-sharing) */
-        downloadHandler={fileDownloadHandler}
+        menuActions={fileCardMenuAction}
         /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
         strings={{ downloadFile: strings.downloadFile, fileCardGroupMessage: strings.fileCardGroupMessage }}
       />
@@ -226,7 +222,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
     strings,
     /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
-    fileDownloadHandler
+    fileCardMenuAction
   ]);
 
   const editedOn = 'editedOn' in message ? message.editedOn : undefined;

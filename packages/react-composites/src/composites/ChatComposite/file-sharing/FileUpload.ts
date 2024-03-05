@@ -5,6 +5,32 @@ import { EventEmitter } from 'events';
 import { nanoid } from 'nanoid';
 import { _MAX_EVENT_LISTENERS } from '@internal/acs-ui-common';
 import { AttachmentMetadata, FileMetadata } from '@internal/react-components';
+import { FileUploadHandler } from './FileUploadHandler';
+
+/**
+ * @beta
+ */
+export interface FileUploadOptions {
+  /**
+   * A string containing the comma separated list of accepted file types.
+   * Similar to the `accept` attribute of the `<input type="file" />` element.
+   * Accepts any type of file if not specified.
+   * @beta
+   */
+  accept?: string;
+  /**
+   * Allows multiple files to be selected if set to `true`.
+   * Similar to the `multiple` attribute of the `<input type="file" />` element.
+   * @defaultValue false
+   * @beta
+   */
+  multiple?: boolean;
+  /**
+   * A function of type {@link FileUploadHandler} for handling file uploads.
+   * @beta
+   */
+  handler: FileUploadHandler;
+}
 
 /**
  * Contains the state attributes of a file upload like name, progress etc.

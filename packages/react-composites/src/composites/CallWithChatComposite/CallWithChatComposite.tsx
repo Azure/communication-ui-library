@@ -49,8 +49,7 @@ import { SidePaneHeader } from '../common/SidePaneHeader';
 import { CallControlOptions } from '../CallComposite/types/CallControlOptions';
 import { useUnreadMessagesTracker } from './ChatButton/useUnreadMessagesTracker';
 /* @conditional-compile-remove(gallery-layouts) */
-import { VideoGalleryLayout } from '@internal/react-components';
-
+import { VideoGalleryLayout} from '@internal/react-components';
 /**
  * Props required for the {@link CallWithChatComposite}
  *
@@ -110,7 +109,7 @@ export type CallWithChatCompositeOptions = {
    * If undefined, file sharing feature will be disabled.
    * @beta
    */
-  fileSharing?: FileSharingOptions;
+  fileSharingOptions?: FileSharingOptions;
   /* @conditional-compile-remove(call-readiness) */
   /**
    * Device permissions check options for your call.
@@ -287,7 +286,7 @@ type CallWithChatScreenProps = {
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   /* @conditional-compile-remove(file-sharing) */
-  fileSharing?: FileSharingOptions;
+  fileSharingOptions?: FileSharingOptions;
   rtl?: boolean;
   /* @conditional-compile-remove(call-readiness) */
   deviceChecks?: DeviceCheckOptions;
@@ -586,14 +585,14 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
           /* @conditional-compile-remove(chat-composite-participant-pane) */
           participantPane: false,
           /* @conditional-compile-remove(file-sharing) */
-          fileSharing: props.fileSharing
+          fileSharingOptions: props.fileSharingOptions
         }}
         onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
       />
     ),
     [
       chatAdapter,
-      /* @conditional-compile-remove(file-sharing) */ props.fileSharing,
+      /* @conditional-compile-remove(file-sharing) */ props.fileSharingOptions,
       props.onFetchAvatarPersonaData,
       theme
     ]
@@ -696,7 +695,7 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         fluentTheme={fluentTheme}
         remoteVideoTileMenuOptions={options?.remoteVideoTileMenuOptions}
         /* @conditional-compile-remove(file-sharing) */
-        fileSharing={options?.fileSharing}
+        fileSharingOptions={options?.fileSharingOptions}
         /* @conditional-compile-remove(click-to-call) */
         localVideoTile={options?.localVideoTile}
         /* @conditional-compile-remove(gallery-layouts) */

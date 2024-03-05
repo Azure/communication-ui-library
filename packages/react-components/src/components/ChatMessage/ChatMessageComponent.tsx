@@ -9,7 +9,7 @@ import { ChatMessage, ComponentSlotStyle, OnRenderAvatarCallback } from '../../t
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types';
 import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMessageBubble';
-import { FileDownloadHandler, AttachmentMetadata } from '../FileDownloadCards';
+import { AttachmentMetadata, FileCardMenuAction } from '../FileDownloadCards';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from '../MentionPopover';
 /* @conditional-compile-remove(image-overlay) */
@@ -58,10 +58,8 @@ type ChatMessageComponentProps = {
    * Optional callback to render uploaded files in the message component.
    */
   onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
-  /**
-   * Optional function called when someone clicks on the file download icon.
-   */
-  fileDownloadHandler?: FileDownloadHandler;
+  /* @conditional-compile-remove(file-sharing) */
+  fileCardMenuAction?: FileCardMenuAction[];
   remoteParticipantsCount?: number;
   onActionButtonClick: (
     message: ChatMessage,

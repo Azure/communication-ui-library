@@ -1,15 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Icon, IconButton, Spinner, SpinnerSize, TooltipHost } from '@fluentui/react';
-import React, { useCallback, useState } from 'react';
+import { Icon /*, IconButton, Spinner, SpinnerSize , TooltipHost*/ } from '@fluentui/react';
+import React, { useCallback /*, useState*/ } from 'react';
 import { useMemo } from 'react';
 /* @conditional-compile-remove(file-sharing) */
 import { useLocale } from '../localization';
 import { _FileCard } from './FileCard';
 import { _FileCardGroup } from './FileCardGroup';
-import { iconButtonClassName } from './styles/IconButton.styles';
+// import { iconButtonClassName } from './styles/IconButton.styles';
 import { _formatString } from '@internal/acs-ui-common';
+import { ActiveFileUpload } from './FileUploadCards';
+import { Open24Filled, Open24Regular } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
@@ -105,6 +107,33 @@ export interface _FileDownloadCardsStrings {
 
 /**
  * @beta
+ */
+export interface FileDownloadOptions {
+  menuActions: FileCardMenuAction[];
+}
+
+/**
+ * @beta
+ */
+export interface FileCardMenuAction {
+  name: string;
+  icon: JSX.Element;
+  onClick: (file: FileMetadata | ActiveFileUpload, userId?: string) => void;
+}
+
+/**
+ * @beta
+ */
+export const defaultFileDownloadOptions: FileCardMenuAction = {
+  name: 'preview',
+  icon: <Open24Regular />,
+  onClick: (file: FileMetadata | ActiveFileUpload, userId?: string) => {
+    window.open((file as FileMetadata).url, '_blank', 'noopener,noreferrer');
+  }
+};
+
+/**
+ * @beta
  * A file download error returned via a {@link FileDownloadHandler}.
  * This error message is used to render an error message in the UI.
  */
@@ -112,41 +141,6 @@ export interface FileDownloadError {
   /** The error message to display in the UI */
   errorMessage: string;
 }
-
-/**
- * @beta
- *
- * A callback function for handling file downloads.
- * The function needs to return a promise that resolves to a file download URL.
- * If the promise is rejected, the {@link Error.message} will be used to display an error message to the user.
- *
- * @example
- * ```ts
- * const fileDownloadHandler: FileDownloadHandler = async (userId, fileData) => {
- *   if (isUnauthorizedUser(userId)) {
- *     return { errorMessage: 'You don’t have permission to download this file.' };
- *   } else {
- *     return new URL(fileData.url);
- *   }
- * }
- *
- * const App = () => (
- *   <ChatComposite
- *     ...
- *     fileSharing={{
- *       fileDownloadHandler: fileDownloadHandler
- *     }}
- *   />
- * )
- *
- * ```
- * @param userId - The user ID of the user downloading the file.
- * @param fileMetadata - The {@link AttachmentMetadata} containing file `url`, `extension` and `name`.
- */
-export type FileDownloadHandler = (
-  userId: string,
-  fileMetadata: AttachmentMetadata
-) => Promise<URL | FileDownloadError>;
 
 /**
  * @internal
@@ -161,11 +155,9 @@ export interface _FileDownloadCardsProps {
    */
   fileMetadata?: AttachmentMetadata[];
   /**
-   * A function of type {@link FileDownloadHandler} for handling file downloads.
-   * If the function is not specified, the file's `url` will be opened in a new tab to
-   * initiate the download.
+   * Optional callback to handle file download
    */
-  downloadHandler?: FileDownloadHandler;
+  menuActions?: FileCardMenuAction[];
   /**
    * Optional callback that runs if downloadHandler returns {@link FileDownloadError}.
    */
@@ -176,26 +168,27 @@ export interface _FileDownloadCardsProps {
   strings?: _FileDownloadCardsStrings;
 }
 
-const fileDownloadCardsStyle = {
+/*const fileDownloadCardsStyle = {
   marginTop: '0.25rem'
-};
+};*/
 
-const actionIconStyle = { height: '1rem' };
+// const actionIconStyle = { height: '1rem' };
 
 /**
  * @internal
  */
 export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element => {
   const { userId, fileMetadata } = props;
-  const [showSpinner, setShowSpinner] = useState(false);
+  // const [showSpinner, setShowSpinner] = useState(false);
   const localeStrings = useLocaleStringsTrampoline();
 
+  /*
   const downloadFileButtonString = useMemo(
     () => () => {
       return props.strings?.downloadFile ?? localeStrings.downloadFile;
     },
     [props.strings?.downloadFile, localeStrings.downloadFile]
-  );
+  );*/
 
   const isFileSharingAttachment = useCallback((attachment: AttachmentMetadata): boolean => {
     /* @conditional-compile-remove(file-sharing) */
@@ -204,11 +197,12 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
   }, []);
 
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  const isShowDownloadIcon = useCallback((attachment: AttachmentMetadata): boolean => {
-    /* @conditional-compile-remove(file-sharing) */
-    return attachment.attachmentType === 'file' && attachment.payload?.teamsFileAttachment !== 'true';
-    return true;
-  }, []);
+
+  // const isShowDownloadIcon = useCallback((attachment: AttachmentMetadata): boolean => {
+  /* @conditional-compile-remove(file-sharing) */
+  //   return attachment.attachmentType === 'file' && attachment.payload?.teamsFileAttachment !== 'true';
+  //   return true;
+  // }, []);
 
   const fileCardGroupDescription = useMemo(
     () => () => {
@@ -224,27 +218,6 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
     [props.strings?.fileCardGroupMessage, localeStrings.fileCardGroupMessage, fileMetadata, isFileSharingAttachment]
   );
 
-  const fileDownloadHandler = useCallback(
-    async (userId: string, file: AttachmentMetadata) => {
-      if (!props.downloadHandler) {
-        window.open(file.url, '_blank', 'noopener,noreferrer');
-      } else {
-        setShowSpinner(true);
-        try {
-          const response = await props.downloadHandler(userId, file);
-          setShowSpinner(false);
-          if (response instanceof URL) {
-            window.open(response.toString(), '_blank', 'noopener,noreferrer');
-          } else {
-            props.onDownloadErrorMessage && props.onDownloadErrorMessage(response.errorMessage);
-          }
-        } finally {
-          setShowSpinner(false);
-        }
-      }
-    },
-    [props]
-  );
   if (
     !fileMetadata ||
     fileMetadata.length === 0 ||
@@ -254,7 +227,7 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
   }
 
   return (
-    <div style={fileDownloadCardsStyle} data-ui-id="file-download-card-group">
+    <div data-ui-id="file-download-card-group">
       <_FileCardGroup ariaLabel={fileCardGroupDescription()}>
         {fileMetadata &&
           fileMetadata
@@ -265,26 +238,12 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
             })
             .map((file) => file as unknown as FileMetadata)
             .map((file) => (
-              <TooltipHost content={downloadFileButtonString()} key={file.name}>
-                <_FileCard
-                  fileName={file.name}
-                  key={file.name}
-                  fileExtension={file.extension}
-                  actionIcon={
-                    showSpinner ? (
-                      <Spinner size={SpinnerSize.medium} aria-live={'polite'} role={'status'} />
-                    ) : true &&
-                      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ isShowDownloadIcon(
-                        file as unknown as AttachmentMetadata
-                      ) ? (
-                      <IconButton className={iconButtonClassName} ariaLabel={downloadFileButtonString()}>
-                        <DownloadIconTrampoline />
-                      </IconButton>
-                    ) : undefined
-                  }
-                  actionHandler={() => fileDownloadHandler(userId, file as unknown as AttachmentMetadata)}
-                />
-              </TooltipHost>
+              <_FileCard
+                file={file}
+                userId={userId}
+                key={file.name}
+                menuActions={props.menuActions ?? [defaultFileDownloadOptions]}
+              />
             ))}
       </_FileCardGroup>
     </div>
@@ -294,12 +253,14 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
 /**
  * @private
  */
+/*
 const DownloadIconTrampoline = (): JSX.Element => {
   // @conditional-compile-remove(file-sharing)
   return <Icon data-ui-id="file-download-card-download-icon" iconName="DownloadFile" style={actionIconStyle} />;
   // Return _some_ available icon, as the real icon is beta-only.
   return <Icon iconName="EditBoxCancel" style={actionIconStyle} />;
 };
+*/
 
 const useLocaleStringsTrampoline = (): _FileDownloadCardsStrings => {
   /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/

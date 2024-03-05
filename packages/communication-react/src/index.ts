@@ -328,7 +328,8 @@ export type {
 export type {
   ActiveFileUpload,
   SendBoxErrorBarError,
-  FileDownloadHandler,
+  FileCardMenuAction,
+  FileDownloadOptions,
   FileDownloadError
 } from '../../react-components/src';
 /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
