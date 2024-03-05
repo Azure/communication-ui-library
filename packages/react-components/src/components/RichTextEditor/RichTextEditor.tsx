@@ -136,7 +136,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
           initialContent={initialContent}
           inDarkMode={isDarkThemed(theme)}
           plugins={plugins}
-          className={richTextEditorStyle({ minHeight: props.styles.minHeight, maxHeight: props.styles.maxHeight })}
+          className={richTextEditorStyle(props.styles)}
           editorCreator={editorCreator}
           // TODO: confirm the color during inline images implementation
           imageSelectionBorderColor={'blue'}
