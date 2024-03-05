@@ -1438,8 +1438,6 @@ export interface ChatMessage extends MessageCommon {
     editedOn?: Date;
     // (undocumented)
     failureReason?: string;
-    // @beta
-    inlineImages?: InlineImageMetadata[];
     // (undocumented)
     messageType: 'chat';
     metadata?: Record<string, string>;
@@ -2466,17 +2464,6 @@ export interface IncomingCallState {
 export interface InlineImage {
     imgAttrs: React_2.ImgHTMLAttributes<HTMLImageElement>;
     messageId: string;
-}
-
-// @beta
-export interface InlineImageMetadata {
-    // (undocumented)
-    attachmentType: 'inlineImage';
-    fullSizeImageSrc?: string;
-    id: string;
-    // (undocumented)
-    previewUrl?: string;
-    url: string;
 }
 
 // @beta
