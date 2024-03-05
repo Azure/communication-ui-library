@@ -7,7 +7,7 @@ settings:
 dependencies:
   '@azure/communication-calling':
     specifier: ^1.22.1
-    version: 1.22.2
+    version: 1.22.3
   '@azure/communication-chat':
     specifier: ^1.4.0
     version: 1.4.0
@@ -91,12 +91,12 @@ packages:
   /@actions/core@1.10.1:
     resolution: {integrity: sha512-3lBR9EDAY+iYIpTnTIXmWcNbX3T2kCkAEQGIQx4NVQ0575nk2k3GRZDTPQG+vVtS2izSLmINlxXf0uLtnrTP+g==}
     dependencies:
-      '@actions/http-client': 2.2.0
+      '@actions/http-client': 2.2.1
       uuid: 8.3.2
     dev: false
 
-  /@actions/http-client@2.2.0:
-    resolution: {integrity: sha512-q+epW0trjVUUHboliPb4UF9g2msf+w61b32tAkFEwL/IwP0DQWgbCMM0Hbe3e3WXSKz5VcUXbzJQgy8Hkra/Lg==}
+  /@actions/http-client@2.2.1:
+    resolution: {integrity: sha512-KhC/cZsq7f8I4LfZSJKgCvEwfkE8o1538VoBeoGzokVLLnbFDEAdFD3UhoMklxo2un9NJVBdANOresx7vTHlHw==}
     dependencies:
       tunnel: 0.0.6
       undici: 5.28.3
@@ -106,12 +106,12 @@ packages:
     resolution: {integrity: sha512-rE0Pygv0sEZ4vBWHlAgJLGDU7Pm8xoO6p3wsEceb7GYAjScrOHpEo8KK/eVkAcnSM+slAEtXjA2JpdjLp4fJQQ==}
     dev: false
 
-  /@ampproject/remapping@2.2.1:
-    resolution: {integrity: sha512-lFMjJTrFL3j7L9yBxwYfCq2k6qqwHyzuUl/XBnif78PWTJYyL/dfowQHWE3sp6U6ZzqWiiIZnpTMO96zhkjwtg==}
+  /@ampproject/remapping@2.3.0:
+    resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
     dependencies:
-      '@jridgewell/gen-mapping': 0.3.4
-      '@jridgewell/trace-mapping': 0.3.23
+      '@jridgewell/gen-mapping': 0.3.5
+      '@jridgewell/trace-mapping': 0.3.25
     dev: false
 
   /@azure/abort-controller@1.1.0:
@@ -135,8 +135,8 @@ packages:
       events: 3.3.0
     dev: false
 
-  /@azure/communication-calling@1.22.2:
-    resolution: {integrity: sha512-dzpaImLMotFoLXVPcGYGxQiWBKM2QsIGDWZZYQSr4FMou0whH2+lxf7Fi8wBcTAyW6VGHDVKTjgehzs4URu6lA==}
+  /@azure/communication-calling@1.22.3:
+    resolution: {integrity: sha512-kRm5dvR8M1akG0ebON1QG6Fl4KqOV2/zc4WvYZ9YF69Zmmhw2BB5ULZp+YZTsWR+uOjR7Khu9kkGOdLow2nfCw==}
     dependencies:
       '@azure/communication-common': 2.3.0
       '@azure/logger': 1.0.4
@@ -402,7 +402,7 @@ packages:
       '@babel/core': ^7.0.0-0
     dependencies:
       '@babel/core': 7.24.0
-      '@jridgewell/trace-mapping': 0.3.23
+      '@jridgewell/trace-mapping': 0.3.25
       commander: 4.1.1
       convert-source-map: 2.0.0
       fs-readdir-recursive: 1.1.0
@@ -461,7 +461,7 @@ packages:
     resolution: {integrity: sha512-fQfkg0Gjkza3nf0c7/w6Xf34BW4YvzNfACRLmmb7XRLa6XHdR+K9AlJlxneFfWYf6uhOzuzZVTjF/8KfndZANw==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      '@ampproject/remapping': 2.2.1
+      '@ampproject/remapping': 2.3.0
       '@babel/code-frame': 7.23.5
       '@babel/generator': 7.23.6
       '@babel/helper-compilation-targets': 7.23.6
@@ -499,8 +499,8 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       '@babel/types': 7.24.0
-      '@jridgewell/gen-mapping': 0.3.4
-      '@jridgewell/trace-mapping': 0.3.23
+      '@jridgewell/gen-mapping': 0.3.5
+      '@jridgewell/trace-mapping': 0.3.25
       jsesc: 2.5.2
     dev: false
 
@@ -4061,7 +4061,7 @@ packages:
       '@jest/test-result': 29.7.0
       '@jest/transform': 29.7.0
       '@jest/types': 29.6.3
-      '@jridgewell/trace-mapping': 0.3.23
+      '@jridgewell/trace-mapping': 0.3.25
       '@types/node': 20.11.24
       chalk: 4.1.2
       collect-v8-coverage: 1.0.2
@@ -4095,7 +4095,7 @@ packages:
     resolution: {integrity: sha512-MHjT95QuipcPrpLM+8JMSzFx6eHp5Bm+4XeFDJlwsvVBjmKNiIAvasGK2fxz2WbGRlnvqehFbh07MMa7n3YJnw==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
-      '@jridgewell/trace-mapping': 0.3.23
+      '@jridgewell/trace-mapping': 0.3.25
       callsites: 3.1.0
       graceful-fs: 4.2.11
     dev: false
@@ -4149,7 +4149,7 @@ packages:
     dependencies:
       '@babel/core': 7.24.0
       '@jest/types': 29.6.3
-      '@jridgewell/trace-mapping': 0.3.23
+      '@jridgewell/trace-mapping': 0.3.25
       babel-plugin-istanbul: 6.1.1
       chalk: 4.1.2
       convert-source-map: 2.0.0
@@ -4189,13 +4189,13 @@ packages:
       chalk: 4.1.2
     dev: false
 
-  /@jridgewell/gen-mapping@0.3.4:
-    resolution: {integrity: sha512-Oud2QPM5dHviZNn4y/WhhYKSXksv+1xLEIsNrAbGcFzUN3ubqWRFT5gwPchNc5NuzILOU4tPBDTZ4VwhL8Y7cw==}
+  /@jridgewell/gen-mapping@0.3.5:
+    resolution: {integrity: sha512-IzL8ZoEDIBRWEzlCcRhOaCupYyN5gdIK+Q6fbFdPDg6HqX6jpkItn7DFIpW9LQzXG6Df9sA7+OKnq0qlz/GaQg==}
     engines: {node: '>=6.0.0'}
     dependencies:
       '@jridgewell/set-array': 1.2.1
       '@jridgewell/sourcemap-codec': 1.4.15
-      '@jridgewell/trace-mapping': 0.3.23
+      '@jridgewell/trace-mapping': 0.3.25
     dev: false
 
   /@jridgewell/resolve-uri@3.1.2:
@@ -4211,16 +4211,16 @@ packages:
   /@jridgewell/source-map@0.3.5:
     resolution: {integrity: sha512-UTYAUj/wviwdsMfzoSJspJxbkH5o1snzwX0//0ENX1u/55kkZZkcTZP6u9bwKGkv+dkk9at4m1Cpt0uY80kcpQ==}
     dependencies:
-      '@jridgewell/gen-mapping': 0.3.4
-      '@jridgewell/trace-mapping': 0.3.23
+      '@jridgewell/gen-mapping': 0.3.5
+      '@jridgewell/trace-mapping': 0.3.25
     dev: false
 
   /@jridgewell/sourcemap-codec@1.4.15:
     resolution: {integrity: sha512-eF2rxCRulEKXHTRiDrDy6erMYWqNw4LPdQ8UQA4huuxaQsVeRPFl2oM8oDGxMFhJUWZf9McpLtJasDDZb/Bpeg==}
     dev: false
 
-  /@jridgewell/trace-mapping@0.3.23:
-    resolution: {integrity: sha512-9/4foRoUKp8s96tSkh8DlAAc5A0Ty8vLXld+l9gjKKY6ckwI8G15f0hskGmuLZu78ZlGa1vtsfOa+lnB4vG6Jg==}
+  /@jridgewell/trace-mapping@0.3.25:
+    resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.4.15
@@ -4275,15 +4275,15 @@ packages:
     resolution: {integrity: sha512-H1rQc1ZOHANWBvPcW+JpGwr+juXSxM8Q8YCkm3GhZd8REu1fHR3z99CErO1p9pkcfcxZnMdIZdIsXkOHY0NilA==}
     dev: false
 
-  /@microsoft/api-documenter@7.23.33(@types/node@20.11.24):
-    resolution: {integrity: sha512-/atAbkxLt7/+gHocQZEcdMBwGi2V+L+rby12EOMPvzjoy1o7ZVZIc7W4OgUDYnL5fKw4SMWtNMFYtzkzDiaLWQ==}
+  /@microsoft/api-documenter@7.23.37(@types/node@20.11.24):
+    resolution: {integrity: sha512-8StaLn4tLGllcgXCNGnqQRLFcWT9JILv5dHm2rYDdMWDQulInNKJnc2P9rpcI5mrO+cKcIRl75kdq4QrI9zunw==}
     hasBin: true
     dependencies:
       '@microsoft/api-extractor-model': 7.28.13(@types/node@20.11.24)
       '@microsoft/tsdoc': 0.14.2
       '@rushstack/node-core-library': 4.0.2(@types/node@20.11.24)
       '@rushstack/terminal': 0.10.0(@types/node@20.11.24)
-      '@rushstack/ts-command-line': 4.18.0(@types/node@20.11.24)
+      '@rushstack/ts-command-line': 4.19.1(@types/node@20.11.24)
       js-yaml: 3.13.1
       resolve: 1.22.8
     transitivePeerDependencies:
@@ -4712,7 +4712,7 @@ packages:
       core-js-pure: 3.36.0
       error-stack-parser: 2.1.4
       find-up: 5.0.0
-      html-entities: 2.4.0
+      html-entities: 2.5.2
       loader-utils: 2.0.4
       react-refresh: 0.11.0
       schema-utils: 3.3.0
@@ -4738,7 +4738,7 @@ packages:
       estree-walker: 2.0.2
       glob: 8.1.0
       is-reference: 1.2.1
-      magic-string: 0.30.7
+      magic-string: 0.30.8
       rollup: 4.12.0
     dev: false
 
@@ -4947,8 +4947,8 @@ packages:
       - '@types/node'
     dev: false
 
-  /@rushstack/ts-command-line@4.18.0(@types/node@20.11.24):
-    resolution: {integrity: sha512-iq8+NCtnOhz4BR4hwmFCRzULmFd8hSbDqJWbdGG44t/fXMRsK3Drft1fiDkxWGPuD3V1x3RDYdXxAfJqKU3XpQ==}
+  /@rushstack/ts-command-line@4.19.1(@types/node@20.11.24):
+    resolution: {integrity: sha512-J7H768dgcpG60d7skZ5uSSwyCZs/S2HrWP1Ds8d1qYAyaaeJmpmmLr9BVw97RjFzmQPOYnoXcKA4GkqDCkduQg==}
     dependencies:
       '@rushstack/terminal': 0.10.0(@types/node@20.11.24)
       '@types/argparse': 1.0.38
@@ -7279,8 +7279,8 @@ packages:
       '@types/node': 20.11.24
     dev: false
 
-  /@types/uglify-js@3.17.4:
-    resolution: {integrity: sha512-Hm/T0kV3ywpJyMGNbsItdivRhYNCQQf1IIsYsXnoVPES4t+FMLyDe0/K+Ea7ahWtMtSNb22ZdY7MIyoD9rqARg==}
+  /@types/uglify-js@3.17.5:
+    resolution: {integrity: sha512-TU+fZFBTBcXj/GpDpDaBmgWk/gn96kMZ+uocaFUlV2f8a6WdMzzI44QBCmGcCiYR0Y6ZlNRiyUyKKt5nl/lbzQ==}
     dependencies:
       source-map: 0.6.1
     dev: false
@@ -7322,7 +7322,7 @@ packages:
     dependencies:
       '@types/node': 20.11.24
       '@types/tapable': 1.0.12
-      '@types/uglify-js': 3.17.4
+      '@types/uglify-js': 3.17.5
       '@types/webpack-sources': 3.2.3
       anymatch: 3.1.3
       source-map: 0.6.1
@@ -8201,6 +8201,17 @@ packages:
       is-string: 1.0.7
     dev: false
 
+  /array.prototype.findlast@1.2.4:
+    resolution: {integrity: sha512-BMtLxpV+8BD+6ZPFIWmnUBpQoy+A+ujcg4rhp2iwCRJYA7PEh2MS4NL3lz8EiDlLrJPp2hg9qWihr5pd//jcGw==}
+    engines: {node: '>= 0.4'}
+    dependencies:
+      call-bind: 1.0.7
+      define-properties: 1.2.1
+      es-abstract: 1.22.5
+      es-errors: 1.3.0
+      es-shim-unscopables: 1.0.2
+    dev: false
+
   /array.prototype.findlastindex@1.2.4:
     resolution: {integrity: sha512-hzvSHUshSpCflDR1QMUBLHGHP1VIEBegT4pix9H/Z92Xw3ySoy6c2qh7lJWTJnRJ8JCZ9bJNCgTyYaJGcJu6xQ==}
     engines: {node: '>= 0.4'}
@@ -8252,6 +8263,15 @@ packages:
       es-abstract: 1.22.5
       es-array-method-boxes-properly: 1.0.0
       is-string: 1.0.7
+    dev: false
+
+  /array.prototype.toreversed@1.1.2:
+    resolution: {integrity: sha512-wwDCoT4Ck4Cz7sLtgUmzR5UV3YF5mFHUlbChCzZBQZ+0m2cl/DH3tKgvphv1nKgFsJ48oCSg6p91q2Vm0I/ZMA==}
+    dependencies:
+      call-bind: 1.0.7
+      define-properties: 1.2.1
+      es-abstract: 1.22.5
+      es-shim-unscopables: 1.0.2
     dev: false
 
   /array.prototype.tosorted@1.1.3:
@@ -8364,7 +8384,7 @@ packages:
     hasBin: true
     dependencies:
       browserslist: 4.23.0
-      caniuse-lite: 1.0.30001591
+      caniuse-lite: 1.0.30001593
       normalize-range: 0.1.2
       num2fraction: 1.2.2
       picocolors: 0.2.1
@@ -8893,8 +8913,8 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001591
-      electron-to-chromium: 1.4.688
+      caniuse-lite: 1.0.30001593
+      electron-to-chromium: 1.4.692
       node-releases: 2.0.14
       update-browserslist-db: 1.0.13(browserslist@4.23.0)
     dev: false
@@ -9089,8 +9109,8 @@ packages:
     resolution: {integrity: sha512-dU+Tx2fsypxTgtLoE36npi3UqcjSSMNYfkqgmoEhtZrraP5VWq0K7FkWVTYa8eMPtnU/G2txVsfdCJTn9uzpuQ==}
     dev: false
 
-  /caniuse-lite@1.0.30001591:
-    resolution: {integrity: sha512-PCzRMei/vXjJyL5mJtzNiUCKP59dm8Apqc3PH8gJkMnMXZGox93RbE76jHsmLwmIo6/3nsYIpJtx0O7u5PqFuQ==}
+  /caniuse-lite@1.0.30001593:
+    resolution: {integrity: sha512-UWM1zlo3cZfkpBysd7AS+z+v007q9G1+fLTUU42rQnY6t2axoogPW/xol6T7juU5EUoOhML4WgBIdG+9yYqAjQ==}
     dev: false
 
   /capture-exit@2.0.0:
@@ -10487,8 +10507,8 @@ packages:
       jake: 10.8.7
     dev: false
 
-  /electron-to-chromium@1.4.688:
-    resolution: {integrity: sha512-3/tHg2ChPF00eukURIB8cSVt3/9oeS1oTUIEt3ivngBInUaEcBhG2VdyEDejhwQdR6SLqaiEAEc0dHS0V52pOw==}
+  /electron-to-chromium@1.4.692:
+    resolution: {integrity: sha512-d5rZRka9n2Y3MkWRN74IoAsxR0HK3yaAt7T50e3iT9VZmCCQDT3geXUO5ZRMhDToa1pkCeQXuNo+0g+NfDOVPA==}
     dev: false
 
   /elliptic@6.5.4:
@@ -10823,7 +10843,7 @@ packages:
       get-stdin: 6.0.0
     dev: false
 
-  /eslint-config-react-app@6.0.0(@typescript-eslint/eslint-plugin@6.21.0)(@typescript-eslint/parser@6.21.0)(eslint-plugin-flowtype@5.10.0)(eslint-plugin-import@2.29.1)(eslint-plugin-jsx-a11y@6.8.0)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.33.2)(eslint@7.32.0):
+  /eslint-config-react-app@6.0.0(@typescript-eslint/eslint-plugin@6.21.0)(@typescript-eslint/parser@6.21.0)(eslint-plugin-flowtype@5.10.0)(eslint-plugin-import@2.29.1)(eslint-plugin-jsx-a11y@6.8.0)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.34.0)(eslint@7.32.0):
     resolution: {integrity: sha512-bpoAAC+YRfzq0dsTk+6v9aHm/uqnDwayNAXleMypGl6CpxI9oXXscVHo4fk3eJPIn+rsbtNetB4r/ZIidFIE8A==}
     engines: {node: ^10.12.0 || >=12.0.0}
     peerDependencies:
@@ -10851,7 +10871,7 @@ packages:
       eslint-plugin-flowtype: 5.10.0(eslint@7.32.0)
       eslint-plugin-import: 2.29.1(eslint@7.32.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@7.32.0)
-      eslint-plugin-react: 7.33.2(eslint@7.32.0)
+      eslint-plugin-react: 7.34.0(eslint@7.32.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@7.32.0)
     dev: false
 
@@ -11037,14 +11057,16 @@ packages:
       eslint: 7.32.0
     dev: false
 
-  /eslint-plugin-react@7.33.2(eslint@7.32.0):
-    resolution: {integrity: sha512-73QQMKALArI8/7xGLNI/3LylrEYrlKZSb5C9+q3OtOewTnMQi5cT+aE9E41sLCmli3I9PGGmD1yiZydyo4FEPw==}
+  /eslint-plugin-react@7.34.0(eslint@7.32.0):
+    resolution: {integrity: sha512-MeVXdReleBTdkz/bvcQMSnCXGi+c9kvy51IpinjnJgutl3YTHWsDdke7Z1ufZpGfDG8xduBDKyjtB9JH1eBKIQ==}
     engines: {node: '>=4'}
     peerDependencies:
       eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8
     dependencies:
       array-includes: 3.1.7
+      array.prototype.findlast: 1.2.4
       array.prototype.flatmap: 1.3.2
+      array.prototype.toreversed: 1.1.2
       array.prototype.tosorted: 1.1.3
       doctrine: 2.1.0
       es-iterator-helpers: 1.0.17
@@ -12503,8 +12525,8 @@ packages:
       whatwg-encoding: 2.0.0
     dev: false
 
-  /html-entities@2.4.0:
-    resolution: {integrity: sha512-igBTJcNNNhvZFRtm8uA6xMY6xYleeDwn3PeBCkDz7tHttv4F2hsDI2aPgNERWzvRcNYHNT3ymRaQzllmXj4YsQ==}
+  /html-entities@2.5.2:
+    resolution: {integrity: sha512-K//PSRMQk4FZ78Kyau+mZurHn3FH0Vwr+H36eE0rPbeYkRRi9YxceYPhuN60UwWorxyKHhqoAJl2OFKa4BVtaA==}
     dev: false
 
   /html-escaper@2.0.2:
@@ -14554,8 +14576,8 @@ packages:
     hasBin: true
     dev: false
 
-  /magic-string@0.30.7:
-    resolution: {integrity: sha512-8vBuFF/I/+OSLRmdf2wwFCJCz+nSn0m6DPvGH1fS/KiQoSaR+sETbov0eIk9KhEKy8CYqIkIAnbohxT/4H0kuA==}
+  /magic-string@0.30.8:
+    resolution: {integrity: sha512-ISQTe55T2ao7XtlAStud6qwYPZjE4GK1S/BeVPus4jrq6JuOnQ00YKQC581RWhR122W7msZV263KzVeLoqidyQ==}
     engines: {node: '>=12'}
     dependencies:
       '@jridgewell/sourcemap-codec': 1.4.15
@@ -18499,7 +18521,7 @@ packages:
       uglify-js:
         optional: true
     dependencies:
-      '@jridgewell/trace-mapping': 0.3.23
+      '@jridgewell/trace-mapping': 0.3.25
       jest-worker: 27.5.1
       schema-utils: 3.3.0
       serialize-javascript: 6.0.2
@@ -19434,7 +19456,7 @@ packages:
     resolution: {integrity: sha512-/EH/sDgxU2eGxajKdwLCDmQ4FWq+kpi3uCmBGpw1xJtnAxEjlD8j8PEiGWpCIMIs3ciNAgH0d3TTJiUkYzyZjA==}
     engines: {node: '>=10.12.0'}
     dependencies:
-      '@jridgewell/trace-mapping': 0.3.23
+      '@jridgewell/trace-mapping': 0.3.25
       '@types/istanbul-lib-coverage': 2.0.6
       convert-source-map: 2.0.0
     dev: false
@@ -19742,7 +19764,7 @@ packages:
       default-gateway: 6.0.3
       express: 4.18.3
       graceful-fs: 4.2.11
-      html-entities: 2.4.0
+      html-entities: 2.5.2
       http-proxy-middleware: 2.0.6(@types/express@4.17.21)
       ipaddr.js: 2.1.0
       launch-editor: 2.6.1
@@ -19778,7 +19800,7 @@ packages:
     resolution: {integrity: sha512-khZGfAeJx6I8K9zKohEWWYN6KDlVw2DHownoe+6Vtwj1LP9WFgegXnVMSkZ/dBEBtXFwrkkydsaPFlB7f8wU2A==}
     dependencies:
       ansi-html-community: 0.0.8
-      html-entities: 2.4.0
+      html-entities: 2.5.2
       strip-ansi: 6.0.1
     dev: false
 
@@ -20322,7 +20344,7 @@ packages:
       '@azure/logger': 1.0.4
       '@babel/cli': 7.23.9(@babel/core@7.24.0)
       '@babel/core': 7.24.0
-      '@microsoft/api-documenter': 7.23.33(@types/node@20.11.24)
+      '@microsoft/api-documenter': 7.23.37(@types/node@20.11.24)
       '@microsoft/api-extractor': 7.40.6(@types/node@20.11.24)
       '@types/jest': 29.5.12
       '@types/react': 18.2.57
@@ -20362,12 +20384,12 @@ packages:
     name: '@rush-temp/calling-component-bindings'
     version: 0.0.0
     dependencies:
-      '@azure/communication-calling': 1.22.2
+      '@azure/communication-calling': 1.22.3
       '@azure/communication-calling-effects': 1.0.1
       '@azure/communication-common': 2.3.1
       '@babel/cli': 7.23.9(@babel/core@7.24.0)
       '@babel/core': 7.24.0
-      '@microsoft/api-documenter': 7.23.33(@types/node@20.11.24)
+      '@microsoft/api-documenter': 7.23.37(@types/node@20.11.24)
       '@microsoft/api-extractor': 7.40.6(@types/node@20.11.24)
       '@types/jest': 29.5.12
       '@types/react': 18.2.57
@@ -20409,13 +20431,13 @@ packages:
     name: '@rush-temp/calling-stateful-client'
     version: 0.0.0
     dependencies:
-      '@azure/communication-calling': 1.22.2
+      '@azure/communication-calling': 1.22.3
       '@azure/communication-common': 2.3.1
       '@azure/core-auth': 1.6.0
       '@azure/logger': 1.0.4
       '@babel/cli': 7.23.9(@babel/core@7.24.0)
       '@babel/core': 7.24.0
-      '@microsoft/api-documenter': 7.23.33(@types/node@20.11.24)
+      '@microsoft/api-documenter': 7.23.37(@types/node@20.11.24)
       '@microsoft/api-extractor': 7.40.6(@types/node@20.11.24)
       '@types/jest': 29.5.12
       '@types/react': 18.2.57
@@ -20457,7 +20479,7 @@ packages:
     version: 0.0.0
     dependencies:
       '@azure/abort-controller': 1.1.0
-      '@azure/communication-calling': 1.22.2
+      '@azure/communication-calling': 1.22.3
       '@azure/communication-common': 2.3.1
       '@azure/communication-identity': 1.3.0
       '@azure/logger': 1.0.4
@@ -20486,13 +20508,13 @@ packages:
       env-cmd: 10.1.0
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0(eslint@7.32.0)
-      eslint-config-react-app: 6.0.0(@typescript-eslint/eslint-plugin@6.21.0)(@typescript-eslint/parser@6.21.0)(eslint-plugin-flowtype@5.10.0)(eslint-plugin-import@2.29.1)(eslint-plugin-jsx-a11y@6.8.0)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.33.2)(eslint@7.32.0)
+      eslint-config-react-app: 6.0.0(@typescript-eslint/eslint-plugin@6.21.0)(@typescript-eslint/parser@6.21.0)(eslint-plugin-flowtype@5.10.0)(eslint-plugin-import@2.29.1)(eslint-plugin-jsx-a11y@6.8.0)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.34.0)(eslint@7.32.0)
       eslint-plugin-flowtype: 5.10.0(eslint@7.32.0)
       eslint-plugin-header: 3.1.1(eslint@7.32.0)
       eslint-plugin-import: 2.29.1(eslint@7.32.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@7.32.0)
       eslint-plugin-prettier: 3.4.1(eslint-config-prettier@6.15.0)(eslint@7.32.0)(prettier@2.3.1)
-      eslint-plugin-react: 7.33.2(eslint@7.32.0)
+      eslint-plugin-react: 7.34.0(eslint@7.32.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@7.32.0)
       follow-redirects: 1.15.3
       html-webpack-plugin: 5.6.0(webpack@5.89.0)
@@ -20548,7 +20570,7 @@ packages:
     version: 0.0.0
     dependencies:
       '@azure/abort-controller': 1.1.0
-      '@azure/communication-calling': 1.22.2
+      '@azure/communication-calling': 1.22.3
       '@azure/communication-chat': 1.4.0
       '@azure/communication-common': 2.3.1
       '@azure/communication-identity': 1.3.0
@@ -20579,13 +20601,13 @@ packages:
       env-cmd: 10.1.0
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0(eslint@7.32.0)
-      eslint-config-react-app: 6.0.0(@typescript-eslint/eslint-plugin@6.21.0)(@typescript-eslint/parser@6.21.0)(eslint-plugin-flowtype@5.10.0)(eslint-plugin-import@2.29.1)(eslint-plugin-jsx-a11y@6.8.0)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.33.2)(eslint@7.32.0)
+      eslint-config-react-app: 6.0.0(@typescript-eslint/eslint-plugin@6.21.0)(@typescript-eslint/parser@6.21.0)(eslint-plugin-flowtype@5.10.0)(eslint-plugin-import@2.29.1)(eslint-plugin-jsx-a11y@6.8.0)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.34.0)(eslint@7.32.0)
       eslint-plugin-flowtype: 5.10.0(eslint@7.32.0)
       eslint-plugin-header: 3.1.1(eslint@7.32.0)
       eslint-plugin-import: 2.29.1(eslint@7.32.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@7.32.0)
       eslint-plugin-prettier: 3.4.1(eslint-config-prettier@6.15.0)(eslint@7.32.0)(prettier@2.3.1)
-      eslint-plugin-react: 7.33.2(eslint@7.32.0)
+      eslint-plugin-react: 7.34.0(eslint@7.32.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@7.32.0)
       html-webpack-plugin: 5.6.0(webpack@5.89.0)
       husky: 8.0.3
@@ -20642,7 +20664,7 @@ packages:
       '@azure/core-paging': 1.5.0
       '@babel/cli': 7.23.9(@babel/core@7.24.0)
       '@babel/core': 7.24.0
-      '@microsoft/api-documenter': 7.23.33(@types/node@20.11.24)
+      '@microsoft/api-documenter': 7.23.37(@types/node@20.11.24)
       '@microsoft/api-extractor': 7.40.6(@types/node@20.11.24)
       '@types/jest': 29.5.12
       '@types/react': 18.2.57
@@ -20686,7 +20708,7 @@ packages:
       '@azure/logger': 1.0.4
       '@babel/cli': 7.23.9(@babel/core@7.24.0)
       '@babel/core': 7.24.0
-      '@microsoft/api-documenter': 7.23.33(@types/node@20.11.24)
+      '@microsoft/api-documenter': 7.23.37(@types/node@20.11.24)
       '@microsoft/api-extractor': 7.40.6(@types/node@20.11.24)
       '@types/jest': 29.5.12
       '@types/react': 18.2.57
@@ -20755,13 +20777,13 @@ packages:
       env-cmd: 10.1.0
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0(eslint@7.32.0)
-      eslint-config-react-app: 6.0.0(@typescript-eslint/eslint-plugin@6.21.0)(@typescript-eslint/parser@6.21.0)(eslint-plugin-flowtype@5.10.0)(eslint-plugin-import@2.29.1)(eslint-plugin-jsx-a11y@6.8.0)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.33.2)(eslint@7.32.0)
+      eslint-config-react-app: 6.0.0(@typescript-eslint/eslint-plugin@6.21.0)(@typescript-eslint/parser@6.21.0)(eslint-plugin-flowtype@5.10.0)(eslint-plugin-import@2.29.1)(eslint-plugin-jsx-a11y@6.8.0)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.34.0)(eslint@7.32.0)
       eslint-plugin-flowtype: 5.10.0(eslint@7.32.0)
       eslint-plugin-header: 3.1.1(eslint@7.32.0)
       eslint-plugin-import: 2.29.1(eslint@7.32.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@7.32.0)
       eslint-plugin-prettier: 3.4.1(eslint-config-prettier@6.15.0)(eslint@7.32.0)(prettier@2.3.1)
-      eslint-plugin-react: 7.33.2(eslint@7.32.0)
+      eslint-plugin-react: 7.34.0(eslint@7.32.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@7.32.0)
       html-webpack-plugin: 5.6.0(webpack@5.89.0)
       husky: 8.0.3
@@ -20853,11 +20875,11 @@ packages:
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-gdFUB9C+CBOdrGW2Bg8B0cwlor0atdAejLJMU2/KlUOBOZ99zLLrDVdktSIZxdbb/Z6efdz/rlbptYCsPs2sgg==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-F3DWhGP+LrFJSGJ798rD9jaY9Kjxxt4pYwjGqvrJxHlHjigbnTtRy4cSOR2FFKZw6qu8exJ7ul6SYewDuph+TA==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
-      '@azure/communication-calling': 1.22.2
+      '@azure/communication-calling': 1.22.3
       '@azure/communication-calling-effects': 1.0.1
       '@azure/communication-chat': 1.4.0
       '@azure/communication-common': 2.3.1
@@ -20876,7 +20898,7 @@ packages:
       '@fluentui/react-icons': 2.0.230(react@18.2.0)
       '@fluentui/react-window-provider': 2.2.18(@types/react@18.2.57)(react@18.2.0)
       '@griffel/react': 1.5.20(react@18.2.0)
-      '@microsoft/api-documenter': 7.23.33(@types/node@20.11.24)
+      '@microsoft/api-documenter': 7.23.37(@types/node@20.11.24)
       '@microsoft/api-extractor': 7.40.6(@types/node@20.11.24)
       '@rollup/plugin-json': 6.1.0(rollup@4.12.0)
       '@testing-library/jest-dom': 6.4.2(@types/jest@29.5.12)(jest@29.7.0)
@@ -20904,7 +20926,7 @@ packages:
       eslint-plugin-import: 2.29.1(eslint@7.32.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@7.32.0)
       eslint-plugin-prettier: 3.4.1(eslint-config-prettier@6.15.0)(eslint@7.32.0)(prettier@2.3.1)
-      eslint-plugin-react: 7.33.2(eslint@7.32.0)
+      eslint-plugin-react: 7.34.0(eslint@7.32.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@7.32.0)
       events: 3.3.0
       html-react-parser: 5.1.8(@types/react@18.2.57)(react@18.2.0)
@@ -20927,6 +20949,7 @@ packages:
       reselect: 4.1.8
       rimraf: 2.7.1
       rollup: 4.12.0
+      roosterjs-editor-api: 8.60.0
       roosterjs-editor-core: 8.60.0
       roosterjs-editor-plugins: 8.60.2
       roosterjs-editor-types-compatible: 8.60.0
@@ -20962,7 +20985,7 @@ packages:
     name: '@rush-temp/component-examples'
     version: 0.0.0
     dependencies:
-      '@azure/communication-calling': 1.22.2
+      '@azure/communication-calling': 1.22.3
       '@azure/communication-chat': 1.4.0
       '@azure/communication-common': 2.3.1
       '@azure/communication-identity': 1.3.0
@@ -20981,13 +21004,13 @@ packages:
       env-cmd: 10.1.0
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0(eslint@7.32.0)
-      eslint-config-react-app: 6.0.0(@typescript-eslint/eslint-plugin@6.21.0)(@typescript-eslint/parser@6.21.0)(eslint-plugin-flowtype@5.10.0)(eslint-plugin-import@2.29.1)(eslint-plugin-jsx-a11y@6.8.0)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.33.2)(eslint@7.32.0)
+      eslint-config-react-app: 6.0.0(@typescript-eslint/eslint-plugin@6.21.0)(@typescript-eslint/parser@6.21.0)(eslint-plugin-flowtype@5.10.0)(eslint-plugin-import@2.29.1)(eslint-plugin-jsx-a11y@6.8.0)(eslint-plugin-react-hooks@4.6.0)(eslint-plugin-react@7.34.0)(eslint@7.32.0)
       eslint-plugin-flowtype: 5.10.0(eslint@7.32.0)
       eslint-plugin-header: 3.1.1(eslint@7.32.0)
       eslint-plugin-import: 2.29.1(eslint@7.32.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@7.32.0)
       eslint-plugin-prettier: 3.4.1(eslint-config-prettier@6.15.0)(eslint@7.32.0)(prettier@2.3.1)
-      eslint-plugin-react: 7.33.2(eslint@7.32.0)
+      eslint-plugin-react: 7.34.0(eslint@7.32.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@7.32.0)
       html-webpack-plugin: 5.6.0(webpack@5.89.0)
       husky: 8.0.3
@@ -21098,7 +21121,7 @@ packages:
     dev: false
 
   file:projects/react-components.tgz:
-    resolution: {integrity: sha512-tviwHlWUrb//1/x0P2yM/y40AR18j9A7cGqOWZnHJVCM0WUW6QwChCFUXIhuWmH97vLOOnOjiaafvCuFZt+jpA==, tarball: file:projects/react-components.tgz}
+    resolution: {integrity: sha512-QeDaqnLKZmixh2W4Stz0ggYWizLngpCZtoGZWJ0NfYp7pBdoExZ4WChY8pmZgXzJ2qVhGNvOB2lY2rA8p/Ssjw==, tarball: file:projects/react-components.tgz}
     name: '@rush-temp/react-components'
     version: 0.0.0
     dependencies:
@@ -21113,7 +21136,7 @@ packages:
       '@fluentui/react-icons': 2.0.230(react@18.2.0)
       '@fluentui/react-window-provider': 2.2.18(@types/react@18.2.57)(react@18.2.0)
       '@griffel/react': 1.5.20(react@18.2.0)
-      '@microsoft/api-documenter': 7.23.33(@types/node@20.11.24)
+      '@microsoft/api-documenter': 7.23.37(@types/node@20.11.24)
       '@microsoft/api-extractor': 7.40.6(@types/node@20.11.24)
       '@playwright/experimental-ct-react': 1.39.0(@types/node@20.11.24)
       '@rollup/plugin-json': 6.1.0(rollup@4.12.0)
@@ -21150,7 +21173,7 @@ packages:
       eslint-plugin-jsdoc: 36.1.1(eslint@7.32.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@7.32.0)
       eslint-plugin-prettier: 3.4.1(eslint-config-prettier@6.15.0)(eslint@7.32.0)(prettier@2.3.1)
-      eslint-plugin-react: 7.33.2(eslint@7.32.0)
+      eslint-plugin-react: 7.34.0(eslint@7.32.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@7.32.0)
       html-react-parser: 5.1.8(@types/react@18.2.57)(react@18.2.0)
       husky: 8.0.3
@@ -21172,6 +21195,7 @@ packages:
       regenerator-runtime: 0.14.1
       rimraf: 2.7.1
       rollup: 4.12.0
+      roosterjs-editor-api: 8.60.0
       roosterjs-editor-core: 8.60.0
       roosterjs-editor-plugins: 8.60.2
       roosterjs-editor-types-compatible: 8.60.0
@@ -21217,7 +21241,7 @@ packages:
     name: '@rush-temp/react-composites'
     version: 0.0.0
     dependencies:
-      '@azure/communication-calling': 1.22.2
+      '@azure/communication-calling': 1.22.3
       '@azure/communication-calling-effects': 1.0.1
       '@azure/communication-chat': 1.4.0
       '@azure/communication-common': 2.3.1
@@ -21233,7 +21257,7 @@ packages:
       '@fluentui/react-file-type-icons': 8.11.3(@types/react@18.2.57)(react@18.2.0)
       '@fluentui/react-hooks': 8.6.36(@types/react@18.2.57)(react@18.2.0)
       '@fluentui/react-icons': 2.0.230(react@18.2.0)
-      '@microsoft/api-documenter': 7.23.33(@types/node@20.11.24)
+      '@microsoft/api-documenter': 7.23.37(@types/node@20.11.24)
       '@microsoft/api-extractor': 7.40.6(@types/node@20.11.24)
       '@playwright/test': 1.39.0
       '@testing-library/jest-dom': 6.4.2(@types/jest@29.5.12)(jest@29.7.0)
@@ -21270,7 +21294,7 @@ packages:
       eslint-plugin-jsdoc: 36.1.1(eslint@7.32.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@7.32.0)
       eslint-plugin-prettier: 3.4.1(eslint-config-prettier@6.15.0)(eslint@7.32.0)(prettier@2.3.1)
-      eslint-plugin-react: 7.33.2(eslint@7.32.0)
+      eslint-plugin-react: 7.34.0(eslint@7.32.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@7.32.0)
       events: 3.3.0
       express: 4.18.3
@@ -21336,7 +21360,7 @@ packages:
     name: '@rush-temp/sample-automation-tests'
     version: 0.0.0
     dependencies:
-      '@azure/communication-calling': 1.22.2
+      '@azure/communication-calling': 1.22.3
       '@azure/communication-chat': 1.4.0
       '@azure/communication-common': 2.3.1
       '@azure/communication-identity': 1.3.0
@@ -21361,7 +21385,7 @@ packages:
     name: '@rush-temp/sample-static-html-composites'
     version: 0.0.0
     dependencies:
-      '@azure/communication-calling': 1.22.2
+      '@azure/communication-calling': 1.22.3
       '@azure/communication-chat': 1.4.0
       '@azure/communication-common': 2.3.1
       '@azure/communication-identity': 1.3.0
@@ -21490,7 +21514,7 @@ packages:
     name: '@rush-temp/storybook'
     version: 0.0.0
     dependencies:
-      '@azure/communication-calling': 1.22.2
+      '@azure/communication-calling': 1.22.3
       '@azure/communication-chat': 1.4.0
       '@azure/communication-common': 2.3.1
       '@azure/communication-identity': 1.3.0
@@ -21504,7 +21528,7 @@ packages:
       '@fluentui/theme-samples': 8.7.123(@types/react-dom@18.2.19)(@types/react@18.2.57)(react-dom@18.2.0)(react@18.2.0)
       '@griffel/react': 1.5.20(react@18.2.0)
       '@mdx-js/react': 1.6.22(react@18.2.0)
-      '@microsoft/api-documenter': 7.23.33(@types/node@20.11.24)
+      '@microsoft/api-documenter': 7.23.37(@types/node@20.11.24)
       '@microsoft/api-extractor': 7.40.6(@types/node@20.11.24)
       '@microsoft/applicationinsights-react-js': 3.4.3(react@18.2.0)(tslib@2.6.2)
       '@microsoft/applicationinsights-web': 2.8.17(tslib@2.6.2)
@@ -21550,7 +21574,7 @@ packages:
       eslint-plugin-jsx-a11y: 6.8.0(eslint@7.32.0)
       eslint-plugin-mdx: 1.16.0(eslint@7.32.0)
       eslint-plugin-prettier: 3.4.1(eslint-config-prettier@6.15.0)(eslint@7.32.0)(prettier@2.3.1)
-      eslint-plugin-react: 7.33.2(eslint@7.32.0)
+      eslint-plugin-react: 7.34.0(eslint@7.32.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@7.32.0)
       husky: 8.0.3
       jest: 29.7.0(@types/node@20.11.24)(ts-node@10.9.2)
