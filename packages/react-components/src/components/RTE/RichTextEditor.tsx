@@ -80,22 +80,18 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     []
   );
 
-  useEffect(() => {
-    if (editor.current !== null) {
-      // Adjust color prop for the div component when theme is updated
-      // because doNotAdjustEditorColor is set for Rooster
-      setTextColor(editor.current, theme.palette.neutralPrimary);
-    }
-  }, [theme]);
-
   const ribbonPlugin = React.useMemo(() => {
     return createRibbonPlugin();
   }, []);
 
   const editorCreator = useCallback((div: HTMLDivElement, options: EditorOptions) => {
     editor.current = new Editor(div, options);
-    // Remove the background color of the editor
-    setBackgroundColor(editor.current, 'transparent');
+    // Remove default values for background color and color
+    // setBackgroundColor and setTextColor can't be used here as they cause the editor to be focused
+    // color will be set in richTextEditorWrapperStyle instead of inline styles
+    div.style.backgroundColor = '';
+    div.style.color = '';
+
     return editor.current;
   }, []);
 
@@ -136,7 +132,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   return (
     <div>
       {showRichTextEditorFormatting && ribbon}
-      <div className={richTextEditorWrapperStyle(!showRichTextEditorFormatting, showRichTextEditorFormatting)}>
+      <div className={richTextEditorWrapperStyle(theme, !showRichTextEditorFormatting, showRichTextEditorFormatting)}>
         <Rooster
           initialContent={initialContent}
           inDarkMode={isDarkThemed(theme)}

@@ -65,6 +65,8 @@ export const ChatMessageComponentAsRichTextEditBox = (props: ChatMessageComponen
   const chatMyMessageStyles = useChatMyMessageStyles();
   const locale = useLocale().strings;
 
+  // TODO: Check if the focus is needed, if so use `focusOnInit` prop
+  // for Rooster component instead as this sets focus too early
   useEffect(() => {
     editTextFieldRef.current?.focus();
   }, []);
