@@ -118,7 +118,12 @@ jobs:
           rush build -t @azure/communication-react
         id: buildapifiles
 
-      # No files changing here, so we don't need to commit, this action needs fixed to cope with no changes.
+      - name: Commit beta release snapshots
+        if: ${{ startsWith(github.event.inputs.branch, 'prerelease-beta' )}}
+        run: |
+          git add packages/**/*.api.md
+          git commit -m 'Update ${{ matrix.flavor }} API files'
+          git push -u origin ${{ steps.releasebranch.outputs.releasebranch }}
 
       # Checkout back to pre-release branch
       - name: Hop back to pre-release branch
