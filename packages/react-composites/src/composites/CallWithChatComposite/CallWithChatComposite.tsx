@@ -49,7 +49,7 @@ import { SidePaneHeader } from '../common/SidePaneHeader';
 import { CallControlOptions } from '../CallComposite/types/CallControlOptions';
 import { useUnreadMessagesTracker } from './ChatButton/useUnreadMessagesTracker';
 /* @conditional-compile-remove(gallery-layouts) */
-import { VideoGalleryLayout} from '@internal/react-components';
+import { VideoGalleryLayout } from '@internal/react-components';
 /**
  * Props required for the {@link CallWithChatComposite}
  *
