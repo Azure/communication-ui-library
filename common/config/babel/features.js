@@ -60,8 +60,6 @@ module.exports = {
     "optimal-video-count",
     // Feature for capabilities
     "capabilities",
-    // Feature for custom video gallery layouts
-    "gallery-layouts",
     // Feature for large Gallery layout
     "large-gallery",
     // feature for positioning the overflowGallery at the top of the screen in the composite
@@ -137,8 +135,6 @@ module.exports = {
     "optimal-video-count",
     // raise hands feature
     "raise-hand",
-    // Feature for gallery layouts
-    "gallery-layouts",
     // feature  for vertical overflow gallery
     "vertical-gallery",
     // API for injecting custom buttons in he control bar for
