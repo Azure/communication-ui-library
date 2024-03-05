@@ -15,7 +15,6 @@ import {
   ErrorBarProps,
   useTheme
 } from '@internal/react-components';
-/* @conditional-compile-remove(gallery-layouts) */
 import { VideoGalleryLayout } from '@internal/react-components';
 /* @conditional-compile-remove(spotlight) */
 import { VideoGallery } from '@internal/react-components';
@@ -104,11 +103,8 @@ export interface CallArrangementProps {
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
   latestErrors: ActiveErrorMessage[];
   onDismissError: (error: ActiveErrorMessage) => void;
-  /* @conditional-compile-remove(gallery-layouts) */
   onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'horizontalTop') => void;
-  /* @conditional-compile-remove(gallery-layouts) */
   onUserSetGalleryLayoutChange?: (layout: VideoGalleryLayout) => void;
-  /* @conditional-compile-remove(gallery-layouts) */
   userSetGalleryLayout?: VideoGalleryLayout;
   /* @conditional-compile-remove(capabilities) */
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
@@ -442,11 +438,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   /* @conditional-compile-remove(video-background-effects) */
                   onClickVideoEffects={onResolveVideoEffectDependency ? openVideoEffectsPane : undefined}
                   displayVertical={verticalControlBar}
-                  /* @conditional-compile-remove(gallery-layouts) */
                   onUserSetOverflowGalleryPositionChange={props.onUserSetOverflowGalleryPositionChange}
-                  /* @conditional-compile-remove(gallery-layouts) */
                   onUserSetGalleryLayout={props.onUserSetGalleryLayoutChange}
-                  /* @conditional-compile-remove(gallery-layouts) */
                   userSetGalleryLayout={props.userSetGalleryLayout}
                   /* @conditional-compile-remove(dtmf-dialer) */
                   onSetDialpadPage={props.onSetDialpadPage}
@@ -470,9 +463,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 disableButtonsForHoldScreen={isInLocalHold}
                 /* @conditional-compile-remove(close-captions) */
                 isCaptionsSupported={isTeamsCall && hasJoinedCall}
-                /* @conditional-compile-remove(gallery-layouts) */
                 onUserSetGalleryLayout={props.onUserSetGalleryLayoutChange}
-                /* @conditional-compile-remove(gallery-layouts) */
                 userSetGalleryLayout={props.userSetGalleryLayout}
                 /* @conditional-compile-remove(dtmf-dialer) */
                 onSetDialpadPage={props.onSetDialpadPage}

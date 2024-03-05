@@ -258,6 +258,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
       const resourceCache = message.resourceCache;
       let imageSrc = '';
+
       if (attachment.url) {
         if (resourceCache && resourceCache[attachment.url]) {
           imageSrc = resourceCache[attachment.url];
