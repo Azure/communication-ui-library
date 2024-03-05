@@ -130,7 +130,9 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     return locale.strings.sendBox;
   }, [/* @conditional-compile-remove(rich-text-editor) */ locale.strings.richTextSendBox, locale.strings.sendBox]);
 
-  const strings = { ...localeStrings, ...props.strings };
+  const strings = useMemo(() => {
+    return { ...localeStrings, ...props.strings };
+  }, [localeStrings, props.strings]);
 
   const [contentValue, setContentValue] = useState('');
   const [contentValueOverflow, setContentValueOverflow] = useState(false);
@@ -207,11 +209,12 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
           /* @conditional-compile-remove(file-sharing) */
           hasFile: false,
           hasErrorMessage: hasErrorMessage,
-          defaultTextColor: theme.palette.neutralSecondary
+          defaultTextColor: theme.palette.neutralSecondary,
+          disabled: disabled
         })}
       />
     ),
-    [contentValue, hasErrorMessage, theme]
+    [contentValue, disabled, hasErrorMessage, theme]
   );
 
   const sendBoxErrorsProps: RTESendBoxErrorsProps = useMemo(() => {

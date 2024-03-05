@@ -5,7 +5,7 @@ import React, { ReactNode, useCallback, useMemo, useState } from 'react';
 import { BaseCustomStyles } from '../../types';
 import { RichTextEditor, RichTextEditorComponentRef, RichTextEditorStyleProps } from './RichTextEditor';
 import { RichTextSendBoxStrings } from './RTESendBox';
-import { borderAndBoxShadowStyle } from '../styles/SendBox.styles';
+import { richTextBorderBoxStyle } from '../styles/SendBox.styles';
 import { useTheme } from '../../theming';
 import { Icon, Stack } from '@fluentui/react';
 import { InputBoxButton } from '../InputBoxButton';
@@ -63,10 +63,10 @@ export const RTEInputBoxComponent = (props: RTEInputBoxComponentProps): JSX.Elem
         iconName={
           isHover || showRichTextEditorFormatting ? 'RichTextEditorButtonIconFilled' : 'RichTextEditorButtonIcon'
         }
-        className={richTextFormatButtonIconStyle(theme, isHover || showRichTextEditorFormatting)}
+        className={richTextFormatButtonIconStyle(theme, !disabled && (isHover || showRichTextEditorFormatting))}
       />
     ),
-    [showRichTextEditorFormatting, theme]
+    [disabled, showRichTextEditorFormatting, theme]
   );
 
   const actionButtons = useMemo(() => {
@@ -104,12 +104,9 @@ export const RTEInputBoxComponent = (props: RTEInputBoxComponentProps): JSX.Elem
 
   return (
     <div
-      className={borderAndBoxShadowStyle({
+      className={richTextBorderBoxStyle({
         theme: theme,
-        // should always be false as we don't want to show the border when there is an error
-        hasErrorMessage: false,
-        disabled: !!disabled,
-        defaultBorderColor: theme.palette.neutralQuaternaryAlt
+        disabled: !!disabled
       })}
     >
       <Stack

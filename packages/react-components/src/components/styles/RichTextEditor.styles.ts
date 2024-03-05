@@ -49,7 +49,8 @@ export const richTextActionButtonsStyle = mergeStyles({
 export const richTextActionButtonsDividerStyle = (theme: Theme): string => {
   return mergeStyles({
     color: theme.palette.neutralQuaternaryAlt,
-    margin: '0.375rem -0.5rem 0 -0.5rem'
+    margin: '0.375rem -0.5rem 0 -0.5rem',
+    backgroundColor: 'transparent'
   });
 };
 
