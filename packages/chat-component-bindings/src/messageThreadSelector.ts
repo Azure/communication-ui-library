@@ -90,7 +90,6 @@ const extractTeamsAttachmentsMetadata = (
     /* @conditional-compile-remove(file-sharing) */
     if (attachmentType === 'file') {
       files.push({
-        attachmentType: attachmentType,
         id: attachment.id,
         name: attachment.name ?? '',
         extension: contentType ?? '',
@@ -140,9 +139,7 @@ const mapAttachmentType = (attachmentType: ChatAttachmentType): AttachmentType =
 
 /* @conditional-compile-remove(file-sharing) */
 const extractAttachmentUrl = (attachment: ChatAttachment): string => {
-  /* @conditional-compile-remove(file-sharing) */
-  return attachment.attachmentType === 'file' && attachment.previewUrl ? attachment.previewUrl : attachment.url || '';
-  return attachment.url || '';
+  return attachment.previewUrl ? attachment.previewUrl : attachment.url || '';
 };
 const processChatMessageContent = (message: ChatMessageWithStatus): string | undefined => {
   let content = message.content?.message;

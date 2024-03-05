@@ -67,8 +67,6 @@ export type AnnouncerProps = {
 
 // @beta
 export interface AttachmentMetadata {
-    // (undocumented)
-    attachmentType: 'file';
     extension: string;
     id: string;
     name: string;

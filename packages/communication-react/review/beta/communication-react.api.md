@@ -150,8 +150,6 @@ export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : fa
 
 // @beta
 export interface AttachmentMetadata {
-    // (undocumented)
-    attachmentType: 'file';
     extension: string;
     id: string;
     name: string;
