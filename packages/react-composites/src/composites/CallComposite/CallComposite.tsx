@@ -434,6 +434,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const callees = useSelector(getTargetCallees) as StartCallIdentifier[];
   const locale = useLocale();
   const palette = useTheme().palette;
+  /* @conditional-compile-remove(PSTN-calls) */
   const alternateCallerId = adapter.getState().alternateCallerId;
   const leavePageStyle = useMemo(() => leavingPageStyle(palette), [palette]);
   let pageElement: JSX.Element | undefined;
@@ -446,7 +447,9 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
             if (callees) {
               adapter.startCall(
                 callees,
-                alternateCallerId ? { alternateCallerId: { phoneNumber: alternateCallerId } } : {}
+                /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
+                  ? { alternateCallerId: { phoneNumber: alternateCallerId } }
+                  : {}
               );
             } else {
               adapter.joinCall({
