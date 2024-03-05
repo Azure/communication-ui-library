@@ -309,6 +309,15 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       inlineImage: InlineImage,
       defaultOnRender: (inlineImage: InlineImage) => JSX.Element
     ): JSX.Element => {
+      const message = adapter.getState().thread.chatMessages[inlineImage.messageId];
+      const attachments = message?.content?.attachments?.find(
+        (attachment) => attachment.id === inlineImage.imgAttrs.id
+      );
+
+      if (attachments === undefined) {
+        return defaultOnRender(inlineImage);
+      }
+
       return (
         <span
           key={inlineImage.imgAttrs.id}
