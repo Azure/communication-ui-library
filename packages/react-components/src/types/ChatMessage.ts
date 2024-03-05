@@ -5,8 +5,6 @@ import { MessageStatus } from '@internal/acs-ui-common';
 import { CommunicationParticipant } from './CommunicationParticipant';
 /* @conditional-compile-remove(file-sharing) */
 import { FileMetadata } from '../components/FileDownloadCards';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { InlineImageMetadata } from '../components/FileDownloadCards';
 
 /**
  * Indicate whether a chat message should be displayed merged with the message before / after it.
@@ -80,13 +78,6 @@ export interface ChatMessage extends MessageCommon {
    * {@link FileMetadata}
    */
   files?: FileMetadata[];
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  /**
-   * @beta
-   * A list of inline images embedded in the message.
-   * {@link InlineImageMetadata}
-   */
-  inlineImages?: InlineImageMetadata[];
 }
 
 /**
