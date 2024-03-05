@@ -100,16 +100,22 @@ export class ChatContext {
   }
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   public async downloadResourceToCache(threadId: string, messageId: string, resourceUrl: string): Promise<void> {
-    let message = this.getState().threads[threadId]?.chatMessages[messageId];
-    if (message && this._fullsizeImageQueue) {
-      if (!message.resourceCache) {
-        message = { ...message, resourceCache: {} };
+    try {
+      let message = this.getState().threads[threadId]?.chatMessages[messageId];
+      if (message && this._fullsizeImageQueue) {
+        if (!message.resourceCache) {
+          message = { ...message, resourceCache: {} };
+        }
+        // Need to discuss retry logic in case of failure
+        this._fullsizeImageQueue.addMessage(message);
+        await this._fullsizeImageQueue.startQueue(threadId, fetchImageSource, {
+          singleUrl: resourceUrl
+        });
       }
-      // Need to discuss retry logic in case of failure
-      this._fullsizeImageQueue.addMessage(message);
-      await this._fullsizeImageQueue.startQueue(threadId, fetchImageSource, {
-        singleUrl: resourceUrl
-      });
+    } catch (error) {
+      const chatError = toChatError('ChatThreadClient.downloadResourceToCache', error);
+      this.setLatestError('ChatThreadClient.downloadResourceToCache', chatError);
+      throw chatError;
     }
   }
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */

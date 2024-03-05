@@ -156,4 +156,5 @@ export type ChatErrorTarget =
   | 'ChatThreadClient.sendTypingNotification'
   | 'ChatThreadClient.updateMessage'
   | /* @conditional-compile-remove(chat-beta-sdk) */ 'ChatThreadClient.updateProperties'
-  | 'ChatThreadClient.updateTopic';
+  | 'ChatThreadClient.updateTopic'
+  | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'ChatThreadClient.downloadResourceToCache';
