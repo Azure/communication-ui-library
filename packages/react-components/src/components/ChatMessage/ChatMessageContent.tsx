@@ -241,15 +241,7 @@ const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
 
         // Transform inline images
         /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-        if (
-          domNode.name &&
-          domNode.name === 'img' &&
-          domNode.attribs &&
-          domNode.attribs.id &&
-          props.message.inlineImages?.find((metadata) => {
-            return metadata.id === domNode.attribs.id;
-          })
-        ) {
+        if (domNode.name && domNode.name === 'img' && domNode.attribs && domNode.attribs.id) {
           domNode.attribs['aria-label'] = domNode.attribs.name;
           const imgProps = attributesToProps(domNode.attribs);
           /* @conditional-compile-remove(image-overlay) */
