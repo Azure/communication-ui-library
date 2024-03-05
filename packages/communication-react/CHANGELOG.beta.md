@@ -11,7 +11,6 @@ Tue, 05 Mar 2024 16:19:15 GMT
 
 Reinclude CallComposite `Branding` option.
 
-
 ## [1.14.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.14.0-beta.1)
 
 Mon, 26 Feb 2024 16:19:15 GMT
