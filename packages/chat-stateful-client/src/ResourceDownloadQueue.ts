@@ -101,11 +101,7 @@ export class ResourceDownloadQueue {
 
   private async downloadResource(operation: ImageRequest, url: string): Promise<string> {
     let blobUrl = URL.createObjectURL(new Blob());
-    try {
-      blobUrl = await operation(url, this._credential);
-    } catch (error) {
-      console.log('Downloading Resource error: ', error);
-    }
+    blobUrl = await operation(url, this._credential);
     return blobUrl;
   }
 }
