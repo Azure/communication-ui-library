@@ -8,7 +8,7 @@ import type { AdapterError, AdapterErrors, AdapterState, Disposable } from '../.
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadAdapter, FileUploadsUiState } from './AzureCommunicationFileUploadAdapter';
 /* @conditional-compile-remove(file-sharing) */
-import { FileMetadata } from '@internal/react-components';
+import { AttachmentMetadata } from '@internal/react-components';
 
 /**
  * {@link ChatAdapter} state for pure UI purposes.
@@ -92,7 +92,7 @@ export interface ChatAdapterThreadManagement {
     metadata?: Record<string, string>,
     /* @conditional-compile-remove(file-sharing) */
     options?: {
-      attachmentMetadata?: FileMetadata[];
+      attachmentMetadata?: AttachmentMetadata[];
     }
   ): Promise<void>;
   /**

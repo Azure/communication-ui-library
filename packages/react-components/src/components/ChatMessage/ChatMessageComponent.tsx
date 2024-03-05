@@ -9,7 +9,7 @@ import { ChatMessage, ComponentSlotStyle, OnRenderAvatarCallback } from '../../t
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types';
 import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMessageBubble';
-import { FileDownloadHandler, FileMetadata } from '../FileDownloadCards';
+import { FileDownloadHandler, AttachmentMetadata } from '../FileDownloadCards';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from '../MentionPopover';
 /* @conditional-compile-remove(image-overlay) */
@@ -26,7 +26,7 @@ type ChatMessageComponentProps = {
     content: string,
     metadata?: Record<string, string>,
     options?: {
-      attachmentMetadata?: FileMetadata[];
+      attachmentMetadata?: AttachmentMetadata[];
     }
   ) => Promise<void>;
   onCancelEditMessage?: (messageId: string) => void;

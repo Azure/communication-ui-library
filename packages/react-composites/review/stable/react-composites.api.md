@@ -29,7 +29,7 @@ import { ComponentLocale } from '@internal/react-components';
 import { CreateVideoStreamViewResult } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
 import { DtmfTone } from '@azure/communication-calling';
-import type { FileMetadata } from '@internal/react-components';
+import type { AttachmentMetadata } from '@internal/react-components';
 import { GroupCallLocator } from '@azure/communication-calling';
 import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { MessageProps } from '@internal/react-components';
@@ -1543,7 +1543,7 @@ export class _MockCallAdapter implements CallAdapter {
 }
 
 // @internal
-export type _MockFileUpload = FileMetadata & {
+export type _MockFileUpload = AttachmentMetadata & {
     uploadComplete?: boolean;
     error?: string;
     progress?: number;

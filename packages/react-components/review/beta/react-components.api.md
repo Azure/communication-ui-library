@@ -65,6 +65,18 @@ export type AnnouncerProps = {
     ariaLive: 'off' | 'polite' | 'assertive' | undefined;
 };
 
+// @beta
+export interface AttachmentMetadata {
+    // (undocumented)
+    attachmentType: 'file';
+    extension: string;
+    id: string;
+    name: string;
+    // (undocumented)
+    payload?: Record<string, string>;
+    url: string;
+}
+
 // @internal
 export type _AudioIssue = 'NoLocalAudio' | 'NoRemoteAudio' | 'Echo' | 'AudioNoise' | 'LowVolume' | 'AudioStoppedUnexpectedly' | 'DistortedSpeech' | 'AudioInterruption' | 'OtherIssues';
 
@@ -464,7 +476,7 @@ export interface ChatMessage extends MessageCommon {
     // (undocumented)
     failureReason?: string;
     // @beta
-    files?: FileMetadata[];
+    files?: AttachmentMetadata[];
     // (undocumented)
     messageType: 'chat';
     metadata?: Record<string, string>;
@@ -1159,7 +1171,7 @@ export const _FileDownloadCards: (props: _FileDownloadCardsProps) => JSX.Element
 // @internal (undocumented)
 export interface _FileDownloadCardsProps {
     downloadHandler?: FileDownloadHandler;
-    fileMetadata?: FileMetadata[];
+    fileMetadata?: AttachmentMetadata[];
     onDownloadErrorMessage?: (errMsg: string) => void;
     strings?: _FileDownloadCardsStrings;
     userId: string;
@@ -1178,19 +1190,7 @@ export interface FileDownloadError {
 }
 
 // @beta
-export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
-
-// @beta
-export interface FileMetadata {
-    // (undocumented)
-    attachmentType: 'file';
-    extension: string;
-    id: string;
-    name: string;
-    // (undocumented)
-    payload?: Record<string, string>;
-    url: string;
-}
+export type FileDownloadHandler = (userId: string, fileMetadata: AttachmentMetadata) => Promise<URL | FileDownloadError>;
 
 // @internal
 export interface _FileUploadCardsStrings {
@@ -2498,7 +2498,7 @@ export interface UnsupportedOperatingSystemStrings {
 // @public
 export type UpdateMessageCallback = (messageId: string, content: string, options?: {
     metadata?: Record<string, string>;
-    attachmentMetadata?: FileMetadata[];
+    attachmentMetadata?: AttachmentMetadata[];
 }) => Promise<void>;
 
 // @internal

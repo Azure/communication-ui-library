@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-import { FileMetadata, _FileDownloadCards } from './FileDownloadCards';
+import { AttachmentMetadata, _FileDownloadCards } from './FileDownloadCards';
 import { render, screen } from '@testing-library/react';
 import { registerIcons } from '@fluentui/react';
 
@@ -24,7 +24,7 @@ describe('FileDownloadCards should be rendered properly', () => {
       url: 'mockUrl',
       id: 'mockId',
       attachmentType: 'file'
-    } as FileMetadata;
+    } as AttachmentMetadata;
 
     const props = {
       userId: 'MockUserId',
@@ -42,5 +42,5 @@ const renderFileDownloadCardsWithDefaults = (props: MockDownloadCardProps): void
 
 interface MockDownloadCardProps {
   userId: string;
-  fileMetadata: FileMetadata[];
+  fileMetadata: AttachmentMetadata[];
 }

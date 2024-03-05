@@ -148,6 +148,18 @@ export type AreParamEqual<A extends (props: any) => JSX.Element | undefined, B e
 // @public
 export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
+// @beta
+export interface AttachmentMetadata {
+    // (undocumented)
+    attachmentType: 'file';
+    extension: string;
+    id: string;
+    name: string;
+    // (undocumented)
+    payload?: Record<string, string>;
+    url: string;
+}
+
 // @public
 export type AvatarPersonaData = {
     text?: string;
@@ -1026,7 +1038,7 @@ export interface CallWithChatAdapterManagement {
     // @beta (undocumented)
     registerActiveFileUploads: (files: File[]) => FileUploadManager[];
     // @beta (undocumented)
-    registerCompletedFileUploads: (metadata: FileMetadata[]) => FileUploadManager[];
+    registerCompletedFileUploads: (metadata: AttachmentMetadata[]) => FileUploadManager[];
     removeParticipant(userId: string): Promise<void>;
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
@@ -1063,7 +1075,7 @@ export interface CallWithChatAdapterManagement {
     // @beta (undocumented)
     updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
     // @beta (undocumented)
-    updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
+    updateFileUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
     // @beta (undocumented)
     updateFileUploadProgress: (id: string, progress: number) => void;
     updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void>;
@@ -1636,7 +1648,7 @@ export interface ChatAdapterThreadManagement {
     sendTypingIndicator(): Promise<void>;
     setTopic(topicName: string): Promise<void>;
     updateMessage(messageId: string, content: string, metadata?: Record<string, string>, options?: {
-        attachmentMetadata?: FileMetadata[];
+        attachmentMetadata?: AttachmentMetadata[];
     }): Promise<void>;
 }
 
@@ -1756,7 +1768,7 @@ export type ChatHandlers = {
     onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
     onUpdateMessage: (messageId: string, content: string, options?: {
         metadata?: Record<string, string>;
-        attachmentMetadata?: FileMetadata[];
+        attachmentMetadata?: AttachmentMetadata[];
     }) => Promise<void>;
     onDeleteMessage: (messageId: string) => Promise<void>;
 };
@@ -1778,7 +1790,7 @@ export interface ChatMessage extends MessageCommon {
     // (undocumented)
     failureReason?: string;
     // @beta
-    files?: FileMetadata[];
+    files?: AttachmentMetadata[];
     // (undocumented)
     messageType: 'chat';
     metadata?: Record<string, string>;
@@ -2859,19 +2871,7 @@ export interface FileDownloadError {
 }
 
 // @beta
-export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
-
-// @beta
-export interface FileMetadata {
-    // (undocumented)
-    attachmentType: 'file';
-    extension: string;
-    id: string;
-    name: string;
-    // (undocumented)
-    payload?: Record<string, string>;
-    url: string;
-}
+export type FileDownloadHandler = (userId: string, fileMetadata: AttachmentMetadata) => Promise<URL | FileDownloadError>;
 
 // @beta
 export interface FileSharingOptions {
@@ -2890,11 +2890,11 @@ export interface FileUploadAdapter {
     // (undocumented)
     registerActiveFileUploads: (files: File[]) => FileUploadManager[];
     // (undocumented)
-    registerCompletedFileUploads: (metadata: FileMetadata[]) => FileUploadManager[];
+    registerCompletedFileUploads: (metadata: AttachmentMetadata[]) => FileUploadManager[];
     // (undocumented)
     updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
     // (undocumented)
-    updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
+    updateFileUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
     // (undocumented)
     updateFileUploadProgress: (id: string, progress: number) => void;
 }
@@ -2912,7 +2912,7 @@ export type FileUploadHandler = (userId: string, fileUploads: FileUploadManager[
 export interface FileUploadManager {
     file?: File;
     id: string;
-    notifyUploadCompleted: (metadata: FileMetadata) => void;
+    notifyUploadCompleted: (metadata: AttachmentMetadata) => void;
     notifyUploadFailed: (message: string) => void;
     notifyUploadProgressChanged: (value: number) => void;
 }
@@ -2922,7 +2922,7 @@ export interface FileUploadState {
     error?: FileUploadError;
     filename: string;
     id: string;
-    metadata?: FileMetadata;
+    metadata?: AttachmentMetadata;
     progress: number;
 }
 
@@ -4350,7 +4350,7 @@ export interface UnsupportedOperatingSystemStrings {
 // @public
 export type UpdateMessageCallback = (messageId: string, content: string, options?: {
     metadata?: Record<string, string>;
-    attachmentMetadata?: FileMetadata[];
+    attachmentMetadata?: AttachmentMetadata[];
 }) => Promise<void>;
 
 // @public

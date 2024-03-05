@@ -26,7 +26,7 @@ export type ChatAttachmentType =
  *
  * @beta
  */
-export interface FileMetadata {
+export interface AttachmentMetadata {
   /* @conditional-compile-remove(file-sharing) */
   attachmentType: 'file';
   /**
@@ -104,9 +104,12 @@ export interface FileDownloadError {
  *
  * ```
  * @param userId - The user ID of the user downloading the file.
- * @param fileMetadata - The {@link FileMetadata} containing file `url`, `extension` and `name`.
+ * @param fileMetadata - The {@link AttachmentMetadata} containing file `url`, `extension` and `name`.
  */
-export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
+export type FileDownloadHandler = (
+  userId: string,
+  fileMetadata: AttachmentMetadata
+) => Promise<URL | FileDownloadError>;
 
 /**
  * @internal
@@ -119,7 +122,7 @@ export interface _FileDownloadCardsProps {
   /**
    * A chat message metadata that includes file metadata
    */
-  fileMetadata?: FileMetadata[];
+  fileMetadata?: AttachmentMetadata[];
   /**
    * A function of type {@link FileDownloadHandler} for handling file downloads.
    * If the function is not specified, the file's `url` will be opened in a new tab to
@@ -157,14 +160,14 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
     [props.strings?.downloadFile, localeStrings.downloadFile]
   );
 
-  const isFileSharingAttachment = useCallback((attachment: FileMetadata): boolean => {
+  const isFileSharingAttachment = useCallback((attachment: AttachmentMetadata): boolean => {
     /* @conditional-compile-remove(file-sharing) */
     return attachment.attachmentType === 'file';
     return false;
   }, []);
 
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  const isShowDownloadIcon = useCallback((attachment: FileMetadata): boolean => {
+  const isShowDownloadIcon = useCallback((attachment: AttachmentMetadata): boolean => {
     /* @conditional-compile-remove(file-sharing) */
     return attachment.attachmentType === 'file' && attachment.payload?.teamsFileAttachment !== 'true';
     return true;
@@ -185,7 +188,7 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
   );
 
   const fileDownloadHandler = useCallback(
-    async (userId: string, file: FileMetadata) => {
+    async (userId: string, file: AttachmentMetadata) => {
       if (!props.downloadHandler) {
         window.open(file.url, '_blank', 'noopener,noreferrer');
       } else {
@@ -223,7 +226,6 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
               return isFileSharingAttachment(attachment);
               return true;
             })
-            .map((file) => file as unknown as FileMetadata)
             .map((file) => (
               <TooltipHost content={downloadFileButtonString()} key={file.name}>
                 <_FileCard

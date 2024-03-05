@@ -15,7 +15,7 @@ import { useChatMyMessageStyles } from '../styles/MessageThread.styles';
 import { ChatMessage } from '../../types';
 import { _FileUploadCards } from '../FileUploadCards';
 /* @conditional-compile-remove(file-sharing) */
-import { FileMetadata } from '../FileDownloadCards';
+import { AttachmentMetadata } from '../FileDownloadCards';
 import {
   chatMessageFailedTagStyle,
   editChatMessageFailedTagStyle,
@@ -46,7 +46,7 @@ export type ChatMessageComponentAsEditBoxProps = {
     metadata?: Record<string, string>,
     options?: {
       /* @conditional-compile-remove(file-sharing) */
-      attachmentMetadata?: FileMetadata[];
+      attachmentMetadata?: AttachmentMetadata[];
     }
   ) => void;
   message: ChatMessage;
@@ -234,7 +234,7 @@ const isMessageTooLong = (messageText: string): boolean => messageText.length > 
 function isMessageEmpty(
   messageText: string,
   /* @conditional-compile-remove(file-sharing) */
-  attachmentMetadata?: FileMetadata[]
+  attachmentMetadata?: AttachmentMetadata[]
 ): boolean {
   /* @conditional-compile-remove(file-sharing) */
   return messageText.trim().length === 0 && attachmentMetadata?.length === 0;
@@ -242,7 +242,7 @@ function isMessageEmpty(
 }
 function getMessageState(
   messageText: string,
-  /* @conditional-compile-remove(file-sharing) */ attachmentMetadata: FileMetadata[]
+  /* @conditional-compile-remove(file-sharing) */ attachmentMetadata: AttachmentMetadata[]
 ): MessageState {
   return isMessageEmpty(messageText, /* @conditional-compile-remove(file-sharing) */ attachmentMetadata)
     ? 'too short'
@@ -253,6 +253,6 @@ function getMessageState(
 
 /* @conditional-compile-remove(file-sharing) */
 // @TODO: Remove when file-sharing feature becomes stable.
-const getMessageAttachedFilesMetadata = (message: ChatMessage): FileMetadata[] | undefined => {
+const getMessageAttachedFilesMetadata = (message: ChatMessage): AttachmentMetadata[] | undefined => {
   return message.files;
 };
