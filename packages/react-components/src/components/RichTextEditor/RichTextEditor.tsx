@@ -12,8 +12,8 @@ import {
   richTextEditorStyle
 } from '../styles/RichTextEditor.styles';
 import { useTheme } from '../../theming';
-import { ribbonButtons, ribbonButtonsStrings } from './RTERibbonButtons';
-import { RichTextSendBoxStrings } from './RTESendBox';
+import { ribbonButtons, ribbonButtonsStrings } from './RichTextRibbonButtons';
+import { RichTextSendBoxStrings } from './RichTextSendBox';
 import { isDarkThemed } from '../../theming/themeUtils';
 import { setBackgroundColor, setTextColor } from 'roosterjs-editor-api';
 
