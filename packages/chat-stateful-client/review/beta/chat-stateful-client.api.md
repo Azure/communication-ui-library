@@ -47,7 +47,7 @@ export type ChatMessageWithStatus = ChatMessage & {
     clientMessageId?: string;
     status: MessageStatus;
     policyViolation?: boolean;
-    resourceCache?: Record<string, ResourceResult>;
+    resourceCache?: Record<string, ResourceFetchResult>;
 };
 
 // @public
@@ -80,7 +80,7 @@ export const _createStatefulChatClientInner: (args: StatefulChatClientArgs, opti
 export const _createStatefulChatClientWithDeps: (chatClient: ChatClient, args: StatefulChatClientArgs, options?: StatefulChatClientOptions) => StatefulChatClient;
 
 // @public
-export type ResourceResult = {
+export type ResourceFetchResult = {
     sourceUrl: string;
     error?: Error;
 };

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { ChatMessageWithStatus, ResourceResult } from '@internal/chat-stateful-client';
+import { ChatMessageWithStatus, ResourceFetchResult } from '@internal/chat-stateful-client';
 import { messageThreadSelector } from './messageThreadSelector';
 import { ChatAttachment, ChatMessageType, ChatParticipant } from '@azure/communication-chat';
 
@@ -100,7 +100,7 @@ const getChatMessages = (
   type: ChatMessageType,
   attachments?: ChatAttachment[],
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  resourceCache?: Record<string, ResourceResult>
+  resourceCache?: Record<string, ResourceFetchResult>
 ): { [key: string]: ChatMessageWithStatus } => {
   const chatMessages: { [key: string]: ChatMessageWithStatus } = {};
   chatMessages['0'] = {

@@ -1801,7 +1801,7 @@ export type ChatMessageWithStatus = ChatMessage_2 & {
     clientMessageId?: string;
     status: MessageStatus;
     policyViolation?: boolean;
-    resourceCache?: Record<string, ResourceResult>;
+    resourceCache?: Record<string, ResourceFetchResult>;
 };
 
 // @public
@@ -3842,7 +3842,7 @@ export type ResourceDetails = {
 };
 
 // @public
-export type ResourceResult = {
+export type ResourceFetchResult = {
     sourceUrl: string;
     error?: Error;
 };

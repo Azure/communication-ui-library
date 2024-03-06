@@ -5,7 +5,7 @@ import { ChatContext } from './ChatContext';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatError } from './ChatClientState';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { ChatMessageWithStatus, ResourceResult } from './types/ChatMessageWithStatus';
+import { ChatMessageWithStatus, ResourceFetchResult } from './types/ChatMessageWithStatus';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import type { CommunicationTokenCredential } from '@azure/communication-common';
 
@@ -79,7 +79,7 @@ export class ResourceDownloadQueue {
     resourceUrl: string,
     operation: ImageRequest
   ): Promise<ChatMessageWithStatus> {
-    const response: ResourceResult = { sourceUrl: '' };
+    const response: ResourceFetchResult = { sourceUrl: '' };
     try {
       const blobUrl = await this.downloadResource(operation, resourceUrl);
       response.sourceUrl = blobUrl;
@@ -102,7 +102,7 @@ export class ResourceDownloadQueue {
       }
       for (const attachment of attachments) {
         if (attachment.previewUrl && attachment.attachmentType === 'image') {
-          const response: ResourceResult = { sourceUrl: '' };
+          const response: ResourceFetchResult = { sourceUrl: '' };
           try {
             const blobUrl = await this.downloadResource(operation, attachment.previewUrl);
             response.sourceUrl = blobUrl;
