@@ -18,13 +18,12 @@ describe('FileDownloadCards should be rendered properly', () => {
   });
 
   it('should render if it is FileSharingMetadata', async () => {
-    const metadata = {
+    const metadata: AttachmentMetadata = {
       name: 'MockFileCard',
       extension: 'docx',
       url: 'mockUrl',
-      id: 'mockId',
-      attachmentType: 'file'
-    } as AttachmentMetadata;
+      id: 'mockId'
+    };
 
     const props = {
       userId: 'MockUserId',
