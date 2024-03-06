@@ -289,7 +289,7 @@ function needPreprocess() {
 
 function isStable() {
   const flavor = getBuildFlavor();
-  return flavor !== 'stable';
+  return flavor === 'stable';
 }
 
 await main(process.argv);
