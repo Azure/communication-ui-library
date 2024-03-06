@@ -20,9 +20,9 @@ import { MAXIMUM_LENGTH_OF_MESSAGE } from '../utils/SendBoxUtils';
 import { getMessageState, onRenderCancelIcon, onRenderSubmitIcon } from '../utils/ChatMessageComponentAsEditBoxUtils';
 /* @conditional-compile-remove(file-sharing) */
 import { getMessageAttachedFilesMetadata } from '../utils/ChatMessageComponentAsEditBoxUtils';
-import { RichTextEditorComponentRef, RichTextEditorStyleProps } from '../RichTextEditor/RichTextEditor';
+import { RichTextEditorComponentRef } from '../RichTextEditor/RichTextEditor';
 import { RichTextInputBoxComponent } from '../RichTextEditor/RichTextInputBoxComponent';
-import { richTextActionButtonsStyle } from '../styles/RichTextEditor.styles';
+import { editBoxRichTextEditorStyle, richTextActionButtonsStyle } from '../styles/RichTextEditor.styles';
 import { RichTextSendBoxErrors } from '../RichTextEditor/RichTextSendBoxErrors';
 import { useLocale } from '../../localization';
 
@@ -105,7 +105,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
     return (
       <Stack horizontal>
         <InputBoxButton
-          className={richTextActionButtonsStyle} //editingButtonStyle}
+          className={richTextActionButtonsStyle}
           ariaLabel={strings.editBoxCancelButton}
           tooltipContent={strings.editBoxCancelButton}
           onRenderIcon={onRenderThemedCancelIcon}
@@ -115,7 +115,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
           id={'dismissIconWrapper'}
         />
         <InputBoxButton
-          className={richTextActionButtonsStyle} //editingButtonStyle}
+          className={richTextActionButtonsStyle}
           ariaLabel={strings.editBoxSubmitButton}
           tooltipContent={strings.editBoxSubmitButton}
           onRenderIcon={onRenderThemedSubmitIcon}
@@ -165,7 +165,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
           strings={richTextLocaleStrings}
           disabled={false}
           actionComponents={actionButtons}
-          richTextEditorStyleProps={richTextEditorStyle}
+          richTextEditorStyleProps={editBoxRichTextEditorStyle}
           supportHorizontalLayout={false}
         />
       </Stack>
@@ -189,11 +189,4 @@ export const ChatMessageComponentAsRichTextEditBox = (
       {getContent()}
     </ChatMyMessage>
   );
-};
-
-const richTextEditorStyle = (): RichTextEditorStyleProps => {
-  return {
-    minHeight: '2.25rem',
-    maxHeight: '2.25rem'
-  };
 };

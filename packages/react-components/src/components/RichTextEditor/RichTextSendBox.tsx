@@ -16,9 +16,9 @@ import { SendBoxErrorBarError } from '../SendBoxErrorBar';
 import { isMessageTooLong, sanitizeText } from '../utils/SendBoxUtils';
 /* @conditional-compile-remove(file-sharing) */
 import { hasCompletedFileUploads } from '../utils/SendBoxUtils';
-import { RichTextEditorComponentRef, RichTextEditorStyleProps } from './RichTextEditor';
+import { RichTextEditorComponentRef } from './RichTextEditor';
 import { useTheme } from '../../theming';
-import { richTextActionButtonsStyle } from '../styles/RichTextEditor.styles';
+import { richTextActionButtonsStyle, sendBoxRichTextEditorStyle } from '../styles/RichTextEditor.styles';
 
 /**
  * Strings of {@link RichTextSendBox} that can be overridden.
@@ -270,11 +270,4 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       />
     </Stack>
   );
-};
-
-const sendBoxRichTextEditorStyle = (isExpanded: boolean): RichTextEditorStyleProps => {
-  return {
-    minHeight: isExpanded ? '5rem' : '1.25rem',
-    maxHeight: '5rem'
-  };
 };

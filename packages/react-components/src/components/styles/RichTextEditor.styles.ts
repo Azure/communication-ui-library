@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 import { IButtonStyles, ICommandBarStyles, IContextualMenuStyles, IStyle, Theme, mergeStyles } from '@fluentui/react';
 import { editorTextBoxButtonStyle } from './SendBox.styles';
+import { RichTextEditorStyleProps } from '../RichTextEditor/RichTextEditor';
 
 /**
  * @private
@@ -144,4 +145,24 @@ export const richTextFormatButtonIconStyle = (theme: Theme, isSelected: boolean)
   return mergeStyles(editorTextBoxButtonStyle, {
     color: isSelected ? theme.palette.themePrimary : theme.palette.neutralSecondary
   });
+};
+
+/**
+ * @private
+ */
+export const editBoxRichTextEditorStyle = (): RichTextEditorStyleProps => {
+  return {
+    minHeight: '2.25rem',
+    maxHeight: '2.25rem'
+  };
+};
+
+/**
+ * @private
+ */
+export const sendBoxRichTextEditorStyle = (isExpanded: boolean): RichTextEditorStyleProps => {
+  return {
+    minHeight: isExpanded ? '5rem' : '1.25rem',
+    maxHeight: '5rem'
+  };
 };
