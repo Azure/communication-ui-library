@@ -8,7 +8,7 @@ import { IButtonStyles, ICommandBarStyles, IContextualMenuStyles, IStyle, Theme,
 export const richTextEditorStyle = mergeStyles({
   border: 'none',
   overflow: 'auto',
-  padding: '10px',
+  padding: '0.625rem',
   outline: 'none',
   bottom: '0',
   minHeight: '2.25rem',

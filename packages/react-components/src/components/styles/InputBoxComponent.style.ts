@@ -17,7 +17,7 @@ export const inputBoxStyle = mergeStyles({
   overflow: 'auto',
   minHeight: '2.25rem', // prevents the input text box from being sized to 0px when the CallWithChatComposite chat pane is closed.
   maxHeight: '8.25rem',
-  outline: 'red 5px',
+  outline: 'red 0.3125rem',
   fontWeight: FontWeights.regular,
   fontSize: '0.875rem',
   width: '100%',

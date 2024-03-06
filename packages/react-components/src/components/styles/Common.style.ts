@@ -10,7 +10,7 @@ export const scrollbarStyles = {
     height: '0.3rem'
   },
   '::-webkit-scrollbar-thumb, *::-webkit-scrollbar-thumb': {
-    borderRadius: '10px',
+    borderRadius: '0.625rem',
     background: 'rgba(150, 150, 150)'
   }
 };

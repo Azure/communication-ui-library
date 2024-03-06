@@ -71,7 +71,7 @@ export const suggestionItemStackStyle = (theme: Theme, isSuggestionHovered: bool
   return mergeStyles({
     width: '10rem',
     alignItems: 'center',
-    height: '36px',
+    height: '2.25rem',
     padding: '0 0.75rem',
     background: isSuggestionHovered ? theme.palette.neutralLighter : theme.palette.white,
     outline: activeBorder ? `0.0625rem solid ${theme.palette.neutralSecondary}` : 'none'

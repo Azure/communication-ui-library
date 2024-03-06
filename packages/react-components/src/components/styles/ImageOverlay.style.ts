@@ -175,12 +175,12 @@ export const closeButtonStyles = (theme: PartialTheme): IStyle => {
  */
 export const downloadButtonStyle: IStyle = {
   margin: '0 0.5rem',
-  height: '32px',
-  borderWidth: '1px',
+  height: '2rem',
+  borderWidth: '0.0625rem',
   fontSize: '0.875rem', // 14px
   fontWeight: 600,
   padding: '0.38rem 0.75rem',
-  borderRadius: '4px',
+  borderRadius: '0.25rem',
   whiteSpace: 'nowrap',
   '@media (max-width: 25rem)': {
     display: 'none'

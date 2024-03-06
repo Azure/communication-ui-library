@@ -133,22 +133,22 @@ export const useChatMessageEditContainerStyles = makeStyles({
     ...shorthands.borderRadius(tokens.borderRadiusMedium),
     // The border thickness changes on hover, to prevent the border thickness change causing the
     // input box to shift we apply a margin to compensate. This margin is then removed on hover when the border is thicker.
-    ...shorthands.margin('21px', '1px', '1px', '1px'),
+    ...shorthands.margin('1.3125rem', '0.0625rem', '0.0625rem', '0.0625rem'),
     // Width should be updated on hover to include the border width change
     width: `calc(100% - ${defaultSendBoxActiveBorderThicknessREM}rem)`,
     '&:hover, &:active, &:focus, &:focus-within': {
       ...shorthands.borderWidth(`${defaultSendBoxActiveBorderThicknessREM}rem`),
-      ...shorthands.margin('20px', 0, 0, 0),
+      ...shorthands.margin('1.25rem', 0, 0, 0),
       width: '100%'
     }
   },
   bodyAttached: {
-    marginBottom: '1px',
-    marginTop: '3px',
+    marginBottom: '0.0625rem',
+    marginTop: '0.1875rem',
     // Width should be updated on hover to include the border width change
     width: `calc(100% - ${defaultSendBoxActiveBorderThicknessREM}rem)`,
     '&:hover, &:active, &:focus, &:focus-within': {
-      marginTop: '2px',
+      marginTop: '0.125rem',
       marginBottom: 0
     }
   },
@@ -189,7 +189,7 @@ export const menuItemIncreasedSizeStyles: IContextualMenuItemStyles = {
  */
 export const menuIconStyleSet = {
   root: {
-    height: 'calc(100% - 8px)', // Adjust for the pixel margin Fluent applies
+    height: 'calc(100% - 0.5rem)', // Adjust for the pixel margin Fluent applies
     width: '1.25rem'
   }
 };
