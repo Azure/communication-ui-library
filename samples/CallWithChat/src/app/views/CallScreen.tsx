@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
+import { CallState, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   toFlatCommunicationIdentifier,
@@ -21,6 +21,9 @@ import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/constants';
 import { useIsMobile } from '../utils/useIsMobile';
 import { isIOS } from '../utils/utils';
+
+// eslint-disable-next-line no-var, @typescript-eslint/no-explicit-any
+var pageTimings = (window as any)._pageTimings || ((window as any)._pageTimings = {});
 
 export interface CallScreenProps {
   token: string;
@@ -115,6 +118,9 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     [userId, token]
   );
 
+  const callStatus = useRef<CallState>('None');
+  const remoteParticipantIdsWithVideosReadys = useRef<unknown[]>([]);
+
   const afterAdapterCreate = useCallback(
     async (adapter: CallWithChatAdapter): Promise<CallWithChatAdapter> => {
       adapter.on('callError', (e) => {
@@ -134,6 +140,44 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
         if (state?.call?.id && callIdRef.current !== state?.call?.id) {
           callIdRef.current = state?.call?.id;
           console.log(`Call Id: ${callIdRef.current}`);
+        }
+
+        if (state?.call?.state) {
+          if (state.call.state !== callStatus.current) {
+            callStatus.current = state.call.state;
+            performance.mark(`callStateChange-${callStatus.current}`);
+            console.log(`Call State: ${callStatus.current}`);
+          }
+        }
+
+        if (state.call?.remoteParticipants) {
+          const remoteParticipants = state.call.remoteParticipants;
+          const participantsWithVideosReady = Object.values(remoteParticipants)
+            .filter((participant) => {
+              const streams = Object.values(participant.videoStreams);
+              const videoStreamsReady = streams.some(
+                (stream) => stream.mediaStreamType === 'Video' && !!stream.view?.target
+              );
+              return videoStreamsReady;
+            })
+            .map((participant) => participant.identifier);
+
+          const newParticipantsWithVideosReady = participantsWithVideosReady.filter(
+            (participant) => !remoteParticipantIdsWithVideosReadys.current.includes(participant)
+          );
+
+          newParticipantsWithVideosReady.forEach((participant) => {
+            remoteParticipantIdsWithVideosReadys.current.push(participant);
+            performance.mark(`remoteParticipantVideoReady-${participant}`);
+            console.log(`Remote participant with video ready: ${participant}`);
+
+            // update page timings
+            // Collect perf metrics from page and add them to pageTimings object
+            performance.getEntriesByType('mark').forEach((perfMark) => {
+              pageTimings[perfMark.name] = Math.round(perfMark.startTime);
+            });
+            console.log('Page Timings:', pageTimings);
+          });
         }
       });
       return adapter;

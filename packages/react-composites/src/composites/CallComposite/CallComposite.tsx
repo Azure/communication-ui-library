@@ -438,6 +438,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         <ConfigurationPage
           mobileView={props.mobileView}
           startCallHandler={(): void => {
+            console.log('perftests-startCall');
+            performance.mark('perftests-startCall');
             if (callees) {
               adapter.startCall(callees);
             } else {

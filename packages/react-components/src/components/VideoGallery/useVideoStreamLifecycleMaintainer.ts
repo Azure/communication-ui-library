@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { VideoStreamOptions, CreateVideoStreamViewResult, ViewScalingMode } from '../../types';
 
 /** @private */
@@ -49,7 +49,17 @@ const useVideoStreamLifecycleMaintainer = (
     scalingMode
   } = props;
 
+  const wasVideoStreamViewAvailable = useRef(false);
   const [videoStreamViewResult, setVideoStreamViewResult] = useState<CreateVideoStreamViewResult | undefined>();
+
+  useEffect(() => {
+    performance.mark('videoStreamView-notAvailable');
+  }, []);
+
+  if (wasVideoStreamViewAvailable.current === false && videoStreamViewResult) {
+    wasVideoStreamViewAvailable.current = true;
+    performance.mark('videoStreamView-available');
+  }
 
   useEffect(() => {
     if (isStreamAvailable && !renderElementExists) {
