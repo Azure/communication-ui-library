@@ -36,7 +36,7 @@ describe('ChatContext api functions', () => {
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   test('removeResourceFromCache method should remove a specific item from resourceCache', () => {
     const resourceUrl = 'resource2Url';
-    const expectedResourceCache = { resource1Url: 'blob:resource1' };
+    const expectedResourceCache = { resource1Url: { sourceUrl: 'blob:resource1' } };
     context.createThreadIfNotExist(threadId);
     context.setChatMessages(threadId, { messageId1: messageTemplateWithResourceCache });
     expect(context.getState().threads[threadId].chatMessages[messageId]).toBeDefined();
