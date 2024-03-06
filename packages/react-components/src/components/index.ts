@@ -22,6 +22,12 @@ export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox
 
 /* @conditional-compile-remove(rich-text-editor) */
 export { RichTextSendBox } from './RichTextEditor/RichTextSendBox';
+// TODO: This component is exported only for testing purposes. Remove this when this component is added to composites
+/* @conditional-compile-remove(rich-text-editor) */
+export { ChatMessageComponentAsRichTextEditBox } from './ChatMessage/ChatMessageComponentAsRichTextEditBox';
+// TODO: This component is exported only for testing purposes. Remove this when this component is added to composites
+/* @conditional-compile-remove(rich-text-editor) */
+export type { ChatMessageComponentAsRichTextEditBoxProps } from './ChatMessage/ChatMessageComponentAsRichTextEditBox';
 /* @conditional-compile-remove(rich-text-editor) */
 export type { RichTextSendBoxProps, RichTextSendBoxStrings } from './RichTextEditor/RichTextSendBox';
 

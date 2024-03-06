@@ -56,7 +56,9 @@ import {
   TextNumberListLtr20Regular,
   TextIndentDecrease20Regular,
   TextIndentIncrease20Regular,
-  DividerTall24Regular
+  DividerTall24Regular,
+  TextEditStyle20Regular,
+  TextEditStyle20Filled
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(reaction) */
 import { Emoji20Regular } from '@fluentui/react-icons';
@@ -398,11 +400,15 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(rich-text-editor) */
   RichTextBulletListButtonIcon: <TextBulletList20Regular />,
   /* @conditional-compile-remove(rich-text-editor) */
-  RichTexttNumberListButtonIcon: <TextNumberListLtr20Regular />,
+  RichTextNumberListButtonIcon: <TextNumberListLtr20Regular />,
   /* @conditional-compile-remove(rich-text-editor) */
   RichTextIndentDecreaseButtonIcon: <TextIndentDecrease20Regular />,
   /* @conditional-compile-remove(rich-text-editor) */
   RichTextIndentIncreaseButtonIcon: <TextIndentIncrease20Regular />,
   /* @conditional-compile-remove(rich-text-editor) */
-  RichTextDividerIcon: <DividerTall24Regular />
+  RichTextDividerIcon: <DividerTall24Regular />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RichTextEditorButtonIcon: <TextEditStyle20Regular />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RichTextEditorButtonIconFilled: <TextEditStyle20Filled />
 };

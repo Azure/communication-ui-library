@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { mergeStyles } from '@fluentui/react';
+import { IStyle, mergeStyles } from '@fluentui/react';
+import { editorTextBoxButtonStyle } from './SendBox.styles';
 
 /**
  * @private
@@ -30,13 +31,26 @@ export const inputBoxIcon = mergeStyles({
     stroke: 'currentColor'
   }
 });
+/**
+ * @private
+ */
+export const richTextEditBoxActionButtonIcon = mergeStyles(editorTextBoxButtonStyle, {
+  '&:hover svg': {
+    stroke: 'currentColor'
+  }
+});
+
+/**
+ * @private
+ */
+export const editBoxWidthStyles: IStyle = {
+  minWidth: '6.25rem',
+  maxWidth: '100%'
+};
 
 /**
  * @private
  */
 export const editBoxStyleSet = {
-  root: {
-    minWidth: '6.25rem',
-    maxWidth: '100%'
-  }
+  root: editBoxWidthStyles
 };
