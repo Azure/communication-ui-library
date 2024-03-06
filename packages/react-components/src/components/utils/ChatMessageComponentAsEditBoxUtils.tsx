@@ -4,7 +4,7 @@
 import React from 'react';
 import { Icon } from '@fluentui/react';
 /* @conditional-compile-remove(file-sharing) */
-import { FileMetadata } from '../FileDownloadCards';
+import { AttachmentMetadata } from '../FileDownloadCards';
 import { isMessageTooLong } from './SendBoxUtils';
 /* @conditional-compile-remove(file-sharing) */
 import { ChatMessage } from '../../types';
@@ -28,7 +28,7 @@ type MessageState = 'OK' | 'too short' | 'too long';
 function isMessageEmpty(
   messageText: string,
   /* @conditional-compile-remove(file-sharing) */
-  attachmentMetadata?: FileMetadata[]
+  attachmentMetadata?: AttachmentMetadata[]
 ): boolean {
   /* @conditional-compile-remove(file-sharing) */
   return messageText.trim().length === 0 && attachmentMetadata?.length === 0;
@@ -40,7 +40,7 @@ function isMessageEmpty(
  */
 export function getMessageState(
   messageText: string,
-  /* @conditional-compile-remove(file-sharing) */ attachmentMetadata: FileMetadata[]
+  /* @conditional-compile-remove(file-sharing) */ attachmentMetadata: AttachmentMetadata[]
 ): MessageState {
   return isMessageEmpty(messageText, /* @conditional-compile-remove(file-sharing) */ attachmentMetadata)
     ? 'too short'
@@ -54,6 +54,6 @@ export function getMessageState(
  * @private
  * @TODO: Remove when file-sharing feature becomes stable.
  */
-export function getMessageAttachedFilesMetadata(message: ChatMessage): FileMetadata[] | undefined {
+export function getMessageAttachedFilesMetadata(message: ChatMessage): AttachmentMetadata[] | undefined {
   return message.files;
 }

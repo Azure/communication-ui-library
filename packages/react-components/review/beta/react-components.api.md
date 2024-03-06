@@ -495,7 +495,7 @@ export const ChatMessageComponentAsRichTextEditBox: (props: ChatMessageComponent
 export type ChatMessageComponentAsRichTextEditBoxProps = {
     onCancel?: (messageId: string) => void;
     onSubmit: (text: string, metadata?: Record<string, string>, options?: {
-        attachmentMetadata?: FileMetadata[];
+        attachmentMetadata?: AttachmentMetadata[];
     }) => void;
     message: ChatMessage;
     strings: MessageThreadStrings;
