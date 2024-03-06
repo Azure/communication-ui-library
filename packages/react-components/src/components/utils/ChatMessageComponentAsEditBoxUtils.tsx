@@ -25,35 +25,35 @@ export const onRenderSubmitIcon = (className: string): JSX.Element => {
 
 type MessageState = 'OK' | 'too short' | 'too long';
 
-const isMessageEmpty = (
+function isMessageEmpty(
   messageText: string,
   /* @conditional-compile-remove(file-sharing) */
   attachmentMetadata?: FileMetadata[]
-): boolean => {
+): boolean {
   /* @conditional-compile-remove(file-sharing) */
   return messageText.trim().length === 0 && attachmentMetadata?.length === 0;
   return messageText.trim().length === 0;
-};
+}
 
 /**
  * @private
  */
-export const getMessageState = (
+export function getMessageState(
   messageText: string,
   /* @conditional-compile-remove(file-sharing) */ attachmentMetadata: FileMetadata[]
-): MessageState => {
+): MessageState {
   return isMessageEmpty(messageText, /* @conditional-compile-remove(file-sharing) */ attachmentMetadata)
     ? 'too short'
     : isMessageTooLong(messageText.length)
     ? 'too long'
     : 'OK';
-};
+}
 
 /* @conditional-compile-remove(file-sharing) */
 /**
  * @private
  * @TODO: Remove when file-sharing feature becomes stable.
  */
-export const getMessageAttachedFilesMetadata = (message: ChatMessage): FileMetadata[] | undefined => {
+export function getMessageAttachedFilesMetadata(message: ChatMessage): FileMetadata[] | undefined {
   return message.files;
-};
+}
