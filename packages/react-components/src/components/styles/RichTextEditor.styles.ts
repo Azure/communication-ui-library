@@ -1,12 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 import { IButtonStyles, ICommandBarStyles, IContextualMenuStyles, IStyle, Theme, mergeStyles } from '@fluentui/react';
-import {
-  borderEditBoxStyle,
-  defaultSendBoxActiveBorderThicknessREM,
-  defaultSendBoxInactiveBorderThicknessREM,
-  editorTextBoxButtonStyle
-} from './SendBox.styles';
+import { editorTextBoxButtonStyle } from './SendBox.styles';
 import { RichTextEditorStyleProps } from '../RichTextEditor/RichTextEditor';
 
 /**
@@ -170,27 +165,4 @@ export const sendBoxRichTextEditorStyle = (isExpanded: boolean): RichTextEditorS
     minHeight: isExpanded ? '5rem' : '1.25rem',
     maxHeight: '5rem'
   };
-};
-
-/**
- * @private
- */
-export const richTextBorderBoxStyle = (props: { theme: Theme; disabled: boolean }): string => {
-  const disabledStyles: IStyle = {
-    pointerEvents: 'none',
-    backgroundColor: props.theme.palette.neutralLighter,
-    borderRadius: props.theme.effects.roundedCorner4,
-    border: `${defaultSendBoxInactiveBorderThicknessREM}rem solid transparent`,
-    margin: `${defaultSendBoxActiveBorderThicknessREM - defaultSendBoxInactiveBorderThicknessREM}rem`
-  };
-  return mergeStyles(
-    props.disabled
-      ? disabledStyles
-      : borderEditBoxStyle({
-          ...props,
-          // should always be false as we don't want to show the border when there is an error
-          hasErrorMessage: false,
-          defaultBorderColor: props.theme.palette.neutralQuaternaryAlt
-        })
-  );
 };

@@ -5,7 +5,7 @@ import React, { ReactNode, useCallback, useMemo, useState } from 'react';
 import { BaseCustomStyles } from '../../types';
 import { RichTextEditor, RichTextEditorComponentRef, RichTextEditorStyleProps } from './RichTextEditor';
 import { RichTextSendBoxStrings } from './RichTextSendBox';
-import { richTextBorderBoxStyle } from '../styles/RichTextEditor.styles';
+import { richTextBorderBoxStyle } from '../styles/RichTextInputBoxComponent.styles';
 import { useTheme } from '../../theming';
 import { Icon, Stack } from '@fluentui/react';
 import { InputBoxButton } from '../InputBoxButton';
