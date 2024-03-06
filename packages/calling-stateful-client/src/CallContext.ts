@@ -95,9 +95,46 @@ export class CallContext {
       incomingCallsEnded: {},
       deviceManager: {
         isSpeakerSelectionAvailable: false,
-        cameras: [],
-        microphones: [],
-        speakers: [],
+        cameras: [
+          {
+            name: 'test-camera',
+            id: 'test-camera-id',
+            deviceType: 'UsbCamera'
+          }
+        ],
+        microphones: [
+          {
+            name: 'test-microphone',
+            id: 'test-microphone-id',
+            isSystemDefault: true,
+            deviceType: 'CompositeAudioDevice'
+          }
+        ],
+        speakers: [
+          {
+            name: 'test-microphone',
+            id: 'test-microphone-id',
+            isSystemDefault: true,
+            deviceType: 'CompositeAudioDevice'
+          }
+        ],
+        selectedCamera: {
+          name: 'test-camera',
+          id: 'test-camera-id',
+          deviceType: 'UsbCamera'
+        },
+        selectedMicrophone: {
+          name: 'test-microphone',
+          id: 'test-microphone-id',
+          isSystemDefault: true,
+          deviceType: 'CompositeAudioDevice'
+        },
+        selectedSpeaker: {
+          name: 'test-microphone',
+          id: 'test-microphone-id',
+          isSystemDefault: true,
+          deviceType: 'CompositeAudioDevice'
+        },
         unparentedViews: []
       },
       callAgent: undefined,

@@ -630,12 +630,13 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   }
 
   public async askDevicePermission(constrain: PermissionConstraints): Promise<void> {
-    const startTime = new Date().getTime();
-    return await this.asyncTeeErrorToEventEmitter(async () => {
-      await this.deviceManager.askDevicePermission(constrain);
-      const endTime = new Date().getTime();
-      compositeLogger.info('time to query askDevicePermissions', endTime - startTime, 'ms');
-    });
+    // const startTime = new Date().getTime();
+    // return await this.asyncTeeErrorToEventEmitter(async () => {
+    //   await this.deviceManager.askDevicePermission(constrain);
+    //   const endTime = new Date().getTime();
+    //   compositeLogger.info('time to query askDevicePermissions', endTime - startTime, 'ms');
+    // });
+    return Promise.resolve();
   }
 
   public joinCall(options?: boolean | JoinCallOptions): CallTypeOf<AgentType> | undefined {

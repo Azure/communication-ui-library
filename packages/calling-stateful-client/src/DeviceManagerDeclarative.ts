@@ -109,29 +109,52 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
     switch (prop) {
       case 'getCameras': {
         return this._context.withAsyncErrorTeedToState((): Promise<VideoDeviceInfo[]> => {
-          return target.getCameras().then((cameras: VideoDeviceInfo[]) => {
-            // Device Manager always has a camera with '' name if there are no real camera devices available.
-            // We don't want to show that in the UI.
-            const realCameras = cameras.filter((c) => !!c.name);
-            this._context.setDeviceManagerCameras(dedupeById(realCameras));
-            return realCameras;
-          });
+          return Promise.resolve([
+            {
+              id: 'id',
+              name: 'name',
+              deviceType: 'UsbCamera'
+            }
+          ]);
+          // return target.getCameras().then((cameras: VideoDeviceInfo[]) => {
+          //   // Device Manager always has a camera with '' name if there are no real camera devices available.
+          //   // We don't want to show that in the UI.
+          //   const realCameras = cameras.filter((c) => !!c.name);
+          //   this._context.setDeviceManagerCameras(dedupeById(realCameras));
+          //   return realCameras;
+          // });
         }, 'DeviceManager.getCameras');
       }
       case 'getMicrophones': {
         return this._context.withAsyncErrorTeedToState((): Promise<AudioDeviceInfo[]> => {
-          return target.getMicrophones().then((microphones: AudioDeviceInfo[]) => {
-            this._context.setDeviceManagerMicrophones(dedupeById(microphones));
-            return microphones;
-          });
+          return Promise.resolve([
+            {
+              id: 'id',
+              name: 'name',
+              isSystemDefault: true,
+              deviceType: 'CompositeAudioDevice'
+            }
+          ]);
+          // return target.getMicrophones().then((microphones: AudioDeviceInfo[]) => {
+          //   this._context.setDeviceManagerMicrophones(dedupeById(microphones));
+          //   return microphones;
+          // });
         }, 'DeviceManager.getMicrophones');
       }
       case 'getSpeakers': {
         return this._context.withAsyncErrorTeedToState((): Promise<AudioDeviceInfo[]> => {
-          return target.getSpeakers().then((speakers: AudioDeviceInfo[]) => {
-            this._context.setDeviceManagerSpeakers(dedupeById(speakers));
-            return speakers;
-          });
+          return Promise.resolve([
+            {
+              id: 'id',
+              name: 'name',
+              isSystemDefault: true,
+              deviceType: 'CompositeAudioDevice'
+            }
+          ]);
+          // return target.getSpeakers().then((speakers: AudioDeviceInfo[]) => {
+          //   this._context.setDeviceManagerSpeakers(dedupeById(speakers));
+          //   return speakers;
+          // });
         }, 'DeviceManager.getSpeakers');
       }
       case 'selectMicrophone': {

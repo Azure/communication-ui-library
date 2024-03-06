@@ -9,7 +9,7 @@ import { getDeviceManager } from './baseSelectors';
  */
 export const devicePermissionSelector = reselect.createSelector([getDeviceManager], (deviceManager) => {
   return {
-    video: deviceManager.deviceAccess ? deviceManager.deviceAccess.video : undefined,
-    audio: deviceManager.deviceAccess ? deviceManager.deviceAccess.audio : undefined
+    video: true, //deviceManager.deviceAccess ? deviceManager.deviceAccess.video : undefined,
+    audio: true //deviceManager.deviceAccess ? deviceManager.deviceAccess.audio : undefined
   };
 });
