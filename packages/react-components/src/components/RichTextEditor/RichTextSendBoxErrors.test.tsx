@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 import React from 'react';
-import { RTESendBoxErrors } from './RTESendBoxErrors';
+import { RichTextSendBoxErrors } from './RichTextSendBoxErrors';
 import { act, render, screen } from '@testing-library/react';
 import { registerIcons } from '@fluentui/react';
 
 jest.useFakeTimers();
-describe('RTESendBoxErrors should be shown correctly', () => {
+describe('RichTextSendBoxErrors should be shown correctly', () => {
   beforeAll(() => {
     registerIcons({
       icons: {
@@ -15,14 +15,14 @@ describe('RTESendBoxErrors should be shown correctly', () => {
     });
   });
   test('MessageBar shouldn`t be shown if there are no errors', async () => {
-    render(<RTESendBoxErrors />);
+    render(<RichTextSendBoxErrors />);
     const messageBar = screen.queryByTestId('send-box-message-bar');
     expect(messageBar).toBeNull();
   });
 
   test('MessageBar should show system error', async () => {
     const text = 'Test system message';
-    render(<RTESendBoxErrors systemMessage={text} />);
+    render(<RichTextSendBoxErrors systemMessage={text} />);
     const sendBoxErrorComponent = await screen.findByText(text);
 
     expect(sendBoxErrorComponent).not.toBeNull();
@@ -31,7 +31,7 @@ describe('RTESendBoxErrors should be shown correctly', () => {
   /* @conditional-compile-remove(file-sharing) */
   test('MessageBar should show file uploads pending error', async () => {
     const text = 'Test file uploads pending error';
-    render(<RTESendBoxErrors fileUploadsPendingError={{ message: text, timestamp: Date.now() }} />);
+    render(<RichTextSendBoxErrors fileUploadsPendingError={{ message: text, timestamp: Date.now() }} />);
     const sendBoxErrorComponent = await screen.findByText(text);
 
     expect(sendBoxErrorComponent).not.toBeNull();
@@ -40,7 +40,7 @@ describe('RTESendBoxErrors should be shown correctly', () => {
   /* @conditional-compile-remove(file-sharing) */
   test('MessageBar should show file uploads error', async () => {
     const text = 'Test file uploads error';
-    render(<RTESendBoxErrors fileUploadError={{ message: text, timestamp: Date.now() }} />);
+    render(<RichTextSendBoxErrors fileUploadError={{ message: text, timestamp: Date.now() }} />);
     const sendBoxErrorComponent = await screen.findByText(text);
 
     expect(sendBoxErrorComponent).not.toBeNull();
@@ -48,7 +48,7 @@ describe('RTESendBoxErrors should be shown correctly', () => {
 
   test('MessageBar should show text too long message', async () => {
     const text = 'Test textTooLongMessage message';
-    render(<RTESendBoxErrors textTooLongMessage={text} />);
+    render(<RichTextSendBoxErrors textTooLongMessage={text} />);
     const sendBoxErrorComponent = await screen.findByText(text);
 
     expect(sendBoxErrorComponent).not.toBeNull();
@@ -57,7 +57,7 @@ describe('RTESendBoxErrors should be shown correctly', () => {
   test('MessageBar should hide textTooLongMessage after 10 sec and show system error', async () => {
     const systemMessage = 'Test system message';
     const textTooLongMessage = 'Test textTooLongMessage message';
-    render(<RTESendBoxErrors systemMessage={systemMessage} textTooLongMessage={textTooLongMessage} />);
+    render(<RichTextSendBoxErrors systemMessage={systemMessage} textTooLongMessage={textTooLongMessage} />);
     const textTooLongMessageComponent = await screen.findByText(textTooLongMessage);
     const systemMessageComponent = screen.queryByText(systemMessage);
     expect(systemMessageComponent).toBeNull();
