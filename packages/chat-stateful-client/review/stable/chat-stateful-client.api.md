@@ -40,13 +40,13 @@ export type ChatErrors = {
 };
 
 // @public
-export type ChatErrorTarget = 'ChatClient.createChatThread' | 'ChatClient.deleteChatThread' | 'ChatClient.getChatThreadClient' | 'ChatClient.listChatThreads' | 'ChatClient.off' | 'ChatClient.on' | 'ChatClient.startRealtimeNotifications' | 'ChatClient.stopRealtimeNotifications' | 'ChatThreadClient.addParticipants' | 'ChatThreadClient.deleteMessage' | 'ChatThreadClient.getMessage' | 'ChatThreadClient.getProperties' | 'ChatThreadClient.listMessages' | 'ChatThreadClient.listParticipants' | 'ChatThreadClient.listReadReceipts' | 'ChatThreadClient.removeParticipant' | 'ChatThreadClient.sendMessage' | 'ChatThreadClient.sendReadReceipt' | 'ChatThreadClient.sendTypingNotification' | 'ChatThreadClient.updateMessage' | 'ChatThreadClient.updateTopic' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'ChatThreadClient.downloadResourceToCache';
+export type ChatErrorTarget = 'ChatClient.createChatThread' | 'ChatClient.deleteChatThread' | 'ChatClient.getChatThreadClient' | 'ChatClient.listChatThreads' | 'ChatClient.off' | 'ChatClient.on' | 'ChatClient.startRealtimeNotifications' | 'ChatClient.stopRealtimeNotifications' | 'ChatThreadClient.addParticipants' | 'ChatThreadClient.deleteMessage' | 'ChatThreadClient.getMessage' | 'ChatThreadClient.getProperties' | 'ChatThreadClient.listMessages' | 'ChatThreadClient.listParticipants' | 'ChatThreadClient.listReadReceipts' | 'ChatThreadClient.removeParticipant' | 'ChatThreadClient.sendMessage' | 'ChatThreadClient.sendReadReceipt' | 'ChatThreadClient.sendTypingNotification' | 'ChatThreadClient.updateMessage' | 'ChatThreadClient.updateTopic';
 
 // @public
 export type ChatMessageWithStatus = ChatMessage & {
     clientMessageId?: string;
     status: MessageStatus;
-    resourceCache?: Record<string, string>;
+    resourceCache?: Record<string, ResourceResult>;
 };
 
 // @public
@@ -77,6 +77,12 @@ export const _createStatefulChatClientInner: (args: StatefulChatClientArgs, opti
 
 // @internal
 export const _createStatefulChatClientWithDeps: (chatClient: ChatClient, args: StatefulChatClientArgs, options?: StatefulChatClientOptions) => StatefulChatClient;
+
+// @public
+export type ResourceResult = {
+    sourceUrl: string;
+    error?: Error;
+};
 
 // @public
 export interface StatefulChatClient extends ChatClient {

@@ -18,5 +18,14 @@ export type ChatMessageWithStatus = ChatMessage & {
   /* @conditional-compile-remove(data-loss-prevention) */
   policyViolation?: boolean;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  resourceCache?: Record<string, string>;
+  resourceCache?: Record<string, ResourceResult>;
+};
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/**
+ * Result of the Resource downloaded from stateful client
+ * @public
+ */
+export type ResourceResult = {
+  sourceUrl: string;
+  error?: Error;
 };

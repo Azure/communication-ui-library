@@ -21,8 +21,7 @@ export const ensureChatErrorTargetsContainsAllValidValues = (target: InferredCha
  */
 type InferredChatErrorTargets =
   | ChatObjectMethodNames<'ChatClient', ChatClient>
-  | ChatObjectMethodNames<'ChatThreadClient', ChatThreadClient>
-  | 'ChatThreadClient.downloadResourceToCache';
+  | ChatObjectMethodNames<'ChatThreadClient', ChatThreadClient>;
 
 type ChatObjectMethodNames<TName extends string, T> = {
   [K in keyof T & string]: `${TName}.${ChatMethodName<T, K>}`;

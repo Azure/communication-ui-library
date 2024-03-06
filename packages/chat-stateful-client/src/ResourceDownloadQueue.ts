@@ -5,7 +5,7 @@ import { ChatContext } from './ChatContext';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatError } from './ChatClientState';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
+import { ChatMessageWithStatus, ResourceResult } from './types/ChatMessageWithStatus';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import type { CommunicationTokenCredential } from '@azure/communication-common';
 
@@ -18,6 +18,7 @@ export class ResourceDownloadQueue {
   private _context: ChatContext;
   private isActive = false;
   private _credential: CommunicationTokenCredential;
+  private _errors: ResourceDownloadError[] = [];
 
   constructor(context: ChatContext, credential: CommunicationTokenCredential) {
     this._context = context;
@@ -38,6 +39,10 @@ export class ResourceDownloadQueue {
     }
 
     return contains;
+  }
+
+  public get errors(): ResourceDownloadError[] {
+    return this._errors;
   }
 
   public addMessage(message: ChatMessageWithStatus): void {
@@ -74,8 +79,15 @@ export class ResourceDownloadQueue {
     resourceUrl: string,
     operation: ImageRequest
   ): Promise<ChatMessageWithStatus> {
-    const blobUrl = await this.downloadResource(operation, resourceUrl);
-    message = { ...message, resourceCache: { ...message.resourceCache, [resourceUrl]: blobUrl } };
+    const response: ResourceResult = { sourceUrl: '' };
+    try {
+      const blobUrl = await this.downloadResource(operation, resourceUrl);
+      response.sourceUrl = blobUrl;
+    } catch (error) {
+      response.error = error as Error;
+    }
+
+    message = { ...message, resourceCache: { ...message.resourceCache, [resourceUrl]: response } };
     return message;
   }
 
@@ -90,8 +102,14 @@ export class ResourceDownloadQueue {
       }
       for (const attachment of attachments) {
         if (attachment.previewUrl && attachment.attachmentType === 'image') {
-          const blobUrl = await this.downloadResource(operation, attachment.previewUrl);
-          message.resourceCache[attachment.previewUrl] = blobUrl;
+          const response: ResourceResult = { sourceUrl: '' };
+          try {
+            const blobUrl = await this.downloadResource(operation, attachment.previewUrl);
+            response.sourceUrl = blobUrl;
+          } catch (error) {
+            response.error = error as Error;
+          }
+          message.resourceCache[attachment.previewUrl] = response;
         }
       }
     }
@@ -105,34 +123,7 @@ export class ResourceDownloadQueue {
     return blobUrl;
   }
 }
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-/**
- * @private
- */
-export const requestPreviewUrl = async (
-  message: ChatMessageWithStatus,
-  credential: CommunicationTokenCredential
-): Promise<ChatMessageWithStatus> => {
-  const attachments = message.content?.attachments;
-  if (message.type === 'html' && attachments) {
-    if (message.resourceCache === undefined) {
-      message.resourceCache = {};
-    }
-    for (const attachment of attachments) {
-      if (attachment.previewUrl) {
-        const previewUrl = attachment.previewUrl;
-        try {
-          const src = await fetchImageSource(previewUrl, credential);
-          message.resourceCache[previewUrl] = src;
-        } catch (error) {
-          throw new ResourceDownloadError(message);
-        }
-      }
-    }
-  }
 
-  return message;
-};
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * @private

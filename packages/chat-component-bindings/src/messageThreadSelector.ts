@@ -161,7 +161,7 @@ const processChatMessageContent = (message: ChatMessageWithStatus): string | und
       document.querySelectorAll('img').forEach((img) => {
         const attachmentPreviewUrl = attachments.find((attachment) => attachment.id === img.id)?.previewUrl;
         if (attachmentPreviewUrl) {
-          const src = message.resourceCache?.[attachmentPreviewUrl] ?? '';
+          const src = message.resourceCache?.[attachmentPreviewUrl].sourceUrl ?? '';
           img.src = src;
         }
       });

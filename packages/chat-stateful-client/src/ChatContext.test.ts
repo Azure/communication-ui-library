@@ -21,15 +21,6 @@ describe('ChatContext api functions', () => {
     context = new ChatContext(0, new MockCommunicationUserCredential());
   });
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  test('downloadResouceToCache throws an error', () => {
-    context.createThreadIfNotExist(threadId);
-    context.setChatMessages(threadId, { messageId1: messageTemplateWithResourceCache });
-    expect(context.getState().threads[threadId].chatMessages[messageId]).toBeDefined();
-    expect(context.downloadResourceToCache(threadId, messageId, 'resource1Url')).rejects.toThrow(
-      'ChatThreadClient.downloadResourceToCache'
-    );
-  });
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   test('dispose method clears the message resourceCache', () => {
     context.createThreadIfNotExist(threadId);
     context.setChatMessages(threadId, { messageId1: messageTemplateWithResourceCache });
