@@ -4,19 +4,19 @@
 import React from 'react';
 import { BaseCustomStyles } from '../../types';
 import { RichTextEditor, RichTextEditorComponentRef } from './RichTextEditor';
-import { RichTextSendBoxStrings } from './RTESendBox';
+import { RichTextSendBoxStrings } from './RichTextSendBox';
 import { borderAndBoxShadowStyle } from '../styles/SendBox.styles';
 import { useTheme } from '../../theming';
 
 /**
  * @private
  */
-export interface RTEInputBoxComponentStylesProps extends BaseCustomStyles {}
+export interface RichTextInputBoxComponentStylesProps extends BaseCustomStyles {}
 
 /**
  * @private
  */
-export interface RTEInputBoxComponentProps {
+export interface RichTextInputBoxComponentProps {
   placeholderText?: string;
   initialContent?: string;
   onChange: (newValue?: string) => void;
@@ -28,7 +28,7 @@ export interface RTEInputBoxComponentProps {
 /**
  * @private
  */
-export const RTEInputBoxComponent = (props: RTEInputBoxComponentProps): JSX.Element => {
+export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps): JSX.Element => {
   const { placeholderText, initialContent, onChange, editorComponentRef, disabled } = props;
   const theme = useTheme();
 
