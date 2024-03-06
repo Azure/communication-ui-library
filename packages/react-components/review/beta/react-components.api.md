@@ -481,6 +481,19 @@ export interface ChatMessage extends MessageCommon {
     status?: MessageStatus;
 }
 
+// @beta (undocumented)
+export const ChatMessageComponentAsRichTextEditBox: (props: ChatMessageComponentAsRichTextEditBoxProps) => JSX.Element;
+
+// @beta (undocumented)
+export type ChatMessageComponentAsRichTextEditBoxProps = {
+    onCancel?: (messageId: string) => void;
+    onSubmit: (text: string, metadata?: Record<string, string>, options?: {
+        attachmentMetadata?: FileMetadata[];
+    }) => void;
+    message: ChatMessage;
+    strings: MessageThreadStrings;
+};
+
 // @beta
 export interface CommonSitePermissionsProps {
     appName: string;
@@ -843,10 +856,12 @@ export const DEFAULT_COMPONENT_ICONS: {
     RichTextItalicButtonIcon: React_2.JSX.Element;
     RichTextUnderlineButtonIcon: React_2.JSX.Element;
     RichTextBulletListButtonIcon: React_2.JSX.Element;
-    RichTexttNumberListButtonIcon: React_2.JSX.Element;
+    RichTextNumberListButtonIcon: React_2.JSX.Element;
     RichTextIndentDecreaseButtonIcon: React_2.JSX.Element;
     RichTextIndentIncreaseButtonIcon: React_2.JSX.Element;
     RichTextDividerIcon: React_2.JSX.Element;
+    RichTextEditorButtonIcon: React_2.JSX.Element;
+    RichTextEditorButtonIconFilled: React_2.JSX.Element;
 };
 
 // @internal
@@ -2005,6 +2020,7 @@ export interface RichTextSendBoxStrings extends SendBoxStrings {
     increaseIndentTooltip: string;
     italicTooltip: string;
     numberListTooltip: string;
+    richTextFormatButtonTooltip: string;
     underlineTooltip: string;
 }
 

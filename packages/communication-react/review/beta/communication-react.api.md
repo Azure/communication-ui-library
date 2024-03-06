@@ -2489,10 +2489,12 @@ export const DEFAULT_COMPONENT_ICONS: {
     RichTextItalicButtonIcon: React_2.JSX.Element;
     RichTextUnderlineButtonIcon: React_2.JSX.Element;
     RichTextBulletListButtonIcon: React_2.JSX.Element;
-    RichTexttNumberListButtonIcon: React_2.JSX.Element;
+    RichTextNumberListButtonIcon: React_2.JSX.Element;
     RichTextIndentDecreaseButtonIcon: React_2.JSX.Element;
     RichTextIndentIncreaseButtonIcon: React_2.JSX.Element;
     RichTextDividerIcon: React_2.JSX.Element;
+    RichTextEditorButtonIcon: React_2.JSX.Element;
+    RichTextEditorButtonIconFilled: React_2.JSX.Element;
 };
 
 // @public
@@ -2644,10 +2646,12 @@ export const DEFAULT_COMPOSITE_ICONS: {
     RichTextItalicButtonIcon: React_2.JSX.Element;
     RichTextUnderlineButtonIcon: React_2.JSX.Element;
     RichTextBulletListButtonIcon: React_2.JSX.Element;
-    RichTexttNumberListButtonIcon: React_2.JSX.Element;
+    RichTextNumberListButtonIcon: React_2.JSX.Element;
     RichTextIndentDecreaseButtonIcon: React_2.JSX.Element;
     RichTextIndentIncreaseButtonIcon: React_2.JSX.Element;
     RichTextDividerIcon: React_2.JSX.Element;
+    RichTextEditorButtonIcon: React_2.JSX.Element;
+    RichTextEditorButtonIconFilled: React_2.JSX.Element;
 };
 
 // @beta
@@ -3863,6 +3867,7 @@ export interface RichTextSendBoxStrings extends SendBoxStrings {
     increaseIndentTooltip: string;
     italicTooltip: string;
     numberListTooltip: string;
+    richTextFormatButtonTooltip: string;
     underlineTooltip: string;
 }
 

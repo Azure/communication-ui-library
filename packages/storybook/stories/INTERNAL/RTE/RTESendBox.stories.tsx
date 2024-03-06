@@ -12,7 +12,7 @@ const RichTextSendBoxStory = (args): JSX.Element => {
   const delayForSendButton = 300;
 
   return (
-    <div style={{ width: '31.25rem' }}>
+    <div style={{ width: '31.25rem', maxWidth: '90%' }}>
       <RichTextSendBoxComponent
         disabled={args.disabled}
         systemMessage={args.isSendBoxWithWarning ? args.systemMessage : undefined}

@@ -43,7 +43,8 @@
     "bulletListTooltip": "Bulleted list",
     "numberListTooltip": "Numbered list",
     "increaseIndentTooltip": "Increase indent",
-    "decreaseIndentTooltip": "Decrease indent"
+    "decreaseIndentTooltip": "Decrease indent",
+    "richTextFormatButtonTooltip": "Format"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggestions"
