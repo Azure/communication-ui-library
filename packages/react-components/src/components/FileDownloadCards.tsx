@@ -55,42 +55,11 @@ export interface FileMetadata {
   payload?: Record<string, string>;
 }
 
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-/**
- * Metadata for rendering images inline with a message.
- * This does not include images attached as files.
- * @beta
- */
-export interface InlineImageMetadata {
-  /*
-   * Type of the attachment
-   */
-  attachmentType: 'inlineImage';
-  /**
-   * Unique ID of the attachment.
-   */
-  id: string;
-  /*
-   * Preview URL for low resolution version.
-   */
-  previewUrl?: string;
-  /**
-   * Download URL for the full resolution version.
-   */
-  url: string;
-  /**
-   * Optional fetched Image source fot the full resolution version.
-   */
-  fullSizeImageSrc?: string;
-}
-
 /**
  * Metadata containing information about the uploaded file.
  * @beta
  */
-export type AttachmentMetadata =
-  | FileMetadata
-  | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ InlineImageMetadata;
+export type AttachmentMetadata = FileMetadata;
 
 /**
  * Strings of _FileDownloadCards that can be overridden.
@@ -302,7 +271,7 @@ const DownloadIconTrampoline = (): JSX.Element => {
 };
 
 const useLocaleStringsTrampoline = (): _FileDownloadCardsStrings => {
-  /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
+  /* @conditional-compile-remove(file-sharing) */
   return useLocale().strings.messageThread;
   return { downloadFile: '', fileCardGroupMessage: '' };
 };

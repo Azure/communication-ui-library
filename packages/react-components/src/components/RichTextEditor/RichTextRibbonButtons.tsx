@@ -4,12 +4,12 @@
 import { Theme } from '@fluentui/react';
 import { KnownRibbonButtonKey, LocalizedStrings, RibbonButton, getButtons } from 'roosterjs-react';
 import { ribbonButtonStyle, ribbonDividerStyle } from '../styles/RichTextEditor.styles';
-import { RichTextSendBoxStrings } from './RTESendBox';
+import { RichTextSendBoxStrings } from './RichTextSendBox';
 
 const dividerRibbonButton = (theme: Theme): RibbonButton<string> => {
   return {
     key: 'Divider',
-    iconName: 'RTEDividerIcon',
+    iconName: 'RichTextDividerIcon',
     unlocalizedText: '',
     onClick: () => {},
     isDisabled: () => true,
@@ -20,31 +20,31 @@ const dividerRibbonButton = (theme: Theme): RibbonButton<string> => {
 };
 
 const boldButton = (theme: Theme): RibbonButton<string> | undefined => {
-  return createKnownRibbonButton(KnownRibbonButtonKey.Bold, theme, 'RTEBoldButtonIcon');
+  return createKnownRibbonButton(KnownRibbonButtonKey.Bold, theme, 'RichTextBoldButtonIcon');
 };
 
 const italicButton = (theme: Theme): RibbonButton<string> | undefined => {
-  return createKnownRibbonButton(KnownRibbonButtonKey.Italic, theme, 'RTEItalicButtonIcon');
+  return createKnownRibbonButton(KnownRibbonButtonKey.Italic, theme, 'RichTextItalicButtonIcon');
 };
 
 const underlineButton = (theme: Theme): RibbonButton<string> | undefined => {
-  return createKnownRibbonButton(KnownRibbonButtonKey.Underline, theme, 'RTEUnderlineButtonIcon');
+  return createKnownRibbonButton(KnownRibbonButtonKey.Underline, theme, 'RichTextUnderlineButtonIcon');
 };
 
 const bulletListButton = (theme: Theme): RibbonButton<string> | undefined => {
-  return createKnownRibbonButton(KnownRibbonButtonKey.BulletedList, theme, 'RTEBulletListButtonIcon');
+  return createKnownRibbonButton(KnownRibbonButtonKey.BulletedList, theme, 'RichTextBulletListButtonIcon');
 };
 
 const numberListButton = (theme: Theme): RibbonButton<string> | undefined => {
-  return createKnownRibbonButton(KnownRibbonButtonKey.NumberedList, theme, 'RTEtNumberListButtonIcon');
+  return createKnownRibbonButton(KnownRibbonButtonKey.NumberedList, theme, 'RichTexttNumberListButtonIcon');
 };
 
 const indentIncreaseButton = (theme: Theme): RibbonButton<string> | undefined => {
-  return createKnownRibbonButton(KnownRibbonButtonKey.IncreaseIndent, theme, 'RTEIndentIncreaseButtonIcon');
+  return createKnownRibbonButton(KnownRibbonButtonKey.IncreaseIndent, theme, 'RichTextIndentIncreaseButtonIcon');
 };
 
 const indentDecreaseButton = (theme: Theme): RibbonButton<string> | undefined => {
-  return createKnownRibbonButton(KnownRibbonButtonKey.DecreaseIndent, theme, 'RTEIndentDecreaseButtonIcon');
+  return createKnownRibbonButton(KnownRibbonButtonKey.DecreaseIndent, theme, 'RichTextIndentDecreaseButtonIcon');
 };
 
 const createKnownRibbonButton = (
@@ -63,7 +63,8 @@ const createKnownRibbonButton = (
       buttonStyles: {
         ...button.commandBarProperties?.buttonStyles,
         ...ribbonButtonStyle(theme)
-      }
+      },
+      canCheck: false
     };
     return result;
   }

@@ -378,6 +378,16 @@ export type CallCompositeOptions = {
     galleryOptions?: {
         layout?: VideoGalleryLayout;
     };
+    branding?: {
+        logo?: {
+            url: string;
+            alt?: string;
+            shape?: 'unset' | 'circle';
+        };
+        backgroundImage?: {
+            url: string;
+        };
+    };
 };
 
 // @public
@@ -487,6 +497,7 @@ export interface CallCompositeStrings {
     participantJoinedNoticeString: string;
     participantLeftNoticeString: string;
     peopleButtonLabel: string;
+    peoplePaneMoreButtonAriaLabel: string;
     peoplePaneTitle: string;
     privacyPolicy: string;
     rejoinCallButtonLabel: string;
@@ -562,6 +573,8 @@ export interface CallWithChatAdapterManagement {
     disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
     disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+    // @beta (undocumented)
+    downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
     fetchInitialData(): Promise<void>;
     // @deprecated
     joinCall(microphoneOn?: boolean): Call | undefined;
@@ -575,6 +588,8 @@ export interface CallWithChatAdapterManagement {
     querySpeakers(): Promise<AudioDeviceInfo[]>;
     raiseHand(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
+    // @beta (undocumented)
+    removeResourceFromCache(resourceDetails: ResourceDetails): void;
     sendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
@@ -808,6 +823,16 @@ export type CallWithChatCompositeOptions = {
     galleryOptions?: {
         layout?: VideoGalleryLayout;
     };
+    branding?: {
+        logo?: {
+            url: string;
+            alt?: string;
+            shape?: 'unset' | 'circle';
+        };
+        backgroundImage?: {
+            url: string;
+        };
+    };
 };
 
 // @public
@@ -915,9 +940,11 @@ export interface ChatAdapterSubscribers {
 // @public
 export interface ChatAdapterThreadManagement {
     deleteMessage(messageId: string): Promise<void>;
+    downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
     fetchInitialData(): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     removeParticipant(userId: string): Promise<void>;
+    removeResourceFromCache(resourceDetails: ResourceDetails): void;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
@@ -1560,6 +1587,13 @@ export type ParticipantsRemovedListener = (event: {
 export interface RemoteVideoTileMenuOptions {
     isHidden?: boolean;
 }
+
+// @public
+export type ResourceDetails = {
+    threadId: string;
+    messageId: string;
+    resourceUrl: string;
+};
 
 // @public
 export type SoundEffect = {

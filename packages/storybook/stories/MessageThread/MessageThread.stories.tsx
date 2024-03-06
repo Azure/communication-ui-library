@@ -456,30 +456,24 @@ const MessageThreadStory = (args): JSX.Element => {
     }
     const chatMessage = messages[0] as ChatMessage;
 
-    const attachments = chatMessage.inlineImages?.filter((attachment) => {
-      return attachment.id === attachmentId;
-    });
-
-    if (!attachments || attachments.length <= 0) {
-      return Promise.reject(`Attachment not found with id ${attachmentId}`);
-    }
-
-    const attachment = attachments[0];
     const title = 'Message Thread Image';
     const titleIcon = (
       <Persona text={chatMessage.senderDisplayName} size={PersonaSize.size32} hidePersonaDetails={true} />
     );
-    const overlayImage = {
-      title,
-      titleIcon,
-      downloadFilename: attachment.id,
-      imageSrc: attachment.url
-    };
-    setOverlayImageItem(overlayImage);
+    const document = new DOMParser().parseFromString(chatMessage.content ?? '', 'text/html');
+    document.querySelectorAll('img').forEach((img) => {
+      if (img.id === attachmentId) {
+        setOverlayImageItem({
+          title,
+          titleIcon,
+          downloadFilename: attachmentId,
+          imageSrc: img.src
+        });
+      }
+    });
     return Promise.resolve();
   };
 
-  /* @conditional-compile-remove(image-overlay) */
   const inlineImageOptions = {
     onRenderInlineImage: (
       inlineImage: InlineImage,

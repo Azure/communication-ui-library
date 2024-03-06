@@ -303,6 +303,9 @@ export interface _CaptionsSettingsModalStrings {
     captionsSettingsSpokenLanguageDropdownLabel?: string;
 }
 
+// @beta
+export type ChatAttachmentType = 'unknown' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage';
+
 // @public
 export interface ChatMessage extends MessageCommon {
     // (undocumented)
@@ -463,6 +466,7 @@ export interface ComponentStrings {
     dialpad: DialpadStrings;
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
+    imageOverlay: ImageOverlayStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
     microphoneButton: MicrophoneButtonStrings;
@@ -987,6 +991,7 @@ export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Eleme
 export interface FluentThemeProviderProps {
     children: React_2.ReactNode;
     fluentTheme?: PartialTheme | Theme;
+    rootStyle?: React_2.CSSProperties | undefined;
     rtl?: boolean;
 }
 
@@ -1064,6 +1069,40 @@ export interface _Identifiers {
     verticalGalleryVideoTile: string;
     videoGallery: string;
     videoTile: string;
+}
+
+// @beta
+export const ImageOverlay: (props: ImageOverlayProps) => JSX.Element;
+
+// @beta
+export interface ImageOverlayProps {
+    altText?: string;
+    imageSrc: string;
+    isOpen: boolean;
+    onDismiss: () => void;
+    onDownloadButtonClicked?: (imageSrc: string) => void;
+    title?: string;
+    titleIcon?: JSX.Element;
+}
+
+// @public
+export interface ImageOverlayStrings {
+    dismissButtonAriaLabel: string;
+    downloadButtonLabel: string;
+}
+
+// @beta
+export const imageOverlayTheme: PartialTheme;
+
+// @beta
+export interface InlineImage {
+    imgAttrs: React_2.ImgHTMLAttributes<HTMLImageElement>;
+    messageId: string;
+}
+
+// @beta
+export interface InlineImageOptions {
+    onRenderInlineImage?: (inlineImage: InlineImage, defaultOnRender: (inlineImage: InlineImage) => JSX.Element) => JSX.Element;
 }
 
 // @public
@@ -1218,6 +1257,7 @@ export type MessageThreadProps = {
     onSendMessage?: (content: string) => Promise<void>;
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
+    inlineImageOptions?: InlineImageOptions;
 };
 
 // @public
@@ -1230,6 +1270,7 @@ export interface MessageThreadStrings {
     editedTag: string;
     editMessage: string;
     failToSendTag?: string;
+    fileCardGroupMessage: string;
     friday: string;
     liveAuthorIntro: string;
     messageContentAriaText: string;
@@ -1328,7 +1369,7 @@ export interface OptionsDevice {
 }
 
 // @public
-export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | /* @conditional-compile-remove(gallery-layouts) */ 'horizontalTop';
+export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | 'horizontalTop';
 
 // @public
 export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
@@ -1991,7 +2032,7 @@ export interface _VideoEffectsItemStyles {
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
 // @public (undocumented)
-export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | /* @conditional-compile-remove(gallery-layouts) */ 'speaker' | /* @conditional-compile-remove(gallery-layouts) */ 'focusedContent';
+export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | 'speaker' | 'focusedContent';
 
 // @public
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {

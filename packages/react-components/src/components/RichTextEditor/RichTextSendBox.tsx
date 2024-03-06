@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { RTEInputBoxComponent } from './RTEInputBoxComponent';
-import { Icon, Stack, useTheme } from '@fluentui/react';
+import { RichTextInputBoxComponent } from './RichTextInputBoxComponent';
+import { Icon, Stack } from '@fluentui/react';
 import { useLocale } from '../../localization';
 import { SendBoxStrings } from '../SendBox';
-import { borderAndBoxShadowStyle, sendButtonStyle, sendIconStyle } from '../styles/SendBox.styles';
+import { sendButtonStyle, sendIconStyle } from '../styles/SendBox.styles';
 import { InputBoxButton } from '../InputBoxButton';
-import { RTESendBoxErrors, RTESendBoxErrorsProps } from './RTESendBoxErrors';
+import { RichTextSendBoxErrors, RichTextSendBoxErrorsProps } from './RichTextSendBoxErrors';
 /* @conditional-compile-remove(file-sharing) */
 import { ActiveFileUpload } from '../FileUploadCards';
 /* @conditional-compile-remove(file-sharing) */
@@ -17,6 +17,7 @@ import { exceedsMaxAllowedLength, sanitizeText } from '../utils/SendBoxUtils';
 /* @conditional-compile-remove(file-sharing) */
 import { hasCompletedFileUploads } from '../utils/SendBoxUtils';
 import { RichTextEditorComponentRef } from './RichTextEditor';
+import { useTheme } from '../../theming';
 
 /**
  * Strings of {@link RichTextSendBox} that can be overridden.
@@ -206,7 +207,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     [contentValue, hasErrorMessage, theme]
   );
 
-  const sendBoxErrorsProps: RTESendBoxErrorsProps = useMemo(() => {
+  const sendBoxErrorsProps: RichTextSendBoxErrorsProps = useMemo(() => {
     return {
       /* @conditional-compile-remove(file-sharing) */
       fileUploadsPendingError: fileUploadsPendingError,
@@ -226,24 +227,14 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
 
   return (
     <Stack>
-      <RTESendBoxErrors {...sendBoxErrorsProps} />
-      <div
-        className={borderAndBoxShadowStyle({
-          theme: theme,
-          // should always be false as we don't want to show the border when there is an error
-          hasErrorMessage: false,
-          disabled: !!disabled
-        })}
-      >
-        <RTEInputBoxComponent
-          placeholderText={strings.placeholderText}
-          content={contentValue}
-          onChange={setContent}
-          editorComponentRef={editorComponentRef}
-          strings={strings}
-        />
-        {/* File Upload */}
-      </div>
+      <RichTextSendBoxErrors {...sendBoxErrorsProps} />
+      <RichTextInputBoxComponent
+        placeholderText={strings.placeholderText}
+        onChange={setContent}
+        editorComponentRef={editorComponentRef}
+        strings={strings}
+        disabled={disabled}
+      />
       <Stack.Item align="end">
         <InputBoxButton
           onRenderIcon={onRenderSendIcon}
