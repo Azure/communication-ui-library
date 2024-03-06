@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { PrimaryButton, mergeStyles, IButtonProps } from '@fluentui/react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { buttonStyle, buttonWithIconStyles, videoCameraIconStyle } from '../styles/StartCallButton.styles';
 import { Video20Filled } from '@fluentui/react-icons';
 import { useLocale } from '../../localization';
@@ -21,8 +21,15 @@ export interface StartCallButtonProps extends IButtonProps {
  * @private
  */
 export const StartCallButton = (props: StartCallButtonProps): JSX.Element => {
-  const { rejoinCall } = props;
+  const { rejoinCall, disabled, onClick } = props;
   const locale = useLocale();
+
+  useEffect(() => {
+    if (!disabled && onClick) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      onClick(undefined as any);
+    }
+  }, [disabled, onClick]);
 
   return (
     <PrimaryButton

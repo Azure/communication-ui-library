@@ -6,7 +6,7 @@ import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CallAndChatLocator } from '@azure/communication-react';
 import { setLogLevel } from '@azure/logger';
 import { initializeIcons, Spinner } from '@fluentui/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   buildTime,
   callingSDKVersion,
@@ -58,6 +58,13 @@ console.log(
 const App = (): JSX.Element => {
   const [page, setPage] = useState<AppPages>('home');
   const [callWithChatArgs, setCallWithChatArgs] = useState<CallWithChatArgs | undefined>(undefined);
+
+  useEffect(() => {
+    generateCallWithChatArgs('TestUser').then((args) => {
+      setCallWithChatArgs(args);
+      setPage('call');
+    });
+  }, []);
 
   if (isOnIphoneAndNotSafari()) {
     return <UnsupportedBrowserPage />;
