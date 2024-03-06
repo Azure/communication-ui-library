@@ -2640,13 +2640,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     SurveyStarIcon: React_2.JSX.Element;
     SurveyStarIconFilled: React_2.JSX.Element;
     StartSpotlightContextualMenuItem: React_2.JSX.Element;
-    StopSpotlightContextualMenuItem: React_2.JSX.Element; /**
-    * Icon wrapper to use when including customizable icons inside the CallWithChatComposite.
-    * This wrapper ensures the icon name is being type-checked helping ensure no typos
-    * and ensure that icon is customizable through the composite API.
-    *
-    * @private
-    */
+    StopSpotlightContextualMenuItem: React_2.JSX.Element;
     VideoSpotlighted: React_2.JSX.Element;
     RichTextBoldButtonIcon: React_2.JSX.Element;
     RichTextItalicButtonIcon: React_2.JSX.Element;
