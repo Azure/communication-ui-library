@@ -6,6 +6,7 @@ import { Icon } from '@fluentui/react';
 /* @conditional-compile-remove(file-sharing) */
 import { FileMetadata } from '../FileDownloadCards';
 import { isMessageTooLong } from './SendBoxUtils';
+/* @conditional-compile-remove(file-sharing) */
 import { ChatMessage } from '../../types';
 
 /**

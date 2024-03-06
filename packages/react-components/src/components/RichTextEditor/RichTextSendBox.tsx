@@ -179,7 +179,13 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       editorComponentRef.current?.setEmptyContent();
     }
     editorComponentRef.current?.focus();
-  }, [activeFileUploads, contentValue, contentValueOverflow, disabled, onSendMessage]);
+  }, [
+    /* @conditional-compile-remove(file-sharing) */ activeFileUploads,
+    contentValue,
+    contentValueOverflow,
+    disabled,
+    onSendMessage
+  ]);
 
   const hasErrorMessage = useMemo(() => {
     return (

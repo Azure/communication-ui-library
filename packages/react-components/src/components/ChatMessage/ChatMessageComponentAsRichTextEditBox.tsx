@@ -17,12 +17,9 @@ import { _FileUploadCards } from '../FileUploadCards';
 import { FileMetadata } from '../FileDownloadCards';
 import { useChatMessageRichTextEditContainerStyles } from '../styles/ChatMessageComponent.styles';
 import { MAXIMUM_LENGTH_OF_MESSAGE } from '../utils/SendBoxUtils';
-import {
-  getMessageAttachedFilesMetadata,
-  getMessageState,
-  onRenderCancelIcon,
-  onRenderSubmitIcon
-} from '../utils/ChatMessageComponentAsEditBoxUtils';
+import { getMessageState, onRenderCancelIcon, onRenderSubmitIcon } from '../utils/ChatMessageComponentAsEditBoxUtils';
+/* @conditional-compile-remove(file-sharing) */
+import { getMessageAttachedFilesMetadata } from '../utils/ChatMessageComponentAsEditBoxUtils';
 import { RichTextEditorComponentRef, RichTextEditorStyleProps } from '../RichTextEditor/RichTextEditor';
 import { RichTextInputBoxComponent } from '../RichTextEditor/RichTextInputBoxComponent';
 import { richTextActionButtonsStyle } from '../styles/RichTextEditor.styles';
@@ -138,7 +135,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
       </Stack>
     );
   }, [
-    attachmentMetadata,
+    /* @conditional-compile-remove(file-sharing) */ attachmentMetadata,
     message.messageId,
     message.metadata,
     onCancel,
@@ -150,6 +147,11 @@ export const ChatMessageComponentAsRichTextEditBox = (
     submitEnabled,
     textValue
   ]);
+  const richTextLocaleStrings = useMemo(() => {
+    /* @conditional-compile-remove(rich-text-editor) */
+    return locale.richTextSendBox;
+    return locale.sendBox;
+  }, [/* @conditional-compile-remove(rich-text-editor) */ locale.richTextSendBox, locale.sendBox]);
 
   const getContent = (): JSX.Element => {
     return (
@@ -160,7 +162,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
           onChange={setText}
           editorComponentRef={editTextFieldRef}
           initialContent={message.content}
-          strings={locale.richTextSendBox}
+          strings={richTextLocaleStrings}
           disabled={false}
           actionComponents={actionButtons}
           richTextEditorStyleProps={richTextEditorStyle}

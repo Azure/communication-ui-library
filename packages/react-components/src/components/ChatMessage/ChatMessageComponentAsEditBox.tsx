@@ -26,12 +26,9 @@ import {
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from '../MentionPopover';
 import { MAXIMUM_LENGTH_OF_MESSAGE } from '../utils/SendBoxUtils';
-import {
-  getMessageAttachedFilesMetadata,
-  getMessageState,
-  onRenderCancelIcon,
-  onRenderSubmitIcon
-} from '../utils/ChatMessageComponentAsEditBoxUtils';
+import { getMessageState, onRenderCancelIcon, onRenderSubmitIcon } from '../utils/ChatMessageComponentAsEditBoxUtils';
+/* @conditional-compile-remove(file-sharing) */
+import { getMessageAttachedFilesMetadata } from '../utils/ChatMessageComponentAsEditBoxUtils';
 
 /** @private */
 export type ChatMessageComponentAsEditBoxProps = {
