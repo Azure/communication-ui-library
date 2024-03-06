@@ -45,6 +45,7 @@ export default {
   title: `${COMPONENT_FOLDER_PREFIX}/Internal/File Card`,
   component: FileCardComponent,
   argTypes: {
+    isDownload: { control: 'boolean', defaultValue: true },
     file: { control: 'object', defaultValue: file },
     progress: { control: 'number', defaultValue: 0.5 },
     // Hiding auto-generated controls
@@ -52,28 +53,28 @@ export default {
       control: 'object',
       defaultValue: [
         {
-          name: 'preview',
+          name: 'Open',
           icon: <Open24Filled />,
           onClick: (file) => {
             window.open(file.url);
           }
         },
         {
-          name: 'download',
+          name: 'Download',
           icon: <ArrowDownload24Filled />,
           onClick: (file) => {
             window.alert(`Downloading ${file.name}`);
           }
         },
         {
-          name: 'share',
+          name: 'Share',
           icon: <Share24Regular />,
           onClick: (file) => {
             window.alert(`sharing ${file.name}`);
           }
         },
         {
-          name: 'pin',
+          name: 'Pin',
           icon: <Pin24Regular />,
           onClick: (file) => {
             window.alert(`pinning ${file.name}`);

@@ -11,7 +11,7 @@ import { _FileCardGroup } from './FileCardGroup';
 // import { iconButtonClassName } from './styles/IconButton.styles';
 import { _formatString } from '@internal/acs-ui-common';
 import { ActiveFileUpload } from './FileUploadCards';
-import { Open24Filled, Open24Regular } from '@fluentui/react-icons';
+import { ArrowDownload24Filled, Open24Filled, Open24Regular } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
@@ -125,8 +125,8 @@ export interface FileCardMenuAction {
  * @beta
  */
 export const defaultFileDownloadOptions: FileCardMenuAction = {
-  name: 'preview',
-  icon: <Open24Regular />,
+  name: 'Open',
+  icon: <ArrowDownload24Filled />,
   onClick: (file: FileMetadata | ActiveFileUpload, userId?: string) => {
     window.open((file as FileMetadata).url, '_blank', 'noopener,noreferrer');
   }
