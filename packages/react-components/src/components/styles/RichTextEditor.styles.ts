@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 import { IButtonStyles, ICommandBarStyles, IContextualMenuStyles, IStyle, Theme, mergeStyles } from '@fluentui/react';
+import { editorTextBoxButtonStyle } from './SendBox.styles';
 
 /**
  * @private
@@ -131,21 +132,16 @@ export const ribbonDividerStyle = (theme: Theme): Partial<IButtonStyles> => {
 /**
  * @private
  */
-export const ribbonStyle = (): Partial<ICommandBarStyles> => {
-  return {
-    // Override for the default white color of the Ribbon component
-    root: { backgroundColor: 'transparent' }
-  };
+export const ribbonStyle: Partial<ICommandBarStyles> = {
+  // Override for the default white color of the Ribbon component
+  root: { backgroundColor: 'transparent' }
 };
 
 /**
  * @private
  */
 export const richTextFormatButtonIconStyle = (theme: Theme, isSelected: boolean): string => {
-  return mergeStyles({
-    width: '1.25rem',
-    height: '1.25rem',
-    margin: 'auto',
+  return mergeStyles(editorTextBoxButtonStyle, {
     color: isSelected ? theme.palette.themePrimary : theme.palette.neutralSecondary
   });
 };

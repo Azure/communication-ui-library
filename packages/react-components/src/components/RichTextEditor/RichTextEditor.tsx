@@ -112,7 +112,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     return (
       //TODO: Add localization for watermark plugin https://github.com/microsoft/roosterjs/issues/2430
       <Ribbon
-        styles={ribbonStyle()}
+        styles={ribbonStyle}
         buttons={buttons}
         plugin={ribbonPlugin}
         overflowButtonProps={{

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import { IStyle, mergeStyles } from '@fluentui/react';
+import { editorTextBoxButtonStyle } from './SendBox.styles';
 
 /**
  * @private
@@ -33,10 +34,7 @@ export const inputBoxIcon = mergeStyles({
 /**
  * @private
  */
-export const richTextEditBoxActionButtonIcon = mergeStyles({
-  width: '1.25rem',
-  height: '1.25rem',
-  margin: 'auto',
+export const richTextEditBoxActionButtonIcon = mergeStyles(editorTextBoxButtonStyle, {
   '&:hover svg': {
     stroke: 'currentColor'
   }

@@ -56,14 +56,21 @@ export const sendIconStyle = (props: {
   } = props;
   const hasNoContent = !hasText && /* @conditional-compile-remove(file-sharing) */ !hasFile;
   return mergeStyles(
+    editorTextBoxButtonStyle,
     {
-      width: '1.25rem',
-      height: '1.25rem',
-      margin: 'auto',
       color: disabled || hasErrorMessage || hasNoContent ? defaultTextColor : theme.palette.themePrimary
     },
     customSendIconStyle
   );
+};
+
+/**
+ * @private
+ */
+export const editorTextBoxButtonStyle: IStyle = {
+  width: '1.25rem',
+  height: '1.25rem',
+  margin: 'auto'
 };
 
 /**
