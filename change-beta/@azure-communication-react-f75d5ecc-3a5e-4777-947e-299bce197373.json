@@ -1,9 +1,0 @@
-{
-  "type": "minor",
-  "area": "improvement",
-  "workstream": "RTE",
-  "comment": "Initial API for adding RTE",
-  "packageName": "@azure/communication-react",
-  "email": "73612854+palatter@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
