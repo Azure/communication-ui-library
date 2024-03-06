@@ -36,7 +36,7 @@ const bulletListButton = (theme: Theme): RibbonButton<string> | undefined => {
 };
 
 const numberListButton = (theme: Theme): RibbonButton<string> | undefined => {
-  return createKnownRibbonButton(KnownRibbonButtonKey.NumberedList, theme, 'RichTexttNumberListButtonIcon');
+  return createKnownRibbonButton(KnownRibbonButtonKey.NumberedList, theme, 'RichTextNumberListButtonIcon');
 };
 
 const indentIncreaseButton = (theme: Theme): RibbonButton<string> | undefined => {

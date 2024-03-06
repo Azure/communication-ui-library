@@ -164,6 +164,22 @@ export const useChatMessageEditContainerStyles = makeStyles({
 });
 
 /**
+ * @private
+ */
+export const useChatMessageRichTextEditContainerStyles = makeStyles({
+  body: {
+    ...shorthands.padding(0),
+    backgroundColor: 'transparent',
+    ...shorthands.margin('1.25rem', 0, 0, 0),
+    width: '100%'
+  },
+  bodyAttached: {
+    marginTop: '0.125rem',
+    marginBottom: 0
+  }
+});
+
+/**
  * Styles that can be applied to ensure flyout items have the minimum touch target size.
  *
  * @private
