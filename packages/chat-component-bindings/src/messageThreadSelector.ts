@@ -159,7 +159,7 @@ const processChatMessageContent = (message: ChatMessageWithStatus): string | und
         const attachmentPreviewUrl = attachments.find((attachment) => attachment.id === img.id)?.previewUrl;
         if (attachmentPreviewUrl) {
           const resourceCache = message.resourceCache?.[attachmentPreviewUrl];
-          let src = URL.createObjectURL(new Blob());
+          let src = 'blob://';
           if (resourceCache && resourceCache.error === undefined) {
             src = resourceCache.sourceUrl;
           }
@@ -191,7 +191,7 @@ const generateImageAttachmentImgHtml = (message: ChatMessageWithStatus, attachme
   if (attachment.previewUrl !== undefined) {
     const contentType = extractAttachmentContentTypeFromName(attachment.name);
     const resourceCache = message.resourceCache?.[attachment.previewUrl];
-    let src = URL.createObjectURL(new Blob());
+    let src = 'blob://';
     if (resourceCache && resourceCache.error === undefined) {
       src = resourceCache.sourceUrl;
     }
