@@ -19,6 +19,13 @@ import { blackAlpha, whiteAlpha, grey, grey10Alpha, grey12Alpha } from './themeD
  */
 const mapAliasColors = (palette: IPalette, inverted: boolean): ColorTokens => {
   return {
+    colorBrandBackground3Static: palette.themeLighter,
+    colorBrandBackground4Static: palette.themeLight,
+    colorNeutralCardBackground: palette.neutralLighter,
+    colorNeutralCardBackgroundHover: palette.neutralLight,
+    colorNeutralCardBackgroundPressed: palette.neutralQuaternaryAlt,
+    colorNeutralCardBackgroundSelected: palette.neutralQuaternary,
+    colorNeutralCardBackgroundDisabled: palette.neutralLighter,
     colorNeutralForeground1: palette.neutralPrimary,
     colorNeutralForeground1Hover: palette.neutralPrimary,
     colorNeutralForeground1Pressed: palette.neutralPrimary,
