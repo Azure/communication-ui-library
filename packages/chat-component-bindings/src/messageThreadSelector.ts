@@ -11,7 +11,7 @@ import {
   getUserId
 } from './baseSelectors';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { ChatClientState, ChatMessageWithStatus } from '@internal/chat-stateful-client';
+import { ChatClientState, ChatMessageWithStatus, ResourceFetchResult } from '@internal/chat-stateful-client';
 import { memoizeFnAll } from '@internal/acs-ui-common';
 import {
   ChatMessage,
@@ -159,12 +159,7 @@ const processChatMessageContent = (message: ChatMessageWithStatus): string | und
         const attachmentPreviewUrl = attachments.find((attachment) => attachment.id === img.id)?.previewUrl;
         if (attachmentPreviewUrl) {
           const resourceCache = message.resourceCache?.[attachmentPreviewUrl];
-          let src = 'blob://';
-          if (resourceCache && resourceCache.error === undefined) {
-            src = resourceCache.sourceUrl;
-          }
-
-          img.src = src;
+          img.src = getResourceSourceUrl(resourceCache);
         }
       });
       content = document.body.innerHTML;
@@ -191,15 +186,21 @@ const generateImageAttachmentImgHtml = (message: ChatMessageWithStatus, attachme
   if (attachment.previewUrl !== undefined) {
     const contentType = extractAttachmentContentTypeFromName(attachment.name);
     const resourceCache = message.resourceCache?.[attachment.previewUrl];
-    let src = 'blob://';
-    if (resourceCache && resourceCache.error === undefined) {
-      src = resourceCache.sourceUrl;
-    }
+    const src = getResourceSourceUrl(resourceCache);
 
     return `\r\n<p><img alt="image" src="${src}" itemscope="${contentType}" id="${attachment.id}"></p>`;
   }
 
   return '';
+};
+
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+const getResourceSourceUrl = (result?: ResourceFetchResult): string => {
+  let src = 'blob://';
+  if (result && result.error === undefined) {
+    src = result.sourceUrl;
+  }
+  return src;
 };
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
