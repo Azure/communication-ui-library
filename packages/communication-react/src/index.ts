@@ -335,8 +335,6 @@ export type {
 } from '../../react-components/src';
 /* @conditional-compile-remove(file-sharing) */
 export type { AttachmentMetadata } from '../../react-components/src';
-/* @conditional-compile-remove(file-sharing) */
-export type { FileMetadata } from '../../react-components/src';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 export type { ChatAttachmentType } from '../../react-components/src';
 /* @conditional-compile-remove(image-overlay) */
@@ -373,6 +371,9 @@ export type {
   ChatThreadProperties,
   ChatErrorTarget
 } from '../../chat-stateful-client/src';
+
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+export type { ResourceFetchResult } from '../../chat-stateful-client/src';
 export * from '../../react-composites/src/index-public';
 export * from './mergedHooks';
 

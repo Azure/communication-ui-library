@@ -36,7 +36,6 @@ import { DeviceManagerState } from '@internal/calling-stateful-client';
 import { DtmfTone } from '@azure/communication-calling';
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { FileDownloadHandler } from '@internal/react-components';
-import type { FileMetadata } from '@internal/react-components';
 import { GroupCallLocator } from '@azure/communication-calling';
 import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { MessageProps } from '@internal/react-components';
@@ -1594,10 +1593,12 @@ export const DEFAULT_COMPOSITE_ICONS: {
     RichTextItalicButtonIcon: React_2.JSX.Element;
     RichTextUnderlineButtonIcon: React_2.JSX.Element;
     RichTextBulletListButtonIcon: React_2.JSX.Element;
-    RichTexttNumberListButtonIcon: React_2.JSX.Element;
+    RichTextNumberListButtonIcon: React_2.JSX.Element;
     RichTextIndentDecreaseButtonIcon: React_2.JSX.Element;
     RichTextIndentIncreaseButtonIcon: React_2.JSX.Element;
     RichTextDividerIcon: React_2.JSX.Element;
+    RichTextEditorButtonIcon: React_2.JSX.Element;
+    RichTextEditorButtonIconFilled: React_2.JSX.Element;
 };
 
 // @beta
@@ -1889,7 +1890,7 @@ export class _MockCallAdapter implements CallAdapter {
 }
 
 // @internal
-export type _MockFileUpload = FileMetadata & {
+export type _MockFileUpload = AttachmentMetadata & {
     uploadComplete?: boolean;
     error?: string;
     progress?: number;

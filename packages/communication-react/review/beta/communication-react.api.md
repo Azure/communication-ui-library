@@ -149,7 +149,14 @@ export type AreParamEqual<A extends (props: any) => JSX.Element | undefined, B e
 export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
 // @beta
-export type AttachmentMetadata = FileMetadata;
+export interface AttachmentMetadata {
+    extension: string;
+    id: string;
+    name: string;
+    // (undocumented)
+    payload?: Record<string, string>;
+    url: string;
+}
 
 // @public
 export type AvatarPersonaData = {
@@ -1782,7 +1789,7 @@ export interface ChatMessage extends MessageCommon {
     // (undocumented)
     failureReason?: string;
     // @beta
-    files?: FileMetadata[];
+    files?: AttachmentMetadata[];
     // (undocumented)
     messageType: 'chat';
     metadata?: Record<string, string>;
@@ -1801,7 +1808,7 @@ export type ChatMessageWithStatus = ChatMessage_2 & {
     clientMessageId?: string;
     status: MessageStatus;
     policyViolation?: boolean;
-    resourceCache?: Record<string, string>;
+    resourceCache?: Record<string, ResourceFetchResult>;
 };
 
 // @public
@@ -2489,10 +2496,12 @@ export const DEFAULT_COMPONENT_ICONS: {
     RichTextItalicButtonIcon: React_2.JSX.Element;
     RichTextUnderlineButtonIcon: React_2.JSX.Element;
     RichTextBulletListButtonIcon: React_2.JSX.Element;
-    RichTexttNumberListButtonIcon: React_2.JSX.Element;
+    RichTextNumberListButtonIcon: React_2.JSX.Element;
     RichTextIndentDecreaseButtonIcon: React_2.JSX.Element;
     RichTextIndentIncreaseButtonIcon: React_2.JSX.Element;
     RichTextDividerIcon: React_2.JSX.Element;
+    RichTextEditorButtonIcon: React_2.JSX.Element;
+    RichTextEditorButtonIconFilled: React_2.JSX.Element;
 };
 
 // @public
@@ -2644,10 +2653,12 @@ export const DEFAULT_COMPOSITE_ICONS: {
     RichTextItalicButtonIcon: React_2.JSX.Element;
     RichTextUnderlineButtonIcon: React_2.JSX.Element;
     RichTextBulletListButtonIcon: React_2.JSX.Element;
-    RichTexttNumberListButtonIcon: React_2.JSX.Element;
+    RichTextNumberListButtonIcon: React_2.JSX.Element;
     RichTextIndentDecreaseButtonIcon: React_2.JSX.Element;
     RichTextIndentIncreaseButtonIcon: React_2.JSX.Element;
     RichTextDividerIcon: React_2.JSX.Element;
+    RichTextEditorButtonIcon: React_2.JSX.Element;
+    RichTextEditorButtonIconFilled: React_2.JSX.Element;
 };
 
 // @beta
@@ -2864,18 +2875,6 @@ export interface FileDownloadError {
 
 // @beta
 export type FileDownloadHandler = (userId: string, fileMetadata: AttachmentMetadata) => Promise<URL | FileDownloadError>;
-
-// @beta
-export interface FileMetadata {
-    // (undocumented)
-    attachmentType: 'file';
-    extension: string;
-    id: string;
-    name: string;
-    // (undocumented)
-    payload?: Record<string, string>;
-    url: string;
-}
 
 // @beta
 export interface FileSharingOptions {
@@ -3837,6 +3836,12 @@ export type ResourceDetails = {
     resourceUrl: string;
 };
 
+// @public
+export type ResourceFetchResult = {
+    sourceUrl: string;
+    error?: Error;
+};
+
 // @beta
 export interface RichTextEditorOptions {
 }
@@ -3863,6 +3868,7 @@ export interface RichTextSendBoxStrings extends SendBoxStrings {
     increaseIndentTooltip: string;
     italicTooltip: string;
     numberListTooltip: string;
+    richTextFormatButtonTooltip: string;
     underlineTooltip: string;
 }
 

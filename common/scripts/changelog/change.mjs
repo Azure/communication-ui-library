@@ -38,22 +38,38 @@ async function main() {
         ...args
     ];
     await exec(cmd.join(' '));
-    await duplicateChangeFiles();
+    await duplicateChangeFile();
 }
 
-async function duplicateChangeFiles() {
+async function duplicateChangeFile() {
     const gitLogStdout = await exec_output(`git log -1 --name-status`);
-    const newChangeFiles = parseNewChangeFiles(gitLogStdout);
-    if (newChangeFiles.length === 0) {
+    const newChangeFilesFilenames = parseNewChangeFiles(gitLogStdout);
+    if (newChangeFilesFilenames.length === 0) {
+        console.log('No new change files detected. Nothing to duplicate.');
         return;
+    } else if (newChangeFilesFilenames.length > 1) {
+        throw new Error(`Expected only one change file, but found ${newChangeFilesFilenames.length} change files`);
     }
 
-    console.log(`Duplicating ${newChangeFiles.length} change files into ${CHANGE_DIR_BETA}`);
-    for (const file of newChangeFiles) {
-        fs.copyFileSync(path.join(CHANGE_DIR, file), path.join(CHANGE_DIR_BETA, file));
+    const changeFilename = newChangeFilesFilenames[0];
+    const filepath = path.join(CHANGE_DIR, changeFilename);
+    const changeFile = JSON.parse(fs.readFileSync(filepath, 'utf-8'));
+
+    // if type is none, we don't need to duplicate the change file.
+    if (changeFile.type !== "none") {
+        console.log(`Duplicating ${filepath} change files into ${CHANGE_DIR_BETA}`);
+        fs.copyFileSync(filepath, path.join(CHANGE_DIR_BETA, changeFilename));
+        await exec(`git add ${CHANGE_DIR_BETA}`);
+        await exec(`git commit -m 'Duplicate change files for beta release'`);
     }
-    await exec(`git add ${CHANGE_DIR_BETA}`);
-    await exec(`git commit -m 'Duplicate change files for beta release'`);
+
+    // if the type is prerelease, we can delete the stable changefile that was created.
+    if (changeFile.type === "prerelease") {
+        console.log(`Deleting stable change file ${filepath}`);
+        fs.unlinkSync(filepath);
+        await exec(`git add ${CHANGE_DIR}`);
+        await exec(`git commit -m 'Remove unecessary stable change file'`);
+    }
 }
 
 await main();
