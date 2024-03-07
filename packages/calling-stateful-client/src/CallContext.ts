@@ -41,9 +41,10 @@ import {
   CallAgentState,
   CallErrors,
   CallErrorTarget,
-  CallError,
-  CaptionsInfo
+  CallError
 } from './CallClientState';
+/* @conditional-compile-remove(close-captions) */
+import { CaptionsInfo } from './CallClientState';
 /* @conditional-compile-remove(reaction) */
 import { ReactionState } from './CallClientState';
 /* @conditional-compile-remove(call-transfer) */
