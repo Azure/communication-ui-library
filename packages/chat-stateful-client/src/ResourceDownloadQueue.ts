@@ -18,7 +18,6 @@ export class ResourceDownloadQueue {
   private _context: ChatContext;
   private isActive = false;
   private _credential: CommunicationTokenCredential;
-  private _errors: ResourceDownloadError[] = [];
 
   constructor(context: ChatContext, credential: CommunicationTokenCredential) {
     this._context = context;
@@ -39,10 +38,6 @@ export class ResourceDownloadQueue {
     }
 
     return contains;
-  }
-
-  public get errors(): ResourceDownloadError[] {
-    return this._errors;
   }
 
   public addMessage(message: ChatMessageWithStatus): void {
@@ -79,7 +74,7 @@ export class ResourceDownloadQueue {
     resourceUrl: string,
     operation: ImageRequest
   ): Promise<ChatMessageWithStatus> {
-    const response: ResourceFetchResult = { sourceUrl: URL.createObjectURL(new Blob()) };
+    const response: ResourceFetchResult = { sourceUrl: '' };
     try {
       const blobUrl = await this.downloadResource(operation, resourceUrl);
       response.sourceUrl = blobUrl;
@@ -102,7 +97,7 @@ export class ResourceDownloadQueue {
       }
       for (const attachment of attachments) {
         if (attachment.previewUrl && attachment.attachmentType === 'image') {
-          const response: ResourceFetchResult = { sourceUrl: URL.createObjectURL(new Blob()) };
+          const response: ResourceFetchResult = { sourceUrl: '' };
           try {
             const blobUrl = await this.downloadResource(operation, attachment.previewUrl);
             response.sourceUrl = blobUrl;
@@ -118,8 +113,7 @@ export class ResourceDownloadQueue {
   }
 
   private async downloadResource(operation: ImageRequest, url: string): Promise<string> {
-    let blobUrl = URL.createObjectURL(new Blob());
-    blobUrl = await operation(url, this._credential);
+    const blobUrl = await operation(url, this._credential);
     return blobUrl;
   }
 }
@@ -163,17 +157,4 @@ export const fetchImageSource = async (src: string, credential: CommunicationTok
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 interface ImageRequest {
   (request: string, credential: CommunicationTokenCredential): Promise<string>;
-}
-
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-/**
- * @private
- */
-export class ResourceDownloadError extends Error {
-  public chatMessageWithStatus: ChatMessageWithStatus;
-
-  constructor(chatMessageWithStatus: ChatMessageWithStatus) {
-    super();
-    this.chatMessageWithStatus = chatMessageWithStatus;
-  }
 }
