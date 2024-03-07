@@ -15,6 +15,8 @@ import { RaisedHand } from '@azure/communication-calling';
 import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(acs-close-captions) */
+import { CaptionsInfo as AcsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
@@ -39,10 +41,9 @@ import {
   CallAgentState,
   CallErrors,
   CallErrorTarget,
-  CallError
+  CallError,
+  CaptionsInfo
 } from './CallClientState';
-/* @conditional-compile-remove(close-captions) */
-import { CaptionsInfo } from './CallClientState';
 /* @conditional-compile-remove(reaction) */
 import { ReactionState } from './CallClientState';
 /* @conditional-compile-remove(call-transfer) */
@@ -957,7 +958,7 @@ export class CallContext {
     }
   }
   /* @conditional-compile-remove(close-captions) */
-  public addCaption(callId: string, caption: TeamsCaptionsInfo): void {
+  public addTeamsCaption(callId: string, caption: TeamsCaptionsInfo): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
@@ -969,6 +970,16 @@ export class CallContext {
         ) {
           this.processNewCaption(call.captionsFeature.captions, convertFromSDKToCaptionInfoState(caption));
         }
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(acs-close-captions) */
+  public addCaption(callId: string, caption: AcsCaptionsInfo): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        this.processNewCaption(call.captionsFeature.captions, convertFromSDKToCaptionInfoState(caption));
       }
     });
   }

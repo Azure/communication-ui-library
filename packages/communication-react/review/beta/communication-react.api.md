@@ -1587,7 +1587,7 @@ export interface CaptionsCallFeatureState {
 // @public (undocumented)
 export interface CaptionsInfo {
     captionLanguage?: string;
-    captionText: string;
+    captionText?: string;
     resultType: CaptionsResultType;
     speaker: CallerInfo;
     spokenLanguage: string;

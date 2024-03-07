@@ -432,7 +432,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   onPeopleButtonClicked={togglePeoplePane}
                   onMoreButtonClicked={onMoreButtonClicked}
                   /* @conditional-compile-remove(close-captions) */
-                  isCaptionsSupported={isTeamsCall && hasJoinedCall}
+                  isCaptionsSupported={hasJoinedCall}
+                  /* @conditional-compile-remove(close-captions) */
+                  isTeamsCall={isTeamsCall}
                   /* @conditional-compile-remove(close-captions) */
                   isCaptionsOn={isCaptionsOn}
                   /* @conditional-compile-remove(video-background-effects) */
@@ -462,7 +464,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
                 disableButtonsForHoldScreen={isInLocalHold}
                 /* @conditional-compile-remove(close-captions) */
-                isCaptionsSupported={isTeamsCall && hasJoinedCall}
+                isCaptionsSupported={hasJoinedCall}
+                /* @conditional-compile-remove(close-captions) */
+                isTeamsCall={isTeamsCall}
                 onUserSetGalleryLayout={props.onUserSetGalleryLayoutChange}
                 userSetGalleryLayout={props.userSetGalleryLayout}
                 /* @conditional-compile-remove(dtmf-dialer) */
@@ -513,6 +517,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                         <CaptionsBanner
                           isMobile={props.mobileView}
                           onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
+                          /* @conditional-compile-remove(close-captions) */
+                          isTeamsCall={isTeamsCall}
                         />
                       )
                   }
