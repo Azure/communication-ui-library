@@ -66,7 +66,14 @@ export type AnnouncerProps = {
 };
 
 // @beta
-export type AttachmentMetadata = FileMetadata;
+export interface AttachmentMetadata {
+    extension: string;
+    id: string;
+    name: string;
+    // (undocumented)
+    payload?: Record<string, string>;
+    url: string;
+}
 
 // @internal
 export type _AudioIssue = 'NoLocalAudio' | 'NoRemoteAudio' | 'Echo' | 'AudioNoise' | 'LowVolume' | 'AudioStoppedUnexpectedly' | 'DistortedSpeech' | 'AudioInterruption' | 'OtherIssues';
@@ -467,7 +474,7 @@ export interface ChatMessage extends MessageCommon {
     // (undocumented)
     failureReason?: string;
     // @beta
-    files?: FileMetadata[];
+    files?: AttachmentMetadata[];
     // (undocumented)
     messageType: 'chat';
     metadata?: Record<string, string>;
@@ -488,7 +495,7 @@ export const ChatMessageComponentAsRichTextEditBox: (props: ChatMessageComponent
 export type ChatMessageComponentAsRichTextEditBoxProps = {
     onCancel?: (messageId: string) => void;
     onSubmit: (text: string, metadata?: Record<string, string>, options?: {
-        attachmentMetadata?: FileMetadata[];
+        attachmentMetadata?: AttachmentMetadata[];
     }) => void;
     message: ChatMessage;
     strings: MessageThreadStrings;
@@ -1197,18 +1204,6 @@ export interface FileDownloadError {
 
 // @beta
 export type FileDownloadHandler = (userId: string, fileMetadata: AttachmentMetadata) => Promise<URL | FileDownloadError>;
-
-// @beta
-export interface FileMetadata {
-    // (undocumented)
-    attachmentType: 'file';
-    extension: string;
-    id: string;
-    name: string;
-    // (undocumented)
-    payload?: Record<string, string>;
-    url: string;
-}
 
 // @internal
 export interface _FileUploadCardsStrings {

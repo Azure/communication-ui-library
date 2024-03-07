@@ -15,7 +15,7 @@ import { useChatMyMessageStyles } from '../styles/MessageThread.styles';
 import { ChatMessage } from '../../types';
 import { _FileUploadCards } from '../FileUploadCards';
 /* @conditional-compile-remove(file-sharing) */
-import { FileMetadata } from '../FileDownloadCards';
+import { AttachmentMetadata } from '../FileDownloadCards';
 import {
   chatMessageFailedTagStyle,
   editChatMessageFailedTagStyle,
@@ -38,7 +38,7 @@ export type ChatMessageComponentAsEditBoxProps = {
     metadata?: Record<string, string>,
     options?: {
       /* @conditional-compile-remove(file-sharing) */
-      attachmentMetadata?: FileMetadata[];
+      attachmentMetadata?: AttachmentMetadata[];
     }
   ) => void;
   message: ChatMessage;

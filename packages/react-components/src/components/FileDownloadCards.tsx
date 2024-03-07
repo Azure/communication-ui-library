@@ -26,9 +26,7 @@ export type ChatAttachmentType =
  *
  * @beta
  */
-export interface FileMetadata {
-  /* @conditional-compile-remove(file-sharing) */
-  attachmentType: 'file';
+export interface AttachmentMetadata {
   /**
    * Extension hint, useful for rendering a specific icon.
    * An unknown or empty extension will be rendered as a generic icon.
@@ -54,12 +52,6 @@ export interface FileMetadata {
    */
   payload?: Record<string, string>;
 }
-
-/**
- * Metadata containing information about the uploaded file.
- * @beta
- */
-export type AttachmentMetadata = FileMetadata;
 
 /**
  * Strings of _FileDownloadCards that can be overridden.
@@ -166,16 +158,10 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
     [props.strings?.downloadFile, localeStrings.downloadFile]
   );
 
-  const isFileSharingAttachment = useCallback((attachment: AttachmentMetadata): boolean => {
-    /* @conditional-compile-remove(file-sharing) */
-    return attachment.attachmentType === 'file';
-    return false;
-  }, []);
-
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const isShowDownloadIcon = useCallback((attachment: AttachmentMetadata): boolean => {
     /* @conditional-compile-remove(file-sharing) */
-    return attachment.attachmentType === 'file' && attachment.payload?.teamsFileAttachment !== 'true';
+    return attachment.payload?.teamsFileAttachment !== 'true';
     return true;
   }, []);
 
@@ -184,13 +170,13 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
       const fileGroupLocaleString = props.strings?.fileCardGroupMessage ?? localeStrings.fileCardGroupMessage;
       /* @conditional-compile-remove(file-sharing) */
       return _formatString(fileGroupLocaleString, {
-        fileCount: `${fileMetadata?.filter(isFileSharingAttachment).length ?? 0}`
+        fileCount: `${fileMetadata?.length ?? 0}`
       });
       return _formatString(fileGroupLocaleString, {
         fileCount: `${fileMetadata?.length ?? 0}`
       });
     },
-    [props.strings?.fileCardGroupMessage, localeStrings.fileCardGroupMessage, fileMetadata, isFileSharingAttachment]
+    [props.strings?.fileCardGroupMessage, localeStrings.fileCardGroupMessage, fileMetadata]
   );
 
   const fileDownloadHandler = useCallback(
@@ -217,7 +203,7 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
   if (
     !fileMetadata ||
     fileMetadata.length === 0 ||
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ !fileMetadata.some(isFileSharingAttachment)
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ !fileMetadata
   ) {
     return <></>;
   }
@@ -226,35 +212,26 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
     <div style={fileDownloadCardsStyle} data-ui-id="file-download-card-group">
       <_FileCardGroup ariaLabel={fileCardGroupDescription()}>
         {fileMetadata &&
-          fileMetadata
-            .filter((attachment) => {
-              /* @conditional-compile-remove(file-sharing) */
-              return isFileSharingAttachment(attachment);
-              return true;
-            })
-            .map((file) => file as unknown as FileMetadata)
-            .map((file) => (
-              <TooltipHost content={downloadFileButtonString()} key={file.name}>
-                <_FileCard
-                  fileName={file.name}
-                  key={file.name}
-                  fileExtension={file.extension}
-                  actionIcon={
-                    showSpinner ? (
-                      <Spinner size={SpinnerSize.medium} aria-live={'polite'} role={'status'} />
-                    ) : true &&
-                      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ isShowDownloadIcon(
-                        file as unknown as AttachmentMetadata
-                      ) ? (
-                      <IconButton className={iconButtonClassName} ariaLabel={downloadFileButtonString()}>
-                        <DownloadIconTrampoline />
-                      </IconButton>
-                    ) : undefined
-                  }
-                  actionHandler={() => fileDownloadHandler(userId, file as unknown as AttachmentMetadata)}
-                />
-              </TooltipHost>
-            ))}
+          fileMetadata.map((file) => (
+            <TooltipHost content={downloadFileButtonString()} key={file.name}>
+              <_FileCard
+                fileName={file.name}
+                key={file.name}
+                fileExtension={file.extension}
+                actionIcon={
+                  showSpinner ? (
+                    <Spinner size={SpinnerSize.medium} aria-live={'polite'} role={'status'} />
+                  ) : true &&
+                    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ isShowDownloadIcon(file) ? (
+                    <IconButton className={iconButtonClassName} ariaLabel={downloadFileButtonString()}>
+                      <DownloadIconTrampoline />
+                    </IconButton>
+                  ) : undefined
+                }
+                actionHandler={() => fileDownloadHandler(userId, file)}
+              />
+            </TooltipHost>
+          ))}
       </_FileCardGroup>
     </div>
   );
