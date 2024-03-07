@@ -7,7 +7,7 @@ import { CommunicationTokenCredential } from '@azure/communication-common';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatContext } from './ChatContext';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { ResourceDownloadError, ResourceDownloadQueue } from './ResourceDownloadQueue';
+import { ResourceDownloadQueue } from './ResourceDownloadQueue';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { messageTemplate } from './mocks/createMockChatThreadClient';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
@@ -224,8 +224,7 @@ describe('ResourceDownloadQueue api functions', () => {
 
     const queue = new ResourceDownloadQueue(context, tokenCredential);
     const operation = jest.fn();
-    const e = new ResourceDownloadError(first);
-    operation.mockRejectedValueOnce(e);
+    operation.mockRejectedValueOnce(new Error('mock error'));
     queue.addMessage(first);
     queue.addMessage(second);
     queue.addMessage(third);
@@ -256,5 +255,75 @@ describe('ResourceDownloadQueue api functions', () => {
     expect(operation).toHaveBeenCalledTimes(1);
     const resourceCache = context.getState().threads[threadId].chatMessages[messageId].resourceCache;
     expect(resourceCache).toBeDefined();
+  });
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  test('if operation fails, error should be in the cache', async () => {
+    const threadId = 'threadId';
+    const messageId = 'messageId';
+    const context = new ChatContext();
+    context.createThreadIfNotExist(threadId);
+    context.setChatMessages(threadId, { messageId1: messageTemplate });
+    const tokenCredential = stubCommunicationTokenCredential();
+
+    const first = { ...messageTemplate };
+    first.id = messageId;
+    const firstAttachments = [
+      { id: '1', attachmentType: 'image' as ChatAttachmentType, name: 'image1', url: 'url1', previewUrl: 'previewUrl1' }
+    ];
+    first.content = { message: 'new message', attachments: firstAttachments };
+
+    const queue = new ResourceDownloadQueue(context, tokenCredential);
+    const operation = jest.fn();
+    operation.mockRejectedValueOnce(new Error('error'));
+    queue.addMessage(first);
+    await queue.startQueue(threadId, operation);
+    expect(operation).toHaveBeenCalledTimes(1);
+    const resourceCache = context.getState().threads[threadId].chatMessages[messageId].resourceCache;
+    expect(resourceCache).toBeDefined();
+    expect(resourceCache?.['previewUrl1'].error).toBeDefined();
+    expect(resourceCache?.['previewUrl1'].sourceUrl).toEqual('');
+  });
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  test('if operation fails for first item, error should be in the cache only for first item', async () => {
+    const threadId = 'threadId';
+    const messageId = 'messageId';
+    const context = new ChatContext();
+    context.createThreadIfNotExist(threadId);
+    context.setChatMessages(threadId, { messageId1: messageTemplate });
+    const tokenCredential = stubCommunicationTokenCredential();
+
+    const first = { ...messageTemplate };
+    first.id = messageId;
+    const firstAttachments = [
+      {
+        id: '1',
+        attachmentType: 'image' as ChatAttachmentType,
+        name: 'image1',
+        url: 'url1',
+        previewUrl: 'previewUrl1'
+      },
+      {
+        id: '2',
+        attachmentType: 'image' as ChatAttachmentType,
+        name: 'image2',
+        url: 'url2',
+        previewUrl: 'previewUrl2'
+      },
+      { id: '3', attachmentType: 'image' as ChatAttachmentType, name: 'image3', url: 'url3', previewUrl: 'previewUrl3' }
+    ];
+    first.content = { message: 'new message', attachments: firstAttachments };
+
+    const queue = new ResourceDownloadQueue(context, tokenCredential);
+    const operation = jest.fn();
+    operation.mockRejectedValueOnce(new Error('error'));
+    queue.addMessage(first);
+    await queue.startQueue(threadId, operation);
+    expect(operation).toHaveBeenCalledTimes(3);
+    const resourceCache = context.getState().threads[threadId].chatMessages[messageId].resourceCache;
+    expect(resourceCache).toBeDefined();
+    expect(resourceCache?.['previewUrl1'].error).toBeDefined();
+    expect(resourceCache?.['previewUrl1'].sourceUrl).toEqual('');
+    expect(resourceCache?.['previewUrl2'].error).toBeUndefined();
+    expect(resourceCache?.['previewUrl3'].error).toBeUndefined();
   });
 });
