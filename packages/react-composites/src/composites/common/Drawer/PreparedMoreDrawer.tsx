@@ -27,6 +27,8 @@ export interface PreparedMoreDrawerProps {
   onSetDialpadPage?: () => void;
   /* @conditional-compile-remove(dtmf-dialer) */
   dtmfDialerPresent?: boolean;
+  /* @conditional-compile-remove(close-captions) */
+  isTeamsCall?: boolean;
 }
 
 /** @private */
