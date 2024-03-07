@@ -269,7 +269,7 @@ export class CallSubscriber {
         );
         this._call.off('stateChanged', this.initCaptionSubscriber);
       } else {
-      /* @conditional-compile-remove(acs-close-captions) */
+        /* @conditional-compile-remove(acs-close-captions) */
         this._CaptionsSubscriber = new CaptionsSubscriber(
           this._callIdRef,
           this._context,
