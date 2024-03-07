@@ -267,7 +267,6 @@ export class CallSubscriber {
           this._context,
           this._call.feature(Features.Captions).captions as TeamsCaptions
         );
-        this._call.off('stateChanged', this.initCaptionSubscriber);
       } else {
         /* @conditional-compile-remove(acs-close-captions) */
         this._CaptionsSubscriber = new CaptionsSubscriber(
@@ -275,8 +274,8 @@ export class CallSubscriber {
           this._context,
           this._call.feature(Features.Captions).captions as Captions
         );
-        this._call.off('stateChanged', this.initCaptionSubscriber);
       }
+      this._call.off('stateChanged', this.initCaptionSubscriber);
     }
   };
 
