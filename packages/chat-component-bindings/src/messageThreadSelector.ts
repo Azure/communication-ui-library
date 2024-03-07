@@ -158,7 +158,7 @@ const processChatMessageContent = (message: ChatMessageWithStatus): string | und
       document.querySelectorAll('img').forEach((img) => {
         const attachmentPreviewUrl = attachments.find((attachment) => attachment.id === img.id)?.previewUrl;
         if (attachmentPreviewUrl) {
-          const src = message.resourceCache?.[attachmentPreviewUrl] ?? '';
+          const src = message.resourceCache?.[attachmentPreviewUrl].sourceUrl ?? '';
           img.src = src;
         }
       });
@@ -185,7 +185,7 @@ const processChatMessageContent = (message: ChatMessageWithStatus): string | und
 const generateImageAttachmentImgHtml = (message: ChatMessageWithStatus, attachment: ChatAttachment): string => {
   if (attachment.previewUrl !== undefined) {
     const contentType = extractAttachmentContentTypeFromName(attachment.name);
-    const src = message.resourceCache?.[attachment.previewUrl] ?? '';
+    const src = message.resourceCache?.[attachment.previewUrl].sourceUrl ?? '';
     return `\r\n<p><img alt="image" src="${src}" itemscope="${contentType}" id="${attachment.id}"></p>`;
   }
 
