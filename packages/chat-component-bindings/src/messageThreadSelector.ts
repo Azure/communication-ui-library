@@ -192,29 +192,16 @@ const extractAttachmentContentTypeFromName = (name?: string): string => {
 };
 
 /* @conditional-compile-remove(file-sharing) */
-const extractAttachmentsMetadata = (
-  message: ChatMessageWithStatus
-): {
-  /* @conditional-compile-remove(file-sharing) */ files: AttachmentMetadata[];
-} => {
-  /* @conditional-compile-remove(file-sharing) */
+const extractAttachmentsMetadata = (message: ChatMessageWithStatus): { files: AttachmentMetadata[] } => {
   let files: AttachmentMetadata[] = [];
-
-  /* @conditional-compile-remove(file-sharing) */
   if (message.metadata) {
     files = files.concat(extractAttachedFilesMetadata(message.metadata));
   }
-
-  /* @conditional-compile-remove(file-sharing) */
   if (message.content?.attachments) {
     const teamsAttachments = extractTeamsAttachmentsMetadata(message.content?.attachments);
-    /* @conditional-compile-remove(file-sharing) */
     files = files.concat(teamsAttachments.files);
   }
-
-  return {
-    /* @conditional-compile-remove(file-sharing) */ files
-  };
+  return { files };
 };
 const convertToUiChatMessage = (
   message: ChatMessageWithStatus,
@@ -224,7 +211,7 @@ const convertToUiChatMessage = (
 ): ChatMessage => {
   const messageSenderId = message.sender !== undefined ? toFlatCommunicationIdentifier(message.sender) : userId;
   /* @conditional-compile-remove(file-sharing) */
-  const { /* @conditional-compile-remove(file-sharing) */ files } = extractAttachmentsMetadata(message);
+  const { files } = extractAttachmentsMetadata(message);
   return {
     messageType: 'chat',
     createdOn: message.createdOn,
