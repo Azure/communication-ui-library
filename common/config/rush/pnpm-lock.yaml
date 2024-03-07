@@ -4300,8 +4300,8 @@ packages:
       - '@types/node'
     dev: false
 
-  /@microsoft/api-extractor@7.40.6(@types/node@20.11.25):
-    resolution: {integrity: sha512-9N+XCIQB94Di+ETTzNGLqjgQydslynHou7QPgDhl5gZ+B/Q5hTv5jtqBglTUnTrC0trHdG5/YKN07ehGKlSb5g==}
+  /@microsoft/api-extractor@7.42.3(@types/node@20.11.25):
+    resolution: {integrity: sha512-JNLJFpGHz6ekjS6bvYXxUBeRGnSHeCMFNvRbCQ+7XXB/ZFrgLSMPwWtEq40AiWAy+oyG5a4RSNwdJTp0B2USvQ==}
     hasBin: true
     dependencies:
       '@microsoft/api-extractor-model': 7.28.13(@types/node@20.11.25)
@@ -4309,9 +4309,10 @@ packages:
       '@microsoft/tsdoc-config': 0.16.2
       '@rushstack/node-core-library': 4.0.2(@types/node@20.11.25)
       '@rushstack/rig-package': 0.5.2
-      '@rushstack/terminal': 0.9.0(@types/node@20.11.25)
-      '@rushstack/ts-command-line': 4.17.3(@types/node@20.11.25)
+      '@rushstack/terminal': 0.10.0(@types/node@20.11.25)
+      '@rushstack/ts-command-line': 4.19.1(@types/node@20.11.25)
       lodash: 4.17.21
+      minimatch: 3.0.8
       resolve: 1.22.8
       semver: 7.5.4
       source-map: 0.6.1
@@ -4921,30 +4922,6 @@ packages:
       '@rushstack/node-core-library': 4.0.2(@types/node@20.11.25)
       '@types/node': 20.11.25
       supports-color: 8.1.1
-    dev: false
-
-  /@rushstack/terminal@0.9.0(@types/node@20.11.25):
-    resolution: {integrity: sha512-49RnIDooriXyqcd7mGyjh9CmjOjf/Vn8PkOQXHa1CS0/RrrynCJLFhRDkswf7gGXZW+6UhROOE8wTmbOrfUTSA==}
-    peerDependencies:
-      '@types/node': '*'
-    peerDependenciesMeta:
-      '@types/node':
-        optional: true
-    dependencies:
-      '@rushstack/node-core-library': 4.0.2(@types/node@20.11.25)
-      '@types/node': 20.11.25
-      colors: 1.2.5
-    dev: false
-
-  /@rushstack/ts-command-line@4.17.3(@types/node@20.11.25):
-    resolution: {integrity: sha512-/PtTYW38A8iUviuCmQSccHfmx3uBh4Jm5YRPU2aTgYEgwT2jtg60vAbwnkMYkyaT1AbWpjZM3xq5uHYPURvStw==}
-    dependencies:
-      '@rushstack/terminal': 0.9.0(@types/node@20.11.25)
-      '@types/argparse': 1.0.38
-      argparse: 1.0.10
-      string-argv: 0.3.2
-    transitivePeerDependencies:
-      - '@types/node'
     dev: false
 
   /@rushstack/ts-command-line@4.19.1(@types/node@20.11.25):
@@ -7385,6 +7362,35 @@ packages:
       - supports-color
     dev: false
 
+  /@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@6.21.0)(eslint@7.32.0)(typescript@5.4.2):
+    resolution: {integrity: sha512-oy9+hTPCUFpngkEZUSzbf9MxI65wbKFoQYsgPdILTfbUldp5ovUuphZVe4i30emU9M/kP+T64Di0mxl7dSw3MA==}
+    engines: {node: ^16.0.0 || >=18.0.0}
+    peerDependencies:
+      '@typescript-eslint/parser': ^6.0.0 || ^6.0.0-alpha
+      eslint: ^7.0.0 || ^8.0.0
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@eslint-community/regexpp': 4.10.0
+      '@typescript-eslint/parser': 6.21.0(eslint@7.32.0)(typescript@5.4.2)
+      '@typescript-eslint/scope-manager': 6.21.0
+      '@typescript-eslint/type-utils': 6.21.0(eslint@7.32.0)(typescript@5.4.2)
+      '@typescript-eslint/utils': 6.21.0(eslint@7.32.0)(typescript@5.4.2)
+      '@typescript-eslint/visitor-keys': 6.21.0
+      debug: 4.3.4(supports-color@5.5.0)
+      eslint: 7.32.0
+      graphemer: 1.4.0
+      ignore: 5.3.1
+      natural-compare: 1.4.0
+      semver: 7.6.0
+      ts-api-utils: 1.2.1(typescript@5.4.2)
+      typescript: 5.4.2
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
   /@typescript-eslint/parser@6.21.0(eslint@7.32.0)(typescript@5.3.3):
     resolution: {integrity: sha512-tbsV1jPne5CkFQCgPBcDOt30ItF7aJoZL997JSF7MhGQqOeT3svWRYxiqlfA5RUdlHN6Fi+EI9bxqbdyAUZjYQ==}
     engines: {node: ^16.0.0 || >=18.0.0}
@@ -7402,6 +7408,27 @@ packages:
       debug: 4.3.4(supports-color@5.5.0)
       eslint: 7.32.0
       typescript: 5.3.3
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  /@typescript-eslint/parser@6.21.0(eslint@7.32.0)(typescript@5.4.2):
+    resolution: {integrity: sha512-tbsV1jPne5CkFQCgPBcDOt30ItF7aJoZL997JSF7MhGQqOeT3svWRYxiqlfA5RUdlHN6Fi+EI9bxqbdyAUZjYQ==}
+    engines: {node: ^16.0.0 || >=18.0.0}
+    peerDependencies:
+      eslint: ^7.0.0 || ^8.0.0
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@typescript-eslint/scope-manager': 6.21.0
+      '@typescript-eslint/types': 6.21.0
+      '@typescript-eslint/typescript-estree': 6.21.0(typescript@5.4.2)
+      '@typescript-eslint/visitor-keys': 6.21.0
+      debug: 4.3.4(supports-color@5.5.0)
+      eslint: 7.32.0
+      typescript: 5.4.2
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -7434,6 +7461,26 @@ packages:
       - supports-color
     dev: false
 
+  /@typescript-eslint/type-utils@6.21.0(eslint@7.32.0)(typescript@5.4.2):
+    resolution: {integrity: sha512-rZQI7wHfao8qMX3Rd3xqeYSMCL3SoiSQLBATSiVKARdFGCYSRvmViieZjqc58jKgs8Y8i9YvVVhRbHSTA4VBag==}
+    engines: {node: ^16.0.0 || >=18.0.0}
+    peerDependencies:
+      eslint: ^7.0.0 || ^8.0.0
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@typescript-eslint/typescript-estree': 6.21.0(typescript@5.4.2)
+      '@typescript-eslint/utils': 6.21.0(eslint@7.32.0)(typescript@5.4.2)
+      debug: 4.3.4(supports-color@5.5.0)
+      eslint: 7.32.0
+      ts-api-utils: 1.2.1(typescript@5.4.2)
+      typescript: 5.4.2
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
   /@typescript-eslint/types@6.21.0:
     resolution: {integrity: sha512-1kFmZ1rOm5epu9NZEZm1kckCDGj5UJEf7P1kliH4LKu/RkwpsfqqGmY2OOcUs18lSlQBKLDYBOGxRVtrMN5lpg==}
     engines: {node: ^16.0.0 || >=18.0.0}
@@ -7461,6 +7508,28 @@ packages:
       - supports-color
     dev: false
 
+  /@typescript-eslint/typescript-estree@6.21.0(typescript@5.4.2):
+    resolution: {integrity: sha512-6npJTkZcO+y2/kr+z0hc4HwNfrrP4kNYh57ek7yCNlrBjWQ1Y0OS7jiZTkgumrvkX5HkEKXFZkkdFNkaW2wmUQ==}
+    engines: {node: ^16.0.0 || >=18.0.0}
+    peerDependencies:
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@typescript-eslint/types': 6.21.0
+      '@typescript-eslint/visitor-keys': 6.21.0
+      debug: 4.3.4(supports-color@5.5.0)
+      globby: 11.1.0
+      is-glob: 4.0.3
+      minimatch: 9.0.3
+      semver: 7.6.0
+      ts-api-utils: 1.2.1(typescript@5.4.2)
+      typescript: 5.4.2
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
   /@typescript-eslint/utils@6.21.0(eslint@7.32.0)(typescript@5.3.3):
     resolution: {integrity: sha512-NfWVaC8HP9T8cbKQxHcsJBY5YE1O33+jpMwN45qzWWaPDZgLIbo12toGMWnmhvCpd3sIxkpDw3Wv1B3dYrbDQQ==}
     engines: {node: ^16.0.0 || >=18.0.0}
@@ -7473,6 +7542,25 @@ packages:
       '@typescript-eslint/scope-manager': 6.21.0
       '@typescript-eslint/types': 6.21.0
       '@typescript-eslint/typescript-estree': 6.21.0(typescript@5.3.3)
+      eslint: 7.32.0
+      semver: 7.6.0
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+    dev: false
+
+  /@typescript-eslint/utils@6.21.0(eslint@7.32.0)(typescript@5.4.2):
+    resolution: {integrity: sha512-NfWVaC8HP9T8cbKQxHcsJBY5YE1O33+jpMwN45qzWWaPDZgLIbo12toGMWnmhvCpd3sIxkpDw3Wv1B3dYrbDQQ==}
+    engines: {node: ^16.0.0 || >=18.0.0}
+    peerDependencies:
+      eslint: ^7.0.0 || ^8.0.0
+    dependencies:
+      '@eslint-community/eslint-utils': 4.4.0(eslint@7.32.0)
+      '@types/json-schema': 7.0.15
+      '@types/semver': 7.5.8
+      '@typescript-eslint/scope-manager': 6.21.0
+      '@typescript-eslint/types': 6.21.0
+      '@typescript-eslint/typescript-estree': 6.21.0(typescript@5.4.2)
       eslint: 7.32.0
       semver: 7.6.0
     transitivePeerDependencies:
@@ -9424,11 +9512,6 @@ packages:
 
   /colorette@2.0.20:
     resolution: {integrity: sha512-IfEDxwoWIjkeXL1eXcDiow4UbKjhLdq6/EuSVR9GMN7KVH3r9gQ83e73hsz1Nd1T3ijd5xv1wcWRYO+D6kCI2w==}
-    dev: false
-
-  /colors@1.2.5:
-    resolution: {integrity: sha512-erNRLao/Y3Fv54qUa0LBB+//Uf3YwMUmdJinN20yMXm9zdKKqH9wt7R9IIVZ+K7ShzfpLV/Zg8+VyrBJYB4lpg==}
-    engines: {node: '>=0.1.90'}
     dev: false
 
   /colors@1.4.0:
@@ -13658,7 +13741,7 @@ packages:
       pretty-format: 29.7.0
       slash: 3.0.0
       strip-json-comments: 3.1.1
-      ts-node: 10.9.2(@types/node@20.11.25)(typescript@5.3.3)
+      ts-node: 10.9.2(@types/node@20.11.25)(typescript@5.4.2)
     transitivePeerDependencies:
       - babel-plugin-macros
       - supports-color
@@ -13699,7 +13782,7 @@ packages:
       pretty-format: 29.7.0
       slash: 3.0.0
       strip-json-comments: 3.1.1
-      ts-node: 10.9.2(@types/node@20.11.25)(typescript@5.3.3)
+      ts-node: 10.9.2(@types/node@20.11.25)(typescript@5.4.2)
     transitivePeerDependencies:
       - babel-plugin-macros
       - supports-color
@@ -14984,6 +15067,12 @@ packages:
 
   /minimalistic-crypto-utils@1.0.1:
     resolution: {integrity: sha512-JIYlbt6g8i5jKfJ3xz7rF0LXmv2TkDxBLUkiBeZ7bAx4GnnNMr8xFpGnOxn6GhTEHx3SjRrZEoU+j04prX1ktg==}
+    dev: false
+
+  /minimatch@3.0.8:
+    resolution: {integrity: sha512-6FsRAQsxQ61mw+qP1ZzbL9Bc78x2p5OqNgNpnoAFLTrX8n5Kxph0CsnhmKKNXTWjXqU5L0pGPR7hYk+XWZr60Q==}
+    dependencies:
+      brace-expansion: 1.1.11
     dev: false
 
   /minimatch@3.1.2:
@@ -18782,6 +18871,15 @@ packages:
       typescript: 5.3.3
     dev: false
 
+  /ts-api-utils@1.2.1(typescript@5.4.2):
+    resolution: {integrity: sha512-RIYA36cJn2WiH9Hy77hdF9r7oEwxAtB/TS9/S4Qd90Ap4z5FSiin5zEiTL44OII1Y3IIlEvxwxFUVgrHSZ/UpA==}
+    engines: {node: '>=16'}
+    peerDependencies:
+      typescript: '>=4.2.0'
+    dependencies:
+      typescript: 5.4.2
+    dev: false
+
   /ts-dedent@2.2.0:
     resolution: {integrity: sha512-q5W7tVM71e2xjHZTlgfTDoPF/SmqKG5hddq9SzR49CH2hayqRKJtQ4mtRlSxKaJlR/+9rEM+mnBHf7I2/BQcpQ==}
     engines: {node: '>=6.10'}
@@ -18819,6 +18917,40 @@ packages:
       make-error: 1.3.6
       semver: 7.6.0
       typescript: 5.3.3
+      yargs-parser: 21.1.1
+    dev: false
+
+  /ts-jest@29.1.2(@babel/core@7.24.0)(jest@29.7.0)(typescript@5.4.2):
+    resolution: {integrity: sha512-br6GJoH/WUX4pu7FbZXuWGKGNDuU7b8Uj77g/Sp7puZV6EXzuByl6JrECvm0MzVzSTkSHWTihsXt+5XYER5b+g==}
+    engines: {node: ^16.10.0 || ^18.0.0 || >=20.0.0}
+    hasBin: true
+    peerDependencies:
+      '@babel/core': '>=7.0.0-beta.0 <8'
+      '@jest/types': ^29.0.0
+      babel-jest: ^29.0.0
+      esbuild: '*'
+      jest: ^29.0.0
+      typescript: '>=4.3 <6'
+    peerDependenciesMeta:
+      '@babel/core':
+        optional: true
+      '@jest/types':
+        optional: true
+      babel-jest:
+        optional: true
+      esbuild:
+        optional: true
+    dependencies:
+      '@babel/core': 7.24.0
+      bs-logger: 0.2.6
+      fast-json-stable-stringify: 2.1.0
+      jest: 29.7.0(@types/node@20.11.25)(ts-node@10.9.2)
+      jest-util: 29.7.0
+      json5: 2.2.3
+      lodash.memoize: 4.1.2
+      make-error: 1.3.6
+      semver: 7.6.0
+      typescript: 5.4.2
       yargs-parser: 21.1.1
     dev: false
 
@@ -18926,6 +19058,37 @@ packages:
       diff: 4.0.2
       make-error: 1.3.6
       typescript: 5.3.3
+      v8-compile-cache-lib: 3.0.1
+      yn: 3.1.1
+    dev: false
+
+  /ts-node@10.9.2(@types/node@20.11.25)(typescript@5.4.2):
+    resolution: {integrity: sha512-f0FFpIdcHgn8zcPSbf1dRevwt047YMnaiJM3u2w2RewrB+fob/zePZcrOyQoLMMO7aBIddLcQIEK5dYjkLnGrQ==}
+    hasBin: true
+    peerDependencies:
+      '@swc/core': '>=1.2.50'
+      '@swc/wasm': '>=1.2.50'
+      '@types/node': '*'
+      typescript: '>=2.7'
+    peerDependenciesMeta:
+      '@swc/core':
+        optional: true
+      '@swc/wasm':
+        optional: true
+    dependencies:
+      '@cspotcode/source-map-support': 0.8.1
+      '@tsconfig/node10': 1.0.9
+      '@tsconfig/node12': 1.0.11
+      '@tsconfig/node14': 1.0.3
+      '@tsconfig/node16': 1.0.4
+      '@types/node': 20.11.25
+      acorn: 8.11.3
+      acorn-walk: 8.3.2
+      arg: 4.1.3
+      create-require: 1.1.1
+      diff: 4.0.2
+      make-error: 1.3.6
+      typescript: 5.4.2
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
     dev: false
@@ -19088,13 +19251,13 @@ packages:
     resolution: {integrity: sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==}
     dev: false
 
-  /typescript-transform-paths@3.4.7(typescript@5.3.3):
+  /typescript-transform-paths@3.4.7(typescript@5.4.2):
     resolution: {integrity: sha512-1Us1kdkdfKd2unbkBAOV2HHRmbRBYpSuk9nJ7cLD2hP4QmfToiM/VpxNlhJc1eezVwVqSKSBjNSzZsK/fWR/9A==}
     peerDependencies:
       typescript: '>=3.6.5'
     dependencies:
       minimatch: 3.1.2
-      typescript: 5.3.3
+      typescript: 5.4.2
     dev: false
 
   /typescript@4.6.3:
@@ -19105,6 +19268,12 @@ packages:
 
   /typescript@5.3.3:
     resolution: {integrity: sha512-pXWcraxM0uxAS+tN0AG/BF2TyqmHO014Z070UsJ+pFvYuRSq8KH8DmWpnbXe0pEPDHXZV3FcAbJkijJ5oNEnWw==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+    dev: false
+
+  /typescript@5.4.2:
+    resolution: {integrity: sha512-+2/g0Fds1ERlP6JsakQQDXjZdZMM+rqpamFZJEKh4kwTIn3iDkgKtby0CeNd5ATNZ4Ry1ax15TMx0W2V+miizQ==}
     engines: {node: '>=14.17'}
     hasBin: true
     dev: false
@@ -20393,7 +20562,7 @@ packages:
     dev: false
 
   file:projects/acs-ui-common.tgz:
-    resolution: {integrity: sha512-tyCgaJY+yKDZo0ANi332Q0rzc3k+kQj1ueQZFiUCEObh0e9p8KHf666ovkvYH38YlEPK5yEzyNhOEzk5Oq925A==, tarball: file:projects/acs-ui-common.tgz}
+    resolution: {integrity: sha512-1KtUSTdA4KPpWJkCqN/7h8Adbx+qwe4+MGfCSqRZuLjmx2pRqcfM285aCVdlB7ov+EUokPGKphT+AdN36YtB/w==, tarball: file:projects/acs-ui-common.tgz}
     name: '@rush-temp/acs-ui-common'
     version: 0.0.0
     dependencies:
@@ -20402,7 +20571,7 @@ packages:
       '@babel/cli': 7.23.9(@babel/core@7.24.0)
       '@babel/core': 7.24.0
       '@microsoft/api-documenter': 7.23.37(@types/node@20.11.25)
-      '@microsoft/api-extractor': 7.40.6(@types/node@20.11.25)
+      '@microsoft/api-extractor': 7.42.3(@types/node@20.11.25)
       '@types/jest': 29.5.12
       '@types/react': 18.2.64
       '@typescript-eslint/eslint-plugin': 6.21.0(@typescript-eslint/parser@6.21.0)(eslint@7.32.0)(typescript@5.3.3)
@@ -20437,7 +20606,7 @@ packages:
     dev: false
 
   file:projects/calling-component-bindings.tgz:
-    resolution: {integrity: sha512-S/+xVdFB5U4UGBky+3P2dk4EBdJFRJ/U9Ml5S/6Rz+YHiH5UG0AOH4PmKgy7Do7Nqv/IGhMRu5CPzJ7og/zxSQ==, tarball: file:projects/calling-component-bindings.tgz}
+    resolution: {integrity: sha512-QuaIbqiH917+9s0mT8PCY37skxU5/3/cuUVvw5sVgKwdsSCoeCkixDfydvyOAH4JcuL804SHGcZv7UvQeN8Wuw==, tarball: file:projects/calling-component-bindings.tgz}
     name: '@rush-temp/calling-component-bindings'
     version: 0.0.0
     dependencies:
@@ -20447,7 +20616,7 @@ packages:
       '@babel/cli': 7.23.9(@babel/core@7.24.0)
       '@babel/core': 7.24.0
       '@microsoft/api-documenter': 7.23.37(@types/node@20.11.25)
-      '@microsoft/api-extractor': 7.40.6(@types/node@20.11.25)
+      '@microsoft/api-extractor': 7.42.3(@types/node@20.11.25)
       '@types/jest': 29.5.12
       '@types/react': 18.2.64
       '@typescript-eslint/eslint-plugin': 6.21.0(@typescript-eslint/parser@6.21.0)(eslint@7.32.0)(typescript@5.3.3)
@@ -20484,7 +20653,7 @@ packages:
     dev: false
 
   file:projects/calling-stateful-client.tgz:
-    resolution: {integrity: sha512-aOBHrSGtbI28traFGrN/azwsRUssygIML5uoawOJE7JQuKfTMVl6jG4fmSKwyx1SDZbokVqcSIgwZ/wYYNkGzA==, tarball: file:projects/calling-stateful-client.tgz}
+    resolution: {integrity: sha512-DGdQ9C4xfKT+NekPMtCxsF1EdbYdcAdaKZfhfSGWiQv4X4BUu12Jj0rAefAG2SxkaOTDijUbQhg7swehftTi+Q==, tarball: file:projects/calling-stateful-client.tgz}
     name: '@rush-temp/calling-stateful-client'
     version: 0.0.0
     dependencies:
@@ -20495,7 +20664,7 @@ packages:
       '@babel/cli': 7.23.9(@babel/core@7.24.0)
       '@babel/core': 7.24.0
       '@microsoft/api-documenter': 7.23.37(@types/node@20.11.25)
-      '@microsoft/api-extractor': 7.40.6(@types/node@20.11.25)
+      '@microsoft/api-extractor': 7.42.3(@types/node@20.11.25)
       '@types/jest': 29.5.12
       '@types/react': 18.2.64
       '@typescript-eslint/eslint-plugin': 6.21.0(@typescript-eslint/parser@6.21.0)(eslint@7.32.0)(typescript@5.3.3)
@@ -20712,7 +20881,7 @@ packages:
     dev: false
 
   file:projects/chat-component-bindings.tgz:
-    resolution: {integrity: sha512-WNWLTcB+s4rIvTQX4ImE5fwgRdmtQ+EgDvVmj4ib9E7Ld+zwKMcmAxkpbq2MrniN0ZhpOfWOLQwHgD7HaUoCqw==, tarball: file:projects/chat-component-bindings.tgz}
+    resolution: {integrity: sha512-b9X6E7PElhjl6e/lcDREhTVNCJ8PQiBnWtVSdWVax81ZDorRkI6OQOzZvGxQXOgQjfIZ+hbESVwmMwEoTDvUpw==, tarball: file:projects/chat-component-bindings.tgz}
     name: '@rush-temp/chat-component-bindings'
     version: 0.0.0
     dependencies:
@@ -20722,7 +20891,7 @@ packages:
       '@babel/cli': 7.23.9(@babel/core@7.24.0)
       '@babel/core': 7.24.0
       '@microsoft/api-documenter': 7.23.37(@types/node@20.11.25)
-      '@microsoft/api-extractor': 7.40.6(@types/node@20.11.25)
+      '@microsoft/api-extractor': 7.42.3(@types/node@20.11.25)
       '@types/jest': 29.5.12
       '@types/react': 18.2.64
       copyfiles: 2.4.1
@@ -20754,7 +20923,7 @@ packages:
     dev: false
 
   file:projects/chat-stateful-client.tgz:
-    resolution: {integrity: sha512-RWKlPwkIgOSe4dkgrdG4KZOT1mXOAGe9oypxPtVsJ36X+y2RidU6OCzic5MxeJcOy1G+Kwes/90p1XRycfZ/lg==, tarball: file:projects/chat-stateful-client.tgz}
+    resolution: {integrity: sha512-njgF6OfYWUFt7COdRQlxGCFFBdxrV/QR/0FkCRefFJCk04xkP757WGPCH7prYqjne97WKDgX9JP0gzoz+GQ9cg==, tarball: file:projects/chat-stateful-client.tgz}
     name: '@rush-temp/chat-stateful-client'
     version: 0.0.0
     dependencies:
@@ -20766,7 +20935,7 @@ packages:
       '@babel/cli': 7.23.9(@babel/core@7.24.0)
       '@babel/core': 7.24.0
       '@microsoft/api-documenter': 7.23.37(@types/node@20.11.25)
-      '@microsoft/api-extractor': 7.40.6(@types/node@20.11.25)
+      '@microsoft/api-extractor': 7.42.3(@types/node@20.11.25)
       '@types/jest': 29.5.12
       '@types/react': 18.2.64
       '@typescript-eslint/eslint-plugin': 6.21.0(@typescript-eslint/parser@6.21.0)(eslint@7.32.0)(typescript@5.3.3)
@@ -20932,7 +21101,7 @@ packages:
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-lnGiPLEDvInqqvrTxYxsOlqggf5XbfHPcBInli7bQN8q08Irf+7u7UZr0yGwED2fC5omZF6Y85GmiE6/BDajHQ==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-0kO7jPxLQGNbptMj3chgO96o453vCgHXw60yHKKaOB3KxfX01+aMUNVcpwMC2beNe1Wgv0txL34b14a7mbxmBg==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
@@ -20956,7 +21125,7 @@ packages:
       '@fluentui/react-window-provider': 2.2.18(@types/react@18.2.64)(react@18.2.0)
       '@griffel/react': 1.5.20(react@18.2.0)
       '@microsoft/api-documenter': 7.23.37(@types/node@20.11.25)
-      '@microsoft/api-extractor': 7.40.6(@types/node@20.11.25)
+      '@microsoft/api-extractor': 7.42.3(@types/node@20.11.25)
       '@rollup/plugin-json': 6.1.0(rollup@4.12.1)
       '@testing-library/jest-dom': 6.4.2(@types/jest@29.5.12)(jest@29.7.0)
       '@testing-library/react': 14.2.1(react-dom@18.2.0)(react@18.2.0)
@@ -20968,8 +21137,8 @@ packages:
       '@types/react-dom': 18.2.21
       '@types/react-linkify': 1.0.4
       '@types/uuid': 9.0.8
-      '@typescript-eslint/eslint-plugin': 6.21.0(@typescript-eslint/parser@6.21.0)(eslint@7.32.0)(typescript@5.3.3)
-      '@typescript-eslint/parser': 6.21.0(eslint@7.32.0)(typescript@5.3.3)
+      '@typescript-eslint/eslint-plugin': 6.21.0(@typescript-eslint/parser@6.21.0)(eslint@7.32.0)(typescript@5.4.2)
+      '@typescript-eslint/parser': 6.21.0(eslint@7.32.0)(typescript@5.4.2)
       ajv: 8.12.0
       copy-to-clipboard: 3.3.3
       copyfiles: 2.4.1
@@ -21014,12 +21183,12 @@ packages:
       scheduler: 0.23.0
       source-map-explorer: 2.5.3
       textarea-caret-ts: 4.1.1
-      ts-jest: 29.1.2(@babel/core@7.24.0)(babel-jest@29.7.0)(jest@29.7.0)(typescript@5.3.3)
-      ts-node: 10.9.2(@types/node@20.11.25)(typescript@5.3.3)
+      ts-jest: 29.1.2(@babel/core@7.24.0)(jest@29.7.0)(typescript@5.4.2)
+      ts-node: 10.9.2(@types/node@20.11.25)(typescript@5.4.2)
       ts-patch: 3.1.2
       type-fest: 3.13.1
-      typescript: 5.3.3
-      typescript-transform-paths: 3.4.7(typescript@5.3.3)
+      typescript: 5.4.2
+      typescript-transform-paths: 3.4.7(typescript@5.4.2)
       use-debounce: 10.0.0(react@18.2.0)
       uuid: 9.0.1
     transitivePeerDependencies:
@@ -21125,7 +21294,7 @@ packages:
     dev: false
 
   file:projects/fake-backends.tgz:
-    resolution: {integrity: sha512-fejQdtSmbGp7y0OINYIFnwZqgUTdLJ6USgqPqqVnV3dJqJXuDqbgWRCiBSrcNOyS4hzQJ+p8EuTVKCZLVqMb4w==, tarball: file:projects/fake-backends.tgz}
+    resolution: {integrity: sha512-JxcOoOx9CypG94YZeIKZmHikTrKHDZCRlpy2nngm6e8r9l0A0ZPki73ZLQWFBal7G0Dr8ngDJtr0+89h8U9vjw==, tarball: file:projects/fake-backends.tgz}
     name: '@rush-temp/fake-backends'
     version: 0.0.0
     dependencies:
@@ -21136,7 +21305,7 @@ packages:
       '@babel/cli': 7.23.9(@babel/core@7.24.0)
       '@babel/core': 7.24.0
       '@babel/preset-env': 7.23.9(@babel/core@7.24.0)
-      '@microsoft/api-extractor': 7.40.6(@types/node@20.11.25)
+      '@microsoft/api-extractor': 7.42.3(@types/node@20.11.25)
       '@types/jest': 29.5.12
       '@typescript-eslint/eslint-plugin': 6.21.0(@typescript-eslint/parser@6.21.0)(eslint@7.32.0)(typescript@5.3.3)
       '@typescript-eslint/parser': 6.21.0(eslint@7.32.0)(typescript@5.3.3)
@@ -21178,7 +21347,7 @@ packages:
     dev: false
 
   file:projects/react-components.tgz:
-    resolution: {integrity: sha512-Go2Nhdxft+EqrfCERm4GiM218aOmLxYRHU26G7AWSzIy/xrzQ7wAfNwiIeV64kXwaCSMGYOHEL1upUBepMTpdg==, tarball: file:projects/react-components.tgz}
+    resolution: {integrity: sha512-6IrusE6xoriSVlV+yOSG5fQWvNsTCKgsJ0fTNNyDSnxi5cWVk9EcnxWEBUbxB857i+SHTpg6kHigat4K+3TE7w==, tarball: file:projects/react-components.tgz}
     name: '@rush-temp/react-components'
     version: 0.0.0
     dependencies:
@@ -21194,7 +21363,7 @@ packages:
       '@fluentui/react-window-provider': 2.2.18(@types/react@18.2.64)(react@18.2.0)
       '@griffel/react': 1.5.20(react@18.2.0)
       '@microsoft/api-documenter': 7.23.37(@types/node@20.11.25)
-      '@microsoft/api-extractor': 7.40.6(@types/node@20.11.25)
+      '@microsoft/api-extractor': 7.42.3(@types/node@20.11.25)
       '@playwright/experimental-ct-react': 1.39.0(@types/node@20.11.25)
       '@rollup/plugin-json': 6.1.0(rollup@4.12.1)
       '@testing-library/dom': 9.3.4
@@ -21294,7 +21463,7 @@ packages:
     dev: false
 
   file:projects/react-composites.tgz:
-    resolution: {integrity: sha512-Nj7/0g/HyxDlYrtQB29Y9H/ZMKCEUAYa2cbs3fmeNbv5ezYIZBOZSc7q+1a4GMfYq6lGBak5QDAOjbFdl0M+0w==, tarball: file:projects/react-composites.tgz}
+    resolution: {integrity: sha512-AZSnxfVhZoqIyuYemmyktKWr0lwYb2+fIL0smKnXu+JdJdAivq0SuSxt67/pePkmrYfJ4FrN+X3CIVwoXYHPKg==, tarball: file:projects/react-composites.tgz}
     name: '@rush-temp/react-composites'
     version: 0.0.0
     dependencies:
@@ -21315,7 +21484,7 @@ packages:
       '@fluentui/react-hooks': 8.6.36(@types/react@18.2.64)(react@18.2.0)
       '@fluentui/react-icons': 2.0.231(react@18.2.0)
       '@microsoft/api-documenter': 7.23.37(@types/node@20.11.25)
-      '@microsoft/api-extractor': 7.40.6(@types/node@20.11.25)
+      '@microsoft/api-extractor': 7.42.3(@types/node@20.11.25)
       '@playwright/test': 1.39.0
       '@testing-library/jest-dom': 6.4.2(@types/jest@29.5.12)(jest@29.7.0)
       '@testing-library/react': 14.2.1(react-dom@18.2.0)(react@18.2.0)
@@ -21567,7 +21736,7 @@ packages:
     dev: false
 
   file:projects/storybook.tgz:
-    resolution: {integrity: sha512-woHjwReIqB36Ppzc5z0ayAbtRMrvDuta87lLHsyyXUbtz534VocBHUV9h2A0yN1wRuYZ0cFxwDVHtTZNUtkrvQ==, tarball: file:projects/storybook.tgz}
+    resolution: {integrity: sha512-cv1SKNF2nnFkoJeaO4+2S6lF7D2eKjVUsP2zgDX2zLoIA4RpfnCdVW1hYuOt5Pw/ZiqdnJTbmMCibqpYTdEaGA==, tarball: file:projects/storybook.tgz}
     name: '@rush-temp/storybook'
     version: 0.0.0
     dependencies:
@@ -21586,7 +21755,7 @@ packages:
       '@griffel/react': 1.5.20(react@18.2.0)
       '@mdx-js/react': 1.6.22(react@18.2.0)
       '@microsoft/api-documenter': 7.23.37(@types/node@20.11.25)
-      '@microsoft/api-extractor': 7.40.6(@types/node@20.11.25)
+      '@microsoft/api-extractor': 7.42.3(@types/node@20.11.25)
       '@microsoft/applicationinsights-react-js': 3.4.3(react@18.2.0)(tslib@2.6.2)
       '@microsoft/applicationinsights-web': 2.8.17(tslib@2.6.2)
       '@storybook/addon-actions': 6.5.16(react-dom@18.2.0)(react@18.2.0)

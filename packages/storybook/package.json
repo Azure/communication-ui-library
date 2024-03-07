@@ -47,7 +47,7 @@
     "@babel/preset-env": "7.23.9",
     "@mdx-js/react": "^1.6.22",
     "@microsoft/api-documenter": "~7.23.30",
-    "@microsoft/api-extractor": "~7.40.6",
+    "@microsoft/api-extractor": "~7.42.3",
     "@storybook/addons": "^6.5.14",
     "@storybook/api": "^6.5.14",
     "@storybook/core-events": "^6.5.14",

@@ -43,7 +43,7 @@
     "@babel/cli": "^7.23.9",
     "@babel/core": "^7.23.9",
     "@microsoft/api-documenter": "~7.23.30",
-    "@microsoft/api-extractor": "~7.40.6",
+    "@microsoft/api-extractor": "~7.42.3",
     "@types/jest": "^29.5.11",
     "@types/react": "18.2.64",
     "@typescript-eslint/eslint-plugin": "^6.19.1",
