@@ -167,22 +167,7 @@ export const BlockedMessageContent = (props: BlockedMessageContentProps): JSX.El
   );
 };
 
-// https://stackoverflow.com/questions/28899298/extract-the-text-out-of-html-string-using-javascript
-const extractContent = (s: string): string => {
-  const span = document.createElement('span');
-  span.innerHTML = s;
-  return span.textContent || span.innerText;
-};
-
-const generateLiveMessage = (props: ChatMessageContentProps): string => {
-  const liveAuthor = _formatString(props.strings.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
-
-  return `${props.message.editedOn ? props.strings.editedTag : ''} ${
-    props.message.mine ? '' : liveAuthor
-  } ${extractContent(props.message.content || '')} `;
-};
-
-const messageContentAriaText = (props: ChatMessageContentProps): string | undefined => {
+const extractContentForAllyMessage = (props: ChatMessageContentProps): string => {
   if (props.message.content) {
     // Replace all <img> tags with 'image' for aria.
     const parsedContent = DOMPurify.sanitize(props.message.content, {
@@ -201,17 +186,29 @@ const messageContentAriaText = (props: ChatMessageContentProps): string | undefi
 
     // Strip all html tags from the content for aria.
     const message = DOMPurify.sanitize(parsedContent, { ALLOWED_TAGS: [] });
-
-    return props.message.mine
-      ? _formatString(props.strings.messageContentMineAriaText, {
-          message: message
-        })
-      : _formatString(props.strings.messageContentAriaText, {
-          author: `${props.message.senderDisplayName}`,
-          message: message
-        });
+    return message;
   }
-  return undefined;
+  return '';
+};
+
+const generateLiveMessage = (props: ChatMessageContentProps): string => {
+  const liveAuthor = _formatString(props.strings.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
+
+  return `${props.message.editedOn ? props.strings.editedTag : ''} ${
+    props.message.mine ? '' : liveAuthor
+  } ${extractContentForAllyMessage(props)} `;
+};
+
+const messageContentAriaText = (props: ChatMessageContentProps): string | undefined => {
+  const message = extractContentForAllyMessage(props);
+  return props.message.mine
+    ? _formatString(props.strings.messageContentMineAriaText, {
+        message: message
+      })
+    : _formatString(props.strings.messageContentAriaText, {
+        author: `${props.message.senderDisplayName}`,
+        message: message
+      });
 };
 
 /* @conditional-compile-remove(image-overlay) */
