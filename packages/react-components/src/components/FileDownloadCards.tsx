@@ -11,7 +11,7 @@ import { _FileCardGroup } from './FileCardGroup';
 import { iconButtonClassName } from './styles/IconButton.styles';
 import { _formatString } from '@internal/acs-ui-common';
 
-/* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * Represents the type of attachment
  * @beta

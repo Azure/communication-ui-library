@@ -205,7 +205,7 @@ const extractAttachmentContentTypeFromName = (name?: string): string => {
   return contentType;
 };
 
-/* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/* @conditional-compile-remove(file-sharing) */
 const extractAttachmentsMetadata = (
   message: ChatMessageWithStatus
 ): {
@@ -237,7 +237,7 @@ const convertToUiChatMessage = (
   isLargeGroup: boolean
 ): ChatMessage => {
   const messageSenderId = message.sender !== undefined ? toFlatCommunicationIdentifier(message.sender) : userId;
-  /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /* @conditional-compile-remove(file-sharing) */
   const { /* @conditional-compile-remove(file-sharing) */ files } = extractAttachmentsMetadata(message);
   return {
     messageType: 'chat',
