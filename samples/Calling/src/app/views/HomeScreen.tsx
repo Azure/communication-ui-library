@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Stack, PrimaryButton, Image, ChoiceGroup, IChoiceGroupOption, Text, TextField } from '@fluentui/react';
 /* @conditional-compile-remove(PSTN-calls) */
 import { Label } from '@fluentui/react';
@@ -81,6 +81,15 @@ export interface HomeScreenProps {
 type ICallChoiceGroupOption = IChoiceGroupOption & { key: CallOption };
 
 export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
+  const { startCallHandler } = props;
+  useEffect(() => {
+    startCallHandler({
+      //TODO: This needs to be updated after we change arg types of TeamsCall
+      displayName: 'TestUser',
+      option: 'ACSCall'
+    });
+  }, [startCallHandler]);
+
   const imageProps = { src: heroSVG.toString() };
   const headerTitle = props.joiningExistingCall ? 'Join Call' : 'Start or join a call';
   const callOptionsGroupLabel = 'Select a call option';
