@@ -88,8 +88,8 @@ export class ChatContext {
           const cache = thread.chatMessages[messageId].resourceCache;
           if (cache) {
             Object.keys(cache).forEach((resourceUrl) => {
-              const blobUrl = cache[resourceUrl];
-              URL.revokeObjectURL(blobUrl);
+              const resource = cache[resourceUrl];
+              URL.revokeObjectURL(resource.sourceUrl);
             });
           }
           thread.chatMessages[messageId].resourceCache = undefined;
@@ -117,8 +117,8 @@ export class ChatContext {
     this.modifyState((draft: ChatClientState) => {
       const message = draft.threads[threadId]?.chatMessages[messageId];
       if (message && message.resourceCache) {
-        const blobUrl = message.resourceCache[resourceUrl];
-        URL.revokeObjectURL(blobUrl);
+        const resource = message.resourceCache[resourceUrl];
+        URL.revokeObjectURL(resource.sourceUrl);
         delete message.resourceCache[resourceUrl];
       }
     });
