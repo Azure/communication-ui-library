@@ -9,6 +9,7 @@ import { ChatMessageWithStatus, ResourceFetchResult } from './types/ChatMessageW
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import type { CommunicationTokenCredential } from '@azure/communication-common';
 
+declare type CancellationDetails = { src: string; abortController: AbortController };
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * @private
@@ -18,6 +19,7 @@ export class ResourceDownloadQueue {
   private _context: ChatContext;
   private isActive = false;
   private _credential: CommunicationTokenCredential;
+  private _requestsToCancel: Record<string, CancellationDetails> = {};
 
   constructor(context: ChatContext, credential: CommunicationTokenCredential) {
     this._context = context;
@@ -69,17 +71,33 @@ export class ResourceDownloadQueue {
     }
   }
 
+  public cancelAllRequests(): void {
+    for (const key in this._requestsToCancel) {
+      this._requestsToCancel[key].abortController.abort();
+    }
+    this._requestsToCancel = {};
+  }
+
+  public cancelRequest(url: string): void {
+    if (this._requestsToCancel[url]) {
+      this._requestsToCancel[url].abortController.abort();
+      delete this._requestsToCancel[url];
+    }
+  }
+
   private async downloadSingleUrl(
     message: ChatMessageWithStatus,
     resourceUrl: string,
     operation: ImageRequest
   ): Promise<ChatMessageWithStatus> {
-    const response: ResourceFetchResult = { sourceUrl: '' };
+    const response: ResourceFetchResult = { sourceUrl: URL.createObjectURL(new Blob()) };
     try {
-      const blobUrl = await this.downloadResource(operation, resourceUrl);
+      const abortController = new AbortController();
+      const blobUrl = await this.downloadResource(operation, resourceUrl, abortController);
       response.sourceUrl = blobUrl;
     } catch (error) {
       response.error = error as Error;
+      delete this._requestsToCancel[resourceUrl];
     }
 
     message = { ...message, resourceCache: { ...message.resourceCache, [resourceUrl]: response } };
@@ -97,12 +115,14 @@ export class ResourceDownloadQueue {
       }
       for (const attachment of attachments) {
         if (attachment.previewUrl && attachment.attachmentType === 'image') {
-          const response: ResourceFetchResult = { sourceUrl: '' };
+          const response: ResourceFetchResult = { sourceUrl: URL.createObjectURL(new Blob()) };
           try {
-            const blobUrl = await this.downloadResource(operation, attachment.previewUrl);
+            const abortController = new AbortController();
+            const blobUrl = await this.downloadResource(operation, attachment.previewUrl, abortController);
             response.sourceUrl = blobUrl;
           } catch (error) {
             response.error = error as Error;
+            delete this._requestsToCancel[attachment.previewUrl];
           }
           message.resourceCache[attachment.previewUrl] = response;
         }
@@ -112,8 +132,14 @@ export class ResourceDownloadQueue {
     return message;
   }
 
-  private async downloadResource(operation: ImageRequest, url: string): Promise<string> {
-    const blobUrl = await operation(url, this._credential);
+  private async downloadResource(
+    operation: ImageRequest,
+    url: string,
+    abortController: AbortController
+  ): Promise<string> {
+    this._requestsToCancel[url] = { src: url, abortController };
+    const blobUrl = await operation(url, this._credential, abortController);
+    delete this._requestsToCancel[url];
     return blobUrl;
   }
 }
@@ -122,39 +148,46 @@ export class ResourceDownloadQueue {
 /**
  * @private
  */
-export const fetchImageSource = async (src: string, credential: CommunicationTokenCredential): Promise<string> => {
-  async function fetchWithAuthentication(url: string, token: string): Promise<Response> {
+export const fetchImageSource = async (
+  src: string,
+  credential: CommunicationTokenCredential,
+  abortController: AbortController
+): Promise<string> => {
+  async function fetchWithAuthentication(
+    url: string,
+    token: string,
+    abortController: AbortController
+  ): Promise<Response> {
     const headers = new Headers();
     headers.append('Authorization', `Bearer ${token}`);
     try {
-      return await fetchWithTimeout(url, { headers });
+      return await fetchWithTimeout(url, { headers, abortController });
     } catch (err) {
       throw new ChatError('ChatThreadClient.getMessage', err as Error);
     }
   }
   async function fetchWithTimeout(
     resource: string | URL | Request,
-    options: { timeout?: number; headers?: Headers }
+    options: { timeout?: number; headers?: Headers; abortController: AbortController }
   ): Promise<Response> {
     // default timeout is 30 seconds
-    const { timeout = 30000 } = options;
-
-    const controller = new AbortController();
-    const id = setTimeout(() => controller.abort(), timeout);
+    const { timeout = 30000, abortController } = options;
+    const id = setTimeout(() => abortController.abort(), timeout);
 
     const response = await fetch(resource, {
       ...options,
-      signal: controller.signal
+      signal: abortController.signal
     });
     clearTimeout(id);
     return response;
   }
   const accessToken = await credential.getToken();
-  const response = await fetchWithAuthentication(src, accessToken.token);
+  const response = await fetchWithAuthentication(src, accessToken.token, abortController);
   const blob = await response.blob();
+
   return URL.createObjectURL(blob);
 };
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 interface ImageRequest {
-  (request: string, credential: CommunicationTokenCredential): Promise<string>;
+  (request: string, credential: CommunicationTokenCredential, abortController: AbortController): Promise<string>;
 }
