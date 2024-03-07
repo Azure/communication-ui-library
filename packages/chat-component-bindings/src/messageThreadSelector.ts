@@ -11,7 +11,7 @@ import {
   getUserId
 } from './baseSelectors';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { ChatClientState, ChatMessageWithStatus } from '@internal/chat-stateful-client';
+import { ChatClientState, ChatMessageWithStatus, ResourceFetchResult } from '@internal/chat-stateful-client';
 import { memoizeFnAll } from '@internal/acs-ui-common';
 import {
   ChatMessage,
@@ -158,8 +158,8 @@ const processChatMessageContent = (message: ChatMessageWithStatus): string | und
       document.querySelectorAll('img').forEach((img) => {
         const attachmentPreviewUrl = attachments.find((attachment) => attachment.id === img.id)?.previewUrl;
         if (attachmentPreviewUrl) {
-          const src = message.resourceCache?.[attachmentPreviewUrl].sourceUrl ?? '';
-          img.src = src;
+          const resourceCache = message.resourceCache?.[attachmentPreviewUrl];
+          img.src = getResourceSourceUrl(resourceCache);
         }
       });
       content = document.body.innerHTML;
@@ -185,11 +185,22 @@ const processChatMessageContent = (message: ChatMessageWithStatus): string | und
 const generateImageAttachmentImgHtml = (message: ChatMessageWithStatus, attachment: ChatAttachment): string => {
   if (attachment.previewUrl !== undefined) {
     const contentType = extractAttachmentContentTypeFromName(attachment.name);
-    const src = message.resourceCache?.[attachment.previewUrl].sourceUrl ?? '';
+    const resourceCache = message.resourceCache?.[attachment.previewUrl];
+    const src = getResourceSourceUrl(resourceCache);
+
     return `\r\n<p><img alt="image" src="${src}" itemscope="${contentType}" id="${attachment.id}"></p>`;
   }
 
   return '';
+};
+
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+const getResourceSourceUrl = (result?: ResourceFetchResult): string => {
+  let src = 'blob://';
+  if (result && result.error === undefined) {
+    src = result.sourceUrl;
+  }
+  return src;
 };
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
