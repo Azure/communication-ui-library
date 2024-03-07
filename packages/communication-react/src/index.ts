@@ -335,8 +335,6 @@ export type {
 } from '../../react-components/src';
 /* @conditional-compile-remove(file-sharing) */
 export type { AttachmentMetadata } from '../../react-components/src';
-/* @conditional-compile-remove(file-sharing) */
-export type { FileMetadata } from '../../react-components/src';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 export type { ChatAttachmentType } from '../../react-components/src';
 /* @conditional-compile-remove(image-overlay) */
