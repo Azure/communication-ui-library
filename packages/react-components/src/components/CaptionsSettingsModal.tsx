@@ -147,7 +147,8 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
     onSetCaptionLanguage,
     onStartCaptions,
     selectedSpokenLanguage.key,
-    selectedCaptionLanguage.key
+    selectedCaptionLanguage.key,
+    changeCaptionLanguage
   ]);
 
   const spokenLanguageDropdownOptions: IDropdownOption[] = useMemo(() => {

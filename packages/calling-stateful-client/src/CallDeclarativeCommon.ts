@@ -86,7 +86,7 @@ export abstract class ProxyCallCommon implements ProxyHandler<CallCommon> {
           if (args[0] === Features.Captions) {
             const captionsFeature = target.feature(Features.Captions).captions;
             let proxyFeature;
-            if (captionsFeature.kind == 'TeamsCaptions') {
+            if (captionsFeature.kind === 'TeamsCaptions') {
               proxyFeature = new ProxyTeamsCaptions(this._context, target);
             } /* @conditional-compile-remove(acs-close-captions) */ else {
               proxyFeature = new ProxyCaptions(this._context, target);
