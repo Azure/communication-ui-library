@@ -308,7 +308,7 @@ export interface _CaptionsSettingsModalStrings {
 }
 
 // @public
-export type ChatAttachmentType = 'unknown' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage';
+export type ChatAttachmentType = 'unknown' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'image';
 
 // @public
 export interface ChatMessage extends MessageCommon {

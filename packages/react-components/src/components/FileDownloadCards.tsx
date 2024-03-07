@@ -18,7 +18,7 @@ import { _formatString } from '@internal/acs-ui-common';
  */
 export type ChatAttachmentType =
   | 'unknown'
-  | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage'
+  | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'image'
   | /* @conditional-compile-remove(file-sharing) */ 'file';
 
 /**

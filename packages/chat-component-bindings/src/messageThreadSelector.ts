@@ -30,12 +30,10 @@ import { ACSKnownMessageType } from './utils/constants';
 import { updateMessagesWithAttached } from './utils/updateMessagesWithAttached';
 /* @conditional-compile-remove(file-sharing) */
 import { AttachmentMetadata } from '@internal/react-components';
-/* @conditional-compile-remove(file-sharing) */
-import { ChatAttachmentType } from '@azure/communication-chat';
 import { ChatAttachment } from '@azure/communication-chat';
 import type { ChatParticipant } from '@azure/communication-chat';
 /* @conditional-compile-remove(file-sharing) */
-import { ChatAttachmentType as AttachmentType } from '@internal/react-components';
+import { ChatAttachmentType } from '@internal/react-components';
 
 const memoizedAllConvertChatMessage = memoizeFnAll(
   (
@@ -84,7 +82,7 @@ const extractTeamsAttachmentsMetadata = (
   /* @conditional-compile-remove(file-sharing) */
   const files: AttachmentMetadata[] = [];
   attachments.forEach((attachment) => {
-    const attachmentType = mapAttachmentType(attachment.attachmentType);
+    const attachmentType = attachment.attachmentType as ChatAttachmentType;
     /* @conditional-compile-remove(file-sharing) */
     const contentType = extractAttachmentContentTypeFromName(attachment.name);
     /* @conditional-compile-remove(file-sharing) */
@@ -123,18 +121,6 @@ const convertToUiBlockedMessage = (
     mine: messageSenderId === userId,
     link: DEFAULT_DATA_LOSS_PREVENTION_POLICY_URL
   };
-};
-
-/* @conditional-compile-remove(file-sharing) */
-const mapAttachmentType = (attachmentType: ChatAttachmentType): AttachmentType => {
-  if (attachmentType === 'image') {
-    return 'inlineImage';
-  }
-  /* @conditional-compile-remove(file-sharing) */
-  if (attachmentType === 'file') {
-    return 'file';
-  }
-  return 'unknown';
 };
 
 /* @conditional-compile-remove(file-sharing) */
