@@ -84,7 +84,7 @@ betaTest.describe('RichTextInputBoxComponent tests', () => {
 
     addList('Numbered list', component);
 
-    await expect(component).toHaveScreenshot('richtextinputboxcomponent-text-formatted-bulleted-list.png');
+    await expect(component).toHaveScreenshot('richtextinputboxcomponent-text-formatted-numbered-list.png');
   });
 });
 
