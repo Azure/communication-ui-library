@@ -340,13 +340,10 @@ describe('ResourceDownloadQueue api functions', () => {
       });
     });
 
-    Object.defineProperty(AbortController.prototype, 'abort', {
-      writable: true,
-      value: () => {
-        abortCalled = true;
-        Promise.resolve();
-      }
+    jest.spyOn(AbortController.prototype, 'abort').mockImplementation(() => {
+      abortCalled = true;
     });
+
     await fetchImageSource('url', stubCommunicationTokenCredential(), {
       timeout: 10,
       abortController
