@@ -3,7 +3,7 @@
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Text, useTheme, Stack, Checkbox, Pivot, PivotItem, TextField } from '@fluentui/react';
-import { _formatString, _pxToRem } from '@internal/acs-ui-common';
+import { _formatString, _getKeys, _pxToRem } from '@internal/acs-ui-common';
 import {
   checkboxClassName,
   questionTextStyle,
@@ -21,7 +21,6 @@ import {
   _VideoIssue
 } from '../SurveyTypes';
 import { SurveyIssuesHeadingStrings, SurveyIssues, CallSurveyImprovementSuggestions } from '../../../types';
-import { getKeys } from '../../utils';
 /**
  * Strings of {@link TagsSurvey} that can be overridden.
  *
@@ -103,8 +102,8 @@ export const _TagsSurvey = (props: _TagsSurveyProps): JSX.Element => {
       videoRating: [],
       screenshareRating: []
     };
-    getKeys(callIssuesToTag).forEach((issueCategory) => {
-      getKeys(callIssuesToTag[issueCategory]).map((issue) => {
+    _getKeys(callIssuesToTag).forEach((issueCategory) => {
+      _getKeys(callIssuesToTag[issueCategory]).map((issue) => {
         const issueCapitalized = (issue?.charAt(0).toUpperCase() + issue?.slice(1)) as
           | _AudioIssue
           | _OverallIssue
@@ -157,17 +156,19 @@ export const _TagsSurvey = (props: _TagsSurveyProps): JSX.Element => {
       } else {
         if (issue) {
           setSelectedTags((prevState) => {
-            if (prevState[issueCategory]?.issues) {
-              (prevState[issueCategory]!.issues as unknown[]) = prevState[issueCategory]!.issues!.filter(function (
-                value
-              ) {
-                return value !== issue;
-              });
-              if (prevState[issueCategory]!.issues!.length === 0) {
-                delete prevState[issueCategory];
+            // 'prevState[issueCategory]?.issues as ...' typing is required here to avoid a typescript limitation
+            // "This expression is not callable" caused by filter().
+            // More information can be found here: https://github.com/microsoft/TypeScript/issues/44373
+            const categoryIssues = (
+              prevState[issueCategory]?.issues as (_AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue)[]
+            )?.filter((value: _AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue) => value !== issue);
+            return {
+              ...prevState,
+              [issueCategory]: {
+                ...(prevState[issueCategory] || {}),
+                issues: categoryIssues
               }
-            }
-            return prevState;
+            };
           });
         } else {
           setCheckedTextFields(checkedTextFields.filter((id) => id !== issueCategory));
@@ -224,7 +225,7 @@ export const _TagsSurvey = (props: _TagsSurveyProps): JSX.Element => {
       </Stack>
 
       <Pivot>
-        {getKeys(tags).map((key, i) => {
+        {_getKeys(tags).map((key, i) => {
           return (
             <PivotItem
               key={`key-${i}`}

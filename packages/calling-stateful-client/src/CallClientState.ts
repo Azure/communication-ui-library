@@ -217,6 +217,19 @@ export interface RaiseHandCallFeatureState {
   localParticipantRaisedHand?: RaisedHandState;
 }
 
+/* @conditional-compile-remove(ppt-live) */
+/**
+ * State only version of {@link @azure/communication-calling#PPTLiveCallFeature}. {@link StatefulCallClient} will
+ * automatically listen for pptLive on the call and update the state exposed by {@link StatefulCallClient} accordingly.
+ *
+ * @beta
+ */
+export interface PPTLiveCallFeatureState {
+  /**
+   * Proxy of {@link @azure/communication-calling#PPTLiveCallFeature.isActive}.
+   */
+  isActive: boolean;
+}
 /* @conditional-compile-remove(raise-hand) */
 /**
  * Raised hand state with order
@@ -400,6 +413,13 @@ export interface RemoteParticipantState {
    * Proxy of {@link @azure/communication-calling#Call.RaisedHand.raisedHands}.
    */
   raisedHand?: RaisedHandState;
+  /* @conditional-compile-remove(ppt-live) */
+  /**
+   * Proxy of {@link @azure/communication-calling#Call.PPTLive.target}.
+   *
+   * @beta
+   */
+  contentSharingStream?: HTMLElement;
   /* @conditional-compile-remove(reaction) */
   /**
    * Proxy of {@link @azure/communication-calling#Call.ReactionMessage} with
@@ -495,6 +515,13 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#RecordingCallFeature}.
    */
   recording: RecordingCallFeatureState;
+  /* @conditional-compile-remove(ppt-live) */
+  /**
+   * Proxy of {@link @azure/communication-calling#PPTLiveCallFeature}.
+   *
+   *@beta
+   */
+  pptLive: PPTLiveCallFeatureState;
   /* @conditional-compile-remove(raise-hand) */
   /**
    * Proxy of {@link @azure/communication-calling#RaiseHandCallFeature}.
@@ -518,6 +545,18 @@ export interface CallState {
    * This property is added by the stateful layer and is not a proxy of SDK state
    */
   screenShareRemoteParticipant?: string;
+  /* @conditional-compile-remove(ppt-live) */
+  /**
+   * Stores the currently active pptlive participant's key. Will be reused by White board etc. If there is no screenshare active, then this will be
+   * undefined. You can use this key to access the remoteParticipant data in {@link CallState.remoteParticipants} object.
+   *
+   * Note this only applies to PPTLive in RemoteParticipant.
+   *
+   * This property is added by the stateful layer and is not a proxy of SDK state
+   *
+   *@beta
+   */
+  contentSharingRemoteParticipant?: string;
   /**
    * Stores the local date when the call started on the client. This property is added by the stateful layer and is not
    * a proxy of SDK state.

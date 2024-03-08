@@ -68,7 +68,7 @@ export const ModalLocalAndRemotePIP = (props: {
   const [touchStartTouches, setTouchStartTouches] = useState<React.TouchList | null>(null);
 
   const onTouchEnd = useCallback(
-    (event) => {
+    (event: React.TouchEvent) => {
       if (touchStartTouches && touchStartTouches.length === 1 && event.changedTouches.length === 1) {
         const touchStartTouch = touchStartTouches[0];
         const touchEndTouch = event.changedTouches[0];
@@ -83,12 +83,12 @@ export const ModalLocalAndRemotePIP = (props: {
     [props, touchStartTouches]
   );
 
-  const onTouchStart = useCallback((event) => {
+  const onTouchStart = useCallback((event: React.TouchEvent) => {
     setTouchStartTouches(event.touches);
   }, []);
 
   const onKeyDown = useCallback(
-    (event) => {
+    (event: React.KeyboardEvent) => {
       if (event.key === 'Enter' || event.key === ' ') {
         props.onDismissSidePane?.();
       }

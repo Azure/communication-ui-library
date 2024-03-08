@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 import { CommandBarButton, DefaultButton, Stack, concatStyleSets } from '@fluentui/react';
+/* @conditional-compile-remove(spotlight) */
+import { IContextualMenuProps } from '@fluentui/react';
 import { useTheme } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { sidePaneHeaderContainerStyles, sidePaneHeaderStyles } from '../common/styles/ParticipantContainer.styles';
@@ -20,6 +22,10 @@ export const SidePaneHeader = (props: {
   headingText?: string;
   dismissSidePaneButtonAriaLabel?: string;
   dismissSidePaneButtonAriaDescription?: string;
+  /* @conditional-compile-remove(spotlight) */
+  moreSidePaneButtonAriaLabel?: string;
+  /* @conditional-compile-remove(spotlight) */
+  menuProps?: IContextualMenuProps;
   onClose: () => void;
   mobileView: boolean;
 }): JSX.Element => {
@@ -45,9 +51,24 @@ export const SidePaneHeader = (props: {
 
   return (
     <Stack horizontal horizontalAlign="space-between" styles={sidePaneHeaderContainerStyles} verticalAlign="center">
-      <Stack.Item role="heading" styles={sidePaneHeaderStyles}>
+      <Stack.Item /* @conditional-compile-remove(spotlight) */ grow role="heading" styles={sidePaneHeaderStyles}>
         {props.headingText}
       </Stack.Item>
+      {
+        /* @conditional-compile-remove(spotlight) */ props.menuProps?.items && props.menuProps.items.length > 0 && (
+          <Stack.Item>
+            <CommandBarButton
+              ariaLabel={props.moreSidePaneButtonAriaLabel}
+              styles={concatStyleSets(sidePaneCloseButtonStyles, {
+                icon: { display: 'flex', alignItems: 'center' }
+              })}
+              iconProps={{ iconName: 'PeoplePaneMoreButton' }}
+              menuProps={props.menuProps}
+              onRenderMenuIcon={() => null}
+            />
+          </Stack.Item>
+        )
+      }
       <Stack.Item>
         <CommandBarButton
           ariaLabel={props.dismissSidePaneButtonAriaLabel}

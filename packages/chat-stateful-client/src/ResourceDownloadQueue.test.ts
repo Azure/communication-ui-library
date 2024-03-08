@@ -7,7 +7,7 @@ import { CommunicationTokenCredential } from '@azure/communication-common';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatContext } from './ChatContext';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { ResourceDownloadError, ResourceDownloadQueue } from './ResourceDownloadQueue';
+import { ResourceDownloadQueue, fetchImageSource } from './ResourceDownloadQueue';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { messageTemplate } from './mocks/createMockChatThreadClient';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
@@ -21,7 +21,7 @@ jest.mock('@azure/communication-chat');
 export const stubCommunicationTokenCredential = (): CommunicationTokenCredential => {
   return {
     getToken: (): Promise<{ token: string; expiresOnTimestamp: number }> => {
-      throw new Error('Not implemented');
+      return Promise.resolve({ token: 'token', expiresOnTimestamp: 1 });
     },
     dispose: (): void => {
       /* Nothing to dispose */
@@ -35,6 +35,15 @@ describe('ResourceDownloadQueue api functions', () => {
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 describe('ResourceDownloadQueue api functions', () => {
+  // URL.createObjectURL is not available in jest-dom
+  // so we need to mock it in tests
+  if (typeof URL.createObjectURL === 'undefined') {
+    Object.defineProperty(window.URL, 'createObjectURL', {
+      value: () => {
+        return 'http://mocked-url';
+      }
+    });
+  }
   test('should add a message to the queue and contains message', () => {
     const context = new ChatContext();
     const tokenCredential = stubCommunicationTokenCredential();
@@ -215,8 +224,7 @@ describe('ResourceDownloadQueue api functions', () => {
 
     const queue = new ResourceDownloadQueue(context, tokenCredential);
     const operation = jest.fn();
-    const e = new ResourceDownloadError(first);
-    operation.mockRejectedValueOnce(e);
+    operation.mockRejectedValueOnce(new Error('mock error'));
     queue.addMessage(first);
     queue.addMessage(second);
     queue.addMessage(third);
@@ -247,5 +255,99 @@ describe('ResourceDownloadQueue api functions', () => {
     expect(operation).toHaveBeenCalledTimes(1);
     const resourceCache = context.getState().threads[threadId].chatMessages[messageId].resourceCache;
     expect(resourceCache).toBeDefined();
+  });
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  test('if operation fails, error should be in the cache', async () => {
+    const threadId = 'threadId';
+    const messageId = 'messageId';
+    const context = new ChatContext();
+    context.createThreadIfNotExist(threadId);
+    context.setChatMessages(threadId, { messageId1: messageTemplate });
+    const tokenCredential = stubCommunicationTokenCredential();
+
+    const first = { ...messageTemplate };
+    first.id = messageId;
+    const firstAttachments = [
+      { id: '1', attachmentType: 'image' as ChatAttachmentType, name: 'image1', url: 'url1', previewUrl: 'previewUrl1' }
+    ];
+    first.content = { message: 'new message', attachments: firstAttachments };
+
+    const queue = new ResourceDownloadQueue(context, tokenCredential);
+    const operation = jest.fn();
+    operation.mockRejectedValueOnce(new Error('error'));
+    queue.addMessage(first);
+    await queue.startQueue(threadId, operation);
+    expect(operation).toHaveBeenCalledTimes(1);
+    const resourceCache = context.getState().threads[threadId].chatMessages[messageId].resourceCache;
+    expect(resourceCache).toBeDefined();
+    expect(resourceCache?.['previewUrl1'].error).toBeDefined();
+    expect(resourceCache?.['previewUrl1'].sourceUrl).toEqual('');
+  });
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  test('if operation fails for first item, error should be in the cache only for first item', async () => {
+    const threadId = 'threadId';
+    const messageId = 'messageId';
+    const context = new ChatContext();
+    context.createThreadIfNotExist(threadId);
+    context.setChatMessages(threadId, { messageId1: messageTemplate });
+    const tokenCredential = stubCommunicationTokenCredential();
+
+    const first = { ...messageTemplate };
+    first.id = messageId;
+    const firstAttachments = [
+      {
+        id: '1',
+        attachmentType: 'image' as ChatAttachmentType,
+        name: 'image1',
+        url: 'url1',
+        previewUrl: 'previewUrl1'
+      },
+      {
+        id: '2',
+        attachmentType: 'image' as ChatAttachmentType,
+        name: 'image2',
+        url: 'url2',
+        previewUrl: 'previewUrl2'
+      },
+      { id: '3', attachmentType: 'image' as ChatAttachmentType, name: 'image3', url: 'url3', previewUrl: 'previewUrl3' }
+    ];
+    first.content = { message: 'new message', attachments: firstAttachments };
+
+    const queue = new ResourceDownloadQueue(context, tokenCredential);
+    const operation = jest.fn();
+    operation.mockRejectedValueOnce(new Error('error'));
+    queue.addMessage(first);
+    await queue.startQueue(threadId, operation);
+    expect(operation).toHaveBeenCalledTimes(3);
+    const resourceCache = context.getState().threads[threadId].chatMessages[messageId].resourceCache;
+    expect(resourceCache).toBeDefined();
+    expect(resourceCache?.['previewUrl1'].error).toBeDefined();
+    expect(resourceCache?.['previewUrl1'].sourceUrl).toEqual('');
+    expect(resourceCache?.['previewUrl2'].error).toBeUndefined();
+    expect(resourceCache?.['previewUrl3'].error).toBeUndefined();
+  });
+  test('if fetchImageSource times out error should be thrown', async () => {
+    const abortController = new AbortController();
+    let abortCalled = false;
+
+    global.fetch = jest.fn().mockImplementation(() => {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve({
+            blob() {}
+          } as Response);
+        }, 100);
+      });
+    });
+
+    jest.spyOn(AbortController.prototype, 'abort').mockImplementation(() => {
+      abortCalled = true;
+    });
+
+    await fetchImageSource('url', stubCommunicationTokenCredential(), {
+      timeout: 10,
+      abortController
+    });
+    expect(abortCalled).toBe(true);
   });
 });

@@ -36,7 +36,7 @@ import { imageOverlayTheme } from '../theming';
 /**
  * Props for {@link ImageOverlay}.
  *
- * @beta
+ * @public
  */
 export interface ImageOverlayProps {
   /**
@@ -72,7 +72,7 @@ export interface ImageOverlayProps {
 /**
  * Strings of {@link ImageOverlay} that can be overridden.
  *
- * @beta
+ * @public
  */
 export interface ImageOverlayStrings {
   /**
@@ -88,7 +88,7 @@ export interface ImageOverlayStrings {
 /**
  * Component to render a fullscreen modal for a selected image.
  *
- * @beta
+ * @public
  */
 export const ImageOverlay = (props: ImageOverlayProps): JSX.Element => {
   const { isOpen, imageSrc, title, titleIcon, altText, onDownloadButtonClicked, onDismiss } = props;

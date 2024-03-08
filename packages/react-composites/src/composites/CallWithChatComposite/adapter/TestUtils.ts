@@ -242,6 +242,8 @@ function createMockCall(mockCallId: string): CallState {
     dominantSpeakers: undefined,
     /* @conditional-compile-remove(raise-hand) */
     raiseHand: { raisedHands: [] },
+    /* @conditional-compile-remove(ppt-live) */
+    pptLive: { isActive: false },
     /* @conditional-compile-remove(reaction) */
     localParticipantReaction: undefined,
     /* @conditional-compile-remove(close-captions) */
@@ -276,7 +278,10 @@ export class MockCallAgent implements CallAgent {
   connectionState = 'Disconnected' as ConnectionState;
   kind = 'CallAgent' as CallAgentKind;
   emitter = new EventEmitter();
-  feature;
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  feature: CallAgent['feature'] = () => {
+    throw Error('Method not implemented.');
+  };
   startCall(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],

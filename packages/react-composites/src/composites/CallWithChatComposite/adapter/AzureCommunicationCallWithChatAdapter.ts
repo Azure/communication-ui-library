@@ -622,6 +622,11 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return this.callAdapter.stopSpotlight(userIds);
   }
 
+  /* @conditional-compile-remove(spotlight) */
+  public async stopAllSpotlight(): Promise<void> {
+    return this.callAdapter.stopAllSpotlight();
+  }
+
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
   on(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
   on(event: 'callEnded', listener: CallEndedListener): void;

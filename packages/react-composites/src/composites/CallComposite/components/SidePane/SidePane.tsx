@@ -26,6 +26,7 @@ export interface SidePaneProps {
   disableChatButton?: boolean;
   onChatButtonClicked?: () => void;
   onPeopleButtonClicked?: () => void;
+  onHeaderMenuClick?: () => void;
 }
 
 /** @private */
@@ -71,6 +72,7 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
         disableChatButton={props.disableChatButton}
         onPeopleButtonClicked={sidePaneRenderer?.id === 'people' ? noop : props.onPeopleButtonClicked}
         onChatButtonClicked={overrideSidePaneId === 'chat' ? noop : props.onChatButtonClicked}
+        onHeaderMenuClick={props.onHeaderMenuClick}
       />
     );
   }, [
@@ -79,6 +81,7 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
     props.onPeopleButtonClicked,
     props.disablePeopleButton,
     props.disableChatButton,
+    props.onHeaderMenuClick,
     sidePaneRenderer?.id,
     closePane
   ]);

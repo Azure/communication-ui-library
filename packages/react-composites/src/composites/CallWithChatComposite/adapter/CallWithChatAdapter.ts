@@ -46,7 +46,7 @@ import { DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { SendMessageOptions } from '@azure/communication-chat';
 import { JoinCallOptions } from '../../CallComposite/adapter/CallAdapter';
-/* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/* @conditional-compile-remove(file-sharing) */
 import { AttachmentMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadManager } from '../../ChatComposite';
@@ -402,10 +402,10 @@ export interface CallWithChatAdapterManagement {
   /** @beta */
   updateFileUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  /** @beta */
+  /** @public */
   downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  /** @beta */
+  /** @public */
   removeResourceFromCache(resourceDetails: ResourceDetails): void;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
@@ -513,6 +513,11 @@ export interface CallWithChatAdapterManagement {
    * Stop spotlight
    */
   stopSpotlight(userIds?: string[]): Promise<void>;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Stop all spotlights
+   */
+  stopAllSpotlight(): Promise<void>;
 }
 
 /**

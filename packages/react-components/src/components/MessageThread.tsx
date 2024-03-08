@@ -34,7 +34,7 @@ import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
 import getParticipantsWhoHaveReadMessage from './utils/getParticipantsWhoHaveReadMessage';
 /* @conditional-compile-remove(file-sharing) */
 import { FileDownloadHandler } from './FileDownloadCards';
-/* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/* @conditional-compile-remove(file-sharing) */
 import { AttachmentMetadata } from './FileDownloadCards';
 import { useTheme } from '../theming';
 import { FluentV9ThemeProvider } from './../theming/FluentV9ThemeProvider';
@@ -222,7 +222,7 @@ export interface MessageThreadStrings {
   /* @conditional-compile-remove(data-loss-prevention) */
   /** String for policy violation message removal details link */
   blockedWarningLinkText: string;
-  /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /* @conditional-compile-remove(file-sharing) */
   /** String for aria text in file attachment group*/
   fileCardGroupMessage: string;
 }

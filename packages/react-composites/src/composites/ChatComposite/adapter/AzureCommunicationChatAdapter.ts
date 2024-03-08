@@ -35,7 +35,7 @@ import {
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ResourceDetails } from './ChatAdapter';
 import { AdapterError } from '../../common/adapters';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/* @conditional-compile-remove(file-sharing) */
 import { FileUploadAdapter, convertFileUploadsUiStateToMessageMetadata } from './AzureCommunicationFileUploadAdapter';
 /* @conditional-compile-remove(file-sharing) */
 import { AzureCommunicationFileUploadAdapter } from './AzureCommunicationFileUploadAdapter';
@@ -275,7 +275,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   ): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
       /* @conditional-compile-remove(file-sharing) */
-      const updatedOptions = options ? { attachmentMetadata: options.attachmentMetadata, metadata: metadata } : {};
+      const updatedOptions = { attachmentMetadata: options?.attachmentMetadata, metadata: metadata };
       /* @conditional-compile-remove(file-sharing) */
       return await this.handlers.onUpdateMessage(messageId, content, updatedOptions);
       return await this.handlers.onUpdateMessage(messageId, content);
