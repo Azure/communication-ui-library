@@ -82,6 +82,8 @@ export class ChatContext {
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   public dispose(): void {
     this.modifyState((draft: ChatClientState) => {
+      this._inlineImageQueue?.cancelAllRequests();
+      this._fullsizeImageQueue?.cancelAllRequests();
       Object.keys(draft.threads).forEach((threadId) => {
         const thread = draft.threads[threadId];
         Object.keys(thread.chatMessages).forEach((messageId) => {
@@ -116,7 +118,16 @@ export class ChatContext {
   public removeResourceFromCache(threadId: string, messageId: string, resourceUrl: string): void {
     this.modifyState((draft: ChatClientState) => {
       const message = draft.threads[threadId]?.chatMessages[messageId];
-      if (message && message.resourceCache) {
+      if (message && this._fullsizeImageQueue && this._fullsizeImageQueue.containsMessageWithSameAttachments(message)) {
+        this._fullsizeImageQueue?.cancelRequest(resourceUrl);
+      } else if (
+        message &&
+        this._inlineImageQueue &&
+        this._inlineImageQueue.containsMessageWithSameAttachments(message)
+      ) {
+        this._inlineImageQueue?.cancelRequest(resourceUrl);
+      }
+      if (message && message.resourceCache && message.resourceCache[resourceUrl]) {
         const resource = message.resourceCache[resourceUrl];
         URL.revokeObjectURL(resource.sourceUrl);
         delete message.resourceCache[resourceUrl];

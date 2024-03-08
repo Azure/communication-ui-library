@@ -7,7 +7,7 @@ import { CommunicationTokenCredential } from '@azure/communication-common';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatContext } from './ChatContext';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { ResourceDownloadQueue } from './ResourceDownloadQueue';
+import { ResourceDownloadQueue, fetchImageSource } from './ResourceDownloadQueue';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { messageTemplate } from './mocks/createMockChatThreadClient';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
@@ -21,7 +21,7 @@ jest.mock('@azure/communication-chat');
 export const stubCommunicationTokenCredential = (): CommunicationTokenCredential => {
   return {
     getToken: (): Promise<{ token: string; expiresOnTimestamp: number }> => {
-      throw new Error('Not implemented');
+      return Promise.resolve({ token: 'token', expiresOnTimestamp: 1 });
     },
     dispose: (): void => {
       /* Nothing to dispose */
@@ -325,5 +325,29 @@ describe('ResourceDownloadQueue api functions', () => {
     expect(resourceCache?.['previewUrl1'].sourceUrl).toEqual('');
     expect(resourceCache?.['previewUrl2'].error).toBeUndefined();
     expect(resourceCache?.['previewUrl3'].error).toBeUndefined();
+  });
+  test('if fetchImageSource times out error should be thrown', async () => {
+    const abortController = new AbortController();
+    let abortCalled = false;
+
+    global.fetch = jest.fn().mockImplementation(() => {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve({
+            blob() {}
+          } as Response);
+        }, 100);
+      });
+    });
+
+    jest.spyOn(AbortController.prototype, 'abort').mockImplementation(() => {
+      abortCalled = true;
+    });
+
+    await fetchImageSource('url', stubCommunicationTokenCredential(), {
+      timeout: 10,
+      abortController
+    });
+    expect(abortCalled).toBe(true);
   });
 });
