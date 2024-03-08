@@ -48,7 +48,7 @@ type MessageContentWithLiveAriaProps = {
 /**
  * InlineImage's state, as reflected in the UI.
  *
- * @beta
+ * @public
  */
 export interface InlineImage {
   /** ID of the message that the inline image is belonged to */
@@ -61,7 +61,7 @@ export interface InlineImage {
 /**
  * Options to display inline image in the inline image scenario.
  *
- * @beta
+ * @public
  */
 export interface InlineImageOptions {
   /**
