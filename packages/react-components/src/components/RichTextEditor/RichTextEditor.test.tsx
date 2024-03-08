@@ -1,12 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
+
 import React from 'react';
 import { RichTextEditor } from './RichTextEditor';
-import { render, screen } from '@testing-library/react';
-// import { fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { registerIcons } from '@fluentui/react';
-// import userEvent from '@testing-library/user-event';
-// import { act } from 'react-dom/test-utils';
+import userEvent from '@testing-library/user-event';
 
 describe('RichTextEditor should be shown correctly', () => {
   beforeAll(() => {
@@ -81,102 +80,34 @@ describe('RichTextEditor should be shown correctly', () => {
     expect(divider).not.toBeNull();
   });
 
-  // test.only('Bold, Underlined, Italic, options should be shown correctly', async () => {
-  //   let value: string | undefined = undefined;
-  //   // const { container } =
-  //   render(
-  //     <div>
-  //       <RichTextEditor
-  //         onChange={(updatedValue) => {
-  //           value = updatedValue;
-  //           console.log('!!!', updatedValue);
-  //         }}
-  //         strings={{}}
-  //         showRichTextEditorFormatting={true}
-  //         styles={{ minHeight: '1rem', maxHeight: '1rem' }}
-  //       />
-  //     </div>
-  //     // <div data-testid={'rooster-rich-text-editor'} contentEditable={'true'}></div>
-  //   );
-  //   const richTextEditorRibbon = screen.queryByTestId('rich-text-editor-ribbon');
-  //   expect(richTextEditorRibbon).not.toBeNull();
-  //   // setTimeout(() => {}, 1000);
-  //   const boldButton = screen.getByLabelText('Bold');
-  //   // const italicButton = screen.getByLabelText('Italic');
-  //   // const underlineButton = screen.getByLabelText('Underline');
-  //   if (!boldButton /* || !italicButton || !underlineButton*/) {
-  //     fail('Format buttons not found');
-  //   }
-  //   const editorDiv = screen.queryByTestId('rooster-rich-text-editor');
-  //   // const editorDiv2 = screen.getByTestId('rooster-rich-text-editor');
-  //   // const editorDiv3 = await screen.findByTestId('rooster-rich-text-editor');
-  //   // const editorDiv = container.querySelector('[data-testid="rooster-rich-text-editor"]');
-
-  //   if (editorDiv === null) {
-  //     fail('Editor div not found');
-  //   }
-  //   // editorDiv.contentEditable = 'true';
-  //   // console.log('1 container', 'container.innerHTML', container.innerHTML);
-  //   // console.log('1 editorDiv', 'editorDiv.outerHTML', editorDiv.outerHTML);
-  //   // console.log('2 editorDiv', 'editorDiv2.outerHTML', editorDiv2.outerHTML);
-  //   // console.log('3 editorDiv', 'editorDiv3.outerHTML', editorDiv3.outerHTML);
-  //   // expect(editorDiv.isContentEditable).toBeTruthy();
-  //   // act(() => {
-  //   // editorDiv.focus();
-  //   // fireEvent.focus(editorDiv);
-  //   // });
-  //   console.log('boldButton.outerHTML', boldButton.outerHTML);
-  //   // boldButton.click();
-  //   // fireEvent.click(boldButton);
-  //   userEvent.click(boldButton);
-  //   // userEvent.click(italicButton);
-  //   // userEvent.click(underlineButton);
-  //   // console.log(
-  //   //   '1 editorDiv',
-  //   //   '\neditorDiv.innerText',
-  //   //   editorDiv.innerText,
-  //   //   '\neditorDiv.innerHTML',
-  //   //   editorDiv.innerHTML,
-  //   //   '\neditorDiv.textContent',
-  //   //   editorDiv.textContent,
-  //   //   '\neditorDiv.outerHTML',
-  //   //   editorDiv.outerHTML
-  //   // );
-  //   // fireEvent.focus(editorDiv);
-  //   editorDiv.focus();
-  //   // act(() => {
-  //   //   container.focus();
-  //   // });
-  //   // await waitFor(async () => {
-  //   // Type into the input field
-  //   // await userEvent.keyboard('Test');
-  //   // console.log('1', editorDiv.innerHTML);
-  //   // userEvent.type(editorDiv, 'Test');
-  //   // console.log('2', editorDiv.innerHTML);
-  //   // });
-  //   await waitFor(async () => {
-  //     // Type into the input field
-  //     await userEvent.keyboard('Test');
-  //     // console.log('1', editorDiv.innerHTML);
-  //     // userEvent.type(editorDiv, 'Test');
-  //     // console.log('2', editorDiv.innerHTML);
-  //   });
-  //   // userEvent.keyboard('Test');
-  //   // userEvent.type(editorDiv, 'Test');
-  //   const result = '<div><b><i><u>Test</u></i></b></div> ';
-  //   console.log(
-  //     '2 editorDiv',
-  //     '\neditorDiv.innerText',
-  //     editorDiv.innerText,
-  //     '\neditorDiv.innerHTML',
-  //     editorDiv.innerHTML,
-  //     '\neditorDiv.textContent',
-  //     editorDiv.textContent,
-  //     '\neditorDiv.outerHTML',
-  //     editorDiv.outerHTML
-  //   );
-  //   // await waitFor(() => expect(value).toEqual(result));
-  //   expect(value).toEqual(result);
-  //   fireEvent.click(boldButton);
-  // });
+  // button clicks cause `TypeError: editor.getDocument(...).execCommand is not a function`.
+  // Possible reason https://github.com/jsdom/jsdom/issues/1539
+  test('Text should be updated correctly', async () => {
+    let value: string | undefined = undefined;
+    render(
+      <div>
+        <RichTextEditor
+          onChange={(updatedValue) => {
+            value = updatedValue;
+          }}
+          strings={{}}
+          showRichTextEditorFormatting={true}
+          styles={{ minHeight: '1rem', maxHeight: '1rem' }}
+        />
+      </div>
+    );
+    const editorDiv = screen.queryByTestId('rooster-rich-text-editor');
+    // fix for an issue when contentEditable is not set to RoosterJS for tests
+    editorDiv?.setAttribute('contentEditable', 'true');
+    if (editorDiv === null) {
+      fail('Editor div not found');
+    }
+    await userEvent.click(editorDiv);
+    await waitFor(async () => {
+      // Type into the input field
+      await userEvent.keyboard('Test');
+    });
+    const result = '<div>Test<br></div>';
+    expect(value).toEqual(result);
+  });
 });
