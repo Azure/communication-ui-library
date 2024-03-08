@@ -35,7 +35,7 @@ export interface RichTextEditorStyleProps {
 export interface RichTextEditorProps {
   initialContent?: string;
   onChange: (newValue?: string) => void;
-  onKeyDown?: (ev: React.KeyboardEvent) => void;
+  onKeyDown?: (ev: React.KeyboardEvent<HTMLElement>) => void;
   placeholderText?: string;
   strings: Partial<RichTextSendBoxStrings>;
   showRichTextEditorFormatting: boolean;
