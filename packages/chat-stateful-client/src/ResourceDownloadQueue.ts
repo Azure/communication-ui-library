@@ -90,7 +90,7 @@ export class ResourceDownloadQueue {
     resourceUrl: string,
     operation: ImageRequest
   ): Promise<ChatMessageWithStatus> {
-    const response: ResourceFetchResult = { sourceUrl: URL.createObjectURL(new Blob()) };
+    const response: ResourceFetchResult = { sourceUrl: '' };
     try {
       const abortController = new AbortController();
       const blobUrl = await this.downloadResource(operation, resourceUrl, abortController);
@@ -115,7 +115,7 @@ export class ResourceDownloadQueue {
       }
       for (const attachment of attachments) {
         if (attachment.previewUrl && attachment.attachmentType === 'image') {
-          const response: ResourceFetchResult = { sourceUrl: URL.createObjectURL(new Blob()) };
+          const response: ResourceFetchResult = { sourceUrl: '' };
           try {
             const abortController = new AbortController();
             const blobUrl = await this.downloadResource(operation, attachment.previewUrl, abortController);
