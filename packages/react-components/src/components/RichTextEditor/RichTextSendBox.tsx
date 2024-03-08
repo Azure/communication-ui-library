@@ -262,6 +262,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       <RichTextInputBoxComponent
         placeholderText={strings.placeholderText}
         onChange={setContent}
+        onEnterKeyDown={sendMessageOnClick}
         editorComponentRef={editorComponentRef}
         strings={strings}
         disabled={disabled}

@@ -111,7 +111,7 @@ export const darkTheme: PartialTheme & CallingTheme = {
 /**
  * Preset dark theme for the ImageOverlay component.
  *
- * @beta
+ * @public
  */
 export const imageOverlayTheme: PartialTheme = {
   palette: darkTheme.palette,
