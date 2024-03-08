@@ -38,8 +38,8 @@
   "devDependencies": {
     "@babel/core": "^7.23.9",
     "@babel/eslint-parser": "^7.22.15",
-    "@types/react": "18.2.57",
-    "@types/react-dom": "18.2.19",
+    "@types/react": "18.2.64",
+    "@types/react-dom": "18.2.21",
     "@types/uuid": "^9.0.8",
     "@typescript-eslint/eslint-plugin": "^6.19.1",
     "@typescript-eslint/parser": "^6.19.1",
