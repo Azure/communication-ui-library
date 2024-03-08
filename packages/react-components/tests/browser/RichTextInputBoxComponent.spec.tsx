@@ -10,7 +10,7 @@ import { Locator } from 'playwright-core';
 const formatButtonId = 'rich-text-input-box-format-button';
 const editorId = 'rooster-rich-text-editor';
 
-betaTest.describe.only('RichTextInputBoxComponent tests', () => {
+betaTest.describe('RichTextInputBoxComponent tests', () => {
   betaTest.skip(({ isBetaBuild }) => !isBetaBuild, 'The tests should be run for beta flavor only');
 
   betaTest('RichTextInputBoxComponent should be shown correctly', async ({ mount }) => {
@@ -26,7 +26,7 @@ betaTest.describe.only('RichTextInputBoxComponent tests', () => {
     await expect(component).toHaveScreenshot('richtextinputboxcomponent-with-format-toolbar.png');
   });
 
-  betaTest.only('Text should be formatted correctly when only 1 text style selected', async ({ mount }) => {
+  betaTest('Text should be formatted correctly when only 1 text style selected', async ({ mount }) => {
     const component = await mount(<TestRichTextInputBoxComponent disabled={false} minHeight="1rem" maxHeight="2rem" />);
     await component.evaluate(() => document.fonts.ready);
     await component.getByTestId(formatButtonId).click();
