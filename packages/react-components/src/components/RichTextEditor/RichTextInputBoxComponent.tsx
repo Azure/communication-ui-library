@@ -106,8 +106,10 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
   }, [richTextEditorStyleProps, showRichTextEditorFormatting]);
 
   const onKeyDown = useCallback(
-    (ev: React.KeyboardEvent) => {
-      // Do we need this for safari if (isEnterKeyEventFromCompositionSession(ev)) {
+    (ev: React.KeyboardEvent<HTMLElement>) => {
+      if (isEnterKeyEventFromCompositionSession(ev)) {
+        return;
+      }
       if (ev.key === 'Enter' && ev.shiftKey === false && !showRichTextEditorFormatting) {
         ev.preventDefault();
         onEnterKeyDown && onEnterKeyDown();
