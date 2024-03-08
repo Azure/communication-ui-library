@@ -138,7 +138,7 @@ export class ResourceDownloadQueue {
     abortController: AbortController
   ): Promise<string> {
     this._requestsToCancel[url] = { src: url, abortController };
-    const blobUrl = await operation(url, this._credential, abortController);
+    const blobUrl = await operation(url, this._credential, { abortController });
     delete this._requestsToCancel[url];
     return blobUrl;
   }
@@ -151,17 +151,21 @@ export class ResourceDownloadQueue {
 export const fetchImageSource = async (
   src: string,
   credential: CommunicationTokenCredential,
-  abortController: AbortController
+  options: { abortController: AbortController; timeout?: number }
 ): Promise<string> => {
   async function fetchWithAuthentication(
     url: string,
     token: string,
-    abortController: AbortController
+    options: { abortController: AbortController; timeout?: number }
   ): Promise<Response> {
     const headers = new Headers();
     headers.append('Authorization', `Bearer ${token}`);
     try {
-      return await fetchWithTimeout(url, { headers, abortController });
+      return await fetchWithTimeout(url, {
+        timeout: options.timeout,
+        headers,
+        abortController: options.abortController
+      });
     } catch (err) {
       throw new ChatError('ChatThreadClient.getMessage', err as Error);
     }
@@ -172,7 +176,10 @@ export const fetchImageSource = async (
   ): Promise<Response> {
     // default timeout is 30 seconds
     const { timeout = 30000, abortController } = options;
-    const id = setTimeout(() => abortController.abort(), timeout);
+
+    const id = setTimeout(() => {
+      abortController.abort();
+    }, timeout);
 
     const response = await fetch(resource, {
       ...options,
@@ -182,12 +189,16 @@ export const fetchImageSource = async (
     return response;
   }
   const accessToken = await credential.getToken();
-  const response = await fetchWithAuthentication(src, accessToken.token, abortController);
+  const response = await fetchWithAuthentication(src, accessToken.token, options);
   const blob = await response.blob();
 
   return URL.createObjectURL(blob);
 };
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 interface ImageRequest {
-  (request: string, credential: CommunicationTokenCredential, abortController: AbortController): Promise<string>;
+  (
+    request: string,
+    credential: CommunicationTokenCredential,
+    options: { abortController: AbortController; timeout?: number }
+  ): Promise<string>;
 }
