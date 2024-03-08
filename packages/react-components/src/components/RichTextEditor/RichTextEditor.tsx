@@ -35,6 +35,7 @@ export interface RichTextEditorStyleProps {
 export interface RichTextEditorProps {
   initialContent?: string;
   onChange: (newValue?: string) => void;
+  onKeyDown?: (ev: React.KeyboardEvent<HTMLElement>) => void;
   placeholderText?: string;
   strings: Partial<RichTextSendBoxStrings>;
   showRichTextEditorFormatting: boolean;
@@ -144,6 +145,8 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
           // doNotAdjustEditorColor is used to fix the default background color for Rooster component
           doNotAdjustEditorColor={true}
           data-testid={'rooster-rich-text-editor'}
+          // if we don't use 'allowKeyboardEventPropagation' only the enter key is caught
+          onKeyDown={props.onKeyDown}
         />
       </div>
     </div>

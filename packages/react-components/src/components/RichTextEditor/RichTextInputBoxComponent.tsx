@@ -16,6 +16,7 @@ import {
   richTextFormatButtonIconStyle
 } from '../styles/RichTextEditor.styles';
 import { inputBoxContentStackStyle, inputBoxRichTextStackStyle } from '../styles/RichTextInputBoxComponent.styles';
+import { isEnterKeyEventFromCompositionSession } from '../utils';
 
 /**
  * @private
@@ -29,6 +30,7 @@ export interface RichTextInputBoxComponentProps {
   placeholderText?: string;
   initialContent?: string;
   onChange: (newValue?: string) => void;
+  onEnterKeyDown?: () => void;
   editorComponentRef: React.RefObject<RichTextEditorComponentRef>;
   strings: Partial<RichTextSendBoxStrings>;
   disabled: boolean;
@@ -47,6 +49,7 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
     placeholderText,
     initialContent,
     onChange,
+    onEnterKeyDown,
     editorComponentRef,
     disabled,
     strings,
@@ -103,6 +106,19 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
     return richTextEditorStyleProps(showRichTextEditorFormatting);
   }, [richTextEditorStyleProps, showRichTextEditorFormatting]);
 
+  const onKeyDown = useCallback(
+    (ev: React.KeyboardEvent<HTMLElement>) => {
+      if (isEnterKeyEventFromCompositionSession(ev)) {
+        return;
+      }
+      if (ev.key === 'Enter' && ev.shiftKey === false && !showRichTextEditorFormatting) {
+        ev.preventDefault();
+        onEnterKeyDown && onEnterKeyDown();
+      }
+    },
+    [onEnterKeyDown, showRichTextEditorFormatting]
+  );
+
   return (
     <div
       className={richTextBorderBoxStyle({
@@ -121,6 +137,7 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
             initialContent={initialContent}
             placeholderText={placeholderText}
             onChange={onChange}
+            onKeyDown={onKeyDown}
             ref={editorComponentRef}
             strings={strings}
             showRichTextEditorFormatting={showRichTextEditorFormatting}
