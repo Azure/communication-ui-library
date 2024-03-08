@@ -1,26 +1,44 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-import React, { useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useImperativeHandle, useMemo, useRef } from 'react';
 import { ContentEdit, Watermark } from 'roosterjs-editor-plugins';
 import { Editor } from 'roosterjs-editor-core';
 import type { EditorOptions, IEditor } from 'roosterjs-editor-types-compatible';
 import { Rooster, createUpdateContentPlugin, UpdateMode, createRibbonPlugin, Ribbon } from 'roosterjs-react';
-import { ribbonButtonStyle, ribbonStyle, richTextEditorStyle } from '../styles/RichTextEditor.styles';
-import { useTheme } from '@fluentui/react';
-import { ribbonButtons, ribbonButtonsStrings } from './RTERibbonButtons';
-import { RichTextSendBoxStrings } from './RTESendBox';
+import {
+  ribbonButtonStyle,
+  ribbonOverflowButtonStyle,
+  ribbonStyle,
+  richTextEditorWrapperStyle,
+  richTextEditorStyle
+} from '../styles/RichTextEditor.styles';
+import { useTheme } from '../../theming';
+import { ribbonButtons, ribbonButtonsStrings } from './RichTextRibbonButtons';
+import { RichTextSendBoxStrings } from './RichTextSendBox';
 import { isDarkThemed } from '../../theming/themeUtils';
 
 /**
  * Props for {@link RichTextEditor}.
  *
- * @beta
+ * @private
+ */
+export interface RichTextEditorStyleProps {
+  minHeight: string;
+  maxHeight: string;
+}
+
+/**
+ * Props for {@link RichTextEditor}.
+ *
+ * @private
  */
 export interface RichTextEditorProps {
-  content?: string;
+  initialContent?: string;
   onChange: (newValue?: string) => void;
   placeholderText?: string;
   strings: Partial<RichTextSendBoxStrings>;
+  showRichTextEditorFormatting: boolean;
+  styles: RichTextEditorStyleProps;
 }
 
 /**
@@ -30,6 +48,7 @@ export interface RichTextEditorProps {
  */
 export interface RichTextEditorComponentRef {
   focus: () => void;
+  setEmptyContent: () => void;
 }
 
 /**
@@ -38,9 +57,8 @@ export interface RichTextEditorComponentRef {
  * @beta
  */
 export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichTextEditorProps>((props, ref) => {
-  const { content, onChange, placeholderText, strings } = props;
+  const { initialContent, onChange, placeholderText, strings, showRichTextEditorFormatting } = props;
   const editor = useRef<IEditor | null>(null);
-  const [divComponent, setDivComponent] = useState<HTMLDivElement | null>(null);
   const theme = useTheme();
   useImperativeHandle(
     ref,
@@ -50,25 +68,16 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
           if (editor.current) {
             editor.current.focus();
           }
+        },
+        setEmptyContent() {
+          if (editor.current) {
+            editor.current.setContent('');
+          }
         }
       };
     },
     []
   );
-
-  useEffect(() => {
-    if (content !== editor.current?.getContent()) {
-      editor.current?.setContent(content || '');
-    }
-  }, [content]);
-
-  useEffect(() => {
-    if (divComponent !== null && theme.palette.neutralPrimary !== undefined) {
-      // Adjust color prop for the div component when theme is updated
-      // because doNotAdjustEditorColor is set for Rooster
-      divComponent.style.color = theme.palette.neutralPrimary;
-    }
-  }, [divComponent, theme]);
 
   const ribbonPlugin = React.useMemo(() => {
     return createRibbonPlugin();
@@ -76,9 +85,12 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
 
   const editorCreator = useCallback((div: HTMLDivElement, options: EditorOptions) => {
     editor.current = new Editor(div, options);
-    setDivComponent(div);
-    // Remove the background color of the editor
-    div.style.backgroundColor = 'transparent';
+    // Remove default values for background color and color
+    // setBackgroundColor and setTextColor can't be used here as they cause the editor to be focused
+    // color will be set in richTextEditorWrapperStyle instead of inline styles
+    div.style.backgroundColor = '';
+    div.style.color = '';
+
     return editor.current;
   }, []);
 
@@ -100,14 +112,15 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     return (
       //TODO: Add localization for watermark plugin https://github.com/microsoft/roosterjs/issues/2430
       <Ribbon
-        styles={ribbonStyle()}
+        styles={ribbonStyle}
         buttons={buttons}
         plugin={ribbonPlugin}
         overflowButtonProps={{
           styles: ribbonButtonStyle(theme),
           menuProps: {
             items: [], // CommandBar will determine items rendered in overflow
-            isBeakVisible: false
+            isBeakVisible: false,
+            styles: ribbonOverflowButtonStyle(theme)
           }
         }}
         strings={ribbonButtonsStrings(strings)}
@@ -117,17 +130,20 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
 
   return (
     <div>
-      {ribbon}
-      <Rooster
-        inDarkMode={isDarkThemed(theme)}
-        plugins={plugins}
-        className={richTextEditorStyle}
-        editorCreator={editorCreator}
-        // TODO: confirm the color during inline images implementation
-        imageSelectionBorderColor={'blue'}
-        // doNotAdjustEditorColor is used to fix the default background color for Rooster component
-        doNotAdjustEditorColor={true}
-      />
+      {showRichTextEditorFormatting && ribbon}
+      <div className={richTextEditorWrapperStyle(theme, !showRichTextEditorFormatting, showRichTextEditorFormatting)}>
+        <Rooster
+          initialContent={initialContent}
+          inDarkMode={isDarkThemed(theme)}
+          plugins={plugins}
+          className={richTextEditorStyle(props.styles)}
+          editorCreator={editorCreator}
+          // TODO: confirm the color during inline images implementation
+          imageSelectionBorderColor={'blue'}
+          // doNotAdjustEditorColor is used to fix the default background color for Rooster component
+          doNotAdjustEditorColor={true}
+        />
+      </div>
     </div>
   );
 });

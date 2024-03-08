@@ -103,13 +103,13 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
   const [hasSetSpokenLanguage, setHasSetSpokenLanguage] = useState(false);
 
   const [selectedSpokenLanguage, setSelectedSpokenLanguage] = useState<SpokenLanguageDropdownOptions>({
-    key: currentSpokenLanguage ?? defaultSpokenLanguage,
-    text: currentSpokenLanguage ?? defaultSpokenLanguage
+    key: currentSpokenLanguage || defaultSpokenLanguage,
+    text: currentSpokenLanguage || defaultSpokenLanguage
   });
 
   const [selectedCaptionLanguage, setSelectedCaptionLanguage] = useState<CaptionLanguageDropdownOptions>({
-    key: currentCaptionLanguage ?? _spokenLanguageToCaptionLanguage[selectedSpokenLanguage.key],
-    text: currentCaptionLanguage ?? _spokenLanguageToCaptionLanguage[selectedSpokenLanguage.key]
+    key: currentCaptionLanguage || _spokenLanguageToCaptionLanguage[selectedSpokenLanguage.key],
+    text: currentCaptionLanguage || _spokenLanguageToCaptionLanguage[selectedSpokenLanguage.key]
   });
 
   useEffect(() => {

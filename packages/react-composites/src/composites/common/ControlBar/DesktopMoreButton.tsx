@@ -3,14 +3,12 @@
 
 import { IContextualMenuItem } from '@fluentui/react';
 import { ControlBarButtonProps } from '@internal/react-components';
-/* @conditional-compile-remove(gallery-layouts) */
 import { VideoGalleryLayout } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
 import { _StartCaptionsButton } from '@internal/react-components';
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButton } from '@internal/react-components';
 import React from 'react';
-/* @conditional-compile-remove(gallery-layouts) */
 import { useState } from 'react';
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
 import { useMemo, useCallback } from 'react';
@@ -52,11 +50,8 @@ export interface DesktopMoreButtonProps extends ControlBarButtonProps {
   /* @conditional-compile-remove(control-bar-button-injection) */
   callControls?: boolean | CommonCallControlOptions;
   onCaptionsSettingsClick?: () => void;
-  /* @conditional-compile-remove(gallery-layouts) */
   onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'horizontalTop') => void;
-  /* @conditional-compile-remove(gallery-layouts) */
   onUserSetGalleryLayout?: (layout: VideoGalleryLayout) => void;
-  /* @conditional-compile-remove(gallery-layouts) */
   userSetGalleryLayout?: VideoGalleryLayout;
   /* @conditional-compile-remove(dtmf-dialer) */
   onSetDialpadPage?: () => void;
@@ -86,9 +81,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
 
   /* @conditional-compile-remove(overflow-top-composite) */
   const [galleryPositionTop, setGalleryPositionTop] = useState<boolean>(false);
-  /* @conditional-compile-remove(gallery-layouts) */
   const [focusedContentOn, setFocusedContentOn] = useState<boolean>(false);
-  /* @conditional-compile-remove(gallery-layouts) */
   const [previousLayout, setPreviousLayout] = useState<VideoGalleryLayout>(
     props.userSetGalleryLayout ?? 'floatingLocalVideo'
   );
@@ -112,7 +105,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
 
   const moreButtonContextualMenuItems: IContextualMenuItem[] = [];
 
-  /* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(gallery-layouts) */
+  /* @conditional-compile-remove(close-captions) */
   const menuSubIconStyleSet = {
     root: {
       height: 'unset',
@@ -229,7 +222,6 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     moreButtonContextualMenuItems.push(dtmfDialerScreenOption);
   }
 
-  /* @conditional-compile-remove(gallery-layouts) */
   if (props.onUserSetOverflowGalleryPositionChange) {
     const galleryOptions = {
       key: 'overflowGalleryPositionKey',
@@ -378,7 +370,6 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     galleryOptions.subMenuProps?.items?.push(galleryOption);
     /* @conditional-compile-remove(overflow-top-composite) */
     galleryOptions.subMenuProps?.items?.push(overflowGalleryOption);
-    /* @conditional-compile-remove(gallery-layouts) */
     moreButtonContextualMenuItems.push(galleryOptions);
   }
 

@@ -60,8 +60,6 @@ module.exports = {
     "optimal-video-count",
     // Feature for capabilities
     "capabilities",
-    // Feature for custom video gallery layouts
-    "gallery-layouts",
     // Feature for large Gallery layout
     "large-gallery",
     // feature for positioning the overflowGallery at the top of the screen in the composite
@@ -107,8 +105,6 @@ module.exports = {
     "gallery-layout-composite",
     // feature for hiding attendee name in the teams meeting
     "hide-attendee-name",
-    // custom branding for the composites
-    "custom-branding",
     // Feature for end of call survey
     'end-of-call-survey',
     // Feature for PPT Live for teams meeting
@@ -139,8 +135,6 @@ module.exports = {
     "optimal-video-count",
     // raise hands feature
     "raise-hand",
-    // Feature for gallery layouts
-    "gallery-layouts",
     // feature  for vertical overflow gallery
     "vertical-gallery",
     // API for injecting custom buttons in he control bar for
@@ -161,6 +155,8 @@ module.exports = {
     // Feature image overlay
     "image-overlay",
     // Chat teams interop to display images and file attachments in chat messages
-    "teams-inline-images-and-file-sharing"
+    "teams-inline-images-and-file-sharing",
+    // custom branding for the composites
+    "custom-branding"
   ]
 }

@@ -149,7 +149,14 @@ export type AreParamEqual<A extends (props: any) => JSX.Element | undefined, B e
 export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
 // @beta
-export type AttachmentMetadata = FileMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ InlineImageMetadata;
+export interface AttachmentMetadata {
+    extension: string;
+    id: string;
+    name: string;
+    // (undocumented)
+    payload?: Record<string, string>;
+    url: string;
+}
 
 // @public
 export type AvatarPersonaData = {
@@ -356,6 +363,7 @@ export interface CallAdapterCallOperations {
     startScreenShare(): Promise<void>;
     startSpotlight(userIds?: string[]): Promise<void>;
     startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
+    stopAllSpotlight(): Promise<void>;
     stopCamera(): Promise<void>;
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
@@ -593,6 +601,8 @@ export type CallCompositeIcons = {
     LargeGalleryLayout?: JSX.Element;
     DefaultCustomButton?: JSX.Element;
     DtmfDialpadButton?: JSX.Element;
+    PeoplePaneMoreButton?: JSX.Element;
+    StopAllSpotlightMenuButton?: JSX.Element;
 };
 
 // @public
@@ -760,6 +770,7 @@ export interface CallCompositeStrings {
     peopleButtonTooltipClose: string;
     peopleButtonTooltipOpen: string;
     peoplePaneAddPeopleButtonLabel: string;
+    peoplePaneMoreButtonAriaLabel: string;
     peoplePaneSubTitle: string;
     peoplePaneTitle: string;
     permissionToReachTargetParticipantNotAllowedMoreDetails?: string;
@@ -799,6 +810,7 @@ export interface CallCompositeStrings {
     startCaptionsButtonTooltipOffContent?: string;
     startCaptionsButtonTooltipOnContent?: string;
     startSpotlightParticipantListMenuLabel: string;
+    stopAllSpotlightMenuLabel: string;
     stopSpotlightOnSelfParticipantListMenuLabel: string;
     stopSpotlightParticipantListMenuLabel: string;
     surveyConfirmButtonLabel: string;
@@ -1003,7 +1015,7 @@ export interface CallWithChatAdapterManagement {
     disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
     disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
-    // @beta (undocumented)
+    // (undocumented)
     downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
     fetchInitialData(): Promise<void>;
     // @beta
@@ -1028,7 +1040,7 @@ export interface CallWithChatAdapterManagement {
     removeParticipant(userId: string): Promise<void>;
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
-    // @beta (undocumented)
+    // (undocumented)
     removeResourceFromCache(resourceDetails: ResourceDetails): void;
     // @beta
     resumeCall: () => Promise<void>;
@@ -1048,6 +1060,7 @@ export interface CallWithChatAdapterManagement {
     startScreenShare(): Promise<void>;
     startSpotlight(userIds?: string[]): Promise<void>;
     startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
+    stopAllSpotlight(): Promise<void>;
     stopCamera(): Promise<void>;
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
@@ -1281,6 +1294,8 @@ export type CallWithChatCompositeIcons = {
     SendBoxAttachFile?: JSX.Element;
     ParticipantItemOptions?: JSX.Element;
     ParticipantItemOptionsHovered?: JSX.Element;
+    PeoplePaneMoreButton?: JSX.Element;
+    StopAllSpotlightMenuButton?: JSX.Element;
 };
 
 // @public
@@ -1641,8 +1656,8 @@ export type ChatAdapterUiState = {
     fileUploads?: FileUploadsUiState;
 };
 
-// @beta
-export type ChatAttachmentType = 'unknown' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | /* @conditional-compile-remove(file-sharing) */ 'file';
+// @public
+export type ChatAttachmentType = 'unknown' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'image' | /* @conditional-compile-remove(file-sharing) */ 'file';
 
 // @public
 export type ChatBaseSelectorProps = {
@@ -1703,6 +1718,7 @@ export type ChatCompositeOptions = {
     topic?: boolean;
     autoFocus?: 'sendBoxTextField';
     fileSharing?: FileSharingOptions;
+    richTextEditor?: boolean | RichTextEditorOptions;
 };
 
 // @public
@@ -1773,9 +1789,7 @@ export interface ChatMessage extends MessageCommon {
     // (undocumented)
     failureReason?: string;
     // @beta
-    files?: FileMetadata[];
-    // @beta
-    inlineImages?: InlineImageMetadata[];
+    files?: AttachmentMetadata[];
     // (undocumented)
     messageType: 'chat';
     metadata?: Record<string, string>;
@@ -1794,7 +1808,7 @@ export type ChatMessageWithStatus = ChatMessage_2 & {
     clientMessageId?: string;
     status: MessageStatus;
     policyViolation?: boolean;
-    resourceCache?: Record<string, string>;
+    resourceCache?: Record<string, ResourceFetchResult>;
 };
 
 // @public
@@ -1960,6 +1974,8 @@ export interface CommonCallingHandlers {
     onStartScreenShare: () => Promise<void>;
     // (undocumented)
     onStartSpotlight: (userIds?: string[]) => Promise<void>;
+    // (undocumented)
+    onStopAllSpotlight: () => Promise<void>;
     // (undocumented)
     onStopCaptions: () => Promise<void>;
     // (undocumented)
@@ -2476,14 +2492,16 @@ export const DEFAULT_COMPONENT_ICONS: {
     StartSpotlightContextualMenuItem: React_2.JSX.Element;
     StopSpotlightContextualMenuItem: React_2.JSX.Element;
     VideoSpotlighted: React_2.JSX.Element;
-    RTEBoldButtonIcon: React_2.JSX.Element;
-    RTEItalicButtonIcon: React_2.JSX.Element;
-    RTEUnderlineButtonIcon: React_2.JSX.Element;
-    RTEBulletListButtonIcon: React_2.JSX.Element;
-    RTEtNumberListButtonIcon: React_2.JSX.Element;
-    RTEIndentDecreaseButtonIcon: React_2.JSX.Element;
-    RTEIndentIncreaseButtonIcon: React_2.JSX.Element;
-    RTEDividerIcon: React_2.JSX.Element;
+    RichTextBoldButtonIcon: React_2.JSX.Element;
+    RichTextItalicButtonIcon: React_2.JSX.Element;
+    RichTextUnderlineButtonIcon: React_2.JSX.Element;
+    RichTextBulletListButtonIcon: React_2.JSX.Element;
+    RichTextNumberListButtonIcon: React_2.JSX.Element;
+    RichTextIndentDecreaseButtonIcon: React_2.JSX.Element;
+    RichTextIndentIncreaseButtonIcon: React_2.JSX.Element;
+    RichTextDividerIcon: React_2.JSX.Element;
+    RichTextEditorButtonIcon: React_2.JSX.Element;
+    RichTextEditorButtonIconFilled: React_2.JSX.Element;
 };
 
 // @public
@@ -2573,6 +2591,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     LargeGalleryLayout?: JSX.Element | undefined;
     DefaultCustomButton?: JSX.Element | undefined;
     DtmfDialpadButton?: JSX.Element | undefined;
+    PeoplePaneMoreButton?: JSX.Element | undefined;
+    StopAllSpotlightMenuButton?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;
@@ -2629,14 +2649,16 @@ export const DEFAULT_COMPOSITE_ICONS: {
     StartSpotlightContextualMenuItem: React_2.JSX.Element;
     StopSpotlightContextualMenuItem: React_2.JSX.Element;
     VideoSpotlighted: React_2.JSX.Element;
-    RTEBoldButtonIcon: React_2.JSX.Element;
-    RTEItalicButtonIcon: React_2.JSX.Element;
-    RTEUnderlineButtonIcon: React_2.JSX.Element;
-    RTEBulletListButtonIcon: React_2.JSX.Element;
-    RTEtNumberListButtonIcon: React_2.JSX.Element;
-    RTEIndentDecreaseButtonIcon: React_2.JSX.Element;
-    RTEIndentIncreaseButtonIcon: React_2.JSX.Element;
-    RTEDividerIcon: React_2.JSX.Element;
+    RichTextBoldButtonIcon: React_2.JSX.Element;
+    RichTextItalicButtonIcon: React_2.JSX.Element;
+    RichTextUnderlineButtonIcon: React_2.JSX.Element;
+    RichTextBulletListButtonIcon: React_2.JSX.Element;
+    RichTextNumberListButtonIcon: React_2.JSX.Element;
+    RichTextIndentDecreaseButtonIcon: React_2.JSX.Element;
+    RichTextIndentIncreaseButtonIcon: React_2.JSX.Element;
+    RichTextDividerIcon: React_2.JSX.Element;
+    RichTextEditorButtonIcon: React_2.JSX.Element;
+    RichTextEditorButtonIconFilled: React_2.JSX.Element;
 };
 
 // @beta
@@ -2855,18 +2877,6 @@ export interface FileDownloadError {
 export type FileDownloadHandler = (userId: string, fileMetadata: AttachmentMetadata) => Promise<URL | FileDownloadError>;
 
 // @beta
-export interface FileMetadata {
-    // (undocumented)
-    attachmentType: 'file';
-    extension: string;
-    id: string;
-    name: string;
-    // (undocumented)
-    payload?: Record<string, string>;
-    url: string;
-}
-
-// @beta
 export interface FileSharingOptions {
     accept?: string;
     downloadHandler?: FileDownloadHandler;
@@ -2943,7 +2953,7 @@ export type GetCallingSelector<Component extends (props: any) => JSX.Element | u
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
 
 // @public
-export type GetChatSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof SendBox> extends true ? SendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? MessageThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? TypingIndicatorSelector : AreEqual<Component, typeof ParticipantList> extends true ? ChatParticipantListSelector : AreEqual<Component, typeof ErrorBar> extends true ? ChatErrorBarSelector : undefined;
+export type GetChatSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof SendBox> extends true ? SendBoxSelector : AreEqual<Component, typeof RichTextSendBox> extends true ? SendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? MessageThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? TypingIndicatorSelector : AreEqual<Component, typeof ParticipantList> extends true ? ChatParticipantListSelector : AreEqual<Component, typeof ErrorBar> extends true ? ChatErrorBarSelector : undefined;
 
 // @public
 export const getChatSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetChatSelector<Component>;
@@ -3025,10 +3035,10 @@ export interface _Identifiers {
     videoTile: string;
 }
 
-// @beta
+// @public
 export const ImageOverlay: (props: ImageOverlayProps) => JSX.Element;
 
-// @beta
+// @public
 export interface ImageOverlayProps {
     altText?: string;
     imageSrc: string;
@@ -3045,7 +3055,7 @@ export interface ImageOverlayStrings {
     downloadButtonLabel: string;
 }
 
-// @beta
+// @public
 export const imageOverlayTheme: PartialTheme;
 
 // @beta
@@ -3062,24 +3072,13 @@ export interface IncomingCallState {
     startTime: Date;
 }
 
-// @beta
+// @public
 export interface InlineImage {
     imgAttrs: React_2.ImgHTMLAttributes<HTMLImageElement>;
     messageId: string;
 }
 
-// @beta
-export interface InlineImageMetadata {
-    // (undocumented)
-    attachmentType: 'inlineImage';
-    fullSizeImageSrc?: string;
-    id: string;
-    // (undocumented)
-    previewUrl?: string;
-    url: string;
-}
-
-// @beta
+// @public
 export interface InlineImageOptions {
     onRenderInlineImage?: (inlineImage: InlineImage, defaultOnRender: (inlineImage: InlineImage) => JSX.Element) => JSX.Element;
 }
@@ -3499,7 +3498,7 @@ export interface OptionsDevice {
 }
 
 // @public
-export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | /* @conditional-compile-remove(gallery-layouts) */ 'horizontalTop';
+export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | 'horizontalTop';
 
 // @public
 export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
@@ -3747,6 +3746,7 @@ export interface ReactionButtonProps extends ControlBarButtonProps {
 // @beta
 export interface ReactionButtonStrings {
     applauseReactionTooltipContent?: string;
+    ariaLabel: string;
     heartReactionTooltipContent?: string;
     label: string;
     laughReactionTooltipContent?: string;
@@ -3837,6 +3837,30 @@ export type ResourceDetails = {
     resourceUrl: string;
 };
 
+// @public
+export type ResourceFetchResult = {
+    sourceUrl: string;
+    error?: Error;
+};
+
+// @beta
+export interface RichTextEditorOptions {
+}
+
+// @beta
+export const RichTextSendBox: (props: RichTextSendBoxProps) => JSX.Element;
+
+// @beta
+export interface RichTextSendBoxProps {
+    activeFileUploads?: ActiveFileUpload[];
+    disabled?: boolean;
+    onCancelFileUpload?: (fileId: string) => void;
+    onRenderFileUploads?: () => JSX.Element;
+    onSendMessage: (content: string) => Promise<void>;
+    strings?: Partial<RichTextSendBoxStrings>;
+    systemMessage?: string;
+}
+
 // @beta
 export interface RichTextSendBoxStrings extends SendBoxStrings {
     boldTooltip: string;
@@ -3845,6 +3869,7 @@ export interface RichTextSendBoxStrings extends SendBoxStrings {
     increaseIndentTooltip: string;
     italicTooltip: string;
     numberListTooltip: string;
+    richTextFormatButtonTooltip: string;
     underlineTooltip: string;
 }
 
@@ -4457,7 +4482,7 @@ export interface VideoBackgroundReplacementEffect extends BackgroundReplacementC
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
 // @public (undocumented)
-export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | /* @conditional-compile-remove(gallery-layouts) */ 'speaker' | /* @conditional-compile-remove(large-gallery) */ 'largeGallery' | /* @conditional-compile-remove(gallery-layouts) */ 'focusedContent';
+export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | 'speaker' | /* @conditional-compile-remove(large-gallery) */ 'largeGallery' | 'focusedContent';
 
 // @public
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
@@ -4529,7 +4554,7 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
 
 // @public
 export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
-    screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
+    screenShareParticipant?: VideoGalleryRemoteParticipant;
     localParticipant: VideoGalleryLocalParticipant;
     remoteParticipants: VideoGalleryRemoteParticipant[];
     dominantSpeakers?: string[];

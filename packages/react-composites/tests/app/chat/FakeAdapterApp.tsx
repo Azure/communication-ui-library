@@ -135,8 +135,6 @@ const handleFileUploads = (adapter: ChatAdapter, fileUploads: _MockFileUpload[])
         extension: file.extension,
         url: file.url,
         /* @conditional-compile-remove(file-sharing) */
-        attachmentType: 'file',
-        /* @conditional-compile-remove(file-sharing) */
         id: file.id
       });
     } else if (file.error) {

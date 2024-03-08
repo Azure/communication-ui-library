@@ -402,10 +402,10 @@ export interface CallWithChatAdapterManagement {
   /** @beta */
   updateFileUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  /** @beta */
+  /** @public */
   downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  /** @beta */
+  /** @public */
   removeResourceFromCache(resourceDetails: ResourceDetails): void;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
@@ -513,6 +513,11 @@ export interface CallWithChatAdapterManagement {
    * Stop spotlight
    */
   stopSpotlight(userIds?: string[]): Promise<void>;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Stop all spotlights
+   */
+  stopAllSpotlight(): Promise<void>;
 }
 
 /**

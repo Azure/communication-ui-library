@@ -2,21 +2,23 @@
 // Licensed under the MIT License.
 
 import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { RTEInputBoxComponent } from './RTEInputBoxComponent';
-import { Icon, Stack, useTheme } from '@fluentui/react';
+import { RichTextInputBoxComponent } from './RichTextInputBoxComponent';
+import { Icon, Stack } from '@fluentui/react';
 import { useLocale } from '../../localization';
 import { SendBoxStrings } from '../SendBox';
-import { borderAndBoxShadowStyle, sendButtonStyle, sendIconStyle } from '../styles/SendBox.styles';
+import { sendIconStyle } from '../styles/SendBox.styles';
 import { InputBoxButton } from '../InputBoxButton';
-import { RTESendBoxErrors, RTESendBoxErrorsProps } from './RTESendBoxErrors';
+import { RichTextSendBoxErrors, RichTextSendBoxErrorsProps } from './RichTextSendBoxErrors';
 /* @conditional-compile-remove(file-sharing) */
 import { ActiveFileUpload } from '../FileUploadCards';
 /* @conditional-compile-remove(file-sharing) */
 import { SendBoxErrorBarError } from '../SendBoxErrorBar';
-import { exceedsMaxAllowedLength, sanitizeText } from '../utils/SendBoxUtils';
+import { isMessageTooLong, sanitizeText } from '../utils/SendBoxUtils';
 /* @conditional-compile-remove(file-sharing) */
 import { hasCompletedFileUploads } from '../utils/SendBoxUtils';
 import { RichTextEditorComponentRef } from './RichTextEditor';
+import { useTheme } from '../../theming';
+import { richTextActionButtonsStyle, sendBoxRichTextEditorStyle } from '../styles/RichTextEditor.styles';
 
 /**
  * Strings of {@link RichTextSendBox} that can be overridden.
@@ -52,6 +54,10 @@ export interface RichTextSendBoxStrings extends SendBoxStrings {
    * Tooltip text for the decrease indent button.
    */
   decreaseIndentTooltip: string;
+  /**
+   * Tooltip text for the rich text format button button.
+   */
+  richTextFormatButtonTooltip: string;
 }
 
 /**
@@ -124,7 +130,9 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     return locale.strings.sendBox;
   }, [/* @conditional-compile-remove(rich-text-editor) */ locale.strings.richTextSendBox, locale.strings.sendBox]);
 
-  const strings = { ...localeStrings, ...props.strings };
+  const strings = useMemo(() => {
+    return { ...localeStrings, ...props.strings };
+  }, [localeStrings, props.strings]);
 
   const [contentValue, setContentValue] = useState('');
   const [contentValueOverflow, setContentValueOverflow] = useState(false);
@@ -142,11 +150,11 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       return;
     }
 
-    setContentValueOverflow(exceedsMaxAllowedLength(newValue.length));
+    setContentValueOverflow(isMessageTooLong(newValue.length));
     setContentValue(newValue);
   }, []);
 
-  const sendMessageOnClick = (): void => {
+  const sendMessageOnClick = useCallback((): void => {
     if (disabled || contentValueOverflow) {
       return;
     }
@@ -168,9 +176,16 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     ) {
       onSendMessage(message);
       setContentValue('');
+      editorComponentRef.current?.setEmptyContent();
     }
     editorComponentRef.current?.focus();
-  };
+  }, [
+    /* @conditional-compile-remove(file-sharing) */ activeFileUploads,
+    contentValue,
+    contentValueOverflow,
+    disabled,
+    onSendMessage
+  ]);
 
   const hasErrorMessage = useMemo(() => {
     return (
@@ -199,14 +214,16 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
           hasText: !!contentValue,
           /* @conditional-compile-remove(file-sharing) */
           hasFile: false,
-          hasErrorMessage: hasErrorMessage
+          hasErrorMessage: hasErrorMessage,
+          defaultTextColor: theme.palette.neutralSecondary,
+          disabled: disabled
         })}
       />
     ),
-    [contentValue, hasErrorMessage, theme]
+    [contentValue, disabled, hasErrorMessage, theme]
   );
 
-  const sendBoxErrorsProps: RTESendBoxErrorsProps = useMemo(() => {
+  const sendBoxErrorsProps: RichTextSendBoxErrorsProps = useMemo(() => {
     return {
       /* @conditional-compile-remove(file-sharing) */
       fileUploadsPendingError: fileUploadsPendingError,
@@ -224,38 +241,33 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     systemMessage
   ]);
 
+  const sendButton = useMemo(() => {
+    return (
+      <InputBoxButton
+        onRenderIcon={onRenderSendIcon}
+        onClick={(e) => {
+          sendMessageOnClick();
+          e.stopPropagation(); // Prevents the click from bubbling up and triggering a focus event on the chat.
+        }}
+        className={richTextActionButtonsStyle}
+        ariaLabel={localeStrings.sendButtonAriaLabel}
+        tooltipContent={localeStrings.sendButtonAriaLabel}
+      />
+    );
+  }, [localeStrings.sendButtonAriaLabel, onRenderSendIcon, sendMessageOnClick]);
+
   return (
     <Stack>
-      <RTESendBoxErrors {...sendBoxErrorsProps} />
-      <div
-        className={borderAndBoxShadowStyle({
-          theme: theme,
-          // should always be false as we don't want to show the border when there is an error
-          hasErrorMessage: false,
-          disabled: !!disabled
-        })}
-      >
-        <RTEInputBoxComponent
-          placeholderText={strings.placeholderText}
-          content={contentValue}
-          onChange={setContent}
-          editorComponentRef={editorComponentRef}
-          strings={strings}
-        />
-        {/* File Upload */}
-      </div>
-      <Stack.Item align="end">
-        <InputBoxButton
-          onRenderIcon={onRenderSendIcon}
-          onClick={(e) => {
-            sendMessageOnClick();
-            e.stopPropagation(); // Prevents the click from bubbling up and triggering a focus event on the chat.
-          }}
-          className={sendButtonStyle}
-          ariaLabel={localeStrings.sendButtonAriaLabel}
-          tooltipContent={localeStrings.sendButtonAriaLabel}
-        />
-      </Stack.Item>
+      <RichTextSendBoxErrors {...sendBoxErrorsProps} />
+      <RichTextInputBoxComponent
+        placeholderText={strings.placeholderText}
+        onChange={setContent}
+        editorComponentRef={editorComponentRef}
+        strings={strings}
+        disabled={disabled}
+        actionComponents={sendButton}
+        richTextEditorStyleProps={sendBoxRichTextEditorStyle}
+      />
     </Stack>
   );
 };

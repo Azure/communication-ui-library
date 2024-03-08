@@ -7,7 +7,7 @@ import { SendBoxErrorBar, SendBoxErrorBarError } from '../SendBoxErrorBar';
 /**
  * @private
  */
-export interface RTESendBoxErrorsProps {
+export interface RichTextSendBoxErrorsProps {
   /* @conditional-compile-remove(file-sharing) */
   fileUploadsPendingError?: SendBoxErrorBarError;
   /* @conditional-compile-remove(file-sharing) */
@@ -19,7 +19,7 @@ export interface RTESendBoxErrorsProps {
 /**
  * @private
  */
-export const RTESendBoxErrors = (props: RTESendBoxErrorsProps): JSX.Element => {
+export const RichTextSendBoxErrors = (props: RichTextSendBoxErrorsProps): JSX.Element => {
   const {
     /* @conditional-compile-remove(file-sharing) */
     fileUploadError,
@@ -41,6 +41,15 @@ export const RTESendBoxErrors = (props: RTESendBoxErrorsProps): JSX.Element => {
       setSendBoxError({ message: textTooLongMessage, timestamp: Date.now() });
     }
   }, [textTooLongMessage]);
+
+  useEffect(() => {
+    if (
+      (textTooLongMessage === undefined || isMessageEmpty(textTooLongMessage)) &&
+      (systemMessage === undefined || isMessageEmpty(systemMessage))
+    ) {
+      setSendBoxError(undefined);
+    }
+  }, [systemMessage, textTooLongMessage]);
 
   useEffect(() => {
     setSendBoxError((prev) => {

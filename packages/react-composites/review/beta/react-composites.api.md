@@ -36,7 +36,6 @@ import { DeviceManagerState } from '@internal/calling-stateful-client';
 import { DtmfTone } from '@azure/communication-calling';
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { FileDownloadHandler } from '@internal/react-components';
-import type { FileMetadata } from '@internal/react-components';
 import { GroupCallLocator } from '@azure/communication-calling';
 import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { MessageProps } from '@internal/react-components';
@@ -230,6 +229,7 @@ export interface CallAdapterCallOperations {
     startScreenShare(): Promise<void>;
     startSpotlight(userIds?: string[]): Promise<void>;
     startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
+    stopAllSpotlight(): Promise<void>;
     stopCamera(): Promise<void>;
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
@@ -418,6 +418,8 @@ export type CallCompositeIcons = {
     LargeGalleryLayout?: JSX.Element;
     DefaultCustomButton?: JSX.Element;
     DtmfDialpadButton?: JSX.Element;
+    PeoplePaneMoreButton?: JSX.Element;
+    StopAllSpotlightMenuButton?: JSX.Element;
 };
 
 // @public
@@ -585,6 +587,7 @@ export interface CallCompositeStrings {
     peopleButtonTooltipClose: string;
     peopleButtonTooltipOpen: string;
     peoplePaneAddPeopleButtonLabel: string;
+    peoplePaneMoreButtonAriaLabel: string;
     peoplePaneSubTitle: string;
     peoplePaneTitle: string;
     permissionToReachTargetParticipantNotAllowedMoreDetails?: string;
@@ -624,6 +627,7 @@ export interface CallCompositeStrings {
     startCaptionsButtonTooltipOffContent?: string;
     startCaptionsButtonTooltipOnContent?: string;
     startSpotlightParticipantListMenuLabel: string;
+    stopAllSpotlightMenuLabel: string;
     stopSpotlightOnSelfParticipantListMenuLabel: string;
     stopSpotlightParticipantListMenuLabel: string;
     surveyConfirmButtonLabel: string;
@@ -705,7 +709,7 @@ export interface CallWithChatAdapterManagement {
     disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
     disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
-    // @beta (undocumented)
+    // (undocumented)
     downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
     fetchInitialData(): Promise<void>;
     // @beta
@@ -730,7 +734,7 @@ export interface CallWithChatAdapterManagement {
     removeParticipant(userId: string): Promise<void>;
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
-    // @beta (undocumented)
+    // (undocumented)
     removeResourceFromCache(resourceDetails: ResourceDetails): void;
     // @beta
     resumeCall: () => Promise<void>;
@@ -750,6 +754,7 @@ export interface CallWithChatAdapterManagement {
     startScreenShare(): Promise<void>;
     startSpotlight(userIds?: string[]): Promise<void>;
     startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
+    stopAllSpotlight(): Promise<void>;
     stopCamera(): Promise<void>;
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
@@ -983,6 +988,8 @@ export type CallWithChatCompositeIcons = {
     SendBoxAttachFile?: JSX.Element;
     ParticipantItemOptions?: JSX.Element;
     ParticipantItemOptionsHovered?: JSX.Element;
+    PeoplePaneMoreButton?: JSX.Element;
+    StopAllSpotlightMenuButton?: JSX.Element;
 };
 
 // @public
@@ -1193,6 +1200,7 @@ export type ChatCompositeOptions = {
     topic?: boolean;
     autoFocus?: 'sendBoxTextField';
     fileSharing?: FileSharingOptions;
+    richTextEditor?: boolean | RichTextEditorOptions;
 };
 
 // @public
@@ -1523,6 +1531,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     LargeGalleryLayout?: JSX.Element | undefined;
     DefaultCustomButton?: JSX.Element | undefined;
     DtmfDialpadButton?: JSX.Element | undefined;
+    PeoplePaneMoreButton?: JSX.Element | undefined;
+    StopAllSpotlightMenuButton?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;
@@ -1579,14 +1589,16 @@ export const DEFAULT_COMPOSITE_ICONS: {
     StartSpotlightContextualMenuItem: React_2.JSX.Element;
     StopSpotlightContextualMenuItem: React_2.JSX.Element;
     VideoSpotlighted: React_2.JSX.Element;
-    RTEBoldButtonIcon: React_2.JSX.Element;
-    RTEItalicButtonIcon: React_2.JSX.Element;
-    RTEUnderlineButtonIcon: React_2.JSX.Element;
-    RTEBulletListButtonIcon: React_2.JSX.Element;
-    RTEtNumberListButtonIcon: React_2.JSX.Element;
-    RTEIndentDecreaseButtonIcon: React_2.JSX.Element;
-    RTEIndentIncreaseButtonIcon: React_2.JSX.Element;
-    RTEDividerIcon: React_2.JSX.Element;
+    RichTextBoldButtonIcon: React_2.JSX.Element;
+    RichTextItalicButtonIcon: React_2.JSX.Element;
+    RichTextUnderlineButtonIcon: React_2.JSX.Element;
+    RichTextBulletListButtonIcon: React_2.JSX.Element;
+    RichTextNumberListButtonIcon: React_2.JSX.Element;
+    RichTextIndentDecreaseButtonIcon: React_2.JSX.Element;
+    RichTextIndentIncreaseButtonIcon: React_2.JSX.Element;
+    RichTextDividerIcon: React_2.JSX.Element;
+    RichTextEditorButtonIcon: React_2.JSX.Element;
+    RichTextEditorButtonIconFilled: React_2.JSX.Element;
 };
 
 // @beta
@@ -1856,6 +1868,8 @@ export class _MockCallAdapter implements CallAdapter {
     // (undocumented)
     state: CallAdapterState;
     // (undocumented)
+    stopAllSpotlight(): Promise<void>;
+    // (undocumented)
     stopCamera(): Promise<void>;
     // (undocumented)
     stopCaptions(): Promise<void>;
@@ -1876,7 +1890,7 @@ export class _MockCallAdapter implements CallAdapter {
 }
 
 // @internal
-export type _MockFileUpload = FileMetadata & {
+export type _MockFileUpload = AttachmentMetadata & {
     uploadComplete?: boolean;
     error?: string;
     progress?: number;
@@ -1935,6 +1949,10 @@ export type ResourceDetails = {
     messageId: string;
     resourceUrl: string;
 };
+
+// @beta
+export interface RichTextEditorOptions {
+}
 
 // @public
 export type SoundEffect = {

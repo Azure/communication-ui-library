@@ -43,7 +43,8 @@
     "bulletListTooltip": "Bulleted list",
     "numberListTooltip": "Numbered list",
     "increaseIndentTooltip": "Increase indent",
-    "decreaseIndentTooltip": "Decrease indent"
+    "decreaseIndentTooltip": "Decrease indent",
+    "richTextFormatButtonTooltip": "Format"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggestions"
@@ -142,6 +143,7 @@
   },
   "reactionButton": {
     "label": "React",
+    "ariaLabel": "React Button, Send a reaction",
     "tooltipDisabledContent": "Reaction action is disabled",
     "tooltipContent": "Send a reaction",
     "likeReactionTooltipContent": "Like",

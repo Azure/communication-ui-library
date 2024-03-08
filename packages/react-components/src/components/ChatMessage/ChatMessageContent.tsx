@@ -48,7 +48,7 @@ type MessageContentWithLiveAriaProps = {
 /**
  * InlineImage's state, as reflected in the UI.
  *
- * @beta
+ * @public
  */
 export interface InlineImage {
   /** ID of the message that the inline image is belonged to */
@@ -61,7 +61,7 @@ export interface InlineImage {
 /**
  * Options to display inline image in the inline image scenario.
  *
- * @beta
+ * @public
  */
 export interface InlineImageOptions {
   /**
@@ -241,15 +241,7 @@ const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
 
         // Transform inline images
         /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-        if (
-          domNode.name &&
-          domNode.name === 'img' &&
-          domNode.attribs &&
-          domNode.attribs.id &&
-          props.message.inlineImages?.find((metadata) => {
-            return metadata.id === domNode.attribs.id;
-          })
-        ) {
+        if (domNode.name && domNode.name === 'img' && domNode.attribs && domNode.attribs.id) {
           domNode.attribs['aria-label'] = domNode.attribs.name;
           const imgProps = attributesToProps(domNode.attribs);
           /* @conditional-compile-remove(image-overlay) */
