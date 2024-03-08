@@ -339,7 +339,6 @@ describe('ResourceDownloadQueue api functions', () => {
         }, 100);
       });
     });
-    //  Promise.resolve({ blob: async () => Promise.resolve({ id: 0 }) })) as jest.Mock;
 
     Object.defineProperty(AbortController.prototype, 'abort', {
       writable: true,
