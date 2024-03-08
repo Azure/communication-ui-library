@@ -9,16 +9,18 @@ import { SendBoxStrings } from '../SendBox';
 import { sendIconStyle } from '../styles/SendBox.styles';
 import { InputBoxButton } from '../InputBoxButton';
 import { RichTextSendBoxErrors, RichTextSendBoxErrorsProps } from './RichTextSendBoxErrors';
-/* @conditional-compile-remove(file-sharing) */
-import { ActiveFileUpload } from '../FileUploadCards';
-/* @conditional-compile-remove(file-sharing) */
-import { SendBoxErrorBarError } from '../SendBoxErrorBar';
 import { isMessageTooLong, sanitizeText } from '../utils/SendBoxUtils';
-/* @conditional-compile-remove(file-sharing) */
-import { hasCompletedFileUploads } from '../utils/SendBoxUtils';
 import { RichTextEditorComponentRef } from './RichTextEditor';
 import { useTheme } from '../../theming';
 import { richTextActionButtonsStyle, sendBoxRichTextEditorStyle } from '../styles/RichTextEditor.styles';
+/* @conditional-compile-remove(file-sharing) */
+import { ActiveFileUpload, _FileUploadCards } from '../FileUploadCards';
+/* @conditional-compile-remove(file-sharing) */
+import { hasCompletedFileUploads } from '../utils/SendBoxUtils';
+/* @conditional-compile-remove(file-sharing) */
+import { SendBoxErrorBarError } from '../SendBoxErrorBar';
+/* @conditional-compile-remove(file-sharing) */
+import { fileUploadCardsStyles } from '../styles/SendBox.styles';
 
 /**
  * Strings of {@link RichTextSendBox} that can be overridden.
@@ -81,14 +83,6 @@ export interface RichTextSendBoxProps {
   systemMessage?: string;
   /* @conditional-compile-remove(file-sharing) */
   /**
-   * Optional callback to render uploaded files in the SendBox. The sendBox will expand
-   * vertically to accommodate the uploaded files. File uploads will
-   * be rendered below the text area in sendBox.
-   * @beta
-   */
-  onRenderFileUploads?: () => JSX.Element;
-  /* @conditional-compile-remove(file-sharing) */
-  /**
    * Optional array of active file uploads where each object has attributes
    * of a file upload like name, progress, errorMessage etc.
    * @beta
@@ -118,7 +112,9 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     systemMessage,
     onSendMessage,
     /* @conditional-compile-remove(file-sharing) */
-    activeFileUploads
+    activeFileUploads,
+    /* @conditional-compile-remove(file-sharing) */
+    onCancelFileUpload
   } = props;
 
   const theme = useTheme();
@@ -241,6 +237,23 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     systemMessage
   ]);
 
+  /* @conditional-compile-remove(file-sharing) */
+  const onRenderFileUploads = useCallback(() => {
+    return (
+      <Stack className={fileUploadCardsStyles}>
+        <_FileUploadCards
+          activeFileUploads={activeFileUploads}
+          onCancelFileUpload={onCancelFileUpload}
+          strings={{
+            removeFile: strings.removeFile,
+            uploading: strings.uploading,
+            uploadCompleted: strings.uploadCompleted
+          }}
+        />
+      </Stack>
+    );
+  }, [activeFileUploads, onCancelFileUpload, strings.removeFile, strings.uploadCompleted, strings.uploading]);
+
   const sendButton = useMemo(() => {
     return (
       <InputBoxButton
@@ -268,6 +281,8 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         disabled={disabled}
         actionComponents={sendButton}
         richTextEditorStyleProps={sendBoxRichTextEditorStyle}
+        /* @conditional-compile-remove(file-sharing) */
+        onRenderFileUploads={onRenderFileUploads}
       />
     </Stack>
   );

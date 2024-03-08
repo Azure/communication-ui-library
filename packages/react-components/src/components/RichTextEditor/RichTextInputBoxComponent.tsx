@@ -5,18 +5,21 @@ import React, { ReactNode, useCallback, useMemo, useState } from 'react';
 import { BaseCustomStyles } from '../../types';
 import { RichTextEditor, RichTextEditorComponentRef, RichTextEditorStyleProps } from './RichTextEditor';
 import { RichTextSendBoxStrings } from './RichTextSendBox';
-import { richTextBorderBoxStyle } from '../styles/RichTextInputBoxComponent.styles';
 import { useTheme } from '../../theming';
 import { Icon, Stack } from '@fluentui/react';
 import { InputBoxButton } from '../InputBoxButton';
+import { isEnterKeyEventFromCompositionSession } from '../utils';
 import {
   richTextActionButtonsDividerStyle,
   richTextActionButtonsStackStyle,
   richTextActionButtonsStyle,
   richTextFormatButtonIconStyle
 } from '../styles/RichTextEditor.styles';
-import { inputBoxContentStackStyle, inputBoxRichTextStackStyle } from '../styles/RichTextInputBoxComponent.styles';
-import { isEnterKeyEventFromCompositionSession } from '../utils';
+import {
+  inputBoxContentStackStyle,
+  inputBoxRichTextStackStyle,
+  richTextBorderBoxStyle
+} from '../styles/RichTextInputBoxComponent.styles';
 
 /**
  * @private
@@ -35,6 +38,8 @@ export interface RichTextInputBoxComponentProps {
   strings: Partial<RichTextSendBoxStrings>;
   disabled: boolean;
   actionComponents: ReactNode;
+  /* @conditional-compile-remove(file-sharing) */
+  onRenderFileUploads?: () => JSX.Element;
   // props for min and max height for the rich text editor
   // otherwise the editor will grow to fit the content
   richTextEditorStyleProps: (isExpanded: boolean) => RichTextEditorStyleProps;
@@ -54,6 +59,8 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
     disabled,
     strings,
     actionComponents,
+    /* @conditional-compile-remove(file-sharing) */
+    onRenderFileUploads,
     richTextEditorStyleProps,
     supportHorizontalLayout = true
   } = props;
@@ -142,7 +149,7 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
             showRichTextEditorFormatting={showRichTextEditorFormatting}
             styles={richTextEditorStyle}
           />
-          {/* File Upload */}
+          {/* @conditional-compile-remove(file-sharing) */ onRenderFileUploads && onRenderFileUploads()}
         </Stack>
         {actionButtons}
       </Stack>
