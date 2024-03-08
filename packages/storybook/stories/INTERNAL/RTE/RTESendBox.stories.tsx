@@ -10,7 +10,7 @@ import { COMPONENT_FOLDER_PREFIX } from '../../constants';
 import { hiddenControl } from '../../controlsUtils';
 import { RTEFileUploadsExample } from './snippets/RTEFileUploads.snippet';
 
-const FileUploadsExampleText = require('!!raw-loader!./snippets/FileUploads.snippet.tsx').default;
+const RTEFileUploadsExampleText = require('!!raw-loader!./snippets/RTEFileUploads.snippet.tsx').default;
 
 const getDocs: () => JSX.Element = () => {
   return (
@@ -28,7 +28,7 @@ const getDocs: () => JSX.Element = () => {
         developers to implement a file sharing feature using the pure UI component with minimal effort. Developers can
         write their own file upload logic and utilize the UI provided by RichTextSendBox.
       </Description>
-      <Canvas mdxSource={FileUploadsExampleText}>
+      <Canvas mdxSource={RTEFileUploadsExampleText}>
         <RTEFileUploadsExample />
       </Canvas>
 
