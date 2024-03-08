@@ -11,14 +11,14 @@ import { _FileCardGroup } from './FileCardGroup';
 import { iconButtonClassName } from './styles/IconButton.styles';
 import { _formatString } from '@internal/acs-ui-common';
 
-/* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * Represents the type of attachment
- * @beta
+ * @public
  */
 export type ChatAttachmentType =
   | 'unknown'
-  | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage'
+  | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'image'
   | /* @conditional-compile-remove(file-sharing) */ 'file';
 
 /**
