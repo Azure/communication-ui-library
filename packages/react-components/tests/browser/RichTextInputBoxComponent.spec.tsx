@@ -51,9 +51,7 @@ betaTest.describe('RichTextInputBoxComponent tests', () => {
   });
 
   betaTest('Text should be formatted correctly when only all text styles selected', async ({ mount }) => {
-    const component = await mount(
-      <TestRichTextInputBoxComponent disabled={false} minHeight="1rem" maxHeight="10rem" />
-    );
+    const component = await mount(<TestRichTextInputBoxComponent disabled={false} minHeight="1rem" maxHeight="2rem" />);
     await component.evaluate(() => document.fonts.ready);
     await component.getByTestId(formatButtonId).click();
     const editor = component.getByTestId(editorId);
@@ -79,7 +77,9 @@ betaTest.describe('RichTextInputBoxComponent tests', () => {
   });
 
   betaTest('Text should be formatted for numbered list', async ({ mount }) => {
-    const component = await mount(<TestRichTextInputBoxComponent disabled={false} minHeight="1rem" maxHeight="2rem" />);
+    const component = await mount(
+      <TestRichTextInputBoxComponent disabled={false} minHeight="1rem" maxHeight="10rem" />
+    );
     await component.evaluate(() => document.fonts.ready);
 
     addList('Numbered list', component);
