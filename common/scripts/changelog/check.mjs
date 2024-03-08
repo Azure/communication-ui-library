@@ -17,13 +17,18 @@ import { parseNewChangeFiles } from "./utils.mjs";
 
 async function main() {
   const [base, head] = parseArgs(process.argv);
-  const gitLogStdout = await exec_output(`git log --name-status ${base}..${head} -- ${path.join(REPO_ROOT, 'change/')}`);
-  const newChangeFiles = parseNewChangeFiles(gitLogStdout);
-  if (!newChangeFiles?.length) {
+  const gitLogStdoutStableChangeFiles = await exec_output(`git log --name-status ${base}..${head} -- ${path.join(REPO_ROOT, 'change/')}`);
+  const gitLogStdoutBetaChangeFiles = await exec_output(`git log --name-status ${base}..${head} -- ${path.join(REPO_ROOT, 'change-beta/')}`);
+
+  const newStableChangeFiles = parseNewChangeFiles(gitLogStdoutStableChangeFiles);
+  const newBetaChangeFiles = parseNewChangeFiles(gitLogStdoutBetaChangeFiles);
+  const newChangeFilesCount = (newStableChangeFiles?.length ?? 0) + (newBetaChangeFiles?.length ?? 0);
+
+  if (newChangeFilesCount === 0) {
     console.error('No changefile detected! Please run `rush changelog` to document your change.');
     process.exit(1);
   }
-  console.log(`Found ${newChangeFiles.length} changefiles. All is good!`)
+  console.log(`Found ${newChangeFilesCount} changefiles. All is good!`)
 }
 
 function parseArgs(args) {
