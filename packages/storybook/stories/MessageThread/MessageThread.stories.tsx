@@ -324,7 +324,6 @@ const Docs: () => JSX.Element = () => {
 
       <div ref={refDisplayInlineImages}>
         <Heading>Tapping Inline Images on Messages</Heading>
-        <SingleLineBetaBanner />
         <Canvas mdxSource={MessageThreadWithInlineImageExampleText}>
           <MessageThreadWithInlineImageExample />
         </Canvas>
