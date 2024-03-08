@@ -182,9 +182,14 @@ const generateImageAttachmentImgHtml = (message: ChatMessageWithStatus, attachme
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 const getResourceSourceUrl = (result?: ResourceFetchResult): string => {
-  let src = 'blob://';
-  if (result && result.error === undefined) {
-    src = result.sourceUrl;
+  let src = '';
+  if (result) {
+    if (result.error) {
+      // In case of an error we set src to some invalid value to show broken image
+      src = 'blob://';
+    } else {
+      src = result.sourceUrl;
+    }
   }
   return src;
 };
