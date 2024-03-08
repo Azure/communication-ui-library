@@ -124,12 +124,13 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
           }
         }}
         strings={ribbonButtonsStrings(strings)}
+        data-testid={'rich-text-editor-ribbon'}
       />
     );
   }, [strings, ribbonPlugin, theme]);
 
   return (
-    <div>
+    <div data-testid={'rich-text-editor-wrapper'}>
       {showRichTextEditorFormatting && ribbon}
       <div className={richTextEditorWrapperStyle(theme, !showRichTextEditorFormatting, showRichTextEditorFormatting)}>
         <Rooster
@@ -142,6 +143,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
           imageSelectionBorderColor={'blue'}
           // doNotAdjustEditorColor is used to fix the default background color for Rooster component
           doNotAdjustEditorColor={true}
+          data-testid={'rooster-rich-text-editor'}
         />
       </div>
     </div>

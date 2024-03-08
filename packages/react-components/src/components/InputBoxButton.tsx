@@ -19,6 +19,7 @@ export type InputBoxButtonProps = {
   id?: string;
   ariaLabel?: string;
   tooltipContent?: string;
+  testId?: string;
 };
 
 /**
@@ -53,6 +54,7 @@ export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
         }}
         // VoiceOver fix: Avoid icon from stealing focus when IconButton is double-tapped to send message by wrapping with Stack with pointerEvents style to none
         onRenderIcon={() => <Stack className={iconWrapperStyle}>{onRenderIcon(isHover)}</Stack>}
+        data-testid={props.testId}
       />
     </TooltipHost>
   );
