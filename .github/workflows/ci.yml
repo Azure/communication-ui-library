@@ -547,6 +547,10 @@ jobs:
       - name: Run dependency update for stable
         if: ${{ matrix.flavor == 'stable' }}
         run: rush update:stable
+      # Build the packages
+      # This is needed because of the specified main/module variables in the package.json
+      - name: Build Packages
+        run: rush build -t @azure/communication-react
       - name: Components Visual Regression Tests
         id: visualregressiontests
         run: |
