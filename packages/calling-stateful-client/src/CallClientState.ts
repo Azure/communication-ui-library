@@ -67,13 +67,13 @@ export interface CaptionsInfo {
    */
   spokenLanguage: string;
   /**
-   * Timestamp of when the captioned words were initially spoken.
-   */
-  timestamp: Date;
-  /**
    * The caption text.
    */
   captionText: string;
+  /**
+   * Timestamp of when the captioned words were initially spoken.
+   */
+  timestamp: Date;
   /**
    * The language that the captions are presented in. Corresponds to the captionLanguage specified in startCaptions / setCaptionLanguage.
    */
