@@ -204,6 +204,7 @@ export function convertFromSDKToCaptionInfoState(
   caption: TeamsCaptionsInfo | /* @conditional-compile-remove(acs-close-captions) */ AcsCaptionsInfo
 ): CaptionsInfo {
   return {
+    captionText: 'captionText' in caption ? caption.captionText : caption.spokenText,
     ...caption
   };
 }

@@ -93,13 +93,13 @@ export class CaptionsSubscriber {
   private subscribe = (): void => {
     this._captions.on('CaptionsActiveChanged', this.isCaptionsActiveChanged);
     this._captions.on('SpokenLanguageChanged', this.isSpokenLanguageChanged);
-    this._captions.on('CaptionsReceived', this.onCaptionsReceived as CaptionsHandler);
+    this._captions.on('CaptionsReceived', this.onCaptionsReceived);
   };
 
   public unsubscribe = (): void => {
     this._captions.off('CaptionsActiveChanged', this.isCaptionsActiveChanged);
     this._captions.off('SpokenLanguageChanged', this.isSpokenLanguageChanged);
-    this._captions.off('CaptionsReceived', this.onCaptionsReceived as CaptionsHandler);
+    this._captions.off('CaptionsReceived', this.onCaptionsReceived);
   };
 
   private onCaptionsReceived: CaptionsHandler = (caption: CaptionsInfo): void => {

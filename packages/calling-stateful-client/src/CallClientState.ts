@@ -73,7 +73,7 @@ export interface CaptionsInfo {
   /**
    * The caption text.
    */
-  captionText?: string;
+  captionText: string;
   /**
    * The language that the captions are presented in. Corresponds to the captionLanguage specified in startCaptions / setCaptionLanguage.
    */
