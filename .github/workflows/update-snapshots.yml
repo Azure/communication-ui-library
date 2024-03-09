@@ -587,6 +587,10 @@ jobs:
       - name: Switch flavor for build
         if: ${{ matrix.flavor != 'beta' }}
         run: rush switch-flavor:${{ matrix.flavor }}
+      # Build the packages
+      # This is needed because of the specified main/module variables in the package.json files
+      - name: Build Packages
+        run: rush build -t @azure/communication-react
       - name: Update components snapshots
         id: update-components-snapshots
         run: rushx test:components:update
