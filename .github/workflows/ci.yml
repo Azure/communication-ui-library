@@ -548,9 +548,10 @@ jobs:
         if: ${{ matrix.flavor == 'stable' }}
         run: rush update:stable
       # Build the packages
-      # This is needed because of the specified main/module variables in the package.json files
-      - name: Build Packages
-        run: rush build -t @azure/communication-react
+      # This is needed because react-components depends on acs-ui-common and
+      # acs-ui-common specifies main/module variables in package.json
+      - name: Build Common Package
+        run: rush build -t acs-ui-common
       - name: Components Visual Regression Tests
         id: visualregressiontests
         run: |
