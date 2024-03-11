@@ -50,12 +50,12 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
     ): JSX.Element => {
       return (
         <span
-          onClick={() => onInlineImageClicked(inlineImage.imgAttrs.id || '', inlineImage.messageId)}
+          onClick={() => onInlineImageClicked(inlineImage.imageAttributes.id || '', inlineImage.messageId)}
           tabIndex={0}
           role="button"
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
-              onInlineImageClicked(inlineImage.imgAttrs.id || '', inlineImage.messageId);
+              onInlineImageClicked(inlineImage.imageAttributes.id || '', inlineImage.messageId);
             }
           }}
         >
