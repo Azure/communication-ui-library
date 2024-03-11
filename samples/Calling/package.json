@@ -4,6 +4,9 @@
   "private": true,
   "description": "This is a sample application to show how the UI Library can be used to build a calling experience. The client-side application is a React based user interface which uses React Hooks for handling complex state while leveraging Microsoft Fluent UI for how things look.",
   "scripts": {
+    "rsbuild:build" : "rsbuild build",
+    "rsbuild:start" : "rsbuild dev",
+    "testwebpack": "webpack",
     "build": "rushx clean && concurrently --kill-others-on-fail \"rushx _typecheck\" \"rushx webpack\"",
     "clean": "rimraf dist",
     "package": "copyfiles -E -u 3 \"../Server/dist/**/*\" dist",
@@ -60,6 +63,8 @@
     "@babel/core": "^7.23.9",
     "@babel/eslint-parser": "^7.22.15",
     "@babel/preset-env": "7.23.9",
+    "@rsbuild/core": "0.4.12",
+    "@rsbuild/plugin-react": "0.4.12",
     "@types/jest": "^29.5.11",
     "@types/node": "^20.11.20",
     "@types/react-dom": "18.2.19",
