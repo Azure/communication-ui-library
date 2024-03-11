@@ -196,7 +196,7 @@ export const fetchImageSource = async (
   }
 
   const accessToken = await authentication.credential.getToken();
-  if (!src.startsWith('azure.communication.com')) {
+  if (!src.startsWith(authentication.endpoint)) {
     throw new ChatError('ChatThreadClient.getMessage', new Error('Invalid endpoint'));
   }
 
