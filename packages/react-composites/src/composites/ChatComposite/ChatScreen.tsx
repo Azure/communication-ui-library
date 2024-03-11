@@ -309,15 +309,24 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       inlineImage: InlineImage,
       defaultOnRender: (inlineImage: InlineImage) => JSX.Element
     ): JSX.Element => {
+      const message = adapter.getState().thread.chatMessages[inlineImage.messageId];
+      const attachments = message?.content?.attachments?.find(
+        (attachment) => attachment.id === inlineImage.imageAttributes.id
+      );
+
+      if (attachments === undefined) {
+        return defaultOnRender(inlineImage);
+      }
+
       return (
         <span
-          key={inlineImage.imgAttrs.id}
-          onClick={() => onInlineImageClicked(inlineImage.imgAttrs.id || '', inlineImage.messageId)}
+          key={inlineImage.imageAttributes.id}
+          onClick={() => onInlineImageClicked(inlineImage.imageAttributes.id || '', inlineImage.messageId)}
           tabIndex={0}
           role="button"
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
-              onInlineImageClicked(inlineImage.imgAttrs.id || '', inlineImage.messageId);
+              onInlineImageClicked(inlineImage.imageAttributes.id || '', inlineImage.messageId);
             }
           }}
           style={{ cursor: 'pointer' }}
