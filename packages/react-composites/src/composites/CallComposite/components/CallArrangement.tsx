@@ -109,9 +109,7 @@ export interface CallArrangementProps {
   /* @conditional-compile-remove(capabilities) */
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
   onCloseChatPane?: () => void;
-  /* @conditional-compile-remove(dtmf-dialer) */
   onSetDialpadPage?: () => void;
-  /* @conditional-compile-remove(dtmf-dialer) */
   dtmfDialerPresent?: boolean;
   /* @conditional-compile-remove(spotlight) */
   setIsPromptOpen?: (isOpen: boolean) => void;
@@ -441,9 +439,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   onUserSetOverflowGalleryPositionChange={props.onUserSetOverflowGalleryPositionChange}
                   onUserSetGalleryLayout={props.onUserSetGalleryLayoutChange}
                   userSetGalleryLayout={props.userSetGalleryLayout}
-                  /* @conditional-compile-remove(dtmf-dialer) */
                   onSetDialpadPage={props.onSetDialpadPage}
-                  /* @conditional-compile-remove(dtmf-dialer) */
                   dtmfDialerPresent={props.dtmfDialerPresent}
                   peopleButtonRef={peopleButtonRef}
                   cameraButtonRef={cameraButtonRef}
@@ -465,9 +461,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 isCaptionsSupported={isTeamsCall && hasJoinedCall}
                 onUserSetGalleryLayout={props.onUserSetGalleryLayoutChange}
                 userSetGalleryLayout={props.userSetGalleryLayout}
-                /* @conditional-compile-remove(dtmf-dialer) */
                 onSetDialpadPage={props.onSetDialpadPage}
-                /* @conditional-compile-remove(dtmf-dialer) */
                 dtmfDialerPresent={props.dtmfDialerPresent}
               />
             </Stack>
