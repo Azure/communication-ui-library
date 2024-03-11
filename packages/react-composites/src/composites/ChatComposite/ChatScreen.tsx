@@ -302,16 +302,24 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       defaultOnRender: (inlineImage: InlineImage) => JSX.Element
     ): JSX.Element => {
       const message = adapter.getState().thread.chatMessages[inlineImage.messageId];
-      const attachments = message?.content?.attachments?.find(
+      const attachment = message?.content?.attachments?.find(
         (attachment) => attachment.id === inlineImage.imageAttributes.id
       );
 
-      if (attachments === undefined) {
+      if (attachment === undefined) {
         return defaultOnRender(inlineImage);
       }
 
-      const pointerEvents =
-        inlineImage.imageAttributes.src === '' || inlineImage.imageAttributes.src === 'blob://' ? 'none' : 'unset';
+      let pointerEvents: 'none' | 'auto' = inlineImage.imageAttributes.src === '' ? 'none' : 'auto';
+      const resourceCache = message.resourceCache;
+      if (
+        resourceCache &&
+        attachment.previewUrl &&
+        resourceCache[attachment.previewUrl] &&
+        resourceCache[attachment.previewUrl].error
+      ) {
+        pointerEvents = 'none';
+      }
 
       return (
         <span
