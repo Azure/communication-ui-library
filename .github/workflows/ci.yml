@@ -111,7 +111,7 @@ jobs:
         run: rush install --max-install-attempts 3
       # Build
       - name: Build Samples
-        run: cd samples/Calling && npx testwebpack
+        run: cd samples/Calling && npm run testwebpack
 
   build_call_samples_2:
     name: 'Build Samples (rsbuild)'
