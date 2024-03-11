@@ -3,8 +3,6 @@
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatContext } from './ChatContext';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { ChatError } from './ChatClientState';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatMessageWithStatus, ResourceFetchResult } from './types/ChatMessageWithStatus';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import type { CommunicationTokenCredential } from '@azure/communication-common';
@@ -166,15 +164,11 @@ export const fetchImageSource = async (
   ): Promise<Response> {
     const headers = new Headers();
     headers.append('Authorization', `Bearer ${token}`);
-    try {
-      return await fetchWithTimeout(url, {
-        timeout: options.timeout,
-        headers,
-        abortController: options.abortController
-      });
-    } catch (err) {
-      throw new ChatError('ChatThreadClient.getMessage', err as Error);
-    }
+    return await fetchWithTimeout(url, {
+      timeout: options.timeout,
+      headers,
+      abortController: options.abortController
+    });
   }
   async function fetchWithTimeout(
     resource: string | URL | Request,
@@ -194,13 +188,14 @@ export const fetchImageSource = async (
     clearTimeout(id);
     return response;
   }
-
-  const accessToken = await authentication.credential.getToken();
-  if (!src.startsWith(authentication.endpoint)) {
-    throw new ChatError('ChatThreadClient.getMessage', new Error('Invalid endpoint'));
+  const fetchUrl = new URL(src);
+  const endpoint = new URL(authentication.endpoint);
+  let token = '';
+  if (fetchUrl.hostname === endpoint.hostname && fetchUrl.protocol === 'https:') {
+    token = (await authentication.credential.getToken()).token;
   }
 
-  const response = await fetchWithAuthentication(src, accessToken.token, options);
+  const response = await fetchWithAuthentication(src, token, options);
   const blob = await response.blob();
 
   return URL.createObjectURL(blob);

@@ -52,7 +52,7 @@ describe('ResourceDownloadQueue api functions', () => {
       { id: '1', attachmentType: 'image' as ChatAttachmentType, name: 'image1', url: 'url1', previewUrl: 'previewUrl1' }
     ];
     mockMessage.content = { message: 'new message', attachments: firstAttachments };
-    const queue = new ResourceDownloadQueue(context, tokenCredential);
+    const queue = new ResourceDownloadQueue(context, { credential: tokenCredential, endpoint: 'endpoint' });
     queue.addMessage(mockMessage);
     expect(queue.containsMessageWithSameAttachments(mockMessage)).toBe(true);
   });
@@ -71,7 +71,7 @@ describe('ResourceDownloadQueue api functions', () => {
     const editedMessage = { ...originalMessage };
     editedMessage.content = { message: 'edited message', attachments: secondAttachments };
 
-    const queue = new ResourceDownloadQueue(context, tokenCredential);
+    const queue = new ResourceDownloadQueue(context, { credential: tokenCredential, endpoint: 'endpoint' });
     queue.addMessage(originalMessage);
     expect(queue.containsMessageWithSameAttachments(originalMessage)).toBe(true);
     expect(queue.containsMessageWithSameAttachments(editedMessage)).toBe(false);
@@ -87,7 +87,7 @@ describe('ResourceDownloadQueue api functions', () => {
       { id: '1', attachmentType: 'image' as ChatAttachmentType, name: 'image1', url: 'url1', previewUrl: 'previewUrl1' }
     ];
     mockMessage.content = { message: 'new message', attachments: mockAttachments };
-    const queue = new ResourceDownloadQueue(context, tokenCredential);
+    const queue = new ResourceDownloadQueue(context, { credential: tokenCredential, endpoint: 'endpoint' });
     const operation = jest.fn();
     queue.addMessage(mockMessage);
     await queue.startQueue('threadId', operation);
@@ -116,7 +116,7 @@ describe('ResourceDownloadQueue api functions', () => {
     ];
     third.content = { message: 'new message', attachments: thirdAttachments };
 
-    const queue = new ResourceDownloadQueue(context, tokenCredential);
+    const queue = new ResourceDownloadQueue(context, { credential: tokenCredential, endpoint: 'endpoint' });
     const operation = jest.fn();
     queue.addMessage(first);
     queue.addMessage(second);
@@ -147,7 +147,7 @@ describe('ResourceDownloadQueue api functions', () => {
     ];
     third.content = { message: 'new message', attachments: thirdAttachments };
 
-    const queue = new ResourceDownloadQueue(context, tokenCredential);
+    const queue = new ResourceDownloadQueue(context, { credential: tokenCredential, endpoint: 'endpoint' });
     const operation = jest.fn();
     const query: string[] = [];
     const expected = ['previewUrl1', 'previewUrl2', 'previewUrl3'];
@@ -188,7 +188,7 @@ describe('ResourceDownloadQueue api functions', () => {
     ];
     third.content = { message: 'new message', attachments: thirdAttachments };
 
-    const queue = new ResourceDownloadQueue(context, tokenCredential);
+    const queue = new ResourceDownloadQueue(context, { credential: tokenCredential, endpoint: 'endpoint' });
     const operation = jest.fn();
     queue.addMessage(first);
     queue.addMessage(second);
@@ -222,7 +222,7 @@ describe('ResourceDownloadQueue api functions', () => {
     ];
     third.content = { message: 'new message', attachments: thirdAttachments };
 
-    const queue = new ResourceDownloadQueue(context, tokenCredential);
+    const queue = new ResourceDownloadQueue(context, { credential: tokenCredential, endpoint: 'endpoint' });
     const operation = jest.fn();
     operation.mockRejectedValueOnce(new Error('mock error'));
     queue.addMessage(first);
@@ -248,7 +248,7 @@ describe('ResourceDownloadQueue api functions', () => {
     ];
     first.content = { message: 'new message', attachments: firstAttachments };
 
-    const queue = new ResourceDownloadQueue(context, tokenCredential);
+    const queue = new ResourceDownloadQueue(context, { credential: tokenCredential, endpoint: 'endpoint' });
     const operation = jest.fn();
     queue.addMessage(first);
     await queue.startQueue(threadId, operation);
@@ -272,7 +272,7 @@ describe('ResourceDownloadQueue api functions', () => {
     ];
     first.content = { message: 'new message', attachments: firstAttachments };
 
-    const queue = new ResourceDownloadQueue(context, tokenCredential);
+    const queue = new ResourceDownloadQueue(context, { credential: tokenCredential, endpoint: 'endpoint' });
     const operation = jest.fn();
     operation.mockRejectedValueOnce(new Error('error'));
     queue.addMessage(first);
@@ -313,7 +313,7 @@ describe('ResourceDownloadQueue api functions', () => {
     ];
     first.content = { message: 'new message', attachments: firstAttachments };
 
-    const queue = new ResourceDownloadQueue(context, tokenCredential);
+    const queue = new ResourceDownloadQueue(context, { credential: tokenCredential, endpoint: 'endpoint' });
     const operation = jest.fn();
     operation.mockRejectedValueOnce(new Error('error'));
     queue.addMessage(first);
@@ -344,10 +344,11 @@ describe('ResourceDownloadQueue api functions', () => {
       abortCalled = true;
     });
 
-    await fetchImageSource('url', stubCommunicationTokenCredential(), {
-      timeout: 10,
-      abortController
-    });
+    await fetchImageSource(
+      'url',
+      { credential: stubCommunicationTokenCredential(), endpoint: 'endpoint' },
+      { timeout: 10, abortController }
+    );
     expect(abortCalled).toBe(true);
   });
 });
