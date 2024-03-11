@@ -804,27 +804,22 @@ export interface CallCompositeStrings {
    * String for more details when the call times out when calling a bot
    */
   callTimeoutBotDetails?: string;
-  /* @conditional-compile-remove(dtmf-dialer) */
   /**
    * Label for the control bar button to show the dtmf dialer when the more button is disabled
    */
   dtmfDialerButtonLabel?: string;
-  /* @conditional-compile-remove(dtmf-dialer) */
   /**
    * Tooltip for the control bar button to show the dtmf dialer when the more button is disabled
    */
   dtmfDialerButtonTooltipOn?: string;
-  /* @conditional-compile-remove(dtmf-dialer) */
   /**
    * Tooltip for the control bar button to hide the dtmf dialer when the more button is disabled
    */
   dtmfDialerButtonTooltipOff?: string;
-  /* @conditional-compile-remove(dtmf-dialer) */
   /**
    * Label to show the dtmf dialer in the more button menu
    */
   dtmfDialerMoreButtonLabelOn?: string;
-  /* @conditional-compile-remove(dtmf-dialer) */
   /**
    * Label to hide the dtmf dialer in the more button menu
    */
