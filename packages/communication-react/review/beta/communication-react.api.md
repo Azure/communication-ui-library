@@ -918,6 +918,26 @@ export interface CallingTheme {
 }
 
 // @public
+export type CallingWidgetCallCompositeOptions = Partial<CallCompositeOptions> & {
+    showDisplayNameField?: boolean;
+    showVideoOptIn?: boolean;
+    customFieldProps: CustomField[];
+    onRenderLogo?: () => JSX.Element;
+    widgetTheme?: Theme;
+};
+
+// @public
+export const CallingWidgetComposite: (props: CallingWidgetCompositeProps) => JSX.Element;
+
+// @public
+export interface CallingWidgetCompositeProps {
+    adapterProps: AzureCommunicationOutboundCallAdapterArgs;
+    onRenderIdleWidget?: () => JSX.Element;
+    options?: CallingWidgetCallCompositeOptions;
+    position?: WidgetPosition;
+}
+
+// @public
 export type CallParticipantListParticipant = ParticipantListParticipant & {
     state: ParticipantState;
     isScreenSharing?: boolean;
@@ -2378,6 +2398,13 @@ export interface CustomCallControlButtonStrings {
     ariaLabel?: string;
     label?: string;
     tooltipContent?: string;
+}
+
+// @public
+export interface CustomField {
+    kind: 'checkBox' | 'inputBox';
+    onCallStart: () => void;
+    onChange: (newValue: boolean | string) => void;
 }
 
 // @public
@@ -4685,5 +4712,8 @@ export interface VideoTileStylesProps extends BaseCustomStyles {
 
 // @public
 export type ViewScalingMode = 'Stretch' | 'Crop' | 'Fit';
+
+// @public
+export type WidgetPosition = 'bottomRight' | 'bottomLeft' | 'topRight' | 'topLeft' | 'unset';
 
 ```

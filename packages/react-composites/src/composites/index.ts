@@ -6,6 +6,7 @@ export type { Disposable, AdapterState } from './common/adapters';
 export * from './ChatComposite';
 export * from './CallComposite';
 export * from './CallWithChatComposite';
+export * from './CallingWidgetComposite';
 export { COMPOSITE_LOCALE_EN_GB } from './localization/locales/en-GB/CompositeLocale';
 export { COMPOSITE_LOCALE_AR_SA } from './localization/locales/ar-SA/CompositeLocale';
 export { COMPOSITE_LOCALE_CS_CZ } from './localization/locales/cs-CZ/CompositeLocale';

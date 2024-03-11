@@ -682,6 +682,26 @@ export type CallingSounds = {
     callBusy?: SoundEffect;
 };
 
+// @public
+export type CallingWidgetCallCompositeOptions = Partial<CallCompositeOptions> & {
+    showDisplayNameField?: boolean;
+    showVideoOptIn?: boolean;
+    customFieldProps: CustomField[];
+    onRenderLogo?: () => JSX.Element;
+    widgetTheme?: Theme;
+};
+
+// @public
+export const CallingWidgetComposite: (props: CallingWidgetCompositeProps) => JSX.Element;
+
+// @public
+export interface CallingWidgetCompositeProps {
+    adapterProps: AzureCommunicationOutboundCallAdapterArgs;
+    onRenderIdleWidget?: () => JSX.Element;
+    options?: CallingWidgetCallCompositeOptions;
+    position?: WidgetPosition;
+}
+
 // @beta
 export type CallParticipantsLocator = {
     participantIds: string[];
@@ -1445,6 +1465,13 @@ export interface CustomCallControlButtonStrings {
 }
 
 // @public
+export interface CustomField {
+    kind: 'checkBox' | 'inputBox';
+    onCallStart: () => void;
+    onChange: (newValue: boolean | string) => void;
+}
+
+// @public
 export const DEFAULT_COMPOSITE_ICONS: {
     EditBoxCancel: JSX.Element;
     EditBoxSubmit: JSX.Element;
@@ -2056,6 +2083,9 @@ export interface VideoBackgroundReplacementEffect extends BackgroundReplacementC
     effectName: 'replacement';
     key?: string;
 }
+
+// @public
+export type WidgetPosition = 'bottomRight' | 'bottomLeft' | 'topRight' | 'topLeft' | 'unset';
 
 // (No @packageDocumentation comment for this package)
 
