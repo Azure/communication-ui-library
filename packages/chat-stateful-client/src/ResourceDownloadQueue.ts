@@ -19,11 +19,13 @@ export class ResourceDownloadQueue {
   private _context: ChatContext;
   private isActive = false;
   private _credential: CommunicationTokenCredential;
+  private _endpoint: string;
   private _requestsToCancel: Record<string, CancellationDetails> = {};
 
-  constructor(context: ChatContext, credential: CommunicationTokenCredential) {
+  constructor(context: ChatContext, authentication: { credential: CommunicationTokenCredential; endpoint: string }) {
     this._context = context;
-    this._credential = credential;
+    this._credential = authentication.credential;
+    this._endpoint = authentication.endpoint;
   }
 
   public containsMessageWithSameAttachments(message: ChatMessageWithStatus): boolean {
@@ -138,7 +140,11 @@ export class ResourceDownloadQueue {
     abortController: AbortController
   ): Promise<string> {
     this._requestsToCancel[url] = { src: url, abortController };
-    const blobUrl = await operation(url, this._credential, { abortController });
+    const blobUrl = await operation(
+      url,
+      { credential: this._credential, endpoint: this._endpoint },
+      { abortController }
+    );
     delete this._requestsToCancel[url];
     return blobUrl;
   }
@@ -150,7 +156,7 @@ export class ResourceDownloadQueue {
  */
 export const fetchImageSource = async (
   src: string,
-  credential: CommunicationTokenCredential,
+  authentication: { credential: CommunicationTokenCredential; endpoint: string },
   options: { abortController: AbortController; timeout?: number }
 ): Promise<string> => {
   async function fetchWithAuthentication(
@@ -188,7 +194,12 @@ export const fetchImageSource = async (
     clearTimeout(id);
     return response;
   }
-  const accessToken = await credential.getToken();
+
+  const accessToken = await authentication.credential.getToken();
+  if (!src.startsWith('azure.communication.com')) {
+    throw new ChatError('ChatThreadClient.getMessage', new Error('Invalid endpoint'));
+  }
+
   const response = await fetchWithAuthentication(src, accessToken.token, options);
   const blob = await response.blob();
 
@@ -198,7 +209,7 @@ export const fetchImageSource = async (
 interface ImageRequest {
   (
     request: string,
-    credential: CommunicationTokenCredential,
+    authentication: { credential: CommunicationTokenCredential; endpoint: string },
     options: { abortController: AbortController; timeout?: number }
   ): Promise<string>;
 }
