@@ -8,6 +8,7 @@ import { Features, PPTLiveCallFeature } from '@azure/communication-calling';
 import { CallContext } from './CallContext';
 /* @conditional-compile-remove(ppt-live) */
 import { CallIdRef } from './CallIdRef';
+/* @conditional-compile-remove(ppt-live) */
 import { CallCommon } from './BetaToStableTypes';
 
 /* @conditional-compile-remove(ppt-live) */
