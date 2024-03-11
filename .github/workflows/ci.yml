@@ -156,6 +156,16 @@ jobs:
         run: npm install -g @microsoft/rush
       - name: Install dependencies
         run: rush install --max-install-attempts 3
+      # Switch flavor if necessary
+      - name: Switch flavor for build
+        id: switch-flavor
+        if: ${{ matrix.flavor != 'beta' }}
+        run: |
+          rush switch-flavor:${{ matrix.flavor }}
+          node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
+      - name: Run dependency update for stable
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush update:stable
       - name: Build Packages
         run: rush build -t @azure/communication-react
       - name: Test Packages
