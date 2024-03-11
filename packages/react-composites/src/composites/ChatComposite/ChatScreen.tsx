@@ -310,7 +310,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         return defaultOnRender(inlineImage);
       }
 
-      const pointerEvents = inlineImage.imageAttributes.src === '' ? 'none' : 'unset';
+      const pointerEvents =
+        inlineImage.imageAttributes.src === '' || inlineImage.imageAttributes.src === 'blob://' ? 'none' : 'unset';
 
       return (
         <span
