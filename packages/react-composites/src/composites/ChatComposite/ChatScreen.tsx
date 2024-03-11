@@ -244,7 +244,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   /* @conditional-compile-remove(image-overlay) */
   const onInlineImageClicked = useCallback(
-    async (attachmentId: string, messageId: string): Promise<void> => {
+    (attachmentId: string, messageId: string) => {
       const message = adapter.getState().thread.chatMessages[messageId];
       const inlinedImages = message.content?.attachments?.filter((attachment) => {
         return attachment.attachmentType === 'image' && attachment.id === attachmentId;
@@ -310,6 +310,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         return defaultOnRender(inlineImage);
       }
 
+      const pointerEvents = inlineImage.imageAttributes.src === '' ? 'none' : 'unset';
+
       return (
         <span
           key={inlineImage.imageAttributes.id}
@@ -321,7 +323,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
               onInlineImageClicked(inlineImage.imageAttributes.id || '', inlineImage.messageId);
             }
           }}
-          style={{ cursor: 'pointer' }}
+          style={{ cursor: 'pointer', pointerEvents }}
         >
           {defaultOnRender(inlineImage)}
         </span>
