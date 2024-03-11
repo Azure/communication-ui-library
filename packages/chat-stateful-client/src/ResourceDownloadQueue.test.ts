@@ -345,8 +345,8 @@ describe('ResourceDownloadQueue api functions', () => {
     });
 
     await fetchImageSource(
-      'url',
-      { credential: stubCommunicationTokenCredential(), endpoint: 'endpoint' },
+      'https://url',
+      { credential: stubCommunicationTokenCredential(), endpoint: 'https://endpoint' },
       { timeout: 10, abortController }
     );
     expect(abortCalled).toBe(true);
