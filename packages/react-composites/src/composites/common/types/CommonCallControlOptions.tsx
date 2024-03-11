@@ -98,7 +98,6 @@ export type CommonCallControlOptions = {
    * @defaultValue true
    */
   peopleButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ { disabled: boolean };
-  /* @conditional-compile-remove(dtmf-dialer) */
   /**
    * Show or hide the dialpad button in the composite control bar.
    */

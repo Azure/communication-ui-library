@@ -53,11 +53,8 @@ import { themedToggleButtonStyle } from './MoreDrawer.styles';
 import { _spokenLanguageToCaptionLanguage } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { useAdapter } from '../../CallComposite/adapter/CallAdapterProvider';
-/* @conditional-compile-remove(dtmf-dialer) */
 import { useSelector } from '../../CallComposite/hooks/useSelector';
-/* @conditional-compile-remove(dtmf-dialer) */
 import { getTargetCallees } from '../../CallComposite/selectors/baseSelectors';
-/* @conditional-compile-remove(dtmf-dialer) */
 import { showDtmfDialer } from '../../CallComposite/utils/MediaGalleryUtils';
 import { SpokenLanguageSettingsDrawer } from './SpokenLanguageSettingsDrawer';
 
@@ -148,12 +145,10 @@ export interface MoreDrawerDevicesMenuProps {
    * Callback for when the gallery layout is changed
    */
   onUserSetGalleryLayout?: (layout: VideoGalleryLayout) => void;
-  /* @conditional-compile-remove(dtmf-dialer) */
   /**
    * Callback to hide and show the dialpad in the more drawer
    */
   onSetDialpadPage?: () => void;
-  /* @conditional-compile-remove(dtmf-dialer) */
   /**
    * Whether the dialpad is present in the call
    */
@@ -199,11 +194,8 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const holdButtonProps = usePropsFor(HoldButton);
 
-  /* @conditional-compile-remove(dtmf-dialer) */
   const callees = useSelector(getTargetCallees);
-  /* @conditional-compile-remove(dtmf-dialer) */
   const allowDtmfDialer = showDtmfDialer(callees);
-  /* @conditional-compile-remove(dtmf-dialer) */
   const [dtmfDialerChecked, setDtmfDialerChecked] = useState<boolean>(props.dtmfDialerPresent ?? false);
 
   /* @conditional-compile-remove(raise-hand) */
@@ -292,7 +284,6 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     });
   }
 
-  /* @conditional-compile-remove(dtmf-dialer) */
   const dtmfDialerScreenOption = {
     itemKey: 'dtmfDialerScreenKey',
     text: !dtmfDialerChecked
@@ -310,7 +301,6 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       styles: { root: { lineHeight: 0 } }
     }
   };
-  /* @conditional-compile-remove(dtmf-dialer) */
   /**
    * Only render the dtmf dialer if the dialpad for PSTN calls is not present
    */

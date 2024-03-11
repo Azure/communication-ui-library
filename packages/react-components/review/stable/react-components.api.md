@@ -1093,7 +1093,7 @@ export const imageOverlayTheme: PartialTheme;
 
 // @public
 export interface InlineImage {
-    imgAttrs: React_2.ImgHTMLAttributes<HTMLImageElement>;
+    imageAttributes: React_2.ImgHTMLAttributes<HTMLImageElement>;
     messageId: string;
 }
 
