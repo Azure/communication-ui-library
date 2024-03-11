@@ -73,7 +73,7 @@ Unit tests coverage is calculated for @azure/communication-react as part of the 
 Steps to create an HTML coverage report from the CI workflow artifacts:
 - Download coverage reports from the PR artifacts
 - Open `detailed-full/coverage-report.json`
-- Update `all/home/runner/work/communication-ui-library` in `detailed-full/coverage-report.json` to a folder where communication-react project is located locally.
+- Update `/home/runner/work/communication-ui-library` in `detailed-full/coverage-report.json` to a folder where communication-react project is located locally.
 - Save the file
-- Run in Terminal `npx nyc report --temp-dir '<path-to-jest-coverage-report-{flavor}-folder>/detailed-full/' --report-dir <directory-path-where-html-report-will-be-saved> --reporter lcov --exclude-after-remap false`. This step is needed to generate an HTTML report from the JSON one.
-- Open `index.html` file for coverage preview.
+- Run in Terminal `npx nyc report --temp-dir '<path-to-jest-coverage-report-{flavor}-folder>/detailed-full/' --report-dir <directory-path-where-html-report-will-be-saved> --reporter lcov`. This step is needed to generate an HTTML report from the JSON one.
+- Open `index.html` file rom `lcov-report` folder for coverage preview.
