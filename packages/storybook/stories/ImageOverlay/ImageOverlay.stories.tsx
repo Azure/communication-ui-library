@@ -5,7 +5,6 @@ import { ImageOverlay as ImageOverlayComponent } from '@azure/communication-reac
 import { ArgsTable, Title, Description, Heading, Source, Canvas } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 
 import { ImageOverlayExample } from './snippets/ImageOverlay.snippet';
@@ -17,7 +16,6 @@ const getDocs: () => JSX.Element = () => {
   return (
     <>
       <Title>ImageOverlay</Title>
-      <DetailedBetaBanner />
       <Description>
         Component to display image in a overlay. The overlay launches as a modal, it takes focus from the page or app
         and require users to interact with them.

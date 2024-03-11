@@ -54,7 +54,7 @@ export interface InlineImage {
   /** ID of the message that the inline image is belonged to */
   messageId: string;
   /** Attributes of the inline image */
-  imgAttrs: React.ImgHTMLAttributes<HTMLImageElement>;
+  imageAttributes: React.ImgHTMLAttributes<HTMLImageElement>;
 }
 
 /* @conditional-compile-remove(image-overlay) */
@@ -214,7 +214,12 @@ const messageContentAriaText = (props: ChatMessageContentProps): string | undefi
 /* @conditional-compile-remove(image-overlay) */
 const defaultOnRenderInlineImage = (inlineImage: InlineImage): JSX.Element => {
   return (
-    <img key={inlineImage.imgAttrs.id} tabIndex={0} data-ui-id={inlineImage.imgAttrs.id} {...inlineImage.imgAttrs} />
+    <img
+      key={inlineImage.imageAttributes.id}
+      tabIndex={0}
+      data-ui-id={inlineImage.imageAttributes.id}
+      {...inlineImage.imageAttributes}
+    />
   );
 };
 
@@ -242,7 +247,7 @@ const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
           domNode.attribs['aria-label'] = domNode.attribs.name;
           const imgProps = attributesToProps(domNode.attribs);
           /* @conditional-compile-remove(image-overlay) */
-          const inlineImageProps: InlineImage = { messageId: props.message.messageId, imgAttrs: imgProps };
+          const inlineImageProps: InlineImage = { messageId: props.message.messageId, imageAttributes: imgProps };
 
           /* @conditional-compile-remove(image-overlay) */
           return props.inlineImageOptions?.onRenderInlineImage
