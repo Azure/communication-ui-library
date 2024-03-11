@@ -13,14 +13,14 @@ import { _formatString } from '@internal/acs-ui-common';
 import { ArrowDownload24Filled /*, Open24Filled, Open24Regular*/ } from '@fluentui/react-icons';
 import { SendBoxErrorBarError } from './SendBoxErrorBar';
 
-/* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * Represents the type of attachment
- * @beta
+ * @public
  */
 export type ChatAttachmentType =
   | 'unknown'
-  | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage'
+  | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'image'
   | /* @conditional-compile-remove(file-sharing) */ 'file';
 
 /**

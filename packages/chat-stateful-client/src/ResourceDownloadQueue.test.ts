@@ -7,7 +7,7 @@ import { CommunicationTokenCredential } from '@azure/communication-common';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatContext } from './ChatContext';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { ResourceDownloadError, ResourceDownloadQueue } from './ResourceDownloadQueue';
+import { ResourceDownloadQueue, fetchImageSource } from './ResourceDownloadQueue';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { messageTemplate } from './mocks/createMockChatThreadClient';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
@@ -21,7 +21,7 @@ jest.mock('@azure/communication-chat');
 export const stubCommunicationTokenCredential = (): CommunicationTokenCredential => {
   return {
     getToken: (): Promise<{ token: string; expiresOnTimestamp: number }> => {
-      throw new Error('Not implemented');
+      return Promise.resolve({ token: 'token', expiresOnTimestamp: 1 });
     },
     dispose: (): void => {
       /* Nothing to dispose */
@@ -224,8 +224,7 @@ describe('ResourceDownloadQueue api functions', () => {
 
     const queue = new ResourceDownloadQueue(context, tokenCredential);
     const operation = jest.fn();
-    const e = new ResourceDownloadError(first);
-    operation.mockRejectedValueOnce(e);
+    operation.mockRejectedValueOnce(new Error('mock error'));
     queue.addMessage(first);
     queue.addMessage(second);
     queue.addMessage(third);
@@ -282,6 +281,7 @@ describe('ResourceDownloadQueue api functions', () => {
     const resourceCache = context.getState().threads[threadId].chatMessages[messageId].resourceCache;
     expect(resourceCache).toBeDefined();
     expect(resourceCache?.['previewUrl1'].error).toBeDefined();
+    expect(resourceCache?.['previewUrl1'].sourceUrl).toEqual('');
   });
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   test('if operation fails for first item, error should be in the cache only for first item', async () => {
@@ -322,7 +322,32 @@ describe('ResourceDownloadQueue api functions', () => {
     const resourceCache = context.getState().threads[threadId].chatMessages[messageId].resourceCache;
     expect(resourceCache).toBeDefined();
     expect(resourceCache?.['previewUrl1'].error).toBeDefined();
+    expect(resourceCache?.['previewUrl1'].sourceUrl).toEqual('');
     expect(resourceCache?.['previewUrl2'].error).toBeUndefined();
     expect(resourceCache?.['previewUrl3'].error).toBeUndefined();
+  });
+  test('if fetchImageSource times out error should be thrown', async () => {
+    const abortController = new AbortController();
+    let abortCalled = false;
+
+    global.fetch = jest.fn().mockImplementation(() => {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve({
+            blob() {}
+          } as Response);
+        }, 100);
+      });
+    });
+
+    jest.spyOn(AbortController.prototype, 'abort').mockImplementation(() => {
+      abortCalled = true;
+    });
+
+    await fetchImageSource('url', stubCommunicationTokenCredential(), {
+      timeout: 10,
+      abortController
+    });
+    expect(abortCalled).toBe(true);
   });
 });

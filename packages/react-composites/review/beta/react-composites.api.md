@@ -709,7 +709,7 @@ export interface CallWithChatAdapterManagement {
     disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
     disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
-    // @beta (undocumented)
+    // (undocumented)
     downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
     fetchInitialData(): Promise<void>;
     // @beta
@@ -734,7 +734,7 @@ export interface CallWithChatAdapterManagement {
     removeParticipant(userId: string): Promise<void>;
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
-    // @beta (undocumented)
+    // (undocumented)
     removeResourceFromCache(resourceDetails: ResourceDetails): void;
     // @beta
     resumeCall: () => Promise<void>;

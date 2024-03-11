@@ -1008,7 +1008,7 @@ export interface CallWithChatAdapterManagement {
     disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
     disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
-    // @beta (undocumented)
+    // (undocumented)
     downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
     fetchInitialData(): Promise<void>;
     // @beta
@@ -1033,7 +1033,7 @@ export interface CallWithChatAdapterManagement {
     removeParticipant(userId: string): Promise<void>;
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
-    // @beta (undocumented)
+    // (undocumented)
     removeResourceFromCache(resourceDetails: ResourceDetails): void;
     // @beta
     resumeCall: () => Promise<void>;
@@ -1649,8 +1649,8 @@ export type ChatAdapterUiState = {
     fileUploads?: FileUploadsUiState;
 };
 
-// @beta
-export type ChatAttachmentType = 'unknown' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | /* @conditional-compile-remove(file-sharing) */ 'file';
+// @public
+export type ChatAttachmentType = 'unknown' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'image' | /* @conditional-compile-remove(file-sharing) */ 'file';
 
 // @public
 export type ChatBaseSelectorProps = {
@@ -3048,10 +3048,10 @@ export interface _Identifiers {
     videoTile: string;
 }
 
-// @beta
+// @public
 export const ImageOverlay: (props: ImageOverlayProps) => JSX.Element;
 
-// @beta
+// @public
 export interface ImageOverlayProps {
     altText?: string;
     imageSrc: string;
@@ -3068,7 +3068,7 @@ export interface ImageOverlayStrings {
     downloadButtonLabel: string;
 }
 
-// @beta
+// @public
 export const imageOverlayTheme: PartialTheme;
 
 // @beta
@@ -3085,13 +3085,13 @@ export interface IncomingCallState {
     startTime: Date;
 }
 
-// @beta
+// @public
 export interface InlineImage {
-    imgAttrs: React_2.ImgHTMLAttributes<HTMLImageElement>;
+    imageAttributes: React_2.ImgHTMLAttributes<HTMLImageElement>;
     messageId: string;
 }
 
-// @beta
+// @public
 export interface InlineImageOptions {
     onRenderInlineImage?: (inlineImage: InlineImage, defaultOnRender: (inlineImage: InlineImage) => JSX.Element) => JSX.Element;
 }
@@ -3759,6 +3759,7 @@ export interface ReactionButtonProps extends ControlBarButtonProps {
 // @beta
 export interface ReactionButtonStrings {
     applauseReactionTooltipContent?: string;
+    ariaLabel: string;
     heartReactionTooltipContent?: string;
     label: string;
     laughReactionTooltipContent?: string;
