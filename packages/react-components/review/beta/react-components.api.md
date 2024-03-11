@@ -34,6 +34,7 @@ import { PersonaSize } from '@fluentui/react';
 import { PropsWithChildren } from 'react';
 import { default as React_2 } from 'react';
 import * as React_3 from 'react';
+import { Reaction as Reaction_2 } from '@azure/communication-calling';
 import { RefObject } from 'react';
 import { Theme } from '@fluentui/react';
 
@@ -1031,6 +1032,10 @@ export interface _DrawerMenuItemProps {
     itemKey: string;
     // (undocumented)
     onItemClick?: (ev?: React_2.MouseEvent<HTMLElement> | React_2.KeyboardEvent<HTMLElement>, itemKey?: string) => void;
+    // (undocumented)
+    onReactionClick?: (reaction: Reaction_2) => Promise<void>;
+    // (undocumented)
+    reactionResources?: ReactionResources;
     secondaryComponent?: JSX.Element;
     secondaryIconProps?: IIconProps;
     secondaryText?: string;

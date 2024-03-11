@@ -82,3 +82,49 @@ export const reactionToolTipHostStyle = (): ITooltipHostStyles => {
     }
   };
 };
+
+/* @conditional-compile-remove(reaction) */
+/**
+ *
+ * @private
+ */
+export const mobileViewMenuItemStyle = (): React.CSSProperties => {
+  return {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: 'row',
+    width: '100%',
+    height: '42px'
+  };
+};
+
+/* @conditional-compile-remove(reaction) */
+/**
+ * @param backgroundImage - the uri for the reaction emoji resource
+ * @param animationPlayState - the value is either 'running' or 'paused' based on the mouse hover event
+ *
+ * @private
+ */
+export const mobileViewEmojiStyles = (backgroundImage: string, animationPlayState: string): React.CSSProperties => {
+  const imageResourceUrl = `url(${backgroundImage})`;
+  return {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+    width: '44px',
+    backgroundImage: imageResourceUrl,
+    animationName: playFrames(),
+    animationDuration: '8.12s',
+    animationTimingFunction: `steps(102)`,
+    animationPlayState: animationPlayState,
+    animationIterationCount: 'infinite',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundPosition: 'center',
+    backgroundSize: `44px 2142px`,
+    transition: 'opacity 2s',
+    backgroundColor: 'transparent',
+    transform: `${animationPlayState === 'running' ? 'scale(0.8)' : 'scale(0.6)'}`
+  };
+};

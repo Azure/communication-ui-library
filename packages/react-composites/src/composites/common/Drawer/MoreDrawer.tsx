@@ -14,6 +14,9 @@ import {
   SpokenLanguageStrings,
   CaptionLanguageStrings
 } from '@internal/react-components';
+/* @conditional-compile-remove(reaction) */
+import { ReactionResources } from '@internal/react-components';
+/* @conditional-compile-remove(gallery-layouts) */
 import { VideoGalleryLayout } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
 import { _StartCaptionsButton, _CaptionsSettingsModal } from '@internal/react-components';
@@ -23,6 +26,8 @@ import { HoldButton } from '@internal/react-components';
 /* @conditional-compile-remove(raise-hand) */
 import { RaiseHandButton, RaiseHandButtonProps } from '@internal/react-components';
 import { AudioDeviceInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(reaction) */
+import { Reaction } from '@azure/communication-calling';
 /* @conditional-compile-remove(control-bar-button-injection) */
 import {
   CUSTOM_BUTTON_OPTIONS,
@@ -170,6 +175,10 @@ export interface MoreDrawerProps extends MoreDrawerDevicesMenuProps {
   isCaptionsSupported?: boolean;
   strings: MoreDrawerStrings;
   disableButtonsForHoldScreen?: boolean;
+  /* @conditional-compile-remove(reaction) */
+  reactionResources?: ReactionResources;
+  /* @conditional-compile-remove(reaction) */
+  onReactionClick?: (reaction: Reaction) => Promise<void>;
 }
 
 const inferCallWithChatControlOptions = (
@@ -224,6 +233,14 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   );
 
   const drawerSelectionOptions = inferCallWithChatControlOptions(props.callControls);
+
+  if (props.reactionResources !== undefined) {
+    drawerMenuItems.push({
+      itemKey: 'reactions',
+      reactionResources: props.reactionResources,
+      onReactionClick: props.onReactionClick
+    });
+  }
 
   if (props.speakers && props.speakers.length > 0) {
     drawerMenuItems.push({

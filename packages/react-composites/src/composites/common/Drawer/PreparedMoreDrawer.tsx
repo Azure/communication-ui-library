@@ -9,7 +9,9 @@ import { useSelector } from '../../CallComposite/hooks/useSelector';
 import { useHandlers } from '../../CallComposite/hooks/useHandlers';
 import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
 /* @condtional-compile-remove(gallery-options) */
-import { VideoGalleryLayout } from '@internal/react-components';
+import { ReactionResources, VideoGalleryLayout } from '@internal/react-components';
+/* @conditional-compile-remove(reaction) */
+import { Reaction } from '@azure/communication-calling';
 
 /** @private */
 export interface PreparedMoreDrawerProps {
@@ -27,6 +29,10 @@ export interface PreparedMoreDrawerProps {
   onSetDialpadPage?: () => void;
   /* @conditional-compile-remove(dtmf-dialer) */
   dtmfDialerPresent?: boolean;
+  /* @conditional-compile-remove(reaction) */
+  reactionResources?: ReactionResources;
+  /* @conditional-compile-remove(reaction) */
+  onReactionClick?: (reaction: Reaction) => Promise<void>;
 }
 
 /** @private */

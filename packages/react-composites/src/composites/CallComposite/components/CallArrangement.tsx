@@ -469,6 +469,10 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 onSetDialpadPage={props.onSetDialpadPage}
                 /* @conditional-compile-remove(dtmf-dialer) */
                 dtmfDialerPresent={props.dtmfDialerPresent}
+                /* @conditional-compile-remove(reaction) */
+                reactionResources={adapter.getState().reactions}
+                /* @conditional-compile-remove(reaction) */
+                onReactionClick={adapter.onReactionClick}
               />
             </Stack>
           )}

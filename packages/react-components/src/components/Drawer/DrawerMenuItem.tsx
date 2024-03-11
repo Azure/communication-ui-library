@@ -16,7 +16,15 @@ import {
 import React from 'react';
 import { useTheme } from '../../theming/FluentThemeProvider';
 import { BaseCustomStyles } from '../../types';
+/* @condtional-compile-remove(reaction) */
+import { ReactionResources } from '../../types';
 import { submitWithKeyboard } from '../utils/keyboardNavigation';
+/* @condtional-compile-remove(reaction) */
+import { mobileViewEmojiStyles, mobileViewMenuItemStyle } from '../styles/ReactionButton.styles';
+/* @condtional-compile-remove(reaction) */
+import { IconButton } from '@fluentui/react';
+/* @conditional-compile-remove(reaction) */
+import { Reaction } from '@azure/communication-calling';
 
 /**
  * Props for the DrawerMenuItem
@@ -54,6 +62,10 @@ export interface _DrawerMenuItemProps {
    * Property to set the focus since this is the first item in the menu
    */
   shouldFocusOnMount?: boolean;
+  /* @conditional-compile-remove(reaction) */
+  reactionResources?: ReactionResources;
+  /* @conditional-compile-remove(reaction) */
+  onReactionClick?: (reaction: Reaction) => Promise<void>;
 }
 
 /**
@@ -66,6 +78,15 @@ export const DrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Element => {
   const onClick = (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>): void =>
     props.onItemClick && props.onItemClick(ev, props.itemKey);
   const onKeyPress = (ev: React.KeyboardEvent<HTMLElement>): void => onClick && submitWithKeyboard(ev, onClick);
+  const resources = props.reactionResources;
+  const emojiResource: Map<string, string | undefined> = new Map([
+    ['like', resources?.likeReaction?.url],
+    ['heart', resources?.heartReaction?.url],
+    ['laugh', resources?.laughReaction?.url],
+    ['applause', resources?.applauseReaction?.url],
+    ['surprised', resources?.surprisedReaction?.url]
+  ]);
+  const emojis: Reaction[] = ['like', 'heart', 'laugh', 'applause', 'surprised'];
 
   const secondaryIcon = props.secondaryIconProps ? (
     <MenuItemIcon {...props.secondaryIconProps} />
@@ -73,10 +94,10 @@ export const DrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Element => {
     <MenuItemIcon iconName="ChevronRight" />
   ) : undefined;
 
-  return (
-    <FocusZone shouldFocusOnMount={props.shouldFocusOnMount}>
+  if (props.itemKey === 'reactions') {
+    return (
       <Stack
-        tabIndex={0}
+        id={props.id}
         role="menuitem"
         horizontal
         className={mergeStyles(
@@ -84,40 +105,73 @@ export const DrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Element => {
           props.disabled ? disabledDrawerMenuItemRootStyles(theme.palette.neutralQuaternaryAlt) : undefined,
           props.styles?.root
         )}
-        onKeyPress={props.disabled ? undefined : onKeyPress}
-        onClick={props.disabled ? undefined : onClick}
-        tokens={menuItemChildrenGap}
-        id={props.id}
       >
-        {props.iconProps && (
-          <Stack.Item
-            role="presentation"
-            styles={props.disabled ? { root: { color: theme.palette.neutralTertiaryAlt } } : undefined}
-          >
-            <MenuItemIcon {...props.iconProps} />
-          </Stack.Item>
-        )}
-        <Stack.Item styles={drawerMenuItemTextStyles} grow>
-          <Text styles={props.disabled ? { root: { color: theme.palette.neutralTertiaryAlt } } : undefined}>
-            {props.text}
-          </Text>
-        </Stack.Item>
-        {props.secondaryText && (
-          <Stack.Item styles={drawerMenuItemTextStyles} className={mergeStyles(secondaryTextStyles)}>
-            <Text
-              styles={{
-                root: { color: props.disabled ? theme.palette.neutralTertiaryAlt : theme.palette.neutralSecondary }
-              }}
+        <div style={mobileViewMenuItemStyle()}>
+          {emojis.map((emoji, index) => {
+            const resourceUrl = emojiResource.get(emoji.toString());
+
+            return (
+              <IconButton
+                key={index}
+                onClick={() => {
+                  if (props.onReactionClick !== undefined) {
+                    props.onReactionClick(emoji);
+                  }
+                }}
+                style={mobileViewEmojiStyles(resourceUrl ? resourceUrl : '', 'running')}
+              />
+            );
+          })}
+        </div>
+      </Stack>
+    );
+  } else {
+    return (
+      <FocusZone shouldFocusOnMount={props.shouldFocusOnMount}>
+        <Stack
+          tabIndex={0}
+          role="menuitem"
+          horizontal
+          className={mergeStyles(
+            drawerMenuItemRootStyles(theme.palette.neutralLight, theme.fonts.small),
+            props.disabled ? disabledDrawerMenuItemRootStyles(theme.palette.neutralQuaternaryAlt) : undefined,
+            props.styles?.root
+          )}
+          onKeyPress={props.disabled ? undefined : onKeyPress}
+          onClick={props.disabled ? undefined : onClick}
+          tokens={menuItemChildrenGap}
+          id={props.id}
+        >
+          {props.iconProps && (
+            <Stack.Item
+              role="presentation"
+              styles={props.disabled ? { root: { color: theme.palette.neutralTertiaryAlt } } : undefined}
             >
-              {props.secondaryText}
+              <MenuItemIcon {...props.iconProps} />
+            </Stack.Item>
+          )}
+          <Stack.Item styles={drawerMenuItemTextStyles} grow>
+            <Text styles={props.disabled ? { root: { color: theme.palette.neutralTertiaryAlt } } : undefined}>
+              {props.text}
             </Text>
           </Stack.Item>
-        )}
-        {props.secondaryComponent && <Stack.Item>{props.secondaryComponent}</Stack.Item>}
-        {secondaryIcon && <Stack.Item>{secondaryIcon}</Stack.Item>}
-      </Stack>
-    </FocusZone>
-  );
+          {props.secondaryText && (
+            <Stack.Item styles={drawerMenuItemTextStyles} className={mergeStyles(secondaryTextStyles)}>
+              <Text
+                styles={{
+                  root: { color: props.disabled ? theme.palette.neutralTertiaryAlt : theme.palette.neutralSecondary }
+                }}
+              >
+                {props.secondaryText}
+              </Text>
+            </Stack.Item>
+          )}
+          {props.secondaryComponent && <Stack.Item>{props.secondaryComponent}</Stack.Item>}
+          {secondaryIcon && <Stack.Item>{secondaryIcon}</Stack.Item>}
+        </Stack>
+      </FocusZone>
+    );
+  }
 };
 
 const MenuItemIcon = (props: IFontIconProps): JSX.Element => (
