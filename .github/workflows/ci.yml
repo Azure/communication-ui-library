@@ -172,7 +172,12 @@ jobs:
         # but it's still needed for the upload bundle report step when main is updated
         if: ${{ !startsWith(github.event.pull_request.base.ref, 'release/') }}
         run: npx nyc report --temp-dir temp/jest/current/merge/detailed-full/ --report-dir temp/jest/current/merge/summary/ --reporter json-summary
-
+      # Upload coverage report to review the merged report locally
+      - name: Upload detailed and summary jest coverage reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: jest-coverage-report-${{ matrix.flavor }}
+          path: temp/jest/current/merge/
       # Pull requests show details of coverage changes
       - name: Get jest tests coverage of main from gist
         if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
