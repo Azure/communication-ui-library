@@ -13,16 +13,17 @@ import { InputBoxButton } from './InputBoxButton';
 /* @conditional-compile-remove(file-sharing) */
 import { SendBoxErrors } from './SendBoxErrors';
 /* @conditional-compile-remove(file-sharing) */
-import { ActiveFileUpload, _FileUploadCards } from './FileUploadCards';
+import { _FileUploadCards } from './FileUploadCards';
 /* @conditional-compile-remove(file-sharing) */
 import { fileUploadCardsStyles } from './styles/SendBox.styles';
 /* @conditional-compile-remove(file-sharing) */
 import { SendBoxErrorBarError } from './SendBoxErrorBar';
 /* @conditional-compile-remove(file-sharing) */
 import { hasCompletedFileUploads, hasIncompleteFileUploads } from './utils/SendBoxUtils';
-import { MAXIMUM_LENGTH_OF_MESSAGE, exceedsMaxAllowedLength, sanitizeText } from './utils/SendBoxUtils';
+import { MAXIMUM_LENGTH_OF_MESSAGE, isMessageTooLong, sanitizeText } from './utils/SendBoxUtils';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from './MentionPopover';
+import { AttachmentMetadata } from './FileDownloadCards';
 
 /**
  * Fluent styles for {@link Sendbox}.
@@ -158,7 +159,7 @@ export interface SendBoxProps {
    * of a file upload like name, progress, errorMessage etc.
    * @beta
    */
-  activeFileUploads?: ActiveFileUpload[];
+  activeFileUploads?: AttachmentMetadata[];
   /* @conditional-compile-remove(file-sharing) */
   /**
    * Optional callback to remove the file upload before sending by clicking on
@@ -239,7 +240,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       return;
     }
 
-    setTextValueOverflow(exceedsMaxAllowedLength(newValue.length));
+    setTextValueOverflow(isMessageTooLong(newValue.length));
     setTextValue(newValue);
   };
 

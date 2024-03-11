@@ -14,7 +14,6 @@ import {
   SpokenLanguageStrings,
   CaptionLanguageStrings
 } from '@internal/react-components';
-/* @conditional-compile-remove(gallery-layouts) */
 import { VideoGalleryLayout } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
 import { _StartCaptionsButton, _CaptionsSettingsModal } from '@internal/react-components';
@@ -112,7 +111,6 @@ export interface MoreDrawerStrings {
    */
   captionLanguageMenuTitle: string;
 
-  /* @conditional-compile-remove(gallery-layouts) */
   /**
    * Label for gallery options drawerMenuItem
    */
@@ -145,9 +143,7 @@ export interface MoreDrawerDevicesMenuProps {
    * Callback when a microphone is selected
    */
   onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
-  /* @conditional-compile-remove(gallery-layouts) */
   userSetGalleryLayout?: VideoGalleryLayout;
-  /* @conditional-compile-remove(gallery-layouts) */
   /**
    * Callback for when the gallery layout is changed
    */
@@ -319,7 +315,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   if (props.onSetDialpadPage && allowDtmfDialer) {
     drawerMenuItems.push(dtmfDialerScreenOption);
   }
-  /* @conditional-compile-remove(gallery-layouts) */
+
   const galleryLayoutOptions = {
     itemKey: 'galleryPositionKey',
     iconProps: {
@@ -376,7 +372,6 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   /* @conditional-compile-remove(gallery-layout-composite) */
   galleryLayoutOptions.subMenuProps?.push(galleryOption);
 
-  /* @conditional-compile-remove(gallery-layouts) */
   drawerMenuItems.push(galleryLayoutOptions);
 
   if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.peopleButton)) {

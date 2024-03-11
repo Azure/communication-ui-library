@@ -32,7 +32,7 @@ import { getFileTypeIconProps } from '@fluentui/react-file-type-icons';
 import React from 'react';
 import { _pxToRem } from '@internal/acs-ui-common';
 // import { useEffect, useState } from 'react';
-import { ActiveFileUpload, _FileUploadCardsStrings } from './FileUploadCards';
+import { _FileUploadCardsStrings } from './FileUploadCards';
 // import { useLocaleFileCardStringsTrampoline } from './utils/common';
 import {
   // ArrowDownload16Filled,
@@ -42,7 +42,7 @@ import {
   // ShareRegular,
   // WindowNew24Regular
 } from '@fluentui/react-icons';
-import { FileCardMenuAction, FileMetadata } from './FileDownloadCards';
+import { AttachmentMetadata, FileCardMenuAction } from './FileDownloadCards';
 
 /**
  * @internal
@@ -52,9 +52,7 @@ export interface _FileCardProps {
   /**
    * File.
    */
-  file: FileMetadata | ActiveFileUpload;
-
-  userId?: string;
+  file: AttachmentMetadata;
 
   progress?: number;
 
@@ -70,7 +68,7 @@ export interface _FileCardProps {
  * A component for displaying a file card with file icon and progress bar.
  */
 export const _FileCard = (props: _FileCardProps): JSX.Element => {
-  const { file, userId, progress, menuActions } = props;
+  const { file, progress, menuActions } = props;
   // const theme = useTheme();
   // const [announcerString, setAnnouncerString] = useState<string | undefined>(undefined);
   // const localeStrings = useLocaleFileCardStringsTrampoline();
@@ -92,8 +90,8 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
   // const progressBarThicknessPx = 4;
 
   const isUpload = progress !== undefined && progress > 0 && progress < 1;
-  const fileName = (file as FileMetadata) ? (file as FileMetadata).name : (file as ActiveFileUpload).filename;
-  const fileExtension = (file as FileMetadata).extension ?? (file as ActiveFileUpload).filename.split('.').pop();
+  const fileName = file.name;
+  const fileExtension = file.extension;
   return (
     <div>
       <Card size="small" role="listitem">
@@ -112,7 +110,7 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
           }
           header={<Text weight="semibold">{fileName}</Text>}
           description={<Caption1>SharePoint &gt; Chat</Caption1>}
-          action={getMenuItems(menuActions, file, userId)}
+          action={getMenuItems(menuActions, file)}
         />
       </Card>
       {isUpload ? (
@@ -126,16 +124,12 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
   );
 };
 
-const getMenuItems = (
-  menuActions: FileCardMenuAction[],
-  file: FileMetadata | ActiveFileUpload,
-  userId?: string
-): JSX.Element => {
+const getMenuItems = (menuActions: FileCardMenuAction[], attachment: AttachmentMetadata): JSX.Element => {
   return menuActions.length === 1 ? (
     <ToolbarButton
       aria-label={menuActions[0].name}
       icon={menuActions[0].icon}
-      onClick={() => menuActions[0].onClick(file, userId)}
+      onClick={() => menuActions[0].onClick(attachment)}
     />
   ) : (
     <Toolbar>
@@ -146,7 +140,7 @@ const getMenuItems = (
         <MenuPopover>
           <MenuList>
             {menuActions.map((menuItem, index) => (
-              <MenuItem key={index} icon={menuItem.icon} onClick={() => menuItem.onClick(file, userId)}>
+              <MenuItem key={index} icon={menuItem.icon} onClick={() => menuItem.onClick(attachment)}>
                 {menuItem.name}
               </MenuItem>
             ))}

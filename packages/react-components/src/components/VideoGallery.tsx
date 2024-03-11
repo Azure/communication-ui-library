@@ -34,9 +34,7 @@ import { floatingLocalVideoTileStyle } from './VideoGallery/styles/FloatingLocal
 import { useId } from '@fluentui/react-hooks';
 /* @conditional-compile-remove(vertical-gallery) */
 import { VerticalGalleryStyles } from './VerticalGallery';
-/* @conditional-compile-remove(gallery-layouts) */
 import { SpeakerVideoLayout } from './VideoGallery/SpeakerVideoLayout';
-/* @conditional-compile-remove(gallery-layouts) */
 import { FocusedContentLayout } from './VideoGallery/FocusContentLayout';
 /* @conditional-compile-remove(large-gallery) */
 import { LargeGalleryLayout } from './VideoGallery/LargeGalleryLayout';
@@ -142,9 +140,9 @@ export interface VideoGalleryStrings {
 export type VideoGalleryLayout =
   | 'default'
   | 'floatingLocalVideo'
-  | /* @conditional-compile-remove(gallery-layouts) */ 'speaker'
+  | 'speaker'
   | /* @conditional-compile-remove(large-gallery) */ 'largeGallery'
-  | /* @conditional-compile-remove(gallery-layouts) */ 'focusedContent';
+  | 'focusedContent';
 
 /**
  * {@link VideoGallery} Component Styles.
@@ -168,10 +166,7 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
  *
  * @public
  */
-export type OverflowGalleryPosition =
-  | 'horizontalBottom'
-  | 'verticalRight'
-  | /* @conditional-compile-remove(gallery-layouts) */ 'horizontalTop';
+export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | 'horizontalTop';
 
 /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
 /**
@@ -413,9 +408,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       : undefined;
   const drawerMenuHostId = useId('drawerMenuHost', drawerMenuHostIdFromProp);
 
-  const localTileNotInGrid =
-    (layout === 'floatingLocalVideo' || /* @conditional-compile-remove(gallery-layouts) */ layout === 'speaker') &&
-    remoteParticipants.length > 0;
+  const localTileNotInGrid = (layout === 'floatingLocalVideo' || layout === 'speaker') && remoteParticipants.length > 0;
 
   const containerRef = useRef<HTMLDivElement>(null);
   const containerWidth = _useContainerWidth(containerRef);
@@ -455,7 +448,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       (localTileNotInGrid && isNarrow) ||
       /*@conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ localVideoTileSize ===
         '9:16'
-    ) || /* @conditional-compile-remove(gallery-layouts) */ layout === 'default';
+    ) || layout === 'default';
   /**
    * Utility function for memoized rendering of LocalParticipant.
    */
@@ -482,7 +475,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     const initialsName = !localParticipant.displayName ? '' : localParticipant.displayName;
 
     const showDisplayNameTrampoline = (): string => {
-      /* @conditional-compile-remove(gallery-layouts) */
       return layout === 'default' ? strings.localVideoLabel : isNarrow ? '' : strings.localVideoLabel;
       return isNarrow ? '' : strings.localVideoLabel;
     };
@@ -554,7 +546,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     theme.effects.roundedCorner4,
     /*@conditional-compile-remove(click-to-call) */
     localVideoTileSize,
-    /* @conditional-compile-remove(gallery-layouts) */
+
     layout,
     showLocalVideoTileLabel,
     /* @conditional-compile-remove(spotlight) */
@@ -766,14 +758,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   );
 
   const videoGalleryLayout = useMemo(() => {
-    /* @conditional-compile-remove(gallery-layouts) */
     if (screenShareParticipant && layout === 'focusedContent') {
       return <FocusedContentLayout {...layoutProps} />;
     }
     if (layout === 'floatingLocalVideo') {
       return <FloatingLocalVideoLayout {...layoutProps} />;
     }
-    /* @conditional-compile-remove(gallery-layouts) */
+
     if (layout === 'speaker') {
       return <SpeakerVideoLayout {...layoutProps} />;
     }
@@ -782,7 +773,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       return <LargeGalleryLayout {...layoutProps} />;
     }
     return <DefaultLayout {...layoutProps} />;
-  }, [layout, layoutProps, /* @conditional-compile-remove(gallery-layouts) */ screenShareParticipant]);
+  }, [layout, layoutProps, screenShareParticipant]);
 
   return (
     <div

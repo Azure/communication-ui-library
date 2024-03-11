@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { concatStyleSets, Icon, ITextField, mergeStyles, Stack } from '@fluentui/react';
+import { concatStyleSets, ITextField, mergeStyles, Stack } from '@fluentui/react';
 import { ChatMyMessage } from '@fluentui-contrib/react-chat';
 import { mergeClasses } from '@fluentui/react-components';
 import { _formatString } from '@internal/acs-ui-common';
 import { useTheme } from '../../theming/FluentThemeProvider';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { editBoxStyle, inputBoxIcon, editingButtonStyle, editBoxStyleSet } from '../styles/EditBox.styles';
+import { editBoxStyle, editingButtonStyle, editBoxStyleSet, inputBoxIcon } from '../styles/EditBox.styles';
 import { InputBoxComponent } from '../InputBoxComponent';
 import { InputBoxButton } from '../InputBoxButton';
 import { MessageThreadStrings } from '../MessageThread';
@@ -15,7 +15,7 @@ import { useChatMyMessageStyles } from '../styles/MessageThread.styles';
 import { ChatMessage } from '../../types';
 import { _FileUploadCards } from '../FileUploadCards';
 /* @conditional-compile-remove(file-sharing) */
-import { FileMetadata } from '../FileDownloadCards';
+import { AttachmentMetadata } from '../FileDownloadCards';
 import {
   chatMessageFailedTagStyle,
   editChatMessageFailedTagStyle,
@@ -25,18 +25,10 @@ import {
 } from '../styles/ChatMessageComponent.styles';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from '../MentionPopover';
-
-const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
-
-const onRenderCancelIcon = (color: string): JSX.Element => {
-  const className = mergeStyles(inputBoxIcon, { color });
-  return <Icon iconName={'EditBoxCancel'} className={className} />;
-};
-
-const onRenderSubmitIcon = (color: string): JSX.Element => {
-  const className = mergeStyles(inputBoxIcon, { color });
-  return <Icon iconName={'EditBoxSubmit'} className={className} />;
-};
+import { MAXIMUM_LENGTH_OF_MESSAGE } from '../utils/SendBoxUtils';
+import { getMessageState, onRenderCancelIcon, onRenderSubmitIcon } from '../utils/ChatMessageComponentAsEditBoxUtils';
+/* @conditional-compile-remove(file-sharing) */
+import { getMessageAttachedFilesMetadata } from '../utils/ChatMessageComponentAsEditBoxUtils';
 
 /** @private */
 export type ChatMessageComponentAsEditBoxProps = {
@@ -46,7 +38,7 @@ export type ChatMessageComponentAsEditBoxProps = {
     metadata?: Record<string, string>,
     options?: {
       /* @conditional-compile-remove(file-sharing) */
-      attachmentMetadata?: FileMetadata[];
+      attachmentMetadata?: AttachmentMetadata[];
     }
   ) => void;
   message: ChatMessage;
@@ -54,8 +46,6 @@ export type ChatMessageComponentAsEditBoxProps = {
   /* @conditional-compile-remove(mention) */
   mentionLookupOptions?: MentionLookupOptions;
 };
-
-type MessageState = 'OK' | 'too short' | 'too long';
 
 /**
  * @private
@@ -92,14 +82,26 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
       ? _formatString(strings.editBoxTextLimit, { limitNumber: `${MAXIMUM_LENGTH_OF_MESSAGE}` })
       : undefined;
 
+  const iconClassName = useCallback(
+    (isHover: boolean) => {
+      const color = isHover ? theme.palette.accent : theme.palette.neutralSecondary;
+      return mergeStyles(inputBoxIcon, { color });
+    },
+    [theme.palette.accent, theme.palette.neutralSecondary]
+  );
+
   const onRenderThemedCancelIcon = useCallback(
-    (isHover: boolean) => onRenderCancelIcon(isHover ? theme.palette.accent : theme.palette.neutralSecondary),
-    [theme.palette.neutralSecondary, theme.palette.accent]
+    (isHover: boolean) => {
+      return onRenderCancelIcon(iconClassName(isHover));
+    },
+    [iconClassName]
   );
 
   const onRenderThemedSubmitIcon = useCallback(
-    (isHover: boolean) => onRenderSubmitIcon(isHover ? theme.palette.accent : theme.palette.neutralSecondary),
-    [theme.palette.neutralSecondary, theme.palette.accent]
+    (isHover: boolean) => {
+      return onRenderSubmitIcon(iconClassName(isHover));
+    },
+    [iconClassName]
   );
 
   const editBoxStyles = useMemo(() => {
@@ -115,7 +117,8 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
           <_FileUploadCards
             activeFileUploads={attachmentMetadata?.map((file) => ({
               id: file.name,
-              filename: file.name,
+              name: file.name,
+              extension: file.extension,
               progress: 1
             }))}
             onCancelFileUpload={(fileId) => {
@@ -228,31 +231,4 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
       {getContent()}
     </ChatMyMessage>
   );
-};
-
-const isMessageTooLong = (messageText: string): boolean => messageText.length > MAXIMUM_LENGTH_OF_MESSAGE;
-function isMessageEmpty(
-  messageText: string,
-  /* @conditional-compile-remove(file-sharing) */
-  attachmentMetadata?: FileMetadata[]
-): boolean {
-  /* @conditional-compile-remove(file-sharing) */
-  return messageText.trim().length === 0 && attachmentMetadata?.length === 0;
-  return messageText.trim().length === 0;
-}
-function getMessageState(
-  messageText: string,
-  /* @conditional-compile-remove(file-sharing) */ attachmentMetadata: FileMetadata[]
-): MessageState {
-  return isMessageEmpty(messageText, /* @conditional-compile-remove(file-sharing) */ attachmentMetadata)
-    ? 'too short'
-    : isMessageTooLong(messageText)
-    ? 'too long'
-    : 'OK';
-}
-
-/* @conditional-compile-remove(file-sharing) */
-// @TODO: Remove when file-sharing feature becomes stable.
-const getMessageAttachedFilesMetadata = (message: ChatMessage): FileMetadata[] | undefined => {
-  return message.files;
 };

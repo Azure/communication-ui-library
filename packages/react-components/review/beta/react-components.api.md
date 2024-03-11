@@ -43,15 +43,6 @@ export interface ActiveErrorMessage {
     type: ErrorType;
 }
 
-// @beta
-export interface ActiveFileUpload {
-    error?: SendBoxErrorBarError;
-    filename: string;
-    id: string;
-    progress: number;
-    uploadComplete?: boolean;
-}
-
 // Warning: (ae-internal-missing-underscore) The name "Announcer" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal
@@ -66,7 +57,16 @@ export type AnnouncerProps = {
 };
 
 // @beta
-export type AttachmentMetadata = FileMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ InlineImageMetadata;
+export interface AttachmentMetadata {
+    error?: SendBoxErrorBarError;
+    extension: string;
+    id: string;
+    name: string;
+    // (undocumented)
+    payload?: Record<string, string>;
+    progress?: number;
+    url?: string;
+}
 
 // @internal
 export type _AudioIssue = 'NoLocalAudio' | 'NoRemoteAudio' | 'Echo' | 'AudioNoise' | 'LowVolume' | 'AudioStoppedUnexpectedly' | 'DistortedSpeech' | 'AudioInterruption' | 'OtherIssues';
@@ -467,9 +467,7 @@ export interface ChatMessage extends MessageCommon {
     // (undocumented)
     failureReason?: string;
     // @beta
-    files?: FileMetadata[];
-    // @beta
-    inlineImages?: InlineImageMetadata[];
+    files?: AttachmentMetadata[];
     // (undocumented)
     messageType: 'chat';
     metadata?: Record<string, string>;
@@ -482,6 +480,19 @@ export interface ChatMessage extends MessageCommon {
     // (undocumented)
     status?: MessageStatus;
 }
+
+// @beta (undocumented)
+export const ChatMessageComponentAsRichTextEditBox: (props: ChatMessageComponentAsRichTextEditBoxProps) => JSX.Element;
+
+// @beta (undocumented)
+export type ChatMessageComponentAsRichTextEditBoxProps = {
+    onCancel?: (messageId: string) => void;
+    onSubmit: (text: string, metadata?: Record<string, string>, options?: {
+        attachmentMetadata?: AttachmentMetadata[];
+    }) => void;
+    message: ChatMessage;
+    strings: MessageThreadStrings;
+};
 
 // @beta
 export interface CommonSitePermissionsProps {
@@ -841,14 +852,16 @@ export const DEFAULT_COMPONENT_ICONS: {
     StartSpotlightContextualMenuItem: React_2.JSX.Element;
     StopSpotlightContextualMenuItem: React_2.JSX.Element;
     VideoSpotlighted: React_2.JSX.Element;
-    RTEBoldButtonIcon: React_2.JSX.Element;
-    RTEItalicButtonIcon: React_2.JSX.Element;
-    RTEUnderlineButtonIcon: React_2.JSX.Element;
-    RTEBulletListButtonIcon: React_2.JSX.Element;
-    RTEtNumberListButtonIcon: React_2.JSX.Element;
-    RTEIndentDecreaseButtonIcon: React_2.JSX.Element;
-    RTEIndentIncreaseButtonIcon: React_2.JSX.Element;
-    RTEDividerIcon: React_2.JSX.Element;
+    RichTextBoldButtonIcon: React_2.JSX.Element;
+    RichTextItalicButtonIcon: React_2.JSX.Element;
+    RichTextUnderlineButtonIcon: React_2.JSX.Element;
+    RichTextBulletListButtonIcon: React_2.JSX.Element;
+    RichTextNumberListButtonIcon: React_2.JSX.Element;
+    RichTextIndentDecreaseButtonIcon: React_2.JSX.Element;
+    RichTextIndentIncreaseButtonIcon: React_2.JSX.Element;
+    RichTextDividerIcon: React_2.JSX.Element;
+    RichTextEditorButtonIcon: React_2.JSX.Element;
+    RichTextEditorButtonIconFilled: React_2.JSX.Element;
 };
 
 // @beta (undocumented)
@@ -1158,19 +1171,17 @@ export interface FileCardMenuAction {
     // (undocumented)
     name: string;
     // (undocumented)
-    onClick: (file: FileMetadata | ActiveFileUpload, userId?: string) => void;
+    onClick: (attachment: AttachmentMetadata) => void;
 }
 
 // @internal
 export interface _FileCardProps {
-    file: FileMetadata | ActiveFileUpload;
+    file: AttachmentMetadata;
     // (undocumented)
     menuActions: FileCardMenuAction[];
     // (undocumented)
     progress?: number;
     strings?: _FileUploadCardsStrings;
-    // (undocumented)
-    userId?: string;
 }
 
 // @internal (undocumented)
@@ -1178,11 +1189,10 @@ export const _FileDownloadCards: (props: _FileDownloadCardsProps) => JSX.Element
 
 // @internal (undocumented)
 export interface _FileDownloadCardsProps {
-    fileMetadata?: AttachmentMetadata[];
+    attachment?: AttachmentMetadata[];
     menuActions?: FileCardMenuAction[];
     onDownloadErrorMessage?: (errMsg: string) => void;
     strings?: _FileDownloadCardsStrings;
-    userId: string;
 }
 
 // @internal
@@ -1201,18 +1211,6 @@ export interface FileDownloadError {
 export interface FileDownloadOptions {
     // (undocumented)
     menuActions: FileCardMenuAction[];
-}
-
-// @beta
-export interface FileMetadata {
-    // (undocumented)
-    attachmentType: 'file';
-    extension: string;
-    id: string;
-    name: string;
-    // (undocumented)
-    payload?: Record<string, string>;
-    url: string;
 }
 
 // @internal
@@ -1355,17 +1353,6 @@ export const imageOverlayTheme: PartialTheme;
 export interface InlineImage {
     imgAttrs: React_2.ImgHTMLAttributes<HTMLImageElement>;
     messageId: string;
-}
-
-// @beta
-export interface InlineImageMetadata {
-    // (undocumented)
-    attachmentType: 'inlineImage';
-    fullSizeImageSrc?: string;
-    id: string;
-    // (undocumented)
-    previewUrl?: string;
-    url: string;
 }
 
 // @beta
@@ -1722,7 +1709,7 @@ export interface OptionsDevice {
 export type _OverallIssue = 'CallCannotJoin' | 'CallCannotInvite' | 'HadToRejoin' | 'CallEndedUnexpectedly' | 'OtherIssues';
 
 // @public
-export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | /* @conditional-compile-remove(gallery-layouts) */ 'horizontalTop';
+export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | 'horizontalTop';
 
 // @public
 export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
@@ -2019,7 +2006,7 @@ export const RichTextSendBox: (props: RichTextSendBoxProps) => JSX.Element;
 
 // @beta
 export interface RichTextSendBoxProps {
-    activeFileUploads?: ActiveFileUpload[];
+    activeFileUploads?: AttachmentMetadata[];
     disabled?: boolean;
     onCancelFileUpload?: (fileId: string) => void;
     onRenderFileUploads?: () => JSX.Element;
@@ -2036,6 +2023,7 @@ export interface RichTextSendBoxStrings extends SendBoxStrings {
     increaseIndentTooltip: string;
     italicTooltip: string;
     numberListTooltip: string;
+    richTextFormatButtonTooltip: string;
     underlineTooltip: string;
 }
 
@@ -2072,7 +2060,7 @@ export interface SendBoxErrorBarError {
 // @public
 export interface SendBoxProps {
     // @beta
-    activeFileUploads?: ActiveFileUpload[];
+    activeFileUploads?: AttachmentMetadata[];
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
     // @beta
@@ -2627,7 +2615,7 @@ export interface _VideoEffectsItemStyles {
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
 // @public (undocumented)
-export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | /* @conditional-compile-remove(gallery-layouts) */ 'speaker' | /* @conditional-compile-remove(large-gallery) */ 'largeGallery' | /* @conditional-compile-remove(gallery-layouts) */ 'focusedContent';
+export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | 'speaker' | /* @conditional-compile-remove(large-gallery) */ 'largeGallery' | 'focusedContent';
 
 // @public
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {

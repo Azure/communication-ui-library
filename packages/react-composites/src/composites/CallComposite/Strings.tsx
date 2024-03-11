@@ -656,37 +656,30 @@ export interface CallCompositeStrings {
    * More details text of the page shown to the user when target participant id is malformed
    */
   participantIdIsMalformedMoreDetails?: string;
-  /* @conditional-compile-remove(gallery-layouts) */
   /**
    * Controls label to move the overflow gallery around
    */
   moreButtonGalleryControlLabel?: string;
-  /* @conditional-compile-remove(gallery-layouts) */
   /**
    * Label for the toggle to move the overflow gallery to the top
    */
   moreButtonGalleryPositionToggleLabel?: string;
-  /* @conditional-compile-remove(gallery-layouts) */
   /**
    * Label for the selection of the speaker layout
    */
   moreButtonGallerySpeakerLayoutLabel?: string;
-  /* @conditional-compile-remove(gallery-layouts) */
   /**
    * Label for the selection of the default (Gallery) layout
    */
   moreButtonGalleryDefaultLayoutLabel?: string;
-  /* @conditional-compile-remove(gallery-layouts) */
   /**
    * Label for the selection of the default (Gallery) layout
    */
   moreButtonLargeGalleryDefaultLayoutLabel?: string;
-  /* @conditional-compile-remove(gallery-layouts) */
   /**
    * Label for the selection of the floatingLocalVideo (Dynamic) layout
    */
   moreButtonGalleryFloatingLocalLayoutLabel?: string;
-  /* @conditional-compile-remove(gallery-layouts) */
   /**
    * Label for the selection of the focusedContentLayout (Focused content) layout
    */

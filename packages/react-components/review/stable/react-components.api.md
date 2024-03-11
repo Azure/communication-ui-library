@@ -56,7 +56,11 @@ export type AnnouncerProps = {
 };
 
 // @beta
-export type AttachmentMetadata = FileMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ InlineImageMetadata;
+export interface AttachmentMetadata {
+    extension: string;
+    name: string;
+    url: string;
+}
 
 // @public
 export interface BaseCustomStyles {
@@ -322,8 +326,6 @@ export interface ChatMessage extends MessageCommon {
     editedOn?: Date;
     // (undocumented)
     failureReason?: string;
-    // @beta
-    inlineImages?: InlineImageMetadata[];
     // (undocumented)
     messageType: 'chat';
     metadata?: Record<string, string>;
@@ -972,13 +974,6 @@ export interface FileDownloadError {
 // @beta
 export type FileDownloadHandler = (userId: string, fileMetadata: AttachmentMetadata) => Promise<URL | FileDownloadError>;
 
-// @beta
-export interface FileMetadata {
-    extension: string;
-    name: string;
-    url: string;
-}
-
 // @internal
 export interface _FileUploadCardsStrings {
     removeFile: string;
@@ -1100,17 +1095,6 @@ export const imageOverlayTheme: PartialTheme;
 export interface InlineImage {
     imgAttrs: React_2.ImgHTMLAttributes<HTMLImageElement>;
     messageId: string;
-}
-
-// @beta
-export interface InlineImageMetadata {
-    // (undocumented)
-    attachmentType: 'inlineImage';
-    fullSizeImageSrc?: string;
-    id: string;
-    // (undocumented)
-    previewUrl?: string;
-    url: string;
 }
 
 // @beta
@@ -1382,7 +1366,7 @@ export interface OptionsDevice {
 }
 
 // @public
-export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | /* @conditional-compile-remove(gallery-layouts) */ 'horizontalTop';
+export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | 'horizontalTop';
 
 // @public
 export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
@@ -2045,7 +2029,7 @@ export interface _VideoEffectsItemStyles {
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
 // @public (undocumented)
-export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | /* @conditional-compile-remove(gallery-layouts) */ 'speaker' | /* @conditional-compile-remove(gallery-layouts) */ 'focusedContent';
+export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | 'speaker' | 'focusedContent';
 
 // @public
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {

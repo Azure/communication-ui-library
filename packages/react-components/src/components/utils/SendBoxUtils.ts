@@ -1,8 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(file-sharing) */
-import { ActiveFileUpload } from '../FileUploadCards';
+import { AttachmentMetadata } from '../FileDownloadCards';
 
 /**
  * @private
@@ -14,10 +13,10 @@ const EMPTY_MESSAGE_REGEX = /^\s*$/;
 /**
  * @private
  */
-export const hasIncompleteFileUploads = (activeFileUploads: ActiveFileUpload[] | undefined): boolean => {
+export const hasIncompleteFileUploads = (activeFileUploads: AttachmentMetadata[] | undefined): boolean => {
   return !!(
     activeFileUploads?.length &&
-    !activeFileUploads.filter((fileUpload) => !fileUpload.error).every((fileUpload) => fileUpload.uploadComplete)
+    !activeFileUploads.filter((fileUpload) => !fileUpload.error).every((fileUpload) => fileUpload.progress === 1)
   );
 };
 
@@ -25,14 +24,14 @@ export const hasIncompleteFileUploads = (activeFileUploads: ActiveFileUpload[] |
 /**
  * @private
  */
-export const hasCompletedFileUploads = (activeFileUploads: ActiveFileUpload[] | undefined): boolean => {
+export const hasCompletedFileUploads = (activeFileUploads: AttachmentMetadata[] | undefined): boolean => {
   return !!activeFileUploads?.find((file) => !file.error);
 };
 
 /**
  * @private
  */
-export const exceedsMaxAllowedLength = (valueLength: number): boolean => {
+export const isMessageTooLong = (valueLength: number): boolean => {
   return valueLength > MAXIMUM_LENGTH_OF_MESSAGE;
 };
 

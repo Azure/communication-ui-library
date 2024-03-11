@@ -10,7 +10,7 @@ import { getFileUploads } from './baseSelectors';
 export const fileUploadsSelector = createSelector([getFileUploads], (fileUploads) => {
   const files = Object.values(fileUploads || {}).map((fileUpload) => ({
     ...fileUpload,
-    uploadComplete: !!fileUpload.metadata
+    uploadComplete: fileUpload.progress === 1
   }));
   return { files: files };
 });

@@ -111,15 +111,6 @@ export interface ActiveErrorMessage {
     type: ErrorType;
 }
 
-// @beta
-export interface ActiveFileUpload {
-    error?: SendBoxErrorBarError;
-    filename: string;
-    id: string;
-    progress: number;
-    uploadComplete?: boolean;
-}
-
 // @public
 export interface AdapterError extends Error {
     innerError: Error;
@@ -149,7 +140,16 @@ export type AreParamEqual<A extends (props: any) => JSX.Element | undefined, B e
 export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
 // @beta
-export type AttachmentMetadata = FileMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ InlineImageMetadata;
+export interface AttachmentMetadata {
+    error?: SendBoxErrorBarError;
+    extension: string;
+    id: string;
+    name: string;
+    // (undocumented)
+    payload?: Record<string, string>;
+    progress?: number;
+    url?: string;
+}
 
 // @public
 export type AvatarPersonaData = {
@@ -1711,6 +1711,7 @@ export type ChatCompositeOptions = {
     topic?: boolean;
     autoFocus?: 'sendBoxTextField';
     fileSharingOptions?: FileSharingOptions;
+    richTextEditor?: boolean | RichTextEditorOptions;
 };
 
 // @public
@@ -1781,9 +1782,7 @@ export interface ChatMessage extends MessageCommon {
     // (undocumented)
     failureReason?: string;
     // @beta
-    files?: FileMetadata[];
-    // @beta
-    inlineImages?: InlineImageMetadata[];
+    files?: AttachmentMetadata[];
     // (undocumented)
     messageType: 'chat';
     metadata?: Record<string, string>;
@@ -1802,7 +1801,7 @@ export type ChatMessageWithStatus = ChatMessage_2 & {
     clientMessageId?: string;
     status: MessageStatus;
     policyViolation?: boolean;
-    resourceCache?: Record<string, string>;
+    resourceCache?: Record<string, ResourceFetchResult>;
 };
 
 // @public
@@ -2486,14 +2485,16 @@ export const DEFAULT_COMPONENT_ICONS: {
     StartSpotlightContextualMenuItem: React_2.JSX.Element;
     StopSpotlightContextualMenuItem: React_2.JSX.Element;
     VideoSpotlighted: React_2.JSX.Element;
-    RTEBoldButtonIcon: React_2.JSX.Element;
-    RTEItalicButtonIcon: React_2.JSX.Element;
-    RTEUnderlineButtonIcon: React_2.JSX.Element;
-    RTEBulletListButtonIcon: React_2.JSX.Element;
-    RTEtNumberListButtonIcon: React_2.JSX.Element;
-    RTEIndentDecreaseButtonIcon: React_2.JSX.Element;
-    RTEIndentIncreaseButtonIcon: React_2.JSX.Element;
-    RTEDividerIcon: React_2.JSX.Element;
+    RichTextBoldButtonIcon: React_2.JSX.Element;
+    RichTextItalicButtonIcon: React_2.JSX.Element;
+    RichTextUnderlineButtonIcon: React_2.JSX.Element;
+    RichTextBulletListButtonIcon: React_2.JSX.Element;
+    RichTextNumberListButtonIcon: React_2.JSX.Element;
+    RichTextIndentDecreaseButtonIcon: React_2.JSX.Element;
+    RichTextIndentIncreaseButtonIcon: React_2.JSX.Element;
+    RichTextDividerIcon: React_2.JSX.Element;
+    RichTextEditorButtonIcon: React_2.JSX.Element;
+    RichTextEditorButtonIconFilled: React_2.JSX.Element;
 };
 
 // @public
@@ -2641,14 +2642,16 @@ export const DEFAULT_COMPOSITE_ICONS: {
     StartSpotlightContextualMenuItem: React_2.JSX.Element;
     StopSpotlightContextualMenuItem: React_2.JSX.Element;
     VideoSpotlighted: React_2.JSX.Element;
-    RTEBoldButtonIcon: React_2.JSX.Element;
-    RTEItalicButtonIcon: React_2.JSX.Element;
-    RTEUnderlineButtonIcon: React_2.JSX.Element;
-    RTEBulletListButtonIcon: React_2.JSX.Element;
-    RTEtNumberListButtonIcon: React_2.JSX.Element;
-    RTEIndentDecreaseButtonIcon: React_2.JSX.Element;
-    RTEIndentIncreaseButtonIcon: React_2.JSX.Element;
-    RTEDividerIcon: React_2.JSX.Element;
+    RichTextBoldButtonIcon: React_2.JSX.Element;
+    RichTextItalicButtonIcon: React_2.JSX.Element;
+    RichTextUnderlineButtonIcon: React_2.JSX.Element;
+    RichTextBulletListButtonIcon: React_2.JSX.Element;
+    RichTextNumberListButtonIcon: React_2.JSX.Element;
+    RichTextIndentDecreaseButtonIcon: React_2.JSX.Element;
+    RichTextIndentIncreaseButtonIcon: React_2.JSX.Element;
+    RichTextDividerIcon: React_2.JSX.Element;
+    RichTextEditorButtonIcon: React_2.JSX.Element;
+    RichTextEditorButtonIconFilled: React_2.JSX.Element;
 };
 
 // @beta
@@ -2865,7 +2868,7 @@ export interface FileCardMenuAction {
     // (undocumented)
     name: string;
     // (undocumented)
-    onClick: (file: FileMetadata | ActiveFileUpload, userId?: string) => void;
+    onClick: (attachment: AttachmentMetadata) => void;
 }
 
 // @beta
@@ -2877,18 +2880,6 @@ export interface FileDownloadError {
 export interface FileDownloadOptions {
     // (undocumented)
     menuActions: FileCardMenuAction[];
-}
-
-// @beta
-export interface FileMetadata {
-    // (undocumented)
-    attachmentType: 'file';
-    extension: string;
-    id: string;
-    name: string;
-    // (undocumented)
-    payload?: Record<string, string>;
-    url: string;
 }
 
 // @beta (undocumented)
@@ -2975,7 +2966,7 @@ export type GetCallingSelector<Component extends (props: any) => JSX.Element | u
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
 
 // @public
-export type GetChatSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof SendBox> extends true ? SendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? MessageThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? TypingIndicatorSelector : AreEqual<Component, typeof ParticipantList> extends true ? ChatParticipantListSelector : AreEqual<Component, typeof ErrorBar> extends true ? ChatErrorBarSelector : undefined;
+export type GetChatSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof SendBox> extends true ? SendBoxSelector : AreEqual<Component, typeof RichTextSendBox> extends true ? SendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? MessageThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? TypingIndicatorSelector : AreEqual<Component, typeof ParticipantList> extends true ? ChatParticipantListSelector : AreEqual<Component, typeof ErrorBar> extends true ? ChatErrorBarSelector : undefined;
 
 // @public
 export const getChatSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetChatSelector<Component>;
@@ -3098,17 +3089,6 @@ export interface IncomingCallState {
 export interface InlineImage {
     imgAttrs: React_2.ImgHTMLAttributes<HTMLImageElement>;
     messageId: string;
-}
-
-// @beta
-export interface InlineImageMetadata {
-    // (undocumented)
-    attachmentType: 'inlineImage';
-    fullSizeImageSrc?: string;
-    id: string;
-    // (undocumented)
-    previewUrl?: string;
-    url: string;
 }
 
 // @beta
@@ -3531,7 +3511,7 @@ export interface OptionsDevice {
 }
 
 // @public
-export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | /* @conditional-compile-remove(gallery-layouts) */ 'horizontalTop';
+export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | 'horizontalTop';
 
 // @public
 export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
@@ -3869,6 +3849,30 @@ export type ResourceDetails = {
     resourceUrl: string;
 };
 
+// @public
+export type ResourceFetchResult = {
+    sourceUrl: string;
+    error?: Error;
+};
+
+// @beta
+export interface RichTextEditorOptions {
+}
+
+// @beta
+export const RichTextSendBox: (props: RichTextSendBoxProps) => JSX.Element;
+
+// @beta
+export interface RichTextSendBoxProps {
+    activeFileUploads?: AttachmentMetadata[];
+    disabled?: boolean;
+    onCancelFileUpload?: (fileId: string) => void;
+    onRenderFileUploads?: () => JSX.Element;
+    onSendMessage: (content: string) => Promise<void>;
+    strings?: Partial<RichTextSendBoxStrings>;
+    systemMessage?: string;
+}
+
 // @beta
 export interface RichTextSendBoxStrings extends SendBoxStrings {
     boldTooltip: string;
@@ -3877,6 +3881,7 @@ export interface RichTextSendBoxStrings extends SendBoxStrings {
     increaseIndentTooltip: string;
     italicTooltip: string;
     numberListTooltip: string;
+    richTextFormatButtonTooltip: string;
     underlineTooltip: string;
 }
 
@@ -3919,7 +3924,7 @@ export interface SendBoxErrorBarError {
 // @public
 export interface SendBoxProps {
     // @beta
-    activeFileUploads?: ActiveFileUpload[];
+    activeFileUploads?: AttachmentMetadata[];
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
     // @beta
@@ -4489,7 +4494,7 @@ export interface VideoBackgroundReplacementEffect extends BackgroundReplacementC
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
 // @public (undocumented)
-export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | /* @conditional-compile-remove(gallery-layouts) */ 'speaker' | /* @conditional-compile-remove(large-gallery) */ 'largeGallery' | /* @conditional-compile-remove(gallery-layouts) */ 'focusedContent';
+export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | 'speaker' | /* @conditional-compile-remove(large-gallery) */ 'largeGallery' | 'focusedContent';
 
 // @public
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {

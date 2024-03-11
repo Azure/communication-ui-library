@@ -9,43 +9,7 @@ import { _FileCardGroup } from './FileCardGroup';
 import { iconButtonClassName } from './styles/IconButton.styles';
 import { useMemo } from 'react';
 import { useLocaleFileCardStringsTrampoline } from './utils/common';
-import { SendBoxErrorBarError } from './SendBoxErrorBar';
-
-/**
- * Attributes required for SendBox to show file uploads like name, progress etc.
- * @beta
- */
-export interface ActiveFileUpload {
-  /**
-   * Unique identifier for the file upload.
-   */
-  id: string;
-
-  /**
-   * File name to be rendered for uploaded file.
-   */
-  filename: string;
-
-  /**
-   * A number between 0 and 1 indicating the progress of the upload.
-   * This is unrelated to the `uploadComplete` property.
-   * It is only used to show the progress of the upload.
-   * Progress of 1 doesn't mark the upload as complete, set the `uploadComplete`
-   * property to true to mark the upload as complete.
-   */
-  progress: number;
-
-  /**
-   * Error to be displayed to the user if the upload fails.
-   */
-  error?: SendBoxErrorBarError;
-
-  /**
-   * `true` means that the upload is completed.
-   * This is independent of the upload `progress`.
-   */
-  uploadComplete?: boolean;
-}
+import { AttachmentMetadata } from './FileDownloadCards';
 
 /**
  * Strings of _FileUploadCards that can be overridden.
@@ -69,7 +33,7 @@ export interface FileUploadCardsProps {
    * Optional array of active file uploads where each object has attibutes
    * of a file upload like name, progress, errormessage etc.
    */
-  activeFileUploads?: ActiveFileUpload[];
+  activeFileUploads?: AttachmentMetadata[];
   /**
    * Optional callback to remove the file upload before sending by clicking on
    * cancel icon.

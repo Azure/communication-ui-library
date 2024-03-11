@@ -48,7 +48,6 @@ import {
 import { SidePaneHeader } from '../common/SidePaneHeader';
 import { CallControlOptions } from '../CallComposite/types/CallControlOptions';
 import { useUnreadMessagesTracker } from './ChatButton/useUnreadMessagesTracker';
-/* @conditional-compile-remove(gallery-layouts) */
 import { VideoGalleryLayout } from '@internal/react-components';
 /**
  * Props required for the {@link CallWithChatComposite}
@@ -175,7 +174,6 @@ export type CallWithChatCompositeOptions = {
    * @remarks if 'false' the local video tile will not be rendered.
    */
   localVideoTile?: boolean | LocalVideoTileOptions;
-  /* @conditional-compile-remove(gallery-layouts) */
   /**
    * Options for controlling the starting layout of the composite's video gallery
    */
@@ -302,7 +300,6 @@ type CallWithChatScreenProps = {
   remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
   /* @conditional-compile-remove(click-to-call) */
   localVideoTile?: boolean | LocalVideoTileOptions;
-  /* @conditional-compile-remove(gallery-layouts) */
   galleryOptions?: {
     layout?: VideoGalleryLayout;
   };
@@ -531,7 +528,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       /* @conditional-compile-remove(unsupported-browser) */
       onEnvironmentInfoTroubleshootingClick: props.onEnvironmentInfoTroubleshootingClick,
       remoteVideoTileMenuOptions: props.remoteVideoTileMenuOptions,
-      /* @conditional-compile-remove(gallery-layouts) */
+
       galleryOptions: props.galleryOptions,
       /* @conditional-compile-remove(click-to-call) */
       localVideoTile: props.localVideoTile,
@@ -559,7 +556,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       props.onNetworkingTroubleShootingClick,
       /* @conditional-compile-remove(call-readiness) */
       props.onPermissionsTroubleshootingClick,
-      /* @conditional-compile-remove(gallery-layouts) */
+
       props.galleryOptions,
       /* @conditional-compile-remove(click-to-call) */
       props.localVideoTile,
@@ -698,7 +695,6 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         fileSharingOptions={options?.fileSharingOptions}
         /* @conditional-compile-remove(click-to-call) */
         localVideoTile={options?.localVideoTile}
-        /* @conditional-compile-remove(gallery-layouts) */
         galleryOptions={options?.galleryOptions}
         /* @conditional-compile-remove(custom-branding) */
         logo={options?.branding?.logo}
