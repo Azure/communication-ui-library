@@ -14,6 +14,7 @@ export type ContainerProps = {
   errorBar?: boolean;
   showParticipants?: boolean;
   showTopic?: boolean;
+  showRichTextEditor?: boolean;
   locale?: CompositeLocale;
   formFactor?: 'desktop' | 'mobile';
   messages: string[];
@@ -54,6 +55,7 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
           rtl={props.rtl ?? false}
           options={{
             topic: props.showTopic,
+            richTextEditor: props.showRichTextEditor,
             participantPane: props.showParticipants
           }}
           locale={props.locale}

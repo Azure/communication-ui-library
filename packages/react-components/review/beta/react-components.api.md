@@ -66,7 +66,14 @@ export type AnnouncerProps = {
 };
 
 // @beta
-export type AttachmentMetadata = FileMetadata;
+export interface AttachmentMetadata {
+    extension: string;
+    id: string;
+    name: string;
+    // (undocumented)
+    payload?: Record<string, string>;
+    url: string;
+}
 
 // @internal
 export type _AudioIssue = 'NoLocalAudio' | 'NoRemoteAudio' | 'Echo' | 'AudioNoise' | 'LowVolume' | 'AudioStoppedUnexpectedly' | 'DistortedSpeech' | 'AudioInterruption' | 'OtherIssues';
@@ -447,8 +454,8 @@ export interface _CaptionsSettingsModalStrings {
     captionsSettingsSpokenLanguageDropdownLabel?: string;
 }
 
-// @beta
-export type ChatAttachmentType = 'unknown' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | /* @conditional-compile-remove(file-sharing) */ 'file';
+// @public
+export type ChatAttachmentType = 'unknown' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'image' | /* @conditional-compile-remove(file-sharing) */ 'file';
 
 // @public
 export interface ChatMessage extends MessageCommon {
@@ -467,7 +474,7 @@ export interface ChatMessage extends MessageCommon {
     // (undocumented)
     failureReason?: string;
     // @beta
-    files?: FileMetadata[];
+    files?: AttachmentMetadata[];
     // (undocumented)
     messageType: 'chat';
     metadata?: Record<string, string>;
@@ -480,6 +487,19 @@ export interface ChatMessage extends MessageCommon {
     // (undocumented)
     status?: MessageStatus;
 }
+
+// @beta (undocumented)
+export const ChatMessageComponentAsRichTextEditBox: (props: ChatMessageComponentAsRichTextEditBoxProps) => JSX.Element;
+
+// @beta (undocumented)
+export type ChatMessageComponentAsRichTextEditBoxProps = {
+    onCancel?: (messageId: string) => void;
+    onSubmit: (text: string, metadata?: Record<string, string>, options?: {
+        attachmentMetadata?: AttachmentMetadata[];
+    }) => void;
+    message: ChatMessage;
+    strings: MessageThreadStrings;
+};
 
 // @beta
 export interface CommonSitePermissionsProps {
@@ -839,14 +859,16 @@ export const DEFAULT_COMPONENT_ICONS: {
     StartSpotlightContextualMenuItem: React_2.JSX.Element;
     StopSpotlightContextualMenuItem: React_2.JSX.Element;
     VideoSpotlighted: React_2.JSX.Element;
-    RTEBoldButtonIcon: React_2.JSX.Element;
-    RTEItalicButtonIcon: React_2.JSX.Element;
-    RTEUnderlineButtonIcon: React_2.JSX.Element;
-    RTEBulletListButtonIcon: React_2.JSX.Element;
-    RTEtNumberListButtonIcon: React_2.JSX.Element;
-    RTEIndentDecreaseButtonIcon: React_2.JSX.Element;
-    RTEIndentIncreaseButtonIcon: React_2.JSX.Element;
-    RTEDividerIcon: React_2.JSX.Element;
+    RichTextBoldButtonIcon: React_2.JSX.Element;
+    RichTextItalicButtonIcon: React_2.JSX.Element;
+    RichTextUnderlineButtonIcon: React_2.JSX.Element;
+    RichTextBulletListButtonIcon: React_2.JSX.Element;
+    RichTextNumberListButtonIcon: React_2.JSX.Element;
+    RichTextIndentDecreaseButtonIcon: React_2.JSX.Element;
+    RichTextIndentIncreaseButtonIcon: React_2.JSX.Element;
+    RichTextDividerIcon: React_2.JSX.Element;
+    RichTextEditorButtonIcon: React_2.JSX.Element;
+    RichTextEditorButtonIconFilled: React_2.JSX.Element;
 };
 
 // @internal
@@ -1183,18 +1205,6 @@ export interface FileDownloadError {
 // @beta
 export type FileDownloadHandler = (userId: string, fileMetadata: AttachmentMetadata) => Promise<URL | FileDownloadError>;
 
-// @beta
-export interface FileMetadata {
-    // (undocumented)
-    attachmentType: 'file';
-    extension: string;
-    id: string;
-    name: string;
-    // (undocumented)
-    payload?: Record<string, string>;
-    url: string;
-}
-
 // @internal
 export interface _FileUploadCardsStrings {
     removeFile: string;
@@ -1308,10 +1318,10 @@ export interface _Identifiers {
     videoTile: string;
 }
 
-// @beta
+// @public
 export const ImageOverlay: (props: ImageOverlayProps) => JSX.Element;
 
-// @beta
+// @public
 export interface ImageOverlayProps {
     altText?: string;
     imageSrc: string;
@@ -1328,16 +1338,16 @@ export interface ImageOverlayStrings {
     downloadButtonLabel: string;
 }
 
-// @beta
+// @public
 export const imageOverlayTheme: PartialTheme;
 
-// @beta
+// @public
 export interface InlineImage {
-    imgAttrs: React_2.ImgHTMLAttributes<HTMLImageElement>;
+    imageAttributes: React_2.ImgHTMLAttributes<HTMLImageElement>;
     messageId: string;
 }
 
-// @beta
+// @public
 export interface InlineImageOptions {
     onRenderInlineImage?: (inlineImage: InlineImage, defaultOnRender: (inlineImage: InlineImage) => JSX.Element) => JSX.Element;
 }
@@ -1917,6 +1927,7 @@ export interface ReactionButtonProps extends ControlBarButtonProps {
 // @beta
 export interface ReactionButtonStrings {
     applauseReactionTooltipContent?: string;
+    ariaLabel: string;
     heartReactionTooltipContent?: string;
     label: string;
     laughReactionTooltipContent?: string;
@@ -2005,6 +2016,7 @@ export interface RichTextSendBoxStrings extends SendBoxStrings {
     increaseIndentTooltip: string;
     italicTooltip: string;
     numberListTooltip: string;
+    richTextFormatButtonTooltip: string;
     underlineTooltip: string;
 }
 

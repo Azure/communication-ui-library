@@ -3,7 +3,6 @@
 
 import React from 'react';
 import { AttachmentMetadata, _FileDownloadCards } from './FileDownloadCards';
-import { FileMetadata } from './FileDownloadCards';
 import { render, screen } from '@testing-library/react';
 import { registerIcons } from '@fluentui/react';
 
@@ -19,13 +18,13 @@ describe('FileDownloadCards should be rendered properly', () => {
   });
 
   it('should render if it is FileSharingMetadata', async () => {
-    const metadata = {
+    const metadata: AttachmentMetadata = {
       name: 'MockFileCard',
       extension: 'docx',
       url: 'mockUrl',
-      id: 'mockId',
-      attachmentType: 'file'
-    } as FileMetadata;
+      /* @conditional-compile-remove(file-sharing) */
+      id: 'mockId'
+    };
 
     const props = {
       userId: 'MockUserId',

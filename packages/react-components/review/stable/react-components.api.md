@@ -56,7 +56,11 @@ export type AnnouncerProps = {
 };
 
 // @beta
-export type AttachmentMetadata = FileMetadata;
+export interface AttachmentMetadata {
+    extension: string;
+    name: string;
+    url: string;
+}
 
 // @public
 export interface BaseCustomStyles {
@@ -303,8 +307,8 @@ export interface _CaptionsSettingsModalStrings {
     captionsSettingsSpokenLanguageDropdownLabel?: string;
 }
 
-// @beta
-export type ChatAttachmentType = 'unknown' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage';
+// @public
+export type ChatAttachmentType = 'unknown' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'image';
 
 // @public
 export interface ChatMessage extends MessageCommon {
@@ -970,13 +974,6 @@ export interface FileDownloadError {
 // @beta
 export type FileDownloadHandler = (userId: string, fileMetadata: AttachmentMetadata) => Promise<URL | FileDownloadError>;
 
-// @beta
-export interface FileMetadata {
-    extension: string;
-    name: string;
-    url: string;
-}
-
 // @internal
 export interface _FileUploadCardsStrings {
     removeFile: string;
@@ -1071,10 +1068,10 @@ export interface _Identifiers {
     videoTile: string;
 }
 
-// @beta
+// @public
 export const ImageOverlay: (props: ImageOverlayProps) => JSX.Element;
 
-// @beta
+// @public
 export interface ImageOverlayProps {
     altText?: string;
     imageSrc: string;
@@ -1091,16 +1088,16 @@ export interface ImageOverlayStrings {
     downloadButtonLabel: string;
 }
 
-// @beta
+// @public
 export const imageOverlayTheme: PartialTheme;
 
-// @beta
+// @public
 export interface InlineImage {
-    imgAttrs: React_2.ImgHTMLAttributes<HTMLImageElement>;
+    imageAttributes: React_2.ImgHTMLAttributes<HTMLImageElement>;
     messageId: string;
 }
 
-// @beta
+// @public
 export interface InlineImageOptions {
     onRenderInlineImage?: (inlineImage: InlineImage, defaultOnRender: (inlineImage: InlineImage) => JSX.Element) => JSX.Element;
 }
@@ -1270,7 +1267,6 @@ export interface MessageThreadStrings {
     editedTag: string;
     editMessage: string;
     failToSendTag?: string;
-    fileCardGroupMessage: string;
     friday: string;
     liveAuthorIntro: string;
     messageContentAriaText: string;
