@@ -172,7 +172,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     }
     const message = adapter.getState().thread.chatMessages[overlayImageItem?.messageId];
     const resourceCache = message.resourceCache;
-    if (overlayImageItem.imageSrc === '' && resourceCache) {
+    if (overlayImageItem.imageSrc === '' && resourceCache && resourceCache[overlayImageItem.imageUrl]) {
       const fullSizeImageSrc = getResourceSourceUrl(resourceCache[overlayImageItem.imageUrl]);
       if (fullSizeImageSrc === undefined || fullSizeImageSrc === '' || overlayImageItem.imageSrc === fullSizeImageSrc) {
         return;
