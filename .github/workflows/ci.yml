@@ -68,8 +68,6 @@ jobs:
       # Install dependencies
       - name: Install rush
         run: node common/scripts/install-run-rush.js install
-      - name: Install dependencies
-        run: rush install --max-install-attempts 3
       # Switch flavor if necessary
       - name: Switch flavor for build
         id: switch-flavor
@@ -165,71 +163,6 @@ jobs:
       # Install dependencies
       - name: Install rush
         run: node common/scripts/install-run-rush.js install
-      - name: Install dependencies
-        run: rush install --max-install-attempts 3
-      - name: Build Packages
-        run: rush build -t @azure/communication-react
-      - name: Test Packages
-        run: rush test:ci-coverage -t @azure/communication-react
-        env:
-          NODE_OPTIONS: '--max_old_space_size=4096'
-      - name: Merge all jest test coverage reports from the current branch
-        # No need to run this step when the base is a release branch
-        # but it's still needed for the upload bundle report step when main is updated
-        if: ${{ !startsWith(github.event.pull_request.base.ref, 'release/') }}
-        run: npx nyc merge temp/jest/coverage/detailed-report/ temp/jest/current/merge/detailed-full/coverage-report.json
-      - name: Create a summary report from the detailed report
-        # No need to run this step when the base is a release branch
-        # but it's still needed for the upload bundle report step when main is updated
-        if: ${{ !startsWith(github.event.pull_request.base.ref, 'release/') }}
-        run: npx nyc report --temp-dir temp/jest/current/merge/detailed-full/ --report-dir temp/jest/current/merge/summary/ --reporter json-summary
-
-      # Pull requests show details of coverage changes
-      - name: Get jest tests coverage of main from gist
-        if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
-        run: curl -o temp/jest/base/coverage-report.json "https://gist.github.com/communication-ui-bot/${{ matrix.coverage_gist_id }}/raw/communication-react-jest-report-${{ matrix.flavor }}.json" --create-dirs -L
-      - name: Calculate coverage change
-        if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
-        id: coverage
-        run: |
-          node ./common/config/workflows/coverage-utils.js ../../../temp/jest/base/coverage-report.json ../../../temp/jest/current/merge/summary/coverage-summary.json lines
-          node ./common/config/workflows/coverage-utils.js ../../../temp/jest/base/coverage-report.json ../../../temp/jest/current/merge/summary/coverage-summary.json statements
-          node ./common/config/workflows/coverage-utils.js ../../../temp/jest/base/coverage-report.json ../../../temp/jest/current/merge/summary/coverage-summary.json functions
-          node ./common/config/workflows/coverage-utils.js ../../../temp/jest/base/coverage-report.json ../../../temp/jest/current/merge/summary/coverage-summary.json branches
-      - name: Find Comment
-        if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
-        uses: peter-evans/find-comment@v2
-        id: fc
-        with:
-          issue-number: ${{ github.event.pull_request.number }}
-          comment-author: 'github-actions[bot]'
-          body-includes: '## @azure/communication-react jest test coverage for ***${{ matrix.flavor }}'
-      - name: Create or update comment
-        if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
-        uses: peter-evans/create-or-update-comment@v2
-        with:
-          comment-id: ${{ steps.fc.outputs.comment-id }}
-          issue-number: ${{ github.event.pull_request.number }}
-          body: |
-            ## @azure/communication-react jest test coverage for ***${{ matrix.flavor }}***.
-
-            |   | Lines | Statements | Functions | Branches |
-            | --- | :-------: | :-------: | :-------: | :-------: |
-            | Base |${{ steps.coverage.outputs.base_lines }}|${{ steps.coverage.outputs.base_statements }}|${{ steps.coverage.outputs.base_functions }}|${{ steps.coverage.outputs.base_branches }}|
-            | Current |${{ steps.coverage.outputs.current_lines }}|${{ steps.coverage.outputs.current_statements }}|${{ steps.coverage.outputs.current_functions }}|${{ steps.coverage.outputs.current_branches }}|
-            | Diff |${{ steps.coverage.outputs.lines_diff }}|${{ steps.coverage.outputs.statements_diff }}|${{ steps.coverage.outputs.functions_diff }}|${{ steps.coverage.outputs.branches_diff }}|
-          edit-mode: replace
-
-        # Main branch gets coverage report uploaded
-      - name: Upload bundle report to gist
-        if: github.ref == 'refs/heads/main'
-        uses: exuanbo/actions-deploy-gist@v1
-        with:
-          token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
-          gist_id: ${{ matrix.coverage_gist_id }}
-          gist_description: 'Jest report for tracking tests coverage for ${{ matrix.flavor }}'
-          gist_file_name: communication-react-jest-report-${{ matrix.flavor }}.json
-          file_path: temp/jest/current/merge/summary/coverage-summary.json
 
   in-progress-feature-validation:
     name: Check if in progress feature can be removed separately
@@ -260,8 +193,6 @@ jobs:
       # Install dependencies
       - name: Install rush
         run: node common/scripts/install-run-rush.js install
-      - name: Install dependencies
-        run: rush install --max-install-attempts 3
       # Switch flavor if necessary
       - name: Switch flavor for beta-release build
         id: switch-flavor
@@ -320,8 +251,6 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
         run: node common/scripts/install-run-rush.js install
-      - name: Install dependencies
-        run: rush install --max-install-attempts 3
       - uses: browser-actions/setup-chrome@v1
         id: setup-chrome
         with:
@@ -407,8 +336,6 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
         run: node common/scripts/install-run-rush.js install
-      - name: Install dependencies
-        run: rush install --max-install-attempts 3
       - uses: browser-actions/setup-chrome@v1
         id: setup-chrome
         with:
@@ -494,8 +421,6 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
         run: node common/scripts/install-run-rush.js install
-      - name: Install dependencies
-        run: rush install --max-install-attempts 3
       - uses: browser-actions/setup-chrome@v1
         id: setup-chrome
         with:
@@ -578,8 +503,6 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
         run: node common/scripts/install-run-rush.js install
-      - name: Install dependencies
-        run: rush install --max-install-attempts 3
       - uses: browser-actions/setup-chrome@v1
         id: setup-chrome
         with:
@@ -644,8 +567,6 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
         run: node common/scripts/install-run-rush.js install
-      - name: Install dependencies
-        run: rush install --max-install-attempts 3
       - name: Build
         run: rush build -o storybook
       - name: Tests
@@ -680,8 +601,6 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
         run: node common/scripts/install-run-rush.js install
-      - name: Install dependencies
-        run: rush install --max-install-attempts 3
       # Switch flavor if necessary
       - name: Switch flavor for build
         id: switch-flavor
@@ -733,8 +652,6 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
         run: node common/scripts/install-run-rush.js install
-      - name: Install dependencies
-        run: rush install --max-install-attempts 3
       # Switch flavor if necessary
       - name: Switch flavor for build
         id: switch-flavor
@@ -786,8 +703,6 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
         run: node common/scripts/install-run-rush.js install
-      - name: Install dependencies
-        run: rush install --max-install-attempts 3
       # Switch flavor if necessary
       - name: Switch flavor for build
         id: switch-flavor
@@ -829,8 +744,6 @@ jobs:
           node-version: 'lts/*'
       - name: Install rush
         run: node common/scripts/install-run-rush.js install
-      - name: Install dependencies
-        run: rush install --max-install-attempts 3
       - uses: browser-actions/setup-chrome@v1
         id: setup-chrome
         with:
@@ -893,8 +806,6 @@ jobs:
           node-version: 'lts/*'
       - name: Install rush
         run: node common/scripts/install-run-rush.js install
-      - name: Install dependencies
-        run: rush install --max-install-attempts 3
       - uses: browser-actions/setup-chrome@v1
         id: setup-chrome
         with:
