@@ -9,6 +9,7 @@ import { COMPOSITE_LOCALE_EN_US } from './locales';
 import { CallCompositeStrings } from '../CallComposite';
 import { CallWithChatCompositeStrings } from '../CallWithChatComposite';
 import { ChatCompositeStrings } from '../ChatComposite';
+import { CallingWidgetCompositeStrings } from '../CallingWidgetComposite/Strings';
 
 /**
  * Locale information for all composites exported from this library.
@@ -47,6 +48,11 @@ export interface CompositeStrings {
    * Strings used by {@link CallWithChatComposite}.
    */
   callWithChat: CallWithChatCompositeStrings;
+
+  /**
+   * Strings used by {@link CallingWidgetComposite}.
+   */
+  callingWidget: CallingWidgetCompositeStrings;
 }
 
 /**

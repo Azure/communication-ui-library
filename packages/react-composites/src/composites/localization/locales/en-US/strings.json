@@ -365,5 +365,13 @@
     "dialpadCloseModalButtonAriaLabel": "Close dialpad",
     "openDtmfDialpadLabel": "Show dialpad",
     "dtmfDialpadPlaceholderText": "Enter number"
+  },
+  "callingWidget": {
+    "startCallButtonNamePrompt": "Enter your name",
+    "startCallButtonStartCall": "Start Call",
+    "consentToDataCollectionLabel": "By checking this box, you are consenting that we will collect data from the call for customer support reasons",
+    "useLocalVideoCheckboxLabel": "Use video - Checking this box will enable camera controls and screen sharing",
+    "displayNameInputLabel": "Name",
+    "displayNamePlaceholderText": "Enter your name"
   }
 }

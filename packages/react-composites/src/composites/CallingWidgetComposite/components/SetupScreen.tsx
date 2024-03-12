@@ -17,6 +17,7 @@ import {
   startCallButtonStyles
 } from '../styles/CallingWidgetComposite.styles';
 import { CustomField } from '../CallingWidgetComposite';
+import { useLocale } from '../../localization';
 
 export interface SetupScreenProps {
   setUseLocalVideo: (useVideo: boolean) => void;
@@ -50,6 +51,7 @@ export const SetupScreen = (props: SetupScreenProps): JSX.Element => {
   } = props;
 
   const theme = useTheme();
+  const locale = useLocale().strings.callingWidget;
 
   /**
    * Render function to display the new custome fields passed in by Contoso
@@ -98,16 +100,16 @@ export const SetupScreen = (props: SetupScreenProps): JSX.Element => {
         <Stack style={{ transform: 'scale(1.8)' }}>{onRenderLogo && onRenderLogo()}</Stack>
       </Stack>
       <TextField
-        label={'Name'}
+        label={locale.displayNameInputLabel}
         required={true}
-        placeholder={'Enter your name'}
+        placeholder={locale.displayNamePlaceholderText}
         onChange={(_, newValue) => {
           setDisplayName(newValue);
         }}
       />
       <Checkbox
         styles={checkboxStyles(theme)}
-        label={'Use video - Checking this box will enable camera controls and screen sharing'}
+        label={locale.useLocalVideoCheckboxLabel}
         onChange={(_, checked?: boolean | undefined) => {
           setUseLocalVideo(!!checked);
           setUseLocalVideo(true);
@@ -118,9 +120,7 @@ export const SetupScreen = (props: SetupScreenProps): JSX.Element => {
         required={true}
         styles={checkboxStyles(theme)}
         disabled={displayName === undefined}
-        label={
-          'By checking this box, you are consenting that we will collect data from the call for customer support reasons'
-        }
+        label={locale.consentToDataCollectionLabel}
         onChange={async (_, checked?: boolean | undefined) => {
           setConsentToData(!!checked);
           if (callAdapterArgs && callAdapterArgs.credential) {
@@ -170,9 +170,9 @@ export const SetupScreen = (props: SetupScreenProps): JSX.Element => {
           }
         }}
       >
-        {!consentToData && `Enter your name`}
+        {!consentToData && `${locale.startCallButtonNamePrompt}`}
         {consentToData && !adapter && <Spinner ariaLive="assertive" labelPosition="top" />}
-        {consentToData && adapter && `StartCall`}
+        {consentToData && adapter && `${locale.startCallButtonStartCall}`}
       </PrimaryButton>
     </Stack>
   );
