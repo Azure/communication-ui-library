@@ -49,7 +49,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       # Ensure node version is great enough
       - name: Use Node.js
         uses: actions/setup-node@v4
@@ -139,7 +139,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       # Ensure node version is great enough
       - name: Use Node.js
         uses: actions/setup-node@v4
@@ -227,7 +227,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       # Ensure node version is great enough
       - name: Use Node.js
         uses: actions/setup-node@v4
@@ -283,7 +283,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -363,7 +363,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -443,7 +443,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -520,7 +520,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -579,7 +579,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -608,7 +608,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -654,7 +654,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -700,7 +700,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -748,7 +748,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -812,7 +812,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
