@@ -52,7 +52,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
-      # Try get node_modules from cache
+      # Try restore deps from cache
+      - name: Restore rush install from cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            common/temp/install-run
+            ~/.rush
+          key: ${{ runner.os }}-${{ hashFiles('rush.json') }}
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -142,7 +149,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
-      # Try get node_modules from cache
+      # Try restore deps from cache
+      - name: Restore rush install from cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            common/temp/install-run
+            ~/.rush
+          key: ${{ runner.os }}-${{ hashFiles('rush.json') }}
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -230,7 +244,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
-      # Try get node_modules from cache
+      # Try restore deps from cache
+      - name: Restore rush install from cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            common/temp/install-run
+            ~/.rush
+          key: ${{ runner.os }}-${{ hashFiles('rush.json') }}
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -285,6 +306,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
+      - name: Restore rush install from cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            common/temp/install-run
+            ~/.rush
+          key: ${{ runner.os }}-${{ hashFiles('rush.json') }}
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -365,6 +393,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
+      - name: Restore rush install from cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            common/temp/install-run
+            ~/.rush
+          key: ${{ runner.os }}-${{ hashFiles('rush.json') }}
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -445,6 +480,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
+      - name: Restore rush install from cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            common/temp/install-run
+            ~/.rush
+          key: ${{ runner.os }}-${{ hashFiles('rush.json') }}
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -522,6 +564,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
+      - name: Restore rush install from cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            common/temp/install-run
+            ~/.rush
+          key: ${{ runner.os }}-${{ hashFiles('rush.json') }}
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -581,6 +630,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
+      - name: Restore rush install from cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            common/temp/install-run
+            ~/.rush
+          key: ${{ runner.os }}-${{ hashFiles('rush.json') }}
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -610,6 +666,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
+      - name: Restore rush install from cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            common/temp/install-run
+            ~/.rush
+          key: ${{ runner.os }}-${{ hashFiles('rush.json') }}
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -656,6 +719,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
+      - name: Restore rush install from cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            common/temp/install-run
+            ~/.rush
+          key: ${{ runner.os }}-${{ hashFiles('rush.json') }}
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -702,6 +772,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
+      - name: Restore rush install from cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            common/temp/install-run
+            ~/.rush
+          key: ${{ runner.os }}-${{ hashFiles('rush.json') }}
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
