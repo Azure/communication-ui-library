@@ -9,7 +9,7 @@ import { expect } from '@playwright/test';
 import { dataUiId, stableScreenshot } from '../../common/utils';
 
 /* @conditional-compile-remove(image-overlay) */
-test.describe.only('ImageOverlay tests', () => {
+test.describe('ImageOverlay tests', () => {
   test('ImageOverlay loads correctly when an inline image is clicked', async ({ page, serverUrl }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
