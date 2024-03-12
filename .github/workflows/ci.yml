@@ -3,9 +3,6 @@ name: CI
 on:
   # Postsubmit CI on main.
   push:
-    branches:
-      - main
-      - release/**
   # Presubmit CI on PRs to all branches.
   pull_request:
   # Allows you to run this workflow manually from the Actions tab.
@@ -55,12 +52,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
-      # Try get node_modules from cache
-      - name: Restore node_modules from cache
-        uses: actions/cache@v3
-        with:
-          path: common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       # Install dependencies
       - name: Install rush
         run: npm install -g @microsoft/rush
@@ -145,12 +136,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
-      # Try get node_modules from cache
-      - name: Restore node_modules from cache
-        uses: actions/cache@v3
-        with:
-          path: common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       # Install dependencies
       - name: Install rush
         run: npm install -g @microsoft/rush
@@ -233,12 +218,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
-      # Try get node_modules from cache
-      - name: Restore node_modules from cache
-        uses: actions/cache@v3
-        with:
-          path: common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       # Install dependencies
       - name: Install rush
         run: npm install -g @microsoft/rush
@@ -288,11 +267,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
-      - name: Restore node_modules from cache
-        uses: actions/cache@v3
-        with:
-          path: common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
         run: npm install -g @microsoft/rush
       - name: Install dependencies
@@ -368,11 +342,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
-      - name: Restore node_modules from cache
-        uses: actions/cache@v3
-        with:
-          path: common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
         run: npm install -g @microsoft/rush
       - name: Install dependencies
@@ -448,11 +417,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
-      - name: Restore node_modules from cache
-        uses: actions/cache@v3
-        with:
-          path: common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
         run: npm install -g @microsoft/rush
       - name: Install dependencies
@@ -525,11 +489,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
-      - name: Restore node_modules from cache
-        uses: actions/cache@v3
-        with:
-          path: common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
         run: npm install -g @microsoft/rush
       - name: Install dependencies
@@ -584,11 +543,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
-      - name: Restore node_modules from cache
-        uses: actions/cache@v3
-        with:
-          path: common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
         run: npm install -g @microsoft/rush
       - name: Install dependencies
@@ -613,11 +567,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
-      - name: Restore node_modules from cache
-        uses: actions/cache@v3
-        with:
-          path: common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
         run: npm install -g @microsoft/rush
       - name: Install dependencies
@@ -659,11 +608,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
-      - name: Restore node_modules from cache
-        uses: actions/cache@v3
-        with:
-          path: common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
         run: npm install -g @microsoft/rush
       - name: Install dependencies
@@ -705,11 +649,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
-      - name: Restore node_modules from cache
-        uses: actions/cache@v3
-        with:
-          path: common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
         run: npm install -g @microsoft/rush
       - name: Install dependencies
