@@ -3,9 +3,6 @@ name: CI
 on:
   # Postsubmit CI on main.
   push:
-    branches:
-      - main
-      - release/**
   # Presubmit CI on PRs to all branches.
   pull_request:
   # Allows you to run this workflow manually from the Actions tab.

@@ -6,6 +6,7 @@
   "main": "dist/dist-cjs/index.js",
   "types": "dist/calling-stateful-client.d.ts",
   "scripts": {
+    "swc": "swc",
     "build": "rushx _by-flavor \"rushx _build:by-flavor\"",
     "build:esm": "npm run _if-preprocess && rushx preprocess && tsc -project tsconfig.preprocess.json || (if-env COMMUNICATION_REACT_FLAVOR=beta && tsc)",
     "build:cjs": "rollup -c --silent --failAfterWarnings",
@@ -48,6 +49,8 @@
     "@babel/core": "^7.23.9",
     "@microsoft/api-documenter": "~7.23.30",
     "@microsoft/api-extractor": "~7.42.3",
+    "@swc/cli": "^0.3.10",
+    "@swc/core": "^1.4.6",
     "@types/jest": "^29.5.11",
     "@types/react": "18.2.64",
     "@typescript-eslint/eslint-plugin": "^6.19.1",
