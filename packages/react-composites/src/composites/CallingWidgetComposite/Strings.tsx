@@ -3,6 +3,7 @@
 
 /**
  * Strings for localizing the {@link CallingWidgetComposite}
+ * @public
  */
 export interface CallingWidgetCompositeStrings {
   /**

@@ -8,3 +8,4 @@ export type {
   WidgetPosition,
   CallingWidgetCallCompositeOptions
 } from './CallingWidgetComposite';
+export type { CallingWidgetCompositeStrings } from './Strings';

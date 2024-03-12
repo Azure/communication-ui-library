@@ -31,7 +31,7 @@ export const WaitingScreen = (props: WaitingScreenProps): JSX.Element => {
           background: theme.palette.themePrimary
         }}
       >
-        <Icon iconName="callAdd" styles={callIconStyles(theme)} />
+        <Icon iconName={'WaitingStatePrimary'} styles={callIconStyles(theme)} />
       </Stack>
     </Stack>
   );

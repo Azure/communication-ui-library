@@ -18,7 +18,9 @@ import {
   Video20Filled,
   VideoOff20Filled,
   WifiWarning20Filled,
-  Circle20Regular
+  Circle20Regular,
+  CallAdd20Regular,
+  Dismiss16Regular
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(spotlight) */
 import { MoreHorizontal20Filled, VideoPersonStarOff20Filled } from '@fluentui/react-icons';
@@ -120,7 +122,9 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   /* @conditional-compile-remove(spotlight) */
   PeoplePaneMoreButton: <MoreHorizontal20Filled />,
   /* @conditional-compile-remove(spotlight) */
-  StopAllSpotlightMenuButton: <VideoPersonStarOff20Filled />
+  StopAllSpotlightMenuButton: <VideoPersonStarOff20Filled />,
+  WaitingStatePrimary: <CallAdd20Regular />,
+  WidgetDismiss: <Dismiss16Regular />
 };
 
 /**
@@ -396,10 +400,32 @@ export const CallWithChatCompositeIcon = (props: CompositeIconProps<CallWithChat
 );
 
 /**
+ * Icons that can be overriden for {@link CallingWidgetComposite}.
+ *
+ * @public
+ */
+export type CallingWidgetCompositeIcons = {
+  WaitingStatePrimary?: JSX.Element;
+  WidgetDismiss?: JSX.Element;
+};
+/**
+ * Icon wrapper to use when including customizable icons inside the {@link CallingWidgetComposite}.
+ * This wrapper ensures the icon name is being type-checked helping ensure no typos and ensure
+ * that icon is customizable through the composite API.
+ * @private
+ */
+export const CallingWidgetCompositeIcon = (props: CompositeIconProps<CallingWidgetCompositeIcons>): JSX.Element => (
+  <FontIcon {...props} />
+);
+
+/**
  * Icons that can be overridden in one of the composites exported by this library.
  *
  * See {@link ChatCompositeIcons}, {@link CallCompositeIcons} and {@link CallWithChatCompositeIcons} for more targeted types.
  *
  * @public
  */
-export type CompositeIcons = ChatCompositeIcons & CallCompositeIcons & CallWithChatCompositeIcons;
+export type CompositeIcons = ChatCompositeIcons &
+  CallCompositeIcons &
+  CallWithChatCompositeIcons &
+  CallingWidgetCompositeIcons;

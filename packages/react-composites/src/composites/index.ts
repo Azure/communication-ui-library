@@ -36,7 +36,8 @@ export type {
   CompositeIcons,
   ChatCompositeIcons,
   CallCompositeIcons,
-  CallWithChatCompositeIcons
+  CallWithChatCompositeIcons,
+  CallingWidgetCompositeIcons
 } from './common/icons';
 export * from './localization/locales';
 export type { CompositeStrings, CompositeLocale } from './localization';

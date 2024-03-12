@@ -923,18 +923,33 @@ export type CallingWidgetCallCompositeOptions = Partial<CallCompositeOptions> & 
     showVideoOptIn?: boolean;
     customFieldProps: CustomField[];
     onRenderLogo?: () => JSX.Element;
-    widgetTheme?: Theme;
 };
 
 // @public
 export const CallingWidgetComposite: (props: CallingWidgetCompositeProps) => JSX.Element;
 
 // @public
-export interface CallingWidgetCompositeProps {
-    adapterProps: AzureCommunicationOutboundCallAdapterArgs;
+export type CallingWidgetCompositeIcons = {
+    WaitingStatePrimary?: JSX.Element;
+    Dismiss?: JSX.Element;
+};
+
+// @public
+export interface CallingWidgetCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
+    adapterProps: AzureCommunicationOutboundCallAdapterArgs | AzureCommunicationCallAdapterArgs;
     onRenderIdleWidget?: () => JSX.Element;
     options?: CallingWidgetCallCompositeOptions;
     position?: WidgetPosition;
+}
+
+// @public
+export interface CallingWidgetCompositeStrings {
+    consentToDataCollectionLabel: string;
+    displayNameInputLabel: string;
+    displayNamePlaceholderText: string;
+    startCallButtonNamePrompt: string;
+    startCallButtonStartCall: string;
+    useLocalVideoCheckboxLabel: string;
 }
 
 // @public
@@ -2228,7 +2243,7 @@ export const COMPOSITE_LOCALE_ZH_TW: CompositeLocale;
 export const COMPOSITE_ONLY_ICONS: CompositeIcons;
 
 // @public
-export type CompositeIcons = ChatCompositeIcons & CallCompositeIcons & CallWithChatCompositeIcons;
+export type CompositeIcons = ChatCompositeIcons & CallCompositeIcons & CallWithChatCompositeIcons & CallingWidgetCompositeIcons;
 
 // @public
 export interface CompositeLocale {
@@ -2239,6 +2254,7 @@ export interface CompositeLocale {
 // @public
 export interface CompositeStrings {
     call: CallCompositeStrings;
+    callingWidget: CallingWidgetCompositeStrings;
     callWithChat: CallWithChatCompositeStrings;
     chat: ChatCompositeStrings;
 }
@@ -2403,6 +2419,7 @@ export interface CustomCallControlButtonStrings {
 // @public
 export interface CustomField {
     kind: 'checkBox' | 'inputBox';
+    label: string;
     onCallStart: () => void;
     onChange: (newValue: boolean | string) => void;
 }
@@ -2629,6 +2646,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MoreDrawerSelectedMicrophone?: JSX.Element | undefined;
     MoreDrawerSelectedSpeaker?: JSX.Element | undefined;
     MoreDrawerSpeakers?: JSX.Element | undefined;
+    WaitingStatePrimary?: JSX.Element | undefined;
+    Dismiss?: JSX.Element | undefined;
     ChatMessageOptions: React_2.JSX.Element;
     ControlButtonParticipantsContextualMenuItem: React_2.JSX.Element;
     CancelFileUpload: React_2.JSX.Element;
