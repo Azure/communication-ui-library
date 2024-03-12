@@ -1,0 +1,18 @@
+{
+  "sourceMaps": true,
+  "module": {
+    "type": "es6",
+    "strictMode": true,
+    "noInterop": false
+  },
+  "jsc": {
+    "externalHelpers": false,
+    "target": "esnext",
+    "parser": {
+      "syntax": "typescript",
+      "tsx": true,
+      "decorators": true,
+      "dynamicImport": true
+    }
+  }
+}
