@@ -71,6 +71,7 @@ export const FakeAdapterApp = (): JSX.Element => {
           fakeChatAdapterArgs.localParticipant,
           fakeChatAdapterArgs.remoteParticipants[0],
           fakeAdapters.service.threadId,
+          fakeChatAdapterArgs.serverUrl ?? '',
           fakeChatAdapterArgs.inlineImageUrl
         );
       }
@@ -174,11 +175,12 @@ const sendRemoteInlineImageMessage = (
   localParticipant: ChatParticipant,
   remoteParticipant: ChatParticipant,
   threadId: string,
+  serverUrl: string,
   inlineImageUrl?: string
 ): void => {
   const localParticipantId = getIdentifierKind(localParticipant.id);
   const remoteParticipantId = getIdentifierKind(remoteParticipant.id);
-  const imgSrc = inlineImageUrl || 'images/inlineImageExample1.png';
+  const imgSrc = serverUrl + (inlineImageUrl || '/images/inlineImageExample1.png');
   if (localParticipantId.kind === 'microsoftTeamsApp' || remoteParticipantId.kind === 'microsoftTeamsApp') {
     throw new Error('Unsupported identifier kind: microsoftBot');
   }
@@ -197,7 +199,7 @@ const sendRemoteInlineImageMessage = (
           attachmentType: 'image',
           name: '',
           url: imgSrc,
-          previewUrl: 'images/inlineImageExample1.png'
+          previewUrl: imgSrc
         }
       ]
     },

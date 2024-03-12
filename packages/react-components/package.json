@@ -75,6 +75,7 @@
     "@microsoft/api-documenter": "~7.23.30",
     "@microsoft/api-extractor": "~7.42.3",
     "@playwright/experimental-ct-react": "~1.39.0",
+    "playwright-core": "~1.39.0",
     "@rollup/plugin-json": "^6.0.1",
     "@testing-library/dom": "^9.3.1",
     "@testing-library/jest-dom": "^6.3.0",
