@@ -91,7 +91,7 @@ export const GenerateMockNewChatMessageWithFileAttachment = (): ChatMessage => {
     messageId: Math.random().toString(),
     content: '<p>Check out these files:&nbsp;</p>',
     createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
-    mine: false,
+    mine: true,
     attached: false,
     contentType: 'html',
     files: [
@@ -99,15 +99,13 @@ export const GenerateMockNewChatMessageWithFileAttachment = (): ChatMessage => {
         id: 'SomeUniqueId1',
         name: 'Annual Report.xlsx',
         extension: 'xlsx',
-        url: 'https://www.example.com/files/RouterConfig.xlsx',
-        attachmentType: 'file'
+        url: 'https://www.sharepoint.com/'
       },
       {
         id: 'SomeUniqueId2',
         name: 'Business Report.pdf',
         extension: 'pdf',
-        url: 'https://www.example.com/files/RouterConfig.xlsx',
-        attachmentType: 'file'
+        url: 'https://www.example.com/files/RouterConfig.xlsx'
       }
     ]
   };

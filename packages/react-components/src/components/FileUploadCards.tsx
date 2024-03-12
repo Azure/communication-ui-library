@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Icon, IconButton } from '@fluentui/react';
+import { Icon } from '@fluentui/react';
 import React from 'react';
 import { _FileCard } from './FileCard';
 import { _FileCardGroup } from './FileCardGroup';
 // import { extension } from './utils';
-import { iconButtonClassName } from './styles/IconButton.styles';
+// import { iconButtonClassName } from './styles/IconButton.styles';
 import { useMemo } from 'react';
 import { useLocaleFileCardStringsTrampoline } from './utils/common';
 import { AttachmentMetadata } from './FileDownloadCards';
@@ -80,9 +80,9 @@ export const _FileUploadCards = (props: FileUploadCardsProps): JSX.Element => {
                 {
                   name: 'remove',
                   icon: (
-                    <IconButton className={iconButtonClassName} ariaLabel={removeFileButtonString()}>
+                    <div aria-label={removeFileButtonString()}>
                       <Icon iconName="CancelFileUpload" style={actionIconStyle} />
-                    </IconButton>
+                    </div>
                   ),
                   onClick: () => {
                     props.onCancelFileUpload && props.onCancelFileUpload(file.id);

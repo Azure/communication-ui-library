@@ -16,13 +16,13 @@ export interface FileUploadButtonProps {
    * A string containing the comma separated list of accepted file types.
    * Similar to the `accept` attribute of the `<input type="file" />` element.
    */
-  accept?: string;
+  acceptedFileTypes?: string[];
   /**
    * Allows multiple files to be selected if set to `true`.
    * Default value is `false`.
    * Similar to the `multiple` attribute of the `<input type="file" />` element.
    */
-  multiple?: boolean;
+  canUploadMultiple?: boolean;
   /**
    * onChange handler for the file upload button.
    * Similar to the `onChange` attribute of the `<input type="file" />` element.
@@ -38,7 +38,7 @@ export interface FileUploadButtonProps {
 export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const theme = useTheme();
-  const { accept, multiple = false, onChange } = props;
+  const { acceptedFileTypes, canUploadMultiple = false, onChange } = props;
 
   const fileUploadButtonClassName = mergeStyles({
     width: '1.5rem',
@@ -77,8 +77,8 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
       <input
         ref={inputRef}
         hidden
-        multiple={multiple}
-        accept={accept}
+        multiple={canUploadMultiple}
+        accept={acceptedFileTypes?.join(',')}
         type="file"
         onClick={(e) => {
           // To ensure that `onChange` is fired even if the same file is picked again.
@@ -107,7 +107,7 @@ const SendBoxAttachFileIconTrampoline = (): JSX.Element => {
 export const FileUploadButtonWrapper = (
   // To make conditional compilation not throw errors.
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  props: Pick<FileUploadButtonProps, 'accept' | 'multiple' | 'onChange'>
+  props: Pick<FileUploadButtonProps, 'acceptedFileTypes' | 'canUploadMultiple' | 'onChange'>
 ): JSX.Element => {
   return (
     <>

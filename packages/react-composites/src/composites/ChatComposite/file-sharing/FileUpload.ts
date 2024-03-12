@@ -17,14 +17,14 @@ export interface FileUploadOptions {
    * Accepts any type of file if not specified.
    * @beta
    */
-  accept?: string;
+  acceptedFileTypes?: string[];
   /**
    * Allows multiple files to be selected if set to `true`.
    * Similar to the `multiple` attribute of the `<input type="file" />` element.
    * @defaultValue false
    * @beta
    */
-  multiple?: boolean;
+  canUploadMultiple?: boolean;
   /**
    * A function of type {@link FileUploadHandler} for handling file uploads.
    * @beta

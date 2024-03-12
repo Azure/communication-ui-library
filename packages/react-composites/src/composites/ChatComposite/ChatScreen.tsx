@@ -359,14 +359,14 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     }
     return (
       <FileUploadButton
-        accept={fileSharingOptions?.uploadOptions?.accept}
-        multiple={fileSharingOptions?.uploadOptions?.multiple}
+        acceptedFileTypes={fileSharingOptions?.uploadOptions?.acceptedFileTypes}
+        canUploadMultiple={fileSharingOptions?.uploadOptions?.canUploadMultiple}
         onChange={fileUploadButtonOnChange}
       />
     );
   }, [
-    fileSharingOptions?.uploadOptions?.accept,
-    fileSharingOptions?.uploadOptions?.multiple,
+    fileSharingOptions?.uploadOptions?.acceptedFileTypes,
+    fileSharingOptions?.uploadOptions?.canUploadMultiple,
     fileSharingOptions?.uploadOptions?.handler,
     fileUploadButtonOnChange
   ]);
