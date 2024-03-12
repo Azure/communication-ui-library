@@ -172,7 +172,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     }
     const message = adapter.getState().thread.chatMessages[overlayImageItem?.messageId];
     const resourceCache = message.resourceCache;
-    if (overlayImageItem.imageSrc === '' && resourceCache) {
+    if (overlayImageItem.imageSrc === '' && resourceCache && resourceCache[overlayImageItem.imageUrl]) {
       const fullSizeImageSrc = getResourceSourceUrl(resourceCache[overlayImageItem.imageUrl]);
       if (fullSizeImageSrc === undefined || fullSizeImageSrc === '' || overlayImageItem.imageSrc === fullSizeImageSrc) {
         return;
@@ -256,7 +256,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   /* @conditional-compile-remove(image-overlay) */
   const onInlineImageClicked = useCallback(
-    async (attachmentId: string, messageId: string): Promise<void> => {
+    (attachmentId: string, messageId: string) => {
       const message = adapter.getState().thread.chatMessages[messageId];
       const inlinedImages = message.content?.attachments?.filter((attachment) => {
         return attachment.attachmentType === 'image' && attachment.id === attachmentId;
@@ -314,12 +314,23 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       defaultOnRender: (inlineImage: InlineImage) => JSX.Element
     ): JSX.Element => {
       const message = adapter.getState().thread.chatMessages[inlineImage.messageId];
-      const attachments = message?.content?.attachments?.find(
+      const attachment = message?.content?.attachments?.find(
         (attachment) => attachment.id === inlineImage.imageAttributes.id
       );
 
-      if (attachments === undefined) {
+      if (attachment === undefined) {
         return defaultOnRender(inlineImage);
+      }
+
+      let pointerEvents: 'none' | 'auto' = inlineImage.imageAttributes.src === '' ? 'none' : 'auto';
+      const resourceCache = message.resourceCache;
+      if (
+        resourceCache &&
+        attachment.previewUrl &&
+        resourceCache[attachment.previewUrl] &&
+        resourceCache[attachment.previewUrl].error
+      ) {
+        pointerEvents = 'none';
       }
 
       return (
@@ -333,7 +344,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
               onInlineImageClicked(inlineImage.imageAttributes.id || '', inlineImage.messageId);
             }
           }}
-          style={{ cursor: 'pointer' }}
+          style={{ cursor: 'pointer', pointerEvents }}
         >
           {defaultOnRender(inlineImage)}
         </span>

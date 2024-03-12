@@ -156,6 +156,16 @@ jobs:
         run: npm install -g @microsoft/rush
       - name: Install dependencies
         run: rush install --max-install-attempts 3
+      # Switch flavor if necessary
+      - name: Switch flavor for build
+        id: switch-flavor
+        if: ${{ matrix.flavor != 'beta' }}
+        run: |
+          rush switch-flavor:${{ matrix.flavor }}
+          node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
+      - name: Run dependency update for stable
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush update:stable
       - name: Build Packages
         run: rush build -t @azure/communication-react
       - name: Test Packages
@@ -172,7 +182,12 @@ jobs:
         # but it's still needed for the upload bundle report step when main is updated
         if: ${{ !startsWith(github.event.pull_request.base.ref, 'release/') }}
         run: npx nyc report --temp-dir temp/jest/current/merge/detailed-full/ --report-dir temp/jest/current/merge/summary/ --reporter json-summary
-
+      # Upload coverage report to review the merged report locally
+      - name: Upload detailed and summary jest coverage reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: jest-coverage-report-${{ matrix.flavor }}
+          path: temp/jest/current/merge/
       # Pull requests show details of coverage changes
       - name: Get jest tests coverage of main from gist
         if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
@@ -547,6 +562,11 @@ jobs:
       - name: Run dependency update for stable
         if: ${{ matrix.flavor == 'stable' }}
         run: rush update:stable
+      # Build the packages
+      # This is needed because react-components depends on acs-ui-common and
+      # acs-ui-common specifies main/module variables in package.json
+      - name: Build Common Package
+        run: rush build -t acs-ui-common
       - name: Components Visual Regression Tests
         id: visualregressiontests
         run: |

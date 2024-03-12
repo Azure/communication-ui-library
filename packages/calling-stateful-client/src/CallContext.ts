@@ -269,6 +269,11 @@ export class CallContext {
         addRemoteParticipant.forEach((participant: RemoteParticipantState) => {
           call.remoteParticipants[toFlatCommunicationIdentifier(participant.identifier)] = participant;
         });
+        // TODO: need to remove after contentSharingRole avaible in WebCalling SDK.
+        /* @conditional-compile-remove(ppt-live) */
+        if (!call.contentSharingRemoteParticipant) {
+          call.contentSharingRemoteParticipant = toFlatCommunicationIdentifier(addRemoteParticipant[0].identifier);
+        }
       }
     });
   }
