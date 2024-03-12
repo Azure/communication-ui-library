@@ -1,19 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-/* @conditional-compile-remove(dtmf-dialer) */
 import React, { useMemo } from 'react';
-/* @conditional-compile-remove(dtmf-dialer) */
 import { CallCompositeIcon } from '../icons';
-/* @conditional-compile-remove(dtmf-dialer) */
 import { ControlBarButton, ControlBarButtonStrings } from '@internal/react-components';
 import { ControlBarButtonProps, ControlBarButtonStyles } from '@internal/react-components';
-/* @conditional-compile-remove(dtmf-dialer) */
 import { concatStyleSets, useTheme } from '@fluentui/react';
 import { CallControlDisplayType } from '../types/CommonCallControlOptions';
-/* @conditional-compile-remove(dtmf-dialer) */
 import { useLocale } from '../../localization';
 
-/* @conditional-compile-remove(dtmf-dialer) */
 const icon = (): JSX.Element => <CallCompositeIcon iconName={'DtmfDialpadButton'} />;
 
 /**
@@ -23,7 +17,6 @@ export interface DtmfDialerButtonProps extends ControlBarButtonProps {
   displayType?: CallControlDisplayType;
   styles?: ControlBarButtonStyles;
 }
-/* @conditional-compile-remove(dtmf-dialer) */
 /**
  * Button for showing and hiding the dtmf dialer in the Call composite.
  * To be used only if the more button control is disabled. This button will replace

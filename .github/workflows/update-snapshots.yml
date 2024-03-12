@@ -587,6 +587,11 @@ jobs:
       - name: Switch flavor for build
         if: ${{ matrix.flavor != 'beta' }}
         run: rush switch-flavor:${{ matrix.flavor }}
+      # Build the packages
+      # This is needed because react-components depends on acs-ui-common and
+      # acs-ui-common specifies main/module variables in package.json
+      - name: Build Common Package
+        run: rush build -t acs-ui-common
       - name: Update components snapshots
         id: update-components-snapshots
         run: rushx test:components:update
