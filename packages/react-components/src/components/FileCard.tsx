@@ -92,6 +92,7 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
   const isUpload = progress !== undefined && progress > 0 && progress < 1;
   const fileName = file.name;
   const fileExtension = file.extension;
+  const subTitle = file.url?.toLowerCase().includes('sharepoint') ? 'SharePoint > Chat' : undefined;
   return (
     <div>
       <Card size="small" role="listitem">
@@ -108,8 +109,12 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
               }
             />
           }
-          header={<Text weight="semibold">{fileName}</Text>}
-          description={<Caption1>SharePoint &gt; Chat</Caption1>}
+          header={
+            <Text weight="semibold" style={{ marginTop: '5px' }}>
+              {fileName}
+            </Text>
+          }
+          description={subTitle ? <Caption1>SharePoint &gt; Chat</Caption1> : <></>}
           action={getMenuItems(menuActions, file)}
         />
       </Card>
