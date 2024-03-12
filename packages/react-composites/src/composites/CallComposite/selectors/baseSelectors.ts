@@ -20,7 +20,6 @@ import {
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from '@internal/calling-stateful-client';
 import { CallAdapterState, CallCompositePage } from '../adapter/CallAdapter';
-/* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundEffect } from '../adapter/CallAdapter';
 import { _isInCall, _isPreviewOn, _dominantSpeakersWithFlatId } from '@internal/calling-component-bindings';
 import { AdapterErrors } from '../../common/adapters';
@@ -154,7 +153,6 @@ export const getRemoteParticipants = (
  */
 export const getEnvironmentInfo = (state: CallAdapterState): EnvironmentInfo | undefined => state.environmentInfo;
 
-/* @conditional-compile-remove(video-background-effects) */
 /**
  * @private
  */

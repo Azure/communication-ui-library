@@ -20,7 +20,6 @@ import {
 import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsResultType } from '@azure/communication-calling';
-/* @conditional-compile-remove(video-background-effects) */
 import { VideoEffectName } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { CallKind } from '@azure/communication-calling';
@@ -275,7 +274,6 @@ export interface LocalVideoStreamState {
    * API. This can be undefined if the stream has not yet been rendered and defined after createView creates the view.
    */
   view?: VideoStreamRendererViewState;
-  /* @conditional-compile-remove(video-background-effects) */
   /**
    * Stores the state of the video effects.
    * @public
@@ -283,7 +281,6 @@ export interface LocalVideoStreamState {
   videoEffects?: LocalVideoStreamVideoEffectsState;
 }
 
-/* @conditional-compile-remove(video-background-effects) */
 /**
  * State only version of a LocalVideoStream's {@link @azure/communication-calling#VideoEffectsFeature}.
  *

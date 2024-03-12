@@ -81,7 +81,6 @@ import {
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(call-readiness) */
 import { Important20Filled } from '@fluentui/react-icons';
-/* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundEffect20Filled, VideoBackgroundEffect20Regular } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
@@ -364,9 +363,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   VerticalGalleryLeftButton: <GalleryLeftButton />,
   /* @conditional-compile-remove(vertical-gallery) */
   VerticalGalleryRightButton: <GalleryRightButton />,
-  /* @conditional-compile-remove(video-background-effects) */
   ControlButtonVideoEffectsOption: <VideoBackgroundEffect20Regular />,
-  /* @conditional-compile-remove(video-background-effects) */
   ConfigurationScreenVideoEffectsButton: <VideoBackgroundEffect20Filled />,
   /* @conditional-compile-remove(close-captions) */
   CaptionsIcon: <ClosedCaption20Regular />,

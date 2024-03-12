@@ -49,13 +49,10 @@ import { ConfigurationPageErrorBar } from '../components/ConfigurationPageErrorB
 import { getDevicePermissionState } from '../utils';
 /* @conditional-compile-remove(call-readiness) */
 import { CallReadinessModal, CallReadinessModalFallBack } from '../components/CallReadinessModal';
-/* @conditional-compile-remove(video-background-effects) */
 import { VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM, useVideoEffectsPane } from '../components/SidePane/useVideoEffectsPane';
 import { SidePane } from '../components/SidePane/SidePane';
 import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
-/* @conditional-compile-remove(video-background-effects) */
 import { useIsParticularSidePaneOpen } from '../components/SidePane/SidePaneProvider';
-/* @conditional-compile-remove(video-background-effects) */
 import { localVideoSelector } from '../../CallComposite/selectors/localVideoStreamSelector';
 /* @conditional-compile-remove(capabilities) */
 import { CapabilitiesChangeNotificationBarProps } from '../components/CapabilitiesChangedNotificationBar';
@@ -131,7 +128,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   /* @conditional-compile-remove(rooms) */
   const role = adapter.getState().call?.role;
 
-  /* @conditional-compile-remove(video-background-effects) */
   const isCameraOn = useSelector(localVideoSelector).isAvailable;
 
   let filteredLatestErrors: ActiveErrorMessage[] = props.latestErrors;
@@ -144,7 +140,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
     );
   }
 
-  /* @conditional-compile-remove(video-background-effects) */
   if ((useIsParticularSidePaneOpen('videoeffects') || !isCameraOn) && errorBarProps) {
     filteredLatestErrors = filteredLatestErrors.filter((e) => e.type !== 'unableToStartVideoEffect');
   }
@@ -238,7 +233,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   /* @conditional-compile-remove(call-readiness) */
   const forceShowingCheckPermissions = !minimumFallbackTimerElapsed;
 
-  /* @conditional-compile-remove(video-background-effects) */
   const { toggleVideoEffectsPane, closeVideoEffectsPane, isVideoEffectsPaneOpen } = useVideoEffectsPane(
     props.updateSidePaneRenderer,
     mobileView,
@@ -247,10 +241,9 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   );
 
   const startCall = useCallback(async () => {
-    /* @conditional-compile-remove(video-background-effects) */
     closeVideoEffectsPane();
     startCallHandler();
-  }, [startCallHandler, /* @conditional-compile-remove(video-background-effects) */ closeVideoEffectsPane]);
+  }, [startCallHandler, closeVideoEffectsPane]);
 
   const panelLayerProps = useMemo(
     () => ({
@@ -390,7 +383,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
                     onClickEnableDevicePermission={() => {
                       setIsPermissionsModalDismissed(true);
                     }}
-                    /* @conditional-compile-remove(video-background-effects) */
                     onClickVideoEffects={toggleVideoEffectsPane}
                   />
                 </Stack>
@@ -410,7 +402,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           </Stack>
         </Stack>
         <Panel
-          /* @conditional-compile-remove(video-background-effects) */
           isOpen={isVideoEffectsPaneOpen}
           hasCloseButton={false}
           isBlocking={false}
@@ -419,7 +410,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           focusTrapZoneProps={panelFocusProps}
           layerProps={panelLayerProps}
           type={PanelType.custom}
-          /* @conditional-compile-remove(video-background-effects) */
           customWidth={`${VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM}rem`}
         >
           <SidePane

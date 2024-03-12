@@ -8,7 +8,6 @@ import { CommonProperties, toFlatCommunicationIdentifier } from '@internal/acs-u
 import { ReactElement } from 'react';
 import memoizeOne from 'memoize-one';
 import { CommonCallAdapter } from '..';
-/* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundBlurEffect, VideoBackgroundReplacementEffect } from '..';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isCameraOn } from '../utils';
@@ -17,7 +16,6 @@ import { DtmfTone } from '@azure/communication-calling';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(reaction) */
 import { Reaction } from '@azure/communication-calling';
-/* @conditional-compile-remove(video-background-effects) */
 import type { BackgroundReplacementConfig, BackgroundBlurConfig } from '@azure/communication-calling';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
@@ -164,11 +162,9 @@ const createCompositeHandlers = memoizeOne(
       askDevicePermission: async (constrain) => {
         return adapter.askDevicePermission(constrain);
       },
-      /* @conditional-compile-remove(video-background-effects) */
       onRemoveVideoBackgroundEffects: async () => {
         return await adapter.stopVideoBackgroundEffects();
       },
-      /* @conditional-compile-remove(video-background-effects) */
       onBlurVideoBackground: async (backgroundBlurConfig?: BackgroundBlurConfig) => {
         const blurConfig: VideoBackgroundBlurEffect = {
           effectName: 'blur',
@@ -176,7 +172,6 @@ const createCompositeHandlers = memoizeOne(
         };
         return await adapter.startVideoBackgroundEffect(blurConfig);
       },
-      /* @conditional-compile-remove(video-background-effects) */
       onReplaceVideoBackground: async (backgroundReplacementConfig: BackgroundReplacementConfig) => {
         const replacementConfig: VideoBackgroundReplacementEffect = {
           effectName: 'replacement',

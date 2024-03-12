@@ -4,7 +4,6 @@
 import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(video-background-effects) */
 import type { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
 /* @conditional-compile-remove(reaction) */
 import { Reaction } from '@azure/communication-calling';
@@ -46,7 +45,6 @@ import { CommunicationIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import type { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
-/* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
@@ -151,17 +149,14 @@ export type CallAdapterClientState = {
    * control bar with the CallComposite.
    */
   cameraStatus?: 'On' | 'Off';
-  /* @conditional-compile-remove(video-background-effects) */
   /**
    * Default set of background images for background replacement effect.
    */
   videoBackgroundImages?: VideoBackgroundImage[];
-  /* @conditional-compile-remove(video-background-effects) */
   /**
    * Dependency to be injected for video background effect.
    */
   onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
-  /* @conditional-compile-remove(video-background-effects) */
   /**
    * State to track the selected video background effect.
    */
@@ -292,7 +287,6 @@ export type DiagnosticChangedEventListner = (
   event: MediaDiagnosticChangedEvent | NetworkDiagnosticChangedEvent
 ) => void;
 
-/* @conditional-compile-remove(video-background-effects) */
 /**
  * Contains the attibutes of a background image like url, name etc.
  *
@@ -427,7 +421,6 @@ export type SpotlightChangedListener = (args: {
   removed: SpotlightedParticipant[];
 }) => void;
 
-/* @conditional-compile-remove(video-background-effects) */
 /**
  * Contains the attibutes of a selected video background effect
  *
@@ -450,7 +443,6 @@ export interface VideoBackgroundNoEffect {
   effectName: 'none';
 }
 
-/* @conditional-compile-remove(video-background-effects) */
 /**
  * Contains the attibutes of the blur video background effect
  *
@@ -463,7 +455,6 @@ export interface VideoBackgroundBlurEffect extends BackgroundBlurConfig {
   effectName: 'blur';
 }
 
-/* @conditional-compile-remove(video-background-effects) */
 /**
  * Contains the attibutes of a selected replacement video background effect
  *
@@ -678,21 +669,18 @@ export interface CallAdapterCallOperations {
    * Funtion to stop captions
    */
   stopCaptions(): Promise<void>;
-  /* @conditional-compile-remove(video-background-effects) */
   /**
    * Start the video background effect.
    *
    * @public
    */
   startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
-  /* @conditional-compile-remove(video-background-effects) */
   /**
    * Stop the video background effect.
    *
    * @public
    */
   stopVideoBackgroundEffects(): Promise<void>;
-  /* @conditional-compile-remove(video-background-effects) */
   /**
    * Override the background picker images for background replacement effect.
    *
@@ -701,7 +689,6 @@ export interface CallAdapterCallOperations {
    * @public
    */
   updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
-  /* @conditional-compile-remove(video-background-effects) */
   /**
    * Update the selected video background effect.
    *

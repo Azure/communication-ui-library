@@ -15,7 +15,6 @@ import {
   convertSdkParticipantToDeclarativeParticipant
 } from './Converter';
 import { InternalCallContext } from './InternalCallContext';
-/* @conditional-compile-remove(video-background-effects) */
 import { LocalVideoStreamVideoEffectsSubscriber } from './LocalVideoStreamVideoEffectsSubscriber';
 import { ParticipantSubscriber } from './ParticipantSubscriber';
 import { RecordingSubscriber } from './RecordingSubscriber';
@@ -60,7 +59,6 @@ export class CallSubscriber {
   private _raiseHandSubscriber?: RaiseHandSubscriber;
   /* @conditional-compile-remove(reaction) */
   private _reactionSubscriber?: ReactionSubscriber;
-  /* @conditional-compile-remove(video-background-effects) */
   private _localVideoStreamVideoEffectsSubscribers: Map<string, LocalVideoStreamVideoEffectsSubscriber>;
   /* @conditional-compile-remove(capabilities) */
   private _capabilitiesSubscriber: CapabilitiesSubscriber;
@@ -109,7 +107,6 @@ export class CallSubscriber {
       context: this._context,
       localOptimalVideoCountFeature: this._call.feature(Features.OptimalVideoCount)
     });
-    /* @conditional-compile-remove(video-background-effects) */
     this._localVideoStreamVideoEffectsSubscribers = new Map();
 
     /* @conditional-compile-remove(capabilities) */

@@ -34,7 +34,6 @@ import React from 'react';
 import { FontIcon, IIconProps, Spinner, SpinnerSize } from '@fluentui/react';
 /* @conditional-compile-remove(file-sharing) */
 import { Attach20Regular } from '@fluentui/react-icons';
-/* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundEffect20Regular, VideoPerson20Filled } from '@fluentui/react-icons';
 import {
   PersonSquare20Regular,
@@ -101,9 +100,7 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   DialpadStartCall: <Call20Regular />,
   /* @conditional-compile-remove(rooms) */
   NoticePageInviteToRoomRemoved: <Info20Filled />,
-  /* @conditional-compile-remove(video-background-effects) */
   BlurVideoBackground: <VideoBackgroundEffect20Regular />,
-  /* @conditional-compile-remove(video-background-effects) */
   RemoveVideoBackgroundEffect: <VideoPerson20Filled />,
   GalleryOptions: <Grid20Regular />,
   OverflowGalleryTop: <WindowHeaderHorizontal20Regular />,
@@ -252,9 +249,7 @@ export type CallCompositeIcons = {
   DialpadStartCall?: JSX.Element;
   /* @conditional-compile-remove(rooms) */
   NoticePageInviteToRoomRemoved?: JSX.Element;
-  /* @conditional-compile-remove(video-background-effects) */
   BlurVideoBackground?: JSX.Element;
-  /* @conditional-compile-remove(video-background-effects) */
   RemoveVideoBackgroundEffect?: JSX.Element;
   GalleryOptions?: JSX.Element;
   SpeakerGalleryLayout?: JSX.Element;

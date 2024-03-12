@@ -32,7 +32,7 @@ import { disposeAllLocalPreviewViews, _isInCall, _isInLobbyOrConnecting, _isPrev
 /* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(video-background-effects) */ /* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(raise-hand) */ /* @conditional-compile-remove(end-of-call-survey) */
+/* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(raise-hand) */ /* @conditional-compile-remove(end-of-call-survey) */
 import { Features } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptions } from '@azure/communication-calling';
@@ -97,11 +97,8 @@ export interface CommonCallingHandlers {
   /* @conditional-compile-remove(call-readiness) */
   askDevicePermission: (constrain: PermissionConstraints) => Promise<void>;
   onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => void;
-  /* @conditional-compile-remove(video-background-effects) */
   onRemoveVideoBackgroundEffects: () => Promise<void>;
-  /* @conditional-compile-remove(video-background-effects) */
   onBlurVideoBackground: (backgroundBlurConfig?: BackgroundBlurConfig) => Promise<void>;
-  /* @conditional-compile-remove(video-background-effects) */
   onReplaceVideoBackground: (backgroundReplacementConfig: BackgroundReplacementConfig) => Promise<void>;
   /* @conditional-compile-remove(close-captions) */
   onStartCaptions: (options?: CaptionsOptions) => Promise<void>;
@@ -544,7 +541,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
     };
 
-    /* @conditional-compile-remove(video-background-effects) */
     const onRemoveVideoBackgroundEffects = async (): Promise<void> => {
       const stream =
         call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video') ||
@@ -558,7 +554,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
     };
 
-    /* @conditional-compile-remove(video-background-effects) */
     const onBlurVideoBackground = async (backgroundBlurConfig?: BackgroundBlurConfig): Promise<void> => {
       const stream =
         call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video') ||
@@ -574,7 +569,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
     };
 
-    /* @conditional-compile-remove(video-background-effects) */
     const onReplaceVideoBackground = async (
       backgroundReplacementConfig: BackgroundReplacementConfig
     ): Promise<void> => {
@@ -692,11 +686,8 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */ onSendDtmfTone,
       /* @conditional-compile-remove(call-readiness) */
       askDevicePermission,
-      /* @conditional-compile-remove(video-background-effects) */
       onRemoveVideoBackgroundEffects,
-      /* @conditional-compile-remove(video-background-effects) */
       onBlurVideoBackground,
-      /* @conditional-compile-remove(video-background-effects) */
       onReplaceVideoBackground,
       /* @conditional-compile-remove(close-captions) */
       onStartCaptions,

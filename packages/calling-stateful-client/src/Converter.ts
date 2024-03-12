@@ -27,11 +27,9 @@ import { CaptionsInfo } from './CallClientState';
 import { _isACSCall } from './TypeGuards';
 import { CallCommon, IncomingCallCommon } from './BetaToStableTypes';
 
-/* @conditional-compile-remove(video-background-effects) */ /* @conditional-compile-remove(optimal-video-count) */
+/* @conditional-compile-remove(optimal-video-count) */
 import { Features } from '@azure/communication-calling';
-/* @conditional-compile-remove(video-background-effects) */
 import { VideoEffectName } from '@azure/communication-calling';
-/* @conditional-compile-remove(video-background-effects) */
 import { LocalVideoStreamVideoEffectsState } from './CallClientState';
 /* @conditional-compile-remove(raise-hand) */
 import { RaisedHand } from '@azure/communication-calling';
@@ -44,14 +42,12 @@ import { RaisedHandState } from './CallClientState';
 export function convertSdkLocalStreamToDeclarativeLocalStream(
   stream: SdkLocalVideoStream
 ): DeclarativeLocalVideoStream {
-  /* @conditional-compile-remove(video-background-effects) */
   const localVideoStreamEffectsAPI = stream.feature(Features.VideoEffects);
 
   return {
     source: stream.source,
     mediaStreamType: stream.mediaStreamType,
     view: undefined,
-    /* @conditional-compile-remove(video-background-effects) */
     videoEffects: convertFromSDKToDeclarativeVideoStreamVideoEffects(localVideoStreamEffectsAPI.activeEffects)
   };
 }
@@ -204,7 +200,6 @@ export function convertFromSDKToCaptionInfoState(caption: TeamsCaptionsInfo): Ca
   };
 }
 
-/* @conditional-compile-remove(video-background-effects) */
 /** @private */
 export function convertFromSDKToDeclarativeVideoStreamVideoEffects(
   videoEffects: VideoEffectName[]

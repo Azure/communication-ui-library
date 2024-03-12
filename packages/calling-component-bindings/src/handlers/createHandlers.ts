@@ -17,7 +17,6 @@ import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-sta
 import memoizeOne from 'memoize-one';
 import { isACSCallParticipants } from '../utils/callUtils';
 import { createDefaultCommonCallingHandlers, CommonCallingHandlers } from './createCommonHandlers';
-/* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundEffectsDependency } from './createCommonHandlers';
 
 /**
@@ -32,7 +31,6 @@ export interface CallingHandlers extends CommonCallingHandlers {
   onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => Call | undefined;
 }
 
-/* @conditional-compile-remove(video-background-effects) */
 /**
  * Configuration options to include video effect background dependency.
  * @public
@@ -51,7 +49,6 @@ export type CreateDefaultCallingHandlers = (
   callAgent: CallAgent | undefined,
   deviceManager: StatefulDeviceManager | undefined,
   call: Call | undefined,
-  /* @conditional-compile-remove(video-background-effects) */
   options?: CallingHandlersOptions
 ) => CallingHandlers;
 
@@ -64,20 +61,9 @@ export type CreateDefaultCallingHandlers = (
  * @public
  */
 export const createDefaultCallingHandlers: CreateDefaultCallingHandlers = memoizeOne((...args) => {
-  const [
-    callClient,
-    callAgent,
-    deviceManager,
-    call,
-    /* @conditional-compile-remove(video-background-effects) */ options
-  ] = args;
+  const [callClient, callAgent, deviceManager, call, options] = args;
   return {
-    ...createDefaultCommonCallingHandlers(
-      callClient,
-      deviceManager,
-      call,
-      /* @conditional-compile-remove(video-background-effects) */ options
-    ),
+    ...createDefaultCommonCallingHandlers(callClient, deviceManager, call, options),
     // FIXME: onStartCall API should use string, not the underlying SDK types.
     onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined => {
       /* @conditional-compile-remove(teams-adhoc-call) */

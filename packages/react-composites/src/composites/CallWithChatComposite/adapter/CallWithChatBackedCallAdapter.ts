@@ -3,7 +3,6 @@
 
 import { CallWithChatAdapter } from './CallWithChatAdapter';
 import { CallAdapter, CallAdapterState } from '../../CallComposite';
-/* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import {
@@ -206,19 +205,18 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     this.callWithChatAdapter.setSpokenLanguage(language);
   }
 
-  /* @conditional-compile-remove(video-background-effects) */
   public async startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void> {
     await this.callWithChatAdapter.startVideoBackgroundEffect(videoBackgroundEffect);
   }
-  /* @conditional-compile-remove(video-background-effects) */
+
   public async stopVideoBackgroundEffects(): Promise<void> {
     await this.callWithChatAdapter.stopVideoBackgroundEffects();
   }
-  /* @conditional-compile-remove(video-background-effects) */
+
   public updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void {
     return this.callWithChatAdapter.updateBackgroundPickerImages(backgroundImages);
   }
-  /* @conditional-compile-remove(video-background-effects) */
+
   public updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void {
     return this.callWithChatAdapter.updateSelectedVideoBackgroundEffect(selectedVideoBackground);
   }
@@ -260,11 +258,8 @@ function callAdapterStateFromCallWithChatAdapterState(
     alternateCallerId: callWithChatAdapterState.alternateCallerId,
     /* @conditional-compile-remove(unsupported-browser) */
     environmentInfo: callWithChatAdapterState.environmentInfo,
-    /* @conditional-compile-remove(video-background-effects) */
     videoBackgroundImages: callWithChatAdapterState.videoBackgroundImages,
-    /* @conditional-compile-remove(video-background-effects) */
     onResolveVideoEffectDependency: callWithChatAdapterState.onResolveVideoEffectDependency,
-    /* @conditional-compile-remove(video-background-effects) */
     selectedVideoBackgroundEffect: callWithChatAdapterState.selectedVideoBackgroundEffect,
     /* @conditional-compile-remove(reaction) */
     reactions: callWithChatAdapterState.reactions

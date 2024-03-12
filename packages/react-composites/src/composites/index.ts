@@ -50,7 +50,5 @@ export type {
   CustomCallControlButtonStrings
 } from './common/ControlBar/CustomButton';
 
-/* @conditional-compile-remove(video-background-effects) */
 export { onResolveVideoEffectDependencyLazy } from './common/resolveVideoEffectDependencyLazy';
-/* @conditional-compile-remove(video-background-effects) */
 export { onResolveVideoEffectDependency } from './common/resolveVideoEffectDependency';
