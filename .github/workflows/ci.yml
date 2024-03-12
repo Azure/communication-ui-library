@@ -130,7 +130,7 @@ jobs:
             packages/communication-react/temp/communication-react.api.json
 
   jest-test-coverage:
-    needs: [get_matrix, build_packages]
+    needs: [get_matrix]
     name: 'Jest Test Coverage (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
     permissions:
