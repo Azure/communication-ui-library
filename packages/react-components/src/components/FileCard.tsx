@@ -91,7 +91,7 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
 
   const isUpload = progress !== undefined && progress > 0 && progress < 1;
   const fileName = file.name;
-  const fileExtension = file.extension;
+  const fileExtension = file.extension && file.extension !== '' ? file.extension : file.name.split('.').pop();
   const subTitle = file.url?.toLowerCase().includes('sharepoint') ? 'SharePoint > Chat' : undefined;
   return (
     <div>

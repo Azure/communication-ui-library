@@ -8,15 +8,15 @@ export const FileUploadsExample: () => JSX.Element = () => (
         activeFileUploads={[
           {
             id: '1',
-            filename: 'Sample.pdf',
-            progress: 0.75,
-            uploadComplete: false
+            name: 'Sample.pdf',
+            extension: 'pdf',
+            progress: 0.75
           },
           {
             id: '1',
-            filename: 'SampleXl.xlsx',
-            progress: 0.33,
-            uploadComplete: false
+            name: 'SampleXl.xlsx',
+            extension: 'xlsx',
+            progress: 0.33
           }
         ]}
       />
