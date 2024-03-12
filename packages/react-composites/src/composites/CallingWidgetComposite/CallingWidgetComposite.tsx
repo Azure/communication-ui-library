@@ -1,19 +1,18 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Stack, Theme } from '@fluentui/react';
+import { Stack } from '@fluentui/react';
 import React, { useEffect, useRef, useState, useMemo } from 'react';
+import { CallAdapter, CallAdapterState, CallCompositeOptions } from '../CallComposite';
 import {
-  CallAdapter,
-  CallAdapterState,
-  CallComposite,
-  StartCallIdentifier,
-  CallCompositeOptions
-} from '../CallComposite';
-import { AzureCommunicationOutboundCallAdapterArgs } from '../CallComposite/adapter/AzureCommunicationCallAdapter';
+  AzureCommunicationCallAdapterArgs,
+  AzureCommunicationOutboundCallAdapterArgs
+} from '../CallComposite/adapter/AzureCommunicationCallAdapter';
 import { CallScreen } from './components/CallScreen';
 import { WaitingScreen } from './components/WaitingScreen';
 import { SetupScreen } from './components/SetupScreen';
+import { BaseCompositeProps, BaseProvider } from '../common/BaseComposite';
+import { CallCompositeIcons } from '../common/icons';
 
 /**
  * What are the things that we want to be customizable?
@@ -27,7 +26,9 @@ import { SetupScreen } from './components/SetupScreen';
  */
 
 /**
- * Props for creating custom fields in the widget
+ * Props for creating custom fields in the widget. This should be used for scenarios like:
+ * - Collecting information from users
+ * - Toggling controls outside calling experience
  * @public
  */
 export interface CustomField {
@@ -36,10 +37,13 @@ export interface CustomField {
    */
   kind: 'checkBox' | 'inputBox';
   /**
+   * Label for the input
+   */
+  label: string;
+  /**
    * Callback to allow the change of data in a field to be tracked
    *
    * @param newValue - New value of the field when the value changes
-   * @returns
    */
   onChange: (newValue: boolean | string) => void;
   /**
@@ -81,21 +85,17 @@ export type CallingWidgetCallCompositeOptions = Partial<CallCompositeOptions> & 
    * Custom render function for displaying logo.
    */
   onRenderLogo?: () => JSX.Element;
-  /**
-   * Theme for the widget to allow for colour customization. This is also applied to the {@link CallComposite} inside the widget.
-   */
-  widgetTheme?: Theme;
 };
 
 /**
  * Props for the CallingWidgetComposite
  * @public
  */
-export interface CallingWidgetCompositeProps {
+export interface CallingWidgetCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
   /**
    *  arguments for creating an AzureCommunicationCallAdapter for your Calling experience
    */
-  adapterProps: AzureCommunicationOutboundCallAdapterArgs;
+  adapterProps: AzureCommunicationOutboundCallAdapterArgs | AzureCommunicationCallAdapterArgs;
   /**
    * Position in the parent container that the widget will render.
    */
@@ -110,12 +110,7 @@ export interface CallingWidgetCompositeProps {
   options?: CallingWidgetCallCompositeOptions;
 }
 
-/**
- * Composite for Calling Widget experiences
- * @param props - properties for creating the CallingWidgetComposite
- * @public
- */
-export const CallingWidgetComposite = (props: CallingWidgetCompositeProps): JSX.Element => {
+const MainWidget = (props: CallingWidgetCompositeProps): JSX.Element => {
   const { adapterProps, options, onRenderIdleWidget } = props;
 
   const [widgetState, setWidgetState] = useState<'new' | 'setup' | 'inCall'>('new');
@@ -125,16 +120,6 @@ export const CallingWidgetComposite = (props: CallingWidgetCompositeProps): JSX.
   const [adapter, setAdapter] = useState<CallAdapter>();
 
   const callIdRef = useRef<string>();
-
-  const callAdapterArgs = useMemo(() => {
-    return {
-      userId: adapterProps.userId,
-      credential: adapterProps.credential,
-      targetCallees: adapterProps.targetCallees as StartCallIdentifier[],
-      displayName: displayName ?? '',
-      options: adapterProps.options
-    };
-  }, [adapterProps.userId, adapterProps.targetCallees, adapterProps.credential, adapterProps.options, displayName]);
 
   /**
    * We want to extract the options for the CallComposite from the Union of the widget and composite options
@@ -179,7 +164,7 @@ export const CallingWidgetComposite = (props: CallingWidgetCompositeProps): JSX.
   if (widgetState === 'setup') {
     return (
       <SetupScreen
-        callAdapterArgs={callAdapterArgs}
+        callAdapterArgs={adapterProps}
         consentToData={consentToData}
         setConsentToData={setConsentToData}
         setDisplayName={setDisplayName}
@@ -200,4 +185,19 @@ export const CallingWidgetComposite = (props: CallingWidgetCompositeProps): JSX.
   }
 
   return onRenderIdleWidget ? <Stack>{onRenderIdleWidget()}</Stack> : <WaitingScreen setWidgetState={setWidgetState} />;
+};
+
+/**
+ * Composite for Calling Widget experiences
+ * @param props - properties for creating the CallingWidgetComposite
+ * @public
+ */
+export const CallingWidgetComposite = (props: CallingWidgetCompositeProps): JSX.Element => {
+  return (
+    <div>
+      <BaseProvider>
+        <MainWidget {...props} />
+      </BaseProvider>
+    </div>
+  );
 };

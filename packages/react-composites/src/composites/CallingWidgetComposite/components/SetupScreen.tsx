@@ -4,6 +4,7 @@
 import { Stack, IconButton, TextField, Checkbox, PrimaryButton, Spinner, useTheme } from '@fluentui/react';
 import React from 'react';
 import {
+  AzureCommunicationCallAdapterArgs,
   AzureCommunicationOutboundCallAdapterArgs,
   CallAdapter,
   createAzureCommunicationCallAdapter
@@ -24,7 +25,7 @@ export interface SetupScreenProps {
   displayName?: string;
   setConsentToData: (consent: boolean) => void;
   setAdapter: (adapter: CallAdapter) => void;
-  callAdapterArgs: AzureCommunicationOutboundCallAdapterArgs;
+  callAdapterArgs: AzureCommunicationOutboundCallAdapterArgs | AzureCommunicationCallAdapterArgs;
   consentToData: boolean;
   adapter?: CallAdapter;
   customFields?: CustomField[];
@@ -44,10 +45,43 @@ export const SetupScreen = (props: SetupScreenProps): JSX.Element => {
     onRenderLogo,
     adapter,
     consentToData,
-    displayName
+    displayName,
+    customFields
   } = props;
 
   const theme = useTheme();
+
+  /**
+   * Render function to display the new custome fields passed in by Contoso
+   */
+  const renderCustomFields = (fields: CustomField[] | undefined): JSX.Element => {
+    if (fields === undefined) {
+      return <></>;
+    }
+    const customFieldElements: JSX.Element[] = fields.map((field) => {
+      if (field.kind === 'checkBox') {
+        return (
+          <Checkbox
+            label={field.label}
+            onChange={(_, checked) => {
+              field.onChange(checked as boolean);
+            }}
+          ></Checkbox>
+        );
+      } else {
+        return (
+          <TextField
+            label={field.label}
+            onChange={(_, newValue) => {
+              field.onChange(newValue as string);
+            }}
+          ></TextField>
+        );
+      }
+    });
+    return <Stack>{customFieldElements}</Stack>;
+  };
+
   return (
     <Stack styles={callingWidgetSetupContainerStyles(theme)} tokens={{ childrenGap: '1rem' }}>
       <IconButton
@@ -79,6 +113,7 @@ export const SetupScreen = (props: SetupScreenProps): JSX.Element => {
           setUseLocalVideo(true);
         }}
       ></Checkbox>
+      {renderCustomFields(customFields)}
       <Checkbox
         required={true}
         styles={checkboxStyles(theme)}
@@ -89,15 +124,27 @@ export const SetupScreen = (props: SetupScreenProps): JSX.Element => {
         onChange={async (_, checked?: boolean | undefined) => {
           setConsentToData(!!checked);
           if (callAdapterArgs && callAdapterArgs.credential) {
-            setAdapter(
-              await createAzureCommunicationCallAdapter({
-                displayName: displayName ?? '',
-                userId: callAdapterArgs.userId,
-                credential: callAdapterArgs.credential,
-                targetCallees: callAdapterArgs.targetCallees,
-                options: callAdapterArgs.options
-              })
-            );
+            if ('targetCallees' in callAdapterArgs) {
+              setAdapter(
+                await createAzureCommunicationCallAdapter({
+                  displayName: displayName ?? '',
+                  userId: callAdapterArgs.userId,
+                  credential: callAdapterArgs.credential,
+                  targetCallees: callAdapterArgs.targetCallees,
+                  options: callAdapterArgs.options
+                })
+              );
+            } else {
+              setAdapter(
+                await createAzureCommunicationCallAdapter({
+                  displayName: displayName ?? '',
+                  userId: callAdapterArgs.userId,
+                  credential: callAdapterArgs.credential,
+                  locator: callAdapterArgs.locator,
+                  options: callAdapterArgs.options
+                })
+              );
+            }
           }
         }}
       ></Checkbox>
@@ -106,9 +153,20 @@ export const SetupScreen = (props: SetupScreenProps): JSX.Element => {
         onClick={() => {
           if (displayName && consentToData && adapter) {
             setWidgetState('inCall');
-            adapter?.startCall(callAdapterArgs.targetCallees, {
-              audioOptions: { muted: false }
+            /**
+             * We need to kick off any actions the user defined to happen at the
+             * call start
+             */
+            customFields?.forEach((field) => {
+              field.onCallStart();
             });
+            if ('targetCallees' in callAdapterArgs) {
+              adapter?.startCall(callAdapterArgs.targetCallees, {
+                audioOptions: { muted: false }
+              });
+            } else {
+              adapter.joinCall({});
+            }
           }
         }}
       >
