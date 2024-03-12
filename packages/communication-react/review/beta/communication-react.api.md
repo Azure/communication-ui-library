@@ -2928,9 +2928,9 @@ export interface FileUploadManager {
 
 // @beta (undocumented)
 export interface FileUploadOptions {
-    accept?: string;
+    acceptedFileTypes?: string[];
+    canUploadMultiple?: boolean;
     handler: FileUploadHandler;
-    multiple?: boolean;
 }
 
 // @beta
