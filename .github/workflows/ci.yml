@@ -67,13 +67,7 @@ jobs:
         run: |
           node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
       - name: Install dependencies
-        # only run variant if variant is stable
-        run: |
-          if [ ${{ matrix.flavor == 'stable' }} ]; then
-            rush install --max-install-attempts 3 --variant stable
-          else
-            rush install --max-install-attempts 3
-          fi
+        run: rush switch-flavor:${{ matrix.flavor }}
       - name: Check the necessary change file has been submitted
         if: ${{ github.event_name == 'pull_request' }}
         # GitHub provides remote branch names as refs.
@@ -148,18 +142,13 @@ jobs:
       # Install dependencies
       - name: Install rush
         run: npm install -g @microsoft/rush
-      - name: Install dependencies
-        run: rush install --max-install-attempts 3
-      # Switch flavor if necessary
-      - name: Switch flavor for build
-        id: switch-flavor
+      # Force build flavor if necessary
+      - name: Force build flavor
         if: ${{ matrix.flavor != 'beta' }}
         run: |
-          rush switch-flavor:${{ matrix.flavor }}
           node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
-      - name: Run dependency update for stable
-        if: ${{ matrix.flavor == 'stable' }}
-        run: rush update:stable
+      - name: Install dependencies
+        run: rush switch-flavor:${{ matrix.flavor }}
       - name: Build Packages
         run: rush build -t @azure/communication-react
       - name: Test Packages
