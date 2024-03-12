@@ -106,6 +106,7 @@ const initializeAdapters = async (
       chatClient: remoteChatClient as IChatClient as ChatClient,
       chatThreadClient: remoteChatClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID')
     });
+
     remoteAdapters.push(remoteAdapter);
   }
   return remoteAdapters;
@@ -118,7 +119,7 @@ const initializeAdapter = async (
   const statefulChatClient = _createStatefulChatClientWithDeps(adapterInfo.chatClient, {
     userId: adapterInfo.userId as CommunicationUserIdentifier,
     displayName: adapterInfo.displayName,
-    endpoint: 'https://fake-endpoint',
+    endpoint: 'https://FAKE_ENDPOINT',
     credential: fakeToken
   });
   statefulChatClient.startRealtimeNotifications();

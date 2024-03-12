@@ -190,7 +190,6 @@ export const fetchImageSource = async (
   }
   const fetchUrl = new URL(src);
   const endpoint = new URL(authentication.endpoint);
-  console.log('fetchUrl:::::::::::::', fetchUrl, endpoint);
 
   let token = '';
   if (fetchUrl.hostname === endpoint.hostname && fetchUrl.protocol === 'https:') {

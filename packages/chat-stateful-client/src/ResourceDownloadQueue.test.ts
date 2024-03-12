@@ -326,6 +326,9 @@ describe('ResourceDownloadQueue api functions', () => {
     expect(resourceCache?.['previewUrl2'].error).toBeUndefined();
     expect(resourceCache?.['previewUrl3'].error).toBeUndefined();
   });
+});
+
+describe('fetchImageSource functionality', () => {
   test('if fetchImageSource times out error should be thrown', async () => {
     const abortController = new AbortController();
     let abortCalled = false;
