@@ -3,9 +3,6 @@ name: CI
 on:
   # Postsubmit CI on main.
   push:
-    branches:
-      - main
-      - release/**
   # Presubmit CI on PRs to all branches.
   pull_request:
   # Allows you to run this workflow manually from the Actions tab.
@@ -64,22 +61,19 @@ jobs:
       # Install dependencies
       - name: Install rush
         run: npm install -g @microsoft/rush
-      - name: Install dependencies
-        run: rush install --max-install-attempts 3
-      # Switch flavor if necessary
-      - name: Switch flavor for build
-        id: switch-flavor
+      # Force build flavor if necessary
+      - name: Force build flavor
         if: ${{ matrix.flavor != 'beta' }}
         run: |
-          rush switch-flavor:${{ matrix.flavor }}
           node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
-      - name: Run dependency update for stable
-        if: ${{ matrix.flavor == 'stable' }}
-        run: rush update:stable
-      - name: Check result of flavor switch
-        if: ${{ always() && steps.switch-flavor.outcome == 'failure' }}
-        run: echo "Failed to switch to stable flavor, please make sure you run 'rush update:stable' if dependencies were updated." && exit 1
-
+      - name: Install dependencies
+        # only run variant if variant is stable
+        run: |
+          if [ ${{ matrix.flavor == 'stable' }} ]; then
+            rush install --max-install-attempts 3 --variant stable
+          else
+            rush install --max-install-attempts 3
+          fi
       - name: Check the necessary change file has been submitted
         if: ${{ github.event_name == 'pull_request' }}
         # GitHub provides remote branch names as refs.
