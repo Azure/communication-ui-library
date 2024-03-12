@@ -112,6 +112,17 @@
     },
     {
       "commandKind": "bulk",
+      "name": "build:minimal",
+      "summary": "Build only the esm modules without the extra commands that run in the build process",
+      "description": "This command is similar to \"rush build\", except this will not build cjs, or run other tools such as api-extractor.",
+      "safeForSimultaneousRushProcesses": false,
+      "enableParallelism": true,
+      "ignoreDependencyOrder": false,
+      "ignoreMissingScript": false,
+      "allowWarningsInSuccessfulBuild": true
+    },
+    {
+      "commandKind": "bulk",
       "name": "test",
       "summary": "Run tests in each project.",
       "description": "Run jest tests in each project.",

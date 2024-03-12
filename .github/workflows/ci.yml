@@ -3,9 +3,6 @@ name: CI
 on:
   # Postsubmit CI on main.
   push:
-    branches:
-      - main
-      - release/**
   # Presubmit CI on PRs to all branches.
   pull_request:
   # Allows you to run this workflow manually from the Actions tab.
@@ -167,7 +164,7 @@ jobs:
         if: ${{ matrix.flavor == 'stable' }}
         run: rush update:stable
       - name: Build Packages
-        run: rush build -t @azure/communication-react
+        run: rush build:minimal -t @azure/communication-react
       - name: Test Packages
         run: rush test:ci-coverage -t @azure/communication-react
         env:
@@ -269,7 +266,7 @@ jobs:
         run: rush lint
       # Builds
       - name: Build Packages
-        run: rush build -t @azure/communication-react
+        run: rush build:minimal -t @azure/communication-react
       # # Type check test folder
       # # - must be run after building all packlets because it depends on compiled packlet dependencies
       # # - must be run only on beta flavor build because the browser test code is not conditional compiled
@@ -330,9 +327,7 @@ jobs:
           cd packages/react-composites
           rushx build:e2e:call
       - name: Install packlets used by browser tests
-        run: |
-          cd packages/react-composites
-          rush build -t .
+        run: rush build:minimal -t @internal/react-composites
       - name: Call Composite Visual Regression Tests
         id: visualregressiontests
         run: |
@@ -410,9 +405,7 @@ jobs:
           cd packages/react-composites
           rushx build:e2e:chat
       - name: Install packlets used by browser tests
-        run: |
-          cd packages/react-composites
-          rush build -t .
+        run: rush build:minimal -t @internal.react-composites
       - name: Chat Composite Visual Regression Tests
         id: visualregressiontests
         run: |
@@ -490,9 +483,7 @@ jobs:
           cd packages/react-composites
           rushx build:e2e:callwithchat
       - name: Install packlets used by browser tests
-        run: |
-          cd packages/react-composites
-          rush build -t .
+        run: rush build:minimal -t @internal/react-composites
       - name: CallWithChatComposite Visual Regression Tests
         id: visualregressiontests
         run: |
@@ -566,7 +557,7 @@ jobs:
       # This is needed because react-components depends on acs-ui-common and
       # acs-ui-common specifies main/module variables in package.json
       - name: Build Common Package
-        run: rush build -t acs-ui-common
+        run: rush build:minimal -t acs-ui-common
       - name: Components Visual Regression Tests
         id: visualregressiontests
         run: |
@@ -653,7 +644,7 @@ jobs:
         if: ${{ matrix.flavor == 'stable' }}
         run: rush update:stable
       - name: Build dependencies
-        run: rush build -t @azure/communication-react
+        run: rush build:minimal -t @azure/communication-react
       - name: Build
         run: rush build -o calling
       - name: Tests
@@ -699,7 +690,7 @@ jobs:
         if: ${{ matrix.flavor == 'stable' }}
         run: rush update:stable
       - name: Build dependencies
-        run: rush build -t @azure/communication-react
+        run: rush build:minimal -t @azure/communication-react
       - name: Build
         run: rush build -o chat
       - name: Tests
@@ -745,7 +736,7 @@ jobs:
         if: ${{ matrix.flavor == 'stable' }}
         run: rush update:stable
       - name: Build dependencies
-        run: rush build -t @azure/communication-react
+        run: rush build:minimal -t @azure/communication-react
       - name: Build
         run: rush build -o callwithchat
       - name: Tests
@@ -792,7 +783,7 @@ jobs:
         if: ${{ matrix.flavor == 'stable' }}
         run: rush update:stable
       - name: Build
-        run: rush build -t sample-static-html-composites
+        run: rush build:minimal -t sample-static-html-composites
       - name: Visual Regression Tests
         id: visualregressiontests
         run: |
@@ -856,7 +847,7 @@ jobs:
         if: ${{ matrix.flavor == 'stable' }}
         run: rush update:stable
       - name: Build
-        run: rush build -t component-examples
+        run: rush build:minimal -t component-examples
       - name: Visual Regression Tests
         id: visualregressiontests
         run: |

@@ -21,7 +21,7 @@
   "bugs": {
     "url": "https://github.com/Azure/communication-ui-library/issues/new/choose"
   },
-  "types": "dist/communication-react.d.ts",
+  "types": "dist/dist-esm/index.d.ts",
   "dependencies": {
     "@azure/communication-common": "^2.3.1",
     "@azure/core-client": "^1.7.3",
@@ -72,6 +72,7 @@
     "copy-preprocess": "cpx \"../*/preprocessed/**\" ./preprocess-dist && renamer --find preprocessed --replace src ./preprocess-dist/**/*",
     "build:test": "tspc",
     "build": "rushx check-deps && rushx _by-flavor \"rushx _build:by-flavor\"",
+    "build:minimal": "rushx _by-flavor \"rushx _build-esm:by-flavor\"",
     "build:cjs": "rollup -c --silent",
     "build:esm": "npm run _if-preprocess && rushx copy-original && rushx preprocess && rushx copy-preprocess  && tspc -project tsconfig.preprocess.json || (if-env COMMUNICATION_REACT_FLAVOR=beta && tspc)",
     "build:watch": "",
@@ -94,6 +95,7 @@
     "_if-beta": "if-env COMMUNICATION_REACT_FLAVOR=beta || if-env COMMUNICATION_REACT_FLAVOR=beta-release",
     "_api-extractor:by-flavor": "if-env COMMUNICATION_REACT_FLAVOR=stable && api-extractor run -c api-extractor.stable.json --local || (rushx _if-beta && api-extractor run --local)",
     "_build:by-flavor": "rushx clean && rushx build:esm && rushx build:cjs && rushx _api-extractor:by-flavor",
+    "_build-esm:by-flavor": "rushx build:esm",
     "_current-flavor": "echo You are running under COMMUNICATION_REACT_FLAVOR: && env-cmd -f ../../common/config/env/.env node -p process.env.COMMUNICATION_REACT_FLAVOR",
     "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell"
   },
