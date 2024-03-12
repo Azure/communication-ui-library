@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "Video Effects",
+  "comment": "Remove CC for Video Background Effects",
+  "packageName": "@azure/communication-react",
+  "email": "97124699+prabhjot-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
