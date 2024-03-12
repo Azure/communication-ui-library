@@ -119,7 +119,7 @@ const initializeAdapter = async (
   const statefulChatClient = _createStatefulChatClientWithDeps(adapterInfo.chatClient, {
     userId: adapterInfo.userId as CommunicationUserIdentifier,
     displayName: adapterInfo.displayName,
-    endpoint: 'https://FAKE_ENDPOINT',
+    endpoint: 'FAKE_ENDPOINT',
     credential: fakeToken
   });
   statefulChatClient.startRealtimeNotifications();
