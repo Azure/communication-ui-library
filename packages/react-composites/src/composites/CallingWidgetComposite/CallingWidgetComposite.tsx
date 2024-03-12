@@ -125,8 +125,13 @@ const MainWidget = (props: CallingWidgetCompositeProps): JSX.Element => {
    * We want to extract the options for the CallComposite from the Union of the widget and composite options
    * to be used on the CallScreen.
    */
-  const callCompositeOptions: CallCompositeOptions = useMemo(() => {
-    return { ...options };
+  const callCompositeOptions: CallCompositeOptions | undefined = useMemo(() => {
+    if (options) {
+      const compositeOptions = { ...options };
+      return compositeOptions;
+    } else {
+      return undefined;
+    }
   }, [options]);
 
   useEffect(() => {

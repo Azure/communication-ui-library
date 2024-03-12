@@ -14,15 +14,15 @@ export const checkboxStyles = (theme: Theme): ICheckboxStyles => {
 export const callingWidgetContainerStyles = (theme: Theme): IStackStyles => {
   return {
     root: {
-      width: '5rem',
-      height: '5rem',
+      minWidth: '5rem',
+      minHeight: '5rem',
       padding: '0.5rem',
       boxShadow: theme.effects.elevation16,
       borderRadius: '50%',
       bottom: '1rem',
       right: '1rem',
       position: 'absolute',
-      overflow: 'hidden',
+      // overflow: 'hidden',
       cursor: 'pointer',
       ':hover': {
         boxShadow: theme.effects.elevation64

@@ -143,8 +143,7 @@ const WithBackgroundColor = (props: { children: React.ReactNode }): JSX.Element 
   const className = mergeStyles({
     background: theme.semanticColors.bodyBackground,
     height: '100%',
-    width: '100%',
-    position: 'relative'
+    width: '100%'
   });
   return <Stack className={className}>{children}</Stack>;
 };

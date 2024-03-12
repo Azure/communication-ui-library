@@ -8,13 +8,14 @@ import React from 'react';
 
 export interface CallScreenProps {
   adapter: CallAdapter;
-  options: CallCompositeOptions;
   useLocalVideo: boolean;
+  options?: CallCompositeOptions;
 }
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const { adapter, options, useLocalVideo } = props;
   const theme = useTheme();
+  console.log(options);
   return (
     <Stack styles={callingWidgetInCallContainerStyles(theme)}>
       <CallComposite

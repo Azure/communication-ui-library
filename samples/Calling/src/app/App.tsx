@@ -4,13 +4,18 @@
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(rooms) */
 import { ParticipantRole } from '@azure/communication-calling';
-import { fromFlatCommunicationIdentifier, StartCallIdentifier } from '@azure/communication-react';
+import {
+  CallingWidgetComposite,
+  fromFlatCommunicationIdentifier,
+  StartCallIdentifier,
+  toFlatCommunicationIdentifier
+} from '@azure/communication-react';
 /* @conditional-compile-remove(teams-identity-support) */
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { setLogLevel } from '@azure/logger';
-import { initializeIcons, Spinner } from '@fluentui/react';
+import { initializeIcons, Spinner, Stack } from '@fluentui/react';
 import { CallAdapterLocator } from '@azure/communication-react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   buildTime,
   callingSDKVersion,
@@ -32,6 +37,7 @@ import { CallError } from './views/CallError';
 import { CallScreen } from './views/CallScreen';
 import { HomeScreen } from './views/HomeScreen';
 import { UnsupportedBrowserPage } from './views/UnsupportedBrowserPage';
+import { createAutoRefreshingCredential } from './utils/credential';
 
 setLogLevel('error');
 
@@ -78,6 +84,28 @@ const App = (): JSX.Element => {
     })();
   }, []);
 
+  const credential = useMemo(() => {
+    if (userId && 'communicationUserId' in userId && token) {
+      return createAutoRefreshingCredential(toFlatCommunicationIdentifier(userId), token);
+    }
+    return {};
+  }, [token, userId]);
+
+  const widgetAdapterArgs = useMemo(() => {
+    if (userId && 'communicationUserId' in userId && token && credential) {
+      return {
+        userId: userId,
+        credential: credential,
+        displayName: displayName,
+        targetCallees: targetCallees,
+        /* @conditional-compile-remove(PSTN-calls) */
+        alternateCallerId: alternateCallerId
+      };
+    }
+    return;
+  }, [credential, userId, token, displayName, callLocator, targetCallees, alternateCallerId]);
+
+  console.log('widgetAdapterArgs', widgetAdapterArgs);
   const isMobileSession = useIsMobile();
   const isLandscapeSession = isLandscape();
 
@@ -101,90 +129,93 @@ const App = (): JSX.Element => {
         !!getTeamsLinkFromUrl() ||
         /* @conditional-compile-remove(rooms) */ !!getRoomIdFromUrl();
       return (
-        <HomeScreen
-          joiningExistingCall={joiningExistingCall}
-          startCallHandler={async (callDetails) => {
-            setDisplayName(callDetails.displayName);
-            /* @conditional-compile-remove(PSTN-calls) */
-            setAlternateCallerId(callDetails.alternateCallerId);
-            let callLocator: CallAdapterLocator | undefined =
-              callDetails.callLocator ||
-              /* @conditional-compile-remove(rooms) */ getRoomIdFromUrl() ||
-              getTeamsLinkFromUrl() ||
-              getGroupIdFromUrl() ||
-              createGroupId();
+        <Stack>
+          <HomeScreen
+            joiningExistingCall={joiningExistingCall}
+            startCallHandler={async (callDetails) => {
+              setDisplayName(callDetails.displayName);
+              /* @conditional-compile-remove(PSTN-calls) */
+              setAlternateCallerId(callDetails.alternateCallerId);
+              let callLocator: CallAdapterLocator | undefined =
+                callDetails.callLocator ||
+                /* @conditional-compile-remove(rooms) */ getRoomIdFromUrl() ||
+                getTeamsLinkFromUrl() ||
+                getGroupIdFromUrl() ||
+                createGroupId();
 
-            /* @conditional-compile-remove(rooms) */
-            if (callDetails.option === 'Rooms') {
-              callLocator = getRoomIdFromUrl() || callDetails.callLocator;
-            }
-
-            /* @conditional-compile-remove(PSTN-calls) */
-            if (callDetails.option === '1:N' || callDetails.option === 'PSTN') {
-              const outboundUsers = callDetails.outboundParticipants?.map((user) => {
-                return fromFlatCommunicationIdentifier(user);
-              });
-              callLocator = undefined;
-              setTargetCallees(outboundUsers ?? []);
-            }
-
-            if (callDetails.option === 'TeamsAdhoc') {
-              const outboundTeamsUsers = callDetails.outboundTeamsUsers?.map((user) => {
-                return fromFlatCommunicationIdentifier(user) as StartCallIdentifier;
-              });
-              callLocator = undefined;
-              setTargetCallees(outboundTeamsUsers ?? []);
-            }
-
-            /* @conditional-compile-remove(rooms) */
-            // There is an API call involved with creating a room so lets only create one if we know we have to
-            if (callDetails.option === 'StartRooms') {
-              let roomId = '';
-              try {
-                roomId = await createRoom();
-              } catch (e) {
-                console.log(e);
+              /* @conditional-compile-remove(rooms) */
+              if (callDetails.option === 'Rooms') {
+                callLocator = getRoomIdFromUrl() || callDetails.callLocator;
               }
 
-              callLocator = { roomId: roomId };
-            }
+              /* @conditional-compile-remove(PSTN-calls) */
+              if (callDetails.option === '1:N' || callDetails.option === 'PSTN') {
+                const outboundUsers = callDetails.outboundParticipants?.map((user) => {
+                  return fromFlatCommunicationIdentifier(user);
+                });
+                callLocator = undefined;
+                setTargetCallees(outboundUsers ?? []);
+              }
 
-            /* @conditional-compile-remove(rooms) */
-            if (callLocator && 'roomId' in callLocator) {
-              if (userId && 'communicationUserId' in userId) {
-                await addUserToRoom(
-                  userId.communicationUserId,
-                  callLocator.roomId,
-                  callDetails.role as ParticipantRole
+              if (callDetails.option === 'TeamsAdhoc') {
+                const outboundTeamsUsers = callDetails.outboundTeamsUsers?.map((user) => {
+                  return fromFlatCommunicationIdentifier(user) as StartCallIdentifier;
+                });
+                callLocator = undefined;
+                setTargetCallees(outboundTeamsUsers ?? []);
+              }
+
+              /* @conditional-compile-remove(rooms) */
+              // There is an API call involved with creating a room so lets only create one if we know we have to
+              if (callDetails.option === 'StartRooms') {
+                let roomId = '';
+                try {
+                  roomId = await createRoom();
+                } catch (e) {
+                  console.log(e);
+                }
+
+                callLocator = { roomId: roomId };
+              }
+
+              /* @conditional-compile-remove(rooms) */
+              if (callLocator && 'roomId' in callLocator) {
+                if (userId && 'communicationUserId' in userId) {
+                  await addUserToRoom(
+                    userId.communicationUserId,
+                    callLocator.roomId,
+                    callDetails.role as ParticipantRole
+                  );
+                } else {
+                  throw 'Invalid userId!';
+                }
+              }
+
+              setCallLocator(callLocator);
+
+              // Update window URL to have a joinable link
+              if (callLocator && !joiningExistingCall) {
+                window.history.pushState(
+                  {},
+                  document.title,
+                  window.location.origin +
+                    getJoinParams(callLocator) +
+                    /* @conditional-compile-remove(teams-identity-support) */
+                    getIsCTEParam(!!callDetails.teamsToken)
                 );
-              } else {
-                throw 'Invalid userId!';
               }
-            }
-
-            setCallLocator(callLocator);
-
-            // Update window URL to have a joinable link
-            if (callLocator && !joiningExistingCall) {
-              window.history.pushState(
-                {},
-                document.title,
-                window.location.origin +
-                  getJoinParams(callLocator) +
-                  /* @conditional-compile-remove(teams-identity-support) */
-                  getIsCTEParam(!!callDetails.teamsToken)
-              );
-            }
-            /* @conditional-compile-remove(teams-identity-support) */
-            setIsTeamsCall(!!callDetails.teamsToken);
-            /* @conditional-compile-remove(teams-identity-support) */
-            callDetails.teamsToken && setToken(callDetails.teamsToken);
-            /* @conditional-compile-remove(teams-identity-support) */
-            callDetails.teamsId &&
-              setUserId(fromFlatCommunicationIdentifier(callDetails.teamsId) as MicrosoftTeamsUserIdentifier);
-            setPage('call');
-          }}
-        />
+              /* @conditional-compile-remove(teams-identity-support) */
+              setIsTeamsCall(!!callDetails.teamsToken);
+              /* @conditional-compile-remove(teams-identity-support) */
+              callDetails.teamsToken && setToken(callDetails.teamsToken);
+              /* @conditional-compile-remove(teams-identity-support) */
+              callDetails.teamsId &&
+                setUserId(fromFlatCommunicationIdentifier(callDetails.teamsId) as MicrosoftTeamsUserIdentifier);
+              setPage('call');
+            }}
+          />
+          {widgetAdapterArgs && <CallingWidgetComposite adapterProps={widgetAdapterArgs} />}
+        </Stack>
       );
     }
 
