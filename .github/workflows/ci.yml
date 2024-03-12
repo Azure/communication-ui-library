@@ -60,7 +60,9 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       # Install dependencies
       - name: Install rush
-        run: node common/scripts/install-run-rush.js install
+        run: |
+          rush_version=$(jq -r '.rushVersion' "./rush.json")
+          npm install -g @microsoft/rush@"$rush_version"
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       # Switch flavor if necessary
@@ -150,7 +152,9 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       # Install dependencies
       - name: Install rush
-        run: node common/scripts/install-run-rush.js install
+        run: |
+          rush_version=$(jq -r '.rushVersion' "./rush.json")
+          npm install -g @microsoft/rush@"$rush_version"
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - name: Build Packages
@@ -238,7 +242,9 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       # Install dependencies
       - name: Install rush
-        run: node common/scripts/install-run-rush.js install
+        run: |
+          rush_version=$(jq -r '.rushVersion' "./rush.json")
+          npm install -g @microsoft/rush@"$rush_version"
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       # Switch flavor if necessary
@@ -291,7 +297,9 @@ jobs:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: node common/scripts/install-run-rush.js install
+        run: |
+          rush_version=$(jq -r '.rushVersion' "./rush.json")
+          npm install -g @microsoft/rush@"$rush_version"
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - uses: browser-actions/setup-chrome@v1
@@ -371,7 +379,9 @@ jobs:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: node common/scripts/install-run-rush.js install
+        run: |
+          rush_version=$(jq -r '.rushVersion' "./rush.json")
+          npm install -g @microsoft/rush@"$rush_version"
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - uses: browser-actions/setup-chrome@v1
@@ -451,7 +461,9 @@ jobs:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: node common/scripts/install-run-rush.js install
+        run: |
+          rush_version=$(jq -r '.rushVersion' "./rush.json")
+          npm install -g @microsoft/rush@"$rush_version"
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - uses: browser-actions/setup-chrome@v1
@@ -528,7 +540,9 @@ jobs:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: node common/scripts/install-run-rush.js install
+        run: |
+          rush_version=$(jq -r '.rushVersion' "./rush.json")
+          npm install -g @microsoft/rush@"$rush_version"
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - uses: browser-actions/setup-chrome@v1
@@ -587,7 +601,9 @@ jobs:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: node common/scripts/install-run-rush.js install
+        run: |
+          rush_version=$(jq -r '.rushVersion' "./rush.json")
+          npm install -g @microsoft/rush@"$rush_version"
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - name: Build
@@ -616,7 +632,9 @@ jobs:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: node common/scripts/install-run-rush.js install
+        run: |
+          rush_version=$(jq -r '.rushVersion' "./rush.json")
+          npm install -g @microsoft/rush@"$rush_version"
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       # Switch flavor if necessary
@@ -662,7 +680,9 @@ jobs:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: node common/scripts/install-run-rush.js install
+        run: |
+          rush_version=$(jq -r '.rushVersion' "./rush.json")
+          npm install -g @microsoft/rush@"$rush_version"
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       # Switch flavor if necessary
@@ -708,7 +728,9 @@ jobs:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: node common/scripts/install-run-rush.js install
+        run: |
+          rush_version=$(jq -r '.rushVersion' "./rush.json")
+          npm install -g @microsoft/rush@"$rush_version"
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       # Switch flavor if necessary
@@ -751,7 +773,9 @@ jobs:
         with:
           node-version: 'lts/*'
       - name: Install rush
-        run: node common/scripts/install-run-rush.js install
+        run: |
+          rush_version=$(jq -r '.rushVersion' "./rush.json")
+          npm install -g @microsoft/rush@"$rush_version"
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - uses: browser-actions/setup-chrome@v1
@@ -815,7 +839,9 @@ jobs:
         with:
           node-version: 'lts/*'
       - name: Install rush
-        run: node common/scripts/install-run-rush.js install
+        run: |
+          rush_version=$(jq -r '.rushVersion' "./rush.json")
+          npm install -g @microsoft/rush@"$rush_version"
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - uses: browser-actions/setup-chrome@v1
