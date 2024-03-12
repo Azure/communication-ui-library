@@ -178,7 +178,7 @@ const sendRemoteInlineImageMessage = (
 ): void => {
   const localParticipantId = getIdentifierKind(localParticipant.id);
   const remoteParticipantId = getIdentifierKind(remoteParticipant.id);
-  const imgSrc = 'http://localhost:3000/images/inlineImageExample1.png';
+  const imgSrc = inlineImageUrl || 'images/inlineImageExample1.png';
   if (localParticipantId.kind === 'microsoftTeamsApp' || remoteParticipantId.kind === 'microsoftTeamsApp') {
     throw new Error('Unsupported identifier kind: microsoftBot');
   }
