@@ -7,7 +7,8 @@
     "mutedIconLabel": "已靜音",
     "displayNamePlaceholder": "未命名的參與者",
     "participantStateRinging": "撥號中...",
-    "participantStateHold": "電話保留"
+    "participantStateHold": "電話保留",
+    "attendeeRole": "出席者"
   },
   "ParticipantList": {
     "overflowParticipantCount": "其他 {overflowCount} 個"
@@ -27,6 +28,23 @@
     "removeFile": "移除檔案",
     "uploading": "正在上傳",
     "uploadCompleted": "上傳完成"
+  },
+  "richTextSendBox": {
+    "placeholderText": "輸入訊息",
+    "textTooLong": "您的訊息長度超過上限。",
+    "sendButtonAriaLabel": "傳送訊息",
+    "fileUploadsPendingError": "正在上傳...請稍候。",
+    "removeFile": "移除檔案",
+    "uploading": "正在上傳",
+    "uploadCompleted": "上傳完成",
+    "boldTooltip": "粗體",
+    "italicTooltip": "斜體",
+    "underlineTooltip": "底線",
+    "bulletListTooltip": "項目符號清單",
+    "numberListTooltip": "編號清單",
+    "increaseIndentTooltip": "增加縮排",
+    "decreaseIndentTooltip": "減少縮排",
+    "richTextFormatButtonTooltip": "格式"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "建議"
@@ -125,6 +143,7 @@
   },
   "reactionButton": {
     "label": "傳送表情符號",
+    "ariaLabel": "表情符號按鈕，傳送表情符號",
     "tooltipDisabledContent": "已停用表情符號動作",
     "tooltipContent": "傳送表情符號",
     "likeReactionTooltipContent": "按讚",
@@ -224,7 +243,8 @@
     "addSpotlightVideoTileMenuLabel": "新增焦點",
     "spotlightLimitReachedMenuTitle": "已達焦點限制",
     "stopSpotlightVideoTileMenuLabel": "停止聚焦",
-    "stopSpotlightOnSelfVideoTileMenuLabel": "結束聚焦"
+    "stopSpotlightOnSelfVideoTileMenuLabel": "結束聚焦",
+    "attendeeRole": "出席者"
   },
   "dialpad": {
     "placeholderText": "輸入電話號碼",
@@ -358,6 +378,5 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "上一頁",
     "rightNavButtonAriaLabel": "下一頁"
-  },
-  "AttendeeRole": "出席者"
+  }
 }

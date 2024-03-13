@@ -7,7 +7,8 @@
     "mutedIconLabel": "Silenciado",
     "displayNamePlaceholder": "Participante sem nome",
     "participantStateRinging": "Chamando...",
-    "participantStateHold": "Em espera"
+    "participantStateHold": "Em espera",
+    "attendeeRole": "Participante"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} mais"
@@ -27,6 +28,23 @@
     "removeFile": "Remover arquivo",
     "uploading": "Carregando",
     "uploadCompleted": "Carregamento concluído"
+  },
+  "richTextSendBox": {
+    "placeholderText": "Inserir uma mensagem",
+    "textTooLong": "O comprimento da mensagem está acima do limite máximo.",
+    "sendButtonAriaLabel": "Enviar mensagem",
+    "fileUploadsPendingError": "Carregando... Aguarde.",
+    "removeFile": "Remover arquivo",
+    "uploading": "Carregando",
+    "uploadCompleted": "Carregamento concluído",
+    "boldTooltip": "Negrito",
+    "italicTooltip": "Itálico",
+    "underlineTooltip": "Sublinhar",
+    "bulletListTooltip": "Lista com marcadores",
+    "numberListTooltip": "Lista numerada",
+    "increaseIndentTooltip": "Aumentar recuo",
+    "decreaseIndentTooltip": "Diminuir recuo",
+    "richTextFormatButtonTooltip": "Formato"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Sugestões"
@@ -125,6 +143,7 @@
   },
   "reactionButton": {
     "label": "Reagir",
+    "ariaLabel": "Botão Reagir, Enviar uma reação",
     "tooltipDisabledContent": "A ação de reação está desabilitada",
     "tooltipContent": "Enviar uma reação",
     "likeReactionTooltipContent": "Curtir",
@@ -224,7 +243,8 @@
     "addSpotlightVideoTileMenuLabel": "Adicionar destaque",
     "spotlightLimitReachedMenuTitle": "Limite de destaque atingido",
     "stopSpotlightVideoTileMenuLabel": "Parar de destacar",
-    "stopSpotlightOnSelfVideoTileMenuLabel": "Sair de destaque"
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Sair de destaque",
+    "attendeeRole": "Participante"
   },
   "dialpad": {
     "placeholderText": "Inserir o número do telefone",
@@ -358,6 +378,5 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "página anterior",
     "rightNavButtonAriaLabel": "próxima página"
-  },
-  "AttendeeRole": "Participante"
+  }
 }
