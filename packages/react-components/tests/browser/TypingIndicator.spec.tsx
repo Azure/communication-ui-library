@@ -28,7 +28,7 @@ test.describe('TypingIndicator tests', () => {
 
 // This is an example of beta only test, to be deleted when we have some beta tests examples
 // betaTest.describe('TypingIndicator beta only test', () => {
-//   betaTest.skip(({ isStableBuild }) => isStableBuild, 'The tests should be run for beta flavor only');
+//   betaTest.skip(({ isBetaBuild }) => !isBetaBuild, 'The tests should be run for beta flavor only');
 //
 //   betaTest('TypingIndicator should be shown correctly 123', async ({ mount }) => {
 //     const component = await mount(<TypingIndicator typingUsers={[{ userId: '1', displayName: 'User 1' }]} />);
