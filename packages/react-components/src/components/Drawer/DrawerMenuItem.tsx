@@ -116,9 +116,7 @@ export const DrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Element => {
               <IconButton
                 key={index}
                 onClick={() => {
-                  if (props.onReactionClick !== undefined) {
-                    props.onReactionClick(emoji);
-                  }
+                  props.onReactionClick?.(emoji);
                 }}
                 style={mobileViewEmojiStyles(resourceUrl ? resourceUrl : '', 'running')}
               />
