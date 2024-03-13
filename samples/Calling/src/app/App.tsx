@@ -63,7 +63,9 @@ const App = (): JSX.Element => {
 
   // Call details to join a call - these are collected from the user on the home screen
   const [callLocator, setCallLocator] = useState<CallAdapterLocator>();
-  const [targetCallees, setTargetCallees] = useState<StartCallIdentifier[]>([]);
+  const [targetCallees, setTargetCallees] = useState<StartCallIdentifier[]>([
+    fromFlatCommunicationIdentifier('28:orgid:19b01e96-c923-433a-83e4-bda54446bad7')
+  ]);
   const [displayName, setDisplayName] = useState<string>('');
 
   /* @conditional-compile-remove(teams-identity-support) */
@@ -101,13 +103,28 @@ const App = (): JSX.Element => {
         displayName: displayName,
         targetCallees: targetCallees,
         /* @conditional-compile-remove(PSTN-calls) */
-        alternateCallerId: alternateCallerId
+        alternateCallerId: alternateCallerId,
+        options: {
+          callingSounds: {
+            callEnded: { url: '/assets/sounds/callEnded.mp3' },
+            callRinging: { url: '/assets/sounds/callRinging.mp3' },
+            callBusy: { url: '/assets/sounds/callBusy.mp3' }
+          }
+        }
       };
     }
     return;
   }, [credential, userId, token, displayName, callLocator, targetCallees, alternateCallerId]);
 
   const widgetOptions: CallingWidgetCallCompositeOptions = {
+    callControls: {
+      cameraButton: false,
+      screenShareButton: false,
+      moreButton: false,
+      peopleButton: false,
+      raiseHandButton: false,
+      displayType: 'compact'
+    },
     onRenderLogo: () => {
       return (
         <Stack style={{ height: '100%' }}>

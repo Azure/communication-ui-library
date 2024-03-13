@@ -27,6 +27,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
             : {
                 cameraButton: useLocalVideo,
                 screenShareButton: useLocalVideo,
+                raiseHandButton: false,
                 moreButton: false,
                 peopleButton: false,
                 displayType: 'compact'
