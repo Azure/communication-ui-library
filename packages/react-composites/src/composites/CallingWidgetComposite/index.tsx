@@ -5,6 +5,8 @@ export { CallingWidgetComposite } from './CallingWidgetComposite';
 export type {
   CallingWidgetCompositeProps,
   CustomField,
+  CustomCheckBoxField,
+  CustomTextField,
   WidgetPosition,
   CallingWidgetCallCompositeOptions
 } from './CallingWidgetComposite';

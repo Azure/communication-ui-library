@@ -16,7 +16,7 @@ import {
   checkboxStyles,
   startCallButtonStyles
 } from '../styles/CallingWidgetComposite.styles';
-import { CustomField } from '../CallingWidgetComposite';
+import { CustomCheckBoxField, CustomTextField } from '../CallingWidgetComposite';
 import { useLocale } from '../../localization';
 
 export interface SetupScreenProps {
@@ -29,7 +29,7 @@ export interface SetupScreenProps {
   callAdapterArgs: AzureCommunicationOutboundCallAdapterArgs | AzureCommunicationCallAdapterArgs;
   consentToData: boolean;
   adapter?: CallAdapter;
-  customFields?: CustomField[];
+  customFields?: (CustomCheckBoxField | CustomTextField)[];
   onRenderLogo?: () => JSX.Element;
   showVideoOptIn?: boolean;
   showDisplayNameField?: boolean;
@@ -56,7 +56,7 @@ export const SetupScreen = (props: SetupScreenProps): JSX.Element => {
   /**
    * Render function to display the new custome fields passed in by Contoso
    */
-  const renderCustomFields = (fields: CustomField[] | undefined): JSX.Element => {
+  const renderCustomFields = (fields: (CustomCheckBoxField | CustomTextField)[] | undefined): JSX.Element => {
     if (fields === undefined) {
       return <></>;
     }
@@ -65,15 +65,19 @@ export const SetupScreen = (props: SetupScreenProps): JSX.Element => {
         return (
           <Checkbox
             label={field.label}
+            defaultChecked={field.defaultChecked}
             onChange={(_, checked) => {
               field.onChange(checked as boolean);
             }}
+            required={field.required}
           ></Checkbox>
         );
       } else {
         return (
           <TextField
             label={field.label}
+            required={field.required}
+            placeholder={field.placeholder}
             onChange={(_, newValue) => {
               field.onChange(newValue as string);
             }}
@@ -81,14 +85,14 @@ export const SetupScreen = (props: SetupScreenProps): JSX.Element => {
         );
       }
     });
-    return <Stack>{customFieldElements}</Stack>;
+    return <Stack tokens={{ childrenGap: '1rem' }}>{customFieldElements}</Stack>;
   };
 
   return (
     <Stack styles={callingWidgetSetupContainerStyles(theme)} tokens={{ childrenGap: '1rem' }}>
       <IconButton
         styles={collapseButtonStyles}
-        iconProps={{ iconName: 'Dismiss' }}
+        iconProps={{ iconName: 'WidgetDismiss' }}
         onClick={() => {
           setDisplayName(undefined);
           setConsentToData(false);
@@ -123,7 +127,7 @@ export const SetupScreen = (props: SetupScreenProps): JSX.Element => {
         label={locale.consentToDataCollectionLabel}
         onChange={async (_, checked?: boolean | undefined) => {
           setConsentToData(!!checked);
-          if (callAdapterArgs && callAdapterArgs.credential) {
+          if (callAdapterArgs && callAdapterArgs.credential && !adapter) {
             if ('targetCallees' in callAdapterArgs) {
               setAdapter(
                 await createAzureCommunicationCallAdapter({

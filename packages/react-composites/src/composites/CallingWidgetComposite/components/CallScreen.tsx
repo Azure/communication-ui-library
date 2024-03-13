@@ -20,20 +20,23 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     <Stack styles={callingWidgetInCallContainerStyles(theme)}>
       <CallComposite
         adapter={adapter}
-        options={
-          options
-            ? options
+        options={{
+          ...options,
+          callControls: options?.callControls
+            ? options.callControls
             : {
-                callControls: {
-                  cameraButton: useLocalVideo,
-                  screenShareButton: useLocalVideo,
-                  moreButton: false,
-                  peopleButton: false,
-                  displayType: 'compact'
-                },
-                localVideoTile: !useLocalVideo ? false : { position: 'floating' }
-              }
-        }
+                cameraButton: useLocalVideo,
+                screenShareButton: useLocalVideo,
+                moreButton: false,
+                peopleButton: false,
+                displayType: 'compact'
+              },
+          localVideoTile: options?.localVideoTile
+            ? options.localVideoTile
+            : !useLocalVideo
+            ? false
+            : { position: 'floating' }
+        }}
       />
     </Stack>
   );

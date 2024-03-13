@@ -921,7 +921,7 @@ export interface CallingTheme {
 export type CallingWidgetCallCompositeOptions = Partial<CallCompositeOptions> & {
     showDisplayNameField?: boolean;
     showVideoOptIn?: boolean;
-    customFieldProps: CustomField[];
+    customFieldProps?: (CustomCheckBoxField | CustomTextField)[];
     onRenderLogo?: () => JSX.Element;
 };
 
@@ -931,7 +931,7 @@ export const CallingWidgetComposite: (props: CallingWidgetCompositeProps) => JSX
 // @public
 export type CallingWidgetCompositeIcons = {
     WaitingStatePrimary?: JSX.Element;
-    Dismiss?: JSX.Element;
+    WidgetDismiss?: JSX.Element;
 };
 
 // @public
@@ -2417,11 +2417,18 @@ export interface CustomCallControlButtonStrings {
 }
 
 // @public
+export interface CustomCheckBoxField extends CustomField {
+    defaultChecked: boolean;
+    kind: 'checkBox';
+}
+
+// @public
 export interface CustomField {
-    kind: 'checkBox' | 'inputBox';
+    key: string;
     label: string;
     onCallStart: () => void;
     onChange: (newValue: boolean | string) => void;
+    required?: boolean;
 }
 
 // @public
@@ -2430,6 +2437,12 @@ export interface CustomMessage extends MessageCommon {
     content: string;
     // (undocumented)
     messageType: 'custom';
+}
+
+// @public
+export interface CustomTextField extends CustomField {
+    kind: 'textBox';
+    placeholder: string;
 }
 
 // @public
@@ -2647,7 +2660,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MoreDrawerSelectedSpeaker?: JSX.Element | undefined;
     MoreDrawerSpeakers?: JSX.Element | undefined;
     WaitingStatePrimary?: JSX.Element | undefined;
-    Dismiss?: JSX.Element | undefined;
+    WidgetDismiss?: JSX.Element | undefined;
     ChatMessageOptions: React_2.JSX.Element;
     ControlButtonParticipantsContextualMenuItem: React_2.JSX.Element;
     CancelFileUpload: React_2.JSX.Element;

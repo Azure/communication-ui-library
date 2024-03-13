@@ -35,8 +35,7 @@ export const callingWidgetSetupContainerStyles = (theme: Theme): IStackStyles =>
   return {
     root: {
       width: '18rem',
-      minHeight: '20rem',
-      maxHeight: '25rem',
+      minHeight: '25rem',
       padding: '0.5rem',
       boxShadow: theme.effects.elevation16,
       borderRadius: theme.effects.roundedCorner6,

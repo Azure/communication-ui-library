@@ -33,13 +33,17 @@ import { CallCompositeIcons } from '../common/icons';
  */
 export interface CustomField {
   /**
-   * Type of input that the new field can be
+   * Unique key for the field
    */
-  kind: 'checkBox' | 'inputBox';
+  key: string;
   /**
    * Label for the input
    */
   label: string;
+  /**
+   * Whether the field is required
+   */
+  required?: boolean;
   /**
    * Callback to allow the change of data in a field to be tracked
    *
@@ -51,6 +55,36 @@ export interface CustomField {
    * @returns
    */
   onCallStart: () => void;
+}
+
+/**
+ * Custom input field for the widget
+ * @public
+ */
+export interface CustomTextField extends CustomField {
+  /**
+   * Kind of input that the field is
+   */
+  kind: 'textBox';
+  /**
+   * Placeholder for the input
+   */
+  placeholder: string;
+}
+
+/**
+ * Custom checkbox field for the widget
+ * @public
+ */
+export interface CustomCheckBoxField extends CustomField {
+  /**
+   * Kind of input that the field is
+   */
+  kind: 'checkBox';
+  /**
+   * Default checked value for the checkbox
+   */
+  defaultChecked?: boolean;
 }
 
 /**
@@ -66,7 +100,7 @@ export type WidgetPosition = 'bottomRight' | 'bottomLeft' | 'topRight' | 'topLef
  * Options for the CallingWidgetComposite
  * @public
  */
-export type CallingWidgetCallCompositeOptions = Partial<CallCompositeOptions> & {
+export interface CallingWidgetCallCompositeOptions extends CallCompositeOptions {
   /**
    * Control to determine whether the user can set their name or if the name given in the adapter
    * arguments is used.
@@ -80,12 +114,12 @@ export type CallingWidgetCallCompositeOptions = Partial<CallCompositeOptions> & 
    * An array of Custom fields to be added to the widget setup. These will be rendered in line with
    * the other stylings of the widget fields provided.
    */
-  customFieldProps: CustomField[];
+  customFieldProps?: (CustomCheckBoxField | CustomTextField)[];
   /**
    * Custom render function for displaying logo.
    */
   onRenderLogo?: () => JSX.Element;
-};
+}
 
 /**
  * Props for the CallingWidgetComposite
@@ -126,12 +160,17 @@ const MainWidget = (props: CallingWidgetCompositeProps): JSX.Element => {
    * to be used on the CallScreen.
    */
   const callCompositeOptions: CallCompositeOptions | undefined = useMemo(() => {
-    if (options) {
-      const compositeOptions = { ...options };
-      return compositeOptions;
-    } else {
-      return undefined;
-    }
+    return {
+      callControlOptions: {
+        callControls: options?.callControls ? options?.callControls : undefined
+      },
+      branding: options?.branding,
+      errorBar: options?.errorBar,
+      deviceChecks: options?.deviceChecks,
+      galleryOptions: options?.galleryOptions,
+      localVideoTile: options?.localVideoTile,
+      spotlight: options?.spotlight
+    };
   }, [options]);
 
   useEffect(() => {
@@ -181,6 +220,7 @@ const MainWidget = (props: CallingWidgetCompositeProps): JSX.Element => {
         customFields={options?.customFieldProps}
         showVideoOptIn={options?.showVideoOptIn}
         showDisplayNameField={options?.showDisplayNameField}
+        onRenderLogo={options?.onRenderLogo}
       />
     );
   }

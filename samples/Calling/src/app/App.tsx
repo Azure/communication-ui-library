@@ -5,6 +5,7 @@ import { CommunicationUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(rooms) */
 import { ParticipantRole } from '@azure/communication-calling';
 import {
+  CallingWidgetCallCompositeOptions,
   CallingWidgetComposite,
   fromFlatCommunicationIdentifier,
   StartCallIdentifier,
@@ -38,6 +39,7 @@ import { CallScreen } from './views/CallScreen';
 import { HomeScreen } from './views/HomeScreen';
 import { UnsupportedBrowserPage } from './views/UnsupportedBrowserPage';
 import { createAutoRefreshingCredential } from './utils/credential';
+import heroSVG from './../assets/hero.svg';
 
 setLogLevel('error');
 
@@ -88,7 +90,7 @@ const App = (): JSX.Element => {
     if (userId && 'communicationUserId' in userId && token) {
       return createAutoRefreshingCredential(toFlatCommunicationIdentifier(userId), token);
     }
-    return {};
+    return undefined;
   }, [token, userId]);
 
   const widgetAdapterArgs = useMemo(() => {
@@ -105,7 +107,79 @@ const App = (): JSX.Element => {
     return;
   }, [credential, userId, token, displayName, callLocator, targetCallees, alternateCallerId]);
 
-  console.log('widgetAdapterArgs', widgetAdapterArgs);
+  const widgetOptions: CallingWidgetCallCompositeOptions = {
+    onRenderLogo: () => {
+      return (
+        <Stack style={{ height: '100%' }}>
+          <img style={{ transform: 'scale(0.6)' }} src={`${heroSVG.toString()}`} alt="cat header" />
+        </Stack>
+      );
+    },
+    customFieldProps: [
+      {
+        key: '1',
+        label: 'Custom Field 1',
+        onChange: (newValue) => {
+          console.log('Custom Field Value:', newValue);
+        },
+        kind: 'textBox',
+        placeholder: 'Enter a value',
+        onCallStart: () => {
+          alert('Call Started');
+        }
+      },
+      {
+        key: '2',
+        label: 'Custom Field 2',
+        required: true,
+        onChange: (newValue) => {
+          console.log('Custom Field Value:', newValue);
+        },
+        kind: 'textBox',
+        placeholder: 'Enter a value',
+        onCallStart: () => {
+          alert('Call Started');
+        }
+      },
+      {
+        key: '3',
+        label: 'Custom Field 3',
+        onChange: (newValue) => {
+          console.log('Custom Field Value:', newValue);
+        },
+        kind: 'checkBox',
+        defaultChecked: false,
+        onCallStart: () => {
+          alert('Call Started');
+        }
+      },
+      {
+        key: '4',
+        label: 'Custom Field 4',
+        onChange: (newValue) => {
+          console.log('Custom Field Value:', newValue);
+        },
+        kind: 'checkBox',
+        defaultChecked: false,
+        onCallStart: () => {
+          alert('Call Started');
+        }
+      },
+      {
+        key: '5',
+        label: 'Custom Field 5',
+        onChange: (newValue) => {
+          console.log('Custom Field Value:', newValue);
+        },
+        kind: 'textBox',
+        placeholder: 'Enter a value',
+        onCallStart: () => {
+          alert('Call Started');
+        }
+      }
+    ]
+  };
+
   const isMobileSession = useIsMobile();
   const isLandscapeSession = isLandscape();
 
@@ -214,7 +288,7 @@ const App = (): JSX.Element => {
               setPage('call');
             }}
           />
-          {widgetAdapterArgs && <CallingWidgetComposite adapterProps={widgetAdapterArgs} />}
+          {widgetAdapterArgs && <CallingWidgetComposite adapterProps={widgetAdapterArgs} options={widgetOptions} />}
         </Stack>
       );
     }
