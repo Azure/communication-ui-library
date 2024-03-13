@@ -1034,6 +1034,8 @@ export interface _DrawerMenuItemProps {
     // (undocumented)
     onReactionClick?: (reaction: string) => Promise<void>;
     // (undocumented)
+    onRendererContent?: () => JSX.Element;
+    // (undocumented)
     reactionResources?: ReactionResources;
     secondaryComponent?: JSX.Element;
     secondaryIconProps?: IIconProps;
@@ -1940,6 +1942,9 @@ export interface ReactionButtonStrings {
     tooltipContent?: string;
     tooltipDisabledContent?: string;
 }
+
+// @internal
+export const _ReactionDrawerMenuItem: (props: _DrawerMenuItemProps) => JSX.Element;
 
 // @beta
 export interface ReactionResources {

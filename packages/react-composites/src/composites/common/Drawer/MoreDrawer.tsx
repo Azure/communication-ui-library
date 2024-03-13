@@ -15,6 +15,8 @@ import {
   CaptionLanguageStrings
 } from '@internal/react-components';
 /* @conditional-compile-remove(reaction) */
+import { _ReactionDrawerMenuItem } from '@internal/react-components';
+/* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '@internal/react-components';
 /* @conditional-compile-remove(gallery-layout-composite) */
 import { VideoGalleryLayout } from '@internal/react-components';
@@ -230,8 +232,13 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   if (props.reactionResources !== undefined) {
     drawerMenuItems.push({
       itemKey: 'reactions',
-      reactionResources: props.reactionResources,
-      onReactionClick: props.onReactionClick
+      onRendererContent: () => (
+        <_ReactionDrawerMenuItem
+          itemKey="reactions"
+          onReactionClick={props.onReactionClick}
+          reactionResources={props.reactionResources}
+        />
+      )
     });
   }
 
