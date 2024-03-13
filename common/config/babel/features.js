@@ -89,7 +89,9 @@ module.exports = {
     // Feature for spotlight
     'spotlight',
     // Feature for tracking beta start call identifier
-    'start-call-beta'
+    'start-call-beta',
+    // Feature for local recording notification for teams meetings
+    'local-recording-notification'
   ],
   // A list of in progress beta feature.
   // These features are still beta feature but "in progress"

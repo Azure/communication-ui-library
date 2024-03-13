@@ -59,6 +59,10 @@ import { convertFromSDKToRaisedHandState } from './Converter';
 import { ReactionMessage } from '@azure/communication-calling';
 /* @conditional-compile-remove(spotlight) */
 import { SpotlightedParticipant } from '@azure/communication-calling';
+/* @conditional-compile-remove(local-recording-notification) */
+import { LocalRecordingInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(local-recording-notification) */
+import { RecordingInfo } from '@azure/communication-calling';
 
 enableMapSet();
 // Needed to generate state diff for verbose logging.
@@ -372,6 +376,46 @@ export class CallContext {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         call.recording.isRecordingActive = isRecordingActive;
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(local-recording-notification) */
+  public setCallRecordingInfos(
+    callId: string,
+    recordingInfosAdded: RecordingInfo[],
+    recordingInfosRemoved: RecordingInfo[]
+  ): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.recording.activeRecordings = recordingInfosAdded;
+        call.recording.stoppedRecordings = recordingInfosRemoved;
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(local-recording-notification) */
+  public setCallLocalRecordingActive(callId: string, isRecordingActive: boolean): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.localRecording.isRecordingActive = isRecordingActive;
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(local-recording-notification) */
+  public setCallLocalRecordingInfos(
+    callId: string,
+    localRecordingInfosAdded: LocalRecordingInfo[],
+    localRecordingInfosRemoved: LocalRecordingInfo[]
+  ): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.localRecording.activeRecordings = localRecordingInfosAdded;
+        call.localRecording.stoppedRecordings = localRecordingInfosRemoved;
       }
     });
   }

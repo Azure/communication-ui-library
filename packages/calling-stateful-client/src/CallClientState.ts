@@ -33,6 +33,8 @@ import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { ReactionMessage } from '@azure/communication-calling';
 /* @conditional-compile-remove(spotlight) */
 import { SpotlightedParticipant } from '@azure/communication-calling';
+/* @condtional-compile-remove(local-recording-notification) */
+import { LocalRecordingInfo, RecordingInfo } from '@azure/communication-calling';
 
 /**
  * State only version of {@link @azure/communication-calling#CallAgent} except calls is moved to be a child directly of
@@ -195,6 +197,40 @@ export interface RecordingCallFeatureState {
    * Proxy of {@link @azure/communication-calling#RecordingCallFeature.isRecordingActive}.
    */
   isRecordingActive: boolean;
+  /* @conditional-compile-remove(local-recording-notification) */
+  /**
+   * Contains list of information of started recordings
+   * Proxy of {@link @azure/communication-calling#RecordingCallFeature.recordings}.
+   */
+  activeRecordings?: RecordingInfo[];
+  /* @conditional-compile-remove(local-recording-notification) */
+  /**
+   * Contains list of information of stopped recordings
+   */
+  stoppedRecordings?: RecordingInfo[];
+}
+
+/* @conditional-compile-remove(local-recording-notification) */
+/**
+ * State only version of {@link @azure/communication-calling#LocalRecordingCallFeature}. {@link StatefulCallClient} will
+ * automatically listen for local recording state of the call and update the state exposed by {@link StatefulCallClient} accordingly.
+ *
+ * @beta
+ */
+export interface LocalRecordingCallFeatureState {
+  /**
+   * Proxy of {@link @azure/communication-calling#LocalRecordingCallFeature.isRecordingActive}.
+   */
+  isRecordingActive: boolean;
+  /**
+   * Contains list of information of started recordings
+   * Proxy of {@link @azure/communication-calling#LocalRecordingCallFeature.recordings}.
+   */
+  activeRecordings?: LocalRecordingInfo[];
+  /**
+   * Contains list of information of stopped recordings
+   */
+  stoppedRecordings?: LocalRecordingInfo[];
 }
 
 /* @conditional-compile-remove(raise-hand) */
@@ -513,6 +549,11 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#RecordingCallFeature}.
    */
   recording: RecordingCallFeatureState;
+  /* @conditional-compile-remove(local-recording-notification) */
+  /**
+   * Proxy of {@link @azure/communication-calling#LocalRecordingCallFeature}.
+   */
+  localRecording: LocalRecordingCallFeatureState;
   /* @conditional-compile-remove(ppt-live) */
   /**
    * Proxy of {@link @azure/communication-calling#PPTLiveCallFeature}.

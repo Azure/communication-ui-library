@@ -30,12 +30,14 @@ import { IncomingCall } from '@azure/communication-calling';
 import { IncomingCallCommon as IncomingCallCommon_2 } from '@azure/communication-calling';
 import { LatestMediaDiagnostics } from '@azure/communication-calling';
 import { LatestNetworkDiagnostics } from '@azure/communication-calling';
+import { LocalRecordingInfo } from '@azure/communication-calling';
 import { LocalVideoStream } from '@azure/communication-calling';
 import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { ParticipantCapabilities } from '@azure/communication-calling';
 import { ParticipantRole } from '@azure/communication-calling';
 import { ReactionMessage } from '@azure/communication-calling';
+import { RecordingInfo } from '@azure/communication-calling';
 import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/communication-calling';
 import { ScalingMode } from '@azure/communication-calling';
 import { SpotlightedParticipant } from '@azure/communication-calling';
@@ -121,6 +123,7 @@ export interface CallState {
     kind: CallKind;
     // @beta
     localParticipantReaction?: ReactionState;
+    localRecording: LocalRecordingCallFeatureState;
     localVideoStreams: LocalVideoStreamState[];
     optimalVideoCount: OptimalVideoCountFeatureState;
     // @beta
@@ -237,6 +240,13 @@ export const _isTeamsCall: (call: CallCommon) => call is TeamsCall_2;
 // @internal (undocumented)
 export const _isTeamsCallAgent: (callAgent: CallAgentCommon) => callAgent is TeamsCallAgent_2;
 
+// @beta
+export interface LocalRecordingCallFeatureState {
+    activeRecordings?: LocalRecordingInfo[];
+    isRecordingActive: boolean;
+    stoppedRecordings?: LocalRecordingInfo[];
+}
+
 // @public
 export interface LocalVideoStreamState {
     mediaStreamType: MediaStreamType;
@@ -291,7 +301,9 @@ export type ReactionState = {
 
 // @public
 export interface RecordingCallFeature {
+    activeRecordings?: RecordingInfo[];
     isRecordingActive: boolean;
+    stoppedRecordings?: RecordingInfo[];
 }
 
 // @public
