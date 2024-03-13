@@ -16,12 +16,12 @@ import {
 import React from 'react';
 import { useTheme } from '../../theming/FluentThemeProvider';
 import { BaseCustomStyles } from '../../types';
-/* @condtional-compile-remove(reaction) */
+/* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '../../types';
 import { submitWithKeyboard } from '../utils/keyboardNavigation';
-/* @condtional-compile-remove(reaction) */
+/* @conditional-compile-remove(reaction) */
 import { mobileViewEmojiStyles, mobileViewMenuItemStyle } from '../styles/ReactionButton.styles';
-/* @condtional-compile-remove(reaction) */
+/* @conditional-compile-remove(reaction) */
 import { IconButton } from '@fluentui/react';
 
 /**
@@ -96,6 +96,7 @@ export const DrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Element => {
   ) : undefined;
 
   if (props.itemKey === 'reactions') {
+    /* @conditional-compile-remove(reaction) */
     return (
       <Stack
         id={props.id}
@@ -126,6 +127,7 @@ export const DrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Element => {
         </div>
       </Stack>
     );
+    return <div></div>;
   } else {
     return (
       <FocusZone shouldFocusOnMount={props.shouldFocusOnMount}>
