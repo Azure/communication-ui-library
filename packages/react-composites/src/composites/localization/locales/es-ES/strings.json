@@ -52,6 +52,7 @@
     "peopleButtonLabel": "Contactos",
     "selectedPeopleButtonLabel": "Se seleccionó el botón Contactos",
     "peoplePaneTitle": "Contactos",
+    "peoplePaneMoreButtonAriaLabel": "Más",
     "peopleButtonTooltipOpen": "Mostrar participantes",
     "peopleButtonTooltipClose": "Ocultar participantes",
     "peoplePaneSubTitle": "En esta llamada {numberOfPeople}",
@@ -65,6 +66,7 @@
     "stopSpotlightParticipantListMenuLabel": "Dejar de poner en primer plano",
     "stopSpotlightOnSelfParticipantListMenuLabel": "Primer plano",
     "spotlightLimitReachedParticipantListMenuTitle": "Se alcanzó el límite de primer plano",
+    "stopAllSpotlightMenuLabel": "Detener todos los primeros planos",
     "returnToCallButtonAriaDescription": "Volver a llamada",
     "returnToCallButtonAriaLabel": "Volver",
     "roomNotFoundDetails": "No se encontró el Id. de sala proporcionado.",
@@ -311,14 +313,16 @@
       "startSpotlightOnSelfText": "Resaltará el vídeo para todos los participantes de la reunión.",
       "startSpotlightConfirmButtonLabel": "Poner en primer plano para todos",
       "startSpotlightCancelButtonLabel": "Cancelar",
-      "stopSpotlightHeading": "¿Dejar de poner en primer plano?",
+      "stopSpotlightHeading": "¿Dejar de poner este vídeo en primer plano?",
       "stopSpotlightOnSelfHeading": "¿Salir del primer plano?",
       "stopSpotlightText": "Este vídeo dejará de estar resaltado para todos los asistentes a la reunión.",
       "stopSpotlightOnSelfText": "Su vídeo ya no resaltará para todos en la reunión.",
       "stopSpotlightConfirmButtonLabel": "Dejar de poner en primer plano",
       "stopSpotlightOnSelfConfirmButtonLabel": "Salir del primer plano",
       "stopSpotlightCancelButtonLabel": "Cancelar"
-    }
+    },
+    "exitSpotlightButtonLabel": "Salir del primer plano",
+    "exitSpotlightButtonTooltip": "Salir del primer plano"
   },
   "chat": {
     "chatListHeader": "En este chat",
