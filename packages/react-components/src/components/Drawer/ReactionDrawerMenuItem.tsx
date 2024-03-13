@@ -36,7 +36,8 @@ export const _ReactionDrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Elemen
   const modifiedFirstItemStyle = {
     root: {
       borderTopRightRadius: borderRadius,
-      borderTopLeftRadius: borderRadius
+      borderTopLeftRadius: borderRadius,
+      marginTop: '12px'
     }
   };
 
@@ -70,6 +71,7 @@ export const _ReactionDrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Elemen
   );
 };
 
+/* @conditional-compile-remove(reaction) */
 const drawerMenuItemRootStyles = (hoverBackground: string, fontSize: IRawStyle): IStyle => ({
   ...fontSize,
   height: '3rem',
@@ -81,6 +83,7 @@ const drawerMenuItemRootStyles = (hoverBackground: string, fontSize: IRawStyle):
   }
 });
 
+/* @conditional-compile-remove(reaction) */
 const disabledDrawerMenuItemRootStyles = (background: string): IStyle => ({
   pointerEvents: 'none',
   background: background,

@@ -60,7 +60,9 @@ export interface _DrawerMenuItemProps {
   reactionResources?: ReactionResources;
   /* @conditional-compile-remove(reaction) */
   onReactionClick?: (reaction: string) => Promise<void>;
-  /* @conditional-compile-remove(reaction) */
+  /**
+   * Custom JSX item injection for custom mobile view button on drawers
+   */
   onRendererContent?: () => JSX.Element;
 }
 
