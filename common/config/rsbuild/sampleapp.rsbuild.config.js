@@ -17,6 +17,7 @@ export const rsbuildConfig = (sampleAppDir) => {
         '@internal/calling-stateful-client': path.resolve(sampleAppDir, '../../packages/calling-stateful-client/src'),
         '@internal/calling-component-bindings': path.resolve(sampleAppDir, '../../packages/calling-component-bindings/src'),
         '@internal/acs-ui-common': path.resolve(sampleAppDir, '../../packages/acs-ui-common/src'),
+        '@internal/fake-backends': path.resolve(sampleAppDir, '../../fake-backends/src'),
       },
       define: {
         'process.env.PRODUCTION': process.env.production || !process.env.development,

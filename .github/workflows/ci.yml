@@ -322,14 +322,14 @@ jobs:
       - name: Run dependency update for stable
         if: ${{ matrix.flavor == 'stable' }}
         run: rush update:stable
-      - name: Build Call Composite Test App
-        run: |
-          cd packages/react-composites
-          rushx build:e2e:call
       - name: Install packlets used by browser tests
         run: |
           cd packages/react-composites
           rush build -t .
+      - name: Build Call Composite Test App
+        run: |
+          cd packages/react-composites
+          rushx build:e2e:call
       - name: Call Composite Visual Regression Tests
         id: visualregressiontests
         run: |
@@ -402,14 +402,14 @@ jobs:
       - name: Run dependency update for stable
         if: ${{ matrix.flavor == 'stable' }}
         run: rush update:stable
-      - name: Build Chat Composite Test App
-        run: |
-          cd packages/react-composites
-          rushx build:e2e:chat
       - name: Install packlets used by browser tests
         run: |
           cd packages/react-composites
           rush build -t .
+      - name: Build Chat Composite Test App
+        run: |
+          cd packages/react-composites
+          rushx build:e2e:chat
       - name: Chat Composite Visual Regression Tests
         id: visualregressiontests
         run: |
@@ -482,14 +482,14 @@ jobs:
       - name: Run dependency update for stable
         if: ${{ matrix.flavor == 'stable' }}
         run: rush update:stable
-      - name: Build CallWithChatComposite Test App
-        run: |
-          cd packages/react-composites
-          rushx build:e2e:callwithchat
       - name: Install packlets used by browser tests
         run: |
           cd packages/react-composites
           rush build -t .
+      - name: Build CallWithChatComposite Test App
+        run: |
+          cd packages/react-composites
+          rushx build:e2e:callwithchat
       - name: CallWithChatComposite Visual Regression Tests
         id: visualregressiontests
         run: |

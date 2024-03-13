@@ -5,7 +5,6 @@
 
 import path from 'path';
 import { rsbuildConfig } from '../../../../common/config/rsbuild/sampleapp.rsbuild.config';
-import { Rspack } from '@rsbuild/core';
 
 /**
  * @returns {import('@rsbuild/core').RSBuildConfig}
