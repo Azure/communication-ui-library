@@ -3,10 +3,11 @@
 
 import path from 'path';
 import { pluginReact } from '@rsbuild/plugin-react';
+import { defineConfig } from '@rsbuild/core';
 
 export const rsbuildConfig = (sampleAppDir) => {
   const packageJson = require(path.join(sampleAppDir, 'package.json'));
-  return {
+  return defineConfig({
     source: {
       alias: {
         '@azure/communication-react': path.resolve(sampleAppDir, '../../packages/communication-react/src'),
@@ -48,5 +49,5 @@ export const rsbuildConfig = (sampleAppDir) => {
         '/uploadToAzureBlobStorage': 'http://[::1]:8080'
       }
     }
-  }
+  });
 };
