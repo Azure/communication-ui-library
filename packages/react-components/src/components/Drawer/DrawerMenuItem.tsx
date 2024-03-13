@@ -76,7 +76,9 @@ export const DrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Element => {
   const onClick = (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>): void =>
     props.onItemClick && props.onItemClick(ev, props.itemKey);
   const onKeyPress = (ev: React.KeyboardEvent<HTMLElement>): void => onClick && submitWithKeyboard(ev, onClick);
+  /* @conditional-compile-remove(reaction) */
   const resources = props.reactionResources;
+  /* @conditional-compile-remove(reaction) */
   const emojiResource: Map<string, string | undefined> = new Map([
     ['like', resources?.likeReaction?.url],
     ['heart', resources?.heartReaction?.url],
@@ -84,6 +86,7 @@ export const DrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Element => {
     ['applause', resources?.applauseReaction?.url],
     ['surprised', resources?.surprisedReaction?.url]
   ]);
+  /* @conditional-compile-remove(reaction) */
   const emojis: string[] = ['like', 'heart', 'laugh', 'applause', 'surprised'];
 
   const secondaryIcon = props.secondaryIconProps ? (
