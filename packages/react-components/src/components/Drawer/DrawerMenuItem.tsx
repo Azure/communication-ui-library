@@ -16,12 +16,12 @@ import {
 import React from 'react';
 import { useTheme } from '../../theming/FluentThemeProvider';
 import { BaseCustomStyles } from '../../types';
-/* @condtional-compile-remove(reaction) */
+/* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '../../types';
 import { submitWithKeyboard } from '../utils/keyboardNavigation';
-/* @condtional-compile-remove(reaction) */
+/* @conditional-compile-remove(reaction) */
 import { mobileViewEmojiStyles, mobileViewMenuItemStyle } from '../styles/ReactionButton.styles';
-/* @condtional-compile-remove(reaction) */
+/* @conditional-compile-remove(reaction) */
 import { IconButton } from '@fluentui/react';
 
 /**
@@ -76,7 +76,9 @@ export const DrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Element => {
   const onClick = (ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>): void =>
     props.onItemClick && props.onItemClick(ev, props.itemKey);
   const onKeyPress = (ev: React.KeyboardEvent<HTMLElement>): void => onClick && submitWithKeyboard(ev, onClick);
+  /* @conditional-compile-remove(reaction) */
   const resources = props.reactionResources;
+  /* @conditional-compile-remove(reaction) */
   const emojiResource: Map<string, string | undefined> = new Map([
     ['like', resources?.likeReaction?.url],
     ['heart', resources?.heartReaction?.url],
@@ -84,6 +86,7 @@ export const DrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Element => {
     ['applause', resources?.applauseReaction?.url],
     ['surprised', resources?.surprisedReaction?.url]
   ]);
+  /* @conditional-compile-remove(reaction) */
   const emojis: string[] = ['like', 'heart', 'laugh', 'applause', 'surprised'];
 
   const secondaryIcon = props.secondaryIconProps ? (
@@ -93,6 +96,7 @@ export const DrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Element => {
   ) : undefined;
 
   if (props.itemKey === 'reactions') {
+    /* @conditional-compile-remove(reaction) */
     return (
       <Stack
         id={props.id}
@@ -123,6 +127,7 @@ export const DrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Element => {
         </div>
       </Stack>
     );
+    return <div></div>;
   } else {
     return (
       <FocusZone shouldFocusOnMount={props.shouldFocusOnMount}>
