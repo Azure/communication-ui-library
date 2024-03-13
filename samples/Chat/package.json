@@ -54,6 +54,8 @@
   "devDependencies": {
     "@babel/core": "^7.23.9",
     "@babel/eslint-parser": "^7.22.15",
+    "@rsbuild/core": "0.4.12",
+    "@rsbuild/plugin-react": "0.4.12",
     "@types/jest": "^29.5.11",
     "@types/json-stringify-safe": "^5.0.3",
     "@types/react-dom": "18.2.21",
