@@ -16,6 +16,8 @@ const storyControls = {
   userId: controlsToAdd.userId,
   token: controlsToAdd.token,
   callLocator: controlsToAdd.teamsMeetingLink,
+  teamsMeetingId: controlsToAdd.teamsMeetingId,
+  teamsMeetingPasscode: controlsToAdd.teamsMeetingPasscode,
   compositeFormFactor: controlsToAdd.formFactor,
   callInvitationURL: controlsToAdd.callInvitationURL
 };
@@ -24,7 +26,8 @@ const JoinExistingCallAsTeamsUserStory = (args: ArgsFrom<typeof storyControls>, 
   const {
     globals: { locale }
   } = context;
-  const areAllKnobsSet = !!args.callLocator && !!args.userId && !!args.token;
+  const areAllKnobsSet =
+    (!!args.callLocator || (args.teamsMeetingId && args.teamsMeetingPasscode)) && !!args.userId && !!args.token;
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
@@ -32,7 +35,9 @@ const JoinExistingCallAsTeamsUserStory = (args: ArgsFrom<typeof storyControls>, 
         <ContosoCTECallContainer
           fluentTheme={context.theme}
           rtl={context.globals.rtl === 'rtl'}
-          locator={args.callLocator}
+          meetingLink={args.callLocator}
+          meetingId={args.teamsMeetingId}
+          meetingPasscode={args.teamsMeetingPasscode}
           userId={{ microsoftTeamsUserId: args.userId }}
           token={args.token}
           callInvitationURL={args.callInvitationURL}

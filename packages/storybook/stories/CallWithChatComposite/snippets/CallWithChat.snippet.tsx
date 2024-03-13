@@ -1,4 +1,4 @@
-import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
+import { TeamsMeetingIdLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   CallAndChatLocator,
@@ -28,7 +28,7 @@ export type CallWithChatExampleProps = {
    * TeamsMeetingLinkLocator: this is a special locator comprised of a Teams meeting link
    * {meetingLink: ...}
    */
-  locator: TeamsMeetingLinkLocator | CallAndChatLocator;
+  locator: TeamsMeetingLinkLocator | CallAndChatLocator | TeamsMeetingIdLocator;
 
   // Props to customize the CallWithChatComposite experience
   fluentTheme?: PartialTheme | Theme;

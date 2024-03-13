@@ -155,7 +155,7 @@ export type AzureCommunicationCallWithChatAdapterArgs = {
     userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
-    locator: CallAndChatLocator | TeamsMeetingLinkLocator;
+    locator: CallAndChatAdapterLocator;
     callAdapterOptions?: AzureCommunicationCallAdapterOptions;
 };
 
@@ -352,6 +352,9 @@ export interface CallAgentProviderProps {
 export interface CallAgentState {
     displayName?: string;
 }
+
+// @public
+export type CallAndChatAdapterLocator = CallAndChatLocator | TeamsMeetingLinkLocator;
 
 // @public
 export interface CallAndChatLocator {

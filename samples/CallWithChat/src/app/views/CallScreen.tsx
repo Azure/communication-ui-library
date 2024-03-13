@@ -2,15 +2,17 @@
 // Licensed under the MIT License.
 
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
+/* @conditional-compile-remove(meeting-id) */
+import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   toFlatCommunicationIdentifier,
   useAzureCommunicationCallWithChatAdapter,
-  CallAndChatLocator,
   CallWithChatAdapterState,
   CallWithChatComposite,
   CallWithChatAdapter,
-  CallWithChatCompositeOptions
+  CallWithChatCompositeOptions,
+  CallAndChatAdapterLocator
 } from '@azure/communication-react';
 /* @conditional-compile-remove(video-background-effects) */
 import { onResolveVideoEffectDependencyLazy, AzureCommunicationCallAdapterOptions } from '@azure/communication-react';
@@ -27,7 +29,7 @@ export interface CallScreenProps {
   userId: CommunicationUserIdentifier;
   displayName: string;
   endpoint: string;
-  locator: CallAndChatLocator | TeamsMeetingLinkLocator;
+  locator: CallAndChatAdapterLocator;
   /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId?: string;
 }
 
@@ -180,7 +182,11 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
 
   let callInvitationUrl: string | undefined = window.location.href;
   // Only show the call invitation url if the call is a group call or Teams call, do not show for Rooms, 1:1 or 1:N calls
-  if (!isGroupCallLocator(locator) && !isTeamsMeetingLinkLocator(locator)) {
+  if (
+    !isGroupCallLocator(locator) &&
+    !isTeamsMeetingLinkLocator(locator) &&
+    /* @conditional-compile-remove(meeting-id) */ !isTeamsMeetingIdLocator(locator)
+  ) {
     callInvitationUrl = undefined;
   }
 
@@ -209,12 +215,15 @@ const convertPageStateToString = (state: CallWithChatAdapterState): string => {
   }
 };
 
-const isTeamsMeetingLinkLocator = (
-  locator: TeamsMeetingLinkLocator | CallAndChatLocator
-): locator is TeamsMeetingLinkLocator => {
+const isTeamsMeetingLinkLocator = (locator: CallAndChatAdapterLocator): locator is TeamsMeetingLinkLocator => {
   return 'meetingLink' in locator;
 };
 
-const isGroupCallLocator = (locator: TeamsMeetingLinkLocator | CallAndChatLocator): boolean => {
+/* @conditional-compile-remove(meeting-id) */
+const isTeamsMeetingIdLocator = (locator: CallAndChatAdapterLocator): locator is TeamsMeetingIdLocator => {
+  return 'meetingId' in locator;
+};
+
+const isGroupCallLocator = (locator: CallAndChatAdapterLocator): boolean => {
   return 'callLocator' in locator && 'groupId' in locator.callLocator;
 };

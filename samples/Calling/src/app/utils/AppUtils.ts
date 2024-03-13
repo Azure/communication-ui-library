@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 import { GroupLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
+/* @conditional-compile-remove(meeting-id) */
+import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
 import { RoomCallLocator } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
@@ -85,6 +87,17 @@ export const getTeamsLinkFromUrl = (): TeamsMeetingLinkLocator | undefined => {
   const urlParams = new URLSearchParams(window.location.search);
   const teamsLink = urlParams.get('teamsLink');
   return teamsLink ? { meetingLink: teamsLink } : undefined;
+};
+
+/* @conditional-compile-remove(meeting-id) */
+/**
+ * Get teams meeting id and passcode from the url's query params.
+ */
+export const getMeetingIdFromUrl = (): TeamsMeetingIdLocator | undefined => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const meetingId = urlParams.get('meetingId');
+  const passcode = urlParams.get('passcode');
+  return meetingId ? { meetingId: meetingId, passcode: passcode ? passcode : undefined } : undefined;
 };
 
 /* @conditional-compile-remove(teams-identity-support) */

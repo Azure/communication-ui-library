@@ -23,8 +23,10 @@ import {
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from './CallClientState';
 
-/* @conditional-compile-remove(teams-identity-support) */
+/* @conditional-compile-remove(teams-identity-support) */ /* @conditional-compile-remove(meeting-id) */
 import { _isACSCall } from './TypeGuards';
+/* @conditional-compile-remove(meeting-id) */
+import { _isTeamsCall } from './TypeGuards';
 import { CallCommon, IncomingCallCommon } from './BetaToStableTypes';
 
 /* @conditional-compile-remove(video-background-effects) */ /* @conditional-compile-remove(optimal-video-count) */
@@ -165,7 +167,9 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     },
     /* @conditional-compile-remove(hide-attendee-name) */
     // TODO: Replace this once the SDK supports hide attendee name
-    hideAttendeeNames: false
+    hideAttendeeNames: false,
+    /* @conditional-compile-remove(meeting-id) */
+    info: _isACSCall(call) ? call.info : _isTeamsCall(call) ? call.info : undefined
   };
 }
 
