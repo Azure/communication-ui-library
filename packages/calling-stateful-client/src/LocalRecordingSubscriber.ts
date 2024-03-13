@@ -22,7 +22,7 @@ export class LocalRecordingSubscriber {
     // be an event for it.
     if (this._recording.isRecordingActive) {
       this._context.setCallLocalRecordingActive(this._callIdRef.callId, this._recording.isRecordingActive);
-      // recordings getter only returns a list of active recordings, so we can set the list to recordings here
+      // recordings getter only returns a list of active recordings, so we can set the list of recordings here
       this._context.setCallLocalRecordingInfos(this._callIdRef.callId, this._recording.recordings, []);
     }
 

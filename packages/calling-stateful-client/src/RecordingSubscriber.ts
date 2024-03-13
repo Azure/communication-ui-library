@@ -25,7 +25,7 @@ export class RecordingSubscriber {
     if (this._recording.isRecordingActive) {
       this._context.setCallRecordingActive(this._callIdRef.callId, this._recording.isRecordingActive);
       /* @conditional-compile-remove(local-recording-notification) */
-      // recordings getter only returns a list of active recordings, so we can set the list to recordings here
+      // recordings getter only returns a list of active recordings, so we can set the list of recordings here
       this._context.setCallRecordingInfos(this._callIdRef.callId, this._recording.recordings, []);
     }
 
