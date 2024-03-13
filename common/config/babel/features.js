@@ -107,8 +107,6 @@ module.exports = {
     "hide-attendee-name",
     // Feature for end of call survey
     'end-of-call-survey',
-    // Feature for PPT Live for teams meeting
-    'ppt-live',
     // Feature for end of call survey self host version
     'end-of-call-survey-self-host',
     // Feature for meeting reactions
