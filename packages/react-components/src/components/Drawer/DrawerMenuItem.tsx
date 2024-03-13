@@ -23,8 +23,6 @@ import { submitWithKeyboard } from '../utils/keyboardNavigation';
 import { mobileViewEmojiStyles, mobileViewMenuItemStyle } from '../styles/ReactionButton.styles';
 /* @condtional-compile-remove(reaction) */
 import { IconButton } from '@fluentui/react';
-/* @conditional-compile-remove(reaction) */
-import { Reaction } from '@azure/communication-calling';
 
 /**
  * Props for the DrawerMenuItem
@@ -65,7 +63,7 @@ export interface _DrawerMenuItemProps {
   /* @conditional-compile-remove(reaction) */
   reactionResources?: ReactionResources;
   /* @conditional-compile-remove(reaction) */
-  onReactionClick?: (reaction: Reaction) => Promise<void>;
+  onReactionClick?: (reaction: string) => Promise<void>;
 }
 
 /**
@@ -86,7 +84,7 @@ export const DrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Element => {
     ['applause', resources?.applauseReaction?.url],
     ['surprised', resources?.surprisedReaction?.url]
   ]);
-  const emojis: Reaction[] = ['like', 'heart', 'laugh', 'applause', 'surprised'];
+  const emojis: string[] = ['like', 'heart', 'laugh', 'applause', 'surprised'];
 
   const secondaryIcon = props.secondaryIconProps ? (
     <MenuItemIcon {...props.secondaryIconProps} />

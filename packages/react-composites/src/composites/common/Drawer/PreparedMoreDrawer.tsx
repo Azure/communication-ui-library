@@ -10,8 +10,6 @@ import { useHandlers } from '../../CallComposite/hooks/useHandlers';
 import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
 /* @condtional-compile-remove(gallery-options) */
 import { ReactionResources, VideoGalleryLayout } from '@internal/react-components';
-/* @conditional-compile-remove(reaction) */
-import { Reaction } from '@azure/communication-calling';
 
 /** @private */
 export interface PreparedMoreDrawerProps {
@@ -29,8 +27,6 @@ export interface PreparedMoreDrawerProps {
   dtmfDialerPresent?: boolean;
   /* @conditional-compile-remove(reaction) */
   reactionResources?: ReactionResources;
-  /* @conditional-compile-remove(reaction) */
-  onReactionClick?: (reaction: Reaction) => Promise<void>;
 }
 
 /** @private */
@@ -55,5 +51,6 @@ export const PreparedMoreDrawer = (props: PreparedMoreDrawerProps): JSX.Element 
   );
   const deviceProps = useSelector(moreDrawerSelector);
   const callHandlers = useHandlers(MoreDrawer);
+
   return <MoreDrawer {...props} {...deviceProps} {...callHandlers} strings={moreDrawerStrings} />;
 };

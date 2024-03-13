@@ -104,14 +104,21 @@ export const _DrawerMenu = (props: _DrawerMenuProps): JSX.Element => {
       onLightDismiss={props.onLightDismiss}
       heading={props.heading}
     >
-      {menuItemsToRender !== undefined && menuItemsToRender[0].itemKey === 'reactions' && (
+      {
         <Stack styles={props.styles} role="menu" data-ui-id="drawer-menu">
           {menuItemsToRender?.slice(0, 1).map((item) => (
             <DrawerMenuItem
               {...item}
               key={`${item.itemKey}` + '0'}
-              shouldFocusOnMount={false}
+              shouldFocusOnMount={item.itemKey === 'reactions' ? false : true}
               styles={modifiedFirstItemStyle}
+              onItemClick={
+                item.itemKey === 'reactions'
+                  ? undefined
+                  : (ev, itemKey) => {
+                      onItemClick(item, ev, itemKey);
+                    }
+              }
             />
           ))}
           {menuItemsToRender?.slice(1).map((item, i) => (
@@ -124,31 +131,7 @@ export const _DrawerMenu = (props: _DrawerMenuProps): JSX.Element => {
             />
           ))}
         </Stack>
-      )}
-      {menuItemsToRender !== undefined && menuItemsToRender[0].itemKey !== 'reactions' && (
-        <Stack styles={props.styles} role="menu" data-ui-id="drawer-menu">
-          {menuItemsToRender?.slice(0, 1).map((item) => (
-            <DrawerMenuItem
-              {...item}
-              key={`${item.itemKey}` + '0'}
-              shouldFocusOnMount={true}
-              styles={modifiedFirstItemStyle}
-              onItemClick={(ev, itemKey) => {
-                onItemClick(item, ev, itemKey);
-              }}
-            />
-          ))}
-          {menuItemsToRender?.slice(1).map((item, i) => (
-            <DrawerMenuItem
-              {...item}
-              key={`${item.itemKey}` + `${i + 1}`}
-              onItemClick={(ev, itemKey) => {
-                onItemClick(item, ev, itemKey);
-              }}
-            />
-          ))}
-        </Stack>
-      )}
+      }
     </_DrawerSurface>
   );
 };

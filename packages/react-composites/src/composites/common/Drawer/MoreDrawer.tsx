@@ -26,8 +26,6 @@ import { HoldButton } from '@internal/react-components';
 /* @conditional-compile-remove(raise-hand) */
 import { RaiseHandButton, RaiseHandButtonProps } from '@internal/react-components';
 import { AudioDeviceInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(reaction) */
-import { Reaction } from '@azure/communication-calling';
 /* @conditional-compile-remove(control-bar-button-injection) */
 import {
   CUSTOM_BUTTON_OPTIONS,
@@ -173,7 +171,7 @@ export interface MoreDrawerProps extends MoreDrawerDevicesMenuProps {
   /* @conditional-compile-remove(reaction) */
   reactionResources?: ReactionResources;
   /* @conditional-compile-remove(reaction) */
-  onReactionClick?: (reaction: Reaction) => Promise<void>;
+  onReactionClick?: (reaction: string) => Promise<void>;
 }
 
 const inferCallWithChatControlOptions = (
@@ -226,6 +224,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
 
   const drawerSelectionOptions = inferCallWithChatControlOptions(props.callControls);
 
+  /* @conditional-compile-remove(reaction) */
   if (props.reactionResources !== undefined) {
     drawerMenuItems.push({
       itemKey: 'reactions',
