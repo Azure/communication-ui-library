@@ -14,6 +14,7 @@ import { FluentChatMessageComponentWrapper } from './FluentChatMessageComponentW
 import { DefaultSystemMessage } from './DefaultSystemMessage';
 /* @conditional-compile-remove(image-overlay) */
 import { InlineImageOptions } from './ChatMessageContent';
+/* @conditional-compile-remove(file-sharing) */
 import { FileCardMenuAction } from '../FileDownloadCards';
 
 /**

@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+/* @conditional-compile-remove(file-sharing) */
 import { AttachmentMetadata } from '../FileDownloadCards';
 
 /**

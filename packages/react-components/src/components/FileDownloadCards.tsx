@@ -38,7 +38,6 @@ export interface AttachmentMetadata {
   /**
    * Unique ID of the file.
    */
-  /* @conditional-compile-remove(file-sharing) */
   id: string;
   /**
    * File name to be displayed.
@@ -99,7 +98,7 @@ export interface FileCardMenuAction {
 /**
  * @beta
  */
-export const defaultFileDownloadOptions: FileCardMenuAction = {
+export const defaultFileCardMenuAction: FileCardMenuAction = {
   name: 'Open',
   icon: <ArrowDownload24Filled />,
   onClick: (attachment: AttachmentMetadata) => {
@@ -203,16 +202,19 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
             })
             .map((file) => file as unknown as AttachmentMetadata)
             .map((file) => (
-              <_FileCard file={file} key={file.name} menuActions={props.menuActions ?? [defaultFileDownloadOptions]} />
+              <_FileCard file={file} key={file.name} menuActions={props.menuActions ?? [defaultFileCardMenuAction]} />
             ))}
       </_FileCardGroup>
     </div>
   );
 };
 
-/**
- * @private
- */
+const useLocaleStringsTrampoline = (): _FileDownloadCardsStrings => {
+  /* @conditional-compile-remove(file-sharing) */
+  return useLocale().strings.messageThread;
+  return { downloadFile: '', fileCardGroupMessage: '' };
+};
+
 /*
 const DownloadIconTrampoline = (): JSX.Element => {
   // @conditional-compile-remove(file-sharing)
@@ -221,9 +223,3 @@ const DownloadIconTrampoline = (): JSX.Element => {
   return <Icon iconName="EditBoxCancel" style={actionIconStyle} />;
 };
 */
-
-const useLocaleStringsTrampoline = (): _FileDownloadCardsStrings => {
-  /* @conditional-compile-remove(file-sharing) */
-  return useLocale().strings.messageThread;
-  return { downloadFile: '', fileCardGroupMessage: '' };
-};

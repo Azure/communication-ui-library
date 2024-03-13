@@ -2915,7 +2915,7 @@ export type FileUploadError = {
 };
 
 // @beta
-export type FileUploadHandler = (userId: string, fileUploads: FileUploadManager[]) => void;
+export type FileUploadHandler = (fileUploads: FileUploadManager[]) => void;
 
 // @beta
 export interface FileUploadManager {

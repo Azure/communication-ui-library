@@ -215,7 +215,12 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
         strings={{ downloadFile: strings.downloadFile, fileCardGroupMessage: strings.fileCardGroupMessage }}
       />
     );
-  }, [message, strings, fileCardMenuAction]);
+  }, [
+    message,
+    strings,
+    /* @conditional-compile-remove(file-sharing) */
+    fileCardMenuAction
+  ]);
 
   const editedOn = 'editedOn' in message ? message.editedOn : undefined;
   const getMessageDetails = useCallback(() => {

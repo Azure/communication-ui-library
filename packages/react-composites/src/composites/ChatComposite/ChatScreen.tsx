@@ -210,9 +210,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       /* @conditional-compile-remove(file-sharing) */
       const fileUploads = adapter.registerActiveFileUploads(Array.from(files));
       /* @conditional-compile-remove(file-sharing) */
-      fileSharingOptions?.uploadOptions?.handler(userId, fileUploads);
+      fileSharingOptions?.uploadOptions?.handler(fileUploads);
     },
-    [adapter, fileSharingOptions, userId]
+    [adapter, fileSharingOptions]
   );
 
   /* @conditional-compile-remove(file-sharing) */
@@ -393,6 +393,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             onRenderFileDownloads={onRenderFileDownloads}
             /* @conditional-compile-remove(image-overlay) */
             inlineImageOptions={inlineImageOptions}
+            /* @conditional-compile-remove(file-sharing) */
             fileCardMenuActions={fileSharingOptions?.downloadOptions?.menuActions}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}

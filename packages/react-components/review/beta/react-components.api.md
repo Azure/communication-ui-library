@@ -865,7 +865,7 @@ export const DEFAULT_COMPONENT_ICONS: {
 };
 
 // @beta (undocumented)
-export const defaultFileDownloadOptions: FileCardMenuAction;
+export const defaultFileCardMenuAction: FileCardMenuAction;
 
 // @internal
 export interface _DeviceMenuProps {

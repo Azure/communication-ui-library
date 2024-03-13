@@ -512,7 +512,9 @@ export type MessageThreadProps = {
    */
   strings?: Partial<MessageThreadStrings>;
 
+  /* @conditional-compile-remove(file-sharing) */
   fileCardMenuActions?: FileCardMenuAction[];
+
   /* @conditional-compile-remove(date-time-customization) */
   /**
    * Optional function to provide customized date format.
