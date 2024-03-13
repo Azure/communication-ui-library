@@ -167,24 +167,27 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   /* @conditional-compile-remove(image-overlay) */
   useEffect(() => {
-    if (overlayImageItem === undefined) {
+    const message = adapter.getState().thread.chatMessages[overlayImageItem?.messageId || ''];
+    if (
+      overlayImageItem === undefined ||
+      overlayImageItem.imageSrc !== '' ||
+      message === undefined ||
+      message.resourceCache === undefined ||
+      message.resourceCache[overlayImageItem.imageUrl] === undefined
+    ) {
       return;
     }
-    const message = adapter.getState().thread.chatMessages[overlayImageItem.messageId];
-    if (message === undefined) {
+
+    const cacheResult = message.resourceCache[overlayImageItem.imageUrl];
+    const fullSizeImageSrc = getResourceSourceUrl(cacheResult);
+    if (fullSizeImageSrc === undefined || fullSizeImageSrc === '' || overlayImageItem.imageSrc === fullSizeImageSrc) {
       return;
     }
-    const resourceCache = message.resourceCache;
-    if (overlayImageItem.imageSrc === '' && resourceCache && resourceCache[overlayImageItem.imageUrl]) {
-      const fullSizeImageSrc = getResourceSourceUrl(resourceCache[overlayImageItem.imageUrl]);
-      if (fullSizeImageSrc === undefined || fullSizeImageSrc === '' || overlayImageItem.imageSrc === fullSizeImageSrc) {
-        return;
-      }
-      setOverlayImageItem({
-        ...overlayImageItem,
-        imageSrc: fullSizeImageSrc
-      });
-    }
+    setOverlayImageItem({
+      ...overlayImageItem,
+      imageSrc: fullSizeImageSrc
+    });
+
     // Disable eslint because we are using the overlayImageItem in this effect but don't want to have it as a dependency, as it will cause an infinite loop.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messageThreadProps.messages]);
