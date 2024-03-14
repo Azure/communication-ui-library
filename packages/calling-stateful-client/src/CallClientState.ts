@@ -207,7 +207,7 @@ export interface RecordingCallFeatureState {
   /**
    * Contains list of information of stopped recordings
    */
-  stoppedRecordings?: RecordingInfo[];
+  lastStoppedRecording?: RecordingInfo[];
 }
 
 /* @conditional-compile-remove(local-recording-notification) */
@@ -221,16 +221,16 @@ export interface LocalRecordingCallFeatureState {
   /**
    * Proxy of {@link @azure/communication-calling#LocalRecordingCallFeature.isRecordingActive}.
    */
-  isRecordingActive: boolean;
+  isLocalRecordingActive: boolean;
   /**
    * Contains list of information of started recordings
    * Proxy of {@link @azure/communication-calling#LocalRecordingCallFeature.recordings}.
    */
-  activeRecordings?: LocalRecordingInfo[];
+  activeLocalRecordings?: LocalRecordingInfo[];
   /**
    * Contains list of information of stopped recordings
    */
-  stoppedRecordings?: LocalRecordingInfo[];
+  lastStoppedLocalRecording?: LocalRecordingInfo[];
 }
 
 /* @conditional-compile-remove(raise-hand) */

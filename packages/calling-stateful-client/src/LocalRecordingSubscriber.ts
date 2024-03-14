@@ -44,6 +44,6 @@ export class LocalRecordingSubscriber {
   };
 
   private isRecordingsUpdated = (data: { added: LocalRecordingInfo[]; removed: LocalRecordingInfo[] }): void => {
-    this._context.setCallLocalRecordingInfos(this._callIdRef.callId, data.added, data.removed);
+    this._context.setCallLocalRecordingInfos(this._callIdRef.callId, this._recording.recordings, data.removed);
   };
 }

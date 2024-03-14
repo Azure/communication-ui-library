@@ -242,9 +242,9 @@ export const _isTeamsCallAgent: (callAgent: CallAgentCommon) => callAgent is Tea
 
 // @beta
 export interface LocalRecordingCallFeatureState {
-    activeRecordings?: LocalRecordingInfo[];
-    isRecordingActive: boolean;
-    stoppedRecordings?: LocalRecordingInfo[];
+    activeLocalRecordings?: LocalRecordingInfo[];
+    isLocalRecordingActive: boolean;
+    lastStoppedLocalRecording?: LocalRecordingInfo[];
 }
 
 // @public
@@ -303,7 +303,7 @@ export type ReactionState = {
 export interface RecordingCallFeature {
     activeRecordings?: RecordingInfo[];
     isRecordingActive: boolean;
-    stoppedRecordings?: RecordingInfo[];
+    lastStoppedRecording?: RecordingInfo[];
 }
 
 // @public

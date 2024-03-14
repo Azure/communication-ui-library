@@ -50,6 +50,6 @@ export class RecordingSubscriber {
 
   /* @conditional-compile-remove(local-recording-notification) */
   private isRecordingsUpdated = (data: { added: RecordingInfo[]; removed: RecordingInfo[] }): void => {
-    this._context.setCallRecordingInfos(this._callIdRef.callId, data.added, data.removed);
+    this._context.setCallRecordingInfos(this._callIdRef.callId, this._recording.recordings, data.removed);
   };
 }

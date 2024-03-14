@@ -384,13 +384,13 @@ export class CallContext {
   public setCallRecordingInfos(
     callId: string,
     recordingInfosAdded: RecordingInfo[],
-    recordingInfosRemoved: RecordingInfo[]
+    lastStoppedRecording: RecordingInfo[]
   ): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         call.recording.activeRecordings = recordingInfosAdded;
-        call.recording.stoppedRecordings = recordingInfosRemoved;
+        call.recording.lastStoppedRecording = lastStoppedRecording;
       }
     });
   }
@@ -400,7 +400,7 @@ export class CallContext {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        call.localRecording.isRecordingActive = isRecordingActive;
+        call.localRecording.isLocalRecordingActive = isRecordingActive;
       }
     });
   }
@@ -409,13 +409,13 @@ export class CallContext {
   public setCallLocalRecordingInfos(
     callId: string,
     localRecordingInfosAdded: LocalRecordingInfo[],
-    localRecordingInfosRemoved: LocalRecordingInfo[]
+    lastStoppedRecording: LocalRecordingInfo[]
   ): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        call.localRecording.activeRecordings = localRecordingInfosAdded;
-        call.localRecording.stoppedRecordings = localRecordingInfosRemoved;
+        call.localRecording.activeLocalRecordings = localRecordingInfosAdded;
+        call.localRecording.lastStoppedLocalRecording = lastStoppedRecording;
       }
     });
   }
