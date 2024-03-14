@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "fix",
-  "workstream": "InlineImage",
-  "comment": "Disable clicking before inline image is loaded",
-  "packageName": "@azure/communication-react",
-  "email": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
