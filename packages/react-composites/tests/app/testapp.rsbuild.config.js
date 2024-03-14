@@ -21,6 +21,11 @@ export const testAppCommonRSBuildConfig = (appDir) => {
           index: path.join(appDir, 'index.tsx')
         }
       },
+      tools: {
+        htmlPlugin: {
+          template: path.join(__dirname, 'index.html')
+        }
+      },
       output: {
         distPath: {
           root: path.join(appDir, 'dist')
