@@ -4,7 +4,7 @@
 /* @conditional-compile-remove(image-overlay) */
 import { DefaultButton, Icon, IconButton, Modal, Stack, mergeStyles } from '@fluentui/react';
 /* @conditional-compile-remove(image-overlay) */
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 /* @conditional-compile-remove(image-overlay) */
 import {
   bodyContainer,
@@ -29,8 +29,10 @@ import {
 import { FluentThemeProvider } from '../theming/FluentThemeProvider';
 /* @conditional-compile-remove(image-overlay) */
 import { useLocale } from '../localization';
-/* @conditional-compile-remove(image-overlay) */
+/* @conditional-compile-remove(image-overlay-theme) */
 import { imageOverlayTheme } from '../theming';
+/* @conditional-compile-remove(image-overlay) */
+import { darkTheme } from '../theming';
 
 /* @conditional-compile-remove(image-overlay) */
 /**
@@ -98,14 +100,27 @@ export const ImageOverlay = (props: ImageOverlayProps): JSX.Element => {
 
   const [isImageLoaded, setIsImageLoaded] = useState<boolean>(true);
 
-  const imageStyle = isImageLoaded ? normalImageStyle : brokenImageStyle(imageOverlayTheme);
+  /* @conditional-compile-remove(image-overlay) */
+  const getTheme = useCallback(() => {
+    /* @conditional-compile-remove(image-overlay-theme) */
+    return imageOverlayTheme;
+    return {
+      ...darkTheme,
+      semanticColors: {
+        ...darkTheme.semanticColors,
+        bodyBackground: 'rgba(0, 0, 0, 0.85)'
+      }
+    };
+  }, []);
+
+  const imageStyle = isImageLoaded ? normalImageStyle : brokenImageStyle(getTheme());
 
   const renderHeaderBar = (): JSX.Element => {
     return (
       <Stack className={mergeStyles(headerStyle)}>
         <Stack className={mergeStyles(titleBarContainerStyle)}>
           {titleIcon}
-          <Stack.Item className={mergeStyles(titleStyle(imageOverlayTheme))} aria-label={title || 'Image'}>
+          <Stack.Item className={mergeStyles(titleStyle(getTheme()))} aria-label={title || 'Image'}>
             {title}
           </Stack.Item>
         </Stack>
@@ -126,7 +141,7 @@ export const ImageOverlay = (props: ImageOverlayProps): JSX.Element => {
           {onDownloadButtonClicked && (
             <IconButton
               iconProps={downloadIcon}
-              className={mergeStyles(smallDownloadButtonContainerStyle(imageOverlayTheme))}
+              className={mergeStyles(smallDownloadButtonContainerStyle(getTheme()))}
               onClick={() => onDownloadButtonClicked && onDownloadButtonClicked(imageSrc)}
               /* @conditional-compile-remove(image-overlay) */
               aria-label={localeStrings.downloadButtonLabel}
@@ -136,7 +151,7 @@ export const ImageOverlay = (props: ImageOverlayProps): JSX.Element => {
           )}
           <IconButton
             iconProps={cancelIcon}
-            className={mergeStyles(closeButtonStyles(imageOverlayTheme))}
+            className={mergeStyles(closeButtonStyles(getTheme()))}
             onClick={onDismiss}
             /* @conditional-compile-remove(image-overlay) */
             ariaLabel={localeStrings.dismissButtonAriaLabel}
@@ -175,11 +190,11 @@ export const ImageOverlay = (props: ImageOverlayProps): JSX.Element => {
       titleAriaId={title}
       isOpen={isOpen}
       onDismiss={onDismiss}
-      overlay={{ styles: { ...overlayStyles(imageOverlayTheme) } }}
+      overlay={{ styles: { ...overlayStyles(getTheme()) } }}
       styles={{ main: focusTrapZoneStyle, scrollableContent: scrollableContentStyle }}
       isDarkOverlay={true}
     >
-      <FluentThemeProvider fluentTheme={imageOverlayTheme} rootStyle={themeProviderRootStyle}>
+      <FluentThemeProvider fluentTheme={getTheme()} rootStyle={themeProviderRootStyle}>
         {renderHeaderBar()}
         {renderBodyWithLightDismiss()}
       </FluentThemeProvider>
