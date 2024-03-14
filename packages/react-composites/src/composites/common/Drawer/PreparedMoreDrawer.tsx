@@ -27,6 +27,8 @@ export interface PreparedMoreDrawerProps {
   userSetGalleryLayout?: VideoGalleryLayout;
   onSetDialpadPage?: () => void;
   dtmfDialerPresent?: boolean;
+  /* @conditional-compile-remove(close-captions) */
+  isTeamsCall?: boolean;
   /* @conditional-compile-remove(reaction) */
   reactionResources?: ReactionResources;
 }

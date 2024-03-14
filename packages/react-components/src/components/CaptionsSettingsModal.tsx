@@ -133,7 +133,9 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
     const captionLanguageCode = selectedCaptionLanguage.key;
     if (isCaptionsFeatureActive) {
       onSetSpokenLanguage(spokenLanguageCode);
-      onSetCaptionLanguage(captionLanguageCode);
+      if (changeCaptionLanguage) {
+        onSetCaptionLanguage(captionLanguageCode);
+      }
     } else {
       await onStartCaptions({ spokenLanguage: spokenLanguageCode });
     }
@@ -145,7 +147,8 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
     onSetCaptionLanguage,
     onStartCaptions,
     selectedSpokenLanguage.key,
-    selectedCaptionLanguage.key
+    selectedCaptionLanguage.key,
+    changeCaptionLanguage
   ]);
 
   const spokenLanguageDropdownOptions: IDropdownOption[] = useMemo(() => {
