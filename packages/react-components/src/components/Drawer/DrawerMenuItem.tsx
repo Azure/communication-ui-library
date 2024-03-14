@@ -16,8 +16,6 @@ import {
 import React from 'react';
 import { useTheme } from '../../theming/FluentThemeProvider';
 import { BaseCustomStyles } from '../../types';
-/* @conditional-compile-remove(reaction) */
-import { ReactionResources } from '../../types';
 import { submitWithKeyboard } from '../utils/keyboardNavigation';
 
 /**
@@ -56,12 +54,9 @@ export interface _DrawerMenuItemProps {
    * Property to set the focus since this is the first item in the menu
    */
   shouldFocusOnMount?: boolean;
-  /* @conditional-compile-remove(reaction) */
-  reactionResources?: ReactionResources;
-  /* @conditional-compile-remove(reaction) */
-  onReactionClick?: (reaction: string) => Promise<void>;
   /**
    * Custom JSX item injection for custom mobile view button on drawers
+   * @beta
    */
   onRendererContent?: () => JSX.Element;
 }

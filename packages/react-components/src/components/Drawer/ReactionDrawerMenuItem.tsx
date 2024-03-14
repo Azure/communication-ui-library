@@ -12,7 +12,29 @@ import { mobileViewEmojiStyles, mobileViewMenuItemStyle } from '../styles/Reacti
 /* @conditional-compile-remove(reaction) */
 import { IconButton } from '@fluentui/react';
 /* @conditional-compile-remove(reaction) */
-import { _DrawerMenuItemProps } from '../..';
+import { _DrawerMenuItemProps, ReactionResources } from '../..';
+
+/* @conditional-compile-remove(reaction) */
+/**
+ * Props for the ReactionMenuItem
+ *
+ * @internal
+ */
+export interface _ReactionMenuItemProps {
+  /**
+   * Reaction resources to render for mobile button menus for reaction
+   */
+  reactionResources?: ReactionResources;
+  /**
+   * reaction click event from the call adapter.
+   */
+  onReactionClick?: (reaction: string) => Promise<void>;
+  /**
+   * Whether the menu item is disabled
+   * @defaultvalue false
+   */
+  disabled?: boolean;
+}
 
 /* @conditional-compile-remove(reaction) */
 /**
@@ -20,7 +42,7 @@ import { _DrawerMenuItemProps } from '../..';
  *
  * @internal
  */
-export const _ReactionDrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Element => {
+export const _ReactionDrawerMenuItem = (props: _ReactionMenuItemProps): JSX.Element => {
   const theme = useTheme();
   const resources = props.reactionResources;
   const emojiResource: Map<string, string | undefined> = new Map([
@@ -43,7 +65,7 @@ export const _ReactionDrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Elemen
 
   return (
     <Stack
-      id={props.id}
+      id="reaction"
       role="menuitem"
       horizontal
       className={mergeStyles(

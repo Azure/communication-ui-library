@@ -233,11 +233,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     drawerMenuItems.push({
       itemKey: 'reactions',
       onRendererContent: () => (
-        <_ReactionDrawerMenuItem
-          itemKey="reactions"
-          onReactionClick={props.onReactionClick}
-          reactionResources={props.reactionResources}
-        />
+        <_ReactionDrawerMenuItem onReactionClick={props.onReactionClick} reactionResources={props.reactionResources} />
       )
     });
   }

@@ -9,3 +9,5 @@ export { _DrawerSurface } from './DrawerSurface';
 export type { _DrawerSurfaceProps, _DrawerSurfaceStyles } from './DrawerSurface';
 /* @conditional-compile-remove(reaction) */
 export { _ReactionDrawerMenuItem } from './ReactionDrawerMenuItem';
+/* @conditional-compile-remove(reaction) */
+export type { _ReactionMenuItemProps } from './ReactionDrawerMenuItem';
