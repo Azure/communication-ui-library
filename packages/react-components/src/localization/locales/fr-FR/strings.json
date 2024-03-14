@@ -7,7 +7,8 @@
     "mutedIconLabel": "Muet activé",
     "displayNamePlaceholder": "Participant sans nom",
     "participantStateRinging": "Appel en cours...",
-    "participantStateHold": "En attente"
+    "participantStateHold": "En attente",
+    "attendeeRole": "Participant"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} plus"
@@ -27,6 +28,23 @@
     "removeFile": "Supprimer un fichier",
     "uploading": "Chargement",
     "uploadCompleted": "Téléchargement terminé"
+  },
+  "richTextSendBox": {
+    "placeholderText": "Saisir un message",
+    "textTooLong": "La longueur de votre message dépasse la limite maximale.",
+    "sendButtonAriaLabel": "Envoyer un message",
+    "fileUploadsPendingError": "Chargement en cours... Veuillez patienter.",
+    "removeFile": "Supprimer le fichier",
+    "uploading": "Téléchargement",
+    "uploadCompleted": "Chargement terminé",
+    "boldTooltip": "Gras",
+    "italicTooltip": "Italique",
+    "underlineTooltip": "Souligner",
+    "bulletListTooltip": "Liste à puces",
+    "numberListTooltip": "Liste numérotée",
+    "increaseIndentTooltip": "Augmenter le retrait",
+    "decreaseIndentTooltip": "Réduire le retrait",
+    "richTextFormatButtonTooltip": "Format"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggestions"
@@ -125,6 +143,7 @@
   },
   "reactionButton": {
     "label": "Réagir",
+    "ariaLabel": "bouton React, envoyer une réaction",
     "tooltipDisabledContent": "L’action de réaction est désactivée",
     "tooltipContent": "Envoyer une réaction",
     "likeReactionTooltipContent": "J’aime",
@@ -224,7 +243,8 @@
     "addSpotlightVideoTileMenuLabel": "Ajouter la mise en évidence",
     "spotlightLimitReachedMenuTitle": "Limite Spotlight atteinte",
     "stopSpotlightVideoTileMenuLabel": "Arrêter la mise en évidence",
-    "stopSpotlightOnSelfVideoTileMenuLabel": "Quitter la mise en évidence"
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Quitter la mise en évidence",
+    "attendeeRole": "Participant(e)"
   },
   "dialpad": {
     "placeholderText": "Entrer un numéro de téléphone",
@@ -358,6 +378,5 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "page précédente",
     "rightNavButtonAriaLabel": "page suivante"
-  },
-  "AttendeeRole": "Participant"
+  }
 }

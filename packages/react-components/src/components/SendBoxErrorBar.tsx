@@ -66,7 +66,7 @@ export const SendBoxErrorBar = (props: SendBoxErrorBarProps): JSX.Element => {
       <>
         <Announcer announcementString={errorMessage} ariaLive={'polite'} />
         <MessageBar
-          data-test-id={'send-box-message-bar'}
+          data-testid={'send-box-message-bar'}
           messageBarType={MessageBarType.warning}
           styles={{
             iconContainer: {

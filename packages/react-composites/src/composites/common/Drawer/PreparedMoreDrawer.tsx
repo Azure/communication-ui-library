@@ -10,6 +10,8 @@ import { useHandlers } from '../../CallComposite/hooks/useHandlers';
 import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
 /* @condtional-compile-remove(gallery-options) */
 import { VideoGalleryLayout } from '@internal/react-components';
+/* @conditional-compile-remove(reaction) */
+import { ReactionResources } from '@internal/react-components';
 
 /** @private */
 export interface PreparedMoreDrawerProps {
@@ -25,6 +27,10 @@ export interface PreparedMoreDrawerProps {
   userSetGalleryLayout?: VideoGalleryLayout;
   onSetDialpadPage?: () => void;
   dtmfDialerPresent?: boolean;
+  /* @conditional-compile-remove(close-captions) */
+  isTeamsCall?: boolean;
+  /* @conditional-compile-remove(reaction) */
+  reactionResources?: ReactionResources;
 }
 
 /** @private */
@@ -49,5 +55,6 @@ export const PreparedMoreDrawer = (props: PreparedMoreDrawerProps): JSX.Element 
   );
   const deviceProps = useSelector(moreDrawerSelector);
   const callHandlers = useHandlers(MoreDrawer);
+
   return <MoreDrawer {...props} {...deviceProps} {...callHandlers} strings={moreDrawerStrings} />;
 };

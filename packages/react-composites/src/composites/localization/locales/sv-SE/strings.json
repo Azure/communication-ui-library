@@ -52,6 +52,7 @@
     "peopleButtonLabel": "Personer",
     "selectedPeopleButtonLabel": "Knappen Kontakter har valts",
     "peoplePaneTitle": "Personer",
+    "peoplePaneMoreButtonAriaLabel": "Mer",
     "peopleButtonTooltipOpen": "Visa deltagare",
     "peopleButtonTooltipClose": "Dölj deltagare",
     "peoplePaneSubTitle": "I det här samtalet {numberOfPeople}",
@@ -65,6 +66,7 @@
     "stopSpotlightParticipantListMenuLabel": "Sluta uppmärksamma",
     "stopSpotlightOnSelfParticipantListMenuLabel": "Spotlight",
     "spotlightLimitReachedParticipantListMenuTitle": "Spotlight-gränsen har nåtts",
+    "stopAllSpotlightMenuLabel": "Avsluta alla uppmärksammanden",
     "returnToCallButtonAriaDescription": "Återgå till samtal",
     "returnToCallButtonAriaLabel": "Tillbaka",
     "roomNotFoundDetails": "Det gick inte att hitta det angivna rums-ID:t.",
@@ -311,14 +313,16 @@
       "startSpotlightOnSelfText": "Du kommer att markera din video för alla i mötet.",
       "startSpotlightConfirmButtonLabel": "Uppmärksamma för alla",
       "startSpotlightCancelButtonLabel": "Avbryt",
-      "stopSpotlightHeading": "Vill du sluta uppmärksamma?",
+      "stopSpotlightHeading": "Sluta att uppmärksamma den här videon?",
       "stopSpotlightOnSelfHeading": "Avsluta uppmärksammande?",
       "stopSpotlightText": "Den här videon markeras inte längre för alla i mötet.",
       "stopSpotlightOnSelfText": "Din video kommer inte längre vara markerad för alla i mötet.",
       "stopSpotlightConfirmButtonLabel": "Sluta uppmärksamma",
       "stopSpotlightOnSelfConfirmButtonLabel": "Spotlight",
       "stopSpotlightCancelButtonLabel": "Avbryt"
-    }
+    },
+    "exitSpotlightButtonLabel": "Spotlight",
+    "exitSpotlightButtonTooltip": "Spotlight"
   },
   "chat": {
     "chatListHeader": "I den här chatten",

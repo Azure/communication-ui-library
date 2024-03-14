@@ -52,6 +52,7 @@
     "peopleButtonLabel": "אנשים",
     "selectedPeopleButtonLabel": "לחצן 'אנשים' נבחר",
     "peoplePaneTitle": "אנשים",
+    "peoplePaneMoreButtonAriaLabel": "עוד",
     "peopleButtonTooltipOpen": "הצג משתתפים",
     "peopleButtonTooltipClose": "הסתר משתתפים",
     "peoplePaneSubTitle": "בשיחה זו {numberOfPeople}",
@@ -65,6 +66,7 @@
     "stopSpotlightParticipantListMenuLabel": "הפסק להציב זרקור",
     "stopSpotlightOnSelfParticipantListMenuLabel": "צא מזרקור",
     "spotlightLimitReachedParticipantListMenuTitle": "הגעת למגבלת הזרקורים",
+    "stopAllSpotlightMenuLabel": "הפסק את כל הצבות הזרקור",
     "returnToCallButtonAriaDescription": "חזור לשיחה",
     "returnToCallButtonAriaLabel": "הקודם",
     "roomNotFoundDetails": "מזהה החדר שסופק לא נמצא.",
@@ -311,14 +313,16 @@
       "startSpotlightOnSelfText": "תסמן את סרטון הווידאו שלך עבור כל האנשים בפגישה.",
       "startSpotlightConfirmButtonLabel": "הצבת זרקור עבור כולם",
       "startSpotlightCancelButtonLabel": "ביטול",
-      "stopSpotlightHeading": "להפסיק להציב זרקור?",
+      "stopSpotlightHeading": "להפסיק להאיר בזרקור וידאו זה?",
       "stopSpotlightOnSelfHeading": "לצאת מזרקור?",
       "stopSpotlightText": "וידאו זה לא יסומן עוד עבור כל האנשים בפגישה.",
       "stopSpotlightOnSelfText": "סרטון הווידאו שלך לא יסומן עוד עבור כל האנשים בפגישה.",
       "stopSpotlightConfirmButtonLabel": "הפסק להציב זרקור",
       "stopSpotlightOnSelfConfirmButtonLabel": "צא מזרקור",
       "stopSpotlightCancelButtonLabel": "ביטול"
-    }
+    },
+    "exitSpotlightButtonLabel": "צא מהזרקור",
+    "exitSpotlightButtonTooltip": "צא מהזרקור"
   },
   "chat": {
     "chatListHeader": "בצ'אט זה",
