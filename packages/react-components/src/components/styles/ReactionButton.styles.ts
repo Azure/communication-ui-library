@@ -44,7 +44,7 @@ export const emojiStyles = (backgroundImage: string, animationPlayState: string)
     justifyContent: 'center',
     alignItems: 'center',
     backgroundPosition: 'center',
-    backgroundSize: `44px 2142px`,
+    backgroundSize: `2.75rem 133.875rem`,
     transition: 'opacity 2s',
     backgroundColor: 'transparent',
     transform: `${animationPlayState === 'running' ? 'scale(0.8)' : 'scale(0.6)'}`
@@ -62,8 +62,8 @@ export const reactionEmojiMenuStyles = (): React.CSSProperties => {
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    width: '220px',
-    height: '42px'
+    width: '13.75rem',
+    height: '2.625rem'
   };
 };
 
@@ -80,5 +80,51 @@ export const reactionToolTipHostStyle = (): ITooltipHostStyles => {
       height: '100%',
       width: '100%'
     }
+  };
+};
+
+/* @conditional-compile-remove(reaction) */
+/**
+ *
+ * @private
+ */
+export const mobileViewMenuItemStyle = (): React.CSSProperties => {
+  return {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: 'row',
+    width: '100%',
+    height: '2.625rem'
+  };
+};
+
+/* @conditional-compile-remove(reaction) */
+/**
+ * @param backgroundImage - the uri for the reaction emoji resource
+ * @param animationPlayState - the value is either 'running' or 'paused' based on the mouse hover event
+ *
+ * @private
+ */
+export const mobileViewEmojiStyles = (backgroundImage: string, animationPlayState: string): React.CSSProperties => {
+  const imageResourceUrl = `url(${backgroundImage})`;
+  return {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+    width: '2.75rem',
+    backgroundImage: imageResourceUrl,
+    animationName: playFrames(),
+    animationDuration: '8.12s',
+    animationTimingFunction: `steps(102)`,
+    animationPlayState: animationPlayState,
+    animationIterationCount: 'infinite',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundPosition: 'center',
+    backgroundSize: `2.75rem 133.875rem`,
+    transition: 'opacity 2s',
+    backgroundColor: 'transparent',
+    transform: `${animationPlayState === 'running' ? 'scale(0.8)' : 'scale(0.6)'}`
   };
 };
