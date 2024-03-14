@@ -7,7 +7,8 @@
     "mutedIconLabel": "Ljudet är avstängt",
     "displayNamePlaceholder": "Namnlös deltagare",
     "participantStateRinging": "Ringer...",
-    "participantStateHold": "Parkerat"
+    "participantStateHold": "Parkerat",
+    "attendeeRole": "Deltagare"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} till"
@@ -27,6 +28,23 @@
     "removeFile": "Ta bort filen",
     "uploading": "Laddar upp",
     "uploadCompleted": "Uppladdningen har slutförts"
+  },
+  "richTextSendBox": {
+    "placeholderText": "Skriv ett meddelande",
+    "textTooLong": "Meddelandelängden överskrider maxgränsen.",
+    "sendButtonAriaLabel": "Skicka meddelande",
+    "fileUploadsPendingError": "Laddar upp... Var god vänta.",
+    "removeFile": "Ta bort fil",
+    "uploading": "Laddar upp",
+    "uploadCompleted": "Uppladdningen har slutförts",
+    "boldTooltip": "Fet",
+    "italicTooltip": "Kursiv",
+    "underlineTooltip": "Understruken",
+    "bulletListTooltip": "Punktlista",
+    "numberListTooltip": "Numrerad lista",
+    "increaseIndentTooltip": "Öka indrag",
+    "decreaseIndentTooltip": "Minska indrag",
+    "richTextFormatButtonTooltip": "Format"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Förslag"
@@ -125,6 +143,7 @@
   },
   "reactionButton": {
     "label": "Reagera",
+    "ariaLabel": "React-knapp, skicka en reaktion",
     "tooltipDisabledContent": "Reaktionsåtgärden är inaktiverad",
     "tooltipContent": "Skicka en reaktion",
     "likeReactionTooltipContent": "Gilla",
@@ -224,7 +243,8 @@
     "addSpotlightVideoTileMenuLabel": "Lägg till uppmärksammande",
     "spotlightLimitReachedMenuTitle": "Spotlight-gränsen har nåtts",
     "stopSpotlightVideoTileMenuLabel": "Sluta uppmärksamma",
-    "stopSpotlightOnSelfVideoTileMenuLabel": "Spotlight"
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Spotlight",
+    "attendeeRole": "Deltagare"
   },
   "dialpad": {
     "placeholderText": "Ange telefonnummer",
@@ -358,6 +378,5 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "föregående sida",
     "rightNavButtonAriaLabel": "nästa sida"
-  },
-  "AttendeeRole": "Deltagare"
+  }
 }

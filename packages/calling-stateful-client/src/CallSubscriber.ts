@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 import { Features, LocalVideoStream, RemoteParticipant } from '@azure/communication-calling';
+/* @conditional-compile-remove(acs-close-captions) */
+import { Captions } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptions } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
@@ -9,7 +11,7 @@ import { CallCommon } from './BetaToStableTypes';
 import { CallContext } from './CallContext';
 import { CallIdRef } from './CallIdRef';
 /* @conditional-compile-remove(close-captions) */
-import { CaptionsSubscriber } from './CaptionsSubscriber';
+import { TeamsCaptionsSubscriber } from './CaptionsSubscriber';
 import {
   convertSdkLocalStreamToDeclarativeLocalStream,
   convertSdkParticipantToDeclarativeParticipant
@@ -34,6 +36,8 @@ import { CapabilitiesSubscriber } from './CapabilitiesSubscriber';
 import { ReactionSubscriber } from './ReactionSubscriber';
 /* @conditional-compile-remove(spotlight) */
 import { SpotlightSubscriber } from './SpotlightSubscriber';
+/* @conditional-compile-remove(acs-close-captions) */
+import { CaptionsSubscriber } from './CaptionsSubscriber';
 
 /**
  * Keeps track of the listeners assigned to a particular call because when we get an event from SDK, it doesn't tell us
@@ -55,7 +59,9 @@ export class CallSubscriber {
   /* @conditional-compile-remove(optimal-video-count) */
   private _optimalVideoCountSubscriber: OptimalVideoCountSubscriber;
   /* @conditional-compile-remove(close-captions) */
-  private _captionsSubscriber?: CaptionsSubscriber;
+  private _TeamsCaptionsSubscriber?: TeamsCaptionsSubscriber;
+  /* @conditional-compile-remove(acs-close-captions) */
+  private _CaptionsSubscriber?: CaptionsSubscriber;
   /* @conditional-compile-remove(raise-hand) */
   private _raiseHandSubscriber?: RaiseHandSubscriber;
   /* @conditional-compile-remove(reaction) */
@@ -208,7 +214,9 @@ export class CallSubscriber {
     /* @conditional-compile-remove(ppt-live) */
     this._pptLiveSubscriber.unsubscribe();
     /* @conditional-compile-remove(close-captions) */
-    this._captionsSubscriber?.unsubscribe();
+    this._TeamsCaptionsSubscriber?.unsubscribe();
+    /* @conditional-compile-remove(acs-close-captions) */
+    this._CaptionsSubscriber?.unsubscribe();
     /* @conditional-compile-remove(raise-hand) */
     this._raiseHandSubscriber?.unsubscribe();
     /* @conditional-compile-remove(capabilities) */
@@ -244,15 +252,26 @@ export class CallSubscriber {
   /* @conditional-compile-remove(close-captions) */
   private initCaptionSubscriber = (): void => {
     // subscribe to captions here so that we don't call captions when call is not initialized
-    if (this._call.state === 'Connected' && !this._captionsSubscriber) {
+    if (
+      this._call.state === 'Connected' &&
+      !this._TeamsCaptionsSubscriber &&
+      /* @conditional-compile-remove(acs-close-captions) */ !this._CaptionsSubscriber
+    ) {
       if (this._call.feature(Features.Captions).captions.kind === 'TeamsCaptions') {
-        this._captionsSubscriber = new CaptionsSubscriber(
+        this._TeamsCaptionsSubscriber = new TeamsCaptionsSubscriber(
           this._callIdRef,
           this._context,
           this._call.feature(Features.Captions).captions as TeamsCaptions
         );
-        this._call.off('stateChanged', this.initCaptionSubscriber);
+      } else {
+        /* @conditional-compile-remove(acs-close-captions) */
+        this._CaptionsSubscriber = new CaptionsSubscriber(
+          this._callIdRef,
+          this._context,
+          this._call.feature(Features.Captions).captions as Captions
+        );
       }
+      this._call.off('stateChanged', this.initCaptionSubscriber);
     }
   };
 
