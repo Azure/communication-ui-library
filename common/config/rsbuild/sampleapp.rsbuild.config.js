@@ -48,6 +48,11 @@ export const rsbuildConfig = (sampleAppDir) => {
         '/addUserToRoom': 'http://[::1]:8080',
         '/uploadToAzureBlobStorage': 'http://[::1]:8080'
       }
-    }
+    },
+    dev: {
+      client: {
+        port: 443 // required for codespaces https://github.com/orgs/community/discussions/11524
+      },
+    },
   });
 };

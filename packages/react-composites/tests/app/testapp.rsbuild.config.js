@@ -6,7 +6,6 @@
 import path from 'path';
 import { rsbuildConfig as commonRsBuildConfig } from '../../../../common/config/rsbuild/sampleapp.rsbuild.config';
 import { defineConfig, mergeRsbuildConfig } from '@rsbuild/core';
-import { pluginReact } from '@rsbuild/plugin-react';
 
 /**
  * @returns {import('@rsbuild/core').RSBuildConfig}
