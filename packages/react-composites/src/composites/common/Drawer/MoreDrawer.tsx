@@ -471,30 +471,6 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     const spokenLanguageString = supportedSpokenLanguageStrings
       ? supportedSpokenLanguageStrings[currentSpokenLanguage]
       : currentSpokenLanguage;
-    if (props.isTeamsCall) {
-      const captionLanguageString = supportedCaptionLanguageStrings
-        ? supportedCaptionLanguageStrings[currentCaptionLanguage]
-        : currentCaptionLanguage;
-
-      captionsDrawerItems.push({
-        itemKey: 'ChangeCaptionLanguage',
-        text: props.strings.captionLanguageMenuTitle,
-        id: 'common-call-composite-captions-subtitle-settings-button',
-        secondaryText: captionLanguageString,
-        iconProps: {
-          iconName: 'ChangeCaptionLanguageIcon',
-          styles: { root: { lineHeight: 0 } }
-        },
-        disabled: props.disableButtonsForHoldScreen || !captionSettingsProp.isCaptionsFeatureActive,
-        onItemClick: () => {
-          setIsCaptionLanguageDrawerOpen(true);
-        },
-        secondaryIconProps: {
-          iconName: 'ChevronRight',
-          styles: { root: { lineHeight: 0 } }
-        }
-      });
-    }
 
     drawerMenuItems.push({
       itemKey: 'captions',
@@ -546,6 +522,31 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         styles: { root: { lineHeight: 0 } }
       }
     });
+
+    if (props.isTeamsCall) {
+      const captionLanguageString = supportedCaptionLanguageStrings
+        ? supportedCaptionLanguageStrings[currentCaptionLanguage]
+        : currentCaptionLanguage;
+
+      captionsDrawerItems.push({
+        itemKey: 'ChangeCaptionLanguage',
+        text: props.strings.captionLanguageMenuTitle,
+        id: 'common-call-composite-captions-subtitle-settings-button',
+        secondaryText: captionLanguageString,
+        iconProps: {
+          iconName: 'ChangeCaptionLanguageIcon',
+          styles: { root: { lineHeight: 0 } }
+        },
+        disabled: props.disableButtonsForHoldScreen || !captionSettingsProp.isCaptionsFeatureActive,
+        onItemClick: () => {
+          setIsCaptionLanguageDrawerOpen(true);
+        },
+        secondaryIconProps: {
+          iconName: 'ChevronRight',
+          styles: { root: { lineHeight: 0 } }
+        }
+      });
+    }
   }
 
   /* @conditional-compile-remove(control-bar-button-injection) */
