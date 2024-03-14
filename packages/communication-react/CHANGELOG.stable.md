@@ -4,7 +4,7 @@ This log was last generated on Thu, 14 Mar 2024 03:50:48 GMT and should not be m
 
 <!-- Start content -->
 
-## [1.14.0](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.14.0)
+## [1.14.0](https://github.com/azure/communication-ui-library/tree/1.14.0)
 
 Thu, 14 Mar 2024 03:50:48 GMT 
 [Compare changes](https://github.com/azure/communication-ui-library/compare/1.13.0...1.14.0)
@@ -47,7 +47,7 @@ The CallComposite and CallWithChatComposite now support applying a background im
 - Update Calling sounds to not play end call sound when transfer happens ([PR #4163](https://github.com/azure/communication-ui-library/pull/4163) by dmceachern@microsoft.com)
 - Fix hanging express.close if have unclosed connection ([PR #4138](https://github.com/azure/communication-ui-library/pull/4138) by 77021369+jimchou-dev@users.noreply.github.com)
 
-## [1.13.0](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.13.0)
+## [1.13.0](https://github.com/azure/communication-ui-library/tree/1.13.0)
 
 Mon, 12 Feb 2024 18:52:29 GMT 
 [Compare changes](https://github.com/azure/communication-ui-library/compare/1.12.0...1.13.0)
