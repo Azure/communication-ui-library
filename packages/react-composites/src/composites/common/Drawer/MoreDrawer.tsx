@@ -14,6 +14,10 @@ import {
   SpokenLanguageStrings,
   CaptionLanguageStrings
 } from '@internal/react-components';
+/* @conditional-compile-remove(reaction) */
+import { _ReactionDrawerMenuItem } from '@internal/react-components';
+/* @conditional-compile-remove(reaction) */
+import { ReactionResources } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
 import { _StartCaptionsButton, _CaptionsSettingsModal } from '@internal/react-components';
@@ -167,6 +171,10 @@ export interface MoreDrawerProps extends MoreDrawerDevicesMenuProps {
   disableButtonsForHoldScreen?: boolean;
   /* @conditional-compile-remove(close-captions) */
   isTeamsCall?: boolean;
+  /* @conditional-compile-remove(reaction) */
+  reactionResources?: ReactionResources;
+  /* @conditional-compile-remove(reaction) */
+  onReactionClick?: (reaction: string) => Promise<void>;
 }
 
 const inferCallWithChatControlOptions = (
@@ -218,6 +226,16 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   );
 
   const drawerSelectionOptions = inferCallWithChatControlOptions(props.callControls);
+
+  /* @conditional-compile-remove(reaction) */
+  if (props.reactionResources !== undefined) {
+    drawerMenuItems.push({
+      itemKey: 'reactions',
+      onRendererContent: () => (
+        <_ReactionDrawerMenuItem onReactionClick={props.onReactionClick} reactionResources={props.reactionResources} />
+      )
+    });
+  }
 
   if (props.speakers && props.speakers.length > 0) {
     drawerMenuItems.push({
