@@ -1141,8 +1141,11 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       } else {
         /* @conditional-compile-remove(acs-close-captions) */
         const captionsFeature = this.call?.feature(Features.Captions).captions as Captions;
+        /* @conditional-compile-remove(acs-close-captions) */
         captionsFeature.on('CaptionsReceived', this.captionsReceived.bind(this));
+        /* @conditional-compile-remove(acs-close-captions) */
         captionsFeature.on('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
+        /* @conditional-compile-remove(acs-close-captions) */
         captionsFeature.on('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
       }
     }
@@ -1160,8 +1163,11 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       } else {
         /* @conditional-compile-remove(acs-close-captions) */
         const captionsFeature = this.call?.feature(Features.Captions).captions as Captions;
+        /* @conditional-compile-remove(acs-close-captions) */
         captionsFeature.off('CaptionsReceived', this.captionsReceived.bind(this));
+        /* @conditional-compile-remove(acs-close-captions) */
         captionsFeature.off('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
+        /* @conditional-compile-remove(acs-close-captions) */
         captionsFeature.off('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
       }
       this.call?.off('stateChanged', this.subscribeToCaptionEvents.bind(this));
@@ -1264,7 +1270,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
   /* @conditional-compile-remove(close-captions) */
   private isCaptionsActiveChanged(): void {
-    const captionsFeature = this.call?.feature(Features.Captions).captions as TeamsCaptions | Captions;
+    const captionsFeature = this.call?.feature(Features.Captions).captions as
+      | TeamsCaptions
+      | /* @conditional-compile-remove(acs-close-captions) */ Captions;
     this.emitter.emit('isCaptionsActiveChanged', {
       isActive: captionsFeature.isCaptionsFeatureActive
     });
@@ -1272,7 +1280,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
   /* @conditional-compile-remove(close-captions) */
   private isSpokenLanguageChanged(): void {
-    const captionsFeature = this.call?.feature(Features.Captions).captions as TeamsCaptions | Captions;
+    const captionsFeature = this.call?.feature(Features.Captions).captions as
+      | TeamsCaptions
+      | /* @conditional-compile-remove(acs-close-captions) */ Captions;
     this.emitter.emit('isSpokenLanguageChanged', {
       activeSpokenLanguage: captionsFeature.activeSpokenLanguage
     });

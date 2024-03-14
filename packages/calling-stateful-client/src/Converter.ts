@@ -200,11 +200,19 @@ export function convertFromSDKToDeclarativeVideoStreamRendererView(
 /**
  * @private
  */
-export function convertFromSDKToCaptionInfoState(
-  caption: TeamsCaptionsInfo | /* @conditional-compile-remove(acs-close-captions) */ AcsCaptionsInfo
-): CaptionsInfo {
+export function convertFromTeamsSDKToCaptionInfoState(caption: TeamsCaptionsInfo): CaptionsInfo {
   return {
-    captionText: 'captionText' in caption ? caption.captionText : caption.spokenText,
+    ...caption
+  };
+}
+
+/* @conditional-compile-remove(acs-close-captions) */
+/**
+ * @private
+ */
+export function convertFromSDKToCaptionInfoState(caption: AcsCaptionsInfo): CaptionsInfo {
+  return {
+    captionText: caption.spokenText,
     ...caption
   };
 }
