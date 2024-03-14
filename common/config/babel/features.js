@@ -88,6 +88,8 @@ module.exports = {
     'spotlight',
     // Feature for tracking beta start call identifier
     'start-call-beta',
+    // Image overlay theme
+    'image-overlay-theme',
      // Close captions feature for ACS calls
      "acs-close-captions"
   ],
