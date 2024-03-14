@@ -2451,9 +2451,6 @@ export interface ImageOverlayStrings {
 }
 
 // @public
-export const imageOverlayTheme: PartialTheme;
-
-// @public
 export interface IncomingCallState {
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
