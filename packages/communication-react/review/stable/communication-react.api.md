@@ -3101,7 +3101,7 @@ export type ResourceDetails = {
 
 // @public
 export type ResourceFetchResult = {
-    sourceUrl: string;
+    sourceUrl?: string;
     error?: Error;
 };
 
