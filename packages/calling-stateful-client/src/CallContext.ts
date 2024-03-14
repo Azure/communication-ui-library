@@ -15,6 +15,8 @@ import { RaisedHand } from '@azure/communication-calling';
 import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(acs-close-captions) */
+import { CaptionsInfo as AcsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
@@ -52,6 +54,8 @@ import { CallIdHistory } from './CallIdHistory';
 /* @conditional-compile-remove(video-background-effects) */
 import { LocalVideoStreamVideoEffectsState } from './CallClientState';
 /* @conditional-compile-remove(close-captions) */
+import { convertFromTeamsSDKToCaptionInfoState } from './Converter';
+/* @conditional-compile-remove(acs-close-captions) */
 import { convertFromSDKToCaptionInfoState } from './Converter';
 /* @conditional-compile-remove(raise-hand) */
 import { convertFromSDKToRaisedHandState } from './Converter';
@@ -962,7 +966,7 @@ export class CallContext {
     }
   }
   /* @conditional-compile-remove(close-captions) */
-  public addCaption(callId: string, caption: TeamsCaptionsInfo): void {
+  public addTeamsCaption(callId: string, caption: TeamsCaptionsInfo): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
@@ -972,8 +976,18 @@ export class CallContext {
           currentCaptionLanguage === '' ||
           currentCaptionLanguage === undefined
         ) {
-          this.processNewCaption(call.captionsFeature.captions, convertFromSDKToCaptionInfoState(caption));
+          this.processNewCaption(call.captionsFeature.captions, convertFromTeamsSDKToCaptionInfoState(caption));
         }
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(acs-close-captions) */
+  public addCaption(callId: string, caption: AcsCaptionsInfo): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        this.processNewCaption(call.captionsFeature.captions, convertFromSDKToCaptionInfoState(caption));
       }
     });
   }
