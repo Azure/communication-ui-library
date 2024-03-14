@@ -52,6 +52,7 @@
     "peopleButtonLabel": "Ihmiset",
     "selectedPeopleButtonLabel": "Henkilöt-painike valittu",
     "peoplePaneTitle": "Ihmiset",
+    "peoplePaneMoreButtonAriaLabel": "Lisää",
     "peopleButtonTooltipOpen": "Näytä osallistujat",
     "peopleButtonTooltipClose": "Piilota osallistujat",
     "peoplePaneSubTitle": "Tässä puhelussa {numberOfPeople}",
@@ -65,6 +66,7 @@
     "stopSpotlightParticipantListMenuLabel": "Poista valokeilasta",
     "stopSpotlightOnSelfParticipantListMenuLabel": "Valokeila",
     "spotlightLimitReachedParticipantListMenuTitle": "Spotlight-raja saavutettu",
+    "stopAllSpotlightMenuLabel": "Poista kaikki valokeilat",
     "returnToCallButtonAriaDescription": "Palaa puheluun",
     "returnToCallButtonAriaLabel": "Takaisin",
     "roomNotFoundDetails": "Annettua huonetunnusta ei löydy.",
@@ -311,14 +313,16 @@
       "startSpotlightOnSelfText": "Korostat videosi kaikille kokouksen osallistujille.",
       "startSpotlightConfirmButtonLabel": "Lisää valokeilaan kaikille",
       "startSpotlightCancelButtonLabel": "Peruuta",
-      "stopSpotlightHeading": "Poistetaanko valokeilasta?",
+      "stopSpotlightHeading": "Haluatko poistaa videon valokeilasta?",
       "stopSpotlightOnSelfHeading": "Haluatko poistua valokeilasta?",
       "stopSpotlightText": "Videota ei enää korosteta kaikille kokouksen osallistujille.",
       "stopSpotlightOnSelfText": "Videota ei enää korosteta kaikille kokouksen osallistujille.",
       "stopSpotlightConfirmButtonLabel": "Poista valokeilasta",
       "stopSpotlightOnSelfConfirmButtonLabel": "Valokeila",
       "stopSpotlightCancelButtonLabel": "Peruuta"
-    }
+    },
+    "exitSpotlightButtonLabel": "Poistu valokeilasta",
+    "exitSpotlightButtonTooltip": "Poistu valokeilasta"
   },
   "chat": {
     "chatListHeader": "Tässä keskustelussa",

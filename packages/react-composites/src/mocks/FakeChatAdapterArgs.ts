@@ -62,6 +62,10 @@ export type _FakeChatAdapterArgs = {
    */
   sendRemoteInlineImageMessage?: boolean;
   /**
+   * Local server url
+   */
+  serverUrl?: string;
+  /**
    * Overwrites the url of the inline image that the first remote participant will send.
    */
   inlineImageUrl?: string;

@@ -109,8 +109,6 @@ module.exports = {
     "hide-attendee-name",
     // Feature for end of call survey
     'end-of-call-survey',
-    // Feature for PPT Live for teams meeting
-    'ppt-live',
     // Feature for end of call survey self host version
     'end-of-call-survey-self-host',
     // Feature for meeting reactions
@@ -161,6 +159,8 @@ module.exports = {
     // Chat teams interop to display images and file attachments in chat messages
     "teams-inline-images-and-file-sharing",
     // custom branding for the composites
-    "custom-branding"
+    "custom-branding",
+    // Feature for PPT Live for teams meeting
+    'ppt-live'
   ]
 }
