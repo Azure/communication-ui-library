@@ -14,6 +14,10 @@ import {
   SpokenLanguageStrings,
   CaptionLanguageStrings
 } from '@internal/react-components';
+/* @conditional-compile-remove(reaction) */
+import { _ReactionDrawerMenuItem } from '@internal/react-components';
+/* @conditional-compile-remove(reaction) */
+import { ReactionResources } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
 import { _StartCaptionsButton, _CaptionsSettingsModal } from '@internal/react-components';
@@ -165,6 +169,12 @@ export interface MoreDrawerProps extends MoreDrawerDevicesMenuProps {
   isCaptionsSupported?: boolean;
   strings: MoreDrawerStrings;
   disableButtonsForHoldScreen?: boolean;
+  /* @conditional-compile-remove(close-captions) */
+  isTeamsCall?: boolean;
+  /* @conditional-compile-remove(reaction) */
+  reactionResources?: ReactionResources;
+  /* @conditional-compile-remove(reaction) */
+  onReactionClick?: (reaction: string) => Promise<void>;
 }
 
 const inferCallWithChatControlOptions = (
@@ -216,6 +226,16 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   );
 
   const drawerSelectionOptions = inferCallWithChatControlOptions(props.callControls);
+
+  /* @conditional-compile-remove(reaction) */
+  if (props.reactionResources !== undefined) {
+    drawerMenuItems.push({
+      itemKey: 'reactions',
+      onRendererContent: () => (
+        <_ReactionDrawerMenuItem onReactionClick={props.onReactionClick} reactionResources={props.reactionResources} />
+      )
+    });
+  }
 
   if (props.speakers && props.speakers.length > 0) {
     drawerMenuItems.push({
@@ -469,9 +489,6 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     const spokenLanguageString = supportedSpokenLanguageStrings
       ? supportedSpokenLanguageStrings[currentSpokenLanguage]
       : currentSpokenLanguage;
-    const captionLanguageString = supportedCaptionLanguageStrings
-      ? supportedCaptionLanguageStrings[currentCaptionLanguage]
-      : currentCaptionLanguage;
 
     drawerMenuItems.push({
       itemKey: 'captions',
@@ -524,24 +541,30 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       }
     });
 
-    captionsDrawerItems.push({
-      itemKey: 'ChangeCaptionLanguage',
-      text: props.strings.captionLanguageMenuTitle,
-      id: 'common-call-composite-captions-subtitle-settings-button',
-      secondaryText: captionLanguageString,
-      iconProps: {
-        iconName: 'ChangeCaptionLanguageIcon',
-        styles: { root: { lineHeight: 0 } }
-      },
-      disabled: props.disableButtonsForHoldScreen || !captionSettingsProp.isCaptionsFeatureActive,
-      onItemClick: () => {
-        setIsCaptionLanguageDrawerOpen(true);
-      },
-      secondaryIconProps: {
-        iconName: 'ChevronRight',
-        styles: { root: { lineHeight: 0 } }
-      }
-    });
+    if (props.isTeamsCall) {
+      const captionLanguageString = supportedCaptionLanguageStrings
+        ? supportedCaptionLanguageStrings[currentCaptionLanguage]
+        : currentCaptionLanguage;
+
+      captionsDrawerItems.push({
+        itemKey: 'ChangeCaptionLanguage',
+        text: props.strings.captionLanguageMenuTitle,
+        id: 'common-call-composite-captions-subtitle-settings-button',
+        secondaryText: captionLanguageString,
+        iconProps: {
+          iconName: 'ChangeCaptionLanguageIcon',
+          styles: { root: { lineHeight: 0 } }
+        },
+        disabled: props.disableButtonsForHoldScreen || !captionSettingsProp.isCaptionsFeatureActive,
+        onItemClick: () => {
+          setIsCaptionLanguageDrawerOpen(true);
+        },
+        secondaryIconProps: {
+          iconName: 'ChevronRight',
+          styles: { root: { lineHeight: 0 } }
+        }
+      });
+    }
   }
 
   /* @conditional-compile-remove(control-bar-button-injection) */

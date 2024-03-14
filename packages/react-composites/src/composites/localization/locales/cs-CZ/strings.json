@@ -52,6 +52,7 @@
     "peopleButtonLabel": "Lidé",
     "selectedPeopleButtonLabel": "Vybráno tlačítko Lidé",
     "peoplePaneTitle": "Lidé",
+    "peoplePaneMoreButtonAriaLabel": "Více",
     "peopleButtonTooltipOpen": "Zobrazit účastníky",
     "peopleButtonTooltipClose": "Skrýt účastníky",
     "peoplePaneSubTitle": "V tomto hovoru {numberOfPeople}",
@@ -65,6 +66,7 @@
     "stopSpotlightParticipantListMenuLabel": "Zastavit přidávání do hlavního výběru",
     "stopSpotlightOnSelfParticipantListMenuLabel": "Ukončit hlavní výběr",
     "spotlightLimitReachedParticipantListMenuTitle": "Dosáhlo se limitu hlavního výběru",
+    "stopAllSpotlightMenuLabel": "Zastavit všechny výběry",
     "returnToCallButtonAriaDescription": "Pokračovat v hovoru",
     "returnToCallButtonAriaLabel": "Zpět",
     "roomNotFoundDetails": "Zadané ID místnosti se nepovedlo najít.",
@@ -311,14 +313,16 @@
       "startSpotlightOnSelfText": "Vaše video se zvýrazní všem účastníkům schůzky.",
       "startSpotlightConfirmButtonLabel": "Přidat do hlavního výběru všem",
       "startSpotlightCancelButtonLabel": "Zrušit",
-      "stopSpotlightHeading": "Zastavit přidávání do hlavního výběru?",
+      "stopSpotlightHeading": "Chcete přestat zobrazovat toto video v hlavním výběru?",
       "stopSpotlightOnSelfHeading": "Ukončit hlavní výběr?",
       "stopSpotlightText": "Účastníkům se už toto video nebude zvýrazňovat.",
       "stopSpotlightOnSelfText": "Účastníkům se už vaše video nebude zvýrazňovat.",
       "stopSpotlightConfirmButtonLabel": "Zastavit přidávání do hlavního výběru",
       "stopSpotlightOnSelfConfirmButtonLabel": "Ukončit hlavní výběr",
       "stopSpotlightCancelButtonLabel": "Zrušit"
-    }
+    },
+    "exitSpotlightButtonLabel": "Ukončit hlavní výběr",
+    "exitSpotlightButtonTooltip": "Ukončit hlavní výběr"
   },
   "chat": {
     "chatListHeader": "V tomto chatu",

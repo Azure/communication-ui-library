@@ -52,6 +52,7 @@
     "peopleButtonLabel": "Personer",
     "selectedPeopleButtonLabel": "Personer-knappen er valgt",
     "peoplePaneTitle": "Personer",
+    "peoplePaneMoreButtonAriaLabel": "Mer",
     "peopleButtonTooltipOpen": "Vis deltakere",
     "peopleButtonTooltipClose": "Skjul deltakere",
     "peoplePaneSubTitle": "I denne samtalen {numberOfPeople}",
@@ -65,6 +66,7 @@
     "stopSpotlightParticipantListMenuLabel": "Fjern fra rampelyset",
     "stopSpotlightOnSelfParticipantListMenuLabel": "Rampelys av",
     "spotlightLimitReachedParticipantListMenuTitle": "Rampelys-grensen er nådd",
+    "stopAllSpotlightMenuLabel": "Stopp rampelyset for alle",
     "returnToCallButtonAriaDescription": "Gå tilbake til samtale",
     "returnToCallButtonAriaLabel": "Tilbake",
     "roomNotFoundDetails": "Finner ikke den angitte rom-IDen.",
@@ -311,14 +313,16 @@
       "startSpotlightOnSelfText": "Du merker videoen for alle i møtet.",
       "startSpotlightConfirmButtonLabel": "Sett i rampelyset for alle",
       "startSpotlightCancelButtonLabel": "Avbryt",
-      "stopSpotlightHeading": "Stoppe rampelyset?",
+      "stopSpotlightHeading": "Slutte å sette denne videoen i rampelyset?",
       "stopSpotlightOnSelfHeading": "Fjern rampelyset?",
       "stopSpotlightText": "Denne videoen vil ikke lenger være uthevet for alle i møtet.",
       "stopSpotlightOnSelfText": "Videoen vil ikke lenger være uthevet for alle i møtet.",
       "stopSpotlightConfirmButtonLabel": "Fjern fra rampelyset",
       "stopSpotlightOnSelfConfirmButtonLabel": "Rampelys av",
       "stopSpotlightCancelButtonLabel": "Avbryt"
-    }
+    },
+    "exitSpotlightButtonLabel": "Rampelys av",
+    "exitSpotlightButtonTooltip": "Rampelys av"
   },
   "chat": {
     "chatListHeader": "I denne chatten",
