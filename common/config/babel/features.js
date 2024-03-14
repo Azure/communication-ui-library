@@ -114,7 +114,9 @@ module.exports = {
     // Feature for Rich Text Editor (RTE) support
     'rich-text-editor',
     // Feature for spotlight
-    'spotlight'
+    'spotlight',
+    // Image overlay theme
+    'image-overlay-theme'
   ],
   // A list of stabilized features.
   // These features can be listed in the conditional compilation directives without
