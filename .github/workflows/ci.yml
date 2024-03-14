@@ -1,12 +1,18 @@
-name: CI
-
 on:
   # Postsubmit CI on main.
   push:
+    branches:
+      - main
+      - release/**
   # Presubmit CI on PRs to all branches.
   pull_request:
   # Allows you to run this workflow manually from the Actions tab.
   workflow_dispatch:
+
+# cancel workflow when a newer version of the workflow is triggered on the same github ref
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions: read-all
 
