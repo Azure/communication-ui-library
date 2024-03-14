@@ -52,6 +52,7 @@
     "peopleButtonLabel": "Personen",
     "selectedPeopleButtonLabel": "Knop Personen geselecteerd",
     "peoplePaneTitle": "Personen",
+    "peoplePaneMoreButtonAriaLabel": "Meer",
     "peopleButtonTooltipOpen": "Deelnemers weergeven",
     "peopleButtonTooltipClose": "Deelnemers verbergen",
     "peoplePaneSubTitle": "In dit gesprek {numberOfPeople}",
@@ -65,6 +66,7 @@
     "stopSpotlightParticipantListMenuLabel": "Spotlighten stoppen",
     "stopSpotlightOnSelfParticipantListMenuLabel": "Spotlight afsluiten",
     "spotlightLimitReachedParticipantListMenuTitle": "Spotlightlimiet bereikt",
+    "stopAllSpotlightMenuLabel": "Alle spotlights stoppen",
     "returnToCallButtonAriaDescription": "Terug naar gesprek",
     "returnToCallButtonAriaLabel": "Terug",
     "roomNotFoundDetails": "Kan de opgegeven ruimte-id niet vinden.",
@@ -311,14 +313,16 @@
       "startSpotlightOnSelfText": "U markeert deze video voor iedereen in de vergadering.",
       "startSpotlightConfirmButtonLabel": "Spotlight voor iedereen",
       "startSpotlightCancelButtonLabel": "Annuleren",
-      "stopSpotlightHeading": "Spotlighten stoppen?",
+      "stopSpotlightHeading": "Wilt u deze video niet meer spotlighten?",
       "stopSpotlightOnSelfHeading": "Spotlight afsluiten?",
       "stopSpotlightText": "Deze video wordt niet meer gemarkeerd voor iedereen in de vergadering.",
       "stopSpotlightOnSelfText": "Uw video wordt niet meer gemarkeerd voor iedereen in de vergadering.",
       "stopSpotlightConfirmButtonLabel": "Spotlighten stoppen",
       "stopSpotlightOnSelfConfirmButtonLabel": "Spotlight afsluiten",
       "stopSpotlightCancelButtonLabel": "Annuleren"
-    }
+    },
+    "exitSpotlightButtonLabel": "Spotlight afsluiten",
+    "exitSpotlightButtonTooltip": "Spotlight afsluiten"
   },
   "chat": {
     "chatListHeader": "In deze chat",

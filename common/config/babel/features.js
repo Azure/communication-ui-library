@@ -87,7 +87,11 @@ module.exports = {
     // Feature for spotlight
     'spotlight',
     // Feature for tracking beta start call identifier
-    'start-call-beta'
+    'start-call-beta',
+    // Image overlay theme
+    'image-overlay-theme',
+     // Close captions feature for ACS calls
+     "acs-close-captions"
   ],
   // A list of in progress beta feature.
   // These features are still beta feature but "in progress"
@@ -107,8 +111,6 @@ module.exports = {
     "hide-attendee-name",
     // Feature for end of call survey
     'end-of-call-survey',
-    // Feature for PPT Live for teams meeting
-    'ppt-live',
     // Feature for end of call survey self host version
     'end-of-call-survey-self-host',
     // Feature for meeting reactions
@@ -116,7 +118,9 @@ module.exports = {
     // Feature for Rich Text Editor (RTE) support
     'rich-text-editor',
     // Feature for spotlight
-    'spotlight'
+    'spotlight',
+    // Close captions feature for ACS calls
+    "acs-close-captions",
   ],
   // A list of stabilized features.
   // These features can be listed in the conditional compilation directives without
@@ -157,6 +161,8 @@ module.exports = {
     // Chat teams interop to display images and file attachments in chat messages
     "teams-inline-images-and-file-sharing",
     // custom branding for the composites
-    "custom-branding"
+    "custom-branding",
+    // Feature for PPT Live for teams meeting
+    'ppt-live'
   ]
 }

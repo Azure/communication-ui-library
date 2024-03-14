@@ -52,6 +52,7 @@
     "peopleButtonLabel": "Osoby",
     "selectedPeopleButtonLabel": "Wybrano przycisk Kontakty",
     "peoplePaneTitle": "Osoby",
+    "peoplePaneMoreButtonAriaLabel": "Więcej",
     "peopleButtonTooltipOpen": "Pokaż uczestników",
     "peopleButtonTooltipClose": "Ukryj uczestników",
     "peoplePaneSubTitle": "W tej rozmowie {numberOfPeople}",
@@ -65,6 +66,7 @@
     "stopSpotlightParticipantListMenuLabel": "Zatrzymaj wyróżnianie",
     "stopSpotlightOnSelfParticipantListMenuLabel": "Zakończ wyróżnienie",
     "spotlightLimitReachedParticipantListMenuTitle": "Osiągnięto limit wyróżnienia",
+    "stopAllSpotlightMenuLabel": "Zatrzymaj wszystkie wyróżnienia",
     "returnToCallButtonAriaDescription": "Wróć do rozmowy",
     "returnToCallButtonAriaLabel": "Wstecz",
     "roomNotFoundDetails": "Nie można odnaleźć podanego identyfikatora pokoju.",
@@ -311,14 +313,16 @@
       "startSpotlightOnSelfText": "Wyróżnisz swój klip wideo dla wszystkich uczestników spotkania.",
       "startSpotlightConfirmButtonLabel": "Wyróżnij dla wszystkich",
       "startSpotlightCancelButtonLabel": "Anuluj",
-      "stopSpotlightHeading": "Zatrzymać wyróżnianie?",
+      "stopSpotlightHeading": "Zatrzymać wyróżnianie tego klipu wideo?",
       "stopSpotlightOnSelfHeading": "Zakończyć wyróżnianie?",
       "stopSpotlightText": "Klip wideo nie będzie już wyróżniany dla wszystkich osób na spotkaniu.",
       "stopSpotlightOnSelfText": "Twój klip wideo nie będzie już wyróżniany dla wszystkich osób na spotkaniu.",
       "stopSpotlightConfirmButtonLabel": "Zatrzymaj wyróżnianie",
       "stopSpotlightOnSelfConfirmButtonLabel": "Zakończ wyróżnienie",
       "stopSpotlightCancelButtonLabel": "Anuluj"
-    }
+    },
+    "exitSpotlightButtonLabel": "Wyjdź z ważnych informacji",
+    "exitSpotlightButtonTooltip": "Wyjdź z ważnych informacji"
   },
   "chat": {
     "chatListHeader": "W tym czacie",

@@ -7,7 +7,6 @@ import { useMemo, useRef, useState } from 'react';
 import { useLocale } from '../../localization';
 import { useSelector } from '../hooks/useSelector';
 import { getRemoteParticipantsConnectedSelector } from '../selectors/mediaGallerySelector';
-/* @conditional-compile-remove(dtmf-dialer) */
 import {
   CommunicationIdentifier,
   isMicrosoftTeamsAppIdentifier,
@@ -167,7 +166,6 @@ export const createAnnouncementString = (
   });
 };
 
-/* @conditional-compile-remove(dtmf-dialer) */
 /**
  * determines if the media gallery should be replaced by the dtmf dialer
  * @param callees Target callees to determine if the dtmf dialer should be shown

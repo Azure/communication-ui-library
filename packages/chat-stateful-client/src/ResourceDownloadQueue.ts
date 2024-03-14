@@ -3,8 +3,6 @@
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatContext } from './ChatContext';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { ChatError } from './ChatClientState';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatMessageWithStatus, ResourceFetchResult } from './types/ChatMessageWithStatus';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import type { CommunicationTokenCredential } from '@azure/communication-common';
@@ -19,11 +17,13 @@ export class ResourceDownloadQueue {
   private _context: ChatContext;
   private isActive = false;
   private _credential: CommunicationTokenCredential;
+  private _endpoint: string;
   private _requestsToCancel: Record<string, CancellationDetails> = {};
 
-  constructor(context: ChatContext, credential: CommunicationTokenCredential) {
+  constructor(context: ChatContext, authentication: { credential: CommunicationTokenCredential; endpoint: string }) {
     this._context = context;
-    this._credential = credential;
+    this._credential = authentication.credential;
+    this._endpoint = authentication.endpoint;
   }
 
   public containsMessageWithSameAttachments(message: ChatMessageWithStatus): boolean {
@@ -138,7 +138,11 @@ export class ResourceDownloadQueue {
     abortController: AbortController
   ): Promise<string> {
     this._requestsToCancel[url] = { src: url, abortController };
-    const blobUrl = await operation(url, this._credential, { abortController });
+    const blobUrl = await operation(
+      url,
+      { credential: this._credential, endpoint: this._endpoint },
+      { abortController }
+    );
     delete this._requestsToCancel[url];
     return blobUrl;
   }
@@ -150,7 +154,7 @@ export class ResourceDownloadQueue {
  */
 export const fetchImageSource = async (
   src: string,
-  credential: CommunicationTokenCredential,
+  authentication: { credential: CommunicationTokenCredential; endpoint: string },
   options: { abortController: AbortController; timeout?: number }
 ): Promise<string> => {
   async function fetchWithAuthentication(
@@ -160,15 +164,11 @@ export const fetchImageSource = async (
   ): Promise<Response> {
     const headers = new Headers();
     headers.append('Authorization', `Bearer ${token}`);
-    try {
-      return await fetchWithTimeout(url, {
-        timeout: options.timeout,
-        headers,
-        abortController: options.abortController
-      });
-    } catch (err) {
-      throw new ChatError('ChatThreadClient.getMessage', err as Error);
-    }
+    return await fetchWithTimeout(url, {
+      timeout: options.timeout,
+      headers,
+      abortController: options.abortController
+    });
   }
   async function fetchWithTimeout(
     resource: string | URL | Request,
@@ -188,8 +188,15 @@ export const fetchImageSource = async (
     clearTimeout(id);
     return response;
   }
-  const accessToken = await credential.getToken();
-  const response = await fetchWithAuthentication(src, accessToken.token, options);
+  const fetchUrl = new URL(src);
+  const endpoint = new URL(authentication.endpoint);
+
+  let token = '';
+  if (fetchUrl.hostname === endpoint.hostname && fetchUrl.protocol === 'https:') {
+    token = (await authentication.credential.getToken()).token;
+  }
+
+  const response = await fetchWithAuthentication(src, token, options);
   const blob = await response.blob();
 
   return URL.createObjectURL(blob);
@@ -198,7 +205,7 @@ export const fetchImageSource = async (
 interface ImageRequest {
   (
     request: string,
-    credential: CommunicationTokenCredential,
+    authentication: { credential: CommunicationTokenCredential; endpoint: string },
     options: { abortController: AbortController; timeout?: number }
   ): Promise<string>;
 }
