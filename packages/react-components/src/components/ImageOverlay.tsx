@@ -120,6 +120,7 @@ export const ImageOverlay = (props: ImageOverlayProps): JSX.Element => {
               aria-live={'polite'}
               /* @conditional-compile-remove(image-overlay) */
               aria-label={localeStrings.downloadButtonLabel}
+              disabled={imageSrc === ''}
             />
           )}
           {onDownloadButtonClicked && (
@@ -130,6 +131,7 @@ export const ImageOverlay = (props: ImageOverlayProps): JSX.Element => {
               /* @conditional-compile-remove(image-overlay) */
               aria-label={localeStrings.downloadButtonLabel}
               aria-live={'polite'}
+              disabled={imageSrc === ''}
             />
           )}
           <IconButton

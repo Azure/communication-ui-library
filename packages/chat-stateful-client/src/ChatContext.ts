@@ -48,14 +48,15 @@ export class ChatContext {
   private _fullsizeImageQueue: ResourceDownloadQueue | undefined = undefined;
   constructor(
     maxListeners?: number,
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ credential?: CommunicationTokenCredential
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ credential?: CommunicationTokenCredential,
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ endpoint?: string
   ) {
     this._logger = createClientLogger('communication-react:chat-context');
     this._emitter = new EventEmitter();
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     if (credential) {
-      this._inlineImageQueue = new ResourceDownloadQueue(this, credential);
-      this._fullsizeImageQueue = new ResourceDownloadQueue(this, credential);
+      this._inlineImageQueue = new ResourceDownloadQueue(this, { credential, endpoint: endpoint ?? '' });
+      this._fullsizeImageQueue = new ResourceDownloadQueue(this, { credential, endpoint: endpoint ?? '' });
     }
     if (maxListeners) {
       this._emitter.setMaxListeners(maxListeners);
