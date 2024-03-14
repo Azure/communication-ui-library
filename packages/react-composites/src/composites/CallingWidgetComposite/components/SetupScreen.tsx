@@ -16,7 +16,7 @@ import {
   checkboxStyles,
   startCallButtonStyles
 } from '../styles/CallingWidgetComposite.styles';
-import { CustomCheckBoxField, CustomTextField } from '../CallingWidgetComposite';
+import { CustomCheckBoxField, CustomTextField, WidgetPosition } from '../CallingWidgetComposite';
 import { useLocale } from '../../localization';
 
 export interface SetupScreenProps {
@@ -33,6 +33,7 @@ export interface SetupScreenProps {
   onRenderLogo?: () => JSX.Element;
   showVideoOptIn?: boolean;
   showDisplayNameField?: boolean;
+  position: WidgetPosition;
 }
 
 export const SetupScreen = (props: SetupScreenProps): JSX.Element => {
@@ -47,7 +48,8 @@ export const SetupScreen = (props: SetupScreenProps): JSX.Element => {
     adapter,
     consentToData,
     displayName,
-    customFields
+    customFields,
+    position
   } = props;
 
   const theme = useTheme();
@@ -89,95 +91,99 @@ export const SetupScreen = (props: SetupScreenProps): JSX.Element => {
   };
 
   return (
-    <Stack styles={callingWidgetSetupContainerStyles(theme)} tokens={{ childrenGap: '1rem' }}>
-      <IconButton
-        styles={collapseButtonStyles}
-        iconProps={{ iconName: 'WidgetDismiss' }}
-        onClick={() => {
-          setDisplayName(undefined);
-          setConsentToData(false);
-          setUseLocalVideo(false);
-          setWidgetState('new');
-        }}
-      />
-      <Stack tokens={{ childrenGap: '1rem' }} styles={logoContainerStyles}>
-        <Stack style={{ transform: 'scale(1.8)' }}>{onRenderLogo && onRenderLogo()}</Stack>
-      </Stack>
-      <TextField
-        label={locale.displayNameInputLabel}
-        required={true}
-        placeholder={locale.displayNamePlaceholderText}
-        onChange={(_, newValue) => {
-          setDisplayName(newValue);
-        }}
-      />
-      <Checkbox
-        styles={checkboxStyles(theme)}
-        label={locale.useLocalVideoCheckboxLabel}
-        onChange={(_, checked?: boolean | undefined) => {
-          setUseLocalVideo(!!checked);
-          setUseLocalVideo(true);
-        }}
-      ></Checkbox>
-      {renderCustomFields(customFields)}
-      <Checkbox
-        required={true}
-        styles={checkboxStyles(theme)}
-        disabled={displayName === undefined}
-        label={locale.consentToDataCollectionLabel}
-        onChange={async (_, checked?: boolean | undefined) => {
-          setConsentToData(!!checked);
-          if (callAdapterArgs && callAdapterArgs.credential && !adapter) {
-            if ('targetCallees' in callAdapterArgs) {
-              setAdapter(
-                await createAzureCommunicationCallAdapter({
-                  displayName: displayName ?? '',
-                  userId: callAdapterArgs.userId,
-                  credential: callAdapterArgs.credential,
-                  targetCallees: callAdapterArgs.targetCallees,
-                  options: callAdapterArgs.options
-                })
-              );
-            } else {
-              setAdapter(
-                await createAzureCommunicationCallAdapter({
-                  displayName: displayName ?? '',
-                  userId: callAdapterArgs.userId,
-                  credential: callAdapterArgs.credential,
-                  locator: callAdapterArgs.locator,
-                  options: callAdapterArgs.options
-                })
-              );
+    <Stack styles={callingWidgetSetupContainerStyles(theme, position)}>
+      <Stack style={{ position: position === 'unset' ? 'relative' : 'unset' }} tokens={{ childrenGap: '1rem' }}>
+        <Stack.Item style={{ position: 'relative' }}>
+          <IconButton
+            styles={collapseButtonStyles}
+            iconProps={{ iconName: 'WidgetDismiss' }}
+            onClick={() => {
+              setDisplayName(undefined);
+              setConsentToData(false);
+              setUseLocalVideo(false);
+              setWidgetState('new');
+            }}
+          />
+        </Stack.Item>
+        <Stack tokens={{ childrenGap: '1rem' }} styles={logoContainerStyles}>
+          <Stack style={{ transform: 'scale(1.8)' }}>{onRenderLogo && onRenderLogo()}</Stack>
+        </Stack>
+        <TextField
+          label={locale.displayNameInputLabel}
+          required={true}
+          placeholder={locale.displayNamePlaceholderText}
+          onChange={(_, newValue) => {
+            setDisplayName(newValue);
+          }}
+        />
+        <Checkbox
+          styles={checkboxStyles(theme)}
+          label={locale.useLocalVideoCheckboxLabel}
+          onChange={(_, checked?: boolean | undefined) => {
+            setUseLocalVideo(!!checked);
+            setUseLocalVideo(true);
+          }}
+        ></Checkbox>
+        {renderCustomFields(customFields)}
+        <Checkbox
+          required={true}
+          styles={checkboxStyles(theme)}
+          disabled={displayName === undefined}
+          label={locale.consentToDataCollectionLabel}
+          onChange={async (_, checked?: boolean | undefined) => {
+            setConsentToData(!!checked);
+            if (callAdapterArgs && callAdapterArgs.credential && !adapter) {
+              if ('targetCallees' in callAdapterArgs) {
+                setAdapter(
+                  await createAzureCommunicationCallAdapter({
+                    displayName: displayName ?? '',
+                    userId: callAdapterArgs.userId,
+                    credential: callAdapterArgs.credential,
+                    targetCallees: callAdapterArgs.targetCallees,
+                    options: callAdapterArgs.options
+                  })
+                );
+              } else {
+                setAdapter(
+                  await createAzureCommunicationCallAdapter({
+                    displayName: displayName ?? '',
+                    userId: callAdapterArgs.userId,
+                    credential: callAdapterArgs.credential,
+                    locator: callAdapterArgs.locator,
+                    options: callAdapterArgs.options
+                  })
+                );
+              }
             }
-          }
-        }}
-      ></Checkbox>
-      <PrimaryButton
-        styles={startCallButtonStyles(theme)}
-        onClick={() => {
-          if (displayName && consentToData && adapter) {
-            setWidgetState('inCall');
-            /**
-             * We need to kick off any actions the user defined to happen at the
-             * call start
-             */
-            customFields?.forEach((field) => {
-              field.onCallStart();
-            });
-            if ('targetCallees' in callAdapterArgs) {
-              adapter?.startCall(callAdapterArgs.targetCallees, {
-                audioOptions: { muted: false }
+          }}
+        ></Checkbox>
+        <PrimaryButton
+          styles={startCallButtonStyles(theme)}
+          onClick={() => {
+            if (displayName && consentToData && adapter) {
+              setWidgetState('inCall');
+              /**
+               * We need to kick off any actions the user defined to happen at the
+               * call start
+               */
+              customFields?.forEach((field) => {
+                field.onCallStart();
               });
-            } else {
-              adapter.joinCall({});
+              if ('targetCallees' in callAdapterArgs) {
+                adapter?.startCall(callAdapterArgs.targetCallees, {
+                  audioOptions: { muted: false }
+                });
+              } else {
+                adapter.joinCall({});
+              }
             }
-          }
-        }}
-      >
-        {!consentToData && `${locale.startCallButtonNamePrompt}`}
-        {consentToData && !adapter && <Spinner ariaLive="assertive" labelPosition="top" />}
-        {consentToData && adapter && `${locale.startCallButtonStartCall}`}
-      </PrimaryButton>
+          }}
+        >
+          {!consentToData && `${locale.startCallButtonNamePrompt}`}
+          {consentToData && !adapter && <Spinner ariaLive="assertive" labelPosition="top" />}
+          {consentToData && adapter && `${locale.startCallButtonStartCall}`}
+        </PrimaryButton>
+      </Stack>
     </Stack>
   );
 };

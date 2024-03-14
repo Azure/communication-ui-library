@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import { IButtonStyles, ICheckboxStyles, IIconStyles, IStackStyles, Theme } from '@fluentui/react';
+import { WidgetPosition } from '../CallingWidgetComposite';
 
 export const checkboxStyles = (theme: Theme): ICheckboxStyles => {
   return {
@@ -11,7 +12,7 @@ export const checkboxStyles = (theme: Theme): ICheckboxStyles => {
   };
 };
 
-export const callingWidgetContainerStyles = (theme: Theme): IStackStyles => {
+export const callingWidgetContainerStyles = (theme: Theme, position: WidgetPosition): IStackStyles => {
   return {
     root: {
       minWidth: '5rem',
@@ -19,10 +20,11 @@ export const callingWidgetContainerStyles = (theme: Theme): IStackStyles => {
       padding: '0.5rem',
       boxShadow: theme.effects.elevation16,
       borderRadius: '50%',
-      bottom: '1rem',
-      right: '1rem',
+      top: position === 'topLeft' || position === 'topRight' ? '1rem' : 'unset',
+      bottom: position === 'bottomRight' || position === 'bottomLeft' ? '1rem' : 'unset',
+      right: position === 'bottomRight' || position === 'topRight' ? '1rem' : 'unset',
+      left: position === 'bottomLeft' || position === 'topLeft' ? '1rem' : 'unset',
       position: 'absolute',
-      // overflow: 'hidden',
       cursor: 'pointer',
       ':hover': {
         boxShadow: theme.effects.elevation64
@@ -31,7 +33,20 @@ export const callingWidgetContainerStyles = (theme: Theme): IStackStyles => {
   };
 };
 
-export const callingWidgetSetupContainerStyles = (theme: Theme): IStackStyles => {
+export const callingWidgetCustomWaitContainerStyles = (theme: Theme, position: WidgetPosition): IStackStyles => {
+  return {
+    root: {
+      top: position === 'topLeft' || position === 'topRight' ? '1rem' : 'unset',
+      bottom: position === 'bottomRight' || position === 'bottomLeft' ? '1rem' : 'unset',
+      right: position === 'bottomRight' || position === 'topRight' ? '1rem' : 'unset',
+      left: position === 'bottomLeft' || position === 'topLeft' ? '1rem' : 'unset',
+      position: 'absolute',
+      cursor: 'pointer'
+    }
+  };
+};
+
+export const callingWidgetSetupContainerStyles = (theme: Theme, position: WidgetPosition): IStackStyles => {
   return {
     root: {
       width: '18rem',
@@ -39,8 +54,10 @@ export const callingWidgetSetupContainerStyles = (theme: Theme): IStackStyles =>
       padding: '0.5rem',
       boxShadow: theme.effects.elevation16,
       borderRadius: theme.effects.roundedCorner6,
-      bottom: 0,
-      right: '1rem',
+      top: position === 'topLeft' || position === 'topRight' ? '1rem' : 'unset',
+      bottom: position === 'bottomRight' || position === 'bottomLeft' ? '1rem' : 'unset',
+      right: position === 'bottomRight' || position === 'topRight' ? '1rem' : 'unset',
+      left: position === 'bottomLeft' || position === 'topLeft' ? '1rem' : 'unset',
       position: 'absolute',
       overflow: 'hidden',
       cursor: 'pointer',
@@ -75,7 +92,7 @@ export const startCallButtonStyles = (theme: Theme): IButtonStyles => {
 export const logoContainerStyles: IStackStyles = {
   root: {
     margin: 'auto',
-    padding: '0.2rem',
+    padding: '1.4rem',
     height: '5rem',
     width: '10rem',
     zIndex: 0
@@ -85,13 +102,13 @@ export const logoContainerStyles: IStackStyles = {
 export const collapseButtonStyles: IButtonStyles = {
   root: {
     position: 'absolute',
-    top: '0.2rem',
-    right: '0.2rem',
+    top: '0rem',
+    right: '0rem',
     zIndex: 1
   }
 };
 
-export const callingWidgetInCallContainerStyles = (theme: Theme): IStackStyles => {
+export const callingWidgetInCallContainerStyles = (theme: Theme, position: WidgetPosition): IStackStyles => {
   return {
     root: {
       width: '35rem',
@@ -99,8 +116,10 @@ export const callingWidgetInCallContainerStyles = (theme: Theme): IStackStyles =
       padding: '0.5rem',
       boxShadow: theme.effects.elevation16,
       borderRadius: theme.effects.roundedCorner6,
-      bottom: 0,
-      right: '1rem',
+      top: position === 'topLeft' || position === 'topRight' ? '1rem' : 'unset',
+      bottom: position === 'bottomRight' || position === 'bottomLeft' ? '1rem' : 'unset',
+      right: position === 'bottomRight' || position === 'topRight' ? '1rem' : 'unset',
+      left: position === 'bottomLeft' || position === 'topLeft' ? '1rem' : 'unset',
       position: 'absolute',
       overflow: 'hidden',
       cursor: 'pointer',

@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Stack } from '@fluentui/react';
 import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { CallAdapter, CallAdapterState, CallCompositeOptions } from '../CallComposite';
 import {
@@ -91,7 +90,6 @@ export interface CustomCheckBoxField extends CustomField {
  * Position of the widget in the application. will float in the bottom right of the parent with a position of relative set in CSS.
  *
  * Use 'unset' for using widget in a floating position inside a container.
- * @default 'bottomRight'
  * @public
  */
 export type WidgetPosition = 'bottomRight' | 'bottomLeft' | 'topRight' | 'topLeft' | 'unset';
@@ -119,6 +117,12 @@ export interface CallingWidgetCallCompositeOptions extends CallCompositeOptions 
    * Custom render function for displaying logo.
    */
   onRenderLogo?: () => JSX.Element;
+  /**
+   * Position in the parent container that the widget will render.
+   * - unset will allow the widget to be placed in a floating position inside a container.
+   * @default 'bottomRight'
+   */
+  position?: WidgetPosition;
 }
 
 /**
@@ -130,10 +134,6 @@ export interface CallingWidgetCompositeProps extends BaseCompositeProps<CallComp
    *  arguments for creating an AzureCommunicationCallAdapter for your Calling experience
    */
   adapterProps: AzureCommunicationOutboundCallAdapterArgs | AzureCommunicationCallAdapterArgs;
-  /**
-   * Position in the parent container that the widget will render.
-   */
-  position?: WidgetPosition;
   /**
    * Custom render callback for the waiting state of the widget.
    */
@@ -221,15 +221,29 @@ const MainWidget = (props: CallingWidgetCompositeProps): JSX.Element => {
         showVideoOptIn={options?.showVideoOptIn}
         showDisplayNameField={options?.showDisplayNameField}
         onRenderLogo={options?.onRenderLogo}
+        position={options?.position ?? 'bottomRight'}
       />
     );
   }
 
   if (widgetState === 'inCall' && adapter) {
-    return <CallScreen adapter={adapter} useLocalVideo={useLocalVideo} options={callCompositeOptions} />;
+    return (
+      <CallScreen
+        adapter={adapter}
+        useLocalVideo={useLocalVideo}
+        options={callCompositeOptions}
+        position={options?.position ?? 'bottomRight'}
+      />
+    );
   }
 
-  return onRenderIdleWidget ? <Stack>{onRenderIdleWidget()}</Stack> : <WaitingScreen setWidgetState={setWidgetState} />;
+  return (
+    <WaitingScreen
+      setWidgetState={setWidgetState}
+      onRenderIdleWidget={onRenderIdleWidget}
+      position={options?.position ?? 'bottomRight'}
+    />
+  );
 };
 
 /**
@@ -239,8 +253,8 @@ const MainWidget = (props: CallingWidgetCompositeProps): JSX.Element => {
  */
 export const CallingWidgetComposite = (props: CallingWidgetCompositeProps): JSX.Element => {
   return (
-    <div>
-      <BaseProvider>
+    <div style={{ width: 'max-content', height: 'max-content' }}>
+      <BaseProvider {...props}>
         <MainWidget {...props} />
       </BaseProvider>
     </div>

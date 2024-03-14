@@ -918,12 +918,13 @@ export interface CallingTheme {
 }
 
 // @public
-export type CallingWidgetCallCompositeOptions = Partial<CallCompositeOptions> & {
-    showDisplayNameField?: boolean;
-    showVideoOptIn?: boolean;
+export interface CallingWidgetCallCompositeOptions extends CallCompositeOptions {
     customFieldProps?: (CustomCheckBoxField | CustomTextField)[];
     onRenderLogo?: () => JSX.Element;
-};
+    position?: WidgetPosition;
+    showDisplayNameField?: boolean;
+    showVideoOptIn?: boolean;
+}
 
 // @public
 export const CallingWidgetComposite: (props: CallingWidgetCompositeProps) => JSX.Element;
@@ -939,7 +940,6 @@ export interface CallingWidgetCompositeProps extends BaseCompositeProps<CallComp
     adapterProps: AzureCommunicationOutboundCallAdapterArgs | AzureCommunicationCallAdapterArgs;
     onRenderIdleWidget?: () => JSX.Element;
     options?: CallingWidgetCallCompositeOptions;
-    position?: WidgetPosition;
 }
 
 // @public
@@ -2418,7 +2418,7 @@ export interface CustomCallControlButtonStrings {
 
 // @public
 export interface CustomCheckBoxField extends CustomField {
-    defaultChecked: boolean;
+    defaultChecked?: boolean;
     kind: 'checkBox';
 }
 
