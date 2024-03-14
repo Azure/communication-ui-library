@@ -87,7 +87,9 @@ module.exports = {
     // Feature for spotlight
     'spotlight',
     // Feature for tracking beta start call identifier
-    'start-call-beta'
+    'start-call-beta',
+    // Image overlay theme
+    'image-overlay-theme'
   ],
   // A list of in progress beta feature.
   // These features are still beta feature but "in progress"
@@ -114,9 +116,7 @@ module.exports = {
     // Feature for Rich Text Editor (RTE) support
     'rich-text-editor',
     // Feature for spotlight
-    'spotlight',
-    // Image overlay theme
-    'image-overlay-theme'
+    'spotlight'
   ],
   // A list of stabilized features.
   // These features can be listed in the conditional compilation directives without
