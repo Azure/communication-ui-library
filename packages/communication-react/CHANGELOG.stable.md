@@ -13,7 +13,7 @@ Thu, 14 Mar 2024 03:50:48 GMT
 
 Today the Azure Communication Services Web UI Library now can view PowerPoint Live sessions initiated by a Teams client. Users can follow along with the current slide the presenter is sharing and view presenter annotations. Developers can use this functionality today through our composites (e.g CallComposite, CallWithChatComposite) as well as through components (e.g VideoGallery).
 
-### Teams Interop Chat Inline Images - General Availability
+### Teams Interop Chat Image Sharing - General Availability
 
 We are excited to announce that the Azure Communication Services Web UI Library now has the ability to receive Teams interop images inline. Additionally, we have enabled users to click on an individual image to view it in a new ImageOverlay component. This component displays the selected image in full screen and allows users to download the image.
 
@@ -24,7 +24,7 @@ The CallComposite and CallWithChatComposite now support applying a background im
 ### Features
 
 - Stabilize Custom Branding ([PR #4211](https://github.com/azure/communication-ui-library/pull/4211) by 2684369+JamesBurnside@users.noreply.github.com)
-- Stabilize Teams Interop Inline Images([PR #4262](https://github.com/Azure/communication-ui-library/pull/4262) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
+- Stabilize Teams Interop Inline Images([PR #4196](https://github.com/Azure/communication-ui-library/pull/4196) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
 - Stabilize PowerPoint Live rendering when shared by a Teams client([PR #4264](https://github.com/azure/communication-ui-library/pull/4264) by 93549644+ShaunaSong@users.noreply.github.com)
 
 ### Improvements
@@ -42,8 +42,8 @@ The CallComposite and CallWithChatComposite now support applying a background im
 - Set correct microphone aria label in Lobby scenarios ([PR #4247](https://github.com/azure/communication-ui-library/pull/4247) by alkwa@microsoft.com)
 - Fix for a deleted message accessibility announcement ([PR #4169](https://github.com/azure/communication-ui-library/pull/4169) by 98852890+vhuseinova-msft@users.noreply.github.com)
 - Fix missing alternate Caller id ([PR #4216](https://github.com/azure/communication-ui-library/pull/4216) by dmceachern@microsoft.com)
-- Resolved issue where edited label is missing from received messages ([PR #4150](https://github.com/azure/communication-ui-library/pull/4150) by 73612854+palatter@users.noreply.github.com)
-- Fixed error when spoken language and caption language show up empty on initiation  ([PR #4228](https://github.com/azure/communication-ui-library/pull/4228) by 96077406+carocao-msft@users.noreply.github.com)
+- Resolve issue where edited label is missing from received messages ([PR #4150](https://github.com/azure/communication-ui-library/pull/4150) by 73612854+palatter@users.noreply.github.com)
+- Fix error when spoken language and caption language show up empty on initiation  ([PR #4228](https://github.com/azure/communication-ui-library/pull/4228) by 96077406+carocao-msft@users.noreply.github.com)
 - Update Calling sounds to not play end call sound when transfer happens ([PR #4163](https://github.com/azure/communication-ui-library/pull/4163) by dmceachern@microsoft.com)
 - Fix hanging express.close if have unclosed connection ([PR #4138](https://github.com/azure/communication-ui-library/pull/4138) by 77021369+jimchou-dev@users.noreply.github.com)
 
