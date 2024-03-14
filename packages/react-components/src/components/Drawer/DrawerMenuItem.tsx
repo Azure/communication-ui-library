@@ -56,7 +56,6 @@ export interface _DrawerMenuItemProps {
   shouldFocusOnMount?: boolean;
   /**
    * Custom JSX item injection for custom mobile view button on drawers
-   * @beta
    */
   onRendererContent?: () => JSX.Element;
 }

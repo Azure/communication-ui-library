@@ -44,7 +44,7 @@ export const emojiStyles = (backgroundImage: string, animationPlayState: string)
     justifyContent: 'center',
     alignItems: 'center',
     backgroundPosition: 'center',
-    backgroundSize: `44px 2142px`,
+    backgroundSize: `2.75rem 133.875rem`,
     transition: 'opacity 2s',
     backgroundColor: 'transparent',
     transform: `${animationPlayState === 'running' ? 'scale(0.8)' : 'scale(0.6)'}`
@@ -62,8 +62,8 @@ export const reactionEmojiMenuStyles = (): React.CSSProperties => {
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    width: '220px',
-    height: '42px'
+    width: '13.75rem',
+    height: '2.625rem'
   };
 };
 
@@ -95,7 +95,7 @@ export const mobileViewMenuItemStyle = (): React.CSSProperties => {
     alignItems: 'center',
     flexDirection: 'row',
     width: '100%',
-    height: '42px'
+    height: '2.625rem'
   };
 };
 
@@ -112,7 +112,7 @@ export const mobileViewEmojiStyles = (backgroundImage: string, animationPlayStat
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
-    width: '44px',
+    width: '2.75rem',
     backgroundImage: imageResourceUrl,
     animationName: playFrames(),
     animationDuration: '8.12s',
@@ -122,7 +122,7 @@ export const mobileViewEmojiStyles = (backgroundImage: string, animationPlayStat
     justifyContent: 'center',
     alignItems: 'center',
     backgroundPosition: 'center',
-    backgroundSize: `44px 2142px`,
+    backgroundSize: `2.75rem 133.875rem`,
     transition: 'opacity 2s',
     backgroundColor: 'transparent',
     transform: `${animationPlayState === 'running' ? 'scale(0.8)' : 'scale(0.6)'}`

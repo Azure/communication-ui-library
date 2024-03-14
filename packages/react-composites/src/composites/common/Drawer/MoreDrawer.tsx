@@ -18,7 +18,6 @@ import {
 import { _ReactionDrawerMenuItem } from '@internal/react-components';
 /* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '@internal/react-components';
-/* @conditional-compile-remove(gallery-layout-composite) */
 import { VideoGalleryLayout } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
 import { _StartCaptionsButton, _CaptionsSettingsModal } from '@internal/react-components';
@@ -145,9 +144,7 @@ export interface MoreDrawerDevicesMenuProps {
    * Callback when a microphone is selected
    */
   onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
-  /* @conditional-compile-remove(gallery-layout-composite) */
   userSetGalleryLayout?: VideoGalleryLayout;
-  /* @conditional-compile-remove(gallery-layout-composite) */
   /**
    * Callback for when the gallery layout is changed
    */
@@ -340,7 +337,6 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         itemKey: 'dynamicSelectionKey',
         text: localeStrings.strings.call.moreButtonGalleryFloatingLocalLayoutLabel,
         onItemClick: () => {
-          /* @conditional-compile-remove(gallery-layout-composite) */
           props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('floatingLocalVideo');
           onLightDismiss();
         },
@@ -348,14 +344,12 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
           iconName: 'FloatingLocalVideoGalleryLayout',
           styles: { root: { lineHeight: 0 } }
         },
-        /* @conditional-compile-remove(gallery-layout-composite) */
         secondaryIconProps: props.userSetGalleryLayout === 'floatingLocalVideo' ? { iconName: 'Accept' } : undefined
       },
       {
         itemKey: 'focusedContentSelectionKey',
         text: localeStrings.strings.call.moreButtonGalleryFocusedContentLayoutLabel,
         onItemClick: () => {
-          /* @conditional-compile-remove(gallery-layout-composite) */
           props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('focusedContent');
           onLightDismiss();
         },
@@ -363,7 +357,6 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
           iconName: 'FocusedContentGalleryLayout',
           styles: { root: { lineHeight: 0 } }
         },
-        /* @conditional-compile-remove(gallery-layout-composite) */
         secondaryIconProps: props.userSetGalleryLayout === 'focusedContent' ? { iconName: 'Accept' } : undefined
       }
     ]
@@ -374,7 +367,6 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     itemKey: 'defaultSelectionKey',
     text: localeStrings.strings.call.moreButtonGalleryDefaultLayoutLabel,
     onItemClick: () => {
-      /* @conditional-compile-remove(gallery-layout-composite) */
       props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('default');
       onLightDismiss();
     },
