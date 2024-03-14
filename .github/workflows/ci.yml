@@ -42,6 +42,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+      fail-fast: false
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v4
@@ -132,6 +133,7 @@ jobs:
       pull-requests: write
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+      fail-fast: false
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v4
@@ -292,6 +294,7 @@ jobs:
       pull-requests: write
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+      fail-fast: false
     steps:
       - uses: actions/checkout@v4
         with:
@@ -372,6 +375,7 @@ jobs:
       pull-requests: write
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+      fail-fast: false
     steps:
       - uses: actions/checkout@v4
         with:
@@ -452,6 +456,7 @@ jobs:
       pull-requests: write
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+      fail-fast: false
     steps:
       - uses: actions/checkout@v4
         with:
@@ -529,6 +534,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+      fail-fast: false
     steps:
       - uses: actions/checkout@v4
         with:
@@ -622,6 +628,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+      fail-fast: false
     steps:
       - uses: actions/checkout@v4
         with:
@@ -668,6 +675,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+      fail-fast: false
     steps:
       - uses: actions/checkout@v4
         with:
@@ -714,6 +722,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+      fail-fast: false
     steps:
       - uses: actions/checkout@v4
         with:
@@ -762,6 +771,7 @@ jobs:
       pull-requests: write
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+      fail-fast: false
     steps:
       - uses: actions/checkout@v4
         with:
@@ -826,6 +836,7 @@ jobs:
       pull-requests: write
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+      fail-fast: false
     steps:
       - uses: actions/checkout@v4
         with:
@@ -890,6 +901,7 @@ jobs:
     name: Compare bundle size from pr head ref to base ref - ${{ matrix.app }}
     needs: [build_calling_sample, build_chat_sample, build_call_with_chat_sample]
     strategy:
+      fail-fast: false
       matrix:
         include:
           # These are gist to track bundle sizes
@@ -942,6 +954,7 @@ jobs:
     needs: [build_calling_sample, build_chat_sample, build_call_with_chat_sample]
     if: github.ref == 'refs/heads/main'
     strategy:
+      fail-fast: false
       matrix:
         include:
           # These are gist to track bundle sizes
