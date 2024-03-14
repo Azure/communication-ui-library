@@ -87,7 +87,11 @@ module.exports = {
     // Feature for spotlight
     'spotlight',
     // Feature for tracking beta start call identifier
-    'start-call-beta'
+    'start-call-beta',
+    // Image overlay theme
+    'image-overlay-theme',
+     // Close captions feature for ACS calls
+     "acs-close-captions"
   ],
   // A list of in progress beta feature.
   // These features are still beta feature but "in progress"
