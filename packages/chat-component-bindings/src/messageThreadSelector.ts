@@ -184,7 +184,7 @@ const generateImageAttachmentImgHtml = (message: ChatMessageWithStatus, attachme
 const getResourceSourceUrl = (result?: ResourceFetchResult): string => {
   let src = '';
   if (result) {
-    if (result.error) {
+    if (result.error || !result.sourceUrl) {
       // In case of an error we set src to some invalid value to show broken image
       src = 'blob://';
     } else {
