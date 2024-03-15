@@ -218,7 +218,6 @@ export class CallSubscriber {
     this._transcriptionSubscriber.unsubscribe();
     /* @conditional-compile-remove(local-recording-notification) */
     this._localRecordingSubscriber.unsubscribe();
-    /* @conditional-compile-remove(optimal-video-count) */
     this._optimalVideoCountSubscriber.unsubscribe();
     /* @conditional-compile-remove(ppt-live) */
     this._pptLiveSubscriber.unsubscribe();
