@@ -186,9 +186,8 @@ export type {
 export { ScreenShareButton } from './ScreenShareButton';
 export type { ScreenShareButtonProps, ScreenShareButtonStrings } from './ScreenShareButton';
 
-/* @conditional-compile-remove(raise-hand) */
 export { RaiseHandButton } from './RaiseHandButton';
-/* @conditional-compile-remove(raise-hand) */
+
 export type { RaiseHandButtonProps, RaiseHandButtonStrings } from './RaiseHandButton';
 /* @conditional-compile-remove(reaction) */
 export { ReactionButton } from './ReactionButton';

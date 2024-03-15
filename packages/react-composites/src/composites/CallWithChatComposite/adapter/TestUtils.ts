@@ -240,7 +240,6 @@ function createMockCall(mockCallId: string): CallState {
     startTime: new Date(),
     endTime: undefined,
     dominantSpeakers: undefined,
-    /* @conditional-compile-remove(raise-hand) */
     raiseHand: { raisedHands: [] },
     /* @conditional-compile-remove(ppt-live) */
     pptLive: { isActive: false },

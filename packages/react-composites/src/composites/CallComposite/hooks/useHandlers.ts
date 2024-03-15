@@ -95,15 +95,12 @@ const createCompositeHandlers = memoizeOne(
           await adapter.removeParticipant(_toCommunicationIdentifier(userId));
         }
       },
-      /* @conditional-compile-remove(raise-hand) */
       onRaiseHand: async () => {
         await adapter.raiseHand();
       },
-      /* @conditional-compile-remove(raise-hand) */
       onLowerHand: async () => {
         await adapter.lowerHand();
       },
-      /* @conditional-compile-remove(raise-hand) */
       onToggleRaiseHand: async () => {
         adapter.getState().call?.raiseHand.localParticipantRaisedHand
           ? await adapter.lowerHand()

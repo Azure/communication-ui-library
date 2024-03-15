@@ -64,7 +64,6 @@ import {
 import { Emoji20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { Star28Regular, Star28Filled } from '@fluentui/react-icons';
-/* @conditional-compile-remove(raise-hand) */
 import {
   HandRight20Filled,
   HandRightOff20Filled,
@@ -275,13 +274,9 @@ export const DEFAULT_COMPONENT_ICONS = {
   ControlButtonParticipantsContextualMenuItem: <People20Regular />,
   ControlButtonScreenShareStart: <ShareScreenStart20Filled />,
   ControlButtonScreenShareStop: <ShareScreenStop20Filled />,
-  /* @conditional-compile-remove(raise-hand) */
   ControlButtonRaiseHand: <ControlButtonRaiseHandIcon />,
-  /* @conditional-compile-remove(raise-hand) */
   ControlButtonLowerHand: <ControlButtonLowerHandIcon />,
-  /* @conditional-compile-remove(raise-hand) */
   RaiseHandContextualMenuItem: <HandRight20Regular />,
-  /* @conditional-compile-remove(raise-hand) */
   LowerHandContextualMenuItem: <HandRightOff20Regular />,
   /* @conditional-compile-remove(reaction) */
   ReactionButtonIcon: <Emoji20Regular />,

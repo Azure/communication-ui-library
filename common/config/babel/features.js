@@ -137,8 +137,6 @@ module.exports = {
     "close-captions",
     // Optimal Video Count
     "optimal-video-count",
-    // raise hands feature
-    "raise-hand",
     // feature  for vertical overflow gallery
     "vertical-gallery",
     // API for injecting custom buttons in he control bar for

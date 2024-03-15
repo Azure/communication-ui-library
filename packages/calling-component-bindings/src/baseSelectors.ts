@@ -21,7 +21,6 @@ import { SpotlightCallFeatureState } from '@internal/calling-stateful-client';
 import { ReactionState } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(raise-hand) */
 import { RaisedHandState } from '@internal/calling-stateful-client';
 import { _SupportedCaptionLanguage, _SupportedSpokenLanguage } from '@internal/react-components';
 
@@ -94,7 +93,6 @@ export const getRemoteParticipants = (
   return state.calls[props.callId]?.remoteParticipants;
 };
 
-/* @conditional-compile-remove(raise-hand) */
 /**
  * @private
  */
@@ -185,7 +183,6 @@ export const getDiagnostics = (
   props: CallingBaseSelectorProps
 ): DiagnosticsCallFeatureState | undefined => state.calls[props.callId]?.diagnostics;
 
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(raise-hand) */
 /**
  * @private
  */

@@ -31,7 +31,6 @@ import {
 } from './utils/videoGalleryUtils';
 /* @conditional-compile-remove(spotlight) */
 import { memoizeSpotlightedParticipantIds } from './utils/videoGalleryUtils';
-/* @conditional-compile-remove(raise-hand) */
 import { getLocalParticipantRaisedHand } from './baseSelectors';
 /* @conditional-compile-remove(reaction) */
 import { getLocalParticipantReactionState } from './baseSelectors';
@@ -80,7 +79,6 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     getOptimalVideoCount,
     /* @conditional-compile-remove(rooms) */
     getRole,
-    /* @conditional-compile-remove(raise-hand) */
     getLocalParticipantRaisedHand,
     /* @conditional-compile-remove(hide-attendee-name) */
     isHideAttendeeNamesEnabled,
@@ -104,7 +102,6 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     optimalVideoCount,
     /* @conditional-compile-remove(rooms) */
     role,
-    /* @conditional-compile-remove(raise-hand) */
     raisedHand,
     /* @conditional-compile-remove(hide-attendee-name) */
     isHideAttendeeNamesEnabled,
@@ -139,7 +136,6 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
             screenShareRemoteParticipant.videoStreams,
             screenShareRemoteParticipant.state,
             screenShareRemoteParticipant.displayName,
-            /* @conditional-compile-remove(raise-hand) */
             screenShareRemoteParticipant.raisedHand,
             /* @conditional-compile-remove(spotlight) */
             screenShareRemoteParticipant.spotlight
@@ -153,7 +149,6 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
         localVideoStream,
         /* @conditional-compile-remove(rooms) */
         role,
-        /* @conditional-compile-remove(raise-hand) */
         raisedHand,
         /* @conditional-compile-remove(reaction) */
         localParticipantReactionState,
