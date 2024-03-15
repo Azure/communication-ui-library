@@ -14,7 +14,7 @@ import {
 /* @conditional-compile-remove(teams-identity-support) */
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { setLogLevel } from '@azure/logger';
-import { initializeIcons, Spinner, Stack } from '@fluentui/react';
+import { Dropdown, initializeIcons, Spinner, Stack } from '@fluentui/react';
 import { CallAdapterLocator } from '@azure/communication-react';
 import React, { useEffect, useMemo, useState } from 'react';
 import {
@@ -63,10 +63,16 @@ const App = (): JSX.Element => {
 
   // Call details to join a call - these are collected from the user on the home screen
   const [callLocator, setCallLocator] = useState<CallAdapterLocator>();
-  const [targetCallees, setTargetCallees] = useState<StartCallIdentifier[]>([
-    fromFlatCommunicationIdentifier('28:orgid:19b01e96-c923-433a-83e4-bda54446bad7')
-  ]);
+  //   {
+  //   groupId: '2c69f815-2bc8-434f-932b-b43449b2c159'
+  // }
+  const [targetCallees, setTargetCallees] = useState<StartCallIdentifier[]>();
+  //   [
+  //   fromFlatCommunicationIdentifier('28:orgid:19b01e96-c923-433a-83e4-bda54446bad7')
+  // ]
   const [displayName, setDisplayName] = useState<string>('');
+
+  const [widgetTheme, setWidgetTheme] = useState<string>('default');
 
   /* @conditional-compile-remove(teams-identity-support) */
   const [isTeamsCall, setIsTeamsCall] = useState<boolean>(false);
@@ -101,7 +107,7 @@ const App = (): JSX.Element => {
         userId: userId,
         credential: credential,
         displayName: displayName,
-        targetCallees: targetCallees,
+        locator: callLocator,
         /* @conditional-compile-remove(PSTN-calls) */
         alternateCallerId: alternateCallerId,
         options: {
@@ -116,6 +122,51 @@ const App = (): JSX.Element => {
     return;
   }, [credential, userId, token, displayName, callLocator, targetCallees, alternateCallerId]);
 
+  const widgetRenderWaitingStatePika = (): JSX.Element => {
+    return (
+      <Stack
+        style={{
+          height: '7rem',
+          width: '7rem',
+          borderRadius: '50%',
+          padding: '0.5rem',
+          backgroundImage: `url("/assets/images/pika.png")`,
+          backgroundSize: 'cover',
+          backgroundOrigin: 'padding-box',
+          backgroundPosition: 'center',
+          boxShadow: '0rem 0 1.5rem'
+        }}
+      ></Stack>
+    );
+  };
+
+  const pikaTheme = {
+    palette: {
+      themePrimary: '#693100',
+      themeLighterAlt: '#f9f4ef',
+      themeLighter: '#e7d3c2',
+      themeLight: '#d2b093',
+      themeTertiary: '#a57042',
+      themeSecondary: '#7b410f',
+      themeDarkAlt: '#5e2c00',
+      themeDark: '#4f2500',
+      themeDarker: '#3b1b00',
+      neutralLighterAlt: '#f8e67c',
+      neutralLighter: '#f4e27a',
+      neutralLight: '#ead975',
+      neutralQuaternaryAlt: '#daca6d',
+      neutralQuaternary: '#d0c068',
+      neutralTertiaryAlt: '#c8b964',
+      neutralTertiary: '#f6acac',
+      neutralSecondary: '#ed5f5f',
+      neutralPrimaryAlt: '#e41b1b',
+      neutralPrimary: '#e00000',
+      neutralDark: '#ab0000',
+      black: '#7e0000',
+      white: '#ffec80'
+    }
+  };
+
   const widgetOptions: CallingWidgetCallCompositeOptions = {
     callControls: {
       cameraButton: false,
@@ -123,78 +174,95 @@ const App = (): JSX.Element => {
       moreButton: false,
       peopleButton: false,
       raiseHandButton: false,
-      displayType: 'compact'
+      displayType: 'default'
     },
-    onRenderLogo: () => {
-      return (
-        <Stack style={{ height: '100%' }}>
-          <img style={{ transform: 'scale(0.6)' }} src={`${heroSVG.toString()}`} alt="cat header" />
-        </Stack>
-      );
-    },
-    customFieldProps: [
-      {
-        key: '1',
-        label: 'Custom Field 1',
-        onChange: (newValue) => {
-          console.log('Custom Field Value:', newValue);
-        },
-        kind: 'textBox',
-        placeholder: 'Enter a value',
-        onCallStart: () => {
-          alert('Call Started');
-        }
-      },
-      {
-        key: '2',
-        label: 'Custom Field 2',
-        required: true,
-        onChange: (newValue) => {
-          console.log('Custom Field Value:', newValue);
-        },
-        kind: 'textBox',
-        placeholder: 'Enter a value',
-        onCallStart: () => {
-          alert('Call Started');
-        }
-      },
-      {
-        key: '3',
-        label: 'Custom Field 3',
-        onChange: (newValue) => {
-          console.log('Custom Field Value:', newValue);
-        },
-        kind: 'checkBox',
-        defaultChecked: false,
-        onCallStart: () => {
-          alert('Call Started');
-        }
-      },
-      {
-        key: '4',
-        label: 'Custom Field 4',
-        onChange: (newValue) => {
-          console.log('Custom Field Value:', newValue);
-        },
-        kind: 'checkBox',
-        defaultChecked: false,
-        onCallStart: () => {
-          alert('Call Started');
-        }
-      },
-      {
-        key: '5',
-        label: 'Custom Field 5',
-        onChange: (newValue) => {
-          console.log('Custom Field Value:', newValue);
-        },
-        kind: 'textBox',
-        placeholder: 'Enter a value',
-        onCallStart: () => {
-          alert('Call Started');
-        }
-      }
-    ]
+    onRenderLogo:
+      widgetTheme === 'pika'
+        ? () => {
+            return (
+              <Stack style={{ height: '100%' }}>
+                <img
+                  style={{ transform: 'scale(0.6)', borderRadius: '50%', boxShadow: '0.5rem 0 1.5rem' }}
+                  src={`/assets/images/pika.png`}
+                  alt="cat header"
+                />
+              </Stack>
+            );
+          }
+        : () => {
+            return (
+              <Stack style={{ height: '100%' }}>
+                <img style={{ transform: 'scale(0.6)' }} src={`${heroSVG}`} alt="cat header" />
+              </Stack>
+            );
+          },
+    customFieldProps:
+      widgetTheme === 'pika'
+        ? [
+            {
+              key: '1',
+              label: 'Custom Field 1',
+              onChange: (newValue) => {
+                console.log('Custom Field Value:', newValue);
+              },
+              kind: 'textBox',
+              placeholder: 'Enter a value',
+              onCallStart: () => {
+                alert('Call Started');
+              }
+            },
+            {
+              key: '2',
+              label: 'Custom Field 2',
+              required: true,
+              onChange: (newValue) => {
+                console.log('Custom Field Value:', newValue);
+              },
+              kind: 'textBox',
+              placeholder: 'Enter a value',
+              onCallStart: () => {
+                alert('Call Started');
+              }
+            },
+            {
+              key: '3',
+              label: 'Custom Field 3',
+              onChange: (newValue) => {
+                console.log('Custom Field Value:', newValue);
+              },
+              kind: 'checkBox',
+              defaultChecked: false,
+              onCallStart: () => {
+                alert('Call Started');
+              }
+            },
+            {
+              key: '4',
+              label: 'Custom Field 4',
+              onChange: (newValue) => {
+                console.log('Custom Field Value:', newValue);
+              },
+              kind: 'checkBox',
+              defaultChecked: false,
+              onCallStart: () => {
+                alert('Call Started');
+              }
+            },
+            {
+              key: '5',
+              label: 'Custom Field 5',
+              onChange: (newValue) => {
+                console.log('Custom Field Value:', newValue);
+              },
+              kind: 'textBox',
+              placeholder: 'Enter a value',
+              onCallStart: () => {
+                alert('Call Started');
+              }
+            }
+          ]
+        : undefined,
+    position: widgetTheme === 'pika' ? 'bottomLeft' : 'bottomRight'
   };
 
   const isMobileSession = useIsMobile();
@@ -281,9 +349,7 @@ const App = (): JSX.Element => {
                   throw 'Invalid userId!';
                 }
               }
-
               setCallLocator(callLocator);
-
               // Update window URL to have a joinable link
               if (callLocator && !joiningExistingCall) {
                 window.history.pushState(
@@ -305,7 +371,33 @@ const App = (): JSX.Element => {
               setPage('call');
             }}
           />
-          {widgetAdapterArgs && <CallingWidgetComposite adapterProps={widgetAdapterArgs} options={widgetOptions} />}
+          <Dropdown
+            label={'Widget Theme'}
+            options={[
+              {
+                key: 'default',
+                text: 'Default'
+              },
+              {
+                key: 'pika',
+                text: 'Pika'
+              }
+            ]}
+            selectedKey={widgetTheme}
+            onChange={(_, item) => {
+              setWidgetTheme(item?.key as string);
+            }}
+          ></Dropdown>
+          {widgetAdapterArgs && (
+            <Stack id={'wrapper'}>
+              <CallingWidgetComposite
+                adapterProps={widgetAdapterArgs}
+                options={widgetOptions}
+                onRenderIdleWidget={widgetTheme === 'pika' ? widgetRenderWaitingStatePika : undefined}
+                fluentTheme={widgetTheme === 'pika' ? pikaTheme : undefined}
+              />
+            </Stack>
+          )}
         </Stack>
       );
     }
