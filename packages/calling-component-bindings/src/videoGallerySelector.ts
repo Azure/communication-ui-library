@@ -19,7 +19,6 @@ import {
 import { getRole } from './baseSelectors';
 /* @conditional-compile-remove(hide-attendee-name) */
 import { isHideAttendeeNamesEnabled } from './baseSelectors';
-/* @conditional-compile-remove(optimal-video-count) */
 import { getOptimalVideoCount } from './baseSelectors';
 import { _updateUserDisplayNames } from './utils/callUtils';
 import { checkIsSpeaking } from './utils/SelectorUtils';
@@ -54,7 +53,6 @@ export type VideoGallerySelector = (
   localParticipant: VideoGalleryLocalParticipant;
   remoteParticipants: VideoGalleryRemoteParticipant[];
   dominantSpeakers?: string[];
-  /* @conditional-compile-remove(optimal-video-count) */
   optimalVideoCount?: number;
   /* @conditional-compile-remove(spotlight) */
   spotlightedParticipants?: string[];
@@ -76,7 +74,6 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     getDisplayName,
     getIdentifier,
     getDominantSpeakers,
-    /* @conditional-compile-remove(optimal-video-count) */
     getOptimalVideoCount,
     /* @conditional-compile-remove(rooms) */
     getRole,
@@ -100,7 +97,6 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     displayName: string | undefined,
     identifier: string,
     dominantSpeakers,
-    /* @conditional-compile-remove(optimal-video-count) */
     optimalVideoCount,
     /* @conditional-compile-remove(rooms) */
     role,
@@ -170,7 +166,6 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
         role
       ),
       dominantSpeakers: dominantSpeakerIds,
-      /* @conditional-compile-remove(optimal-video-count) */
       maxRemoteVideoStreams: optimalVideoCount,
       /* @conditional-compile-remove(spotlight) */
       spotlightedParticipants: spotlightedParticipantIds,
