@@ -19,9 +19,7 @@ import { buttonFlyoutIncreasedSizeStyles } from '../../CallComposite/styles/Butt
 import { MoreButton } from '../MoreButton';
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
 import { useLocale } from '../../localization';
-/* @conditional-compile-remove(control-bar-button-injection) */
 import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
-/* @conditional-compile-remove(control-bar-button-injection) */
 import {
   CUSTOM_BUTTON_OPTIONS,
   generateCustomCallDesktopOverflowButtons,
@@ -44,7 +42,6 @@ export interface DesktopMoreButtonProps extends ControlBarButtonProps {
   onClickShowDialpad?: () => void;
   /* @conditional-compile-remove(close-captions) */
   isCaptionsSupported?: boolean;
-  /* @conditional-compile-remove(control-bar-button-injection) */
   callControls?: boolean | CommonCallControlOptions;
   onCaptionsSettingsClick?: () => void;
   onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'horizontalTop') => void;
@@ -363,7 +360,6 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     moreButtonContextualMenuItems.push(galleryOptions);
   }
 
-  /* @conditional-compile-remove(control-bar-button-injection) */
   const customDrawerButtons = useMemo(
     () =>
       generateCustomCallDesktopOverflowButtons(
@@ -373,7 +369,6 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     [props.callControls]
   );
 
-  /* @conditional-compile-remove(control-bar-button-injection) */
   customDrawerButtons['primary'].slice(CUSTOM_BUTTON_OPTIONS.MAX_PRIMARY_DESKTOP_CUSTOM_BUTTONS).forEach((element) => {
     moreButtonContextualMenuItems.push({
       itemProps: {
@@ -382,7 +377,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
       ...element
     });
   });
-  /* @conditional-compile-remove(control-bar-button-injection) */
+
   customDrawerButtons['secondary']
     .slice(CUSTOM_BUTTON_OPTIONS.MAX_SECONDARY_DESKTOP_CUSTOM_BUTTONS)
     .forEach((element) => {
@@ -394,7 +389,6 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
       });
     });
 
-  /* @conditional-compile-remove(control-bar-button-injection) */
   customDrawerButtons['overflow'].forEach((element) => {
     moreButtonContextualMenuItems.push({
       itemProps: {
