@@ -47,7 +47,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 1
       # Ensure node version is great enough
       - name: Use Node.js
         uses: actions/setup-node@v4
@@ -81,7 +81,9 @@ jobs:
       - name: Check the necessary change file has been submitted
         if: ${{ github.event_name == 'pull_request' }}
         # GitHub provides remote branch names as refs.
-        run: node common/scripts/changelog/check.mjs origin/${{ github.base_ref }} origin/${{ github.head_ref }}
+        run: |
+          git fetch origin/main --depth=1
+          node common/scripts/changelog/check.mjs origin/${{ github.base_ref }} origin/${{ github.head_ref }}
 
       # Perform lint check
       - name: Run linter
@@ -137,7 +139,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 1
       # Ensure node version is great enough
       - name: Use Node.js
         uses: actions/setup-node@v4
@@ -240,7 +242,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 1
       # Ensure node version is great enough
       - name: Use Node.js
         uses: actions/setup-node@v4
@@ -296,7 +298,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -376,7 +378,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -456,7 +458,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -533,7 +535,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -597,7 +599,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -626,7 +628,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -672,7 +674,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -718,7 +720,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -766,7 +768,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -830,7 +832,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
