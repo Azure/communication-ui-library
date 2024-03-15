@@ -90,7 +90,6 @@ export function defaultMockCallAdapterState(
       isScreenSharingOn: false,
       remoteParticipants,
       remoteParticipantsEnded: {},
-      /** @conditional-compile-remove(raise-hand) */
       raiseHand: { raisedHands: [] },
       /** @conditional-compile-remove(ppt-live) */
       pptLive: { isActive: false },
