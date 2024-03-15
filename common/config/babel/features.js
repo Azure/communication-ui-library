@@ -86,7 +86,9 @@ module.exports = {
     // Image overlay theme
     'image-overlay-theme',
      // Close captions feature for ACS calls
-     "acs-close-captions"
+     "acs-close-captions",
+    // Feature for local recording notification for teams meetings
+    'local-recording-notification'
   ],
   // A list of in progress beta feature.
   // These features are still beta feature but "in progress"

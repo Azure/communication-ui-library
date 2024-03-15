@@ -86,6 +86,8 @@ function createMockCall(mockCallId: string): CallState {
     remoteParticipants: {},
     remoteParticipantsEnded: {},
     recording: { isRecordingActive: false },
+    /* @conditional-compile-remove(local-recording-notification) */
+    localRecording: { isLocalRecordingActive: false },
     raiseHand: { raisedHands: [] },
     /* @conditional-compile-remove(reaction) */
     localParticipantReaction: undefined,

@@ -36,6 +36,8 @@ import { ReactionSubscriber } from './ReactionSubscriber';
 import { SpotlightSubscriber } from './SpotlightSubscriber';
 /* @conditional-compile-remove(acs-close-captions) */
 import { CaptionsSubscriber } from './CaptionsSubscriber';
+/* @conditional-compile-remove(local-recording-notification) */
+import { LocalRecordingSubscriber } from './LocalRecordingSubscriber';
 
 /**
  * Keeps track of the listeners assigned to a particular call because when we get an event from SDK, it doesn't tell us
@@ -52,6 +54,8 @@ export class CallSubscriber {
   private _participantSubscribers: Map<string, ParticipantSubscriber>;
   private _recordingSubscriber: RecordingSubscriber;
   private _transcriptionSubscriber: TranscriptionSubscriber;
+  /* @conditional-compile-remove(local-recording-notification) */
+  private _localRecordingSubscriber: LocalRecordingSubscriber;
   /* @conditional-compile-remove(ppt-live) */
   private _pptLiveSubscriber: PPTLiveSubscriber;
   private _optimalVideoCountSubscriber: OptimalVideoCountSubscriber;
@@ -85,6 +89,12 @@ export class CallSubscriber {
       this._callIdRef,
       this._context,
       this._call.feature(Features.Recording)
+    );
+    /* @conditional-compile-remove(local-recording-notification) */
+    this._localRecordingSubscriber = new LocalRecordingSubscriber(
+      this._callIdRef,
+      this._context,
+      this._call.feature(Features.LocalRecording)
     );
     /* @conditional-compile-remove(ppt-live) */
     this._pptLiveSubscriber = new PPTLiveSubscriber(this._callIdRef, this._context, this._call);
@@ -203,6 +213,8 @@ export class CallSubscriber {
     this._diagnosticsSubscriber.unsubscribe();
     this._recordingSubscriber.unsubscribe();
     this._transcriptionSubscriber.unsubscribe();
+    /* @conditional-compile-remove(local-recording-notification) */
+    this._localRecordingSubscriber.unsubscribe();
     this._optimalVideoCountSubscriber.unsubscribe();
     /* @conditional-compile-remove(ppt-live) */
     this._pptLiveSubscriber.unsubscribe();
