@@ -4,7 +4,6 @@
 import React, { useCallback } from 'react';
 /* @conditional-compile-remove(close-captions) */
 import { useState } from 'react';
-/* @conditional-compile-remove(control-bar-button-injection) */
 import { useMemo } from 'react';
 import {
   OptionsDevice,
@@ -24,18 +23,14 @@ import { _StartCaptionsButton, _CaptionsSettingsModal } from '@internal/react-co
 
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButton } from '@internal/react-components';
-/* @conditional-compile-remove(raise-hand) */
 import { RaiseHandButton, RaiseHandButtonProps } from '@internal/react-components';
 import { AudioDeviceInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(control-bar-button-injection) */
 import {
   CUSTOM_BUTTON_OPTIONS,
   generateCustomCallDrawerButtons,
   onFetchCustomButtonPropsTrampoline
 } from '../ControlBar/CustomButton';
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(raise-hand) */
 import { usePropsFor } from '../../CallComposite/hooks/usePropsFor';
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(raise-hand) */
 import { useLocale } from '../../localization';
 import { isDisabled } from '../../CallComposite/utils';
 import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
@@ -169,6 +164,8 @@ export interface MoreDrawerProps extends MoreDrawerDevicesMenuProps {
   isCaptionsSupported?: boolean;
   strings: MoreDrawerStrings;
   disableButtonsForHoldScreen?: boolean;
+  /* @conditional-compile-remove(close-captions) */
+  isTeamsCall?: boolean;
   /* @conditional-compile-remove(reaction) */
   reactionResources?: ReactionResources;
   /* @conditional-compile-remove(reaction) */
@@ -195,7 +192,6 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
 
   const { speakers, onSelectSpeaker, onLightDismiss } = props;
 
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(raise-hand) */
   const localeStrings = useLocale();
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const holdButtonProps = usePropsFor(HoldButton);
@@ -204,7 +200,6 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   const allowDtmfDialer = showDtmfDialer(callees);
   const [dtmfDialerChecked, setDtmfDialerChecked] = useState<boolean>(props.dtmfDialerPresent ?? false);
 
-  /* @conditional-compile-remove(raise-hand) */
   const raiseHandButtonProps = usePropsFor(RaiseHandButton) as RaiseHandButtonProps;
 
   const onSpeakerItemClick = useCallback(
@@ -413,7 +408,6 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   const hideRaiseHandButtonInRoomsCall =
     callAdapter.getState().isRoomsCall && role && ['Consumer', 'Unknown'].includes(role);
 
-  /* @conditional-compile-remove(raise-hand) */
   if (
     drawerSelectionOptions !== false &&
     isEnabled(drawerSelectionOptions?.raiseHandButton) &&
@@ -487,9 +481,6 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     const spokenLanguageString = supportedSpokenLanguageStrings
       ? supportedSpokenLanguageStrings[currentSpokenLanguage]
       : currentSpokenLanguage;
-    const captionLanguageString = supportedCaptionLanguageStrings
-      ? supportedCaptionLanguageStrings[currentCaptionLanguage]
-      : currentCaptionLanguage;
 
     drawerMenuItems.push({
       itemKey: 'captions',
@@ -542,27 +533,32 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       }
     });
 
-    captionsDrawerItems.push({
-      itemKey: 'ChangeCaptionLanguage',
-      text: props.strings.captionLanguageMenuTitle,
-      id: 'common-call-composite-captions-subtitle-settings-button',
-      secondaryText: captionLanguageString,
-      iconProps: {
-        iconName: 'ChangeCaptionLanguageIcon',
-        styles: { root: { lineHeight: 0 } }
-      },
-      disabled: props.disableButtonsForHoldScreen || !captionSettingsProp.isCaptionsFeatureActive,
-      onItemClick: () => {
-        setIsCaptionLanguageDrawerOpen(true);
-      },
-      secondaryIconProps: {
-        iconName: 'ChevronRight',
-        styles: { root: { lineHeight: 0 } }
-      }
-    });
+    if (props.isTeamsCall) {
+      const captionLanguageString = supportedCaptionLanguageStrings
+        ? supportedCaptionLanguageStrings[currentCaptionLanguage]
+        : currentCaptionLanguage;
+
+      captionsDrawerItems.push({
+        itemKey: 'ChangeCaptionLanguage',
+        text: props.strings.captionLanguageMenuTitle,
+        id: 'common-call-composite-captions-subtitle-settings-button',
+        secondaryText: captionLanguageString,
+        iconProps: {
+          iconName: 'ChangeCaptionLanguageIcon',
+          styles: { root: { lineHeight: 0 } }
+        },
+        disabled: props.disableButtonsForHoldScreen || !captionSettingsProp.isCaptionsFeatureActive,
+        onItemClick: () => {
+          setIsCaptionLanguageDrawerOpen(true);
+        },
+        secondaryIconProps: {
+          iconName: 'ChevronRight',
+          styles: { root: { lineHeight: 0 } }
+        }
+      });
+    }
   }
 
-  /* @conditional-compile-remove(control-bar-button-injection) */
   const customDrawerButtons = useMemo(
     () =>
       generateCustomCallDrawerButtons(
@@ -572,15 +568,12 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     [drawerSelectionOptions]
   );
 
-  /* @conditional-compile-remove(control-bar-button-injection) */
   customDrawerButtons['primary'].slice(CUSTOM_BUTTON_OPTIONS.MAX_PRIMARY_MOBILE_CUSTOM_BUTTONS).forEach((element) => {
     drawerMenuItems.push(element);
   });
-  /* @conditional-compile-remove(control-bar-button-injection) */
   customDrawerButtons['secondary'].forEach((element) => {
     drawerMenuItems.push(element);
   });
-  /* @conditional-compile-remove(control-bar-button-injection) */
   customDrawerButtons['overflow'].forEach((element) => {
     drawerMenuItems.push(element);
   });

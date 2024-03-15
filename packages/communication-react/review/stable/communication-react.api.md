@@ -2451,9 +2451,6 @@ export interface ImageOverlayStrings {
 }
 
 // @public
-export const imageOverlayTheme: PartialTheme;
-
-// @public
 export interface IncomingCallState {
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
@@ -3104,7 +3101,7 @@ export type ResourceDetails = {
 
 // @public
 export type ResourceFetchResult = {
-    sourceUrl: string;
+    sourceUrl?: string;
     error?: Error;
 };
 

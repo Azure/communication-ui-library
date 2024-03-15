@@ -92,7 +92,9 @@ export class ChatContext {
           if (cache) {
             Object.keys(cache).forEach((resourceUrl) => {
               const resource = cache[resourceUrl];
-              URL.revokeObjectURL(resource.sourceUrl);
+              if (resource.sourceUrl) {
+                URL.revokeObjectURL(resource.sourceUrl);
+              }
             });
           }
           thread.chatMessages[messageId].resourceCache = undefined;
@@ -130,7 +132,10 @@ export class ChatContext {
       }
       if (message && message.resourceCache && message.resourceCache[resourceUrl]) {
         const resource = message.resourceCache[resourceUrl];
-        URL.revokeObjectURL(resource.sourceUrl);
+        if (resource.sourceUrl) {
+          URL.revokeObjectURL(resource.sourceUrl);
+        }
+
         delete message.resourceCache[resourceUrl];
       }
     });
