@@ -233,7 +233,6 @@ export interface LocalRecordingCallFeatureState {
   lastStoppedLocalRecording?: LocalRecordingInfo[];
 }
 
-/* @conditional-compile-remove(raise-hand) */
 /**
  * State only version of {@link @azure/communication-calling#RaiseHandCallFeature}. {@link StatefulCallClient} will
  * automatically listen for raised hands on the call and update the state exposed by {@link StatefulCallClient} accordingly.
@@ -264,7 +263,6 @@ export interface PPTLiveCallFeatureState {
    */
   isActive: boolean;
 }
-/* @conditional-compile-remove(raise-hand) */
 /**
  * Raised hand state with order
  *
@@ -441,7 +439,6 @@ export interface RemoteParticipantState {
    * Proxy of {@link @azure/communication-calling#RemoteParticipant.role}.
    */
   role?: ParticipantRole;
-  /* @conditional-compile-remove(raise-hand) */
   /**
    * Proxy of {@link @azure/communication-calling#Call.RaisedHand.raisedHands}.
    */
@@ -559,7 +556,6 @@ export interface CallState {
    *@public
    */
   pptLive: PPTLiveCallFeatureState;
-  /* @conditional-compile-remove(raise-hand) */
   /**
    * Proxy of {@link @azure/communication-calling#RaiseHandCallFeature}.
    */

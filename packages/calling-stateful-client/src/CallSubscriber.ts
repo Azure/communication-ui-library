@@ -26,7 +26,6 @@ import { PPTLiveSubscriber } from './PPTLiveSubscriber';
 import { disposeView } from './StreamUtils';
 import { TranscriptionSubscriber } from './TranscriptionSubscriber';
 import { UserFacingDiagnosticsSubscriber } from './UserFacingDiagnosticsSubscriber';
-/* @conditional-compile-remove(raise-hand) */
 import { RaiseHandSubscriber } from './RaiseHandSubscriber';
 import { OptimalVideoCountSubscriber } from './OptimalVideoCountSubscriber';
 /* @conditional-compile-remove(capabilities) */
@@ -64,7 +63,6 @@ export class CallSubscriber {
   private _TeamsCaptionsSubscriber?: TeamsCaptionsSubscriber;
   /* @conditional-compile-remove(acs-close-captions) */
   private _CaptionsSubscriber?: CaptionsSubscriber;
-  /* @conditional-compile-remove(raise-hand) */
   private _raiseHandSubscriber?: RaiseHandSubscriber;
   /* @conditional-compile-remove(reaction) */
   private _reactionSubscriber?: ReactionSubscriber;
@@ -105,7 +103,6 @@ export class CallSubscriber {
       this._context,
       this._call.feature(Features.Transcription)
     );
-    /* @conditional-compile-remove(raise-hand) */
     this._raiseHandSubscriber = new RaiseHandSubscriber(
       this._callIdRef,
       this._context,
@@ -225,7 +222,6 @@ export class CallSubscriber {
     this._TeamsCaptionsSubscriber?.unsubscribe();
     /* @conditional-compile-remove(acs-close-captions) */
     this._CaptionsSubscriber?.unsubscribe();
-    /* @conditional-compile-remove(raise-hand) */
     this._raiseHandSubscriber?.unsubscribe();
     /* @conditional-compile-remove(capabilities) */
     this._capabilitiesSubscriber.unsubscribe();
