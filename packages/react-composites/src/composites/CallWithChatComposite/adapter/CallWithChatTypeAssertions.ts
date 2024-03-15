@@ -50,7 +50,7 @@ type CallWithChatControlOptionsInternal = Omit<
   CallControlOptions,
   | 'endCallButton'
   | 'devicesButton'
-  | /* @conditional-compile-remove(control-bar-button-injection) */ 'onFetchCustomButtonProps'
+  | 'onFetchCustomButtonProps'
   | 'participantsButton'
   | 'legacyControlBarExperience'
 >;

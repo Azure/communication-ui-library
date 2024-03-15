@@ -86,7 +86,6 @@ export type CommonCallControlOptions = {
    * @defaultValue true
    */
   reactionButton?: boolean | { disabled: boolean };
-  /* @conditional-compile-remove(control-bar-button-injection) */
   /**
    * Inject custom buttons in the call controls.
    */
