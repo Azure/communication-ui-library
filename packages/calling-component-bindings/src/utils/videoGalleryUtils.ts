@@ -104,12 +104,12 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     state: RemoteParticipantConnectionState,
     displayName?: string,
     raisedHand?: unknown, // temp unknown type to build stable
+    /* @conditional-compile-remove(ppt-live) */
+    contentSharingStream?: HTMLElement,
     /* @conditional-compile-remove(reaction) */
     reaction?: unknown, // temp unknown type to build stable
     /* @conditional-compile-remove(spotlight) */
-    spotlight?: unknown, // temp unknown type to build stable
-    /* @conditional-compile-remove(ppt-live) */
-    contentSharingStream?: HTMLElement
+    spotlight?: unknown // temp unknown type to build stable
   ): VideoGalleryRemoteParticipant => {
     return convertRemoteParticipantToVideoGalleryRemoteParticipant(
       userId,
@@ -119,12 +119,12 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
       state,
       displayName,
       raisedHand as RaisedHandState,
+      /* @conditional-compile-remove(ppt-live) */
+      contentSharingStream,
       /* @conditional-compile-remove(reaction) */
       reaction as Reaction,
       /* @conditional-compile-remove(spotlight) */
-      spotlight as Spotlight,
-      /* @conditional-compile-remove(ppt-live) */
-      contentSharingStream
+      spotlight as Spotlight
     );
   }
 );
@@ -138,12 +138,12 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   state: RemoteParticipantConnectionState,
   displayName?: string,
   raisedHand?: unknown, // temp unknown type to build stable
+  /* @conditional-compile-remove(ppt-live) */
+  contentSharingStream?: HTMLElement,
   /* @conditional-compile-remove(reaction) */
   reaction?: unknown, // temp unknown type to build stable
   /* @conditional-compile-remove(spotlight) */
-  spotlight?: unknown, // temp unknown type to build stable
-  /* @conditional-compile-remove(ppt-live) */
-  contentSharingStream?: HTMLElement
+  spotlight?: unknown // temp unknown type to build stable
 ): VideoGalleryRemoteParticipant => {
   const rawVideoStreamsArray = Object.values(videoStreams);
   let videoStream: VideoGalleryStream | undefined = undefined;
