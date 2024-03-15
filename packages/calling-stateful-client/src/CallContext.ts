@@ -9,7 +9,6 @@ import {
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(raise-hand) */
 import { RaisedHand } from '@azure/communication-calling';
 /* @conditional-compile-remove(capabilities) */
 import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
@@ -57,7 +56,6 @@ import { LocalVideoStreamVideoEffectsState } from './CallClientState';
 import { convertFromTeamsSDKToCaptionInfoState } from './Converter';
 /* @conditional-compile-remove(acs-close-captions) */
 import { convertFromSDKToCaptionInfoState } from './Converter';
-/* @conditional-compile-remove(raise-hand) */
 import { convertFromSDKToRaisedHandState } from './Converter';
 /* @conditional-compile-remove(reaction) */
 import { ReactionMessage } from '@azure/communication-calling';
@@ -174,11 +172,9 @@ export class CallContext {
         existingCall.transcription.isTranscriptionActive = call.transcription.isTranscriptionActive;
         existingCall.optimalVideoCount.maxRemoteVideoStreams = call.optimalVideoCount.maxRemoteVideoStreams;
         existingCall.recording.isRecordingActive = call.recording.isRecordingActive;
-        /* @conditional-compile-remove(raise-hand) */
         existingCall.raiseHand.raisedHands = call.raiseHand.raisedHands;
         /* @conditional-compile-remove(ppt-live) */
         existingCall.pptLive.isActive = call.pptLive.isActive;
-        /* @conditional-compile-remove(raise-hand) */
         existingCall.raiseHand.localParticipantRaisedHand = call.raiseHand.localParticipantRaisedHand;
         /* @conditional-compile-remove(rooms) */
         existingCall.role = call.role;
@@ -408,7 +404,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(raise-hand) */
   public setCallRaisedHands(callId: string, raisedHands: RaisedHand[]): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -429,7 +424,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(raise-hand) */
   public setParticipantIsRaisedHand(callId: string, participantKey: string, raisedHand: RaisedHand | undefined): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];

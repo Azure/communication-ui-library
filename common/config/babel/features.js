@@ -130,8 +130,6 @@ module.exports = {
     "capabilities",
     // Closed captions
     "close-captions",
-    // raise hands feature
-    "raise-hand",
     // feature  for vertical overflow gallery
     "vertical-gallery",
     // rooms

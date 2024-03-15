@@ -97,11 +97,9 @@ export class _MockCallAdapter implements CallAdapter {
   stopScreenShare(): Promise<void> {
     throw Error('stopScreenShare not implemented');
   }
-  /* @conditional-compile-remove(raise-hand) */
   raiseHand(): Promise<void> {
     throw Error('raiseHand not implemented');
   }
-  /* @conditional-compile-remove(raise-hand) */
   lowerHand(): Promise<void> {
     throw Error('lowerHand not implemented');
   }
@@ -242,7 +240,6 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
       isScreenSharingOn: false,
       remoteParticipants: {},
       remoteParticipantsEnded: {},
-      /* @conditional-compile-remove(raise-hand) */
       raiseHand: { raisedHands: [] },
       /* @conditional-compile-remove(ppt-live) */
       pptLive: { isActive: false },

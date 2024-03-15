@@ -186,13 +186,10 @@ export type CallCompositeIcons = {
   ControlButtonCameraProhibited?: JSX.Element;
   /* @conditional-compile-remove(capabilities) */
   ControlButtonMicProhibited?: JSX.Element;
-  /* @conditional-compile-remove(raise-hand) */
   ControlButtonRaiseHand?: JSX.Element;
-  /* @conditional-compile-remove(raise-hand) */
   ControlButtonLowerHand?: JSX.Element;
   /* @conditional-compile-remove(spotlight) */
   ControlButtonExitSpotlight?: JSX.Element;
-  /* @conditional-compile-remove(raise-hand) */
   RaiseHandContextualMenuItem?: JSX.Element;
   /* @conditional-compile-remove(reaction) */
   ReactionContextualMenuItem?: JSX.Element;

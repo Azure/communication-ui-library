@@ -18,7 +18,6 @@ import {
   LocalVideoStreamLifecycleMaintainerProps
 } from './VideoGallery/useVideoStreamLifecycleMaintainer';
 import { VideoTile, VideoTileStylesProps } from './VideoTile';
-/* @conditional-compile-remove(raise-hand) */
 import { RaisedHand } from '../types';
 /* @conditional-compile-remove(spotlight) */
 import { useTheme } from '../theming';
@@ -57,7 +56,6 @@ export const _LocalVideoTile = React.memo(
     localVideoSelectedDescription?: string;
     styles?: VideoTileStylesProps;
     personaMinSize?: number;
-    /* @conditional-compile-remove(raise-hand) */
     raisedHand?: RaisedHand;
     /* @conditional-compile-remove(reaction) */
     reaction?: Reaction;
@@ -98,7 +96,6 @@ export const _LocalVideoTile = React.memo(
       localVideoCameraCycleButtonProps,
       localVideoCameraSwitcherLabel,
       localVideoSelectedDescription,
-      /* @conditional-compile-remove(raise-hand) */
       raisedHand,
       /* @conditional-compile-remove(reaction) */
       reaction,
@@ -251,7 +248,6 @@ export const _LocalVideoTile = React.memo(
           isMuted={isMuted}
           showMuteIndicator={showMuteIndicator}
           personaMinSize={props.personaMinSize}
-          /* @conditional-compile-remove(raise-hand) */
           raisedHand={raisedHand}
           /* @conditional-compile-remove(reaction) */
           reaction={reaction}
