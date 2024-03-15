@@ -54,6 +54,7 @@ import { ImageOverlay } from '@internal/react-components';
 /* @conditional-compile-remove(image-overlay) */
 import { InlineImage } from '@internal/react-components';
 import { SendBox } from '../common/SendBox';
+import { ResourceFetchResult } from '@internal/chat-stateful-client';
 
 /**
  * @private
@@ -169,10 +170,13 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     if (overlayImageItem === undefined) {
       return;
     }
-    const message = adapter.getState().thread.chatMessages[overlayImageItem?.messageId];
+    const message = adapter.getState().thread.chatMessages[overlayImageItem.messageId];
+    if (message === undefined) {
+      return;
+    }
     const resourceCache = message.resourceCache;
-    if (overlayImageItem.imageSrc === '' && resourceCache) {
-      const fullSizeImageSrc = resourceCache[overlayImageItem.imageUrl].sourceUrl;
+    if (overlayImageItem.imageSrc === '' && resourceCache && resourceCache[overlayImageItem.imageUrl]) {
+      const fullSizeImageSrc = getResourceSourceUrl(resourceCache[overlayImageItem.imageUrl]);
       if (fullSizeImageSrc === undefined || fullSizeImageSrc === '' || overlayImageItem.imageSrc === fullSizeImageSrc) {
         return;
       }
@@ -184,6 +188,17 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     // Disable eslint because we are using the overlayImageItem in this effect but don't want to have it as a dependency, as it will cause an infinite loop.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messageThreadProps.messages]);
+
+  const getResourceSourceUrl = (result: ResourceFetchResult): string => {
+    let src = '';
+    if (result.error || !result.sourceUrl) {
+      src = 'blob://';
+    } else {
+      src = result.sourceUrl;
+    }
+
+    return src;
+  };
 
   const onRenderAvatarCallback = useCallback(
     (userId?: string, defaultOptions?: AvatarPersonaProps) => {
@@ -244,7 +259,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   /* @conditional-compile-remove(image-overlay) */
   const onInlineImageClicked = useCallback(
-    async (attachmentId: string, messageId: string): Promise<void> => {
+    (attachmentId: string, messageId: string) => {
       const message = adapter.getState().thread.chatMessages[messageId];
       const inlinedImages = message.content?.attachments?.filter((attachment) => {
         return attachment.attachmentType === 'image' && attachment.id === attachmentId;
@@ -261,7 +276,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
       if (attachment.url) {
         if (resourceCache && resourceCache[attachment.url]) {
-          imageSrc = resourceCache[attachment.url].sourceUrl;
+          imageSrc = getResourceSourceUrl(resourceCache[attachment.url]);
         } else {
           adapter.downloadResourceToCache({
             threadId: adapter.getState().thread.threadId,
@@ -302,26 +317,37 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       defaultOnRender: (inlineImage: InlineImage) => JSX.Element
     ): JSX.Element => {
       const message = adapter.getState().thread.chatMessages[inlineImage.messageId];
-      const attachments = message?.content?.attachments?.find(
-        (attachment) => attachment.id === inlineImage.imgAttrs.id
+      const attachment = message?.content?.attachments?.find(
+        (attachment) => attachment.id === inlineImage.imageAttributes.id
       );
 
-      if (attachments === undefined) {
+      if (attachment === undefined) {
         return defaultOnRender(inlineImage);
+      }
+
+      let pointerEvents: 'none' | 'auto' = inlineImage.imageAttributes.src === '' ? 'none' : 'auto';
+      const resourceCache = message.resourceCache;
+      if (
+        resourceCache &&
+        attachment.previewUrl &&
+        resourceCache[attachment.previewUrl] &&
+        resourceCache[attachment.previewUrl].error
+      ) {
+        pointerEvents = 'none';
       }
 
       return (
         <span
-          key={inlineImage.imgAttrs.id}
-          onClick={() => onInlineImageClicked(inlineImage.imgAttrs.id || '', inlineImage.messageId)}
+          key={inlineImage.imageAttributes.id}
+          onClick={() => onInlineImageClicked(inlineImage.imageAttributes.id || '', inlineImage.messageId)}
           tabIndex={0}
           role="button"
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
-              onInlineImageClicked(inlineImage.imgAttrs.id || '', inlineImage.messageId);
+              onInlineImageClicked(inlineImage.imageAttributes.id || '', inlineImage.messageId);
             }
           }}
-          style={{ cursor: 'pointer' }}
+          style={{ cursor: 'pointer', pointerEvents }}
         >
           {defaultOnRender(inlineImage)}
         </span>

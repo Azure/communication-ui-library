@@ -46,7 +46,7 @@ test.describe('Dtmf dialpad tests', async () => {
 
     expect(await stableScreenshot(page)).toMatchSnapshot(`Dtmf-Dialpad-Hidden-Non-PSTN.png`);
   });
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(dtmf-dialer) */
+  /* @conditional-compile-remove(PSTN-calls) */
   test('More Button menu opens and shows dialpad Control', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo) || isTestProfileLandscapeMobile(testInfo));
     const initialState = defaultMockCallAdapterState([defaultMockRemotePSTNParticipant('+14255550123')]);
@@ -60,7 +60,7 @@ test.describe('Dtmf dialpad tests', async () => {
     await moreButtonShowDialpadButton?.click();
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-more-button-dtmf-dialpad-closed.png`);
   });
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(dtmf-dialer) */
+  /* @conditional-compile-remove(PSTN-calls) */
   test('More Drawer menu opens and shows dialpad Control', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileDesktop(testInfo));
     const initialState = defaultMockCallAdapterState([defaultMockRemotePSTNParticipant('+14255550123')]);

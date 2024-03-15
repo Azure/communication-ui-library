@@ -9,6 +9,8 @@ import {
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(acs-close-captions) */
+import { CaptionsInfo as AcsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { CallKind } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
@@ -198,8 +200,19 @@ export function convertFromSDKToDeclarativeVideoStreamRendererView(
 /**
  * @private
  */
-export function convertFromSDKToCaptionInfoState(caption: TeamsCaptionsInfo): CaptionsInfo {
+export function convertFromTeamsSDKToCaptionInfoState(caption: TeamsCaptionsInfo): CaptionsInfo {
   return {
+    ...caption
+  };
+}
+
+/* @conditional-compile-remove(acs-close-captions) */
+/**
+ * @private
+ */
+export function convertFromSDKToCaptionInfoState(caption: AcsCaptionsInfo): CaptionsInfo {
+  return {
+    captionText: caption.spokenText,
     ...caption
   };
 }
