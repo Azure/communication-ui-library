@@ -33,7 +33,7 @@ import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { ReactionMessage } from '@azure/communication-calling';
 /* @conditional-compile-remove(spotlight) */
 import { SpotlightedParticipant } from '@azure/communication-calling';
-/* @condtional-compile-remove(local-recording-notification) */
+/* @conditional-compile-remove(local-recording-notification) */
 import { LocalRecordingInfo, RecordingInfo } from '@azure/communication-calling';
 
 /**

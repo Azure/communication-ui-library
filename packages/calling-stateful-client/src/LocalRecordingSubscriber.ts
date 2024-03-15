@@ -1,10 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+/* @conditional-compile-remove(local-recording-notification) */
 import { LocalRecordingCallFeature, LocalRecordingInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(local-recording-notification) */
 import { CallContext } from './CallContext';
+/* @conditional-compile-remove(local-recording-notification) */
 import { CallIdRef } from './CallIdRef';
 
+/* @conditional-compile-remove(local-recording-notification) */
 /**
  * @private
  */
