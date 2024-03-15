@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-import { BlockedMessage, ChatMessage, MessageAttachedStatus } from '../../types/ChatMessage';
+import { ChatMessage, MessageAttachedStatus } from '../../types/ChatMessage';
 import { ChatMessageContent } from '../ChatMessage/ChatMessageContent';
+/* @conditional-compile-remove(data-loss-prevention) */
+import { BlockedMessage } from '../../types/ChatMessage';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessageContent } from '../ChatMessage/ChatMessageContent';
 /* @conditional-compile-remove(image-overlay) */
@@ -11,7 +13,9 @@ import { InlineImageOptions } from '../ChatMessage/ChatMessageContent';
 import { MessageThreadStrings } from '../MessageThread';
 /* @conditional-compile-remove(mention) */
 import { MentionDisplayOptions } from '../MentionPopover';
-import { FileDownloadHandler, _FileDownloadCards } from '../FileDownloadCards';
+import { _FileDownloadCards } from '../FileDownloadCards';
+/* @conditional-compile-remove(file-sharing) */
+import { FileDownloadHandler } from '../FileDownloadCards';
 import { formatTimeForChatMessage, formatTimestampForChatMessage } from './Datetime';
 import { ComponentLocale } from '../../localization/LocalizationProvider';
 import { chatMessageEditedTagStyle } from '../styles/ChatMessageComponent.styles';
@@ -31,7 +35,7 @@ export const getFluentUIAttachedValue = (
  * @private
  *  Get the message bubble content for the message.
  */
-export const getMessageBubbleContent = (
+export function getMessageBubbleContent(
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage,
   strings: MessageThreadStrings,
   userId: string,
@@ -43,7 +47,7 @@ export const getMessageBubbleContent = (
   mentionDisplayOptions?: MentionDisplayOptions,
   /* @conditional-compile-remove(file-sharing) */
   fileDownloadHandler?: FileDownloadHandler
-): JSX.Element => {
+): JSX.Element {
   /* @conditional-compile-remove(data-loss-prevention) */
   if (message.messageType === 'blocked') {
     return (
@@ -74,18 +78,19 @@ export const getMessageBubbleContent = (
       }
     </div>
   );
-};
+}
 
 /**
  * Default component for rendering file downloads.
  */
+/* @conditional-compile-remove(file-sharing) */
 const defaultOnRenderFileDownloads = (
   userId: string,
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage,
   strings: MessageThreadStrings,
   /* @conditional-compile-remove(file-sharing) */
   fileDownloadHandler?: FileDownloadHandler
-): JSX.Element => {
+): JSX.Element | undefined => {
   /* @conditional-compile-remove(file-sharing) */
   return (
     <_FileDownloadCards
@@ -98,6 +103,7 @@ const defaultOnRenderFileDownloads = (
       strings={{ downloadFile: strings.downloadFile, fileCardGroupMessage: strings.fileCardGroupMessage }}
     />
   );
+  return undefined;
 };
 
 /** @private */
