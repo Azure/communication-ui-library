@@ -34,7 +34,6 @@ test.describe('Custom call control options tests', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`user-set-control-bar-button-options.png`);
   });
 
-  /* @conditional-compile-remove(control-bar-button-injection) */
   test('Control bar custom buttons render correctly', async ({ page, serverUrl }) => {
     const callState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
     await loadCallPage(page, serverUrl, callState, {

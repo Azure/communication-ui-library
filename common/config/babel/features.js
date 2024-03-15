@@ -17,9 +17,6 @@ module.exports = {
     "chat-composite-participant-pane",
     // Close captions feature
     "close-captions",
-    // API for injecting custom buttons in he control bar for
-    // `CallComposite` and `CallWithChatComposite`.
-    "control-bar-button-injection",
     // props to allow Contoso to overwrite timestamp format for chat messages, one in locale and one in message thread component
     "date-time-customization",
     // Demo feature. Used in live-documentation of conditional compilation.
@@ -143,9 +140,6 @@ module.exports = {
     "raise-hand",
     // feature  for vertical overflow gallery
     "vertical-gallery",
-    // API for injecting custom buttons in he control bar for
-    // `CallComposite` and `CallWithChatComposite`.
-    "control-bar-button-injection",
     // rooms
     "rooms",
     // feature for calling sounds

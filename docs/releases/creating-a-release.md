@@ -237,36 +237,7 @@ Samples should be updated within a week of the package release.
 
 ### Releasing a hotfix for an older release
 
-There is currently no GitHub action for creating a hotfix and must be done manually.
-
-1. Checkout the version you wish to fix
-
-    ```bash
-     git checkout <version-tag> # version tag will be something like v.1.2.3
-    ```
-
-1. Create a release branch from this
-
-    ```bash
-    git checkout -b hotfix/fix-security-flaw
-    ```
-
-1. Create a development branch from your release branch
-
-    ```bash
-    git checkout -b jaburnsi/chat-thread-security-patch
-    ```
-
-1. Make your changes as normal, commit your changes and put up a PR _into the release branch you made_. Ensure you specify `patch` when generating running `rush changelog`.
-
-1. Once the PR is complete, hop onto the release branch in your terminal again (be sure to pull the latest changes that were merged into it)
-
-    ```bash
-    git checkout -b hotfix/fix-security-flaw
-    git pull
-    ```
-
-1. Publish the package. _documentation to follow on publishing packages._
+There is a separate process for releasing a hotfix. See [documentation on creating hotfixes](./hotfix-release.md).
 
 ### Creating alpha releases
 
