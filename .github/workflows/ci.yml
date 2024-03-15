@@ -47,7 +47,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 1
       # Ensure node version is great enough
       - name: Use Node.js
         uses: actions/setup-node@v4
@@ -80,9 +80,8 @@ jobs:
 
       - name: Check the necessary change file has been submitted
         if: ${{ github.event_name == 'pull_request' }}
-        # GitHub provides remote branch names as refs.
         run: |
-          git fetch origin main:main --depth=2
+          git fetch origin main:main --depth=1
           node common/scripts/changelog/check.mjs ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }}
 
       # Perform lint check
