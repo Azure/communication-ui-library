@@ -52,6 +52,7 @@
     "peopleButtonLabel": "Pessoas",
     "selectedPeopleButtonLabel": "Botão Pessoas Selecionado",
     "peoplePaneTitle": "Pessoas",
+    "peoplePaneMoreButtonAriaLabel": "Mais",
     "peopleButtonTooltipOpen": "Mostrar participantes",
     "peopleButtonTooltipClose": "Ocultar participantes",
     "peoplePaneSubTitle": "Nessa chamada {numberOfPeople}",
@@ -65,6 +66,7 @@
     "stopSpotlightParticipantListMenuLabel": "Parar de destacar",
     "stopSpotlightOnSelfParticipantListMenuLabel": "Sair de destaque",
     "spotlightLimitReachedParticipantListMenuTitle": "Limite de destaque atingido",
+    "stopAllSpotlightMenuLabel": "Parar todos os refletores",
     "returnToCallButtonAriaDescription": "Retornar à Chamada",
     "returnToCallButtonAriaLabel": "Voltar",
     "roomNotFoundDetails": "Não foi possível encontrar a ID da sala fornecida.",
@@ -311,14 +313,16 @@
       "startSpotlightOnSelfText": "Você realçará seu vídeo para todos os participantes da reunião.",
       "startSpotlightConfirmButtonLabel": "Destacar para todo mundo",
       "startSpotlightCancelButtonLabel": "Cancelar",
-      "stopSpotlightHeading": "Parar de destacar?",
+      "stopSpotlightHeading": "Parar de dar destaque a este vídeo?",
       "stopSpotlightOnSelfHeading": "Sair do destaque?",
       "stopSpotlightText": "Esse vídeo não será mais realçado para todos os participantes da reunião.",
       "stopSpotlightOnSelfText": "Seu vídeo não será mais realçado para todos os participantes da reunião.",
       "stopSpotlightConfirmButtonLabel": "Parar de destacar",
       "stopSpotlightOnSelfConfirmButtonLabel": "Sair do destaque",
       "stopSpotlightCancelButtonLabel": "Cancelar"
-    }
+    },
+    "exitSpotlightButtonLabel": "Sair do destaque",
+    "exitSpotlightButtonTooltip": "Sair do destaque"
   },
   "chat": {
     "chatListHeader": "Neste chat",

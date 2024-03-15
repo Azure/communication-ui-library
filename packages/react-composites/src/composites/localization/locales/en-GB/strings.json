@@ -52,6 +52,7 @@
     "peopleButtonLabel": "People",
     "selectedPeopleButtonLabel": "People Button Selected",
     "peoplePaneTitle": "People",
+    "peoplePaneMoreButtonAriaLabel": "More",
     "peopleButtonTooltipOpen": "Show participants",
     "peopleButtonTooltipClose": "Hide participants",
     "peoplePaneSubTitle": "In this call {numberOfPeople}",
@@ -65,6 +66,7 @@
     "stopSpotlightParticipantListMenuLabel": "Stop spotlighting",
     "stopSpotlightOnSelfParticipantListMenuLabel": "Exit spotlight",
     "spotlightLimitReachedParticipantListMenuTitle": "Spotlight limit reached",
+    "stopAllSpotlightMenuLabel": "Stop all spotlights",
     "returnToCallButtonAriaDescription": "Return to Call",
     "returnToCallButtonAriaLabel": "Back",
     "roomNotFoundDetails": "The room ID provided could not be found.",
@@ -311,14 +313,16 @@
       "startSpotlightOnSelfText": "You'll highlight your video for everyone in the meeting.",
       "startSpotlightConfirmButtonLabel": "Spotlight for everyone",
       "startSpotlightCancelButtonLabel": "Cancel",
-      "stopSpotlightHeading": "Stop spotlighting?",
+      "stopSpotlightHeading": "Stop spotlighting this video?",
       "stopSpotlightOnSelfHeading": "Exit spotlight?",
       "stopSpotlightText": "This video will no longer be highlighted for everyone in the meeting.",
       "stopSpotlightOnSelfText": "Your video will no longer be highlighted for everyone in the meeting.",
       "stopSpotlightConfirmButtonLabel": "Stop spotlighting",
       "stopSpotlightOnSelfConfirmButtonLabel": "Exit spotlight",
       "stopSpotlightCancelButtonLabel": "Cancel"
-    }
+    },
+    "exitSpotlightButtonLabel": "Exit spotlight",
+    "exitSpotlightButtonTooltip": "Exit spotlight"
   },
   "chat": {
     "chatListHeader": "In this chat",

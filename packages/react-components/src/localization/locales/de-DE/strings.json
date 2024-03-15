@@ -7,7 +7,8 @@
     "mutedIconLabel": "Stumm geschaltet",
     "displayNamePlaceholder": "Teilnehmer ohne Namen",
     "participantStateRinging": "Anrufen...",
-    "participantStateHold": "In der Warteschleife"
+    "participantStateHold": "In der Warteschleife",
+    "attendeeRole": "Teilnehmer"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} weitere"
@@ -27,6 +28,23 @@
     "removeFile": "Datei entfernen",
     "uploading": "Hochladen",
     "uploadCompleted": "Upload abgeschlossen"
+  },
+  "richTextSendBox": {
+    "placeholderText": "Nachricht eingeben",
+    "textTooLong": "Ihre Nachrichtenlänge überschreitet den maximalen Grenzwert.",
+    "sendButtonAriaLabel": "Nachricht senden",
+    "fileUploadsPendingError": "Wird hochgeladen... Bitte warten.",
+    "removeFile": "Datei entfernen",
+    "uploading": "Wird hochgeladen",
+    "uploadCompleted": "Upload abgeschlossen",
+    "boldTooltip": "Fett",
+    "italicTooltip": "Kursiv",
+    "underlineTooltip": "Unterstreichen",
+    "bulletListTooltip": "Aufzählungsliste",
+    "numberListTooltip": "Nummerierte Liste",
+    "increaseIndentTooltip": "Einzug vergrößern",
+    "decreaseIndentTooltip": "Einzug verringern",
+    "richTextFormatButtonTooltip": "Formatieren"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Vorschläge"
@@ -125,6 +143,7 @@
   },
   "reactionButton": {
     "label": "Reagieren",
+    "ariaLabel": "Reaktionsschaltfläche, Reaktion senden",
     "tooltipDisabledContent": "Reaktionsaktion ist deaktiviert",
     "tooltipContent": "Reaktion senden",
     "likeReactionTooltipContent": "Gefällt mir",
@@ -224,7 +243,8 @@
     "addSpotlightVideoTileMenuLabel": "Spotlight hinzufügen",
     "spotlightLimitReachedMenuTitle": "Spotlight-Limit erreicht",
     "stopSpotlightVideoTileMenuLabel": "Spotlight beenden",
-    "stopSpotlightOnSelfVideoTileMenuLabel": "Spotlight beenden"
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Spotlight beenden",
+    "attendeeRole": "Teilnehmer"
   },
   "dialpad": {
     "placeholderText": "Telefonnummer eingeben",
@@ -358,6 +378,5 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "Vorherige Seite",
     "rightNavButtonAriaLabel": "Nächste Seite"
-  },
-  "AttendeeRole": "Teilnehmer"
+  }
 }

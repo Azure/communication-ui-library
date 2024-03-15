@@ -52,6 +52,7 @@
     "peopleButtonLabel": "Kişiler",
     "selectedPeopleButtonLabel": "Kişiler Düğmesi Seçildi",
     "peoplePaneTitle": "Kişiler",
+    "peoplePaneMoreButtonAriaLabel": "Daha fazla",
     "peopleButtonTooltipOpen": "Katılımcıları göster",
     "peopleButtonTooltipClose": "Katılımcıları gizle",
     "peoplePaneSubTitle": "Bu aramada {numberOfPeople} var",
@@ -65,6 +66,7 @@
     "stopSpotlightParticipantListMenuLabel": "Öne çıkarmayı durdur",
     "stopSpotlightOnSelfParticipantListMenuLabel": "Öne çıkarmadan çık",
     "spotlightLimitReachedParticipantListMenuTitle": "Öne çıkarma sınırına ulaşıldı",
+    "stopAllSpotlightMenuLabel": "Tüm öne çıkarmaları durdur",
     "returnToCallButtonAriaDescription": "Aramaya Dön",
     "returnToCallButtonAriaLabel": "Geri",
     "roomNotFoundDetails": "Sağlanan oda kimliği bulunamadı.",
@@ -311,14 +313,16 @@
       "startSpotlightOnSelfText": "Videonuzu toplantıdaki herkes için öne çıkaracaksınız.",
       "startSpotlightConfirmButtonLabel": "Herkes için öne çıkar",
       "startSpotlightCancelButtonLabel": "İptal",
-      "stopSpotlightHeading": "Öne çıkarma durdurulsun mu?",
+      "stopSpotlightHeading": "Bu video için öne çıkarma durdurulsun mu?",
       "stopSpotlightOnSelfHeading": "Öne çıkarmadan çıkılsın mı?",
       "stopSpotlightText": "Bu video artık toplantıdaki herkes için öne çıkarılmayacak.",
       "stopSpotlightOnSelfText": "Videonuz toplantıdaki herkes için artık öne çıkarılmayacak.",
       "stopSpotlightConfirmButtonLabel": "Öne çıkarmayı durdur",
       "stopSpotlightOnSelfConfirmButtonLabel": "Öne çıkarmadan çık",
       "stopSpotlightCancelButtonLabel": "İptal"
-    }
+    },
+    "exitSpotlightButtonLabel": "Öne çıkarmadan çık",
+    "exitSpotlightButtonTooltip": "Öne çıkarmadan çık"
   },
   "chat": {
     "chatListHeader": "Bu sohbette",

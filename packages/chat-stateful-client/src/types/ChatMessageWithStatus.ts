@@ -26,6 +26,6 @@ export type ChatMessageWithStatus = ChatMessage & {
  * @public
  */
 export type ResourceFetchResult = {
-  sourceUrl: string;
+  sourceUrl?: string;
   error?: Error;
 };
