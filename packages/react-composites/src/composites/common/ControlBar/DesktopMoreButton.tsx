@@ -377,7 +377,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
       ...element
     });
   });
-  
+
   customDrawerButtons['secondary']
     .slice(CUSTOM_BUTTON_OPTIONS.MAX_SECONDARY_DESKTOP_CUSTOM_BUTTONS)
     .forEach((element) => {
