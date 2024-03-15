@@ -41,8 +41,6 @@ export * from './localization/locales';
 export type { CompositeStrings, CompositeLocale } from './localization';
 export type { AdapterError, AdapterErrors } from './common/adapters';
 export type { BaseCompositeProps } from './common/BaseComposite';
-
-/* @conditional-compile-remove(control-bar-button-injection) */
 export type {
   CustomCallControlButtonCallback,
   CustomCallControlButtonPlacement,

@@ -4,7 +4,6 @@
 import React, { useCallback } from 'react';
 /* @conditional-compile-remove(close-captions) */
 import { useState } from 'react';
-/* @conditional-compile-remove(control-bar-button-injection) */
 import { useMemo } from 'react';
 import {
   OptionsDevice,
@@ -26,7 +25,6 @@ import { _StartCaptionsButton, _CaptionsSettingsModal } from '@internal/react-co
 import { HoldButton } from '@internal/react-components';
 import { RaiseHandButton, RaiseHandButtonProps } from '@internal/react-components';
 import { AudioDeviceInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(control-bar-button-injection) */
 import {
   CUSTOM_BUTTON_OPTIONS,
   generateCustomCallDrawerButtons,
@@ -561,7 +559,6 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     }
   }
 
-  /* @conditional-compile-remove(control-bar-button-injection) */
   const customDrawerButtons = useMemo(
     () =>
       generateCustomCallDrawerButtons(
@@ -571,15 +568,12 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     [drawerSelectionOptions]
   );
 
-  /* @conditional-compile-remove(control-bar-button-injection) */
   customDrawerButtons['primary'].slice(CUSTOM_BUTTON_OPTIONS.MAX_PRIMARY_MOBILE_CUSTOM_BUTTONS).forEach((element) => {
     drawerMenuItems.push(element);
   });
-  /* @conditional-compile-remove(control-bar-button-injection) */
   customDrawerButtons['secondary'].forEach((element) => {
     drawerMenuItems.push(element);
   });
-  /* @conditional-compile-remove(control-bar-button-injection) */
   customDrawerButtons['overflow'].forEach((element) => {
     drawerMenuItems.push(element);
   });
