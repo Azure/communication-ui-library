@@ -261,7 +261,6 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
       transfer: {
         acceptedTransfers: {}
       },
-      /* @conditional-compile-remove(optimal-video-count) */
       optimalVideoCount: {
         maxRemoteVideoStreams: 4
       }

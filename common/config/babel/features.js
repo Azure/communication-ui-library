@@ -53,8 +53,6 @@ module.exports = {
     "in-progress-beta-feature-demo",
     // Feature for call transfer
     "call-transfer",
-    // Optimal Video Count
-    "optimal-video-count",
     // Feature for capabilities
     "capabilities",
     // Feature for large Gallery layout
@@ -132,8 +130,6 @@ module.exports = {
     "capabilities",
     // Closed captions
     "close-captions",
-    // Optimal Video Count
-    "optimal-video-count",
     // feature  for vertical overflow gallery
     "vertical-gallery",
     // rooms

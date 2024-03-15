@@ -27,7 +27,6 @@ import { disposeView } from './StreamUtils';
 import { TranscriptionSubscriber } from './TranscriptionSubscriber';
 import { UserFacingDiagnosticsSubscriber } from './UserFacingDiagnosticsSubscriber';
 import { RaiseHandSubscriber } from './RaiseHandSubscriber';
-/* @conditional-compile-remove(optimal-video-count) */
 import { OptimalVideoCountSubscriber } from './OptimalVideoCountSubscriber';
 /* @conditional-compile-remove(capabilities) */
 import { CapabilitiesSubscriber } from './CapabilitiesSubscriber';
@@ -55,7 +54,6 @@ export class CallSubscriber {
   private _transcriptionSubscriber: TranscriptionSubscriber;
   /* @conditional-compile-remove(ppt-live) */
   private _pptLiveSubscriber: PPTLiveSubscriber;
-  /* @conditional-compile-remove(optimal-video-count) */
   private _optimalVideoCountSubscriber: OptimalVideoCountSubscriber;
   /* @conditional-compile-remove(close-captions) */
   private _TeamsCaptionsSubscriber?: TeamsCaptionsSubscriber;
@@ -106,7 +104,6 @@ export class CallSubscriber {
       this._context,
       this._call.feature(Features.Reaction)
     );
-    /* @conditional-compile-remove(optimal-video-count) */
     this._optimalVideoCountSubscriber = new OptimalVideoCountSubscriber({
       callIdRef: this._callIdRef,
       context: this._context,
@@ -206,7 +203,6 @@ export class CallSubscriber {
     this._diagnosticsSubscriber.unsubscribe();
     this._recordingSubscriber.unsubscribe();
     this._transcriptionSubscriber.unsubscribe();
-    /* @conditional-compile-remove(optimal-video-count) */
     this._optimalVideoCountSubscriber.unsubscribe();
     /* @conditional-compile-remove(ppt-live) */
     this._pptLiveSubscriber.unsubscribe();
