@@ -107,12 +107,12 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     displayName?: string,
     /* @conditional-compile-remove(raise-hand) */
     raisedHand?: unknown, // temp unknown type to build stable
+    /* @conditional-compile-remove(ppt-live) */
+    contentSharingStream?: HTMLElement,
     /* @conditional-compile-remove(reaction) */
     reaction?: unknown, // temp unknown type to build stable
     /* @conditional-compile-remove(spotlight) */
-    spotlight?: unknown, // temp unknown type to build stable
-    /* @conditional-compile-remove(ppt-live) */
-    contentSharingStream?: HTMLElement
+    spotlight?: unknown // temp unknown type to build stable
   ): VideoGalleryRemoteParticipant => {
     return convertRemoteParticipantToVideoGalleryRemoteParticipant(
       userId,
@@ -123,12 +123,12 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
       displayName,
       /* @conditional-compile-remove(raise-hand) */
       raisedHand as RaisedHandState,
+      /* @conditional-compile-remove(ppt-live) */
+      contentSharingStream,
       /* @conditional-compile-remove(reaction) */
       reaction as Reaction,
       /* @conditional-compile-remove(spotlight) */
-      spotlight as Spotlight,
-      /* @conditional-compile-remove(ppt-live) */
-      contentSharingStream
+      spotlight as Spotlight
     );
   }
 );
@@ -143,12 +143,12 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   displayName?: string,
   /* @conditional-compile-remove(raise-hand) */
   raisedHand?: unknown, // temp unknown type to build stable
+  /* @conditional-compile-remove(ppt-live) */
+  contentSharingStream?: HTMLElement,
   /* @conditional-compile-remove(reaction) */
   reaction?: unknown, // temp unknown type to build stable
   /* @conditional-compile-remove(spotlight) */
-  spotlight?: unknown, // temp unknown type to build stable
-  /* @conditional-compile-remove(ppt-live) */
-  contentSharingStream?: HTMLElement
+  spotlight?: unknown // temp unknown type to build stable
 ): VideoGalleryRemoteParticipant => {
   const rawVideoStreamsArray = Object.values(videoStreams);
   let videoStream: VideoGalleryStream | undefined = undefined;
