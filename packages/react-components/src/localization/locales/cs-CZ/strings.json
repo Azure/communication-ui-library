@@ -24,7 +24,7 @@
     "placeholderText": "Zadejte zprávu",
     "textTooLong": "Délka vaší zprávy překračuje maximální limit.",
     "sendButtonAriaLabel": "Poslat zprávu",
-    "fileUploadsPendingError": "Probíhá nahrávání... Počkejte prosím.",
+    "attachmentUploadsPendingError": "Probíhá nahrávání... Počkejte prosím.",
     "removeFile": "Odebrat soubor",
     "uploading": "Nahrávání",
     "uploadCompleted": "Nahrávání se dokončilo"
@@ -33,7 +33,7 @@
     "placeholderText": "Zadejte zprávu",
     "textTooLong": "Délka vaší zprávy překračuje maximální limit.",
     "sendButtonAriaLabel": "Poslat zprávu",
-    "fileUploadsPendingError": "Nahrávání… Počkejte prosím.",
+    "attachmentUploadsPendingError": "Nahrávání… Počkejte prosím.",
     "removeFile": "Odebrat soubor",
     "uploading": "Nahrávání",
     "uploadCompleted": "Nahrávání se dokončilo",

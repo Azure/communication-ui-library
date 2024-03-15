@@ -27,7 +27,7 @@ import { MessageThreadStrings } from '../MessageThread';
 import { chatMessageActionMenuProps } from './ChatMessageActionMenu';
 import { ComponentSlotStyle, OnRenderAvatarCallback } from '../../types';
 /* @conditional-compile-remove(file-sharing) */
-import { FileCardMenuAction, _FileDownloadCards } from '../FileDownloadCards';
+import { AttachmentMenuAction, _AttachmentDownloadCards } from '../AttachmentDownloadCards';
 import { ComponentLocale, useLocale } from '../../localization';
 /* @conditional-compile-remove(mention) */
 import { MentionDisplayOptions } from '../MentionPopover';
@@ -66,9 +66,9 @@ type ChatMessageComponentAsMessageBubbleProps = {
   /**
    * Optional callback to render uploaded files in the message component.
    */
-  onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+  onRenderAttachmentDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
   /* @conditional-compile-remove(file-sharing) */
-  fileCardMenuAction?: FileCardMenuAction[];
+  attachmentMenuAction?: AttachmentMenuAction[];
   remoteParticipantsCount?: number;
   onActionButtonClick: (
     message: ChatMessage,
@@ -148,7 +148,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     showMessageStatus,
     messageStatus,
     /* @conditional-compile-remove(file-sharing) */
-    fileCardMenuAction,
+    attachmentMenuAction,
     /* @conditional-compile-remove(image-overlay) */
     inlineImageOptions,
     shouldOverlapAvatarAndMessage
@@ -203,14 +203,14 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     setChatMessageActionFlyoutTarget(undefined);
   }, [setChatMessageActionFlyoutTarget]);
 
-  const defaultOnRenderFileDownloads = useCallback(() => {
+  const defaultOnRenderAttachmentDownloads = useCallback(() => {
     /* @conditional-compile-remove(file-sharing) */
     return (
-      <_FileDownloadCards
+      <_AttachmentDownloadCards
         /* @conditional-compile-remove(file-sharing) */
         attachment={(message as ChatMessage).files || []}
         /* @conditional-compile-remove(file-sharing) */
-        menuActions={fileCardMenuAction}
+        menuActions={attachmentMenuAction}
         /* @conditional-compile-remove(file-sharing) */
         strings={{ downloadFile: strings.downloadFile, fileCardGroupMessage: strings.fileCardGroupMessage }}
       />
@@ -219,7 +219,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     message,
     strings,
     /* @conditional-compile-remove(file-sharing) */
-    fileCardMenuAction
+    attachmentMenuAction
   ]);
 
   const editedOn = 'editedOn' in message ? message.editedOn : undefined;
@@ -252,14 +252,14 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           inlineImageOptions={inlineImageOptions}
         />
         {
-          /* @conditional-compile-remove(file-sharing) */ props.onRenderFileDownloads
-            ? props.onRenderFileDownloads(userId, message)
-            : defaultOnRenderFileDownloads()
+          /* @conditional-compile-remove(file-sharing) */ props.onRenderAttachmentDownloads
+            ? props.onRenderAttachmentDownloads(userId, message)
+            : defaultOnRenderAttachmentDownloads()
         }
       </div>
     );
   }, [
-    defaultOnRenderFileDownloads,
+    defaultOnRenderAttachmentDownloads,
     /* @conditional-compile-remove(image-overlay) */ inlineImageOptions,
     message,
     props,

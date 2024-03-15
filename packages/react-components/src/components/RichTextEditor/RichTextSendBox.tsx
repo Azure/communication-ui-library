@@ -13,11 +13,11 @@ import { RichTextSendBoxErrors, RichTextSendBoxErrorsProps } from './RichTextSen
 import { SendBoxErrorBarError } from '../SendBoxErrorBar';
 import { isMessageTooLong, sanitizeText } from '../utils/SendBoxUtils';
 /* @conditional-compile-remove(file-sharing) */
-import { hasCompletedFileUploads } from '../utils/SendBoxUtils';
+import { hasCompletedAttachmentUploads } from '../utils/SendBoxUtils';
 import { RichTextEditorComponentRef } from './RichTextEditor';
 import { useTheme } from '../../theming';
 import { richTextActionButtonsStyle, sendBoxRichTextEditorStyle } from '../styles/RichTextEditor.styles';
-import { AttachmentMetadata } from '../FileDownloadCards';
+import { AttachmentMetadata } from '../AttachmentDownloadCards';
 
 /**
  * Strings of {@link RichTextSendBox} that can be overridden.
@@ -171,7 +171,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     // Message can be empty if there is a valid file upload
     if (
       sanitizeText(message).length > 0 ||
-      /* @conditional-compile-remove(file-sharing) */ hasCompletedFileUploads(activeFileUploads)
+      /* @conditional-compile-remove(file-sharing) */ hasCompletedAttachmentUploads(activeFileUploads)
     ) {
       onSendMessage(message);
       setContentValue('');

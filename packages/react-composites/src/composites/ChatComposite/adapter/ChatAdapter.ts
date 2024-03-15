@@ -6,7 +6,7 @@ import type { CommunicationIdentifierKind, CommunicationUserKind } from '@azure/
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import type { AdapterError, AdapterErrors, AdapterState, Disposable } from '../../common/adapters';
 /* @conditional-compile-remove(file-sharing) */
-import { FileUploadAdapter, FileUploadsUiState } from './AzureCommunicationFileUploadAdapter';
+import { AttachmentUploadAdapter, AttachmentUploadsUiState } from './AzureCommunicationAttachmentUploadAdapter';
 /* @conditional-compile-remove(file-sharing) */
 import { AttachmentMetadata } from '@internal/react-components';
 
@@ -23,10 +23,10 @@ export type ChatAdapterUiState = {
   /**
    * Files being uploaded by a user in the current thread.
    * Should be set to null once the upload is complete.
-   * Array of type {@link FileUploadsUiState}
+   * Array of type {@link AttachmentUploadsUiState}
    * @beta
    */
-  fileUploads?: FileUploadsUiState;
+  attachmentUploads?: AttachmentUploadsUiState;
 };
 
 /**
@@ -221,7 +221,7 @@ export type ChatAdapter = ChatAdapterThreadManagement &
   Disposable &
   ChatAdapterSubscribers &
   /* @conditional-compile-remove(file-sharing) */
-  FileUploadAdapter;
+  AttachmentUploadAdapter;
 
 /**
  * Callback for {@link ChatAdapterSubscribers} 'messageReceived' event.

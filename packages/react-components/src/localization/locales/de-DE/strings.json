@@ -24,7 +24,7 @@
     "placeholderText": "Nachricht eingeben",
     "textTooLong": "Ihre Nachrichtenlänge überschreitet den maximalen Grenzwert.",
     "sendButtonAriaLabel": "Nachricht senden",
-    "fileUploadsPendingError": "Wird hochgeladen... Bitte warten.",
+    "attachmentUploadsPendingError": "Wird hochgeladen... Bitte warten.",
     "removeFile": "Datei entfernen",
     "uploading": "Hochladen",
     "uploadCompleted": "Upload abgeschlossen"
@@ -33,7 +33,7 @@
     "placeholderText": "Nachricht eingeben",
     "textTooLong": "Ihre Nachrichtenlänge überschreitet den maximalen Grenzwert.",
     "sendButtonAriaLabel": "Nachricht senden",
-    "fileUploadsPendingError": "Wird hochgeladen... Bitte warten.",
+    "attachmentUploadsPendingError": "Wird hochgeladen... Bitte warten.",
     "removeFile": "Datei entfernen",
     "uploading": "Wird hochgeladen",
     "uploadCompleted": "Upload abgeschlossen",

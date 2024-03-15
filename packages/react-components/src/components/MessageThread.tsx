@@ -33,9 +33,9 @@ import { useLocale } from '../localization/LocalizationProvider';
 import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
 import getParticipantsWhoHaveReadMessage from './utils/getParticipantsWhoHaveReadMessage';
 /* @conditional-compile-remove(file-sharing) */
-import { FileCardMenuAction } from './FileDownloadCards';
+import { AttachmentMenuAction } from './AttachmentDownloadCards';
 /* @conditional-compile-remove(file-sharing) */
-import { AttachmentMetadata } from './FileDownloadCards';
+import { AttachmentMetadata } from './AttachmentDownloadCards';
 import { useTheme } from '../theming';
 import { FluentV9ThemeProvider } from './../theming/FluentV9ThemeProvider';
 import LiveAnnouncer from './Announcer/LiveAnnouncer';
@@ -465,7 +465,7 @@ export type MessageThreadProps = {
    * Optional callback to render attached files in the message component.
    * @beta
    */
-  onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+  onRenderAttachmentDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
   /**
    * Optional callback to edit a message.
    *
@@ -513,7 +513,7 @@ export type MessageThreadProps = {
   strings?: Partial<MessageThreadStrings>;
 
   /* @conditional-compile-remove(file-sharing) */
-  fileCardMenuActions?: FileCardMenuAction[];
+  attachmentMenuActions?: AttachmentMenuAction[];
 
   /* @conditional-compile-remove(date-time-customization) */
   /**
@@ -666,7 +666,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     /* @conditional-compile-remove(image-overlay) */
     inlineImageOptions,
     /* @conditional-compile-remove(file-sharing) */
-    onRenderFileDownloads
+    onRenderAttachmentDownloads
   } = props;
   // We need this state to wait for one tick and scroll to bottom after messages have been initialized.
   // Otherwise chatScrollDivRef.current.clientHeight is wrong if we scroll to bottom before messages are initialized.
@@ -1114,7 +1114,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
                   readCount={readCountForHoveredIndicator}
                   participantCount={participantCount}
                   /* @conditional-compile-remove(file-sharing) */
-                  fileCardMenuAction={props.fileCardMenuActions}
+                  attachmentMenuAction={props.attachmentMenuActions}
                   /* @conditional-compile-remove(image-overlay) */
                   inlineImageOptions={inlineImageOptions}
                   /* @conditional-compile-remove(date-time-customization) */
@@ -1122,7 +1122,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
                   /* @conditional-compile-remove(mention) */
                   mentionOptions={mentionOptions}
                   /* @conditional-compile-remove(file-sharing) */
-                  onRenderFileDownloads={onRenderFileDownloads}
+                  onRenderAttachmentDownloads={onRenderAttachmentDownloads}
                 />
               );
             })}

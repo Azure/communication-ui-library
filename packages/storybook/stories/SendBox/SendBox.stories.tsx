@@ -12,14 +12,14 @@ import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { controlsToAdd, hiddenControl } from '../controlsUtils';
 import { CustomIconExample } from './snippets/CustomIcon.snippet';
 import { CustomStylingExample } from './snippets/CustomStyling.snippet';
-import { FileUploadsExample } from './snippets/FileUploads.snippet';
+import { AttachmentUploadsExample } from './snippets/AttachmentUploads.snippet';
 import { MentionsExample } from './snippets/Mentions.snippet';
 import { SendBoxExample } from './snippets/SendBox.snippet';
 import { SendBoxWithSystemMessageExample } from './snippets/SendBoxWithSystemMessage.snippet';
 
 const CustomIconExampleText = require('!!raw-loader!./snippets/CustomIcon.snippet.tsx').default;
 const CustomStylingExampleText = require('!!raw-loader!./snippets/CustomStyling.snippet.tsx').default;
-const FileUploadsExampleText = require('!!raw-loader!./snippets/FileUploads.snippet.tsx').default;
+const AttachmentUploadsExampleText = require('!!raw-loader!./snippets/AttachmentUploads.snippet.tsx').default;
 const MentionsExampleText = require('!!raw-loader!./snippets/Mentions.snippet.tsx').default;
 const SendBoxExampleText = require('!!raw-loader!./snippets/SendBox.snippet.tsx').default;
 const SendBoxWithSystemMessageExampleText =
@@ -76,8 +76,8 @@ const getDocs: () => JSX.Element = () => {
         implement a file sharing feature using the pure UI component with minimal effort. Developers can write their own
         file upload logic and utilize the UI provided by SendBox.
       </Description>
-      <Canvas mdxSource={FileUploadsExampleText}>
-        <FileUploadsExample />
+      <Canvas mdxSource={AttachmentUploadsExampleText}>
+        <AttachmentUploadsExample />
       </Canvas>
 
       <Heading>Mentioning Users</Heading>

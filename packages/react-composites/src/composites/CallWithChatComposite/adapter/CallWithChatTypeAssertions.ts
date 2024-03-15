@@ -13,7 +13,7 @@ import { CallWithChatControlOptions } from '../CallWithChatComposite';
 import { CallWithChatAdapterUiState, CallWithChatClientState } from '../state/CallWithChatAdapterState';
 import { CallWithChatAdapterManagement } from './CallWithChatAdapter';
 /* @conditional-compile-remove(file-sharing) */
-import { FileUploadAdapter } from '../../ChatComposite';
+import { AttachmentUploadAdapter } from '../../ChatComposite';
 
 /// IMPORTANT
 ///
@@ -31,7 +31,7 @@ type CallWithChatAdapterManagementInternal = Omit<CallAdapterCallManagement, 're
   CallAdapterDeviceManagement &
   Omit<ChatAdapterThreadManagement, 'removeParticipant' | 'setTopic'> &
   /* @conditional-compile-remove(file-sharing) */
-  FileUploadAdapter;
+  AttachmentUploadAdapter;
 
 const CallWithChatAdapterManagementTypeAssertion = (
   value: CallWithChatAdapterManagement

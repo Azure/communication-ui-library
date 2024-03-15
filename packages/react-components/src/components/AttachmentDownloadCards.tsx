@@ -6,8 +6,8 @@ import React /*, {  useCallback , useState  }*/ from 'react';
 import { useMemo } from 'react';
 /* @conditional-compile-remove(file-sharing) */
 import { useLocale } from '../localization';
-import { _FileCard } from './FileCard';
-import { _FileCardGroup } from './FileCardGroup';
+import { _AttachmentCard } from './AttachmentCard';
+import { _AttachmentCardGroup } from './AttachmentCardGroup';
 // import { iconButtonClassName } from './styles/IconButton.styles';
 import { _formatString } from '@internal/acs-ui-common';
 import { ArrowDownload24Filled /*, Open24Filled, Open24Regular*/ } from '@fluentui/react-icons';
@@ -69,11 +69,11 @@ export interface AttachmentMetadata {
 }
 
 /**
- * Strings of _FileDownloadCards that can be overridden.
+ * Strings of _AttachmentDownloadCards that can be overridden.
  *
  * @internal
  */
-export interface _FileDownloadCardsStrings {
+export interface _AttachmentDownloadCardsStrings {
   /** Aria label to notify user when focus is on file download button. */
   downloadFile: string;
   fileCardGroupMessage: string;
@@ -82,14 +82,14 @@ export interface _FileDownloadCardsStrings {
 /**
  * @beta
  */
-export interface FileDownloadOptions {
-  menuActions: FileCardMenuAction[];
+export interface AttachmentDownloadOptions {
+  menuActions: AttachmentMenuAction[];
 }
 
 /**
  * @beta
  */
-export interface FileCardMenuAction {
+export interface AttachmentMenuAction {
   name: string;
   icon: JSX.Element;
   onClick: (attachment: AttachmentMetadata) => void;
@@ -98,7 +98,7 @@ export interface FileCardMenuAction {
 /**
  * @beta
  */
-export const defaultFileCardMenuAction: FileCardMenuAction = {
+export const defaultAttachmentMenuAction: AttachmentMenuAction = {
   name: 'Open',
   icon: <ArrowDownload24Filled />,
   onClick: (attachment: AttachmentMetadata) => {
@@ -107,19 +107,9 @@ export const defaultFileCardMenuAction: FileCardMenuAction = {
 };
 
 /**
- * @beta
- * A file download error returned via a {@link FileDownloadHandler}.
- * This error message is used to render an error message in the UI.
- */
-export interface FileDownloadError {
-  /** The error message to display in the UI */
-  errorMessage: string;
-}
-
-/**
  * @internal
  */
-export interface _FileDownloadCardsProps {
+export interface _AttachmentDownloadCardsProps {
   /**
    * A chat message metadata that includes file metadata
    */
@@ -127,18 +117,18 @@ export interface _FileDownloadCardsProps {
   /**
    * Optional callback to handle file download
    */
-  menuActions?: FileCardMenuAction[];
+  menuActions?: AttachmentMenuAction[];
   /**
-   * Optional callback that runs if downloadHandler returns {@link FileDownloadError}.
+   * Optional callback that runs if downloadHandler returns {@link AttachmentDownloadError}.
    */
   onDownloadErrorMessage?: (errMsg: string) => void;
   /**
    * Optional aria label strings for file download cards
    */
-  strings?: _FileDownloadCardsStrings;
+  strings?: _AttachmentDownloadCardsStrings;
 }
 
-/*const fileDownloadCardsStyle = {
+/*const attachmentDownloadCardsStyle = {
   marginTop: '0.25rem'
 };*/
 
@@ -147,7 +137,7 @@ export interface _FileDownloadCardsProps {
 /**
  * @internal
  */
-export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element => {
+export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): JSX.Element => {
   const { attachment } = props;
   // const [showSpinner, setShowSpinner] = useState(false);
   const localeStrings = useLocaleStringsTrampoline();
@@ -192,7 +182,7 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
 
   return (
     <div data-ui-id="file-download-card-group">
-      <_FileCardGroup ariaLabel={fileCardGroupDescription()}>
+      <_AttachmentCardGroup ariaLabel={fileCardGroupDescription()}>
         {attachment &&
           attachment
             .filter((attachment) => {
@@ -202,14 +192,19 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
             })
             .map((file) => file as unknown as AttachmentMetadata)
             .map((file) => (
-              <_FileCard file={file} key={file.name} menuActions={props.menuActions ?? [defaultFileCardMenuAction]} />
+              <_AttachmentCard
+                file={file}
+                key={file.id}
+                menuActions={props.menuActions ?? [defaultAttachmentMenuAction]}
+                onDownloadErrorMessage={props.onDownloadErrorMessage}
+              />
             ))}
-      </_FileCardGroup>
+      </_AttachmentCardGroup>
     </div>
   );
 };
 
-const useLocaleStringsTrampoline = (): _FileDownloadCardsStrings => {
+const useLocaleStringsTrampoline = (): _AttachmentDownloadCardsStrings => {
   /* @conditional-compile-remove(file-sharing) */
   return useLocale().strings.messageThread;
   return { downloadFile: '', fileCardGroupMessage: '' };

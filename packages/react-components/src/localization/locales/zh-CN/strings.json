@@ -24,7 +24,7 @@
     "placeholderText": "输入消息",
     "textTooLong": "你的消息长度超过了最大限制。",
     "sendButtonAriaLabel": "发送消息",
-    "fileUploadsPendingError": "正在上载...请稍候。",
+    "attachmentUploadsPendingError": "正在上载...请稍候。",
     "removeFile": "删除文件",
     "uploading": "正在上传",
     "uploadCompleted": "已完成上传"
@@ -33,7 +33,7 @@
     "placeholderText": "输入消息",
     "textTooLong": "你的消息长度超过了最大限制。",
     "sendButtonAriaLabel": "发送信息",
-    "fileUploadsPendingError": "正在上传...请稍等。",
+    "attachmentUploadsPendingError": "正在上传...请稍等。",
     "removeFile": "删除文件",
     "uploading": "正在上传",
     "uploadCompleted": "已完成上传",

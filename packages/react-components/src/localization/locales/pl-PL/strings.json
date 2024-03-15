@@ -24,7 +24,7 @@
     "placeholderText": "Wprowadź wiadomość",
     "textTooLong": "Długość wiadomości przekracza maksymalny limit.",
     "sendButtonAriaLabel": "Wyślij wiadomość",
-    "fileUploadsPendingError": "Trwa przekazywanie... Czekaj.",
+    "attachmentUploadsPendingError": "Trwa przekazywanie... Czekaj.",
     "removeFile": "Usuwanie pliku",
     "uploading": "Przekazywanie",
     "uploadCompleted": "Zakończono przekazywanie"
@@ -33,7 +33,7 @@
     "placeholderText": "Wprowadź wiadomość",
     "textTooLong": "Długość wiadomości przekracza maksymalny limit.",
     "sendButtonAriaLabel": "Wyślij wiadomość",
-    "fileUploadsPendingError": "Trwa przekazywanie... Czekaj.",
+    "attachmentUploadsPendingError": "Trwa przekazywanie... Czekaj.",
     "removeFile": "Usuń plik",
     "uploading": "Przekazywanie",
     "uploadCompleted": "Zakończono przekazywanie",

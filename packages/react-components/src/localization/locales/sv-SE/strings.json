@@ -24,7 +24,7 @@
     "placeholderText": "Skriv ett meddelande",
     "textTooLong": "Meddelandelängden överskrider maxgränsen.",
     "sendButtonAriaLabel": "Skicka meddelande",
-    "fileUploadsPendingError": "Uppladdning pågår... Vänta.",
+    "attachmentUploadsPendingError": "Uppladdning pågår... Vänta.",
     "removeFile": "Ta bort filen",
     "uploading": "Laddar upp",
     "uploadCompleted": "Uppladdningen har slutförts"
@@ -33,7 +33,7 @@
     "placeholderText": "Skriv ett meddelande",
     "textTooLong": "Meddelandelängden överskrider maxgränsen.",
     "sendButtonAriaLabel": "Skicka meddelande",
-    "fileUploadsPendingError": "Laddar upp... Var god vänta.",
+    "attachmentUploadsPendingError": "Laddar upp... Var god vänta.",
     "removeFile": "Ta bort fil",
     "uploading": "Laddar upp",
     "uploadCompleted": "Uppladdningen har slutförts",

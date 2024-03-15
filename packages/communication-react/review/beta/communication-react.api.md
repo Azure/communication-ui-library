@@ -139,6 +139,22 @@ export type AreParamEqual<A extends (props: any) => JSX.Element | undefined, B e
 // @public
 export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
+// @beta (undocumented)
+export interface AttachmentDownloadOptions {
+    // (undocumented)
+    menuActions: AttachmentMenuAction[];
+}
+
+// @beta (undocumented)
+export interface AttachmentMenuAction {
+    // (undocumented)
+    icon: JSX.Element;
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    onClick: (attachment: AttachmentMetadata) => void;
+}
+
 // @beta
 export interface AttachmentMetadata {
     error?: SendBoxErrorBarError;
@@ -150,6 +166,52 @@ export interface AttachmentMetadata {
     progress?: number;
     url?: string;
 }
+
+// @beta (undocumented)
+export interface AttachmentUploadAdapter {
+    // (undocumented)
+    cancelAttachmentUpload: (id: string) => void;
+    // (undocumented)
+    clearAttachmentUploads: () => void;
+    // (undocumented)
+    registeractiveAttachmentUploads: (files: File[]) => AttachmentUploadManager[];
+    // (undocumented)
+    registerCompletedAttachmentUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadManager[];
+    // (undocumented)
+    updateAttachmentUploadErrorMessage: (id: string, errorMessage: string) => void;
+    // (undocumented)
+    updateAttachmentUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
+    // (undocumented)
+    updateAttachmentUploadProgress: (id: string, progress: number) => void;
+}
+
+// @beta
+export type AttachmentUploadError = {
+    message: string;
+    timestamp: number;
+};
+
+// @beta
+export type AttachmentUploadHandler = (attachmentUploads: AttachmentUploadManager[]) => void;
+
+// @beta
+export interface AttachmentUploadManager {
+    file?: File;
+    id: string;
+    notifyUploadCompleted: (metadata: AttachmentMetadata) => void;
+    notifyUploadFailed: (message: string) => void;
+    notifyUploadProgressChanged: (value: number) => void;
+}
+
+// @beta (undocumented)
+export interface AttachmentUploadOptions {
+    acceptedMimeTypes?: string[];
+    canUploadMultiple?: boolean;
+    handler: AttachmentUploadHandler;
+}
+
+// @beta
+export type AttachmentUploadsUiState = Record<string, AttachmentMetadata>;
 
 // @public
 export type AvatarPersonaData = {
@@ -999,9 +1061,9 @@ export interface CallWithChatAdapterManagement {
     allowUnsupportedBrowserVersion(): void;
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     // @beta (undocumented)
-    cancelFileUpload: (id: string) => void;
+    cancelAttachmentUpload: (id: string) => void;
     // @beta (undocumented)
-    clearFileUploads: () => void;
+    clearAttachmentUploads: () => void;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     deleteMessage(messageId: string): Promise<void>;
     disposeLocalVideoStreamView(): Promise<void>;
@@ -1027,9 +1089,9 @@ export interface CallWithChatAdapterManagement {
     querySpeakers(): Promise<AudioDeviceInfo[]>;
     raiseHand(): Promise<void>;
     // @beta (undocumented)
-    registerActiveFileUploads: (files: File[]) => FileUploadManager[];
+    registeractiveAttachmentUploads: (files: File[]) => AttachmentUploadManager[];
     // @beta (undocumented)
-    registerCompletedFileUploads: (metadata: AttachmentMetadata[]) => FileUploadManager[];
+    registerCompletedAttachmentUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadManager[];
     removeParticipant(userId: string): Promise<void>;
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
@@ -1062,13 +1124,13 @@ export interface CallWithChatAdapterManagement {
     // @beta
     submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
     unmute(): Promise<void>;
+    // @beta (undocumented)
+    updateAttachmentUploadErrorMessage: (id: string, errorMessage: string) => void;
+    // @beta (undocumented)
+    updateAttachmentUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
+    // @beta (undocumented)
+    updateAttachmentUploadProgress: (id: string, progress: number) => void;
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
-    // @beta (undocumented)
-    updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
-    // @beta (undocumented)
-    updateFileUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
-    // @beta (undocumented)
-    updateFileUploadProgress: (id: string, progress: number) => void;
     updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void>;
     updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
 }
@@ -1184,7 +1246,7 @@ export interface CallWithChatAdapterSubscriptions {
 // @public
 export interface CallWithChatAdapterUiState {
     // @beta
-    fileUploads?: FileUploadsUiState;
+    attachmentUploads?: AttachmentUploadsUiState;
     isLocalPreviewMicrophoneEnabled: boolean;
     page: CallCompositePage;
     // @beta
@@ -1599,7 +1661,7 @@ export type CaptionsReceivedListener = (event: {
 }) => void;
 
 // @public
-export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable_2 & ChatAdapterSubscribers & FileUploadAdapter;
+export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable_2 & ChatAdapterSubscribers & AttachmentUploadAdapter;
 
 // @public
 export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
@@ -1646,7 +1708,7 @@ export interface ChatAdapterThreadManagement {
 // @public
 export type ChatAdapterUiState = {
     error?: Error;
-    fileUploads?: FileUploadsUiState;
+    attachmentUploads?: AttachmentUploadsUiState;
 };
 
 // @public
@@ -2408,7 +2470,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     RaiseHandContextualMenuItem: React_2.JSX.Element;
     LowerHandContextualMenuItem: React_2.JSX.Element;
     ReactionButtonIcon: React_2.JSX.Element;
-    CancelFileUpload: React_2.JSX.Element;
+    CancelAttachmentUpload: React_2.JSX.Element;
     DownloadFile: React_2.JSX.Element;
     DataLossPreventionProhibited: React_2.JSX.Element;
     EditBoxCancel: React_2.JSX.Element;
@@ -2597,7 +2659,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MoreDrawerSpeakers?: JSX.Element | undefined;
     ChatMessageOptions: React_2.JSX.Element;
     ControlButtonParticipantsContextualMenuItem: React_2.JSX.Element;
-    CancelFileUpload: React_2.JSX.Element;
+    CancelAttachmentUpload: React_2.JSX.Element;
     DownloadFile: React_2.JSX.Element;
     DataLossPreventionProhibited: React_2.JSX.Element;
     ErrorBarCallVideoRecoveredBySystem: React_2.JSX.Element;
@@ -2862,88 +2924,12 @@ export interface ErrorBarStrings {
 export type ErrorType = keyof ErrorBarStrings;
 
 // @beta (undocumented)
-export interface FileCardMenuAction {
-    // (undocumented)
-    icon: JSX.Element;
-    // (undocumented)
-    name: string;
-    // (undocumented)
-    onClick: (attachment: AttachmentMetadata) => void;
-}
-
-// @beta
-export interface FileDownloadError {
-    errorMessage: string;
-}
-
-// @beta (undocumented)
-export interface FileDownloadOptions {
-    // (undocumented)
-    menuActions: FileCardMenuAction[];
-}
-
-// @beta (undocumented)
 export interface FileSharingOptions {
     // (undocumented)
-    downloadOptions?: FileDownloadOptions;
+    downloadOptions?: AttachmentDownloadOptions;
     // (undocumented)
-    uploadOptions?: FileUploadOptions;
+    uploadOptions?: AttachmentUploadOptions;
 }
-
-// @beta (undocumented)
-export interface FileUploadAdapter {
-    // (undocumented)
-    cancelFileUpload: (id: string) => void;
-    // (undocumented)
-    clearFileUploads: () => void;
-    // (undocumented)
-    registerActiveFileUploads: (files: File[]) => FileUploadManager[];
-    // (undocumented)
-    registerCompletedFileUploads: (metadata: AttachmentMetadata[]) => FileUploadManager[];
-    // (undocumented)
-    updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
-    // (undocumented)
-    updateFileUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
-    // (undocumented)
-    updateFileUploadProgress: (id: string, progress: number) => void;
-}
-
-// @beta
-export type FileUploadError = {
-    message: string;
-    timestamp: number;
-};
-
-// @beta
-export type FileUploadHandler = (fileUploads: FileUploadManager[]) => void;
-
-// @beta
-export interface FileUploadManager {
-    file?: File;
-    id: string;
-    notifyUploadCompleted: (metadata: AttachmentMetadata) => void;
-    notifyUploadFailed: (message: string) => void;
-    notifyUploadProgressChanged: (value: number) => void;
-}
-
-// @beta (undocumented)
-export interface FileUploadOptions {
-    acceptedFileTypes?: string[];
-    canUploadMultiple?: boolean;
-    handler: FileUploadHandler;
-}
-
-// @beta
-export interface FileUploadState {
-    error?: FileUploadError;
-    filename: string;
-    id: string;
-    metadata?: AttachmentMetadata;
-    progress: number;
-}
-
-// @beta
-export type FileUploadsUiState = Record<string, FileUploadState>;
 
 // @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;
@@ -3334,14 +3320,14 @@ export type MessageThreadProps = {
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
-    onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+    onRenderAttachmentDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
     onUpdateMessage?: UpdateMessageCallback;
     onCancelEditMessage?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (content: string) => Promise<void>;
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
-    fileCardMenuActions?: FileCardMenuAction[];
+    attachmentMenuActions?: AttachmentMenuAction[];
     onDisplayDateTimeString?: (messageDate: Date) => string;
     mentionOptions?: MentionOptions;
     inlineImageOptions?: InlineImageOptions;
@@ -3925,15 +3911,15 @@ export interface SendBoxErrorBarError {
 // @public
 export interface SendBoxProps {
     // @beta
-    activeFileUploads?: AttachmentMetadata[];
+    activeAttachmentUploads?: AttachmentMetadata[];
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
     // @beta
     mentionLookupOptions?: MentionLookupOptions;
     // @beta
-    onCancelFileUpload?: (fileId: string) => void;
+    onCancelAttachmentUpload?: (fileId: string) => void;
     // @beta
-    onRenderFileUploads?: () => JSX.Element;
+    onRenderAttachmentUploads?: () => JSX.Element;
     onRenderIcon?: (isHover: boolean) => JSX.Element;
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
     onSendMessage?: (content: string) => Promise<void>;
@@ -3952,7 +3938,7 @@ export type SendBoxSelector = (state: ChatClientState, props: ChatBaseSelectorPr
 
 // @public
 export interface SendBoxStrings {
-    fileUploadsPendingError: string;
+    attachmentUploadsPendingError: string;
     placeholderText: string;
     removeFile: string;
     sendButtonAriaLabel: string;

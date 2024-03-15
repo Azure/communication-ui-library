@@ -7,21 +7,21 @@ import React from 'react';
 /**
  * @private
  */
-export interface FileDownloadErrorBarProps {
+export interface AttachmentDownloadErrorBarProps {
   /**callback to dismiss the download error message */
   onDismissDownloadErrorMessage: () => void;
   /** Error message to render */
-  fileDownloadErrorMessage: string;
+  attachmentDownloadErrorMessage: string;
 }
 
 /**
  * @private
  */
-export const FileDownloadErrorBar = (props: FileDownloadErrorBarProps): JSX.Element => {
-  const { fileDownloadErrorMessage, onDismissDownloadErrorMessage } = props;
+export const AttachmentDownloadErrorBar = (props: AttachmentDownloadErrorBarProps): JSX.Element => {
+  const { attachmentDownloadErrorMessage, onDismissDownloadErrorMessage } = props;
   const messageBarIconProps = { iconName: 'ProtectedDocument' };
 
-  if (fileDownloadErrorMessage !== '') {
+  if (attachmentDownloadErrorMessage !== '') {
     return (
       <Stack horizontal horizontalAlign="space-between" verticalAlign="center">
         <MessageBar
@@ -31,7 +31,7 @@ export const FileDownloadErrorBar = (props: FileDownloadErrorBarProps): JSX.Elem
           }}
           messageBarIconProps={messageBarIconProps}
         >
-          {fileDownloadErrorMessage}
+          {attachmentDownloadErrorMessage}
         </MessageBar>
       </Stack>
     );

@@ -57,20 +57,20 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
     /* @conditional-compile-remove(mention) */
     mentionOptions,
     /* @conditional-compile-remove(file-sharing) */
-    fileCardMenuAction,
+    attachmentMenuAction,
     userId,
     /* @conditional-compile-remove(file-sharing) */
-    onRenderFileDownloads,
+    onRenderAttachmentDownloads,
     defaultStatusRenderer,
     statusToRender
   } = props;
   const chatMessageRenderStyles = useChatMessageRenderStyles();
 
-  const onRenderFileDownloadsMemo = useMemo(() => {
+  const onRenderAttachmentDownloadsMemo = useMemo(() => {
     /* @conditional-compile-remove(file-sharing) */
-    return onRenderFileDownloads;
+    return onRenderAttachmentDownloads;
     return undefined;
-  }, [/* @conditional-compile-remove(file-sharing) */ onRenderFileDownloads]);
+  }, [/* @conditional-compile-remove(file-sharing) */ onRenderAttachmentDownloads]);
 
   // To rerender the defaultChatMessageRenderer if app running across days(every new day chat time stamp
   // needs to be regenerated), the dependency on "new Date().toDateString()"" is added.
@@ -84,7 +84,7 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
           <ChatMessageComponent
             {...messageProps}
             /* @conditional-compile-remove(file-sharing) */
-            onRenderFileDownloads={onRenderFileDownloadsMemo}
+            onRenderAttachmentDownloads={onRenderAttachmentDownloadsMemo}
             /* @conditional-compile-remove(file-sharing) */
             strings={messageProps.strings}
             message={messageProps.message}
@@ -102,7 +102,7 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
             /* @conditional-compile-remove(mention) */
             mentionOptions={mentionOptions}
             /* @conditional-compile-remove(file-sharing) */
-            fileCardMenuAction={fileCardMenuAction}
+            attachmentMenuAction={attachmentMenuAction}
           />
         );
       }
@@ -111,7 +111,7 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
     [
       onActionButtonClick,
       onRenderAvatar,
-      onRenderFileDownloadsMemo,
+      onRenderAttachmentDownloadsMemo,
       participantCount,
       shouldOverlapAvatarAndMessage,
       showMessageStatus,
@@ -123,7 +123,7 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
       /* @conditional-compile-remove(mention) */
       mentionOptions,
       /* @conditional-compile-remove(file-sharing) */
-      fileCardMenuAction,
+      attachmentMenuAction,
       // eslint-disable-next-line react-hooks/exhaustive-deps
       new Date().toDateString()
     ]

@@ -327,12 +327,7 @@ export type {
   LongPressTrigger
 } from '../../react-components/src';
 /* @conditional-compile-remove(file-sharing) */
-export type {
-  SendBoxErrorBarError,
-  FileCardMenuAction,
-  FileDownloadOptions,
-  FileDownloadError
-} from '../../react-components/src';
+export type { SendBoxErrorBarError, AttachmentMenuAction, AttachmentDownloadOptions } from '../../react-components/src';
 /* @conditional-compile-remove(file-sharing) */
 export type { AttachmentMetadata } from '../../react-components/src';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */

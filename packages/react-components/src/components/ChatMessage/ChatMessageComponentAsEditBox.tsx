@@ -13,9 +13,9 @@ import { InputBoxButton } from '../InputBoxButton';
 import { MessageThreadStrings } from '../MessageThread';
 import { useChatMyMessageStyles } from '../styles/MessageThread.styles';
 import { ChatMessage } from '../../types';
-import { _FileUploadCards } from '../FileUploadCards';
+import { _AttachmentUploadCards } from '../AttachmentUploadCards';
 /* @conditional-compile-remove(file-sharing) */
-import { AttachmentMetadata } from '../FileDownloadCards';
+import { AttachmentMetadata } from '../AttachmentDownloadCards';
 import {
   chatMessageFailedTagStyle,
   editChatMessageFailedTagStyle,
@@ -109,19 +109,19 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
   }, [theme.palette.themePrimary]);
 
   /* @conditional-compile-remove(file-sharing) */
-  const onRenderFileUploads = useCallback(() => {
+  const onRenderAttachmentUploads = useCallback(() => {
     return (
       !!attachmentMetadata &&
       attachmentMetadata.length > 0 && (
         <div style={{ margin: '0.25rem' }}>
-          <_FileUploadCards
-            activeFileUploads={attachmentMetadata?.map((file) => ({
+          <_AttachmentUploadCards
+            activeAttachmentUploads={attachmentMetadata?.map((file) => ({
               id: file.name,
               name: file.name,
               extension: file.extension,
               progress: 1
             }))}
-            onCancelFileUpload={(fileId) => {
+            onCancelAttachmentUpload={(fileId) => {
               setAttachedFilesMetadata(attachmentMetadata?.filter((file) => file.name !== fileId));
             }}
           />
@@ -208,7 +208,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
             />
           </Stack.Item>
         </Stack>
-        {/* @conditional-compile-remove(file-sharing) */ onRenderFileUploads()}
+        {/* @conditional-compile-remove(file-sharing) */ onRenderAttachmentUploads()}
       </>
     );
   };

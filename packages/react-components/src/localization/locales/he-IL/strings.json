@@ -24,7 +24,7 @@
     "placeholderText": "הזן הודעה",
     "textTooLong": "אורך ההודעה שלך חורג מהמגבלה המרבית.",
     "sendButtonAriaLabel": "שלח הודעה",
-    "fileUploadsPendingError": "מעלה... אנא המתן.",
+    "attachmentUploadsPendingError": "מעלה... אנא המתן.",
     "removeFile": "הסר קובץ",
     "uploading": "מעלה",
     "uploadCompleted": "ההעלאה הושלמה"
@@ -33,7 +33,7 @@
     "placeholderText": "הזן הודעה",
     "textTooLong": "אורך ההודעה שלך חורג מהמגבלה המרבית.",
     "sendButtonAriaLabel": "שלח הודעה",
-    "fileUploadsPendingError": "מעלה... המתן.",
+    "attachmentUploadsPendingError": "מעלה... המתן.",
     "removeFile": "הסרת קובץ",
     "uploading": "מעלה",
     "uploadCompleted": "ההעלאה הושלמה",

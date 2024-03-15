@@ -32,7 +32,7 @@ import { getFileTypeIconProps } from '@fluentui/react-file-type-icons';
 import React from 'react';
 import { _pxToRem } from '@internal/acs-ui-common';
 // import { useEffect, useState } from 'react';
-import { _FileUploadCardsStrings } from './FileUploadCards';
+import { _AttachmentUploadCardsStrings } from './AttachmentUploadCards';
 // import { useLocaleFileCardStringsTrampoline } from './utils/common';
 import {
   // ArrowDownload16Filled,
@@ -42,13 +42,13 @@ import {
   // ShareRegular,
   // WindowNew24Regular
 } from '@fluentui/react-icons';
-import { AttachmentMetadata, FileCardMenuAction } from './FileDownloadCards';
+import { AttachmentMetadata, AttachmentMenuAction } from './AttachmentDownloadCards';
 
 /**
  * @internal
- * _FileCard Component Props.
+ * AttachmentCard Component Props.
  */
-export interface _FileCardProps {
+export interface _AttachmentCardProps {
   /**
    * File.
    */
@@ -56,19 +56,23 @@ export interface _FileCardProps {
 
   progress?: number;
 
-  menuActions: FileCardMenuAction[];
+  menuActions: AttachmentMenuAction[];
   /**
    * Optional arialabel strings for file cards
    */
-  strings?: _FileUploadCardsStrings;
+  strings?: _AttachmentUploadCardsStrings;
+  /**
+   * Optional callback that runs if menu bar action onclick throws.
+   */
+  onDownloadErrorMessage?: (errMsg: string) => void;
 }
 
 /**
  * @internal
  * A component for displaying a file card with file icon and progress bar.
  */
-export const _FileCard = (props: _FileCardProps): JSX.Element => {
-  const { file, progress, menuActions } = props;
+export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
+  const { file, progress, menuActions, onDownloadErrorMessage } = props;
   // const theme = useTheme();
   // const [announcerString, setAnnouncerString] = useState<string | undefined>(undefined);
   // const localeStrings = useLocaleFileCardStringsTrampoline();
@@ -115,7 +119,7 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
             </Text>
           }
           description={subTitle ? <Caption1>SharePoint &gt; Chat</Caption1> : <></>}
-          action={getMenuItems(menuActions, file)}
+          action={getMenuItems(menuActions, file, onDownloadErrorMessage)}
         />
       </Card>
       {isUpload ? (
@@ -129,7 +133,11 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
   );
 };
 
-const getMenuItems = (menuActions: FileCardMenuAction[], attachment: AttachmentMetadata): JSX.Element => {
+const getMenuItems = (
+  menuActions: AttachmentMenuAction[],
+  attachment: AttachmentMetadata,
+  onDownloadErrorMessage?: (errMsg: string) => void
+): JSX.Element => {
   return menuActions.length === 1 ? (
     <ToolbarButton
       aria-label={menuActions[0].name}
@@ -145,7 +153,18 @@ const getMenuItems = (menuActions: FileCardMenuAction[], attachment: AttachmentM
         <MenuPopover>
           <MenuList>
             {menuActions.map((menuItem, index) => (
-              <MenuItem key={index} icon={menuItem.icon} onClick={() => menuItem.onClick(attachment)}>
+              <MenuItem
+                key={index}
+                icon={menuItem.icon}
+                onClick={() => {
+                  try {
+                    menuItem.onClick(attachment);
+                  } catch (e) {
+                    console.error(e);
+                    onDownloadErrorMessage?.((e as Error).message);
+                  }
+                }}
+              >
                 {menuItem.name}
               </MenuItem>
             ))}

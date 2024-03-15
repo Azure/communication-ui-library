@@ -24,7 +24,7 @@
     "placeholderText": "輸入訊息",
     "textTooLong": "您的訊息長度超過上限。",
     "sendButtonAriaLabel": "傳送訊息",
-    "fileUploadsPendingError": "正在上傳... 請稍候。",
+    "attachmentUploadsPendingError": "正在上傳... 請稍候。",
     "removeFile": "移除檔案",
     "uploading": "正在上傳",
     "uploadCompleted": "上傳完成"
@@ -33,7 +33,7 @@
     "placeholderText": "輸入訊息",
     "textTooLong": "您的訊息長度超過上限。",
     "sendButtonAriaLabel": "傳送訊息",
-    "fileUploadsPendingError": "正在上傳...請稍候。",
+    "attachmentUploadsPendingError": "正在上傳...請稍候。",
     "removeFile": "移除檔案",
     "uploading": "正在上傳",
     "uploadCompleted": "上傳完成",

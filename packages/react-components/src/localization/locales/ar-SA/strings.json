@@ -24,7 +24,7 @@
     "placeholderText": "أدخل رسالة",
     "textTooLong": "تجاوز طول الرسالة الحد الأقصى.",
     "sendButtonAriaLabel": "إرسال رسالة",
-    "fileUploadsPendingError": "جارِ التحميل... يرجى الانتظار.",
+    "attachmentUploadsPendingError": "جارِ التحميل... يرجى الانتظار.",
     "removeFile": "إزالة الملف",
     "uploading": "جارٍ التحميل",
     "uploadCompleted": "اكتمل التحميل"
@@ -33,7 +33,7 @@
     "placeholderText": "أدخل رسالة",
     "textTooLong": "تجاوز طول الرسالة الحد الأقصى.",
     "sendButtonAriaLabel": "إرسال رسالة",
-    "fileUploadsPendingError": "جارٍ التحميل... الرجاء الانتظار.",
+    "attachmentUploadsPendingError": "جارٍ التحميل... الرجاء الانتظار.",
     "removeFile": "إزالة الملف",
     "uploading": "يتم الآن التحميل",
     "uploadCompleted": "اكتمل التحميل",

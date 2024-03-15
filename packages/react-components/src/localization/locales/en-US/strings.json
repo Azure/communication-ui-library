@@ -24,7 +24,7 @@
     "placeholderText": "Enter a message",
     "textTooLong": "Your message length is over the maximum limit.",
     "sendButtonAriaLabel": "Send message",
-    "fileUploadsPendingError": "Uploading... Please wait.",
+    "attachmentUploadsPendingError": "Uploading... Please wait.",
     "removeFile": "Remove file",
     "uploading": "Uploading",
     "uploadCompleted": "Upload completed"
@@ -33,7 +33,7 @@
     "placeholderText": "Enter a message",
     "textTooLong": "Your message length is over the maximum limit.",
     "sendButtonAriaLabel": "Send message",
-    "fileUploadsPendingError": "Uploading... Please wait.",
+    "attachmentUploadsPendingError": "Uploading... Please wait.",
     "removeFile": "Remove file",
     "uploading": "Uploading",
     "uploadCompleted": "Upload completed",

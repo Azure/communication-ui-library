@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(file-sharing) */
-import { AttachmentMetadata } from '../FileDownloadCards';
+import { AttachmentMetadata } from '../AttachmentDownloadCards';
 
 /**
  * @private
@@ -14,10 +14,12 @@ const EMPTY_MESSAGE_REGEX = /^\s*$/;
 /**
  * @private
  */
-export const hasIncompleteFileUploads = (activeFileUploads: AttachmentMetadata[] | undefined): boolean => {
+export const hasIncompleteAttachmentUploads = (activeAttachmentUploads: AttachmentMetadata[] | undefined): boolean => {
   return !!(
-    activeFileUploads?.length &&
-    !activeFileUploads.filter((fileUpload) => !fileUpload.error).every((fileUpload) => fileUpload.progress === 1)
+    activeAttachmentUploads?.length &&
+    !activeAttachmentUploads
+      .filter((attachmentUpload) => !attachmentUpload.error)
+      .every((attachmentUpload) => attachmentUpload.progress === 1)
   );
 };
 
@@ -25,8 +27,8 @@ export const hasIncompleteFileUploads = (activeFileUploads: AttachmentMetadata[]
 /**
  * @private
  */
-export const hasCompletedFileUploads = (activeFileUploads: AttachmentMetadata[] | undefined): boolean => {
-  return !!activeFileUploads?.find((file) => !file.error);
+export const hasCompletedAttachmentUploads = (activeAttachmentUploads: AttachmentMetadata[] | undefined): boolean => {
+  return !!activeAttachmentUploads?.find((file) => !file.error);
 };
 
 /**

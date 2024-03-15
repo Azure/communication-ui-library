@@ -24,7 +24,7 @@
     "placeholderText": "Bir mesaj girin",
     "textTooLong": "İletinizin uzunluğu üst sınırı aşıyor.",
     "sendButtonAriaLabel": "İleti gönder",
-    "fileUploadsPendingError": "Karşıya yükleniyor... Lütfen bekleyin.",
+    "attachmentUploadsPendingError": "Karşıya yükleniyor... Lütfen bekleyin.",
     "removeFile": "Dosyayı kaldır",
     "uploading": "Karşıya yükleniyor",
     "uploadCompleted": "Karşıya yükleme tamamlandı"
@@ -33,7 +33,7 @@
     "placeholderText": "Bir mesaj girin",
     "textTooLong": "İletinizin uzunluğu üst sınırı aşıyor.",
     "sendButtonAriaLabel": "Mesaj gönder",
-    "fileUploadsPendingError": "Karşıya yükleniyor... Lütfen bekleyin.",
+    "attachmentUploadsPendingError": "Karşıya yükleniyor... Lütfen bekleyin.",
     "removeFile": "Dosyayı kaldır",
     "uploading": "Yükleniyor",
     "uploadCompleted": "Karşıya yükleme tamamlandı",

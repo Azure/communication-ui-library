@@ -40,11 +40,11 @@ export default {
     isSendBoxWithWarning: { control: 'boolean', defaultValue: false, name: 'Has warning/information message' },
     strings: hiddenControl,
     /* @conditional-compile-remove(file-sharing) */
-    onRenderFileUploads: hiddenControl,
+    onRenderAttachmentUploads: hiddenControl,
     /* @conditional-compile-remove(file-sharing) */
-    activeFileUploads: hiddenControl,
+    activeAttachmentUploads: hiddenControl,
     /* @conditional-compile-remove(file-sharing) */
-    onCancelFileUpload: hiddenControl,
+    onCancelAttachmentUpload: hiddenControl,
     onSendMessage: hiddenControl
   }
 } as Meta;

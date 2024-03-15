@@ -8,7 +8,7 @@ import type { AttachmentMetadata } from '@internal/react-components';
  * Type to represent a file upload the local participant will perform.
  * @internal
  */
-export type _MockFileUpload = AttachmentMetadata & {
+export type _MockAttachmentUpload = AttachmentMetadata & {
   uploadComplete?: boolean;
   error?: string;
   progress?: number;
@@ -43,15 +43,15 @@ export type _FakeChatAdapterArgs = {
    */
   fileSharingEnabled?: boolean;
   /**
-   * Array of {@link FileUpload} the local participant will perform when. Property `fileSharingEnabled`
+   * Array of {@link AttachmentUpload} the local participant will perform when. Property `fileSharingEnabled`
    * needs to be enabled.
    */
-  fileUploads?: _MockFileUpload[];
+  attachmentUploads?: _MockAttachmentUpload[];
   /**
-   * Determines if array of {@link FileUpload} the local participant will perform in property `fileUploads`
+   * Determines if array of {@link AttachmentUpload} the local participant will perform in property `AttachmentUploads`
    * will fail. Property `fileSharingEnabled` needs to be enabled.
    */
-  failFileDownload?: boolean;
+  failAttachmentDownload?: boolean;
   /**
    * Determines if the first remote participant will send a fixed message with a shared file. Property
    * `fileSharingEnabled` needs to be enabled.

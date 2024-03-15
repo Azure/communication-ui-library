@@ -56,6 +56,65 @@ export type AnnouncerProps = {
     ariaLive: 'off' | 'polite' | 'assertive' | undefined;
 };
 
+// @internal
+export const _AttachmentCard: (props: _AttachmentCardProps) => JSX.Element;
+
+// @internal
+export const _AttachmentCardGroup: (props: _AttachmentCardGroupProps) => JSX.Element;
+
+// @internal
+export interface _AttachmentCardGroupProps {
+    // (undocumented)
+    ariaLabel?: string;
+    // (undocumented)
+    children: React_2.ReactNode;
+}
+
+// @internal
+export interface _AttachmentCardProps {
+    file: AttachmentMetadata;
+    // (undocumented)
+    menuActions: AttachmentMenuAction[];
+    onDownloadErrorMessage?: (errMsg: string) => void;
+    // (undocumented)
+    progress?: number;
+    strings?: _AttachmentUploadCardsStrings;
+}
+
+// @internal (undocumented)
+export const _AttachmentDownloadCards: (props: _AttachmentDownloadCardsProps) => JSX.Element;
+
+// @internal (undocumented)
+export interface _AttachmentDownloadCardsProps {
+    attachment?: AttachmentMetadata[];
+    menuActions?: AttachmentMenuAction[];
+    onDownloadErrorMessage?: (errMsg: string) => void;
+    strings?: _AttachmentDownloadCardsStrings;
+}
+
+// @internal
+export interface _AttachmentDownloadCardsStrings {
+    downloadFile: string;
+    // (undocumented)
+    fileCardGroupMessage: string;
+}
+
+// @beta (undocumented)
+export interface AttachmentDownloadOptions {
+    // (undocumented)
+    menuActions: AttachmentMenuAction[];
+}
+
+// @beta (undocumented)
+export interface AttachmentMenuAction {
+    // (undocumented)
+    icon: JSX.Element;
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    onClick: (attachment: AttachmentMetadata) => void;
+}
+
 // @beta
 export interface AttachmentMetadata {
     error?: SendBoxErrorBarError;
@@ -66,6 +125,13 @@ export interface AttachmentMetadata {
     payload?: Record<string, string>;
     progress?: number;
     url?: string;
+}
+
+// @internal
+export interface _AttachmentUploadCardsStrings {
+    removeFile: string;
+    uploadCompleted: string;
+    uploading: string;
 }
 
 // @internal
@@ -775,7 +841,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     RaiseHandContextualMenuItem: React_2.JSX.Element;
     LowerHandContextualMenuItem: React_2.JSX.Element;
     ReactionButtonIcon: React_2.JSX.Element;
-    CancelFileUpload: React_2.JSX.Element;
+    CancelAttachmentUpload: React_2.JSX.Element;
     DownloadFile: React_2.JSX.Element;
     DataLossPreventionProhibited: React_2.JSX.Element;
     EditBoxCancel: React_2.JSX.Element;
@@ -865,7 +931,7 @@ export const DEFAULT_COMPONENT_ICONS: {
 };
 
 // @beta (undocumented)
-export const defaultFileCardMenuAction: FileCardMenuAction;
+export const defaultAttachmentMenuAction: AttachmentMenuAction;
 
 // @internal
 export interface _DeviceMenuProps {
@@ -1148,76 +1214,6 @@ export interface _ExtendedIModalProps extends IModalProps {
     maxDragPosition?: _ICoordinates;
     // (undocumented)
     minDragPosition?: _ICoordinates;
-}
-
-// @internal
-export const _FileCard: (props: _FileCardProps) => JSX.Element;
-
-// @internal
-export const _FileCardGroup: (props: _FileCardGroupProps) => JSX.Element;
-
-// @internal
-export interface _FileCardGroupProps {
-    // (undocumented)
-    ariaLabel?: string;
-    // (undocumented)
-    children: React_2.ReactNode;
-}
-
-// @beta (undocumented)
-export interface FileCardMenuAction {
-    // (undocumented)
-    icon: JSX.Element;
-    // (undocumented)
-    name: string;
-    // (undocumented)
-    onClick: (attachment: AttachmentMetadata) => void;
-}
-
-// @internal
-export interface _FileCardProps {
-    file: AttachmentMetadata;
-    // (undocumented)
-    menuActions: FileCardMenuAction[];
-    // (undocumented)
-    progress?: number;
-    strings?: _FileUploadCardsStrings;
-}
-
-// @internal (undocumented)
-export const _FileDownloadCards: (props: _FileDownloadCardsProps) => JSX.Element;
-
-// @internal (undocumented)
-export interface _FileDownloadCardsProps {
-    attachment?: AttachmentMetadata[];
-    menuActions?: FileCardMenuAction[];
-    onDownloadErrorMessage?: (errMsg: string) => void;
-    strings?: _FileDownloadCardsStrings;
-}
-
-// @internal
-export interface _FileDownloadCardsStrings {
-    downloadFile: string;
-    // (undocumented)
-    fileCardGroupMessage: string;
-}
-
-// @beta
-export interface FileDownloadError {
-    errorMessage: string;
-}
-
-// @beta (undocumented)
-export interface FileDownloadOptions {
-    // (undocumented)
-    menuActions: FileCardMenuAction[];
-}
-
-// @internal
-export interface _FileUploadCardsStrings {
-    removeFile: string;
-    uploadCompleted: string;
-    uploading: string;
 }
 
 // @public
@@ -1568,14 +1564,14 @@ export type MessageThreadProps = {
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
-    onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+    onRenderAttachmentDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
     onUpdateMessage?: UpdateMessageCallback;
     onCancelEditMessage?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (content: string) => Promise<void>;
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
-    fileCardMenuActions?: FileCardMenuAction[];
+    attachmentMenuActions?: AttachmentMenuAction[];
     onDisplayDateTimeString?: (messageDate: Date) => string;
     mentionOptions?: MentionOptions;
     inlineImageOptions?: InlineImageOptions;
@@ -2061,15 +2057,15 @@ export interface SendBoxErrorBarError {
 // @public
 export interface SendBoxProps {
     // @beta
-    activeFileUploads?: AttachmentMetadata[];
+    activeAttachmentUploads?: AttachmentMetadata[];
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
     // @beta
     mentionLookupOptions?: MentionLookupOptions;
     // @beta
-    onCancelFileUpload?: (fileId: string) => void;
+    onCancelAttachmentUpload?: (fileId: string) => void;
     // @beta
-    onRenderFileUploads?: () => JSX.Element;
+    onRenderAttachmentUploads?: () => JSX.Element;
     onRenderIcon?: (isHover: boolean) => JSX.Element;
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
     onSendMessage?: (content: string) => Promise<void>;
@@ -2082,7 +2078,7 @@ export interface SendBoxProps {
 
 // @public
 export interface SendBoxStrings {
-    fileUploadsPendingError: string;
+    attachmentUploadsPendingError: string;
     placeholderText: string;
     removeFile: string;
     sendButtonAriaLabel: string;

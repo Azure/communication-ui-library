@@ -24,7 +24,7 @@
     "placeholderText": "Введите сообщение",
     "textTooLong": "Длина сообщения превышает максимально допустимую.",
     "sendButtonAriaLabel": "Отправить сообщение",
-    "fileUploadsPendingError": "Выполняется загрузка. Подождите...",
+    "attachmentUploadsPendingError": "Выполняется загрузка. Подождите...",
     "removeFile": "Удалить файл",
     "uploading": "Отправка",
     "uploadCompleted": "Отправка завершена"
@@ -33,7 +33,7 @@
     "placeholderText": "Введите сообщение",
     "textTooLong": "Длина сообщения превышает максимально допустимую.",
     "sendButtonAriaLabel": "Отправить сообщение",
-    "fileUploadsPendingError": "Производится отправка... Подождите.",
+    "attachmentUploadsPendingError": "Производится отправка... Подождите.",
     "removeFile": "Удалить файл",
     "uploading": "Отправка",
     "uploadCompleted": "Отправка завершена",

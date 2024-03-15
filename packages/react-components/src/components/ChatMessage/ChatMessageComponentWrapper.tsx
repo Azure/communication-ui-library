@@ -15,7 +15,7 @@ import { DefaultSystemMessage } from './DefaultSystemMessage';
 /* @conditional-compile-remove(image-overlay) */
 import { InlineImageOptions } from './ChatMessageContent';
 /* @conditional-compile-remove(file-sharing) */
-import { FileCardMenuAction } from '../FileDownloadCards';
+import { AttachmentMenuAction } from '../AttachmentDownloadCards';
 
 /**
  * Props for {@link ChatMessageComponentWrapper}
@@ -42,7 +42,7 @@ export type ChatMessageComponentWrapperProps = _ChatMessageProps & {
   participantCount?: number;
   readCount?: number;
   /* @conditional-compile-remove(file-sharing) */
-  onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+  onRenderAttachmentDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
   onActionButtonClick: (
     message: ChatMessage,
     setMessageReadBy: (
@@ -53,7 +53,7 @@ export type ChatMessageComponentWrapperProps = _ChatMessageProps & {
     ) => void
   ) => void;
   /* @conditional-compile-remove(file-sharing) */
-  fileCardMenuAction?: FileCardMenuAction[];
+  attachmentMenuAction?: AttachmentMenuAction[];
   /* @conditional-compile-remove(date-time-customization) */
   onDisplayDateTimeString?: (messageDate: Date) => string;
   /* @conditional-compile-remove(image-overlay) */

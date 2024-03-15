@@ -24,7 +24,7 @@
     "placeholderText": "Een bericht invoeren",
     "textTooLong": "De lengte van uw bericht overschrijdt de maximumlimiet.",
     "sendButtonAriaLabel": "Bericht verzenden",
-    "fileUploadsPendingError": "Uploaden.... Een ogenblik geduld.",
+    "attachmentUploadsPendingError": "Uploaden.... Een ogenblik geduld.",
     "removeFile": "Bestand verwijderen",
     "uploading": "Uploaden",
     "uploadCompleted": "Upload voltooid"
@@ -33,7 +33,7 @@
     "placeholderText": "Een bericht invoeren",
     "textTooLong": "De lengte van uw bericht overschrijdt de maximumlimiet.",
     "sendButtonAriaLabel": "Bericht verzenden",
-    "fileUploadsPendingError": "Uploaden... Een ogenblik geduld.",
+    "attachmentUploadsPendingError": "Uploaden... Een ogenblik geduld.",
     "removeFile": "Bestand verwijderen",
     "uploading": "Uploaden",
     "uploadCompleted": "Upload voltooid",

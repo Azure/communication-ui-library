@@ -24,7 +24,7 @@
     "placeholderText": "Saisir un message",
     "textTooLong": "La longueur de votre message dépasse la limite maximale.",
     "sendButtonAriaLabel": "Envoyer un message",
-    "fileUploadsPendingError": "Chargement en cours... Veuillez patienter.",
+    "attachmentUploadsPendingError": "Chargement en cours... Veuillez patienter.",
     "removeFile": "Supprimer un fichier",
     "uploading": "Chargement",
     "uploadCompleted": "Téléchargement terminé"
@@ -33,7 +33,7 @@
     "placeholderText": "Saisir un message",
     "textTooLong": "La longueur de votre message dépasse la limite maximale.",
     "sendButtonAriaLabel": "Envoyer un message",
-    "fileUploadsPendingError": "Chargement en cours... Veuillez patienter.",
+    "attachmentUploadsPendingError": "Chargement en cours... Veuillez patienter.",
     "removeFile": "Supprimer le fichier",
     "uploading": "Téléchargement",
     "uploadCompleted": "Chargement terminé",

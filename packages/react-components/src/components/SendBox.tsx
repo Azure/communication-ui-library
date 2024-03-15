@@ -13,18 +13,18 @@ import { InputBoxButton } from './InputBoxButton';
 /* @conditional-compile-remove(file-sharing) */
 import { SendBoxErrors } from './SendBoxErrors';
 /* @conditional-compile-remove(file-sharing) */
-import { _FileUploadCards } from './FileUploadCards';
+import { _AttachmentUploadCards } from './AttachmentUploadCards';
 /* @conditional-compile-remove(file-sharing) */
-import { fileUploadCardsStyles } from './styles/SendBox.styles';
+import { attachmentUploadCardsStyles } from './styles/SendBox.styles';
 /* @conditional-compile-remove(file-sharing) */
 import { SendBoxErrorBarError } from './SendBoxErrorBar';
 /* @conditional-compile-remove(file-sharing) */
-import { hasCompletedFileUploads, hasIncompleteFileUploads } from './utils/SendBoxUtils';
+import { hasCompletedAttachmentUploads, hasIncompleteAttachmentUploads } from './utils/SendBoxUtils';
 import { MAXIMUM_LENGTH_OF_MESSAGE, isMessageTooLong, sanitizeText } from './utils/SendBoxUtils';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from './MentionPopover';
 /* @conditional-compile-remove(file-sharing) */
-import { AttachmentMetadata } from './FileDownloadCards';
+import { AttachmentMetadata } from './AttachmentDownloadCards';
 import { FluentV9ThemeProvider } from '../theming/FluentV9ThemeProvider';
 
 /**
@@ -67,7 +67,7 @@ export interface SendBoxStrings {
   /**
    * Error message indicating that all file uploads are not complete.
    */
-  fileUploadsPendingError: string;
+  attachmentUploadsPendingError: string;
   /* @conditional-compile-remove(file-sharing) */
   /**
    * Aria label to notify user when focus is on cancel file upload button.
@@ -154,21 +154,21 @@ export interface SendBoxProps {
    * be rendered below the text area in sendBox.
    * @beta
    */
-  onRenderFileUploads?: () => JSX.Element;
+  onRenderAttachmentUploads?: () => JSX.Element;
   /* @conditional-compile-remove(file-sharing) */
   /**
    * Optional array of active file uploads where each object has attributes
    * of a file upload like name, progress, errorMessage etc.
    * @beta
    */
-  activeFileUploads?: AttachmentMetadata[];
+  activeAttachmentUploads?: AttachmentMetadata[];
   /* @conditional-compile-remove(file-sharing) */
   /**
    * Optional callback to remove the file upload before sending by clicking on
    * cancel icon.
    * @beta
    */
-  onCancelFileUpload?: (fileId: string) => void;
+  onCancelAttachmentUpload?: (fileId: string) => void;
 }
 
 /**
@@ -193,7 +193,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     /* @conditional-compile-remove(mention) */
     mentionLookupOptions,
     /* @conditional-compile-remove(file-sharing) */
-    activeFileUploads
+    activeAttachmentUploads
   } = props;
   const theme = useTheme();
   const localeStrings = useLocale().strings.sendBox;
@@ -206,7 +206,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   const sendTextFieldRef = React.useRef<ITextField>(null);
 
   /* @conditional-compile-remove(file-sharing) */
-  const [fileUploadsPendingError, setFileUploadsPendingError] = useState<SendBoxErrorBarError | undefined>(undefined);
+  const [attachmentUploadsPendingError, setAttachmentUploadsPendingError] = useState<SendBoxErrorBarError | undefined>(undefined);
 
   const sendMessageOnClick = (): void => {
     // don't send a message when disabled
@@ -216,11 +216,11 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
 
     // Don't send message until all files have been uploaded successfully
     /* @conditional-compile-remove(file-sharing) */
-    setFileUploadsPendingError(undefined);
+    setAttachmentUploadsPendingError(undefined);
 
     /* @conditional-compile-remove(file-sharing) */
-    if (hasIncompleteFileUploads(activeFileUploads)) {
-      setFileUploadsPendingError({ message: strings.fileUploadsPendingError, timestamp: Date.now() });
+    if (hasIncompleteAttachmentUploads(activeAttachmentUploads)) {
+      setAttachmentUploadsPendingError({ message: strings.attachmentUploadsPendingError, timestamp: Date.now() });
       return;
     }
 
@@ -229,7 +229,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     // Message can be empty if there is a valid file upload
     if (
       sanitizeText(message).length > 0 ||
-      /* @conditional-compile-remove(file-sharing) */ hasCompletedFileUploads(activeFileUploads)
+      /* @conditional-compile-remove(file-sharing) */ hasCompletedAttachmentUploads(activeAttachmentUploads)
     ) {
       onSendMessage && onSendMessage(message);
       setTextValue('');
@@ -261,14 +261,14 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       sendIconStyle({
         theme,
         hasText: !!textValue,
-        /* @conditional-compile-remove(file-sharing) */ hasFile: hasCompletedFileUploads(activeFileUploads),
+        /* @conditional-compile-remove(file-sharing) */ hasFile: hasCompletedAttachmentUploads(activeAttachmentUploads),
         hasErrorMessage: !!errorMessage,
         customSendIconStyle: styles?.sendMessageIcon
       }),
     [
       theme,
       textValue,
-      /* @conditional-compile-remove(file-sharing) */ activeFileUploads,
+      /* @conditional-compile-remove(file-sharing) */ activeAttachmentUploads,
       errorMessage,
       styles?.sendMessageIcon
     ]
@@ -287,31 +287,31 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   // Ensure that errors are cleared when there are no files in sendBox
   /* @conditional-compile-remove(file-sharing) */
   React.useEffect(() => {
-    if (!activeFileUploads?.filter((upload) => !upload.error).length) {
-      setFileUploadsPendingError(undefined);
+    if (!activeAttachmentUploads?.filter((upload) => !upload.error).length) {
+      setAttachmentUploadsPendingError(undefined);
     }
-  }, [activeFileUploads]);
+  }, [activeAttachmentUploads]);
 
   /* @conditional-compile-remove(file-sharing) */
   const sendBoxErrorsProps = useMemo(() => {
     return {
-      fileUploadsPendingError: fileUploadsPendingError,
-      fileUploadError: activeFileUploads?.filter((fileUpload) => fileUpload.error).pop()?.error
+      attachmentUploadsPendingError: attachmentUploadsPendingError,
+      attachmentUploadError: activeAttachmentUploads?.filter((attachmentUpload) => attachmentUpload.error).pop()?.error
     };
-  }, [activeFileUploads, fileUploadsPendingError]);
+  }, [activeAttachmentUploads, attachmentUploadsPendingError]);
 
   /* @conditional-compile-remove(file-sharing) */
-  const onRenderFileUploads = useCallback(() => {
-    if (!activeFileUploads?.filter((upload) => !upload.error).length) {
+  const onRenderAttachmentUploads = useCallback(() => {
+    if (!activeAttachmentUploads?.filter((upload) => !upload.error).length) {
       return null;
     }
-    return props.onRenderFileUploads ? (
-      props.onRenderFileUploads()
+    return props.onRenderAttachmentUploads ? (
+      props.onRenderAttachmentUploads()
     ) : (
-      <Stack className={fileUploadCardsStyles}>
-        <_FileUploadCards
-          activeFileUploads={activeFileUploads}
-          onCancelFileUpload={props.onCancelFileUpload}
+      <Stack className={attachmentUploadCardsStyles}>
+        <_AttachmentUploadCards
+          activeAttachmentUploads={activeAttachmentUploads}
+          onCancelAttachmentUpload={props.onCancelAttachmentUpload}
           strings={{
             removeFile: props.strings?.removeFile ?? localeStrings.removeFile,
             uploading: props.strings?.uploading ?? localeStrings.uploading,
@@ -320,7 +320,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
         />
       </Stack>
     );
-  }, [activeFileUploads, props, localeStrings]);
+  }, [activeAttachmentUploads, props, localeStrings]);
 
   return (
     <FluentV9ThemeProvider v8Theme={theme}>
@@ -379,7 +379,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
           </InputBoxComponent>
           {
             /* @conditional-compile-remove(file-sharing) */
-            onRenderFileUploads()
+            onRenderAttachmentUploads()
           }
         </Stack>
       </Stack>

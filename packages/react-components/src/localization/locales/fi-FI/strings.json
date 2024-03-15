@@ -24,7 +24,7 @@
     "placeholderText": "Kirjoita viesti",
     "textTooLong": "Viestin pituus ylittää enimmäispituuden.",
     "sendButtonAriaLabel": "Lähetä viesti",
-    "fileUploadsPendingError": "Ladataan palvelimeen... Odota hetki.",
+    "attachmentUploadsPendingError": "Ladataan palvelimeen... Odota hetki.",
     "removeFile": "Poista tiedosto",
     "uploading": "Ladataan palvelimeen",
     "uploadCompleted": "Ladattu palvelimeen"
@@ -33,7 +33,7 @@
     "placeholderText": "Kirjoita viesti",
     "textTooLong": "Viestin pituus ylittää enimmäispituuden.",
     "sendButtonAriaLabel": "Lähetä viesti",
-    "fileUploadsPendingError": "Ladataan... Odota.",
+    "attachmentUploadsPendingError": "Ladataan... Odota.",
     "removeFile": "Poista tiedosto",
     "uploading": "Ladataan",
     "uploadCompleted": "Lataus valmis",

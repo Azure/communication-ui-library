@@ -24,7 +24,7 @@
     "placeholderText": "Inserir uma mensagem",
     "textTooLong": "O comprimento da mensagem está acima do limite máximo.",
     "sendButtonAriaLabel": "Enviar mensagem",
-    "fileUploadsPendingError": "Carregando... Aguarde.",
+    "attachmentUploadsPendingError": "Carregando... Aguarde.",
     "removeFile": "Remover arquivo",
     "uploading": "Carregando",
     "uploadCompleted": "Carregamento concluído"
@@ -33,7 +33,7 @@
     "placeholderText": "Inserir uma mensagem",
     "textTooLong": "O comprimento da mensagem está acima do limite máximo.",
     "sendButtonAriaLabel": "Enviar mensagem",
-    "fileUploadsPendingError": "Carregando... Aguarde.",
+    "attachmentUploadsPendingError": "Carregando... Aguarde.",
     "removeFile": "Remover arquivo",
     "uploading": "Carregando",
     "uploadCompleted": "Carregamento concluído",

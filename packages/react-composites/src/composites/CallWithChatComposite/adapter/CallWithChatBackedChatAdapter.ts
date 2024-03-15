@@ -6,7 +6,7 @@ import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ResourceDetails } from '../../ChatComposite';
 /* @conditional-compile-remove(file-sharing) */
-import { FileUploadManager } from '../../ChatComposite';
+import { AttachmentUploadManager } from '../../ChatComposite';
 /* @conditional-compile-remove(file-sharing) */
 import { AttachmentMetadata } from '@internal/react-components';
 import { ErrorBarStrings } from '@internal/react-components';
@@ -95,38 +95,38 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
   };
 
   /* @conditional-compile-remove(file-sharing) */
-  public registerActiveFileUploads = (files: File[]): FileUploadManager[] => {
-    return this.callWithChatAdapter.registerActiveFileUploads(files);
+  public registeractiveAttachmentUploads = (files: File[]): AttachmentUploadManager[] => {
+    return this.callWithChatAdapter.registeractiveAttachmentUploads(files);
   };
 
   /* @conditional-compile-remove(file-sharing) */
-  public registerCompletedFileUploads = (metadata: AttachmentMetadata[]): FileUploadManager[] => {
-    return this.callWithChatAdapter.registerCompletedFileUploads(metadata);
+  public registerCompletedAttachmentUploads = (metadata: AttachmentMetadata[]): AttachmentUploadManager[] => {
+    return this.callWithChatAdapter.registerCompletedAttachmentUploads(metadata);
   };
 
   /* @conditional-compile-remove(file-sharing) */
-  public clearFileUploads = (): void => {
-    this.callWithChatAdapter.clearFileUploads();
+  public clearAttachmentUploads = (): void => {
+    this.callWithChatAdapter.clearAttachmentUploads();
   };
 
   /* @conditional-compile-remove(file-sharing) */
-  public cancelFileUpload = (id: string): void => {
-    this.callWithChatAdapter.cancelFileUpload(id);
+  public cancelAttachmentUpload = (id: string): void => {
+    this.callWithChatAdapter.cancelAttachmentUpload(id);
   };
 
   /* @conditional-compile-remove(file-sharing) */
-  public updateFileUploadProgress = (id: string, progress: number): void => {
-    this.callWithChatAdapter.updateFileUploadProgress(id, progress);
+  public updateAttachmentUploadProgress = (id: string, progress: number): void => {
+    this.callWithChatAdapter.updateAttachmentUploadProgress(id, progress);
   };
 
   /* @conditional-compile-remove(file-sharing) */
-  public updateFileUploadErrorMessage = (id: string, errorMessage: string): void => {
-    this.callWithChatAdapter.updateFileUploadErrorMessage(id, errorMessage);
+  public updateAttachmentUploadErrorMessage = (id: string, errorMessage: string): void => {
+    this.callWithChatAdapter.updateAttachmentUploadErrorMessage(id, errorMessage);
   };
 
   /* @conditional-compile-remove(file-sharing) */
-  public updateFileUploadMetadata = (id: string, metadata: AttachmentMetadata): void => {
-    this.callWithChatAdapter.updateFileUploadMetadata(id, metadata);
+  public updateAttachmentUploadMetadata = (id: string, metadata: AttachmentMetadata): void => {
+    this.callWithChatAdapter.updateAttachmentUploadMetadata(id, metadata);
   };
 
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
@@ -152,6 +152,6 @@ function chatAdapterStateFromCallWithChatAdapterState(
     thread: callWithChatAdapterState.chat,
     latestErrors: callWithChatAdapterState.latestChatErrors,
     /* @conditional-compile-remove(file-sharing) */
-    fileUploads: callWithChatAdapterState.fileUploads
+    attachmentUploads: callWithChatAdapterState.attachmentUploads
   };
 }

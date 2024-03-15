@@ -4,13 +4,7 @@
 import { ChatParticipant, ChatMessage } from '@azure/communication-chat';
 import { getIdentifierKind } from '@azure/communication-common';
 import { _createStatefulChatClientWithDeps } from '@internal/chat-stateful-client';
-import {
-  _IdentifierProvider,
-  FileDownloadError,
-  FileDownloadHandler,
-  lightTheme,
-  darkTheme
-} from '@internal/react-components';
+import { _IdentifierProvider, lightTheme, darkTheme, defaultAttachmentMenuAction } from '@internal/react-components';
 import React, { useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import {
@@ -19,7 +13,7 @@ import {
   COMPOSITE_LOCALE_FR_FR,
   _FakeChatAdapterArgs,
   _useFakeChatAdapters,
-  _MockFileUpload
+  _MockAttachmentUpload
 } from '../../../src';
 // eslint-disable-next-line no-restricted-imports
 import { IDS } from '../../browser/common/constants';
@@ -53,8 +47,8 @@ export const FakeAdapterApp = (): JSX.Element => {
         return;
       }
 
-      if (fakeChatAdapterArgs.fileUploads) {
-        handleFileUploads(fakeAdapters.local, fakeChatAdapterArgs.fileUploads);
+      if (fakeChatAdapterArgs.attachmentUploads) {
+        handleAttachmentUploads(fakeAdapters.local, fakeChatAdapterArgs.attachmentUploads);
       }
 
       if (fakeChatAdapterArgs.sendRemoteFileSharingMessage && fakeChatAdapterArgs.remoteParticipants.length > 0) {
@@ -78,16 +72,6 @@ export const FakeAdapterApp = (): JSX.Element => {
     })();
   }, [fakeAdapters]);
 
-  const fileDownloadHandler: FileDownloadHandler = (_userId, fileData): Promise<URL | FileDownloadError> => {
-    return new Promise((resolve) => {
-      if (fakeChatAdapterArgs.failFileDownload) {
-        resolve({ errorMessage: 'You don’t have permission to download this file.' });
-      } else {
-        resolve(new URL(fileData.url));
-      }
-    });
-  };
-
   if (!fakeAdapters) {
     return <>{'Initializing chat adapter...'}</>;
   }
@@ -105,13 +89,17 @@ export const FakeAdapterApp = (): JSX.Element => {
             onRenderMessage={fakeChatAdapterArgs.customDataModelEnabled ? customOnRenderMessage : undefined}
             options={{
               participantPane: fakeChatAdapterArgs.showParticipantPane ?? false,
-              fileSharing: fakeChatAdapterArgs.fileSharingEnabled
+              fileSharingOptions: fakeChatAdapterArgs.fileSharingEnabled
                 ? {
-                    downloadHandler: fileDownloadHandler,
-                    uploadHandler: () => {
-                      //noop
+                    downloadOptions: {
+                      menuActions: [defaultAttachmentMenuAction]
                     },
-                    multiple: true
+                    uploadOptions: {
+                      canUploadMultiple: true,
+                      handler: () => {
+                        // noop
+                      }
+                    }
                   }
                 : undefined
             }}
@@ -127,11 +115,11 @@ export const FakeAdapterApp = (): JSX.Element => {
   );
 };
 
-const handleFileUploads = (adapter: ChatAdapter, fileUploads: _MockFileUpload[]): void => {
-  fileUploads.forEach((file) => {
+const handleAttachmentUploads = (adapter: ChatAdapter, AttachmentUploads: _MockAttachmentUpload[]): void => {
+  AttachmentUploads.forEach((file) => {
     if (file.uploadComplete) {
-      const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
-      fileUploads[0].notifyUploadCompleted({
+      const attachmentUploads = adapter.registeractiveAttachmentUploads([new File([], file.name)]);
+      attachmentUploads[0].notifyUploadCompleted({
         name: file.name,
         extension: file.extension,
         url: file.url,
@@ -139,13 +127,13 @@ const handleFileUploads = (adapter: ChatAdapter, fileUploads: _MockFileUpload[])
         id: file.id
       });
     } else if (file.error) {
-      const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
-      fileUploads[0].notifyUploadFailed(file.error);
+      const attachmentUploads = adapter.registeractiveAttachmentUploads([new File([], file.name)]);
+      attachmentUploads[0].notifyUploadFailed(file.error);
     } else if (file.progress) {
-      const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
-      fileUploads[0].notifyUploadProgressChanged(file.progress);
+      const attachmentUploads = adapter.registeractiveAttachmentUploads([new File([], file.name)]);
+      attachmentUploads[0].notifyUploadProgressChanged(file.progress);
     } else {
-      adapter.registerCompletedFileUploads([file]);
+      adapter.registerCompletedAttachmentUploads([file]);
     }
   });
 };

@@ -10,7 +10,7 @@ import { Suspense } from 'react';
 /* @conditional-compile-remove(file-sharing) */
 import { ChatAdapter } from '../ChatComposite';
 /* @conditional-compile-remove(file-sharing) */
-import { fileUploadsSelector } from '../ChatComposite/selectors/fileUploadsSelector';
+import { attachmentUploadsSelector } from '../ChatComposite/selectors/attachmentUploadsSelector';
 /* @conditional-compile-remove(file-sharing) */
 import { useSelector } from '../ChatComposite/hooks/useSelector';
 
@@ -43,7 +43,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   const sendBoxProps = usePropsFor(SimpleSendBox);
 
   /* @conditional-compile-remove(file-sharing) */
-  const activeFileUploads = useSelector(fileUploadsSelector).files;
+  const activeAttachmentUploads = useSelector(attachmentUploadsSelector).files;
 
   const sendBoxStyles = useMemo(() => {
     return Object.assign({}, styles);
@@ -56,22 +56,21 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
         autoFocus={options?.autoFocus}
         styles={sendBoxStyles}
         /* @conditional-compile-remove(file-sharing) */
-        activeFileUploads={activeFileUploads.map((file) => ({
+        activeAttachmentUploads={activeAttachmentUploads.map((file) => ({
           id: file.id,
-          name: file.filename,
-          extension: file.filename.split('.').pop() ?? '',
-          progress: file.progress,
-          error: file.error
+          name: file.name,
+          extension: file.name.split('.').pop() ?? '',
+          progress: file.progress
         }))}
         /* @conditional-compile-remove(file-sharing) */
-        onCancelFileUpload={adapter.cancelFileUpload}
+        onCancelAttachmentUpload={adapter.cancelAttachmentUpload}
       />
     ),
     [
       sendBoxProps,
       options,
       sendBoxStyles,
-      /* @conditional-compile-remove(file-sharing) */ activeFileUploads,
+      /* @conditional-compile-remove(file-sharing) */ activeAttachmentUploads,
       /* @conditional-compile-remove(file-sharing) */ adapter
     ]
   );

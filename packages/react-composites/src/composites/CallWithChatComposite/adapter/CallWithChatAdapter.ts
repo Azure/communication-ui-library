@@ -48,7 +48,7 @@ import { JoinCallOptions } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(file-sharing) */
 import { AttachmentMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
-import { FileUploadManager } from '../../ChatComposite';
+import { AttachmentUploadManager } from '../../ChatComposite';
 /* @conditional-compile-remove(PSTN-calls) */
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { UnknownIdentifier, MicrosoftTeamsAppIdentifier } from '@azure/communication-common';
@@ -381,25 +381,25 @@ export interface CallWithChatAdapterManagement {
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
   /* @conditional-compile-remove(file-sharing) */
   /** @beta */
-  registerActiveFileUploads: (files: File[]) => FileUploadManager[];
+  registeractiveAttachmentUploads: (files: File[]) => AttachmentUploadManager[];
   /* @conditional-compile-remove(file-sharing) */
   /** @beta */
-  registerCompletedFileUploads: (metadata: AttachmentMetadata[]) => FileUploadManager[];
+  registerCompletedAttachmentUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadManager[];
   /* @conditional-compile-remove(file-sharing) */
   /** @beta */
-  clearFileUploads: () => void;
+  clearAttachmentUploads: () => void;
   /* @conditional-compile-remove(file-sharing) */
   /** @beta */
-  cancelFileUpload: (id: string) => void;
+  cancelAttachmentUpload: (id: string) => void;
   /* @conditional-compile-remove(file-sharing) */
   /** @beta */
-  updateFileUploadProgress: (id: string, progress: number) => void;
+  updateAttachmentUploadProgress: (id: string, progress: number) => void;
   /* @conditional-compile-remove(file-sharing) */
   /** @beta */
-  updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
+  updateAttachmentUploadErrorMessage: (id: string, errorMessage: string) => void;
   /* @conditional-compile-remove(file-sharing) */
   /** @beta */
-  updateFileUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
+  updateAttachmentUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /** @public */
   downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;

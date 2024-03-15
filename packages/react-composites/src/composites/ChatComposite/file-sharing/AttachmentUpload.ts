@@ -5,19 +5,19 @@ import { EventEmitter } from 'events';
 import { nanoid } from 'nanoid';
 import { _MAX_EVENT_LISTENERS } from '@internal/acs-ui-common';
 import { AttachmentMetadata } from '@internal/react-components';
-import { FileUploadHandler } from './FileUploadHandler';
+import { AttachmentUploadHandler } from './AttachmentUploadHandler';
 
 /**
  * @beta
  */
-export interface FileUploadOptions {
+export interface AttachmentUploadOptions {
   /**
    * A string containing the comma separated list of accepted file types.
    * Similar to the `accept` attribute of the `<input type="file" />` element.
    * Accepts any type of file if not specified.
    * @beta
    */
-  acceptedFileTypes?: string[];
+  acceptedMimeTypes?: string[];
   /**
    * Allows multiple files to be selected if set to `true`.
    * Similar to the `multiple` attribute of the `<input type="file" />` element.
@@ -26,49 +26,17 @@ export interface FileUploadOptions {
    */
   canUploadMultiple?: boolean;
   /**
-   * A function of type {@link FileUploadHandler} for handling file uploads.
+   * A function of type {@link AttachmentUploadHandler} for handling file uploads.
    * @beta
    */
-  handler: FileUploadHandler;
-}
-
-/**
- * Contains the state attributes of a file upload like name, progress etc.
- * @beta
- */
-export interface FileUploadState {
-  /**
-   * Unique identifier for the file upload.
-   */
-  id: string;
-
-  /**
-   * Filename extracted from the {@link File} object.
-   * This attribute is used to render the filename if `metadata.name` is not available.
-   */
-  filename: string;
-
-  /**
-   * A number between 0 and 1 indicating the progress of the upload.
-   */
-  progress: number;
-
-  /**
-   * Metadata {@link AttachmentMetadata} containing information about the uploaded file.
-   */
-  metadata?: AttachmentMetadata;
-
-  /**
-   * Error message to be displayed to the user if the upload fails.
-   */
-  error?: FileUploadError;
+  handler: AttachmentUploadHandler;
 }
 
 /**
  * @beta
  * Error message to be displayed to the user if the upload fails.
  */
-export type FileUploadError = {
+export type AttachmentUploadError = {
   message: string;
   timestamp: number;
 };
@@ -79,7 +47,7 @@ export type FileUploadError = {
  * upload progress, canceling an upload, completing an upload etc.
  * @beta
  */
-export interface FileUploadManager {
+export interface AttachmentUploadManager {
   /**
    * Unique identifier for the file upload.
    */
@@ -111,7 +79,7 @@ export interface FileUploadManager {
  * Provides common functions for updating the upload progress, canceling an upload etc.
  * @private
  */
-export class FileUpload implements FileUploadManager, FileUploadEventEmitter {
+export class AttachmentUpload implements AttachmentUploadManager, AttachmentUploadEventEmitter {
   private _emitter: EventEmitter;
   public readonly id: string;
   public readonly file?: File;
@@ -154,10 +122,10 @@ export class FileUpload implements FileUploadManager, FileUploadEventEmitter {
   on(event: 'uploadFail', listener: UploadFailedListener): void;
   /**
    * File upload event subscriber.
-   * @param event - {@link FileUploadEvents}
-   * @param listener - {@link FileUploadEventListener}
+   * @param event - {@link AttachmentUploadEvents}
+   * @param listener - {@link AttachmentUploadEventListener}
    */
-  on(event: FileUploadEvents, listener: FileUploadEventListener): void {
+  on(event: AttachmentUploadEvents, listener: AttachmentUploadEventListener): void {
     this._emitter.addListener(event, listener);
   }
 
@@ -166,25 +134,25 @@ export class FileUpload implements FileUploadManager, FileUploadEventEmitter {
   off(event: 'uploadFail', listener: UploadFailedListener): void;
   /**
    * File upload event unsubscriber.
-   * @param event - {@link FileUploadEvents}
-   * @param listener - {@link FileUploadEventListener}
+   * @param event - {@link AttachmentUploadEvents}
+   * @param listener - {@link AttachmentUploadEventListener}
    */
-  off(event: FileUploadEvents, listener: FileUploadEventListener): void {
+  off(event: AttachmentUploadEvents, listener: AttachmentUploadEventListener): void {
     this._emitter.removeListener(event, listener);
   }
 }
 
 /**
- * Events emitted by the FileUpload class.
+ * Events emitted by the AttachmentUpload class.
  * @beta
  */
-type FileUploadEvents = 'uploadProgressChange' | 'uploadComplete' | 'uploadFail';
+type AttachmentUploadEvents = 'uploadProgressChange' | 'uploadComplete' | 'uploadFail';
 
 /**
- * Events listeners supported by the FileUpload class.
+ * Events listeners supported by the AttachmentUpload class.
  * @beta
  */
-type FileUploadEventListener = UploadProgressListener | UploadCompleteListener | UploadFailedListener;
+type AttachmentUploadEventListener = UploadProgressListener | UploadCompleteListener | UploadFailedListener;
 
 /**
  * Listener for `uploadProgressed` event.
@@ -205,7 +173,7 @@ type UploadFailedListener = (id: string, message: string) => void;
 /**
  * @beta
  */
-interface FileUploadEventEmitter {
+interface AttachmentUploadEventEmitter {
   /**
    * Subscriber function for `uploadProgressed` event.
    */

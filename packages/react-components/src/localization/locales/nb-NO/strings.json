@@ -24,7 +24,7 @@
     "placeholderText": "Skriv en melding",
     "textTooLong": "Meldingslengden er over maksimumsgrensen.",
     "sendButtonAriaLabel": "Send melding",
-    "fileUploadsPendingError": "Laster opp. Vent litt ...",
+    "attachmentUploadsPendingError": "Laster opp. Vent litt ...",
     "removeFile": "Fjern fil",
     "uploading": "Laster opp",
     "uploadCompleted": "Opplasting fullført"
@@ -33,7 +33,7 @@
     "placeholderText": "Skriv en melding",
     "textTooLong": "Meldingslengden er over maksimumsgrensen.",
     "sendButtonAriaLabel": "Send melding",
-    "fileUploadsPendingError": "Laster opp ... Vent litt.",
+    "attachmentUploadsPendingError": "Laster opp ... Vent litt.",
     "removeFile": "Fjern fil",
     "uploading": "Laster opp",
     "uploadCompleted": "Opplasting fullført",

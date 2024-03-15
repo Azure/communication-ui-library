@@ -8,15 +8,15 @@ import { ChatCompositeIcon } from '../../common/icons';
 import { useLocale } from '../../localization';
 
 /**
- * Props for {@link FileUploadButton} component.
+ * Props for {@link AttachmentUploadButton} component.
  * @internal
  */
-export interface FileUploadButtonProps {
+export interface AttachmentUploadButtonProps {
   /**
    * A string containing the comma separated list of accepted file types.
    * Similar to the `accept` attribute of the `<input type="file" />` element.
    */
-  acceptedFileTypes?: string[];
+  acceptedMimeTypes?: string[];
   /**
    * Allows multiple files to be selected if set to `true`.
    * Default value is `false`.
@@ -35,12 +35,12 @@ export interface FileUploadButtonProps {
 /**
  * @internal
  */
-export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
+export const AttachmentUploadButton = (props: AttachmentUploadButtonProps): JSX.Element => {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const theme = useTheme();
-  const { acceptedFileTypes, canUploadMultiple = false, onChange } = props;
+  const { acceptedMimeTypes, canUploadMultiple = false, onChange } = props;
 
-  const fileUploadButtonClassName = mergeStyles({
+  const attachmentUploadButtonClassName = mergeStyles({
     width: '1.5rem',
     height: '1.5rem',
     cursor: 'pointer',
@@ -65,7 +65,7 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
       <Stack
         verticalAlign="center"
         horizontalAlign="center"
-        className={fileUploadButtonClassName}
+        className={attachmentUploadButtonClassName}
         onClick={() => {
           inputRef.current?.click();
         }}
@@ -78,7 +78,7 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
         ref={inputRef}
         hidden
         multiple={canUploadMultiple}
-        accept={acceptedFileTypes?.join(',')}
+        accept={acceptedMimeTypes?.join(',')}
         type="file"
         onClick={(e) => {
           // To ensure that `onChange` is fired even if the same file is picked again.
@@ -100,20 +100,20 @@ const SendBoxAttachFileIconTrampoline = (): JSX.Element => {
 };
 
 /**
- * A wrapper to return {@link FileUploadButton} component conditionally.
+ * A wrapper to return {@link AttachmentUploadButton} component conditionally.
  * It will return `<></>` for stable builds.
  * @internal
  */
-export const FileUploadButtonWrapper = (
+export const AttachmentUploadButtonWrapper = (
   // To make conditional compilation not throw errors.
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  props: Pick<FileUploadButtonProps, 'acceptedFileTypes' | 'canUploadMultiple' | 'onChange'>
+  props: Pick<AttachmentUploadButtonProps, 'acceptedMimeTypes' | 'canUploadMultiple' | 'onChange'>
 ): JSX.Element => {
   return (
     <>
       {
         /* @conditional-compile-remove(file-sharing) */
-        <FileUploadButton {...props} />
+        <AttachmentUploadButton {...props} />
       }
     </>
   );

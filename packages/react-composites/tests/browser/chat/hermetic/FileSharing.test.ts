@@ -32,7 +32,7 @@ test.describe('Filesharing SendBox', async () => {
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
         fileSharingEnabled: true,
-        fileUploads: [
+        attachmentUploads: [
           {
             id: 'SomeMockId',
             name: 'SampleFile.pdf',
@@ -67,7 +67,7 @@ test.describe('Filesharing ProgressBar', async () => {
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
         fileSharingEnabled: true,
-        fileUploads: [
+        attachmentUploads: [
           {
             id: 'SomeMockId',
             name: 'SampleFile.pdf',
@@ -101,7 +101,7 @@ test.describe('Filesharing ProgressBar', async () => {
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
         fileSharingEnabled: true,
-        fileUploads: [
+        attachmentUploads: [
           {
             id: 'SomeMockId',
             name: 'SampleFile.pdf',
@@ -135,7 +135,7 @@ test.describe('Filesharing ProgressBar', async () => {
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
         fileSharingEnabled: true,
-        fileUploads: [
+        attachmentUploads: [
           {
             id: 'SomeMockId',
             name: 'SampleFile.pdf',
@@ -172,13 +172,13 @@ test.describe('Filesharing SendBox Errorbar', async () => {
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
         fileSharingEnabled: true,
-        fileUploads: [
+        attachmentUploads: [
           {
             id: 'SomeMockId',
             name: 'SampleFile.pdf',
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
-            error: 'File too big. Select a file under 99 MB.',
+            progress: -1,
             attachmentType: 'file'
           }
         ]
@@ -194,7 +194,7 @@ test.describe('Filesharing SendBox Errorbar', async () => {
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
         fileSharingEnabled: true,
-        fileUploads: [
+        attachmentUploads: [
           {
             id: 'SomeMockId',
             name: 'SampleFile.pdf',
@@ -224,7 +224,7 @@ test.describe('Filesharing Global Errorbar', async () => {
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
         fileSharingEnabled: true,
-        fileUploads: [
+        attachmentUploads: [
           {
             id: 'SomeMockId',
             name: 'Sample.pdf',
@@ -233,7 +233,7 @@ test.describe('Filesharing Global Errorbar', async () => {
             attachmentType: 'file'
           }
         ],
-        failFileDownload: true
+        failAttachmentDownload: true
       })
     );
     const testMessageText = 'Hello!';
@@ -259,7 +259,7 @@ test.describe('Filesharing Message Thread', async () => {
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
         fileSharingEnabled: true,
-        fileUploads: [
+        attachmentUploads: [
           {
             id: 'SomeMockId',
             name: 'SampleFile1.pdf',
@@ -314,7 +314,7 @@ test.describe('Filesharing Edit Message', async () => {
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
         fileSharingEnabled: true,
-        fileUploads: [
+        attachmentUploads: [
           {
             id: 'SomeMockId',
             name: 'SampleFile1.pdf',

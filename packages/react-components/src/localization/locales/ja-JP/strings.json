@@ -24,7 +24,7 @@
     "placeholderText": "メッセージを入力",
     "textTooLong": "メッセージの長さが上限を超えています。",
     "sendButtonAriaLabel": "メッセージの送信",
-    "fileUploadsPendingError": "アップロード中です... お待ちください。",
+    "attachmentUploadsPendingError": "アップロード中です... お待ちください。",
     "removeFile": "ファイルを削除します",
     "uploading": "アップロード中",
     "uploadCompleted": "アップロードが完了しました"
@@ -33,7 +33,7 @@
     "placeholderText": "メッセージを入力してください",
     "textTooLong": "メッセージの長さが上限を超えています。",
     "sendButtonAriaLabel": "メッセージの送信",
-    "fileUploadsPendingError": "アップロード中...お待ちください。",
+    "attachmentUploadsPendingError": "アップロード中...お待ちください。",
     "removeFile": "ファイルの削除",
     "uploading": "アップロード中",
     "uploadCompleted": "アップロード完了",

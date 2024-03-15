@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-import { AttachmentMetadata, _FileDownloadCards } from './FileDownloadCards';
+import { AttachmentMetadata, _AttachmentDownloadCards } from './AttachmentDownloadCards';
 import { render, screen } from '@testing-library/react';
 import { registerIcons } from '@fluentui/react';
 
-describe('FileDownloadCards should be rendered properly', () => {
+describe('AttachmentDownloadCards should be rendered properly', () => {
   beforeEach(() => {
     registerIcons({
       icons: {
@@ -30,14 +30,14 @@ describe('FileDownloadCards should be rendered properly', () => {
       userId: 'MockUserId',
       fileMetadata: [metadata]
     };
-    renderFileDownloadCardsWithDefaults(props);
+    renderAttachmentDownloadCardsWithDefaults(props);
     const card = await screen.findByText('MockFileCard');
     expect(card).toBeDefined();
   });
 });
 
-const renderFileDownloadCardsWithDefaults = (props: MockDownloadCardProps): void => {
-  render(<_FileDownloadCards attachment={props.fileMetadata} />);
+const renderAttachmentDownloadCardsWithDefaults = (props: MockDownloadCardProps): void => {
+  render(<_AttachmentDownloadCards attachment={props.fileMetadata} />);
 };
 
 interface MockDownloadCardProps {

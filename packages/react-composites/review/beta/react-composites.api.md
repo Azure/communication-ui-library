@@ -7,6 +7,7 @@
 /// <reference types="react" />
 
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import { AttachmentDownloadOptions } from '@internal/react-components';
 import { AttachmentMetadata } from '@internal/react-components';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import type { BackgroundBlurConfig } from '@azure/communication-calling';
@@ -35,7 +36,6 @@ import { CreateVideoStreamViewResult } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
 import { DtmfTone } from '@azure/communication-calling';
 import { EnvironmentInfo } from '@azure/communication-calling';
-import { FileDownloadOptions } from '@internal/react-components';
 import { GroupCallLocator } from '@azure/communication-calling';
 import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { MessageProps } from '@internal/react-components';
@@ -95,6 +95,52 @@ export interface AdapterState<TState> {
     offStateChange(handler: (state: TState) => void): void;
     onStateChange(handler: (state: TState) => void): void;
 }
+
+// @beta (undocumented)
+export interface AttachmentUploadAdapter {
+    // (undocumented)
+    cancelAttachmentUpload: (id: string) => void;
+    // (undocumented)
+    clearAttachmentUploads: () => void;
+    // (undocumented)
+    registeractiveAttachmentUploads: (files: File[]) => AttachmentUploadManager[];
+    // (undocumented)
+    registerCompletedAttachmentUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadManager[];
+    // (undocumented)
+    updateAttachmentUploadErrorMessage: (id: string, errorMessage: string) => void;
+    // (undocumented)
+    updateAttachmentUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
+    // (undocumented)
+    updateAttachmentUploadProgress: (id: string, progress: number) => void;
+}
+
+// @beta
+export type AttachmentUploadError = {
+    message: string;
+    timestamp: number;
+};
+
+// @beta
+export type AttachmentUploadHandler = (attachmentUploads: AttachmentUploadManager[]) => void;
+
+// @beta
+export interface AttachmentUploadManager {
+    file?: File;
+    id: string;
+    notifyUploadCompleted: (metadata: AttachmentMetadata) => void;
+    notifyUploadFailed: (message: string) => void;
+    notifyUploadProgressChanged: (value: number) => void;
+}
+
+// @beta (undocumented)
+export interface AttachmentUploadOptions {
+    acceptedMimeTypes?: string[];
+    canUploadMultiple?: boolean;
+    handler: AttachmentUploadHandler;
+}
+
+// @beta
+export type AttachmentUploadsUiState = Record<string, AttachmentMetadata>;
 
 // @public
 export type AvatarPersonaData = {
@@ -700,9 +746,9 @@ export interface CallWithChatAdapterManagement {
     allowUnsupportedBrowserVersion(): void;
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     // @beta (undocumented)
-    cancelFileUpload: (id: string) => void;
+    cancelAttachmentUpload: (id: string) => void;
     // @beta (undocumented)
-    clearFileUploads: () => void;
+    clearAttachmentUploads: () => void;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     deleteMessage(messageId: string): Promise<void>;
     disposeLocalVideoStreamView(): Promise<void>;
@@ -728,9 +774,9 @@ export interface CallWithChatAdapterManagement {
     querySpeakers(): Promise<AudioDeviceInfo[]>;
     raiseHand(): Promise<void>;
     // @beta (undocumented)
-    registerActiveFileUploads: (files: File[]) => FileUploadManager[];
+    registeractiveAttachmentUploads: (files: File[]) => AttachmentUploadManager[];
     // @beta (undocumented)
-    registerCompletedFileUploads: (metadata: AttachmentMetadata[]) => FileUploadManager[];
+    registerCompletedAttachmentUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadManager[];
     removeParticipant(userId: string): Promise<void>;
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
@@ -763,13 +809,13 @@ export interface CallWithChatAdapterManagement {
     // @beta
     submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
     unmute(): Promise<void>;
+    // @beta (undocumented)
+    updateAttachmentUploadErrorMessage: (id: string, errorMessage: string) => void;
+    // @beta (undocumented)
+    updateAttachmentUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
+    // @beta (undocumented)
+    updateAttachmentUploadProgress: (id: string, progress: number) => void;
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
-    // @beta (undocumented)
-    updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
-    // @beta (undocumented)
-    updateFileUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
-    // @beta (undocumented)
-    updateFileUploadProgress: (id: string, progress: number) => void;
     updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void>;
     updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
 }
@@ -885,7 +931,7 @@ export interface CallWithChatAdapterSubscriptions {
 // @public
 export interface CallWithChatAdapterUiState {
     // @beta
-    fileUploads?: FileUploadsUiState;
+    attachmentUploads?: AttachmentUploadsUiState;
     isLocalPreviewMicrophoneEnabled: boolean;
     page: CallCompositePage;
     // @beta
@@ -1115,7 +1161,7 @@ export type CaptionsReceivedListener = (event: {
 }) => void;
 
 // @public
-export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable_2 & ChatAdapterSubscribers & FileUploadAdapter;
+export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable_2 & ChatAdapterSubscribers & AttachmentUploadAdapter;
 
 // @public
 export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
@@ -1162,7 +1208,7 @@ export interface ChatAdapterThreadManagement {
 // @public
 export type ChatAdapterUiState = {
     error?: Error;
-    fileUploads?: FileUploadsUiState;
+    attachmentUploads?: AttachmentUploadsUiState;
 };
 
 // @public
@@ -1544,7 +1590,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MoreDrawerSpeakers?: JSX.Element | undefined;
     ChatMessageOptions: React_2.JSX.Element;
     ControlButtonParticipantsContextualMenuItem: React_2.JSX.Element;
-    CancelFileUpload: React_2.JSX.Element;
+    CancelAttachmentUpload: React_2.JSX.Element;
     DownloadFile: React_2.JSX.Element;
     DataLossPreventionProhibited: React_2.JSX.Element;
     ErrorBarCallVideoRecoveredBySystem: React_2.JSX.Element;
@@ -1629,8 +1675,8 @@ export type _FakeChatAdapterArgs = {
     topic?: string;
     localParticipantPosition?: number;
     fileSharingEnabled?: boolean;
-    fileUploads?: _MockFileUpload[];
-    failFileDownload?: boolean;
+    attachmentUploads?: _MockAttachmentUpload[];
+    failAttachmentDownload?: boolean;
     sendRemoteFileSharingMessage?: boolean;
     sendRemoteInlineImageMessage?: boolean;
     serverUrl?: string;
@@ -1659,65 +1705,10 @@ export interface _FakeChatAdapters {
 // @beta (undocumented)
 export interface FileSharingOptions {
     // (undocumented)
-    downloadOptions?: FileDownloadOptions;
+    downloadOptions?: AttachmentDownloadOptions;
     // (undocumented)
-    uploadOptions?: FileUploadOptions;
+    uploadOptions?: AttachmentUploadOptions;
 }
-
-// @beta (undocumented)
-export interface FileUploadAdapter {
-    // (undocumented)
-    cancelFileUpload: (id: string) => void;
-    // (undocumented)
-    clearFileUploads: () => void;
-    // (undocumented)
-    registerActiveFileUploads: (files: File[]) => FileUploadManager[];
-    // (undocumented)
-    registerCompletedFileUploads: (metadata: AttachmentMetadata[]) => FileUploadManager[];
-    // (undocumented)
-    updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
-    // (undocumented)
-    updateFileUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
-    // (undocumented)
-    updateFileUploadProgress: (id: string, progress: number) => void;
-}
-
-// @beta
-export type FileUploadError = {
-    message: string;
-    timestamp: number;
-};
-
-// @beta
-export type FileUploadHandler = (fileUploads: FileUploadManager[]) => void;
-
-// @beta
-export interface FileUploadManager {
-    file?: File;
-    id: string;
-    notifyUploadCompleted: (metadata: AttachmentMetadata) => void;
-    notifyUploadFailed: (message: string) => void;
-    notifyUploadProgressChanged: (value: number) => void;
-}
-
-// @beta (undocumented)
-export interface FileUploadOptions {
-    acceptedFileTypes?: string[];
-    canUploadMultiple?: boolean;
-    handler: FileUploadHandler;
-}
-
-// @beta
-export interface FileUploadState {
-    error?: FileUploadError;
-    filename: string;
-    id: string;
-    metadata?: AttachmentMetadata;
-    progress: number;
-}
-
-// @beta
-export type FileUploadsUiState = Record<string, FileUploadState>;
 
 // @public
 export type IsCaptionLanguageChangedListener = (event: {
@@ -1786,6 +1777,14 @@ export type MessageReceivedListener = (event: {
 
 // @public
 export type MessageSentListener = MessageReceivedListener;
+
+// @internal
+export type _MockAttachmentUpload = AttachmentMetadata & {
+    uploadComplete?: boolean;
+    error?: string;
+    progress?: number;
+    attachmentType: string;
+};
 
 // @internal
 export class _MockCallAdapter implements CallAdapter {
@@ -1896,14 +1895,6 @@ export class _MockCallAdapter implements CallAdapter {
     // (undocumented)
     updateSelectedVideoBackgroundEffect(): void;
 }
-
-// @internal
-export type _MockFileUpload = AttachmentMetadata & {
-    uploadComplete?: boolean;
-    error?: string;
-    progress?: number;
-    attachmentType: string;
-};
 
 // @public
 export type NetworkDiagnosticChangedEvent = NetworkDiagnosticChangedEventArgs & {

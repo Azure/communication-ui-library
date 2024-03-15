@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { FileMetadata } from '@azure/communication-react';
+import { AttachmentMetadata } from '@azure/communication-react';
 import { Icon, useTheme } from '@fluentui/react';
 import {
   ArrowDownload24Filled,
@@ -10,7 +10,7 @@ import {
   Share24Regular,
   WindowNew24Filled
 } from '@fluentui/react-icons';
-import { _FileCard as FileCardComponent } from '@internal/react-components';
+import { _AttachmentCard as FileCardComponent } from '@internal/react-components';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { FluentV9ThemeProvider } from '../../../../react-components/src/theming/FluentV9ThemeProvider';
@@ -32,12 +32,11 @@ const FileCardStory = (args): JSX.Element => {
 // This ensures that storybook hoists the story instead of creating a folder with a single entry.
 export const FileCard = FileCardStory.bind({});
 
-const file: FileMetadata = {
+const file: AttachmentMetadata = {
   extension: 'pdf',
   id: '42839hdwe-dfr2-323fcfwe',
   name: 'SampleFileName.pdf',
-  url: 'https://www.bing.com',
-  attachmentType: 'file'
+  url: 'https://www.bing.com'
 };
 
 export default {

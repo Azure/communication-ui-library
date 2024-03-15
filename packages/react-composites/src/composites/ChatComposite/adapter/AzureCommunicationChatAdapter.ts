@@ -36,15 +36,18 @@ import {
 import { ResourceDetails } from './ChatAdapter';
 import { AdapterError } from '../../common/adapters';
 /* @conditional-compile-remove(file-sharing) */
-import { FileUploadAdapter, convertFileUploadsUiStateToMessageMetadata } from './AzureCommunicationFileUploadAdapter';
+import {
+  AttachmentUploadAdapter,
+  convertAttachmentUploadsUiStateToMessageMetadata
+} from './AzureCommunicationAttachmentUploadAdapter';
 /* @conditional-compile-remove(file-sharing) */
-import { AzureCommunicationFileUploadAdapter } from './AzureCommunicationFileUploadAdapter';
+import { AzureCommunicationAttachmentUploadAdapter } from './AzureCommunicationAttachmentUploadAdapter';
 import { useEffect, useRef, useState } from 'react';
 import { _isValidIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(file-sharing) */
 import { AttachmentMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
-import { FileUploadManager } from '../file-sharing';
+import { AttachmentUploadManager } from '../file-sharing';
 
 /**
  * Context of Chat, which is a centralized context for all state updates
@@ -104,7 +107,7 @@ export class ChatContext {
     };
 
     /* @conditional-compile-remove(file-sharing) */
-    updatedState = { ...updatedState, fileUploads: this.state.fileUploads };
+    updatedState = { ...updatedState, attachmentUploads: this.state.attachmentUploads };
 
     this.setState(updatedState);
   }
@@ -118,7 +121,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   private chatThreadClient: ChatThreadClient;
   private context: ChatContext;
   /* @conditional-compile-remove(file-sharing) */
-  private fileUploadAdapter: FileUploadAdapter;
+  private attachmentUploadAdapter: AttachmentUploadAdapter;
   private handlers: ChatHandlers;
   private emitter: EventEmitter = new EventEmitter();
 
@@ -128,7 +131,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.chatThreadClient = chatThreadClient;
     this.context = new ChatContext(chatClient.getState(), chatThreadClient.threadId);
     /* @conditional-compile-remove(file-sharing) */
-    this.fileUploadAdapter = new AzureCommunicationFileUploadAdapter(this.context);
+    this.attachmentUploadAdapter = new AzureCommunicationAttachmentUploadAdapter(this.context);
 
     const onStateChange = (clientState: ChatClientState): void => {
       // unsubscribe when the instance gets disposed
@@ -162,19 +165,19 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.on = this.on.bind(this);
     this.off = this.off.bind(this);
     /* @conditional-compile-remove(file-sharing) */
-    this.registerActiveFileUploads = this.registerActiveFileUploads.bind(this);
+    this.registeractiveAttachmentUploads = this.registeractiveAttachmentUploads.bind(this);
     /* @conditional-compile-remove(file-sharing) */
-    this.registerCompletedFileUploads = this.registerCompletedFileUploads.bind(this);
+    this.registerCompletedAttachmentUploads = this.registerCompletedAttachmentUploads.bind(this);
     /* @conditional-compile-remove(file-sharing) */
-    this.clearFileUploads = this.clearFileUploads.bind(this);
+    this.clearAttachmentUploads = this.clearAttachmentUploads.bind(this);
     /* @conditional-compile-remove(file-sharing) */
-    this.cancelFileUpload = this.cancelFileUpload.bind(this);
+    this.cancelAttachmentUpload = this.cancelAttachmentUpload.bind(this);
     /* @conditional-compile-remove(file-sharing) */
-    this.updateFileUploadProgress = this.updateFileUploadProgress.bind(this);
+    this.updateAttachmentUploadProgress = this.updateAttachmentUploadProgress.bind(this);
     /* @conditional-compile-remove(file-sharing) */
-    this.updateFileUploadErrorMessage = this.updateFileUploadErrorMessage.bind(this);
+    this.updateAttachmentUploadErrorMessage = this.updateAttachmentUploadErrorMessage.bind(this);
     /* @conditional-compile-remove(file-sharing) */
-    this.updateFileUploadMetadata = this.updateFileUploadMetadata.bind(this);
+    this.updateAttachmentUploadMetadata = this.updateAttachmentUploadMetadata.bind(this);
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     this.downloadResourceToCache = this.downloadResourceToCache.bind(this);
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
@@ -217,7 +220,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
       /* @conditional-compile-remove(file-sharing) */
       options.metadata = {
         ...options.metadata,
-        ...convertFileUploadsUiStateToMessageMetadata(this.context.getState().fileUploads)
+        ...convertAttachmentUploadsUiStateToMessageMetadata(this.context.getState().attachmentUploads)
       };
 
       /* @conditional-compile-remove(file-sharing) */
@@ -228,7 +231,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
        * 2. any component rendering these file uploads doesn't continue to do so.
        * 3. Cleans the state for new file uploads with a fresh message.
        */
-      this.fileUploadAdapter.clearFileUploads();
+      this.attachmentUploadAdapter.clearAttachmentUploads();
 
       await this.handlers.onSendMessage(content, options);
     });
@@ -289,38 +292,38 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   /* @conditional-compile-remove(file-sharing) */
-  registerActiveFileUploads(files: File[]): FileUploadManager[] {
-    return this.fileUploadAdapter.registerActiveFileUploads(files);
+  registeractiveAttachmentUploads(files: File[]): AttachmentUploadManager[] {
+    return this.attachmentUploadAdapter.registeractiveAttachmentUploads(files);
   }
 
   /* @conditional-compile-remove(file-sharing) */
-  registerCompletedFileUploads(metadata: AttachmentMetadata[]): FileUploadManager[] {
-    return this.fileUploadAdapter.registerCompletedFileUploads(metadata);
+  registerCompletedAttachmentUploads(metadata: AttachmentMetadata[]): AttachmentUploadManager[] {
+    return this.attachmentUploadAdapter.registerCompletedAttachmentUploads(metadata);
   }
 
   /* @conditional-compile-remove(file-sharing) */
-  clearFileUploads(): void {
-    this.fileUploadAdapter.clearFileUploads();
+  clearAttachmentUploads(): void {
+    this.attachmentUploadAdapter.clearAttachmentUploads();
   }
 
   /* @conditional-compile-remove(file-sharing) */
-  cancelFileUpload(id: string): void {
-    this.fileUploadAdapter.cancelFileUpload(id);
+  cancelAttachmentUpload(id: string): void {
+    this.attachmentUploadAdapter.cancelAttachmentUpload(id);
   }
 
   /* @conditional-compile-remove(file-sharing) */
-  updateFileUploadProgress(id: string, progress: number): void {
-    this.fileUploadAdapter.updateFileUploadProgress(id, progress);
+  updateAttachmentUploadProgress(id: string, progress: number): void {
+    this.attachmentUploadAdapter.updateAttachmentUploadProgress(id, progress);
   }
 
   /* @conditional-compile-remove(file-sharing) */
-  updateFileUploadErrorMessage(id: string, errorMessage: string): void {
-    this.fileUploadAdapter.updateFileUploadErrorMessage(id, errorMessage);
+  updateAttachmentUploadErrorMessage(id: string, errorMessage: string): void {
+    this.attachmentUploadAdapter.updateAttachmentUploadErrorMessage(id, errorMessage);
   }
 
   /* @conditional-compile-remove(file-sharing) */
-  updateFileUploadMetadata(id: string, metadata: AttachmentMetadata): void {
-    this.fileUploadAdapter.updateFileUploadMetadata(id, metadata);
+  updateAttachmentUploadMetadata(id: string, metadata: AttachmentMetadata): void {
+    this.attachmentUploadAdapter.updateAttachmentUploadMetadata(id, metadata);
   }
 
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */

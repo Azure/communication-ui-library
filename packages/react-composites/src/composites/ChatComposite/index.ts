@@ -36,13 +36,15 @@ export * from './Strings';
 
 /* @conditional-compile-remove(file-sharing) */
 export type {
-  FileUploadOptions,
-  FileUploadHandler,
-  FileUploadManager,
-  FileUploadState,
-  FileUploadError
+  AttachmentUploadOptions,
+  AttachmentUploadHandler,
+  AttachmentUploadManager,
+  AttachmentUploadError
 } from './file-sharing';
 /* @conditional-compile-remove(file-sharing) */
 export type { FileSharingOptions } from './ChatScreen';
 /* @conditional-compile-remove(file-sharing) */
-export type { FileUploadsUiState, FileUploadAdapter } from './adapter/AzureCommunicationFileUploadAdapter';
+export type {
+  AttachmentUploadsUiState,
+  AttachmentUploadAdapter
+} from './adapter/AzureCommunicationAttachmentUploadAdapter';
