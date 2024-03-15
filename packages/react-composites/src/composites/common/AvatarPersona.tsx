@@ -61,10 +61,6 @@ export interface AvatarPersonaProps extends IPersonaProps {
    * A function that returns a Promise that resolves to the data to be displayed.
    */
   dataProvider?: AvatarPersonaDataCallback;
-  /**
-   * Allow to show colored border around persona coin, but isActive is what shows it.
-   */
-  allowActiveBorder?: boolean;
 }
 
 /**
@@ -92,19 +88,17 @@ export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
   }, [data, dataProvider, userId]);
 
   let activePersona = '';
-  if (props.allowActiveBorder) {
-    // Display a border for raised handed participants in participant list
-    activePersona = mergeStyles({
-      border: 'solid 2px',
-      borderColor: 'transparent',
-      borderRadius: '50%',
-      padding: '2px',
-      boxSizing: 'content-box',
-      margin: '-4px'
-    });
+  // Display a border for raised handed participants in participant list
+  activePersona = mergeStyles({
+    border: 'solid 2px',
+    borderColor: 'transparent',
+    borderRadius: '50%',
+    padding: '2px',
+    boxSizing: 'content-box',
+    margin: '-4px'
+  });
 
-    mergeStyles(activePersona, props.styles);
-  }
+  mergeStyles(activePersona, props.styles);
 
   return (
     <Persona
