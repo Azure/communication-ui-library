@@ -83,6 +83,7 @@ export const ParticipantListWithHeading = (props: {
                 {...options}
                 {...{ hidePersonaDetails: !!options?.text }}
                 dataProvider={onFetchAvatarPersonaData}
+                allowActiveBorder={true}
               />
               {options?.text && (
                 <Text nowrap={true} styles={displayNameStyles}>
