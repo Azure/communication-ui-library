@@ -81,7 +81,7 @@ jobs:
       - name: Check the necessary change file has been submitted
         if: ${{ github.event_name == 'pull_request' }}
         run: |
-          git fetch origin main:main --depth=1
+          git fetch origin main:main --depth=2
           node common/scripts/changelog/check.mjs ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }}
 
       # Perform lint check
