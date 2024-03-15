@@ -82,7 +82,7 @@ jobs:
         if: ${{ github.event_name == 'pull_request' }}
         # GitHub provides remote branch names as refs.
         run: |
-          git fetch origin/main --depth=1
+          git fetch origin main --depth=1
           node common/scripts/changelog/check.mjs origin/${{ github.base_ref }} origin/${{ github.head_ref }}
 
       # Perform lint check
