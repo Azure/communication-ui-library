@@ -80,7 +80,7 @@ export const _createStatefulChatClientWithDeps: (chatClient: ChatClient, args: S
 
 // @public
 export type ResourceFetchResult = {
-    sourceUrl: string;
+    sourceUrl?: string;
     error?: Error;
 };
 

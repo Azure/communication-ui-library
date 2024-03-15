@@ -167,7 +167,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   const getResourceSourceUrl = (result: ResourceFetchResult): string => {
     let src = '';
-    if (result.error) {
+    if (result.error || !result.sourceUrl) {
       src = 'blob://';
     } else {
       src = result.sourceUrl;

@@ -1093,6 +1093,7 @@ export interface _DrawerMenuItemProps {
     itemKey: string;
     // (undocumented)
     onItemClick?: (ev?: React_2.MouseEvent<HTMLElement> | React_2.KeyboardEvent<HTMLElement>, itemKey?: string) => void;
+    onRendererContent?: () => JSX.Element;
     secondaryComponent?: JSX.Element;
     secondaryIconProps?: IIconProps;
     secondaryText?: string;
@@ -1939,6 +1940,16 @@ export interface ReactionButtonStrings {
     surprisedReactionTooltipContent?: string;
     tooltipContent?: string;
     tooltipDisabledContent?: string;
+}
+
+// @internal
+export const _ReactionDrawerMenuItem: (props: _ReactionMenuItemProps) => JSX.Element;
+
+// @internal
+export interface _ReactionMenuItemProps {
+    disabled?: boolean;
+    onReactionClick?: (reaction: string) => Promise<void>;
+    reactionResources?: ReactionResources;
 }
 
 // @beta
