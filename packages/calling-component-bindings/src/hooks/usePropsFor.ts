@@ -141,9 +141,6 @@ export const getSelector = <Component extends (props: any) => JSX.Element | unde
   if (component === HoldButton) {
     return findConditionalCompiledSelector(component);
   }
-  if (component === RaiseHandButton) {
-    return findConditionalCompiledSelector(component);
-  }
   /* @conditional-compile-remove(reaction) */
   if (component === ReactionButton) {
     return findConditionalCompiledSelector(component);
