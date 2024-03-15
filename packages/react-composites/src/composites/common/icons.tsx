@@ -112,7 +112,6 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   FloatingLocalVideoGalleryLayout: <BoardSplit20Regular />,
   FocusedContentGalleryLayout: <ContentView20Regular />,
   LargeGalleryLayout: <Table20Regular />,
-  /* @conditional-compile-remove(control-bar-button-injection) */
   DefaultCustomButton: <Circle20Regular />,
   DtmfDialpadButton: <Dialpad20Regular />,
   /* @conditional-compile-remove(spotlight) */
@@ -260,7 +259,6 @@ export type CallCompositeIcons = {
   FocusedContentGalleryLayout?: JSX.Element;
   OverflowGalleryTop?: JSX.Element;
   LargeGalleryLayout?: JSX.Element;
-  /* @conditional-compile-remove(control-bar-button-injection) */
   DefaultCustomButton?: JSX.Element;
   DtmfDialpadButton?: JSX.Element;
   /* @conditional-compile-remove(spotlight) */
@@ -350,7 +348,6 @@ export type CallWithChatCompositeIcons = {
   PeoplePaneOpenDialpad?: JSX.Element;
   /* @conditional-compile-remove(PSTN-calls) */
   DialpadStartCall?: JSX.Element;
-  /* @conditional-compile-remove(control-bar-button-injection) */
   DefaultCustomButton?: JSX.Element;
   DtmfDialpadButton?: JSX.Element;
 

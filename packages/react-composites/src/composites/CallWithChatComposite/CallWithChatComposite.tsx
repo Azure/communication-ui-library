@@ -501,9 +501,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   );
 
   const injectedCustomButtonsFromProps = useMemo(() => {
-    /* @conditional-compile-remove(control-bar-button-injection) */
     return [...(callControlOptionsFromProps.onFetchCustomButtonProps ?? [])];
-    return [];
   }, [callControlOptionsFromProps]);
 
   const callCompositeOptions: CallCompositeOptions = useMemo(
@@ -515,7 +513,6 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
               ...callControlOptionsFromProps,
               onFetchCustomButtonProps: [
                 ...(showChatButton ? [customChatButton] : []),
-                /* @conditional-compile-remove(control-bar-button-injection) */
                 ...injectedCustomButtonsFromProps
               ],
               legacyControlBarExperience: false
