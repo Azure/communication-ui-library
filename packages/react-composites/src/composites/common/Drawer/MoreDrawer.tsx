@@ -14,7 +14,10 @@ import {
   SpokenLanguageStrings,
   CaptionLanguageStrings
 } from '@internal/react-components';
-/* @conditional-compile-remove(gallery-layouts) */
+/* @conditional-compile-remove(reaction) */
+import { _ReactionDrawerMenuItem } from '@internal/react-components';
+/* @conditional-compile-remove(reaction) */
+import { ReactionResources } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
 import { _StartCaptionsButton, _CaptionsSettingsModal } from '@internal/react-components';
@@ -54,11 +57,8 @@ import { themedToggleButtonStyle } from './MoreDrawer.styles';
 import { _spokenLanguageToCaptionLanguage } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { useAdapter } from '../../CallComposite/adapter/CallAdapterProvider';
-/* @conditional-compile-remove(dtmf-dialer) */
 import { useSelector } from '../../CallComposite/hooks/useSelector';
-/* @conditional-compile-remove(dtmf-dialer) */
 import { getTargetCallees } from '../../CallComposite/selectors/baseSelectors';
-/* @conditional-compile-remove(dtmf-dialer) */
 import { showDtmfDialer } from '../../CallComposite/utils/MediaGalleryUtils';
 import { SpokenLanguageSettingsDrawer } from './SpokenLanguageSettingsDrawer';
 
@@ -112,7 +112,6 @@ export interface MoreDrawerStrings {
    */
   captionLanguageMenuTitle: string;
 
-  /* @conditional-compile-remove(gallery-layouts) */
   /**
    * Label for gallery options drawerMenuItem
    */
@@ -145,19 +144,15 @@ export interface MoreDrawerDevicesMenuProps {
    * Callback when a microphone is selected
    */
   onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
-  /* @conditional-compile-remove(gallery-layouts) */
   userSetGalleryLayout?: VideoGalleryLayout;
-  /* @conditional-compile-remove(gallery-layouts) */
   /**
    * Callback for when the gallery layout is changed
    */
   onUserSetGalleryLayout?: (layout: VideoGalleryLayout) => void;
-  /* @conditional-compile-remove(dtmf-dialer) */
   /**
    * Callback to hide and show the dialpad in the more drawer
    */
   onSetDialpadPage?: () => void;
-  /* @conditional-compile-remove(dtmf-dialer) */
   /**
    * Whether the dialpad is present in the call
    */
@@ -174,6 +169,12 @@ export interface MoreDrawerProps extends MoreDrawerDevicesMenuProps {
   isCaptionsSupported?: boolean;
   strings: MoreDrawerStrings;
   disableButtonsForHoldScreen?: boolean;
+  /* @conditional-compile-remove(close-captions) */
+  isTeamsCall?: boolean;
+  /* @conditional-compile-remove(reaction) */
+  reactionResources?: ReactionResources;
+  /* @conditional-compile-remove(reaction) */
+  onReactionClick?: (reaction: string) => Promise<void>;
 }
 
 const inferCallWithChatControlOptions = (
@@ -201,11 +202,8 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const holdButtonProps = usePropsFor(HoldButton);
 
-  /* @conditional-compile-remove(dtmf-dialer) */
   const callees = useSelector(getTargetCallees);
-  /* @conditional-compile-remove(dtmf-dialer) */
   const allowDtmfDialer = showDtmfDialer(callees);
-  /* @conditional-compile-remove(dtmf-dialer) */
   const [dtmfDialerChecked, setDtmfDialerChecked] = useState<boolean>(props.dtmfDialerPresent ?? false);
 
   /* @conditional-compile-remove(raise-hand) */
@@ -228,6 +226,16 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   );
 
   const drawerSelectionOptions = inferCallWithChatControlOptions(props.callControls);
+
+  /* @conditional-compile-remove(reaction) */
+  if (props.reactionResources !== undefined) {
+    drawerMenuItems.push({
+      itemKey: 'reactions',
+      onRendererContent: () => (
+        <_ReactionDrawerMenuItem onReactionClick={props.onReactionClick} reactionResources={props.reactionResources} />
+      )
+    });
+  }
 
   if (props.speakers && props.speakers.length > 0) {
     drawerMenuItems.push({
@@ -294,7 +302,6 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     });
   }
 
-  /* @conditional-compile-remove(dtmf-dialer) */
   const dtmfDialerScreenOption = {
     itemKey: 'dtmfDialerScreenKey',
     text: !dtmfDialerChecked
@@ -312,14 +319,13 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       styles: { root: { lineHeight: 0 } }
     }
   };
-  /* @conditional-compile-remove(dtmf-dialer) */
   /**
    * Only render the dtmf dialer if the dialpad for PSTN calls is not present
    */
   if (props.onSetDialpadPage && allowDtmfDialer) {
     drawerMenuItems.push(dtmfDialerScreenOption);
   }
-  /* @conditional-compile-remove(gallery-layouts) */
+
   const galleryLayoutOptions = {
     itemKey: 'galleryPositionKey',
     iconProps: {
@@ -376,7 +382,6 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   /* @conditional-compile-remove(gallery-layout-composite) */
   galleryLayoutOptions.subMenuProps?.push(galleryOption);
 
-  /* @conditional-compile-remove(gallery-layouts) */
   drawerMenuItems.push(galleryLayoutOptions);
 
   if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.peopleButton)) {
@@ -484,9 +489,6 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     const spokenLanguageString = supportedSpokenLanguageStrings
       ? supportedSpokenLanguageStrings[currentSpokenLanguage]
       : currentSpokenLanguage;
-    const captionLanguageString = supportedCaptionLanguageStrings
-      ? supportedCaptionLanguageStrings[currentCaptionLanguage]
-      : currentCaptionLanguage;
 
     drawerMenuItems.push({
       itemKey: 'captions',
@@ -539,24 +541,30 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       }
     });
 
-    captionsDrawerItems.push({
-      itemKey: 'ChangeCaptionLanguage',
-      text: props.strings.captionLanguageMenuTitle,
-      id: 'common-call-composite-captions-subtitle-settings-button',
-      secondaryText: captionLanguageString,
-      iconProps: {
-        iconName: 'ChangeCaptionLanguageIcon',
-        styles: { root: { lineHeight: 0 } }
-      },
-      disabled: props.disableButtonsForHoldScreen || !captionSettingsProp.isCaptionsFeatureActive,
-      onItemClick: () => {
-        setIsCaptionLanguageDrawerOpen(true);
-      },
-      secondaryIconProps: {
-        iconName: 'ChevronRight',
-        styles: { root: { lineHeight: 0 } }
-      }
-    });
+    if (props.isTeamsCall) {
+      const captionLanguageString = supportedCaptionLanguageStrings
+        ? supportedCaptionLanguageStrings[currentCaptionLanguage]
+        : currentCaptionLanguage;
+
+      captionsDrawerItems.push({
+        itemKey: 'ChangeCaptionLanguage',
+        text: props.strings.captionLanguageMenuTitle,
+        id: 'common-call-composite-captions-subtitle-settings-button',
+        secondaryText: captionLanguageString,
+        iconProps: {
+          iconName: 'ChangeCaptionLanguageIcon',
+          styles: { root: { lineHeight: 0 } }
+        },
+        disabled: props.disableButtonsForHoldScreen || !captionSettingsProp.isCaptionsFeatureActive,
+        onItemClick: () => {
+          setIsCaptionLanguageDrawerOpen(true);
+        },
+        secondaryIconProps: {
+          iconName: 'ChevronRight',
+          styles: { root: { lineHeight: 0 } }
+        }
+      });
+    }
   }
 
   /* @conditional-compile-remove(control-bar-button-injection) */

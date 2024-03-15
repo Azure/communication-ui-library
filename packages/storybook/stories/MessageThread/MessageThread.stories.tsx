@@ -324,7 +324,6 @@ const Docs: () => JSX.Element = () => {
 
       <div ref={refDisplayInlineImages}>
         <Heading>Tapping Inline Images on Messages</Heading>
-        <SingleLineBetaBanner />
         <Canvas mdxSource={MessageThreadWithInlineImageExampleText}>
           <MessageThreadWithInlineImageExample />
         </Canvas>
@@ -456,26 +455,21 @@ const MessageThreadStory = (args): JSX.Element => {
     }
     const chatMessage = messages[0] as ChatMessage;
 
-    const attachments = chatMessage.inlineImages?.filter((attachment) => {
-      return attachment.id === attachmentId;
-    });
-
-    if (!attachments || attachments.length <= 0) {
-      return Promise.reject(`Attachment not found with id ${attachmentId}`);
-    }
-
-    const attachment = attachments[0];
     const title = 'Message Thread Image';
     const titleIcon = (
       <Persona text={chatMessage.senderDisplayName} size={PersonaSize.size32} hidePersonaDetails={true} />
     );
-    const overlayImage = {
-      title,
-      titleIcon,
-      downloadFilename: attachment.id,
-      imageSrc: attachment.url
-    };
-    setOverlayImageItem(overlayImage);
+    const document = new DOMParser().parseFromString(chatMessage.content ?? '', 'text/html');
+    document.querySelectorAll('img').forEach((img) => {
+      if (img.id === attachmentId) {
+        setOverlayImageItem({
+          title,
+          titleIcon,
+          downloadFilename: attachmentId,
+          imageSrc: img.src
+        });
+      }
+    });
     return Promise.resolve();
   };
 
@@ -486,8 +480,8 @@ const MessageThreadStory = (args): JSX.Element => {
     ): JSX.Element => {
       return (
         <span
-          data-ui-id={inlineImage.imgAttrs.id}
-          onClick={() => onInlineImageClicked(inlineImage.imgAttrs.id || '', inlineImage.messageId)}
+          data-ui-id={inlineImage.imageAttributes.id}
+          onClick={() => onInlineImageClicked(inlineImage.imageAttributes.id || '', inlineImage.messageId)}
           tabIndex={0}
           role="button"
           style={{
@@ -495,7 +489,7 @@ const MessageThreadStory = (args): JSX.Element => {
           }}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
-              onInlineImageClicked(inlineImage.imgAttrs.id || '', inlineImage.messageId);
+              onInlineImageClicked(inlineImage.imageAttributes.id || '', inlineImage.messageId);
             }
           }}
         >

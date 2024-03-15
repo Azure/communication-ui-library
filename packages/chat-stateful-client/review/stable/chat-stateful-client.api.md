@@ -46,7 +46,7 @@ export type ChatErrorTarget = 'ChatClient.createChatThread' | 'ChatClient.delete
 export type ChatMessageWithStatus = ChatMessage & {
     clientMessageId?: string;
     status: MessageStatus;
-    resourceCache?: Record<string, string>;
+    resourceCache?: Record<string, ResourceFetchResult>;
 };
 
 // @public
@@ -77,6 +77,12 @@ export const _createStatefulChatClientInner: (args: StatefulChatClientArgs, opti
 
 // @internal
 export const _createStatefulChatClientWithDeps: (chatClient: ChatClient, args: StatefulChatClientArgs, options?: StatefulChatClientOptions) => StatefulChatClient;
+
+// @public
+export type ResourceFetchResult = {
+    sourceUrl?: string;
+    error?: Error;
+};
 
 // @public
 export interface StatefulChatClient extends ChatClient {

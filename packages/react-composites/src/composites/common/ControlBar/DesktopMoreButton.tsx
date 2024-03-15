@@ -3,14 +3,12 @@
 
 import { IContextualMenuItem } from '@fluentui/react';
 import { ControlBarButtonProps } from '@internal/react-components';
-/* @conditional-compile-remove(gallery-layouts) */
 import { VideoGalleryLayout } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
 import { _StartCaptionsButton } from '@internal/react-components';
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButton } from '@internal/react-components';
 import React from 'react';
-/* @conditional-compile-remove(gallery-layouts) */
 import { useState } from 'react';
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
 import { useMemo, useCallback } from 'react';
@@ -36,11 +34,8 @@ import { _startCaptionsButtonSelector } from '@internal/calling-component-bindin
 /* @conditional-compile-remove(close-captions) */
 import { useAdaptedSelector } from '../../CallComposite/hooks/useAdaptedSelector';
 import { _preventDismissOnEvent } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(dtmf-dialer) */
 import { showDtmfDialer } from '../../CallComposite/utils/MediaGalleryUtils';
-/* @conditional-compile-remove(dtmf-dialer) */
 import { useSelector } from '../../CallComposite/hooks/useSelector';
-/* @conditional-compile-remove(dtmf-dialer) */
 import { getTargetCallees } from '../../CallComposite/selectors/baseSelectors';
 
 /** @private */
@@ -52,15 +47,10 @@ export interface DesktopMoreButtonProps extends ControlBarButtonProps {
   /* @conditional-compile-remove(control-bar-button-injection) */
   callControls?: boolean | CommonCallControlOptions;
   onCaptionsSettingsClick?: () => void;
-  /* @conditional-compile-remove(gallery-layouts) */
   onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'horizontalTop') => void;
-  /* @conditional-compile-remove(gallery-layouts) */
   onUserSetGalleryLayout?: (layout: VideoGalleryLayout) => void;
-  /* @conditional-compile-remove(gallery-layouts) */
   userSetGalleryLayout?: VideoGalleryLayout;
-  /* @conditional-compile-remove(dtmf-dialer) */
   onSetDialpadPage?: () => void;
-  /* @conditional-compile-remove(dtmf-dialer) */
   dtmfDialerPresent?: boolean;
 }
 
@@ -86,19 +76,14 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
 
   /* @conditional-compile-remove(overflow-top-composite) */
   const [galleryPositionTop, setGalleryPositionTop] = useState<boolean>(false);
-  /* @conditional-compile-remove(gallery-layouts) */
   const [focusedContentOn, setFocusedContentOn] = useState<boolean>(false);
-  /* @conditional-compile-remove(gallery-layouts) */
   const [previousLayout, setPreviousLayout] = useState<VideoGalleryLayout>(
     props.userSetGalleryLayout ?? 'floatingLocalVideo'
   );
 
-  /* @conditional-compile-remove(dtmf-dialer) */
   const callees = useSelector(getTargetCallees);
-  /* @conditional-compile-remove(dtmf-dialer) */
   const allowDtmfDialer = showDtmfDialer(callees);
 
-  /* @conditional-compile-remove(dtmf-dialer) */
   const [dtmfDialerChecked, setDtmfDialerChecked] = useState<boolean>(props.dtmfDialerPresent ?? false);
 
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
@@ -112,7 +97,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
 
   const moreButtonContextualMenuItems: IContextualMenuItem[] = [];
 
-  /* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(gallery-layouts) */
+  /* @conditional-compile-remove(close-captions) */
   const menuSubIconStyleSet = {
     root: {
       height: 'unset',
@@ -203,7 +188,6 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     }
   }
 
-  /* @conditional-compile-remove(dtmf-dialer) */
   const dtmfDialerScreenOption = {
     key: 'dtmfDialerScreenKey',
     itemProps: {
@@ -221,7 +205,6 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
       styles: { root: { lineHeight: 0 } }
     }
   };
-  /* @conditional-compile-remove(dtmf-dialer) */
   /**
    * Only render the dtmf dialer if the dialpad for PSTN calls is not present
    */
@@ -229,7 +212,6 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     moreButtonContextualMenuItems.push(dtmfDialerScreenOption);
   }
 
-  /* @conditional-compile-remove(gallery-layouts) */
   if (props.onUserSetOverflowGalleryPositionChange) {
     const galleryOptions = {
       key: 'overflowGalleryPositionKey',
@@ -378,7 +360,6 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     galleryOptions.subMenuProps?.items?.push(galleryOption);
     /* @conditional-compile-remove(overflow-top-composite) */
     galleryOptions.subMenuProps?.items?.push(overflowGalleryOption);
-    /* @conditional-compile-remove(gallery-layouts) */
     moreButtonContextualMenuItems.push(galleryOptions);
   }
 

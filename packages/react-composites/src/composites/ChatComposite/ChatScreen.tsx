@@ -14,7 +14,6 @@ import {
   MessageThread,
   MessageThreadStyles,
   ParticipantMenuItemsCallback,
-  SendBox,
   SendBoxStylesProps,
   TypingIndicator,
   TypingIndicatorStylesProps,
@@ -47,10 +46,6 @@ import { participantListContainerPadding } from '../common/styles/ParticipantCon
 import { ChatScreenPeoplePane } from './ChatScreenPeoplePane';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(file-sharing) */
-import { fileUploadsSelector } from './selectors/fileUploadsSelector';
-/* @conditional-compile-remove(file-sharing) */
-import { useSelector } from './hooks/useSelector';
-/* @conditional-compile-remove(file-sharing) */
 import { FileDownloadErrorBar } from './FileDownloadErrorBar';
 /* @conditional-compile-remove(file-sharing) */
 import { _FileDownloadCards } from '@internal/react-components';
@@ -58,6 +53,8 @@ import { _FileDownloadCards } from '@internal/react-components';
 import { ImageOverlay } from '@internal/react-components';
 /* @conditional-compile-remove(image-overlay) */
 import { InlineImage } from '@internal/react-components';
+import { SendBox } from '../common/SendBox';
+import { ResourceFetchResult } from '@internal/chat-stateful-client';
 
 /**
  * @private
@@ -69,7 +66,6 @@ export type ChatScreenProps = {
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   styles?: ChatScreenStyles;
-  hasFocusOnMount?: 'sendBoxTextField';
   fileSharing?: FileSharingOptions;
   formFactor?: 'desktop' | 'mobile';
 };
@@ -165,7 +161,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   }, [adapter]);
 
   const messageThreadProps = usePropsFor(MessageThread);
-  const sendBoxProps = usePropsFor(SendBox);
   const typingIndicatorProps = usePropsFor(TypingIndicator);
   const headerProps = useAdaptedSelector(getHeaderProps);
   const errorBarProps = usePropsFor(ErrorBar);
@@ -175,10 +170,13 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     if (overlayImageItem === undefined) {
       return;
     }
-    const message = adapter.getState().thread.chatMessages[overlayImageItem?.messageId];
+    const message = adapter.getState().thread.chatMessages[overlayImageItem.messageId];
+    if (message === undefined) {
+      return;
+    }
     const resourceCache = message.resourceCache;
-    if (overlayImageItem.imageSrc === '' && resourceCache) {
-      const fullSizeImageSrc = resourceCache[overlayImageItem.imageUrl];
+    if (overlayImageItem.imageSrc === '' && resourceCache && resourceCache[overlayImageItem.imageUrl]) {
+      const fullSizeImageSrc = getResourceSourceUrl(resourceCache[overlayImageItem.imageUrl]);
       if (fullSizeImageSrc === undefined || fullSizeImageSrc === '' || overlayImageItem.imageSrc === fullSizeImageSrc) {
         return;
       }
@@ -190,6 +188,17 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     // Disable eslint because we are using the overlayImageItem in this effect but don't want to have it as a dependency, as it will cause an infinite loop.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messageThreadProps.messages]);
+
+  const getResourceSourceUrl = (result: ResourceFetchResult): string => {
+    let src = '';
+    if (result.error || !result.sourceUrl) {
+      src = 'blob://';
+    } else {
+      src = result.sourceUrl;
+    }
+
+    return src;
+  };
 
   const onRenderAvatarCallback = useCallback(
     (userId?: string, defaultOptions?: AvatarPersonaProps) => {
@@ -216,9 +225,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const typingIndicatorStyles = useMemo(() => {
     return Object.assign({}, styles?.typingIndicator);
   }, [styles?.typingIndicator]);
-  const sendBoxStyles = useMemo(() => {
-    return Object.assign({}, styles?.sendBox);
-  }, [styles?.sendBox]);
+
   const userId = toFlatCommunicationIdentifier(adapter.getState().userId);
 
   const fileUploadButtonOnChange = useCallback(
@@ -252,7 +259,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   /* @conditional-compile-remove(image-overlay) */
   const onInlineImageClicked = useCallback(
-    async (attachmentId: string, messageId: string): Promise<void> => {
+    (attachmentId: string, messageId: string) => {
       const message = adapter.getState().thread.chatMessages[messageId];
       const inlinedImages = message.content?.attachments?.filter((attachment) => {
         return attachment.attachmentType === 'image' && attachment.id === attachmentId;
@@ -266,9 +273,10 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
       const resourceCache = message.resourceCache;
       let imageSrc = '';
+
       if (attachment.url) {
         if (resourceCache && resourceCache[attachment.url]) {
-          imageSrc = resourceCache[attachment.url];
+          imageSrc = getResourceSourceUrl(resourceCache[attachment.url]);
         } else {
           adapter.downloadResourceToCache({
             threadId: adapter.getState().thread.threadId,
@@ -308,18 +316,38 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       inlineImage: InlineImage,
       defaultOnRender: (inlineImage: InlineImage) => JSX.Element
     ): JSX.Element => {
+      const message = adapter.getState().thread.chatMessages[inlineImage.messageId];
+      const attachment = message?.content?.attachments?.find(
+        (attachment) => attachment.id === inlineImage.imageAttributes.id
+      );
+
+      if (attachment === undefined) {
+        return defaultOnRender(inlineImage);
+      }
+
+      let pointerEvents: 'none' | 'auto' = inlineImage.imageAttributes.src === '' ? 'none' : 'auto';
+      const resourceCache = message.resourceCache;
+      if (
+        resourceCache &&
+        attachment.previewUrl &&
+        resourceCache[attachment.previewUrl] &&
+        resourceCache[attachment.previewUrl].error
+      ) {
+        pointerEvents = 'none';
+      }
+
       return (
         <span
-          key={inlineImage.imgAttrs.id}
-          onClick={() => onInlineImageClicked(inlineImage.imgAttrs.id || '', inlineImage.messageId)}
+          key={inlineImage.imageAttributes.id}
+          onClick={() => onInlineImageClicked(inlineImage.imageAttributes.id || '', inlineImage.messageId)}
           tabIndex={0}
           role="button"
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
-              onInlineImageClicked(inlineImage.imgAttrs.id || '', inlineImage.messageId);
+              onInlineImageClicked(inlineImage.imageAttributes.id || '', inlineImage.messageId);
             }
           }}
-          style={{ cursor: 'pointer' }}
+          style={{ cursor: 'pointer', pointerEvents }}
         >
           {defaultOnRender(inlineImage)}
         </span>
@@ -365,6 +393,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       />
     );
   }, [fileSharing?.accept, fileSharing?.multiple, fileSharing?.uploadHandler, fileUploadButtonOnChange]);
+
   return (
     <Stack className={chatContainer} grow>
       {options?.topic !== false && <ChatHeader {...headerProps} />}
@@ -407,13 +436,10 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
               )}
               <Stack grow>
                 <SendBox
-                  {...sendBoxProps}
-                  autoFocus={options?.autoFocus}
-                  styles={sendBoxStyles}
+                  options={options}
+                  styles={styles?.sendBox}
                   /* @conditional-compile-remove(file-sharing) */
-                  activeFileUploads={useSelector(fileUploadsSelector).files}
-                  /* @conditional-compile-remove(file-sharing) */
-                  onCancelFileUpload={adapter.cancelFileUpload}
+                  adapter={adapter}
                 />
               </Stack>
               {formFactor !== 'mobile' && <AttachFileButton />}

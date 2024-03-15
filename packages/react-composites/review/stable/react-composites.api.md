@@ -6,6 +6,7 @@
 
 /// <reference types="react" />
 
+import type { AttachmentMetadata } from '@internal/react-components';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import type { BackgroundBlurConfig } from '@azure/communication-calling';
 import type { BackgroundReplacementConfig } from '@azure/communication-calling';
@@ -29,7 +30,6 @@ import { ComponentLocale } from '@internal/react-components';
 import { CreateVideoStreamViewResult } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
 import { DtmfTone } from '@azure/communication-calling';
-import type { FileMetadata } from '@internal/react-components';
 import { GroupCallLocator } from '@azure/communication-calling';
 import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { MessageProps } from '@internal/react-components';
@@ -378,6 +378,16 @@ export type CallCompositeOptions = {
     galleryOptions?: {
         layout?: VideoGalleryLayout;
     };
+    branding?: {
+        logo?: {
+            url: string;
+            alt?: string;
+            shape?: 'unset' | 'circle';
+        };
+        backgroundImage?: {
+            url: string;
+        };
+    };
 };
 
 // @public
@@ -563,7 +573,7 @@ export interface CallWithChatAdapterManagement {
     disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
     disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
-    // @beta (undocumented)
+    // (undocumented)
     downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
     fetchInitialData(): Promise<void>;
     // @deprecated
@@ -578,7 +588,7 @@ export interface CallWithChatAdapterManagement {
     querySpeakers(): Promise<AudioDeviceInfo[]>;
     raiseHand(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
-    // @beta (undocumented)
+    // (undocumented)
     removeResourceFromCache(resourceDetails: ResourceDetails): void;
     sendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
@@ -812,6 +822,16 @@ export type CallWithChatCompositeOptions = {
     localVideoTile?: boolean | LocalVideoTileOptions;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
+    };
+    branding?: {
+        logo?: {
+            url: string;
+            alt?: string;
+            shape?: 'unset' | 'circle';
+        };
+        backgroundImage?: {
+            url: string;
+        };
     };
 };
 
@@ -1332,6 +1352,7 @@ export type _FakeChatAdapterArgs = {
     failFileDownload?: boolean;
     sendRemoteFileSharingMessage?: boolean;
     sendRemoteInlineImageMessage?: boolean;
+    serverUrl?: string;
     inlineImageUrl?: string;
     frenchLocaleEnabled?: boolean;
     showParticipantPane?: boolean;
@@ -1523,7 +1544,7 @@ export class _MockCallAdapter implements CallAdapter {
 }
 
 // @internal
-export type _MockFileUpload = FileMetadata & {
+export type _MockFileUpload = AttachmentMetadata & {
     uploadComplete?: boolean;
     error?: string;
     progress?: number;

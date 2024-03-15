@@ -12,7 +12,6 @@ import { CommonCallAdapter } from '..';
 import { VideoBackgroundBlurEffect, VideoBackgroundReplacementEffect } from '..';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isCameraOn } from '../utils';
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(dtmf-dialer) */
 import { DtmfTone } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
@@ -83,7 +82,6 @@ const createCompositeHandlers = memoizeOne(
           return await adapter.addParticipant(participant as PhoneNumberIdentifier, options);
         }
       },
-      /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(dtmf-dialer) */
       onSendDtmfTone: async (dtmfTone: DtmfTone) => {
         await adapter.sendDtmfTone(dtmfTone);
       },

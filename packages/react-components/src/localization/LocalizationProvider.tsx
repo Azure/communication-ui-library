@@ -50,7 +50,7 @@ import { ImageOverlayStrings } from '../components/ImageOverlay';
 /* @conditional-compile-remove(reaction) */
 import { ReactionButtonStrings } from '../components';
 /* @conditional-compile-remove(rich-text-editor) */
-import { RichTextSendBoxStrings } from '../components/RTE/RTESendBox';
+import { RichTextSendBoxStrings } from '../components/RichTextEditor/RichTextSendBox';
 
 /**
  * Locale information for all components exported from this library.
@@ -104,7 +104,7 @@ export interface ComponentStrings {
   /** Strings for SendBox */
   sendBox: SendBoxStrings;
   /* @conditional-compile-remove(rich-text-editor) */
-  /** Strings for RTESendBox */
+  /** Strings for RichTextSendBox */
   richTextSendBox: RichTextSendBoxStrings;
   /* @conditional-compile-remove(mention) */
   /** Strings for MentionPopover */

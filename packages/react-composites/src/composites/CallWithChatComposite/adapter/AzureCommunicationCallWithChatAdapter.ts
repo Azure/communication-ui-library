@@ -21,7 +21,6 @@ import { Reaction } from '@azure/communication-calling';
 import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
-/* @conditional-compile-remove(dtmf-dialer) */
 import { DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
@@ -243,7 +242,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.resumeCall.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
     this.addParticipant.bind(this);
-    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(dtmf-dialer) */
     this.sendDtmfTone.bind(this);
     /* @conditional-compile-remove(unsupported-browser) */
     this.allowUnsupportedBrowserVersion.bind(this);
@@ -513,7 +511,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     }
   }
 
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(dtmf-dialer) */
   public async sendDtmfTone(dtmfTone: DtmfTone): Promise<void> {
     return await this.callAdapter.sendDtmfTone(dtmfTone);
   }

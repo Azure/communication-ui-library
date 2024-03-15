@@ -56,7 +56,11 @@ export type AnnouncerProps = {
 };
 
 // @beta
-export type AttachmentMetadata = FileMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ InlineImageMetadata;
+export interface AttachmentMetadata {
+    extension: string;
+    name: string;
+    url: string;
+}
 
 // @public
 export interface BaseCustomStyles {
@@ -303,8 +307,8 @@ export interface _CaptionsSettingsModalStrings {
     captionsSettingsSpokenLanguageDropdownLabel?: string;
 }
 
-// @beta
-export type ChatAttachmentType = 'unknown' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage';
+// @public
+export type ChatAttachmentType = 'unknown' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'image';
 
 // @public
 export interface ChatMessage extends MessageCommon {
@@ -322,8 +326,6 @@ export interface ChatMessage extends MessageCommon {
     editedOn?: Date;
     // (undocumented)
     failureReason?: string;
-    // @beta
-    inlineImages?: InlineImageMetadata[];
     // (undocumented)
     messageType: 'chat';
     metadata?: Record<string, string>;
@@ -799,6 +801,7 @@ export interface _DrawerMenuItemProps {
     itemKey: string;
     // (undocumented)
     onItemClick?: (ev?: React_2.MouseEvent<HTMLElement> | React_2.KeyboardEvent<HTMLElement>, itemKey?: string) => void;
+    onRendererContent?: () => JSX.Element;
     secondaryComponent?: JSX.Element;
     secondaryIconProps?: IIconProps;
     secondaryText?: string;
@@ -972,13 +975,6 @@ export interface FileDownloadError {
 // @beta
 export type FileDownloadHandler = (userId: string, fileMetadata: AttachmentMetadata) => Promise<URL | FileDownloadError>;
 
-// @beta
-export interface FileMetadata {
-    extension: string;
-    name: string;
-    url: string;
-}
-
 // @internal
 export interface _FileUploadCardsStrings {
     removeFile: string;
@@ -1073,10 +1069,10 @@ export interface _Identifiers {
     videoTile: string;
 }
 
-// @beta
+// @public
 export const ImageOverlay: (props: ImageOverlayProps) => JSX.Element;
 
-// @beta
+// @public
 export interface ImageOverlayProps {
     altText?: string;
     imageSrc: string;
@@ -1093,27 +1089,13 @@ export interface ImageOverlayStrings {
     downloadButtonLabel: string;
 }
 
-// @beta
-export const imageOverlayTheme: PartialTheme;
-
-// @beta
+// @public
 export interface InlineImage {
-    imgAttrs: React_2.ImgHTMLAttributes<HTMLImageElement>;
+    imageAttributes: React_2.ImgHTMLAttributes<HTMLImageElement>;
     messageId: string;
 }
 
-// @beta
-export interface InlineImageMetadata {
-    // (undocumented)
-    attachmentType: 'inlineImage';
-    fullSizeImageSrc?: string;
-    id: string;
-    // (undocumented)
-    previewUrl?: string;
-    url: string;
-}
-
-// @beta
+// @public
 export interface InlineImageOptions {
     onRenderInlineImage?: (inlineImage: InlineImage, defaultOnRender: (inlineImage: InlineImage) => JSX.Element) => JSX.Element;
 }
@@ -1283,7 +1265,6 @@ export interface MessageThreadStrings {
     editedTag: string;
     editMessage: string;
     failToSendTag?: string;
-    fileCardGroupMessage: string;
     friday: string;
     liveAuthorIntro: string;
     messageContentAriaText: string;
@@ -1382,7 +1363,7 @@ export interface OptionsDevice {
 }
 
 // @public
-export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | /* @conditional-compile-remove(gallery-layouts) */ 'horizontalTop';
+export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | 'horizontalTop';
 
 // @public
 export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
@@ -2045,7 +2026,7 @@ export interface _VideoEffectsItemStyles {
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
 // @public (undocumented)
-export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | /* @conditional-compile-remove(gallery-layouts) */ 'speaker' | /* @conditional-compile-remove(gallery-layouts) */ 'focusedContent';
+export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | 'speaker' | 'focusedContent';
 
 // @public
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {

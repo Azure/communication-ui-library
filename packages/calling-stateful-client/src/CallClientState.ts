@@ -256,7 +256,7 @@ export interface RaiseHandCallFeatureState {
  * State only version of {@link @azure/communication-calling#PPTLiveCallFeature}. {@link StatefulCallClient} will
  * automatically listen for pptLive on the call and update the state exposed by {@link StatefulCallClient} accordingly.
  *
- * @beta
+ * @public
  */
 export interface PPTLiveCallFeatureState {
   /**
@@ -451,7 +451,7 @@ export interface RemoteParticipantState {
   /**
    * Proxy of {@link @azure/communication-calling#Call.PPTLive.target}.
    *
-   * @beta
+   * @public
    */
   contentSharingStream?: HTMLElement;
   /* @conditional-compile-remove(reaction) */
@@ -558,7 +558,7 @@ export interface CallState {
   /**
    * Proxy of {@link @azure/communication-calling#PPTLiveCallFeature}.
    *
-   *@beta
+   *@public
    */
   pptLive: PPTLiveCallFeatureState;
   /* @conditional-compile-remove(raise-hand) */
@@ -593,7 +593,7 @@ export interface CallState {
    *
    * This property is added by the stateful layer and is not a proxy of SDK state
    *
-   *@beta
+   *@public
    */
   contentSharingRemoteParticipant?: string;
   /**

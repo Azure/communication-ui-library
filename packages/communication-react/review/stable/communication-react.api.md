@@ -474,6 +474,16 @@ export type CallCompositeOptions = {
     galleryOptions?: {
         layout?: VideoGalleryLayout;
     };
+    branding?: {
+        logo?: {
+            url: string;
+            alt?: string;
+            shape?: 'unset' | 'circle';
+        };
+        backgroundImage?: {
+            url: string;
+        };
+    };
 };
 
 // @public
@@ -724,6 +734,7 @@ export interface CallState {
     callerInfo: CallerInfo;
     capabilitiesFeature?: CapabilitiesFeatureState;
     captionsFeature: CaptionsCallFeatureState;
+    contentSharingRemoteParticipant?: string;
     diagnostics: DiagnosticsCallFeatureState;
     direction: CallDirection;
     dominantSpeakers?: DominantSpeakersInfo;
@@ -733,6 +744,7 @@ export interface CallState {
     isScreenSharingOn: boolean;
     localVideoStreams: LocalVideoStreamState[];
     optimalVideoCount: OptimalVideoCountFeatureState;
+    pptLive: PPTLiveCallFeatureState;
     raiseHand: RaiseHandCallFeature;
     recording: RecordingCallFeature;
     remoteParticipants: {
@@ -762,7 +774,7 @@ export interface CallWithChatAdapterManagement {
     disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
     disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
-    // @beta (undocumented)
+    // (undocumented)
     downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
     fetchInitialData(): Promise<void>;
     // @deprecated
@@ -777,7 +789,7 @@ export interface CallWithChatAdapterManagement {
     querySpeakers(): Promise<AudioDeviceInfo[]>;
     raiseHand(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
-    // @beta (undocumented)
+    // (undocumented)
     removeResourceFromCache(resourceDetails: ResourceDetails): void;
     sendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
@@ -1011,6 +1023,16 @@ export type CallWithChatCompositeOptions = {
     localVideoTile?: boolean | LocalVideoTileOptions;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
+    };
+    branding?: {
+        logo?: {
+            url: string;
+            alt?: string;
+            shape?: 'unset' | 'circle';
+        };
+        backgroundImage?: {
+            url: string;
+        };
     };
 };
 
@@ -1295,8 +1317,8 @@ export type ChatAdapterUiState = {
     error?: Error;
 };
 
-// @beta
-export type ChatAttachmentType = 'unknown' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage';
+// @public
+export type ChatAttachmentType = 'unknown' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'image';
 
 // @public
 export type ChatBaseSelectorProps = {
@@ -1418,8 +1440,6 @@ export interface ChatMessage extends MessageCommon {
     editedOn?: Date;
     // (undocumented)
     failureReason?: string;
-    // @beta
-    inlineImages?: InlineImageMetadata[];
     // (undocumented)
     messageType: 'chat';
     metadata?: Record<string, string>;
@@ -1437,7 +1457,7 @@ export interface ChatMessage extends MessageCommon {
 export type ChatMessageWithStatus = ChatMessage_2 & {
     clientMessageId?: string;
     status: MessageStatus;
-    resourceCache?: Record<string, string>;
+    resourceCache?: Record<string, ResourceFetchResult>;
 };
 
 // @public
@@ -2410,10 +2430,10 @@ export interface _Identifiers {
     videoTile: string;
 }
 
-// @beta
+// @public
 export const ImageOverlay: (props: ImageOverlayProps) => JSX.Element;
 
-// @beta
+// @public
 export interface ImageOverlayProps {
     altText?: string;
     imageSrc: string;
@@ -2430,9 +2450,6 @@ export interface ImageOverlayStrings {
     downloadButtonLabel: string;
 }
 
-// @beta
-export const imageOverlayTheme: PartialTheme;
-
 // @public
 export interface IncomingCallState {
     callEndReason?: CallEndReason;
@@ -2442,24 +2459,13 @@ export interface IncomingCallState {
     startTime: Date;
 }
 
-// @beta
+// @public
 export interface InlineImage {
-    imgAttrs: React_2.ImgHTMLAttributes<HTMLImageElement>;
+    imageAttributes: React_2.ImgHTMLAttributes<HTMLImageElement>;
     messageId: string;
 }
 
-// @beta
-export interface InlineImageMetadata {
-    // (undocumented)
-    attachmentType: 'inlineImage';
-    fullSizeImageSrc?: string;
-    id: string;
-    // (undocumented)
-    previewUrl?: string;
-    url: string;
-}
-
-// @beta
+// @public
 export interface InlineImageOptions {
     onRenderInlineImage?: (inlineImage: InlineImage, defaultOnRender: (inlineImage: InlineImage) => JSX.Element) => JSX.Element;
 }
@@ -2698,7 +2704,6 @@ export interface MessageThreadStrings {
     editedTag: string;
     editMessage: string;
     failToSendTag?: string;
-    fileCardGroupMessage: string;
     friday: string;
     liveAuthorIntro: string;
     messageContentAriaText: string;
@@ -2826,7 +2831,7 @@ export interface OptionsDevice {
 }
 
 // @public
-export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | /* @conditional-compile-remove(gallery-layouts) */ 'horizontalTop';
+export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | 'horizontalTop';
 
 // @public
 export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
@@ -2997,6 +3002,11 @@ export type ParticipantsRemovedListener = (event: {
 export type ParticipantState = 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
 
 // @public
+export interface PPTLiveCallFeatureState {
+    isActive: boolean;
+}
+
+// @public
 export type RaisedHand = {
     raisedHandOrderPosition: number;
 };
@@ -3052,6 +3062,7 @@ export interface RecordingCallFeature {
 // @public
 export interface RemoteParticipantState {
     callEndReason?: CallEndReason;
+    contentSharingStream?: HTMLElement;
     displayName?: string;
     identifier: CommunicationIdentifierKind;
     isMuted: boolean;
@@ -3086,6 +3097,12 @@ export type ResourceDetails = {
     threadId: string;
     messageId: string;
     resourceUrl: string;
+};
+
+// @public
+export type ResourceFetchResult = {
+    sourceUrl?: string;
+    error?: Error;
 };
 
 // @public
@@ -3479,7 +3496,7 @@ export interface VideoBackgroundReplacementEffect extends BackgroundReplacementC
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
 // @public (undocumented)
-export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | /* @conditional-compile-remove(gallery-layouts) */ 'speaker' | /* @conditional-compile-remove(gallery-layouts) */ 'focusedContent';
+export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | 'speaker' | 'focusedContent';
 
 // @public
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
