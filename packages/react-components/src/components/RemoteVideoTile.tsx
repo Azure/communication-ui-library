@@ -12,9 +12,13 @@ import {
   VideoStreamOptions,
   ViewScalingMode
 } from '../types';
+/* @conditional-compile-remove(spotlight) */
+import { VideoGalleryParticipant } from '../types';
 import { _DrawerMenu, _DrawerMenuItemProps } from './Drawer';
 import { StreamMedia } from './StreamMedia';
 import { VideoGalleryStrings } from './VideoGallery';
+/* @conditional-compile-remove(spotlight) */
+import { CallingContextualMenuItem } from './VideoGallery';
 import { drawerMenuWrapperStyles, remoteVideoTileWrapperStyle } from './VideoGallery/styles/RemoteVideoTile.styles';
 import {
   RemoteVideoStreamLifecycleMaintainerProps,
@@ -62,9 +66,10 @@ export const _RemoteVideoTile = React.memo(
     isPinned?: boolean;
     /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds?: string[];
     /* @conditional-compile-remove(spotlight) */ isSpotlighted?: boolean;
-    /* @conditional-compile-remove(spotlight) */ onStartSpotlight?: (userIds: string[]) => void;
-    /* @conditional-compile-remove(spotlight) */ onStopSpotlight?: (userIds: string[]) => void;
     /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight?: number;
+    /* @conditional-compile-remove(spotlight) */ onFetchParticipantCallbackItems?: (
+      participant: VideoGalleryParticipant
+    ) => CallingContextualMenuItem[];
     disablePinMenuItem?: boolean;
     toggleAnnouncerString?: (announcerString: string) => void;
     /* @conditional-compile-remove(reaction) */ reactionResources?: ReactionResources;
@@ -88,8 +93,7 @@ export const _RemoteVideoTile = React.memo(
       onUnpinParticipant,
       /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds,
       /* @conditional-compile-remove(spotlight) */ isSpotlighted,
-      /* @conditional-compile-remove(spotlight) */ onStartSpotlight,
-      /* @conditional-compile-remove(spotlight) */ onStopSpotlight,
+      /* @conditional-compile-remove(spotlight) */ onFetchParticipantCallbackItems,
       /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight,
       onUpdateScalingMode,
       disablePinMenuItem,
@@ -137,8 +141,7 @@ export const _RemoteVideoTile = React.memo(
       toggleAnnouncerString,
       /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds,
       /* @conditional-compile-remove(spotlight) */ isSpotlighted,
-      /* @conditional-compile-remove(spotlight) */ onStartSpotlight,
-      /* @conditional-compile-remove(spotlight) */ onStopSpotlight,
+      /* @conditional-compile-remove(spotlight) */ onFetchParticipantCallbackItems,
       /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight
     });
 

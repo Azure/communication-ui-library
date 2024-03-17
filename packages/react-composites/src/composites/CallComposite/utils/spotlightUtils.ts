@@ -44,7 +44,10 @@ export const useLocalSpotlightCallbacksWithPrompt = (
 };
 
 /* @conditional-compile-remove(spotlight) */
-const getStartLocalSpotlightWithPromptCallback = (
+/**
+ * @internal
+ */
+export const getStartLocalSpotlightWithPromptCallback = (
   onStartSpotlight: (userIds?: string[]) => void,
   setIsPromptOpen: (isOpen: boolean) => void,
   setPromptProps: (promptProps: PromptProps) => void,
@@ -67,6 +70,9 @@ const getStartLocalSpotlightWithPromptCallback = (
 };
 
 /* @conditional-compile-remove(spotlight) */
+/**
+ * @internal
+ */
 const getStopLocalSpotlightWithPromptCallback = (
   onStopSpotlight: (userIds?: string[]) => void,
   setIsPromptOpen: (isOpen: boolean) => void,
@@ -127,7 +133,10 @@ export const useRemoteSpotlightCallbacksWithPrompt = (
 };
 
 /* @conditional-compile-remove(spotlight) */
-const getStartRemoteSpotlightWithPromptCallback = (
+/**
+ * @internal
+ */
+export const getStartRemoteSpotlightWithPromptCallback = (
   onStartSpotlight: (userIds?: string[]) => void,
   setIsPromptOpen: (isOpen: boolean) => void,
   setPromptProps: (promptProps: PromptProps) => void,
@@ -153,7 +162,10 @@ const getStartRemoteSpotlightWithPromptCallback = (
 };
 
 /* @conditional-compile-remove(spotlight) */
-const getStopRemoteSpotlightWithPromptCallback = (
+/**
+ * @internal
+ */
+export const getStopRemoteSpotlightWithPromptCallback = (
   onStopSpotlight: (userIds?: string[]) => void,
   setIsPromptOpen: (isOpen: boolean) => void,
   setPromptProps: (promptProps: PromptProps) => void,

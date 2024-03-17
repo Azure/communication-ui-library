@@ -29,6 +29,8 @@ import {
 } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(spotlight) */
+import { CallingContextualMenuItem, VideoGalleryParticipant } from '@internal/react-components';
 
 /**
  * @private
@@ -228,6 +230,28 @@ const createCompositeHandlers = memoizeOne(
       /* @conditional-compile-remove(spotlight) */
       onStopRemoteSpotlight: async (userIds?: string[]): Promise<void> => {
         await adapter.stopSpotlight(userIds);
+      },
+      /* @conditional-compile-remove(spotlight) */
+      onFetchParticipantCallbackItems: (participant: VideoGalleryParticipant): CallingContextualMenuItem[] => {
+        const contextualItems: CallingContextualMenuItem[] = [];
+        if (participant.spotlight) {
+          contextualItems.push({
+            key: 'stopSpotlight',
+            action: 'stopSpotlight',
+            onClick: () => {
+              adapter.stopSpotlight([participant.userId]);
+            }
+          });
+        } else {
+          contextualItems.push({
+            key: 'startSpotlight',
+            action: 'startSpotlight',
+            onClick: () => {
+              adapter.startSpotlight([participant.userId]);
+            }
+          });
+        }
+        return contextualItems;
       }
     };
   }

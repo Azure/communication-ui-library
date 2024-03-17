@@ -93,7 +93,9 @@ export type {
   VideoGalleryStyles,
   VideoGalleryLayout,
   VideoTileContextualMenuProps,
-  VideoTileDrawerMenuProps
+  VideoTileDrawerMenuProps,
+  CallingContextualMenuItem,
+  CallingAction
 } from './VideoGallery';
 /* @conditional-compile-remove(vertical-gallery) */
 export type { OverflowGalleryPosition } from './VideoGallery';

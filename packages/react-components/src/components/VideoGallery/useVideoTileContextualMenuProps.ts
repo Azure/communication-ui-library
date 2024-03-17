@@ -6,6 +6,7 @@ import { _formatString } from '@internal/acs-ui-common';
 import { useMemo } from 'react';
 import { VideoGalleryParticipant, ViewScalingMode } from '../../types';
 import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-ui-common';
+import { CallingContextualMenuItem } from '../VideoGallery';
 
 /**
  * @private
@@ -45,9 +46,7 @@ export const useVideoTileContextualMenuProps = (props: {
   /* @conditional-compile-remove(spotlight) */
   spotlightedParticipantUserIds?: string[];
   /* @conditional-compile-remove(spotlight) */
-  onStartSpotlight?: (userIds: string[]) => void;
-  /* @conditional-compile-remove(spotlight) */
-  onStopSpotlight?: (userIds: string[]) => void;
+  onFetchParticipantCallbackItems?: (participant: VideoGalleryParticipant) => CallingContextualMenuItem[];
   /* @conditional-compile-remove(spotlight) */
   maxParticipantsToSpotlight?: number;
   /* @conditional-compile-remove(spotlight) */
@@ -65,8 +64,7 @@ export const useVideoTileContextualMenuProps = (props: {
     toggleAnnouncerString,
     /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds = [],
     /* @conditional-compile-remove(spotlight) */ isSpotlighted,
-    /* @conditional-compile-remove(spotlight) */ onStartSpotlight,
-    /* @conditional-compile-remove(spotlight) */ onStopSpotlight,
+    /* @conditional-compile-remove(spotlight) */ onFetchParticipantCallbackItems,
     /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight,
     /* @conditional-compile-remove(spotlight) */ myUserId
   } = props;
@@ -124,47 +122,44 @@ export const useVideoTileContextualMenuProps = (props: {
         });
       }
     }
-    /* @conditional-compile-remove(spotlight) */
-    if (isSpotlighted) {
-      const stopSpotlightMenuLabel =
-        myUserId === participant.userId
-          ? strings?.stopSpotlightOnSelfVideoTileMenuLabel
-          : strings?.stopSpotlightVideoTileMenuLabel;
-      if (onStopSpotlight && participant.userId && strings?.stopSpotlightVideoTileMenuLabel) {
+    const g = onFetchParticipantCallbackItems ? onFetchParticipantCallbackItems(participant) : [];
+    console.log('g: ', g);
+    g.forEach((h) => {
+      if (h.action === 'startSpotlight') {
+        const startSpotlightMenuLabel =
+          spotlightedParticipantUserIds && spotlightedParticipantUserIds.length > 0
+            ? strings?.addSpotlightVideoTileMenuLabel
+            : strings?.startSpotlightVideoTileMenuLabel;
+        const maxSpotlightedParticipantsReached = maxParticipantsToSpotlight
+          ? spotlightedParticipantUserIds.length >= maxParticipantsToSpotlight
+          : false;
         items.push({
-          key: 'stopSpotlight',
-          text: stopSpotlightMenuLabel,
-          iconProps: {
-            iconName: 'StopSpotlightContextualMenuItem',
-            styles: { root: { lineHeight: 0 } }
-          },
-          onClick: () => onStopSpotlight([participant.userId]),
-          ariaLabel: strings.stopSpotlightVideoTileMenuLabel
-        });
-      }
-    } else {
-      const startSpotlightMenuLabel =
-        spotlightedParticipantUserIds && spotlightedParticipantUserIds.length > 0
-          ? strings?.addSpotlightVideoTileMenuLabel
-          : strings?.startSpotlightVideoTileMenuLabel;
-      const maxSpotlightedParticipantsReached = maxParticipantsToSpotlight
-        ? spotlightedParticipantUserIds.length >= maxParticipantsToSpotlight
-        : false;
-      if (onStartSpotlight && participant.userId && startSpotlightMenuLabel) {
-        items.push({
-          key: 'startSpotlight',
+          ...h,
           text: startSpotlightMenuLabel,
           iconProps: {
             iconName: 'StartSpotlightContextualMenuItem',
             styles: { root: { lineHeight: 0 } }
           },
-          onClick: () => onStartSpotlight([participant.userId]),
           ariaLabel: startSpotlightMenuLabel,
           disabled: maxSpotlightedParticipantsReached,
           title: maxSpotlightedParticipantsReached ? strings?.spotlightLimitReachedMenuTitle : undefined
         });
+      } else if (h.action === 'stopSpotlight') {
+        const stopSpotlightMenuLabel =
+          myUserId === participant.userId
+            ? strings?.stopSpotlightOnSelfVideoTileMenuLabel
+            : strings?.stopSpotlightVideoTileMenuLabel;
+        items.push({
+          ...h,
+          text: stopSpotlightMenuLabel,
+          iconProps: {
+            iconName: 'StopSpotlightContextualMenuItem',
+            styles: { root: { lineHeight: 0 } }
+          },
+          ariaLabel: stopSpotlightMenuLabel
+        });
       }
-    }
+    });
     if (scalingMode) {
       if (scalingMode === 'Crop' && strings?.fitRemoteParticipantToFrame) {
         items.push({
@@ -211,14 +206,12 @@ export const useVideoTileContextualMenuProps = (props: {
     onPinParticipant,
     onUnpinParticipant,
     onUpdateScalingMode,
-    participant.userId,
-    participant.displayName,
     disablePinMenuItem,
     toggleAnnouncerString,
     /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds,
     /* @conditional-compile-remove(spotlight) */ isSpotlighted,
-    /* @conditional-compile-remove(spotlight) */ onStartSpotlight,
-    /* @conditional-compile-remove(spotlight) */ onStopSpotlight,
+    /* @conditional-compile-remove(spotlight) */ onFetchParticipantCallbackItems,
+    participant,
     /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight,
     /* @conditional-compile-remove(spotlight) */ myUserId
   ]);

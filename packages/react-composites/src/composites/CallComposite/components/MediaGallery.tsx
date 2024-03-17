@@ -10,7 +10,9 @@ import {
   CustomAvatarOptions,
   Announcer,
   VideoTileContextualMenuProps,
-  VideoTileDrawerMenuProps
+  VideoTileDrawerMenuProps,
+  VideoGalleryParticipant,
+  CallingContextualMenuItem
 } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
 /* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(rooms) */
@@ -32,7 +34,12 @@ import { useAdapter } from '../adapter/CallAdapterProvider';
 /* @conditional-compile-remove(spotlight) */
 import { PromptProps } from './Prompt';
 /* @conditional-compile-remove(spotlight) */
-import { useLocalSpotlightCallbacksWithPrompt, useRemoteSpotlightCallbacksWithPrompt } from '../utils/spotlightUtils';
+import {
+  getStartRemoteSpotlightWithPromptCallback,
+  useLocalSpotlightCallbacksWithPrompt,
+  useRemoteSpotlightCallbacksWithPrompt
+} from '../utils/spotlightUtils';
+import { useLocale } from '../../localization';
 
 const VideoGalleryStyles = {
   root: {
@@ -154,8 +161,28 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   ]);
 
   /* @conditional-compile-remove(spotlight) */
-  const { onStartLocalSpotlight, onStopLocalSpotlight, onStartRemoteSpotlight, onStopRemoteSpotlight } =
-    videoGalleryProps;
+  const {
+    onStartLocalSpotlight,
+    onStopLocalSpotlight,
+    onStartRemoteSpotlight,
+    onStopRemoteSpotlight,
+    onFetchParticipantCallbackItems
+  } = videoGalleryProps;
+
+  const strings = useLocale().strings.call;
+
+  const g: (participant: VideoGalleryParticipant) => CallingContextualMenuItem[] = (
+    participant: VideoGalleryParticipant
+  ): CallingContextualMenuItem[] => {
+    const h = onFetchParticipantCallbackItems(participant);
+    const k = h.find((m: CallingContextualMenuItem) => m.action === 'startSpotlight');
+    if (k) {
+      getStartRemoteSpotlightWithPromptCallback(onStartRemoteSpotlight, setIsPromptOpen, setPromptProps, strings);
+      k.onClick = () => {};
+    }
+    return [];
+  };
+  console.log(g);
 
   /* @conditional-compile-remove(spotlight) */
   const { onStartLocalSpotlightWithPrompt, onStopLocalSpotlightWithPrompt } = useLocalSpotlightCallbacksWithPrompt(
@@ -210,6 +237,8 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         onStartRemoteSpotlight={hideSpotlightButtons ? undefined : onStartRemoteSpotlightWithPrompt}
         /* @conditional-compile-remove(spotlight) */
         onStopRemoteSpotlight={hideSpotlightButtons ? undefined : onStopRemoteSpotlightWithPrompt}
+        /* @conditional-compile-remove(spotlight) */
+        onFetchParticipantCallbackItems={onFetchParticipantCallbackItems}
       />
     );
   }, [
@@ -242,7 +271,9 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(spotlight) */
     onStopRemoteSpotlightWithPrompt,
     /* @conditional-compile-remove(spotlight) */
-    hideSpotlightButtons
+    hideSpotlightButtons,
+    /* @conditional-compile-remove(spotlight) */
+    onFetchParticipantCallbackItems
   ]);
 
   return (

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { concatStyleSets, IStyle, mergeStyles, Stack } from '@fluentui/react';
+import { concatStyleSets, IContextualMenuItem, IStyle, mergeStyles, Stack } from '@fluentui/react';
 import React, { useCallback, useMemo, useRef } from 'react';
 import { GridLayoutStyles } from '.';
 import { Announcer } from './Announcer';
@@ -14,7 +14,8 @@ import {
   VideoGalleryLocalParticipant,
   VideoGalleryRemoteParticipant,
   VideoStreamOptions,
-  CreateVideoStreamViewResult
+  CreateVideoStreamViewResult,
+  VideoGalleryParticipant
 } from '../types';
 import { ViewScalingMode } from '../types';
 import { HorizontalGalleryStyles } from './HorizontalGallery';
@@ -286,6 +287,8 @@ export interface VideoGalleryProps {
    */
   onStopRemoteSpotlight?: (userIds?: string[]) => Promise<void>;
   /* @conditional-compile-remove(spotlight) */
+  onFetchParticipantCallbackItems?: (participant: VideoGalleryParticipant) => CallingContextualMenuItem[];
+  /* @conditional-compile-remove(spotlight) */
   /**
    * Maximum participants that can be spotlighted
    */
@@ -317,6 +320,18 @@ export interface VideoGalleryProps {
    */
   reactionResources?: ReactionResources;
 }
+
+/**
+ * @beta
+ */
+export interface CallingContextualMenuItem extends IContextualMenuItem {
+  action: CallingAction;
+}
+
+/**
+ * @beta
+ */
+export type CallingAction = 'startSpotlight' | 'stopSpotlight';
 
 /**
  * Properties for showing contextual menu for remote {@link VideoTile} components in {@link VideoGallery}.
@@ -386,11 +401,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(spotlight) */
     onStartLocalSpotlight,
     /* @conditional-compile-remove(spotlight) */
-    onStartRemoteSpotlight,
-    /* @conditional-compile-remove(spotlight) */
     onStopLocalSpotlight,
-    /* @conditional-compile-remove(spotlight) */
-    onStopRemoteSpotlight,
     /* @conditional-compile-remove(spotlight) */
     maxParticipantsToSpotlight,
     /* @conditional-compile-remove(reaction) */
@@ -663,13 +674,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           /* @conditional-compile-remove(spotlight) */
           isSpotlighted={isSpotlighted}
           /* @conditional-compile-remove(spotlight) */
-          onStartSpotlight={onStartRemoteSpotlight}
-          /* @conditional-compile-remove(spotlight) */
-          onStopSpotlight={onStopRemoteSpotlight}
-          /* @conditional-compile-remove(spotlight) */
           maxParticipantsToSpotlight={maxParticipantsToSpotlight}
           /* @conditional-compile-remove(reaction) */
           reactionResources={reactionResources}
+          /* @conditional-compile-remove(spotlight) */
+          onFetchParticipantCallbackItems={props.onFetchParticipantCallbackItems}
         />
       );
     },
@@ -690,8 +699,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       toggleAnnouncerString,
       onUpdateScalingMode,
       /* @conditional-compile-remove(spotlight) */ spotlightedParticipants,
-      /* @conditional-compile-remove(spotlight) */ onStartRemoteSpotlight,
-      /* @conditional-compile-remove(spotlight) */ onStopRemoteSpotlight,
+      /* @conditional-compile-remove(spotlight) */ props.onFetchParticipantCallbackItems,
       /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight,
       /* @conditional-compile-remove(reaction) */ reactionResources
     ]

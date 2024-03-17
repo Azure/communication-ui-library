@@ -19,6 +19,8 @@ import { isACSCallParticipants } from '../utils/callUtils';
 import { createDefaultCommonCallingHandlers, CommonCallingHandlers } from './createCommonHandlers';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundEffectsDependency } from './createCommonHandlers';
+/* @conditional-compile-remove(spotlight) */
+import { VideoGalleryParticipant, CallingContextualMenuItem } from '@internal/react-components';
 
 /**
  * Object containing all the handlers required for calling components.
@@ -122,4 +124,6 @@ export interface _ComponentCallingHandlers {
   onStartRemoteSpotlight: (userIds?: string[]) => Promise<void>;
   /** VideoGallery callback prop to stop remote spotlight */
   onStopRemoteSpotlight: (userIds?: string[]) => Promise<void>;
+
+  onFetchParticipantCallbackItems: (participant: VideoGalleryParticipant) => CallingContextualMenuItem[];
 }
