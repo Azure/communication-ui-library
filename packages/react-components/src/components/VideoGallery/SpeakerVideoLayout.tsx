@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 import { LayerHost, Stack, mergeStyles, useTheme } from '@fluentui/react';
-/* @conditional-compile-remove(click-to-call) */
 import { LocalVideoTileSize } from '../VideoGallery';
 import { LayoutProps } from './Layout';
 import { isNarrowWidth } from '../utils/responsive';
@@ -41,7 +40,6 @@ export interface SpeakerVideoLayoutProps extends LayoutProps {
    * Height of parent element
    */
   parentHeight?: number;
-  /* @conditional-compile-remove(click-to-call) */
   /**
    * Local video tile mode
    */
@@ -66,7 +64,7 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
     /* @conditional-compile-remove(vertical-gallery) */ parentHeight,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'horizontalBottom',
     pinnedParticipantUserIds = [],
-    /* @conditional-compile-remove(click-to-call) */ localVideoTileSize
+    localVideoTileSize
   } = props;
 
   const theme = useTheme();
@@ -154,7 +152,7 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
     screenShareComponent,
     /* @conditional-compile-remove(vertical-gallery) */ isShort,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
-    /* @conditional-compile-remove(click-to-call) */ localVideoTileSize
+    localVideoTileSize
   ]);
 
   const wrappedLocalVideoComponent =

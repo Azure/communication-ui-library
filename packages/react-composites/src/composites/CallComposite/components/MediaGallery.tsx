@@ -25,7 +25,6 @@ import { LocalVideoCameraCycleButton } from '@internal/react-components';
 import { _formatString } from '@internal/acs-ui-common';
 import { useParticipantChangedAnnouncement } from '../utils/MediaGalleryUtils';
 import { RemoteVideoTileMenuOptions } from '../CallComposite';
-/* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(vertical-gallery) */
 import { LocalVideoTileOptions } from '../CallComposite';
 /* @conditional-compile-remove(rooms) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
@@ -62,7 +61,6 @@ export interface MediaGalleryProps {
   isMobile?: boolean;
   drawerMenuHostId?: string;
   remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
-  /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(vertical-gallery) */
   localVideoTileOptions?: boolean | LocalVideoTileOptions;
   userSetOverflowGalleryPosition?: 'Responsive' | 'horizontalTop';
   userSetGalleryLayout: VideoGalleryLayout;
@@ -99,14 +97,12 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const containerWidth = _useContainerWidth(containerRef);
   /* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(rooms) */
   const containerHeight = _useContainerHeight(containerRef);
-  /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(vertical-gallery) */
   const containerAspectRatio = containerWidth && containerHeight ? containerWidth / containerHeight : 0;
   /* @conditional-compile-remove(reaction) */
   const reactionResources = adapter.getState().reactions;
 
-  const layoutBasedOnTilePosition: VideoGalleryLayout = localVideoTileLayoutTrampoline(
-    /* @conditional-compile-remove(click-to-call) */ (props.localVideoTileOptions as LocalVideoTileOptions)?.position
-  );
+  const layoutBasedOnTilePosition: VideoGalleryLayout =
+    (props?.localVideoTileOptions as LocalVideoTileOptions).position === 'grid' ? 'default' : 'floatingLocalVideo';
 
   const cameraSwitcherProps = useMemo(() => {
     return {
@@ -254,11 +250,3 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
 };
 
 const mediaGalleryContainerStyles: CSSProperties = { width: '100%', height: '100%' };
-
-const localVideoTileLayoutTrampoline = (
-  /* @conditional-compile-remove(click-to-call) */ localTileOptions?: string
-): VideoGalleryLayout => {
-  /* @conditional-compile-remove(click-to-call) */
-  return localTileOptions === 'grid' ? 'default' : 'floatingLocalVideo';
-  return 'floatingLocalVideo';
-};
