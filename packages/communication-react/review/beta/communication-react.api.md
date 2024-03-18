@@ -61,6 +61,7 @@ import { IStyleFunctionOrObject } from '@fluentui/react';
 import { ITextFieldStyles } from '@fluentui/react';
 import { LatestMediaDiagnostics } from '@azure/communication-calling';
 import { LatestNetworkDiagnostics } from '@azure/communication-calling';
+import { LocalRecordingInfo } from '@azure/communication-calling';
 import { LocalVideoStream } from '@azure/communication-calling';
 import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { MediaStreamType } from '@azure/communication-calling';
@@ -79,6 +80,7 @@ import { PropertyChangedEvent } from '@azure/communication-calling';
 import { default as React_2 } from 'react';
 import { Reaction as Reaction_2 } from '@azure/communication-calling';
 import { ReactionMessage } from '@azure/communication-calling';
+import { RecordingInfo } from '@azure/communication-calling';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/communication-calling';
 import { RoomCallLocator } from '@azure/communication-calling';
@@ -950,7 +952,6 @@ export interface CallState {
     callerInfo: CallerInfo;
     capabilitiesFeature?: CapabilitiesFeatureState;
     captionsFeature: CaptionsCallFeatureState;
-    // @beta
     contentSharingRemoteParticipant?: string;
     diagnostics: DiagnosticsCallFeatureState;
     direction: CallDirection;
@@ -963,9 +964,9 @@ export interface CallState {
     kind: CallKind;
     // @beta
     localParticipantReaction?: ReactionState;
+    localRecording: LocalRecordingCallFeatureState;
     localVideoStreams: LocalVideoStreamState[];
     optimalVideoCount: OptimalVideoCountFeatureState;
-    // @beta
     pptLive: PPTLiveCallFeatureState;
     raiseHand: RaiseHandCallFeature;
     recording: RecordingCallFeature;
@@ -3074,7 +3075,7 @@ export interface IncomingCallState {
 
 // @public
 export interface InlineImage {
-    imgAttrs: React_2.ImgHTMLAttributes<HTMLImageElement>;
+    imageAttributes: React_2.ImgHTMLAttributes<HTMLImageElement>;
     messageId: string;
 }
 
@@ -3141,6 +3142,13 @@ export type LocalizationProviderProps = {
     locale: ComponentLocale;
     children: React_2.ReactNode;
 };
+
+// @beta
+export interface LocalRecordingCallFeatureState {
+    activeLocalRecordings?: LocalRecordingInfo[];
+    isLocalRecordingActive: boolean;
+    lastStoppedLocalRecording?: LocalRecordingInfo[];
+}
 
 // @public (undocumented)
 export interface LocalVideoCameraCycleButtonProps {
@@ -3680,7 +3688,7 @@ export type ParticipantsRemovedListener = (event: {
 // @public
 export type ParticipantState = 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
 
-// @beta
+// @public
 export interface PPTLiveCallFeatureState {
     isActive: boolean;
 }
@@ -3788,13 +3796,14 @@ export type ReadReceiptsBySenderId = {
 
 // @public
 export interface RecordingCallFeature {
+    activeRecordings?: RecordingInfo[];
     isRecordingActive: boolean;
+    lastStoppedRecording?: RecordingInfo[];
 }
 
 // @public
 export interface RemoteParticipantState {
     callEndReason?: CallEndReason;
-    // @beta
     contentSharingStream?: HTMLElement;
     displayName?: string;
     identifier: CommunicationIdentifierKind;
@@ -3839,7 +3848,7 @@ export type ResourceDetails = {
 
 // @public
 export type ResourceFetchResult = {
-    sourceUrl: string;
+    sourceUrl?: string;
     error?: Error;
 };
 
@@ -4413,7 +4422,7 @@ export const useDeviceManager: () => StatefulDeviceManager | undefined;
 export const usePropsFor: <Component extends (props: any) => JSX.Element>(component: Component, type?: 'calling' | 'chat') => ComponentProps<Component>;
 
 // @public
-export const useSelector: <ParamT extends Selector | undefined>(selector: ParamT, selectorProps?: (ParamT extends Selector ? Parameters<ParamT>[1] : undefined) | undefined, type?: 'calling' | 'chat') => ParamT extends Selector ? ReturnType<ParamT> : undefined;
+export const useSelector: <ParamT extends Selector | undefined>(selector: ParamT, selectorProps?: ParamT extends Selector ? Parameters<ParamT>[1] : undefined, type?: 'calling' | 'chat') => ParamT extends Selector ? ReturnType<ParamT> : undefined;
 
 // @beta
 export const useTeamsCall: () => undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;

@@ -48,14 +48,15 @@ export class ChatContext {
   private _fullsizeImageQueue: ResourceDownloadQueue | undefined = undefined;
   constructor(
     maxListeners?: number,
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ credential?: CommunicationTokenCredential
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ credential?: CommunicationTokenCredential,
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ endpoint?: string
   ) {
     this._logger = createClientLogger('communication-react:chat-context');
     this._emitter = new EventEmitter();
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     if (credential) {
-      this._inlineImageQueue = new ResourceDownloadQueue(this, credential);
-      this._fullsizeImageQueue = new ResourceDownloadQueue(this, credential);
+      this._inlineImageQueue = new ResourceDownloadQueue(this, { credential, endpoint: endpoint ?? '' });
+      this._fullsizeImageQueue = new ResourceDownloadQueue(this, { credential, endpoint: endpoint ?? '' });
     }
     if (maxListeners) {
       this._emitter.setMaxListeners(maxListeners);
@@ -91,7 +92,9 @@ export class ChatContext {
           if (cache) {
             Object.keys(cache).forEach((resourceUrl) => {
               const resource = cache[resourceUrl];
-              URL.revokeObjectURL(resource.sourceUrl);
+              if (resource.sourceUrl) {
+                URL.revokeObjectURL(resource.sourceUrl);
+              }
             });
           }
           thread.chatMessages[messageId].resourceCache = undefined;
@@ -129,7 +132,10 @@ export class ChatContext {
       }
       if (message && message.resourceCache && message.resourceCache[resourceUrl]) {
         const resource = message.resourceCache[resourceUrl];
-        URL.revokeObjectURL(resource.sourceUrl);
+        if (resource.sourceUrl) {
+          URL.revokeObjectURL(resource.sourceUrl);
+        }
+
         delete message.resourceCache[resourceUrl];
       }
     });

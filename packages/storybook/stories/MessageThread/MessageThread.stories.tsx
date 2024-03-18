@@ -324,7 +324,6 @@ const Docs: () => JSX.Element = () => {
 
       <div ref={refDisplayInlineImages}>
         <Heading>Tapping Inline Images on Messages</Heading>
-        <SingleLineBetaBanner />
         <Canvas mdxSource={MessageThreadWithInlineImageExampleText}>
           <MessageThreadWithInlineImageExample />
         </Canvas>
@@ -481,8 +480,8 @@ const MessageThreadStory = (args): JSX.Element => {
     ): JSX.Element => {
       return (
         <span
-          data-ui-id={inlineImage.imgAttrs.id}
-          onClick={() => onInlineImageClicked(inlineImage.imgAttrs.id || '', inlineImage.messageId)}
+          data-ui-id={inlineImage.imageAttributes.id}
+          onClick={() => onInlineImageClicked(inlineImage.imageAttributes.id || '', inlineImage.messageId)}
           tabIndex={0}
           role="button"
           style={{
@@ -490,7 +489,7 @@ const MessageThreadStory = (args): JSX.Element => {
           }}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
-              onInlineImageClicked(inlineImage.imgAttrs.id || '', inlineImage.messageId);
+              onInlineImageClicked(inlineImage.imageAttributes.id || '', inlineImage.messageId);
             }
           }}
         >

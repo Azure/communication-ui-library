@@ -239,7 +239,8 @@ export const _createStatefulChatClientWithDeps = (
 ): StatefulChatClient => {
   const context = new ChatContext(
     options?.maxStateChangeListeners,
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ args.credential
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ args.credential,
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ args.endpoint
   );
 
   let eventSubscriber: EventSubscriber;

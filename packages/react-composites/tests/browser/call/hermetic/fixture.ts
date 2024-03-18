@@ -81,6 +81,8 @@ export function defaultMockCallAdapterState(
       direction: 'Incoming',
       transcription: { isTranscriptionActive: false },
       recording: { isRecordingActive: false },
+      /* @conditional-compile-remove(local-recording-notification) */
+      localRecording: { isLocalRecordingActive: false },
       startTime: new Date(500000000000),
       endTime: new Date(500000000000),
       diagnostics: { network: { latest: {} }, media: { latest: {} } },
@@ -90,7 +92,6 @@ export function defaultMockCallAdapterState(
       isScreenSharingOn: false,
       remoteParticipants,
       remoteParticipantsEnded: {},
-      /** @conditional-compile-remove(raise-hand) */
       raiseHand: { raisedHands: [] },
       /** @conditional-compile-remove(ppt-live) */
       pptLive: { isActive: false },
@@ -111,7 +112,6 @@ export function defaultMockCallAdapterState(
       transfer: {
         acceptedTransfers: {}
       },
-      /* @conditional-compile-remove(optimal-video-count) */
       optimalVideoCount: {
         maxRemoteVideoStreams: 4
       },
@@ -424,6 +424,8 @@ const defaultEndedCallState: CallState = {
   direction: 'Incoming',
   transcription: { isTranscriptionActive: false },
   recording: { isRecordingActive: false },
+  /* @conditional-compile-remove(local-recording-notification) */
+  localRecording: { isLocalRecordingActive: false },
   startTime: new Date(500000000000),
   endTime: new Date(500000000000),
   diagnostics: { network: { latest: {} }, media: { latest: {} } },
@@ -433,7 +435,6 @@ const defaultEndedCallState: CallState = {
   isScreenSharingOn: false,
   remoteParticipants: {},
   remoteParticipantsEnded: {},
-  /** @conditional-compile-remove(raise-hand) */
   raiseHand: { raisedHands: [] },
   /** @conditional-compile-remove(ppt-live) */
   pptLive: { isActive: false },
@@ -450,7 +451,6 @@ const defaultEndedCallState: CallState = {
   transfer: {
     acceptedTransfers: {}
   },
-  /* @conditional-compile-remove(optimal-video-count) */
   optimalVideoCount: {
     maxRemoteVideoStreams: 4
   }

@@ -21,7 +21,6 @@ import { Reaction } from '@azure/communication-calling';
 import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
-/* @conditional-compile-remove(dtmf-dialer) */
 import { DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
@@ -200,9 +199,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.unmute.bind(this);
     this.startScreenShare.bind(this);
     this.stopScreenShare.bind(this);
-    /* @conditional-compile-remove(raise-hand) */
     this.raiseHand.bind(this);
-    /* @conditional-compile-remove(raise-hand) */
     this.lowerHand.bind(this);
     /* @conditional-compile-remove(reaction) */
     this.onReactionClick.bind(this);
@@ -243,7 +240,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.resumeCall.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
     this.addParticipant.bind(this);
-    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(dtmf-dialer) */
     this.sendDtmfTone.bind(this);
     /* @conditional-compile-remove(unsupported-browser) */
     this.allowUnsupportedBrowserVersion.bind(this);
@@ -375,12 +371,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   public async stopScreenShare(): Promise<void> {
     await this.callAdapter.stopScreenShare();
   }
-  /* @conditional-compile-remove(raise-hand) */
   /** Raise hand for local user. */
   public async raiseHand(): Promise<void> {
     await this.callAdapter.raiseHand();
   }
-  /* @conditional-compile-remove(raise-hand) */
   /** Lower hand for local user. */
   public async lowerHand(): Promise<void> {
     await this.callAdapter.lowerHand();
@@ -513,7 +507,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     }
   }
 
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(dtmf-dialer) */
   public async sendDtmfTone(dtmfTone: DtmfTone): Promise<void> {
     return await this.callAdapter.sendDtmfTone(dtmfTone);
   }

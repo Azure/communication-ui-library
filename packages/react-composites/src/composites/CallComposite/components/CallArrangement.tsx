@@ -109,9 +109,7 @@ export interface CallArrangementProps {
   /* @conditional-compile-remove(capabilities) */
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
   onCloseChatPane?: () => void;
-  /* @conditional-compile-remove(dtmf-dialer) */
   onSetDialpadPage?: () => void;
-  /* @conditional-compile-remove(dtmf-dialer) */
   dtmfDialerPresent?: boolean;
   /* @conditional-compile-remove(spotlight) */
   setIsPromptOpen?: (isOpen: boolean) => void;
@@ -432,7 +430,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   onPeopleButtonClicked={togglePeoplePane}
                   onMoreButtonClicked={onMoreButtonClicked}
                   /* @conditional-compile-remove(close-captions) */
-                  isCaptionsSupported={isTeamsCall && hasJoinedCall}
+                  isCaptionsSupported={hasJoinedCall}
+                  /* @conditional-compile-remove(close-captions) */
+                  isTeamsCall={isTeamsCall}
                   /* @conditional-compile-remove(close-captions) */
                   isCaptionsOn={isCaptionsOn}
                   /* @conditional-compile-remove(video-background-effects) */
@@ -441,9 +441,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   onUserSetOverflowGalleryPositionChange={props.onUserSetOverflowGalleryPositionChange}
                   onUserSetGalleryLayout={props.onUserSetGalleryLayoutChange}
                   userSetGalleryLayout={props.userSetGalleryLayout}
-                  /* @conditional-compile-remove(dtmf-dialer) */
                   onSetDialpadPage={props.onSetDialpadPage}
-                  /* @conditional-compile-remove(dtmf-dialer) */
                   dtmfDialerPresent={props.dtmfDialerPresent}
                   peopleButtonRef={peopleButtonRef}
                   cameraButtonRef={cameraButtonRef}
@@ -462,13 +460,15 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
                 disableButtonsForHoldScreen={isInLocalHold}
                 /* @conditional-compile-remove(close-captions) */
-                isCaptionsSupported={isTeamsCall && hasJoinedCall}
+                isCaptionsSupported={hasJoinedCall}
+                /* @conditional-compile-remove(close-captions) */
+                isTeamsCall={isTeamsCall}
                 onUserSetGalleryLayout={props.onUserSetGalleryLayoutChange}
                 userSetGalleryLayout={props.userSetGalleryLayout}
-                /* @conditional-compile-remove(dtmf-dialer) */
                 onSetDialpadPage={props.onSetDialpadPage}
-                /* @conditional-compile-remove(dtmf-dialer) */
                 dtmfDialerPresent={props.dtmfDialerPresent}
+                /* @conditional-compile-remove(reaction) */
+                reactionResources={adapter.getState().reactions}
               />
             </Stack>
           )}
@@ -513,6 +513,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                         <CaptionsBanner
                           isMobile={props.mobileView}
                           onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
+                          /* @conditional-compile-remove(close-captions) */
+                          isTeamsCall={isTeamsCall}
                         />
                       )
                   }

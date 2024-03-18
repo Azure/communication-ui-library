@@ -40,7 +40,6 @@ import { CallWithChatControlOptions } from '../../CallWithChatComposite';
 import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsSettingsModal } from '../CaptionsSettingsModal';
-/* @conditional-compile-remove(raise-hand) */
 import { RaiseHand } from '../../CallComposite/components/buttons/RaiseHand';
 /* @conditional-compile-remove(reaction) */
 import { Reaction } from '../../CallComposite/components/buttons/Reaction';
@@ -48,7 +47,6 @@ import { Reaction } from '../../CallComposite/components/buttons/Reaction';
 import { useSelector } from '../../CallComposite/hooks/useSelector';
 /* @conditional-compile-remove(reaction) */
 import { capabilitySelector } from '../../CallComposite/selectors/capabilitySelector';
-/* @conditional-compile-remove(dtmf-dialer) */
 import { DtmfDialpadButton } from './DtmfDialerButton';
 /* @conditional-compile-remove(spotlight) */
 import { ExitSpotlightButton } from '../ExitSpotlightButton';
@@ -82,12 +80,12 @@ export interface CommonCallControlBarProps {
   cameraButtonRef?: React.RefObject<IButton>;
   /* @conditional-compile-remove(video-background-effects) */
   videoBackgroundPickerRef?: React.RefObject<IButton>;
-  /* @conditional-compile-remove(dtmf-dialer) */
   onSetDialpadPage?: () => void;
-  /* @conditional-compile-remove(dtmf-dialer) */
   dtmfDialerPresent?: boolean;
   /* @conditional-compile-remove(spotlight) */
   onStopLocalSpotlight?: () => void;
+  /* @conditional-compile-remove(close-captions) */
+  isTeamsCall?: boolean;
 }
 
 const inferCommonCallControlOptions = (
@@ -294,7 +292,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
             <CaptionsSettingsModal
               showCaptionsSettingsModal={showCaptionsSettingsModal}
               onDismissCaptionsSettings={onDismissCaptionsSettings}
-              changeCaptionLanguage={props.isCaptionsOn}
+              changeCaptionLanguage={props.isCaptionsOn && props.isTeamsCall}
             />
           )
         }
@@ -365,32 +363,27 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                           />
                         )
                     }
-                    {
-                      /* @conditional-compile-remove(raise-hand) */ !props.mobileView &&
-                        isEnabled(options.raiseHandButton) &&
-                        /* @conditional-compile-remove(rooms) */ !hideRaiseHandButtonInRoomsCall && (
-                          <RaiseHand
-                            displayType={options.displayType}
-                            styles={commonButtonStyles}
-                            /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-                            disabled={props.disableButtonsForHoldScreen || isDisabled(options.microphoneButton)}
-                          />
-                        )
-                    }
-                    {
-                      /* @conditional-compile-remove(dtmf-dialer) */ showDtmfDialerButton(options) &&
-                        props.onSetDialpadPage !== undefined && (
-                          <DtmfDialpadButton
-                            styles={commonButtonStyles}
-                            displayType={options.displayType}
-                            onClick={() => {
-                              if (props.onSetDialpadPage !== undefined) {
-                                props.onSetDialpadPage();
-                              }
-                            }}
-                          />
-                        )
-                    }
+                    {!props.mobileView &&
+                      isEnabled(options.raiseHandButton) &&
+                      /* @conditional-compile-remove(rooms) */ !hideRaiseHandButtonInRoomsCall && (
+                        <RaiseHand
+                          displayType={options.displayType}
+                          styles={commonButtonStyles}
+                          /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+                          disabled={props.disableButtonsForHoldScreen || isDisabled(options.microphoneButton)}
+                        />
+                      )}
+                    {showDtmfDialerButton(options) && props.onSetDialpadPage !== undefined && (
+                      <DtmfDialpadButton
+                        styles={commonButtonStyles}
+                        displayType={options.displayType}
+                        onClick={() => {
+                          if (props.onSetDialpadPage !== undefined) {
+                            props.onSetDialpadPage();
+                          }
+                        }}
+                      />
+                    )}
                     {
                       /* @conditional-compile-remove(spotlight) */ showExitSpotlightButton &&
                         props.onStopLocalSpotlight && (
@@ -443,7 +436,6 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         styles={commonButtonStyles}
                         /*@conditional-compile-remove(PSTN-calls) */
                         onClickShowDialpad={props.onClickShowDialpad}
-                        /* @conditional-compile-remove(control-bar-button-injection) */
                         callControls={props.callControls}
                         /* @conditional-compile-remove(close-captions) */
                         isCaptionsSupported={props.isCaptionsSupported}
@@ -452,9 +444,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         onUserSetOverflowGalleryPositionChange={props.onUserSetOverflowGalleryPositionChange}
                         onUserSetGalleryLayout={props.onUserSetGalleryLayout}
                         userSetGalleryLayout={props.userSetGalleryLayout}
-                        /* @conditional-compile-remove(dtmf-dialer) */
                         dtmfDialerPresent={props.dtmfDialerPresent}
-                        /* @conditional-compile-remove(dtmf-dialer) */
                         onSetDialpadPage={props.onSetDialpadPage}
                       />
                     )}
@@ -629,7 +619,6 @@ const getDesktopEndCallButtonStyles = (theme: ITheme): ControlBarButtonStyles =>
 
 const isEnabled = (option: unknown): boolean => option !== false;
 
-/* @conditional-compile-remove(dtmf-dialer) */
 const showDtmfDialerButton = (options: CommonCallControlOptions | CallWithChatControlOptions): boolean => {
   if (options.moreButton === false && options.dtmfDialerButton !== false) {
     return true;

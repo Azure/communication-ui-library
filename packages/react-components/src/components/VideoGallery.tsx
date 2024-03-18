@@ -505,7 +505,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           localVideoCameraSwitcherLabel={strings.localVideoCameraSwitcherLabel}
           localVideoSelectedDescription={strings.localVideoSelectedDescription}
           styles={localVideoTileStyles}
-          /* @conditional-compile-remove(raise-hand) */
           raisedHand={localParticipant.raisedHand}
           /* @conditional-compile-remove(reaction) */
           reaction={localParticipant.reaction}
@@ -710,6 +709,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       onDisposeRemoteStreamView={onDisposeRemoteScreenShareStreamView}
       isReceiving={screenShareParticipant.screenShareStream?.isReceiving}
       participantVideoScalingMode={selectedScalingModeState[screenShareParticipant.userId]}
+      /* @conditional-compile-remove(ppt-live) */
+      isPPTLive={!screenShareParticipant.screenShareStream?.id}
     />
   );
 
