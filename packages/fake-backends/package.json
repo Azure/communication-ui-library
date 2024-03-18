@@ -35,7 +35,7 @@
     "@azure/core-paging": "^1.5.0",
     "@internal/acs-ui-common": "1.14.0-beta.2",
     "events": "^3.3.0",
-    "immer": "10.0.3",
+    "immer": "10.0.4",
     "nanoid": "3.3.6"
   },
   "devDependencies": {
