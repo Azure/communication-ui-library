@@ -17242,19 +17242,19 @@ packages:
       color: 3.2.1
     dev: false
 
-  /roosterjs-editor-api@8.61.0:
-    resolution: {integrity: sha512-PmL1lQi3ersHFRBSTsl9CiCjdOnSvoAXDtsDN5bz9vWhcnQeOLF1GMi+WuT7Jyvv7uzwdqXE8xL9dNcJwOylbQ==}
+  /roosterjs-editor-api@8.60.0:
+    resolution: {integrity: sha512-6yROZaioJPRbq4wOi23T+T172RoGggpyg0+Euls7U0sj5U4xYCwU2yO3b52aXp2JxoLvZ7WZgAsx9WFtYNjT/g==}
     dependencies:
-      roosterjs-editor-dom: 8.61.0
-      roosterjs-editor-types: 8.61.0
+      roosterjs-editor-dom: 8.60.0
+      roosterjs-editor-types: 8.60.0
       tslib: 2.6.2
     dev: false
 
-  /roosterjs-editor-core@8.61.0:
-    resolution: {integrity: sha512-J3yhqja1cspqLEJnRkBL89lTNgYz59dYCpziV2wd6kBIhobcJxpPk4g4MK4OO/yDFAY5hJ5TkPi18V9VjfbMcg==}
+  /roosterjs-editor-core@8.60.0:
+    resolution: {integrity: sha512-PAd/afts3EFtSAwE3klonOgs+wphrMseMYrVpfO73XbT3dhZ0DgZUn9KPbRKp7x3Yt9jJHIuX5Nk9Svf70M1Eg==}
     dependencies:
-      roosterjs-editor-dom: 8.61.0
-      roosterjs-editor-types: 8.61.0
+      roosterjs-editor-dom: 8.60.0
+      roosterjs-editor-types: 8.60.0
       tslib: 2.6.2
     dev: false
 
@@ -17265,34 +17265,23 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /roosterjs-editor-dom@8.61.0:
-    resolution: {integrity: sha512-yPYDq5CsgjbDh8TsixAB2+xW3yxuemodYursuj8rU309XoUGxA7AOU6hn88Nw9hst1Pfq4kKNFetXuOR4OU3+A==}
+  /roosterjs-editor-plugins@8.60.2:
+    resolution: {integrity: sha512-bHnE6cxllIr1QEG1sbBj32xz8AyN9GB593wABffaMbF6KypV2KRFdKJs8Lmi029ccW5wTz/0bvZzU2EIgDhWiw==}
     dependencies:
-      roosterjs-editor-types: 8.61.0
+      roosterjs-editor-api: 8.60.0
+      roosterjs-editor-dom: 8.60.0
+      roosterjs-editor-types: 8.60.0
       tslib: 2.6.2
     dev: false
 
-  /roosterjs-editor-plugins@8.61.0:
-    resolution: {integrity: sha512-LcYL0WCqYCrkym5iKdBjdVh4Ev8KpYwpDGwPGg0VgeIHaCzW4GxxO5MsbIjVAuqQAzJmllAb6YrLQXzOYtUYLQ==}
+  /roosterjs-editor-types-compatible@8.60.0:
+    resolution: {integrity: sha512-mRhiHLrw4pJ1A1+5l4u0wod4lLg4xL2QMZOBOYhkudmvuStmxsYZOpK0qcHsCCzefvh9w0CcffQF8uLobHl8sw==}
     dependencies:
-      roosterjs-editor-api: 8.61.0
-      roosterjs-editor-dom: 8.61.0
-      roosterjs-editor-types: 8.61.0
-      tslib: 2.6.2
-    dev: false
-
-  /roosterjs-editor-types-compatible@8.61.0:
-    resolution: {integrity: sha512-ZPfudsXiQI0nB4XquoDAzxplS42zjz0yu7eo1Y0kv+YKUukBoPN9L3uMJ8UpppW+veUWdhJFh5hScFUhGULyLQ==}
-    dependencies:
-      roosterjs-editor-types: 8.61.0
+      roosterjs-editor-types: 8.60.0
     dev: false
 
   /roosterjs-editor-types@8.60.0:
     resolution: {integrity: sha512-/A7KmkwTjdkSNcb28E3DMPOJqmAKxamvRBQJEROUTeRya7hZDvgqycimONXPYlDrGTdSJMpA7smOvY3Thyw9QQ==}
-    dev: false
-
-  /roosterjs-editor-types@8.61.0:
-    resolution: {integrity: sha512-zP8IAN5Rvd9FTJSmNX26FeDMMrpV8CXQ8KHt+AgB+8QBa+w6tnV4PohMa61GqIUVWEDWmIvxbKGgQy0aqh7ywA==}
     dev: false
 
   /roosterjs-react@8.55.0(@fluentui/react@8.115.6)(react-dom@18.2.0)(react@18.2.0):
@@ -17306,12 +17295,12 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       roosterjs-color-utils: 1.1.0
-      roosterjs-editor-api: 8.61.0
-      roosterjs-editor-core: 8.61.0
+      roosterjs-editor-api: 8.60.0
+      roosterjs-editor-core: 8.60.0
       roosterjs-editor-dom: 8.60.0
-      roosterjs-editor-plugins: 8.61.0
+      roosterjs-editor-plugins: 8.60.2
       roosterjs-editor-types: 8.60.0
-      roosterjs-editor-types-compatible: 8.61.0
+      roosterjs-editor-types-compatible: 8.60.0
       tslib: 2.6.2
     dev: false
 
@@ -20899,7 +20888,7 @@ packages:
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-p2hQQfI+KokOgFbRy5v4Z0LuC2La8Fe8Vu6ltxKvj4qESQkof5zhkxbIOuUbIeISh+r7UBZEEBEI5/VHxi6yrQ==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-bCioWFXTSM7MoYuxYZ3f7jSkCqFB9WuGHzxtHey8oDP2RVVRPbZ9ePTfu+z8XOTFhOfcqo1nnv1H1N+E/7QXtQ==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
@@ -20973,10 +20962,10 @@ packages:
       reselect: 4.1.8
       rimraf: 2.7.1
       rollup: 4.12.1
-      roosterjs-editor-api: 8.61.0
-      roosterjs-editor-core: 8.61.0
-      roosterjs-editor-plugins: 8.61.0
-      roosterjs-editor-types-compatible: 8.61.0
+      roosterjs-editor-api: 8.60.0
+      roosterjs-editor-core: 8.60.0
+      roosterjs-editor-plugins: 8.60.2
+      roosterjs-editor-types-compatible: 8.60.0
       roosterjs-react: 8.55.0(@fluentui/react@8.115.6)(react-dom@18.2.0)(react@18.2.0)
       scheduler: 0.23.0
       source-map-explorer: 2.5.3
@@ -21145,7 +21134,7 @@ packages:
     dev: false
 
   file:projects/react-components.tgz:
-    resolution: {integrity: sha512-Oq1O/wTT6GsRf0LRkTW5FbTZfeU99w5mfsloYsJjew54yVXD6sY9yvNInEyXY2taqUMcFX6ERKxRmVIdVgK5aw==, tarball: file:projects/react-components.tgz}
+    resolution: {integrity: sha512-lfVYpy7hlOeoXHgJXLGmc/V+cUWgr6DvXBnHkV7ibJiG7NA+8hPUEQYKCw3LHxy0GbqYDZg6iA1GOaIyriKaoQ==, tarball: file:projects/react-components.tgz}
     name: '@rush-temp/react-components'
     version: 0.0.0
     dependencies:
@@ -21220,10 +21209,10 @@ packages:
       regenerator-runtime: 0.14.1
       rimraf: 2.7.1
       rollup: 4.12.1
-      roosterjs-editor-api: 8.61.0
-      roosterjs-editor-core: 8.61.0
-      roosterjs-editor-plugins: 8.61.0
-      roosterjs-editor-types-compatible: 8.61.0
+      roosterjs-editor-api: 8.60.0
+      roosterjs-editor-core: 8.60.0
+      roosterjs-editor-plugins: 8.60.2
+      roosterjs-editor-types-compatible: 8.60.0
       roosterjs-react: 8.55.0(@fluentui/react@8.115.6)(react-dom@18.2.0)(react@18.2.0)
       scheduler: 0.23.0
       source-map-explorer: 2.5.3
