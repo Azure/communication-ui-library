@@ -4422,7 +4422,7 @@ export const useDeviceManager: () => StatefulDeviceManager | undefined;
 export const usePropsFor: <Component extends (props: any) => JSX.Element>(component: Component, type?: 'calling' | 'chat') => ComponentProps<Component>;
 
 // @public
-export const useSelector: <ParamT extends Selector | undefined>(selector: ParamT, selectorProps?: (ParamT extends Selector ? Parameters<ParamT>[1] : undefined) | undefined, type?: 'calling' | 'chat') => ParamT extends Selector ? ReturnType<ParamT> : undefined;
+export const useSelector: <ParamT extends Selector | undefined>(selector: ParamT, selectorProps?: ParamT extends Selector ? Parameters<ParamT>[1] : undefined, type?: 'calling' | 'chat') => ParamT extends Selector ? ReturnType<ParamT> : undefined;
 
 // @beta
 export const useTeamsCall: () => undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
