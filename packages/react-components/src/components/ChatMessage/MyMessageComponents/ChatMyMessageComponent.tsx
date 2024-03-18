@@ -3,19 +3,19 @@
 
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useState } from 'react';
-import { ChatMessageComponentAsEditBox } from './ChatMessageComponentAsEditBox';
-import { MessageThreadStrings } from '../MessageThread';
-import { ChatMessage, ComponentSlotStyle, OnRenderAvatarCallback } from '../../types';
+import { ChatMessageComponentAsEditBox } from '../ChatMessageComponentAsEditBox';
+import { MessageThreadStrings } from '../../MessageThread';
+import { ChatMessage, ComponentSlotStyle, OnRenderAvatarCallback } from '../../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
-import { BlockedMessage } from '../../types';
-import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMessageBubble';
-import { FileDownloadHandler, AttachmentMetadata } from '../FileDownloadCards';
+import { BlockedMessage } from '../../../types';
+import { FileDownloadHandler, AttachmentMetadata } from '../../FileDownloadCards';
 /* @conditional-compile-remove(mention) */
-import { MentionOptions } from '../MentionPopover';
+import { MentionOptions } from '../../MentionPopover';
 /* @conditional-compile-remove(image-overlay) */
-import { InlineImageOptions } from './ChatMessageContent';
+import { InlineImageOptions } from '../ChatMessageContent';
+import { ChatMyMessageComponentAsMessageBubble } from './ChatMyMessageComponentAsMessageBubble';
 
-type ChatMessageComponentProps = {
+type ChatMyMessageComponentProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
   userId: string;
   messageContainerStyle?: ComponentSlotStyle;
@@ -96,7 +96,7 @@ type ChatMessageComponentProps = {
 /**
  * @private
  */
-export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Element => {
+export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.Element => {
   const { onDeleteMessage, onSendMessage, message } = props;
   const [isEditing, setIsEditing] = useState(false);
 
@@ -139,7 +139,7 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
     );
   } else {
     return (
-      <ChatMessageComponentAsMessageBubble
+      <ChatMyMessageComponentAsMessageBubble
         {...props}
         onRemoveClick={onRemoveClick}
         onEditClick={onEditClick}
