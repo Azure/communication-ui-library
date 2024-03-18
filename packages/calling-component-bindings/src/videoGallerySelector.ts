@@ -133,6 +133,8 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
             screenShareRemoteParticipant.state,
             screenShareRemoteParticipant.displayName,
             screenShareRemoteParticipant.raisedHand,
+            /* @conditional-compile-remove(ppt-live) */
+            screenShareRemoteParticipant.contentSharingStream,
             /* @conditional-compile-remove(spotlight) */
             screenShareRemoteParticipant.spotlight
           )
