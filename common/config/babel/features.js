@@ -159,8 +159,6 @@ module.exports = {
     // Chat teams interop to display images and file attachments in chat messages
     "teams-inline-images-and-file-sharing",
     // custom branding for the composites
-    "custom-branding",
-    // Feature for PPT Live for teams meeting
-    'ppt-live'
+    "custom-branding"
   ]
 }
