@@ -9,10 +9,6 @@ This log was last generated on Thu, 14 Mar 2024 03:50:48 GMT and should not be m
 Thu, 14 Mar 2024 03:50:48 GMT 
 [Compare changes](https://github.com/azure/communication-ui-library/compare/1.13.0...1.14.0)
 
-### PowerPoint Live (Viewing) Support - General Availability
-
-Today the Azure Communication Services Web UI Library now can view PowerPoint Live sessions initiated by a Teams client. Users can follow along with the current slide the presenter is sharing and view presenter annotations. Developers can use this functionality today through our composites (e.g CallComposite, CallWithChatComposite) as well as through components (e.g VideoGallery).
-
 ### Teams Interop Chat Image Sharing - General Availability
 
 We are excited to announce that the Azure Communication Services Web UI Library now has the ability to receive Teams interop images inline. Additionally, we have enabled users to click on an individual image to view it in a new ImageOverlay component. This component displays the selected image in full screen and allows users to download the image.
@@ -25,7 +21,6 @@ The CallComposite and CallWithChatComposite now support applying a background im
 
 - Stabilize Custom Branding ([PR #4211](https://github.com/azure/communication-ui-library/pull/4211) by 2684369+JamesBurnside@users.noreply.github.com)
 - Stabilize Teams Interop Inline Images([PR #4196](https://github.com/Azure/communication-ui-library/pull/4196) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
-- Stabilize PowerPoint Live rendering when shared by a Teams client([PR #4264](https://github.com/azure/communication-ui-library/pull/4264) by 93549644+ShaunaSong@users.noreply.github.com)
 
 ### Improvements
 
