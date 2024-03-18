@@ -9,7 +9,7 @@ import { SendBoxStrings } from '../SendBox';
 import { sendIconStyle } from '../styles/SendBox.styles';
 import { InputBoxButton } from '../InputBoxButton';
 import { RichTextSendBoxErrors, RichTextSendBoxErrorsProps } from './RichTextSendBoxErrors';
-import { isMessageTooLong, sanitizeText } from '../utils/SendBoxUtils';
+import { hasIncompleteFileUploads, isMessageTooLong, sanitizeText } from '../utils/SendBoxUtils';
 import { RichTextEditorComponentRef } from './RichTextEditor';
 import { useTheme } from '../../theming';
 import { richTextActionButtonsStyle, sendBoxRichTextEditorStyle } from '../styles/RichTextEditor.styles';
@@ -158,10 +158,10 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     /* @conditional-compile-remove(file-sharing) */
     setFileUploadsPendingError(undefined);
 
-    // if (hasIncompleteFileUploads(activeFileUploads)) {
-    //   setFileUploadsPendingError({ message: strings.fileUploadsPendingError, timestamp: Date.now() });
-    //   return;
-    // }
+    if (hasIncompleteFileUploads(activeFileUploads)) {
+      setFileUploadsPendingError({ message: strings.fileUploadsPendingError, timestamp: Date.now() });
+      return;
+    }
 
     const message = contentValue;
     // we don't want to send empty messages including spaces, newlines, tabs
