@@ -443,11 +443,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const pinnedParticipants = props.pinnedParticipants ?? pinnedParticipantsState;
 
   const showLocalVideoTileLabel =
-    !(
-      (localTileNotInGrid && isNarrow) ||
-      /*@conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ localVideoTileSize ===
-        '9:16'
-    ) || layout === 'default';
+    !((localTileNotInGrid && isNarrow) || localVideoTileSize === '9:16') || layout === 'default';
   /**
    * Utility function for memoized rendering of LocalParticipant.
    */
@@ -541,7 +537,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     showMuteIndicator,
     styles?.localVideo,
     theme.effects.roundedCorner4,
-    /*@conditional-compile-remove(click-to-call) */
     localVideoTileSize,
 
     layout,

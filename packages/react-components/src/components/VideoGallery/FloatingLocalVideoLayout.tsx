@@ -137,7 +137,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
   const layerHostId = useId('layerhost');
 
   const localVideoSizeRem = useMemo(() => {
-    if (isNarrow || /*@conditional-compile-remove(click-to-call) */ localVideoTileSize === '9:16') {
+    if (isNarrow || localVideoTileSize === '9:16') {
       return SMALL_FLOATING_MODAL_SIZE_REM;
     }
     /* @conditional-compile-remove(vertical-gallery) */
@@ -148,7 +148,6 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
         ? SHORT_VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM
         : VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM;
     }
-    /*@conditional-compile-remove(click-to-call) */
     if ((overflowGalleryTiles.length > 0 || screenShareComponent) && overflowGalleryPosition === 'horizontalBottom') {
       return localVideoTileSize === '16:9' || !isNarrow ? LARGE_FLOATING_MODAL_SIZE_REM : SMALL_FLOATING_MODAL_SIZE_REM;
     }
