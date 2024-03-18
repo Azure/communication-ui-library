@@ -83,12 +83,12 @@ export const _videoGalleryRemoteParticipantsMemo: _VideoGalleryRemoteParticipant
             state,
             displayName,
             participant.raisedHand,
+            /* @conditional-compile-remove(ppt-live) */
+            participant.contentSharingStream,
             /* @conditional-compile-remove(reaction) */
             remoteParticipantReaction,
             /* @conditional-compile-remove(spotlight) */
-            participant.spotlight,
-            /* @conditional-compile-remove(ppt-live) */
-            participant.contentSharingStream
+            participant.spotlight
           );
         })
     );
