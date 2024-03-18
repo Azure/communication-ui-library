@@ -85,12 +85,12 @@ export const _videoGalleryRemoteParticipantsMemo: _VideoGalleryRemoteParticipant
             displayName,
             /* @conditional-compile-remove(raise-hand) */
             participant.raisedHand,
+            /* @conditional-compile-remove(ppt-live) */
+            participant.contentSharingStream,
             /* @conditional-compile-remove(reaction) */
             remoteParticipantReaction,
             /* @conditional-compile-remove(spotlight) */
-            participant.spotlight,
-            /* @conditional-compile-remove(ppt-live) */
-            participant.contentSharingStream
+            participant.spotlight
           );
         })
     );
