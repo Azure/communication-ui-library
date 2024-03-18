@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 import React, { CSSProperties, useCallback, useMemo } from 'react';
-/* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(rooms) */
 import { useRef } from 'react';
 import {
   VideoGallery,
@@ -13,7 +12,6 @@ import {
   VideoTileDrawerMenuProps
 } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
-/* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(rooms) */
 import { _useContainerWidth, _useContainerHeight } from '@internal/react-components';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../../common/AvatarPersona';
@@ -25,7 +23,6 @@ import { LocalVideoCameraCycleButton } from '@internal/react-components';
 import { _formatString } from '@internal/acs-ui-common';
 import { useParticipantChangedAnnouncement } from '../utils/MediaGalleryUtils';
 import { RemoteVideoTileMenuOptions } from '../CallComposite';
-/* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(vertical-gallery) */
 import { LocalVideoTileOptions } from '../CallComposite';
 /* @conditional-compile-remove(rooms) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
@@ -62,7 +59,6 @@ export interface MediaGalleryProps {
   isMobile?: boolean;
   drawerMenuHostId?: string;
   remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
-  /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(vertical-gallery) */
   localVideoTileOptions?: boolean | LocalVideoTileOptions;
   userSetOverflowGalleryPosition?: 'Responsive' | 'horizontalTop';
   userSetGalleryLayout: VideoGalleryLayout;
@@ -93,13 +89,9 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   /* @conditional-compile-remove(rooms) */
   const isRoomsCall = adapter.getState().isRoomsCall;
 
-  /* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(rooms) */
   const containerRef = useRef<HTMLDivElement>(null);
-  /* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(rooms) */
   const containerWidth = _useContainerWidth(containerRef);
-  /* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(rooms) */
   const containerHeight = _useContainerHeight(containerRef);
-  /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(vertical-gallery) */
   const containerAspectRatio = containerWidth && containerHeight ? containerWidth / containerHeight : 0;
   /* @conditional-compile-remove(reaction) */
   const reactionResources = adapter.getState().reactions;
@@ -138,7 +130,6 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
       : { kind: 'contextual' };
   }, [props.remoteVideoTileMenuOptions?.isHidden, props.isMobile, props.drawerMenuHostId]);
 
-  /* @conditional-compile-remove(vertical-gallery) */
   const overflowGalleryPosition = useMemo(() => {
     /* @conditional-compile-remove(overflow-top-composite) */
     if (props.userSetOverflowGalleryPosition === 'horizontalTop') {
@@ -190,7 +181,6 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         localVideoCameraCycleButtonProps={cameraSwitcherProps}
         onRenderAvatar={onRenderAvatar}
         remoteVideoTileMenu={remoteVideoTileMenuOptions}
-        /* @conditional-compile-remove(vertical-gallery) */
         overflowGalleryPosition={overflowGalleryPosition}
         /* @conditional-compile-remove(rooms) */
         localVideoTileSize={
@@ -220,13 +210,11 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     cameraSwitcherProps,
     onRenderAvatar,
     remoteVideoTileMenuOptions,
-    /* @conditional-compile-remove(vertical-gallery) */
     overflowGalleryPosition,
     /* @conditional-compile-remove(rooms) */
     userRole,
     /* @conditional-compile-remove(rooms) */
     isRoomsCall,
-    /* @conditional-compile-remove(vertical-gallery) */
     containerAspectRatio,
 
     props.userSetGalleryLayout,
@@ -246,7 +234,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   ]);
 
   return (
-    <div /* @conditional-compile-remove(vertical-gallery) */ ref={containerRef} style={mediaGalleryContainerStyles}>
+    <div ref={containerRef} style={mediaGalleryContainerStyles}>
       <Announcer announcementString={announcerString} ariaLive={'polite'} />
       {VideoGalleryMemoized}
     </div>

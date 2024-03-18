@@ -32,7 +32,6 @@ import { useIdentifiers } from '../identifiers';
 import { localVideoTileContainerStyles, videoGalleryOuterDivStyle } from './styles/VideoGallery.styles';
 import { floatingLocalVideoTileStyle } from './VideoGallery/styles/FloatingLocalVideo.styles';
 import { useId } from '@fluentui/react-hooks';
-/* @conditional-compile-remove(vertical-gallery) */
 import { VerticalGalleryStyles } from './VerticalGallery';
 import { SpeakerVideoLayout } from './VideoGallery/SpeakerVideoLayout';
 import { FocusedContentLayout } from './VideoGallery/FocusContentLayout';
@@ -155,12 +154,10 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
   horizontalGallery?: HorizontalGalleryStyles;
   /** Styles for the local video  */
   localVideo?: IStyle;
-  /* @conditional-compile-remove(vertical-gallery) */
   /** Styles for the vertical gallery */
   verticalGallery?: VerticalGalleryStyles;
 }
 
-/* @conditional-compile-remove(vertical-gallery) */
 /**
  * Different modes and positions of the overflow gallery in the VideoGallery
  *
@@ -296,7 +293,6 @@ export interface VideoGalleryProps {
    * @defaultValue \{ kind: 'contextual' \}
    */
   remoteVideoTileMenu?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
-  /* @conditional-compile-remove(vertical-gallery) */
   /**
    * Determines the layout of the overflowGallery inside the VideoGallery.
    * @defaultValue 'horizontalBottom'
@@ -377,7 +373,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onPinParticipant: onPinParticipantHandler,
     onUnpinParticipant: onUnpinParticipantHandler,
     remoteVideoTileMenu = DEFAULT_REMOTE_VIDEO_TILE_MENU_OPTIONS,
-    /* @conditional-compile-remove(vertical-gallery) */
     overflowGalleryPosition = 'horizontalBottom',
     /* @conditional-compile-remove(rooms) */
     localVideoTileSize = 'followDeviceOrientation',
@@ -734,7 +729,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       parentWidth: containerWidth,
       parentHeight: containerHeight,
       pinnedParticipantUserIds: pinnedParticipants,
-      /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
+      overflowGalleryPosition,
       /* @conditional-compile-remove(click-to-call) */ localVideoTileSize,
       /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds: spotlightedParticipants
     }),
@@ -752,7 +747,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       onRenderRemoteVideoTile,
       defaultOnRenderVideoTile,
       pinnedParticipants,
-      /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
+      overflowGalleryPosition,
       /* @conditional-compile-remove(click-to-call) */ localVideoTileSize,
       /* @conditional-compile-remove(spotlight) */ spotlightedParticipants
     ]

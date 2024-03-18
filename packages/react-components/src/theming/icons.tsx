@@ -355,9 +355,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   SplitButtonPrimaryActionCameraOff: <VideoOff20Filled />,
   SplitButtonPrimaryActionMicUnmuted: <Mic20Filled />,
   SplitButtonPrimaryActionMicMuted: <MicOff20Filled />,
-  /* @conditional-compile-remove(vertical-gallery) */
   VerticalGalleryLeftButton: <GalleryLeftButton />,
-  /* @conditional-compile-remove(vertical-gallery) */
   VerticalGalleryRightButton: <GalleryRightButton />,
   /* @conditional-compile-remove(video-background-effects) */
   ControlButtonVideoEffectsOption: <VideoBackgroundEffect20Regular />,
