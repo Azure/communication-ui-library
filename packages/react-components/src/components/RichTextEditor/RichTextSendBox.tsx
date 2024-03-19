@@ -158,6 +158,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     /* @conditional-compile-remove(file-sharing) */
     setFileUploadsPendingError(undefined);
 
+    /* @conditional-compile-remove(file-sharing) */
     if (hasIncompleteFileUploads(activeFileUploads)) {
       setFileUploadsPendingError({ message: strings.fileUploadsPendingError, timestamp: Date.now() });
       return;
@@ -175,7 +176,14 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       editorComponentRef.current?.setEmptyContent();
     }
     editorComponentRef.current?.focus();
-  }, [activeFileUploads, contentValue, contentValueOverflow, disabled, onSendMessage, strings.fileUploadsPendingError]);
+  }, [
+    contentValue,
+    contentValueOverflow,
+    disabled,
+    onSendMessage,
+    /* @conditional-compile-remove(file-sharing) */ activeFileUploads,
+    /* @conditional-compile-remove(file-sharing) */ strings.fileUploadsPendingError
+  ]);
 
   const hasErrorMessage = useMemo(() => {
     return (
