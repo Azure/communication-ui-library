@@ -446,7 +446,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   peopleButtonRef={peopleButtonRef}
                   cameraButtonRef={cameraButtonRef}
                   /* @conditional-compile-remove(spotlight) */
-                  onStopLocalSpotlight={localParticipant.spotlight ? onStopLocalSpotlight : undefined}
+                  onStopLocalSpotlight={
+                    !hideSpotlightButtons && localParticipant.spotlight ? onStopLocalSpotlight : undefined
+                  }
                 />
               )}
             </Stack>

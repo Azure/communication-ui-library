@@ -254,27 +254,27 @@ export interface CallCompositeStrings {
   /**
    * Label for menu item to start spotlight on participant
    */
-  startSpotlightParticipantListMenuLabel: string;
+  startSpotlightMenuLabel: string;
   /* @conditional-compile-remove(spotlight) */
   /**
    * Label for menu item to add spotlight on participant
    */
-  addSpotlightParticipantListMenuLabel: string;
+  addSpotlightMenuLabel: string;
   /* @conditional-compile-remove(spotlight) */
   /**
    * Label for menu item to stop spotlight on participant
    */
-  stopSpotlightParticipantListMenuLabel: string;
+  stopSpotlightMenuLabel: string;
   /* @conditional-compile-remove(spotlight) */
   /**
    * Label for menu item to stop spotlight on local user
    */
-  stopSpotlightOnSelfParticipantListMenuLabel: string;
+  stopSpotlightOnSelfMenuLabel: string;
   /* @conditional-compile-remove(spotlight) */
   /**
    * Label for menu item to stop spotlight on local user
    */
-  spotlightLimitReachedParticipantListMenuTitle: string;
+  spotlightLimitReachedMenuTitle: string;
   /* @conditional-compile-remove(spotlight) */
   /**
    * Label for menu item to stop all spotlight
