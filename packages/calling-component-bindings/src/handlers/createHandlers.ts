@@ -119,7 +119,7 @@ export interface _ComponentCallingHandlers {
   /** VideoGallery callback prop to stop local spotlight */
   onStopLocalSpotlight: () => Promise<void>;
   /** VideoGallery callback prop to start remote spotlight */
-  onStartRemoteSpotlight: (userIds?: string[]) => Promise<void>;
+  onStartRemoteSpotlight: (userIds: string[]) => Promise<void>;
   /** VideoGallery callback prop to stop remote spotlight */
-  onStopRemoteSpotlight: (userIds?: string[]) => Promise<void>;
+  onStopRemoteSpotlight: (userIds: string[]) => Promise<void>;
 }
