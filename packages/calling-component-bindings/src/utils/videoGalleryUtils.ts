@@ -150,12 +150,12 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   let screenShareStream: VideoGalleryStream | undefined = undefined;
 
   const sdkRemoteVideoStream =
-    Object.values(rawVideoStreamsArray).find((i) => i.mediaStreamType === 'Video' && i.isAvailable) ||
-    Object.values(rawVideoStreamsArray).find((i) => i.mediaStreamType === 'Video');
+    Object.values(rawVideoStreamsArray).findLast((i) => i.mediaStreamType === 'Video' && i.isAvailable) ||
+    Object.values(rawVideoStreamsArray).findLast((i) => i.mediaStreamType === 'Video');
 
   const sdkScreenShareStream =
-    Object.values(rawVideoStreamsArray).find((i) => i.mediaStreamType === 'ScreenSharing' && i.isAvailable) ||
-    Object.values(rawVideoStreamsArray).find((i) => i.mediaStreamType === 'ScreenSharing');
+    Object.values(rawVideoStreamsArray).findLast((i) => i.mediaStreamType === 'ScreenSharing' && i.isAvailable) ||
+    Object.values(rawVideoStreamsArray).findLast((i) => i.mediaStreamType === 'ScreenSharing');
 
   if (sdkRemoteVideoStream) {
     videoStream = convertRemoteVideoStreamToVideoGalleryStream(sdkRemoteVideoStream);
