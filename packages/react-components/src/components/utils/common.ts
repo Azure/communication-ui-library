@@ -10,7 +10,7 @@ import { ParticipantState } from '../../types';
  * Conditionally modify locale strings passed to the file card
  * @returns file upload card strings
  */
-export const useLocaleFileCardStringsTrampoline = (): _AttachmentUploadCardsStrings => {
+export const useLocaleAttachmentCardStringsTrampoline = (): _AttachmentUploadCardsStrings => {
   /* @conditional-compile-remove(file-sharing) */
   return useLocale().strings.sendBox;
   return {

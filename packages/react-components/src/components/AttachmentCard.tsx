@@ -19,7 +19,7 @@ import { _pxToRem } from '@internal/acs-ui-common';
 import { Announcer } from './Announcer';
 import { useEffect, useState } from 'react';
 import { _AttachmentUploadCardsStrings } from './AttachmentUploadCards';
-import { useLocaleFileCardStringsTrampoline } from './utils/common';
+import { useLocaleAttachmentCardStringsTrampoline } from './utils/common';
 
 /**
  * @internal
@@ -61,7 +61,7 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
   const { fileName, fileExtension, progress, actionIcon } = props;
   const theme = useTheme();
   const [announcerString, setAnnouncerString] = useState<string | undefined>(undefined);
-  const localeStrings = useLocaleFileCardStringsTrampoline();
+  const localeStrings = useLocaleAttachmentCardStringsTrampoline();
   const uploadStartedString = props.strings?.uploading ?? localeStrings.uploading;
   const uploadCompletedString = props.strings?.uploadCompleted ?? localeStrings.uploadCompleted;
 

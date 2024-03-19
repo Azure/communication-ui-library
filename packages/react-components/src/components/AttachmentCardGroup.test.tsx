@@ -7,7 +7,7 @@ import { _AttachmentCardGroup, _AttachmentCardGroupProps } from './AttachmentCar
 import { render, screen } from '@testing-library/react';
 import { registerIcons } from '@fluentui/react';
 
-describe('FileCardGroup should be rendered properly', () => {
+describe('AttachmentCardGroup should be rendered properly', () => {
   beforeEach(() => {
     registerIcons({
       icons: {
@@ -19,42 +19,42 @@ describe('FileCardGroup should be rendered properly', () => {
   it('should render the component', async () => {
     const props = {
       children: <></>,
-      ariaLabel: 'MockFileCardGroup'
+      ariaLabel: 'MockAttachmentCardGroup'
     };
-    renderFileCardGroupWithDefaults(props);
-    expect(await screen.findByLabelText('MockFileCardGroup')).toBeDefined();
+    renderAttachmentCardGroupWithDefaults(props);
+    expect(await screen.findByLabelText('MockAttachmentCardGroup')).toBeDefined();
   });
 
   it('should not render the component with no children', async () => {
     const props = {
       children: undefined,
-      ariaLabel: 'MockFileCardGroup'
+      ariaLabel: 'MockAttachmentCardGroup'
     };
-    renderFileCardGroupWithDefaults(props);
-    expect(screen.queryByLabelText('MockFileCardGroup')).toBeNull();
+    renderAttachmentCardGroupWithDefaults(props);
+    expect(screen.queryByLabelText('MockAttachmentCardGroup')).toBeNull();
   });
 
   it('should render the component with children', async () => {
     const props = {
       children: (
         <>
-          <_AttachmentCard fileName={'MockFileCard'} fileExtension={'docx'} />
-          <_AttachmentCard fileName={'MockSecondFileCard'} fileExtension={'docx'} />
+          <_AttachmentCard fileName={'MockAttachmentCard'} fileExtension={'docx'} />
+          <_AttachmentCard fileName={'MockSecondAttachmentCard'} fileExtension={'docx'} />
         </>
       ),
-      ariaLabel: 'MockFileCardGroup'
+      ariaLabel: 'MockAttachmentCardGroup'
     };
 
-    renderFileCardGroupWithDefaults(props);
-    const fileCard = screen.findByText('MockFileCard');
-    const secondFileCard = screen.findByText('MockSecondFileCard');
+    renderAttachmentCardGroupWithDefaults(props);
+    const fileCard = screen.findByText('MockAttachmentCard');
+    const secondAttachmentCard = screen.findByText('MockSecondAttachmentCard');
 
     expect(fileCard).toBeDefined();
-    expect(secondFileCard).toBeDefined();
+    expect(secondAttachmentCard).toBeDefined();
   });
 });
 
-const renderFileCardGroupWithDefaults = (props?: Partial<_AttachmentCardGroupProps>): void => {
+const renderAttachmentCardGroupWithDefaults = (props?: Partial<_AttachmentCardGroupProps>): void => {
   const mergedProps: _AttachmentCardGroupProps = {
     children: props?.children ?? <></>,
     ...(props ?? {})

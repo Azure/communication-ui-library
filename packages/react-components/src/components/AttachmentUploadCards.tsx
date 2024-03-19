@@ -8,7 +8,7 @@ import { _AttachmentCardGroup } from './AttachmentCardGroup';
 import { extension } from './utils';
 import { iconButtonClassName } from './styles/IconButton.styles';
 import { useMemo } from 'react';
-import { useLocaleFileCardStringsTrampoline } from './utils/common';
+import { useLocaleAttachmentCardStringsTrampoline } from './utils/common';
 import { SendBoxErrorBarError } from './SendBoxErrorBar';
 
 /**
@@ -89,7 +89,7 @@ const actionIconStyle = { height: '1rem' };
 export const _AttachmentUploadCards = (props: FileUploadCardsProps): JSX.Element => {
   const files = props.activeFileUploads;
 
-  const localeStrings = useLocaleFileCardStringsTrampoline();
+  const localeStrings = useLocaleAttachmentCardStringsTrampoline();
 
   const removeFileButtonString = useMemo(
     () => () => {

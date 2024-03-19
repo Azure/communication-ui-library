@@ -19,7 +19,7 @@ describe('FileDownloadCards should be rendered properly', () => {
 
   it('should render if it is FileSharingMetadata', async () => {
     const metadata: AttachmentMetadata = {
-      name: 'MockFileCard',
+      name: 'MockAttachmentCard',
       extension: 'docx',
       url: 'mockUrl',
       /* @conditional-compile-remove(file-sharing) */
@@ -31,7 +31,7 @@ describe('FileDownloadCards should be rendered properly', () => {
       fileMetadata: [metadata]
     };
     renderFileDownloadCardsWithDefaults(props);
-    const card = await screen.findByText('MockFileCard');
+    const card = await screen.findByText('MockAttachmentCard');
     expect(card).toBeDefined();
   });
 });

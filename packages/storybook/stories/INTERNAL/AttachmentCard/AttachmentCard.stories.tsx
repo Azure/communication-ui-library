@@ -8,7 +8,7 @@ import React from 'react';
 import { COMPONENT_FOLDER_PREFIX } from '../../constants';
 import { hiddenControl } from '../../controlsUtils';
 
-const FileCardStory = (args): JSX.Element => {
+const AttachmentCardStory = (args): JSX.Element => {
   return (
     <_AttachmentCard
       fileName={args.fileName}
@@ -21,7 +21,7 @@ const FileCardStory = (args): JSX.Element => {
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
 // This ensures that storybook hoists the story instead of creating a folder with a single entry.
-export const FileCard = FileCardStory.bind({});
+export const AttachmentCard = AttachmentCardStory.bind({});
 
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-internal-filecard`,
