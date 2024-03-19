@@ -47,8 +47,6 @@ module.exports = {
     "calling-environment-info",
     // feature for vertical gallery layouts in VideoGallery
     "vertical-gallery",
-    // Feature for updates needed for Click to Call (C2C) scenarios
-    "click-to-call",
     // a demo feature flag for those beta feature not ready for beta release
     "in-progress-beta-feature-demo",
     // Feature for call transfer
@@ -142,8 +140,6 @@ module.exports = {
     "dtmf-dialer",
     // dialpad
     "dialpad",
-    // Feature for updates needed for Click to Call (C2C) scenarios
-    "click-to-call",
     // Feature for call transfer
     "call-transfer",
     // Feature image overlay
