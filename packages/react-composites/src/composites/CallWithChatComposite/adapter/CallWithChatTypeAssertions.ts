@@ -48,11 +48,7 @@ CallWithChatAdapterManagementRequiredTypeAssertion;
 
 type CallWithChatControlOptionsInternal = Omit<
   CallControlOptions,
-  | 'endCallButton'
-  | 'devicesButton'
-  | /* @conditional-compile-remove(control-bar-button-injection) */ 'onFetchCustomButtonProps'
-  | 'participantsButton'
-  | 'legacyControlBarExperience'
+  'endCallButton' | 'devicesButton' | 'onFetchCustomButtonProps' | 'participantsButton' | 'legacyControlBarExperience'
 >;
 
 const CallWithChatControlOptionsTypeAssertion = (

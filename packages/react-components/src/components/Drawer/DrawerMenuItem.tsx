@@ -54,6 +54,10 @@ export interface _DrawerMenuItemProps {
    * Property to set the focus since this is the first item in the menu
    */
   shouldFocusOnMount?: boolean;
+  /**
+   * Custom JSX item injection for custom mobile view button on drawers
+   */
+  onRendererContent?: () => JSX.Element;
 }
 
 /**

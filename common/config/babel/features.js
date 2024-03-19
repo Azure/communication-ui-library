@@ -17,9 +17,6 @@ module.exports = {
     "chat-composite-participant-pane",
     // Close captions feature
     "close-captions",
-    // API for injecting custom buttons in he control bar for
-    // `CallComposite` and `CallWithChatComposite`.
-    "control-bar-button-injection",
     // props to allow Contoso to overwrite timestamp format for chat messages, one in locale and one in message thread component
     "date-time-customization",
     // Demo feature. Used in live-documentation of conditional compilation.
@@ -56,8 +53,6 @@ module.exports = {
     "in-progress-beta-feature-demo",
     // Feature for call transfer
     "call-transfer",
-    // Optimal Video Count
-    "optimal-video-count",
     // Feature for capabilities
     "capabilities",
     // Feature for large Gallery layout
@@ -87,7 +82,13 @@ module.exports = {
     // Feature for spotlight
     'spotlight',
     // Feature for tracking beta start call identifier
-    'start-call-beta'
+    'start-call-beta',
+    // Image overlay theme
+    'image-overlay-theme',
+     // Close captions feature for ACS calls
+     "acs-close-captions",
+    // Feature for local recording notification for teams meetings
+    'local-recording-notification'
   ],
   // A list of in progress beta feature.
   // These features are still beta feature but "in progress"
@@ -114,7 +115,9 @@ module.exports = {
     // Feature for Rich Text Editor (RTE) support
     'rich-text-editor',
     // Feature for spotlight
-    'spotlight'
+    'spotlight',
+    // Close captions feature for ACS calls
+    "acs-close-captions",
   ],
   // A list of stabilized features.
   // These features can be listed in the conditional compilation directives without
@@ -129,15 +132,8 @@ module.exports = {
     "capabilities",
     // Closed captions
     "close-captions",
-    // Optimal Video Count
-    "optimal-video-count",
-    // raise hands feature
-    "raise-hand",
     // feature  for vertical overflow gallery
     "vertical-gallery",
-    // API for injecting custom buttons in he control bar for
-    // `CallComposite` and `CallWithChatComposite`.
-    "control-bar-button-injection",
     // rooms
     "rooms",
     // feature for calling sounds
