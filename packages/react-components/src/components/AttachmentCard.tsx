@@ -131,7 +131,12 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
           props.actionHandler?.();
         }}
       >
-        <Stack horizontal horizontalAlign="space-between" verticalAlign="center" className={attachmentInfoWrapperClassName}>
+        <Stack
+          horizontal
+          horizontalAlign="space-between"
+          verticalAlign="center"
+          className={attachmentInfoWrapperClassName}
+        >
           <Stack>
             {/* We are not using <ChatCompositeIcon /> here as we currently do not support customizing these attachmenttype icons. */}
             <Icon

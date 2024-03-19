@@ -222,7 +222,9 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
                   showSpinner ? (
                     <Spinner size={SpinnerSize.medium} aria-live={'polite'} role={'status'} />
                   ) : true &&
-                    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ isShowDownloadIcon(attachment) ? (
+                    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ isShowDownloadIcon(
+                      attachment
+                    ) ? (
                     <IconButton className={iconButtonClassName} ariaLabel={downloadFileButtonString()}>
                       <DownloadIconTrampoline />
                     </IconButton>
