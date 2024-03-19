@@ -116,8 +116,8 @@ export const usePeoplePane = (props: {
       const isMe = myUserId === participantId;
       if (isSpotlighted) {
         const stopSpotlightMenuText = isMe
-          ? localeStrings.stopSpotlightOnSelfParticipantListMenuLabel
-          : localeStrings.stopSpotlightParticipantListMenuLabel;
+          ? localeStrings.stopSpotlightOnSelfMenuLabel
+          : localeStrings.stopSpotlightMenuLabel;
         const onStopSpotlight = isMe
           ? onStopLocalSpotlight
           : onStopRemoteSpotlight
@@ -140,8 +140,8 @@ export const usePeoplePane = (props: {
       } else {
         const startSpotlightMenuText =
           spotlightedParticipantUserIds && spotlightedParticipantUserIds.length > 0
-            ? localeStrings.addSpotlightParticipantListMenuLabel
-            : localeStrings.startSpotlightParticipantListMenuLabel;
+            ? localeStrings.addSpotlightMenuLabel
+            : localeStrings.startSpotlightMenuLabel;
         const maxSpotlightedParticipantsReached = maxParticipantsToSpotlight
           ? spotlightedParticipantUserIds
             ? spotlightedParticipantUserIds.length >= maxParticipantsToSpotlight
@@ -165,9 +165,7 @@ export const usePeoplePane = (props: {
             },
             ariaLabel: startSpotlightMenuText,
             disabled: maxSpotlightedParticipantsReached,
-            title: maxSpotlightedParticipantsReached
-              ? localeStrings.spotlightLimitReachedParticipantListMenuTitle
-              : undefined
+            title: maxSpotlightedParticipantsReached ? localeStrings.spotlightLimitReachedMenuTitle : undefined
           });
         }
       }
@@ -182,11 +180,11 @@ export const usePeoplePane = (props: {
       onStartRemoteSpotlight,
       onStopRemoteSpotlight,
       onFetchParticipantMenuItems,
-      localeStrings.stopSpotlightParticipantListMenuLabel,
-      localeStrings.stopSpotlightOnSelfParticipantListMenuLabel,
-      localeStrings.addSpotlightParticipantListMenuLabel,
-      localeStrings.startSpotlightParticipantListMenuLabel,
-      localeStrings.spotlightLimitReachedParticipantListMenuTitle,
+      localeStrings.stopSpotlightMenuLabel,
+      localeStrings.stopSpotlightOnSelfMenuLabel,
+      localeStrings.addSpotlightMenuLabel,
+      localeStrings.startSpotlightMenuLabel,
+      localeStrings.spotlightLimitReachedMenuTitle,
       maxParticipantsToSpotlight
     ]
   );
