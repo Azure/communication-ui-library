@@ -74,6 +74,8 @@ export class _MockCallingWidgetCallAdapter implements CallAdapter {
                 {
                   mediaStreamType: 'Video' as MediaStreamType,
                   isAvailable: true,
+                  /* @conditional-compile-remove(video-stream-is-receiving-flag) */
+                  isReceiving: true,
                   id: 1,
                   view: {
                     target: mockVideoElement,
