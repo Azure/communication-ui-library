@@ -404,6 +404,13 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         return;
       }
 
+      /**
+       * There is a bug from the calling sdk where if a user leaves and rejoins immediately
+       * it adds 2 more potential streams this remote participant can use. The old 2 streams
+       * still show as available and that is how we got a frozen stream in this case. The stopgap
+       * until streams accurately reflect their availability is to always prioritize the latest streams of a certain type
+       * e.g findLast instead of find
+       */
       // Find the first available stream, if there is none, then get the first stream
       const remoteVideoStream =
         Object.values(participant.videoStreams).findLast((i) => i.mediaStreamType === 'Video' && i.isAvailable) ||
