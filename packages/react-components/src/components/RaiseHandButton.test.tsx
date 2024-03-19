@@ -1,19 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(raise-hand) */
 import React from 'react';
-/* @conditional-compile-remove(raise-hand) */
 import { RaiseHandButton } from './RaiseHandButton';
-/* @conditional-compile-remove(raise-hand) */
 import { createTestLocale, renderWithLocalization } from './utils/testUtils';
-/* @conditional-compile-remove(raise-hand) */
 import { registerIcons } from '@fluentui/react';
-/* @conditional-compile-remove(raise-hand) */
 import { screen } from '@testing-library/react';
 
 describe('RaiseHandButton strings should be localizable and overridable', () => {
-  /* @conditional-compile-remove(raise-hand) */
   beforeAll(() => {
     registerIcons({
       icons: {
@@ -26,7 +20,6 @@ describe('RaiseHandButton strings should be localizable and overridable', () => 
     expect(true).toBe(true);
   });
 
-  /* @conditional-compile-remove(raise-hand) */
   test('Should localize button label', async () => {
     const testLocale = createTestLocale({
       raiseHandButton: { offLabel: 'Raise Hand', onLabel: 'Lower Hand' }
@@ -38,7 +31,6 @@ describe('RaiseHandButton strings should be localizable and overridable', () => 
     expect(screen.getByRole('button').textContent).toBe('Lower Hand');
   });
 
-  /* @conditional-compile-remove(raise-hand) */
   test('Should override button label with `strings` prop', async () => {
     const testLocale = createTestLocale({
       raiseHandButton: { offLabel: 'Raise Hand', onLabel: 'Lower Hand' }

@@ -27,14 +27,14 @@ import {
 } from '../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../types';
-import { MessageStatusIndicator, MessageStatusIndicatorProps } from './MessageStatusIndicator';
+import { MessageStatusIndicatorProps } from './MessageStatusIndicator';
 import { memoizeFnAll, MessageStatus } from '@internal/acs-ui-common';
 import { useLocale } from '../localization/LocalizationProvider';
 import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
 import getParticipantsWhoHaveReadMessage from './utils/getParticipantsWhoHaveReadMessage';
 /* @conditional-compile-remove(file-sharing) */
 import { FileDownloadHandler } from './FileDownloadCards';
-/* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/* @conditional-compile-remove(file-sharing) */
 import { AttachmentMetadata } from './FileDownloadCards';
 import { useTheme } from '../theming';
 import { FluentV9ThemeProvider } from './../theming/FluentV9ThemeProvider';
@@ -46,9 +46,10 @@ import {
   ChatMessageComponentWrapper,
   ChatMessageComponentWrapperProps
 } from './ChatMessage/ChatMessageComponentWrapper';
-import { Announcer } from './Announcer';
 /* @conditional-compile-remove(image-overlay) */
 import { InlineImageOptions } from './ChatMessage/ChatMessageContent';
+import { MessageStatusIndicatorInternal } from './MessageStatusIndicatorInternal';
+import { Announcer } from './Announcer';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (
@@ -221,7 +222,7 @@ export interface MessageThreadStrings {
   /* @conditional-compile-remove(data-loss-prevention) */
   /** String for policy violation message removal details link */
   blockedWarningLinkText: string;
-  /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /* @conditional-compile-remove(file-sharing) */
   /** String for aria text in file attachment group*/
   fileCardGroupMessage: string;
 }
@@ -325,6 +326,16 @@ const getLastChatMessageIdWithStatus = (messages: Message[], status: MessageStat
     const message = messages[i];
     if (message.messageType === 'chat' && message.status === status && message.mine) {
       return message.messageId;
+    }
+  }
+  return undefined;
+};
+
+const getLastChatMessageForCurrentUser = (messages: Message[]): ChatMessage | undefined => {
+  for (let i = messages.length - 1; i >= 0; i--) {
+    const message = messages[i];
+    if (message.messageType === 'chat' && message.mine) {
+      return message;
     }
   }
   return undefined;
@@ -703,6 +714,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
         // reset deleted message label in case if there was a value already (messages are deleted 1 after another)
         setDeletedMessageAriaLabel(undefined);
         setLatestDeletedMessageId(messageId);
+        lastChatMessageStatus.current = 'deleted';
         // we should set up latestDeletedMessageId before the onDeleteMessage call
         // as otherwise in very rare cases the messages array can be updated before latestDeletedMessageId
         await onDeleteMessage(messageId);
@@ -923,6 +935,21 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     // Only scroll to bottom if isAtBottomOfScrollRef is true
     isAtBottomOfScrollRef.current && scrollToBottom();
   }, [clientHeight, forceUpdate, scrollToBottom, chatMessagesInitialized]);
+  useEffect(() => {
+    const newStatus = getLastChatMessageForCurrentUser(newMessages)?.status;
+    if (newStatus !== undefined) {
+      if (lastChatMessageStatus.current === 'deleted' && newStatus === 'sending') {
+        // enforce message life cycle
+        // message status should always be [ sending -> delivered -> seen (optional) -> deleted ] or [sending -> failed -> deleted]
+        // not any other way around
+        // therefore, if current message status is deleted, we should only update it if newStatus is sending
+        lastChatMessageStatus.current = newStatus;
+      } else if (lastChatMessageStatus.current !== 'deleted') {
+        lastChatMessageStatus.current = newStatus;
+      }
+    }
+    // The hook should depend on newMessages not on messages as otherwise it will skip the sending status for a first message
+  }, [newMessages]);
 
   /**
    * This needs to run to update latestPreviousChatMessage & latestCurrentChatMessage.
@@ -957,6 +984,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages]);
 
+  const lastChatMessageStatus = useRef<string | undefined>(undefined);
   const participantCountRef = useRef(participantCount);
   const readReceiptsBySenderIdRef = useRef(readReceiptsBySenderId);
 
@@ -979,6 +1007,11 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
       readCount: number,
       status?: MessageStatus
     ) => {
+      // we should only announce label if the message status isn't deleted
+      // because after message is deleted, we now need to render statusIndicator for previous messages
+      // and their status has been announced already and we should not announce them again
+      const shouldAnnounce = lastChatMessageStatus.current !== 'deleted';
+
       const onToggleToolTip = (isToggled: boolean): void => {
         if (isToggled && readReceiptsBySenderIdRef.current) {
           setReadCountForHoveredIndicator(
@@ -989,12 +1022,13 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
         }
       };
       return (
-        <MessageStatusIndicator
+        <MessageStatusIndicatorInternal
           status={status}
           readCount={readCount}
           onToggleToolTip={onToggleToolTip}
           // -1 because participant count does not include myself
           remoteParticipantsCount={participantCount ? participantCount - 1 : 0}
+          shouldAnnounce={shouldAnnounce}
         />
       );
     },
@@ -1056,7 +1090,13 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
       )}
       <LiveAnnouncer>
         <FluentV9ThemeProvider v8Theme={theme}>
-          <Announcer announcementString={deletedMessageAriaLabel} ariaLive={'assertive'} />
+          {latestDeletedMessageId && (
+            <Announcer
+              key={latestDeletedMessageId}
+              announcementString={deletedMessageAriaLabel}
+              ariaLive={'assertive'}
+            />
+          )}
           <Chat
             // styles?.chatContainer used in className and style prop as style prop can't handle CSS selectors
             className={mergeClasses(classes.root, mergeStyles(styles?.chatContainer))}

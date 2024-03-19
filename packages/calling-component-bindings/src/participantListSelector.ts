@@ -26,12 +26,11 @@ import { memoizedConvertAllremoteParticipantsBetaRelease } from './utils/partici
 import { memoizedConvertAllremoteParticipantsBeta } from './utils/participantListSelectorUtils';
 /* @conditional-compile-remove(spotlight) */
 import { memoizedSpotlight } from './utils/participantListSelectorUtils';
-/* @conditional-compile-remove(raise-hand) */
 import { getLocalParticipantRaisedHand } from './baseSelectors';
 /* @conditional-compile-remove(reaction) */
 import { getLocalParticipantReactionState } from './baseSelectors';
 /* @conditional-compile-remove(spotlight) */
-import { getSpotlightedParticipants } from './baseSelectors';
+import { getSpotlightCallFeature } from './baseSelectors';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { getParticipantCount } from './baseSelectors';
 import { isMicrosoftTeamsAppIdentifier, isPhoneNumberIdentifier } from '@azure/communication-common';
@@ -98,7 +97,6 @@ const convertRemoteParticipantsToParticipantListParticipants = (
             participant.isMuted,
             isScreenSharing,
             participant.isSpeaking,
-            /* @conditional-compile-remove(raise-hand) */
             participant.raisedHand,
             localUserCanRemoveOthers,
             /* @conditional-compile-remove(reaction) */
@@ -156,7 +154,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     getRemoteParticipantsExcludingConsumers,
     getIsScreenSharingOn,
     getIsMuted,
-    /* @conditional-compile-remove(raise-hand) */ getLocalParticipantRaisedHand,
+    getLocalParticipantRaisedHand,
     getRole,
     getParticipantCount,
     /* @conditional-compile-remove(hide-attendee-name) */
@@ -164,7 +162,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     /* @conditional-compile-remove(reaction) */
     getLocalParticipantReactionState,
     /* @conditional-compile-remove(spotlight) */
-    getSpotlightedParticipants
+    getSpotlightCallFeature
   ],
   (
     userId,
@@ -172,7 +170,6 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     remoteParticipants,
     isScreenSharingOn,
     isMuted,
-    /* @conditional-compile-remove(raise-hand) */
     raisedHand,
     role,
     partitipantCount,
@@ -181,7 +178,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     /* @conditional-compile-remove(reaction) */
     localParticipantReactionState,
     /* @conditional-compile-remove(spotlight) */
-    spotlightedParticipants
+    spotlightCallFeature
   ): {
     participants: CallParticipantListParticipant[];
     myUserId: string;
@@ -197,7 +194,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
           /* @conditional-compile-remove(hide-attendee-name) */
           role,
           /* @conditional-compile-remove(spotlight) */
-          spotlightedParticipants
+          spotlightCallFeature?.spotlightedParticipants
         )
       : [];
     /* @conditional-compile-remove(reaction) */
@@ -207,7 +204,6 @@ export const participantListSelector: ParticipantListSelector = createSelector(
       displayName: displayName,
       isScreenSharing: isScreenSharingOn,
       isMuted: isMuted,
-      /* @conditional-compile-remove(raise-hand) */
       raisedHand: raisedHand,
       state: 'Connected',
       // Local participant can never remove themselves.
@@ -215,7 +211,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
       /* @conditional-compile-remove(reaction) */
       reaction: localParticipantReaction,
       /* @conditional-compile-remove(spotlight) */
-      spotlight: memoizedSpotlight(spotlightedParticipants, userId)
+      spotlight: memoizedSpotlight(spotlightCallFeature?.spotlightedParticipants, userId)
     });
     /* @conditional-compile-remove(total-participant-count) */
     const totalParticipantCount = partitipantCount;

@@ -107,3 +107,19 @@ export const createDefaultCallingHandlers: CreateDefaultCallingHandlers = memoiz
     }
   };
 });
+
+/* @conditional-compile-remove(spotlight) */
+/**
+ * Handlers only for calling components
+ * @internal
+ */
+export interface _ComponentCallingHandlers {
+  /** VideoGallery callback prop to start local spotlight */
+  onStartLocalSpotlight: () => Promise<void>;
+  /** VideoGallery callback prop to stop local spotlight */
+  onStopLocalSpotlight: () => Promise<void>;
+  /** VideoGallery callback prop to start remote spotlight */
+  onStartRemoteSpotlight: (userIds: string[]) => Promise<void>;
+  /** VideoGallery callback prop to stop remote spotlight */
+  onStopRemoteSpotlight: (userIds: string[]) => Promise<void>;
+}

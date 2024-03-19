@@ -15,11 +15,9 @@ import {
 /* @conditional-compile-remove(reaction) */
 import { getLocalParticipantReactionState } from './baseSelectors';
 /* @conditional-compile-remove(capabilities) */
-import { getCapabilites, getRole } from './baseSelectors';
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(raise-hand) */
+import { getCapabilities, getRole } from './baseSelectors';
 import { getCallState } from './baseSelectors';
 import { _isPreviewOn } from './utils/callUtils';
-/* @conditional-compile-remove(raise-hand) */
 import { getLocalParticipantRaisedHand } from './baseSelectors';
 /**
  * Selector type for {@link MicrophoneButton} component.
@@ -48,7 +46,7 @@ export const microphoneButtonSelector: MicrophoneButtonSelector = reselect.creat
     getCallExists,
     getIsMuted,
     getDeviceManager,
-    /* @conditional-compile-remove(capabilities) */ getCapabilites,
+    /* @conditional-compile-remove(capabilities) */ getCapabilities,
     /* @conditional-compile-remove(capabilities) */ getRole
   ],
   (
@@ -98,7 +96,7 @@ export const cameraButtonSelector: CameraButtonSelector = reselect.createSelecto
   [
     getLocalVideoStreams,
     getDeviceManager,
-    /* @conditional-compile-remove(capabilities) */ getCapabilites,
+    /* @conditional-compile-remove(capabilities) */ getCapabilities,
     /* @conditional-compile-remove(capabilities) */ getRole
   ],
   (
@@ -140,7 +138,6 @@ export type ScreenShareButtonSelector = (
   /* @conditional-compile-remove(capabilities) */ /* @conditional-compile-remove(PSTN-calls) */ disabled?: boolean;
 };
 
-/* @conditional-compile-remove(raise-hand) */
 /**
  * Selector type for {@link RaiseHandButton} component.
  *
@@ -154,7 +151,6 @@ export type RaiseHandButtonSelector = (
   disabled?: boolean;
 };
 
-/* @conditional-compile-remove(raise-hand) */
 /**
  * Selector for {@link RaiseHandButton} component.
  *
@@ -209,7 +205,7 @@ export const screenShareButtonSelector: ScreenShareButtonSelector = reselect.cre
   [
     getIsScreenSharingOn,
     /* @conditional-compile-remove(PSTN-calls) */ getCallState,
-    /* @conditional-compile-remove(capabilities) */ getCapabilites,
+    /* @conditional-compile-remove(capabilities) */ getCapabilities,
     /* @conditional-compile-remove(capabilities) */ getRole
   ],
   (

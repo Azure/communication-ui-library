@@ -53,8 +53,10 @@ import { videoStreamRendererViewDeclaratify } from './VideoStreamRendererViewDec
  *   - RemoteVideoStream 'isAvailableChanged'
  *   - TranscriptionCallFeature 'isTranscriptionActiveChanged'
  *   - RecordingCallFeature 'isRecordingActiveChanged'
+ *   - LocalRecordingCallFeature 'isLocalRecordingActiveChanged'
  *   - RaiseHandCallFeature 'raisedHandEvent'
  *   - RaiseHandCallFeature 'loweredHandEvent'
+ *   - PPTLiveCallFeature 'isAciveChanged'
  *   - ReactionCallFeature 'reaction'
  *
  * @public

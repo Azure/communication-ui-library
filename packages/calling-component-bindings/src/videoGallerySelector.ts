@@ -19,7 +19,6 @@ import {
 import { getRole } from './baseSelectors';
 /* @conditional-compile-remove(hide-attendee-name) */
 import { isHideAttendeeNamesEnabled } from './baseSelectors';
-/* @conditional-compile-remove(optimal-video-count) */
 import { getOptimalVideoCount } from './baseSelectors';
 import { _updateUserDisplayNames } from './utils/callUtils';
 import { checkIsSpeaking } from './utils/SelectorUtils';
@@ -31,7 +30,6 @@ import {
 } from './utils/videoGalleryUtils';
 /* @conditional-compile-remove(spotlight) */
 import { memoizeSpotlightedParticipantIds } from './utils/videoGalleryUtils';
-/* @conditional-compile-remove(raise-hand) */
 import { getLocalParticipantRaisedHand } from './baseSelectors';
 /* @conditional-compile-remove(reaction) */
 import { getLocalParticipantReactionState } from './baseSelectors';
@@ -39,7 +37,7 @@ import { getLocalParticipantReactionState } from './baseSelectors';
 import { memoizedConvertToVideoTileReaction } from './utils/participantListSelectorUtils';
 import { getRemoteParticipantsExcludingConsumers } from './getRemoteParticipantsExcludingConsumers';
 /* @conditional-compile-remove(spotlight) */
-import { getSpotlightedParticipants, getMaxParticipantsToSpotlight } from './baseSelectors';
+import { getSpotlightCallFeature, getCapabilities } from './baseSelectors';
 
 /**
  * Selector type for {@link VideoGallery} component.
@@ -50,11 +48,10 @@ export type VideoGallerySelector = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ) => {
-  screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
+  screenShareParticipant?: VideoGalleryRemoteParticipant;
   localParticipant: VideoGalleryLocalParticipant;
   remoteParticipants: VideoGalleryRemoteParticipant[];
   dominantSpeakers?: string[];
-  /* @conditional-compile-remove(optimal-video-count) */
   optimalVideoCount?: number;
   /* @conditional-compile-remove(spotlight) */
   spotlightedParticipants?: string[];
@@ -76,20 +73,18 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     getDisplayName,
     getIdentifier,
     getDominantSpeakers,
-    /* @conditional-compile-remove(optimal-video-count) */
     getOptimalVideoCount,
     /* @conditional-compile-remove(rooms) */
     getRole,
-    /* @conditional-compile-remove(raise-hand) */
     getLocalParticipantRaisedHand,
     /* @conditional-compile-remove(hide-attendee-name) */
     isHideAttendeeNamesEnabled,
     /* @conditional-compile-remove(reaction) */
     getLocalParticipantReactionState,
     /* @conditional-compile-remove(spotlight) */
-    getSpotlightedParticipants,
+    getSpotlightCallFeature,
     /* @conditional-compile-remove(spotlight) */
-    getMaxParticipantsToSpotlight
+    getCapabilities
   ],
   (
     screenShareRemoteParticipantId,
@@ -100,20 +95,18 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     displayName: string | undefined,
     identifier: string,
     dominantSpeakers,
-    /* @conditional-compile-remove(optimal-video-count) */
     optimalVideoCount,
     /* @conditional-compile-remove(rooms) */
     role,
-    /* @conditional-compile-remove(raise-hand) */
     raisedHand,
     /* @conditional-compile-remove(hide-attendee-name) */
     isHideAttendeeNamesEnabled,
     /* @conditional-compile-remove(reaction) */
     localParticipantReaction,
     /* @conditional-compile-remove(spotlight) */
-    spotlightedParticipants,
+    spotlightCallFeature,
     /* @conditional-compile-remove(spotlight) */
-    maxParticipantsToSpotlight
+    capabilities
   ) => {
     const screenShareRemoteParticipant =
       screenShareRemoteParticipantId && remoteParticipants
@@ -128,7 +121,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     /* @conditional-compile-remove(reaction) */
     const localParticipantReactionState = memoizedConvertToVideoTileReaction(localParticipantReaction);
     /* @conditional-compile-remove(spotlight) */
-    const spotlightedParticipantIds = memoizeSpotlightedParticipantIds(spotlightedParticipants);
+    const spotlightedParticipantIds = memoizeSpotlightedParticipantIds(spotlightCallFeature?.spotlightedParticipants);
 
     return {
       screenShareParticipant: screenShareRemoteParticipant
@@ -139,8 +132,9 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
             screenShareRemoteParticipant.videoStreams,
             screenShareRemoteParticipant.state,
             screenShareRemoteParticipant.displayName,
-            /* @conditional-compile-remove(raise-hand) */
             screenShareRemoteParticipant.raisedHand,
+            /* @conditional-compile-remove(ppt-live) */
+            screenShareRemoteParticipant.contentSharingStream,
             /* @conditional-compile-remove(spotlight) */
             screenShareRemoteParticipant.spotlight
           )
@@ -153,10 +147,13 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
         localVideoStream,
         /* @conditional-compile-remove(rooms) */
         role,
-        /* @conditional-compile-remove(raise-hand) */
         raisedHand,
         /* @conditional-compile-remove(reaction) */
-        localParticipantReactionState
+        localParticipantReactionState,
+        /* @conditional-compile-remove(spotlight) */
+        spotlightCallFeature?.localParticipantSpotlight,
+        /* @conditional-compile-remove(spotlight) */
+        capabilities
       ),
       remoteParticipants: _videoGalleryRemoteParticipantsMemo(
         updateUserDisplayNamesTrampoline(remoteParticipants ? Object.values(remoteParticipants) : noRemoteParticipants),
@@ -166,12 +163,11 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
         role
       ),
       dominantSpeakers: dominantSpeakerIds,
-      /* @conditional-compile-remove(optimal-video-count) */
       maxRemoteVideoStreams: optimalVideoCount,
       /* @conditional-compile-remove(spotlight) */
       spotlightedParticipants: spotlightedParticipantIds,
       /* @conditional-compile-remove(spotlight) */
-      maxParticipantsToSpotlight: maxParticipantsToSpotlight
+      maxParticipantsToSpotlight: spotlightCallFeature?.maxParticipantsToSpotlight
     };
   }
 );

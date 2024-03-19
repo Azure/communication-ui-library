@@ -93,7 +93,12 @@ module.exports = {
     },
     {
       // disable no-restricted-imports for playwright tests
-      files: ['./tests/browser/**/*.spec.ts', './tests/browser/**/*.spec.tsx'],
+      files: [
+        './tests/browser/**/*.spec.ts',
+        './tests/browser/**/*.spec.tsx',
+        './tests/browser/**/*.tsx',
+        './playwright/index.tsx'
+      ],
       rules: {
         'no-restricted-imports': 'off'
       }

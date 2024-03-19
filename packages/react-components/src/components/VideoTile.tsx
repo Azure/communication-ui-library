@@ -17,9 +17,7 @@ import { useIdentifiers } from '../identifiers';
 import { ComponentLocale, useLocale } from '../localization';
 import { useTheme } from '../theming';
 import { BaseCustomStyles, CustomAvatarOptions, OnRenderAvatarCallback } from '../types';
-/* @conditional-compile-remove(raise-hand) */
 import { CallingTheme } from '../theming';
-/* @conditional-compile-remove(raise-hand) */
 import { RaisedHand } from '../types';
 /* @conditional-compile-remove(raise-hand) */
 import { RaisedHandIcon } from './assets/RaisedHandIcon';
@@ -41,7 +39,6 @@ import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
 import { pinIconStyle } from './styles/VideoTile.styles';
 import useLongPress from './utils/useLongPress';
 import { moreButtonStyles } from './styles/VideoTile.styles';
-/* @conditional-compile-remove(raise-hand) */
 import { raiseHandContainerStyles } from './styles/VideoTile.styles';
 /* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '../types/ReactionTypes';
@@ -146,7 +143,6 @@ export interface VideoTileProps {
   /** Whether the participant in the videoTile is speaking. Shows a speaking indicator (border). */
   isSpeaking?: boolean;
 
-  /* @conditional-compile-remove(raise-hand) */
   /** Whether the participant is raised hand. Show a indicator (border) and icon with order */
   raisedHand?: RaisedHand;
 
@@ -266,7 +262,6 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     userId,
     noVideoAvailableAriaLabel,
     isSpeaking,
-    /* @conditional-compile-remove(raise-hand) */
     raisedHand,
     personaMinSize = DEFAULT_PERSONA_MIN_SIZE_PX,
     personaMaxSize = DEFAULT_PERSONA_MAX_SIZE_PX,
@@ -351,9 +346,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const participantStateString = participantStateStringTrampoline(props, locale);
   const canShowContextMenuButton = isHovered || isFocused;
   let raisedHandBackgroundColor = '';
-  /* @conditional-compile-remove(raise-hand) */
   const callingPalette = (theme as unknown as CallingTheme).callingPalette;
-  /* @conditional-compile-remove(raise-hand) */
   raisedHandBackgroundColor = callingPalette.raiseHandGold;
 
   return (
@@ -365,7 +358,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           background: theme.palette.neutralLighter,
           borderRadius: theme.effects.roundedCorner4
         },
-        (isSpeaking || /* @conditional-compile-remove(raise-hand) */ raisedHand) && {
+        (isSpeaking || raisedHand) && {
           '&::after': {
             content: `''`,
             position: 'absolute',
@@ -439,7 +432,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
                 /* @conditional-compile-remove(spotlight) */
                 isSpotlighted && (
                   <Stack className={mergeStyles(iconContainerStyle)}>
-                    <Icon iconName="VideoSpotlighted" />
+                    <Icon iconName="VideoTileSpotlighted" />
                   </Stack>
                 )
               }
@@ -459,22 +452,20 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
         {children && (
           <Stack className={mergeStyles(overlayContainerStyles, styles?.overlayContainer)}>{children}</Stack>
         )}
-        {
-          /* @conditional-compile-remove(raise-hand) */ raisedHand && (
-            <Stack
-              horizontal={true}
-              tokens={{ childrenGap: '0.2rem' }}
-              className={raiseHandContainerStyles(theme, !canShowLabel)}
-            >
-              <Stack.Item>
-                <Text>{raisedHand.raisedHandOrderPosition}</Text>
-              </Stack.Item>
-              <Stack.Item>
-                <RaisedHandIcon />
-              </Stack.Item>
-            </Stack>
-          )
-        }
+        {raisedHand && (
+          <Stack
+            horizontal={true}
+            tokens={{ childrenGap: '0.2rem' }}
+            className={raiseHandContainerStyles(theme, !canShowLabel)}
+          >
+            <Stack.Item>
+              <Text>{raisedHand.raisedHandOrderPosition}</Text>
+            </Stack.Item>
+            <Stack.Item>
+              <RaisedHandIcon />
+            </Stack.Item>
+          </Stack>
+        )}
       </div>
     </Stack>
   );

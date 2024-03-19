@@ -11,15 +11,18 @@ import {
   stableScreenshot,
   waitForSelector
 } from '../../common/utils';
-import { buildUrlWithMockAdapter, defaultMockCallAdapterState, defaultMockRemoteParticipant, test } from './fixture';
+import {
+  buildUrlWithMockAdapter,
+  defaultMockCallAdapterState,
+  defaultMockRemotePSTNParticipant,
+  test
+} from './fixture';
 
 /* @conditional-compile-remove(PSTN-calls) */
 test.describe('Dtmf dialpad tests', async () => {
   test('Dtmf dialpad should render in 1:1 PSTN call', async ({ page, serverUrl }) => {
-    const paul = defaultMockRemoteParticipant('Paul Bridges');
-
-    const participant = [paul];
-    const initialState = defaultMockCallAdapterState(participant);
+    const participant = defaultMockRemotePSTNParticipant('+14255550123');
+    const initialState = defaultMockCallAdapterState([participant]);
     initialState.targetCallees = [{ phoneNumber: '+14255550123', rawId: '4:14255550123' }];
 
     //PSTN call has alternate caller id
@@ -43,10 +46,10 @@ test.describe('Dtmf dialpad tests', async () => {
 
     expect(await stableScreenshot(page)).toMatchSnapshot(`Dtmf-Dialpad-Hidden-Non-PSTN.png`);
   });
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(dtmf-dialer) */
+  /* @conditional-compile-remove(PSTN-calls) */
   test('More Button menu opens and shows dialpad Control', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo) || isTestProfileLandscapeMobile(testInfo));
-    const initialState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
+    const initialState = defaultMockCallAdapterState([defaultMockRemotePSTNParticipant('+14255550123')]);
     initialState.targetCallees = [{ phoneNumber: '+14255550123', rawId: '4:14255550123' }];
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
@@ -57,10 +60,10 @@ test.describe('Dtmf dialpad tests', async () => {
     await moreButtonShowDialpadButton?.click();
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-more-button-dtmf-dialpad-closed.png`);
   });
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(dtmf-dialer) */
+  /* @conditional-compile-remove(PSTN-calls) */
   test('More Drawer menu opens and shows dialpad Control', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileDesktop(testInfo));
-    const initialState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
+    const initialState = defaultMockCallAdapterState([defaultMockRemotePSTNParticipant('+14255550123')]);
     initialState.targetCallees = [{ phoneNumber: '+14255550123', rawId: '4:14255550123' }];
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));

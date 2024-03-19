@@ -1,19 +1,19 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { RTESendBox as RTESendBoxComponent } from '@internal/react-components';
+import { RichTextSendBox as RichTextSendBoxComponent } from '@internal/react-components';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { COMPONENT_FOLDER_PREFIX } from '../../constants';
 import { hiddenControl } from '../../controlsUtils';
 
-const RTESendBoxStory = (args): JSX.Element => {
+const RichTextSendBoxStory = (args): JSX.Element => {
   const timeoutRef = React.useRef<NodeJS.Timeout>();
   const delayForSendButton = 300;
 
   return (
-    <div style={{ width: '31.25rem' }}>
-      <RTESendBoxComponent
+    <div style={{ width: '31.25rem', maxWidth: '90%' }}>
+      <RichTextSendBoxComponent
         disabled={args.disabled}
         systemMessage={args.isSendBoxWithWarning ? args.systemMessage : undefined}
         onSendMessage={async (message) => {
@@ -28,12 +28,12 @@ const RTESendBoxStory = (args): JSX.Element => {
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
 // This ensures that storybook hoists the story instead of creating a folder with a single entry.
-export const RTESendBox = RTESendBoxStory.bind({});
+export const RichTextSendBox = RichTextSendBoxStory.bind({});
 
 export default {
-  id: `${COMPONENT_FOLDER_PREFIX}-internal-rtesendbox`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Internal/RTESendBox`,
-  component: RTESendBoxComponent,
+  id: `${COMPONENT_FOLDER_PREFIX}-internal-richtextsendbox`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Internal/RichTextSendBox`,
+  component: RichTextSendBoxComponent,
   argTypes: {
     disabled: { control: 'boolean', defaultValue: false },
     systemMessage: { control: 'text', defaultValue: undefined },

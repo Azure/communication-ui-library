@@ -11,7 +11,6 @@ import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CallParticipantListParticipant } from '@internal/react-components';
 /* @conditional-compile-remove(spotlight) */
 import { Spotlight } from '@internal/react-components';
-/* @conditional-compile-remove(raise-hand) */
 import { RaisedHandState } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(reaction) */
 import { ReactionState } from '@internal/calling-stateful-client';
@@ -173,7 +172,7 @@ export const memoizedConvertToVideoTileReaction = memoizeOne(
     return reactionState && reactionState.reactionMessage
       ? {
           reactionType: reactionState.reactionMessage.reactionType,
-          receivedAt: reactionState.receivedAt
+          receivedOn: reactionState.receivedOn
         }
       : undefined;
   }

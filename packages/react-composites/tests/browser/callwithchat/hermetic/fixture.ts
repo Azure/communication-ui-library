@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Page, test as base } from '@playwright/test';
+import { Browser, Page, test as base } from '@playwright/test';
 import path from 'path';
 import { createTestServer } from '../../common/server';
 import { loadNewPageWithPermissionsForCalls } from '../../common/fixtureHelpers';
@@ -49,7 +49,7 @@ export interface TestFixture {
   page: Page;
 }
 
-const usePage = async ({ browser }, use): Promise<void> => {
+const usePage = async ({ browser }: { browser: Browser }, use: (page: Page) => Promise<void>): Promise<void> => {
   await use(await loadNewPageWithPermissionsForCalls(browser));
 };
 

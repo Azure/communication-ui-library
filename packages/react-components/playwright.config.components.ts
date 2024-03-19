@@ -26,7 +26,13 @@ const ctViteConfig = {
         configFile: true
       }
     })
-  ]
+  ],
+  build: {
+    // Fix warning for telemetryVersion
+    commonjsOptions: {
+      include: undefined
+    }
+  }
 };
 if (componentsConfig.use) {
   componentsConfig.use.ctViteConfig = ctViteConfig;

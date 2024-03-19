@@ -41,14 +41,11 @@ import { Reaction } from '@azure/communication-calling';
 import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
-/* @conditional-compile-remove(dtmf-dialer) */
 import { DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { SendMessageOptions } from '@azure/communication-chat';
 import { JoinCallOptions } from '../../CallComposite/adapter/CallAdapter';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { AttachmentDownloadResult } from '@internal/react-components';
-/* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/* @conditional-compile-remove(file-sharing) */
 import { AttachmentMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadManager } from '../../ChatComposite';
@@ -193,14 +190,12 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   stopScreenShare(): Promise<void>;
-  /* @conditional-compile-remove(raise-hand) */
   /**
    * Raise hand for local user.
    *
    * @public
    */
   raiseHand(): Promise<void>;
-  /* @conditional-compile-remove(raise-hand) */
   /**
    * Lower hand for local user.
    *
@@ -214,7 +209,7 @@ export interface CallWithChatAdapterManagement {
    *
    * @beta
    */
-  onReactionClicked(reaction: Reaction): Promise<void>;
+  onReactionClick(reaction: Reaction): Promise<void>;
   /**
    * Create the html view for a stream.
    *
@@ -404,10 +399,10 @@ export interface CallWithChatAdapterManagement {
   /** @beta */
   updateFileUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  downloadAttachment: (options: { attachmentUrl: string }) => Promise<AttachmentDownloadResult>; // ToDo: This method is to be removed
+  /** @public */
+  downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  downloadResourceToCache(resourceDetails: ResourceDetails): void;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /** @public */
   removeResourceFromCache(resourceDetails: ResourceDetails): void;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
@@ -432,7 +427,6 @@ export interface CallWithChatAdapterManagement {
   addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(dtmf-dialer) */
   /**
    * send dtmf tone to another participant in the call in 1:1 calls
    *
@@ -515,6 +509,11 @@ export interface CallWithChatAdapterManagement {
    * Stop spotlight
    */
   stopSpotlight(userIds?: string[]): Promise<void>;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Stop all spotlights
+   */
+  stopAllSpotlight(): Promise<void>;
 }
 
 /**

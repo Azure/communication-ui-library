@@ -50,7 +50,6 @@ import {
 import { TrackedErrors } from './types/ErrorTracking';
 import { usePropsFor } from './hooks/usePropsFor';
 import { deviceCountSelector } from './selectors/deviceCountSelector';
-/* @conditional-compile-remove(gallery-layouts) */
 import { VideoGalleryLayout } from '@internal/react-components';
 /* @conditional-compile-remove(capabilities) */
 import { capabilitiesChangedInfoAndRoleSelector } from './selectors/capabilitiesChangedInfoAndRoleSelector';
@@ -126,7 +125,6 @@ export interface RemoteVideoTileMenuOptions {
   isHidden?: boolean;
 }
 
-/* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(vertical-gallery) */
 /**
  * Options for the local video tile in the Call composite.
  *
@@ -220,14 +218,12 @@ export type CallCompositeOptions = {
    * Remote participant video tile menu options
    */
   remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
-  /* @conditional-compile-remove(click-to-call) */
   /**
    * Options for controlling the local video tile.
    *
    * @remarks if 'false' the local video tile will not be rendered.
    */
   localVideoTile?: boolean | LocalVideoTileOptions;
-  /* @conditional-compile-remove(gallery-layouts) */
   /**
    * Options for controlling the starting layout of the composite's video gallery
    */
@@ -316,6 +312,17 @@ export type CallCompositeOptions = {
       url: string;
     };
   };
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Options for settings related to spotlight.
+   */
+  spotlight?: {
+    /**
+     * Flag to hide the menu buttons to start and stop spotlight for remote participants and the local participant.
+     * @defaultValue false
+     */
+    hideSpotlightButtons?: boolean;
+  };
 };
 
 type MainScreenProps = {
@@ -365,11 +372,9 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
 
   const [sidePaneRenderer, setSidePaneRenderer] = React.useState<SidePaneRenderer | undefined>();
   const [injectedSidePaneProps, setInjectedSidePaneProps] = React.useState<InjectedSidePaneProps>();
-  /* @conditional-compile-remove(gallery-layouts) */
   const [userSetGalleryLayout, setUserSetGalleryLayout] = useState<VideoGalleryLayout>(
     props.options?.galleryOptions?.layout ?? 'floatingLocalVideo'
   );
-  /* @conditional-compile-remove(gallery-layouts) */
   const [userSetOverflowGalleryPosition, setUserSetOverflowGalleryPosition] = useState<'Responsive' | 'horizontalTop'>(
     'Responsive'
   );
@@ -423,6 +428,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const callees = useSelector(getTargetCallees) as StartCallIdentifier[];
   const locale = useLocale();
   const palette = useTheme().palette;
+  /* @conditional-compile-remove(PSTN-calls) */
+  const alternateCallerId = adapter.getState().alternateCallerId;
   const leavePageStyle = useMemo(() => leavingPageStyle(palette), [palette]);
   let pageElement: JSX.Element | undefined;
   switch (page) {
@@ -432,7 +439,12 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           mobileView={props.mobileView}
           startCallHandler={(): void => {
             if (callees) {
-              adapter.startCall(callees);
+              adapter.startCall(
+                callees,
+                /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
+                  ? { alternateCallerId: { phoneNumber: alternateCallerId } }
+                  : {}
+              );
             } else {
               adapter.joinCall({
                 microphoneOn: 'keep',
@@ -574,13 +586,9 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           onCloseChatPane={props.onCloseChatPane}
           latestErrors={latestErrors}
           onDismissError={onDismissError}
-          /* @conditional-compile-remove(gallery-layouts) */
           galleryLayout={userSetGalleryLayout}
-          /* @conditional-compile-remove(gallery-layouts) */
           onUserSetGalleryLayoutChange={setUserSetGalleryLayout}
-          /* @conditional-compile-remove(gallery-layouts) */
           onSetUserSetOverflowGalleryPosition={setUserSetOverflowGalleryPosition}
-          /* @conditional-compile-remove(gallery-layouts) */
           userSetOverflowGalleryPosition={userSetOverflowGalleryPosition}
           /* @conditional-compile-remove(capabilities) */
           capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}

@@ -34,9 +34,7 @@ import { floatingLocalVideoTileStyle } from './VideoGallery/styles/FloatingLocal
 import { useId } from '@fluentui/react-hooks';
 /* @conditional-compile-remove(vertical-gallery) */
 import { VerticalGalleryStyles } from './VerticalGallery';
-/* @conditional-compile-remove(gallery-layouts) */
 import { SpeakerVideoLayout } from './VideoGallery/SpeakerVideoLayout';
-/* @conditional-compile-remove(gallery-layouts) */
 import { FocusedContentLayout } from './VideoGallery/FocusContentLayout';
 /* @conditional-compile-remove(large-gallery) */
 import { LargeGalleryLayout } from './VideoGallery/LargeGalleryLayout';
@@ -131,6 +129,9 @@ export interface VideoGalleryStrings {
   /* @conditional-compile-remove(spotlight) */
   /** Menu text shown in Video Tile contextual menu to stop spotlight on local user's video tile */
   stopSpotlightOnSelfVideoTileMenuLabel: string;
+  /* @conditional-compile-remove(hide-attendee-name) */
+  /** String for the attendee role */
+  attendeeRole: string;
 }
 
 /**
@@ -139,9 +140,9 @@ export interface VideoGalleryStrings {
 export type VideoGalleryLayout =
   | 'default'
   | 'floatingLocalVideo'
-  | /* @conditional-compile-remove(gallery-layouts) */ 'speaker'
+  | 'speaker'
   | /* @conditional-compile-remove(large-gallery) */ 'largeGallery'
-  | /* @conditional-compile-remove(gallery-layouts) */ 'focusedContent';
+  | 'focusedContent';
 
 /**
  * {@link VideoGallery} Component Styles.
@@ -165,12 +166,8 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
  *
  * @public
  */
-export type OverflowGalleryPosition =
-  | 'horizontalBottom'
-  | 'verticalRight'
-  | /* @conditional-compile-remove(gallery-layouts) */ 'horizontalTop';
+export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | 'horizontalTop';
 
-/* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
 /**
  * different modes of the local video tile
  *
@@ -269,14 +266,24 @@ export interface VideoGalleryProps {
   spotlightedParticipants?: string[];
   /* @conditional-compile-remove(spotlight) */
   /**
-   * This callback will be called when spotlight is started for participant video tiles.
+   * This callback is to start spotlight for local participant video tile.
    */
-  onStartSpotlight?: (userIds?: string[]) => Promise<void>;
+  onStartLocalSpotlight?: () => Promise<void>;
   /* @conditional-compile-remove(spotlight) */
   /**
-   * This callback will be called when spotlight is stopped for participant video tiles.
+   * This callback is to stop spotlight for local participant video tile.
    */
-  onStopSpotlight?: (userIds?: string[]) => Promise<void>;
+  onStartRemoteSpotlight?: (userIds: string[]) => Promise<void>;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * This callback is to start spotlight for remote participant video tiles.
+   */
+  onStopLocalSpotlight?: () => Promise<void>;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * This callback is to stop spotlight for remote participant video tiles.
+   */
+  onStopRemoteSpotlight?: (userIds: string[]) => Promise<void>;
   /* @conditional-compile-remove(spotlight) */
   /**
    * Maximum participants that can be spotlighted
@@ -294,7 +301,7 @@ export interface VideoGalleryProps {
    * @defaultValue 'horizontalBottom'
    */
   overflowGalleryPosition?: OverflowGalleryPosition;
-  /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
+  /* @conditional-compile-remove(rooms) */
   /**
    * Determines the aspect ratio of local video tile in the video gallery.
    * @remarks 'followDeviceOrientation' will be responsive to the screen orientation and will change between 9:16 (portrait) and
@@ -376,9 +383,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(spotlight) */
     spotlightedParticipants,
     /* @conditional-compile-remove(spotlight) */
-    onStartSpotlight,
+    onStartLocalSpotlight,
     /* @conditional-compile-remove(spotlight) */
-    onStopSpotlight,
+    onStartRemoteSpotlight,
+    /* @conditional-compile-remove(spotlight) */
+    onStopLocalSpotlight,
+    /* @conditional-compile-remove(spotlight) */
+    onStopRemoteSpotlight,
     /* @conditional-compile-remove(spotlight) */
     maxParticipantsToSpotlight,
     /* @conditional-compile-remove(reaction) */
@@ -396,9 +407,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       : undefined;
   const drawerMenuHostId = useId('drawerMenuHost', drawerMenuHostIdFromProp);
 
-  const localTileNotInGrid =
-    (layout === 'floatingLocalVideo' || /* @conditional-compile-remove(gallery-layouts) */ layout === 'speaker') &&
-    remoteParticipants.length > 0;
+  const localTileNotInGrid = (layout === 'floatingLocalVideo' || layout === 'speaker') && remoteParticipants.length > 0;
 
   const containerRef = useRef<HTMLDivElement>(null);
   const containerWidth = _useContainerWidth(containerRef);
@@ -434,16 +443,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const pinnedParticipants = props.pinnedParticipants ?? pinnedParticipantsState;
 
   const showLocalVideoTileLabel =
-    !(
-      (localTileNotInGrid && isNarrow) ||
-      /*@conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ localVideoTileSize ===
-        '9:16'
-    ) || /* @conditional-compile-remove(gallery-layouts) */ layout === 'default';
+    !((localTileNotInGrid && isNarrow) || localVideoTileSize === '9:16') || layout === 'default';
   /**
    * Utility function for memoized rendering of LocalParticipant.
    */
   const localVideoTile = useMemo((): JSX.Element /* @conditional-compile-remove(rooms) */ | undefined => {
-    /* @conditional-compile-remove(click-to-call) */
     if (localVideoTileSize === 'hidden') {
       return undefined;
     }
@@ -465,7 +469,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     const initialsName = !localParticipant.displayName ? '' : localParticipant.displayName;
 
     const showDisplayNameTrampoline = (): string => {
-      /* @conditional-compile-remove(gallery-layouts) */
       return layout === 'default' ? strings.localVideoLabel : isNarrow ? '' : strings.localVideoLabel;
       return isNarrow ? '' : strings.localVideoLabel;
     };
@@ -496,12 +499,25 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           localVideoCameraSwitcherLabel={strings.localVideoCameraSwitcherLabel}
           localVideoSelectedDescription={strings.localVideoSelectedDescription}
           styles={localVideoTileStyles}
-          /* @conditional-compile-remove(raise-hand) */
           raisedHand={localParticipant.raisedHand}
           /* @conditional-compile-remove(reaction) */
           reaction={localParticipant.reaction}
           /* @conditional-compile-remove(spotlight) */
+          spotlightedParticipantUserIds={spotlightedParticipants}
+          /* @conditional-compile-remove(spotlight) */
           isSpotlighted={isSpotlighted}
+          /* @conditional-compile-remove(spotlight) */
+          onStartSpotlight={onStartLocalSpotlight}
+          /* @conditional-compile-remove(spotlight) */
+          onStopSpotlight={onStopLocalSpotlight}
+          /* @conditional-compile-remove(spotlight) */
+          maxParticipantsToSpotlight={maxParticipantsToSpotlight}
+          /* @conditional-compile-remove(spotlight) */
+          menuKind={remoteVideoTileMenu ? (remoteVideoTileMenu.kind === 'drawer' ? 'drawer' : 'contextual') : undefined}
+          /* @conditional-compile-remove(spotlight) */
+          drawerMenuHostId={drawerMenuHostId}
+          /* @conditional-compile-remove(spotlight) */
+          strings={strings}
           /* @conditional-compile-remove(reaction) */
           reactionResources={reactionResources}
         />
@@ -519,17 +535,26 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     localTileNotInGrid,
     showCameraSwitcherInLocalPreview,
     showMuteIndicator,
-    strings.localVideoCameraSwitcherLabel,
-    strings.localVideoLabel,
-    strings.localVideoMovementLabel,
-    strings.localVideoSelectedDescription,
     styles?.localVideo,
     theme.effects.roundedCorner4,
-    /*@conditional-compile-remove(click-to-call) */
     localVideoTileSize,
-    /* @conditional-compile-remove(gallery-layouts) */
+
     layout,
     showLocalVideoTileLabel,
+    /* @conditional-compile-remove(spotlight) */
+    spotlightedParticipants,
+    /* @conditional-compile-remove(spotlight) */
+    onStartLocalSpotlight,
+    /* @conditional-compile-remove(spotlight) */
+    onStopLocalSpotlight,
+    /* @conditional-compile-remove(spotlight) */
+    maxParticipantsToSpotlight,
+    /* @conditional-compile-remove(spotlight) */
+    remoteVideoTileMenu,
+    /* @conditional-compile-remove(spotlight) */
+    strings,
+    /* @conditional-compile-remove(spotlight) */
+    drawerMenuHostId,
     /* @conditional-compile-remove(reaction) */
     reactionResources
   ]);
@@ -559,7 +584,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
    * sets the announcement string for VideoGallery actions so that the screenreader will trigger
    */
   const toggleAnnouncerString = useCallback(
-    (announcement) => {
+    (announcement: string) => {
       setAnnouncementString(announcement);
       /**
        * Clears the announcer string after VideoGallery action allowing it to be re-announced.
@@ -631,9 +656,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           /* @conditional-compile-remove(spotlight) */
           isSpotlighted={isSpotlighted}
           /* @conditional-compile-remove(spotlight) */
-          onStartSpotlight={onStartSpotlight}
+          onStartSpotlight={onStartRemoteSpotlight}
           /* @conditional-compile-remove(spotlight) */
-          onStopSpotlight={onStopSpotlight}
+          onStopSpotlight={onStopRemoteSpotlight}
           /* @conditional-compile-remove(spotlight) */
           maxParticipantsToSpotlight={maxParticipantsToSpotlight}
           /* @conditional-compile-remove(reaction) */
@@ -658,8 +683,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       toggleAnnouncerString,
       onUpdateScalingMode,
       /* @conditional-compile-remove(spotlight) */ spotlightedParticipants,
-      /* @conditional-compile-remove(spotlight) */ onStartSpotlight,
-      /* @conditional-compile-remove(spotlight) */ onStopSpotlight,
+      /* @conditional-compile-remove(spotlight) */ onStartRemoteSpotlight,
+      /* @conditional-compile-remove(spotlight) */ onStopRemoteSpotlight,
       /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight,
       /* @conditional-compile-remove(reaction) */ reactionResources
     ]
@@ -689,6 +714,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       remoteParticipants={remoteParticipants}
       /* @conditional-compile-remove(reaction) */
       reactionResources={reactionResources}
+      /* @conditional-compile-remove(ppt-live) */
+      isPPTLive={!screenShareParticipant.screenShareStream?.id}
     />
   );
 
@@ -713,7 +740,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       parentHeight: containerHeight,
       pinnedParticipantUserIds: pinnedParticipants,
       /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
-      /* @conditional-compile-remove(click-to-call) */ localVideoTileSize,
+      localVideoTileSize,
       /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds: spotlightedParticipants
     }),
     [
@@ -731,20 +758,19 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       defaultOnRenderVideoTile,
       pinnedParticipants,
       /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
-      /* @conditional-compile-remove(click-to-call) */ localVideoTileSize,
+      localVideoTileSize,
       /* @conditional-compile-remove(spotlight) */ spotlightedParticipants
     ]
   );
 
   const videoGalleryLayout = useMemo(() => {
-    /* @conditional-compile-remove(gallery-layouts) */
     if (screenShareParticipant && layout === 'focusedContent') {
       return <FocusedContentLayout {...layoutProps} />;
     }
     if (layout === 'floatingLocalVideo') {
       return <FloatingLocalVideoLayout {...layoutProps} />;
     }
-    /* @conditional-compile-remove(gallery-layouts) */
+
     if (layout === 'speaker') {
       return <SpeakerVideoLayout {...layoutProps} />;
     }
@@ -753,7 +779,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       return <LargeGalleryLayout {...layoutProps} />;
     }
     return <DefaultLayout {...layoutProps} />;
-  }, [layout, layoutProps, /* @conditional-compile-remove(gallery-layouts) */ screenShareParticipant]);
+  }, [layout, layoutProps, screenShareParticipant]);
 
   return (
     <div

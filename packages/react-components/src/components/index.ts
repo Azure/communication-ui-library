@@ -18,13 +18,18 @@ export { _MentionPopover } from './MentionPopover';
 export { ImageOverlay } from './ImageOverlay';
 /* @conditional-compile-remove(image-overlay) */
 export type { ImageOverlayStrings } from './ImageOverlay';
-
 export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox';
 
 /* @conditional-compile-remove(rich-text-editor) */
-export { RTESendBox } from './RTE/RTESendBox';
+export { RichTextSendBox } from './RichTextEditor/RichTextSendBox';
+// TODO: This component is exported only for testing purposes. Remove this when this component is added to composites
 /* @conditional-compile-remove(rich-text-editor) */
-export type { RTESendBoxProps } from './RTE/RTESendBox';
+export { ChatMessageComponentAsRichTextEditBox } from './ChatMessage/ChatMessageComponentAsRichTextEditBox';
+// TODO: This component is exported only for testing purposes. Remove this when this component is added to composites
+/* @conditional-compile-remove(rich-text-editor) */
+export type { ChatMessageComponentAsRichTextEditBoxProps } from './ChatMessage/ChatMessageComponentAsRichTextEditBox';
+/* @conditional-compile-remove(rich-text-editor) */
+export type { RichTextSendBoxProps, RichTextSendBoxStrings } from './RichTextEditor/RichTextSendBox';
 
 /* @conditional-compile-remove(mention) */
 export type {
@@ -92,7 +97,6 @@ export type {
 } from './VideoGallery';
 /* @conditional-compile-remove(vertical-gallery) */
 export type { OverflowGalleryPosition } from './VideoGallery';
-/* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
 export type { LocalVideoTileSize } from './VideoGallery';
 export type { HorizontalGalleryStyles } from './HorizontalGallery';
 
@@ -181,9 +185,8 @@ export type {
 export { ScreenShareButton } from './ScreenShareButton';
 export type { ScreenShareButtonProps, ScreenShareButtonStrings } from './ScreenShareButton';
 
-/* @conditional-compile-remove(raise-hand) */
 export { RaiseHandButton } from './RaiseHandButton';
-/* @conditional-compile-remove(raise-hand) */
+
 export type { RaiseHandButtonProps, RaiseHandButtonStrings } from './RaiseHandButton';
 /* @conditional-compile-remove(reaction) */
 export { ReactionButton } from './ReactionButton';

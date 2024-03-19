@@ -14,7 +14,6 @@ import {
 
 import { useLocale } from '../../localization';
 
-/* @conditional-compile-remove(raise-hand) */
 import { RaisedHand } from '@internal/react-components';
 
 /**
@@ -24,7 +23,7 @@ export interface LocalAndRemotePIPProps {
   localParticipant: {
     displayName?: string;
     videoStream?: VideoGalleryStream;
-    /* @conditional-compile-remove(raise-hand) */ raisedHand?: RaisedHand;
+    raisedHand?: RaisedHand;
   };
   dominantRemoteParticipant?: {
     userId: string;
@@ -70,7 +69,6 @@ export const LocalAndRemotePIP = (props: LocalAndRemotePIPProps): JSX.Element =>
       showCameraSwitcherInLocalPreview: false,
       isAvailable: localParticipant.videoStream?.isAvailable,
       renderElement: localParticipant.videoStream?.renderElement,
-      /* @conditional-compile-remove(raise-hand) */
       raisedHand: localParticipant.raisedHand
     }),
     [
@@ -79,7 +77,6 @@ export const LocalAndRemotePIP = (props: LocalAndRemotePIPProps): JSX.Element =>
       localParticipant.videoStream?.renderElement,
       onCreateLocalStreamView,
       onDisposeLocalStreamView,
-      /* @conditional-compile-remove(raise-hand) */
       localParticipant.raisedHand
     ]
   );
@@ -118,14 +115,14 @@ export const LocalAndRemotePIP = (props: LocalAndRemotePIPProps): JSX.Element =>
   const primaryTileProps: _PictureInPictureInPictureTileProps = useMemo(
     () => ({
       children: remoteVideoTileProps ? (
-        <_RemoteVideoTile {...remoteVideoTileProps} />
+        <_RemoteVideoTile {...remoteVideoTileProps} strings={locale.component.strings.videoGallery} />
       ) : (
         <_LocalVideoTile {...localVideoTileProps} />
       ),
       // TODO: when the calling SDK provides height/width stream information - update this to reflect the stream orientation.
       orientation: 'portrait'
     }),
-    [localVideoTileProps, remoteVideoTileProps]
+    [localVideoTileProps, remoteVideoTileProps, locale.component.strings.videoGallery]
   );
 
   // If we are showing the local participant as the primary tile, show nothing for the secondary tile

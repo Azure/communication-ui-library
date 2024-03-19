@@ -1,12 +1,48 @@
 # Change Log - @azure/communication-react
 
-This log was last generated on Mon, 29 Jan 2024 17:18:22 GMT and should not be manually modified.
+This log was last generated on Mon, 26 Feb 2024 16:19:15 GMT and should not be manually modified.
 
 <!-- Start content -->
 
+## [1.14.0-beta.2](https://github.com/azure/communication-ui-library/tree/1.14.0-beta.2)
+
+Tue, 05 Mar 2024 16:19:15 GMT
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.14.0-beta.1...1.14.0-beta.2)
+
+Reinclude CallComposite `Branding` option.
+
+## [1.14.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.14.0-beta.1)
+
+Mon, 26 Feb 2024 16:19:15 GMT
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.13.0...1.14.0-beta.1)
+
+### Improvements
+
+- Provide managed image cache for inline images and associated APIs
+  - [PR #4099](https://github.com/azure/communication-ui-library/pull/4099), [PR #4126](https://github.com/azure/communication-ui-library/pull/4126), [PR #4071](https://github.com/azure/communication-ui-library/pull/4071) by <9044372+JoshuaLai@users.noreply.github.com>
+- Rework ImageGallery to ImageOverlay; updates to related APIs
+  - [PR #4083](https://github.com/azure/communication-ui-library/pull/4083), [PR #4117](https://github.com/azure/communication-ui-library/pull/4117), [PR #4154](https://github.com/azure/communication-ui-library/pull/4154), [PR #4101](https://github.com/azure/communication-ui-library/pull/4101) by <107075081+Leah-Xia-Microsoft@users.noreply.github.com>
+
+### Bug Fixes
+
+- Update styling to include space for back button ([PR #4079](https://github.com/azure/communication-ui-library/pull/4079) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Defect fixing the src of the inline image ([PR #4104](https://github.com/azure/communication-ui-library/pull/4104) by 9044372+JoshuaLai@users.noreply.github.com)
+- Fix for an issue when head and body tags were added to messages with html type ([PR #4106](https://github.com/azure/communication-ui-library/pull/4106) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Fix message rendering of inline image when there is no message text ([PR #4084](https://github.com/azure/communication-ui-library/pull/4084) by 9044372+JoshuaLai@users.noreply.github.com)
+- Fix color loss of raised hand icon on iOS ([PR #4089](https://github.com/azure/communication-ui-library/pull/4089) by 79475487+mgamis-msft@users.noreply.github.com)
+- Resolve issue where images previews would not show in a message if the message also had a file attachment. ([PR #4167](https://github.com/azure/communication-ui-library/pull/4167) by 73612854+palatter@users.noreply.github.com)
+- Update gallery logic to not include local participant in grid calculations. ([PR #4136](https://github.com/azure/communication-ui-library/pull/4136) by dmceachern@microsoft.com)
+- Hangup Call to transfer target when leaving in mid-transfer ([PR #4155](https://github.com/azure/communication-ui-library/pull/4155) by dmceachern@microsoft.com)
+- Update the policy violation check ([PR #4087](https://github.com/azure/communication-ui-library/pull/4087) by 9044372+JoshuaLai@users.noreply.github.com)
+- Fix for a deleted message accessibility announcement ([PR #4169](https://github.com/azure/communication-ui-library/pull/4169) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Replace Inline Image tag with image text for aria text ([PR #4128](https://github.com/azure/communication-ui-library/pull/4128) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
+- Set hide attendee name option to 'False' until replaced by sdk ([PR #4111](https://github.com/azure/communication-ui-library/pull/4111) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Resolve issue where edited label is missing from received messages ([PR #4150](https://github.com/azure/communication-ui-library/pull/4150) by 73612854+palatter@users.noreply.github.com)
+- Fix offset of message edit box ([PR #4112](https://github.com/azure/communication-ui-library/pull/4112) by 3941071+emlynmac@users.noreply.github.com)
+
 ## [1.13.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.13.0-beta.1)
 
-Mon, 29 Jan 2024 17:18:22 GMT 
+Mon, 29 Jan 2024 17:18:22 GMT
 [Compare changes](https://github.com/azure/communication-ui-library/compare/1.12.0...1.13.0-beta.1)
 
 ### Custom Branding - Public Preivew

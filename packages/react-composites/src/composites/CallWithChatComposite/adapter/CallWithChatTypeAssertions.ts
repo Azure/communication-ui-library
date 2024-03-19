@@ -27,10 +27,7 @@ import { FileUploadAdapter } from '../../ChatComposite';
 
 /// CallWithChatAdapterManagement
 
-type CallWithChatAdapterManagementInternal = Omit<
-  CallAdapterCallManagement,
-  'removeParticipant' | 'onReactionClicked'
-> &
+type CallWithChatAdapterManagementInternal = Omit<CallAdapterCallManagement, 'removeParticipant' | 'onReactionClick'> &
   CallAdapterDeviceManagement &
   Omit<ChatAdapterThreadManagement, 'removeParticipant' | 'setTopic'> &
   /* @conditional-compile-remove(file-sharing) */
@@ -51,11 +48,7 @@ CallWithChatAdapterManagementRequiredTypeAssertion;
 
 type CallWithChatControlOptionsInternal = Omit<
   CallControlOptions,
-  | 'endCallButton'
-  | 'devicesButton'
-  | /* @conditional-compile-remove(control-bar-button-injection) */ 'onFetchCustomButtonProps'
-  | 'participantsButton'
-  | 'legacyControlBarExperience'
+  'endCallButton' | 'devicesButton' | 'onFetchCustomButtonProps' | 'participantsButton' | 'legacyControlBarExperience'
 >;
 
 const CallWithChatControlOptionsTypeAssertion = (

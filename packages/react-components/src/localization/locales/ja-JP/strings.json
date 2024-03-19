@@ -7,7 +7,8 @@
     "mutedIconLabel": "ミュート状態",
     "displayNamePlaceholder": "名前のない参加者",
     "participantStateRinging": "呼び出し中...",
-    "participantStateHold": "保留中"
+    "participantStateHold": "保留中",
+    "attendeeRole": "出席者"
   },
   "ParticipantList": {
     "overflowParticipantCount": "その他 {overflowCount} 個"
@@ -27,6 +28,23 @@
     "removeFile": "ファイルを削除します",
     "uploading": "アップロード中",
     "uploadCompleted": "アップロードが完了しました"
+  },
+  "richTextSendBox": {
+    "placeholderText": "メッセージを入力してください",
+    "textTooLong": "メッセージの長さが上限を超えています。",
+    "sendButtonAriaLabel": "メッセージの送信",
+    "fileUploadsPendingError": "アップロード中...お待ちください。",
+    "removeFile": "ファイルの削除",
+    "uploading": "アップロード中",
+    "uploadCompleted": "アップロード完了",
+    "boldTooltip": "太字",
+    "italicTooltip": "斜体",
+    "underlineTooltip": "下線",
+    "bulletListTooltip": "箇条書き",
+    "numberListTooltip": "番号付きリスト",
+    "increaseIndentTooltip": "インデントを増やす",
+    "decreaseIndentTooltip": "インデントを減らす",
+    "richTextFormatButtonTooltip": "形式"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "候補"
@@ -125,6 +143,7 @@
   },
   "reactionButton": {
     "label": "リアクションする",
+    "ariaLabel": "リアクション ボタン、リアクションの送信",
     "tooltipDisabledContent": "リアクション操作が無効になっています",
     "tooltipContent": "リアクションを送信します",
     "likeReactionTooltipContent": "高く評価",
@@ -201,7 +220,7 @@
     "failedToJoinCallInvalidMeetingLink": "会議に参加できません。リンクが無効です。",
     "cameraFrozenForRemoteParticipants": "通話のユーザーにビデオの表示で問題が発生しています。デバイスとネットワークを確認してください。",
     "unableToStartVideoEffect": "ビデオ効果を適用できません。",
-    "startSpotlightWhileMaxParticipantsAreSpotlighted": "Cannot start spotlight on participant(s) because the maximum number of participants are already spotlighted."
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "最大数の参加者に既にスポットライトが設定されているため、参加者にスポットライトを開始できません。"
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "画面を共有しています",
@@ -222,9 +241,10 @@
     "unpinnedParticipantAnnouncementAriaLabel": "{participantName} さんのピンを外しました",
     "startSpotlightVideoTileMenuLabel": "全員にスポットライトを設定",
     "addSpotlightVideoTileMenuLabel": "スポットライトを追加",
-    "spotlightLimitReachedMenuTitle": "Spotlight limit reached",
+    "spotlightLimitReachedMenuTitle": "スポットライトの上限に達しました",
     "stopSpotlightVideoTileMenuLabel": "スポットライトの設定を解除",
-    "stopSpotlightOnSelfVideoTileMenuLabel": "スポットライトを終了"
+    "stopSpotlightOnSelfVideoTileMenuLabel": "スポットライトを終了",
+    "attendeeRole": "出席者"
   },
   "dialpad": {
     "placeholderText": "電話番号を入力してください",
@@ -358,6 +378,5 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "前のページ",
     "rightNavButtonAriaLabel": "次のページ"
-  },
-  "AttendeeRole": "出席者"
+  }
 }

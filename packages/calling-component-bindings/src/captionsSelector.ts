@@ -18,7 +18,7 @@ import * as reselect from 'reselect';
 /* @conditional-compile-remove(close-captions) */
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(close-captions) */
-import { _CaptionsInfo } from '@internal/react-components';
+import { _CaptionsInfo, _SupportedCaptionLanguage, _SupportedSpokenLanguage } from '@internal/react-components';
 
 /* @conditional-compile-remove(close-captions) */
 /**
@@ -60,10 +60,10 @@ export type _CaptionSettingsSelector = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ) => {
-  supportedCaptionLanguages: string[];
-  currentCaptionLanguage: string;
-  supportedSpokenLanguages: string[];
-  currentSpokenLanguage: string;
+  supportedCaptionLanguages: _SupportedCaptionLanguage[];
+  currentCaptionLanguage: _SupportedCaptionLanguage;
+  supportedSpokenLanguages: _SupportedSpokenLanguage[];
+  currentSpokenLanguage: _SupportedSpokenLanguage;
   isCaptionsFeatureActive: boolean;
 };
 
@@ -90,7 +90,7 @@ export const _captionSettingsSelector: _CaptionSettingsSelector = reselect.creat
   ) => {
     return {
       supportedCaptionLanguages: supportedCaptionLanguages ?? [],
-      currentCaptionLanguage: currentCaptionLanguage ?? '',
+      currentCaptionLanguage: currentCaptionLanguage ?? 'en',
       supportedSpokenLanguages: supportedSpokenLanguages ?? ['en-us'],
       currentSpokenLanguage: currentSpokenLanguage ?? 'en-us',
       isCaptionsFeatureActive: isCaptionsFeatureActive ?? false

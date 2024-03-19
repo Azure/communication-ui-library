@@ -151,7 +151,7 @@ describe('VideoGallery default layout tests', () => {
     expect(horizontalGalleryTiles.length).toBe(2);
     expect(horizontalGalleryTiles.filter(tileIsVideo).length).toBe(1);
 
-    expect(getDisplayName(horizontalGalleryTiles[0])).toBe('Local Participant');
+    expect(getDisplayName(horizontalGalleryTiles[0])).toBe('You');
     expect(tileIsVideo(horizontalGalleryTiles[0])).toBe(true);
     expect(getDisplayName(horizontalGalleryTiles[1])).toBe('Remote Screensharing Participant');
     expect(tileIsVideo(horizontalGalleryTiles[1])).toBe(false);
@@ -320,7 +320,6 @@ describe('VideoGallery floating local video layout tests', () => {
   });
 });
 
-/* @conditional-compile-remove(gallery-layouts) */
 describe('VideoGallery Speaker layout tests', () => {
   beforeAll(() => {
     mockVideoGalleryInternalHelpers();
@@ -389,7 +388,6 @@ describe('VideoGallery Speaker layout tests', () => {
   });
 });
 
-/* @conditional-compile-remove(gallery-layouts) */
 describe('VideoGallery Focused Content layout tests', () => {
   beforeAll(() => {
     mockVideoGalleryInternalHelpers();

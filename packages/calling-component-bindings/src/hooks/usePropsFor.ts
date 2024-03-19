@@ -15,9 +15,7 @@ import {
 import { Dialpad } from '@internal/react-components';
 /* @conditional-compile-remove(PSTN-calls) */
 import { HoldButton } from '@internal/react-components';
-/* @conditional-compile-remove(raise-hand) */
 import { RaiseHandButton } from '@internal/react-components';
-/* @conditional-compile-remove(raise-hand) */
 import { raiseHandButtonSelector } from '../callControlSelectors';
 import {
   CameraButtonSelector,
@@ -45,6 +43,8 @@ import { CommonCallingHandlers } from '../handlers/createCommonHandlers';
 import { reactionButtonSelector } from '../callControlSelectors';
 /* @conditional-compile-remove(reaction) */
 import { ReactionButton } from '@internal/react-components';
+/* @conditional-compile-remove(spotlight) */
+import { _ComponentCallingHandlers } from '../handlers/createHandlers';
 
 /**
  * Primary hook to get all hooks necessary for a calling Component.
@@ -67,7 +67,11 @@ import { ReactionButton } from '@internal/react-components';
 export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   component: Component
 ): GetSelector<Component> extends (props: any) => any
-  ? ReturnType<GetSelector<Component>> & Common<CommonCallingHandlers, Parameters<Component>[0]>
+  ? ReturnType<GetSelector<Component>> &
+      Common<
+        CommonCallingHandlers & /* @conditional-compile-remove(spotlight) */ _ComponentCallingHandlers,
+        Parameters<Component>[0]
+      >
   : undefined => {
   const selector = getSelector(component);
   const props = useSelector(selector);
@@ -137,10 +141,6 @@ export const getSelector = <Component extends (props: any) => JSX.Element | unde
   if (component === HoldButton) {
     return findConditionalCompiledSelector(component);
   }
-  /* @conditional-compile-remove(raise-hand) */
-  if (component === RaiseHandButton) {
-    return findConditionalCompiledSelector(component);
-  }
   /* @conditional-compile-remove(reaction) */
   if (component === ReactionButton) {
     return findConditionalCompiledSelector(component);
@@ -174,21 +174,19 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
       return emptySelector;
     case ErrorBar:
       return errorBarSelector;
+    case RaiseHandButton:
+      return raiseHandButtonSelector;
   }
   return undefined;
 };
 
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(raise-hand) */
+/* @conditional-compile-remove(PSTN-calls) */
 const findConditionalCompiledSelector = (component: (props: any) => JSX.Element | undefined): any => {
   switch (component) {
     /* @conditional-compile-remove(PSTN-calls) */
     case HoldButton:
       /* @conditional-compile-remove(PSTN-calls) */
       return holdButtonSelector;
-    /* @conditional-compile-remove(raise-hand) */
-    case RaiseHandButton:
-      /* @conditional-compile-remove(raise-hand) */
-      return raiseHandButtonSelector;
     /* @conditional-compile-remove(reaction) */
     case ReactionButton:
       /* @conditional-compile-remove(reaction) */

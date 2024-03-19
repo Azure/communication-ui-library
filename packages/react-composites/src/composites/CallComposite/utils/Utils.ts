@@ -246,11 +246,11 @@ type GetCallCompositePageFunction = ((
   ((
     call: CallState | undefined,
     previousCall: CallState | undefined,
+    /* @conditional-compile-remove(call-transfer) */ transferCall?: CallState,
     /* @conditional-compile-remove(unsupported-browser) */ unsupportedBrowserInfo?: {
       environmentInfo?: EnvironmentInfo;
       unsupportedBrowserVersionOptedIn?: boolean;
-    },
-    /* @conditional-compile-remove(call-transfer) */ transferCall?: CallState
+    }
   ) => CallCompositePage);
 /**
  * Get the current call composite page based on the current call composite state
@@ -268,14 +268,18 @@ type GetCallCompositePageFunction = ((
 export const getCallCompositePage: GetCallCompositePageFunction = (
   call,
   previousCall?,
-  unsupportedBrowserInfo?,
-  transferCall?: CallState
+  transferCall?: CallState,
+  unsupportedBrowserInfo?: {
+    /* @conditional-compile-remove(unsupported-browser) */
+    environmentInfo?: EnvironmentInfo;
+    unsupportedBrowserVersionOptedIn?: boolean;
+  }
 ): CallCompositePage => {
   /* @conditional-compile-remove(unsupported-browser) */
   if (
     isUnsupportedEnvironment(
-      unsupportedBrowserInfo.environmentInfo,
-      unsupportedBrowserInfo.unsupportedBrowserVersionOptedIn
+      unsupportedBrowserInfo?.environmentInfo,
+      unsupportedBrowserInfo?.unsupportedBrowserVersionOptedIn
     )
   ) {
     return 'unsupportedEnvironment';
@@ -362,17 +366,25 @@ export const disableCallControls = (
     return false;
   }
   // Ensure we clone the prop if it is an object to ensure we do not mutate the original prop.
-  let newOptions =
+  let newOptions: CallControlOptions | boolean | undefined =
     (callControlOptions instanceof Object ? ({ ...callControlOptions } as CallControlOptions) : callControlOptions) ??
-    {};
+    ({} as Partial<CallControlOptions>);
   if (newOptions === true || newOptions === undefined) {
     newOptions = disabledControls.reduce((acc, key) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // @ts-expect-error TODO: fix noImplicitAny error here
+      // Not solveable at this time due to typescript limitations. The typing is too complex for typescript to
+      // understand. Will need to revisit when either typescript or the calling component bindings are updated.
       acc[key] = { disabled: true };
       return acc;
-    }, {});
+    }, {} as Partial<CallControlOptions>);
   } else {
     disabledControls.forEach((key) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // @ts-expect-error refer to above comment
       if (newOptions[key] !== false) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // @ts-expect-error refer to above comment
         newOptions[key] = { disabled: true };
       }
     });
@@ -479,7 +491,9 @@ export const createParticipantModifier = (
         [keys: string]: RemoteParticipantState;
       }
     | undefined = undefined;
-  let modifiedParticipants = {};
+  let modifiedParticipants: {
+    [keys: string]: RemoteParticipantState;
+  } = {};
   const memoizedParticipants: {
     [id: string]: { originalRef: RemoteParticipantState; newParticipant: RemoteParticipantState };
   } = {};

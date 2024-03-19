@@ -18,6 +18,7 @@ import {
 } from './styles/ModalLocalAndRemotePIP.styles';
 /* @conditional-compile-remove(rooms) */
 import { useAdapter } from '../CallComposite/adapter/CallAdapterProvider';
+import { useLocale } from '../localization';
 
 /**
  * Drag options for Modal in {@link ModalLocalAndRemotePIP} component
@@ -60,12 +61,14 @@ export const ModalLocalAndRemotePIP = (props: {
   /* @conditional-compile-remove(rooms) */
   const role = adapter.getState().call?.role;
 
+  const locale = useLocale();
+
   const pictureInPictureProps = useSelector(localAndRemotePIPSelector);
 
   const [touchStartTouches, setTouchStartTouches] = useState<React.TouchList | null>(null);
 
   const onTouchEnd = useCallback(
-    (event) => {
+    (event: React.TouchEvent) => {
       if (touchStartTouches && touchStartTouches.length === 1 && event.changedTouches.length === 1) {
         const touchStartTouch = touchStartTouches[0];
         const touchEndTouch = event.changedTouches[0];
@@ -80,12 +83,12 @@ export const ModalLocalAndRemotePIP = (props: {
     [props, touchStartTouches]
   );
 
-  const onTouchStart = useCallback((event) => {
+  const onTouchStart = useCallback((event: React.TouchEvent) => {
     setTouchStartTouches(event.touches);
   }, []);
 
   const onKeyDown = useCallback(
-    (event) => {
+    (event: React.KeyboardEvent) => {
       if (event.key === 'Enter' || event.key === ' ') {
         props.onDismissSidePane?.();
       }
@@ -100,6 +103,7 @@ export const ModalLocalAndRemotePIP = (props: {
       return (
         <Stack tabIndex={0} aria-label={props.strings?.dismissModalAriaLabel ?? ''} onKeyDown={onKeyDown}>
           <_RemoteVideoTile
+            strings={locale.component.strings.videoGallery}
             {...pictureInPictureProps.dominantRemoteParticipant}
             remoteParticipant={pictureInPictureProps.dominantRemoteParticipant}
           />
@@ -116,7 +120,8 @@ export const ModalLocalAndRemotePIP = (props: {
     onKeyDown,
     pictureInPictureProps,
     props,
-    pictureInPictureHandlers
+    pictureInPictureHandlers,
+    locale.component.strings.videoGallery
   ]);
 
   /* @conditional-compile-remove(rooms) */

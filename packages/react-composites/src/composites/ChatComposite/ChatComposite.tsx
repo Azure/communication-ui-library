@@ -84,7 +84,24 @@ export type ChatCompositeOptions = {
    * @beta
    */
   fileSharing?: FileSharingOptions;
+
+  /* @conditional-compile-remove(rich-text-editor) */
+  /**
+   * Properties for configuring the richTextEditor feature.
+   * @defaultValue false
+   *
+   * @beta
+   */
+  richTextEditor?: boolean | RichTextEditorOptions;
 };
+
+/* @conditional-compile-remove(rich-text-editor) */
+/**
+ * Options for configuring the rich text editor.
+ *
+ * @beta
+ */
+export interface RichTextEditorOptions {}
 
 /**
  * A customizable UI composite for the chat experience.
@@ -103,6 +120,7 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
     onFetchParticipantMenuItems
   } = props;
 
+  /* @conditional-compile-remove(file-sharing) */
   const formFactor = props['formFactor'] || 'desktop';
 
   return (
@@ -110,6 +128,7 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
       <BaseProvider {...props}>
         <ChatAdapterProvider adapter={adapter}>
           <ChatScreen
+            /* @conditional-compile-remove(file-sharing) */
             formFactor={formFactor}
             options={options}
             onFetchAvatarPersonaData={onFetchAvatarPersonaData}

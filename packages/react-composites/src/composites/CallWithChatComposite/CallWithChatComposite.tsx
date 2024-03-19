@@ -32,7 +32,6 @@ import { containerDivStyles } from '../common/ContainerRectProps';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { CallCompositeInner, CallCompositeOptions } from '../CallComposite/CallComposite';
 import { RemoteVideoTileMenuOptions } from '../CallComposite/CallComposite';
-/* @conditional-compile-remove(click-to-call) */
 import { LocalVideoTileOptions } from '../CallComposite/CallComposite';
 /* @conditional-compile-remove(call-readiness) */
 import { DeviceCheckOptions } from '../CallComposite/CallComposite';
@@ -48,7 +47,6 @@ import {
 import { SidePaneHeader } from '../common/SidePaneHeader';
 import { CallControlOptions } from '../CallComposite/types/CallControlOptions';
 import { useUnreadMessagesTracker } from './ChatButton/useUnreadMessagesTracker';
-/* @conditional-compile-remove(gallery-layouts) */
 import { VideoGalleryLayout } from '@internal/react-components';
 
 /**
@@ -169,14 +167,12 @@ export type CallWithChatCompositeOptions = {
    * Remote participant video tile menu options
    */
   remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
-  /* @conditional-compile-remove(click-to-call) */
   /**
    * Options for controlling the local video tile.
    *
    * @remarks if 'false' the local video tile will not be rendered.
    */
   localVideoTile?: boolean | LocalVideoTileOptions;
-  /* @conditional-compile-remove(gallery-layouts) */
   /**
    * Options for controlling the starting layout of the composite's video gallery
    */
@@ -265,6 +261,17 @@ export type CallWithChatCompositeOptions = {
       url: string;
     };
   };
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Options for settings related to spotlight.
+   */
+  spotlight?: {
+    /**
+     * Flag to hide the menu buttons to start and stop spotlight for remote participants and the local participant.
+     * @defaultValue false
+     */
+    hideSpotlightButtons?: boolean;
+  };
 };
 
 type CallWithChatScreenProps = {
@@ -290,9 +297,7 @@ type CallWithChatScreenProps = {
   /* @conditional-compile-remove(unsupported-browser) */
   onEnvironmentInfoTroubleshootingClick?: () => void;
   remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
-  /* @conditional-compile-remove(click-to-call) */
   localVideoTile?: boolean | LocalVideoTileOptions;
-  /* @conditional-compile-remove(gallery-layouts) */
   galleryOptions?: {
     layout?: VideoGalleryLayout;
   };
@@ -343,6 +348,10 @@ type CallWithChatScreenProps = {
   /* @conditional-compile-remove(custom-branding) */
   backgroundImage?: {
     url: string;
+  };
+  /* @conditional-compile-remove(spotlight) */
+  spotlight?: {
+    hideSpotlightButtons?: boolean;
   };
 };
 
@@ -489,9 +498,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   );
 
   const injectedCustomButtonsFromProps = useMemo(() => {
-    /* @conditional-compile-remove(control-bar-button-injection) */
     return [...(callControlOptionsFromProps.onFetchCustomButtonProps ?? [])];
-    return [];
   }, [callControlOptionsFromProps]);
 
   const callCompositeOptions: CallCompositeOptions = useMemo(
@@ -503,7 +510,6 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
               ...callControlOptionsFromProps,
               onFetchCustomButtonProps: [
                 ...(showChatButton ? [customChatButton] : []),
-                /* @conditional-compile-remove(control-bar-button-injection) */
                 ...injectedCustomButtonsFromProps
               ],
               legacyControlBarExperience: false
@@ -517,9 +523,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       /* @conditional-compile-remove(unsupported-browser) */
       onEnvironmentInfoTroubleshootingClick: props.onEnvironmentInfoTroubleshootingClick,
       remoteVideoTileMenuOptions: props.remoteVideoTileMenuOptions,
-      /* @conditional-compile-remove(gallery-layouts) */
+
       galleryOptions: props.galleryOptions,
-      /* @conditional-compile-remove(click-to-call) */
       localVideoTile: props.localVideoTile,
       /* @conditional-compile-remove(end-of-call-survey) */
       surveyOptions: surveyOptions,
@@ -527,7 +532,9 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       branding: {
         logo: props.logo,
         backgroundImage: props.backgroundImage
-      }
+      },
+      /* @conditional-compile-remove(spotlight) */
+      spotlight: props.spotlight
     }),
     [
       props.callControls,
@@ -543,9 +550,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       props.onNetworkingTroubleShootingClick,
       /* @conditional-compile-remove(call-readiness) */
       props.onPermissionsTroubleshootingClick,
-      /* @conditional-compile-remove(gallery-layouts) */
+
       props.galleryOptions,
-      /* @conditional-compile-remove(click-to-call) */
       props.localVideoTile,
       props.remoteVideoTileMenuOptions,
       /* @conditional-compile-remove(end-of-call-survey) */
@@ -553,7 +559,9 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       /* @conditional-compile-remove(custom-branding) */
       props.logo,
       /* @conditional-compile-remove(custom-branding) */
-      props.backgroundImage
+      props.backgroundImage,
+      /* @conditional-compile-remove(spotlight) */
+      props.spotlight
     ]
   );
 
@@ -678,9 +686,7 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         remoteVideoTileMenuOptions={options?.remoteVideoTileMenuOptions}
         /* @conditional-compile-remove(file-sharing) */
         fileSharing={options?.fileSharing}
-        /* @conditional-compile-remove(click-to-call) */
         localVideoTile={options?.localVideoTile}
-        /* @conditional-compile-remove(gallery-layouts) */
         galleryOptions={options?.galleryOptions}
         /* @conditional-compile-remove(custom-branding) */
         logo={options?.branding?.logo}
@@ -688,6 +694,8 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         backgroundImage={options?.branding?.backgroundImage}
         /* @conditional-compile-remove(end-of-call-survey) */
         surveyOptions={options?.surveyOptions}
+        /* @conditional-compile-remove(spotlight) */
+        spotlight={options?.spotlight}
       />
     </BaseProvider>
   );

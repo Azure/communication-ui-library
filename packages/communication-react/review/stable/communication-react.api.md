@@ -77,12 +77,19 @@ import { StartCallOptions } from '@azure/communication-calling';
 import { StartCaptionsOptions } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
+import { TransferEventArgs } from '@azure/communication-calling';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-chat';
 import { UnknownIdentifier } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoEffectName } from '@azure/communication-calling';
 import { VideoStreamRenderer } from '@azure/communication-calling';
 import { VideoStreamRendererView } from '@azure/communication-calling';
+
+// @public
+export interface AcceptedTransfer {
+    callId: string;
+    timestamp: Date;
+}
 
 // @public
 export interface ActiveErrorMessage {
@@ -261,6 +268,7 @@ export type CallAdapterClientState = {
     videoBackgroundImages?: VideoBackgroundImage[];
     onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
+    acceptedTransferCallState?: CallState;
     sounds?: CallingSounds;
 };
 
@@ -299,6 +307,7 @@ export interface CallAdapterSubscribers {
     off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
     off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
     off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
+    off(event: 'transferAccepted', listener: TransferAcceptedListener): void;
     off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     off(event: 'roleChanged', listener: PropertyChangedEvent): void;
     on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
@@ -317,6 +326,7 @@ export interface CallAdapterSubscribers {
     on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
     on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
     on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
+    on(event: 'transferAccepted', listener: TransferAcceptedListener): void;
     on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     on(event: 'roleChanged', listener: PropertyChangedEvent): void;
 }
@@ -464,10 +474,20 @@ export type CallCompositeOptions = {
     galleryOptions?: {
         layout?: VideoGalleryLayout;
     };
+    branding?: {
+        logo?: {
+            url: string;
+            alt?: string;
+            shape?: 'unset' | 'circle';
+        };
+        backgroundImage?: {
+            url: string;
+        };
+    };
 };
 
 // @public
-export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'leaving' | 'lobby' | 'removedFromCall';
+export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'leaving' | 'lobby' | 'removedFromCall' | /* @conditional-compile-remove(call-transfer) */ 'transferring';
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
@@ -569,10 +589,11 @@ export interface CallCompositeStrings {
     noSpeakersLabel: string;
     notInvitedToRoomDetails?: string;
     notInvitedToRoomTitle: string;
-    outboundCallingNoticeString: string;
+    outboundCallingNoticeString?: string;
     participantJoinedNoticeString: string;
     participantLeftNoticeString: string;
     peopleButtonLabel: string;
+    peoplePaneMoreButtonAriaLabel: string;
     peoplePaneTitle: string;
     privacyPolicy: string;
     rejoinCallButtonLabel: string;
@@ -596,6 +617,11 @@ export interface CallCompositeStrings {
     startCaptionsButtonTooltipOnContent?: string;
     threeParticipantJoinedNoticeString: string;
     threeParticipantLeftNoticeString: string;
+    transferPageNoticeString: string;
+    transferPageTransferorText: string;
+    transferPageTransferTargetText: string;
+    transferPageUnknownTransferorDisplayName: string;
+    transferPageUnknownTransferTargetDisplayName: string;
     twoParticipantJoinedNoticeString: string;
     twoParticipantLeftNoticeString: string;
     unableToStartVideoEffect?: string;
@@ -708,6 +734,7 @@ export interface CallState {
     callerInfo: CallerInfo;
     capabilitiesFeature?: CapabilitiesFeatureState;
     captionsFeature: CaptionsCallFeatureState;
+    contentSharingRemoteParticipant?: string;
     diagnostics: DiagnosticsCallFeatureState;
     direction: CallDirection;
     dominantSpeakers?: DominantSpeakersInfo;
@@ -717,6 +744,7 @@ export interface CallState {
     isScreenSharingOn: boolean;
     localVideoStreams: LocalVideoStreamState[];
     optimalVideoCount: OptimalVideoCountFeatureState;
+    pptLive: PPTLiveCallFeatureState;
     raiseHand: RaiseHandCallFeature;
     recording: RecordingCallFeature;
     remoteParticipants: {
@@ -730,6 +758,7 @@ export interface CallState {
     startTime: Date;
     state: CallState_2;
     transcription: TranscriptionCallFeature;
+    transfer: TransferFeature;
 }
 
 // @public
@@ -745,6 +774,8 @@ export interface CallWithChatAdapterManagement {
     disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
     disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+    // (undocumented)
+    downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
     fetchInitialData(): Promise<void>;
     // @deprecated
     joinCall(microphoneOn?: boolean): Call | undefined;
@@ -758,6 +789,8 @@ export interface CallWithChatAdapterManagement {
     querySpeakers(): Promise<AudioDeviceInfo[]>;
     raiseHand(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
+    // (undocumented)
+    removeResourceFromCache(resourceDetails: ResourceDetails): void;
     sendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
@@ -990,6 +1023,16 @@ export type CallWithChatCompositeOptions = {
     localVideoTile?: boolean | LocalVideoTileOptions;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
+    };
+    branding?: {
+        logo?: {
+            url: string;
+            alt?: string;
+            shape?: 'unset' | 'circle';
+        };
+        backgroundImage?: {
+            url: string;
+        };
     };
 };
 
@@ -1257,9 +1300,11 @@ export interface ChatAdapterSubscribers {
 // @public
 export interface ChatAdapterThreadManagement {
     deleteMessage(messageId: string): Promise<void>;
+    downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
     fetchInitialData(): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     removeParticipant(userId: string): Promise<void>;
+    removeResourceFromCache(resourceDetails: ResourceDetails): void;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
@@ -1271,6 +1316,9 @@ export interface ChatAdapterThreadManagement {
 export type ChatAdapterUiState = {
     error?: Error;
 };
+
+// @public
+export type ChatAttachmentType = 'unknown' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'image';
 
 // @public
 export type ChatBaseSelectorProps = {
@@ -1409,6 +1457,7 @@ export interface ChatMessage extends MessageCommon {
 export type ChatMessageWithStatus = ChatMessage_2 & {
     clientMessageId?: string;
     status: MessageStatus;
+    resourceCache?: Record<string, ResourceFetchResult>;
 };
 
 // @public
@@ -1654,6 +1703,7 @@ export interface ComponentStrings {
     dialpad: DialpadStrings;
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
+    imageOverlay: ImageOverlayStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
     microphoneButton: MicrophoneButtonStrings;
@@ -2308,6 +2358,7 @@ export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Eleme
 export interface FluentThemeProviderProps {
     children: React_2.ReactNode;
     fluentTheme?: PartialTheme | Theme;
+    rootStyle?: React_2.CSSProperties | undefined;
     rtl?: boolean;
 }
 
@@ -2380,12 +2431,43 @@ export interface _Identifiers {
 }
 
 // @public
+export const ImageOverlay: (props: ImageOverlayProps) => JSX.Element;
+
+// @public
+export interface ImageOverlayProps {
+    altText?: string;
+    imageSrc: string;
+    isOpen: boolean;
+    onDismiss: () => void;
+    onDownloadButtonClicked?: (imageSrc: string) => void;
+    title?: string;
+    titleIcon?: JSX.Element;
+}
+
+// @public
+export interface ImageOverlayStrings {
+    dismissButtonAriaLabel: string;
+    downloadButtonLabel: string;
+}
+
+// @public
 export interface IncomingCallState {
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
     endTime?: Date;
     id: string;
     startTime: Date;
+}
+
+// @public
+export interface InlineImage {
+    imageAttributes: React_2.ImgHTMLAttributes<HTMLImageElement>;
+    messageId: string;
+}
+
+// @public
+export interface InlineImageOptions {
+    onRenderInlineImage?: (inlineImage: InlineImage, defaultOnRender: (inlineImage: InlineImage) => JSX.Element) => JSX.Element;
 }
 
 // @public
@@ -2602,6 +2684,7 @@ export type MessageThreadProps = {
     onSendMessage?: (content: string) => Promise<void>;
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
+    inlineImageOptions?: InlineImageOptions;
 };
 
 // @public
@@ -2748,7 +2831,7 @@ export interface OptionsDevice {
 }
 
 // @public
-export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | /* @conditional-compile-remove(gallery-layouts) */ 'horizontalTop';
+export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | 'horizontalTop';
 
 // @public
 export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
@@ -2919,6 +3002,11 @@ export type ParticipantsRemovedListener = (event: {
 export type ParticipantState = 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
 
 // @public
+export interface PPTLiveCallFeatureState {
+    isActive: boolean;
+}
+
+// @public
 export type RaisedHand = {
     raisedHandOrderPosition: number;
 };
@@ -2974,6 +3062,7 @@ export interface RecordingCallFeature {
 // @public
 export interface RemoteParticipantState {
     callEndReason?: CallEndReason;
+    contentSharingStream?: HTMLElement;
     displayName?: string;
     identifier: CommunicationIdentifierKind;
     isMuted: boolean;
@@ -3002,6 +3091,19 @@ export interface RemoteVideoStreamState {
 export interface RemoteVideoTileMenuOptions {
     isHidden?: boolean;
 }
+
+// @public
+export type ResourceDetails = {
+    threadId: string;
+    messageId: string;
+    resourceUrl: string;
+};
+
+// @public
+export type ResourceFetchResult = {
+    sourceUrl?: string;
+    error?: Error;
+};
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
@@ -3185,9 +3287,12 @@ export type StatefulCallClientOptions = {
 
 // @public
 export interface StatefulChatClient extends ChatClient {
+    dispose(): void;
+    downloadResourceToCache(threadId: string, messageId: string, resourceUrl: string): void;
     getState(): ChatClientState;
     offStateChange(handler: (state: ChatClientState) => void): void;
     onStateChange(handler: (state: ChatClientState) => void): void;
+    removeResourceFromCache(threadId: string, messageId: string, resourceUrl: string): void;
 }
 
 // @public
@@ -3257,6 +3362,16 @@ export interface TranscriptionCallFeature {
 }
 
 // @public
+export type TransferAcceptedListener = (event: TransferEventArgs) => void;
+
+// @public
+export interface TransferFeature {
+    acceptedTransfers: {
+        [key: string]: AcceptedTransfer;
+    };
+}
+
+// @public
 export const TypingIndicator: (props: TypingIndicatorProps) => JSX.Element;
 
 // @public
@@ -3321,7 +3436,7 @@ export const useDeviceManager: () => StatefulDeviceManager | undefined;
 export const usePropsFor: <Component extends (props: any) => JSX.Element>(component: Component, type?: 'calling' | 'chat') => ComponentProps<Component>;
 
 // @public
-export const useSelector: <ParamT extends Selector | undefined>(selector: ParamT, selectorProps?: (ParamT extends Selector ? Parameters<ParamT>[1] : undefined) | undefined, type?: 'calling' | 'chat') => ParamT extends Selector ? ReturnType<ParamT> : undefined;
+export const useSelector: <ParamT extends Selector | undefined>(selector: ParamT, selectorProps?: ParamT extends Selector ? Parameters<ParamT>[1] : undefined, type?: 'calling' | 'chat') => ParamT extends Selector ? ReturnType<ParamT> : undefined;
 
 // @public
 export const useTheme: () => Theme;
@@ -3381,7 +3496,7 @@ export interface VideoBackgroundReplacementEffect extends BackgroundReplacementC
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
 // @public (undocumented)
-export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | /* @conditional-compile-remove(gallery-layouts) */ 'speaker' | /* @conditional-compile-remove(gallery-layouts) */ 'focusedContent';
+export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | 'speaker' | 'focusedContent';
 
 // @public
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
@@ -3438,7 +3553,7 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
 
 // @public
 export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
-    screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
+    screenShareParticipant?: VideoGalleryRemoteParticipant;
     localParticipant: VideoGalleryLocalParticipant;
     remoteParticipants: VideoGalleryRemoteParticipant[];
     dominantSpeakers?: string[];

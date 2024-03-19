@@ -7,7 +7,8 @@
     "mutedIconLabel": "تم كتم الصوت",
     "displayNamePlaceholder": "مشارك غير مسمى",
     "participantStateRinging": "يتم الآن الاتصال...",
-    "participantStateHold": "قيد الانتظار"
+    "participantStateHold": "قيد الانتظار",
+    "attendeeRole": "الحضور"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} من الأشخاص الإضافيين"
@@ -27,6 +28,23 @@
     "removeFile": "إزالة الملف",
     "uploading": "جارٍ التحميل",
     "uploadCompleted": "اكتمل التحميل"
+  },
+  "richTextSendBox": {
+    "placeholderText": "أدخل رسالة",
+    "textTooLong": "تجاوز طول الرسالة الحد الأقصى.",
+    "sendButtonAriaLabel": "إرسال رسالة",
+    "fileUploadsPendingError": "جارٍ التحميل... الرجاء الانتظار.",
+    "removeFile": "إزالة الملف",
+    "uploading": "يتم الآن التحميل",
+    "uploadCompleted": "اكتمل التحميل",
+    "boldTooltip": "غامق",
+    "italicTooltip": "مائل",
+    "underlineTooltip": "مسطّر",
+    "bulletListTooltip": "قائمة ذات تعداد نقطي",
+    "numberListTooltip": "قائمة مرقّمة",
+    "increaseIndentTooltip": "زيادة المسافة البادئة",
+    "decreaseIndentTooltip": "إنقاص المسافة البادئة",
+    "richTextFormatButtonTooltip": "تنسيق"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "الاقتراحات"
@@ -125,6 +143,7 @@
   },
   "reactionButton": {
     "label": "تفاعل",
+    "ariaLabel": "زر \"تفاعل\"، إرسال تفاعل",
     "tooltipDisabledContent": "تم تعطيل إجراء التفاعل",
     "tooltipContent": "إرسال تفاعل",
     "likeReactionTooltipContent": "إعجاب",
@@ -224,7 +243,8 @@
     "addSpotlightVideoTileMenuLabel": "إضافة تسليط ضوء",
     "spotlightLimitReachedMenuTitle": "تم الوصول إلى الحد الأقصى لتسليط الضوء",
     "stopSpotlightVideoTileMenuLabel": "التوقف عن تسليط الضوء",
-    "stopSpotlightOnSelfVideoTileMenuLabel": "الخروج من وضع تسليط الضوء"
+    "stopSpotlightOnSelfVideoTileMenuLabel": "الخروج من وضع تسليط الضوء",
+    "attendeeRole": "الحضور"
   },
   "dialpad": {
     "placeholderText": "أدخل رقم الهاتف",
@@ -358,6 +378,5 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "الصفحة السابقة",
     "rightNavButtonAriaLabel": "الصفحة التالية"
-  },
-  "AttendeeRole": "الحضور"
+  }
 }

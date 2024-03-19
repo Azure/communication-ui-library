@@ -7,10 +7,10 @@ export {
   useAzureCommunicationChatAdapter
 } from './adapter/AzureCommunicationChatAdapter';
 export type { AzureCommunicationChatAdapterArgs } from './adapter/AzureCommunicationChatAdapter';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-export type { AzureCommunicationChatAdapterOptions } from './adapter/AzureCommunicationChatAdapter';
 export { ChatComposite } from './ChatComposite';
 export type { ChatCompositeProps, ChatCompositeOptions } from './ChatComposite';
+/* @conditional-compile-remove(rich-text-editor) */
+export type { RichTextEditorOptions } from './ChatComposite';
 
 export type {
   ChatAdapter,

@@ -3,7 +3,6 @@
 
 import React, { useMemo, useRef, useState } from 'react';
 import { isNarrowWidth } from '../utils/responsive';
-/* @conditional-compile-remove(gallery-layouts) */
 import { isShortHeight } from '../utils/responsive';
 import { LayoutProps } from './Layout';
 import { OverflowGallery } from './OverflowGallery';
@@ -12,7 +11,6 @@ import { Stack } from '@fluentui/react';
 import { useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
 import { rootLayoutStyle } from './styles/DefaultLayout.styles';
 import { videoGalleryLayoutGap } from './styles/Layout.styles';
-/* @conditional-compile-remove(gallery-layouts) */
 import { VERTICAL_GALLERY_TILE_SIZE_REM } from './styles/VideoGalleryResponsiveVerticalGallery.styles';
 
 /**
@@ -23,9 +21,7 @@ import { VERTICAL_GALLERY_TILE_SIZE_REM } from './styles/VideoGalleryResponsiveV
 export type LargeGalleryProps = LayoutProps;
 
 const DEFAULT_CHILDREN_PER_PAGE = 5;
-/* @conditional-compile-remove(gallery-layouts) */
 const REM_TO_PIXEL = 16;
-/* @conditional-compile-remove(gallery-layouts) */
 const LARGE_GALLERY_PARTICIPANT_CAP = 48;
 /**
  * VideoGallery Layout for when user is in a large meeting and wants to see more participants
@@ -45,17 +41,15 @@ export const LargeGalleryLayout = (props: LargeGalleryProps): JSX.Element => {
     styles,
     maxRemoteVideoStreams,
     parentWidth,
-    /* @conditional-compile-remove(gallery-layouts) */ parentHeight,
+    parentHeight,
     pinnedParticipantUserIds = [],
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'horizontalBottom'
   } = props;
 
   const isNarrow = parentWidth ? isNarrowWidth(parentWidth) : false;
-  /* @conditional-compile-remove(gallery-layouts) */
   const isShort = parentHeight ? isShortHeight(parentHeight) : false;
 
   const maxStreamsTrampoline = (): number => {
-    /* @conditional-compile-remove(gallery-layouts) */
     return parentWidth && parentHeight
       ? calculateMaxTilesInLargeGrid(parentWidth, parentHeight)
       : maxRemoteVideoStreams;
@@ -80,7 +74,7 @@ export const LargeGalleryLayout = (props: LargeGalleryProps): JSX.Element => {
   });
   let activeVideoStreams = 0;
 
-  const gridTiles = gridParticipants.map((p) => {
+  let gridTiles = gridParticipants.map((p) => {
     return onRenderRemoteParticipant(
       p,
       maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
@@ -98,7 +92,7 @@ export const LargeGalleryLayout = (props: LargeGalleryProps): JSX.Element => {
    */
   const [indexesToRender, setIndexesToRender] = useState<number[]>([]);
 
-  const overflowGalleryTiles = overflowGalleryParticipants.map((p, i) => {
+  let overflowGalleryTiles = overflowGalleryParticipants.map((p, i) => {
     return onRenderRemoteParticipant(
       p,
       maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
@@ -108,7 +102,11 @@ export const LargeGalleryLayout = (props: LargeGalleryProps): JSX.Element => {
   });
 
   if (localVideoComponent) {
-    gridTiles.push(localVideoComponent);
+    if (screenShareComponent) {
+      overflowGalleryTiles = [localVideoComponent].concat(overflowGalleryTiles);
+    } else {
+      gridTiles = [localVideoComponent].concat(gridTiles);
+    }
   }
 
   const overflowGallery = useMemo(() => {
@@ -118,7 +116,6 @@ export const LargeGalleryLayout = (props: LargeGalleryProps): JSX.Element => {
     return (
       <OverflowGallery
         isNarrow={isNarrow}
-        /* @conditional-compile-remove(gallery-layouts) */
         isShort={isShort}
         shouldFloatLocalVideo={false}
         overflowGalleryElements={overflowGalleryTiles}
@@ -136,7 +133,7 @@ export const LargeGalleryLayout = (props: LargeGalleryProps): JSX.Element => {
     );
   }, [
     isNarrow,
-    /* @conditional-compile-remove(gallery-layouts) */ isShort,
+    isShort,
     overflowGalleryTiles,
     styles?.horizontalGallery,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
@@ -152,13 +149,7 @@ export const LargeGalleryLayout = (props: LargeGalleryProps): JSX.Element => {
       styles={rootLayoutStyle}
       tokens={videoGalleryLayoutGap}
     >
-      {
-        /* @conditional-compile-remove(gallery-layouts) */ props.overflowGalleryPosition === 'horizontalTop' ? (
-          overflowGallery
-        ) : (
-          <></>
-        )
-      }
+      {props.overflowGalleryPosition === 'horizontalTop' ? overflowGallery : <></>}
       {screenShareComponent ? (
         screenShareComponent
       ) : (
@@ -166,10 +157,7 @@ export const LargeGalleryLayout = (props: LargeGalleryProps): JSX.Element => {
           {gridTiles}
         </GridLayout>
       )}
-      {overflowGalleryTrampoline(
-        overflowGallery,
-        /* @conditional-compile-remove(gallery-layouts) */ props.overflowGalleryPosition
-      )}
+      {overflowGalleryTrampoline(overflowGallery, props.overflowGalleryPosition)}
     </Stack>
   );
 };
@@ -178,12 +166,10 @@ const overflowGalleryTrampoline = (
   gallery: JSX.Element | null,
   galleryPosition?: 'horizontalBottom' | 'verticalRight' | 'horizontalTop'
 ): JSX.Element | null => {
-  /* @conditional-compile-remove(gallery-layouts) */
   return galleryPosition !== 'horizontalTop' ? gallery : <></>;
   return gallery;
 };
 
-/* @conditional-compile-remove(gallery-layouts) */
 const calculateMaxTilesInLargeGrid = (parentWidth: number, parentHeight: number): number => {
   const xAxisTiles = Math.floor(parentWidth / (VERTICAL_GALLERY_TILE_SIZE_REM.width * REM_TO_PIXEL));
   const yAxisTiles = Math.floor(parentHeight / (VERTICAL_GALLERY_TILE_SIZE_REM.minHeight * REM_TO_PIXEL));

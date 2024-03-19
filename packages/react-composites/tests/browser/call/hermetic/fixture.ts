@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { Page, test as base } from '@playwright/test';
+import { Browser, Page, test as base } from '@playwright/test';
 import path from 'path';
 import { createTestServer } from '../../common/server';
 import { loadNewPageWithPermissionsForCalls } from '../../common/fixtureHelpers';
@@ -47,7 +47,7 @@ export interface TestFixture {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const usePage = async ({ browser }, use) => {
+const usePage = async ({ browser }: { browser: Browser }, use: (page: Page) => Promise<void>) => {
   await use(await loadNewPageWithPermissionsForCalls(browser));
 };
 
@@ -81,6 +81,8 @@ export function defaultMockCallAdapterState(
       direction: 'Incoming',
       transcription: { isTranscriptionActive: false },
       recording: { isRecordingActive: false },
+      /* @conditional-compile-remove(local-recording-notification) */
+      localRecording: { isLocalRecordingActive: false },
       startTime: new Date(500000000000),
       endTime: new Date(500000000000),
       diagnostics: { network: { latest: {} }, media: { latest: {} } },
@@ -90,8 +92,9 @@ export function defaultMockCallAdapterState(
       isScreenSharingOn: false,
       remoteParticipants,
       remoteParticipantsEnded: {},
-      /** @conditional-compile-remove(raise-hand) */
       raiseHand: { raisedHands: [] },
+      /** @conditional-compile-remove(ppt-live) */
+      pptLive: { isActive: false },
       role: role ?? 'Unknown',
       dominantSpeakers: dominantSpeakers,
       totalParticipantCount:
@@ -109,7 +112,6 @@ export function defaultMockCallAdapterState(
       transfer: {
         acceptedTransfers: {}
       },
-      /* @conditional-compile-remove(optimal-video-count) */
       optimalVideoCount: {
         maxRemoteVideoStreams: 4
       },
@@ -422,6 +424,8 @@ const defaultEndedCallState: CallState = {
   direction: 'Incoming',
   transcription: { isTranscriptionActive: false },
   recording: { isRecordingActive: false },
+  /* @conditional-compile-remove(local-recording-notification) */
+  localRecording: { isLocalRecordingActive: false },
   startTime: new Date(500000000000),
   endTime: new Date(500000000000),
   diagnostics: { network: { latest: {} }, media: { latest: {} } },
@@ -431,8 +435,9 @@ const defaultEndedCallState: CallState = {
   isScreenSharingOn: false,
   remoteParticipants: {},
   remoteParticipantsEnded: {},
-  /** @conditional-compile-remove(raise-hand) */
   raiseHand: { raisedHands: [] },
+  /** @conditional-compile-remove(ppt-live) */
+  pptLive: { isActive: false },
   captionsFeature: {
     captions: [],
     supportedSpokenLanguages: [],
@@ -446,7 +451,6 @@ const defaultEndedCallState: CallState = {
   transfer: {
     acceptedTransfers: {}
   },
-  /* @conditional-compile-remove(optimal-video-count) */
   optimalVideoCount: {
     maxRemoteVideoStreams: 4
   }

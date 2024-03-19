@@ -3,13 +3,16 @@
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatContext } from './ChatContext';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { ResourceDownloadQueue } from './ResourceDownloadQueue';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { messageTemplate, messageTemplateWithResourceCache } from './TestHelpers';
+import { messageTemplateWithResourceCache } from './TestHelpers';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { MockCommunicationUserCredential } from './mocks/MockCommunicationUserCredential';
+
+describe('ChatContext api functions', () => {
+  test('Placeholder test. Please remove this when stabilizing teams-inline-images-and-file-sharing', () => {});
+});
+
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-describe('ChatContext api funcations', () => {
+describe('ChatContext api functions', () => {
   let context: ChatContext;
   const threadId = 'threadId';
   const messageId = 'messageId1';
@@ -31,18 +34,9 @@ describe('ChatContext api funcations', () => {
     expect(context.getState().threads[threadId].chatMessages[messageId].resourceCache).toBeUndefined();
   });
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  test('downloadResourceToCache method should update the resourceCache', () => {
-    context.createThreadIfNotExist(threadId);
-    context.setChatMessages(threadId, { messageId1: messageTemplate });
-    const mockStartQueue = jest.spyOn(ResourceDownloadQueue.prototype, 'startQueue').mockImplementation();
-    context.downloadResourceToCache(threadId, messageId, 'blob:url');
-    expect(mockStartQueue).toHaveBeenCalledTimes(1);
-    expect(context.getState().threads[threadId].chatMessages[messageId].resourceCache).toBeDefined();
-  });
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   test('removeResourceFromCache method should remove a specific item from resourceCache', () => {
     const resourceUrl = 'resource2Url';
-    const expectedResourceCache = { resource1Url: 'blob:resource1' };
+    const expectedResourceCache = { resource1Url: { sourceUrl: 'blob:resource1' } };
     context.createThreadIfNotExist(threadId);
     context.setChatMessages(threadId, { messageId1: messageTemplateWithResourceCache });
     expect(context.getState().threads[threadId].chatMessages[messageId]).toBeDefined();

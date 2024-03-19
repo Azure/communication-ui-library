@@ -63,13 +63,13 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
       ? childrenPerPage.current - ((pinnedParticipantUserIds.length + 1) % childrenPerPage.current)
       : childrenPerPage.current,
     pinnedParticipantUserIds,
-    /* @conditional-compile-remove(gallery-layouts) */ layout: 'default',
+    layout: 'default',
     /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds
   });
 
   let activeVideoStreams = 0;
 
-  const gridTiles = gridParticipants.map((p) => {
+  let gridTiles = gridParticipants.map((p) => {
     return onRenderRemoteParticipant(
       p,
       maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
@@ -87,7 +87,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
    */
   const [indexesToRender, setIndexesToRender] = useState<number[]>([]);
 
-  const overflowGalleryTiles = overflowGalleryParticipants.map((p, i) => {
+  let overflowGalleryTiles = overflowGalleryParticipants.map((p, i) => {
     return onRenderRemoteParticipant(
       p,
       maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
@@ -97,7 +97,11 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
   });
 
   if (localVideoComponent) {
-    gridTiles.push(localVideoComponent);
+    if (screenShareComponent) {
+      overflowGalleryTiles = [localVideoComponent].concat(overflowGalleryTiles);
+    } else {
+      gridTiles = [localVideoComponent].concat(gridTiles);
+    }
   }
 
   const overflowGallery = useMemo(() => {
@@ -141,13 +145,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
       styles={rootLayoutStyle}
       tokens={videoGalleryLayoutGap}
     >
-      {
-        /* @conditional-compile-remove(gallery-layouts) */ props.overflowGalleryPosition === 'horizontalTop' ? (
-          overflowGallery
-        ) : (
-          <></>
-        )
-      }
+      {props.overflowGalleryPosition === 'horizontalTop' ? overflowGallery : <></>}
       {screenShareComponent ? (
         screenShareComponent
       ) : (
@@ -155,10 +153,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
           {gridTiles}
         </GridLayout>
       )}
-      {overflowGalleryTrampoline(
-        overflowGallery,
-        /* @conditional-compile-remove(gallery-layouts) */ props.overflowGalleryPosition
-      )}
+      {overflowGalleryTrampoline(overflowGallery, props.overflowGalleryPosition)}
     </Stack>
   );
 };
@@ -167,7 +162,6 @@ const overflowGalleryTrampoline = (
   gallery: JSX.Element | null,
   galleryPosition?: 'horizontalBottom' | 'verticalRight' | 'horizontalTop'
 ): JSX.Element | null => {
-  /* @conditional-compile-remove(gallery-layouts) */
   return galleryPosition !== 'horizontalTop' ? gallery : <></>;
   return gallery;
 };

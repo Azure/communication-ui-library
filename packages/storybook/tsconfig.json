@@ -1,7 +1,6 @@
 {
   "extends": "../../common/config/tsc/tsconfig.json",
   "compilerOptions": {
-    "noImplicitAny": false, // disable for now for storybook
     "outDir": "./dist",
     "paths": {
       "@azure/communication-react": ["../communication-react/src"],

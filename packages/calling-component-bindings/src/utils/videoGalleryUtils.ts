@@ -18,7 +18,6 @@ import { _isRingingPSTNParticipant } from './callUtils';
 import { maskDisplayNameWithRole } from './callUtils';
 import { checkIsSpeaking } from './SelectorUtils';
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(raise-hand) */
 import { RaisedHandState } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(reaction) */
 import { Reaction } from '@internal/react-components';
@@ -33,16 +32,19 @@ export const _dominantSpeakersWithFlatId = (dominantSpeakers?: DominantSpeakersI
 };
 
 /** @internal */
-export const _videoGalleryRemoteParticipantsMemo: (
+export type _VideoGalleryRemoteParticipantsMemoFn = (
   remoteParticipants: RemoteParticipantState[] | undefined,
   /* @conditional-compile-remove(hide-attendee-name) */
   isHideAttendeeNamesEnabled?: boolean,
   /* @conditional-compile-remove(hide-attendee-name) */
   localUserRole?: ParticipantRole
-) => VideoGalleryRemoteParticipant[] = (
+) => VideoGalleryRemoteParticipant[];
+
+/** @internal */
+export const _videoGalleryRemoteParticipantsMemo: _VideoGalleryRemoteParticipantsMemoFn = (
   remoteParticipants: RemoteParticipantState[] | undefined,
   isHideAttendeeNamesEnabled?: boolean,
-  localUserRole?
+  /* @conditional-compile-remove(hide-attendee-name) */ localUserRole?
 ): VideoGalleryRemoteParticipant[] => {
   if (!remoteParticipants) {
     return [];
@@ -80,8 +82,9 @@ export const _videoGalleryRemoteParticipantsMemo: (
             participant.videoStreams,
             state,
             displayName,
-            /* @conditional-compile-remove(raise-hand) */
             participant.raisedHand,
+            /* @conditional-compile-remove(ppt-live) */
+            participant.contentSharingStream,
             /* @conditional-compile-remove(reaction) */
             remoteParticipantReaction,
             /* @conditional-compile-remove(spotlight) */
@@ -100,11 +103,12 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     videoStreams: { [key: number]: RemoteVideoStreamState },
     state: RemoteParticipantConnectionState,
     displayName?: string,
-    /* @conditional-compile-remove(raise-hand) */
     raisedHand?: unknown, // temp unknown type to build stable
+    /* @conditional-compile-remove(ppt-live) */
+    contentSharingStream?: HTMLElement,
     /* @conditional-compile-remove(reaction) */
     reaction?: unknown, // temp unknown type to build stable
-    /* @conditional-compile-remove(reaction) */
+    /* @conditional-compile-remove(spotlight) */
     spotlight?: unknown // temp unknown type to build stable
   ): VideoGalleryRemoteParticipant => {
     return convertRemoteParticipantToVideoGalleryRemoteParticipant(
@@ -114,11 +118,12 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
       videoStreams,
       state,
       displayName,
-      /* @conditional-compile-remove(raise-hand) */
       raisedHand as RaisedHandState,
+      /* @conditional-compile-remove(ppt-live) */
+      contentSharingStream,
       /* @conditional-compile-remove(reaction) */
       reaction as Reaction,
-      /* @conditional-compile-remove(reaction) */
+      /* @conditional-compile-remove(spotlight) */
       spotlight as Spotlight
     );
   }
@@ -132,11 +137,12 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   videoStreams: { [key: number]: RemoteVideoStreamState },
   state: RemoteParticipantConnectionState,
   displayName?: string,
-  /* @conditional-compile-remove(raise-hand) */
   raisedHand?: unknown, // temp unknown type to build stable
+  /* @conditional-compile-remove(ppt-live) */
+  contentSharingStream?: HTMLElement,
   /* @conditional-compile-remove(reaction) */
   reaction?: unknown, // temp unknown type to build stable
-  /* @conditional-compile-remove(reaction) */
+  /* @conditional-compile-remove(spotlight) */
   spotlight?: unknown // temp unknown type to build stable
 ): VideoGalleryRemoteParticipant => {
   const rawVideoStreamsArray = Object.values(videoStreams);
@@ -158,6 +164,11 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     screenShareStream = convertRemoteVideoStreamToVideoGalleryStream(sdkScreenShareStream);
   }
 
+  /* @conditional-compile-remove(ppt-live) */
+  if (contentSharingStream) {
+    screenShareStream = convertRemoteContentSharingStreamToVideoGalleryStream(contentSharingStream);
+  }
+
   return {
     userId,
     displayName,
@@ -169,11 +180,10 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     /* @conditional-compile-remove(one-to-n-calling) */
     /* @conditional-compile-remove(PSTN-calls) */
     state,
-    /* @conditional-compile-remove(raise-hand) */
     raisedHand: raisedHand as RaisedHandState,
     /* @conditional-compile-remove(reaction) */
     reaction: reaction as Reaction,
-    /* @conditional-compile-remove(reaction) */
+    /* @conditional-compile-remove(spotlight) */
     spotlight: spotlight as Spotlight
   };
 };
@@ -191,6 +201,16 @@ const convertRemoteVideoStreamToVideoGalleryStream = (stream: RemoteVideoStreamS
   };
 };
 
+/* @conditional-compile-remove(ppt-live) */
+const convertRemoteContentSharingStreamToVideoGalleryStream = (stream: HTMLElement): VideoGalleryStream => {
+  return {
+    isAvailable: !!stream,
+    isReceiving: true,
+    isMirrored: false,
+    renderElement: stream
+  };
+};
+
 /** @private */
 export const memoizeLocalParticipant = memoizeOne(
   (
@@ -200,8 +220,10 @@ export const memoizeLocalParticipant = memoizeOne(
     isScreenSharingOn,
     localVideoStream,
     /* @conditional-compile-remove(rooms) */ role,
-    /* @conditional-compile-remove(raise-hand) */ raisedHand,
-    /* @conditional-compile-remove(reaction) */ reaction
+    raisedHand,
+    /* @conditional-compile-remove(reaction) */ reaction,
+    /* @conditional-compile-remove(spotlight) */ localSpotlight,
+    /* @conditional-compile-remove(spotlight) */ capabilities
   ) => ({
     userId: identifier,
     displayName: displayName ?? '',
@@ -214,10 +236,13 @@ export const memoizeLocalParticipant = memoizeOne(
     },
     /* @conditional-compile-remove(rooms) */
     role,
-    /* @conditional-compile-remove(raise-hand) */
     raisedHand: raisedHand,
     /* @conditional-compile-remove(reaction) */
-    reaction: reaction
+    reaction: reaction,
+    /* @conditional-compile-remove(spotlight) */
+    spotlight: localSpotlight,
+    /* @conditional-compile-remove(spotlight) */
+    capabilities
   })
 );
 

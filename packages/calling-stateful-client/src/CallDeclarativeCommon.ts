@@ -5,6 +5,8 @@ import { CallContext } from './CallContext';
 import { CallCommon } from './BetaToStableTypes';
 /* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(call-transfer) */
 import { Features } from '@azure/communication-calling';
+/* @conditional-compile-remove(acs-close-captions) */
+import { Captions } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(call-transfer) */
@@ -83,7 +85,13 @@ export abstract class ProxyCallCommon implements ProxyHandler<CallCommon> {
           /* @conditional-compile-remove(close-captions) */
           if (args[0] === Features.Captions) {
             const captionsFeature = target.feature(Features.Captions).captions;
-            const proxyFeature = new ProxyTeamsCaptions(this._context, target);
+            let proxyFeature;
+            /* @conditional-compile-remove(acs-close-captions) */
+            if (captionsFeature.kind === 'Captions') {
+              proxyFeature = new ProxyCaptions(this._context, target);
+              return { captions: new Proxy(captionsFeature, proxyFeature) };
+            }
+            proxyFeature = new ProxyTeamsCaptions(this._context, target);
             return { captions: new Proxy(captionsFeature, proxyFeature) };
           }
           /* @conditional-compile-remove(call-transfer) */
@@ -152,6 +160,52 @@ class ProxyTeamsCaptions implements ProxyHandler<TeamsCaptions> {
           async (...args: Parameters<TeamsCaptions['setCaptionLanguage']>) => {
             const ret = await target.setCaptionLanguage(...args);
             this._context.setSelectedCaptionLanguage(this._call.id, args[0]);
+            return ret;
+          },
+          'Call.feature'
+        );
+      default:
+        return Reflect.get(target, prop);
+    }
+  }
+}
+
+/* @conditional-compile-remove(acs-close-captions) */
+/**
+ * @private
+ */
+class ProxyCaptions implements ProxyHandler<Captions> {
+  private _context: CallContext;
+  private _call: CallCommon;
+
+  constructor(context: CallContext, call: CallCommon) {
+    this._context = context;
+    this._call = call;
+  }
+
+  public get<P extends keyof Captions>(target: Captions, prop: P): any {
+    switch (prop) {
+      case 'startCaptions':
+        return this._context.withAsyncErrorTeedToState(async (...args: Parameters<TeamsCaptions['startCaptions']>) => {
+          this._context.setStartCaptionsInProgress(this._call.id, true);
+          const ret = await target.startCaptions(...args);
+          this._context.setSelectedSpokenLanguage(this._call.id, args[0]?.spokenLanguage ?? 'en-us');
+          return ret;
+        }, 'Call.feature');
+        break;
+      case 'stopCaptions':
+        return this._context.withAsyncErrorTeedToState(async (...args: Parameters<TeamsCaptions['stopCaptions']>) => {
+          const ret = await target.stopCaptions(...args);
+          this._context.setIsCaptionActive(this._call.id, false);
+          this._context.setStartCaptionsInProgress(this._call.id, false);
+          this._context.clearCaptions(this._call.id);
+          return ret;
+        }, 'Call.feature');
+      case 'setSpokenLanguage':
+        return this._context.withAsyncErrorTeedToState(
+          async (...args: Parameters<TeamsCaptions['setSpokenLanguage']>) => {
+            const ret = await target.setSpokenLanguage(...args);
+            this._context.setSelectedSpokenLanguage(this._call.id, args[0]);
             return ret;
           },
           'Call.feature'

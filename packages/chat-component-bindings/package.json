@@ -1,10 +1,10 @@
 {
   "name": "@internal/chat-component-bindings",
-  "version": "1.13.0-beta.1",
+  "version": "1.14.0-beta.2",
   "description": "Component bindings specific to components that integrate with the Azure Communication Services Chat JavaScript SDK",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
-  "types": "dist/chat-component-bindings.d.ts",
+  "types": "dist/dist-esm/index.d.ts",
   "scripts": {
     "build": "rushx _by-flavor \"rushx _build:by-flavor\"",
     "build:esm": "npm run _if-preprocess && rushx preprocess && tsc -project tsconfig.preprocess.json || (if-env COMMUNICATION_REACT_FLAVOR=beta && tsc)",
@@ -20,23 +20,20 @@
     "lint": "eslint --max-warnings 0 \"*/**/*.{ts,tsx}\"",
     "lint:fix": "rushx lint --fix --",
     "lint:quiet": "rushx lint -- --quiet",
-    "api-extractor": "rushx _by-flavor \"rushx build:esm && rushx _api-extractor:by-flavor\"",
-    "generate-doc": "api-documenter markdown -i temp -o docGen",
     "_if-preprocess": "if-env COMMUNICATION_REACT_FLAVOR=stable || if-env COMMUNICATION_REACT_FLAVOR=beta-release",
     "_if-beta": "if-env COMMUNICATION_REACT_FLAVOR=beta || if-env COMMUNICATION_REACT_FLAVOR=beta-release",
-    "_api-extractor:by-flavor": "if-env COMMUNICATION_REACT_FLAVOR=stable && api-extractor run -c api-extractor.stable.json --local || (rushx _if-beta && api-extractor run --local)",
-    "_build:by-flavor": "rushx clean && rushx build:esm && rushx build:cjs && rushx _api-extractor:by-flavor",
+    "_build:by-flavor": "rushx clean && rushx build:esm && rushx build:cjs",
     "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell",
     "_current-flavor": "echo You are running under COMMUNICATION_REACT_FLAVOR: && env-cmd -f ../../common/config/env/.env node -p process.env.COMMUNICATION_REACT_FLAVOR",
     "_test:by-flavor": "(npm run _if-preprocess && rushx preprocess || if-env COMMUNICATION_REACT_FLAVOR=beta && echo \"skip preprocess\") && jest"
   },
   "license": "MIT",
   "dependencies": {
-    "@azure/communication-common": "^2.3.0",
+    "@azure/communication-common": "^2.3.1",
     "@azure/core-paging": "^1.5.0",
-    "@internal/acs-ui-common": "1.13.0-beta.1",
-    "@internal/chat-stateful-client": "1.13.0-beta.1",
-    "@internal/react-components": "1.13.0-beta.1",
+    "@internal/acs-ui-common": "1.14.0-beta.2",
+    "@internal/chat-stateful-client": "1.14.0-beta.2",
+    "@internal/react-components": "1.14.0-beta.2",
     "reselect": "^4.0.0",
     "memoize-one": "^5.2.1"
   },
@@ -49,10 +46,8 @@
     "@azure/communication-chat": "1.5.0-beta.1 || ^1.4.0",
     "@babel/cli": "^7.23.9",
     "@babel/core": "^7.23.9",
-    "@microsoft/api-documenter": "~7.23.20",
-    "@microsoft/api-extractor": "~7.39.4",
     "@types/jest": "^29.5.11",
-    "@types/react": "18.2.48",
+    "@types/react": "18.2.64",
     "copyfiles": "^2.4.1",
     "cpx": "^1.5.0",
     "cross-env": "^7.0.3",
@@ -68,7 +63,7 @@
     "prettier": "2.3.1",
     "react": "18.2.0",
     "rimraf": "^2.6.2",
-    "rollup": "^4.9.6",
-    "typescript": "5.3.3"
+    "rollup": "^4.12.1",
+    "typescript": "5.4.2"
   }
 }

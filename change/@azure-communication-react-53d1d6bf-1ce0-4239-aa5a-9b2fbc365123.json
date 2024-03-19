@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "area": "improvement",
-  "workstream": "Adding concept storybook for reaction feature",
-  "comment": "Adding concept storybook section for Reaction feature",
-  "packageName": "@azure/communication-react",
-  "email": "mbellah@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -25,14 +25,13 @@ import { LocalVideoCameraCycleButton } from '@internal/react-components';
 import { _formatString } from '@internal/acs-ui-common';
 import { useParticipantChangedAnnouncement } from '../utils/MediaGalleryUtils';
 import { RemoteVideoTileMenuOptions } from '../CallComposite';
-/* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(vertical-gallery) */
 import { LocalVideoTileOptions } from '../CallComposite';
 /* @conditional-compile-remove(rooms) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
 /* @conditional-compile-remove(spotlight) */
 import { PromptProps } from './Prompt';
 /* @conditional-compile-remove(spotlight) */
-import { useSpotlightCallbacksWithPrompt } from '../utils/spotlightUtils';
+import { useLocalSpotlightCallbacksWithPrompt, useRemoteSpotlightCallbacksWithPrompt } from '../utils/spotlightUtils';
 
 const VideoGalleryStyles = {
   root: {
@@ -62,16 +61,15 @@ export interface MediaGalleryProps {
   isMobile?: boolean;
   drawerMenuHostId?: string;
   remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
-  /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(vertical-gallery) */
   localVideoTileOptions?: boolean | LocalVideoTileOptions;
-  /* @conditional-compile-remove(gallery-layouts) */
   userSetOverflowGalleryPosition?: 'Responsive' | 'horizontalTop';
-  /* @conditional-compile-remove(gallery-layouts) */
   userSetGalleryLayout: VideoGalleryLayout;
   /* @conditional-compile-remove(spotlight) */
   setIsPromptOpen: (isOpen: boolean) => void;
   /* @conditional-compile-remove(spotlight) */
   setPromptProps: (props: PromptProps) => void;
+  /* @conditional-compile-remove(spotlight) */
+  hideSpotlightButtons?: boolean;
 }
 
 /**
@@ -79,7 +77,7 @@ export interface MediaGalleryProps {
  */
 export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   /* @conditional-compile-remove(spotlight) */
-  const { setIsPromptOpen, setPromptProps } = props;
+  const { setIsPromptOpen, setPromptProps, hideSpotlightButtons } = props;
 
   const videoGalleryProps = usePropsFor(VideoGallery);
   const cameraSwitcherCameras = useSelector(localVideoCameraCycleButtonSelector);
@@ -99,15 +97,13 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const containerWidth = _useContainerWidth(containerRef);
   /* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(rooms) */
   const containerHeight = _useContainerHeight(containerRef);
-  /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(vertical-gallery) */
   const containerAspectRatio = containerWidth && containerHeight ? containerWidth / containerHeight : 0;
   /* @conditional-compile-remove(reaction) */
   const reactionResources = adapter.getState().reactions;
 
-  const layoutBasedOnTilePosition: VideoGalleryLayout = localVideoTileLayoutTrampoline(
-    /* @conditional-compile-remove(click-to-call) */ (props.localVideoTileOptions as LocalVideoTileOptions)?.position
+  const layoutBasedOnTilePosition: VideoGalleryLayout = getVideoGalleryLayoutBasedOnLocalOptions(
+    (props.localVideoTileOptions as LocalVideoTileOptions)?.position
   );
-
   const cameraSwitcherProps = useMemo(() => {
     return {
       ...cameraSwitcherCallback,
@@ -140,7 +136,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
 
   /* @conditional-compile-remove(vertical-gallery) */
   const overflowGalleryPosition = useMemo(() => {
-    /* @conditional-compile-remove(gallery-layouts) */
+    /* @conditional-compile-remove(overflow-top-composite) */
     if (props.userSetOverflowGalleryPosition === 'horizontalTop') {
       return props.userSetOverflowGalleryPosition;
     }
@@ -148,28 +144,33 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
       ? 'verticalRight'
       : 'horizontalBottom';
   }, [
-    /* @conditional-compile-remove(gallery-layouts) */ props.userSetOverflowGalleryPosition,
+    /* @conditional-compile-remove(overflow-top-composite) */ props.userSetOverflowGalleryPosition,
     containerWidth,
     containerHeight
   ]);
 
   /* @conditional-compile-remove(spotlight) */
-  const { onStartSpotlight, onStopSpotlight } = videoGalleryProps;
+  const { onStartLocalSpotlight, onStopLocalSpotlight, onStartRemoteSpotlight, onStopRemoteSpotlight } =
+    videoGalleryProps;
 
   /* @conditional-compile-remove(spotlight) */
-  const { onStartSpotlightWithPrompt, onStopSpotlightWithPrompt } = useSpotlightCallbacksWithPrompt(
-    onStartSpotlight,
-    onStopSpotlight,
+  const { onStartLocalSpotlightWithPrompt, onStopLocalSpotlightWithPrompt } = useLocalSpotlightCallbacksWithPrompt(
+    onStartLocalSpotlight,
+    onStopLocalSpotlight,
     setIsPromptOpen,
     setPromptProps
   );
 
   /* @conditional-compile-remove(spotlight) */
-  const ableToSpotlight = adapter.getState().call?.capabilitiesFeature?.capabilities.spotlightParticipant.isPresent;
+  const { onStartRemoteSpotlightWithPrompt, onStopRemoteSpotlightWithPrompt } = useRemoteSpotlightCallbacksWithPrompt(
+    onStartRemoteSpotlight,
+    onStopRemoteSpotlight,
+    setIsPromptOpen,
+    setPromptProps
+  );
 
   const VideoGalleryMemoized = useMemo(() => {
     const layoutBasedOnUserSelection = (): VideoGalleryLayout => {
-      /* @conditional-compile-remove(gallery-layouts) */
       return props.localVideoTileOptions ? layoutBasedOnTilePosition : props.userSetGalleryLayout;
       return layoutBasedOnTilePosition;
     };
@@ -198,9 +199,13 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         /* @conditional-compile-remove(reaction) */
         reactionResources={reactionResources}
         /* @conditional-compile-remove(spotlight) */
-        onStartSpotlight={ableToSpotlight ? onStartSpotlightWithPrompt : undefined}
+        onStartLocalSpotlight={hideSpotlightButtons ? undefined : onStartLocalSpotlightWithPrompt}
         /* @conditional-compile-remove(spotlight) */
-        onStopSpotlight={ableToSpotlight ? onStopSpotlightWithPrompt : undefined}
+        onStopLocalSpotlight={hideSpotlightButtons ? undefined : onStopLocalSpotlightWithPrompt}
+        /* @conditional-compile-remove(spotlight) */
+        onStartRemoteSpotlight={hideSpotlightButtons ? undefined : onStartRemoteSpotlightWithPrompt}
+        /* @conditional-compile-remove(spotlight) */
+        onStopRemoteSpotlight={hideSpotlightButtons ? undefined : onStopRemoteSpotlightWithPrompt}
       />
     );
   }, [
@@ -219,17 +224,21 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     isRoomsCall,
     /* @conditional-compile-remove(vertical-gallery) */
     containerAspectRatio,
-    /* @conditional-compile-remove(gallery-layouts) */
+
     props.userSetGalleryLayout,
     layoutBasedOnTilePosition,
     /* @conditional-compile-remove(reaction) */
     reactionResources,
     /* @conditional-compile-remove(spotlight) */
-    ableToSpotlight,
+    onStartLocalSpotlightWithPrompt,
     /* @conditional-compile-remove(spotlight) */
-    onStartSpotlightWithPrompt,
+    onStopLocalSpotlightWithPrompt,
     /* @conditional-compile-remove(spotlight) */
-    onStopSpotlightWithPrompt
+    onStartRemoteSpotlightWithPrompt,
+    /* @conditional-compile-remove(spotlight) */
+    onStopRemoteSpotlightWithPrompt,
+    /* @conditional-compile-remove(spotlight) */
+    hideSpotlightButtons
   ]);
 
   return (
@@ -242,10 +251,6 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
 
 const mediaGalleryContainerStyles: CSSProperties = { width: '100%', height: '100%' };
 
-const localVideoTileLayoutTrampoline = (
-  /* @conditional-compile-remove(click-to-call) */ localTileOptions?: string
-): VideoGalleryLayout => {
-  /* @conditional-compile-remove(click-to-call) */
+const getVideoGalleryLayoutBasedOnLocalOptions = (localTileOptions?: string): VideoGalleryLayout => {
   return localTileOptions === 'grid' ? 'default' : 'floatingLocalVideo';
-  return 'floatingLocalVideo';
 };
