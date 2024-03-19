@@ -658,7 +658,7 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
 
 // @public
 export interface CallCompositeStrings {
-    addSpotlightParticipantListMenuLabel: string;
+    addSpotlightMenuLabel: string;
     blurBackgroundEffectButtonLabel?: string;
     blurBackgroundTooltip?: string;
     callRejectedMoreDetails?: string;
@@ -797,7 +797,7 @@ export interface CallCompositeStrings {
     selectedPeopleButtonLabel: string;
     soundLabel: string;
     spokenLanguageStrings?: SpokenLanguageStrings;
-    spotlightLimitReachedParticipantListMenuTitle: string;
+    spotlightLimitReachedMenuTitle: string;
     spotlightPrompt: SpotlightPromptStrings;
     starRatingAriaLabel: string;
     starSurveyFiveStarText: string;
@@ -811,10 +811,10 @@ export interface CallCompositeStrings {
     startCaptionsButtonOnLabel?: string;
     startCaptionsButtonTooltipOffContent?: string;
     startCaptionsButtonTooltipOnContent?: string;
-    startSpotlightParticipantListMenuLabel: string;
+    startSpotlightMenuLabel: string;
     stopAllSpotlightMenuLabel: string;
-    stopSpotlightOnSelfParticipantListMenuLabel: string;
-    stopSpotlightParticipantListMenuLabel: string;
+    stopSpotlightMenuLabel: string;
+    stopSpotlightOnSelfMenuLabel: string;
     surveyConfirmButtonLabel: string;
     surveyIssues: SurveyIssues;
     SurveyIssuesHeadingStrings: SurveyIssuesHeadingStrings;
@@ -2492,7 +2492,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     SurveyStarIconFilled: React_2.JSX.Element;
     StartSpotlightContextualMenuItem: React_2.JSX.Element;
     StopSpotlightContextualMenuItem: React_2.JSX.Element;
-    VideoSpotlighted: React_2.JSX.Element;
+    VideoTileSpotlighted: React_2.JSX.Element;
     RichTextBoldButtonIcon: React_2.JSX.Element;
     RichTextItalicButtonIcon: React_2.JSX.Element;
     RichTextUnderlineButtonIcon: React_2.JSX.Element;
@@ -2649,7 +2649,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     SurveyStarIconFilled: React_2.JSX.Element;
     StartSpotlightContextualMenuItem: React_2.JSX.Element;
     StopSpotlightContextualMenuItem: React_2.JSX.Element;
-    VideoSpotlighted: React_2.JSX.Element;
+    VideoTileSpotlighted: React_2.JSX.Element;
     RichTextBoldButtonIcon: React_2.JSX.Element;
     RichTextItalicButtonIcon: React_2.JSX.Element;
     RichTextUnderlineButtonIcon: React_2.JSX.Element;
@@ -4532,9 +4532,9 @@ export interface VideoGalleryProps {
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
     onStartLocalSpotlight?: () => Promise<void>;
-    onStartRemoteSpotlight?: (userIds?: string[]) => Promise<void>;
+    onStartRemoteSpotlight?: (userIds: string[]) => Promise<void>;
     onStopLocalSpotlight?: () => Promise<void>;
-    onStopRemoteSpotlight?: (userIds?: string[]) => Promise<void>;
+    onStopRemoteSpotlight?: (userIds: string[]) => Promise<void>;
     onUnpinParticipant?: (userId: string) => void;
     overflowGalleryPosition?: OverflowGalleryPosition;
     pinnedParticipants?: string[];
