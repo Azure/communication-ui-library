@@ -246,10 +246,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
       data-is-focusable={true}
       data-ui-id="participant-item"
       className={mergeStyles(
-        participantItemContainerStyle({
-          localparticipant: me,
-          clickable: !!menuItems && menuItems.length > 0
-        }),
+        participantItemContainerStyle({ clickable: !!menuItems && menuItems.length > 0 }),
         styles?.root
       )}
       onMouseEnter={() => setItemHovered(true)}
