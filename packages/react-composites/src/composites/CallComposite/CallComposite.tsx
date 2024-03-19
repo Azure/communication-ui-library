@@ -218,7 +218,6 @@ export type CallCompositeOptions = {
    * Remote participant video tile menu options
    */
   remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
-  /* @conditional-compile-remove(click-to-call) */
   /**
    * Options for controlling the local video tile.
    *

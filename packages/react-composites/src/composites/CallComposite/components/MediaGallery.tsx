@@ -96,10 +96,9 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   /* @conditional-compile-remove(reaction) */
   const reactionResources = adapter.getState().reactions;
 
-  const layoutBasedOnTilePosition: VideoGalleryLayout = localVideoTileLayoutTrampoline(
-    /* @conditional-compile-remove(click-to-call) */ (props.localVideoTileOptions as LocalVideoTileOptions)?.position
+  const layoutBasedOnTilePosition: VideoGalleryLayout = getVideoGalleryLayoutBasedOnLocalOptions(
+    (props.localVideoTileOptions as LocalVideoTileOptions)?.position
   );
-
   const cameraSwitcherProps = useMemo(() => {
     return {
       ...cameraSwitcherCallback,
@@ -243,10 +242,6 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
 
 const mediaGalleryContainerStyles: CSSProperties = { width: '100%', height: '100%' };
 
-const localVideoTileLayoutTrampoline = (
-  /* @conditional-compile-remove(click-to-call) */ localTileOptions?: string
-): VideoGalleryLayout => {
-  /* @conditional-compile-remove(click-to-call) */
+const getVideoGalleryLayoutBasedOnLocalOptions = (localTileOptions?: string): VideoGalleryLayout => {
   return localTileOptions === 'grid' ? 'default' : 'floatingLocalVideo';
-  return 'floatingLocalVideo';
 };

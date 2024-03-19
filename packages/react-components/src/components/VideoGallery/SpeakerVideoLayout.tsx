@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 import { LayerHost, Stack, mergeStyles, useTheme } from '@fluentui/react';
-/* @conditional-compile-remove(click-to-call) */
 import { LocalVideoTileSize } from '../VideoGallery';
 import { LayoutProps } from './Layout';
 import { isNarrowWidth } from '../utils/responsive';
@@ -39,7 +38,6 @@ export interface SpeakerVideoLayoutProps extends LayoutProps {
    * Height of parent element
    */
   parentHeight?: number;
-  /* @conditional-compile-remove(click-to-call) */
   /**
    * Local video tile mode
    */
@@ -64,7 +62,7 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
     parentHeight,
     overflowGalleryPosition = 'horizontalBottom',
     pinnedParticipantUserIds = [],
-    /* @conditional-compile-remove(click-to-call) */ localVideoTileSize
+    localVideoTileSize
   } = props;
 
   const theme = useTheme();
@@ -129,7 +127,7 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
   const layerHostId = useId('layerhost');
 
   const localVideoSizeRem = useMemo(() => {
-    if (isNarrow || /*@conditional-compile-remove(click-to-call) */ localVideoTileSize === '9:16') {
+    if (isNarrow || localVideoTileSize === '9:16') {
       return SMALL_FLOATING_MODAL_SIZE_REM;
     }
     if ((overflowGalleryTiles.length > 0 || screenShareComponent) && overflowGalleryPosition === 'verticalRight') {
@@ -139,7 +137,6 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
         ? SHORT_VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM
         : VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM;
     }
-    /*@conditional-compile-remove(click-to-call) */
     if ((overflowGalleryTiles.length > 0 || screenShareComponent) && overflowGalleryPosition === 'horizontalBottom') {
       return localVideoTileSize === '16:9' || !isNarrow ? LARGE_FLOATING_MODAL_SIZE_REM : SMALL_FLOATING_MODAL_SIZE_REM;
     }
@@ -150,7 +147,7 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
     screenShareComponent,
     isShort,
     overflowGalleryPosition,
-    /* @conditional-compile-remove(click-to-call) */ localVideoTileSize
+    localVideoTileSize
   ]);
 
   const wrappedLocalVideoComponent =

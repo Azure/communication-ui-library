@@ -6,7 +6,6 @@ import { expect } from '@playwright/test';
 import { buildUrlWithMockAdapter, defaultMockCallAdapterState, defaultMockRemoteParticipant, test } from './fixture';
 import { dataUiId, stableScreenshot, waitForSelector } from '../../common/utils';
 
-/* @conditional-compile-remove(click-to-call) */
 test.describe('Call Composite E2E local video tile control tests', () => {
   test('Call composite should not have a video tile when hidden', async ({ page, serverUrl }) => {
     const paul = defaultMockRemoteParticipant('Paul');

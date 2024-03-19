@@ -25,7 +25,6 @@ import { innerLayoutStyle, layerHostStyle, rootLayoutStyle } from './styles/Floa
 import { videoGalleryLayoutGap } from './styles/Layout.styles';
 import { useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
 import { OverflowGallery } from './OverflowGallery';
-/* @conditional-compile-remove(click-to-call) */
 import { LocalVideoTileSize } from '../VideoGallery';
 
 /**
@@ -42,7 +41,6 @@ export interface FloatingLocalVideoLayoutProps extends LayoutProps {
    * Height of parent element
    */
   parentHeight?: number;
-  /* @conditional-compile-remove(click-to-call) */
   /**
    * Local video tile mode
    */
@@ -69,7 +67,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     parentHeight,
     overflowGalleryPosition = 'horizontalBottom',
     pinnedParticipantUserIds = [],
-    /* @conditional-compile-remove(click-to-call) */ localVideoTileSize,
+    localVideoTileSize,
     /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds
   } = props;
 
@@ -136,7 +134,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
   const layerHostId = useId('layerhost');
 
   const localVideoSizeRem = useMemo(() => {
-    if (isNarrow || /*@conditional-compile-remove(click-to-call) */ localVideoTileSize === '9:16') {
+    if (isNarrow || localVideoTileSize === '9:16') {
       return SMALL_FLOATING_MODAL_SIZE_REM;
     }
     if ((overflowGalleryTiles.length > 0 || screenShareComponent) && overflowGalleryPosition === 'verticalRight') {
@@ -146,7 +144,6 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
         ? SHORT_VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM
         : VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM;
     }
-    /*@conditional-compile-remove(click-to-call) */
     if ((overflowGalleryTiles.length > 0 || screenShareComponent) && overflowGalleryPosition === 'horizontalBottom') {
       return localVideoTileSize === '16:9' || !isNarrow ? LARGE_FLOATING_MODAL_SIZE_REM : SMALL_FLOATING_MODAL_SIZE_REM;
     }
@@ -157,7 +154,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     screenShareComponent,
     isShort,
     overflowGalleryPosition,
-    /* @conditional-compile-remove(click-to-call) */ localVideoTileSize
+    localVideoTileSize
   ]);
 
   const wrappedLocalVideoComponent =

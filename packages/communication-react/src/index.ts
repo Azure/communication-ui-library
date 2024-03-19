@@ -348,7 +348,6 @@ export type {
   BrowserPermissionDeniedIOSProps
 } from '../../react-components/src';
 export type { OverflowGalleryPosition } from '../../react-components/src';
-/* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
 export type { LocalVideoTileSize } from '../../react-components/src';
 export * from '../../react-components/src/localization/locales';
 export * from '../../react-components/src/theming';
