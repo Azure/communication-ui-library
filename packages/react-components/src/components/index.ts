@@ -97,7 +97,6 @@ export type {
 } from './VideoGallery';
 /* @conditional-compile-remove(vertical-gallery) */
 export type { OverflowGalleryPosition } from './VideoGallery';
-/* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
 export type { LocalVideoTileSize } from './VideoGallery';
 export type { HorizontalGalleryStyles } from './HorizontalGallery';
 

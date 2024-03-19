@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useMemo } from 'react';
 import { ThemeProvider, PartialTheme, Theme, getTheme, mergeThemes, mergeStyles } from '@fluentui/react';
 import { lightTheme } from './themes';
 
@@ -63,8 +63,10 @@ const ThemeContext = createContext<Theme>(defaultTheme);
 export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Element => {
   const { fluentTheme, rtl, children, /* @conditional-compile-remove(image-overlay) */ rootStyle } = props;
 
-  let fluentV8Theme: Theme = mergeThemes(defaultTheme, fluentTheme);
-  fluentV8Theme = mergeThemes(fluentV8Theme, { rtl });
+  const fluentV8Theme = useMemo(() => {
+    const mergedTheme = mergeThemes(defaultTheme, fluentTheme);
+    return mergeThemes(mergedTheme, { rtl });
+  }, [fluentTheme, rtl]);
 
   return (
     <ThemeContext.Provider value={fluentV8Theme}>
