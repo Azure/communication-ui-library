@@ -497,7 +497,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
                 /* @conditional-compile-remove(spotlight) */
                 isSpotlighted && (
                   <Stack className={mergeStyles(iconContainerStyle)}>
-                    <Icon iconName="VideoSpotlighted" />
+                    <Icon iconName="VideoTileSpotlighted" />
                   </Stack>
                 )
               }
