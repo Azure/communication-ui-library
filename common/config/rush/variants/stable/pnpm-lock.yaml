@@ -16274,7 +16274,7 @@ packages:
     dependencies:
       nanoid: 3.3.7
       picocolors: 1.0.0
-      source-map-js: 1.1.0
+      source-map-js: 1.2.0
     dev: false
 
   /preact-render-to-string@5.2.6(preact@10.19.7):
@@ -17936,8 +17936,8 @@ packages:
       yargs: 16.2.0
     dev: false
 
-  /source-map-js@1.1.0:
-    resolution: {integrity: sha512-9vC2SfsJzlej6MAaMPLu8HiBSHGdRAJ9hVFYN1ibZoNkeanmDmLUcIrj6G9DGL7XMJ54AKg/G75akXl1/izTOw==}
+  /source-map-js@1.2.0:
+    resolution: {integrity: sha512-itJW8lvSA0TXEphiRoawsCksnlf8SyvmFzIhltqAHluXd88pkCd+cXJVHTDwdCr0IzwptSm035IHQktUu1QUMg==}
     engines: {node: '>=0.10.0'}
     dev: false
 
