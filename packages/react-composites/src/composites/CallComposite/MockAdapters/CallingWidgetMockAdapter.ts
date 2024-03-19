@@ -74,7 +74,6 @@ export class _MockCallingWidgetCallAdapter implements CallAdapter {
                 {
                   mediaStreamType: 'Video' as MediaStreamType,
                   isAvailable: true,
-                  isReceiving: true,
                   id: 1,
                   view: {
                     target: mockVideoElement,
@@ -209,11 +208,9 @@ export class _MockCallingWidgetCallAdapter implements CallAdapter {
   stopScreenShare(): Promise<void> {
     throw Error('stopScreenShare not implemented');
   }
-  /* @conditional-compile-remove(raise-hand) */
   raiseHand(): Promise<void> {
     throw Error('raiseHand not implemented');
   }
-  /* @conditional-compile-remove(raise-hand) */
   lowerHand(): Promise<void> {
     throw Error('lowerHand not implemented');
   }
@@ -324,6 +321,10 @@ export class _MockCallingWidgetCallAdapter implements CallAdapter {
   stopSpotlight(userIds?: string[]): Promise<void> {
     throw Error('stopSpotlight not implemented');
   }
+  /* @conditional-compile-remove(spotlight) */ // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  stopAllSpotlight(): Promise<void> {
+    throw Error('stopAllSpotlight not implemented');
+  }
 }
 
 /**
@@ -349,9 +350,10 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
       localVideoStreams: [],
       isMuted: false,
       isScreenSharingOn: false,
+      /* @conditional-compile-remove(local-recording-notification) */
+      localRecording: { isLocalRecordingActive: false },
       remoteParticipants: {},
       remoteParticipantsEnded: {},
-      /* @conditional-compile-remove(raise-hand) */
       raiseHand: { raisedHands: [] },
       /* @conditional-compile-remove(reaction) */
       localParticipantReaction: undefined,
@@ -371,7 +373,6 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
       transfer: {
         acceptedTransfers: {}
       },
-      /* @conditional-compile-remove(optimal-video-count) */
       optimalVideoCount: {
         maxRemoteVideoStreams: 4
       },
