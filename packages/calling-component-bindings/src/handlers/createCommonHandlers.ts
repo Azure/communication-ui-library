@@ -32,7 +32,6 @@ import { disposeAllLocalPreviewViews, _isInCall, _isInLobbyOrConnecting, _isPrev
 /* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(video-background-effects) */ /* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(raise-hand) */ /* @conditional-compile-remove(end-of-call-survey) */
 import { Features } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptions } from '@azure/communication-calling';
@@ -60,11 +59,8 @@ export interface CommonCallingHandlers {
   onStopScreenShare: () => Promise<void>;
   onToggleScreenShare: () => Promise<void>;
   onHangUp: (forEveryone?: boolean) => Promise<void>;
-  /* @conditional-compile-remove(raise-hand) */
   onRaiseHand: () => Promise<void>;
-  /* @conditional-compile-remove(raise-hand) */
   onLowerHand: () => Promise<void>;
-  /* @conditional-compile-remove(raise-hand) */
   onToggleRaiseHand: () => Promise<void>;
   /* @conditional-compile-remove(reaction) */
   /**
@@ -117,6 +113,8 @@ export interface CommonCallingHandlers {
   onStartSpotlight: (userIds?: string[]) => Promise<void>;
   /* @conditional-compile-remove(spotlight) */
   onStopSpotlight: (userIds?: string[]) => Promise<void>;
+  /* @conditional-compile-remove(spotlight) */
+  onStopAllSpotlight: () => Promise<void>;
 }
 
 /**
@@ -308,13 +306,10 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
     };
 
-    /* @conditional-compile-remove(raise-hand) */
     const onRaiseHand = async (): Promise<void> => await call?.feature(Features.RaiseHand)?.raiseHand();
 
-    /* @conditional-compile-remove(raise-hand) */
     const onLowerHand = async (): Promise<void> => await call?.feature(Features.RaiseHand)?.lowerHand();
 
-    /* @conditional-compile-remove(raise-hand) */
     const onToggleRaiseHand = async (): Promise<void> => {
       const raiseHandFeature = call?.feature(Features.RaiseHand);
       const localUserId = callClient.getState().userId;
@@ -626,6 +621,10 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       await call?.feature(Features.Spotlight).stopSpotlight(participants);
     };
     /* @conditional-compile-remove(spotlight) */
+    const onStopAllSpotlight = async (): Promise<void> => {
+      await call?.feature(Features.Spotlight).stopAllSpotlight();
+    };
+    /* @conditional-compile-remove(spotlight) */
     const canSpotlight = call?.feature(Features.Capabilities).capabilities.spotlightParticipant.isPresent;
     /* @conditional-compile-remove(spotlight) */
     const onStartLocalSpotlight = canSpotlight
@@ -671,11 +670,8 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onDisposeLocalStreamView,
       onDisposeRemoteScreenShareStreamView,
       onDisposeRemoteVideoStreamView,
-      /* @conditional-compile-remove(raise-hand) */
       onRaiseHand,
-      /* @conditional-compile-remove(raise-hand) */
       onLowerHand,
-      /* @conditional-compile-remove(raise-hand) */
       onToggleRaiseHand,
       /* @conditional-compile-remove(reaction) */
       onReactionClick: onReactionClick,
@@ -706,6 +702,8 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onStartSpotlight,
       /* @conditional-compile-remove(spotlight) */
       onStopSpotlight,
+      /* @conditional-compile-remove(spotlight) */
+      onStopAllSpotlight,
       /* @conditional-compile-remove(spotlight) */
       onStartLocalSpotlight,
       /* @conditional-compile-remove(spotlight) */

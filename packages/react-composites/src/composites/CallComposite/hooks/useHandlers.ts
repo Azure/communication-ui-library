@@ -12,7 +12,6 @@ import { CommonCallAdapter } from '..';
 import { VideoBackgroundBlurEffect, VideoBackgroundReplacementEffect } from '..';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isCameraOn } from '../utils';
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(dtmf-dialer) */
 import { DtmfTone } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
@@ -83,7 +82,6 @@ const createCompositeHandlers = memoizeOne(
           return await adapter.addParticipant(participant as PhoneNumberIdentifier, options);
         }
       },
-      /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(dtmf-dialer) */
       onSendDtmfTone: async (dtmfTone: DtmfTone) => {
         await adapter.sendDtmfTone(dtmfTone);
       },
@@ -97,15 +95,12 @@ const createCompositeHandlers = memoizeOne(
           await adapter.removeParticipant(_toCommunicationIdentifier(userId));
         }
       },
-      /* @conditional-compile-remove(raise-hand) */
       onRaiseHand: async () => {
         await adapter.raiseHand();
       },
-      /* @conditional-compile-remove(raise-hand) */
       onLowerHand: async () => {
         await adapter.lowerHand();
       },
-      /* @conditional-compile-remove(raise-hand) */
       onToggleRaiseHand: async () => {
         adapter.getState().call?.raiseHand.localParticipantRaisedHand
           ? await adapter.lowerHand()
@@ -213,6 +208,10 @@ const createCompositeHandlers = memoizeOne(
       /* @conditional-compile-remove(spotlight) */
       onStopSpotlight: async (userIds?: string[]): Promise<void> => {
         await adapter.stopSpotlight(userIds);
+      },
+      /* @conditional-compile-remove(spotlight) */
+      onStopAllSpotlight: async (): Promise<void> => {
+        await adapter.stopAllSpotlight();
       },
       /* @conditional-compile-remove(spotlight) */
       onStartLocalSpotlight: async (): Promise<void> => {

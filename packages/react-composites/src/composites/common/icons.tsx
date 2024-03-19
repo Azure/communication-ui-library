@@ -21,14 +21,12 @@ import {
   Circle20Regular
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(spotlight) */
-import { VideoPersonStarOff20Filled } from '@fluentui/react-icons';
+import { MoreHorizontal20Filled, VideoPersonStarOff20Filled } from '@fluentui/react-icons';
 /* @conditional-compile-remove(capabilities) */
 import { MicProhibited20Filled, VideoProhibited20Filled } from '@fluentui/react-icons';
-/* @conditional-compile-remove(gallery-layouts) */
 import { Grid20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
 import { PersonAdd20Regular, Call20Regular } from '@fluentui/react-icons';
-/* @conditional-compile-remove(dtmf-dialer) */
 import { Dialpad20Regular } from '@fluentui/react-icons';
 import { DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
 import React from 'react';
@@ -38,7 +36,6 @@ import { FontIcon, IIconProps, Spinner, SpinnerSize } from '@fluentui/react';
 import { Attach20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundEffect20Regular, VideoPerson20Filled } from '@fluentui/react-icons';
-/* @conditional-compile-remove(gallery-layouts) */
 import {
   PersonSquare20Regular,
   WindowHeaderHorizontal20Regular,
@@ -108,24 +105,19 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   BlurVideoBackground: <VideoBackgroundEffect20Regular />,
   /* @conditional-compile-remove(video-background-effects) */
   RemoveVideoBackgroundEffect: <VideoPerson20Filled />,
-  /* @conditional-compile-remove(gallery-layouts) */
   GalleryOptions: <Grid20Regular />,
-  /* @conditional-compile-remove(gallery-layouts) */
   OverflowGalleryTop: <WindowHeaderHorizontal20Regular />,
-  /* @conditional-compile-remove(gallery-layouts) */
   SpeakerGalleryLayout: <PersonSquare20Regular />,
-  /* @conditional-compile-remove(gallery-layouts) */
   DefaultGalleryLayout: <TableSimple20Regular />,
-  /* @conditional-compile-remove(gallery-layouts) */
   FloatingLocalVideoGalleryLayout: <BoardSplit20Regular />,
-  /* @conditional-compile-remove(gallery-layouts) */
   FocusedContentGalleryLayout: <ContentView20Regular />,
-  /* @conditional-compile-remove(gallery-layouts) */
   LargeGalleryLayout: <Table20Regular />,
-  /* @conditional-compile-remove(control-bar-button-injection) */
   DefaultCustomButton: <Circle20Regular />,
-  /* @conditional-compile-remove(dtmf-dialer) */
-  DtmfDialpadButton: <Dialpad20Regular />
+  DtmfDialpadButton: <Dialpad20Regular />,
+  /* @conditional-compile-remove(spotlight) */
+  PeoplePaneMoreButton: <MoreHorizontal20Filled />,
+  /* @conditional-compile-remove(spotlight) */
+  StopAllSpotlightMenuButton: <VideoPersonStarOff20Filled />
 };
 
 /**
@@ -194,13 +186,10 @@ export type CallCompositeIcons = {
   ControlButtonCameraProhibited?: JSX.Element;
   /* @conditional-compile-remove(capabilities) */
   ControlButtonMicProhibited?: JSX.Element;
-  /* @conditional-compile-remove(raise-hand) */
   ControlButtonRaiseHand?: JSX.Element;
-  /* @conditional-compile-remove(raise-hand) */
   ControlButtonLowerHand?: JSX.Element;
   /* @conditional-compile-remove(spotlight) */
   ControlButtonExitSpotlight?: JSX.Element;
-  /* @conditional-compile-remove(raise-hand) */
   RaiseHandContextualMenuItem?: JSX.Element;
   /* @conditional-compile-remove(reaction) */
   ReactionContextualMenuItem?: JSX.Element;
@@ -263,24 +252,19 @@ export type CallCompositeIcons = {
   BlurVideoBackground?: JSX.Element;
   /* @conditional-compile-remove(video-background-effects) */
   RemoveVideoBackgroundEffect?: JSX.Element;
-  /* @conditional-compile-remove(gallery-layouts) */
   GalleryOptions?: JSX.Element;
-  /* @conditional-compile-remove(gallery-layouts) */
   SpeakerGalleryLayout?: JSX.Element;
-  /* @conditional-compile-remove(gallery-layouts) */
   FloatingLocalVideoGalleryLayout?: JSX.Element;
-  /* @conditional-compile-remove(gallery-layouts) */
   DefaultGalleryLayout?: JSX.Element;
-  /* @conditional-compile-remove(gallery-layouts) */
   FocusedContentGalleryLayout?: JSX.Element;
-  /* @conditional-compile-remove(gallery-layouts) */
   OverflowGalleryTop?: JSX.Element;
-  /* @conditional-compile-remove(gallery-layouts) */
   LargeGalleryLayout?: JSX.Element;
-  /* @conditional-compile-remove(control-bar-button-injection) */
   DefaultCustomButton?: JSX.Element;
-  /* @conditional-compile-remove(dtmf-dialer) */
   DtmfDialpadButton?: JSX.Element;
+  /* @conditional-compile-remove(spotlight) */
+  PeoplePaneMoreButton?: JSX.Element;
+  /* @conditional-compile-remove(spotlight) */
+  StopAllSpotlightMenuButton?: JSX.Element;
 };
 
 /**
@@ -364,9 +348,7 @@ export type CallWithChatCompositeIcons = {
   PeoplePaneOpenDialpad?: JSX.Element;
   /* @conditional-compile-remove(PSTN-calls) */
   DialpadStartCall?: JSX.Element;
-  /* @conditional-compile-remove(control-bar-button-injection) */
   DefaultCustomButton?: JSX.Element;
-  /* @conditional-compile-remove(dtmf-dialer) */
   DtmfDialpadButton?: JSX.Element;
 
   // Chat icons
@@ -385,6 +367,11 @@ export type CallWithChatCompositeIcons = {
   // Icons common to Call and Chat.
   ParticipantItemOptions?: JSX.Element;
   ParticipantItemOptionsHovered?: JSX.Element;
+
+  /* @conditional-compile-remove(spotlight) */
+  PeoplePaneMoreButton?: JSX.Element;
+  /* @conditional-compile-remove(spotlight) */
+  StopAllSpotlightMenuButton?: JSX.Element;
 };
 
 /**

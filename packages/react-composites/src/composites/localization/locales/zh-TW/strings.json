@@ -52,6 +52,7 @@
     "peopleButtonLabel": "人員",
     "selectedPeopleButtonLabel": "已選取人員按鈕",
     "peoplePaneTitle": "人員",
+    "peoplePaneMoreButtonAriaLabel": "其他",
     "peopleButtonTooltipOpen": "顯示參與者",
     "peopleButtonTooltipClose": "隱藏參與者",
     "peoplePaneSubTitle": "在此通話 {numberOfPeople}",
@@ -65,6 +66,7 @@
     "stopSpotlightParticipantListMenuLabel": "停止聚焦",
     "stopSpotlightOnSelfParticipantListMenuLabel": "結束聚焦",
     "spotlightLimitReachedParticipantListMenuTitle": "已達焦點限制",
+    "stopAllSpotlightMenuLabel": "停止所有聚焦",
     "returnToCallButtonAriaDescription": "返回通話",
     "returnToCallButtonAriaLabel": "返回",
     "roomNotFoundDetails": "找不到提供的會議室識別碼。",
@@ -311,14 +313,16 @@
       "startSpotlightOnSelfText": "您將向會議中的每個人醒目提示您的影片。",
       "startSpotlightConfirmButtonLabel": "設為每個人的精選",
       "startSpotlightCancelButtonLabel": "取消",
-      "stopSpotlightHeading": "停止選為精選?",
+      "stopSpotlightHeading": "要停止聚焦這部影片嗎?",
       "stopSpotlightOnSelfHeading": "結束精選?",
       "stopSpotlightText": "不會再向會議中的每個人醒目提示該影片。",
       "stopSpotlightOnSelfText": "不會再向會議中的每個人醒目提示您的影片。",
       "stopSpotlightConfirmButtonLabel": "停止選為精選",
       "stopSpotlightOnSelfConfirmButtonLabel": "結束精選",
       "stopSpotlightCancelButtonLabel": "取消"
-    }
+    },
+    "exitSpotlightButtonLabel": "結束精選",
+    "exitSpotlightButtonTooltip": "結束精選"
   },
   "chat": {
     "chatListHeader": "在此聊天中",

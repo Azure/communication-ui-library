@@ -9,6 +9,8 @@ import {
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(acs-close-captions) */
+import { CaptionsInfo as AcsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { CallKind } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
@@ -27,15 +29,13 @@ import { CaptionsInfo } from './CallClientState';
 import { _isACSCall } from './TypeGuards';
 import { CallCommon, IncomingCallCommon } from './BetaToStableTypes';
 
-/* @conditional-compile-remove(video-background-effects) */ /* @conditional-compile-remove(optimal-video-count) */
+/* @conditional-compile-remove(video-background-effects) */
 import { Features } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoEffectName } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
 import { LocalVideoStreamVideoEffectsState } from './CallClientState';
-/* @conditional-compile-remove(raise-hand) */
 import { RaisedHand } from '@azure/communication-calling';
-/* @conditional-compile-remove(raise-hand) */
 import { RaisedHandState } from './CallClientState';
 
 /**
@@ -91,7 +91,6 @@ export function convertSdkParticipantToDeclarativeParticipant(
     videoStreams: declarativeVideoStreams,
     isMuted: participant.isMuted,
     isSpeaking: participant.isSpeaking,
-    /* @conditional-compile-remove(raise-hand) */
     raisedHand: undefined,
     /* @conditional-compile-remove(hide-attendee-name) */
     role: participant.role,
@@ -133,9 +132,10 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     remoteParticipants: declarativeRemoteParticipants,
     remoteParticipantsEnded: {},
     recording: { isRecordingActive: false },
+    /* @conditional-compile-remove(local-recording-notification) */
+    localRecording: { isLocalRecordingActive: false },
     /* @conditional-compile-remove(ppt-live) */
     pptLive: { isActive: false },
-    /* @conditional-compile-remove(raise-hand) */
     raiseHand: { raisedHands: [] },
     /* @conditional-compile-remove(reaction) */
     localParticipantReaction: undefined,
@@ -159,7 +159,6 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     transfer: {
       acceptedTransfers: {}
     },
-    /* @conditional-compile-remove(optimal-video-count) */
     optimalVideoCount: {
       maxRemoteVideoStreams: call.feature(Features.OptimalVideoCount).optimalVideoCount
     },
@@ -198,8 +197,19 @@ export function convertFromSDKToDeclarativeVideoStreamRendererView(
 /**
  * @private
  */
-export function convertFromSDKToCaptionInfoState(caption: TeamsCaptionsInfo): CaptionsInfo {
+export function convertFromTeamsSDKToCaptionInfoState(caption: TeamsCaptionsInfo): CaptionsInfo {
   return {
+    ...caption
+  };
+}
+
+/* @conditional-compile-remove(acs-close-captions) */
+/**
+ * @private
+ */
+export function convertFromSDKToCaptionInfoState(caption: AcsCaptionsInfo): CaptionsInfo {
+  return {
+    captionText: caption.spokenText,
     ...caption
   };
 }
@@ -214,7 +224,6 @@ export function convertFromSDKToDeclarativeVideoStreamVideoEffects(
   };
 }
 
-/* @conditional-compile-remove(raise-hand) */
 /**
  * @private
  */

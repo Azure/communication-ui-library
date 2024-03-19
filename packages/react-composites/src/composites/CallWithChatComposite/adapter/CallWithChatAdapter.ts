@@ -41,7 +41,6 @@ import { Reaction } from '@azure/communication-calling';
 import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
-/* @conditional-compile-remove(dtmf-dialer) */
 import { DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { SendMessageOptions } from '@azure/communication-chat';
@@ -191,14 +190,12 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   stopScreenShare(): Promise<void>;
-  /* @conditional-compile-remove(raise-hand) */
   /**
    * Raise hand for local user.
    *
    * @public
    */
   raiseHand(): Promise<void>;
-  /* @conditional-compile-remove(raise-hand) */
   /**
    * Lower hand for local user.
    *
@@ -402,10 +399,10 @@ export interface CallWithChatAdapterManagement {
   /** @beta */
   updateFileUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  /** @beta */
+  /** @public */
   downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  /** @beta */
+  /** @public */
   removeResourceFromCache(resourceDetails: ResourceDetails): void;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
@@ -430,7 +427,6 @@ export interface CallWithChatAdapterManagement {
   addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(dtmf-dialer) */
   /**
    * send dtmf tone to another participant in the call in 1:1 calls
    *
@@ -513,6 +509,11 @@ export interface CallWithChatAdapterManagement {
    * Stop spotlight
    */
   stopSpotlight(userIds?: string[]): Promise<void>;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Stop all spotlights
+   */
+  stopAllSpotlight(): Promise<void>;
 }
 
 /**

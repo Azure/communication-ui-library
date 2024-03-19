@@ -52,6 +52,7 @@
     "peopleButtonLabel": "사용자",
     "selectedPeopleButtonLabel": "사용자 단추 선택됨",
     "peoplePaneTitle": "사용자",
+    "peoplePaneMoreButtonAriaLabel": "더 보기",
     "peopleButtonTooltipOpen": "참가자 표시",
     "peopleButtonTooltipClose": "참가자 숨기기",
     "peoplePaneSubTitle": "이 통화에 {numberOfPeople}명",
@@ -65,6 +66,7 @@
     "stopSpotlightParticipantListMenuLabel": "스포트라이트 중지",
     "stopSpotlightOnSelfParticipantListMenuLabel": "스포트라이트 종료",
     "spotlightLimitReachedParticipantListMenuTitle": "스포트라이트 한도 도달",
+    "stopAllSpotlightMenuLabel": "모든 스포트라이트 중지",
     "returnToCallButtonAriaDescription": "통화로 돌아가기",
     "returnToCallButtonAriaLabel": "뒤로",
     "roomNotFoundDetails": "제공된 소회의실 ID를 찾을 수 없습니다.",
@@ -311,14 +313,16 @@
       "startSpotlightOnSelfText": "모임에 참석한 모든 사용자에 대해 비디오를 강조합니다.",
       "startSpotlightConfirmButtonLabel": "모든 사용자에게 스포트라이트",
       "startSpotlightCancelButtonLabel": "취소",
-      "stopSpotlightHeading": "스포트라이트를 중지하시겠습니까?",
+      "stopSpotlightHeading": "이 비디오 스포트라이트를 중지할까요?",
       "stopSpotlightOnSelfHeading": "스포트라이트를 종료하시겠습니까?",
       "stopSpotlightText": "모임에 참석한 모든 사용자에게 이 비디오가 더 이상 강조되지 않습니다.",
       "stopSpotlightOnSelfText": "모임에 참석한 모든 사용자에 대해 비디오가 더 이상 강조되지 않습니다.",
       "stopSpotlightConfirmButtonLabel": "스포트라이트 중지",
       "stopSpotlightOnSelfConfirmButtonLabel": "스포트라이트 종료",
       "stopSpotlightCancelButtonLabel": "취소"
-    }
+    },
+    "exitSpotlightButtonLabel": "스포트라이트 종료",
+    "exitSpotlightButtonTooltip": "스포트라이트 종료"
   },
   "chat": {
     "chatListHeader": "채팅 참가자",

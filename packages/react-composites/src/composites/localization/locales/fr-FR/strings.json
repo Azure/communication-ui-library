@@ -52,6 +52,7 @@
     "peopleButtonLabel": "Personnes",
     "selectedPeopleButtonLabel": "Bouton Contacts sélectionné",
     "peoplePaneTitle": "Personnes",
+    "peoplePaneMoreButtonAriaLabel": "Autres",
     "peopleButtonTooltipOpen": "Afficher les participants",
     "peopleButtonTooltipClose": "Masquer les participants",
     "peoplePaneSubTitle": "Dans cet appel {numberOfPeople}",
@@ -65,6 +66,7 @@
     "stopSpotlightParticipantListMenuLabel": "Arrêter la mise en évidence",
     "stopSpotlightOnSelfParticipantListMenuLabel": "Quitter la mise en évidence",
     "spotlightLimitReachedParticipantListMenuTitle": "Limite Spotlight atteinte",
+    "stopAllSpotlightMenuLabel": "Arrêtez tous les projecteurs",
     "returnToCallButtonAriaDescription": "Revenir à l’appel",
     "returnToCallButtonAriaLabel": "Précédent",
     "roomNotFoundDetails": "L’ID de la salle fourni est introuvable.",
@@ -311,14 +313,16 @@
       "startSpotlightOnSelfText": "Vous mettez en surbrillance votre vidéo pour tous les participants à la réunion.",
       "startSpotlightConfirmButtonLabel": "Mettre en évidence pour tout le monde",
       "startSpotlightCancelButtonLabel": "Annuler",
-      "stopSpotlightHeading": "Arrêter la mise en évidence ?",
+      "stopSpotlightHeading": "Arrêter la mise en évidence de cette vidéo ?",
       "stopSpotlightOnSelfHeading": "Quitter la mise en évidence ?",
       "stopSpotlightText": "Cette vidéo ne sera plus mise en évidence pour tous les participants à la réunion.",
       "stopSpotlightOnSelfText": "Votre vidéo ne sera plus mise en surbrillance pour tous les participants à la réunion.",
       "stopSpotlightConfirmButtonLabel": "Arrêter la mise en évidence",
       "stopSpotlightOnSelfConfirmButtonLabel": "Quitter la mise en évidence",
       "stopSpotlightCancelButtonLabel": "Annuler"
-    }
+    },
+    "exitSpotlightButtonLabel": "Quitter la mise en évidence",
+    "exitSpotlightButtonTooltip": "Quitter la mise en évidence"
   },
   "chat": {
     "chatListHeader": "Dans cette conversation",

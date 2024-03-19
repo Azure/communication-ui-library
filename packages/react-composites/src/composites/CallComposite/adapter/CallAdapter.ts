@@ -41,7 +41,6 @@ import type {
 import type { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
-/* @conditional-compile-remove(dtmf-dialer) */
 import { DtmfTone } from '@azure/communication-calling';
 import { CommunicationIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -529,14 +528,12 @@ export interface CallAdapterCallOperations {
    * @public
    */
   startScreenShare(): Promise<void>;
-  /* @conditional-compile-remove(raise-hand) */
   /**
    * Raise hand for current user
    *
    * @public
    */
   raiseHand(): Promise<void>;
-  /* @conditional-compile-remove(raise-hand) */
   /**
    * lower hand for current user
    *
@@ -645,7 +642,6 @@ export interface CallAdapterCallOperations {
   addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(dtmf-dialer) */
   /**
    * send dtmf tone to another participant in a 1:1 PSTN call
    *
@@ -727,6 +723,11 @@ export interface CallAdapterCallOperations {
    * Stop spotlight
    */
   stopSpotlight(userIds?: string[]): Promise<void>;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Stop all spotlights
+   */
+  stopAllSpotlight(): Promise<void>;
 }
 
 /**

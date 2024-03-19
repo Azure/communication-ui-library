@@ -1,5 +1,3 @@
-name: CI
-
 on:
   # Postsubmit CI on main.
   push:
@@ -49,7 +47,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 2 # this job requires depth of 2 for access to diff the SHA for change file check
       # Ensure node version is great enough
       - name: Use Node.js
         uses: actions/setup-node@v4
@@ -63,7 +61,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       # Install dependencies
       - name: Install rush
-        run: npm install -g @microsoft/rush
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       # Switch flavor if necessary
@@ -82,8 +80,9 @@ jobs:
 
       - name: Check the necessary change file has been submitted
         if: ${{ github.event_name == 'pull_request' }}
-        # GitHub provides remote branch names as refs.
-        run: node common/scripts/changelog/check.mjs origin/${{ github.base_ref }} origin/${{ github.head_ref }}
+        run: |
+          git fetch origin main:main --depth=2
+          node common/scripts/changelog/check.mjs ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }}
 
       # Perform lint check
       - name: Run linter
@@ -139,7 +138,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       # Ensure node version is great enough
       - name: Use Node.js
         uses: actions/setup-node@v4
@@ -153,9 +152,19 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       # Install dependencies
       - name: Install rush
-        run: npm install -g @microsoft/rush
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Install dependencies
         run: rush install --max-install-attempts 3
+      # Switch flavor if necessary
+      - name: Switch flavor for build
+        id: switch-flavor
+        if: ${{ matrix.flavor != 'beta' }}
+        run: |
+          rush switch-flavor:${{ matrix.flavor }}
+          node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
+      - name: Run dependency update for stable
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush update:stable
       - name: Build Packages
         run: rush build -t @azure/communication-react
       - name: Test Packages
@@ -172,7 +181,12 @@ jobs:
         # but it's still needed for the upload bundle report step when main is updated
         if: ${{ !startsWith(github.event.pull_request.base.ref, 'release/') }}
         run: npx nyc report --temp-dir temp/jest/current/merge/detailed-full/ --report-dir temp/jest/current/merge/summary/ --reporter json-summary
-
+      # Upload coverage report to review the merged report locally
+      - name: Upload detailed and summary jest coverage reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: jest-coverage-report-${{ matrix.flavor }}
+          path: temp/jest/current/merge/
       # Pull requests show details of coverage changes
       - name: Get jest tests coverage of main from gist
         if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
@@ -227,7 +241,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       # Ensure node version is great enough
       - name: Use Node.js
         uses: actions/setup-node@v4
@@ -241,7 +255,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       # Install dependencies
       - name: Install rush
-        run: npm install -g @microsoft/rush
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       # Switch flavor if necessary
@@ -283,7 +297,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -294,7 +308,7 @@ jobs:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - uses: browser-actions/setup-chrome@v1
@@ -363,7 +377,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -374,7 +388,7 @@ jobs:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - uses: browser-actions/setup-chrome@v1
@@ -443,7 +457,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -454,7 +468,7 @@ jobs:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - uses: browser-actions/setup-chrome@v1
@@ -520,7 +534,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -531,7 +545,7 @@ jobs:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - uses: browser-actions/setup-chrome@v1
@@ -547,6 +561,11 @@ jobs:
       - name: Run dependency update for stable
         if: ${{ matrix.flavor == 'stable' }}
         run: rush update:stable
+      # Build the packages
+      # This is needed because react-components depends on acs-ui-common and
+      # acs-ui-common specifies main/module variables in package.json
+      - name: Build Common Package
+        run: rush build -t acs-ui-common
       - name: Components Visual Regression Tests
         id: visualregressiontests
         run: |
@@ -579,7 +598,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -590,7 +609,7 @@ jobs:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - name: Build
@@ -608,7 +627,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -619,7 +638,7 @@ jobs:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       # Switch flavor if necessary
@@ -654,7 +673,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -665,7 +684,7 @@ jobs:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       # Switch flavor if necessary
@@ -700,7 +719,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -711,7 +730,7 @@ jobs:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       # Switch flavor if necessary
@@ -748,13 +767,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
       - name: Install rush
-        run: npm install -g @microsoft/rush
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - uses: browser-actions/setup-chrome@v1
@@ -812,13 +831,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
       - name: Install rush
-        run: npm install -g @microsoft/rush
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - uses: browser-actions/setup-chrome@v1

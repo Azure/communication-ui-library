@@ -97,11 +97,9 @@ export class _MockCallAdapter implements CallAdapter {
   stopScreenShare(): Promise<void> {
     throw Error('stopScreenShare not implemented');
   }
-  /* @conditional-compile-remove(raise-hand) */
   raiseHand(): Promise<void> {
     throw Error('raiseHand not implemented');
   }
-  /* @conditional-compile-remove(raise-hand) */
   lowerHand(): Promise<void> {
     throw Error('lowerHand not implemented');
   }
@@ -211,6 +209,10 @@ export class _MockCallAdapter implements CallAdapter {
   stopSpotlight(userIds?: string[]): Promise<void> {
     throw Error('stopSpotlight not implemented');
   }
+  /* @conditional-compile-remove(spotlight) */
+  stopAllSpotlight(): Promise<void> {
+    throw Error('stopAllSpotlight not implemented');
+  }
 }
 
 /**
@@ -229,6 +231,8 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
       direction: 'Incoming',
       transcription: { isTranscriptionActive: false },
       recording: { isRecordingActive: false },
+      /* @conditional-compile-remove(local-recording-notification) */
+      localRecording: { isLocalRecordingActive: false },
       startTime: new Date(500000000000),
       endTime: new Date(500000000000),
       diagnostics: { network: { latest: {} }, media: { latest: {} } },
@@ -238,7 +242,6 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
       isScreenSharingOn: false,
       remoteParticipants: {},
       remoteParticipantsEnded: {},
-      /* @conditional-compile-remove(raise-hand) */
       raiseHand: { raisedHands: [] },
       /* @conditional-compile-remove(ppt-live) */
       pptLive: { isActive: false },
@@ -260,7 +263,6 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
       transfer: {
         acceptedTransfers: {}
       },
-      /* @conditional-compile-remove(optimal-video-count) */
       optimalVideoCount: {
         maxRemoteVideoStreams: 4
       }

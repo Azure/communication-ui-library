@@ -64,7 +64,6 @@ export const LiveTestApp = (): JSX.Element => {
             name: file.name,
             extension: file.extension,
             url: file.url,
-            attachmentType: 'file',
             id: ''
           });
         } else if (file.error) {

@@ -59,6 +59,8 @@ export interface ReactionButtonProps extends ControlBarButtonProps {
 export interface ReactionButtonStrings {
   /** Label of the button. */
   label: string;
+  /** Aria label for reaction button accessibility announcement */
+  ariaLabel: string;
   /** Tooltip content when the button is disabled. */
   tooltipDisabledContent?: string;
   /** Tooltip content when the button is enabled. */
@@ -174,6 +176,7 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
       labelKey={props.labelKey ?? 'reactionButtonLabel'}
       onRenderMenuIcon={() => <div />}
       disabled={props.disabled}
+      ariaLabel={strings.ariaLabel}
     />
   );
 };

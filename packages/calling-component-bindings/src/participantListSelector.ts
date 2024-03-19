@@ -26,7 +26,6 @@ import { memoizedConvertAllremoteParticipantsBetaRelease } from './utils/partici
 import { memoizedConvertAllremoteParticipantsBeta } from './utils/participantListSelectorUtils';
 /* @conditional-compile-remove(spotlight) */
 import { memoizedSpotlight } from './utils/participantListSelectorUtils';
-/* @conditional-compile-remove(raise-hand) */
 import { getLocalParticipantRaisedHand } from './baseSelectors';
 /* @conditional-compile-remove(reaction) */
 import { getLocalParticipantReactionState } from './baseSelectors';
@@ -98,7 +97,6 @@ const convertRemoteParticipantsToParticipantListParticipants = (
             participant.isMuted,
             isScreenSharing,
             participant.isSpeaking,
-            /* @conditional-compile-remove(raise-hand) */
             participant.raisedHand,
             localUserCanRemoveOthers,
             /* @conditional-compile-remove(reaction) */
@@ -156,7 +154,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     getRemoteParticipantsExcludingConsumers,
     getIsScreenSharingOn,
     getIsMuted,
-    /* @conditional-compile-remove(raise-hand) */ getLocalParticipantRaisedHand,
+    getLocalParticipantRaisedHand,
     getRole,
     getParticipantCount,
     /* @conditional-compile-remove(hide-attendee-name) */
@@ -172,7 +170,6 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     remoteParticipants,
     isScreenSharingOn,
     isMuted,
-    /* @conditional-compile-remove(raise-hand) */
     raisedHand,
     role,
     partitipantCount,
@@ -207,7 +204,6 @@ export const participantListSelector: ParticipantListSelector = createSelector(
       displayName: displayName,
       isScreenSharing: isScreenSharingOn,
       isMuted: isMuted,
-      /* @conditional-compile-remove(raise-hand) */
       raisedHand: raisedHand,
       state: 'Connected',
       // Local participant can never remove themselves.

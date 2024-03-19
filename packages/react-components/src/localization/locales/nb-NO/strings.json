@@ -7,7 +7,8 @@
     "mutedIconLabel": "Dempet",
     "displayNamePlaceholder": "Deltaker uten navn",
     "participantStateRinging": "Ringer ...",
-    "participantStateHold": "På vent"
+    "participantStateHold": "På vent",
+    "attendeeRole": "Deltaker"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} flere"
@@ -27,6 +28,23 @@
     "removeFile": "Fjern fil",
     "uploading": "Laster opp",
     "uploadCompleted": "Opplasting fullført"
+  },
+  "richTextSendBox": {
+    "placeholderText": "Skriv en melding",
+    "textTooLong": "Meldingslengden er over maksimumsgrensen.",
+    "sendButtonAriaLabel": "Send melding",
+    "fileUploadsPendingError": "Laster opp ... Vent litt.",
+    "removeFile": "Fjern fil",
+    "uploading": "Laster opp",
+    "uploadCompleted": "Opplasting fullført",
+    "boldTooltip": "Fet",
+    "italicTooltip": "Kursiv",
+    "underlineTooltip": "Understreking",
+    "bulletListTooltip": "Punktliste",
+    "numberListTooltip": "Nummerert liste",
+    "increaseIndentTooltip": "Øk innrykk",
+    "decreaseIndentTooltip": "Reduser innrykk",
+    "richTextFormatButtonTooltip": "Format"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Forslag"
@@ -125,6 +143,7 @@
   },
   "reactionButton": {
     "label": "Reager",
+    "ariaLabel": "Reager-knapp, send en reaksjon",
     "tooltipDisabledContent": "Reaksjonshandling er deaktivert",
     "tooltipContent": "Send en reaksjon",
     "likeReactionTooltipContent": "Liker",
@@ -224,7 +243,8 @@
     "addSpotlightVideoTileMenuLabel": "Legg til rampelys",
     "spotlightLimitReachedMenuTitle": "Rampelys-grensen er nådd",
     "stopSpotlightVideoTileMenuLabel": "Fjern fra rampelyset",
-    "stopSpotlightOnSelfVideoTileMenuLabel": "Rampelys av"
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Rampelys av",
+    "attendeeRole": "Deltaker"
   },
   "dialpad": {
     "placeholderText": "Skriv inn telefonnummeret",
@@ -358,6 +378,5 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "forrige side",
     "rightNavButtonAriaLabel": "neste side"
-  },
-  "AttendeeRole": "Deltaker"
+  }
 }

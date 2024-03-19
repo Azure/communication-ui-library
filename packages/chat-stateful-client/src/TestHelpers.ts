@@ -122,7 +122,7 @@ export const messageTemplateWithResourceCache: ChatMessageWithStatus = {
   status: 'delivered',
   /* @conditional-compile-remove(data-loss-prevention) */
   policyViolation: false,
-  resourceCache: { resource1Url: 'blob:resource1', resource2Url: 'blob:resource2' }
+  resourceCache: { resource1Url: { sourceUrl: 'blob:resource1' }, resource2Url: { sourceUrl: 'blob:resource2' } }
 };
 /**
  * @private

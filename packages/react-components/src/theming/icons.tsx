@@ -56,13 +56,14 @@ import {
   TextNumberListLtr20Regular,
   TextIndentDecrease20Regular,
   TextIndentIncrease20Regular,
-  DividerTall24Regular
+  DividerTall24Regular,
+  TextEditStyle20Regular,
+  TextEditStyle20Filled
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(reaction) */
 import { Emoji20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { Star28Regular, Star28Filled } from '@fluentui/react-icons';
-/* @conditional-compile-remove(raise-hand) */
 import {
   HandRight20Filled,
   HandRightOff20Filled,
@@ -273,13 +274,9 @@ export const DEFAULT_COMPONENT_ICONS = {
   ControlButtonParticipantsContextualMenuItem: <People20Regular />,
   ControlButtonScreenShareStart: <ShareScreenStart20Filled />,
   ControlButtonScreenShareStop: <ShareScreenStop20Filled />,
-  /* @conditional-compile-remove(raise-hand) */
   ControlButtonRaiseHand: <ControlButtonRaiseHandIcon />,
-  /* @conditional-compile-remove(raise-hand) */
   ControlButtonLowerHand: <ControlButtonLowerHandIcon />,
-  /* @conditional-compile-remove(raise-hand) */
   RaiseHandContextualMenuItem: <HandRight20Regular />,
-  /* @conditional-compile-remove(raise-hand) */
   LowerHandContextualMenuItem: <HandRightOff20Regular />,
   /* @conditional-compile-remove(reaction) */
   ReactionButtonIcon: <Emoji20Regular />,
@@ -390,19 +387,23 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(spotlight) */
   VideoSpotlighted: <VideoPersonStar20Filled style={{ height: '16px', width: '16px' }} />,
   /* @conditional-compile-remove(rich-text-editor) */
-  RTEBoldButtonIcon: <TextBold20Regular />,
+  RichTextBoldButtonIcon: <TextBold20Regular />,
   /* @conditional-compile-remove(rich-text-editor) */
-  RTEItalicButtonIcon: <TextItalic20Regular />,
+  RichTextItalicButtonIcon: <TextItalic20Regular />,
   /* @conditional-compile-remove(rich-text-editor) */
-  RTEUnderlineButtonIcon: <TextUnderlineCharacterU20Regular />,
+  RichTextUnderlineButtonIcon: <TextUnderlineCharacterU20Regular />,
   /* @conditional-compile-remove(rich-text-editor) */
-  RTEBulletListButtonIcon: <TextBulletList20Regular />,
+  RichTextBulletListButtonIcon: <TextBulletList20Regular />,
   /* @conditional-compile-remove(rich-text-editor) */
-  RTEtNumberListButtonIcon: <TextNumberListLtr20Regular />,
+  RichTextNumberListButtonIcon: <TextNumberListLtr20Regular />,
   /* @conditional-compile-remove(rich-text-editor) */
-  RTEIndentDecreaseButtonIcon: <TextIndentDecrease20Regular />,
+  RichTextIndentDecreaseButtonIcon: <TextIndentDecrease20Regular />,
   /* @conditional-compile-remove(rich-text-editor) */
-  RTEIndentIncreaseButtonIcon: <TextIndentIncrease20Regular />,
+  RichTextIndentIncreaseButtonIcon: <TextIndentIncrease20Regular />,
   /* @conditional-compile-remove(rich-text-editor) */
-  RTEDividerIcon: <DividerTall24Regular />
+  RichTextDividerIcon: <DividerTall24Regular />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RichTextEditorButtonIcon: <TextEditStyle20Regular />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RichTextEditorButtonIconFilled: <TextEditStyle20Filled />
 };

@@ -7,7 +7,8 @@
     "mutedIconLabel": "Mykistetty",
     "displayNamePlaceholder": "Nimetön osallistuja",
     "participantStateRinging": "Soitetaan...",
-    "participantStateHold": "Pidossa"
+    "participantStateHold": "Pidossa",
+    "attendeeRole": "Osallistuja"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} lisää"
@@ -27,6 +28,23 @@
     "removeFile": "Poista tiedosto",
     "uploading": "Ladataan palvelimeen",
     "uploadCompleted": "Ladattu palvelimeen"
+  },
+  "richTextSendBox": {
+    "placeholderText": "Kirjoita viesti",
+    "textTooLong": "Viestin pituus ylittää enimmäispituuden.",
+    "sendButtonAriaLabel": "Lähetä viesti",
+    "fileUploadsPendingError": "Ladataan... Odota.",
+    "removeFile": "Poista tiedosto",
+    "uploading": "Ladataan",
+    "uploadCompleted": "Lataus valmis",
+    "boldTooltip": "Lihavoi",
+    "italicTooltip": "Kursivointi",
+    "underlineTooltip": "Alleviivaa",
+    "bulletListTooltip": "Luettelomerkeillä varustettu luettelo",
+    "numberListTooltip": "Numeroitu luettelo",
+    "increaseIndentTooltip": "Suurenna sisennystä",
+    "decreaseIndentTooltip": "Pienennä sisennystä",
+    "richTextFormatButtonTooltip": "Muoto"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Ehdotuksia"
@@ -125,6 +143,7 @@
   },
   "reactionButton": {
     "label": "Reagoi",
+    "ariaLabel": "Reagoi-painike, lähetä reaktio",
     "tooltipDisabledContent": "Reaktiotoiminto on poistettu käytöstä",
     "tooltipContent": "Lähetä reaktio",
     "likeReactionTooltipContent": "Tykkää",
@@ -224,7 +243,8 @@
     "addSpotlightVideoTileMenuLabel": "Lisää valokeilaan",
     "spotlightLimitReachedMenuTitle": "Spotlight-raja saavutettu",
     "stopSpotlightVideoTileMenuLabel": "Poista valokeilasta",
-    "stopSpotlightOnSelfVideoTileMenuLabel": "Valokeila"
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Valokeila",
+    "attendeeRole": "Osallistuja"
   },
   "dialpad": {
     "placeholderText": "Anna puhelinnumero",
@@ -358,6 +378,5 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "edellinen sivu",
     "rightNavButtonAriaLabel": "seuraava sivu"
-  },
-  "AttendeeRole": "Osallistuja"
+  }
 }

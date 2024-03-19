@@ -14,10 +14,9 @@ type SmartDominantSpeakerParticipantsArgs = {
    */
   dominantSpeakers?: string[];
   /**
-   * Array containing currently rendered (visible)
-   * participants in the call. {@link @azure/communication-react#VideoGalleryRemoteParticipant}
+   * Array containing the current participants in the call. {@link @azure/communication-react#VideoGalleryRemoteParticipant}
    */
-  lastVisibleParticipants?: VideoGalleryRemoteParticipant[];
+  currentParticipants?: VideoGalleryRemoteParticipant[];
   /**
    * Maximum number of dominant speaker positions to move participants in.
    */
@@ -33,7 +32,7 @@ type SmartDominantSpeakerParticipantsArgs = {
 export const smartDominantSpeakerParticipants = (
   args: SmartDominantSpeakerParticipantsArgs
 ): VideoGalleryRemoteParticipant[] => {
-  const { participants, dominantSpeakers = [], lastVisibleParticipants = [], maxDominantSpeakers } = args;
+  const { participants, dominantSpeakers = [], currentParticipants = [], maxDominantSpeakers } = args;
 
   // Don't apply any logic if total number of video streams is less than max dominant speakers.
   if (participants.length <= maxDominantSpeakers) {
@@ -45,7 +44,7 @@ export const smartDominantSpeakerParticipants = (
   // Only use the Max allowed dominant speakers that exist in participants
   const dominantSpeakerIds = dominantSpeakers.filter((id) => !!participantsMap[id]).slice(0, maxDominantSpeakers);
 
-  const newVisibleParticipantIds = lastVisibleParticipants.map((p) => p.userId).slice(0, maxDominantSpeakers);
+  const newVisibleParticipantIds = currentParticipants.map((p) => p.userId).slice(0, maxDominantSpeakers);
   const newDominantSpeakerIds = dominantSpeakerIds.filter((id) => !newVisibleParticipantIds.includes(id));
 
   // Remove participants that are no longer dominant and replace them with new dominant speakers.
