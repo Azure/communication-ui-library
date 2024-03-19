@@ -22,6 +22,8 @@ import { RaisedHand } from '../types';
 import { useTheme } from '../theming';
 /* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '../types/ReactionTypes';
+/* @conditional-compile-remove(reaction) */
+import { MeetingReactionOverlay } from './MeetingReactionOverlay';
 /**
  * A memoized version of VideoTile for rendering local participant.
  *
@@ -155,6 +157,12 @@ export const _LocalVideoTile = React.memo(
       /* @conditional-compile-remove(spotlight) */ spotlightBorder
     ]);
 
+    /* @conditional-compile-remove(reaction) */
+    const reactionOverlay =
+      reactionResources !== undefined ? (
+        <MeetingReactionOverlay overlayMode="grid-tiles" reaction={reaction} reactionResources={reactionResources} />
+      ) : undefined;
+
     return (
       <>
         <VideoTile
@@ -171,12 +179,10 @@ export const _LocalVideoTile = React.memo(
           personaMinSize={props.personaMinSize}
           /* @conditional-compile-remove(raise-hand) */
           raisedHand={raisedHand}
-          /* @conditional-compile-remove(reaction) */
-          reaction={reaction}
           /* @conditional-compile-remove(spotlight) */
           isSpotlighted={isSpotlighted}
           /* @conditional-compile-remove(reaction) */
-          reactionResources={reactionResources}
+          reactionOverlay={reactionOverlay}
         />
         {/* @conditional-compile-remove(spotlight) */ isSpotlighted && spotlightBorder}
       </>

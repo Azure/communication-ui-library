@@ -4,11 +4,14 @@
 import { Spinner, SpinnerSize, Stack } from '@fluentui/react';
 import React, { useEffect } from 'react';
 import { useLocale } from '../../localization';
-import { StreamMedia } from '../StreamMedia';
 import { VideoTile } from '../VideoTile';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '../../types';
+/* @conditional-compile-remove(reaction) */
+import { ReactionResources, VideoGalleryLocalParticipant, VideoGalleryRemoteParticipant } from '../../types';
 import { loadingStyle } from './styles/RemoteScreenShare.styles';
 import { _formatString } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(reaction) */
+import { MeetingReactionOverlay } from '../MeetingReactionOverlay';
 
 /**
  * A memoized version of VideoTile for rendering the remote screen share stream. React.memo is used for a performance
@@ -28,8 +31,14 @@ export const RemoteScreenShare = React.memo(
     isReceiving?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
-    renderElement?: HTMLElement;
+    renderElement?: JSX.Element | null;
     participantVideoScalingMode?: VideoStreamOptions;
+    /* @conditional-compile-remove(reaction) */
+    reactionResources?: ReactionResources;
+    /* @conditional-compile-remove(reaction) */
+    localParticipant?: VideoGalleryLocalParticipant;
+    /* @conditional-compile-remove(reaction) */
+    remoteParticipants?: VideoGalleryRemoteParticipant[];
   }) => {
     const {
       userId,
@@ -38,8 +47,13 @@ export const RemoteScreenShare = React.memo(
       renderElement,
       onCreateRemoteStreamView,
       onDisposeRemoteStreamView,
-      isReceiving,
-      participantVideoScalingMode
+      participantVideoScalingMode,
+      /* @conditional-compile-remove(reaction) */
+      reactionResources,
+      /* @conditional-compile-remove(reaction) */
+      localParticipant,
+      /* @conditional-compile-remove(reaction) */
+      remoteParticipants
     } = props;
     const locale = useLocale();
 
@@ -72,12 +86,17 @@ export const RemoteScreenShare = React.memo(
       <VideoTile
         displayName={displayName}
         isMuted={isMuted}
-        renderElement={
-          renderElement ? (
-            <StreamMedia videoStreamElement={renderElement} loadingState={isReceiving === false ? 'loading' : 'none'} />
-          ) : undefined
-        }
+        renderElement={renderElement}
         onRenderPlaceholder={() => <LoadingSpinner loadingMessage={loadingMessage} />}
+        /* @conditional-compile-remove(reaction) */
+        reactionOverlay={
+          <MeetingReactionOverlay
+            reactionResources={reactionResources!}
+            localParticipant={localParticipant}
+            remoteParticipants={remoteParticipants}
+            overlayMode="screen-share"
+          />
+        }
       />
     );
   }

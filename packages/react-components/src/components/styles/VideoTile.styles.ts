@@ -195,7 +195,7 @@ export const playFrames = memoizeFunction(() =>
 /**
  * @private
  */
-export const reactionRenderingStyle = (args: { spriteImageUrl: string; personaSize: number }): string => {
+export const reactionRenderingStyle = (args: { spriteImageUrl: string; emojiSize: number }): string => {
   const imageUrl = `url(${args.spriteImageUrl})`;
   return mergeStyles({
     height: '100%',
@@ -211,6 +211,6 @@ export const reactionRenderingStyle = (args: { spriteImageUrl: string; personaSi
     justifyContent: 'center',
     alignItems: 'center',
     backgroundPosition: `center`,
-    transform: `scale(${84 < args.personaSize ? 84 / args.personaSize : args.personaSize / 84})`
+    transform: `scale(${84 < args.emojiSize ? 84 / args.emojiSize : args.emojiSize / 84})`
   });
 };

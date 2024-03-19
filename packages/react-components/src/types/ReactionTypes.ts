@@ -48,3 +48,10 @@ export interface ReactionResources {
    */
   surprisedReaction?: ReactionSprite;
 }
+
+//* @conditional-compile-remove(reaction) */
+/**
+ * Options for overlay mode for reaction rendering
+ * @internal
+ */
+export type OverlayModeTypes = 'grid-tiles' | 'screen-share' | 'content-share' | 'together-mode';

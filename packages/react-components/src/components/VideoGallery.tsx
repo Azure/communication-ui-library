@@ -3,7 +3,7 @@
 
 import { concatStyleSets, IStyle, mergeStyles, Stack } from '@fluentui/react';
 import React, { useCallback, useMemo, useRef } from 'react';
-import { GridLayoutStyles } from '.';
+import { GridLayoutStyles, StreamMedia } from '.';
 import { Announcer } from './Announcer';
 import { useEffect } from 'react';
 import { useLocale } from '../localization';
@@ -669,14 +669,26 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
   const localScreenShareStreamComponent = <LocalScreenShare localParticipant={localParticipant} />;
 
+  const htmlRenderElement = screenShareParticipant?.screenShareStream?.renderElement;
+  const isReceiving = screenShareParticipant?.screenShareStream?.isReceiving;
+  const jsxRenderElement = htmlRenderElement ? (
+    <StreamMedia videoStreamElement={htmlRenderElement} loadingState={isReceiving === false ? 'loading' : 'none'} />
+  ) : undefined;
+
   const remoteScreenShareComponent = screenShareParticipant && (
     <RemoteScreenShare
       {...screenShareParticipant}
-      renderElement={screenShareParticipant.screenShareStream?.renderElement}
+      renderElement={jsxRenderElement}
       onCreateRemoteStreamView={onCreateRemoteStreamView}
       onDisposeRemoteStreamView={onDisposeRemoteScreenShareStreamView}
       isReceiving={screenShareParticipant.screenShareStream?.isReceiving}
       participantVideoScalingMode={selectedScalingModeState[screenShareParticipant.userId]}
+      /* @conditional-compile-remove(reaction) */
+      localParticipant={localParticipant}
+      /* @conditional-compile-remove(reaction) */
+      remoteParticipants={remoteParticipants}
+      /* @conditional-compile-remove(reaction) */
+      reactionResources={reactionResources}
     />
   );
 
