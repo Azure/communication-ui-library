@@ -64,6 +64,6 @@
     "react": "18.2.0",
     "rimraf": "^2.6.2",
     "rollup": "^4.12.1",
-    "typescript": "5.3.3"
+    "typescript": "5.4.2"
   }
 }

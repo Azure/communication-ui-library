@@ -3,32 +3,19 @@
 
 import { MessageStatus, _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useMemo } from 'react';
-import { MessageProps, _ChatMessageProps } from '../MessageThread';
-import { ChatMessage } from '../../types';
+import { MessageProps, _ChatMessageProps } from '../../MessageThread';
+import { ChatMessage } from '../../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
-import { BlockedMessage } from '../../types';
-import {
-  gutterWithAvatar,
-  gutterWithHiddenAvatar,
-  noMessageStatusStyle,
-  useChatMessageRenderStyles
-} from '../styles/MessageThread.styles';
-import { IPersona, PersonaSize, mergeStyles, Persona } from '@fluentui/react';
+import { BlockedMessage } from '../../../types';
+import { noMessageStatusStyle, useChatMessageRenderStyles } from '../../styles/MessageThread.styles';
+import { mergeStyles } from '@fluentui/react';
 import { mergeClasses } from '@fluentui/react-components';
-import { createStyleFromV8Style } from '../styles/v8StyleShim';
-import { MessageStatusIndicatorProps } from '../MessageStatusIndicator';
-import { ChatMessageComponentWrapperProps } from './ChatMessageComponentWrapper';
-import { ChatMessageComponent } from './ChatMessageComponent';
-import { ChatMessage as FluentChatMessage, ChatMyMessage as FluentChatMyMessage } from '@fluentui-contrib/react-chat';
-
-/**
- * Props for {@link FluentChatMessageComponentWrapper}
- *
- * @private
- */
-type FluentChatMessageComponentWrapperProps = ChatMessageComponentWrapperProps & {
-  message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
-};
+import { createStyleFromV8Style } from '../../styles/v8StyleShim';
+import { MessageStatusIndicatorProps } from '../../MessageStatusIndicator';
+import { ChatMyMessageComponent } from './ChatMyMessageComponent';
+import { ChatMyMessage as FluentChatMyMessage } from '@fluentui-contrib/react-chat';
+import { getFluentUIAttachedValue } from '../../utils/ChatMessageComponentUtils';
+import type { FluentChatMessageComponentWrapperProps } from '../MessageComponents/FluentChatMessageComponent';
 
 /**
  * The component for rendering a chat message using Fluent UI components
@@ -38,7 +25,7 @@ type FluentChatMessageComponentWrapperProps = ChatMessageComponentWrapperProps &
  *
  * @private
  */
-export const FluentChatMessageComponentWrapper = (props: FluentChatMessageComponentWrapperProps): JSX.Element => {
+export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWrapperProps): JSX.Element => {
   const {
     message,
     styles,
@@ -81,7 +68,7 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
         /* @conditional-compile-remove(data-loss-prevention) */ messageProps.message.messageType === 'blocked'
       ) {
         return (
-          <ChatMessageComponent
+          <ChatMyMessageComponent
             {...messageProps}
             /* @conditional-compile-remove(file-sharing) */
             onRenderFileDownloads={onRenderFileDownloadsMemo}
@@ -166,13 +153,9 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
     [message, statusToRender]
   );
 
-  const shouldShowAvatar = useMemo(() => {
-    return message.attached === 'top' || message.attached === false;
-  }, [message.attached]);
-
   const attached = useMemo(() => {
-    return shouldShowAvatar ? 'top' : 'center';
-  }, [shouldShowAvatar]);
+    return getFluentUIAttachedValue(message.attached);
+  }, [message.attached]);
 
   const myMessageRootProps = useMemo(() => {
     return {
@@ -231,76 +214,18 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
     styles
   ]);
 
-  const messageRootProps = useMemo(() => {
-    return { className: mergeClasses(chatMessageRenderStyles.rootMessage, chatMessageRenderStyles.rootCommon) };
-  }, [chatMessageRenderStyles.rootCommon, chatMessageRenderStyles.rootMessage]);
-
-  const messageBodyProps = useMemo(() => {
-    return {
-      // chatItemMessageContainer used in className and style prop as style prop can't handle CSS selectors
-      className: mergeClasses(
-        chatMessageRenderStyles.bodyCommon,
-        !shouldShowAvatar ? chatMessageRenderStyles.bodyWithoutAvatar : chatMessageRenderStyles.bodyWithAvatar,
-        shouldOverlapAvatarAndMessage ? chatMessageRenderStyles.avatarOverlap : chatMessageRenderStyles.avatarNoOverlap,
-        mergeStyles(styles?.chatItemMessageContainer)
-      ),
-      style:
-        styles?.chatItemMessageContainer !== undefined ? createStyleFromV8Style(styles?.chatItemMessageContainer) : {},
-      // make body not focusable to remove repetitions from narrators.
-      // inner components are already focusable
-      tabIndex: -1,
-      role: 'none'
-    };
-  }, [
-    chatMessageRenderStyles.avatarNoOverlap,
-    chatMessageRenderStyles.avatarOverlap,
-    chatMessageRenderStyles.bodyCommon,
-    chatMessageRenderStyles.bodyWithAvatar,
-    chatMessageRenderStyles.bodyWithoutAvatar,
-    shouldOverlapAvatarAndMessage,
-    shouldShowAvatar,
-    styles?.chatItemMessageContainer
-  ]);
-
-  const avatar = useMemo(() => {
-    const chatAvatarStyle = shouldShowAvatar ? gutterWithAvatar : gutterWithHiddenAvatar;
-    const personaOptions: IPersona = {
-      hidePersonaDetails: true,
-      size: PersonaSize.size32,
-      text: message.senderDisplayName,
-      showOverflowTooltip: false
-    };
-    return (
-      <div className={mergeStyles(chatAvatarStyle)}>
-        {onRenderAvatar ? onRenderAvatar?.(message.senderId, personaOptions) : <Persona {...personaOptions} />}
-      </div>
-    );
-  }, [message.senderDisplayName, message.senderId, onRenderAvatar, shouldShowAvatar]);
-
   // Fluent UI message components are used here as for default message renderer,
   // timestamp and author name should be shown but they aren't shown for custom renderer.
   // More investigations are needed to check if this can be simplified with states.
   // Status and avatar should be shown for both custom and default renderers.
-  if (message.mine === true) {
-    return (
-      <div>
-        <FluentChatMyMessage
-          attached={attached}
-          root={myMessageRootProps}
-          body={myMessageBodyProps}
-          statusIcon={myMessageStatusIcon}
-        >
-          {messageRenderer({ ...props })}
-        </FluentChatMyMessage>
-      </div>
-    );
-  } else {
-    return (
-      <div>
-        <FluentChatMessage attached={attached} root={messageRootProps} body={messageBodyProps} avatar={avatar}>
-          {messageRenderer({ ...props })}
-        </FluentChatMessage>
-      </div>
-    );
-  }
+  return (
+    <FluentChatMyMessage
+      attached={attached}
+      root={myMessageRootProps}
+      body={myMessageBodyProps}
+      statusIcon={myMessageStatusIcon}
+    >
+      {messageRenderer({ ...props })}
+    </FluentChatMyMessage>
+  );
 };
