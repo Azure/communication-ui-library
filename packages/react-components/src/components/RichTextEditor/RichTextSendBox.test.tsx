@@ -22,7 +22,8 @@ describe('RichTextSendBox should return text correctly', () => {
         richtextnumberlistbuttonicon: <></>,
         richtextindentdecreasebuttonicon: <></>,
         richtextindentincreasebuttonicon: <></>,
-        richtextdividericon: <></>
+        richtextdividericon: <></>,
+        richtexteditorbuttonicon: <></>
       }
     });
   });
@@ -72,7 +73,8 @@ describe('RichTextSendBox should work with localization', () => {
         richtextnumberlistbuttonicon: <></>,
         richtextindentdecreasebuttonicon: <></>,
         richtextindentincreasebuttonicon: <></>,
-        richtextdividericon: <></>
+        richtextdividericon: <></>,
+        richtexteditorbuttonicon: <></>
       }
     });
   });
