@@ -20,7 +20,7 @@ export interface _AttachmentCardGroupProps {
  * This is a workaround to avoid this issue.
  */
 
-const fileCardGroupClassName = mergeStyles({
+const attachmentCardGroupClassName = mergeStyles({
   flexFlow: 'row wrap',
   '& > *': {
     margin: _pxToRem(2)
@@ -45,7 +45,7 @@ export const _AttachmentCardGroup = (props: _AttachmentCardGroupProps): JSX.Elem
   }
 
   return (
-    <Stack horizontal className={fileCardGroupClassName} aria-label={ariaLabel}>
+    <Stack horizontal className={attachmentCardGroupClassName} aria-label={ariaLabel}>
       {children}
     </Stack>
   );

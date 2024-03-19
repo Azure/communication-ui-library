@@ -38,18 +38,18 @@ describe('AttachmentCardGroup should be rendered properly', () => {
     const props = {
       children: (
         <>
-          <_AttachmentCard fileName={'MockAttachmentCard'} fileExtension={'docx'} />
-          <_AttachmentCard fileName={'MockSecondAttachmentCard'} fileExtension={'docx'} />
+          <_AttachmentCard attachmentName={'MockAttachmentCard'} attachmentExtension={'docx'} />
+          <_AttachmentCard attachmentName={'MockSecondAttachmentCard'} attachmentExtension={'docx'} />
         </>
       ),
       ariaLabel: 'MockAttachmentCardGroup'
     };
 
     renderAttachmentCardGroupWithDefaults(props);
-    const fileCard = screen.findByText('MockAttachmentCard');
+    const attachmentCard = screen.findByText('MockAttachmentCard');
     const secondAttachmentCard = screen.findByText('MockSecondAttachmentCard');
 
-    expect(fileCard).toBeDefined();
+    expect(attachmentCard).toBeDefined();
     expect(secondAttachmentCard).toBeDefined();
   });
 });

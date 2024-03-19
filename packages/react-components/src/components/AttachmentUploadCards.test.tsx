@@ -10,7 +10,7 @@ describe('FileUploadCards should be rendered properly', () => {
   beforeEach(() => {
     registerIcons({
       icons: {
-        cancelfileupload: <></>,
+        cancelattachmentupload: <></>,
         genericfile24_svg: <></>
       }
     });

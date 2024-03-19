@@ -22,7 +22,7 @@ export type ChatAttachmentType =
   | /* @conditional-compile-remove(file-sharing) */ 'file';
 
 /**
- * Metadata containing basic information about the uploaded file.
+ * Metadata containing basic information about the uploaded attachment.
  *
  * @beta
  */
@@ -34,7 +34,7 @@ export interface AttachmentMetadata {
    */
   extension: string;
   /**
-   * Unique ID of the file.
+   * Unique ID of the attachment.
    */
   /* @conditional-compile-remove(file-sharing) */
   id: string;
@@ -43,12 +43,12 @@ export interface AttachmentMetadata {
    */
   name: string;
   /**
-   * Download URL for the file.
+   * Download URL for the attachment.
    */
   url: string;
   /* @conditional-compile-remove(file-sharing) */
   /*
-   * Optional dictionary of meta data associated with the file.
+   * Optional dictionary of meta data associated with the attachment.
    */
   payload?: Record<string, string>;
 }
@@ -59,14 +59,14 @@ export interface AttachmentMetadata {
  * @internal
  */
 export interface _AttachmentDownloadCardsStrings {
-  /** Aria label to notify user when focus is on file download button. */
+  /** Aria label to notify user when focus is on attachment download button. */
   downloadFile: string;
   fileCardGroupMessage: string;
 }
 
 /**
  * @beta
- * A file download error returned via a {@link FileDownloadHandler}.
+ * A attachment download error returned via a {@link FileDownloadHandler}.
  * This error message is used to render an error message in the UI.
  */
 export interface FileDownloadError {
@@ -77,17 +77,17 @@ export interface FileDownloadError {
 /**
  * @beta
  *
- * A callback function for handling file downloads.
- * The function needs to return a promise that resolves to a file download URL.
+ * A callback function for handling attachment downloads.
+ * The function needs to return a promise that resolves to a attachment download URL.
  * If the promise is rejected, the {@link Error.message} will be used to display an error message to the user.
  *
  * @example
  * ```ts
- * const fileDownloadHandler: FileDownloadHandler = async (userId, fileData) => {
+ * const attachmentDownloadHandler: FileDownloadHandler = async (userId, attachmentData) => {
  *   if (isUnauthorizedUser(userId)) {
- *     return { errorMessage: 'You don’t have permission to download this file.' };
+ *     return { errorMessage: 'You don’t have permission to download this attachment.' };
  *   } else {
- *     return new URL(fileData.url);
+ *     return new URL(attachmentData.url);
  *   }
  * }
  *
@@ -101,7 +101,7 @@ export interface FileDownloadError {
  * )
  *
  * ```
- * @param userId - The user ID of the user downloading the file.
+ * @param userId - The user ID of the user downloading the attachment.
  * @param fileMetadata - The {@link AttachmentMetadata} containing file `url`, `extension` and `name`.
  */
 export type FileDownloadHandler = (
@@ -122,8 +122,8 @@ export interface _AttachmentDownloadCardsProps {
    */
   fileMetadata?: AttachmentMetadata[];
   /**
-   * A function of type {@link FileDownloadHandler} for handling file downloads.
-   * If the function is not specified, the file's `url` will be opened in a new tab to
+   * A function of type {@link FileDownloadHandler} for handling attachment downloads.
+   * If the function is not specified, the attachment's `url` will be opened in a new tab to
    * initiate the download.
    */
   downloadHandler?: FileDownloadHandler;
@@ -132,12 +132,12 @@ export interface _AttachmentDownloadCardsProps {
    */
   onDownloadErrorMessage?: (errMsg: string) => void;
   /**
-   * Optional aria label strings for file download cards
+   * Optional aria label strings for attachment download cards
    */
   strings?: _AttachmentDownloadCardsStrings;
 }
 
-const fileDownloadCardsStyle = {
+const attachmentDownloadCardsStyle = {
   marginTop: '0.25rem'
 };
 
@@ -209,26 +209,26 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
   }
 
   return (
-    <div style={fileDownloadCardsStyle} data-ui-id="file-download-card-group">
+    <div style={attachmentDownloadCardsStyle} data-ui-id="file-download-card-group">
       <_AttachmentCardGroup ariaLabel={fileCardGroupDescription()}>
         {fileMetadata &&
-          fileMetadata.map((file) => (
-            <TooltipHost content={downloadFileButtonString()} key={file.name}>
+          fileMetadata.map((attachment) => (
+            <TooltipHost content={downloadFileButtonString()} key={attachment.name}>
               <_AttachmentCard
-                fileName={file.name}
-                key={file.name}
-                fileExtension={file.extension}
+                attachmentName={attachment.name}
+                key={attachment.name}
+                attachmentExtension={attachment.extension}
                 actionIcon={
                   showSpinner ? (
                     <Spinner size={SpinnerSize.medium} aria-live={'polite'} role={'status'} />
                   ) : true &&
-                    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ isShowDownloadIcon(file) ? (
+                    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ isShowDownloadIcon(attachment) ? (
                     <IconButton className={iconButtonClassName} ariaLabel={downloadFileButtonString()}>
                       <DownloadIconTrampoline />
                     </IconButton>
                   ) : undefined
                 }
-                actionHandler={() => fileDownloadHandler(userId, file)}
+                actionHandler={() => fileDownloadHandler(userId, attachment)}
               />
             </TooltipHost>
           ))}

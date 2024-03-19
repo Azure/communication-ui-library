@@ -12,7 +12,7 @@ import { useLocaleAttachmentCardStringsTrampoline } from './utils/common';
 import { SendBoxErrorBarError } from './SendBoxErrorBar';
 
 /**
- * Attributes required for SendBox to show file uploads like name, progress etc.
+ * Attributes required for SendBox to show attachment uploads like name, progress etc.
  * @beta
  */
 export interface ActiveFileUpload {
@@ -53,11 +53,11 @@ export interface ActiveFileUpload {
  * @internal
  */
 export interface _AttachmentUploadCardsStrings {
-  /** Aria label to notify user when focus is on cancel file upload button. */
+  /** Aria label to notify user when focus is on cancel attachment upload button. */
   removeFile: string;
-  /** Aria label to notify user file uploading starts. */
+  /** Aria label to notify user attachment uploading starts. */
   uploading: string;
-  /** Aria label to notify user file is uploaded. */
+  /** Aria label to notify user attachment is uploaded. */
   uploadCompleted: string;
 }
 
@@ -66,17 +66,17 @@ export interface _AttachmentUploadCardsStrings {
  */
 export interface FileUploadCardsProps {
   /**
-   * Optional array of active file uploads where each object has attibutes
-   * of a file upload like name, progress, errormessage etc.
+   * Optional array of active attachment uploads where each object has attibutes
+   * of a attachment upload like name, progress, errormessage etc.
    */
   activeFileUploads?: ActiveFileUpload[];
   /**
-   * Optional callback to remove the file upload before sending by clicking on
+   * Optional callback to remove the attachment upload before sending by clicking on
    * cancel icon.
    */
-  onCancelFileUpload?: (fileId: string) => void;
+  onCancelFileUpload?: (attachmentId: string) => void;
   /**
-   * Optional arialabel strings for file upload cards
+   * Optional arialabel strings for attachment upload cards
    */
   strings?: _AttachmentUploadCardsStrings;
 }
@@ -87,7 +87,7 @@ const actionIconStyle = { height: '1rem' };
  * @internal
  */
 export const _AttachmentUploadCards = (props: FileUploadCardsProps): JSX.Element => {
-  const files = props.activeFileUploads;
+  const attachments = props.activeFileUploads;
 
   const localeStrings = useLocaleAttachmentCardStringsTrampoline();
 
@@ -98,28 +98,28 @@ export const _AttachmentUploadCards = (props: FileUploadCardsProps): JSX.Element
     [props.strings?.removeFile, localeStrings.removeFile]
   );
 
-  if (!files || files.length === 0) {
+  if (!attachments || attachments.length === 0) {
     return <></>;
   }
 
   return (
     <_AttachmentCardGroup>
-      {files &&
-        files
-          .filter((file) => !file.error)
-          .map((file) => (
+      {attachments &&
+        attachments
+          .filter((attachment) => !attachment.error)
+          .map((attachment) => (
             <_AttachmentCard
-              fileName={file.filename}
-              progress={file.progress}
-              key={file.id}
-              fileExtension={extension(file.filename)}
+              attachmentName={attachment.filename}
+              progress={attachment.progress}
+              key={attachment.id}
+              attachmentExtension={extension(attachment.filename)}
               actionIcon={
                 <IconButton className={iconButtonClassName} ariaLabel={removeFileButtonString()}>
                   <Icon iconName="CancelFileUpload" style={actionIconStyle} />
                 </IconButton>
               }
               actionHandler={() => {
-                props.onCancelFileUpload && props.onCancelFileUpload(file.id);
+                props.onCancelFileUpload && props.onCancelFileUpload(attachment.id);
               }}
               strings={props.strings}
             />

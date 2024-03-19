@@ -11,7 +11,7 @@ describe('AttachmentCard should be rendered properly', () => {
     registerIcons({
       icons: {
         docx24_svg: <></>,
-        cancelfileupload: <></>
+        cancelattachmentupload: <></>
       }
     });
   });
@@ -61,8 +61,8 @@ describe('Filecard action handler should be called', () => {
 
 const renderAttachmentCardWithDefaults = (props?: Partial<_AttachmentCardProps>): void => {
   const mergedProps: _AttachmentCardProps = {
-    fileName: 'MockAttachmentCard',
-    fileExtension: 'docx',
+    attachmentName: 'MockAttachmentCard',
+    attachmentExtension: 'docx',
     ...(props ?? {})
   };
 
