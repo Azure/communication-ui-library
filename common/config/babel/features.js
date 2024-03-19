@@ -144,8 +144,6 @@ module.exports = {
     "call-transfer",
     // Feature image overlay
     "image-overlay",
-    // Chat teams interop to display images and file attachments in chat messages
-    "teams-inline-images-and-file-sharing",
     // custom branding for the composites
     "custom-branding",
     // Feature for PPT Live for teams meeting

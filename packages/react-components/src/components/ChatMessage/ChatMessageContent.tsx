@@ -4,7 +4,6 @@
 import React from 'react';
 import { _formatString } from '@internal/acs-ui-common';
 import parse, { HTMLReactParserOptions, Element as DOMElement } from 'html-react-parser';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { attributesToProps } from 'html-react-parser';
 import Linkify from 'react-linkify';
 import { ChatMessage } from '../../types/ChatMessage';
@@ -242,7 +241,6 @@ const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
         }
 
         // Transform inline images
-        /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
         if (domNode.name && domNode.name === 'img' && domNode.attribs && domNode.attribs.id) {
           domNode.attribs['aria-label'] = domNode.attribs.name;
           const imgProps = attributesToProps(domNode.attribs);
