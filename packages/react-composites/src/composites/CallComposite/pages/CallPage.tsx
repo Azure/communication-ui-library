@@ -126,7 +126,6 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           remoteVideoTileMenuOptions={options?.remoteVideoTileMenuOptions}
           drawerMenuHostId={drawerMenuHostId}
-          /* @conditional-compile-remove(click-to-call) */
           localVideoTileOptions={options?.localVideoTile}
           userSetOverflowGalleryPosition={userSetOverflowGalleryPosition}
           userSetGalleryLayout={galleryLayout}
