@@ -267,24 +267,24 @@ export interface VideoGalleryProps {
   spotlightedParticipants?: string[];
   /* @conditional-compile-remove(spotlight) */
   /**
-   * This callback will be called when spotlight is started for the local participant video tile.
+   * This callback is to start spotlight for local participant video tile.
    */
   onStartLocalSpotlight?: () => Promise<void>;
   /* @conditional-compile-remove(spotlight) */
   /**
-   * This callback will be called when spotlight is started for the local participant video tile.
+   * This callback is to stop spotlight for local participant video tile.
    */
-  onStartRemoteSpotlight?: (userIds?: string[]) => Promise<void>;
+  onStartRemoteSpotlight?: (userIds: string[]) => Promise<void>;
   /* @conditional-compile-remove(spotlight) */
   /**
-   * This callback will be called when spotlight is stopped for remote participant video tiles.
+   * This callback is to start spotlight for remote participant video tiles.
    */
   onStopLocalSpotlight?: () => Promise<void>;
   /* @conditional-compile-remove(spotlight) */
   /**
-   * This callback will be called when spotlight is stopped for remote participant video tiles.
+   * This callback is to stop spotlight for remote participant video tiles.
    */
-  onStopRemoteSpotlight?: (userIds?: string[]) => Promise<void>;
+  onStopRemoteSpotlight?: (userIds: string[]) => Promise<void>;
   /* @conditional-compile-remove(spotlight) */
   /**
    * Maximum participants that can be spotlighted
