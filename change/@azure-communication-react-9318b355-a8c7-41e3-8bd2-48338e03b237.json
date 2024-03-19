@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "area": "improvement",
+  "workstream": "webpack",
+  "comment": "Add optimization flags in sampleapp webpack config",
+  "packageName": "@azure/communication-react",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "none"
+}
