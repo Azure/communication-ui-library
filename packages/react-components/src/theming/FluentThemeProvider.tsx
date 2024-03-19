@@ -64,7 +64,7 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
   const { fluentTheme, rtl, children, /* @conditional-compile-remove(image-overlay) */ rootStyle } = props;
 
   const fluentV8Theme = useMemo(() => {
-    const mergedTheme: Theme = mergeThemes(defaultTheme, fluentTheme);
+    const mergedTheme = mergeThemes(defaultTheme, fluentTheme);
     return mergeThemes(mergedTheme, { rtl });
   }, [fluentTheme, rtl]);
 
