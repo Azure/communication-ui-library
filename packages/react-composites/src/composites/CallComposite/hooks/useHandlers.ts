@@ -40,22 +40,14 @@ export const useHandlers = <PropsT>(
 ): Pick<CommonCallingHandlers, CommonProperties<CommonCallingHandlers, PropsT>> &
   /* @conditional-compile-remove(spotlight) */ Partial<_ComponentCallingHandlers> => {
   const adapter = useAdapter();
-  const compositeHandlers = createCompositeHandlers(adapter);
-  /* @conditional-compile-remove(spotlight) */
-  const canSpotlight = adapter.getState().call?.capabilitiesFeature?.capabilities.spotlightParticipant.isPresent;
-  /* @conditional-compile-remove(spotlight) */
-  return {
-    ...compositeHandlers,
-    ...(canSpotlight
-      ? {}
-      : { onStartLocalSpotlight: undefined, onStartRemoteSpotlight: undefined, onStopRemoteSpotlight: undefined })
-  };
-  return compositeHandlers;
+  const canSpotlight = !!adapter.getState().call?.capabilitiesFeature?.capabilities.spotlightParticipant.isPresent;
+  return createCompositeHandlers(adapter, canSpotlight);
 };
 
 const createCompositeHandlers = memoizeOne(
   (
-    adapter: CommonCallAdapter
+    adapter: CommonCallAdapter,
+    canSpotlight: boolean
   ): CommonCallingHandlers & /* @conditional-compile-remove(spotlight) */ Partial<_ComponentCallingHandlers> => {
     return {
       onCreateLocalStreamView: async (options) => {
@@ -214,21 +206,27 @@ const createCompositeHandlers = memoizeOne(
         await adapter.stopAllSpotlight();
       },
       /* @conditional-compile-remove(spotlight) */
-      onStartLocalSpotlight: async (): Promise<void> => {
-        await adapter.startSpotlight();
-      },
+      onStartLocalSpotlight: canSpotlight
+        ? async (): Promise<void> => {
+            await adapter.startSpotlight();
+          }
+        : undefined,
       /* @conditional-compile-remove(spotlight) */
       onStopLocalSpotlight: async (): Promise<void> => {
         await adapter.stopSpotlight();
       },
       /* @conditional-compile-remove(spotlight) */
-      onStartRemoteSpotlight: async (userIds?: string[]): Promise<void> => {
-        await adapter.startSpotlight(userIds);
-      },
+      onStartRemoteSpotlight: canSpotlight
+        ? async (userIds?: string[]): Promise<void> => {
+            await adapter.startSpotlight(userIds);
+          }
+        : undefined,
       /* @conditional-compile-remove(spotlight) */
-      onStopRemoteSpotlight: async (userIds?: string[]): Promise<void> => {
-        await adapter.stopSpotlight(userIds);
-      }
+      onStopRemoteSpotlight: canSpotlight
+        ? async (userIds?: string[]): Promise<void> => {
+            await adapter.stopSpotlight(userIds);
+          }
+        : undefined
     };
   }
 );
