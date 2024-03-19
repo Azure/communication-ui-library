@@ -11760,8 +11760,8 @@ packages:
       readable-stream: 2.3.8
     dev: false
 
-  /follow-redirects@1.15.3:
-    resolution: {integrity: sha512-1VzOtuEM8pC9SFU1E+8KfTjZyMztRsgEfwQl44z8A25uy13jSzTj6dyK2Df52iV0vgHCfBwLhDWevLn95w5v6Q==}
+  /follow-redirects@1.15.5:
+    resolution: {integrity: sha512-vSFWUON1B+yAw1VN4xMfxgn5fTUiaOzAJCKBwIIgT/+7CuGy9+r+5gITvP62j3RmaD5Ph65UaERdOSRGUzZtgw==}
     engines: {node: '>=4.0'}
     peerDependencies:
       debug: '*'
@@ -11770,8 +11770,8 @@ packages:
         optional: true
     dev: false
 
-  /follow-redirects@1.15.5:
-    resolution: {integrity: sha512-vSFWUON1B+yAw1VN4xMfxgn5fTUiaOzAJCKBwIIgT/+7CuGy9+r+5gITvP62j3RmaD5Ph65UaERdOSRGUzZtgw==}
+  /follow-redirects@1.15.6:
+    resolution: {integrity: sha512-wWN62YITEaOpSK584EZXJafH1AGpO8RVgElfkuXbTOrPX4fIfOyEpW/CsiNd8JdYrAoOvafRTOEnvsO++qCqFA==}
     engines: {node: '>=4.0'}
     peerDependencies:
       debug: '*'
@@ -20551,7 +20551,7 @@ packages:
     dev: false
 
   file:projects/calling.tgz:
-    resolution: {integrity: sha512-ois9/m4wgQ0NW3Ffu0T0petEKFced5rNIOGJ9Qb18BPn65vpm5AZhpPNGAyN/ysTjvU7SZekX/Uue0VW/8oFRw==, tarball: file:projects/calling.tgz}
+    resolution: {integrity: sha512-h82X53t4/5quJ7n+iuYZg+MVrZwYvTVlv3iFUwTeIaaITe7hjAuvlxbNjIE2uGV25rlc9tJhdfJlnlBLUk8M7A==, tarball: file:projects/calling.tgz}
     name: '@rush-temp/calling'
     version: 0.0.0
     dependencies:
@@ -20593,7 +20593,7 @@ packages:
       eslint-plugin-prettier: 3.4.1(eslint-config-prettier@6.15.0)(eslint@7.32.0)(prettier@2.3.1)
       eslint-plugin-react: 7.34.0(eslint@7.32.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@7.32.0)
-      follow-redirects: 1.15.3
+      follow-redirects: 1.15.6
       html-webpack-plugin: 5.6.0(webpack@5.89.0)
       husky: 8.0.3
       if-env: 1.0.4
