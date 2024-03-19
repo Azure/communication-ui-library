@@ -1,4 +1,10 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+import { CommunicationUserIdentifier, MicrosoftTeamsAppIdentifier } from '@azure/communication-common';
+import { CallAdapter, CallAdapterState, CallComposite } from '@azure/communication-react';
 import { IconButton, PrimaryButton, Stack, TextField, useTheme, Checkbox, Icon, Spinner } from '@fluentui/react';
+import { _MockCallingWidgetCallAdapter } from '@internal/react-composites';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   callingWidgetSetupContainerStyles,
@@ -10,9 +16,6 @@ import {
   collapseButtonStyles,
   callingWidgetInCallContainerStyles
 } from './CallingWidgetComponent.styles';
-import { CommunicationUserIdentifier, MicrosoftTeamsAppIdentifier } from '@azure/communication-common';
-import { CallAdapter, CallAdapterState, CallComposite } from '@azure/communication-react';
-import { _MockCallingWidgetCallAdapter } from '@internal/react-composites';
 
 /**
  * Properties needed for our widget to start a call.

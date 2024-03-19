@@ -1,16 +1,7 @@
-import { IconButton, PrimaryButton, Stack, TextField, useTheme, Checkbox, Icon, Spinner } from '@fluentui/react';
-import React, { useEffect, useRef, useState, useMemo } from 'react';
-import {
-  callingWidgetSetupContainerStyles,
-  checkboxStyles,
-  startCallButtonStyles,
-  callingWidgetContainerStyles,
-  callIconStyles,
-  logoContainerStyles,
-  collapseButtonStyles,
-  callingWidgetInCallContainerStyles
-} from './CallingWidgetComponent.styles';
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 
+import { TransferEventArgs } from '@azure/communication-calling';
 import {
   AzureCommunicationTokenCredential,
   CommunicationUserIdentifier,
@@ -24,7 +15,18 @@ import {
   StartCallIdentifier,
   createAzureCommunicationCallAdapter
 } from '@azure/communication-react';
-import { TransferEventArgs } from '@azure/communication-calling';
+import { IconButton, PrimaryButton, Stack, TextField, useTheme, Checkbox, Icon, Spinner } from '@fluentui/react';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
+import {
+  callingWidgetSetupContainerStyles,
+  checkboxStyles,
+  startCallButtonStyles,
+  callingWidgetContainerStyles,
+  callIconStyles,
+  logoContainerStyles,
+  collapseButtonStyles,
+  callingWidgetInCallContainerStyles
+} from './CallingWidgetComponent.styles';
 
 /**
  * Properties needed for our widget to start a call.

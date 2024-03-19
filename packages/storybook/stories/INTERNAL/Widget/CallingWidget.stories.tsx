@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { MessageBar, MessageBarType, Stack, registerIcons } from '@fluentui/react';
-import React from 'react';
-import { COMPOSITE_FOLDER_PREFIX } from '../../constants';
 import { CallComposite } from '@azure/communication-react';
-import { Meta } from '@storybook/react/types-6-0';
-import { CallingWidgetComponentMock } from './snippets/CallingWidgetComponentMock.snippet';
+import { MessageBar, MessageBarType, Stack, registerIcons } from '@fluentui/react';
 import { CallAdd20Regular, Dismiss20Regular } from '@fluentui/react-icons';
 import { Canvas, Description, Heading, Props, Source, Subheading, Title } from '@storybook/addon-docs';
+import { Meta } from '@storybook/react/types-6-0';
+import React from 'react';
+import { COMPOSITE_FOLDER_PREFIX } from '../../constants';
+import { CallingWidgetComponentMock } from './snippets/CallingWidgetComponentMock.snippet';
 
 registerIcons({
   icons: { dismiss: <Dismiss20Regular />, callAdd: <CallAdd20Regular /> }
