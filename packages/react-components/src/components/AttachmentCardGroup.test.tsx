@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-import { _FileCard, _FileCardProps } from './FileCard';
-import { _FileCardGroup, _FileCardGroupProps } from './FileCardGroup';
+import { _AttachmentCard, _AttachmentCardProps } from './AttachmentCard';
+import { _AttachmentCardGroup, _AttachmentCardGroupProps } from './AttachmentCardGroup';
 import { render, screen } from '@testing-library/react';
 import { registerIcons } from '@fluentui/react';
 
@@ -38,8 +38,8 @@ describe('FileCardGroup should be rendered properly', () => {
     const props = {
       children: (
         <>
-          <_FileCard fileName={'MockFileCard'} fileExtension={'docx'} />
-          <_FileCard fileName={'MockSecondFileCard'} fileExtension={'docx'} />
+          <_AttachmentCard fileName={'MockFileCard'} fileExtension={'docx'} />
+          <_AttachmentCard fileName={'MockSecondFileCard'} fileExtension={'docx'} />
         </>
       ),
       ariaLabel: 'MockFileCardGroup'
@@ -54,10 +54,10 @@ describe('FileCardGroup should be rendered properly', () => {
   });
 });
 
-const renderFileCardGroupWithDefaults = (props?: Partial<_FileCardGroupProps>): void => {
-  const mergedProps: _FileCardGroupProps = {
+const renderFileCardGroupWithDefaults = (props?: Partial<_AttachmentCardGroupProps>): void => {
+  const mergedProps: _AttachmentCardGroupProps = {
     children: props?.children ?? <></>,
     ...(props ?? {})
   };
-  render(<_FileCardGroup {...mergedProps} />);
+  render(<_AttachmentCardGroup {...mergedProps} />);
 };

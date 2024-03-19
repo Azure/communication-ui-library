@@ -13,9 +13,9 @@ import { InlineImageOptions } from '../ChatMessage/ChatMessageContent';
 import { MessageThreadStrings } from '../MessageThread';
 /* @conditional-compile-remove(mention) */
 import { MentionDisplayOptions } from '../MentionPopover';
-import { _FileDownloadCards } from '../FileDownloadCards';
+import { _AttachmentDownloadCards } from '../AttachmentDownloadCards';
 /* @conditional-compile-remove(file-sharing) */
-import { FileDownloadHandler } from '../FileDownloadCards';
+import { FileDownloadHandler } from '../AttachmentDownloadCards';
 import { formatTimeForChatMessage, formatTimestampForChatMessage } from './Datetime';
 import { ComponentLocale } from '../../localization/LocalizationProvider';
 import { chatMessageEditedTagStyle } from '../styles/ChatMessageComponent.styles';
@@ -93,7 +93,7 @@ const defaultOnRenderFileDownloads = (
 ): JSX.Element | undefined => {
   /* @conditional-compile-remove(file-sharing) */
   return (
-    <_FileDownloadCards
+    <_AttachmentDownloadCards
       userId={userId}
       /* @conditional-compile-remove(file-sharing) */
       fileMetadata={(message as ChatMessage).files || []}

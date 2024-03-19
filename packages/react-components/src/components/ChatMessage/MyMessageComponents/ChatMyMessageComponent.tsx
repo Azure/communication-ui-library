@@ -8,7 +8,7 @@ import { MessageThreadStrings } from '../../MessageThread';
 import { ChatMessage, ComponentSlotStyle, OnRenderAvatarCallback } from '../../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../../types';
-import { FileDownloadHandler, AttachmentMetadata } from '../../FileDownloadCards';
+import { FileDownloadHandler, AttachmentMetadata } from '../../AttachmentDownloadCards';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from '../../MentionPopover';
 /* @conditional-compile-remove(image-overlay) */

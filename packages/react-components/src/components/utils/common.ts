@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { _FileUploadCardsStrings } from '../FileUploadCards';
+import { _AttachmentUploadCardsStrings } from '../AttachmentUploadCards';
 /* @conditional-compile-remove(file-sharing) */
 import { useLocale } from '../../localization';
 import { ParticipantState } from '../../types';
@@ -10,7 +10,7 @@ import { ParticipantState } from '../../types';
  * Conditionally modify locale strings passed to the file card
  * @returns file upload card strings
  */
-export const useLocaleFileCardStringsTrampoline = (): _FileUploadCardsStrings => {
+export const useLocaleFileCardStringsTrampoline = (): _AttachmentUploadCardsStrings => {
   /* @conditional-compile-remove(file-sharing) */
   return useLocale().strings.sendBox;
   return {

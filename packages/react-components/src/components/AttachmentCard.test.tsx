@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-import { _FileCard, _FileCardProps } from './FileCard';
+import { _AttachmentCard, _AttachmentCardProps } from './AttachmentCard';
 import { render, screen } from '@testing-library/react';
 import { Icon, IconButton, registerIcons } from '@fluentui/react';
 
@@ -59,12 +59,12 @@ describe('Filecard action handler should be called', () => {
   });
 });
 
-const renderFileCardWithDefaults = (props?: Partial<_FileCardProps>): void => {
-  const mergedProps: _FileCardProps = {
+const renderFileCardWithDefaults = (props?: Partial<_AttachmentCardProps>): void => {
+  const mergedProps: _AttachmentCardProps = {
     fileName: 'MockFileCard',
     fileExtension: 'docx',
     ...(props ?? {})
   };
 
-  render(<_FileCard {...mergedProps} />);
+  render(<_AttachmentCard {...mergedProps} />);
 };

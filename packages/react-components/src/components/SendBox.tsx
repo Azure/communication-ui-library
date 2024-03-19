@@ -13,7 +13,7 @@ import { InputBoxButton } from './InputBoxButton';
 /* @conditional-compile-remove(file-sharing) */
 import { SendBoxErrors } from './SendBoxErrors';
 /* @conditional-compile-remove(file-sharing) */
-import { ActiveFileUpload, _FileUploadCards } from './FileUploadCards';
+import { ActiveFileUpload, _AttachmentUploadCards } from './AttachmentUploadCards';
 /* @conditional-compile-remove(file-sharing) */
 import { fileUploadCardsStyles } from './styles/SendBox.styles';
 /* @conditional-compile-remove(file-sharing) */
@@ -306,7 +306,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       props.onRenderFileUploads()
     ) : (
       <Stack className={fileUploadCardsStyles}>
-        <_FileUploadCards
+        <_AttachmentUploadCards
           activeFileUploads={activeFileUploads}
           onCancelFileUpload={props.onCancelFileUpload}
           strings={{

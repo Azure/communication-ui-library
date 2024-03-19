@@ -7,9 +7,9 @@ import React from 'react';
 
 /**
  * @internal
- * Props for `_FileCardGroup` component.
+ * Props for `_AttachmentCardGroup` component.
  */
-export interface _FileCardGroupProps {
+export interface _AttachmentCardGroupProps {
   children: React.ReactNode;
   ariaLabel?: string;
 }
@@ -35,10 +35,10 @@ const fileCardGroupClassName = mergeStyles({
 
 /**
  * @internal
- * Used with `_FileCard` component where `_FileCard` components are passed as children.
+ * Used with `_AttachmentCard` component where `_AttachmentCard` components are passed as children.
  * Renders the children equally spaced in multiple rows.
  */
-export const _FileCardGroup = (props: _FileCardGroupProps): JSX.Element => {
+export const _AttachmentCardGroup = (props: _AttachmentCardGroupProps): JSX.Element => {
   const { children, ariaLabel } = props;
   if (!children) {
     return <></>;

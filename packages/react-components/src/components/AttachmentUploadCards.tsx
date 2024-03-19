@@ -3,8 +3,8 @@
 
 import { Icon, IconButton } from '@fluentui/react';
 import React from 'react';
-import { _FileCard } from './FileCard';
-import { _FileCardGroup } from './FileCardGroup';
+import { _AttachmentCard } from './AttachmentCard';
+import { _AttachmentCardGroup } from './AttachmentCardGroup';
 import { extension } from './utils';
 import { iconButtonClassName } from './styles/IconButton.styles';
 import { useMemo } from 'react';
@@ -48,11 +48,11 @@ export interface ActiveFileUpload {
 }
 
 /**
- * Strings of _FileUploadCards that can be overridden.
+ * Strings of _AttachmentUploadCards that can be overridden.
  *
  * @internal
  */
-export interface _FileUploadCardsStrings {
+export interface _AttachmentUploadCardsStrings {
   /** Aria label to notify user when focus is on cancel file upload button. */
   removeFile: string;
   /** Aria label to notify user file uploading starts. */
@@ -78,7 +78,7 @@ export interface FileUploadCardsProps {
   /**
    * Optional arialabel strings for file upload cards
    */
-  strings?: _FileUploadCardsStrings;
+  strings?: _AttachmentUploadCardsStrings;
 }
 
 const actionIconStyle = { height: '1rem' };
@@ -86,7 +86,7 @@ const actionIconStyle = { height: '1rem' };
 /**
  * @internal
  */
-export const _FileUploadCards = (props: FileUploadCardsProps): JSX.Element => {
+export const _AttachmentUploadCards = (props: FileUploadCardsProps): JSX.Element => {
   const files = props.activeFileUploads;
 
   const localeStrings = useLocaleFileCardStringsTrampoline();
@@ -103,12 +103,12 @@ export const _FileUploadCards = (props: FileUploadCardsProps): JSX.Element => {
   }
 
   return (
-    <_FileCardGroup>
+    <_AttachmentCardGroup>
       {files &&
         files
           .filter((file) => !file.error)
           .map((file) => (
-            <_FileCard
+            <_AttachmentCard
               fileName={file.filename}
               progress={file.progress}
               key={file.id}
@@ -124,6 +124,6 @@ export const _FileUploadCards = (props: FileUploadCardsProps): JSX.Element => {
               strings={props.strings}
             />
           ))}
-    </_FileCardGroup>
+    </_AttachmentCardGroup>
   );
 };

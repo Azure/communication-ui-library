@@ -18,8 +18,8 @@ import { MessageThreadStrings } from '../../MessageThread';
 import { chatMessageActionMenuProps } from '../ChatMessageActionMenu';
 import { ComponentSlotStyle, OnRenderAvatarCallback } from '../../../types';
 /* @conditional-compile-remove(file-sharing) */
-import { FileDownloadHandler } from '../../FileDownloadCards';
-import { _FileDownloadCards } from '../../FileDownloadCards';
+import { FileDownloadHandler } from '../../AttachmentDownloadCards';
+import { _AttachmentDownloadCards } from '../../AttachmentDownloadCards';
 import { useLocale } from '../../../localization';
 /* @conditional-compile-remove(mention) */
 import { MentionDisplayOptions } from '../../MentionPopover';

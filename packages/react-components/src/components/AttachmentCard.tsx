@@ -18,14 +18,14 @@ import React from 'react';
 import { _pxToRem } from '@internal/acs-ui-common';
 import { Announcer } from './Announcer';
 import { useEffect, useState } from 'react';
-import { _FileUploadCardsStrings } from './FileUploadCards';
+import { _AttachmentUploadCardsStrings } from './AttachmentUploadCards';
 import { useLocaleFileCardStringsTrampoline } from './utils/common';
 
 /**
  * @internal
- * _FileCard Component Props.
+ * _AttachmentCard Component Props.
  */
-export interface _FileCardProps {
+export interface _AttachmentCardProps {
   /**
    * File name.
    */
@@ -50,14 +50,14 @@ export interface _FileCardProps {
   /**
    * Optional arialabel strings for file cards
    */
-  strings?: _FileUploadCardsStrings;
+  strings?: _AttachmentUploadCardsStrings;
 }
 
 /**
  * @internal
  * A component for displaying a file card with file icon and progress bar.
  */
-export const _FileCard = (props: _FileCardProps): JSX.Element => {
+export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
   const { fileName, fileExtension, progress, actionIcon } = props;
   const theme = useTheme();
   const [announcerString, setAnnouncerString] = useState<string | undefined>(undefined);

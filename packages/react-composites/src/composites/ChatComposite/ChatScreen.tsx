@@ -48,7 +48,7 @@ import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(file-sharing) */
 import { FileDownloadErrorBar } from './FileDownloadErrorBar';
 /* @conditional-compile-remove(file-sharing) */
-import { _FileDownloadCards } from '@internal/react-components';
+import { _AttachmentDownloadCards } from '@internal/react-components';
 /* @conditional-compile-remove(image-overlay) */
 import { ImageOverlay } from '@internal/react-components';
 /* @conditional-compile-remove(image-overlay) */
@@ -245,7 +245,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   /* @conditional-compile-remove(file-sharing) */
   const onRenderFileDownloads = useCallback(
     (userId: string, message: ChatMessage) => (
-      <_FileDownloadCards
+      <_AttachmentDownloadCards
         userId={userId}
         fileMetadata={message.files || []}
         downloadHandler={fileSharing?.downloadHandler}

@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(file-sharing) */
-import { ActiveFileUpload } from '../FileUploadCards';
+import { ActiveFileUpload } from '../AttachmentUploadCards';
 
 /**
  * @private

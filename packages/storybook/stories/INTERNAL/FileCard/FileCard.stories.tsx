@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { Icon } from '@fluentui/react';
-import { _FileCard } from '@internal/react-components';
+import { _AttachmentCard } from '@internal/react-components';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { COMPONENT_FOLDER_PREFIX } from '../../constants';
@@ -10,7 +10,7 @@ import { hiddenControl } from '../../controlsUtils';
 
 const FileCardStory = (args): JSX.Element => {
   return (
-    <_FileCard
+    <_AttachmentCard
       fileName={args.fileName}
       fileExtension={args.fileExtension}
       actionIcon={<Icon iconName={args.actionIconName} />}
@@ -26,7 +26,7 @@ export const FileCard = FileCardStory.bind({});
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-internal-filecard`,
   title: `${COMPONENT_FOLDER_PREFIX}/Internal/File Card`,
-  component: _FileCard,
+  component: _AttachmentCard,
   argTypes: {
     fileName: { control: 'text', defaultValue: 'SampleFileName.pdf' },
     fileExtension: { control: 'text', defaultValue: 'pdf' },

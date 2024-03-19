@@ -6,8 +6,8 @@ import React, { useCallback, useState } from 'react';
 import { useMemo } from 'react';
 /* @conditional-compile-remove(file-sharing) */
 import { useLocale } from '../localization';
-import { _FileCard } from './FileCard';
-import { _FileCardGroup } from './FileCardGroup';
+import { _AttachmentCard } from './AttachmentCard';
+import { _AttachmentCardGroup } from './AttachmentCardGroup';
 import { iconButtonClassName } from './styles/IconButton.styles';
 import { _formatString } from '@internal/acs-ui-common';
 
@@ -54,11 +54,11 @@ export interface AttachmentMetadata {
 }
 
 /**
- * Strings of _FileDownloadCards that can be overridden.
+ * Strings of _AttachmentDownloadCards that can be overridden.
  *
  * @internal
  */
-export interface _FileDownloadCardsStrings {
+export interface _AttachmentDownloadCardsStrings {
   /** Aria label to notify user when focus is on file download button. */
   downloadFile: string;
   fileCardGroupMessage: string;
@@ -112,7 +112,7 @@ export type FileDownloadHandler = (
 /**
  * @internal
  */
-export interface _FileDownloadCardsProps {
+export interface _AttachmentDownloadCardsProps {
   /**
    * User id of the local participant
    */
@@ -134,7 +134,7 @@ export interface _FileDownloadCardsProps {
   /**
    * Optional aria label strings for file download cards
    */
-  strings?: _FileDownloadCardsStrings;
+  strings?: _AttachmentDownloadCardsStrings;
 }
 
 const fileDownloadCardsStyle = {
@@ -146,7 +146,7 @@ const actionIconStyle = { height: '1rem' };
 /**
  * @internal
  */
-export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element => {
+export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): JSX.Element => {
   const { userId, fileMetadata } = props;
   const [showSpinner, setShowSpinner] = useState(false);
   const localeStrings = useLocaleStringsTrampoline();
@@ -210,11 +210,11 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
 
   return (
     <div style={fileDownloadCardsStyle} data-ui-id="file-download-card-group">
-      <_FileCardGroup ariaLabel={fileCardGroupDescription()}>
+      <_AttachmentCardGroup ariaLabel={fileCardGroupDescription()}>
         {fileMetadata &&
           fileMetadata.map((file) => (
             <TooltipHost content={downloadFileButtonString()} key={file.name}>
-              <_FileCard
+              <_AttachmentCard
                 fileName={file.name}
                 key={file.name}
                 fileExtension={file.extension}
@@ -232,7 +232,7 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
               />
             </TooltipHost>
           ))}
-      </_FileCardGroup>
+      </_AttachmentCardGroup>
     </div>
   );
 };
@@ -247,7 +247,7 @@ const DownloadIconTrampoline = (): JSX.Element => {
   return <Icon iconName="EditBoxCancel" style={actionIconStyle} />;
 };
 
-const useLocaleStringsTrampoline = (): _FileDownloadCardsStrings => {
+const useLocaleStringsTrampoline = (): _AttachmentDownloadCardsStrings => {
   /* @conditional-compile-remove(file-sharing) */
   return useLocale().strings.messageThread;
   return { downloadFile: '', fileCardGroupMessage: '' };
