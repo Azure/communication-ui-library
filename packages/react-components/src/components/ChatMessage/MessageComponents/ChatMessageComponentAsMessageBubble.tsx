@@ -8,7 +8,6 @@ import React, { useCallback, useMemo } from 'react';
 import { chatMessageDateStyle, chatMessageAuthorStyle } from '../../styles/ChatMessageComponent.styles';
 import { useIdentifiers } from '../../../identifiers/IdentifierProvider';
 import { useTheme } from '../../../theming';
-/* @conditional-compile-remove(image-overlay) */
 import { InlineImageOptions } from '../ChatMessageContent';
 import { ChatMessage } from '../../../types/ChatMessage';
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -62,7 +61,6 @@ type ChatMessageComponentAsMessageBubbleProps = {
    * @internal
    */
   mentionDisplayOptions?: MentionDisplayOptions;
-  /* @conditional-compile-remove(image-overlay) */
   /**
    * Optional callback called when an inline image is clicked.
    * @beta
@@ -84,7 +82,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     strings,
     /* @conditional-compile-remove(file-sharing) */
     fileDownloadHandler,
-    /* @conditional-compile-remove(image-overlay) */
     inlineImageOptions,
     shouldOverlapAvatarAndMessage,
     /* @conditional-compile-remove(file-sharing) */
@@ -115,7 +112,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
       message,
       strings,
       userId,
-      /* @conditional-compile-remove(image-overlay) */
       inlineImageOptions,
       /* @conditional-compile-remove(file-sharing) */
       onRenderFileDownloads,
@@ -126,7 +122,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     );
   }, [
     /* @conditional-compile-remove(file-sharing) */ fileDownloadHandler,
-    /* @conditional-compile-remove(image-overlay) */ inlineImageOptions,
+    inlineImageOptions,
     /* @conditional-compile-remove(mention) */ mentionDisplayOptions,
     message,
     /* @conditional-compile-remove(file-sharing) */ onRenderFileDownloads,

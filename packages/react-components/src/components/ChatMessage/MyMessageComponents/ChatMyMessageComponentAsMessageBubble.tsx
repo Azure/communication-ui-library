@@ -9,7 +9,6 @@ import { chatMessageDateStyle, chatMessageFailedTagStyle } from '../../styles/Ch
 import { useIdentifiers } from '../../../identifiers/IdentifierProvider';
 import { useTheme } from '../../../theming';
 import { ChatMessageActionFlyout } from '../ChatMessageActionsFlyout';
-/* @conditional-compile-remove(image-overlay) */
 import { InlineImageOptions } from '../ChatMessageContent';
 import { ChatMessage } from '../../../types/ChatMessage';
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -81,7 +80,6 @@ type ChatMyMessageComponentAsMessageBubbleProps = {
    * @internal
    */
   mentionDisplayOptions?: MentionDisplayOptions;
-  /* @conditional-compile-remove(image-overlay) */
   /**
    * Optional callback called when an inline image is clicked.
    * @beta
@@ -111,7 +109,6 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
     messageStatus,
     /* @conditional-compile-remove(file-sharing) */
     fileDownloadHandler,
-    /* @conditional-compile-remove(image-overlay) */
     inlineImageOptions,
     /* @conditional-compile-remove(file-sharing) */
     onRenderFileDownloads,
@@ -186,7 +183,6 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
       message,
       strings,
       userId,
-      /* @conditional-compile-remove(image-overlay) */
       inlineImageOptions,
       /* @conditional-compile-remove(file-sharing) */
       onRenderFileDownloads,
@@ -197,7 +193,7 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
     );
   }, [
     /* @conditional-compile-remove(file-sharing) */ fileDownloadHandler,
-    /* @conditional-compile-remove(image-overlay) */ inlineImageOptions,
+    inlineImageOptions,
     /* @conditional-compile-remove(mention) */ mentionDisplayOptions,
     message,
     /* @conditional-compile-remove(file-sharing) */ onRenderFileDownloads,

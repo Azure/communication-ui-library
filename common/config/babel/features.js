@@ -142,8 +142,6 @@ module.exports = {
     "dialpad",
     // Feature for call transfer
     "call-transfer",
-    // Feature image overlay
-    "image-overlay",
     // custom branding for the composites
     "custom-branding",
     // Feature for PPT Live for teams meeting
