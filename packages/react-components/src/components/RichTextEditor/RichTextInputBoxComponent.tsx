@@ -46,6 +46,7 @@ export interface RichTextInputBoxComponentProps {
   // props for min and max height for the rich text editor
   // otherwise the editor will grow to fit the content
   richTextEditorStyleProps: (isExpanded: boolean) => RichTextEditorStyleProps;
+  isHorizontalLayoutDisabled?: boolean;
 }
 
 /**
@@ -65,7 +66,8 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
     onRenderFileUploads,
     /* @conditional-compile-remove(file-sharing) */
     hasFiles,
-    richTextEditorStyleProps
+    richTextEditorStyleProps,
+    isHorizontalLayoutDisabled = false
   } = props;
   const theme = useTheme();
   const [showRichTextEditorFormatting, setShowRichTextEditorFormatting] = useState(false);
@@ -129,8 +131,17 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
     [onEnterKeyDown, showRichTextEditorFormatting]
   );
 
-  const useHorizontalLayout =
-    !showRichTextEditorFormatting && /* @conditional-compile-remove(file-sharing) */ !hasFiles;
+  const useHorizontalLayout = useMemo(() => {
+    return (
+      !isHorizontalLayoutDisabled &&
+      !showRichTextEditorFormatting &&
+      /* @conditional-compile-remove(file-sharing) */ !hasFiles
+    );
+  }, [
+    isHorizontalLayoutDisabled,
+    showRichTextEditorFormatting,
+    /* @conditional-compile-remove(file-sharing) */ hasFiles
+  ]);
 
   return (
     <div
