@@ -162,7 +162,6 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
         videoBackgroundImages,
         onResolveDependency: onResolveVideoEffectDependencyLazy
       },
-      /* @conditional-compile-remove(calling-sounds) */
       callingSounds: {
         callEnded: { url: '/assets/sounds/callEnded.mp3' },
         callRinging: { url: '/assets/sounds/callRinging.mp3' },
@@ -200,7 +199,6 @@ const AzureCommunicationOutboundCallScreen = (props: AzureCommunicationCallScree
         videoBackgroundImages,
         onResolveDependency: onResolveVideoEffectDependencyLazy
       },
-      /* @conditional-compile-remove(calling-sounds) */
       callingSounds: {
         callEnded: { url: '/assets/sounds/callEnded.mp3' },
         callRinging: { url: '/assets/sounds/callRinging.mp3' },
