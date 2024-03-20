@@ -45,8 +45,6 @@ module.exports = {
     "total-participant-count",
     // feature for tracking environment info API different than unsupported browser. stable use of environment info affects other components possibly sooner
     "calling-environment-info",
-    // feature for vertical gallery layouts in VideoGallery
-    "vertical-gallery",
     // a demo feature flag for those beta feature not ready for beta release
     "in-progress-beta-feature-demo",
     // Feature for call transfer
@@ -130,8 +128,6 @@ module.exports = {
     "capabilities",
     // Closed captions
     "close-captions",
-    // feature  for vertical overflow gallery
-    "vertical-gallery",
     // rooms
     "rooms",
     // feature for calling sounds

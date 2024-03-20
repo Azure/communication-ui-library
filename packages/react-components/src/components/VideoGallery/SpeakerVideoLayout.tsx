@@ -5,7 +5,6 @@ import { LayerHost, Stack, mergeStyles, useTheme } from '@fluentui/react';
 import { LocalVideoTileSize } from '../VideoGallery';
 import { LayoutProps } from './Layout';
 import { isNarrowWidth } from '../utils/responsive';
-/* @conditional-compile-remove(vertical-gallery) */
 import { isShortHeight } from '../utils/responsive';
 import React, { useMemo, useRef, useState } from 'react';
 import { OverflowGallery } from './OverflowGallery';
@@ -14,7 +13,6 @@ import {
   LARGE_FLOATING_MODAL_SIZE_REM,
   localVideoTileContainerStyle
 } from './styles/FloatingLocalVideo.styles';
-/* @conditional-compile-remove(vertical-gallery) */
 import {
   VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM,
   SHORT_VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM
@@ -61,8 +59,8 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
     styles,
     maxRemoteVideoStreams,
     parentWidth,
-    /* @conditional-compile-remove(vertical-gallery) */ parentHeight,
-    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'horizontalBottom',
+    parentHeight,
+    overflowGalleryPosition = 'horizontalBottom',
     pinnedParticipantUserIds = [],
     localVideoTileSize
   } = props;
@@ -71,7 +69,6 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
 
   const isNarrow = parentWidth ? isNarrowWidth(parentWidth) : false;
 
-  /* @conditional-compile-remove(vertical-gallery) */
   const isShort = parentHeight ? isShortHeight(parentHeight) : false;
 
   // This is for tracking the number of children in the first page of overflow gallery.
@@ -133,7 +130,6 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
     if (isNarrow || localVideoTileSize === '9:16') {
       return SMALL_FLOATING_MODAL_SIZE_REM;
     }
-    /* @conditional-compile-remove(vertical-gallery) */
     if ((overflowGalleryTiles.length > 0 || screenShareComponent) && overflowGalleryPosition === 'verticalRight') {
       return isNarrow
         ? SMALL_FLOATING_MODAL_SIZE_REM
@@ -149,8 +145,8 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
     overflowGalleryTiles.length,
     isNarrow,
     screenShareComponent,
-    /* @conditional-compile-remove(vertical-gallery) */ isShort,
-    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
+    isShort,
+    overflowGalleryPosition,
     localVideoTileSize
   ]);
 
@@ -171,16 +167,13 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
     }
     return (
       <OverflowGallery
-        /* @conditional-compile-remove(vertical-gallery) */
         isShort={isShort}
         onFetchTilesToRender={setIndexesToRender}
         isNarrow={isNarrow}
         shouldFloatLocalVideo={!!localVideoComponent}
         overflowGalleryElements={overflowGalleryTiles}
         horizontalGalleryStyles={styles?.horizontalGallery}
-        /* @conditional-compile-remove(vertical-gallery) */
         verticalGalleryStyles={styles?.verticalGallery}
-        /* @conditional-compile-remove(vertical-gallery) */
         overflowGalleryPosition={overflowGalleryPosition}
         onChildrenPerPageChange={(n: number) => {
           childrenPerPage.current = n;
@@ -190,13 +183,13 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
     );
   }, [
     isNarrow,
-    /* @conditional-compile-remove(vertical-gallery) */ isShort,
+    isShort,
     screenShareComponent,
     overflowGalleryTiles,
     styles?.horizontalGallery,
-    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
+    overflowGalleryPosition,
     setIndexesToRender,
-    /* @conditional-compile-remove(vertical-gallery) */ styles?.verticalGallery,
+    styles?.verticalGallery,
     parentWidth,
     localVideoComponent
   ]);
@@ -206,7 +199,6 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
       {wrappedLocalVideoComponent}
       <LayerHost id={layerHostId} className={mergeStyles(layerHostStyle)} />
       <Stack
-        /* @conditional-compile-remove(vertical-gallery) */
         horizontal={overflowGalleryPosition === 'verticalRight'}
         styles={innerLayoutStyle}
         tokens={videoGalleryLayoutGap}
