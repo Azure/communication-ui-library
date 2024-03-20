@@ -149,6 +149,8 @@ module.exports = {
     // custom branding for the composites
     "custom-branding",
     // Feature for PPT Live for teams meeting
-    'ppt-live'
+    'ppt-live',
+    // Support Calling SDK isReceiving flag, shows a loading spinner on the video tile when isAvailable is true but isReceiving is false
+    "video-stream-is-receiving-flag",
   ]
 }
