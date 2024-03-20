@@ -12,7 +12,7 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
     entry: {
       build: './src/index.tsx'
     },
-    optimization: {
+    optimization: env.minify ? {} : {
       mangleExports: false,
       minimize: false,
       minimizer: []
