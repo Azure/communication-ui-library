@@ -11,7 +11,6 @@ import { BlockedMessage } from '../../../types';
 import { FileDownloadHandler, AttachmentMetadata } from '../../FileDownloadCards';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from '../../MentionPopover';
-/* @conditional-compile-remove(image-overlay) */
 import { InlineImageOptions } from '../ChatMessageContent';
 import { ChatMyMessageComponentAsMessageBubble } from './ChatMyMessageComponentAsMessageBubble';
 
@@ -85,7 +84,6 @@ type ChatMyMessageComponentProps = {
    * @beta
    */
   mentionOptions?: MentionOptions;
-  /* @conditional-compile-remove(image-overlay) */
   /**
    * Optional callback called when an inline image is clicked.
    * @beta
@@ -148,7 +146,6 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
         /* @conditional-compile-remove(date-time-customization) */
         onDisplayDateTimeString={props.onDisplayDateTimeString}
         strings={props.strings}
-        /* @conditional-compile-remove(image-overlay) */
         inlineImageOptions={props.inlineImageOptions}
         /* @conditional-compile-remove(mention) */
         mentionDisplayOptions={props.mentionOptions?.displayOptions}
