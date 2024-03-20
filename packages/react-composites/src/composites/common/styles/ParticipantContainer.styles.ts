@@ -1,7 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { IStackStyles, IStackItemStyles, IStackTokens, mergeStyles, Theme, ITextStyles } from '@fluentui/react';
+import {
+  IStackStyles,
+  IStackItemStyles,
+  IStackTokens,
+  mergeStyles,
+  Theme,
+  ITextStyles,
+  IButtonStyles
+} from '@fluentui/react';
 import { ParticipantListStyles } from '@internal/react-components';
 import { CHAT_CONTAINER_ZINDEX } from '../../ChatComposite/styles/Chat.styles';
 
@@ -167,4 +175,34 @@ export const displayNameStyles: ITextStyles = {
     textOverflow: 'ellipsis',
     overflow: 'hidden'
   }
+};
+
+/**
+ * @private
+ */
+export const headingMoreButtonStyles = (theme: Theme): IButtonStyles => {
+  return {
+    root: {
+      height: '100%',
+      minWidth: '1.5rem',
+      padding: '0.5rem 0.25rem',
+      marginRight: '0.25rem',
+      border: 'none',
+      background: 'none'
+    },
+    rootHovered: {
+      background: 'none'
+    },
+    rootPressed: {
+      background: 'none'
+    },
+    rootFocused: {
+      background: 'none'
+    },
+    icon: {
+      color: theme.palette.neutralSecondary,
+      display: 'flex',
+      alignItems: 'center'
+    }
+  };
 };

@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 import { IContextualMenuItem, Stack } from '@fluentui/react';
+/* @conditional-compile-remove(spotlight) */
+import { IContextualMenuProps } from '@fluentui/react';
 import {
   ParticipantList,
   ParticipantListParticipant,
@@ -37,8 +39,15 @@ export const PeoplePaneContent = (props: {
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   setDrawerMenuItems: (drawerMenuItems: _DrawerMenuItemProps[]) => void;
   mobileView?: boolean;
+  /* @conditional-compile-remove(spotlight) */
+  participantListHeadingMoreButtonProps?: IContextualMenuProps;
 }): JSX.Element => {
-  const { inviteLink, onFetchParticipantMenuItems, setDrawerMenuItems } = props;
+  const {
+    inviteLink,
+    onFetchParticipantMenuItems,
+    setDrawerMenuItems,
+    /* @conditional-compile-remove(spotlight) */ participantListHeadingMoreButtonProps
+  } = props;
   const adapter = useAdapter();
   const localeStrings = useLocale();
 
@@ -102,6 +111,14 @@ export const PeoplePaneContent = (props: {
     setDrawerMenuItems
   ]);
 
+  /* @conditional-compile-remove(spotlight) */
+  const setDrawerMenuItemsForParticipantListHeadingMoreButton = useMemo(() => {
+    const drawerMenuItems = participantListHeadingMoreButtonProps?.items.map((contextualMenu: IContextualMenuItem) =>
+      convertContextualMenuItemToDrawerMenuItem(contextualMenu, () => setDrawerMenuItems([]))
+    );
+    return drawerMenuItems && drawerMenuItems.length > 0 ? () => setDrawerMenuItems(drawerMenuItems) : undefined;
+  }, [participantListHeadingMoreButtonProps?.items, setDrawerMenuItems]);
+
   const participantListProps: ParticipantListProps = useMemo(() => {
     const onRemoveAParticipant = async (participantId: string): Promise<void> =>
       removeParticipantFromCall(participantId);
@@ -121,6 +138,12 @@ export const PeoplePaneContent = (props: {
       onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
       onFetchParticipantMenuItems={props.mobileView ? undefined : onFetchParticipantMenuItems}
       title={strings.peoplePaneSubTitle}
+      /* @conditional-compile-remove(spotlight) */
+      headingMoreButtonAriaLabel={localeStrings.strings.call.peoplePaneMoreButtonAriaLabel}
+      /* @conditional-compile-remove(spotlight) */
+      onClickHeadingMoreButton={props.mobileView ? setDrawerMenuItemsForParticipantListHeadingMoreButton : undefined}
+      /* @conditional-compile-remove(spotlight) */
+      headingMoreButtonMenuProps={props.participantListHeadingMoreButtonProps}
     />
   );
 
