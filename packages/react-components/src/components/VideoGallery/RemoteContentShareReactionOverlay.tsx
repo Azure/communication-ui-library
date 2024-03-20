@@ -51,9 +51,14 @@ export const RemoteContentShareReactionOverlay = React.memo(
     const REACTION_START_DISPLAY_SIZE = 44;
     const REACTION_NUMBER_OF_ANIMATION_FRAMES = 51;
     const [visibleReactions, setVisibleReactions] = useState<ReactionStateType[]>([]);
-    const [isCurrentlyActive, setIsCurrentlyActive] = useState(new Map<string, number>());
-    const [isAlreadyInQueue, setIsAlreadyInQueue] = useState(new Map<string, boolean>());
-    const [activeTypeCount, setActiveTypeCount] = useState(new Map<string, number>());
+    const [isCurrentlyActive, setIsCurrentlyActive] = useState<string[]>([]);
+    const [activeTypeCount, setActiveTypeCount] = useState([
+      { reactionType: 'like', count: 0 },
+      { reactionType: 'heart', count: 0 },
+      { reactionType: 'laugh', count: 0 },
+      { reactionType: 'applause', count: 0 },
+      { reactionType: 'surprised', count: 0 }
+    ]);
 
     const getReceivedUnixTime = (receivedTime: Date): number => {
       return Math.floor(receivedTime.getTime() / 1000);
@@ -61,19 +66,19 @@ export const RemoteContentShareReactionOverlay = React.memo(
 
     const getCombinedKey = (userId: string, reactionType: string, receivedAt: Date): string => {
       const receivedTime =
-        receivedAt.getUTCFullYear() +
+        receivedAt.getFullYear() +
         ':' +
-        receivedAt.getUTCMonth() +
+        receivedAt.getMonth() +
         ':' +
-        receivedAt.getUTCDay() +
+        receivedAt.getDay() +
         ':' +
-        receivedAt.getUTCHours() +
+        receivedAt.getHours() +
         ':' +
-        receivedAt.getUTCMinutes() +
+        receivedAt.getMinutes() +
         ':' +
-        receivedAt.getUTCSeconds() +
+        receivedAt.getSeconds() +
         ':' +
-        receivedAt.getUTCMilliseconds();
+        receivedAt.getMilliseconds();
 
       return userId + reactionType + receivedTime;
     };
@@ -84,64 +89,50 @@ export const RemoteContentShareReactionOverlay = React.memo(
     );
 
     const markAsCurrentlyActive = (reaction: Reaction, id: string): void => {
-      setIsCurrentlyActive((prevIsCurrentlyActive) => {
-        const activeReactions = new Map(prevIsCurrentlyActive);
-        activeReactions.set(id, activeReactions.get(id) ?? 0 + 1);
-        return activeReactions;
-      });
+      setIsCurrentlyActive([...isCurrentlyActive, id]);
 
-      setActiveTypeCount((prevActiveCount) => {
-        const newActiveCount = new Map(prevActiveCount);
-        newActiveCount.set(reaction.reactionType, newActiveCount.get(reaction.reactionType) ?? 0 + 1);
-        return newActiveCount;
-      });
+      setActiveTypeCount((prevActiveCounts) =>
+        prevActiveCounts.map((item) =>
+          item.reactionType === reaction.reactionType ? { ...item, count: item.count + 1 } : item
+        )
+      );
     };
 
-    const checkIsCurrentlyActive = (id: string): boolean => {
-      if (isCurrentlyActive.has(id) !== undefined) {
-        return isCurrentlyActive.has(id);
+    const shouldRender = (id: string): boolean => {
+      if (id === '') {
+        return false;
       }
-      return false;
+      const isFirstTime = isCurrentlyActive.find((prevId) => prevId === id);
+      console.log('Mohtasim - isReceivedForFirstTime ' + isFirstTime);
+      return isFirstTime === undefined;
     };
 
     const updateVisibleReactions = (reaction: Reaction, userId: string): boolean => {
       const combinedKey = getCombinedKey(userId, reaction.reactionType, reaction.receivedOn);
-
-      if (isAlreadyInQueue.get(combinedKey) !== undefined) {
-        return isAlreadyInQueue.has(combinedKey);
-      }
-
-      if (activeTypeCount.get(reaction.reactionType) ?? 0 > 10) {
+      console.log('Mohtasim - combined key ' + combinedKey);
+      const isInQueue = visibleReactions.findIndex((reaction) => reaction.id === combinedKey);
+      if (isInQueue !== -1) {
         return false;
       }
 
-      setVisibleReactions((prevReactions) => [...prevReactions, { reaction: reaction, id: combinedKey }]);
-      setIsAlreadyInQueue((prevQueue) => {
-        const newMap = new Map(prevQueue);
-        newMap.set(combinedKey, true);
-        return newMap;
-      });
+      const activeCountItem = activeTypeCount.find((item) => item.reactionType === reaction.reactionType);
+      const activeCount = activeCountItem === undefined ? 0 : activeCountItem.count;
+      if (activeCount > 10) {
+        return false;
+      }
+
+      setVisibleReactions([...visibleReactions, { reaction: reaction, id: combinedKey }]);
 
       return true;
     };
 
-    const removeVisibleReaction = (reactionType: string, combinedKey: string): void => {
-      setVisibleReactions((prevReactions) => prevReactions.filter((reaction) => reaction.id !== combinedKey));
-      setIsAlreadyInQueue((prevQueue) => {
-        const newMap = new Map(prevQueue);
-        newMap.set(combinedKey, false);
-        return newMap;
-      });
-      setIsCurrentlyActive((prevIsCurrentlyActive) => {
-        const activeReactions = new Map(prevIsCurrentlyActive);
-        activeReactions.delete(combinedKey);
-        return activeReactions;
-      });
-      setActiveTypeCount((prevActiveCount) => {
-        const newActiveCount = new Map(prevActiveCount);
-        newActiveCount.set(reactionType, newActiveCount.get(reactionType) ?? 0 - 1);
-        return newActiveCount;
-      });
+    const removeVisibleReaction = (reactionType: string, id: string): void => {
+      console.log('Mohtasim - trying to remove with id ' + id);
+      visibleReactions.filter((reaction) => reaction.id !== id);
+      isCurrentlyActive.filter((item) => item !== id);
+      setActiveTypeCount((prevActiveCounts) =>
+        prevActiveCounts.map((item) => (item.reactionType === reactionType ? { ...item, count: item.count - 1 } : item))
+      );
     };
 
     useEffect(() => {
@@ -156,14 +147,24 @@ export const RemoteContentShareReactionOverlay = React.memo(
       });
     }, [localParticipant?.reaction, remoteParticipantReactions]);
 
-    const canRenderReaction = (reaction: Reaction | undefined): boolean => {
+    const cleanupIfGarbage = (reaction: Reaction | undefined, id: string): void => {
+      if (reaction?.reactionType) {
+        removeVisibleReaction(reaction?.reactionType, id);
+      }
+    };
+
+    const canRenderReaction = (reaction: Reaction | undefined, id: string): boolean => {
       if (reaction === undefined) {
         return false;
       }
       const currentTimestamp = new Date();
       const currentUnixTimeStamp = Math.floor(currentTimestamp.getTime() / 1000);
       const receivedUnixTimestamp = reaction ? getReceivedUnixTime(reaction.receivedOn) : 0;
-      return receivedUnixTimestamp ? currentUnixTimeStamp - receivedUnixTimestamp < 1000 : false;
+      const canRender = receivedUnixTimestamp ? currentUnixTimeStamp - receivedUnixTimestamp < 4133 : false;
+      if (!canRender) {
+        cleanupIfGarbage(reaction, id);
+      }
+      return canRender;
     };
 
     const containerHeight = hostDivHeight ?? 0;
@@ -188,10 +189,10 @@ export const RemoteContentShareReactionOverlay = React.memo(
         })}
       >
         {visibleReactions.map((reaction, index) => (
-          <div key={reaction.id ?? reaction.reaction.receivedOn.getMilliseconds()} style={reactionOverlayStyle}>
-            <div key={reaction.id ?? reaction.reaction.receivedOn.getMilliseconds()} className="reaction-item">
-              <React.Fragment key={reaction.id ?? reaction.reaction.receivedOn.getMilliseconds()}>
-                {canRenderReaction(reaction.reaction) && !checkIsCurrentlyActive(reaction.id ?? '') && (
+          <div style={reactionOverlayStyle}>
+            <div className="reaction-item">
+              <React.Fragment key={reaction.id ?? reaction?.reaction.receivedOn.getMilliseconds()}>
+                {canRenderReaction(reaction.reaction, reaction.id ?? '') && shouldRender(reaction.id ?? '') && (
                   // First div - Section that fixes the travel height and applies the movement animation
                   // Second div - Keeps track of active sprites and responsible for marking, counting and removing reactions
                   // Third div - Responsible for opacity controls as the sprite emoji animates
@@ -200,20 +201,19 @@ export const RemoteContentShareReactionOverlay = React.memo(
                   <div
                     style={moveAnimationStyles(
                       containerHeight,
-                      containerHeight * (1 - styleBucket(isCurrentlyActive.size).heightMaxScale)
+                      containerHeight * (1 - styleBucket(isCurrentlyActive.length).heightMaxScale)
                     )}
                   >
                     <div
                       onAnimationEnd={() => removeVisibleReaction(reaction.reaction.reactionType, reaction.id ?? '')}
                       onAnimationStart={() => markAsCurrentlyActive(reaction.reaction, reaction.id ?? '')}
                     >
-                      <div style={opacityAnimationStyles(styleBucket(isCurrentlyActive.size).opacityMax)}>
+                      <div style={opacityAnimationStyles(styleBucket(isCurrentlyActive.length).opacityMax)}>
                         <div style={reactionMovementStyle(index)}>
                           <div
                             style={spriteAnimationStyles(
                               REACTION_NUMBER_OF_ANIMATION_FRAMES,
-                              displaySizePx(isCurrentlyActive.size),
-                              reaction.reaction.reactionType,
+                              displaySizePx(isCurrentlyActive.length),
                               getEmojiResource(reaction?.reaction.reactionType ?? '', reactionResources) ?? ''
                             )}
                           />

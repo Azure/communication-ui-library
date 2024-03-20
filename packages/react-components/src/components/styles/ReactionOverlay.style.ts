@@ -283,7 +283,6 @@ export const spriteFrames = memoizeFunction((numOfFrames, displaySizePx) =>
 export const spriteAnimationStyles = (
   numOfFrames: number,
   displaySizePx: number,
-  reactionType: string,
   imageUrl: string
 ): React.CSSProperties => {
   return {
@@ -291,12 +290,12 @@ export const spriteAnimationStyles = (
     width: `${displaySizePx}px`,
     backgroundImage: `url(${imageUrl})`,
     backgroundRepeat: 'no-repeat',
-    backgroundSize: `${displaySizePx}px ${numOfFrames * displaySizePx}px`,
-    transform: `scale(${displaySizePx}/128)`,
     animationName: spriteFrames(numOfFrames, displaySizePx),
     animationDuration: `${numOfFrames / 24}s`,
     animationFillMode: `forwards`,
     animationIterationCount: 'infinite',
-    animationTimingFunction: `steps(${numOfFrames})`
+    animationTimingFunction: `steps(${numOfFrames})`,
+    backgroundSize: `${displaySizePx}px ${numOfFrames * displaySizePx}px`,
+    transform: `scale(${displaySizePx}/128)`
   };
 };

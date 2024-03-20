@@ -3,7 +3,7 @@
 
 import { concatStyleSets, IStyle, mergeStyles, Stack } from '@fluentui/react';
 import React, { useCallback, useMemo, useRef } from 'react';
-import { GridLayoutStyles, StreamMedia } from '.';
+import { GridLayoutStyles } from '.';
 import { Announcer } from './Announcer';
 import { useEffect } from 'react';
 import { useLocale } from '../localization';
@@ -694,16 +694,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
   const localScreenShareStreamComponent = <LocalScreenShare localParticipant={localParticipant} />;
 
-  const htmlRenderElement = screenShareParticipant?.screenShareStream?.renderElement;
-  const isReceiving = screenShareParticipant?.screenShareStream?.isReceiving;
-  const jsxRenderElement = htmlRenderElement ? (
-    <StreamMedia videoStreamElement={htmlRenderElement} loadingState={isReceiving === false ? 'loading' : 'none'} />
-  ) : undefined;
-
   const remoteScreenShareComponent = screenShareParticipant && (
     <RemoteScreenShare
       {...screenShareParticipant}
-      renderElement={jsxRenderElement}
+      renderElement={screenShareParticipant.screenShareStream?.renderElement}
       onCreateRemoteStreamView={onCreateRemoteStreamView}
       onDisposeRemoteStreamView={onDisposeRemoteScreenShareStreamView}
       isReceiving={screenShareParticipant.screenShareStream?.isReceiving}

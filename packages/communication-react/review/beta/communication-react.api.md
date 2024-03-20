@@ -4665,7 +4665,7 @@ export interface VideoTileProps {
     personaMinSize?: number;
     raisedHand?: RaisedHand;
     // @beta
-    reaction?: Reaction;
+    reactionOverlay?: JSX.Element | null;
     // @beta
     reactionResources?: ReactionResources;
     renderElement?: JSX.Element | null;

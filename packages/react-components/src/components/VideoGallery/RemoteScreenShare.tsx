@@ -4,6 +4,7 @@
 import { Spinner, SpinnerSize, Stack } from '@fluentui/react';
 import React, { useEffect } from 'react';
 import { useLocale } from '../../localization';
+import { StreamMedia } from '../StreamMedia';
 import { VideoTile } from '../VideoTile';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '../../types';
 /* @conditional-compile-remove(reaction) */
@@ -31,7 +32,7 @@ export const RemoteScreenShare = React.memo(
     isReceiving?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
-    renderElement?: JSX.Element | null;
+    renderElement?: HTMLElement;
     participantVideoScalingMode?: VideoStreamOptions;
     /* @conditional-compile-remove(reaction) */
     reactionResources?: ReactionResources;
@@ -49,6 +50,7 @@ export const RemoteScreenShare = React.memo(
       renderElement,
       onCreateRemoteStreamView,
       onDisposeRemoteStreamView,
+      isReceiving,
       participantVideoScalingMode,
       /* @conditional-compile-remove(reaction) */
       reactionResources,
@@ -89,8 +91,24 @@ export const RemoteScreenShare = React.memo(
     if (isPPTLive) {
       return (
         <VideoTile
-          renderElement={renderElement}
+          renderElement={
+            renderElement ? (
+              <StreamMedia
+                videoStreamElement={renderElement}
+                loadingState={isReceiving === false ? 'loading' : 'none'}
+              />
+            ) : undefined
+          }
           onRenderPlaceholder={() => <LoadingSpinner loadingMessage={loadingMessage} />}
+          /* @conditional-compile-remove(reaction) */
+          reactionOverlay={
+            <MeetingReactionOverlay
+              reactionResources={reactionResources!}
+              localParticipant={localParticipant}
+              remoteParticipants={remoteParticipants}
+              overlayMode="screen-share"
+            />
+          }
         />
       );
     }
@@ -99,7 +117,11 @@ export const RemoteScreenShare = React.memo(
       <VideoTile
         displayName={displayName}
         isMuted={isMuted}
-        renderElement={renderElement}
+        renderElement={
+          renderElement ? (
+            <StreamMedia videoStreamElement={renderElement} loadingState={isReceiving === false ? 'loading' : 'none'} />
+          ) : undefined
+        }
         onRenderPlaceholder={() => <LoadingSpinner loadingMessage={loadingMessage} />}
         /* @conditional-compile-remove(reaction) */
         reactionOverlay={
