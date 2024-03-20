@@ -9,14 +9,14 @@ import { SendBoxStrings } from '../SendBox';
 import { sendIconStyle } from '../styles/SendBox.styles';
 import { InputBoxButton } from '../InputBoxButton';
 import { RichTextSendBoxErrors, RichTextSendBoxErrorsProps } from './RichTextSendBoxErrors';
-import { hasIncompleteFileUploads, isMessageTooLong, sanitizeText } from '../utils/SendBoxUtils';
+import { isMessageTooLong, sanitizeText } from '../utils/SendBoxUtils';
 import { RichTextEditorComponentRef } from './RichTextEditor';
 import { useTheme } from '../../theming';
 import { richTextActionButtonsStyle, sendBoxRichTextEditorStyle } from '../styles/RichTextEditor.styles';
 /* @conditional-compile-remove(file-sharing) */
 import { ActiveFileUpload, _FileUploadCards } from '../FileUploadCards';
 /* @conditional-compile-remove(file-sharing) */
-import { hasCompletedFileUploads } from '../utils/SendBoxUtils';
+import { hasCompletedFileUploads, hasIncompleteFileUploads } from '../utils/SendBoxUtils';
 /* @conditional-compile-remove(file-sharing) */
 import { SendBoxErrorBarError } from '../SendBoxErrorBar';
 /* @conditional-compile-remove(file-sharing) */
@@ -285,6 +285,8 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         richTextEditorStyleProps={sendBoxRichTextEditorStyle}
         /* @conditional-compile-remove(file-sharing) */
         onRenderFileUploads={onRenderFileUploads}
+        /* @conditional-compile-remove(file-sharing) */
+        activeFileUploads={activeFileUploads}
       />
     </Stack>
   );

@@ -17,9 +17,12 @@ import {
 } from '../styles/RichTextEditor.styles';
 import {
   inputBoxContentStackStyle,
+  inputBoxRichTextStackItemStyle,
   inputBoxRichTextStackStyle,
   richTextBorderBoxStyle
 } from '../styles/RichTextInputBoxComponent.styles';
+/* @conditional-compile-remove(file-sharing) */
+import { ActiveFileUpload } from '../FileUploadCards';
 
 /**
  * @private
@@ -40,10 +43,11 @@ export interface RichTextInputBoxComponentProps {
   actionComponents: ReactNode;
   /* @conditional-compile-remove(file-sharing) */
   onRenderFileUploads?: () => JSX.Element;
+  /* @conditional-compile-remove(file-sharing) */
+  activeFileUploads?: ActiveFileUpload[];
   // props for min and max height for the rich text editor
   // otherwise the editor will grow to fit the content
   richTextEditorStyleProps: (isExpanded: boolean) => RichTextEditorStyleProps;
-  supportHorizontalLayout?: boolean;
 }
 
 /**
@@ -61,8 +65,9 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
     actionComponents,
     /* @conditional-compile-remove(file-sharing) */
     onRenderFileUploads,
-    richTextEditorStyleProps,
-    supportHorizontalLayout = true
+    /* @conditional-compile-remove(file-sharing) */
+    activeFileUploads,
+    richTextEditorStyleProps
   } = props;
   const theme = useTheme();
   const [showRichTextEditorFormatting, setShowRichTextEditorFormatting] = useState(false);
@@ -126,6 +131,10 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
     [onEnterKeyDown, showRichTextEditorFormatting]
   );
 
+  const useHorizontalLayout =
+    !showRichTextEditorFormatting &&
+    /* @conditional-compile-remove(file-sharing) */ (activeFileUploads?.length ?? 0) === 0;
+
   return (
     <div
       className={richTextBorderBoxStyle({
@@ -135,21 +144,26 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
     >
       <Stack
         grow
-        horizontal={supportHorizontalLayout && !showRichTextEditorFormatting}
+        horizontal={useHorizontalLayout}
+        horizontalAlign={useHorizontalLayout ? 'end' : 'space-between'}
         className={inputBoxContentStackStyle}
+        wrap={useHorizontalLayout}
       >
         {/* fixes the issue when flex box can grow to be bigger than parent */}
         <Stack grow className={inputBoxRichTextStackStyle}>
-          <RichTextEditor
-            initialContent={initialContent}
-            placeholderText={placeholderText}
-            onChange={onChange}
-            onKeyDown={onKeyDown}
-            ref={editorComponentRef}
-            strings={strings}
-            showRichTextEditorFormatting={showRichTextEditorFormatting}
-            styles={richTextEditorStyle}
-          />
+          {/* Add padding to stack.item */}
+          <Stack.Item className={inputBoxRichTextStackItemStyle}>
+            <RichTextEditor
+              initialContent={initialContent}
+              placeholderText={placeholderText}
+              onChange={onChange}
+              onKeyDown={onKeyDown}
+              ref={editorComponentRef}
+              strings={strings}
+              showRichTextEditorFormatting={showRichTextEditorFormatting}
+              styles={richTextEditorStyle}
+            />
+          </Stack.Item>
           {/* @conditional-compile-remove(file-sharing) */ onRenderFileUploads && onRenderFileUploads()}
         </Stack>
         {actionButtons}

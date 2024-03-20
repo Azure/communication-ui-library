@@ -133,7 +133,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   return (
     <div data-testid={'rich-text-editor-wrapper'}>
       {showRichTextEditorFormatting && ribbon}
-      <div className={richTextEditorWrapperStyle(theme, !showRichTextEditorFormatting, showRichTextEditorFormatting)}>
+      <div className={richTextEditorWrapperStyle(theme, !showRichTextEditorFormatting)}>
         <Rooster
           initialContent={initialContent}
           inDarkMode={isDarkThemed(theme)}
