@@ -125,7 +125,6 @@ export interface RemoteVideoTileMenuOptions {
   isHidden?: boolean;
 }
 
-/* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(vertical-gallery) */
 /**
  * Options for the local video tile in the Call composite.
  *
@@ -219,7 +218,6 @@ export type CallCompositeOptions = {
    * Remote participant video tile menu options
    */
   remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
-  /* @conditional-compile-remove(click-to-call) */
   /**
    * Options for controlling the local video tile.
    *
