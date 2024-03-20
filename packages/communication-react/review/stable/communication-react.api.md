@@ -3079,6 +3079,7 @@ export interface RemoteParticipantState {
 export interface RemoteVideoStreamState {
     id: number;
     isAvailable: boolean;
+    isReceiving: boolean;
     mediaStreamType: MediaStreamType;
     streamSize?: {
         width: number;
