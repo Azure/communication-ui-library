@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "area": "improvement",
+  "workstream": "merging prerelease branch back into main",
+  "comment": "Merge branch 'prerelease-stable-remove-beta-suffix/1.14.0' into alkwa/merge-back-prerelease-1.14.0",
+  "packageName": "@azure/communication-react",
+  "email": "alkwa@microsoft.com",
+  "dependentChangeType": "none"
+}

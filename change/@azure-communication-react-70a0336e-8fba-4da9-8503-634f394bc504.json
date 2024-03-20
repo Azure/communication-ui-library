@@ -1,8 +1,8 @@
 {
   "type": "none",
-  "area": "feature",
+  "area": "fix",
   "workstream": "RTE",
-  "comment": "Add Ribbon toolbar for rich text editor",
+  "comment": "Watermark plugin update",
   "packageName": "@azure/communication-react",
   "email": "98852890+vhuseinova-msft@users.noreply.github.com",
   "dependentChangeType": "none"
