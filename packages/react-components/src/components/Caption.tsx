@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
+
 import { IPersona, Persona, Stack, PersonaSize, Text } from '@fluentui/react';
 import React from 'react';
 import { _FileUploadCardsStrings } from './FileUploadCards';
@@ -38,6 +39,7 @@ export const _Caption = (props: _CaptionProps): JSX.Element => {
     size: PersonaSize.size32,
     text: displayName,
     showOverflowTooltip: false,
+    imageShouldStartVisible: true,
     initialsTextColor: 'white',
     styles: {
       root: {

@@ -7,7 +7,11 @@
     "mutedIconLabel": "Микрофон отключен",
     "displayNamePlaceholder": "Участник без имени",
     "participantStateRinging": "Выполняется вызов...",
-    "participantStateHold": "На удержании"
+    "participantStateHold": "На удержании",
+    "attendeeRole": "Участник"
+  },
+  "ParticipantList": {
+    "overflowParticipantCount": "и еще {overflowCount}"
   },
   "typingIndicator": {
     "singleUser": "{user} вводит текст...",
@@ -25,8 +29,29 @@
     "uploading": "Отправка",
     "uploadCompleted": "Отправка завершена"
   },
+  "richTextSendBox": {
+    "placeholderText": "Введите сообщение",
+    "textTooLong": "Длина сообщения превышает максимально допустимую.",
+    "sendButtonAriaLabel": "Отправить сообщение",
+    "fileUploadsPendingError": "Производится отправка... Подождите.",
+    "removeFile": "Удалить файл",
+    "uploading": "Отправка",
+    "uploadCompleted": "Отправка завершена",
+    "boldTooltip": "Полужирный",
+    "italicTooltip": "Курсив",
+    "underlineTooltip": "Подчеркнуть",
+    "bulletListTooltip": "Маркированный список",
+    "numberListTooltip": "Нумерованный список",
+    "increaseIndentTooltip": "Увеличить отступ",
+    "decreaseIndentTooltip": "Уменьшить отступ",
+    "richTextFormatButtonTooltip": "Формат"
+  },
   "mentionPopover": {
     "mentionPopoverHeader": "Рекомендации"
+  },
+  "imageOverlay": {
+    "downloadButtonLabel": "Скачать",
+    "dismissButtonAriaLabel": "Закрыть"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Сообщение отправлено",
@@ -109,6 +134,24 @@
     "tooltipOnContent": "Демонстрация экрана",
     "tooltipOffContent": "Демонстрировать экран"
   },
+  "raiseHandButton": {
+    "offLabel": "Поднять руку",
+    "onLabel": "Опустить",
+    "tooltipDisabledContent": "Действие \"Поднять руку\" отключено",
+    "tooltipOnContent": "Опустить руку",
+    "tooltipOffContent": "Поднять руку"
+  },
+  "reactionButton": {
+    "label": "Отреагировать",
+    "ariaLabel": "Кнопка \"Отреагировать\", отправить реакцию",
+    "tooltipDisabledContent": "Действие реакции отключено",
+    "tooltipContent": "Отправка реакции",
+    "likeReactionTooltipContent": "Нравится",
+    "heartReactionTooltipContent": "Люблю",
+    "laughReactionTooltipContent": "Смеюсь",
+    "applauseReactionTooltipContent": "Аплодисменты",
+    "surprisedReactionTooltipContent": "Удивляюсь"
+  },
   "messageThread": {
     "yesterday": "Вчера",
     "sunday": "Воскресенье",
@@ -133,13 +176,14 @@
     "newMessagesIndicator": "Новые сообщения",
     "noDisplayNameSub": "Без имени",
     "editBoxCancelButton": "Отмена",
-    "editBoxSubmitButton": "Отправить",
+    "editBoxSubmitButton": "Готово",
     "messageReadCount": "Прочитали: {messageReadByCount} из {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Дополнительные параметры",
     "downloadFile": "Скачать файл",
     "blockedWarningText": "Это сообщение было удалено политикой организации.",
     "blockedWarningLinkText": "Сведения",
-    "fileCardGroupMessage": "Сообщение содержит {fileCount} вложение"
+    "fileCardGroupMessage": "Сообщение содержит {fileCount} вложение",
+    "messageDeletedAnnouncementAriaLabel": "Сообщение удалено"
   },
   "errorBar": {
     "unableToReachChatService": "Вы не в сети",
@@ -175,7 +219,8 @@
     "failedToJoinCallGeneric": "Не удалось присоединиться к звонку.",
     "failedToJoinCallInvalidMeetingLink": "Не удалось присоединиться к собранию. Недопустимая ссылка.",
     "cameraFrozenForRemoteParticipants": "У участников звонка возникают проблемы с просмотром вашего видео. Проверьте свои устройства и сеть.",
-    "unableToStartVideoEffect": "Не удалось применить эффект видео."
+    "unableToStartVideoEffect": "Не удалось применить эффект видео.",
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "Не удается запустить закрепление участников, так как достигнуто предельное число закрепленных участников."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Вы демонстрируете свой экран",
@@ -193,7 +238,13 @@
     "pinParticipantMenuItemAriaLabel": "Закрепить участника {participantName}",
     "unpinParticipantMenuItemAriaLabel": "Открепить участника {participantName}",
     "pinnedParticipantAnnouncementAriaLabel": "Участник {participantName} закреплен",
-    "unpinnedParticipantAnnouncementAriaLabel": "Участник {participantName} откреплен"
+    "unpinnedParticipantAnnouncementAriaLabel": "Участник {participantName} откреплен",
+    "startSpotlightVideoTileMenuLabel": "Закрепить видео для всех",
+    "addSpotlightVideoTileMenuLabel": "Добавить закрепление",
+    "spotlightLimitReachedMenuTitle": "Достигнуто предельное число закреплений",
+    "stopSpotlightVideoTileMenuLabel": "Не закреплять",
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Открепить",
+    "attendeeRole": "Участник"
   },
   "dialpad": {
     "placeholderText": "Введите номер телефона",
@@ -324,7 +375,7 @@
     "step3DigitText": "3",
     "step4DigitText": "4"
   },
-  "VerticalGallery": {
+  "verticalGallery": {
     "leftNavButtonAriaLabel": "предыдущая страница",
     "rightNavButtonAriaLabel": "следующая страница"
   }

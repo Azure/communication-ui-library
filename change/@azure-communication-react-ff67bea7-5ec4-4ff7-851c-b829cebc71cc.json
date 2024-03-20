@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix unread chat messages badge on the CallWithChatComposite being cleared when the call goes on hold",
-  "packageName": "@azure/communication-react",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { CallWithChatComposite } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
@@ -64,7 +64,11 @@ const BasicStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Element 
     <>
       <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
         {callWithChatProps ? (
-          <CallWithChatExperienceWithErrorChecks fluentTheme={context.theme} {...callWithChatProps} />
+          <CallWithChatExperienceWithErrorChecks
+            fluentTheme={context.theme}
+            rtl={context.globals.rtl === 'rtl'}
+            {...callWithChatProps}
+          />
         ) : (
           <ConfigHintBanner />
         )}

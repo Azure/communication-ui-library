@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 // This entry point exports only the symbols that should be re-exported from
 // @azure/communication-react.

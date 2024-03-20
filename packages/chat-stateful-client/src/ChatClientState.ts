@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ChatMessageReadReceipt, ChatParticipant } from '@azure/communication-chat';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
@@ -155,4 +155,5 @@ export type ChatErrorTarget =
   | 'ChatThreadClient.sendReadReceipt'
   | 'ChatThreadClient.sendTypingNotification'
   | 'ChatThreadClient.updateMessage'
+  | /* @conditional-compile-remove(chat-beta-sdk) */ 'ChatThreadClient.updateProperties'
   | 'ChatThreadClient.updateTopic';

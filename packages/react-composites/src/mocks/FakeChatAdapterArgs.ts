@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
-import type { FileMetadata } from '@internal/react-components';
+import type { AttachmentMetadata } from '@internal/react-components';
 
 /**
  * Type to represent a file upload the local participant will perform.
  * @internal
  */
-export type _MockFileUpload = FileMetadata & {
+export type _MockFileUpload = AttachmentMetadata & {
   uploadComplete?: boolean;
   error?: string;
   progress?: number;
@@ -62,6 +62,14 @@ export type _FakeChatAdapterArgs = {
    */
   sendRemoteInlineImageMessage?: boolean;
   /**
+   * Local server url
+   */
+  serverUrl?: string;
+  /**
+   * Overwrites the url of the inline image that the first remote participant will send.
+   */
+  inlineImageUrl?: string;
+  /**
    * Determines if chat composite will be localized in French (France).
    */
   frenchLocaleEnabled?: boolean;
@@ -70,7 +78,7 @@ export type _FakeChatAdapterArgs = {
    */
   showParticipantPane?: boolean;
   /**
-   * Array of chat participants for which hidden chat composites will be created for triggerring typing indicators and read receipts
+   * Array of chat participants for which hidden chat composites will be created for triggering typing indicators and read receipts
    */
   participantsWithHiddenComposites?: ChatParticipant[];
   /*
@@ -81,6 +89,7 @@ export type _FakeChatAdapterArgs = {
    * Record of rest errors to throw when methods of interface ChatThreadClient are called
    */
   chatThreadClientMethodErrors?: Partial<Record<keyof ChatThreadClient, _ChatThreadRestError>>;
+  theme?: 'light' | 'dark';
 };
 
 /** @internal */

@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Add tests for mouse and keyboard events when interacting with mentions in SendBox",
-  "packageName": "@azure/communication-react",
-  "email": "98852890+vhuseinova-msft@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

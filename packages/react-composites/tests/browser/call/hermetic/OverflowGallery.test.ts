@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { expect } from '@playwright/test';
 import { IDS } from '../../common/constants';
@@ -7,6 +7,7 @@ import {
   dataUiId,
   dragToRight,
   existsOnPage,
+  isTestProfileDesktop,
   isTestProfileLandscapeMobile,
   pageClick,
   stableScreenshot,
@@ -84,7 +85,6 @@ test.describe('Overflow gallery tests', async () => {
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-many-audio-participants-on-page-1.png');
 
-    /* @conditional-compile-remove(pinned-participants) */
     if (await existsOnPage(page, dataUiId('scrollable-horizontal-gallery'))) {
       await dragToRight(page, dataUiId('scrollable-horizontal-gallery'));
       expect(await stableScreenshot(page)).toMatchSnapshot(
@@ -142,7 +142,7 @@ test.describe('Overflow gallery tests', async () => {
     );
   });
 
-  /* @conditional-compile-remove(PSTN-calls) @conditional-compile-remove(pinned-participants) */
+  /* @conditional-compile-remove(PSTN-calls) */
   test('Overflow gallery should have multiple audio participants and 1 PSTN participant on second page', async ({
     page,
     serverUrl
@@ -173,7 +173,6 @@ test.describe('Overflow gallery tests', async () => {
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
 
-    /* @conditional-compile-remove(pinned-participants) */
     if (
       (await existsOnPage(page, dataUiId('scrollable-horizontal-gallery'))) &&
       !isTestProfileLandscapeMobile(testInfo)
@@ -262,5 +261,30 @@ test.describe('Overflow gallery tests', async () => {
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-1-joining-1-hold-participants.png');
+  });
+
+  /* @conditional-compile-remove(gallery-layout-composite) */
+  test('Overflow gallery can be moved to the top along with the local tile', async ({ page, serverUrl }, testInfo) => {
+    test.skip(!isTestProfileDesktop(testInfo));
+    const reina = defaultMockRemoteParticipant('Reina Takizawa');
+    addVideoStream(reina, true);
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+
+    const participants = [reina, paul];
+    const initialState = defaultMockCallAdapterState(participants);
+
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
+
+    await waitForSelector(page, dataUiId(IDS.videoGallery));
+
+    await waitForSelector(page, dataUiId(IDS.moreButton));
+    await pageClick(page, dataUiId(IDS.moreButton));
+
+    expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-controls.png');
+    await page.locator('button:has-text("View")').click();
+    expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-controls-open.png');
+    await page.locator('button:has-text("Move gallery to top")').click();
+
+    expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-moved-to-top.png');
   });
 });

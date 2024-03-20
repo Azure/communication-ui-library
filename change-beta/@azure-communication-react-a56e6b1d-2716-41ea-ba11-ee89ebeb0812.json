@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fixed adapter error on mobile querying speakers when speakers are not available",
-  "packageName": "@azure/communication-react",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}

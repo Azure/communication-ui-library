@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { MediaStreamType } from '@azure/communication-calling';
 import { _logEvent } from '@internal/acs-ui-common';
@@ -17,7 +17,7 @@ function _logDisposeStreamEvent(
   streamLogInfo: {
     callId?: string;
     participantKey?: any;
-    streamId?: number;
+    streamId?: number | string;
     streamType?: MediaStreamType;
     streamEventType?: string;
   }
@@ -97,7 +97,7 @@ function _logCreateStreamEvent(
   streamLogInfo: {
     callId?: string;
     participantKey?: any;
-    streamId?: number;
+    streamId?: number | string;
     streamType?: MediaStreamType;
     streamEventType?: string;
   },
@@ -213,7 +213,7 @@ export function _logStreamEvent(
   streamLogInfo: {
     callId?: string;
     participantKey?: any;
-    streamId?: number;
+    streamId?: number | string;
     streamType?: MediaStreamType;
     streamEventType?: string;
   },

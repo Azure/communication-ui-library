@@ -2,24 +2,67 @@ import {
   FluentThemeProvider,
   MessageThread,
   Message,
-  FileMetadata,
-  AttachmentDownloadResult
+  ImageOverlay,
+  ChatMessage,
+  InlineImage
 } from '@azure/communication-react';
-import React from 'react';
+import { Persona, PersonaSize } from '@fluentui/react';
+import React, { useState } from 'react';
 
 export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
-  const onFetchAttachment = async (attachment: FileMetadata): Promise<AttachmentDownloadResult[]> => {
-    // * Your custom function to fetch image behind authenticated blob storage/server
-    // const response = await fetchImage(attachment.previewUrl ?? '', token);
-    // const blob = await response.blob();
+  const [overlayImageItem, setOverlayImageItem] =
+    useState<{ imageSrc: string; title: string; titleIcon: JSX.Element; downloadFilename: string }>();
 
-    // * Create a blob url as <img> src
-    return [
-      {
-        // blobUrl: URL.createObjectURL(blob);
-        blobUrl: attachment.attachmentType === 'inlineImage' ? attachment.previewUrl ?? '' : ''
+  const onInlineImageClicked = (attachmentId: string, messageId: string): Promise<void> => {
+    const filteredMessages = messages?.filter((message) => {
+      return message.messageId === messageId;
+    });
+    if (!filteredMessages || filteredMessages.length <= 0) {
+      return Promise.reject(`Message not found with messageId ${messageId}`);
+    }
+    const chatMessage = filteredMessages[0] as ChatMessage;
+    const title = 'Image';
+    const titleIcon = (
+      <Persona text={chatMessage.senderDisplayName} size={PersonaSize.size32} hidePersonaDetails={true} />
+    );
+    const document = new DOMParser().parseFromString(chatMessage.content ?? '', 'text/html');
+    let imgSrc = '';
+    document.querySelectorAll('img').forEach((img) => {
+      if (img.id === attachmentId) {
+        imgSrc = img.src;
       }
-    ];
+    });
+    const overlayImage = {
+      title,
+      titleIcon,
+      downloadFilename: attachmentId,
+      imageSrc: imgSrc
+    };
+    setOverlayImageItem(overlayImage);
+    return Promise.resolve();
+  };
+
+  /* @conditional-compile-remove(image-overlay) */
+  const inlineImageOptions = {
+    onRenderInlineImage: (
+      inlineImage: InlineImage,
+      defaultOnRender: (inlineImage: InlineImage) => JSX.Element
+    ): JSX.Element => {
+      return (
+        <span
+          onClick={() => onInlineImageClicked(inlineImage.imageAttributes.id || '', inlineImage.messageId)}
+          tabIndex={0}
+          role="button"
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              onInlineImageClicked(inlineImage.imageAttributes.id || '', inlineImage.messageId);
+            }
+          }}
+        >
+          {defaultOnRender(inlineImage)}
+        </span>
+      );
+    }
   };
 
   const messages: Message[] = [
@@ -27,31 +70,13 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
       messageType: 'chat',
       senderId: 'user3',
       content:
-        '<p>How should I design my new house?</p><p><img alt="image" src="" itemscope="png" width="166.5625" height="250" id="SomeImageId1" style="vertical-align:bottom"></p><p><img alt="image" src="" itemscope="png" width="374.53183520599254" height="250" id="SomeImageId2" style="vertical-align:bottom"></p><p>&nbsp;</p>',
+        '<p>How should I design my new house?</p><p><img alt="image" src="images/inlineImageExample1.png" itemscope="png" width="166.5625" height="250" id="SomeImageId1" style="vertical-align:bottom"></p><p><img alt="image" src="images/inlineImageExample2.png" itemscope="png" width="374.53183520599254" height="250" id="SomeImageId2" style="vertical-align:bottom"></p><p>&nbsp;</p>',
       senderDisplayName: 'Miguel Garcia',
       messageId: Math.random().toString(),
       createdOn: new Date('2019-04-13T00:00:00.000+08:09'),
       mine: false,
       attached: false,
-      contentType: 'html',
-      attachedFilesMetadata: [
-        {
-          id: 'SomeImageId1',
-          name: 'SomeImageId1',
-          attachmentType: 'inlineImage',
-          extension: 'png',
-          url: 'images/inlineImageExample1.png',
-          previewUrl: 'images/inlineImageExample1.png'
-        },
-        {
-          id: 'SomeImageId2',
-          name: 'SomeImageId2',
-          attachmentType: 'inlineImage',
-          extension: 'png',
-          url: 'images/inlineImageExample2.png',
-          previewUrl: 'images/inlineImageExample2.png'
-        }
-      ]
+      contentType: 'html'
     },
     {
       messageType: 'chat',
@@ -65,10 +90,22 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
       contentType: 'text'
     }
   ];
-
   return (
     <FluentThemeProvider>
-      <MessageThread userId={'1'} messages={messages} onFetchAttachments={onFetchAttachment} />
+      <MessageThread userId={'1'} messages={messages} inlineImageOptions={inlineImageOptions} />
+      {
+        <ImageOverlay
+          isOpen={overlayImageItem !== undefined}
+          imageSrc={overlayImageItem?.imageSrc || ''}
+          title="Image"
+          onDismiss={() => {
+            setOverlayImageItem(undefined);
+          }}
+          onDownloadButtonClicked={() => {
+            alert('Download button clicked');
+          }}
+        />
+      }
     </FluentThemeProvider>
   );
 };

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
@@ -11,6 +11,7 @@ import {
   buildTime,
   callingSDKVersion,
   chatSDKVersion,
+  commitID,
   communicationReactSDKVersion,
   createGroupId,
   ensureJoinableCallLocatorPushedToUrl,
@@ -29,14 +30,13 @@ import { joinThread } from './utils/joinThread';
 import { getThread } from './utils/getThread';
 import { getExistingThreadIdFromURL } from './utils/getThreadId';
 import { WEB_APP_TITLE } from './utils/constants';
-import { useSecondaryInstanceCheck } from './utils/useSecondaryInstanceCheck';
-import { PageOpenInAnotherTab } from './views/PageOpenInAnotherTab';
-import { useIsMobile } from './utils/useIsMobile';
-/* @conditional-compilation-remove(PSTN-calls) */
+/* @conditional-compile-remove(PSTN-calls) */
 import { CallParticipantsLocator } from '@azure/communication-react';
+import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 
-setLogLevel('warning');
+setLogLevel('error');
 initializeIcons();
+initializeFileTypeIcons();
 
 interface Credentials {
   userId: CommunicationUserIdentifier;
@@ -52,18 +52,12 @@ interface CallWithChatArgs {
 type AppPages = 'home' | 'call' | 'error';
 
 console.log(
-  `ACS sample Call with Chat app. Last Updated ${buildTime} Using @azure/communication-calling:${callingSDKVersion}, @azure/communication-chat:${chatSDKVersion}, and @azure/communication-react:${communicationReactSDKVersion}`
+  `ACS sample Call with Chat app. Last Updated ${buildTime} with CommitID:${commitID} using @azure/communication-calling:${callingSDKVersion}, @azure/communication-chat:${chatSDKVersion}, and @azure/communication-react:${communicationReactSDKVersion}`
 );
 
 const App = (): JSX.Element => {
   const [page, setPage] = useState<AppPages>('home');
   const [callWithChatArgs, setCallWithChatArgs] = useState<CallWithChatArgs | undefined>(undefined);
-  const isMobileSession = useIsMobile();
-  const isAppAlreadyRunningInAnotherTab = useSecondaryInstanceCheck();
-
-  if (isMobileSession && isAppAlreadyRunningInAnotherTab) {
-    return <PageOpenInAnotherTab />;
-  }
 
   if (isOnIphoneAndNotSafari()) {
     return <UnsupportedBrowserPage />;
@@ -170,8 +164,8 @@ const generateCallWithChatArgs = async (
 };
 
 const callLocatorGen = (
-  /* @conditional-compilation-remove(PSTN-calls) */ outBoundParticipants?: string[]
-): GroupCallLocator | /* @conditional-compilation-remove(PSTN-calls) */ CallParticipantsLocator => {
+  /* @conditional-compile-remove(PSTN-calls) */ outBoundParticipants?: string[]
+): GroupCallLocator | /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator => {
   /* @conditional-compile-remove(PSTN-calls) */
   if (outBoundParticipants) {
     return { participantIds: outBoundParticipants };

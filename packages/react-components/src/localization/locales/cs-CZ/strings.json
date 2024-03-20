@@ -7,7 +7,11 @@
     "mutedIconLabel": "Ztlumeno",
     "displayNamePlaceholder": "Nepojmenovaný účastník",
     "participantStateRinging": "Volání…",
-    "participantStateHold": "Pozastavený hovor"
+    "participantStateHold": "Pozastavený hovor",
+    "attendeeRole": "Účastník"
+  },
+  "ParticipantList": {
+    "overflowParticipantCount": "+{overflowCount} další(ch)"
   },
   "typingIndicator": {
     "singleUser": "{user} píše...",
@@ -25,8 +29,29 @@
     "uploading": "Nahrávání",
     "uploadCompleted": "Nahrávání se dokončilo"
   },
+  "richTextSendBox": {
+    "placeholderText": "Zadejte zprávu",
+    "textTooLong": "Délka vaší zprávy překračuje maximální limit.",
+    "sendButtonAriaLabel": "Poslat zprávu",
+    "fileUploadsPendingError": "Nahrávání… Počkejte prosím.",
+    "removeFile": "Odebrat soubor",
+    "uploading": "Nahrávání",
+    "uploadCompleted": "Nahrávání se dokončilo",
+    "boldTooltip": "Tučné",
+    "italicTooltip": "Kurzíva",
+    "underlineTooltip": "Podtržení",
+    "bulletListTooltip": "Seznam s odrážkami",
+    "numberListTooltip": "Číslovaný seznam",
+    "increaseIndentTooltip": "Zvětšit odsazení",
+    "decreaseIndentTooltip": "Zmenšit odsazení",
+    "richTextFormatButtonTooltip": "Formát"
+  },
   "mentionPopover": {
     "mentionPopoverHeader": "Návrhy"
+  },
+  "imageOverlay": {
+    "downloadButtonLabel": "Stáhnout",
+    "dismissButtonAriaLabel": "Zavřít"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Zpráva byla odeslána",
@@ -53,8 +78,8 @@
     "cameraMenuTitle": "Kamera",
     "cameraMenuTooltip": "Zvolit kameru",
     "cameraButtonSplitRoleDescription": "Tlačítko rozdělení",
-    "onSplitButtonAriaLabel": "Vypnout možnosti kamery a fotoaparátu",
-    "offSplitButtonAriaLabel": "Zapnout možnosti kamery a fotoaparátu",
+    "onSplitButtonAriaLabel": "Vypnout kameru a možnosti kamery",
+    "offSplitButtonAriaLabel": "Zapnout kameru a možnosti kamery",
     "cameraActionTurnedOnAnnouncement": "Vaše kamera je zapnutá",
     "cameraActionTurnedOffAnnouncement": "Vaše kamera je vypnutá",
     "onSplitButtonPrimaryActionCamera": "Vypnout kameru",
@@ -73,7 +98,7 @@
     "speakerMenuTitle": "Reproduktor",
     "speakerMenuTooltip": "Zvolit reproduktor",
     "microphoneButtonSplitRoleDescription": "Tlačítko rozdělení",
-    "onSplitButtonAriaLabel": "Ztlumit možnosti mikrofonu a zvuku",
+    "onSplitButtonAriaLabel": "Ztlumit mikrofon a možnosti zvuku",
     "offSplitButtonAriaLabel": "Zrušit ztlumení mikrofonu a možností zvuku",
     "microphoneActionTurnedOnAnnouncement": "Váš mikrofon je zapnutý",
     "microphoneActionTurnedOffAnnouncement": "Váš mikrofon je vypnutý",
@@ -104,10 +129,28 @@
   },
   "screenShareButton": {
     "onLabel": "Zastavit prezentaci",
-    "offLabel": "Přítomno",
+    "offLabel": "Prezentovat",
     "tooltipDisabledContent": "Sdílení je zakázáno",
     "tooltipOnContent": "Sdílí se vaše obrazovka",
     "tooltipOffContent": "Sdílet obrazovku"
+  },
+  "raiseHandButton": {
+    "offLabel": "Zvednout",
+    "onLabel": "Dolů",
+    "tooltipDisabledContent": "Akce Zvednout ruku je zakázaná",
+    "tooltipOnContent": "Dát ruku dolů",
+    "tooltipOffContent": "Zvednout ruku"
+  },
+  "reactionButton": {
+    "label": "Reagovat",
+    "ariaLabel": "Tlačítko Reagovat, odeslat reakci",
+    "tooltipDisabledContent": "Akce reakce je zakázaná",
+    "tooltipContent": "Odeslání reakce",
+    "likeReactionTooltipContent": "To se mi líbí",
+    "heartReactionTooltipContent": "Láska",
+    "laughReactionTooltipContent": "Smích",
+    "applauseReactionTooltipContent": "Aplaus",
+    "surprisedReactionTooltipContent": "Překvapení"
   },
   "messageThread": {
     "yesterday": "Včera",
@@ -133,13 +176,14 @@
     "newMessagesIndicator": "Nové zprávy",
     "noDisplayNameSub": "Bez jména",
     "editBoxCancelButton": "Zrušit",
-    "editBoxSubmitButton": "Odeslat",
+    "editBoxSubmitButton": "Hotovo",
     "messageReadCount": "Přečetl(a) {messageReadByCount} z {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Další možnosti",
     "downloadFile": "Stáhnout soubor",
     "blockedWarningText": "Tato zpráva se odstranila kvůli zásadám organizace.",
     "blockedWarningLinkText": "Podrobnosti",
-    "fileCardGroupMessage": "Zpráva obsahuje počet příloh: {fileCount}"
+    "fileCardGroupMessage": "Zpráva obsahuje počet příloh: {fileCount}",
+    "messageDeletedAnnouncementAriaLabel": "Zpráva se odstranila."
   },
   "errorBar": {
     "unableToReachChatService": "Jste offline",
@@ -175,7 +219,8 @@
     "failedToJoinCallGeneric": "K hovoru se nepovedlo připojit.",
     "failedToJoinCallInvalidMeetingLink": "Ke schůzce se nelze připojit. Neplatný odkaz.",
     "cameraFrozenForRemoteParticipants": "Uživatelé v hovoru mají problémy s zobrazením vašeho videa. Zkontrolujte prosím svá zařízení a síť.",
-    "unableToStartVideoEffect": "Nelze použít efekt videa."
+    "unableToStartVideoEffect": "Nelze použít efekt videa.",
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "Nelze zahájit vytváření hlavního výběru účastníků, protože je již v hlavním výběru maximální počet účastníků."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Sdílíte obrazovku",
@@ -193,7 +238,13 @@
     "pinParticipantMenuItemAriaLabel": "Připnout {participantName}",
     "unpinParticipantMenuItemAriaLabel": "Odepnout {participantName}",
     "pinnedParticipantAnnouncementAriaLabel": "Připnutý účastník {participantName}",
-    "unpinnedParticipantAnnouncementAriaLabel": "{participantName} odepnut"
+    "unpinnedParticipantAnnouncementAriaLabel": "{participantName} odepnut",
+    "startSpotlightVideoTileMenuLabel": "Přidat do hlavního výběru všem",
+    "addSpotlightVideoTileMenuLabel": "Přidat do hlavního výběru",
+    "spotlightLimitReachedMenuTitle": "Dosáhlo se limitu hlavního výběru",
+    "stopSpotlightVideoTileMenuLabel": "Zastavit přidávání do hlavního výběru",
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Ukončit hlavní výběr",
+    "attendeeRole": "Účastník"
   },
   "dialpad": {
     "placeholderText": "Zadejte telefonní číslo",
@@ -324,7 +375,7 @@
     "step3DigitText": "3",
     "step4DigitText": "4"
   },
-  "VerticalGallery": {
+  "verticalGallery": {
     "leftNavButtonAriaLabel": "předchozí stránka",
     "rightNavButtonAriaLabel": "další stránka"
   }

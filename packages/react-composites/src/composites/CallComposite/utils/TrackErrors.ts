@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ActiveErrorMessage, ErrorType } from '@internal/react-components';
 import { TrackedErrors } from '../types/ErrorTracking';

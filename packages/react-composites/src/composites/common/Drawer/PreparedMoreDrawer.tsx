@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React, { useMemo } from 'react';
 import { useCallWithChatCompositeStrings } from '../../CallWithChatComposite/hooks/useCallWithChatCompositeStrings';
@@ -8,6 +8,10 @@ import { moreDrawerSelector } from '../../CallWithChatComposite/selectors/moreDr
 import { useSelector } from '../../CallComposite/hooks/useSelector';
 import { useHandlers } from '../../CallComposite/hooks/useHandlers';
 import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
+/* @condtional-compile-remove(gallery-options) */
+import { VideoGalleryLayout } from '@internal/react-components';
+/* @conditional-compile-remove(reaction) */
+import { ReactionResources } from '@internal/react-components';
 
 /** @private */
 export interface PreparedMoreDrawerProps {
@@ -19,6 +23,14 @@ export interface PreparedMoreDrawerProps {
   /* @conditional-compile-remove(close-captions) */
   isCaptionsSupported?: boolean;
   disableButtonsForHoldScreen?: boolean;
+  onUserSetGalleryLayout?: (layout: VideoGalleryLayout) => void;
+  userSetGalleryLayout?: VideoGalleryLayout;
+  onSetDialpadPage?: () => void;
+  dtmfDialerPresent?: boolean;
+  /* @conditional-compile-remove(close-captions) */
+  isTeamsCall?: boolean;
+  /* @conditional-compile-remove(reaction) */
+  reactionResources?: ReactionResources;
 }
 
 /** @private */
@@ -33,11 +45,16 @@ export const PreparedMoreDrawer = (props: PreparedMoreDrawerProps): JSX.Element 
       /* @conditional-compile-remove(close-captions) */
       captionsMenuTitle: strings.moreDrawerCaptionsMenuTitle,
       /* @conditional-compile-remove(close-captions) */
-      spokenLanguageMenuTitle: strings.moreDrawerSpokenLanguageMenuTitle
+      spokenLanguageMenuTitle: strings.moreDrawerSpokenLanguageMenuTitle,
+      /* @conditional-compile-remove(close-captions) */
+      captionLanguageMenuTitle: strings.moreDrawerCaptionLanguageMenuTitle,
+
+      galleryOptionsMenuTitle: strings.moreDrawerGalleryOptionsMenuTitle
     }),
     [strings]
   );
   const deviceProps = useSelector(moreDrawerSelector);
   const callHandlers = useHandlers(MoreDrawer);
+
   return <MoreDrawer {...props} {...deviceProps} {...callHandlers} strings={moreDrawerStrings} />;
 };

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { TypingIndicatorReceivedEvent } from '@azure/communication-chat';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
@@ -206,7 +206,7 @@ describe('typingIndicatorSelector tests', () => {
         receivedOn: new Date()
       }
     ];
-    const participants = {};
+    const participants: { [key: number]: { id: string; displayName: string } } = {};
     Array.from(Array(20).keys()).forEach(
       (num) => (participants[`${num}`] = { id: `${num}`, displayName: `User${num}` })
     );

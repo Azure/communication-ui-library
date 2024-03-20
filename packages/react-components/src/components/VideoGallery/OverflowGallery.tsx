@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { concatStyleSets } from '@fluentui/react';
 import React, { useMemo } from 'react';
@@ -12,13 +12,15 @@ import { HORIZONTAL_GALLERY_BUTTON_WIDTH, HORIZONTAL_GALLERY_GAP } from '../styl
 import { VerticalGalleryStyles } from '../VerticalGallery';
 /* @conditional-compile-remove(vertical-gallery) */
 import { OverflowGalleryPosition } from '../VideoGallery';
-/* @conditional-compile-remove(pinned-participants) */
 import { ScrollableHorizontalGallery } from './ScrollableHorizontalGallery';
 import {
+  SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM,
   horizontalGalleryContainerStyle,
   horizontalGalleryStyle
 } from './styles/VideoGalleryResponsiveHorizontalGallery.styles';
 /* @conditional-compile-remove(vertical-gallery) */
+import { _convertPxToRem } from '@internal/acs-ui-common';
+import { SMALL_FLOATING_MODAL_SIZE_REM } from './styles/FloatingLocalVideo.styles';
 import {
   verticalGalleryContainerStyle,
   verticalGalleryStyle
@@ -42,6 +44,7 @@ export const OverflowGallery = (props: {
   /* @conditional-compile-remove(vertical-gallery) */
   overflowGalleryPosition?: OverflowGalleryPosition;
   onChildrenPerPageChange?: (childrenPerPage: number) => void;
+  parentWidth?: number;
 }): JSX.Element => {
   const {
     shouldFloatLocalVideo = false,
@@ -51,14 +54,15 @@ export const OverflowGallery = (props: {
     isShort = false,
     overflowGalleryElements,
     horizontalGalleryStyles,
-    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'HorizontalBottom',
+    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'horizontalBottom',
     /* @conditional-compile-remove(vertical-gallery) */ verticalGalleryStyles,
-    onChildrenPerPageChange
+    onChildrenPerPageChange,
+    parentWidth
   } = props;
 
   const containerStyles = useMemo(() => {
     /* @conditional-compile-remove(vertical-gallery) */
-    if (overflowGalleryPosition === 'VerticalRight') {
+    if (overflowGalleryPosition === 'verticalRight') {
       return verticalGalleryContainerStyle(shouldFloatLocalVideo, isNarrow, isShort);
     }
     return horizontalGalleryContainerStyle(shouldFloatLocalVideo, isNarrow);
@@ -71,7 +75,7 @@ export const OverflowGallery = (props: {
 
   const galleryStyles = useMemo(() => {
     /* @conditional-compile-remove(vertical-gallery) */
-    if (overflowGalleryPosition === 'VerticalRight') {
+    if (overflowGalleryPosition === 'verticalRight') {
       return concatStyleSets(verticalGalleryStyle(isShort), verticalGalleryStyles);
     }
     return concatStyleSets(horizontalGalleryStyle(isNarrow), horizontalGalleryStyles);
@@ -83,8 +87,19 @@ export const OverflowGallery = (props: {
     /* @conditional-compile-remove(vertical-gallery) */ verticalGalleryStyles
   ]);
 
+  const scrollableHorizontalGalleryContainerStyles = useMemo(() => {
+    if (isNarrow && parentWidth) {
+      return {
+        width: shouldFloatLocalVideo
+          ? `${_convertPxToRem(parentWidth) - SMALL_FLOATING_MODAL_SIZE_REM.width - 1}rem`
+          : `${_convertPxToRem(parentWidth) - 1}rem`
+      };
+    }
+    return undefined;
+  }, [isNarrow, parentWidth, shouldFloatLocalVideo]);
+
   /* @conditional-compile-remove(vertical-gallery) */
-  if (overflowGalleryPosition === 'VerticalRight') {
+  if (overflowGalleryPosition === 'verticalRight') {
     return (
       <ResponsiveVerticalGallery
         key="responsive-vertical-gallery"
@@ -101,16 +116,19 @@ export const OverflowGallery = (props: {
     );
   }
 
-  /* @conditional-compile-remove(pinned-participants) */
+  SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM;
+
   if (isNarrow) {
     // There are no pages for ScrollableHorizontalGallery so we will approximate the first 3 remote
     // participant tiles are visible
     onChildrenPerPageChange?.(3);
+
     return (
       <ScrollableHorizontalGallery
         horizontalGalleryElements={overflowGalleryElements ? overflowGalleryElements : [<></>]}
         onFetchTilesToRender={onFetchTilesToRender}
         key="scrollable-horizontal-gallery"
+        containerStyles={scrollableHorizontalGalleryContainerStyles}
       />
     );
   }

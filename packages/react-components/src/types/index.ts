@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 export * from './ChatMessage';
 export * from './ComponentSlotStyle';
@@ -10,3 +10,7 @@ export * from './ParticipantListParticipant';
 export * from './OnRender';
 export * from './ReadReceiptsBySenderId';
 export * from './CaptionsAvailableLanguageStrings';
+export * from './SurveyIssues';
+export * from './SurveyIssuesHeadingStrings';
+export * from './CallSurveyImprovementSuggestions';
+export * from './ReactionTypes';

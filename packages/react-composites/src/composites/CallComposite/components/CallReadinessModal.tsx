@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React from 'react';
 /* @conditional-compile-remove(call-readiness) */
@@ -35,7 +35,7 @@ export const CallReadinessModal = (props: {
   /* @conditional-compile-remove(unsupported-browser) */
   environmentInfo?: EnvironmentInfo;
   isPermissionsModalDismissed: boolean;
-  setIsPermissionsModalDismissed: (boolean) => void;
+  setIsPermissionsModalDismissed: (dismissedState: boolean) => void;
   onPermissionsTroubleshootingClick?: (permissionsState: {
     camera: PermissionState;
     microphone: PermissionState;
@@ -209,7 +209,7 @@ export const CallReadinessModal = (props: {
         onDismiss={() => {
           setIsPermissionsModalDismissed(false);
         }}
-        overlay={{ styles: { root: { background: 'rgba(0,0,0,0.9)' } } }}
+        overlay={{ styles: { root: { background: 'rgba(0,0,0,0.4)' } } }}
       >
         {modal()}
       </_ModalClone>
@@ -236,7 +236,7 @@ export const CallReadinessModalFallBack = (props: {
   /* @conditional-compile-remove(unsupported-browser) */
   environmentInfo?: EnvironmentInfo;
   isPermissionsModalDismissed: boolean;
-  setIsPermissionsModalDismissed: (boolean) => void;
+  setIsPermissionsModalDismissed: (dismissedState: boolean) => void;
   onPermissionsTroubleshootingClick?: (permissionsState: {
     camera: PermissionState;
     microphone: PermissionState;
@@ -373,7 +373,7 @@ export const CallReadinessModalFallBack = (props: {
             onDismiss={() => {
               setIsPermissionsModalDismissed(false);
             }}
-            overlay={{ styles: { root: { background: 'rgba(0,0,0,0.9)' } } }}
+            overlay={{ styles: { root: { background: 'rgba(0,0,0,0.4)' } } }}
           >
             <CameraAndMicrophoneSitePermissions
               appName={'app'}
@@ -403,7 +403,7 @@ export const CallReadinessModalFallBack = (props: {
             onDismiss={() => {
               setIsPermissionsModalDismissed(false);
             }}
-            overlay={{ styles: { root: { background: 'rgba(0,0,0,0.9)' } } }}
+            overlay={{ styles: { root: { background: 'rgba(0,0,0,0.4)' } } }}
           >
             {modal()}
           </_ModalClone>

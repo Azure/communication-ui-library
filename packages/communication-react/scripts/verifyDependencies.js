@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 /**
  * Verify package contains all the dependencies of downstream packlets.
@@ -12,16 +12,19 @@ const { exit } = require('process');
 const tsConfig = require(path.resolve(__dirname, '../tsconfig.json'));
 const downstreamPacklets = tsConfig['compilerOptions']['paths'];
 
+// ONLY ADD TO THIS LIST IF THE DEPENDENCY IS NOT IN THE FINAL NPM PACKAGE.
+//
+// Typically test dependencies are listed under the devDependencies section of the package.json.
+// However, some test dependencies used for the mock adapters are listed under dependencies section because
+// they are used in exported code for other internal usage in other packlets.
+// These dependencies are not included in the final npm package and are only used for internal testing purposes.
+// Hence we can skip these dependencies from the verification process.
+const testOnlyDependencies = ['@azure/core-rest-pipeline'];
+
 let allDependencies = new Set();
 let allPeerDependencies = new Set();
 
 for (const packlet of Object.keys(downstreamPacklets)) {
-  // Special case for @internal/northstar-wrapper, we use a bundled output for this packlet
-  // and so it does not have a package.json nor dependencies (relevant dependencies are bundled)
-  if (packlet === '@internal/northstar-wrapper') {
-    continue;
-  }
-
   const packageJsonRelativePath = '../';
 
   const packletPackageData = require(path.resolve(
@@ -47,7 +50,7 @@ const packageData = require(path.resolve(__dirname, '../package.json'));
 const currentPackageDependencies = packageData['dependencies'];
 for (const dep of allDependencies) {
   // if the dependency is not listed or is not another internal packlet, throw error
-  if (!currentPackageDependencies[dep] && !downstreamPacklets[dep]) {
+  if (!currentPackageDependencies[dep] && !downstreamPacklets[dep] && !testOnlyDependencies.includes(dep)) {
     console.error(
       `VERIFY DEPENDENCIES ERROR: ${dep} does not exist in @azure/communication-react package dependencies list`
     );

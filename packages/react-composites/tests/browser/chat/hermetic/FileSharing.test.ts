@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
+
 import { expect } from '@playwright/test';
 import { sendMessage, waitForMessageDelivered } from '../../common/chatTestHelpers';
 import { dataUiId, stableScreenshot, waitForSelector } from '../../common/utils';
@@ -37,14 +38,14 @@ test.describe('Filesharing SendBox', async () => {
             name: 'SampleFile.pdf',
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
-            attachmentType: 'fileSharing'
+            attachmentType: 'file'
           },
           {
             id: 'SomeMockId',
             name: 'SampleXlsLoooongName.xlsx',
             extension: 'xslx',
             url: 'https://sample.com/SampleXls.xlsx',
-            attachmentType: 'fileSharing'
+            attachmentType: 'file'
           }
         ]
       })
@@ -73,7 +74,7 @@ test.describe('Filesharing ProgressBar', async () => {
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
             progress: 0.5,
-            attachmentType: 'fileSharing'
+            attachmentType: 'file'
           },
           {
             id: 'SomeMockId',
@@ -81,7 +82,7 @@ test.describe('Filesharing ProgressBar', async () => {
             extension: 'xslx',
             url: 'https://sample.com/SampleXls.xlsx',
             progress: 0.8,
-            attachmentType: 'fileSharing'
+            attachmentType: 'file'
           }
         ]
       })
@@ -107,7 +108,7 @@ test.describe('Filesharing ProgressBar', async () => {
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
             progress: 0,
-            attachmentType: 'fileSharing'
+            attachmentType: 'file'
           },
           {
             id: 'SomeMockId',
@@ -115,7 +116,7 @@ test.describe('Filesharing ProgressBar', async () => {
             extension: 'xslx',
             url: 'https://sample.com/SampleXls.xlsx',
             progress: -1,
-            attachmentType: 'fileSharing'
+            attachmentType: 'file'
           }
         ]
       })
@@ -141,7 +142,7 @@ test.describe('Filesharing ProgressBar', async () => {
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
             progress: 1,
-            attachmentType: 'fileSharing'
+            attachmentType: 'file'
           },
           {
             id: 'SomeMockId',
@@ -149,7 +150,7 @@ test.describe('Filesharing ProgressBar', async () => {
             extension: 'xslx',
             url: 'https://sample.com/SampleXls.xlsx',
             progress: 10,
-            attachmentType: 'fileSharing'
+            attachmentType: 'file'
           }
         ]
       })
@@ -178,7 +179,7 @@ test.describe('Filesharing SendBox Errorbar', async () => {
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
             error: 'File too big. Select a file under 99 MB.',
-            attachmentType: 'fileSharing'
+            attachmentType: 'file'
           }
         ]
       })
@@ -200,7 +201,7 @@ test.describe('Filesharing SendBox Errorbar', async () => {
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
             progress: 0.5,
-            attachmentType: 'fileSharing'
+            attachmentType: 'file'
           }
         ]
       })
@@ -229,7 +230,7 @@ test.describe('Filesharing Global Errorbar', async () => {
             name: 'Sample.pdf',
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
-            attachmentType: 'fileSharing'
+            attachmentType: 'file'
           }
         ],
         failFileDownload: true
@@ -265,7 +266,7 @@ test.describe('Filesharing Message Thread', async () => {
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
             uploadComplete: true,
-            attachmentType: 'fileSharing'
+            attachmentType: 'file'
           }
         ]
       })
@@ -284,6 +285,7 @@ test.describe('Filesharing Message Thread', async () => {
     ).toMatchSnapshot('filesharing-file-download-card-in-sent-messages.png');
   });
 
+  /* @conditional-compile-remove(file-sharing) */
   test('contains File Download Card in remote message', async ({ serverUrl, page }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
@@ -305,27 +307,6 @@ test.describe('Filesharing Message Thread', async () => {
   });
 });
 
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-test.describe('Inline Image Message Thread', async () => {
-  test('contains Inline Image in remote message', async ({ serverUrl, page }) => {
-    await page.goto(
-      buildUrlForChatAppUsingFakeAdapter(serverUrl, {
-        localParticipant: TEST_PARTICIPANTS[1],
-        remoteParticipants: [TEST_PARTICIPANTS[0], TEST_PARTICIPANTS[2]],
-        localParticipantPosition: 1,
-        sendRemoteInlineImageMessage: true
-      })
-    );
-
-    expect(
-      await stableScreenshot(page, {
-        stubMessageTimestamps: true,
-        dismissChatMessageActions: true
-      })
-    ).toMatchSnapshot('inline-image-in-received-messages.png');
-  });
-});
-
 /* @conditional-compile-remove(file-sharing) */
 test.describe('Filesharing Edit Message', async () => {
   test.beforeEach(async ({ serverUrl, page }) => {
@@ -340,7 +321,7 @@ test.describe('Filesharing Edit Message', async () => {
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
             uploadComplete: true,
-            attachmentType: 'fileSharing'
+            attachmentType: 'file'
           }
         ]
       })
@@ -355,9 +336,9 @@ test.describe('Filesharing Edit Message', async () => {
     await page.waitForSelector(dataUiId('file-download-card-group'));
     await page.locator(dataUiId('chat-composite-message')).click();
     await page.locator(dataUiId('chat-composite-message-action-icon')).click();
-    await page.waitForSelector('[id="chat-composite-message-contextual-menu"]');
+    await page.waitForSelector(dataUiId('chat-composite-message-contextual-menu-edit-action'));
     await page.locator(dataUiId('chat-composite-message-contextual-menu-edit-action')).click();
-    await page.waitForSelector('[id="editbox"]');
+    await page.waitForSelector(dataUiId('edit-box'));
 
     expect(
       await stableScreenshot(page, {

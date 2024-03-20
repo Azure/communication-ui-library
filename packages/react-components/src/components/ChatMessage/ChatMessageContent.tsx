@@ -1,12 +1,11 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React from 'react';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { useEffect } from 'react';
 import { _formatString } from '@internal/acs-ui-common';
-import { Parser, ProcessNodeDefinitions, IsValidNodeDefinitions, ProcessingInstructionType } from 'html-to-react';
-
+import parse, { HTMLReactParserOptions, Element as DOMElement } from 'html-react-parser';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { attributesToProps } from 'html-react-parser';
 import Linkify from 'react-linkify';
 import { ChatMessage } from '../../types/ChatMessage';
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -18,8 +17,6 @@ import { MentionDisplayOptions, Mention } from '../MentionPopover';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { FontIcon, Stack } from '@fluentui/react';
 import { MessageThreadStrings } from '../MessageThread';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { FileMetadata } from '../FileDownloadCards';
 import LiveMessage from '../Announcer/LiveMessage';
 /* @conditional-compile-remove(mention) */
 import { defaultOnMentionRender } from './MentionRenderer';
@@ -30,10 +27,8 @@ type ChatMessageContentProps = {
   strings: MessageThreadStrings;
   /* @conditional-compile-remove(mention) */
   mentionDisplayOptions?: MentionDisplayOptions;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  attachmentsMap?: Record<string, string>;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  onFetchAttachment?: (attachment: FileMetadata) => Promise<void>;
+  /* @conditional-compile-remove(image-overlay) */
+  inlineImageOptions?: InlineImageOptions;
 };
 
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -48,6 +43,35 @@ type MessageContentWithLiveAriaProps = {
   ariaLabel?: string;
   content: JSX.Element;
 };
+
+/* @conditional-compile-remove(image-overlay) */
+/**
+ * InlineImage's state, as reflected in the UI.
+ *
+ * @public
+ */
+export interface InlineImage {
+  /** ID of the message that the inline image is belonged to */
+  messageId: string;
+  /** Attributes of the inline image */
+  imageAttributes: React.ImgHTMLAttributes<HTMLImageElement>;
+}
+
+/* @conditional-compile-remove(image-overlay) */
+/**
+ * Options to display inline image in the inline image scenario.
+ *
+ * @public
+ */
+export interface InlineImageOptions {
+  /**
+   * Optional callback to render an inline image of in a message.
+   */
+  onRenderInlineImage?: (
+    inlineImage: InlineImage,
+    defaultOnRender: (inlineImage: InlineImage) => JSX.Element
+  ) => JSX.Element;
+}
 
 /** @private */
 export const ChatMessageContent = (props: ChatMessageContentProps): JSX.Element => {
@@ -74,20 +98,6 @@ const MessageContentWithLiveAria = (props: MessageContentWithLiveAriaProps): JSX
 };
 
 const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Element => {
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  useEffect(() => {
-    props.message.attachedFilesMetadata?.map((fileMetadata) => {
-      if (
-        props.onFetchAttachment &&
-        props.attachmentsMap &&
-        fileMetadata.attachmentType === 'inlineImage' &&
-        props.attachmentsMap[fileMetadata.id] === undefined
-      ) {
-        props.onFetchAttachment(fileMetadata);
-      }
-    });
-  }, [props]);
-
   return (
     <MessageContentWithLiveAria
       message={props.message}
@@ -157,11 +167,28 @@ export const BlockedMessageContent = (props: BlockedMessageContentProps): JSX.El
   );
 };
 
-// https://stackoverflow.com/questions/28899298/extract-the-text-out-of-html-string-using-javascript
-const extractContent = (s: string): string => {
-  const span = document.createElement('span');
-  span.innerHTML = s;
-  return span.textContent || span.innerText;
+const extractContentForAllyMessage = (props: ChatMessageContentProps): string => {
+  if (props.message.content) {
+    // Replace all <img> tags with 'image' for aria.
+    const parsedContent = DOMPurify.sanitize(props.message.content, {
+      ALLOWED_TAGS: ['img'],
+      RETURN_DOM_FRAGMENT: true
+    });
+
+    parsedContent.childNodes.forEach((child) => {
+      if (child.nodeName.toLowerCase() !== 'img') {
+        return;
+      }
+      const imageTextNode = document.createElement('div');
+      imageTextNode.innerHTML = 'image ';
+      parsedContent.replaceChild(imageTextNode, child);
+    });
+
+    // Strip all html tags from the content for aria.
+    const message = DOMPurify.sanitize(parsedContent, { ALLOWED_TAGS: [] });
+    return message;
+  }
+  return '';
 };
 
 const generateLiveMessage = (props: ChatMessageContentProps): string => {
@@ -169,91 +196,70 @@ const generateLiveMessage = (props: ChatMessageContentProps): string => {
 
   return `${props.message.editedOn ? props.strings.editedTag : ''} ${
     props.message.mine ? '' : liveAuthor
-  } ${extractContent(props.message.content || '')} `;
+  } ${extractContentForAllyMessage(props)} `;
 };
 
 const messageContentAriaText = (props: ChatMessageContentProps): string | undefined => {
-  // Strip all html tags from the content for aria.
-
-  return props.message.content
-    ? props.message.mine
-      ? _formatString(props.strings.messageContentMineAriaText, {
-          message: DOMPurify.sanitize(props.message.content, { ALLOWED_TAGS: [] })
-        })
-      : _formatString(props.strings.messageContentAriaText, {
-          author: `${props.message.senderDisplayName}`,
-          message: DOMPurify.sanitize(props.message.content, { ALLOWED_TAGS: [] })
-        })
-    : undefined;
+  const message = extractContentForAllyMessage(props);
+  return props.message.mine
+    ? _formatString(props.strings.messageContentMineAriaText, {
+        message: message
+      })
+    : _formatString(props.strings.messageContentAriaText, {
+        author: `${props.message.senderDisplayName}`,
+        message: message
+      });
 };
 
-const processNodeDefinitions = ProcessNodeDefinitions();
-const htmlToReactParser = Parser();
-
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-const processInlineImage = (props: ChatMessageContentProps): ProcessingInstructionType => ({
-  // Custom <img> processing
-  shouldProcessNode: (node): boolean => {
-    function isImageNode(file: FileMetadata): boolean {
-      return file.attachmentType === 'inlineImage' && file.id === node.attribs.id;
-    }
-
-    // Process img node with id in attachments list
-    return (
-      node.name &&
-      node.name === 'img' &&
-      node.attribs &&
-      node.attribs.id &&
-      props.message.attachedFilesMetadata?.find(isImageNode)
-    );
-  },
-  processNode: (node, children, index): HTMLElement => {
-    // logic to check id in map/list
-    if (props.attachmentsMap && node.attribs.id in props.attachmentsMap) {
-      node.attribs = { ...node.attribs, src: props.attachmentsMap[node.attribs.id] };
-    }
-    return processNodeDefinitions.processDefaultNode(node, children, index);
-  }
-});
-
-/* @conditional-compile-remove(mention) */
-const processMention = (props: ChatMessageContentProps): ProcessingInstructionType => ({
-  shouldProcessNode: (node) => {
-    if (props.mentionDisplayOptions?.onRenderMention) {
-      // Override the handling of the <msft-mention> tag in the HTML if there's a custom renderer
-      return node.name === 'msft-mention';
-    }
-    return false;
-  },
-  processNode: (node) => {
-    if (props.mentionDisplayOptions?.onRenderMention) {
-      const { id } = node.attribs;
-      const mention: Mention = {
-        id: id,
-        displayText: node.children[0]?.data ?? ''
-      };
-      return props.mentionDisplayOptions.onRenderMention(mention, defaultOnMentionRender);
-    }
-    return processNodeDefinitions.processDefaultNode;
-  }
-});
+/* @conditional-compile-remove(image-overlay) */
+const defaultOnRenderInlineImage = (inlineImage: InlineImage): JSX.Element => {
+  return (
+    <img
+      key={inlineImage.imageAttributes.id}
+      tabIndex={0}
+      data-ui-id={inlineImage.imageAttributes.id}
+      {...inlineImage.imageAttributes}
+    />
+  );
+};
 
 const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
-  const steps: ProcessingInstructionType[] = [
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-    processInlineImage(props),
-    /* @conditional-compile-remove(mention) */
-    processMention(props),
-    {
-      // Process everything else in the default way
-      shouldProcessNode: IsValidNodeDefinitions.alwaysValid,
-      processNode: processNodeDefinitions.processDefaultNode
-    }
-  ];
+  const options: HTMLReactParserOptions = {
+    transform(reactNode, domNode) {
+      if (domNode instanceof DOMElement && domNode.attribs) {
+        // Transform custom rendering of mentions
+        /* @conditional-compile-remove(mention) */
+        if (domNode.name === 'msft-mention') {
+          const { id } = domNode.attribs;
+          const mention: Mention = {
+            id: id,
+            displayText: (domNode.children[0] as unknown as Text).nodeValue ?? ''
+          };
+          if (props.mentionDisplayOptions?.onRenderMention) {
+            return props.mentionDisplayOptions.onRenderMention(mention, defaultOnMentionRender);
+          }
+          return defaultOnMentionRender(mention);
+        }
 
-  return htmlToReactParser.parseWithInstructions(
-    props.message.content ?? '',
-    IsValidNodeDefinitions.alwaysValid,
-    steps
-  );
+        // Transform inline images
+        /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+        if (domNode.name && domNode.name === 'img' && domNode.attribs && domNode.attribs.id) {
+          domNode.attribs['aria-label'] = domNode.attribs.name;
+          const imgProps = attributesToProps(domNode.attribs);
+          /* @conditional-compile-remove(image-overlay) */
+          const inlineImageProps: InlineImage = { messageId: props.message.messageId, imageAttributes: imgProps };
+
+          /* @conditional-compile-remove(image-overlay) */
+          return props.inlineImageOptions?.onRenderInlineImage
+            ? props.inlineImageOptions.onRenderInlineImage(inlineImageProps, defaultOnRenderInlineImage)
+            : defaultOnRenderInlineImage(inlineImageProps);
+
+          return <img key={imgProps.id as string} {...imgProps} />;
+        }
+      }
+      // Pass through the original node
+      return reactNode as unknown as JSX.Element;
+    }
+  };
+  return <>{parse(props.message.content ?? '', options)}</>;
 };

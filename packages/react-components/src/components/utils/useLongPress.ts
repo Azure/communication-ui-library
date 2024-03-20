@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { useMemo, useRef, useState, useCallback, useEffect } from 'react';
 
@@ -90,8 +90,11 @@ export default function useLongPress(props: {
   }, [startPressTimer]);
 
   const handleOnTouchEnd = useCallback(() => {
+    if (!isLongPress && onClick) {
+      onClick();
+    }
     timerRef.current && clearTimeout(timerRef.current);
-  }, []);
+  }, [onClick, isLongPress]);
 
   const handleOnTouchMove = useCallback(() => {
     timerRef.current && clearTimeout(timerRef.current);

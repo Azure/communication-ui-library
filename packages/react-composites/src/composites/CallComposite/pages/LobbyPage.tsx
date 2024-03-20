@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
+
 import React from 'react';
 import { ActiveErrorMessage, ErrorBar } from '@internal/react-components';
 import { useSelector } from '../hooks/useSelector';
@@ -12,12 +13,13 @@ import { getCallStatus, getRemoteParticipants } from '../selectors/baseSelectors
 import { disableCallControls, reduceCallControlsForMobile } from '../utils';
 import { CallCompositeStrings } from '../Strings';
 import { useLocale } from '../../localization';
-import { useLocalVideoStartTrigger } from '../components/MediaGallery';
 import { CallCompositeIcon } from '../../common/icons';
 import { isPhoneNumberIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 import { RemoteParticipantState } from '@internal/calling-stateful-client';
 import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
 import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
+/* @conditional-compile-remove(capabilities) */
+import { CapabilitiesChangeNotificationBarProps } from '../components/CapabilitiesChangedNotificationBar';
 
 /**
  * @private
@@ -30,6 +32,8 @@ export interface LobbyPageProps {
   updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
   latestErrors: ActiveErrorMessage[];
   onDismissError: (error: ActiveErrorMessage) => void;
+  /* @conditional-compile-remove(capabilities) */
+  capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
 }
 
 /**
@@ -44,8 +48,6 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
   const inLobby = callState === 'InLobby';
 
   const participants = useSelector(getRemoteParticipants) ?? {};
-
-  useLocalVideoStartTrigger(lobbyProps.localParticipantVideoStream.isAvailable, inLobby);
 
   // Reduce the controls shown when mobile view is enabled.
   let callControlOptions = props.mobileView
@@ -65,7 +67,11 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
       mobileView={props.mobileView}
       modalLayerHostId={props.modalLayerHostId}
       onRenderGalleryContent={() => (
-        <LobbyTile {...lobbyProps} overlayProps={overlayProps(strings, inLobby, Object.values(participants))} />
+        <LobbyTile
+          {...lobbyProps}
+          showLocalVideoCameraCycleButton={props.mobileView}
+          overlayProps={overlayProps(strings, inLobby, Object.values(participants))}
+        />
       )}
       dataUiId={'lobby-page'}
       updateSidePaneRenderer={props.updateSidePaneRenderer}
@@ -123,17 +129,11 @@ const overlayPropsOutboundCall = (
   if (isPhoneNumberIdentifier(participant.identifier)) {
     return {
       title: (participant.identifier as PhoneNumberIdentifier).phoneNumber,
-      moreDetails: outboundCallStringsTrampoline(strings)
+      moreDetails: strings.outboundCallingNoticeString
     };
   } else {
     return {
-      title: outboundCallStringsTrampoline(strings)
+      title: strings.outboundCallingNoticeString ?? ''
     };
   }
-};
-
-const outboundCallStringsTrampoline = (strings: CallCompositeStrings): string => {
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-  return strings.outboundCallingNoticeString;
-  return '';
 };

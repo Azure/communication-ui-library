@@ -1,20 +1,11 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React, { useState, FormEvent, useCallback, useRef } from 'react';
 import { useEffect, useMemo } from 'react';
 import { useLocale } from '../../localization';
 import { Announcer } from '../Announcer';
-import {
-  Stack,
-  TextField,
-  mergeStyles,
-  ITextField,
-  IconButton,
-  TooltipHost,
-  ICalloutContentStyles,
-  ITextFieldProps
-} from '@fluentui/react';
+import { TextField, ITextField, ITextFieldProps } from '@fluentui/react';
 
 import { isEnterKeyEventFromCompositionSession, nullToUndefined } from '../utils';
 import {
@@ -28,11 +19,8 @@ import {
   textToTagParser,
   updateHTML
 } from './mentionTagUtils';
-import { inputButtonStyle, inputButtonTooltipStyle, iconWrapperStyle } from '../styles/InputBoxComponent.style';
 
 import { Caret } from 'textarea-caret-ts';
-import { isDarkThemed } from '../../theming/themeUtils';
-import { useTheme } from '../../theming';
 
 import { MentionLookupOptions, _MentionPopover, Mention } from '../MentionPopover';
 
@@ -220,7 +208,7 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
       if (isEnterKeyEventFromCompositionSession(ev)) {
         return;
       }
-
+      let isActiveSuggestionIndexUpdated = false;
       if (mentionSuggestions.length > 0) {
         if (ev.key === 'ArrowUp') {
           ev.preventDefault();
@@ -229,6 +217,7 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
               ? mentionSuggestions.length - 1
               : Math.max(activeSuggestionIndex - 1, 0);
           setActiveSuggestionIndex(newActiveIndex);
+          isActiveSuggestionIndexUpdated = true;
         } else if (ev.key === 'ArrowDown') {
           ev.preventDefault();
           const newActiveIndex =
@@ -236,8 +225,12 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
               ? 0
               : Math.min(activeSuggestionIndex + 1, mentionSuggestions.length - 1);
           setActiveSuggestionIndex(newActiveIndex);
+          isActiveSuggestionIndexUpdated = true;
         } else if (ev.key === 'Escape') {
           updateMentionSuggestions([]);
+          // reset active suggestion index when suggestions are closed
+          setActiveSuggestionIndex(undefined);
+          isActiveSuggestionIndexUpdated = true;
         }
       }
       if (ev.key === 'Enter' && (ev.shiftKey === false || !supportNewline)) {
@@ -253,6 +246,10 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
         }
 
         onEnterKeyDown && onEnterKeyDown();
+      } else if (!isActiveSuggestionIndexUpdated) {
+        // Update the active suggestion index if the user is typing,
+        // otherwise the focus will be lost
+        setActiveSuggestionIndex(undefined);
       }
       onKeyDown && onKeyDown(ev);
     },
@@ -793,56 +790,5 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
         elementRef={inputBoxRef}
       />
     </>
-  );
-};
-
-/**
- * Props for displaying a send button besides the text input area.
- *
- * @private
- */
-export type InputBoxButtonProps = {
-  onRenderIcon: (isHover: boolean) => JSX.Element;
-  onClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-  className?: string;
-  id?: string;
-  ariaLabel?: string;
-  tooltipContent?: string;
-};
-
-/**
- * @private
- */
-export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
-  const { onRenderIcon, onClick, ariaLabel, className, id, tooltipContent } = props;
-  const [isHover, setIsHover] = useState(false);
-  const mergedButtonStyle = mergeStyles(inputButtonStyle, className);
-
-  const theme = useTheme();
-  const calloutStyle: Partial<ICalloutContentStyles> = { root: { padding: 0 }, calloutMain: { padding: '0.5rem' } };
-
-  // Place callout with no gap between it and the button.
-  const calloutProps = {
-    gapSpace: 0,
-    styles: calloutStyle,
-    backgroundColor: isDarkThemed(theme) ? theme.palette.neutralLighter : ''
-  };
-  return (
-    <TooltipHost hostClassName={inputButtonTooltipStyle} content={tooltipContent} calloutProps={{ ...calloutProps }}>
-      <IconButton
-        className={mergedButtonStyle}
-        ariaLabel={ariaLabel}
-        onClick={onClick}
-        id={id}
-        onMouseEnter={() => {
-          setIsHover(true);
-        }}
-        onMouseLeave={() => {
-          setIsHover(false);
-        }}
-        // VoiceOver fix: Avoid icon from stealing focus when IconButton is double-tapped to send message by wrapping with Stack with pointerEvents style to none
-        onRenderIcon={() => <Stack className={iconWrapperStyle}>{onRenderIcon(isHover)}</Stack>}
-      />
-    </TooltipHost>
   );
 };

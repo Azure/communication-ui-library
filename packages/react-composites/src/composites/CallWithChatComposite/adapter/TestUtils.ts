@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
+
 import {
   Call,
   CallAgent,
@@ -16,7 +17,8 @@ import {
   TeamsMeetingLinkLocator,
   VideoDeviceInfo,
   AudioDeviceInfo,
-  RoomLocator
+  RoomLocator,
+  TeamsMeetingIdLocator
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
@@ -116,7 +118,7 @@ export type Mutable<T> = {
 
 interface MockDeviceManager extends Mutable<DeviceManager> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  emit(event: any, data?: any);
+  emit(event: any, data?: any): any;
 }
 
 const createMockDeviceManager = (): MockDeviceManager => {
@@ -233,11 +235,18 @@ function createMockCall(mockCallId: string): CallState {
     remoteParticipants: {},
     remoteParticipantsEnded: {},
     recording: { isRecordingActive: false },
+    /* @conditional-compile-remove(local-recording-notification) */
+    localRecording: { isLocalRecordingActive: false },
     transcription: { isTranscriptionActive: false },
     screenShareRemoteParticipant: undefined,
     startTime: new Date(),
     endTime: undefined,
     dominantSpeakers: undefined,
+    raiseHand: { raisedHands: [] },
+    /* @conditional-compile-remove(ppt-live) */
+    pptLive: { isActive: false },
+    /* @conditional-compile-remove(reaction) */
+    localParticipantReaction: undefined,
     /* @conditional-compile-remove(close-captions) */
     captionsFeature: {
       captions: [],
@@ -252,7 +261,6 @@ function createMockCall(mockCallId: string): CallState {
     transfer: {
       acceptedTransfers: {}
     },
-    /* @conditional-compile-remove(optimal-video-count) */
     optimalVideoCount: {
       maxRemoteVideoStreams: 4
     }
@@ -270,7 +278,10 @@ export class MockCallAgent implements CallAgent {
   connectionState = 'Disconnected' as ConnectionState;
   kind = 'CallAgent' as CallAgentKind;
   emitter = new EventEmitter();
-  feature;
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  feature: CallAgent['feature'] = () => {
+    throw Error('Method not implemented.');
+  };
   startCall(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],
@@ -287,6 +298,7 @@ export class MockCallAgent implements CallAgent {
   join(groupLocator: GroupLocator, options?: JoinCallOptions): Call;
   /* @conditional-compile-remove(calling-beta-sdk) */
   join(groupChatCallLoctor: GroupChatCallLocator, options?: JoinCallOptions): Call;
+  join(meetingLocator: TeamsMeetingIdLocator, options?: JoinCallOptions): Call;
   join(meetingLocator: TeamsMeetingLinkLocator, options?: JoinCallOptions): Call;
   /* @conditional-compile-remove(calling-beta-sdk) */
   join(meetingLocator: MeetingLocator, options?: JoinCallOptions): Call;

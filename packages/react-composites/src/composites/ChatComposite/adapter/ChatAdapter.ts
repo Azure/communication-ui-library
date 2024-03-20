@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import type { ChatMessage, ChatParticipant, SendMessageOptions } from '@azure/communication-chat';
 import type { CommunicationIdentifierKind, CommunicationUserKind } from '@azure/communication-common';
@@ -7,10 +7,8 @@ import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import type { AdapterError, AdapterErrors, AdapterState, Disposable } from '../../common/adapters';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadAdapter, FileUploadsUiState } from './AzureCommunicationFileUploadAdapter';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { AttachmentDownloadResult } from '@internal/react-components';
-/* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { FileMetadata } from '@internal/react-components';
+/* @conditional-compile-remove(file-sharing) */
+import { AttachmentMetadata } from '@internal/react-components';
 
 /**
  * {@link ChatAdapter} state for pure UI purposes.
@@ -94,7 +92,7 @@ export interface ChatAdapterThreadManagement {
     metadata?: Record<string, string>,
     /* @conditional-compile-remove(file-sharing) */
     options?: {
-      attachedFilesMetadata?: FileMetadata[];
+      attachmentMetadata?: AttachmentMetadata[];
     }
   ): Promise<void>;
   /**
@@ -110,8 +108,27 @@ export interface ChatAdapterThreadManagement {
    */
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  downloadAttachments: (options: { attachmentUrls: string[] }) => Promise<AttachmentDownloadResult[]>;
+  /**
+   * Downloads a resource into the cache for the given message.
+   */
+  downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /**
+   * Removes a resource from the cache for the given message.
+   */
+  removeResourceFromCache(resourceDetails: ResourceDetails): void;
 }
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/**
+ * Details required for download a resource to cache.
+ *
+ * @public
+ */
+export type ResourceDetails = {
+  threadId: string;
+  messageId: string;
+  resourceUrl: string;
+};
 
 /**
  * Chat composite events that can be subscribed to.
@@ -123,6 +140,14 @@ export interface ChatAdapterSubscribers {
    * Subscribe function for 'messageReceived' event.
    */
   on(event: 'messageReceived', listener: MessageReceivedListener): void;
+  /**
+   * Subscribe function for 'messageEdited' event.
+   */
+  on(event: 'messageEdited', listener: MessageEditedListener): void;
+  /**
+   * Subscribe function for 'messageDeleted' event.
+   */
+  on(event: 'messageDeleted', listener: MessageDeletedListener): void;
   /**
    * Subscribe function for 'messageSent' event.
    */
@@ -152,6 +177,14 @@ export interface ChatAdapterSubscribers {
    * Unsubscribe function for 'messageReceived' event.
    */
   off(event: 'messageReceived', listener: MessageReceivedListener): void;
+  /**
+   * Unsubscribe function for 'messageEdited' event.
+   */
+  off(event: 'messageEdited', listener: MessageEditedListener): void;
+  /**
+   * Unsubscribe function for 'messageDeleted' event.
+   */
+  off(event: 'messageDeleted', listener: MessageDeletedListener): void;
   /**
    * Unsubscribe function for 'messageSent' event.
    */
@@ -203,6 +236,20 @@ export type MessageReceivedListener = (event: { message: ChatMessage }) => void;
  * @public
  */
 export type MessageSentListener = MessageReceivedListener;
+
+/**
+ * Callback for {@link ChatAdapterSubscribers} 'messageEdited' event.
+ *
+ * @public
+ */
+export type MessageEditedListener = MessageReceivedListener;
+
+/**
+ * Callback for {@link ChatAdapterSubscribers} 'messageDeleted' event.
+ *
+ * @public
+ */
+export type MessageDeletedListener = MessageReceivedListener;
 
 /**
  * Callback for {@link ChatAdapterSubscribers} 'messageRead' event.

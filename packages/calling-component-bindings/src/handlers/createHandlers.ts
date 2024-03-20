@@ -1,8 +1,7 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { Call, CallAgent, StartCallOptions } from '@azure/communication-calling';
-/* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -18,6 +17,8 @@ import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-sta
 import memoizeOne from 'memoize-one';
 import { isACSCallParticipants } from '../utils/callUtils';
 import { createDefaultCommonCallingHandlers, CommonCallingHandlers } from './createCommonHandlers';
+/* @conditional-compile-remove(video-background-effects) */
+import { VideoBackgroundEffectsDependency } from './createCommonHandlers';
 
 /**
  * Object containing all the handlers required for calling components.
@@ -31,6 +32,29 @@ export interface CallingHandlers extends CommonCallingHandlers {
   onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => Call | undefined;
 }
 
+/* @conditional-compile-remove(video-background-effects) */
+/**
+ * Configuration options to include video effect background dependency.
+ * @public
+ */
+export type CallingHandlersOptions = {
+  onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
+};
+
+/**
+ * Type of {@link createDefaultCallingHandlers}.
+ *
+ * @public
+ */
+export type CreateDefaultCallingHandlers = (
+  callClient: StatefulCallClient,
+  callAgent: CallAgent | undefined,
+  deviceManager: StatefulDeviceManager | undefined,
+  call: Call | undefined,
+  /* @conditional-compile-remove(video-background-effects) */
+  options?: CallingHandlersOptions
+) => CallingHandlers;
+
 /**
  * Create the default implementation of {@link CallingHandlers} for teams call.
  *
@@ -39,42 +63,63 @@ export interface CallingHandlers extends CommonCallingHandlers {
  *
  * @public
  */
-export const createDefaultCallingHandlers = memoizeOne(
-  (
-    callClient: StatefulCallClient,
-    callAgent: CallAgent | undefined,
-    deviceManager: StatefulDeviceManager | undefined,
-    call: Call | undefined
-  ): CallingHandlers => {
-    return {
-      ...createDefaultCommonCallingHandlers(callClient, deviceManager, call),
-      // FIXME: onStartCall API should use string, not the underlying SDK types.
-      onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined => {
-        /* @conditional-compile-remove(teams-adhoc-call) */
-        return callAgent?.startCall(participants, options);
-        if (!isACSCallParticipants(participants)) {
-          throw new Error('TeamsUserIdentifier in Teams call is not supported!');
-        }
-        return callAgent?.startCall(participants, options);
-      },
-      /* @conditional-compile-remove(PSTN-calls) */
-      onAddParticipant: async (
-        userId: string | CommunicationIdentifier,
-        options?: AddPhoneNumberOptions
-      ): Promise<void> => {
-        const participant = _toCommunicationIdentifier(userId);
-        if (isPhoneNumberIdentifier(participant)) {
-          call?.addParticipant(participant, options);
-        } else if (isCommunicationUserIdentifier(participant) || isMicrosoftTeamsUserIdentifier(participant)) {
-          call?.addParticipant(participant);
-        }
-      },
-      onRemoveParticipant: async (
-        userId: string | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier
-      ): Promise<void> => {
-        const participant = _toCommunicationIdentifier(userId);
-        await call?.removeParticipant(participant);
+export const createDefaultCallingHandlers: CreateDefaultCallingHandlers = memoizeOne((...args) => {
+  const [
+    callClient,
+    callAgent,
+    deviceManager,
+    call,
+    /* @conditional-compile-remove(video-background-effects) */ options
+  ] = args;
+  return {
+    ...createDefaultCommonCallingHandlers(
+      callClient,
+      deviceManager,
+      call,
+      /* @conditional-compile-remove(video-background-effects) */ options
+    ),
+    // FIXME: onStartCall API should use string, not the underlying SDK types.
+    onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined => {
+      /* @conditional-compile-remove(teams-adhoc-call) */
+      return callAgent?.startCall(participants, options);
+      if (!isACSCallParticipants(participants)) {
+        throw new Error('TeamsUserIdentifier in Teams call is not supported!');
       }
-    };
-  }
-);
+      return callAgent?.startCall(participants, options);
+    },
+    /* @conditional-compile-remove(PSTN-calls) */
+    onAddParticipant: async (
+      userId: string | CommunicationIdentifier,
+      options?: AddPhoneNumberOptions
+    ): Promise<void> => {
+      const participant = _toCommunicationIdentifier(userId);
+      if (isPhoneNumberIdentifier(participant)) {
+        call?.addParticipant(participant, options);
+      } else if (isCommunicationUserIdentifier(participant) || isMicrosoftTeamsUserIdentifier(participant)) {
+        call?.addParticipant(participant);
+      }
+    },
+    onRemoveParticipant: async (
+      userId: string | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier
+    ): Promise<void> => {
+      const participant = _toCommunicationIdentifier(userId);
+      await call?.removeParticipant(participant);
+    }
+  };
+});
+
+/* @conditional-compile-remove(spotlight) */
+/**
+ * Handlers only for calling components
+ * @internal
+ */
+export interface _ComponentCallingHandlers {
+  /** VideoGallery callback prop to start local spotlight */
+  onStartLocalSpotlight: () => Promise<void>;
+  /** VideoGallery callback prop to stop local spotlight */
+  onStopLocalSpotlight: () => Promise<void>;
+  /** VideoGallery callback prop to start remote spotlight */
+  onStartRemoteSpotlight: (userIds: string[]) => Promise<void>;
+  /** VideoGallery callback prop to stop remote spotlight */
+  onStopRemoteSpotlight: (userIds: string[]) => Promise<void>;
+}

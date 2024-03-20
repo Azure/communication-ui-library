@@ -20,6 +20,7 @@ export type ContainerProps = {
   callInvitationURL?: string;
   formFactor?: 'desktop' | 'mobile';
   fluentTheme?: PartialTheme | Theme;
+  rtl?: boolean;
   locale?: CompositeLocale;
   options?: CallCompositeOptions;
 };
@@ -75,6 +76,7 @@ export const CustomDataModelExampleContainer = (props: ContainerProps): JSX.Elem
       {adapter && (
         <CallComposite
           fluentTheme={props.fluentTheme}
+          rtl={props.rtl}
           adapter={adapter}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}

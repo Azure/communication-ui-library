@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React, { useCallback, useMemo } from 'react';
 /* @conditional-compile-remove(call-readiness) */
@@ -10,27 +10,33 @@ import { LocalDeviceSettings } from '../components/LocalDeviceSettings';
 import { StartCallButton } from '../components/StartCallButton';
 import { devicePermissionSelector } from '../selectors/devicePermissionSelector';
 import { useSelector } from '../hooks/useSelector';
-import { ActiveErrorMessage, DevicesButton, ErrorBar } from '@internal/react-components';
-/* @conditional-compile-remove(rooms) */
-import { _usePermissions, _Permissions } from '@internal/react-components';
+import { ActiveErrorMessage, DevicesButton, ErrorBar, useTheme } from '@internal/react-components';
 import { getCallingSelector } from '@internal/calling-component-bindings';
-import { Panel, PanelType, Stack } from '@fluentui/react';
-import { fillWidth, panelFocusProps, panelStyles } from '../styles/CallConfiguration.styles';
+import { Image, Panel, PanelType, Stack } from '@fluentui/react';
+import {
+  callDetailsContainerStyles,
+  configurationCenteredContent,
+  configurationSectionStyle,
+  deviceConfigurationStackTokens,
+  fillWidth,
+  logoStyles,
+  panelFocusProps,
+  panelStyles,
+  startCallButtonStyleDesktop
+} from '../styles/CallConfiguration.styles';
 import { LocalPreview } from '../components/LocalPreview';
 import {
   callDetailsStyleDesktop,
   callDetailsStyleMobile,
   configurationStackTokensDesktop,
   configurationStackTokensMobile,
-  configurationContainerStyleDesktop,
-  configurationContainerStyleMobile,
+  configurationContainerStyle,
   selectionContainerStyle,
   startCallButtonContainerStyleDesktop,
   startCallButtonContainerStyleMobile,
   startCallButtonStyleMobile,
   titleContainerStyleDesktop,
-  titleContainerStyleMobile,
-  callDetailsContainerStylesDesktop
+  titleContainerStyleMobile
 } from '../styles/CallConfiguration.styles';
 import { useLocale } from '../../localization';
 import { bannerNotificationStyles } from '../styles/CallPage.styles';
@@ -51,6 +57,10 @@ import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
 import { useIsParticularSidePaneOpen } from '../components/SidePane/SidePaneProvider';
 /* @conditional-compile-remove(video-background-effects) */
 import { localVideoSelector } from '../../CallComposite/selectors/localVideoStreamSelector';
+/* @conditional-compile-remove(capabilities) */
+import { CapabilitiesChangeNotificationBarProps } from '../components/CapabilitiesChangedNotificationBar';
+import { SvgWithWordWrapping } from '../components/SvgWithWordWrapping';
+import { EnvironmentInfo } from '@azure/communication-calling';
 
 /**
  * @private
@@ -71,6 +81,18 @@ export interface ConfigurationPageProps {
   }) => void;
   /* @conditional-compile-remove(call-readiness) */
   onNetworkingTroubleShootingClick?: () => void;
+  /* @conditional-compile-remove(capabilities) */
+  capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
+  /* @conditional-compile-remove(custom-branding) */
+  logo?: {
+    url: string;
+    alt?: string;
+    shape?: 'unset' | 'circle';
+  };
+  /* @conditional-compile-remove(custom-branding) */
+  backgroundImage?: {
+    url: string;
+  };
 }
 
 /**
@@ -85,6 +107,8 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
     /* @conditional-compile-remove(call-readiness) */ onPermissionsTroubleshootingClick,
     /* @conditional-compile-remove(call-readiness) */ onNetworkingTroubleShootingClick
   } = props;
+
+  const theme = useTheme();
 
   const options = useAdaptedSelector(getCallingSelector(DevicesButton));
   const localDeviceSettingsHandlers = useHandlers(LocalDeviceSettings);
@@ -105,7 +129,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
 
   let disableStartCallButton = !microphonePermissionGranted || deviceState.microphones?.length === 0;
   /* @conditional-compile-remove(rooms) */
-  const rolePermissions = _usePermissions();
+  const role = adapter.getState().call?.role;
 
   /* @conditional-compile-remove(video-background-effects) */
   const isCameraOn = useSelector(localVideoSelector).isAvailable;
@@ -114,7 +138,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
 
   /* @conditional-compile-remove(rooms) */
   // TODO: move this logic to the error bar selector once role is plumbed from the headless SDK
-  if (!rolePermissions.cameraButton) {
+  if (role !== 'Consumer') {
     filteredLatestErrors = filteredLatestErrors.filter(
       (e) => e.type !== 'callCameraAccessDenied' && e.type !== 'callCameraAccessDeniedSafari'
     );
@@ -126,7 +150,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   }
 
   /* @conditional-compile-remove(rooms) */
-  if (!rolePermissions.microphoneButton) {
+  if (role === 'Consumer') {
     // If user's role permissions do not allow access to the microphone button then DO NOT disable the start call button
     // because microphone device permission is not needed for the user's role
     disableStartCallButton = false;
@@ -146,25 +170,29 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   }
 
   const locale = useLocale();
-  const title = (
-    <Stack.Item
-      className={mobileView ? titleContainerStyleMobile : titleContainerStyleDesktop}
-      role="heading"
-      aria-level={1}
-    >
-      {locale.strings.call.configurationPageTitle}
-    </Stack.Item>
-  );
+  const title =
+    locale.strings.call.configurationPageTitle.length > 0 ? (
+      <Stack.Item className={mobileView ? titleContainerStyleMobile(theme) : titleContainerStyleDesktop(theme)}>
+        <SvgWithWordWrapping
+          width={mobileView ? 325 : 445}
+          lineHeightPx={16 * 1.5}
+          bufferHeightPx={16}
+          text={locale.strings.call.configurationPageTitle}
+        />
+      </Stack.Item>
+    ) : (
+      <></>
+    );
 
   const callDescription = locale.strings.call.configurationPageCallDetails && (
-    <Stack.Item className={mobileView ? callDetailsStyleMobile : callDetailsStyleDesktop}>
+    <Stack.Item className={mobileView ? callDetailsStyleMobile(theme) : callDetailsStyleDesktop(theme)}>
       {locale.strings.call.configurationPageCallDetails}
     </Stack.Item>
   );
 
   let mobileWithPreview = mobileView;
   /* @conditional-compile-remove(rooms) */
-  mobileWithPreview = mobileWithPreview && rolePermissions.cameraButton;
+  mobileWithPreview = mobileWithPreview && role !== 'Consumer';
 
   /* @conditional-compile-remove(call-readiness) */
   const permissionsState: {
@@ -239,8 +267,18 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
     [errorBarProps, filteredLatestErrors]
   );
 
+  const containerStyles = useMemo(
+    () =>
+      configurationContainerStyle(
+        !mobileView,
+        /* @conditional-compile-remove(custom-branding) */
+        props.backgroundImage?.url
+      ),
+    [mobileView, /* @conditional-compile-remove(custom-branding) */ props.backgroundImage?.url]
+  );
+
   return (
-    <Stack className={mobileView ? configurationContainerStyleMobile : configurationContainerStyleDesktop}>
+    <Stack styles={containerStyles}>
       <Stack styles={bannerNotificationStyles}>
         <ConfigurationPageErrorBar
           /* @conditional-compile-remove(call-readiness) */
@@ -296,57 +334,78 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
 
       <Stack verticalFill grow horizontal className={fillWidth}>
         <Stack
-          className={fillWidth}
-          horizontal={!mobileWithPreview}
-          horizontalAlign={mobileWithPreview ? 'stretch' : 'center'}
+          className={configurationCenteredContent(
+            mobileWithPreview,
+            /* @conditional-compile-remove(custom-branding) */
+            !!props.logo
+          )}
           verticalAlign="center"
+          verticalFill={mobileWithPreview}
           tokens={mobileWithPreview ? configurationStackTokensMobile : configurationStackTokensDesktop}
         >
-          {mobileWithPreview && (
-            <Stack.Item>
-              {title}
-              {callDescription}
-            </Stack.Item>
-          )}
-          {localPreviewTrampoline(
-            mobileWithPreview,
-            /* @conditional-compile-remove(rooms) */ !rolePermissions.cameraButton
-          )}
-          <Stack className={mobileView ? undefined : selectionContainerStyle}>
-            {!mobileWithPreview && (
-              <>
-                <Stack.Item styles={callDetailsContainerStylesDesktop}>
-                  {title}
-                  {callDescription}
-                </Stack.Item>
-                <LocalDeviceSettings
-                  {...options}
-                  {...localDeviceSettingsHandlers}
-                  cameraPermissionGranted={cameraPermissionGrantedTrampoline(
-                    cameraPermissionGranted,
-                    /* @conditional-compile-remove(call-readiness) */ videoState
-                  )}
-                  microphonePermissionGranted={micPermissionGrantedTrampoline(
-                    microphonePermissionGranted,
-                    /* @conditional-compile-remove(call-readiness) */ audioState
-                  )}
-                  /* @conditional-compile-remove(call-readiness) */
-                  onClickEnableDevicePermission={() => {
-                    setIsPermissionsModalDismissed(true);
-                  }}
-                  /* @conditional-compile-remove(video-background-effects) */
-                  onVideoEffectsClick={toggleVideoEffectsPane}
-                />
-              </>
+          <Stack.Item styles={callDetailsContainerStyles}>
+            <Logo
+              /* @conditional-compile-remove(custom-branding) */
+              logo={props.logo}
+            />
+            {title}
+            {callDescription}
+          </Stack.Item>
+          <Stack
+            horizontal={!mobileWithPreview}
+            horizontalAlign={mobileWithPreview ? 'stretch' : 'center'}
+            verticalFill={mobileWithPreview}
+            tokens={deviceConfigurationStackTokens}
+          >
+            {localPreviewTrampoline(
+              mobileWithPreview,
+              /* @conditional-compile-remove(rooms) */ !!(role === 'Consumer')
             )}
-            <Stack
-              styles={mobileWithPreview ? startCallButtonContainerStyleMobile : startCallButtonContainerStyleDesktop}
-            >
-              <StartCallButton
-                className={mobileWithPreview ? startCallButtonStyleMobile : undefined}
-                onClick={startCall}
-                disabled={disableStartCallButton}
-              />
+            <Stack styles={mobileView ? undefined : configurationSectionStyle}>
+              {!mobileWithPreview && (
+                <Stack
+                  className={
+                    mobileView
+                      ? undefined
+                      : selectionContainerStyle(
+                          theme,
+                          isSafariBrowserEnvironmentTrampoline(
+                            /* @conditional-compile-remove(unsupported-browser) */ environmentInfo
+                          )
+                        )
+                  }
+                >
+                  <LocalDeviceSettings
+                    {...options}
+                    {...localDeviceSettingsHandlers}
+                    cameraPermissionGranted={cameraPermissionGrantedTrampoline(
+                      cameraPermissionGranted,
+                      /* @conditional-compile-remove(call-readiness) */ videoState
+                    )}
+                    microphonePermissionGranted={micPermissionGrantedTrampoline(
+                      microphonePermissionGranted,
+                      /* @conditional-compile-remove(call-readiness) */ audioState
+                    )}
+                    /* @conditional-compile-remove(call-readiness) */
+                    onClickEnableDevicePermission={() => {
+                      setIsPermissionsModalDismissed(true);
+                    }}
+                    /* @conditional-compile-remove(video-background-effects) */
+                    onClickVideoEffects={toggleVideoEffectsPane}
+                  />
+                </Stack>
+              )}
+              <Stack
+                styles={mobileWithPreview ? startCallButtonContainerStyleMobile : startCallButtonContainerStyleDesktop}
+                horizontalAlign={mobileWithPreview ? 'stretch' : 'end'}
+              >
+                <StartCallButton
+                  className={mobileWithPreview ? startCallButtonStyleMobile : startCallButtonStyleDesktop}
+                  onClick={startCall}
+                  disabled={disableStartCallButton}
+                  hideIcon={true}
+                />
+              </Stack>
             </Stack>
           </Stack>
         </Stack>
@@ -363,7 +422,12 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           /* @conditional-compile-remove(video-background-effects) */
           customWidth={`${VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM}rem`}
         >
-          <SidePane mobileView={props.mobileView} updateSidePaneRenderer={props.updateSidePaneRenderer} />
+          <SidePane
+            mobileView={props.mobileView}
+            updateSidePaneRenderer={props.updateSidePaneRenderer}
+            maxWidth={`${VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM}rem`}
+            minWidth={`${VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM}rem`}
+          />
         </Panel>
       </Stack>
     </Stack>
@@ -396,4 +460,18 @@ const micPermissionGrantedTrampoline = (
   return audioState && audioState !== 'unsupported' ? audioState === 'granted' : microphonePermissionGranted;
 
   return microphonePermissionGranted;
+};
+
+const Logo = (props: { logo?: { url: string; alt?: string; shape?: 'unset' | 'circle' } }): JSX.Element => {
+  if (!props.logo) {
+    return <></>;
+  }
+  return <Image styles={logoStyles(props.logo.shape)} src={props.logo.url} alt={props.logo.alt} />;
+};
+
+const isSafariBrowserEnvironmentTrampoline = (environmentInfo?: EnvironmentInfo): boolean | undefined => {
+  /* @conditional-compile-remove(unsupported-browser) */
+  return environmentInfo && environmentInfo?.environment.browser.toLowerCase() === 'safari';
+
+  return false;
 };

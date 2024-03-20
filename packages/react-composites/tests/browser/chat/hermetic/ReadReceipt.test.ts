@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { expect } from '@playwright/test';
 import { temporarilyShowHiddenChatComposite } from '../../common/hermeticChatTestHelpers';
@@ -64,11 +64,13 @@ test.describe('Chat Composite E2E Tests', () => {
     await screenshotOnFailure(page, async () => {
       await page.locator(dataUiId('chat-composite-message')).first().click();
       await page.locator(dataUiId('chat-composite-message-action-icon')).first().click();
-      await waitForSelector(page, '[id="chat-composite-message-contextual-menu"]');
+      await page.waitForSelector(dataUiId('chat-composite-message-contextual-menu-edit-action'));
       await page.locator(dataUiId('chat-composite-message-contextual-menu-read-info')).click();
-      await waitForSelector(page, '[id="chat-composite-message-contextual-menu-read-name-list"]');
+      await page.waitForSelector(dataUiId('chat-composite-message-contextual-menu-read-name-list-item'));
     });
 
-    expect(await stableScreenshot(page)).toMatchSnapshot('read-message-contextualMenu.png');
+    expect(await stableScreenshot(page, { stubMessageTimestamps: true })).toMatchSnapshot(
+      'read-message-contextualMenu.png'
+    );
   });
 });

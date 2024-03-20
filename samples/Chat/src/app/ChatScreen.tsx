@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import {
@@ -85,7 +85,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   }, [adapter]);
 
   if (adapter) {
-    const onFetchAvatarPersonaData = (userId): Promise<AvatarPersonaData> =>
+    const onFetchAvatarPersonaData = (userId: string): Promise<AvatarPersonaData> =>
       fetchEmojiForUser(userId).then(
         (emoji) =>
           new Promise((resolve) => {

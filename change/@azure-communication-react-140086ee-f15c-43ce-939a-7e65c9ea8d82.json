@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Introduce new options for the CallComposite to configure LocalVideoTile positioning enabling new use case scenarios with the composite like click to call",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -7,9 +7,11 @@ import {
   CompositeLocale,
   useAzureCommunicationCallAdapter
 } from '@azure/communication-react';
-import { PartialTheme, Theme } from '@fluentui/react';
+import { PartialTheme, Theme, initializeIcons } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import { validate as validateUUID } from 'uuid';
+
+initializeIcons();
 
 export type ContainerProps = {
   userId: CommunicationUserIdentifier;
@@ -18,6 +20,7 @@ export type ContainerProps = {
   displayName: string;
   formFactor?: 'desktop' | 'mobile';
   fluentTheme?: PartialTheme | Theme;
+  rtl?: boolean;
   callInvitationURL?: string;
   locale?: CompositeLocale;
   options?: CallCompositeOptions;
@@ -31,6 +34,8 @@ const createCallAdapterLocator = (locator: string): CallAdapterLocator | undefin
     return { meetingLink: locator };
   } else if (isGroupID(locator)) {
     return { groupId: locator };
+  } else if (/^\d+$/.test(locator)) {
+    return { roomId: locator };
   }
   return undefined;
 };
@@ -69,6 +74,7 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
           adapter={adapter}
           formFactor={props.formFactor}
           fluentTheme={props.fluentTheme}
+          rtl={props.rtl}
           callInvitationUrl={props?.callInvitationURL}
           locale={props?.locale}
           options={props?.options}

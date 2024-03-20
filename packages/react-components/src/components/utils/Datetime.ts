@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { MessageThreadStrings } from '../MessageThread';
 
@@ -7,50 +7,26 @@ import { MessageThreadStrings } from '../MessageThread';
  * @private
  */
 export const formatTimeForChatMessage = (messageDate: Date): string => {
-  let hours = messageDate.getHours();
-  let minutes = messageDate.getMinutes().toString();
-  const isAm = hours < 12;
-  if (hours > 12) {
-    hours = hours - 12;
-  }
-  if (hours === 0) {
-    hours = 12;
-  }
-  if (minutes.length < 2) {
-    minutes = '0' + minutes;
-  }
-  return hours.toString() + ':' + minutes + ' ' + (isAm ? 'a.m.' : 'p.m.');
+  return messageDate.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
 };
 
 /**
  * @private
  */
 export const formatDateForChatMessage = (messageDate: Date): string => {
-  const year = messageDate.getFullYear().toString();
-  let month = (messageDate.getMonth() + 1).toString();
-  let day = messageDate.getDate().toString();
-
-  if (month.length === 1) {
-    month = '0' + month;
-  }
-  if (day.length === 1) {
-    day = '0' + day;
-  }
-
-  return year + '-' + month + '-' + day;
+  return messageDate.toLocaleDateString();
 };
 
 /**
- * Given a message date object in ISO8601 and a current date object, generates a user friendly timestamp text like the
- * following:
- *
- * 1:30 p.m.
- * Yesterday 1:30 p.m.
- * Monday 1:30 p.m.
- * 2021-01-10 1:30 p.m.
+ * Given a message date object in ISO8601 and a current date object, generates a user friendly timestamp text
+ * using the system locale.
+ * <time in locale format>.
+ * Yesterday <time in locale format>.
+ * <dateStrings day of week> <time in locale format>.
+ * <date in locale format> <time in locale format>.
  *
  * If message is after yesterday, then only show the time.
- * If message is before yesteray and after day before yesterday, then show 'Yesterday' plus the time.
+ * If message is before yesterday and after day before yesterday, then show 'Yesterday' plus the time.
  * If message is before day before yesterday and within the current week, then show 'Monday/Tuesday/etc' plus the time.
  *   - We consider start of the week as Sunday. If current day is Sunday, then any time before that is in previous week.
  * If message is in previous or older weeks, then show date string plus the time.

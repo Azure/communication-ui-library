@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import {
   CallAdapterCallManagement,
@@ -27,7 +27,7 @@ import { FileUploadAdapter } from '../../ChatComposite';
 
 /// CallWithChatAdapterManagement
 
-type CallWithChatAdapterManagementInternal = Omit<CallAdapterCallManagement, 'removeParticipant'> &
+type CallWithChatAdapterManagementInternal = Omit<CallAdapterCallManagement, 'removeParticipant' | 'onReactionClick'> &
   CallAdapterDeviceManagement &
   Omit<ChatAdapterThreadManagement, 'removeParticipant' | 'setTopic'> &
   /* @conditional-compile-remove(file-sharing) */
@@ -48,12 +48,7 @@ CallWithChatAdapterManagementRequiredTypeAssertion;
 
 type CallWithChatControlOptionsInternal = Omit<
   CallControlOptions,
-  | 'endCallButton'
-  | 'devicesButton'
-  | /* @conditional-compile-remove(control-bar-button-injection) */ 'onFetchCustomButtonProps'
-  | 'participantsButton'
-  /* @conditional-compile-remove(new-call-control-bar) */
-  | 'legacyControlBarExperience'
+  'endCallButton' | 'devicesButton' | 'onFetchCustomButtonProps' | 'participantsButton' | 'legacyControlBarExperience'
 >;
 
 const CallWithChatControlOptionsTypeAssertion = (
@@ -92,11 +87,13 @@ type CallWithChatClientStateInternal = Omit<
   | 'userId'
   | /* @conditional-compile-remove(PSTN-calls) */ 'alternateCallerId'
   | /* @conditional-compile-remove(unsupported-browser) */ 'features'
-  | /* @conditional-compile-remove(rooms) */ 'roleHint'
   | /* @conditional-compile-remove(video-background-effects) */ 'videoBackgroundImages'
   | /* @conditional-compile-remove(video-background-effects) */ 'selectedVideoBackgroundEffect'
   | /* @conditional-compile-remove(call-transfer) */ 'acceptedTransferCallState'
   | 'cameraStatus'
+  | /* @conditional-compile-remove(calling-sounds) */ 'sounds'
+  | /* @conditional-compile-remove(rooms) */ 'isRoomsCall'
+  | /* @conditional-compile-remove(calling-sounds) */ 'targetCallees'
 >;
 
 const CallWithChatClientStateTypeAssertion = (value: CallWithChatClientState): CallWithChatClientStateInternal => value;

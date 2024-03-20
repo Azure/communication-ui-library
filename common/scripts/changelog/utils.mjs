@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 const NEW_CHANGE_FILE_REGEXP = /\s*A\s*change\/(.*\.json)\s*/;
 

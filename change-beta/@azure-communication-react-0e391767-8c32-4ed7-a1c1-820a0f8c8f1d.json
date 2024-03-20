@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "update pnpm version to 8.6.9",
-  "packageName": "@azure/communication-react",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

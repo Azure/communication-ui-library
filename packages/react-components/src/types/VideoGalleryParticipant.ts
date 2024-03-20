@@ -1,10 +1,15 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 /* @conditional-compile-remove(one-to-n-calling) */
 /* @conditional-compile-remove(PSTN-calls) */
 import { ParticipantState } from './ParticipantListParticipant';
 
+import { RaisedHand } from './ParticipantListParticipant';
+/* @conditional-compile-remove(reaction) */
+import { Reaction } from './ParticipantListParticipant';
+/* @conditional-compile-remove(spotlight) */
+import { Spotlight } from './ParticipantListParticipant';
 /**
  * Scaling mode of a {@link VideoGalleryStream}.
  *
@@ -40,6 +45,9 @@ export type VideoGalleryParticipant = {
   videoStream?: VideoGalleryStream;
   /** Whether participant is screen sharing or not */
   isScreenSharingOn?: boolean;
+  /* @conditional-compile-remove(spotlight) */
+  /** Whether participant is spotlighted **/
+  spotlight?: Spotlight;
 };
 
 /**
@@ -58,9 +66,10 @@ export interface VideoGalleryStream {
   isMirrored?: boolean;
   /** Render element of the video stream */
   renderElement?: HTMLElement;
-  /* @conditional-compile-remove(pinned-participants) */
   /** Scaling mode of the video stream */
   scalingMode?: ViewScalingMode;
+  /** Stream Size of the video stream */
+  streamSize?: { width: number; height: number };
 }
 
 /**
@@ -87,7 +96,17 @@ export interface CreateVideoStreamViewResult {
  *
  * @public
  */
-export type VideoGalleryLocalParticipant = VideoGalleryParticipant;
+export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
+  /** Whether local participant is raised a hand */
+  raisedHand?: RaisedHand;
+  /* @conditional-compile-remove(reaction) */
+  /**
+   * Whether local participant has reacted
+   *
+   * @beta
+   * */
+  reaction?: Reaction;
+}
 
 /**
  * The state of a remote participant in the {@link VideoGallery}.
@@ -106,4 +125,13 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
    * The connection state of the participant. For example, 'Hold', 'Connecting' etc.
    */
   state?: ParticipantState;
+  /** Whether participant is raised a hand */
+  raisedHand?: RaisedHand;
+  /* @conditional-compile-remove(reaction) */
+  /**
+   * Whether participant has reacted
+   *
+   * @beta
+   * */
+  reaction?: Reaction;
 }

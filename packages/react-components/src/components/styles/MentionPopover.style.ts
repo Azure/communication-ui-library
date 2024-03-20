@@ -1,13 +1,8 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { IStackStyles, mergeStyles, Theme } from '@fluentui/react';
-
-/**
- * @private
- * z-index to ensure that chat container has lower z-index than mention popover
- */
-export const CHAT_CONTAINER_ZINDEX = 1;
+import { makeStyles, shorthands } from '@fluentui/react-components';
 
 /**
  * @private
@@ -17,8 +12,10 @@ export const mentionPopoverContainerStyle = (theme: Theme): string =>
     boxShadow: theme.effects.elevation16,
     background: theme.semanticColors.bodyBackground,
     overflow: 'visible',
-    // zIndex to set the mentionPopover above the chat container
-    zIndex: CHAT_CONTAINER_ZINDEX + 1
+    // zIndex to set the mentionPopover
+    // Temporary set to a hardcoded high number to make sure it is on top of the other components
+    // Will be replaced by a proper z-index solution after the Fluent 9 migration
+    zIndex: 10000
   });
 /**
  * @private
@@ -45,10 +42,12 @@ export const suggestionListContainerStyle = mergeStyles({
 /**
  * @private
  */
-export const suggestionListStyle = mergeStyles({
-  padding: '0.25rem 0rem 0',
-  overflow: 'visible',
-  overflowY: 'scroll'
+export const useSuggestionListStyle = makeStyles({
+  root: {
+    ...shorthands.padding('0.25rem', '0rem', '0rem'),
+    ...shorthands.overflow('visible'),
+    overflowY: 'scroll'
+  }
 });
 
 /**
@@ -56,7 +55,9 @@ export const suggestionListStyle = mergeStyles({
  */
 export const suggestionItemWrapperStyle = (theme: Theme): string => {
   return mergeStyles({
-    margin: '0.05rem 0',
+    margin: '0.0625rem 0',
+    'scroll-margin-top': '0.0625rem',
+    'scroll-margin-bottom': '0.0625rem',
     '&:focus-visible': {
       outline: `${theme.palette.black} solid 0.1rem`
     }

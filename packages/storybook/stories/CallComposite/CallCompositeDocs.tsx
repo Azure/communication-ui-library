@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { CallComposite } from '@azure/communication-react';
 import { MessageBar, Stack, Text } from '@fluentui/react';
@@ -25,12 +25,30 @@ body,
 }
 `;
 
-const callParticipantsLocatorSnippet = `
-// CallParticipantsLocator
-{ participantIds: string[] }
+const creatingTargetCalleesSnippet = `
+// You will want to make sure that any flat id's are converted to CommunicationUserIdentifier or PhoneNumberIdentifier
+const createTargetCallees = (targetCallees: string[]): CommunicationUserIdentifier[] => {
+  return targetCallees.map((c) => fromFlatCommunicationIdentifier(c) as CommunicationUserIdentifier);
+};
 
-// Example
-{ participantsIDs: ["<phone #>", "<phone #>", "<ACS userId>", ...] }
+const createTargetCallees = useMemo(() => {
+  return participantIds.map((c) => fromFlatCommunicationIdentifier(c) as PhoneNumberIdentifier);
+}, [participantIds]);
+`;
+
+const customBrandingSnippet = `
+<CallComposite options={{
+  branding: {
+    logo: {
+      url: 'https://...',
+      alt: 'My company logo',
+      shape: 'circle'
+    },
+    backgroundImage: {
+      url: 'https://...'
+    }
+  }
+}} />
 `;
 
 export const Docs: () => JSX.Element = () => {
@@ -176,12 +194,33 @@ export const Docs: () => JSX.Element = () => {
         </Description>
       </div>
 
+      <Heading>Custom Branding</Heading>
+      <Description>
+        Along with applying a Fluent Theme to style the composites, you can also inject your own custom branding. You
+        can inject a background and logo into the Composite configuration page to present to your users. This is done by
+        passing background and logo properties to the `options` of the Composite.
+      </Description>
+      <Description>
+        **Image recommendations.** The background image should be as simple and uncluttered as possible to avoid text
+        becoming unreadable against the background. The background image should have a minimum size of 576x576 pixels
+        and a maximum size of 2048x2048 pixels. The recommended size is 1280x720 pixels. The recommended size for the
+        logo image is 128x128 pixels.
+      </Description>
+      <Stack horizontalAlign="center">
+        <img
+          style={{ width: '100%', maxWidth: '50rem' }}
+          src="images/composite-logo-background.png"
+          alt="CallComposite with a logo and background applied"
+        />
+      </Stack>
+      <Source code={customBrandingSnippet} />
+
       <div ref={refCustomDataModel}>
         <Heading>Custom Data Model</Heading>
         <Description>
           It is a primary tenet of Azure Communication Services that customers bring their own user identities.
           Customers then use the Azure Communication Services identity service to create corresponding authentication
-          tokens for their users. The ChatComposite allows developers to easily inject custom data associated with these
+          tokens for their users. The CallComposite allows developers to easily inject custom data associated with these
           user identities. Look at the [example
           canvas](./?path=/story/composites-call-customdatamodelexample--custom-data-model-example) to see how the
           initials displayed for users can be provided by Contoso.
@@ -271,7 +310,54 @@ export const Docs: () => JSX.Element = () => {
         gallery](./?path=/docs/ui-components-videogallery--video-gallery) component docs for more information on our
         local video tile and some of the other options we have for the local video tile when just using the components.
       </Description>
-
+      <Heading>Customizing the default Gallery Layout</Heading>
+      <Description>
+        We allow for the customization of the starting layout of the gallery. The layout can be changed by the user
+        though the gallery options menu found in the more button of the call controls.
+      </Description>
+      <Stack horizontal horizontalAlign="space-between" tokens={{ childrenGap: '1rem' }}>
+        <Stack>
+          <Stack horizontalAlign="center">
+            <img
+              style={{ width: '100%', maxWidth: '25rem' }}
+              src="images/callcomposite-dynamic-layout.png"
+              alt="Dynamic layout for composite video gallery"
+            />
+            <Description>Call Composite with `dynamic` layout.</Description>
+          </Stack>
+          <Stack horizontalAlign="center">
+            <img
+              style={{ width: '100%', maxWidth: '25rem' }}
+              src="images/callcomposite-focused-content.png"
+              alt="Focused content layout for composite video gallery"
+            />
+            <Description>Call Composite with `focused content` layout.</Description>
+          </Stack>
+        </Stack>
+        <Stack>
+          <Stack horizontalAlign="center">
+            <img
+              style={{ width: '100%', maxWidth: '25rem' }}
+              src="images/callcomposite-gallery-layout.png"
+              alt="Gallery layout for composite video gallery"
+            />
+            <Description>Call Composite with `gallery` layout.</Description>
+          </Stack>
+          <Stack horizontalAlign="center">
+            <img
+              style={{ width: '100%', maxWidth: '25rem' }}
+              src="images/callcomposite-speaker-layout.png"
+              alt="Speaker layout for composite video gallery"
+            />
+            <Description>Call Composite with `speaker` layout.</Description>
+          </Stack>
+        </Stack>
+      </Stack>
+      <Description>You can set the gallery layout using the following: </Description>
+      <Source code="<CallComposite options={galleryOptions: {layout: 'speaker'}} />" />
+      <Source code="<CallComposite options={galleryOptions: {layout: 'default'}} />" />
+      <Source code="<CallComposite options={galleryOptions: {layout: 'floatingLocalVideo'}} />" />
+      <Source code="<CallComposite options={galleryOptions: {layout: 'focusedContent'}} />" />
       <div ref={refExistedJoinCall}>
         <Heading>Joining an existing Call</Heading>
         <Description>
@@ -284,12 +370,13 @@ export const Docs: () => JSX.Element = () => {
       <SingleLineBetaBanner version={'1.3.2-beta.1'} />
       <Description>
         The CallComposite supports making outbound PSTN and 1:N calls. 1:N is a call either between just Azure
-        Communication Users or, a mix between ACS and PSTN users. To make these outbound calls you need to provide a
-        `locator` that contains participantIds that you are looking to call to the
+        Communication Users or, a mix between ACS and PSTN users. To make these outbound calls you need to provide an
+        array of `targetCallees` that contains participantIds that you are looking to call to the
         [CallAdapter](./?path=/docs/composite-adapters--page). For PSTN these IDs are the phone numbers that you are
         looking to call. For Azure Communication Users you will need to provide their unique ACS acquired `userId`.
+        These are to be provided to the `CallAdapter` properties in place of a locator as `targetCallees`.
       </Description>
-      <Source code={callParticipantsLocatorSnippet} />
+      <Source code={creatingTargetCalleesSnippet} />
       <Description>
         As well as these participantIds you are required to provide a [phone
         number](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/telephony/get-phone-number?tabs=windows&pivots=platform-azcli)
@@ -300,7 +387,6 @@ export const Docs: () => JSX.Element = () => {
       </Description>
 
       <Heading>Rooms</Heading>
-      <SingleLineBetaBanner version={'1.3.2-beta.1'} />
       <Description>
         The CallComposite supports [Rooms](./?path=/docs/rooms--page). To join a room call you need to provide a
         `locator` that contains the roomId of the room call you want to join to the

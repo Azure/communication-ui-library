@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { IStackItemStyles, IStackStyles, IStyle, mergeStyles } from '@fluentui/react';
 import { controlBarContainerStyles } from './CallControls.styles';
@@ -83,6 +83,7 @@ export const notificationsContainerStyles: IStackStyles = {
  */
 export const bannerNotificationStyles: IStackStyles = {
   root: {
+    zIndex: NOTIFICATION_CONTAINER_Z_INDEX,
     pointerEvents: 'auto' // to allow the dismissal or error and warning bars in the notification container
   }
 };

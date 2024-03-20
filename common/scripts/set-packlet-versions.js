@@ -1,5 +1,5 @@
 "use strict";
-// Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
+// Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT License.
 // See the @microsoft/rush package's LICENSE file for license information.
 
 // Use this script to set all the packlets' version to a specific value.

@@ -1,12 +1,20 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React from 'react';
 import { EndCallButton } from './EndCallButton';
 import { createTestLocale, renderWithLocalization } from './utils/testUtils';
 import { screen } from '@testing-library/react';
+import { registerIcons } from '@fluentui/react';
 
 describe('EndCallButton strings should be localizable and overridable', () => {
+  beforeAll(() => {
+    registerIcons({
+      icons: {
+        controlbuttonendcall: <></>
+      }
+    });
+  });
   test('Should localize button label', async () => {
     const testLocale = createTestLocale({ endCallButton: { label: Math.random().toString() } });
     renderWithLocalization(<EndCallButton showLabel={true} />, testLocale);

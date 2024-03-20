@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { IPersonaProps, Persona, PersonaInitialsColor } from '@fluentui/react';
 import React, { useEffect, useState } from 'react';
+import { mergeStyles } from '@fluentui/react';
 
 /**
  * Custom data attributes for displaying avatar for a user.
@@ -60,6 +61,11 @@ export interface AvatarPersonaProps extends IPersonaProps {
    * A function that returns a Promise that resolves to the data to be displayed.
    */
   dataProvider?: AvatarPersonaDataCallback;
+  /**
+   * Allow to show colored border around persona coin, but isActive is what shows it.
+   */
+
+  allowActiveBorder?: boolean;
 }
 
 /**
@@ -86,9 +92,26 @@ export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
     })();
   }, [data, dataProvider, userId]);
 
+  let activePersona = '';
+
+  if (props.allowActiveBorder) {
+    // Display a border for raised handed participants in participant list
+    activePersona = mergeStyles({
+      border: 'solid 2px',
+      borderColor: 'transparent',
+      borderRadius: '50%',
+      padding: '2px',
+      boxSizing: 'content-box',
+      margin: '-4px'
+    });
+
+    mergeStyles(activePersona, props.styles);
+  }
+
   return (
     <Persona
       {...props}
+      className={activePersona}
       text={data?.text ?? text}
       imageUrl={data?.imageUrl ?? imageUrl}
       imageInitials={data?.imageInitials ?? imageInitials}

@@ -16,6 +16,7 @@ export type ContainerProps = {
   locator: string;
   formFactor?: 'desktop' | 'mobile';
   fluentTheme?: PartialTheme | Theme;
+  rtl?: boolean;
   callInvitationURL?: string;
   locale?: CompositeLocale;
   options?: CallCompositeOptions;
@@ -63,6 +64,7 @@ export const ContosoCTECallContainer = (props: ContainerProps): JSX.Element => {
           adapter={adapter}
           formFactor={props.formFactor}
           fluentTheme={props.fluentTheme}
+          rtl={props.rtl}
           callInvitationUrl={props?.callInvitationURL}
           locale={props?.locale}
           options={props?.options}

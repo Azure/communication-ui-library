@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React, { ReactNode } from 'react';
 import { IStyle, IStackTokens, mergeStyles, Stack, Text } from '@fluentui/react';

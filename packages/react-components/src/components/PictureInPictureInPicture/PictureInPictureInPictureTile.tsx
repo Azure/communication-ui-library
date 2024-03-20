@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { IStackStyles, memoizeFunction, Stack } from '@fluentui/react';
 import React, { ReactElement, PropsWithChildren } from 'react';

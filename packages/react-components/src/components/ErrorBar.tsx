@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React, { useEffect, useRef, useState } from 'react';
 import { IMessageBarProps, MessageBar, Stack } from '@fluentui/react';
@@ -224,6 +224,11 @@ export interface ErrorBarStrings {
    * Unable to start effect
    */
   unableToStartVideoEffect?: string;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * An error message when starting spotlight while max participants are spotlighted
+   */
+  startSpotlightWhileMaxParticipantsAreSpotlighted: string;
 }
 
 /**

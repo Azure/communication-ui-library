@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { MessageBar, MessageBarType } from '@fluentui/react';
 import React, { useRef, useState } from 'react';

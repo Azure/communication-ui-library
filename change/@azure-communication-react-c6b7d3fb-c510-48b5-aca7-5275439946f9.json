@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "CallComposite to control the local tile aspect ratio based on screen aspect ratio and formfactor",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

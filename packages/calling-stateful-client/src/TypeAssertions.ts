@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { Call, CallAgent, CallClient, DeviceManager } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
@@ -42,6 +42,7 @@ type InferredCallErrorTargets =
   | 'CallClient.feature'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admit'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.rejectParticipant'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteAllRemoteParticipants'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll';
 
 type CallObjectMethodNames<TName extends string, T> = {

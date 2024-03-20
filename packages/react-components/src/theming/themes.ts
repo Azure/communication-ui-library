@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { PartialTheme } from '@fluentui/react';
 
 /**
- * Custom Fluent theme pallete used by calling related components in this library.
+ * Custom Fluent theme palette used by calling related components in this library.
  *
  * @public
  */
@@ -14,6 +14,7 @@ export interface CallingTheme {
     callRedDark: string;
     callRedDarker: string;
     iconWhite: string;
+    raiseHandGold: string;
   };
 }
 
@@ -45,13 +46,15 @@ export const lightTheme: PartialTheme & CallingTheme = {
     neutralPrimary: '#323130',
     neutralDark: '#201f1e',
     black: '#000000',
-    white: '#ffffff'
+    white: '#ffffff',
+    whiteTranslucent40: 'rgba(255, 255, 255, 0.4)'
   },
   callingPalette: {
     callRed: '#a42e43',
     callRedDark: '#8b2c3d',
     callRedDarker: '#772a38',
-    iconWhite: '#ffffff'
+    iconWhite: '#ffffff',
+    raiseHandGold: '#eaa300'
   },
   semanticColors: {
     errorText: '#a80000'
@@ -86,15 +89,31 @@ export const darkTheme: PartialTheme & CallingTheme = {
     neutralPrimary: '#ffffff',
     neutralDark: '#f4f4f4',
     black: '#f8f8f8',
-    white: '#252423'
+    white: '#252423',
+    whiteTranslucent40: 'rgba(0, 0, 0, 0.4)'
   },
   callingPalette: {
     callRed: '#c4314b',
     callRedDark: '#a42e43',
     callRedDarker: '#8b2c3d',
-    iconWhite: '#ffffff'
+    iconWhite: '#ffffff',
+    raiseHandGold: '#eaa300'
   },
   semanticColors: {
     errorText: '#f1707b'
+  }
+};
+
+/* @conditional-compile-remove(image-overlay-theme) */
+/**
+ * Preset dark theme for the ImageOverlay component.
+ *
+ * @public
+ */
+export const imageOverlayTheme: PartialTheme = {
+  palette: darkTheme.palette,
+  semanticColors: {
+    ...darkTheme.semanticColors,
+    bodyBackground: 'rgba(0, 0, 0, 0.85)'
   }
 };

@@ -7,7 +7,11 @@
     "mutedIconLabel": "Ljudet är avstängt",
     "displayNamePlaceholder": "Namnlös deltagare",
     "participantStateRinging": "Ringer...",
-    "participantStateHold": "Parkerat"
+    "participantStateHold": "Parkerat",
+    "attendeeRole": "Deltagare"
+  },
+  "ParticipantList": {
+    "overflowParticipantCount": "+{overflowCount} till"
   },
   "typingIndicator": {
     "singleUser": "{user} skriver...",
@@ -25,8 +29,29 @@
     "uploading": "Laddar upp",
     "uploadCompleted": "Uppladdningen har slutförts"
   },
+  "richTextSendBox": {
+    "placeholderText": "Skriv ett meddelande",
+    "textTooLong": "Meddelandelängden överskrider maxgränsen.",
+    "sendButtonAriaLabel": "Skicka meddelande",
+    "fileUploadsPendingError": "Laddar upp... Var god vänta.",
+    "removeFile": "Ta bort fil",
+    "uploading": "Laddar upp",
+    "uploadCompleted": "Uppladdningen har slutförts",
+    "boldTooltip": "Fet",
+    "italicTooltip": "Kursiv",
+    "underlineTooltip": "Understruken",
+    "bulletListTooltip": "Punktlista",
+    "numberListTooltip": "Numrerad lista",
+    "increaseIndentTooltip": "Öka indrag",
+    "decreaseIndentTooltip": "Minska indrag",
+    "richTextFormatButtonTooltip": "Format"
+  },
   "mentionPopover": {
     "mentionPopoverHeader": "Förslag"
+  },
+  "imageOverlay": {
+    "downloadButtonLabel": "Ladda ner",
+    "dismissButtonAriaLabel": "Stäng"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Meddelandet har skickats",
@@ -109,6 +134,24 @@
     "tooltipOnContent": "Visar din skärm",
     "tooltipOffContent": "Dela skärmen"
   },
+  "raiseHandButton": {
+    "offLabel": "Hand",
+    "onLabel": "Lägre",
+    "tooltipDisabledContent": "Åtgärden Räck upp hand är inaktiverad",
+    "tooltipOnContent": "Ta ned handen",
+    "tooltipOffContent": "Räck upp handen"
+  },
+  "reactionButton": {
+    "label": "Reagera",
+    "ariaLabel": "React-knapp, skicka en reaktion",
+    "tooltipDisabledContent": "Reaktionsåtgärden är inaktiverad",
+    "tooltipContent": "Skicka en reaktion",
+    "likeReactionTooltipContent": "Gilla",
+    "heartReactionTooltipContent": "Kärlek",
+    "laughReactionTooltipContent": "Skrattar",
+    "applauseReactionTooltipContent": "Applåd",
+    "surprisedReactionTooltipContent": "Förvånad"
+  },
   "messageThread": {
     "yesterday": "I går",
     "sunday": "Söndag",
@@ -133,13 +176,14 @@
     "newMessagesIndicator": "Nya meddelanden",
     "noDisplayNameSub": "Inget namn",
     "editBoxCancelButton": "Avbryt",
-    "editBoxSubmitButton": "Skicka",
+    "editBoxSubmitButton": "Klar",
     "messageReadCount": "Läst av {messageReadByCount} av {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Fler alternativ",
     "downloadFile": "Ladda ner fil",
     "blockedWarningText": "Det här meddelandet har tagits bort på grund av en organisationsprincip.",
     "blockedWarningLinkText": "Information",
-    "fileCardGroupMessage": "Meddelandet har {fileCount} bifogad fil"
+    "fileCardGroupMessage": "Meddelandet har {fileCount} bifogad fil",
+    "messageDeletedAnnouncementAriaLabel": "Meddelandet har tagits bort"
   },
   "errorBar": {
     "unableToReachChatService": "Du är offline",
@@ -175,7 +219,8 @@
     "failedToJoinCallGeneric": "Det gick inte att ansluta till samtalet.",
     "failedToJoinCallInvalidMeetingLink": "Det går inte att ansluta till mötet. Ogiltig länk.",
     "cameraFrozenForRemoteParticipants": "Användare i samtalet har problem med att se din video. Kontrollera dina enheter och nätverk.",
-    "unableToStartVideoEffect": "Det går inte att tillämpa videoeffekten."
+    "unableToStartVideoEffect": "Det går inte att tillämpa videoeffekten.",
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "Det går inte att starta spotlight på deltagare eftersom det maximala antalet deltagare redan är uppmärksammat."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Du delar din skärm",
@@ -193,7 +238,13 @@
     "pinParticipantMenuItemAriaLabel": "Fäst {participantName}",
     "unpinParticipantMenuItemAriaLabel": "Ta bort {participantName}",
     "pinnedParticipantAnnouncementAriaLabel": "Fäst {participantName}",
-    "unpinnedParticipantAnnouncementAriaLabel": "Borttagen {participantName}"
+    "unpinnedParticipantAnnouncementAriaLabel": "Borttagen {participantName}",
+    "startSpotlightVideoTileMenuLabel": "Uppmärksamma för alla",
+    "addSpotlightVideoTileMenuLabel": "Lägg till uppmärksammande",
+    "spotlightLimitReachedMenuTitle": "Spotlight-gränsen har nåtts",
+    "stopSpotlightVideoTileMenuLabel": "Sluta uppmärksamma",
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Spotlight",
+    "attendeeRole": "Deltagare"
   },
   "dialpad": {
     "placeholderText": "Ange telefonnummer",
@@ -324,7 +375,7 @@
     "step3DigitText": "3",
     "step4DigitText": "4"
   },
-  "VerticalGallery": {
+  "verticalGallery": {
     "leftNavButtonAriaLabel": "föregående sida",
     "rightNavButtonAriaLabel": "nästa sida"
   }

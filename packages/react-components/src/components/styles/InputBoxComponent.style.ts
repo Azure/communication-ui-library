@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
+
 import { mergeStyles, IStyle, FontWeights } from '@fluentui/react';
 
 /**
@@ -74,42 +75,3 @@ export const textFieldStyle: IStyle = {
     borderRadius: '0.25rem'
   }
 };
-
-/**
- * @private
- */
-export const inputButtonStyle = mergeStyles({
-  color: 'grey',
-  margin: 'auto',
-  width: '1.0625rem',
-  height: '1.0625rem',
-  backgroundColor: 'transparent',
-  '&:hover': {
-    backgroundColor: 'transparent'
-  }
-});
-
-/**
- * @private
- */
-export const newLineButtonsContainerStyle: IStyle = {
-  position: 'absolute',
-  right: '0.8rem',
-  bottom: '0.8rem',
-  gap: '1rem'
-};
-
-/**
- * @private
- */
-export const inputButtonTooltipStyle = mergeStyles({
-  // The toolTip host container show be a flex box, so that alignItems: 'center' works for inside buttons
-  display: 'flex'
-});
-
-/**
- * @private
- */
-export const iconWrapperStyle = mergeStyles({
-  pointerEvents: 'none'
-});

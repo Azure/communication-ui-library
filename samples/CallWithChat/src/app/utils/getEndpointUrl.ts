@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 export const getEndpointUrl = async (): Promise<string> => {
   let endpointUrl: string | undefined = undefined;

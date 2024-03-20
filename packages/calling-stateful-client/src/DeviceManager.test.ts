@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import {
   AudioDeviceInfo,
@@ -276,7 +276,7 @@ const createStatefulCallClientWithDeviceManager = (deviceManager: MockDeviceMana
 };
 
 interface MockDeviceManager extends Mutable<DeviceManager> {
-  emit(event: any, data?: any);
+  emit(eventName: string | symbol, ...args: any[]): boolean;
 }
 
 const createMockDeviceManagerWithCameras = (cameras: VideoDeviceInfo[]): MockDeviceManager => {

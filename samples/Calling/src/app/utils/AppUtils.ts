@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { GroupLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
-import { RoomLocator } from '@azure/communication-calling';
+import { RoomCallLocator } from '@azure/communication-calling';
+/* @conditional-compile-remove(rooms) */
+import { ParticipantRole } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */
 import { CallParticipantsLocator } from '@azure/communication-react';
-/* @conditional-compile-remove(rooms) */
-import { Role } from '@azure/communication-react';
 import { v1 as generateGUID } from 'uuid';
 
 /**
@@ -64,7 +64,7 @@ export const createRoom = async (): Promise<string> => {
 /**
  * Add user to an ACS room with a given roomId and role
  */
-export const addUserToRoom = async (userId: string, roomId: string, role: Role): Promise<void> => {
+export const addUserToRoom = async (userId: string, roomId: string, role: ParticipantRole): Promise<void> => {
   const requestOptions = {
     method: 'POST',
     headers: {
@@ -87,6 +87,7 @@ export const getTeamsLinkFromUrl = (): TeamsMeetingLinkLocator | undefined => {
   return teamsLink ? { meetingLink: teamsLink } : undefined;
 };
 
+/* @conditional-compile-remove(teams-identity-support) */
 /**
  * Get teams meeting link from the url's query params.
  */
@@ -99,7 +100,7 @@ export const getIsCTE = (): boolean | undefined => {
 /**
  * Get room id from the url's query params.
  */
-export const getRoomIdFromUrl = (): RoomLocator | undefined => {
+export const getRoomIdFromUrl = (): RoomCallLocator | undefined => {
   const urlParams = new URLSearchParams(window.location.search);
   const roomId = urlParams.get('roomId');
   return roomId ? { roomId } : undefined;
@@ -141,3 +142,6 @@ export const callingSDKVersion = __CALLINGVERSION__;
 
 declare let __COMMUNICATIONREACTVERSION__: string; //Injected by webpack
 export const communicationReactSDKVersion = __COMMUNICATIONREACTVERSION__;
+
+declare let __COMMITID__: string; //Injected by webpack
+export const commitID = __COMMITID__;

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React, { useEffect, useState } from 'react';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';

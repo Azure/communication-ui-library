@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 import { Description, Heading, Subheading, Source, Title } from '@storybook/addon-docs';
 import React from 'react';
 const CallComponentText = require('!!raw-loader!./snippets/CallComponent.snippet.tsx').default;

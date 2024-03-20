@@ -1,17 +1,30 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import {
   DominantSpeakersInfo,
   RemoteParticipantState as RemoteParticipantConnectionState
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(spotlight) */
+import { SpotlightedParticipant } from '@azure/communication-calling';
+/* @conditional-compile-remove(hide-attendee-name) */
+import { ParticipantRole } from '@azure/communication-calling';
 import { memoizeFnAll, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { RemoteParticipantState, RemoteVideoStreamState } from '@internal/calling-stateful-client';
 import { VideoGalleryRemoteParticipant, VideoGalleryStream } from '@internal/react-components';
 import memoizeOne from 'memoize-one';
 import { _isRingingPSTNParticipant } from './callUtils';
+/* @conditional-compile-remove(hide-attendee-name) */
+import { maskDisplayNameWithRole } from './callUtils';
 import { checkIsSpeaking } from './SelectorUtils';
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
+import { RaisedHandState } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(reaction) */
+import { Reaction } from '@internal/react-components';
+/* @conditional-compile-remove(reaction) */
+import { memoizedConvertToVideoTileReaction } from './participantListSelectorUtils';
+/* @conditional-compile-remove(spotlight) */
+import { Spotlight } from '@internal/react-components';
 
 /** @internal */
 export const _dominantSpeakersWithFlatId = (dominantSpeakers?: DominantSpeakersInfo): undefined | string[] => {
@@ -19,12 +32,24 @@ export const _dominantSpeakersWithFlatId = (dominantSpeakers?: DominantSpeakersI
 };
 
 /** @internal */
-export const _videoGalleryRemoteParticipantsMemo = (
-  remoteParticipants: RemoteParticipantState[] | undefined
+export type _VideoGalleryRemoteParticipantsMemoFn = (
+  remoteParticipants: RemoteParticipantState[] | undefined,
+  /* @conditional-compile-remove(hide-attendee-name) */
+  isHideAttendeeNamesEnabled?: boolean,
+  /* @conditional-compile-remove(hide-attendee-name) */
+  localUserRole?: ParticipantRole
+) => VideoGalleryRemoteParticipant[];
+
+/** @internal */
+export const _videoGalleryRemoteParticipantsMemo: _VideoGalleryRemoteParticipantsMemoFn = (
+  remoteParticipants: RemoteParticipantState[] | undefined,
+  isHideAttendeeNamesEnabled?: boolean,
+  /* @conditional-compile-remove(hide-attendee-name) */ localUserRole?
 ): VideoGalleryRemoteParticipant[] => {
   if (!remoteParticipants) {
     return [];
   }
+
   return memoizedAllConvertRemoteParticipant((memoizedFn) => {
     return (
       Object.values(remoteParticipants)
@@ -40,13 +65,30 @@ export const _videoGalleryRemoteParticipantsMemo = (
         })
         .map((participant: RemoteParticipantState) => {
           const state = _isRingingPSTNParticipant(participant);
+          let displayName = participant.displayName;
+          /* @conditional-compile-remove(hide-attendee-name) */
+          displayName = maskDisplayNameWithRole(
+            displayName,
+            localUserRole,
+            participant.role,
+            isHideAttendeeNamesEnabled
+          );
+          /* @conditional-compile-remove(reaction) */
+          const remoteParticipantReaction = memoizedConvertToVideoTileReaction(participant.reactionState);
           return memoizedFn(
             toFlatCommunicationIdentifier(participant.identifier),
             participant.isMuted,
             checkIsSpeaking(participant),
             participant.videoStreams,
             state,
-            participant.displayName
+            displayName,
+            participant.raisedHand,
+            /* @conditional-compile-remove(ppt-live) */
+            participant.contentSharingStream,
+            /* @conditional-compile-remove(reaction) */
+            remoteParticipantReaction,
+            /* @conditional-compile-remove(spotlight) */
+            participant.spotlight
           );
         })
     );
@@ -60,7 +102,14 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     isSpeaking: boolean,
     videoStreams: { [key: number]: RemoteVideoStreamState },
     state: RemoteParticipantConnectionState,
-    displayName?: string
+    displayName?: string,
+    raisedHand?: unknown, // temp unknown type to build stable
+    /* @conditional-compile-remove(ppt-live) */
+    contentSharingStream?: HTMLElement,
+    /* @conditional-compile-remove(reaction) */
+    reaction?: unknown, // temp unknown type to build stable
+    /* @conditional-compile-remove(spotlight) */
+    spotlight?: unknown // temp unknown type to build stable
   ): VideoGalleryRemoteParticipant => {
     return convertRemoteParticipantToVideoGalleryRemoteParticipant(
       userId,
@@ -68,7 +117,14 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
       isSpeaking,
       videoStreams,
       state,
-      displayName
+      displayName,
+      raisedHand as RaisedHandState,
+      /* @conditional-compile-remove(ppt-live) */
+      contentSharingStream,
+      /* @conditional-compile-remove(reaction) */
+      reaction as Reaction,
+      /* @conditional-compile-remove(spotlight) */
+      spotlight as Spotlight
     );
   }
 );
@@ -80,7 +136,14 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   isSpeaking: boolean,
   videoStreams: { [key: number]: RemoteVideoStreamState },
   state: RemoteParticipantConnectionState,
-  displayName?: string
+  displayName?: string,
+  raisedHand?: unknown, // temp unknown type to build stable
+  /* @conditional-compile-remove(ppt-live) */
+  contentSharingStream?: HTMLElement,
+  /* @conditional-compile-remove(reaction) */
+  reaction?: unknown, // temp unknown type to build stable
+  /* @conditional-compile-remove(spotlight) */
+  spotlight?: unknown // temp unknown type to build stable
 ): VideoGalleryRemoteParticipant => {
   const rawVideoStreamsArray = Object.values(videoStreams);
   let videoStream: VideoGalleryStream | undefined = undefined;
@@ -101,6 +164,11 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     screenShareStream = convertRemoteVideoStreamToVideoGalleryStream(sdkScreenShareStream);
   }
 
+  /* @conditional-compile-remove(ppt-live) */
+  if (contentSharingStream) {
+    screenShareStream = convertRemoteContentSharingStreamToVideoGalleryStream(contentSharingStream);
+  }
+
   return {
     userId,
     displayName,
@@ -111,7 +179,12 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     isScreenSharingOn: screenShareStream !== undefined && screenShareStream.isAvailable,
     /* @conditional-compile-remove(one-to-n-calling) */
     /* @conditional-compile-remove(PSTN-calls) */
-    state
+    state,
+    raisedHand: raisedHand as RaisedHandState,
+    /* @conditional-compile-remove(reaction) */
+    reaction: reaction as Reaction,
+    /* @conditional-compile-remove(spotlight) */
+    spotlight: spotlight as Spotlight
   };
 };
 
@@ -123,14 +196,35 @@ const convertRemoteVideoStreamToVideoGalleryStream = (stream: RemoteVideoStreamS
     isReceiving: stream.isReceiving,
     isMirrored: stream.view?.isMirrored,
     renderElement: stream.view?.target,
-    /* @conditional-compile-remove(pinned-participants) */
-    scalingMode: stream.view?.scalingMode
+    scalingMode: stream.view?.scalingMode,
+    streamSize: stream.streamSize
+  };
+};
+
+/* @conditional-compile-remove(ppt-live) */
+const convertRemoteContentSharingStreamToVideoGalleryStream = (stream: HTMLElement): VideoGalleryStream => {
+  return {
+    isAvailable: !!stream,
+    isReceiving: true,
+    isMirrored: false,
+    renderElement: stream
   };
 };
 
 /** @private */
 export const memoizeLocalParticipant = memoizeOne(
-  (identifier, displayName, isMuted, isScreenSharingOn, localVideoStream) => ({
+  (
+    identifier,
+    displayName,
+    isMuted,
+    isScreenSharingOn,
+    localVideoStream,
+    /* @conditional-compile-remove(rooms) */ role,
+    raisedHand,
+    /* @conditional-compile-remove(reaction) */ reaction,
+    /* @conditional-compile-remove(spotlight) */ localSpotlight,
+    /* @conditional-compile-remove(spotlight) */ capabilities
+  ) => ({
     userId: identifier,
     displayName: displayName ?? '',
     isMuted: isMuted,
@@ -139,6 +233,21 @@ export const memoizeLocalParticipant = memoizeOne(
       isAvailable: !!localVideoStream,
       isMirrored: localVideoStream?.view?.isMirrored,
       renderElement: localVideoStream?.view?.target
-    }
+    },
+    /* @conditional-compile-remove(rooms) */
+    role,
+    raisedHand: raisedHand,
+    /* @conditional-compile-remove(reaction) */
+    reaction: reaction,
+    /* @conditional-compile-remove(spotlight) */
+    spotlight: localSpotlight,
+    /* @conditional-compile-remove(spotlight) */
+    capabilities
   })
+);
+
+/* @conditional-compile-remove(spotlight) */
+/** @private */
+export const memoizeSpotlightedParticipantIds = memoizeOne((spotlightedParticipants) =>
+  spotlightedParticipants?.map((p: SpotlightedParticipant) => toFlatCommunicationIdentifier(p.identifier))
 );

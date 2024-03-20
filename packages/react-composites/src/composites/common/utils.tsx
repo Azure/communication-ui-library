@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { _ICoordinates, _useContainerHeight, _useContainerWidth } from '@internal/react-components';
 import { useMemo, useRef } from 'react';

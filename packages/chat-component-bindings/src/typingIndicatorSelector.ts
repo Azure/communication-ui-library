@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { getTypingIndicators, getParticipants, getUserId, ChatBaseSelectorProps } from './baseSelectors';
 import { createSelector } from 'reselect';

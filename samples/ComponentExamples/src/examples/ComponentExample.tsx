@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
+
 import { MessageThread, SendBox, usePropsFor } from '@azure/communication-react';
 import * as React from 'react';
 

@@ -20,6 +20,9 @@ jobs:
   chromatic_deployment:
     name: Publish Chromatic
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@v3
         with:
@@ -37,7 +40,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
 
       - name: Install Rush
-        run: npm install -g @microsoft/rush@5.100.1
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
 
       - name: Install Dependencies
         run: rush install --max-install-attempts 3
@@ -47,13 +50,10 @@ jobs:
         uses: chromaui/action@v1
         with:
           workingDir: ./packages/storybook
-          buildScriptName: build
+          buildScriptName: build:dev
           token: ${{ secrets.GITHUB_TOKEN }}
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           allowConsoleErrors: true
-        env:
-          # Set the node_env to ensure Internal stories are published in chromatic builds
-          NODE_ENV: development
 
       - name: Format storybook URL
         id: storybook_url

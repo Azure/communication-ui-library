@@ -20,6 +20,7 @@ export interface CustomDataModelExampleContainerProps {
   botUserId: string;
   botAvatar: string;
   fluentTheme?: PartialTheme | Theme;
+  rtl?: boolean;
   locale?: CompositeLocale;
 }
 
@@ -48,7 +49,7 @@ export const CustomDataModelExampleContainer = (props: CustomDataModelExampleCon
   // It is recommended that Contoso memoize the `onFetchAvatarPersonaData` callback
   // to avoid costly re-fetching of data.
   // A 3rd Party utility such as Lodash (_.memoize) can be used to memoize the callback.
-  const onFetchAvatarPersonaData = (userId): Promise<AvatarPersonaData> =>
+  const onFetchAvatarPersonaData = (userId: string): Promise<AvatarPersonaData> =>
     new Promise((resolve) => {
       if (userId === props.botUserId) {
         return resolve({
@@ -80,6 +81,7 @@ export const CustomDataModelExampleContainer = (props: CustomDataModelExampleCon
       {adapter ? (
         <ChatComposite
           fluentTheme={props.fluentTheme}
+          rtl={props.rtl ?? false}
           adapter={adapter}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}

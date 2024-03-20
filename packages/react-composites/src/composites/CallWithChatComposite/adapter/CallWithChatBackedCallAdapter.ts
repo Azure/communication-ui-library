@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { CallWithChatAdapter } from './CallWithChatAdapter';
 import { CallAdapter, CallAdapterState } from '../../CallComposite';
@@ -13,19 +13,22 @@ import {
   PermissionConstraints,
   StartCallOptions
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(reaction) */
+import { Reaction } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
-import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import { DtmfTone } from '@azure/communication-calling';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 /* @conditional-compile-remove(PSTN-calls) */
-import {
-  CommunicationIdentifier,
-  CommunicationUserIdentifier,
-  isPhoneNumberIdentifier,
-  PhoneNumberIdentifier
-} from '@azure/communication-common';
+import { CommunicationIdentifier, isPhoneNumberIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
+import { JoinCallOptions, StartCallIdentifier } from '../../CallComposite/adapter/CallAdapter';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
@@ -84,22 +87,22 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public getState = (): CallAdapterState =>
     callAdapterStateFromCallWithChatAdapterState(this.callWithChatAdapter.getState());
   public dispose = (): void => this.callWithChatAdapter.dispose();
-  public joinCall = (microphoneOn?: boolean): Call | undefined => {
-    return this.callWithChatAdapter.joinCall(microphoneOn);
-  };
-  public joinCallWithOptions = (options?: { microphoneOn?: boolean; cameraOn?: boolean }): Call | undefined => {
-    return this.callWithChatAdapter.joinCallWithOptions(options);
+  public joinCall = (options?: boolean | JoinCallOptions): Call | undefined => {
+    if (typeof options === 'boolean') {
+      return this.callWithChatAdapter.joinCall(options);
+    } else {
+      return this.callWithChatAdapter.joinCall(options);
+    }
   };
   public leaveCall = async (forEveryone?: boolean): Promise<void> =>
     await this.callWithChatAdapter.leaveCall(forEveryone);
-  public startCall = (
-    participants: string[] | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier[],
-    options: StartCallOptions
-  ): Call | undefined => {
-    let communicationParticipants = participants;
-    /* @conditional-compile-remove(PSTN-calls) */
-    communicationParticipants = participants.map(_toCommunicationIdentifier);
-    return this.callWithChatAdapter.startCall(communicationParticipants, options);
+
+  public startCall = (participants: (string | StartCallIdentifier)[], options: StartCallOptions): Call | undefined => {
+    if (participants.every((participant: string | StartCallIdentifier) => typeof participant === 'string')) {
+      return this.callWithChatAdapter.startCall(participants as string[], options);
+    } else {
+      return this.callWithChatAdapter.startCall(participants as StartCallIdentifier[], options);
+    }
   };
   public setCamera = async (sourceId: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void> =>
     await this.callWithChatAdapter.setCamera(sourceId, options);
@@ -119,6 +122,11 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public unmute = async (): Promise<void> => await this.callWithChatAdapter.unmute();
   public startScreenShare = async (): Promise<void> => await this.callWithChatAdapter.startScreenShare();
   public stopScreenShare = async (): Promise<void> => await this.callWithChatAdapter.stopScreenShare();
+  public raiseHand = async (): Promise<void> => await this.callWithChatAdapter.raiseHand();
+  public lowerHand = async (): Promise<void> => await this.callWithChatAdapter.lowerHand();
+  /* @conditional-compile-remove(reaction) */
+  public onReactionClick = async (reaction: Reaction): Promise<void> =>
+    await this.callWithChatAdapter.onReactionClick(reaction);
   public removeParticipant = async (
     userId: string | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier
   ): Promise<void> => {
@@ -172,7 +180,6 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     return this.callWithChatAdapter.allowUnsupportedBrowserVersion();
   }
 
-  /* @conditional-compile-remove(PSTN-calls) */
   public sendDtmfTone = async (dtmfTone: DtmfTone): Promise<void> => {
     await this.callWithChatAdapter.sendDtmfTone(dtmfTone);
   };
@@ -213,6 +220,24 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void {
     return this.callWithChatAdapter.updateSelectedVideoBackgroundEffect(selectedVideoBackground);
   }
+  /* @conditional-compile-remove(end-of-call-survey) */
+  public async submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined> {
+    return this.callWithChatAdapter.submitSurvey(survey);
+  }
+  /* @conditional-compile-remove(spotlight) */
+  public async startSpotlight(userIds?: string[]): Promise<void> {
+    return this.callWithChatAdapter.startSpotlight(userIds);
+  }
+
+  /* @conditional-compile-remove(spotlight) */
+  public async stopSpotlight(userIds?: string[]): Promise<void> {
+    return this.callWithChatAdapter.stopSpotlight(userIds);
+  }
+
+  /* @conditional-compile-remove(spotlight) */
+  public async stopAllSpotlight(): Promise<void> {
+    return this.callWithChatAdapter.stopAllSpotlight();
+  }
 }
 
 function callAdapterStateFromCallWithChatAdapterState(
@@ -226,6 +251,8 @@ function callAdapterStateFromCallWithChatAdapterState(
     call: callWithChatAdapterState.call,
     devices: callWithChatAdapterState.devices,
     isTeamsCall: callWithChatAdapterState.isTeamsCall,
+    /* @conditional-compile-remove(rooms) */
+    isRoomsCall: false,
     latestErrors: callWithChatAdapterState.latestCallErrors,
     /* @conditional-compile-remove(PSTN-calls) */
     alternateCallerId: callWithChatAdapterState.alternateCallerId,
@@ -234,6 +261,10 @@ function callAdapterStateFromCallWithChatAdapterState(
     /* @conditional-compile-remove(video-background-effects) */
     videoBackgroundImages: callWithChatAdapterState.videoBackgroundImages,
     /* @conditional-compile-remove(video-background-effects) */
-    selectedVideoBackgroundEffect: callWithChatAdapterState.selectedVideoBackgroundEffect
+    onResolveVideoEffectDependency: callWithChatAdapterState.onResolveVideoEffectDependency,
+    /* @conditional-compile-remove(video-background-effects) */
+    selectedVideoBackgroundEffect: callWithChatAdapterState.selectedVideoBackgroundEffect,
+    /* @conditional-compile-remove(reaction) */
+    reactions: callWithChatAdapterState.reactions
   };
 }

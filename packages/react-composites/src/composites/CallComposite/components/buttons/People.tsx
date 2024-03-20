@@ -1,10 +1,8 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React, { useMemo } from 'react';
 import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles, useTheme } from '@internal/react-components';
-/* @conditional-compile-remove(rooms) */
-import { _usePermissions } from '@internal/react-components';
 import { concatStyleSets } from '@fluentui/react';
 import { CallCompositeIcon } from '../../../common/icons';
 import { controlButtonBaseStyle } from '../../styles/Buttons.styles';
@@ -19,6 +17,7 @@ export const People = (props: ControlBarButtonProps): JSX.Element => {
   const { strings, onRenderOnIcon, onRenderOffIcon, onClick } = props;
 
   const theme = useTheme();
+
   const styles: ControlBarButtonStyles = useMemo(
     () =>
       concatStyleSets(

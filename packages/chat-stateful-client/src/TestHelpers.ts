@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { ChatClient, ChatThreadItem } from '@azure/communication-chat';
@@ -8,6 +8,8 @@ import { _createStatefulChatClientWithDeps, StatefulChatClient, StatefulChatClie
 import { createMockChatThreadClient } from './mocks/createMockChatThreadClient';
 import { createMockIterator } from './mocks/createMockIterator';
 import { MockCommunicationUserCredential } from './mocks/MockCommunicationUserCredential';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 
 /**
  * @private
@@ -79,7 +81,49 @@ export const createStatefulChatClientMock = (): StatefulChatClientWithEventTrigg
     defaultClientArgs
   ) as StatefulChatClientWithEventTrigger;
 };
-
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/**
+ * @private
+ */
+export const messageTemplate: ChatMessageWithStatus = {
+  id: 'MessageId',
+  content: { message: 'MessageContent' },
+  clientMessageId: undefined,
+  createdOn: new Date(),
+  sender: {
+    kind: 'communicationUser',
+    communicationUserId: 'UserId'
+  },
+  senderDisplayName: 'User',
+  type: 'text',
+  sequenceId: '',
+  version: '',
+  status: 'delivered',
+  /* @conditional-compile-remove(data-loss-prevention) */
+  policyViolation: false
+};
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/**
+ * @private
+ */
+export const messageTemplateWithResourceCache: ChatMessageWithStatus = {
+  id: 'MessageId',
+  content: { message: 'MessageContent' },
+  clientMessageId: undefined,
+  createdOn: new Date(),
+  sender: {
+    kind: 'communicationUser',
+    communicationUserId: 'UserId'
+  },
+  senderDisplayName: 'User',
+  type: 'text',
+  sequenceId: '',
+  version: '',
+  status: 'delivered',
+  /* @conditional-compile-remove(data-loss-prevention) */
+  policyViolation: false,
+  resourceCache: { resource1Url: { sourceUrl: 'blob:resource1' }, resource2Url: { sourceUrl: 'blob:resource2' } }
+};
 /**
  * @private
  */
@@ -91,7 +135,7 @@ export type ChatClientWithEventTrigger = ChatClient & {
  * @private
  */
 export function createMockChatClient(): ChatClientWithEventTrigger {
-  const mockEventHandlersRef = { value: {} };
+  const mockEventHandlersRef: { value: any } = { value: {} };
   const mockChatClient: ChatClientWithEventTrigger = {} as any;
 
   mockChatClient.createChatThread = async (request) => {

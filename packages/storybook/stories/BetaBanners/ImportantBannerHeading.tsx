@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { Text } from '@fluentui/react';
 import { Info16Regular } from '@fluentui/react-icons';

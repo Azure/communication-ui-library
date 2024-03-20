@@ -1,8 +1,14 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 /* @conditional-compile-remove(close-captions) */
-import { CaptionsAvailableLanguageStrings } from '@internal/react-components';
+import { SpokenLanguageStrings, CaptionLanguageStrings } from '@internal/react-components';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { SurveyIssues, SurveyIssuesHeadingStrings } from '@internal/react-components';
+/* @conditional-compile-remove(capabilities) */
+import { CapabilityChangedNotificationStrings } from './components/CapabilitiesChangedNotificationBar';
+/* @conditional-compile-remove(spotlight) */
+import { SpotlightPromptStrings } from './components/Prompt';
 
 /**
  * Strings used by the {@link CallComposite} directly.
@@ -192,32 +198,34 @@ export interface CallCompositeStrings {
    * Tooltip text used to inform a user that toggling microphone in lobby is not supported.
    */
   microphoneToggleInLobbyNotAllowed: string;
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * Side pane People section Title.
    */
   peoplePaneTitle: string;
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Aria label of more button in people pane
+   */
+  peoplePaneMoreButtonAriaLabel: string;
   /**
    * Aria label string for return to call back button
    */
   returnToCallButtonAriaLabel?: string;
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * Aria Description string for return to call button
    */
   returnToCallButtonAriaDescription?: string;
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * control bar People button label
    */
   peopleButtonLabel: string;
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+  /**
+   * control bar People button label when checked
+   */
+  selectedPeopleButtonLabel: string;
   /**
    * control bar Chat button label.
    */
   chatButtonLabel: string;
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * Label for SidePaneHeader dismiss button
    */
@@ -242,6 +250,36 @@ export interface CallCompositeStrings {
    * Label for menu item to remove participant
    */
   removeMenuLabel: string;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Label for menu item to start spotlight on participant
+   */
+  startSpotlightMenuLabel: string;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Label for menu item to add spotlight on participant
+   */
+  addSpotlightMenuLabel: string;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Label for menu item to stop spotlight on participant
+   */
+  stopSpotlightMenuLabel: string;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Label for menu item to stop spotlight on local user
+   */
+  stopSpotlightOnSelfMenuLabel: string;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Label for menu item to stop spotlight on local user
+   */
+  spotlightLimitReachedMenuTitle: string;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Label for menu item to stop all spotlight
+   */
+  stopAllSpotlightMenuLabel: string;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Label for add people dropdown
@@ -267,7 +305,6 @@ export interface CallCompositeStrings {
    * Aria Label for dialpad Modal close button
    */
   dialpadCloseModalButtonAriaLabel: string;
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
   /**
    * label for more button in the Calling composite
    */
@@ -321,6 +358,26 @@ export interface CallCompositeStrings {
    * More details text of the page shown to the user when the user attempts to join a room that cannot be found.
    */
   roomNotFoundDetails?: string;
+  /* @conditional-compile-remove(rooms) */
+  /**
+   * Title text of the page shown to the user when the user attempts to join a room that is not valid.
+   */
+  roomNotValidTitle: string;
+  /* @conditional-compile-remove(rooms) */
+  /**
+   * More details text of the page shown to the user when the user attempts to join a room that is not valid.
+   */
+  roomNotValidDetails?: string;
+  /* @conditional-compile-remove(rooms) */
+  /**
+   * Title text of the page shown to the user when the user's permission to join the room is removed.
+   */
+  inviteToRoomRemovedTitle: string;
+  /* @conditional-compile-remove(rooms) */
+  /**
+   * More details text of the page shown to the user when the user's permission to join the room is removed.
+   */
+  inviteToRoomRemovedDetails?: string;
   /* @conditional-compile-remove(video-background-effects) */
   /**
    * Video Effects pane title.
@@ -368,14 +425,14 @@ export interface CallCompositeStrings {
   cameraOffBackgroundEffectWarningText?: string;
   /* @conditional-compile-remove(rooms) */
   /**
-   * Title text of the page shown to the user when the user attempts to join a room to which they are not invited.
+   * Title text of the page shown to the user when the user attempts to join a room they are not invited to.
    */
-  deniedPermissionToRoomTitle: string;
+  notInvitedToRoomTitle: string;
   /* @conditional-compile-remove(rooms) */
   /**
-   * More details text of the page shown to the user when the user attempts to join a room to which they are not invited.
+   * More details text of the page shown to the user when the user attempts to join a room they are not invited to.
    */
-  deniedPermissionToRoomDetails?: string;
+  notInvitedToRoomDetails?: string;
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * Control bar People button ToolTipContent
@@ -386,11 +443,10 @@ export interface CallCompositeStrings {
    * Control bar People button ToolTipContent
    */
   peopleButtonTooltipClose: string;
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   /**
    * Label disaplayed on the lobby screen during a 1:1 outbound call.
    */
-  outboundCallingNoticeString: string;
+  outboundCallingNoticeString?: string;
   /**
    * Notice to be announced by narrator when a participant joins a call
    */
@@ -472,14 +528,24 @@ export interface CallCompositeStrings {
   captionsSettingsModalTitle?: string;
   /* @conditional-compile-remove(close-captions) */
   /**
-   * label for dropdown inside captions setting modal
+   * label for spoken language dropdown inside captions setting modal
    */
-  captionsSettingsDropdownLabel?: string;
+  captionsSettingsSpokenLanguageDropdownLabel?: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * label for captions language inside captions setting modal
+   */
+  captionsSettingsCaptionLanguageDropdownLabel?: string;
   /* @conditional-compile-remove(close-captions) */
   /**
    * text under captions setting dropdown indicating what the dropdown is for
    */
-  captionsSettingsDropdownInfoText?: string;
+  captionsSettingsSpokenLanguageDropdownInfoText?: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * text under captions setting dropdown indicating what the dropdown is for
+   */
+  captionsSettingsCaptionLanguageDropdownInfoText?: string;
   /* @conditional-compile-remove(close-captions) */
   /**
    * confirm button label in captions setting modal
@@ -512,9 +578,14 @@ export interface CallCompositeStrings {
   captionsBannerMoreButtonTooltip?: string;
   /* @conditional-compile-remove(close-captions) */
   /**
-   * list of key value pairs that pairs language code to language names
+   * list of key value pairs that pairs spoken language code to language names
    */
-  captionsAvailableLanguageStrings?: CaptionsAvailableLanguageStrings;
+  spokenLanguageStrings?: SpokenLanguageStrings;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * list of key value pairs that pairs caption language code to language names
+   */
+  captionLanguageStrings?: CaptionLanguageStrings;
   /* @conditional-compile-remove(close-captions) */
   /**
    * captions banner loading spinner label
@@ -585,4 +656,187 @@ export interface CallCompositeStrings {
    * More details text of the page shown to the user when target participant id is malformed
    */
   participantIdIsMalformedMoreDetails?: string;
+  /**
+   * Controls label to move the overflow gallery around
+   */
+  moreButtonGalleryControlLabel?: string;
+  /**
+   * Label for the toggle to move the overflow gallery to the top
+   */
+  moreButtonGalleryPositionToggleLabel?: string;
+  /**
+   * Label for the selection of the speaker layout
+   */
+  moreButtonGallerySpeakerLayoutLabel?: string;
+  /**
+   * Label for the selection of the default (Gallery) layout
+   */
+  moreButtonGalleryDefaultLayoutLabel?: string;
+  /**
+   * Label for the selection of the default (Gallery) layout
+   */
+  moreButtonLargeGalleryDefaultLayoutLabel?: string;
+  /**
+   * Label for the selection of the floatingLocalVideo (Dynamic) layout
+   */
+  moreButtonGalleryFloatingLocalLayoutLabel?: string;
+  /**
+   * Label for the selection of the focusedContentLayout (Focused content) layout
+   */
+  moreButtonGalleryFocusedContentLayoutLabel?: string;
+  /* @conditional-compile-remove(capabilities) */
+  /**
+   * All strings for capability changed notification
+   */
+  capabilityChangedNotification?: CapabilityChangedNotificationStrings;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Title for the survey
+   */
+  surveyTitle: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Helper text to explain what the survey is for
+   */
+  starSurveyHelperText: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Helper text displayed below survey question after user select one star
+   */
+  starSurveyOneStarText: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Helper text displayed below survey question after user select two star
+   */
+  starSurveyTwoStarText: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Helper text displayed below survey question after user select three star
+   */
+  starSurveyThreeStarText: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Helper text displayed below survey question after user select four star
+   */
+  starSurveyFourStarText: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Helper text displayed below survey question after user select five star
+   */
+  starSurveyFiveStarText: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Aria Label for each individual star rating
+   */
+  starRatingAriaLabel: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Tags Survey Question
+   */
+  tagsSurveyQuestion: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Default text for free form text field inside tags survey
+   */
+  tagsSurveyTextFieldDefaultText: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Tags Survey helper text
+   */
+  tagsSurveyHelperText: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Confirm button label for survey
+   */
+  surveyConfirmButtonLabel: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Cancel button label for survey
+   */
+  surveySkipButtonLabel: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Default text for free form text box
+   */
+  surveyTextboxDefaultText: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Thank you text appeared on screen after survey is submitted
+   */
+  endOfSurveyText: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Corresponding texts to each call issue
+   */
+  surveyIssues: SurveyIssues;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Corresponding texts to each call category
+   */
+  SurveyIssuesHeadingStrings: SurveyIssuesHeadingStrings;
+  /**
+   * String for the dismiss control on the local and remote PIP on mobile
+   */
+  dismissModalAriaLabel?: string;
+  /* @conditional-compile-remove(calling-sounds) */
+  /**
+   * String for title when the call is rejected by the callee
+   */
+  callRejectedTitle?: string;
+  /* @conditional-compile-remove(calling-sounds) */
+  /**
+   * String for more details when the call is rejected by the callee
+   */
+  callRejectedMoreDetails?: string;
+  /**
+   * String for title when the call times out because the remote user does not answer
+   */
+  callTimeoutTitle?: string;
+  /**
+   * String for title when the call times out when calling a bot.
+   */
+  callTimeoutBotTitle?: string;
+  /**
+   * String for more details when the call times out because the remote user does not answer
+   */
+  callTimeoutDetails?: string;
+  /**
+   * String for more details when the call times out when calling a bot
+   */
+  callTimeoutBotDetails?: string;
+  /**
+   * Label for the control bar button to show the dtmf dialer when the more button is disabled
+   */
+  dtmfDialerButtonLabel?: string;
+  /**
+   * Tooltip for the control bar button to show the dtmf dialer when the more button is disabled
+   */
+  dtmfDialerButtonTooltipOn?: string;
+  /**
+   * Tooltip for the control bar button to hide the dtmf dialer when the more button is disabled
+   */
+  dtmfDialerButtonTooltipOff?: string;
+  /**
+   * Label to show the dtmf dialer in the more button menu
+   */
+  dtmfDialerMoreButtonLabelOn?: string;
+  /**
+   * Label to hide the dtmf dialer in the more button menu
+   */
+  dtmfDialerMoreButtonLabelOff?: string;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Strings for spotlight prompt
+   */
+  spotlightPrompt: SpotlightPromptStrings;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Label for button to exit spotlight
+   */
+  exitSpotlightButtonLabel: string;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Tooltip for button to exit spotlight
+   */
+  exitSpotlightButtonTooltip: string;
 }

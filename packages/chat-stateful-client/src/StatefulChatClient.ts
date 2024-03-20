@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ChatClient, ChatClientOptions } from '@azure/communication-chat';
-import { _getApplicationId } from '@internal/acs-ui-common';
+import { _getApplicationId, _TelemetryImplementationHint } from '@internal/acs-ui-common';
 import { ChatContext } from './ChatContext';
 import { ChatClientState } from './ChatClientState';
 import { EventSubscriber } from './EventSubscriber';
@@ -23,6 +23,11 @@ import { chatStatefulLogger } from './Logger';
  * @public
  */
 export interface StatefulChatClient extends ChatClient {
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /**
+   * Cleans up the resource cache from the chat thread client.
+   */
+  dispose(): void;
   /**
    * Holds all the state that we could proxy from ChatClient {@Link @azure/communication-chat#ChatClient} as
    * ChatClientState {@Link ChatClientState}.
@@ -40,6 +45,24 @@ export interface StatefulChatClient extends ChatClient {
    * @param handler - Original callback to be unsubscribed.
    */
   offStateChange(handler: (state: ChatClientState) => void): void;
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /**
+   * Downloads a resource for specific message and caches it.
+   *
+   * @param threadId - The thread id of the chat thread.
+   * @param messageId - The message id of the chat message.
+   * @param resourceUrl - The resource url to fetch and cache.
+   */
+  downloadResourceToCache(threadId: string, messageId: string, resourceUrl: string): void;
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /**
+   * Removes a resource from cache for a specific message.
+   *
+   * @param threadId - The thread id of the chat thread.
+   * @param messageId - The message id of the chat message.
+   * @param resourceUrl - The resource url to remove from cache.
+   */
+  removeResourceFromCache(threadId: string, messageId: string, resourceUrl: string): void;
 }
 
 interface StatefulChatClientWithPrivateProps extends StatefulChatClient {
@@ -161,12 +184,27 @@ export const createStatefulChatClient = (
   args: StatefulChatClientArgs,
   options?: StatefulChatClientOptions
 ): StatefulChatClient => {
-  chatStatefulLogger.info(`Creating chat stateful client using library version: ${_getApplicationId()}`);
+  return _createStatefulChatClientInner(args, options);
+};
+
+/**
+ * This inner function is used to allow injection of TelemetryImplementationHint without changing the public API.
+ *
+ * @internal
+ */
+export const _createStatefulChatClientInner = (
+  args: StatefulChatClientArgs,
+  options?: StatefulChatClientOptions,
+  telemetryImplementationHint: _TelemetryImplementationHint = 'StatefulComponents'
+): StatefulChatClient => {
+  chatStatefulLogger.info(
+    `Creating chat stateful client using library version: ${_getApplicationId(telemetryImplementationHint)}`
+  );
   const tweakedOptions = {
     ...options,
     chatClientOptions: {
       ...options?.chatClientOptions,
-      userAgentOptions: { userAgentPrefix: _getApplicationId() }
+      userAgentOptions: { userAgentPrefix: _getApplicationId(telemetryImplementationHint) }
     }
   };
   return _createStatefulChatClientWithDeps(
@@ -199,7 +237,12 @@ export const _createStatefulChatClientWithDeps = (
   args: StatefulChatClientArgs,
   options?: StatefulChatClientOptions
 ): StatefulChatClient => {
-  const context = new ChatContext(options?.maxStateChangeListeners);
+  const context = new ChatContext(
+    options?.maxStateChangeListeners,
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ args.credential,
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ args.endpoint
+  );
+
   let eventSubscriber: EventSubscriber;
 
   context.updateChatConfig(getIdentifierKind(args.userId), args.displayName);
@@ -218,7 +261,23 @@ export const _createStatefulChatClientWithDeps = (
       eventSubscriber = val;
     }
   });
-
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  Object.defineProperty(proxy, 'dispose', {
+    configurable: false,
+    value: () => context?.dispose()
+  });
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  Object.defineProperty(proxy, 'downloadResourceToCache', {
+    configurable: false,
+    value: (threadId: string, messageId: string, resourceUrl: string) =>
+      context?.downloadResourceToCache(threadId, messageId, resourceUrl)
+  });
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  Object.defineProperty(proxy, 'removeResourceFromCache', {
+    configurable: false,
+    value: (threadId: string, messageId: string, resourceUrl: string) =>
+      context?.removeResourceFromCache(threadId, messageId, resourceUrl)
+  });
   Object.defineProperty(proxy, 'getState', {
     configurable: false,
     value: () => context?.getState()

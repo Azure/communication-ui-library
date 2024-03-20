@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { IStackStyles, IStackItemStyles, IStackTokens, mergeStyles, Theme, ITextStyles } from '@fluentui/react';
 import { ParticipantListStyles } from '@internal/react-components';

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 export type { CallingBaseSelectorProps } from './baseSelectors';
 export * from './callControlSelectors';
@@ -16,23 +16,25 @@ export type { HoldButtonSelector } from './callControlSelectors';
 /* @conditional-compile-remove(close-captions) */
 export type {
   _StartCaptionsButtonSelector,
-  _ChangeSpokenLanguageSelector,
+  _CaptionSettingsSelector,
   _CaptionsBannerSelector
 } from './captionsSelector';
 
 /* @conditional-compile-remove(close-captions) */
-export {
-  _captionsBannerSelector,
-  _startCaptionsButtonSelector,
-  _changeSpokenLanguageSelector
-} from './captionsSelector';
+export { _captionsBannerSelector, _startCaptionsButtonSelector, _captionSettingsSelector } from './captionsSelector';
 
-export type { CallingHandlers } from './handlers/createHandlers';
+export type { CallingHandlers, CreateDefaultCallingHandlers } from './handlers/createHandlers';
 /* @conditional-compile-remove(teams-identity-support) */
 export type { TeamsCallingHandlers } from './handlers/createTeamsCallHandlers';
 export type { CommonCallingHandlers } from './handlers/createCommonHandlers';
 /* @conditional-compile-remove(close-captions) */
 export type { CaptionsOptions } from './handlers/createCommonHandlers';
+/* @conditional-compile-remove(video-background-effects) */
+export type { VideoBackgroundEffectsDependency } from './handlers/createCommonHandlers';
+/* @conditional-compile-remove(spotlight) */
+export type { _ComponentCallingHandlers } from './handlers/createHandlers';
+/* @conditional-compile-remove(video-background-effects) */
+export type { CallingHandlersOptions } from './handlers/createHandlers';
 /* @conditional-compile-remove(teams-identity-support) */
 export { useTeamsCall, useTeamsCallAgent } from './providers';
 
@@ -60,3 +62,4 @@ export { _updateUserDisplayNames } from './utils/callUtils';
 export { _getEnvironmentInfo } from './utils/callUtils';
 
 export { _videoGalleryRemoteParticipantsMemo, _dominantSpeakersWithFlatId } from './utils/videoGalleryUtils';
+export type { _VideoGalleryRemoteParticipantsMemoFn } from './utils/videoGalleryUtils';

@@ -1,11 +1,15 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { registerIcons } from '@fluentui/react';
 import React from 'react';
-import { MockCallAdapter } from './MockCallAdapter';
+import { _MockCallAdapter } from './MockCallAdapter';
 import { CallComposite } from './CallComposite';
 import { render } from '@testing-library/react';
+
+window.AudioContext = jest.fn().mockImplementation(() => {
+  return {};
+});
 
 describe('CallComposite device permission test for different roles', () => {
   let audioDevicePermissionRequests = 0;
@@ -34,7 +38,7 @@ describe('CallComposite device permission test for different roles', () => {
   });
 
   test('Audio and video device permission should be requested when no role is assigned', async () => {
-    const adapter = new MockCallAdapter({ askDevicePermission: countDevicePermissionRequests });
+    const adapter = new _MockCallAdapter({ askDevicePermission: countDevicePermissionRequests });
     render(<CallComposite adapter={adapter} />);
     expect(audioDevicePermissionRequests).toBe(1);
     expect(videoDevicePermissionRequests).toBe(1);
@@ -42,9 +46,9 @@ describe('CallComposite device permission test for different roles', () => {
 
   /* @conditional-compile-remove(rooms) */
   test('Audio and video device permission should be requested for Presenter role', async () => {
-    const adapter = new MockCallAdapter({
+    const adapter = new _MockCallAdapter({
       askDevicePermission: countDevicePermissionRequests,
-      options: { roleHint: 'Presenter' }
+      localParticipantRole: 'Presenter'
     });
     render(<CallComposite adapter={adapter} />);
     expect(audioDevicePermissionRequests).toBe(1);
@@ -53,9 +57,9 @@ describe('CallComposite device permission test for different roles', () => {
 
   /* @conditional-compile-remove(rooms) */
   test('Audio and video device permission should be requested for Attendee role', async () => {
-    const adapter = new MockCallAdapter({
+    const adapter = new _MockCallAdapter({
       askDevicePermission: countDevicePermissionRequests,
-      options: { roleHint: 'Attendee' }
+      localParticipantRole: 'Attendee'
     });
     render(<CallComposite adapter={adapter} />);
     expect(audioDevicePermissionRequests).toBe(1);
@@ -64,9 +68,9 @@ describe('CallComposite device permission test for different roles', () => {
 
   /* @conditional-compile-remove(rooms) */
   test('Only audio device permission should be requested for Consumer role', async () => {
-    const adapter = new MockCallAdapter({
+    const adapter = new _MockCallAdapter({
       askDevicePermission: countDevicePermissionRequests,
-      options: { roleHint: 'Consumer' }
+      localParticipantRole: 'Consumer'
     });
     render(<CallComposite adapter={adapter} />);
     expect(audioDevicePermissionRequests).toBe(1);
@@ -86,7 +90,7 @@ describe('CallComposite device permission test for call readiness', () => {
       audioDevicePermissionRequests++;
     }
   };
-  const adapter = new MockCallAdapter({ askDevicePermission: countDevicePermissionRequests });
+  const adapter = new _MockCallAdapter({ askDevicePermission: countDevicePermissionRequests });
 
   beforeEach(() => {
     // Register icons used in CallComposite to avoid warnings

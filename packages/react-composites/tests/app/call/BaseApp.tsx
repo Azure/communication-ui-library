@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React from 'react';
 
@@ -20,6 +20,7 @@ import { isMobile } from '../lib/utils';
 import { IContextualMenuItem, mergeStyles } from '@fluentui/react';
 import { QueryArgs } from './QueryArgs';
 import { MoreHorizontal20Regular } from '@fluentui/react-icons';
+import { VideoGalleryLayout } from '@internal/react-components';
 
 /** @internal */
 export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter }): JSX.Element {
@@ -92,6 +93,48 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
     };
   }
 
+  if (queryArgs.galleryLayout) {
+    options = {
+      ...options,
+      galleryOptions: { layout: queryArgs.galleryLayout as VideoGalleryLayout }
+    };
+  }
+
+  if (queryArgs.logo === 'square') {
+    options = {
+      ...options,
+      branding: {
+        logo: {
+          url: '/images/acslogo.svg',
+          alt: 'Contoso logo',
+          shape: 'unset'
+        }
+      }
+    };
+  }
+  if (queryArgs.logo === 'circle') {
+    options = {
+      ...options,
+      branding: {
+        logo: {
+          url: '/images/elephant.jpg',
+          alt: 'Contoso logo',
+          shape: 'circle'
+        }
+      }
+    };
+  }
+  if (queryArgs.backgroundImage) {
+    options = {
+      ...options,
+      branding: {
+        backgroundImage: {
+          url: '/images/composite-background.jpg'
+        }
+      }
+    };
+  }
+
   return (
     <>
       {!callAdapter && 'Initializing call adapter...'}
@@ -139,32 +182,35 @@ function onFetchParticipantMenuItems(): IContextualMenuItem[] {
     }
   ];
 }
-
+/* eslint-disable @typescript-eslint/no-unused-vars */
 const onFetchCustomButtonProps: CustomCallControlButtonCallback[] = [
   (args: CustomCallControlButtonCallbackArgs): CustomCallControlButtonProps => {
     return {
-      showLabel: args.displayType !== 'compact',
       // Some non-default icon that is already registered by the composites.
       iconName: 'ParticipantItemOptionsHovered',
-      text: 'custom #1',
+      strings: {
+        label: 'custom #1'
+      },
       placement: 'primary'
     };
   },
   (args: CustomCallControlButtonCallbackArgs): CustomCallControlButtonProps => {
     return {
-      showLabel: args.displayType !== 'compact',
       // Some non-default icon that is already registered by the composites.
       iconName: 'NetworkReconnectIcon',
-      text: 'custom #2',
+      strings: {
+        label: 'custom #2'
+      },
       placement: 'primary'
     };
   },
   (args: CustomCallControlButtonCallbackArgs): CustomCallControlButtonProps => {
     return {
-      showLabel: args.displayType !== 'compact',
       // Some non-default icon that is already registered by the composites.
       iconName: 'HorizontalGalleryRightButton',
-      text: 'custom #3',
+      strings: {
+        label: 'custom #3'
+      },
       placement: 'primary'
     };
   }

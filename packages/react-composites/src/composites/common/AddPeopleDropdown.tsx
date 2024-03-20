@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
+
 import React from 'react';
 import {
   DefaultButton,
@@ -148,7 +149,7 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
         )}
         {alternateCallerId && (
           <CallingDialpad
-            isMobile
+            isMobile={true}
             strings={strings}
             showDialpad={showDialpad}
             onDismissDialpad={onDismissDialpad}

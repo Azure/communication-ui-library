@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { CommonProperties } from '@internal/acs-ui-common';
 import { ChatHandlers } from '@internal/chat-component-bindings';
@@ -8,6 +8,8 @@ import { ReactElement } from 'react';
 import memoizeOne from 'memoize-one';
 import { ChatAdapter } from '../adapter/ChatAdapter';
 import { useAdapter } from '../adapter/ChatAdapterProvider';
+/* @conditional-compile-remove(file-sharing) */
+import { AttachmentMetadata } from '@internal/react-components';
 
 /**
  * @private
@@ -28,7 +30,26 @@ const createCompositeHandlers = memoizeOne(
     onTyping: adapter.sendTypingIndicator,
     onRemoveParticipant: adapter.removeParticipant,
     updateThreadTopicName: adapter.setTopic,
-    onUpdateMessage: adapter.updateMessage,
+    onUpdateMessage: (
+      messageId: string,
+      content: string,
+      /* @conditional-compile-remove(file-sharing) */
+      options?: {
+        metadata?: Record<string, string>;
+        /* @conditional-compile-remove(file-sharing) */
+        attachmentMetadata?: AttachmentMetadata[];
+      }
+    ) => {
+      const metadata = options?.metadata;
+      /* @conditional-compile-remove(file-sharing) */
+      const updatedOptions = options?.attachmentMetadata ? { ...options.attachmentMetadata } : {};
+      return adapter.updateMessage(
+        messageId,
+        content,
+        metadata,
+        /* @conditional-compile-remove(file-sharing) */ updatedOptions
+      );
+    },
     onDeleteMessage: adapter.deleteMessage
   })
 );

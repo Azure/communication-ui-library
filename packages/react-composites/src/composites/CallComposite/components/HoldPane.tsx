@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { PrimaryButton, Stack, Text } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
@@ -74,6 +74,7 @@ export const HoldPane = (): JSX.Element => {
             }
           }}
           data-ui-id="hold-page-resume-call-button"
+          autoFocus
         ></PrimaryButton>
       </Stack>
     </Stack>

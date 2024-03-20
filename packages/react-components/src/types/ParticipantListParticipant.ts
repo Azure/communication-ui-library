@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
-/* @conditional-compile-remove(rooms) */
-import { Role } from '../permissions';
 import { CommunicationParticipant } from './CommunicationParticipant';
 
 /**
@@ -19,9 +17,57 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
   isMuted?: boolean;
   /** Whether calling participant is speaking */
   isSpeaking?: boolean;
-  /* @conditional-compile-remove(rooms) */
-  /** Role of participant in Rooms call */
-  role?: Role;
+  /** Whether calling participant is raised hand */
+  raisedHand?: RaisedHand;
+  /* @conditional-compile-remove(reaction) */
+  /**
+   * Whether calling participant has reacted
+   *
+   * @beta
+   * */
+  reaction?: Reaction;
+  /* @conditional-compile-remove(spotlight) */
+  /** Whether calling participant is spotlighted **/
+  spotlight?: Spotlight;
+};
+
+/* @conditional-compile-remove(spotlight) */
+/**
+ * Spotlight state with order
+ *
+ * @beta
+ */
+export type Spotlight = {
+  /**
+   * Specifies the order position of the spotlight
+   */
+  spotlightedOrderPosition?: number;
+};
+
+/**
+ * Raised hand state with order
+ *
+ * @public
+ */
+export type RaisedHand = {
+  raisedHandOrderPosition: number;
+};
+
+/* @conditional-compile-remove(reaction) */
+/**
+ * Reaction state with reaction type to render
+ *
+ * @beta
+ */
+export type Reaction = {
+  /**
+   * Specifies the type of reaction videoTile should render i.e. like, heart etc.
+   */
+  reactionType: string;
+  /**
+   * Received timestamp for the message as default Date format.
+   */
+  receivedOn: Date;
 };
 
 /**

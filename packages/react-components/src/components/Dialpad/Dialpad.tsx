@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { IStyle, IButtonStyles, ITextFieldStyles } from '@fluentui/react';
 
 import { IconButton } from '@fluentui/react';
@@ -30,10 +30,12 @@ import {
 import { formatPhoneNumber } from '../utils/formatPhoneNumber';
 import useLongPress from '../utils/useLongPress';
 
+import { dtmfFrequencies, DtmfFrequenciesKeys, Tone } from './DTMFToneGenerator';
+
 /**
  * Strings of {@link Dialpad} that can be overridden.
  *
- * @beta
+ * @public
  */
 export interface DialpadStrings {
   placeholderText: string;
@@ -43,7 +45,7 @@ export interface DialpadStrings {
 /**
  * Styles for {@link Dialpad} component.
  *
- * @beta
+ * @public
  */
 export interface DialpadStyles {
   root?: IStyle;
@@ -57,7 +59,7 @@ export interface DialpadStyles {
 /**
  * DTMF tone for PSTN calls.
  *
- * @beta
+ * @public
  */
 export type DtmfTone =
   | 'A'
@@ -79,30 +81,69 @@ export type DtmfTone =
   | 'Star';
 
 /**
+ * Modes of the dialpad component.
+ * @public
+ */
+export type DialpadMode = 'dtmf' | 'dialer';
+
+/**
+ * Modes of how the longpress handlers can be tiggered.
+ * @public
+ */
+export type LongPressTrigger = 'mouseAndTouch' | 'touch';
+
+/**
  * Props for {@link Dialpad} component.
  *
- * @beta
+ * @public
  */
 export interface DialpadProps {
   strings?: DialpadStrings;
-  /**  function to send dtmf tones on button click */
+  /**
+   * function to send dtmf tones on button click
+   */
   onSendDtmfTone?: (dtmfTone: DtmfTone) => Promise<void>;
-  /**  Callback for dialpad button behavior*/
+  /**
+   * Callback for dialpad button behavior
+   */
   onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
-  /** set dialpad textfield content */
+  /**
+   * set dialpad textfield content
+   */
   textFieldValue?: string;
-  /**  on change function for text field, provides an unformatted plain text*/
+  /**
+   * on change function for text field, provides an unformatted plain text
+   */
   onChange?: (input: string) => void;
-  /**  boolean input to determine when to show/hide delete button, default true */
+  /**
+   * flag to determine when to show/hide delete button, default true
+   */
   showDeleteButton?: boolean;
-  /**  boolean input to determine if dialpad is in mobile view, default false */
-  isMobile?: boolean;
+  /**
+   * Determines what kind of device that the user is on and should respect that based on interaction
+   * interfaces available to the user
+   */
+  longPressTrigger?: LongPressTrigger;
+  /**
+   * Styles for customizing the dialpad component
+   */
   styles?: DialpadStyles;
+  /**
+   * Disables DTMF sounds when dialpad buttons are pressed. the actual
+   * tones are still sent to the call.
+   */
+  disableDtmfPlayback?: boolean;
+  /**
+   * Dialer mode for the dialpad. The dtmf mode is for sending dtmf tones and the appearence of
+   * the dialpad is changed like hiding the input box. When using dialer mode the input box is there
+   * and can be edited to change the number being dialed.
+   */
+  dialpadMode?: DialpadMode;
 }
 
 type DialpadButtonContent = {
   /** Number displayed on each dialpad button */
-  digit: string;
+  digit: DtmfFrequenciesKeys;
   /** Letters displayed on each dialpad button */
   letter?: string;
 };
@@ -138,17 +179,24 @@ const DtmfTones: DtmfTone[] = [
 ];
 
 const DialpadButton = (props: {
-  digit: string;
+  digit: DtmfFrequenciesKeys;
   letter?: string;
   styles?: DialpadStyles;
   index: number;
   onClick: (input: string, index: number) => void;
   onLongPress: (input: string, index: number) => void;
-  isMobile?: boolean;
+  longPressTrigger: LongPressTrigger;
+  dtmfToneAudioContext: AudioContext;
+  disableDtmfPlayback?: boolean;
 }): JSX.Element => {
   const theme = useTheme();
 
-  const { digit, index, onClick, onLongPress, isMobile = false } = props;
+  const { digit, index, onClick, onLongPress, longPressTrigger, dtmfToneAudioContext, disableDtmfPlayback } = props;
+  const [buttonPressed, setButtonPressed] = useState(false);
+
+  const dtmfToneSound = useRef<Tone>(
+    new Tone(dtmfToneAudioContext, dtmfFrequencies[digit].f1, dtmfFrequencies[digit].f2)
+  );
 
   const useLongPressProps = React.useMemo(
     () => ({
@@ -158,9 +206,9 @@ const DialpadButton = (props: {
       onLongPress: async () => {
         onLongPress(digit, index);
       },
-      touchEventsOnly: isMobile
+      touchEventsOnly: longPressTrigger === 'touch'
     }),
-    [digit, index, isMobile, onClick, onLongPress]
+    [digit, index, longPressTrigger, onClick, onLongPress]
   );
 
   const longPressHandlers = useLongPress(useLongPressProps);
@@ -170,6 +218,57 @@ const DialpadButton = (props: {
       data-test-id={`dialpad-button-${props.index}`}
       styles={concatStyleSets(buttonStyles(theme), props.styles?.button)}
       {...longPressHandlers}
+      onKeyDown={(e) => {
+        if ((e.key === 'Enter' || e.key === ' ') && !buttonPressed) {
+          if (!disableDtmfPlayback) {
+            dtmfToneSound.current.play();
+          }
+          longPressHandlers.onKeyDown();
+          setButtonPressed(true);
+          return;
+        }
+        if (
+          e.key === 'Tab' ||
+          e.key === 'ArrowLeft' ||
+          e.key === 'ArrowRight' ||
+          e.key === 'ArrowUp' ||
+          e.key === 'ArrowDown'
+        ) {
+          dtmfToneSound.current.stop();
+        }
+        longPressHandlers.onKeyDown();
+      }}
+      onKeyUp={(e) => {
+        if ((e.key === 'Enter' || e.key === ' ') && buttonPressed) {
+          dtmfToneSound.current.stop();
+          longPressHandlers.onKeyUp();
+          setButtonPressed(false);
+        }
+        longPressHandlers.onKeyUp();
+      }}
+      onMouseDown={() => {
+        if (!disableDtmfPlayback) {
+          dtmfToneSound.current.play();
+        }
+        longPressHandlers.onMouseDown();
+      }}
+      onMouseUp={() => {
+        dtmfToneSound.current.stop();
+        longPressHandlers.onMouseUp();
+      }}
+      onMouseLeave={() => {
+        dtmfToneSound.current.stop();
+      }}
+      onTouchStart={() => {
+        if (!disableDtmfPlayback) {
+          dtmfToneSound.current.play();
+        }
+        longPressHandlers.onTouchStart();
+      }}
+      onTouchEnd={() => {
+        dtmfToneSound.current.stop();
+        longPressHandlers.onTouchEnd();
+      }}
     >
       <Stack>
         <Text className={mergeStyles(digitStyles(theme), props.styles?.digit)}>{props.digit}</Text>
@@ -192,8 +291,10 @@ const DialpadContainer = (props: {
   /**  boolean input to determine when to show/hide delete button, default true */
   showDeleteButton?: boolean;
   /**  boolean input to determine if dialpad is in mobile view, default false */
-  isMobile?: boolean;
+  longPressTrigger?: LongPressTrigger;
   styles?: DialpadStyles;
+  disableDtmfPlayback?: boolean;
+  dialpadMode?: DialpadMode;
 }): JSX.Element => {
   const theme = useTheme();
 
@@ -203,16 +304,22 @@ const DialpadContainer = (props: {
     textFieldValue,
     onChange,
     showDeleteButton = true,
-    isMobile = false
+    longPressTrigger = 'mouseAndTouch',
+    disableDtmfPlayback,
+    dialpadMode = 'dialer'
   } = props;
 
+  const dtmfToneAudioContext = useRef(new AudioContext());
+
   const [plainTextValue, setPlainTextValue] = useState(textFieldValue ?? '');
+  const plainTextValuePreviousRenderValue = useRef(plainTextValue);
 
   useEffect(() => {
-    if (onChange) {
-      onChange(plainTextValue);
+    if (plainTextValuePreviousRenderValue.current !== plainTextValue) {
+      onChange?.(plainTextValue);
     }
-  }, [plainTextValue, onChange]);
+    plainTextValuePreviousRenderValue.current = plainTextValue;
+  }, [plainTextValuePreviousRenderValue, plainTextValue, onChange]);
 
   useEffect(() => {
     setText(textFieldValue ?? '');
@@ -255,46 +362,43 @@ const DialpadContainer = (props: {
   };
 
   return (
-    <div
+    <Stack
       className={mergeStyles(containerStyles(theme), props.styles?.root)}
       data-test-id="dialpadContainer"
       data-ui-id="dialpadContainer"
+      horizontalAlign={'center'}
     >
-      <TextField
-        styles={concatStyleSets(textFieldStyles(theme), props.styles?.textField)}
-        value={textFieldValue ? textFieldValue : formatPhoneNumber(plainTextValue)}
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        onChange={(e: any) => {
-          setText(e.target.value);
-        }}
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        onClick={(e: any) => {
-          const input = e.target;
-          const end = input.value.length;
-
-          // Move focus to end of input field
-          input.setSelectionRange(end, end);
-          input.focus();
-        }}
-        placeholder={props.strings.placeholderText}
-        data-test-id="dialpad-input"
-        onRenderSuffix={(): JSX.Element => (
-          <>
-            {showDeleteButton && plainTextValue.length !== 0 && (
-              <IconButton
-                ariaLabel={props.strings.deleteButtonAriaLabel}
-                onClick={deleteNumbers}
-                styles={concatStyleSets(iconButtonStyles(theme), props.styles?.deleteIcon)}
-                iconProps={{ iconName: 'DialpadBackspace' }}
-              />
-            )}
-          </>
-        )}
-      />
+      {dialpadMode === 'dialer' && (
+        <TextField
+          styles={concatStyleSets(textFieldStyles(theme, plainTextValue !== ''), props.styles?.textField)}
+          value={textFieldValue ? textFieldValue : formatPhoneNumber(plainTextValue)}
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          onChange={(e: any) => {
+            setText(e.target.value);
+          }}
+          onClick={(e) => {
+            e.preventDefault();
+          }}
+          placeholder={props.strings.placeholderText}
+          data-test-id="dialpad-input"
+          onRenderSuffix={(): JSX.Element => (
+            <>
+              {showDeleteButton && plainTextValue.length !== 0 && (
+                <IconButton
+                  ariaLabel={props.strings.deleteButtonAriaLabel}
+                  onClick={deleteNumbers}
+                  styles={concatStyleSets(iconButtonStyles(theme), props.styles?.deleteIcon)}
+                  iconProps={{ iconName: 'DialpadBackspace' }}
+                />
+              )}
+            </>
+          )}
+        />
+      )}
       <FocusZone>
         {dialPadButtonsDefault.map((rows, rowIndex) => {
           return (
-            <Stack horizontal key={`row_${rowIndex}`} horizontalAlign="stretch">
+            <Stack horizontal key={`row_${rowIndex}`} horizontalAlign="stretch" tokens={{ childrenGap: '1rem' }}>
               {rows.map((button, columnIndex) => (
                 <DialpadButton
                   key={`button_${columnIndex}`}
@@ -321,14 +425,16 @@ const DialpadContainer = (props: {
                   styles={props.styles}
                   onClick={onClickDialpad}
                   onLongPress={onLongPressDialpad}
-                  isMobile={isMobile}
+                  longPressTrigger={longPressTrigger}
+                  dtmfToneAudioContext={dtmfToneAudioContext.current}
+                  disableDtmfPlayback={disableDtmfPlayback}
                 />
               ))}
             </Stack>
           );
         })}
       </FocusZone>
-    </div>
+    </Stack>
   );
 };
 
@@ -336,7 +442,7 @@ const DialpadContainer = (props: {
  * A component to allow users to enter phone number through clicking on dialpad/using keyboard
  * It will return empty component for stable builds
  *
- * @beta
+ * @public
  */
 export const Dialpad = (props: DialpadProps): JSX.Element => {
   /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */

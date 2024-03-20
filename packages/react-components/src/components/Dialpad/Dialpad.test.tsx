@@ -1,6 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
+// Licensed under the MIT License.
 
 import React from 'react';
 import { Dialpad, DialpadStrings, DtmfTone } from './Dialpad';
@@ -15,6 +14,10 @@ const onSendDtmfTone = (dtmfTone: DtmfTone): Promise<void> => {
   mockSendDTMF(dtmfTone);
   return Promise.resolve();
 };
+
+window.AudioContext = jest.fn().mockImplementation(() => {
+  return {};
+});
 
 describe('Dialpad tests', () => {
   beforeAll(() => {

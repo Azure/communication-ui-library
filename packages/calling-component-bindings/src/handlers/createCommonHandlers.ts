@@ -1,36 +1,44 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import {
   AudioDeviceInfo,
   Call,
   LocalVideoStream,
   StartCallOptions,
-  VideoDeviceInfo
+  VideoDeviceInfo,
+  BackgroundBlurEffect,
+  BackgroundReplacementEffect,
+  BackgroundBlurConfig,
+  BackgroundReplacementConfig
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
-import { DtmfTone, AddPhoneNumberOptions } from '@azure/communication-calling';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
+/* @conditional-compile-remove(dialpad) */
+import { DtmfTone } from '@azure/communication-calling';
+/* @conditional-compile-remove(PSTN-calls) */
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCall } from '@azure/communication-calling';
 /* @conditional-compile-remove(call-readiness) */
 import { PermissionConstraints } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(spotlight) */
+import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CreateViewResult, StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { disposeAllLocalPreviewViews, _isInCall, _isInLobbyOrConnecting, _isPreviewOn } from '../utils/callUtils';
-import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
+import { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(video-background-effects) */
-import {
-  BackgroundBlurConfig,
-  BackgroundBlurEffect,
-  BackgroundReplacementConfig,
-  BackgroundReplacementEffect
-} from '@azure/communication-calling-effects';
-/* @conditional-compile-remove(video-background-effects) */
 import { Features } from '@azure/communication-calling';
+/* @conditional-compile-remove(close-captions) */
+import { TeamsCaptions } from '@azure/communication-calling';
+/* @conditional-compile-remove(reaction) */
+import { Reaction } from '@azure/communication-calling';
+/* @conditional-compile-remove(spotlight) */
+import { _ComponentCallingHandlers } from './createHandlers';
 
 /**
  * Object containing all the handlers required for calling components.
@@ -51,6 +59,14 @@ export interface CommonCallingHandlers {
   onStopScreenShare: () => Promise<void>;
   onToggleScreenShare: () => Promise<void>;
   onHangUp: (forEveryone?: boolean) => Promise<void>;
+  onRaiseHand: () => Promise<void>;
+  onLowerHand: () => Promise<void>;
+  onToggleRaiseHand: () => Promise<void>;
+  /* @conditional-compile-remove(reaction) */
+  /**
+   * @beta
+   */
+  onReactionClick: (reaction: Reaction) => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   onToggleHold: () => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
@@ -76,10 +92,7 @@ export interface CommonCallingHandlers {
   onRemoveParticipant(participant: CommunicationIdentifier): Promise<void>;
   /* @conditional-compile-remove(call-readiness) */
   askDevicePermission: (constrain: PermissionConstraints) => Promise<void>;
-  onStartCall: (
-    participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],
-    options?: StartCallOptions
-  ) => void;
+  onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => void;
   /* @conditional-compile-remove(video-background-effects) */
   onRemoveVideoBackgroundEffects: () => Promise<void>;
   /* @conditional-compile-remove(video-background-effects) */
@@ -94,12 +107,20 @@ export interface CommonCallingHandlers {
   onSetSpokenLanguage: (language: string) => Promise<void>;
   /* @conditional-compile-remove(close-captions) */
   onSetCaptionLanguage: (language: string) => Promise<void>;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  onSubmitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
+  /* @conditional-compile-remove(spotlight) */
+  onStartSpotlight: (userIds?: string[]) => Promise<void>;
+  /* @conditional-compile-remove(spotlight) */
+  onStopSpotlight: (userIds?: string[]) => Promise<void>;
+  /* @conditional-compile-remove(spotlight) */
+  onStopAllSpotlight: () => Promise<void>;
 }
 
 /**
  * options bag to start captions
  *
- * @beta
+ * @public
  */
 export type CaptionsOptions = {
   spokenLanguage: string;
@@ -113,6 +134,16 @@ export const areStreamsEqual = (prevStream: LocalVideoStream, newStream: LocalVi
 };
 
 /**
+ * Dependency type to be injected for video background effects
+ *
+ * @public
+ */
+export type VideoBackgroundEffectsDependency = {
+  createBackgroundBlurEffect: (config?: BackgroundBlurConfig) => BackgroundBlurEffect;
+  createBackgroundReplacementEffect: (config: BackgroundReplacementConfig) => BackgroundReplacementEffect;
+};
+
+/**
  * Create the common implementation of {@link CallingHandlers} for all types of Call
  *
  * @private
@@ -121,8 +152,11 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
   (
     callClient: StatefulCallClient,
     deviceManager: StatefulDeviceManager | undefined,
-    call: Call | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall | undefined
-  ): CommonCallingHandlers => {
+    call: Call | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall | undefined,
+    options?: {
+      onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
+    }
+  ): CommonCallingHandlers & /* @conditional-compile-remove(spotlight) */ Partial<_ComponentCallingHandlers> => {
     const onStartLocalVideo = async (): Promise<void> => {
       // Before the call object creates a stream, dispose of any local preview streams.
       // @TODO: is there any way to parent the unparented view to the call object instead
@@ -158,37 +192,48 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     const onToggleCamera = async (options?: VideoStreamOptions): Promise<void> => {
       const previewOn = _isPreviewOn(callClient.getState().deviceManager);
 
-      if (previewOn && call && call.state === 'Connecting') {
-        // This is to workaround: https://skype.visualstudio.com/SPOOL/_workitems/edit/3030558.
-        // The root cause of the issue is caused by never transitioning the unparented view to the
-        // call object when going from configuration page (disconnected call state) to connecting.
-        //
-        // Currently the only time the local video stream is moved from unparented view to the call
-        // object is when we transition from connecting -> call state. If the camera was on,
-        // inside the MediaGallery we trigger toggleCamera. This triggers onStartLocalVideo which
-        // destroys the unparentedView and creates a new stream in the call - so all looks well.
-        //
-        // However, if someone turns off their camera during the lobbyOrConnecting screen, the
-        // call.localVideoStreams will be empty (as the stream is currently stored in the unparented
-        // views and was never transitioned to the call object) and thus we incorrectly try to create
-        // a new video stream for the call object, instead of only stopping the unparented view.
-        //
-        // The correct fix for this is to ensure that callAgent.onStartCall is called with the
-        // localvideostream as a videoOption. That will mean call.onLocalVideoStreamsUpdated will
-        // be triggered when the call is in connecting state, which we can then transition the
-        // local video stream to the stateful call client and get into a clean state.
-        await onDisposeLocalStreamView();
-        return;
-      }
+      // the disposal of the unparented views is to workaround: https://skype.visualstudio.com/SPOOL/_workitems/edit/3030558.
+      // The root cause of the issue is caused by never transitioning the unparented view to the
+      // call object when going from configuration page (disconnected call state) to connecting.
+      //
+      // Currently the only time the local video stream is moved from unparented view to the call
+      // object is when we transition from connecting -> call state. If the camera was on,
+      // inside the MediaGallery we trigger toggleCamera. This triggers onStartLocalVideo which
+      // destroys the unparentedView and creates a new stream in the call - so all looks well.
+      //
+      // However, if someone turns off their camera during the lobbyOrConnecting screen, the
+      // call.localVideoStreams will be empty (as the stream is currently stored in the unparented
+      // views and was never transitioned to the call object) and thus we incorrectly try to create
+      // a new video stream for the call object, instead of only stopping the unparented view.
+      //
+      // The correct fix for this is to ensure that callAgent.onStartCall is called with the
+      // localvideostream as a videoOption. That will mean call.onLocalVideoStreamsUpdated will
+      // be triggered when the call is in connecting state, which we can then transition the
+      // local video stream to the stateful call client and get into a clean state.
 
       if (call && (_isInCall(call.state) || _isInLobbyOrConnecting(call.state))) {
         const stream = call.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
-        if (stream) {
-          await onStopLocalVideo(stream);
+        const unparentedViews = callClient.getState().deviceManager.unparentedViews;
+        if (stream || unparentedViews.length > 0) {
+          unparentedViews &&
+            (await unparentedViews.forEach(
+              (view) => view.mediaStreamType === 'Video' && callClient.disposeView(undefined, undefined, view)
+            ));
+          stream && (await onStopLocalVideo(stream));
         } else {
           await onStartLocalVideo();
         }
       } else {
+        /**
+         * This will create a unparented view to be used on the configuration page and the connecting screen
+         *
+         * If the device that the stream will come from is not on from permissions checks, then it will take time
+         * to create the stream since device is off. If we are turn the camera on immedietly on the configuration page we see it is
+         * fast but that is because the device is already primed to return a stream.
+         *
+         * On the connecting page the device has already turned off and the connecting window is so small we do not see the resulting
+         * unparented view from the code below.
+         */
         const selectedCamera = callClient.getState().deviceManager.selectedCamera;
         if (selectedCamera) {
           if (previewOn) {
@@ -229,7 +274,15 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       if (call && _isInCall(call.state)) {
         deviceManager.selectCamera(device);
         const stream = call.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
-        return stream?.switchSource(device);
+        await stream?.switchSource(device);
+
+        /// TODO: TEMPORARY SOLUTION
+        /// The Calling SDK needs to wait until the stream is ready before resolving the switchSource promise.
+        /// This is a temporary solution to wait for the stream to be ready before resolving the promise.
+        /// This allows the onSelectCamera to be throttled to prevent the streams from getting in to a frozen state
+        /// if the user switches cameras too rapidly.
+        /// This is to be removed once the Calling SDK has issued a fix.
+        await stream?.getMediaStream();
       } else {
         const previewOn = _isPreviewOn(callClient.getState().deviceManager);
 
@@ -253,8 +306,44 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
     };
 
+    const onRaiseHand = async (): Promise<void> => await call?.feature(Features.RaiseHand)?.raiseHand();
+
+    const onLowerHand = async (): Promise<void> => await call?.feature(Features.RaiseHand)?.lowerHand();
+
+    const onToggleRaiseHand = async (): Promise<void> => {
+      const raiseHandFeature = call?.feature(Features.RaiseHand);
+      const localUserId = callClient.getState().userId;
+      const isLocalRaisedHand = raiseHandFeature
+        ?.getRaisedHands()
+        .find(
+          (publishedState) =>
+            toFlatCommunicationIdentifier(publishedState.identifier) === toFlatCommunicationIdentifier(localUserId)
+        );
+      if (isLocalRaisedHand) {
+        await raiseHandFeature?.lowerHand();
+      } else {
+        await raiseHandFeature?.raiseHand();
+      }
+    };
+
+    /* @conditional-compile-remove(reaction) */
+    const onReactionClick = async (reaction: Reaction): Promise<void> => {
+      if (
+        reaction === 'like' ||
+        reaction === 'applause' ||
+        reaction === 'heart' ||
+        reaction === 'laugh' ||
+        reaction === 'surprised'
+      ) {
+        await call?.feature(Features.Reaction)?.sendReaction({ reactionType: reaction });
+      } else {
+        console.warn(`Can not recognize ${reaction} as meeting reaction`);
+      }
+      return;
+    };
+
     const onToggleMicrophone = async (): Promise<void> => {
-      if (!call || !_isInCall(call.state)) {
+      if (!call || !(_isInCall(call.state) || _isInLobbyOrConnecting(call.state))) {
         throw new Error(`Please invoke onToggleMicrophone after call is started`);
       }
       return call.isMuted ? await call.unmute() : await call.mute();
@@ -454,7 +543,11 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video') ||
         deviceManager?.getUnparentedVideoStreams().find((stream) => stream.mediaStreamType === 'Video');
       if (stream) {
-        return stream.feature(Features.VideoEffects).stopEffects();
+        if (!options?.onResolveVideoBackgroundEffectsDependency) {
+          throw new Error(`Video background effects dependency not resolved`);
+        } else {
+          return stream.feature(Features.VideoEffects).stopEffects();
+        }
       }
     };
 
@@ -464,7 +557,13 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video') ||
         deviceManager?.getUnparentedVideoStreams().find((stream) => stream.mediaStreamType === 'Video');
       if (stream) {
-        return stream.feature(Features.VideoEffects).startEffects(new BackgroundBlurEffect(backgroundBlurConfig));
+        if (!options?.onResolveVideoBackgroundEffectsDependency) {
+          throw new Error(`Video background effects dependency not resolved`);
+        }
+        const createEffect =
+          options?.onResolveVideoBackgroundEffectsDependency &&
+          (await options.onResolveVideoBackgroundEffectsDependency())?.createBackgroundBlurEffect;
+        return createEffect && stream.feature(Features.VideoEffects).startEffects(createEffect(backgroundBlurConfig));
       }
     };
 
@@ -476,27 +575,81 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video') ||
         deviceManager?.getUnparentedVideoStreams().find((stream) => stream.mediaStreamType === 'Video');
       if (stream) {
-        return stream
-          .feature(Features.VideoEffects)
-          .startEffects(new BackgroundReplacementEffect(backgroundReplacementConfig));
+        if (!options?.onResolveVideoBackgroundEffectsDependency) {
+          throw new Error(`Video background effects dependency not resolved`);
+        }
+        const createEffect =
+          options?.onResolveVideoBackgroundEffectsDependency &&
+          (await options.onResolveVideoBackgroundEffectsDependency())?.createBackgroundReplacementEffect;
+        return (
+          createEffect && stream.feature(Features.VideoEffects).startEffects(createEffect(backgroundReplacementConfig))
+        );
       }
     };
+
     /* @conditional-compile-remove(close-captions) */
     const onStartCaptions = async (options?: CaptionsOptions): Promise<void> => {
-      await call?.feature(Features.TeamsCaptions).startCaptions(options);
+      const captionsFeature = call?.feature(Features.Captions).captions;
+      await captionsFeature?.startCaptions(options);
     };
     /* @conditional-compile-remove(close-captions) */
     const onStopCaptions = async (): Promise<void> => {
-      await call?.feature(Features.TeamsCaptions).stopCaptions();
+      const captionsFeature = call?.feature(Features.Captions).captions;
+      await captionsFeature?.stopCaptions();
     };
     /* @conditional-compile-remove(close-captions) */
     const onSetSpokenLanguage = async (language: string): Promise<void> => {
-      await call?.feature(Features.TeamsCaptions).setSpokenLanguage(language);
+      const captionsFeature = call?.feature(Features.Captions).captions;
+      await captionsFeature?.setSpokenLanguage(language);
     };
     /* @conditional-compile-remove(close-captions) */
     const onSetCaptionLanguage = async (language: string): Promise<void> => {
-      await call?.feature(Features.TeamsCaptions).setCaptionLanguage(language);
+      const captionsFeature = call?.feature(Features.Captions).captions as TeamsCaptions;
+      await captionsFeature.setCaptionLanguage(language);
     };
+    /* @conditional-compile-remove(end-of-call-survey) */
+    const onSubmitSurvey = async (survey: CallSurvey): Promise<CallSurveyResponse | undefined> =>
+      await call?.feature(Features.CallSurvey).submitSurvey(survey);
+    /* @conditional-compile-remove(spotlight) */
+    const onStartSpotlight = async (userIds?: string[]): Promise<void> => {
+      const participants = userIds?.map((userId) => _toCommunicationIdentifier(userId));
+      await call?.feature(Features.Spotlight).startSpotlight(participants);
+    };
+    /* @conditional-compile-remove(spotlight) */
+    const onStopSpotlight = async (userIds?: string[]): Promise<void> => {
+      const participants = userIds?.map((userId) => _toCommunicationIdentifier(userId));
+      await call?.feature(Features.Spotlight).stopSpotlight(participants);
+    };
+    /* @conditional-compile-remove(spotlight) */
+    const onStopAllSpotlight = async (): Promise<void> => {
+      await call?.feature(Features.Spotlight).stopAllSpotlight();
+    };
+    /* @conditional-compile-remove(spotlight) */
+    const canSpotlight = call?.feature(Features.Capabilities).capabilities.spotlightParticipant.isPresent;
+    /* @conditional-compile-remove(spotlight) */
+    const onStartLocalSpotlight = canSpotlight
+      ? async (): Promise<void> => {
+          await call?.feature(Features.Spotlight).startSpotlight();
+        }
+      : undefined;
+    /* @conditional-compile-remove(spotlight) */
+    const onStopLocalSpotlight = async (): Promise<void> => {
+      await call?.feature(Features.Spotlight).stopSpotlight();
+    };
+    /* @conditional-compile-remove(spotlight) */
+    const onStartRemoteSpotlight = canSpotlight
+      ? async (userIds?: string[]): Promise<void> => {
+          const participants = userIds?.map((userId) => _toCommunicationIdentifier(userId));
+          await call?.feature(Features.Spotlight).startSpotlight(participants);
+        }
+      : undefined;
+    /* @conditional-compile-remove(spotlight) */
+    const onStopRemoteSpotlight = canSpotlight
+      ? async (userIds?: string[]): Promise<void> => {
+          const participants = userIds?.map((userId) => _toCommunicationIdentifier(userId));
+          await call?.feature(Features.Spotlight).stopSpotlight(participants);
+        }
+      : undefined;
 
     return {
       onHangUp,
@@ -517,6 +670,11 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onDisposeLocalStreamView,
       onDisposeRemoteScreenShareStreamView,
       onDisposeRemoteVideoStreamView,
+      onRaiseHand,
+      onLowerHand,
+      onToggleRaiseHand,
+      /* @conditional-compile-remove(reaction) */
+      onReactionClick: onReactionClick,
       /* @conditional-compile-remove(PSTN-calls) */
       onAddParticipant: notImplemented,
       onRemoveParticipant: notImplemented,
@@ -537,7 +695,23 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       /* @conditional-compile-remove(close-captions) */
       onSetCaptionLanguage,
       /* @conditional-compile-remove(close-captions) */
-      onSetSpokenLanguage
+      onSetSpokenLanguage,
+      /* @conditional-compile-remove(end-of-call-survey) */
+      onSubmitSurvey,
+      /* @conditional-compile-remove(spotlight) */
+      onStartSpotlight,
+      /* @conditional-compile-remove(spotlight) */
+      onStopSpotlight,
+      /* @conditional-compile-remove(spotlight) */
+      onStopAllSpotlight,
+      /* @conditional-compile-remove(spotlight) */
+      onStartLocalSpotlight,
+      /* @conditional-compile-remove(spotlight) */
+      onStopLocalSpotlight,
+      /* @conditional-compile-remove(spotlight) */
+      onStartRemoteSpotlight,
+      /* @conditional-compile-remove(spotlight) */
+      onStopRemoteSpotlight
     };
   }
 );

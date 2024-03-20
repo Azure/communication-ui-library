@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 export * from './index-public';
 
-export { _isACSCall, _isACSCallAgent, _isTeamsCall, _isTeamsCallAgent } from './TypeGuards';
+export { _createStatefulCallClientInner } from './StatefulCallClient';
 
-/* @conditional-compile-remove(close-captions) */
-export { _isTeamsMeetingCall } from './TypeGuards';
+export { _isACSCall, _isACSCallAgent, _isTeamsCall, _isTeamsCallAgent } from './TypeGuards';
 
 export type { CallAgentCommon, CallCommon, TeamsCall, TeamsCallAgent, IncomingCallCommon } from './BetaToStableTypes';

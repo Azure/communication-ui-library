@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ChatComposite, toFlatCommunicationIdentifier } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
@@ -77,6 +77,7 @@ const CustomDataModelStory = (args: ArgsFrom<typeof storyControls>, context): JS
       {containerProps ? (
         <CustomDataModelExampleContainer
           fluentTheme={context.theme}
+          rtl={context.globals.rtl === 'rtl'}
           locale={compositeLocale(locale)}
           {...containerProps}
           botAvatar={getControlledBotAvatarSymbol(args.avatar)}

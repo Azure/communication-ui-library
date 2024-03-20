@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
+
 import React from 'react';
 import { useState } from 'react';
 import { useMemo } from 'react';
@@ -70,7 +71,11 @@ export const CallingDialpad = (props: CallingDialpadProps): JSX.Element => {
   const dialpadComponent = (): JSX.Element => {
     return (
       <>
-        <Dialpad styles={dialpadStyle} onChange={setTextFieldInput} isMobile={isMobile} />
+        <Dialpad
+          styles={dialpadStyle}
+          onChange={setTextFieldInput}
+          longPressTrigger={isMobile ? 'touch' : 'mouseAndTouch'}
+        />
         <PrimaryButton
           text={strings.dialpadStartCallButtonLabel}
           onRenderIcon={() => DialpadStartCallIconTrampoline()}

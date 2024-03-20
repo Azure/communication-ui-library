@@ -1,10 +1,13 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
+
 import { AudioDeviceInfo, Call, EnvironmentInfo, VideoDeviceInfo } from '@azure/communication-calling';
 import type { CallAdapter, CallAdapterState, VideoBackgroundEffect } from '../../../src';
 import type { MockCallAdapterState } from '../../common';
 import { produce } from 'immer';
 import EventEmitter from 'events';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 
 /**
  * Mock class that implements CallAdapter interface for UI snapshot tests. The handler implementation is currently limited so
@@ -26,6 +29,10 @@ export class MockCallAdapter implements CallAdapter {
     this._emitter = new EventEmitter();
   }
 
+  /* @conditional-compile-remove(reaction) */
+  onReactionClick(emoji: string): Promise<void> {
+    throw new Error(`Method could not send ${emoji}.`);
+  }
   addParticipant(): Promise<void> {
     throw Error('addParticipant not implemented');
   }
@@ -46,9 +53,6 @@ export class MockCallAdapter implements CallAdapter {
   }
   joinCall(): Call | undefined {
     throw Error('joinCall not implemented');
-  }
-  joinCallWithOptions(): Call | undefined {
-    throw Error('joinCallWithOptions not implemented');
   }
   leaveCall(): Promise<void> {
     throw Error('leaveCall not implemented');
@@ -73,6 +77,12 @@ export class MockCallAdapter implements CallAdapter {
   }
   stopScreenShare(): Promise<void> {
     throw Error('stopScreenShare not implemented');
+  }
+  raiseHand(): Promise<void> {
+    throw Error('raiseHand not implemented');
+  }
+  lowerHand(): Promise<void> {
+    throw Error('lowerHand not implemented');
   }
   removeParticipant(): Promise<void> {
     throw Error('removeParticipant not implemented');
@@ -132,6 +142,18 @@ export class MockCallAdapter implements CallAdapter {
   setSpokenLanguage(): Promise<void> {
     throw Error('setSpokenLanguage not implemented');
   }
+  /* @conditional-compile-remove(spotlight) */
+  startSpotlight(): Promise<void> {
+    throw Error('startSpotlight not implemented');
+  }
+  /* @conditional-compile-remove(spotlight) */
+  stopSpotlight(): Promise<void> {
+    throw Error('stopSpotlight not implemented');
+  }
+  /* @conditional-compile-remove(spotlight) */
+  stopAllSpotlight(): Promise<void> {
+    throw Error('stopAllSpotlight not implemented');
+  }
 
   async setCamera(sourceInfo: VideoDeviceInfo): Promise<void> {
     this.modifyState((draft: CallAdapterState) => {
@@ -149,10 +171,10 @@ export class MockCallAdapter implements CallAdapter {
     });
   }
   on(): void {
-    throw Error('on not implemented');
+    return;
   }
   off(): void {
-    throw Error('off not implemented');
+    return;
   }
 
   private modifyState(modifier: (draft: CallAdapterState) => void): void {
@@ -212,6 +234,11 @@ export class MockCallAdapter implements CallAdapter {
     this.modifyState((draft: CallAdapterState) => {
       draft.selectedVideoBackgroundEffect = selectedVideoBackground;
     });
+  }
+
+  /* @conditional-compile-remove(end-of-call-survey) */ // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined> {
+    throw Error('submitStarSurvey not implemented');
   }
 }
 

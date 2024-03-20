@@ -7,7 +7,11 @@
     "mutedIconLabel": "تم كتم الصوت",
     "displayNamePlaceholder": "مشارك غير مسمى",
     "participantStateRinging": "يتم الآن الاتصال...",
-    "participantStateHold": "قيد الانتظار"
+    "participantStateHold": "قيد الانتظار",
+    "attendeeRole": "الحضور"
+  },
+  "ParticipantList": {
+    "overflowParticipantCount": "+{overflowCount} من الأشخاص الإضافيين"
   },
   "typingIndicator": {
     "singleUser": "{user} يكتب",
@@ -25,8 +29,29 @@
     "uploading": "جارٍ التحميل",
     "uploadCompleted": "اكتمل التحميل"
   },
+  "richTextSendBox": {
+    "placeholderText": "أدخل رسالة",
+    "textTooLong": "تجاوز طول الرسالة الحد الأقصى.",
+    "sendButtonAriaLabel": "إرسال رسالة",
+    "fileUploadsPendingError": "جارٍ التحميل... الرجاء الانتظار.",
+    "removeFile": "إزالة الملف",
+    "uploading": "يتم الآن التحميل",
+    "uploadCompleted": "اكتمل التحميل",
+    "boldTooltip": "غامق",
+    "italicTooltip": "مائل",
+    "underlineTooltip": "مسطّر",
+    "bulletListTooltip": "قائمة ذات تعداد نقطي",
+    "numberListTooltip": "قائمة مرقّمة",
+    "increaseIndentTooltip": "زيادة المسافة البادئة",
+    "decreaseIndentTooltip": "إنقاص المسافة البادئة",
+    "richTextFormatButtonTooltip": "تنسيق"
+  },
   "mentionPopover": {
     "mentionPopoverHeader": "الاقتراحات"
+  },
+  "imageOverlay": {
+    "downloadButtonLabel": "تنزيل",
+    "dismissButtonAriaLabel": "إغلاق"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "تم إرسال الرسالة",
@@ -109,6 +134,24 @@
     "tooltipOnContent": "تقديم العرض على شاشتك.",
     "tooltipOffContent": "عرض الشاشة"
   },
+  "raiseHandButton": {
+    "offLabel": "رفع",
+    "onLabel": "خفض",
+    "tooltipDisabledContent": "تم تعطيل إجراء رفع اليد",
+    "tooltipOnContent": "خفض يد",
+    "tooltipOffContent": "رفع يد"
+  },
+  "reactionButton": {
+    "label": "تفاعل",
+    "ariaLabel": "زر \"تفاعل\"، إرسال تفاعل",
+    "tooltipDisabledContent": "تم تعطيل إجراء التفاعل",
+    "tooltipContent": "إرسال تفاعل",
+    "likeReactionTooltipContent": "إعجاب",
+    "heartReactionTooltipContent": "حب",
+    "laughReactionTooltipContent": "ضحك",
+    "applauseReactionTooltipContent": "تصفيق",
+    "surprisedReactionTooltipContent": "مندهش"
+  },
   "messageThread": {
     "yesterday": "أمس",
     "sunday": "الأحد",
@@ -133,13 +176,14 @@
     "newMessagesIndicator": "رسائل جديدة",
     "noDisplayNameSub": "لا يوجد اسم",
     "editBoxCancelButton": "إلغاء الأمر",
-    "editBoxSubmitButton": "إرسال",
+    "editBoxSubmitButton": "تم",
     "messageReadCount": "تمت القراءة بواسطة {messageReadByCount} من {remoteParticipantsCount}",
     "actionMenuMoreOptions": "المزيد من الخيارات",
     "downloadFile": "تنزيل ملف",
     "blockedWarningText": "تم حذف هذه الرسالة بسبب نهج تنظيمي.",
     "blockedWarningLinkText": "تفاصيل",
-    "fileCardGroupMessage": "تحتوي الرسالة على مرفق {fileCount}"
+    "fileCardGroupMessage": "تحتوي الرسالة على مرفق {fileCount}",
+    "messageDeletedAnnouncementAriaLabel": "تم حذف الرسالة"
   },
   "errorBar": {
     "unableToReachChatService": "أنت غير متصل",
@@ -175,7 +219,8 @@
     "failedToJoinCallGeneric": "فشل في الانضمام إلى المكالمة.",
     "failedToJoinCallInvalidMeetingLink": "تعذر الانضمام إلى الاجتماع. ارتباط غير صالح.",
     "cameraFrozenForRemoteParticipants": "يواجه المستخدمون في المكالمة مشكلات في رؤية الفيديو الخاص بك. الرجاء التحقق من أجهزتك وشبكتك.",
-    "unableToStartVideoEffect": "يتعذر تطبيق تأثير الفيديو."
+    "unableToStartVideoEffect": "يتعذر تطبيق تأثير الفيديو.",
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "لا يمكن بدء تسليط الضوء على المشاركين (المشاركين) لأنه تم بالفعل تسليط الضوء على الحد الأقصى لعدد المشاركين."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "أنت تشارك شاشتك",
@@ -193,7 +238,13 @@
     "pinParticipantMenuItemAriaLabel": "تثبيت {participantName}",
     "unpinParticipantMenuItemAriaLabel": "إزالة تثبيت {participantName}",
     "pinnedParticipantAnnouncementAriaLabel": "تم تثبيت {participantName}",
-    "unpinnedParticipantAnnouncementAriaLabel": "تم إلغاء تثبيت {participantName}"
+    "unpinnedParticipantAnnouncementAriaLabel": "تم إلغاء تثبيت {participantName}",
+    "startSpotlightVideoTileMenuLabel": "تسليط الضوء لدى الجميع",
+    "addSpotlightVideoTileMenuLabel": "إضافة تسليط ضوء",
+    "spotlightLimitReachedMenuTitle": "تم الوصول إلى الحد الأقصى لتسليط الضوء",
+    "stopSpotlightVideoTileMenuLabel": "التوقف عن تسليط الضوء",
+    "stopSpotlightOnSelfVideoTileMenuLabel": "الخروج من وضع تسليط الضوء",
+    "attendeeRole": "الحضور"
   },
   "dialpad": {
     "placeholderText": "أدخل رقم الهاتف",
@@ -324,7 +375,7 @@
     "step3DigitText": "3",
     "step4DigitText": "4"
   },
-  "VerticalGallery": {
+  "verticalGallery": {
     "leftNavButtonAriaLabel": "الصفحة السابقة",
     "rightNavButtonAriaLabel": "الصفحة التالية"
   }

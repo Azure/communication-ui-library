@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 // TODO: Move utils.ts, controlUtils.ts and this file to a utils folder.
 

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 /**
  * @internal
@@ -9,6 +9,16 @@
  */
 export const _convertRemToPx = (rem: number): number => {
   return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+};
+
+/**
+ * @internal
+ * Converts units of pixels to units of rem
+ * @param px - units of px
+ * @returns units of rem
+ */
+export const _convertPxToRem = (px: number): number => {
+  return px / parseFloat(getComputedStyle(document.documentElement).fontSize);
 };
 
 /**
@@ -27,3 +37,11 @@ export const _preventDismissOnEvent = (
 ): boolean => {
   return ev.type === 'resize' || ev.type === 'scroll';
 };
+
+/**
+ * @internal
+ * Helper function to get the keys of an object
+ */
+export function _getKeys<T extends object>(obj: T): (keyof T)[] {
+  return Object.keys(obj) as Array<keyof T>;
+}

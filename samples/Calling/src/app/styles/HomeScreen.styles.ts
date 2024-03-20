@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { IStackTokens, mergeStyles } from '@fluentui/react';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -61,7 +61,6 @@ export const buttonStyle = mergeStyles({
   borderRadius: 3,
   padding: '0.625rem'
 });
-/* @conditional-compile-remove(PSTN-calls) */
 export const outboundTextField = mergeStyles({
   paddingTop: '0.5rem'
 });

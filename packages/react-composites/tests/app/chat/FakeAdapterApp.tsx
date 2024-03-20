@@ -1,10 +1,16 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ChatParticipant, ChatMessage } from '@azure/communication-chat';
 import { getIdentifierKind } from '@azure/communication-common';
 import { _createStatefulChatClientWithDeps } from '@internal/chat-stateful-client';
-import { _IdentifierProvider, FileDownloadError, FileDownloadHandler } from '@internal/react-components';
+import {
+  _IdentifierProvider,
+  FileDownloadError,
+  FileDownloadHandler,
+  lightTheme,
+  darkTheme
+} from '@internal/react-components';
 import React, { useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import {
@@ -64,7 +70,9 @@ export const FakeAdapterApp = (): JSX.Element => {
           fakeAdapters.service.model,
           fakeChatAdapterArgs.localParticipant,
           fakeChatAdapterArgs.remoteParticipants[0],
-          fakeAdapters.service.threadId
+          fakeAdapters.service.threadId,
+          fakeChatAdapterArgs.serverUrl ?? '',
+          fakeChatAdapterArgs.inlineImageUrl
         );
       }
     })();
@@ -110,6 +118,7 @@ export const FakeAdapterApp = (): JSX.Element => {
             onFetchAvatarPersonaData={
               fakeChatAdapterArgs.customDataModelEnabled ? customOnFetchAvatarPersonaData : undefined
             }
+            fluentTheme={fakeChatAdapterArgs.theme === 'dark' ? darkTheme : lightTheme}
           />
         </_IdentifierProvider>
       )}
@@ -126,7 +135,7 @@ const handleFileUploads = (adapter: ChatAdapter, fileUploads: _MockFileUpload[])
         name: file.name,
         extension: file.extension,
         url: file.url,
-        attachmentType: 'fileSharing',
+        /* @conditional-compile-remove(file-sharing) */
         id: file.id
       });
     } else if (file.error) {
@@ -154,7 +163,7 @@ const sendRemoteFileSharingMessage = (
       type: 'text',
       metadata: {
         fileSharingMetadata: JSON.stringify([
-          { name: 'SampleFile1.pdf', extension: 'pdf', attachmentType: 'fileSharing', id: uuidv4() }
+          { name: 'SampleFile1.pdf', extension: 'pdf', attachmentType: 'file', id: uuidv4() }
         ])
       }
     }
@@ -165,14 +174,15 @@ const sendRemoteInlineImageMessage = (
   chatClientModel: Model,
   localParticipant: ChatParticipant,
   remoteParticipant: ChatParticipant,
-  threadId: string
+  threadId: string,
+  serverUrl: string,
+  inlineImageUrl?: string
 ): void => {
   const localParticipantId = getIdentifierKind(localParticipant.id);
   const remoteParticipantId = getIdentifierKind(remoteParticipant.id);
-
-  /* @conditional-compile-remove(communication-common-beta-v3) */
-  if (localParticipantId.kind === 'microsoftBot' || remoteParticipantId.kind === 'microsoftBot') {
-    throw new Error('Unsupported indentifier kind: microsoftBot');
+  const imgSrc = serverUrl + (inlineImageUrl || '/images/inlineImageExample1.png');
+  if (localParticipantId.kind === 'microsoftTeamsApp' || remoteParticipantId.kind === 'microsoftTeamsApp') {
+    throw new Error('Unsupported identifier kind: microsoftBot');
   }
 
   const thread: Thread = chatClientModel.checkedGetThread(localParticipant.id, threadId);
@@ -182,16 +192,14 @@ const sendRemoteInlineImageMessage = (
     sequenceId: `${thread.messages.length}`,
     version: '0',
     content: {
-      message:
-        '<p>Test</p><p><img alt="image" src="" itemscope="png" width="200" height="300" id="SomeImageId1" style="vertical-align:bottom"></p><p>&nbsp;</p>',
+      message: `<p>Test</p><p><img alt="image" src="${imgSrc}" itemscope="png" width="200" height="300" id="SomeImageId1" style="vertical-align:bottom"></p><p>&nbsp;</p>`,
       attachments: [
         {
           id: 'SomeImageId1',
-          attachmentType: 'teamsInlineImage',
-          contentType: 'png',
+          attachmentType: 'image',
           name: '',
-          url: 'images/inlineImageExample1.png',
-          previewUrl: 'images/inlineImageExample1.png'
+          url: imgSrc,
+          previewUrl: imgSrc
         }
       ]
     },

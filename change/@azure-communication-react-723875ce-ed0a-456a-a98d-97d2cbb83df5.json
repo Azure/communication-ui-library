@@ -1,0 +1,9 @@
+{
+  "type": "minor",
+  "area": "feature",
+  "workstream": "PowerPoint Live - Teams Interop",
+  "comment": "We are excited to announce that the Azure Communication Services Web UI Library now can view PowerPoint Live sessions initiated by a Teams client. Users can follow along with the current slide the presenter is sharing and view presenter annotations. Developers can use this functionality today through our composites (e.g CallComposite, CallWithChatComposite) as well as through components (e.g VideoGallery).",
+  "packageName": "@azure/communication-react",
+  "email": "93549644+ShaunaSong@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

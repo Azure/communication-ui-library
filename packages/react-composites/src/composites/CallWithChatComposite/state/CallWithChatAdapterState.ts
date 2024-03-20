@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
@@ -7,12 +7,16 @@ import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import { CallAdapter, CallAdapterState, CallCompositePage } from '../../CallComposite';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
+/* @conditional-compile-remove(video-background-effects) */
+import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadsUiState } from '../../ChatComposite';
 import { AdapterErrors } from '../../common/adapters';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(reaction) */
+import { ReactionResources } from '@internal/react-components';
 
 /**
  * UI state pertaining to the {@link CallWithChatComposite}.
@@ -84,8 +88,20 @@ export interface CallWithChatClientState {
   /** Default set of background images for background replacement effect */
   videoBackgroundImages?: VideoBackgroundImage[];
   /* @conditional-compile-remove(video-background-effects) */
+  /** Dependency to be injected for video background effects */
+  onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
+  /* @conditional-compile-remove(video-background-effects) */
   /** State to track the selected video background effect */
   selectedVideoBackgroundEffect?: VideoBackgroundEffect;
+  /* @conditional-compile-remove(hide-attendee-name) */
+  /** Hide attendee names in teams meeting */
+  hideAttendeeNames?: boolean;
+  /* @conditional-compile-remove(reaction) */
+  /**
+   * Reaction resources to render in meetings
+   * @beta
+   * */
+  reactions?: ReactionResources;
 }
 
 /**
@@ -126,7 +142,14 @@ export function callWithChatAdapterStateFromBackingStates(
     /* @conditional-compile-remove(video-background-effects) */
     videoBackgroundImages: callAdapterState.videoBackgroundImages,
     /* @conditional-compile-remove(video-background-effects) */
-    selectedVideoBackgroundEffect: callAdapterState.selectedVideoBackgroundEffect
+    onResolveVideoEffectDependency: callAdapterState.onResolveVideoEffectDependency,
+    /* @conditional-compile-remove(video-background-effects) */
+    selectedVideoBackgroundEffect: callAdapterState.selectedVideoBackgroundEffect,
+    /* @conditional-compile-remove(hide-attendee-name) */
+    /** Hide attendee names in teams meeting */
+    hideAttendeeNames: callAdapterState.hideAttendeeNames,
+    /* @conditional-compile-remove(reaction) */
+    reactions: callAdapterState.reactions
   };
 }
 
@@ -165,6 +188,8 @@ export function mergeCallAdapterStateIntoCallWithChatAdapterState(
     latestCallErrors: callAdapterState.latestErrors,
     /* @conditional-compile-remove(video-background-effects) */
     videoBackgroundImages: callAdapterState.videoBackgroundImages,
+    /* @conditional-compile-remove(video-background-effects) */
+    onResolveVideoEffectDependency: callAdapterState.onResolveVideoEffectDependency,
     /* @conditional-compile-remove(video-background-effects) */
     selectedVideoBackgroundEffect: callAdapterState.selectedVideoBackgroundEffect
   };

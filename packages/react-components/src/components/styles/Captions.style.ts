@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { IStackStyles, mergeStyles } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
@@ -35,7 +35,9 @@ export const captionClassName = mergeStyles({
  * @private
  */
 export const captionsContainerClassName = mergeStyles({
+  height: '100%',
   margin: 0,
+  overflow: 'auto',
   padding: 0
 });
 
@@ -51,15 +53,13 @@ export const captionContainerClassName = mergeStyles({
 /**
  * @private
  */
-export const captionsBannerStyles = (formFactor: 'default' | 'compact'): IStackStyles => {
-  return {
-    root: {
-      overflowX: 'hidden',
-      height: formFactor === 'compact' ? '4.5rem' : '8.75rem',
-      overflowY: 'auto',
-      ...scrollbarStyles
-    }
-  };
+export const captionsBannerClassName = (formFactor: 'default' | 'compact'): string => {
+  return mergeStyles({
+    overflowX: 'hidden',
+    height: formFactor === 'compact' ? '4.5rem' : '8.75rem',
+    overflowY: 'auto',
+    ...scrollbarStyles
+  });
 };
 
 /**

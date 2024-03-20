@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React, { useState, useMemo, createContext, useContext } from 'react';
 import { FluentThemeProvider, lightTheme, darkTheme } from '@azure/communication-react';

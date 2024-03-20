@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ChatComposite } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
-import { Title, Description, Heading, Source, Props } from '@storybook/addon-docs';
+import { Title, Description, Heading, Source, Props, Subheading } from '@storybook/addon-docs';
 import React, { useEffect, useRef } from 'react';
 import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { overviewPageImagesStackStyle } from '../constants';
@@ -19,22 +19,6 @@ const hideTopicStatement = `
 const showParticipantStatement = `
 // Caution: the Participant Pane is a beta feature
 <ChatComposite options={{ participantPane: true}}>
-`;
-
-const addFileSharingSnippet = `
-<ChatComposite
-adapter={chatAdapter}
-options={{
-  fileSharing: {
-    uploadHandler: fileUploadHandler,
-    /* If fileDownloadHandler is not provided. The file URL is opened in a new tab.
-    You can find examples of fileDownloadHandler and fileUploadHandler in this tutorial
-    https://docs.microsoft.com/en-us/azure/communication-services/tutorials/file-sharing-tutorial */
-    downloadHandler: fileDownloadHandler,
-    accept: 'image/png, image/jpeg, text/plain, .docx',
-    multiple: true
-  }
-}} />
 `;
 
 export const Docs: () => JSX.Element = () => {
@@ -205,15 +189,13 @@ export const Docs: () => JSX.Element = () => {
       </div>
       <Heading>Adding file sharing</Heading>
       <SingleLineBetaBanner />
+      <Subheading>In Azure Communication Service Chat Thread</Subheading>
       <Description>
         The Chat Composite supports file sharing capabilities in conjunction with your choice of a storage solution.
-        Using the provided APIs, you can enable the composite to support uploading files and displaying them on the send
-        box before sending, and the message thread once they have been sent or received. For an end to end tutorial on
-        enabling file sharing with Azure Blob Storage as your choice of a storage solution, refer to our
-        [tutorial](https://docs.microsoft.com/azure/communication-services/tutorials/file-sharing-tutorial). File
-        sharing is supported for Teams interop scenarios by default.
+        Please refer to our
+        [tutorial](https://docs.microsoft.com/azure/communication-services/tutorials/file-sharing-tutorial) for more
+        details. File sharing in Teams interop senarios is avaliable with the CallWithChat Composite.
       </Description>
-      <Source code={addFileSharingSnippet} />
 
       <Heading>Chat Composite Props</Heading>
       <Props of={ChatComposite} />

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
@@ -9,16 +9,18 @@ import {
   CallAndChatLocator,
   CallWithChatAdapterState,
   CallWithChatComposite,
-  CallWithChatAdapter
+  CallWithChatAdapter,
+  CallWithChatCompositeOptions
 } from '@azure/communication-react';
+/* @conditional-compile-remove(video-background-effects) */
+import { onResolveVideoEffectDependencyLazy, AzureCommunicationCallAdapterOptions } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/constants';
 import { useIsMobile } from '../utils/useIsMobile';
-/* @conditional-compile-remove(video-background-effects) */
-import { AzureCommunicationCallAdapterOptions } from '@azure/communication-react';
+import { isIOS } from '../utils/utils';
 
 export interface CallScreenProps {
   token: string;
@@ -44,41 +46,55 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     const videoBackgroundImages = [
       {
         key: 'ab1',
-        url: '/backgrounds/contoso.png',
+        url: '/assets/backgrounds/contoso.png',
         tooltipText: 'Custom Background'
       },
       {
         key: 'ab2',
-        url: '/backgrounds/abstract2.jpg',
+        url: '/assets/backgrounds/abstract2.jpg',
         tooltipText: 'Custom Background'
       },
       {
         key: 'ab3',
-        url: '/backgrounds/abstract3.jpg',
+        url: '/assets/backgrounds/abstract3.jpg',
         tooltipText: 'Custom Background'
       },
       {
         key: 'ab4',
-        url: '/backgrounds/room1.jpg',
+        url: '/assets/backgrounds/room1.jpg',
         tooltipText: 'Custom Background'
       },
       {
         key: 'ab5',
-        url: '/backgrounds/room2.jpg',
+        url: '/assets/backgrounds/room2.jpg',
         tooltipText: 'Custom Background'
       },
       {
         key: 'ab6',
-        url: '/backgrounds/room3.jpg',
+        url: '/assets/backgrounds/room3.jpg',
         tooltipText: 'Custom Background'
       },
       {
         key: 'ab7',
-        url: '/backgrounds/room4.jpg',
+        url: '/assets/backgrounds/room4.jpg',
         tooltipText: 'Custom Background'
       }
     ];
-    return { videoBackgroundImages: videoBackgroundImages };
+    return {
+      videoBackgroundOptions: {
+        videoBackgroundImages,
+        /* @conditional-compile-remove(video-background-effects) */
+        onResolveDependency: onResolveVideoEffectDependencyLazy
+      },
+      /* @conditional-compile-remove(reaction) */
+      reactionResources: {
+        likeReaction: { url: '/assets/reactions/likeEmoji.png', frameCount: 102 },
+        heartReaction: { url: '/assets/reactions/heartEmoji.png', frameCount: 102 },
+        laughReaction: { url: '/assets/reactions/laughEmoji.png', frameCount: 102 },
+        applauseReaction: { url: '/assets/reactions/clapEmoji.png', frameCount: 102 },
+        surprisedReaction: { url: '/assets/reactions/surprisedEmoji.png', frameCount: 102 }
+      }
+    };
   }, []);
 
   // Disables pull down to refresh. Prevents accidental page refresh when scrolling through chat messages
@@ -133,9 +149,20 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       endpoint,
       locator,
       /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-      /* @conditional-compile-remove(video-background-effects) */ callAdapterOptions
+      /* @conditional-compile-remove(video-background-effects) */ callAdapterOptions: callAdapterOptions
     },
     afterAdapterCreate
+  );
+
+  const shouldHideScreenShare = isMobileSession || isIOS();
+
+  const options: CallWithChatCompositeOptions = useMemo(
+    () => ({
+      callControls: {
+        screenShareButton: shouldHideScreenShare ? false : undefined
+      }
+    }),
+    [shouldHideScreenShare]
   );
 
   // Dispose of the adapter in the window's before unload event.
@@ -151,12 +178,19 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     return <Spinner label={'Creating adapter'} ariaLive="assertive" labelPosition="top" />;
   }
 
+  let callInvitationUrl: string | undefined = window.location.href;
+  // Only show the call invitation url if the call is a group call or Teams call, do not show for Rooms, 1:1 or 1:N calls
+  if (!isGroupCallLocator(locator) && !isTeamsMeetingLinkLocator(locator)) {
+    callInvitationUrl = undefined;
+  }
+
   return (
     <CallWithChatComposite
       adapter={adapter}
       fluentTheme={currentTheme.theme}
       rtl={currentRtl}
-      joinInvitationURL={window.location.href}
+      joinInvitationURL={callInvitationUrl}
+      options={options}
       formFactor={isMobileSession ? 'mobile' : 'desktop'}
     />
   );
@@ -173,4 +207,14 @@ const convertPageStateToString = (state: CallWithChatAdapterState): string => {
     default:
       return `${state.page}`;
   }
+};
+
+const isTeamsMeetingLinkLocator = (
+  locator: TeamsMeetingLinkLocator | CallAndChatLocator
+): locator is TeamsMeetingLinkLocator => {
+  return 'meetingLink' in locator;
+};
+
+const isGroupCallLocator = (locator: TeamsMeetingLinkLocator | CallAndChatLocator): boolean => {
+  return 'callLocator' in locator && 'groupId' in locator.callLocator;
 };

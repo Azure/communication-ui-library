@@ -1,12 +1,15 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ContextualMenu, IDragOptions } from '@fluentui/react';
 import { _convertRemToPx } from '@internal/acs-ui-common';
 import React, { useMemo } from 'react';
 import { useTheme } from '../../theming';
 import { _ICoordinates, _ModalClone } from '../ModalClone/ModalClone';
-import { floatingLocalVideoModalStyle, localVideoTileOuterPaddingRem } from './styles/FloatingLocalVideo.styles';
+import {
+  floatingLocalVideoModalStyle,
+  floatinglocalVideoModalInitialPositionGapRem
+} from './styles/FloatingLocalVideo.styles';
 
 const DRAG_OPTIONS: IDragOptions = {
   moveMenuItemText: 'Move',
@@ -20,8 +23,8 @@ const DRAG_OPTIONS: IDragOptions = {
 // Because our modal starts in the bottom right corner, we can say that this is the max (i.e. rightmost and bottomost)
 // position the modal can be dragged to.
 const modalMaxDragPosition = {
-  x: _convertRemToPx(localVideoTileOuterPaddingRem),
-  y: _convertRemToPx(localVideoTileOuterPaddingRem)
+  x: _convertRemToPx(floatinglocalVideoModalInitialPositionGapRem),
+  y: _convertRemToPx(floatinglocalVideoModalInitialPositionGapRem)
 };
 
 /**
@@ -59,9 +62,14 @@ export const FloatingLocalVideo = (props: FloatingLocalVideoProps): JSX.Element 
         ? {
             // We use -parentWidth/Height because our modal is positioned to start in the bottom right,
             // hence (0,0) is the bottom right of the video gallery.
-            x: -parentWidth + _convertRemToPx(localVideoSizeRem.width) + _convertRemToPx(localVideoTileOuterPaddingRem),
+            x:
+              -parentWidth +
+              _convertRemToPx(localVideoSizeRem.width) +
+              _convertRemToPx(floatinglocalVideoModalInitialPositionGapRem),
             y:
-              -parentHeight + _convertRemToPx(localVideoSizeRem.height) + _convertRemToPx(localVideoTileOuterPaddingRem)
+              -parentHeight +
+              _convertRemToPx(localVideoSizeRem.height) +
+              _convertRemToPx(floatinglocalVideoModalInitialPositionGapRem)
           }
         : undefined,
     [parentHeight, parentWidth, localVideoSizeRem.width, localVideoSizeRem.height]

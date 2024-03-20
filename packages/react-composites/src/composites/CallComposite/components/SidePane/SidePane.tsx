@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React, { useCallback, useMemo } from 'react';
 import { Stack } from '@fluentui/react';
@@ -19,12 +19,14 @@ export interface SidePaneProps {
   updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
   mobileView?: boolean;
   maxWidth?: string;
+  minWidth?: string;
 
   // legacy arguments to be removed in breaking change
   disablePeopleButton?: boolean;
   disableChatButton?: boolean;
   onChatButtonClicked?: () => void;
   onPeopleButtonClicked?: () => void;
+  onHeaderMenuClick?: () => void;
 }
 
 /** @private */
@@ -36,16 +38,20 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
     !overrideSidePane.isActive;
   const renderingOnlyHiddenContent = renderingHiddenOverrideContent && !sidePaneRenderer;
 
-  const maxWidthStyles = useMemo(() => sidePaneStyles(props.maxWidth), [props.maxWidth]);
+  const widthConstrainedStyles = useMemo(
+    () => sidePaneStyles(props.maxWidth, props.minWidth),
+    [props.maxWidth, props.minWidth]
+  );
   const paneStyles = renderingOnlyHiddenContent
     ? hiddenStyles
     : props.mobileView
     ? availableSpaceStyles
-    : maxWidthStyles;
+    : widthConstrainedStyles;
 
-  let Header =
+  const Header =
     (overrideSidePane?.isActive ? overrideSidePane.renderer.headerRenderer : sidePaneRenderer?.headerRenderer) ??
     EmptyElement;
+
   /**
    * Legacy code to support old behavior of showing chat and people tab headers on mobile side pane.
    * To be removed in breaking change.
@@ -56,9 +62,8 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
     updateSidePaneRenderer(undefined);
   }, [updateSidePaneRenderer]);
 
-  if (props.mobileView && (overrideSidePaneId === 'chat' || sidePaneRenderer?.id === 'people')) {
-    // use legacy header
-    Header = () => (
+  const LegacyHeader = useMemo((): JSX.Element => {
+    return (
       <PeopleAndChatHeader
         onClose={overrideSidePaneId === 'chat' ? props.onChatButtonClicked ?? noop : closePane}
         activeTab={sidePaneRenderer?.id === 'people' ? 'people' : 'chat'}
@@ -67,9 +72,22 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
         disableChatButton={props.disableChatButton}
         onPeopleButtonClicked={sidePaneRenderer?.id === 'people' ? noop : props.onPeopleButtonClicked}
         onChatButtonClicked={overrideSidePaneId === 'chat' ? noop : props.onChatButtonClicked}
+        onHeaderMenuClick={props.onHeaderMenuClick}
       />
     );
-  }
+  }, [
+    overrideSidePaneId,
+    props.onChatButtonClicked,
+    props.onPeopleButtonClicked,
+    props.disablePeopleButton,
+    props.disableChatButton,
+    props.onHeaderMenuClick,
+    sidePaneRenderer?.id,
+    closePane
+  ]);
+
+  const HeaderToRender =
+    props.mobileView && (overrideSidePaneId === 'chat' || sidePaneRenderer?.id === 'people') ? LegacyHeader : Header();
 
   const ContentRender = overrideSidePane?.isActive ? undefined : sidePaneRenderer?.contentRenderer;
   const OverrideContentRender =
@@ -83,7 +101,7 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
 
   return (
     <Stack verticalFill grow styles={paneStyles} data-ui-id="SidePane" tokens={props.mobileView ? {} : sidePaneTokens}>
-      <Header />
+      {HeaderToRender}
       <Stack.Item verticalFill grow styles={paneBodyContainer}>
         <Stack verticalFill styles={scrollableContainer}>
           {ContentRender && (

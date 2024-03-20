@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ChatComposite } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
@@ -32,6 +32,7 @@ const JoinExistingChatThreadStory = (args: ArgsFrom<typeof storyControls>, conte
       {areAllControlsSet ? (
         <ContosoChatContainer
           fluentTheme={context.theme}
+          rtl={context.globals.rtl === 'rtl'}
           endpointUrl={args.endpointUrl}
           threadId={args.threadId}
           userIdentifier={args.userId}

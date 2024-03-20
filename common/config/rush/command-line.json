@@ -84,6 +84,22 @@
       "safeForSimultaneousRushProcesses": true
     },
     {
+      "commandKind": "global",
+      "name": "generate-api-diff",
+      "summary": "Generate two api files for a supplied feature name",
+      "description": "Supply a feature name and this command will generate two api files under <repo-root>/api. The first file `baseline.api.json` is the @azure/communication-react API result on the current branch with the supplied feature removed. The second file is `feature.api.json` and is the @azure/communication-react API result with the feature included. The two files can then be uploaded to APIView.dev for comparing the API difference with the supplied feature enabled. This is particularly useful for generating an API view for ARB reviews.",
+      "shellCommand": "node common/scripts/generate-api-diff.mjs",
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "global",
+      "name": "stage-feature",
+      "summary": "Promote/demote a beta feature to/from alpha or stable",
+      "description": "Supply a feature name and an option and adjust the features.js file to appropriately promote/demote the feature.",
+      "shellCommand": "node common/scripts/stage-feature.mjs",
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
       "commandKind": "bulk",
       "name": "build",
       "summary": "Build all projects that haven't been built, or have changed since they were last built",
@@ -99,6 +115,15 @@
       "name": "test",
       "summary": "Run tests in each project.",
       "description": "Run jest tests in each project.",
+      "enableParallelism": true,
+      "allowWarningsInSuccessfulBuild": true,
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "bulk",
+      "name": "test:ci-coverage",
+      "summary": "Run tests coverage for CI in each project.",
+      "description": "Run tests coverage for CI in each project.",
       "enableParallelism": true,
       "allowWarningsInSuccessfulBuild": true,
       "safeForSimultaneousRushProcesses": true
@@ -152,5 +177,24 @@
       "safeForSimultaneousRushProcesses": true
     }
   ],
-  "parameters": []
+  "parameters": [
+    {
+      "parameterKind": "string",
+      "longName": "--feature",
+      "shortName": "-f",
+      "required": true,
+      "argumentName": "FEATURE_NAME",
+      "description": "Feature name. Note: This must match the name given in features.js",
+      "associatedCommands": ["generate-api-diff", "stage-feature"]
+    },
+    {
+      "parameterKind": "string",
+      "longName": "--option",
+      "shortName": "-o",
+      "required": true,
+      "argumentName": "OPTION",
+      "description": "Option to promote/demote a feature. Options: 'alphaToBeta', 'betaToAlpha', 'betaToStable', 'stableToBeta'",
+      "associatedCommands": ["stage-feature"]
+    }
+  ]
 }

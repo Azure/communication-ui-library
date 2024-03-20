@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
-import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+import { AzureCommunicationTokenCredential } from '@azure/communication-common';
+import { CommunicationUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(teams-identity-support) */
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import {
@@ -14,12 +15,13 @@ import {
 } from '@azure/communication-react';
 /* @conditional-compile-remove(teams-identity-support) */
 import { useTeamsCallAdapter, TeamsCallAdapter } from '@azure/communication-react';
-/* @conditional-compile-remove(rooms) */
+/* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(video-background-effects) */
 import { AzureCommunicationCallAdapterOptions } from '@azure/communication-react';
 /* @conditional-compile-remove(video-background-effects) */
-import { TeamsAdapterOptions } from '@azure/communication-react';
-/* @conditional-compile-remove(rooms) */
-import { Role } from '@azure/communication-react';
+import { onResolveVideoEffectDependencyLazy } from '@azure/communication-react';
+/* @conditional-compile-remove(teams-identity-support) */
+import type { TeamsAdapterOptions } from '@azure/communication-react';
+import type { StartCallIdentifier } from '@azure/communication-react';
 import React, { useCallback, useMemo, useRef } from 'react';
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/AppUtils';
@@ -30,12 +32,11 @@ export interface CallScreenProps {
   userId:
     | CommunicationUserIdentifier
     | /* @conditional-compile-remove(teams-identity-support) */ MicrosoftTeamsUserIdentifier;
-  callLocator: CallAdapterLocator;
+  callLocator?: CallAdapterLocator;
+  targetCallees?: StartCallIdentifier[];
   displayName: string;
   /* @conditional-compile-remove(PSTN-calls) */
   alternateCallerId?: string;
-  /* @conditional-compile-remove(rooms) */
-  roleHint?: Role;
   /* @conditional-compile-remove(teams-identity-support) */
   isTeamsIdentityCall?: boolean;
 }
@@ -60,8 +61,8 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       }
     });
     /* @conditional-compile-remove(call-transfer) */
-    adapter.on('transferRequested', (e) => {
-      e.accept();
+    adapter.on('transferAccepted', (e) => {
+      console.log('Call being transferred to: ' + e);
     });
   }, []);
 
@@ -93,8 +94,13 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   if (isTeamsIdentityCall) {
     return <TeamsCallScreen afterCreate={afterTeamsCallAdapterCreate} credential={credential} {...props} />;
   }
-
-  return <AzureCommunicationCallScreen afterCreate={afterCallAdapterCreate} credential={credential} {...props} />;
+  if (props.callLocator) {
+    return <AzureCommunicationCallScreen afterCreate={afterCallAdapterCreate} credential={credential} {...props} />;
+  } else {
+    return (
+      <AzureCommunicationOutboundCallScreen afterCreate={afterCallAdapterCreate} credential={credential} {...props} />
+    );
+  }
 };
 
 /* @conditional-compile-remove(teams-identity-support) */
@@ -106,7 +112,7 @@ type TeamsCallScreenProps = CallScreenProps & {
 /* @conditional-compile-remove(teams-identity-support) */
 const TeamsCallScreen = (props: TeamsCallScreenProps): JSX.Element => {
   const { afterCreate, callLocator: locator, userId, ...adapterArgs } = props;
-  if (!('meetingLink' in locator)) {
+  if (!(locator && 'meetingLink' in locator)) {
     throw new Error('A teams meeting locator must be provided for Teams Identity Call.');
   }
 
@@ -117,7 +123,9 @@ const TeamsCallScreen = (props: TeamsCallScreenProps): JSX.Element => {
   /* @conditional-compile-remove(video-background-effects) */
   const teamsAdapterOptions: TeamsAdapterOptions = useMemo(
     () => ({
-      videoBackgroundImages
+      videoBackgroundOptions: {
+        videoBackgroundImages
+      }
     }),
     []
   );
@@ -141,8 +149,6 @@ type AzureCommunicationCallScreenProps = CallScreenProps & {
 
 const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps): JSX.Element => {
   const { afterCreate, callLocator: locator, userId, ...adapterArgs } = props;
-  /* @conditional-compile-remove(rooms) */
-  const { roleHint } = props;
 
   if (!('communicationUserId' in userId)) {
     throw new Error('A MicrosoftTeamsUserIdentifier must be provided for Teams Identity Call.');
@@ -151,18 +157,71 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
   /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(video-background-effects) */
   const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(() => {
     return {
-      /* @conditional-compile-remove(rooms) */
-      roleHint,
       /* @conditional-compile-remove(video-background-effects) */
-      videoBackgroundImages
+      videoBackgroundOptions: {
+        videoBackgroundImages,
+        onResolveDependency: onResolveVideoEffectDependencyLazy
+      },
+      /* @conditional-compile-remove(calling-sounds) */
+      callingSounds: {
+        callEnded: { url: '/assets/sounds/callEnded.mp3' },
+        callRinging: { url: '/assets/sounds/callRinging.mp3' },
+        callBusy: { url: '/assets/sounds/callBusy.mp3' }
+      }
     };
-  }, [/* @conditional-compile-remove(rooms) */ roleHint]);
+  }, []);
 
   const adapter = useAzureCommunicationCallAdapter(
     {
       ...adapterArgs,
       userId,
       locator,
+      /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(unsupported-browser) */ /* @conditional-compile-remove(video-background-effects) */
+      options: callAdapterOptions
+    },
+    afterCreate
+  );
+
+  return <CallCompositeContainer {...props} adapter={adapter} />;
+};
+
+const AzureCommunicationOutboundCallScreen = (props: AzureCommunicationCallScreenProps): JSX.Element => {
+  const { afterCreate, targetCallees: targetCallees, userId, ...adapterArgs } = props;
+
+  if (!('communicationUserId' in userId)) {
+    throw new Error('A MicrosoftTeamsUserIdentifier must be provided for Teams Identity Call.');
+  }
+
+  /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(video-background-effects) */
+  const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(() => {
+    return {
+      /* @conditional-compile-remove(video-background-effects) */
+      videoBackgroundOptions: {
+        videoBackgroundImages,
+        onResolveDependency: onResolveVideoEffectDependencyLazy
+      },
+      /* @conditional-compile-remove(calling-sounds) */
+      callingSounds: {
+        callEnded: { url: '/assets/sounds/callEnded.mp3' },
+        callRinging: { url: '/assets/sounds/callRinging.mp3' },
+        callBusy: { url: '/assets/sounds/callBusy.mp3' }
+      },
+      /* @conditional-compile-remove(reaction) */
+      reactionResources: {
+        likeReaction: { url: '/assets/reactions/likeEmoji.png', frameCount: 102 },
+        heartReaction: { url: '/assets/reactions/heartEmoji.png', frameCount: 102 },
+        laughReaction: { url: '/assets/reactions/laughEmoji.png', frameCount: 102 },
+        applauseReaction: { url: '/assets/reactions/clapEmoji.png', frameCount: 102 },
+        surprisedReaction: { url: '/assets/reactions/surprisedEmoji.png', frameCount: 102 }
+      }
+    };
+  }, []);
+
+  const adapter = useAzureCommunicationCallAdapter(
+    {
+      ...adapterArgs,
+      userId,
+      targetCallees: targetCallees,
       /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(unsupported-browser) */ /* @conditional-compile-remove(video-background-effects) */
       options: callAdapterOptions
     },
@@ -189,37 +248,37 @@ const convertPageStateToString = (state: CallAdapterState): string => {
 const videoBackgroundImages = [
   {
     key: 'ab1',
-    url: '/backgrounds/contoso.png',
+    url: '/assets/backgrounds/contoso.png',
     tooltipText: 'Custom Background'
   },
   {
     key: 'ab2',
-    url: '/backgrounds/abstract2.jpg',
+    url: '/assets/backgrounds/abstract2.jpg',
     tooltipText: 'Custom Background'
   },
   {
     key: 'ab3',
-    url: '/backgrounds/abstract3.jpg',
+    url: '/assets/backgrounds/abstract3.jpg',
     tooltipText: 'Custom Background'
   },
   {
     key: 'ab4',
-    url: '/backgrounds/room1.jpg',
+    url: '/assets/backgrounds/room1.jpg',
     tooltipText: 'Custom Background'
   },
   {
     key: 'ab5',
-    url: '/backgrounds/room2.jpg',
+    url: '/assets/backgrounds/room2.jpg',
     tooltipText: 'Custom Background'
   },
   {
     key: 'ab6',
-    url: '/backgrounds/room3.jpg',
+    url: '/assets/backgrounds/room3.jpg',
     tooltipText: 'Custom Background'
   },
   {
     key: 'ab7',
-    url: '/backgrounds/room4.jpg',
+    url: '/assets/backgrounds/room4.jpg',
     tooltipText: 'Custom Background'
   }
 ];

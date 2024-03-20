@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(rooms) */
-import { Role } from '@azure/communication-react';
-/* @conditional-compile-remove(teams-identity-support) */
-import { fromFlatCommunicationIdentifier } from '@azure/communication-react';
+import { ParticipantRole } from '@azure/communication-calling';
+import { fromFlatCommunicationIdentifier, StartCallIdentifier } from '@azure/communication-react';
 /* @conditional-compile-remove(teams-identity-support) */
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { setLogLevel } from '@azure/logger';
@@ -15,6 +14,7 @@ import React, { useEffect, useState } from 'react';
 import {
   buildTime,
   callingSDKVersion,
+  commitID,
   communicationReactSDKVersion,
   createGroupId,
   fetchTokenResponse,
@@ -25,23 +25,18 @@ import {
   navigateToHomePage,
   WEB_APP_TITLE
 } from './utils/AppUtils';
-/* @conditional-compile-remove(PSTN-calls) */
-/* @conditional-compile-remove(one-to-n-calling) */
-import { getOutboundParticipants } from './utils/AppUtils';
 /* @conditional-compile-remove(rooms) */
 import { createRoom, getRoomIdFromUrl, addUserToRoom } from './utils/AppUtils';
 import { useIsMobile } from './utils/useIsMobile';
-import { useSecondaryInstanceCheck } from './utils/useSecondaryInstanceCheck';
 import { CallError } from './views/CallError';
 import { CallScreen } from './views/CallScreen';
 import { HomeScreen } from './views/HomeScreen';
-import { PageOpenInAnotherTab } from './views/PageOpenInAnotherTab';
 import { UnsupportedBrowserPage } from './views/UnsupportedBrowserPage';
 
-setLogLevel('warning');
+setLogLevel('error');
 
 console.log(
-  `ACS sample calling app. Last Updated ${buildTime} Using @azure/communication-calling:${callingSDKVersion} and @azure/communication-react:${communicationReactSDKVersion}`
+  `ACS sample calling app. Last Updated ${buildTime} with CommitID:${commitID} using @azure/communication-calling:${callingSDKVersion} and @azure/communication-react:${communicationReactSDKVersion}`
 );
 
 initializeIcons();
@@ -59,10 +54,9 @@ const App = (): JSX.Element => {
   const [userCredentialFetchError, setUserCredentialFetchError] = useState<boolean>(false);
 
   // Call details to join a call - these are collected from the user on the home screen
-  const [callLocator, setCallLocator] = useState<CallAdapterLocator>(createGroupId());
+  const [callLocator, setCallLocator] = useState<CallAdapterLocator>();
+  const [targetCallees, setTargetCallees] = useState<StartCallIdentifier[]>([]);
   const [displayName, setDisplayName] = useState<string>('');
-  /* @conditional-compile-remove(rooms) */
-  const [role, setRole] = useState<Role>();
 
   /* @conditional-compile-remove(teams-identity-support) */
   const [isTeamsCall, setIsTeamsCall] = useState<boolean>(false);
@@ -86,17 +80,12 @@ const App = (): JSX.Element => {
 
   const isMobileSession = useIsMobile();
   const isLandscapeSession = isLandscape();
-  const isAppAlreadyRunningInAnotherTab = useSecondaryInstanceCheck();
 
   useEffect(() => {
     if (isMobileSession && isLandscapeSession) {
       console.log('ACS Calling sample: Mobile landscape view is experimental behavior');
     }
   }, [isMobileSession, isLandscapeSession]);
-
-  if (isMobileSession && isAppAlreadyRunningInAnotherTab) {
-    return <PageOpenInAnotherTab />;
-  }
 
   const supportedBrowser = !isOnIphoneAndNotSafari();
   if (!supportedBrowser) {
@@ -119,18 +108,33 @@ const App = (): JSX.Element => {
             /* @conditional-compile-remove(PSTN-calls) */
             setAlternateCallerId(callDetails.alternateCallerId);
             let callLocator: CallAdapterLocator | undefined =
-              callDetails.callLocator || getTeamsLinkFromUrl() || getGroupIdFromUrl();
+              callDetails.callLocator ||
+              /* @conditional-compile-remove(rooms) */ getRoomIdFromUrl() ||
+              getTeamsLinkFromUrl() ||
+              getGroupIdFromUrl() ||
+              createGroupId();
 
             /* @conditional-compile-remove(rooms) */
-            callLocator = callLocator || getRoomIdFromUrl();
+            if (callDetails.option === 'Rooms') {
+              callLocator = getRoomIdFromUrl() || callDetails.callLocator;
+            }
 
             /* @conditional-compile-remove(PSTN-calls) */
-            callLocator = callLocator || getOutboundParticipants(callDetails.outboundParticipants);
+            if (callDetails.option === '1:N' || callDetails.option === 'PSTN') {
+              const outboundUsers = callDetails.outboundParticipants?.map((user) => {
+                return fromFlatCommunicationIdentifier(user);
+              });
+              callLocator = undefined;
+              setTargetCallees(outboundUsers ?? []);
+            }
 
-            /* @conditional-compile-remove(teams-adhoc-call) */
-            callLocator = callLocator || getOutboundParticipants(callDetails.outboundTeamsUsers);
-
-            callLocator = callLocator || createGroupId();
+            if (callDetails.option === 'TeamsAdhoc') {
+              const outboundTeamsUsers = callDetails.outboundTeamsUsers?.map((user) => {
+                return fromFlatCommunicationIdentifier(user) as StartCallIdentifier;
+              });
+              callLocator = undefined;
+              setTargetCallees(outboundTeamsUsers ?? []);
+            }
 
             /* @conditional-compile-remove(rooms) */
             // There is an API call involved with creating a room so lets only create one if we know we have to
@@ -146,24 +150,29 @@ const App = (): JSX.Element => {
             }
 
             /* @conditional-compile-remove(rooms) */
-            if ('roomId' in callLocator) {
+            if (callLocator && 'roomId' in callLocator) {
               if (userId && 'communicationUserId' in userId) {
-                setRole(callDetails.role as Role);
-                await addUserToRoom(userId.communicationUserId, callLocator.roomId, callDetails.role as Role);
+                await addUserToRoom(
+                  userId.communicationUserId,
+                  callLocator.roomId,
+                  callDetails.role as ParticipantRole
+                );
               } else {
                 throw 'Invalid userId!';
               }
             }
+
             setCallLocator(callLocator);
 
             // Update window URL to have a joinable link
-            if (!joiningExistingCall) {
+            if (callLocator && !joiningExistingCall) {
               window.history.pushState(
                 {},
                 document.title,
                 window.location.origin +
                   getJoinParams(callLocator) +
-                  getIsCTEParam(/* @conditional-compile-remove(teams-identity-support) */ !!callDetails.teamsToken)
+                  /* @conditional-compile-remove(teams-identity-support) */
+                  getIsCTEParam(!!callDetails.teamsToken)
               );
             }
             /* @conditional-compile-remove(teams-identity-support) */
@@ -196,26 +205,23 @@ const App = (): JSX.Element => {
         !token ||
         !userId ||
         (!displayName && /* @conditional-compile-remove(teams-identity-support) */ !isTeamsCall) ||
-        !callLocator
+        (!targetCallees && !callLocator)
       ) {
         document.title = `credentials - ${WEB_APP_TITLE}`;
         return <Spinner label={'Getting user credentials from server'} ariaLive="assertive" labelPosition="top" />;
       }
       return (
-        <React.StrictMode>
-          <CallScreen
-            token={token}
-            userId={userId}
-            displayName={displayName}
-            callLocator={callLocator}
-            /* @conditional-compile-remove(PSTN-calls) */
-            alternateCallerId={alternateCallerId}
-            /* @conditional-compile-remove(rooms) */
-            roleHint={role}
-            /* @conditional-compile-remove(teams-identity-support) */
-            isTeamsIdentityCall={isTeamsCall}
-          />
-        </React.StrictMode>
+        <CallScreen
+          token={token}
+          userId={userId}
+          displayName={displayName}
+          callLocator={callLocator}
+          targetCallees={targetCallees}
+          /* @conditional-compile-remove(PSTN-calls) */
+          alternateCallerId={alternateCallerId}
+          /* @conditional-compile-remove(teams-identity-support) */
+          isTeamsIdentityCall={isTeamsCall}
+        />
       );
     }
     default:
@@ -224,6 +230,7 @@ const App = (): JSX.Element => {
   }
 };
 
+/* @conditional-compile-remove(teams-identity-support) */
 const getIsCTEParam = (isCTE?: boolean): string => {
   return isCTE ? '&isCTE=true' : '';
 };

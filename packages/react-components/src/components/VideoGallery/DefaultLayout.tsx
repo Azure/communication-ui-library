@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { Stack } from '@fluentui/react';
 import React, { useMemo, useState, useRef } from 'react';
@@ -40,7 +40,8 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     /* @conditional-compile-remove(vertical-gallery) */
     parentHeight,
     pinnedParticipantUserIds = [],
-    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'HorizontalBottom'
+    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'horizontalBottom',
+    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds
   } = props;
 
   const isNarrow = parentWidth ? isNarrowWidth(parentWidth) : false;
@@ -61,12 +62,14 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     maxOverflowGalleryDominantSpeakers: screenShareComponent
       ? childrenPerPage.current - ((pinnedParticipantUserIds.length + 1) % childrenPerPage.current)
       : childrenPerPage.current,
-    /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds
+    pinnedParticipantUserIds,
+    layout: 'default',
+    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds
   });
 
   let activeVideoStreams = 0;
 
-  const gridTiles = gridParticipants.map((p) => {
+  let gridTiles = gridParticipants.map((p) => {
     return onRenderRemoteParticipant(
       p,
       maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
@@ -84,7 +87,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
    */
   const [indexesToRender, setIndexesToRender] = useState<number[]>([]);
 
-  const overflowGalleryTiles = overflowGalleryParticipants.map((p, i) => {
+  let overflowGalleryTiles = overflowGalleryParticipants.map((p, i) => {
     return onRenderRemoteParticipant(
       p,
       maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
@@ -94,7 +97,11 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
   });
 
   if (localVideoComponent) {
-    gridTiles.push(localVideoComponent);
+    if (screenShareComponent) {
+      overflowGalleryTiles = [localVideoComponent].concat(overflowGalleryTiles);
+    } else {
+      gridTiles = [localVideoComponent].concat(gridTiles);
+    }
   }
 
   const overflowGallery = useMemo(() => {
@@ -111,12 +118,13 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
         horizontalGalleryStyles={styles?.horizontalGallery}
         /* @conditional-compile-remove(vertical-gallery) */
         verticalGalleryStyles={styles?.verticalGallery}
-        /* @conditional-compile-remove(pinned-participants) */
+        /* @conditional-compile-remove(vertical-gallery) */
         overflowGalleryPosition={overflowGalleryPosition}
         onFetchTilesToRender={setIndexesToRender}
         onChildrenPerPageChange={(n: number) => {
           childrenPerPage.current = n;
         }}
+        parentWidth={parentWidth}
       />
     );
   }, [
@@ -126,16 +134,18 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     styles?.horizontalGallery,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
     setIndexesToRender,
-    /* @conditional-compile-remove(vertical-gallery) */ styles?.verticalGallery
+    /* @conditional-compile-remove(vertical-gallery) */ styles?.verticalGallery,
+    parentWidth
   ]);
 
   return (
     <Stack
       /* @conditional-compile-remove(vertical-gallery) */
-      horizontal={overflowGalleryPosition === 'VerticalRight'}
+      horizontal={overflowGalleryPosition === 'verticalRight'}
       styles={rootLayoutStyle}
       tokens={videoGalleryLayoutGap}
     >
+      {props.overflowGalleryPosition === 'horizontalTop' ? overflowGallery : <></>}
       {screenShareComponent ? (
         screenShareComponent
       ) : (
@@ -143,7 +153,15 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
           {gridTiles}
         </GridLayout>
       )}
-      {overflowGallery}
+      {overflowGalleryTrampoline(overflowGallery, props.overflowGalleryPosition)}
     </Stack>
   );
+};
+
+const overflowGalleryTrampoline = (
+  gallery: JSX.Element | null,
+  galleryPosition?: 'horizontalBottom' | 'verticalRight' | 'horizontalTop'
+): JSX.Element | null => {
+  return galleryPosition !== 'horizontalTop' ? gallery : <></>;
+  return gallery;
 };

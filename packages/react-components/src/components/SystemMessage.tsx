@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { IStyle, FontIcon, mergeStyles, Stack, Text } from '@fluentui/react';
 import React from 'react';
@@ -41,7 +41,7 @@ export const SystemMessage = (props: SystemMessageProps): JSX.Element => {
   return (
     <Stack horizontal className={mergeStyles(props?.containerStyle as IStyle)} tabIndex={0}>
       {Icon}
-      <Text style={{ wordBreak: 'break-word' }} role="status" title={content}>
+      <Text style={{ wordBreak: 'break-word' }} role="status" title={content} variant={'small'}>
         {content}
       </Text>
     </Stack>

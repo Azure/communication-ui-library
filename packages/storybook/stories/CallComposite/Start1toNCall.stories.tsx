@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { CallComposite } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
@@ -34,7 +34,8 @@ const Start1toNCallStory = (args: ArgsFrom<typeof storyControls>, context): JSX.
           <div style={args.calleeToken ? { width: '65%' } : { width: '100%' }}>
             <ContosoCallContainer1toN
               fluentTheme={context.theme}
-              locator={[args.calleeUserId]}
+              rtl={context.globals.rtl === 'rtl'}
+              targetCallees={[args.calleeUserId]}
               userId={{ communicationUserId: args.userId }}
               token={args.token}
               displayName={args.displayName}
@@ -46,6 +47,7 @@ const Start1toNCallStory = (args: ArgsFrom<typeof storyControls>, context): JSX.
             <div style={{ width: '35%' }}>
               <ContosoCallContainer1toNInbound
                 fluentTheme={context.theme}
+                rtl={context.globals.rtl === 'rtl'}
                 userId={{ communicationUserId: args.calleeUserId }}
                 token={args.calleeToken}
                 locale={compositeLocale(locale)}

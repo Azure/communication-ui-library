@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { Image, MessageBar, Stack } from '@fluentui/react';
-import { Title, Description, Heading, Source } from '@storybook/addon-docs';
+import { Title, Description, Heading, Source, Subheading } from '@storybook/addon-docs';
 import React, { useEffect, useRef } from 'react';
 import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { overviewPageImagesStackStyle } from '../constants';
@@ -30,16 +30,50 @@ options={{
 }} />
 `;
 
+const customBrandingSnippet = `
+<CallWithChatComposite options={{
+  branding: {
+    logo: {
+      url: 'https://...',
+      alt: 'My company logo',
+      shape: 'circle'
+    },
+    backgroundImage: {
+      url: 'https://...'
+    }
+  }
+}} />
+`;
+
 export const Docs: () => JSX.Element = () => {
   const refTeamsMeeting = useRef(null);
+  const refFileSharing = useRef(null);
+  const refImageSharing = useRef(null);
+  const refImageSharingTeams = useRef(null);
+  const refFileSharingACS = useRef(null);
+  const refFileSharingTeams = useRef(null);
+
+  const scrollToRef = (ref): void => {
+    ref.current.scrollIntoView({ behavior: 'auto' });
+  };
 
   useEffect(() => {
     const url = document.URL;
 
-    if (url.includes('teams-meeting') && refTeamsMeeting.current) {
-      refTeamsMeeting.current.scrollIntoView({ behavior: 'auto' });
+    if (url.includes('adding-file-sharing') && refFileSharing.current) {
+      scrollToRef(refFileSharing);
+    } else if (url.includes('adding-image-sharing') && refImageSharing.current) {
+      scrollToRef(refImageSharing);
+    } else if (url.includes('inline-image-in-teams-interop-meeting-chat-thread') && refImageSharingTeams.current) {
+      scrollToRef(refImageSharingTeams);
+    } else if (url.includes('file-sharing-in-teams-interop-meeting-chat-thread') && refFileSharingTeams.current) {
+      scrollToRef(refFileSharingTeams);
+    } else if (url.includes('file-sharing-in-azure-communication-services-chat-thread') && refFileSharingACS.current) {
+      scrollToRef(refFileSharingACS);
+    } else if (url.includes('teams-meeting') && refTeamsMeeting.current) {
+      scrollToRef(refTeamsMeeting);
     }
-  }, [refTeamsMeeting]);
+  }, [refTeamsMeeting, refFileSharingACS, refFileSharingTeams, refFileSharing]);
 
   return (
     <>
@@ -112,6 +146,28 @@ export const Docs: () => JSX.Element = () => {
         action or the [overall theming example](./?path=/docs/theming--page) to see how theming works for all the
         components in this UI library.
       </Description>
+
+      <Heading>Custom Branding</Heading>
+      <Description>
+        Along with applying a Fluent Theme to style the composites, you can also inject your own custom branding. You
+        can inject a background and logo into the Composite configuration page to present to your users. This is done by
+        passing background and logo properties to the `options` of the Composite.
+      </Description>
+      <Description>
+        **Image recommendations.** The background image should be as simple and uncluttered as possible to avoid text
+        becoming unreadable against the background. The background image should have a minimum size of 576x576 pixels
+        and a maximum size of 2048x2048 pixels. The recommended size is 1280x720 pixels. The recommended size for the
+        logo image is 128x128 pixels.
+      </Description>
+      <Stack horizontalAlign="center">
+        <img
+          style={{ width: '100%', maxWidth: '50rem' }}
+          src="images/composite-logo-background.png"
+          alt="CallWithChatComposite with a logo and background applied"
+        />
+      </Stack>
+      <Source code={customBrandingSnippet} />
+
       <div ref={refTeamsMeeting}>
         <Heading>Joining a Teams Meeting</Heading>
         <Description>
@@ -126,18 +182,50 @@ export const Docs: () => JSX.Element = () => {
         CallComposite. Check out [Customize Call
         Controls](./?path=/docs/composites-call-basicexample--basic-example#customize-call-controls) to learn more.
       </Description>
-
-      <Heading>Adding file sharing</Heading>
-      <SingleLineBetaBanner />
-      <Description>
-        The CallWithChat Composite supports file sharing capabilities in conjunction with your choice of a storage
-        solution. Using the provided APIs, you can enable the composite to support uploading files and displaying them
-        on the send box before sending, and the message thread once they have been sent or received. For an end to end
-        tutorial on enabling file sharing with Azure Blob Storage as your choice of a storage solution, refer to our
-        [tutorial](https://docs.microsoft.com/azure/communication-services/tutorials/file-sharing-tutorial). File
-        sharing is supported for Teams interop scenarios by default.
-      </Description>
-      <Source code={addFileSharingSnippet} />
+      <div ref={refImageSharing}>
+        <Heading>Adding image sharing</Heading>
+      </div>
+      <div ref={refImageSharingTeams}>
+        <Subheading>Inline Image In Teams Interop Meeting Chat Thread</Subheading>
+        <SingleLineBetaBanner />
+        <Description>
+          The Azure Communication Services end user can recieve images shared by the Teams user without any additional
+          setup when using the `CallWithChat` Composite in a Teams interop scenario,. Azure Communication Services end
+          user would need to join the Teams meeting first, as soon as the Teams user sends a file from the Teams client,
+          the Azure Communication Services end user will be see the image in the chat thread. Please check out the
+          tutorial for [Enable inline image using UI Library in Teams Interoperability
+          Chat](https://learn.microsoft.com/en-us/azure/communication-services/tutorials/inline-image-tutorial-interop-chat)
+          for details.
+        </Description>
+      </div>
+      <div ref={refFileSharing}>
+        <Heading>Adding file sharing</Heading>
+      </div>
+      <div ref={refFileSharingACS}>
+        <Subheading>File Sharing In Azure Communication Services Chat Thread</Subheading>
+        <SingleLineBetaBanner />
+        <Description>
+          In a chat thread where all participants are Azure Communication Services end users, the `CallWithChat`
+          Composite supports file capabilities in conjunction with your choice of a storage solution. Using the provided
+          APIs, you can composite to support uploading files and displaying them on the send box before sending, and the
+          once they have been sent or received. For an end to end tutorial on enabling file sharing with Azure Blob
+          Storage as your choice of a storage solution, refer to our
+          [tutorial](https://docs.microsoft.com/azure/communication-services/tutorials/file-sharing-tutorial).
+        </Description>
+        <Source code={addFileSharingSnippet} />
+      </div>
+      <div ref={refFileSharingTeams}>
+        <Subheading>File Sharing In Teams Interop Meeting Chat Thread</Subheading>
+        <SingleLineBetaBanner />
+        <Description>
+          When using the `CallWithChat` Composite in a Teams interop scenario, the Azure Communication Services end user
+          can recieve file attachments from Teams user without any additional setup. Simply join the Teams meeting as an
+          Azure Communication Services end user, as soon as the Teams user sends a file from the Teams client, the Azure
+          Communication Services end user will be able to see shared files in the chat thread. Please check out the
+          tutorial for [Enable file sharing using UI Library in Teams Interoperability
+          Chat](https://learn.microsoft.com/en-us/azure/communication-services/tutorials/file-sharing-tutorial-interop-chat)
+        </Description>
+      </div>
 
       <Heading>PSTN and 1:N Calling</Heading>
       <SingleLineBetaBanner />

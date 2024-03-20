@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update Captions component for mobile landscape to not obstruct the verticalGallery",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

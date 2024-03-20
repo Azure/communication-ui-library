@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 import React from 'react';
 import { Mention } from '../MentionPopover';
 
@@ -12,5 +12,9 @@ import { Mention } from '../MentionPopover';
 export const defaultOnMentionRender = (mention: Mention): JSX.Element => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const MsftMention = 'msft-mention' as any;
-  return <MsftMention id={mention.id}>{mention.displayText}</MsftMention>;
+  return (
+    <MsftMention id={mention.id} key={Math.random().toString()}>
+      {mention.displayText}
+    </MsftMention>
+  );
 };

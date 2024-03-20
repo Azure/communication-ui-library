@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import path from 'path';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
@@ -12,6 +12,7 @@ const config = {
     path: path.join(__dirname, '/dist'),
     filename: 'server.js'
   },
+  mode: 'development',
   module: {
     rules: [
       {

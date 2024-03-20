@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React from 'react';
 import { ControlBarButton, ControlBarButtonProps } from '@internal/react-components';
@@ -19,7 +19,7 @@ export const MoreButton = (props: ControlBarButtonProps): JSX.Element => {
       onRenderOnIcon={icon}
       onRenderOffIcon={icon}
       onClick={props.onClick}
-      data-ui-id={props['data-ui-id']}
+      data-ui-id={props['data-ui-id' as keyof ControlBarButtonProps]}
     />
   );
 };

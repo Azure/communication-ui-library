@@ -43,6 +43,10 @@ function App(): JSX.Element {
   // (indirectly) by the user.
   const { userId, token, displayName, participantIds } = useAzureCommunicationServiceArgs();
 
+  const createTargetCallees = useMemo(() => {
+    return participantIds.map((c) => fromFlatCommunicationIdentifier(c) as CommunicationUserIdentifier);
+  }, [participantIds]);
+
   // A well-formed token is required to initialize the chat and calling adapters.
   const credential = useMemo(() => {
     try {
@@ -60,9 +64,9 @@ function App(): JSX.Element {
       userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
       displayName,
       credential,
-      locator: { participantIds }
+      targetCallees: createTargetCallees
     }),
-    [userId, credential, displayName, participantIds]
+    [userId, displayName, credential, createTargetCallees]
   );
   const callAdapter = useAzureCommunicationCallAdapter(callAdapterArgs);
 

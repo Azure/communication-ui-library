@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Request a feature
+    url: https://learn.microsoft.com/en-us/search/?terms=Azure%20Communication%20Services%20UI%20Library&category=QnA
+    about: Suggest a feature or share an idea on Microsoft Q&A.

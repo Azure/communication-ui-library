@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { REPO_ROOT } from './lib/index.mjs';
 import { removeDepsFromAllPackages, updateAllDepVersions } from './package-utils.js';
@@ -42,7 +42,7 @@ function restrictBuildFlavorForWorkflows(target) {
 // Dependencies to choose the right version for beta and stable
 const SDK_DEPS = ["@azure/communication-calling", "@azure/communication-common", "@azure/communication-chat"]
 // Depencies that are beta only and should be removed from stable packages
-const BETA_ONLY_DEPS = ["@azure/communication-calling-effects"]
+const BETA_ONLY_DEPS = []
 
 function chooseSdkDependencies(target) {
   const action = target === 'stable' ? chooseStableVersion : chooseBetaVersion;

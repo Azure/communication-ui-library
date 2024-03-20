@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { ReactElement } from 'react';
@@ -7,7 +7,7 @@ import { Common, fromFlatCommunicationIdentifier } from '@internal/acs-ui-common
 import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { ChatMessage, ChatMessageReadReceipt, ChatThreadClient, SendMessageOptions } from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
-import { FileMetadata } from '@internal/react-components';
+import { AttachmentMetadata } from '@internal/react-components';
 
 /**
  * Object containing all the handlers required for chat components.
@@ -28,10 +28,10 @@ export type ChatHandlers = {
     messageId: string,
     content: string,
     /* @conditional-compile-remove(file-sharing) */
-    metadata?: Record<string, string>,
-    /* @conditional-compile-remove(file-sharing) */
     options?: {
-      attachedFilesMetadata?: FileMetadata[];
+      /* @conditional-compile-remove(file-sharing) */
+      metadata?: Record<string, string>;
+      attachmentMetadata?: AttachmentMetadata[];
     }
   ) => Promise<void>;
   onDeleteMessage: (messageId: string) => Promise<void>;
@@ -62,13 +62,13 @@ export const createDefaultChatHandlers = memoizeOne(
       onUpdateMessage: async (
         messageId: string,
         content: string,
-        metadata?: Record<string, string>,
         options?: {
-          attachedFilesMetadata?: FileMetadata[];
+          metadata?: Record<string, string>;
+          attachmentMetadata?: AttachmentMetadata[];
         }
       ) => {
-        const updatedMetadata = metadata ? { ...metadata } : {};
-        updatedMetadata['fileSharingMetadata'] = JSON.stringify(options?.attachedFilesMetadata || []);
+        const updatedMetadata = options?.metadata ? { ...options.metadata } : {};
+        updatedMetadata.fileSharingMetadata = JSON.stringify(options?.attachmentMetadata || []);
         await chatThreadClient.updateMessage(messageId, { content, metadata: updatedMetadata });
       },
       onDeleteMessage: async (messageId: string) => {

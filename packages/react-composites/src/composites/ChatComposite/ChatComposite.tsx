@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { CommunicationParticipant, MessageRenderer, MessageProps } from '@internal/react-components';
 import React from 'react';
@@ -84,7 +84,24 @@ export type ChatCompositeOptions = {
    * @beta
    */
   fileSharing?: FileSharingOptions;
+
+  /* @conditional-compile-remove(rich-text-editor) */
+  /**
+   * Properties for configuring the richTextEditor feature.
+   * @defaultValue false
+   *
+   * @beta
+   */
+  richTextEditor?: boolean | RichTextEditorOptions;
 };
+
+/* @conditional-compile-remove(rich-text-editor) */
+/**
+ * Options for configuring the rich text editor.
+ *
+ * @beta
+ */
+export interface RichTextEditorOptions {}
 
 /**
  * A customizable UI composite for the chat experience.
@@ -103,33 +120,23 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
     onFetchParticipantMenuItems
   } = props;
 
+  /* @conditional-compile-remove(file-sharing) */
   const formFactor = props['formFactor'] || 'desktop';
-
-  /**
-   * @TODO Remove this function and pass the props directly when file-sharing is promoted to stable.
-   * @private
-   */
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  const fileSharingOptions = () => {
-    /* @conditional-compile-remove(file-sharing) */
-    return {
-      fileSharing: options?.fileSharing
-    };
-    return {};
-  };
 
   return (
     <div className={chatScreenContainerStyle}>
       <BaseProvider {...props}>
         <ChatAdapterProvider adapter={adapter}>
           <ChatScreen
+            /* @conditional-compile-remove(file-sharing) */
             formFactor={formFactor}
             options={options}
             onFetchAvatarPersonaData={onFetchAvatarPersonaData}
             onRenderTypingIndicator={onRenderTypingIndicator}
             onRenderMessage={onRenderMessage}
             onFetchParticipantMenuItems={onFetchParticipantMenuItems}
-            {...fileSharingOptions()}
+            /* @conditional-compile-remove(file-sharing) */
+            fileSharing={options?.fileSharing}
           />
         </ChatAdapterProvider>
       </BaseProvider>

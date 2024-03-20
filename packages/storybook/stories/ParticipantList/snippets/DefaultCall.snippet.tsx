@@ -26,7 +26,8 @@ export const DefaultCallParticipantListExample: () => JSX.Element = () => {
       state: 'Idle',
       isMuted: false,
       isScreenSharing: false,
-      isRemovable: true
+      isRemovable: true,
+      raisedHand: { raisedHandOrderPosition: 1 }
     },
     {
       userId: 'user4',

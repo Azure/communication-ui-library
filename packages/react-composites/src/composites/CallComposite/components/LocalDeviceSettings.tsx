@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { AudioDeviceInfo, VideoDeviceInfo } from '@azure/communication-calling';
 import { Dropdown, IDropdownOption, Label, mergeStyles, Stack } from '@fluentui/react';
@@ -15,11 +15,10 @@ import {
   dropDownStyles,
   dropDownTitleIconStyles,
   mainStackTokens,
-  optionIconStyles
+  optionIconStyles,
+  soundStackTokens
 } from '../styles/LocalDeviceSettings.styles';
-/* @conditional-compile-remove(rooms) */
-import { _usePermissions } from '@internal/react-components';
-/* @conditional-compile-remove(call-readiness) */
+/* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(video-background-effects) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { ConfigurationPageCameraDropdown } from './ConfigurationPageCameraDropdown';
 import { ConfigurationPageMicDropdown } from './ConfigurationPageMicDropdown';
@@ -94,7 +93,7 @@ export interface LocalDeviceSettingsType {
   /* @conditional-compile-remove(call-readiness) */
   onClickEnableDevicePermission?: () => void;
   /* @conditional-compile-remove(video-background-effects) */
-  onVideoEffectsClick?: () => void;
+  onClickVideoEffects?: () => void;
 }
 
 /**
@@ -103,25 +102,29 @@ export interface LocalDeviceSettingsType {
 export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element => {
   const theme = useTheme();
   const locale = useLocale();
-  /* @conditional-compile-remove(call-readiness) */
+  /* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(video-background-effects) */ /* @conditional-compile-remove(rooms) */
   const adapter = useAdapter();
+  /* @conditional-compile-remove(video-background-effects) */
+  const onResolveVideoEffectDependency = adapter.getState().onResolveVideoEffectDependency;
   const defaultPlaceHolder = locale.strings.call.defaultPlaceHolder;
   const cameraLabel = locale.strings.call.cameraLabel;
   const soundLabel = locale.strings.call.soundLabel;
   const noSpeakersLabel = locale.strings.call.noSpeakersLabel;
   const noCameraLabel = locale.strings.call.noCamerasLabel;
   const noMicLabel = locale.strings.call.noMicrophonesLabel;
+  /* @conditional-compile-remove(rooms) */
+  const role = adapter.getState().call?.role;
 
   const cameraPermissionGranted = props.cameraPermissionGranted;
   const micPermissionGranted = props.microphonePermissionGranted;
+
   let roleCanUseCamera = true;
   let roleCanUseMic = true;
+
   /* @conditional-compile-remove(rooms) */
-  const rolePermissions = _usePermissions();
+  roleCanUseCamera = role === 'Consumer' ? false : true;
   /* @conditional-compile-remove(rooms) */
-  roleCanUseCamera = rolePermissions.cameraButton;
-  /* @conditional-compile-remove(rooms) */
-  roleCanUseMic = rolePermissions.microphoneButton;
+  roleCanUseMic = role === 'Consumer' ? false : true;
 
   // TODO: speaker permission is tied to microphone permission (when you request 'audio' permission using the SDK) its
   // actually granting access to query both microphone and speaker. However the browser popup asks you explicity for
@@ -143,6 +146,9 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
   const hasCameras = props.cameras.length > 0;
   const hasMicrophones = props.microphones.length > 0;
   const hasSpeakers = props.speakers.length > 0;
+  /* @conditional-compile-remove(unsupported-browser) */
+  const isSafariWithNoSpeakers =
+    adapter.getState().environmentInfo?.environment.browser.toLowerCase() === 'safari' && !hasSpeakers;
 
   const cameraGrantedDropdown = (
     <Dropdown
@@ -207,6 +213,33 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
     </>
   );
 
+  const speakerDropdown = (
+    <Dropdown
+      aria-labelledby={'call-composite-local-sound-settings-label'}
+      placeholder={hasSpeakers ? defaultPlaceHolder : noSpeakersLabel}
+      styles={dropDownStyles(theme)}
+      disabled={props.speakers.length === 0}
+      options={getDropDownList(props.speakers)}
+      defaultSelectedKey={props.selectedSpeaker ? props.selectedSpeaker.id : defaultDeviceId(props.speakers)}
+      onChange={(
+        event: React.FormEvent<HTMLDivElement>,
+        option?: IDropdownOption | undefined,
+        index?: number | undefined
+      ) => {
+        props.onSelectSpeaker(props.speakers[index ?? 0]);
+      }}
+      onRenderTitle={(props?: IDropdownOption[]) => onRenderTitle('Speaker', props)}
+    />
+  );
+
+  const SafariBrowserSpeakerDropdownTrampoline = (): JSX.Element => {
+    /* @conditional-compile-remove(unsupported-browser) */
+    if (isSafariWithNoSpeakers) {
+      return <></>;
+    }
+    return speakerDropdown;
+  };
+
   return (
     <Stack data-ui-id="call-composite-device-settings" tokens={mainStackTokens}>
       {roleCanUseCamera && (
@@ -221,14 +254,16 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
             </Label>
             {
               /* @conditional-compile-remove(video-background-effects) */
-              <DefaultButton
-                iconProps={{ iconName: 'ConfigurationScreenVideoEffectsButton' }}
-                styles={effectsButtonStyles(theme)}
-                onClick={props.onVideoEffectsClick}
-                data-ui-id={'call-config-video-effects-button'}
-              >
-                {locale.strings.call.configurationPageVideoEffectsButtonLabel}
-              </DefaultButton>
+              onResolveVideoEffectDependency && (
+                <DefaultButton
+                  iconProps={{ iconName: 'ConfigurationScreenVideoEffectsButton' }}
+                  styles={effectsButtonStyles(theme)}
+                  onClick={props.onClickVideoEffects}
+                  data-ui-id={'call-config-video-effects-button'}
+                >
+                  {locale.strings.call.configurationPageVideoEffectsButtonLabel}
+                </DefaultButton>
+              )
             }
           </Stack>
           <ConfigurationPageCameraDropdown
@@ -249,7 +284,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
         >
           {soundLabel}
         </Label>
-        <Stack data-ui-id="call-composite-sound-settings" tokens={mainStackTokens}>
+        <Stack data-ui-id="call-composite-sound-settings" tokens={soundStackTokens}>
           <ConfigurationPageMicDropdown
             micGrantedDropdown={micGrantedDropdown}
             micPermissionGranted={micPermissionGranted ?? false}
@@ -258,22 +293,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
             /* @conditional-compile-remove(call-readiness) */
             onClickEnableDevicePermission={props.onClickEnableDevicePermission}
           />
-          <Dropdown
-            aria-labelledby={'call-composite-local-sound-settings-label'}
-            placeholder={hasSpeakers ? defaultPlaceHolder : noSpeakersLabel}
-            styles={dropDownStyles(theme)}
-            disabled={props.speakers.length === 0}
-            options={getDropDownList(props.speakers)}
-            defaultSelectedKey={props.selectedSpeaker ? props.selectedSpeaker.id : defaultDeviceId(props.speakers)}
-            onChange={(
-              event: React.FormEvent<HTMLDivElement>,
-              option?: IDropdownOption | undefined,
-              index?: number | undefined
-            ) => {
-              props.onSelectSpeaker(props.speakers[index ?? 0]);
-            }}
-            onRenderTitle={(props?: IDropdownOption[]) => onRenderTitle('Speaker', props)}
-          />
+          <SafariBrowserSpeakerDropdownTrampoline />
         </Stack>
       </Stack>
     </Stack>

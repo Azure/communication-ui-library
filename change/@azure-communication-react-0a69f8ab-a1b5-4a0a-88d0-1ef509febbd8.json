@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update fluentui package",
-  "packageName": "@azure/communication-react",
-  "email": "edwardlee@microsoft.com",
-  "dependentChangeType": "patch"
-}

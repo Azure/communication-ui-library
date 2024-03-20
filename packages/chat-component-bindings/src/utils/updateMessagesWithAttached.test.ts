@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
+
 import { ChatMessage, CustomMessage, Message, MessageAttachedStatus } from '@internal/react-components';
 import { MINUTE_IN_MS } from './constants';
 import { updateMessagesWithAttached } from './updateMessagesWithAttached';

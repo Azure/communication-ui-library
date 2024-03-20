@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React from 'react';
 
@@ -8,7 +8,7 @@ import {
   CallWithChatAdapter,
   CallWithChatComposite,
   CallWithChatControlOptions,
-  CustomCallWithChatControlButtonCallback
+  CustomCallControlButtonCallback
 } from '../../../src';
 import { IDS } from '../../browser/common/constants';
 import { isMobile } from '../lib/utils';
@@ -48,86 +48,82 @@ export function BaseApp(props: { queryArgs: CommonQueryArgs; adapter?: CallWithC
   );
 }
 
-const customButtonsForInjection: CustomCallWithChatControlButtonCallback[] = [
+const customButtonsForInjection: CustomCallControlButtonCallback[] = [
   () => ({
     placement: 'primary',
-    iconName: 'MessageEdit',
-    text: 'Primary Btn 1',
-    key: 'primary-button-1',
-    styles: {
-      root: {
-        background: '#ff6600'
-      }
+    strings: {
+      label: 'Primary Btn 1'
     }
   }),
   () => ({
     placement: 'primary',
     iconName: 'MessageEdit',
-    text: 'Primary Btn 2',
-    key: 'primary-button-2',
+    strings: {
+      label: 'Primary Btn 2'
+    },
     disabled: true
   }),
   () => ({
     placement: 'primary',
     iconName: 'MessageEdit',
-    text: 'Primary Btn 3',
-    key: 'primary-button-3',
-    showLabel: false
+    strings: {
+      label: 'Primary Btn 3'
+    }
   }),
   () => ({
     placement: 'primary',
     iconName: 'MessageEdit',
-    text: 'Primary Btn 4',
-    key: 'primary-button-4',
-    disabled: false,
-    showLabel: false
+    strings: {
+      label: 'Primary Btn 4'
+    },
+    disabled: false
   }),
   () => ({
     placement: 'primary',
     iconName: 'MessageEdit',
-    text: 'Primary Btn 5',
-    key: 'primary-button-5',
-    disabled: true,
-    showLabel: false
+    strings: {
+      label: 'Primary Btn 5'
+    },
+    disabled: true
   }),
   () => ({
     placement: 'secondary',
-    iconName: 'MessageRemove',
-    text: 'Secondary Btn 1',
-    key: 'secondary-button-1',
+    strings: {
+      label: 'Secondary Btn 1'
+    },
     disabled: true,
     showLabel: true
   }),
   () => ({
     placement: 'secondary',
     iconName: 'MessageRemove',
-    text: 'Secondary Btn 2',
-    key: 'secondary-button-2',
+    strings: {
+      label: 'Secondary Btn 2'
+    },
     disabled: false,
     showLabel: false
   }),
   () => ({
     placement: 'secondary',
     iconName: 'MessageRemove',
-    text: 'Secondary Btn 3',
-    key: 'secondary-button-3',
-    disabled: false,
-    showLabel: false
+    strings: {
+      label: 'Secondary Btn 3'
+    },
+    disabled: false
+  }),
+  () => ({
+    placement: 'overflow',
+    strings: {
+      label: 'Overflow Btn 1'
+    },
+    disabled: false
   }),
   () => ({
     placement: 'overflow',
     iconName: 'SendBoxSend',
-    text: 'Overflow Btn 1',
-    key: 'overflow-button-1',
-    disabled: false,
-    showLabel: false
-  }),
-  () => ({
-    placement: 'overflow',
-    iconName: 'SendBoxSend',
-    text: 'Overflow Btn 2',
-    key: 'overflow-button-2',
-    disabled: false,
-    showLabel: false
+    strings: {
+      label: 'Overflow Btn 2'
+    },
+    disabled: false
   })
 ];

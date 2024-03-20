@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ChatComposite } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
@@ -69,6 +69,7 @@ const BasicStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Element 
       {containerProps ? (
         <ContosoChatContainer
           fluentTheme={context.theme}
+          rtl={context.globals.rtl === 'rtl'}
           {...containerProps}
           locale={compositeLocale(locale)}
           errorBar={args.showErrorBar}

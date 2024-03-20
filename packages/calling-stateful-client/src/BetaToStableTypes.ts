@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 // This is for mapping new types from beta, which does not exist in stable sdk.
 // These mappings are necessary to bypass type check of conditional compilation

@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { CallWithChatAdapter } from './CallWithChatAdapter';
 import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { ResourceDetails } from '../../ChatComposite';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadManager } from '../../ChatComposite';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { AttachmentDownloadResult } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
-import { FileMetadata } from '@internal/react-components';
+import { AttachmentMetadata } from '@internal/react-components';
 import { ErrorBarStrings } from '@internal/react-components';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 
@@ -100,7 +100,7 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
   };
 
   /* @conditional-compile-remove(file-sharing) */
-  public registerCompletedFileUploads = (metadata: FileMetadata[]): FileUploadManager[] => {
+  public registerCompletedFileUploads = (metadata: AttachmentMetadata[]): FileUploadManager[] => {
     return this.callWithChatAdapter.registerCompletedFileUploads(metadata);
   };
 
@@ -125,13 +125,17 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
   };
 
   /* @conditional-compile-remove(file-sharing) */
-  public updateFileUploadMetadata = (id: string, metadata: FileMetadata): void => {
+  public updateFileUploadMetadata = (id: string, metadata: AttachmentMetadata): void => {
     this.callWithChatAdapter.updateFileUploadMetadata(id, metadata);
   };
 
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  public async downloadAttachments(options: { attachmentUrls: string[] }): Promise<AttachmentDownloadResult[]> {
-    return await this.callWithChatAdapter.downloadAttachments(options);
+  public async downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void> {
+    this.callWithChatAdapter.downloadResourceToCache(resourceDetails);
+  }
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  public removeResourceFromCache(resourceDetails: ResourceDetails): void {
+    this.callWithChatAdapter.removeResourceFromCache(resourceDetails);
   }
 }
 

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 export type CheckBreakingChanges<OLD, NEW extends OLD> = NEW;
 
 // These are the list we intentionally make breaking changes,

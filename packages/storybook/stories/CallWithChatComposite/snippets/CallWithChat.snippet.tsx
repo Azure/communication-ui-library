@@ -6,8 +6,10 @@ import {
   useAzureCommunicationCallWithChatAdapter,
   CallWithChatCompositeOptions
 } from '@azure/communication-react';
-import { Theme, PartialTheme, Spinner } from '@fluentui/react';
+import { Theme, PartialTheme, Spinner, initializeIcons } from '@fluentui/react';
 import React, { useMemo } from 'react';
+
+initializeIcons();
 
 export type CallWithChatExampleProps = {
   // Props needed for the construction of the CallWithChatAdapter
@@ -30,6 +32,7 @@ export type CallWithChatExampleProps = {
 
   // Props to customize the CallWithChatComposite experience
   fluentTheme?: PartialTheme | Theme;
+  rtl?: boolean;
   compositeOptions?: CallWithChatCompositeOptions;
   callInvitationURL?: string;
   formFactor?: 'desktop' | 'mobile';
@@ -60,6 +63,7 @@ export const CallWithChatExperience = (props: CallWithChatExampleProps): JSX.Ele
     <CallWithChatComposite
       adapter={adapter}
       fluentTheme={props.fluentTheme}
+      rtl={props.rtl}
       formFactor={props.formFactor}
       joinInvitationURL={props.callInvitationURL}
       options={props.compositeOptions}

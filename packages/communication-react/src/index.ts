@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 /**
  * `@azure/communication-react` is an npm package that exports the functionality of the Azure Communication Services - UI Library.
@@ -38,6 +38,9 @@ export type {
   CallingBaseSelectorProps,
   CommonCallingHandlers
 } from '../../calling-component-bindings/src';
+
+/* @conditional-compile-remove(video-background-effects) */
+export type { VideoBackgroundEffectsDependency, CallingHandlersOptions } from '../../calling-component-bindings/src';
 
 /* @conditional-compile-remove(close-captions) */
 export type { CaptionsOptions } from '../../calling-component-bindings/src';
@@ -81,10 +84,13 @@ export type {
   ErrorBarSelector as CallErrorBarSelector,
   ParticipantListSelector,
   MicrophoneButtonSelector,
-  ParticipantsButtonSelector
+  ParticipantsButtonSelector,
+  CreateDefaultCallingHandlers
 } from '../../calling-component-bindings/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonSelector } from '../../calling-component-bindings/src';
+
+export type { RaiseHandButtonSelector } from '../../calling-component-bindings/src';
 
 export {
   ChatClientProvider,
@@ -124,10 +130,34 @@ export {
   StreamMedia,
   TypingIndicator,
   VideoGallery,
-  VideoTile
+  VideoTile,
+  COMPONENT_LOCALE_EN_GB,
+  COMPONENT_LOCALE_AR_SA,
+  COMPONENT_LOCALE_CS_CZ,
+  COMPONENT_LOCALE_DE_DE,
+  COMPONENT_LOCALE_ES_ES,
+  COMPONENT_LOCALE_FI_FI,
+  COMPONENT_LOCALE_FR_FR,
+  COMPONENT_LOCALE_HE_IL,
+  COMPONENT_LOCALE_IT_IT,
+  COMPONENT_LOCALE_JA_JP,
+  COMPONENT_LOCALE_KO_KR,
+  COMPONENT_LOCALE_NB_NO,
+  COMPONENT_LOCALE_NL_NL,
+  COMPONENT_LOCALE_PL_PL,
+  COMPONENT_LOCALE_PT_BR,
+  COMPONENT_LOCALE_RU_RU,
+  COMPONENT_LOCALE_SV_SE,
+  COMPONENT_LOCALE_TR_TR,
+  COMPONENT_LOCALE_ZH_CN,
+  COMPONENT_LOCALE_ZH_TW
 } from '../../react-components/src';
+/* @conditional-compile-remove(image-overlay) */
+export { ImageOverlay } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export { HoldButton } from '../../react-components/src';
+
+export { RaiseHandButton } from '../../react-components/src';
 
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 export { Dialpad } from '../../react-components/src';
@@ -150,6 +180,9 @@ export type {
   MicrophoneSitePermissionsStrings,
   MicrophoneSitePermissionsProps
 } from '../../react-components/src';
+
+/* @conditional-compile-remove(total-participant-count) */
+export type { ParticipantListStrings } from '../../react-components/src';
 
 /* @conditional-compile-remove(mention) */
 export type {
@@ -258,14 +291,39 @@ export type {
   VideoStreamOptions,
   VideoTileProps,
   VideoTileStylesProps,
-  ViewScalingMode
+  ViewScalingMode,
+  VideoTileContextualMenuProps,
+  VideoTileDrawerMenuProps
 } from '../../react-components/src';
+
+export type { RaiseHandButtonProps, RaiseHandButtonStrings, RaisedHand } from '../../react-components/src';
+/* @conditional-compile-remove(reaction) */
+export type {
+  ReactionButtonStrings,
+  Reaction,
+  ReactionButtonProps,
+  ReactionResources,
+  ReactionSprite
+} from '../../react-components/src';
+/* @conditional-compile-remove(rich-text-editor) */
+export { RichTextSendBox } from '../../react-components/src';
+/* @conditional-compile-remove(rich-text-editor) */
+export type { RichTextSendBoxProps, RichTextSendBoxStrings } from '../../react-components/src';
+/* @conditional-compile-remove(spotlight) */
+export type { Spotlight } from '../../react-components/src';
+/* @conditional-compile-remove(image-overlay) */
+export type { ImageOverlayProps, ImageOverlayStrings } from '../../react-components/src';
 /* @conditional-compile-remove(data-loss-prevention) */
 export type { BlockedMessage } from '../../react-components/src';
-/* @conditional-compile-remove(rooms) */
-export type { Role } from '../../react-components/src';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
-export type { DialpadProps, DialpadStrings, DialpadStyles, DtmfTone } from '../../react-components/src';
+export type {
+  DialpadMode,
+  DialpadProps,
+  DialpadStrings,
+  DialpadStyles,
+  DtmfTone,
+  LongPressTrigger
+} from '../../react-components/src';
 /* @conditional-compile-remove(file-sharing) */
 export type {
   ActiveFileUpload,
@@ -273,16 +331,12 @@ export type {
   FileDownloadHandler,
   FileDownloadError
 } from '../../react-components/src';
-/* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-export type { FileMetadata } from '../../react-components/src';
+/* @conditional-compile-remove(file-sharing) */
+export type { AttachmentMetadata } from '../../react-components/src';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-export type {
-  BaseFileMetadata,
-  FileMetadataAttachmentType,
-  AttachmentDownloadResult,
-  FileSharingMetadata,
-  ImageFileMetadata
-} from '../../react-components/src';
+export type { ChatAttachmentType } from '../../react-components/src';
+/* @conditional-compile-remove(image-overlay) */
+export type { InlineImageOptions, InlineImage } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonProps, HoldButtonStrings, VideoTileStrings } from '../../react-components/src';
 /* @conditional-compile-remove(call-readiness) */
@@ -293,11 +347,8 @@ export type {
   BrowserPermissionDeniedStyles,
   BrowserPermissionDeniedIOSProps
 } from '../../react-components/src';
-/* @conditional-compile-remove(pinned-participants) */
-export type { VideoTileContextualMenuProps, VideoTileDrawerMenuProps } from '../../react-components/src';
 /* @conditional-compile-remove(vertical-gallery) */
 export type { OverflowGalleryPosition } from '../../react-components/src';
-/* @conditional-compile-remove(click-to-call) */
 export type { LocalVideoTileSize } from '../../react-components/src';
 export * from '../../react-components/src/localization/locales';
 export * from '../../react-components/src/theming';
@@ -317,6 +368,9 @@ export type {
   ChatThreadProperties,
   ChatErrorTarget
 } from '../../chat-stateful-client/src';
+
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+export type { ResourceFetchResult } from '../../chat-stateful-client/src';
 export * from '../../react-composites/src/index-public';
 export * from './mergedHooks';
 
@@ -339,4 +393,10 @@ export type {
   VerticalGalleryControlBarStyles
 } from '../../react-components/src';
 /* @conditional-compile-remove(close-captions) */
-export type { CaptionsAvailableLanguageStrings } from '../../react-components/src';
+export type { SpokenLanguageStrings, CaptionLanguageStrings } from '../../react-components/src';
+/* @conditional-compile-remove(end-of-call-survey) */
+export type { SurveyIssues } from '../../react-components/src';
+/* @conditional-compile-remove(end-of-call-survey) */
+export type { SurveyIssuesHeadingStrings } from '../../react-components/src';
+/* @conditional-compile-remove(end-of-call-survey) */
+export type { CallSurveyImprovementSuggestions } from '../../react-components/src';

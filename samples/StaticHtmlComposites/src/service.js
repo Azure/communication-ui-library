@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 export { v4 as createGUID } from 'uuid';
 
 // In your real app, your authenticated service should create users and issue tokens.

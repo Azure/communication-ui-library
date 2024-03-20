@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { VideoGallery as VideoGalleryComponent } from '@azure/communication-react';
 import { Image, Stack, Text } from '@fluentui/react';
@@ -7,8 +7,6 @@ import { ArgsTable, Canvas, Description, Heading, Source, Subheading, Title } fr
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { yellowBannerPalette } from '../BetaBanners/BannerPalettes';
-import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
-import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { StorybookBanner } from '../BetaBanners/StorybookBanner';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
@@ -17,13 +15,16 @@ import { CustomAvatarVideoGalleryExample } from './snippets/CustomAvatar.snippet
 import { CustomStyleVideoGalleryExample } from './snippets/CustomStyle.snippet';
 import { DefaultVideoGalleryExample } from './snippets/Default.snippet';
 import { FloatingLocalVideoExample } from './snippets/FloatingLocalVideo.snippet';
+import { FocusedContentExample } from './snippets/FocusedContent.snippet';
 import { LocalCameraSwitcherExample } from './snippets/LocalCameraSwitcher.snippet';
 import { ManagedPinnedParticipantsExample } from './snippets/ManagedPinnedParticipants.snippet';
 import { MobileWrapper } from './snippets/MobileWrapper';
+import { OVC3x3VideoGalleryExample } from './snippets/OVC3x3.snippet';
 import { PinnedParticipantsDisabledExample } from './snippets/PinnedParticipantsDisabled.snippet';
 import { PinnedParticipantsMobileExample } from './snippets/PinnedParticipantsMobile.snippet';
 import { ScreenSharingFromPresenterExample } from './snippets/ScreenSharingFromPresenter.snippet';
 import { ScreenSharingFromViewerExample } from './snippets/ScreenSharingFromViewer.snippet';
+import { SpeakerLayoutExample } from './snippets/SpeakerLayout.snippet';
 import { WithHorizontalGalleryExample } from './snippets/WithHorizontalGallery.snippet';
 import { WithVerticalGalleryExample } from './snippets/WithVerticalGallery.snippet';
 
@@ -31,10 +32,12 @@ const CustomAvatarVideoGalleryExampleText = require('!!raw-loader!./snippets/Cus
 const CustomStyleVideoGalleryExampleText = require('!!raw-loader!./snippets/CustomStyle.snippet.tsx').default;
 const DefaultVideoGalleryExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
 const FloatingLocalVideoExampleText = require('!!raw-loader!./snippets/FloatingLocalVideo.snippet.tsx').default;
+const focusedContentExampleText = require('!!raw-loader!./snippets/FocusedContent.snippet.tsx').default;
 const LocalVideoCameraCycleButtonExampleText =
   require('!!raw-loader!./snippets/LocalCameraSwitcher.snippet.tsx').default;
 const ManagedPinnedParticipantsExampleText =
   require('!!raw-loader!./snippets/ManagedPinnedParticipants.snippet.tsx').default;
+const OVC3x3ExampleText = require('!!raw-loader!./snippets/OVC3x3.snippet.tsx').default;
 const PinnedParticipantsDisabledExampleText =
   require('!!raw-loader!./snippets/PinnedParticipantsDisabled.snippet.tsx').default;
 const PinnedParticipantsMobileExampleText =
@@ -43,6 +46,7 @@ const ScreenSharingFromPresenterExampleText =
   require('!!raw-loader!./snippets/ScreenSharingFromPresenter.snippet.tsx').default;
 const ScreenSharingFromViewerExampleText =
   require('!!raw-loader!./snippets/ScreenSharingFromViewer.snippet.tsx').default;
+const speakerLayoutExampleText = require('!!raw-loader!./snippets/SpeakerLayout.snippet.tsx').default;
 const WithHorizontalGalleryExampleText = require('!!raw-loader!./snippets/WithHorizontalGallery.snippet.tsx').default;
 const WithVerticalGalleryExampleText = require('!!raw-loader!./snippets/WithVerticalGallery.snippet.tsx').default;
 
@@ -65,7 +69,29 @@ const getDocs: () => JSX.Element = () => {
       <Source code={importStatement} />
 
       <Heading>Layouts</Heading>
-      <Subheading>Default Layout</Subheading>
+      <Description>
+        This feature allows users to choose from a variety of video gallery layouts. On desktop web, the layouts enabled
+        include default Gallery, Gallery on Top, Focus Mode, and Speaker Mode. On mobile web, the default gallery and
+        large gallery are enabled. This feature will greatly enhance the user experience and provide more flexibility in
+        how users view and interact with video content. Enabling this feature will enable greater productivity and allow
+        for a better flow of discussions and conversations within calls. Here are some example scenarios where custom
+        layouts are useful:
+      </Description>
+      <ul className={'sbdocs sbdocs-p'}>
+        <li>
+          During a meeting with many participants such as a conference call, the large gallery layout can be selected to
+          have greater visibility of the users in a call.{' '}
+        </li>
+        <li>
+          During a patient/doctor call in which the patient wants to show something, the doctor could enable focus mode
+          to hide all other video tiles and focus on the speakers video stream.{' '}
+        </li>
+        <li>
+          In a call with multiple important people that are talking, the speaker mode can be selected which will switch
+          the focus between each speaker as they talk.{' '}
+        </li>
+      </ul>
+      <Subheading>Gallery Layout</Subheading>
       <Description>
         If there are no remote video streams on, all participants are placed in the [Grid
         Layout](./?path=/docs/ui-components-gridlayout--grid-layout) including the local user. Otherwise, only remote
@@ -91,23 +117,41 @@ const getDocs: () => JSX.Element = () => {
       <Canvas mdxSource={FloatingLocalVideoExampleText}>
         <FloatingLocalVideoExample />
       </Canvas>
+      <Subheading>Speaker layout</Subheading>
+      <Description>
+        Speaker Layout is meant to highlight the current dominant speaker in the call. For this view in the video
+        gallery the only participant that is in the grid view is the participant talking. All other participants are in
+        the overflow gallery. When screen sharing the screenshare will replace this participant and the overflow gallery
+        will behave like normal.
+      </Description>
+      <Canvas mdxSource={speakerLayoutExampleText}>
+        <SpeakerLayoutExample />
+      </Canvas>
+      <Subheading>Focused Content Layout</Subheading>
+      <Description>
+        This layout is meant to highlight the current screenshare stream. In this view when the screenshare is present
+        the other participants will be removed from the grid view and the overflow gallery will be hidden from view.
+        This allows for the focus of the local participant to be only on the screenshare stream.
+      </Description>
+      <Canvas mdxSource={focusedContentExampleText}>
+        <FocusedContentExample />
+      </Canvas>
 
       <Heading>Overflow Gallery</Heading>
-      <DetailedBetaBanner></DetailedBetaBanner>
       <Description>
         In the VideoGallery, when there are participants who are not to be prioritized in the grid view, the
         VideoGallery will enter a new layout called Overflow Layout. When in this mode, the VideoGallery will create a
         sub-gallery that can be placed on the bottom of the VideoGallery displaying participants horizontally by
-        assigning the `overflowGalleryPosition` to 'HorizontalBottom'. This is the default. Conversely, this sub-gallery
+        assigning the `overflowGalleryPosition` to 'horizontalBottom'. This is the default. Conversely, this sub-gallery
         can be placed on the right displaying participants vertically by assigning the `overflowGalleryPosition` to
-        'VerticalRight'.
+        'verticalRight'.
       </Description>
       <Subheading>Horizontal Gallery</Subheading>
       <Description>
         The remote participants not in the Grid Layout are placed in a sub-gallery called the Horizontal Gallery in the
         lower section. A gif element is used to simulate a remote video stream to move the other remote participants to
         the Horizontal Gallery in the example below. This is the default behavior for the VideoGallery, but can also be
-        used by setting the `overflowGalleryPosition` property to 'HorizontalBottom'.
+        used by setting the `overflowGalleryPosition` property to 'horizontalBottom'.
       </Description>
       <Canvas mdxSource={WithHorizontalGalleryExampleText}>
         <WithHorizontalGalleryExample />
@@ -117,7 +161,7 @@ const getDocs: () => JSX.Element = () => {
         The remote participants not in the Grid Layout are placed in a sub-gallery called the Vertical Gallery on the
         right side. A gif element is used to simulate a remote video stream to move the other remote participants to the
         Vertical Gallery in the example below. This is used by setting the `overflowGalleryPosition` property to
-        'VerticalRight'.
+        'verticalRight'.
       </Description>
       <Canvas mdxSource={WithVerticalGalleryExampleText}>
         <WithVerticalGalleryExample />
@@ -241,7 +285,6 @@ const getDocs: () => JSX.Element = () => {
       </Canvas>
 
       <Heading>Remote video tile contextual menu</Heading>
-      <DetailedBetaBanner />
       <Description>
         The VideoGallery provides a contextual menu for each remote video tile which can be accessed by hovering the
         remote video tile and clicking menu button next to the participant display name. You can try it out in any of
@@ -253,14 +296,13 @@ const getDocs: () => JSX.Element = () => {
       <Subheading>Disabling remote video tile contextual menu</Subheading>
       <Description>
         Remote video tile contextual menu is be enabled by default but can be disabled by setting the
-        `remoteVideoTileMenu` prop to false like in the example below.
+        `remoteVideoTileMenuOptions` prop to false like in the example below.
       </Description>
       <Canvas mdxSource={PinnedParticipantsDisabledExampleText}>
         <PinnedParticipantsDisabledExample />
       </Canvas>
 
       <Heading>Pinning Participants</Heading>
-      <DetailedBetaBanner />
       <Description>
         The contextual menu will have a menu item to pin a participant's video tile such that only pinned participants
         are shown in the GridLayout. This is shown in the video clip below. Pinned participants will be shown in the
@@ -315,7 +357,6 @@ const getDocs: () => JSX.Element = () => {
       </Canvas>
 
       <Heading>Remote video stream rendering options</Heading>
-      <DetailedBetaBanner />
       <Description>
         When `useProps` hook is used to provide the props to VideoGallery from the [stateful
         client](./?path=/docs/statefulclient-overview--page), prop `remoteParticipants` will contain information on the
@@ -370,7 +411,6 @@ const getDocs: () => JSX.Element = () => {
       <Source code={renderingOptionsDefault} />
 
       <Heading>Local video tile aspect ratio options</Heading>
-      <SingleLineBetaBanner version={'2.0.0-beta.0'} />
       <Description>
         The local video tile can have its aspect ratio controlled to ensure the expected behavior for the device
         formfactor and orientation. If left unset it will follow the default of `followDeviceOrientation` which will
@@ -387,7 +427,7 @@ const getDocs: () => JSX.Element = () => {
         </Stack>
         <Stack horizontalAlign="center">
           <img
-            style={{ width: '100%', maxWidth: '27.2rem' }}
+            style={{ width: '100%', maxWidth: '25rem' }}
             src="images/storybook-gallery-916.png"
             alt="Floating layout for composite video gallery"
           />
@@ -402,6 +442,25 @@ const getDocs: () => JSX.Element = () => {
           <Description>Local tile size `hidden` removes the local tile</Description>
         </Stack>
       </Stack>
+
+      <Heading>Optimal Video Count and 3x3 Video Tiles</Heading>
+      <Description>
+        The Optimal Video Count (OVC) feature provides a way to make sure that the number of videos rendered within the
+        gallery is appropiate and that all videos are rendering in the best quality possible. This feature is used in
+        the implementation of the VideoGallery as a default behavior for maxRemoteVideoRenderers property currently
+        exposed, changing the previous default which was static to a dynamic one that it is coming from SDK layer. This
+        Optimal Video Count value could increase or decrease during the call according to the network conditions in
+        conjuction with the memory usage by the participant currently rendering videos. To read more about OVC, video
+        quality and how it works within the sdk, [Click
+        Here](https://learn.microsoft.com/en-us/azure/communication-services/how-tos/calling-sdk/manage-video?pivots=platform-web)
+      </Description>
+      <Subheading>3x3 Video Gallery Layout</Subheading>
+      <Description>
+        The 3x3 video gallery allows customers to have 9 remote videos rendering with the highest optimal quality.
+      </Description>
+      <Canvas mdxSource={OVC3x3ExampleText}>
+        <OVC3x3VideoGalleryExample />
+      </Canvas>
 
       <Heading>Props</Heading>
       <ArgsTable of={VideoGalleryComponent} />
@@ -524,7 +583,10 @@ export default {
     maxRemoteVideoStreams: hiddenControl,
     pinnedParticipants: hiddenControl,
     onPinParticipant: hiddenControl,
-    onUnpinParticipant: hiddenControl
+    onUnpinParticipant: hiddenControl,
+    layout: hiddenControl,
+    onDisposeRemoteVideoStreamView: hiddenControl,
+    onDisposeRemoteScreenShareStreamView: hiddenControl
   },
   parameters: {
     docs: {

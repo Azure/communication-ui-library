@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
+
 import React, { useRef } from 'react';
 import { ComplianceState, computeVariant } from './Utils';
 import { _ComplianceBannerProps } from './types';

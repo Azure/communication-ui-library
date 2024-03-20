@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ChatMessage } from '@azure/communication-chat';
 import { MessageStatus } from '@internal/acs-ui-common';
@@ -21,7 +21,8 @@ export const convertChatMessage = (
     policyViolation: !!(
       message.sender?.kind === 'microsoftTeamsUser' &&
       !!message.editedOn &&
-      message.content?.message === ''
+      message.content?.message === '' &&
+      message.content.attachments?.length === 0
     )
   };
 };

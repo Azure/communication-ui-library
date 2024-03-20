@@ -26,11 +26,13 @@ Both hermetic and live tests use [playwright](https://playwright.dev/) test fram
 
 ## Setup
 * Create `.env` file under `packages/react-composites/tests/browser` and in this file, make sure you have defined:
-     *  CONNECTION_STRING
-     *  TEST_DIR
-     *  SNAPSHOT_DIR
-     *  PLAYWRIGHT_OUTPUT_DIR
-* Build all dependencies. Inside `packages/react-composite`, run
+```bash
+CONNECTION_STRING = "<INSERT CONNECTION STRING HERE>"
+TEST_DIR = "tests"
+SNAPSHOT_DIR = "tests/app/browser/snapshots"
+PLAYWRIGHT_OUTPUT_DIR = "temp"
+```
+* Build all dependencies. Inside `packages/react-composites`, run
   ```sh
   rush update; rush build -t .
   ```
@@ -60,7 +62,7 @@ npx playwright install chrome
 
 ## Run tests
 
-For local development, the preferred way to run browser tests is via [../scripts/runBrowswerTests.mjs](../scripts/runBrowswerTests.mjs).
+For local development, the preferred way to run browser tests is via [../scripts/runBrowserTests.mjs](../scripts/runBrowserTests.mjs).
 
 In `packages/react-composites`, run
 
@@ -98,7 +100,7 @@ To update snapshots,
 
 As mentioned above, you should not need to update snapshots manually. This section describes the tooling available for snapshot update. This tooling is also used by the GitHub action mentioned above.
 
-`scripts/runBrowswerTests.mjs` provides a flag `-u` to update tests snapshots for the various groups of tests. [package.json](../package.json) also provides scripts that invoke the helper script to update snapshots. If you are updating snapshots locally, directly invoke the helper.
+`scripts/runBrowserTests.mjs` provides a flag `-u` to update tests snapshots for the various groups of tests. [package.json](../package.json) also provides scripts that invoke the helper script to update snapshots. If you are updating snapshots locally, directly invoke the helper.
 
 ## Test development
 
@@ -156,7 +158,7 @@ test('Your test name here', async ({ pages }, testInfo) => {
 
 ### Local debugging
 
-Use `node scripts/runBrowswerTests.mjs -d` to debug a test locally. In debug mode the script runs the test under [Playwright Inspector](https://playwright.dev/docs/debug). Additionally, some internal test timeouts are relaxed to allow you to single-step through the tests via the inspector.
+Use `node scripts/runBrowserTests.mjs -d` to debug a test locally. In debug mode the script runs the test under [Playwright Inspector](https://playwright.dev/docs/debug). Additionally, some internal test timeouts are relaxed to allow you to single-step through the tests via the inspector.
 
 This mode requires a display device because the tests need to run in a browser with a display. In particular, this means that you can not use this mode on GitHub Codespaces.
 

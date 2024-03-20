@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React from 'react';
 import {
@@ -26,9 +26,8 @@ export const ControlButtonTooltip = (props: ITooltipHostProps): JSX.Element => {
   const theme = useTheme();
   const calloutStyle: Partial<ICalloutContentStyles> = { root: { padding: 0 }, calloutMain: { padding: '0.5rem' } };
 
-  // Place callout with no gap between it and the button.
   const calloutProps = {
-    gapSpace: 0,
+    gapSpace: 4,
     styles: calloutStyle,
     backgroundColor: isDarkThemed(theme) ? theme.palette.neutralLighter : ''
   };

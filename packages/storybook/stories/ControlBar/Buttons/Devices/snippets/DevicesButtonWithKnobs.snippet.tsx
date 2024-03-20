@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { DevicesButton, DevicesButtonProps } from '@azure/communication-react';
 import React, { useState } from 'react';

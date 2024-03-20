@@ -16,6 +16,7 @@ export type ContainerProps = {
   endpointUrl: string;
   threadId: string;
   fluentTheme?: PartialTheme | Theme;
+  rtl?: boolean;
   errorBar?: boolean;
   participants?: boolean;
   topic?: boolean;
@@ -61,6 +62,7 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
         <ChatComposite
           adapter={adapter}
           fluentTheme={props.fluentTheme}
+          rtl={props.rtl ?? false}
           options={{
             errorBar: props.errorBar,
             participantPane: props.participants,

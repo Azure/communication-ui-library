@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import {
   AddChatParticipantsResult,
@@ -21,14 +21,14 @@ type PublicInterface<T> = { [K in keyof T]: T[K] };
  * A public interface compatible stub for ChatClient.
  */
 export class StubChatClient implements PublicInterface<ChatClient> {
-  private threadClient;
+  private threadClient: ChatThreadClient | undefined;
 
   /**
    * @param threadClient If set, an implementation of ChatThreadClient interface that is returned for *all* calls to
    * {@getChatThreadClient()}.
    */
   constructor(threadClient?: PublicInterface<ChatThreadClient>) {
-    this.threadClient = threadClient;
+    this.threadClient = threadClient as ChatThreadClient;
   }
 
   getChatThreadClient(): ChatThreadClient {
@@ -107,6 +107,10 @@ export class StubChatThreadClient implements PublicInterface<ChatThreadClient> {
   }
   listReadReceipts(): PagedAsyncIterableIterator<ChatMessageReadReceipt> {
     return pagedAsyncIterator([]);
+  }
+  /* @conditional-compile-remove(chat-beta-sdk) */
+  updateProperties(): Promise<void> {
+    return Promise.resolve();
   }
 }
 

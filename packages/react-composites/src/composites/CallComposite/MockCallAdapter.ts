@@ -1,33 +1,39 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
-import { AudioDeviceInfo, Call, DtmfTone, PermissionConstraints, VideoDeviceInfo } from '@azure/communication-calling';
+import {
+  AudioDeviceInfo,
+  Call,
+  DtmfTone,
+  ParticipantRole,
+  PermissionConstraints,
+  VideoDeviceInfo
+} from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { CallKind } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { EnvironmentInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(rooms) */
-import { Role } from '@internal/react-components';
-import { EventEmitter } from 'stream';
+import { EventEmitter } from 'events';
 import type { CallAdapter, CallAdapterState } from './adapter';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 
 /**
- * Temporary copy of the packages\react-composites\tests\browser\call\app\mocks\MockCallAdapter.ts
+ * Temporary copy of the packages/react-composites/tests/browser/call/app/mocks/MockCallAdapter.ts
+ * @internal
  */
 // TODO: Remove this simplified copy of the MockCallAdapter when the original MockCallAdapter is moved to fake-backends package and can be imported
-export class MockCallAdapter implements CallAdapter {
+export class _MockCallAdapter implements CallAdapter {
   constructor(testState: {
     askDevicePermission?: (constrain: PermissionConstraints) => Promise<void>;
-    /* @conditional-compile-remove(rooms) */ options?: { roleHint?: Role };
+    localParticipantRole?: ParticipantRole;
   }) {
-    this.state = { ...defaultCallAdapterState };
+    this.state = {
+      ...createDefaultCallAdapterState(/* @conditional-compile-remove(rooms) */ testState.localParticipantRole)
+    };
 
     if (testState.askDevicePermission) {
       this.askDevicePermission = testState.askDevicePermission;
-    }
-    /* @conditional-compile-remove(rooms) */
-    if (testState.options?.roleHint) {
-      this.state.roleHint = testState.options.roleHint;
     }
   }
 
@@ -61,9 +67,6 @@ export class MockCallAdapter implements CallAdapter {
   joinCall(): Call | undefined {
     throw Error('joinCall not implemented');
   }
-  joinCallWithOptions(): Call | undefined {
-    throw Error('joinCallWithOptions not implemented');
-  }
   leaveCall(): Promise<void> {
     throw Error('leaveCall not implemented');
   }
@@ -93,6 +96,15 @@ export class MockCallAdapter implements CallAdapter {
   }
   stopScreenShare(): Promise<void> {
     throw Error('stopScreenShare not implemented');
+  }
+  raiseHand(): Promise<void> {
+    throw Error('raiseHand not implemented');
+  }
+  lowerHand(): Promise<void> {
+    throw Error('lowerHand not implemented');
+  }
+  onReactionClick(emoji: string): Promise<void> {
+    throw Error(`Reaction of type ${emoji} send not successful`);
   }
   removeParticipant(): Promise<void> {
     throw Error('removeParticipant not implemented');
@@ -139,10 +151,10 @@ export class MockCallAdapter implements CallAdapter {
     throw Error('sendDtmfTone not implemented');
   }
   on(): void {
-    throw Error('on not implemented');
+    return;
   }
   off(): void {
-    throw Error('off not implemented');
+    return;
   }
   /* @conditional-compile-remove(PSTN-calls) */
   getEnvironmentInfo(): Promise<EnvironmentInfo> {
@@ -185,68 +197,96 @@ export class MockCallAdapter implements CallAdapter {
   public updateSelectedVideoBackgroundEffect(): void {
     throw new Error('updateSelectedVideoBackgroundEffect not implemented.');
   }
+  /* @conditional-compile-remove(end-of-call-survey) */ // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined> {
+    throw Error('submitStarSurvey not implemented');
+  }
+  /* @conditional-compile-remove(spotlight) */ // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  startSpotlight(userIds?: string[]): Promise<void> {
+    throw Error('startSpotlight not implemented');
+  }
+  /* @conditional-compile-remove(spotlight) */ // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  stopSpotlight(userIds?: string[]): Promise<void> {
+    throw Error('stopSpotlight not implemented');
+  }
+  /* @conditional-compile-remove(spotlight) */
+  stopAllSpotlight(): Promise<void> {
+    throw Error('stopAllSpotlight not implemented');
+  }
 }
 
 /**
- * Default call adapter state that the {@link MockCallAdapter} class is initialized with
+ * Default call adapter state that the {@link _MockCallAdapter} class is initialized with an optional role.
  */
-const defaultCallAdapterState: CallAdapterState = {
-  displayName: 'Agnes Thompson',
-  isLocalPreviewMicrophoneEnabled: true,
-  page: 'call',
-  call: {
-    id: 'call1',
-    /* @conditional-compile-remove(teams-identity-support) */
-    kind: CallKind.Call,
-    callerInfo: { displayName: 'caller', identifier: { kind: 'communicationUser', communicationUserId: '1' } },
-    direction: 'Incoming',
-    transcription: { isTranscriptionActive: false },
-    recording: { isRecordingActive: false },
-    startTime: new Date(500000000000),
-    endTime: new Date(500000000000),
-    diagnostics: { network: { latest: {} }, media: { latest: {} } },
-    state: 'Connected',
-    localVideoStreams: [],
-    isMuted: false,
-    isScreenSharingOn: false,
-    remoteParticipants: {},
-    remoteParticipantsEnded: {},
-    /* @conditional-compile-remove(close-captions) */
-    captionsFeature: {
-      captions: [],
-      supportedSpokenLanguages: [],
-      supportedCaptionLanguages: [],
-      currentCaptionLanguage: '',
-      currentSpokenLanguage: '',
-      isCaptionsFeatureActive: false,
-      startCaptionsInProgress: false
+const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState => {
+  return {
+    displayName: 'Agnes Thompson',
+    isLocalPreviewMicrophoneEnabled: true,
+    page: 'call',
+    call: {
+      id: 'call1',
+      /* @conditional-compile-remove(teams-identity-support) */
+      kind: CallKind.Call,
+      callerInfo: { displayName: 'caller', identifier: { kind: 'communicationUser', communicationUserId: '1' } },
+      direction: 'Incoming',
+      transcription: { isTranscriptionActive: false },
+      recording: { isRecordingActive: false },
+      /* @conditional-compile-remove(local-recording-notification) */
+      localRecording: { isLocalRecordingActive: false },
+      startTime: new Date(500000000000),
+      endTime: new Date(500000000000),
+      diagnostics: { network: { latest: {} }, media: { latest: {} } },
+      state: 'Connected',
+      localVideoStreams: [],
+      isMuted: false,
+      isScreenSharingOn: false,
+      remoteParticipants: {},
+      remoteParticipantsEnded: {},
+      raiseHand: { raisedHands: [] },
+      /* @conditional-compile-remove(ppt-live) */
+      pptLive: { isActive: false },
+      /* @conditional-compile-remove(reaction) */
+      localParticipantReaction: undefined,
+      /* @conditional-compile-remove(rooms) */
+      role,
+      /* @conditional-compile-remove(close-captions) */
+      captionsFeature: {
+        captions: [],
+        supportedSpokenLanguages: [],
+        supportedCaptionLanguages: [],
+        currentCaptionLanguage: '',
+        currentSpokenLanguage: '',
+        isCaptionsFeatureActive: false,
+        startCaptionsInProgress: false
+      },
+      /* @conditional-compile-remove(call-transfer) */
+      transfer: {
+        acceptedTransfers: {}
+      },
+      optimalVideoCount: {
+        maxRemoteVideoStreams: 4
+      }
     },
-    /* @conditional-compile-remove(call-transfer) */
-    transfer: {
-      acceptedTransfers: {}
+    userId: { kind: 'communicationUser', communicationUserId: '1' },
+    devices: {
+      isSpeakerSelectionAvailable: true,
+      selectedCamera: { id: 'camera1', name: '1st Camera', deviceType: 'UsbCamera' },
+      cameras: [{ id: 'camera1', name: '1st Camera', deviceType: 'UsbCamera' }],
+      selectedMicrophone: {
+        id: 'microphone1',
+        name: '1st Microphone',
+        deviceType: 'Microphone',
+        isSystemDefault: true
+      },
+      microphones: [{ id: 'microphone1', name: '1st Microphone', deviceType: 'Microphone', isSystemDefault: true }],
+      selectedSpeaker: { id: 'speaker1', name: '1st Speaker', deviceType: 'Speaker', isSystemDefault: true },
+      speakers: [{ id: 'speaker1', name: '1st Speaker', deviceType: 'Speaker', isSystemDefault: true }],
+      unparentedViews: [],
+      deviceAccess: { video: true, audio: true }
     },
-    /* @conditional-compile-remove(optimal-video-count) */
-    optimalVideoCount: {
-      maxRemoteVideoStreams: 4
-    }
-  },
-  userId: { kind: 'communicationUser', communicationUserId: '1' },
-  devices: {
-    isSpeakerSelectionAvailable: true,
-    selectedCamera: { id: 'camera1', name: '1st Camera', deviceType: 'UsbCamera' },
-    cameras: [{ id: 'camera1', name: '1st Camera', deviceType: 'UsbCamera' }],
-    selectedMicrophone: {
-      id: 'microphone1',
-      name: '1st Microphone',
-      deviceType: 'Microphone',
-      isSystemDefault: true
-    },
-    microphones: [{ id: 'microphone1', name: '1st Microphone', deviceType: 'Microphone', isSystemDefault: true }],
-    selectedSpeaker: { id: 'speaker1', name: '1st Speaker', deviceType: 'Speaker', isSystemDefault: true },
-    speakers: [{ id: 'speaker1', name: '1st Speaker', deviceType: 'Speaker', isSystemDefault: true }],
-    unparentedViews: [],
-    deviceAccess: { video: true, audio: true }
-  },
-  isTeamsCall: false,
-  latestErrors: {}
+    isTeamsCall: false,
+    /* @conditional-compile-remove(rooms) */
+    isRoomsCall: false,
+    latestErrors: {}
+  };
 };

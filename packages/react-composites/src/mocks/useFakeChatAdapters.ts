@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { _ChatThreadRestError, _FakeChatAdapterArgs } from './FakeChatAdapterArgs';
 import { createAzureCommunicationChatAdapterFromClient } from '../composites/ChatComposite/adapter/AzureCommunicationChatAdapter';
@@ -8,11 +8,13 @@ import type { ChatAdapter } from '../composites/ChatComposite/adapter/ChatAdapte
 import { FakeChatClient, IChatClient, Model } from '@internal/fake-backends';
 
 import { useEffect, useState } from 'react';
-import { ChatClient, ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
-import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(communication-common-beta-v3) */
-import { isMicrosoftBotIdentifier } from '@azure/communication-common';
-import { CommunicationIdentifier } from '@azure/communication-signaling';
+import { ChatClient, ChatParticipant, ChatThreadClient, CreateChatThreadResult } from '@azure/communication-chat';
+import {
+  CommunicationTokenCredential,
+  CommunicationUserIdentifier,
+  getIdentifierKind
+} from '@azure/communication-common';
+import { CommunicationIdentifier } from '@azure/communication-common';
 import { _createStatefulChatClientWithDeps } from '@internal/chat-stateful-client';
 import { RestError } from '@azure/core-rest-pipeline';
 
@@ -41,11 +43,6 @@ export function _useFakeChatAdapters(args: _FakeChatAdapterArgs): _FakeChatAdapt
         throw new Error(
           `Local participant must have display name defined, got ${JSON.stringify(args.localParticipant)}`
         );
-      }
-
-      /* @conditional-compile-remove(communication-common-beta-v3) */
-      if (isMicrosoftBotIdentifier(args.localParticipant.id)) {
-        throw new Error('Local participant cannot be a bot');
       }
 
       const chatClientModel = new Model({ asyncDelivery: false });
@@ -92,12 +89,11 @@ export function _useFakeChatAdapters(args: _FakeChatAdapterArgs): _FakeChatAdapt
 const initializeAdapters = async (
   participants: ChatParticipant[],
   chatClientModel: Model,
-  thread
+  thread: CreateChatThreadResult
 ): Promise<ChatAdapter[]> => {
   const remoteAdapters: ChatAdapter[] = [];
   for (const participant of participants) {
-    /* @conditional-compile-remove(communication-common-beta-v3) */
-    if (isMicrosoftBotIdentifier(participant.id)) {
+    if (getIdentifierKind(participant.id).kind === 'microsoftTeamsApp') {
       throw new Error('Creating an adapter with a Bot participant is not supported');
     }
     if (!participant.displayName) {
@@ -110,6 +106,7 @@ const initializeAdapters = async (
       chatClient: remoteChatClient as IChatClient as ChatClient,
       chatThreadClient: remoteChatClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID')
     });
+
     remoteAdapters.push(remoteAdapter);
   }
   return remoteAdapters;
@@ -122,7 +119,7 @@ const initializeAdapter = async (
   const statefulChatClient = _createStatefulChatClientWithDeps(adapterInfo.chatClient, {
     userId: adapterInfo.userId as CommunicationUserIdentifier,
     displayName: adapterInfo.displayName,
-    endpoint: 'FAKE_ENDPOINT',
+    endpoint: 'http://FAKE_ENDPOINT',
     credential: fakeToken
   });
   statefulChatClient.startRealtimeNotifications();
@@ -130,12 +127,7 @@ const initializeAdapter = async (
     adapterInfo.chatThreadClient.threadId
   );
   registerChatThreadClientMethodErrors(chatThreadClient, chatThreadClientMethodErrors);
-  return await createAzureCommunicationChatAdapterFromClient(
-    statefulChatClient,
-    chatThreadClient,
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-    { credential: fakeToken }
-  );
+  return await createAzureCommunicationChatAdapterFromClient(statefulChatClient, chatThreadClient);
 };
 
 interface AdapterInfo {
@@ -177,11 +169,14 @@ const registerChatThreadClientMethodErrors = (
   chatThreadClientMethodErrors?: Partial<Record<keyof ChatThreadClient, _ChatThreadRestError>>
 ): void => {
   for (const k in chatThreadClientMethodErrors) {
-    chatThreadClient[k] = () => {
-      throw new RestError(chatThreadClientMethodErrors[k].message ?? '', {
-        code: chatThreadClientMethodErrors[k].code,
-        statusCode: chatThreadClientMethodErrors[k].statusCode
-      });
-    };
+    if (k in chatThreadClient) {
+      const key = k as keyof Omit<ChatThreadClient, 'threadId'>;
+      chatThreadClient[key] = () => {
+        throw new RestError(chatThreadClientMethodErrors[key]?.message ?? '', {
+          code: chatThreadClientMethodErrors[key]?.code,
+          statusCode: chatThreadClientMethodErrors[key]?.statusCode
+        });
+      };
+    }
   }
 };

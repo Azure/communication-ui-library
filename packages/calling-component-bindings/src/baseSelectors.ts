@@ -1,9 +1,10 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 import { DominantSpeakersInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(capabilities) */
+import { ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(rooms) */
 import { ParticipantRole } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
@@ -14,8 +15,14 @@ import {
   CallErrors,
   DiagnosticsCallFeatureState
 } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(spotlight) */
+import { SpotlightCallFeatureState } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(reaction) */
+import { ReactionState } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from '@internal/calling-stateful-client';
+import { RaisedHandState } from '@internal/calling-stateful-client';
+import { _SupportedCaptionLanguage, _SupportedSpokenLanguage } from '@internal/react-components';
 
 /**
  * Common props used to reference calling declarative client state.
@@ -31,12 +38,32 @@ export type CallingBaseSelectorProps = {
  */
 export const getDeviceManager = (state: CallClientState): DeviceManagerState => state.deviceManager;
 
-/* @conditional-compile-remove(rooms) */
 /**
  * @private
  */
-export const getRole = (state: CallClientState, props: CallingBaseSelectorProps): ParticipantRole | undefined =>
-  state.calls[props.callId]?.role;
+export const getRole = (state: CallClientState, props: CallingBaseSelectorProps): ParticipantRole | undefined => {
+  /* @conditional-compile-remove(rooms) */
+  return state.calls[props.callId]?.role;
+  return 'Unknown';
+};
+
+/**
+ * @private
+ */
+export const isHideAttendeeNamesEnabled = (state: CallClientState, props: CallingBaseSelectorProps): boolean => {
+  /* @conditional-compile-remove(hide-attendee-name) */
+  return state.calls[props.callId]?.hideAttendeeNames ?? false;
+  return false;
+};
+
+/* @conditional-compile-remove(capabilities) */
+/**
+ * @private
+ */
+export const getCapabilities = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): ParticipantCapabilities | undefined => state.calls[props.callId]?.capabilitiesFeature?.capabilities;
 
 /**
  * @private
@@ -69,6 +96,38 @@ export const getRemoteParticipants = (
 /**
  * @private
  */
+export const getLocalParticipantRaisedHand = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): RaisedHandState | undefined => {
+  return state.calls[props.callId]?.raiseHand?.localParticipantRaisedHand;
+};
+
+/* @conditional-compile-remove(spotlight) */
+/**
+ * @private
+ */
+export const getSpotlightCallFeature = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): SpotlightCallFeatureState | undefined => {
+  return state.calls[props.callId]?.spotlight;
+};
+
+/* @conditional-compile-remove(reaction) */
+/**
+ * @private
+ */
+export const getLocalParticipantReactionState = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): ReactionState | undefined => {
+  return state.calls[props.callId]?.localParticipantReaction;
+};
+
+/**
+ * @private
+ */
 export const getIsScreenSharingOn = (state: CallClientState, props: CallingBaseSelectorProps): boolean | undefined =>
   state.calls[props.callId]?.isScreenSharingOn;
 
@@ -78,7 +137,6 @@ export const getIsScreenSharingOn = (state: CallClientState, props: CallingBaseS
 export const getIsMuted = (state: CallClientState, props: CallingBaseSelectorProps): boolean | undefined =>
   state.calls[props.callId]?.isMuted;
 
-/* @conditional-compile-remove(optimal-video-count) */
 /**
  * @private
  */
@@ -124,7 +182,6 @@ export const getDiagnostics = (
   props: CallingBaseSelectorProps
 ): DiagnosticsCallFeatureState | undefined => state.calls[props.callId]?.diagnostics;
 
-/* @conditional-compile-remove(PSTN-calls) */
 /**
  * @private
  */
@@ -175,8 +232,8 @@ export const getStartCaptionsInProgress = (
 export const getCurrentCaptionLanguage = (
   state: CallClientState,
   props: CallingBaseSelectorProps
-): string | undefined => {
-  return state.calls[props.callId]?.captionsFeature.currentCaptionLanguage;
+): _SupportedCaptionLanguage | undefined => {
+  return state.calls[props.callId]?.captionsFeature.currentCaptionLanguage as _SupportedCaptionLanguage;
 };
 
 /* @conditional-compile-remove(close-captions) */
@@ -184,8 +241,8 @@ export const getCurrentCaptionLanguage = (
 export const getCurrentSpokenLanguage = (
   state: CallClientState,
   props: CallingBaseSelectorProps
-): string | undefined => {
-  return state.calls[props.callId]?.captionsFeature.currentSpokenLanguage;
+): _SupportedSpokenLanguage | undefined => {
+  return state.calls[props.callId]?.captionsFeature.currentSpokenLanguage as _SupportedSpokenLanguage;
 };
 
 /* @conditional-compile-remove(close-captions) */
@@ -193,8 +250,8 @@ export const getCurrentSpokenLanguage = (
 export const getSupportedCaptionLanguages = (
   state: CallClientState,
   props: CallingBaseSelectorProps
-): string[] | undefined => {
-  return state.calls[props.callId]?.captionsFeature.supportedCaptionLanguages;
+): _SupportedCaptionLanguage[] | undefined => {
+  return state.calls[props.callId]?.captionsFeature.supportedCaptionLanguages as _SupportedCaptionLanguage[];
 };
 
 /* @conditional-compile-remove(close-captions) */
@@ -202,6 +259,6 @@ export const getSupportedCaptionLanguages = (
 export const getSupportedSpokenLanguages = (
   state: CallClientState,
   props: CallingBaseSelectorProps
-): string[] | undefined => {
-  return state.calls[props.callId]?.captionsFeature.supportedSpokenLanguages;
+): _SupportedSpokenLanguage[] | undefined => {
+  return state.calls[props.callId]?.captionsFeature.supportedSpokenLanguages as _SupportedSpokenLanguage[];
 };

@@ -1,28 +1,25 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
-import { mergeStyles } from '@fluentui/react';
+import { IStyle, mergeStyles } from '@fluentui/react';
+import { editorTextBoxButtonStyle } from './SendBox.styles';
 
 /**
  * @private
  */
-export const editBoxStyle = (inlineEditButtons: boolean): string => {
-  const paddingRight = inlineEditButtons ? {} : { paddingRight: '0.5rem' };
-
-  return mergeStyles({
-    marginTop: '0.0875rem',
-    marginBottom: '0.0875rem',
-    // @TODO future refactor: This is being used to give enough space to the accept/reject edits buttons
-    // This space affordance should be handled by the InputBoxComponent not the here (by the parent of the InputBoxComponent)
-    ...paddingRight
-  });
-};
+export const editBoxStyle = mergeStyles({
+  marginTop: '0.0875rem',
+  marginBottom: '0.0875rem'
+});
 
 /**
  * @private
  */
 export const editingButtonStyle = mergeStyles({
-  margin: 'auto .3rem'
+  margin: '0',
+  width: '2.125rem',
+  height: '2.125rem',
+  padding: '0.375rem 0 0 0'
 });
 
 /**
@@ -34,12 +31,26 @@ export const inputBoxIcon = mergeStyles({
     stroke: 'currentColor'
   }
 });
+/**
+ * @private
+ */
+export const richTextEditBoxActionButtonIcon = mergeStyles(editorTextBoxButtonStyle, {
+  '&:hover svg': {
+    stroke: 'currentColor'
+  }
+});
+
+/**
+ * @private
+ */
+export const editBoxWidthStyles: IStyle = {
+  minWidth: '6.25rem',
+  maxWidth: '100%'
+};
 
 /**
  * @private
  */
 export const editBoxStyleSet = {
-  root: {
-    width: '100%'
-  }
+  root: editBoxWidthStyles
 };

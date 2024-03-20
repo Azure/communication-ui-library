@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoEffectErrorPayload, VideoEffectsFeature } from '@azure/communication-calling';

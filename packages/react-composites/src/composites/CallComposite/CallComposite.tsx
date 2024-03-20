@@ -1,28 +1,22 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { _isInCall } from '@internal/calling-component-bindings';
-import {
-  ActiveErrorMessage,
-  ErrorBar,
-  OnRenderAvatarCallback,
-  ParticipantMenuItemsCallback,
-  useTheme
-} from '@internal/react-components';
+import { ActiveErrorMessage, ErrorBar, ParticipantMenuItemsCallback, useTheme } from '@internal/react-components';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { CallSurveyImprovementSuggestions } from '@internal/react-components';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons } from '../common/icons';
-import { CompositeLocale, useLocale } from '../localization';
-import { CommonCallAdapter } from './adapter/CallAdapter';
+import { useLocale } from '../localization';
+import { CommonCallAdapter, StartCallIdentifier } from './adapter/CallAdapter';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
 import { CallPage } from './pages/CallPage';
 import { ConfigurationPage } from './pages/ConfigurationPage';
 import { NoticePage } from './pages/NoticePage';
 import { useSelector } from './hooks/useSelector';
-import { getEndedCall, getPage } from './selectors/baseSelectors';
-/* @conditional-compile-remove(rooms) */
-import { getRole } from './selectors/baseSelectors';
+import { getEndedCall, getPage, getTargetCallees } from './selectors/baseSelectors';
 import { LobbyPage } from './pages/LobbyPage';
 /* @conditional-compile-remove(call-transfer) */
 import { TransferPage } from './pages/TransferPage';
@@ -33,8 +27,6 @@ import {
 } from './styles/CallComposite.styles';
 import { CallControlOptions } from './types/CallControlOptions';
 
-/* @conditional-compile-remove(rooms) */
-import { _PermissionsProvider, Role, _getPermissions } from '@internal/react-components';
 import { LayerHost, mergeStyles } from '@fluentui/react';
 import { modalLayerHostStyle } from '../common/styles/ModalLocalAndRemotePIP.styles';
 import { useId } from '@fluentui/react-hooks';
@@ -42,13 +34,30 @@ import { useId } from '@fluentui/react-hooks';
 import { HoldPage } from './pages/HoldPage';
 /* @conditional-compile-remove(unsupported-browser) */
 import { UnsupportedBrowserPage } from './pages/UnsupportedBrowser';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { CallSurvey } from '@azure/communication-calling';
 import { PermissionConstraints } from '@azure/communication-calling';
+/* @conditional-compile-remove(rooms) */
+import { ParticipantRole } from '@azure/communication-calling';
 import { MobileChatSidePaneTabHeaderProps } from '../common/TabHeader';
 import { InjectedSidePaneProps, SidePaneProvider, SidePaneRenderer } from './components/SidePane/SidePaneProvider';
-import { CallState } from '@internal/calling-stateful-client';
-import { filterLatestErrors, trackErrorAsDismissed, updateTrackedErrorsWithActiveErrors } from './utils';
+import {
+  filterLatestErrors,
+  getEndedCallPageProps,
+  trackErrorAsDismissed,
+  updateTrackedErrorsWithActiveErrors
+} from './utils';
 import { TrackedErrors } from './types/ErrorTracking';
 import { usePropsFor } from './hooks/usePropsFor';
+import { deviceCountSelector } from './selectors/deviceCountSelector';
+import { VideoGalleryLayout } from '@internal/react-components';
+/* @conditional-compile-remove(capabilities) */
+import { capabilitiesChangedInfoAndRoleSelector } from './selectors/capabilitiesChangedInfoAndRoleSelector';
+/* @conditional-compile-remove(capabilities) */
+import { useTrackedCapabilityChangedNotifications } from './utils/TrackCapabilityChangedNotifications';
+import { useEndedCallConsoleErrors } from './utils/useConsoleErrors';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { SurveyPage } from './pages/SurveyPage';
 
 /**
  * Props for {@link CallComposite}.
@@ -102,11 +111,10 @@ export interface DeviceCheckOptions {
   microphone: 'required' | 'optional' | 'doNotPrompt';
 }
 
-/* @conditional-compile-remove(pinned-participants) */
 /**
  * Menu options for remote video tiles in {@link VideoGallery}.
  *
- * @beta
+ * @public
  */
 export interface RemoteVideoTileMenuOptions {
   /**
@@ -117,11 +125,10 @@ export interface RemoteVideoTileMenuOptions {
   isHidden?: boolean;
 }
 
-/* @conditional-compile-remove(click-to-call) */
 /**
  * Options for the local video tile in the Call composite.
  *
- * @beta
+ * @public
  */
 export interface LocalVideoTileOptions {
   /**
@@ -131,7 +138,6 @@ export interface LocalVideoTileOptions {
    * @remarks 'grid' - local video tile will be rendered in the grid view of the videoGallery.
    * 'floating' - local video tile will be rendered in the floating position and will observe overflow gallery
    * local video tile rules and be docked in the bottom corner.
-   * 'hidden' - local video tile will not be rendered.
    * This does not affect the Configuration screen or the side pane Picture in Picture in Picture view.
    */
   position?: 'grid' | 'floating';
@@ -208,33 +214,128 @@ export type CallCompositeOptions = {
    * if this is not supplied, the composite will not show a unsupported browser page.
    */
   onEnvironmentInfoTroubleshootingClick?: () => void;
-  /* @conditional-compile-remove(pinned-participants) */
   /**
    * Remote participant video tile menu options
    */
-  remoteVideoTileMenu?: RemoteVideoTileMenuOptions;
-  /* @conditional-compile-remove(click-to-call) */
+  remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
   /**
    * Options for controlling the local video tile.
    *
    * @remarks if 'false' the local video tile will not be rendered.
    */
   localVideoTile?: boolean | LocalVideoTileOptions;
+  /**
+   * Options for controlling the starting layout of the composite's video gallery
+   */
+  galleryOptions?: {
+    /**
+     * Layout for the gallery when the call starts
+     */
+    layout?: VideoGalleryLayout;
+  };
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Options for end of call survey
+   */
+  surveyOptions?: {
+    /**
+     * Disable call survey at the end of a call.
+     * @defaultValue false
+     */
+    disableSurvey?: boolean;
+    /**
+     * Optional callback to redirect users to custom screens when survey is done, note that default end call screen will be shown if this callback is not provided
+     * This callback can be used to redirect users to different screens depending on survey state, whether it is submitted, skipped or has a problem when submitting the survey
+     */
+    onSurveyClosed?: (surveyState: 'sent' | 'skipped' | 'error', surveyError?: string) => void;
+    /**
+     * Optional callback to handle survey data including free form text response
+     * Note that free form text response survey option is only going to be enabled when this callback is provided
+     * User will need to handle all free form text response on their own
+     */
+    onSurveySubmitted?: (
+      callId: string,
+      surveyId: string,
+      /**
+       * This is the survey results containing star survey data and API tag survey data.
+       * This part of the result will always be sent to the calling sdk
+       * This callback provides user with the ability to gain access to survey data
+       */
+      submittedSurvey: CallSurvey,
+      /**
+       * This is the survey results containing free form text
+       * This part of the result will not be handled by composites
+       * User will need to collect and handle this information 100% on their own
+       * Free form text survey is not going to show in the UI if onSurveySubmitted is not populated
+       */
+      improvementSuggestions: CallSurveyImprovementSuggestions
+    ) => Promise<void>;
+  };
+  /* @conditional-compile-remove(custom-branding) */
+  /**
+   * Options for setting additional customizations related to personalized branding.
+   */
+  branding?: {
+    /**
+     * Logo displayed on the configuration page.
+     */
+    logo?: {
+      /**
+       * URL for the logo image.
+       *
+       * @remarks
+       * Recommended size is 80x80 pixels.
+       */
+      url: string;
+      /**
+       * Alt text for the logo image.
+       */
+      alt?: string;
+      /**
+       * The logo can be displayed as a circle.
+       *
+       * @defaultValue 'unset'
+       */
+      shape?: 'unset' | 'circle';
+    };
+    /* @conditional-compile-remove(custom-branding) */
+    /**
+     * Background image displayed on the configuration page.
+     */
+    backgroundImage?: {
+      /**
+       * URL for the background image.
+       *
+       * @remarks
+       * Background image should be larger than 576x567 pixels and smaller than 2048x2048 pixels pixels.
+       */
+      url: string;
+    };
+  };
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Options for settings related to spotlight.
+   */
+  spotlight?: {
+    /**
+     * Flag to hide the menu buttons to start and stop spotlight for remote participants and the local participant.
+     * @defaultValue false
+     */
+    hideSpotlightButtons?: boolean;
+  };
 };
 
 type MainScreenProps = {
   mobileView: boolean;
   modalLayerHostId: string;
-  onRenderAvatar?: OnRenderAvatarCallback;
   callInvitationUrl?: string;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   options?: CallCompositeOptions;
-  /* @conditional-compile-remove(rooms) */
-  roleHint?: Role;
   overrideSidePane?: InjectedSidePaneProps;
   onSidePaneIdChange?: (sidePaneId: string | undefined) => void;
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
+  onCloseChatPane?: () => void;
 };
 
 const isShowing = (overrideSidePane?: InjectedSidePaneProps): boolean => {
@@ -242,12 +343,41 @@ const isShowing = (overrideSidePane?: InjectedSidePaneProps): boolean => {
 };
 
 const MainScreen = (props: MainScreenProps): JSX.Element => {
-  const { callInvitationUrl, onRenderAvatar, onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
+  const adapter = useAdapter();
+  const { camerasCount, microphonesCount } = useSelector(deviceCountSelector);
+  const hasCameras = camerasCount > 0;
+  const hasMicrophones = microphonesCount > 0;
+
+  useEffect(() => {
+    (async () => {
+      const constrain = getQueryOptions({
+        /* @conditional-compile-remove(rooms) */ role: adapter.getState().call?.role
+      });
+      await adapter.askDevicePermission(constrain);
+      adapter.queryCameras();
+      adapter.queryMicrophones();
+      adapter.querySpeakers();
+    })();
+  }, [
+    adapter,
+    // Ensure we re-ask for permissions if the number of devices goes from 0 -> n during a call
+    // as we cannot request permissions when there are no devices.
+    hasCameras,
+    hasMicrophones
+  ]);
+
+  const { callInvitationUrl, onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
   const page = useSelector(getPage);
   const endedCall = useSelector(getEndedCall);
 
   const [sidePaneRenderer, setSidePaneRenderer] = React.useState<SidePaneRenderer | undefined>();
   const [injectedSidePaneProps, setInjectedSidePaneProps] = React.useState<InjectedSidePaneProps>();
+  const [userSetGalleryLayout, setUserSetGalleryLayout] = useState<VideoGalleryLayout>(
+    props.options?.galleryOptions?.layout ?? 'floatingLocalVideo'
+  );
+  const [userSetOverflowGalleryPosition, setUserSetOverflowGalleryPosition] = useState<'Responsive' | 'horizontalTop'>(
+    'Responsive'
+  );
 
   const overridePropsRef = useRef<InjectedSidePaneProps | undefined>(props.overrideSidePane);
   useEffect(() => {
@@ -265,6 +395,24 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     onSidePaneIdChange?.(sidePaneRenderer?.id);
   }, [sidePaneRenderer?.id, onSidePaneIdChange]);
 
+  // When the call ends ensure the side pane is set to closed to prevent the side pane being open if the call is re-joined.
+  useEffect(() => {
+    const closeSidePane = (): void => {
+      setSidePaneRenderer(undefined);
+    };
+    adapter.on('callEnded', closeSidePane);
+    return () => {
+      adapter.off('callEnded', closeSidePane);
+    };
+  }, [adapter]);
+
+  /* @conditional-compile-remove(capabilities) */
+  const capabilitiesChangedInfoAndRole = useSelector(capabilitiesChangedInfoAndRoleSelector);
+
+  /* @conditional-compile-remove(capabilities) */
+  const capabilitiesChangedNotificationBarProps =
+    useTrackedCapabilityChangedNotifications(capabilitiesChangedInfoAndRole);
+
   // Track the last dismissed errors of any error kind to prevent errors from re-appearing on subsequent page navigation
   // This works by tracking the most recent timestamp of any active error type.
   // And then tracking when that error type was last dismissed.
@@ -277,46 +425,32 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     setTrackedErrors((prev) => trackErrorAsDismissed(error.type, prev));
   }, []);
   const latestErrors = useMemo(() => filterLatestErrors(activeErrors, trackedErrors), [activeErrors, trackedErrors]);
-
-  const adapter = useAdapter();
+  const callees = useSelector(getTargetCallees) as StartCallIdentifier[];
   const locale = useLocale();
   const palette = useTheme().palette;
+  /* @conditional-compile-remove(PSTN-calls) */
+  const alternateCallerId = adapter.getState().alternateCallerId;
   const leavePageStyle = useMemo(() => leavingPageStyle(palette), [palette]);
-
-  /* @conditional-compile-remove(rooms) */
-  const role = useSelector(getRole);
-
   let pageElement: JSX.Element | undefined;
-  /* @conditional-compile-remove(rooms) */
-  switch (page) {
-    case 'roomNotFound':
-      pageElement = (
-        <NoticePage
-          iconName="NoticePageInvalidRoom"
-          title={locale.strings.call.roomNotFoundTitle}
-          moreDetails={locale.strings.call.roomNotFoundDetails}
-          dataUiId={'room-not-found-page'}
-        />
-      );
-      break;
-    case 'deniedPermissionToRoom':
-      pageElement = (
-        <NoticePage
-          iconName="NoticePageInvalidRoom"
-          title={locale.strings.call.deniedPermissionToRoomTitle}
-          moreDetails={locale.strings.call.deniedPermissionToRoomDetails}
-          dataUiId={'not-invited-to-room-page'}
-        />
-      );
-      break;
-  }
   switch (page) {
     case 'configuration':
       pageElement = (
         <ConfigurationPage
           mobileView={props.mobileView}
           startCallHandler={(): void => {
-            adapter.joinCall();
+            if (callees) {
+              adapter.startCall(
+                callees,
+                /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
+                  ? { alternateCallerId: { phoneNumber: alternateCallerId } }
+                  : {}
+              );
+            } else {
+              adapter.joinCall({
+                microphoneOn: 'keep',
+                cameraOn: 'keep'
+              });
+            }
           }}
           updateSidePaneRenderer={setSidePaneRenderer}
           latestErrors={latestErrors}
@@ -328,6 +462,12 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           onPermissionsTroubleshootingClick={props.options?.onPermissionsTroubleshootingClick}
           /* @conditional-compile-remove(call-readiness) */
           onNetworkingTroubleShootingClick={props.options?.onNetworkingTroubleShootingClick}
+          /* @conditional-compile-remove(capabilities) */
+          capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
+          /* @conditional-compile-remove(custom-branding) */
+          logo={props.options?.branding?.logo}
+          /* @conditional-compile-remove(custom-branding) */
+          backgroundImage={props.options?.branding?.backgroundImage}
         />
       );
       break;
@@ -372,16 +512,32 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
       );
       break;
     case 'leftCall': {
-      const { title, moreDetails, disableStartCallButton } = getEndedCallStrings(locale, endedCall);
+      const { title, moreDetails, disableStartCallButton, iconName } = getEndedCallPageProps(locale, endedCall);
+      /* @conditional-compile-remove(end-of-call-survey) */
+      if (!props.options?.surveyOptions?.disableSurvey) {
+        pageElement = (
+          <SurveyPage
+            dataUiId={'left-call-page'}
+            surveyOptions={props.options?.surveyOptions}
+            iconName={iconName}
+            title={title}
+            moreDetails={moreDetails}
+            disableStartCallButton={disableStartCallButton}
+            mobileView={props.mobileView}
+          />
+        );
+        break;
+      }
       pageElement = (
         <NoticePage
-          iconName="NoticePageLeftCall"
+          iconName={iconName}
           title={title}
-          moreDetails={moreDetails}
+          moreDetails={callees ? '' : moreDetails}
           dataUiId={'left-call-page'}
           disableStartCallButton={disableStartCallButton}
         />
       );
+
       break;
     }
     case 'lobby':
@@ -394,6 +550,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           mobileChatTabHeader={props.mobileChatTabHeader}
           latestErrors={latestErrors}
           onDismissError={onDismissError}
+          /* @conditional-compile-remove(capabilities) */
+          capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
         />
       );
       break;
@@ -406,17 +564,17 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           options={props.options}
           updateSidePaneRenderer={setSidePaneRenderer}
           mobileChatTabHeader={props.mobileChatTabHeader}
-          onRenderAvatar={onRenderAvatar}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           latestErrors={latestErrors}
           onDismissError={onDismissError}
+          /* @conditional-compile-remove(capabilities) */
+          capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
         />
       );
       break;
     case 'call':
       pageElement = (
         <CallPage
-          onRenderAvatar={onRenderAvatar}
           callInvitationURL={callInvitationUrl}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
@@ -425,8 +583,15 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           options={props.options}
           updateSidePaneRenderer={setSidePaneRenderer}
           mobileChatTabHeader={props.mobileChatTabHeader}
+          onCloseChatPane={props.onCloseChatPane}
           latestErrors={latestErrors}
           onDismissError={onDismissError}
+          galleryLayout={userSetGalleryLayout}
+          onUserSetGalleryLayoutChange={setUserSetGalleryLayout}
+          onSetUserSetOverflowGalleryPosition={setUserSetOverflowGalleryPosition}
+          userSetOverflowGalleryPosition={userSetOverflowGalleryPosition}
+          /* @conditional-compile-remove(capabilities) */
+          capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
         />
       );
       break;
@@ -443,12 +608,16 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
               mobileChatTabHeader={props.mobileChatTabHeader}
               latestErrors={latestErrors}
               onDismissError={onDismissError}
+              /* @conditional-compile-remove(capabilities) */
+              capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
             />
           }
         </>
       );
       break;
   }
+
+  useEndedCallConsoleErrors(endedCall);
 
   /* @conditional-compile-remove(unsupported-browser) */
   switch (page) {
@@ -471,17 +640,9 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     throw new Error('Invalid call composite page');
   }
 
-  /* @conditional-compile-remove(rooms) */
-  const permissions = _getPermissions(role === 'Unknown' || role === undefined ? props.roleHint : role);
-
-  // default retElement for stable version
-  let retElement = pageElement;
-  /* @conditional-compile-remove(rooms) */
-  retElement = <_PermissionsProvider permissions={permissions}>{pageElement}</_PermissionsProvider>;
-
   return (
     <SidePaneProvider sidePaneRenderer={sidePaneRenderer} overrideSidePane={injectedSidePaneProps}>
-      {retElement}
+      {pageElement}
     </SidePaneProvider>
   );
 };
@@ -503,7 +664,7 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => <CallCo
 export interface InternalCallCompositeProps {
   overrideSidePane?: InjectedSidePaneProps;
   onSidePaneIdChange?: (sidePaneId: string | undefined) => void;
-
+  onCloseChatPane?: () => void;
   // legacy property to avoid breaking change
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
 }
@@ -518,21 +679,6 @@ export const CallCompositeInner = (props: CallCompositeProps & InternalCallCompo
     options,
     formFactor = 'desktop'
   } = props;
-
-  /* @conditional-compile-remove(rooms) */
-  const roleHint = adapter.getState().roleHint;
-
-  useEffect(() => {
-    (async () => {
-      const constrain = getQueryOptions({
-        /* @conditional-compile-remove(rooms) */ role: roleHint
-      });
-      await adapter.askDevicePermission(constrain);
-      adapter.queryCameras();
-      adapter.queryMicrophones();
-      adapter.querySpeakers();
-    })();
-  }, [adapter, /* @conditional-compile-remove(rooms) */ roleHint]);
 
   const mobileView = formFactor === 'mobile';
 
@@ -552,11 +698,10 @@ export const CallCompositeInner = (props: CallCompositeProps & InternalCallCompo
             mobileView={mobileView}
             modalLayerHostId={modalLayerHostId}
             options={options}
-            /* @conditional-compile-remove(rooms) */
-            roleHint={roleHint}
             onSidePaneIdChange={props.onSidePaneIdChange}
             overrideSidePane={props.overrideSidePane}
             mobileChatTabHeader={props.mobileChatTabHeader}
+            onCloseChatPane={props.onCloseChatPane}
           />
           {
             // This layer host is for ModalLocalAndRemotePIP in SidePane. This LayerHost cannot be inside the SidePane
@@ -575,7 +720,9 @@ export const CallCompositeInner = (props: CallCompositeProps & InternalCallCompo
   );
 };
 
-const getQueryOptions = (options: { /* @conditional-compile-remove(rooms) */ role?: Role }): PermissionConstraints => {
+const getQueryOptions = (options: {
+  /* @conditional-compile-remove(rooms) */ role?: ParticipantRole;
+}): PermissionConstraints => {
   /* @conditional-compile-remove(rooms) */
   if (options.role === 'Consumer') {
     return {
@@ -584,45 +731,4 @@ const getQueryOptions = (options: { /* @conditional-compile-remove(rooms) */ rol
     };
   }
   return { video: true, audio: true };
-};
-
-const getEndedCallStrings = (
-  locale: CompositeLocale,
-  endedCall?: CallState
-): { title: string; moreDetails?: string; disableStartCallButton: boolean } => {
-  let title = locale.strings.call.leftCallTitle;
-  let moreDetails = locale.strings.call.leftCallMoreDetails;
-  let disableStartCallButton = false;
-  /* @conditional-compile-remove(teams-adhoc-call) */
-  switch (endedCall?.callEndReason?.subCode) {
-    case 10037:
-      if (locale.strings.call.participantCouldNotBeReachedTitle) {
-        title = locale.strings.call.participantCouldNotBeReachedTitle;
-        moreDetails = locale.strings.call.participantCouldNotBeReachedMoreDetails;
-        disableStartCallButton = true;
-      }
-      break;
-    case 10124:
-      if (locale.strings.call.permissionToReachTargetParticipantNotAllowedTitle) {
-        title = locale.strings.call.permissionToReachTargetParticipantNotAllowedTitle;
-        moreDetails = locale.strings.call.permissionToReachTargetParticipantNotAllowedMoreDetails;
-        disableStartCallButton = true;
-      }
-      break;
-    case 10119:
-      if (locale.strings.call.unableToResolveTenantTitle) {
-        title = locale.strings.call.unableToResolveTenantTitle;
-        moreDetails = locale.strings.call.unableToResolveTenantMoreDetails;
-        disableStartCallButton = true;
-      }
-      break;
-    case 10044:
-      if (locale.strings.call.participantIdIsMalformedTitle) {
-        title = locale.strings.call.participantIdIsMalformedTitle;
-        moreDetails = locale.strings.call.participantIdIsMalformedMoreDetails;
-        disableStartCallButton = true;
-      }
-      break;
-  }
-  return { title, moreDetails, disableStartCallButton };
 };

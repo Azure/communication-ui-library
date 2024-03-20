@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ChatComposite } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
@@ -9,7 +9,7 @@ import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../c
 import { defaultChatCompositeHiddenControls, controlsToAdd, ArgsFrom } from '../controlsUtils';
 import { compositeLocale } from '../localizationUtils';
 import { Docs } from './ChatCompositeDocs';
-import { ContosoChatContainer, ContainerProps } from './CustomBehaviorExampleContainer';
+import { ContosoChatContainer, ContainerProps } from './snippets/CustomBehaviorExampleContainer';
 import { ConfigHintBanner, addParrotBotToThread, createThreadAndAddUser } from './snippets/Utils';
 
 const messageArray = [
@@ -57,7 +57,12 @@ const CustomBehaviorStory = (args: ArgsFrom<typeof storyControls>, context): JSX
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
       {containerProps ? (
-        <ContosoChatContainer fluentTheme={context.theme} locale={compositeLocale(locale)} {...containerProps} />
+        <ContosoChatContainer
+          fluentTheme={context.theme}
+          rtl={context.globals.rtl === 'rtl'}
+          locale={compositeLocale(locale)}
+          {...containerProps}
+        />
       ) : (
         <ConfigHintBanner />
       )}

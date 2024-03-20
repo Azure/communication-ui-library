@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import {
   Icon,
@@ -8,21 +8,25 @@ import {
   merge,
   mergeStyles,
   PersonaPresence,
-  Stack
+  Stack,
+  Theme
 } from '@fluentui/react';
+import { Text } from '@fluentui/react';
+import { useTheme, CallingTheme } from '../theming';
+import { RaisedHandIcon } from './assets/RaisedHandIcon';
 import React, { useCallback, useMemo } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { useLocale } from '../localization';
-/* @conditional-compile-remove(rooms) */
-import { _usePermissions } from '../permissions';
 import {
   BaseCustomStyles,
   CallParticipantListParticipant,
   OnRenderAvatarCallback,
   ParticipantListParticipant
 } from '../types';
+import { CustomAvatarOptions } from '../types';
 import { ParticipantItem, ParticipantItemStrings, ParticipantItemStyles } from './ParticipantItem';
 import { iconStyles, participantListItemStyle, participantListStyle } from './styles/ParticipantList.styles';
+import { _formatString } from '@internal/acs-ui-common';
 
 /**
  * Styles for the {@link ParticipantList} {@link ParticipantItem}.
@@ -42,6 +46,19 @@ export interface ParticipantListItemStyles extends ParticipantItemStyles {
 export interface ParticipantListStyles extends BaseCustomStyles {
   /** Styles for the {@link ParticipantList} {@link ParticipantItem}. */
   participantItemStyles?: ParticipantListItemStyles;
+}
+
+/* @conditional-compile-remove(total-participant-count) */
+/**
+ * Strings for the {@link ParticipantList}.
+ *
+ * @beta
+ */
+export interface ParticipantListStrings {
+  /**
+   * String for rendering the count of participants not contained in the displayed participant list
+   */
+  overflowParticipantCount?: string;
 }
 
 /**
@@ -81,11 +98,16 @@ export type ParticipantListProps = {
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   /** Optional callback when rendered ParticipantItem is clicked */
   onParticipantClick?: (participant?: ParticipantListParticipant) => void;
-  /** Styles for the {@link ParticipantList} */
   styles?: ParticipantListStyles;
   /** Optional value to determine if the tooltip should be shown for participants or not */
   showParticipantOverflowTooltip?: boolean;
-  /** Optional aria-lablledby prop that prefixes each ParticipantItem aria-label */
+  /* @conditional-compile-remove(total-participant-count) */
+  /** Total number of people in the call. This number can be larger than the remote participant count. */
+  totalParticipantCount?: number;
+  /* @conditional-compile-remove(total-participant-count) */
+  /** Strings for the participant list */
+  strings?: ParticipantListStrings;
+  /** Optional aria-labelledby prop that prefixes each ParticipantItem aria-label */
   participantAriaLabelledBy?: string;
 };
 
@@ -98,25 +120,57 @@ const onRenderParticipantDefault = (
   styles?: ParticipantListItemStyles,
   onParticipantClick?: (participant?: ParticipantListParticipant) => void,
   showParticipantOverflowTooltip?: boolean,
-  participantAriaLabelledBy?: string
+  participantAriaLabelledBy?: string,
+  theme?: Theme
 ): JSX.Element | null => {
   const callingParticipant = participant as CallParticipantListParticipant;
 
   let presence: PersonaPresence | undefined = undefined;
   if (callingParticipant) {
-    if (callingParticipant.state === 'Connected') {
-      presence = PersonaPresence.online;
-    } else if (callingParticipant.state === 'Idle') {
-      presence = PersonaPresence.away;
-    }
+    presence = PersonaPresence.none;
   }
 
   const menuItems = createParticipantMenuItems && createParticipantMenuItems(participant);
 
+  let displayName = participant.displayName;
+
+  /* @conditional-compile-remove(hide-attendee-name) */
+  const formatDisplayName = (): string | undefined => {
+    if (displayName && strings.attendeeRole) {
+      return _formatString(displayName, { AttendeeRole: strings.attendeeRole });
+    }
+    return displayName;
+  };
+  /* @conditional-compile-remove(hide-attendee-name) */
+  displayName = formatDisplayName();
+
+  const callingPalette = (theme as unknown as CallingTheme).callingPalette;
+
   const onRenderIcon =
-    callingParticipant?.isScreenSharing || callingParticipant?.isMuted
+    callingParticipant?.isScreenSharing || callingParticipant?.isMuted || callingParticipant?.raisedHand
       ? () => (
           <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
+            {callingParticipant.raisedHand && (
+              <Stack
+                horizontal={true}
+                tokens={{ childrenGap: '0.2rem' }}
+                style={{
+                  alignItems: 'center',
+                  padding: '0.1rem 0.2rem',
+                  backgroundColor: theme?.palette.neutralLighter,
+                  borderRadius: '0.3rem'
+                }}
+              >
+                {callingParticipant.raisedHand.raisedHandOrderPosition && (
+                  <Stack.Item>
+                    <Text>{callingParticipant.raisedHand?.raisedHandOrderPosition}</Text>
+                  </Stack.Item>
+                )}
+                <Stack.Item>
+                  <RaisedHandIcon />
+                </Stack.Item>
+              </Stack>
+            )}
             {callingParticipant.isScreenSharing && (
               <Icon
                 iconName="ParticipantItemScreenShareStart"
@@ -127,21 +181,40 @@ const onRenderParticipantDefault = (
             {callingParticipant.isMuted && (
               <Icon iconName="ParticipantItemMicOff" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
             )}
+            {
+              /* @conditional-compile-remove(spotlight) */ callingParticipant.spotlight && (
+                <Icon iconName="ParticipantItemSpotlighted" className={iconStyles} />
+              )
+            }
           </Stack>
         )
       : () => null;
+
+  const onRenderAvatarWithRaiseHand =
+    callingParticipant?.raisedHand && onRenderAvatar
+      ? (
+          userId?: string,
+          options?: CustomAvatarOptions,
+          defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element
+        ) =>
+          onRenderAvatar(
+            userId,
+            { ...options, styles: { root: { border: callingPalette.raiseHandGold } } },
+            defaultOnRender
+          )
+      : onRenderAvatar;
 
   return (
     <ParticipantItem
       styles={styles}
       key={participant.userId}
       userId={participant.userId}
-      displayName={participant.displayName}
+      displayName={displayName}
       me={myUserId ? participant.userId === myUserId : false}
       menuItems={menuItems}
       presence={presence}
       onRenderIcon={onRenderIcon}
-      onRenderAvatar={onRenderAvatar}
+      onRenderAvatar={onRenderAvatarWithRaiseHand}
       onClick={() => onParticipantClick?.(participant)}
       showParticipantOverflowTooltip={showParticipantOverflowTooltip}
       /* @conditional-compile-remove(one-to-n-calling) */
@@ -150,6 +223,32 @@ const onRenderParticipantDefault = (
       ariaLabelledBy={participantAriaLabelledBy}
     />
   );
+};
+
+/**
+ * Sort participants by raised hand order position
+ */
+const sortParticipants = (participants: ParticipantListParticipant[]): ParticipantListParticipant[] => {
+  const isParticipantListCallParticipant = function (participant: ParticipantListParticipant): boolean {
+    return 'raisedHand' in participant;
+  };
+
+  participants.sort((a, b) => {
+    if (!isParticipantListCallParticipant(a) || !isParticipantListCallParticipant(b)) {
+      return 0;
+    }
+    const callA = a as CallParticipantListParticipant;
+    const callB = b as CallParticipantListParticipant;
+    if (callA.raisedHand && callB.raisedHand) {
+      return callA.raisedHand.raisedHandOrderPosition - callB.raisedHand.raisedHandOrderPosition;
+    } else if (callA.raisedHand) {
+      return -1;
+    } else if (callB.raisedHand) {
+      return 1;
+    }
+    return 0;
+  });
+  return participants;
 };
 
 const getParticipantsForDefaultRender = (
@@ -190,26 +289,34 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     onRenderParticipant,
     onFetchParticipantMenuItems,
     showParticipantOverflowTooltip,
+    /* @conditional-compile-remove(total-participant-count) */
+    totalParticipantCount,
+    /* @conditional-compile-remove(total-participant-count) */
+    strings,
     participantAriaLabelledBy
   } = props;
 
+  const theme = useTheme();
   const ids = useIdentifiers();
-  const strings = useLocale().strings.participantItem;
+  const participantItemStrings = useLocale().strings.participantItem;
+  /* @conditional-compile-remove(total-participant-count) */
+  const participantListStrings = useLocale().strings.ParticipantList;
 
   const displayedParticipants: ParticipantListParticipant[] = useMemo(() => {
     return onRenderParticipant ? participants : getParticipantsForDefaultRender(participants, excludeMe, myUserId);
   }, [participants, excludeMe, myUserId, onRenderParticipant]);
 
+  sortParticipants(displayedParticipants);
+
   const createParticipantMenuItems = useCallback(
     (participant: ParticipantListParticipant): IContextualMenuItem[] => {
       let menuItems: IContextualMenuItem[] = [];
-      let participantIsRemovable = participant.isRemovable;
-      /* @conditional-compile-remove(rooms) */
-      participantIsRemovable = _usePermissions().removeParticipantButton && participantIsRemovable;
+
+      const participantIsRemovable = participant.isRemovable;
       if (participant.userId !== myUserId && onRemoveParticipant && participantIsRemovable) {
         menuItems.push({
           key: 'remove',
-          text: strings.removeButtonLabel,
+          text: participantItemStrings.removeButtonLabel,
           onClick: () => onRemoveParticipant(participant.userId),
           itemProps: {
             styles: props.styles?.participantItemStyles?.participantSubMenuItemsStyles
@@ -230,7 +337,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
       onFetchParticipantMenuItems,
       onRemoveParticipant,
       props.styles?.participantItemStyles?.participantSubMenuItemsStyles,
-      strings.removeButtonLabel
+      participantItemStrings.removeButtonLabel
     ]
   );
 
@@ -238,23 +345,44 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     () => merge(participantListItemStyle, props.styles?.participantItemStyles),
     [props.styles?.participantItemStyles]
   );
+
+  /* @conditional-compile-remove(total-participant-count) */
+  const overflowParticipantCountString =
+    strings?.overflowParticipantCount ?? participantListStrings?.overflowParticipantCount;
+
   return (
-    <Stack data-ui-id={ids.participantList} className={mergeStyles(participantListStyle, props.styles?.root)}>
+    <Stack
+      data-ui-id={ids.participantList}
+      className={mergeStyles(participantListStyle, props.styles?.root)}
+      role={'menu'}
+    >
       {displayedParticipants.map((participant: ParticipantListParticipant) =>
         onRenderParticipant
           ? onRenderParticipant(participant)
           : onRenderParticipantDefault(
               participant,
-              strings,
+              participantItemStrings,
               myUserId,
               onRenderAvatar,
               createParticipantMenuItems,
               participantItemStyles,
               props.onParticipantClick,
               showParticipantOverflowTooltip,
-              participantAriaLabelledBy
+              participantAriaLabelledBy,
+              theme
             )
       )}
+      {
+        /* @conditional-compile-remove(total-participant-count) */ overflowParticipantCountString &&
+          totalParticipantCount &&
+          totalParticipantCount > displayedParticipants.length && (
+            <Text style={{ fontWeight: 400, margin: '0.5rem' }}>
+              {_formatString(overflowParticipantCountString, {
+                overflowCount: `${totalParticipantCount - displayedParticipants.length}`
+              })}
+            </Text>
+          )
+      }
     </Stack>
   );
 };

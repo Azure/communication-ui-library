@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import {
   Call,
@@ -15,12 +15,14 @@ import {
   TranscriptionCallFeature,
   CallFeatureFactory,
   StartCallOptions,
-  RoomLocator
+  RoomLocator,
+  TeamsMeetingIdLocator
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(calling-beta-sdk) */
 import {
-  GroupChatCallLocator,
+  CallAgentFeature,
   MeetingLocator,
+  GroupChatCallLocator,
   PushNotificationData,
   ConnectionStateChangedEvent,
   ConnectionState
@@ -77,7 +79,10 @@ class MockCallAgent implements CallAgent {
   connectionState = 'Disconnected' as ConnectionState;
   kind = 'CallAgent' as CallAgentKind;
   emitter = new EventEmitter();
-  feature;
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  feature<TFeature extends CallAgentFeature>(): TFeature {
+    throw new Error('Method not implemented.');
+  }
   startCall(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],
@@ -97,9 +102,10 @@ class MockCallAgent implements CallAgent {
   join(groupLocator: GroupLocator, options?: JoinCallOptions): Call;
   /* @conditional-compile-remove(calling-beta-sdk) */
   join(groupChatCallLoctor: GroupChatCallLocator, options?: JoinCallOptions): Call;
-  join(meetingLocator: TeamsMeetingLinkLocator, options?: JoinCallOptions): Call;
   /* @conditional-compile-remove(calling-beta-sdk) */
   join(meetingLocator: MeetingLocator, options?: JoinCallOptions): Call;
+  join(meetingLocator: TeamsMeetingLinkLocator, options?: JoinCallOptions): Call;
+  join(meetingLocator: TeamsMeetingIdLocator, options?: JoinCallOptions): Call;
   join(roomLocator: RoomLocator, options?: JoinCallOptions): Call;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   join(meetingLocator: any, options?: any): Call {
@@ -224,7 +230,7 @@ describe('declarative call agent', () => {
 
     expect(Object.keys(context.getState().calls).length).toBe(1);
 
-    mockCall.callEndReason = { code: 1 };
+    mockCall.callEndReason = { code: 1, /* @conditional-compile-remove(calling-beta-sdk) */ resultCategories: [] };
     mockCallAgent.calls = [];
     mockCallAgent.emit('callsUpdated', { added: [], removed: [mockCall] });
 

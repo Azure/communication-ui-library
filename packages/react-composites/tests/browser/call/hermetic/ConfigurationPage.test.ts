@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { buildUrlWithMockAdapter, defaultMockCallAdapterState, test } from './fixture';
 import { expect, Page } from '@playwright/test';
@@ -41,6 +41,29 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
     );
     await waitForCallCompositeToLoad(page);
     expect(await stableScreenshot(page)).toMatchSnapshot('call-configuration-page-with-call-details.png');
+  });
+
+  /* @conditional-compile-remove(custom-branding) */
+  test('Configuration screen shows square logo', async ({ page, serverUrl }) => {
+    await page.goto(buildUrlWithMockAdapter(serverUrl, defaultMockConfigurationPageState(), { logo: 'square' }));
+    await waitForCallCompositeToLoad(page);
+    expect(await stableScreenshot(page)).toMatchSnapshot('call-configuration-page-with-square-logo.png');
+  });
+
+  /* @conditional-compile-remove(custom-branding) */
+  test('Configuration screen shows circle logo', async ({ page, serverUrl }) => {
+    await page.goto(buildUrlWithMockAdapter(serverUrl, defaultMockConfigurationPageState(), { logo: 'circle' }));
+    await waitForCallCompositeToLoad(page);
+    expect(await stableScreenshot(page)).toMatchSnapshot('call-configuration-page-with-circle-logo.png');
+  });
+
+  /* @conditional-compile-remove(custom-branding) */
+  test('Configuration screen has background image', async ({ page, serverUrl }) => {
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, defaultMockConfigurationPageState(), { backgroundImage: 'true' })
+    );
+    await waitForCallCompositeToLoad(page);
+    expect(await stableScreenshot(page)).toMatchSnapshot('call-configuration-page-with-background-image.png');
   });
 
   test('Configuration screen desktop should show no devices available', async ({ page, serverUrl }, testInfo) => {

@@ -1,13 +1,17 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { Features, LocalVideoStream, RemoteParticipant } from '@azure/communication-calling';
+/* @conditional-compile-remove(acs-close-captions) */
+import { Captions } from '@azure/communication-calling';
+/* @conditional-compile-remove(close-captions) */
+import { TeamsCaptions } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CallCommon } from './BetaToStableTypes';
 import { CallContext } from './CallContext';
 import { CallIdRef } from './CallIdRef';
 /* @conditional-compile-remove(close-captions) */
-import { CaptionsSubscriber } from './CaptionsSubscriber';
+import { TeamsCaptionsSubscriber } from './CaptionsSubscriber';
 import {
   convertSdkLocalStreamToDeclarativeLocalStream,
   convertSdkParticipantToDeclarativeParticipant
@@ -17,15 +21,23 @@ import { InternalCallContext } from './InternalCallContext';
 import { LocalVideoStreamVideoEffectsSubscriber } from './LocalVideoStreamVideoEffectsSubscriber';
 import { ParticipantSubscriber } from './ParticipantSubscriber';
 import { RecordingSubscriber } from './RecordingSubscriber';
+/* @conditional-compile-remove(ppt-live) */
+import { PPTLiveSubscriber } from './PPTLiveSubscriber';
 import { disposeView } from './StreamUtils';
 import { TranscriptionSubscriber } from './TranscriptionSubscriber';
-/* @conditional-compile-remove(close-captions) */
-import { _isTeamsMeetingCall } from './TypeGuards';
 import { UserFacingDiagnosticsSubscriber } from './UserFacingDiagnosticsSubscriber';
-/* @conditional-compile-remove(optimal-video-count) */
+import { RaiseHandSubscriber } from './RaiseHandSubscriber';
 import { OptimalVideoCountSubscriber } from './OptimalVideoCountSubscriber';
 /* @conditional-compile-remove(capabilities) */
 import { CapabilitiesSubscriber } from './CapabilitiesSubscriber';
+/* @conditional-compile-remove(reaction) */
+import { ReactionSubscriber } from './ReactionSubscriber';
+/* @conditional-compile-remove(spotlight) */
+import { SpotlightSubscriber } from './SpotlightSubscriber';
+/* @conditional-compile-remove(acs-close-captions) */
+import { CaptionsSubscriber } from './CaptionsSubscriber';
+/* @conditional-compile-remove(local-recording-notification) */
+import { LocalRecordingSubscriber } from './LocalRecordingSubscriber';
 
 /**
  * Keeps track of the listeners assigned to a particular call because when we get an event from SDK, it doesn't tell us
@@ -42,14 +54,24 @@ export class CallSubscriber {
   private _participantSubscribers: Map<string, ParticipantSubscriber>;
   private _recordingSubscriber: RecordingSubscriber;
   private _transcriptionSubscriber: TranscriptionSubscriber;
-  /* @conditional-compile-remove(optimal-video-count) */
+  /* @conditional-compile-remove(local-recording-notification) */
+  private _localRecordingSubscriber: LocalRecordingSubscriber;
+  /* @conditional-compile-remove(ppt-live) */
+  private _pptLiveSubscriber: PPTLiveSubscriber;
   private _optimalVideoCountSubscriber: OptimalVideoCountSubscriber;
   /* @conditional-compile-remove(close-captions) */
-  private _captionsSubscriber?: CaptionsSubscriber;
+  private _TeamsCaptionsSubscriber?: TeamsCaptionsSubscriber;
+  /* @conditional-compile-remove(acs-close-captions) */
+  private _CaptionsSubscriber?: CaptionsSubscriber;
+  private _raiseHandSubscriber?: RaiseHandSubscriber;
+  /* @conditional-compile-remove(reaction) */
+  private _reactionSubscriber?: ReactionSubscriber;
   /* @conditional-compile-remove(video-background-effects) */
   private _localVideoStreamVideoEffectsSubscribers: Map<string, LocalVideoStreamVideoEffectsSubscriber>;
   /* @conditional-compile-remove(capabilities) */
   private _capabilitiesSubscriber: CapabilitiesSubscriber;
+  /* @conditional-compile-remove(spotlight) */
+  private _spotlightSubscriber: SpotlightSubscriber;
 
   constructor(call: CallCommon, context: CallContext, internalContext: InternalCallContext) {
     this._call = call;
@@ -68,13 +90,30 @@ export class CallSubscriber {
       this._context,
       this._call.feature(Features.Recording)
     );
+    /* @conditional-compile-remove(local-recording-notification) */
+    this._localRecordingSubscriber = new LocalRecordingSubscriber(
+      this._callIdRef,
+      this._context,
+      this._call.feature(Features.LocalRecording)
+    );
+    /* @conditional-compile-remove(ppt-live) */
+    this._pptLiveSubscriber = new PPTLiveSubscriber(this._callIdRef, this._context, this._call);
     this._transcriptionSubscriber = new TranscriptionSubscriber(
       this._callIdRef,
       this._context,
       this._call.feature(Features.Transcription)
     );
-
-    /* @conditional-compile-remove(optimal-video-count) */
+    this._raiseHandSubscriber = new RaiseHandSubscriber(
+      this._callIdRef,
+      this._context,
+      this._call.feature(Features.RaiseHand)
+    );
+    /* @conditional-compile-remove(reaction) */
+    this._reactionSubscriber = new ReactionSubscriber(
+      this._callIdRef,
+      this._context,
+      this._call.feature(Features.Reaction)
+    );
     this._optimalVideoCountSubscriber = new OptimalVideoCountSubscriber({
       callIdRef: this._callIdRef,
       context: this._context,
@@ -90,6 +129,13 @@ export class CallSubscriber {
       this._call.feature(Features.Capabilities)
     );
 
+    /* @conditional-compile-remove(spotlight) */
+    this._spotlightSubscriber = new SpotlightSubscriber(
+      this._callIdRef,
+      this._context,
+      this._call.feature(Features.Spotlight)
+    );
+
     this.subscribe();
   }
 
@@ -102,17 +148,17 @@ export class CallSubscriber {
     this._call.on('remoteParticipantsUpdated', this.remoteParticipantsUpdated);
     this._call.on('localVideoStreamsUpdated', this.localVideoStreamsUpdated);
     this._call.on('isMutedChanged', this.isMuteChanged);
-    /* @conditional-compile-remove(rooms) */
+    /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
     this._call.on('roleChanged', this.callRoleChangedHandler);
     this._call.feature(Features.DominantSpeakers).on('dominantSpeakersChanged', this.dominantSpeakersChanged);
     /* @conditional-compile-remove(total-participant-count) */
     this._call.on('totalParticipantCountChanged', this.totalParticipantCountChangedHandler);
 
-    // At time of writing only one LocalVideoStream is supported by SDK.
-    if (this._call.localVideoStreams.length > 0) {
+    for (const localVideoStream of this._call.localVideoStreams) {
       this._internalContext.setLocalRenderInfo(
         this._callIdRef.callId,
-        this._call.localVideoStreams[0],
+        localVideoStream.mediaStreamType,
+        localVideoStream,
         'NotRendered',
         undefined
       );
@@ -140,7 +186,7 @@ export class CallSubscriber {
     this._call.off('remoteParticipantsUpdated', this.remoteParticipantsUpdated);
     this._call.off('localVideoStreamsUpdated', this.localVideoStreamsUpdated);
     this._call.off('isMutedChanged', this.isMuteChanged);
-    /* @conditional-compile-remove(rooms) */
+    /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
     this._call.off('roleChanged', this.callRoleChangedHandler);
     /* @conditional-compile-remove(total-participant-count) */
     this._call.off('totalParticipantCountChanged', this.totalParticipantCountChangedHandler);
@@ -152,27 +198,37 @@ export class CallSubscriber {
 
     // If we are unsubscribing that means we no longer want to display any video for this call (callEnded or callAgent
     // disposed) and we should not be updating it any more. So if video is rendering we stop rendering.
-    if (this._call.localVideoStreams && this._call.localVideoStreams[0]) {
+    for (const localVideoStream of this._call.localVideoStreams) {
+      const mediaStreamType = localVideoStream.mediaStreamType;
       disposeView(
         this._context,
         this._internalContext,
         this._callIdRef.callId,
         undefined,
-        convertSdkLocalStreamToDeclarativeLocalStream(this._call.localVideoStreams[0])
+        convertSdkLocalStreamToDeclarativeLocalStream(localVideoStream)
       );
+      this._internalContext.deleteLocalRenderInfo(this._callIdRef.callId, mediaStreamType);
     }
-
-    this._internalContext.deleteLocalRenderInfo(this._callIdRef.callId);
 
     this._diagnosticsSubscriber.unsubscribe();
     this._recordingSubscriber.unsubscribe();
     this._transcriptionSubscriber.unsubscribe();
-    /* @conditional-compile-remove(optimal-video-count) */
+    /* @conditional-compile-remove(local-recording-notification) */
+    this._localRecordingSubscriber.unsubscribe();
     this._optimalVideoCountSubscriber.unsubscribe();
+    /* @conditional-compile-remove(ppt-live) */
+    this._pptLiveSubscriber.unsubscribe();
     /* @conditional-compile-remove(close-captions) */
-    this._captionsSubscriber?.unsubscribe();
+    this._TeamsCaptionsSubscriber?.unsubscribe();
+    /* @conditional-compile-remove(acs-close-captions) */
+    this._CaptionsSubscriber?.unsubscribe();
+    this._raiseHandSubscriber?.unsubscribe();
     /* @conditional-compile-remove(capabilities) */
     this._capabilitiesSubscriber.unsubscribe();
+    /* @conditional-compile-remove(reaction) */
+    this._reactionSubscriber?.unsubscribe();
+    /* @conditional-compile-remove(spotlight) */
+    this._spotlightSubscriber.unsubscribe();
   };
 
   private addParticipantListener(participant: RemoteParticipant): void {
@@ -200,12 +256,25 @@ export class CallSubscriber {
   /* @conditional-compile-remove(close-captions) */
   private initCaptionSubscriber = (): void => {
     // subscribe to captions here so that we don't call captions when call is not initialized
-    if (_isTeamsMeetingCall(this._call) && this._call.state === 'Connected' && !this._captionsSubscriber) {
-      this._captionsSubscriber = new CaptionsSubscriber(
-        this._callIdRef,
-        this._context,
-        this._call.feature(Features.TeamsCaptions)
-      );
+    if (
+      this._call.state === 'Connected' &&
+      !this._TeamsCaptionsSubscriber &&
+      /* @conditional-compile-remove(acs-close-captions) */ !this._CaptionsSubscriber
+    ) {
+      if (this._call.feature(Features.Captions).captions.kind === 'TeamsCaptions') {
+        this._TeamsCaptionsSubscriber = new TeamsCaptionsSubscriber(
+          this._callIdRef,
+          this._context,
+          this._call.feature(Features.Captions).captions as TeamsCaptions
+        );
+      } else {
+        /* @conditional-compile-remove(acs-close-captions) */
+        this._CaptionsSubscriber = new CaptionsSubscriber(
+          this._callIdRef,
+          this._context,
+          this._call.feature(Features.Captions).captions as Captions
+        );
+      }
       this._call.off('stateChanged', this.initCaptionSubscriber);
     }
   };
@@ -224,7 +293,7 @@ export class CallSubscriber {
     this._context.setCallIsMicrophoneMuted(this._callIdRef.callId, this._call.isMuted);
   };
 
-  /* @conditional-compile-remove(rooms) */
+  /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
   private callRoleChangedHandler = (): void => {
     this._context.setRole(this._callIdRef.callId, this._call.role);
   };
@@ -263,51 +332,49 @@ export class CallSubscriber {
   };
 
   private localVideoStreamsUpdated = (event: { added: LocalVideoStream[]; removed: LocalVideoStream[] }): void => {
-    // At time of writing only one LocalVideoStream is supported by SDK.
-    if (event.added.length > 0) {
-      const localVideoStreams = [convertSdkLocalStreamToDeclarativeLocalStream(this._call.localVideoStreams[0])];
+    for (const localVideoStream of event.added) {
+      const mediaStreamType = localVideoStream.mediaStreamType;
       // IMPORTANT: The internalContext should be set before context. This is done to ensure that the internal context
       // has the required data when component re-renders due to external state changes.
       this._internalContext.setLocalRenderInfo(
         this._callIdRef.callId,
-        this._call.localVideoStreams[0],
+        mediaStreamType,
+        localVideoStream,
         'NotRendered',
         undefined
       );
-      this._context.setCallLocalVideoStream(this._callIdRef.callId, [...localVideoStreams]);
 
-      /* @conditional-compile-remove(video-background-effects) */
-      {
-        // Subscribe to video effect changes
-        const localVideoStreamKey = event.added[0].source.id;
-        this._localVideoStreamVideoEffectsSubscribers.get(localVideoStreamKey)?.unsubscribe();
-        this._localVideoStreamVideoEffectsSubscribers.set(
-          localVideoStreamKey,
-          new LocalVideoStreamVideoEffectsSubscriber({
-            parent: this._callIdRef,
-            context: this._context,
-            localVideoStream: this._call.localVideoStreams[0],
-            localVideoStreamEffectsAPI: this._call.localVideoStreams[0].feature(Features.VideoEffects)
-          })
-        );
-      }
+      // Subscribe to video effect changes
+      this._localVideoStreamVideoEffectsSubscribers.get(mediaStreamType)?.unsubscribe();
+      this._localVideoStreamVideoEffectsSubscribers.set(
+        mediaStreamType,
+        new LocalVideoStreamVideoEffectsSubscriber({
+          parent: this._callIdRef,
+          context: this._context,
+          localVideoStream: localVideoStream,
+          localVideoStreamEffectsAPI: localVideoStream.feature(Features.VideoEffects)
+        })
+      );
     }
-    if (event.removed.length > 0) {
-      /* @conditional-compile-remove(video-background-effects) */
-      {
-        const localVideoStreamKey = event.removed[0].source.id;
-        this._localVideoStreamVideoEffectsSubscribers.get(localVideoStreamKey)?.unsubscribe();
-      }
+    for (const localVideoStream of event.removed) {
+      const mediaStreamType = localVideoStream.mediaStreamType;
+      this._localVideoStreamVideoEffectsSubscribers.get(mediaStreamType)?.unsubscribe();
       disposeView(
         this._context,
         this._internalContext,
         this._callIdRef.callId,
         undefined,
-        convertSdkLocalStreamToDeclarativeLocalStream(event.removed[0])
+        convertSdkLocalStreamToDeclarativeLocalStream(localVideoStream)
       );
-      this._internalContext.deleteLocalRenderInfo(this._callIdRef.callId);
-      this._context.setCallLocalVideoStream(this._callIdRef.callId, []);
+
+      this._internalContext.deleteLocalRenderInfo(this._callIdRef.callId, mediaStreamType);
     }
+
+    this._context.setCallLocalVideoStream(
+      this._callIdRef.callId,
+      event.added.map(convertSdkLocalStreamToDeclarativeLocalStream),
+      event.removed.map(convertSdkLocalStreamToDeclarativeLocalStream)
+    );
   };
 
   private dominantSpeakersChanged = (): void => {

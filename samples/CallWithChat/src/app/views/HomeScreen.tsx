@@ -1,21 +1,10 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React, { useState } from 'react';
-import {
-  Stack,
-  PrimaryButton,
-  Image,
-  ChoiceGroup,
-  IChoiceGroupOption,
-  Text,
-  TextField,
-  Link,
-  Callout,
-  mergeStyles
-} from '@fluentui/react';
+import { Stack, PrimaryButton, Image, ChoiceGroup, IChoiceGroupOption, Text, TextField } from '@fluentui/react';
 /* @conditional-compile-remove(PSTN-calls) */
-import { registerIcons } from '@fluentui/react';
+import { registerIcons, Label, Link, Callout, mergeStyles } from '@fluentui/react';
 import heroSVG from '../../assets/hero.svg';
 import {
   imgStyle,
@@ -143,6 +132,8 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
               <TextField
                 className={teamsItemStyle}
                 iconProps={{ iconName: 'Link' }}
+                label={'Meeting Link'}
+                required
                 placeholder={'Enter a Teams meeting link'}
                 onChange={(_, newValue) => newValue && setTeamsLink({ meetingLink: newValue })}
               />
@@ -153,6 +144,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                   <TextField
                     className={outboundTextField}
                     label={'Participants'}
+                    required
                     placeholder={"Comma seperated phone numbers or ACS ID's"}
                     onChange={(_, newValue) => newValue && setOutboundParticipants(newValue)}
                   />
@@ -163,10 +155,12 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
               /* @conditional-compile-remove(PSTN-calls) */ pstnCallChosen && (
                 <Stack>
                   <Stack>
-                    <Text style={{ paddingBottom: '0.5rem' }}>Please dial the number you wish to call.</Text>
+                    <Label required style={{ paddingBottom: '0.5rem' }}>
+                      Please dial the number you wish to call.
+                    </Label>
                     <Stack styles={dialpadOptionStyles}>
                       <Dialpad
-                        isMobile={isMobileSession}
+                        longPressTrigger={isMobileSession ? 'touch' : 'mouseAndTouch'}
                         onChange={(newValue) => {
                           /**
                            * We need to pass in the formatting for the phone number string in the onChange handler

@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "area": "improvement",
+  "workstream": "Remove conditional compilation comments for optimal video count",
+  "comment": "Remove conditional compilation comments for optimal video count",
+  "packageName": "@azure/communication-react",
+  "email": "dmceachern@microsoft.com",
+  "dependentChangeType": "none"
+}

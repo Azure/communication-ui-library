@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
+
 import React, { useMemo } from 'react';
 import {
   participantListContainerStyle,
@@ -9,18 +10,13 @@ import {
   participantListWrapper,
   displayNameStyles
 } from './styles/ParticipantContainer.styles';
-import {
-  OnRenderAvatarCallback,
-  ParticipantList,
-  ParticipantListProps,
-  ParticipantMenuItemsCallback
-} from '@internal/react-components';
+import { ParticipantList, ParticipantListProps, ParticipantMenuItemsCallback } from '@internal/react-components';
 import { FocusZone, Stack, Text, useTheme } from '@fluentui/react';
 import { AvatarPersona, AvatarPersonaDataCallback } from './AvatarPersona';
 import { useId } from '@fluentui/react-hooks';
+import { _formatString } from '@internal/acs-ui-common';
 
 type ParticipantContainerProps = {
-  onRenderAvatar?: OnRenderAvatarCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   participantListProps: ParticipantListProps;
@@ -54,6 +50,8 @@ export const ParticipantListWithHeading = (props: {
   const { onFetchAvatarPersonaData, onFetchParticipantMenuItems, title, participantListProps } = props;
   const subheadingUniqueId = useId();
   const theme = useTheme();
+  /* @conditional-compile-remove(total-participant-count) */
+  const totalParticipantCount = participantListProps.totalParticipantCount;
   const subheadingStyleThemed = useMemo(
     () => ({
       root: {
@@ -68,7 +66,10 @@ export const ParticipantListWithHeading = (props: {
   return (
     <Stack className={participantListStack}>
       <Stack.Item styles={subheadingStyleThemed} aria-label={title} id={subheadingUniqueId}>
-        {title}
+        {paneTitleTrampoline(
+          title ?? '',
+          /* @conditional-compile-remove(total-participant-count) */ totalParticipantCount
+        )}
       </Stack.Item>
       <FocusZone className={participantListContainerStyle} shouldFocusOnMount={true}>
         <ParticipantList
@@ -82,6 +83,7 @@ export const ParticipantListWithHeading = (props: {
                 {...options}
                 {...{ hidePersonaDetails: !!options?.text }}
                 dataProvider={onFetchAvatarPersonaData}
+                allowActiveBorder={true}
               />
               {options?.text && (
                 <Text nowrap={true} styles={displayNameStyles}>
@@ -97,4 +99,11 @@ export const ParticipantListWithHeading = (props: {
       </FocusZone>
     </Stack>
   );
+};
+
+const paneTitleTrampoline = (paneTitle: string, totalParticipantCount?: number): string => {
+  const participantCountString = totalParticipantCount
+    ? { numberOfPeople: `(${totalParticipantCount})` }
+    : { numberOfPeople: ' ' };
+  return _formatString(paneTitle, participantCountString);
 };

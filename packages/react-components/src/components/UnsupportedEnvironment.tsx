@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 /* @conditional-compile-remove(unsupported-browser) */
 import { DefaultButton, Icon, Link, Stack, Text } from '@fluentui/react';

@@ -1,13 +1,18 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
-export { createStatefulChatClient, _createStatefulChatClientWithDeps } from './StatefulChatClient';
-
+export {
+  createStatefulChatClient,
+  _createStatefulChatClientInner,
+  _createStatefulChatClientWithDeps
+} from './StatefulChatClient';
 export type { StatefulChatClient, StatefulChatClientArgs, StatefulChatClientOptions } from './StatefulChatClient';
 export type { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+export type { ResourceFetchResult } from './types/ChatMessageWithStatus';
+export { ChatError } from './ChatClientState';
 export type {
   ChatClientState,
-  ChatError,
   ChatErrors,
   ChatThreadClientState,
   ChatThreadProperties,

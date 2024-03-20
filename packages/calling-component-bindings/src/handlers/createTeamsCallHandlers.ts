@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { StartCallOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
@@ -7,9 +7,11 @@ import { StartCallOptions } from '@azure/communication-calling';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCall, TeamsCallAgent } from '@azure/communication-calling';
-import { CommunicationIdentifier, isCommunicationUserIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(communication-common-beta-v3) */
-import { isMicrosoftBotIdentifier } from '@azure/communication-common';
+import {
+  CommunicationIdentifier,
+  isCommunicationUserIdentifier,
+  isMicrosoftTeamsAppIdentifier
+} from '@azure/communication-common';
 /* @conditional-compile-remove(teams-identity-support) */
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
 import { Common, _toCommunicationIdentifier } from '@internal/acs-ui-common';
@@ -17,8 +19,11 @@ import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-sta
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
 import { isTeamsCallParticipants } from '../utils/callUtils';
-import { createDefaultCommonCallingHandlers, CommonCallingHandlers } from './createCommonHandlers';
-
+import {
+  createDefaultCommonCallingHandlers,
+  CommonCallingHandlers,
+  VideoBackgroundEffectsDependency
+} from './createCommonHandlers';
 /**
  * Object containing all the teams call handlers required for calling components.
  *
@@ -47,10 +52,13 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
     callClient: StatefulCallClient,
     callAgent: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent,
     deviceManager: StatefulDeviceManager | undefined,
-    call: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall
+    call: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall,
+    options?: {
+      onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
+    }
   ): never | TeamsCallingHandlers => {
     return {
-      ...createDefaultCommonCallingHandlers(callClient, deviceManager, call),
+      ...createDefaultCommonCallingHandlers(callClient, deviceManager, call, options),
       onStartCall: (participants, options) => {
         /* @conditional-compile-remove(teams-identity-support) */
         const threadId = options?.threadId;
@@ -75,9 +83,9 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
         if (isCommunicationUserIdentifier(participant)) {
           throw new Error('CommunicationIdentifier in Teams call is not supported!');
         }
-        /* @conditional-compile-remove(communication-common-beta-v3) */
-        if (isMicrosoftBotIdentifier(participant)) {
-          throw new Error('Adding Microsoft Bot Identifier is not supported!');
+
+        if (isMicrosoftTeamsAppIdentifier(participant)) {
+          throw new Error('Adding Microsoft Teams app identifier is not supported!');
         }
         /* @conditional-compile-remove(teams-identity-support) */
         if (isPhoneNumberIdentifier(participant)) {
@@ -93,9 +101,9 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
         if (isCommunicationUserIdentifier(participant)) {
           throw new Error('CommunicationIdentifier in Teams call is not supported!');
         }
-        /* @conditional-compile-remove(communication-common-beta-v3) */
-        if (isMicrosoftBotIdentifier(participant)) {
-          throw new Error('Removing Microsoft Bot Identifier is not supported!');
+
+        if (isMicrosoftTeamsAppIdentifier(participant)) {
+          throw new Error('Removing Microsoft Teams app identifier is not supported!');
         }
         /* @conditional-compile-remove(teams-identity-support) */
         await call?.removeParticipant(participant);

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import {
   concatStyleSets,
@@ -79,6 +79,7 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
     };
     const { onRenderAvatar } = props;
     return {
+      'data-ui-id': 'chat-composite-message-contextual-menu-read-name-list-item',
       key: person.displayName,
       text: person.displayName,
       itemProps: { styles: props.increaseFlyoutItemSize ? menuItemIncreasedSizeStyles : undefined },
@@ -145,7 +146,6 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
         },
         calloutProps: preventUnwantedDismissProps,
         subMenuProps: {
-          id: 'chat-composite-message-contextual-menu-read-name-list',
           items: messageReadByList ?? [],
           calloutProps: preventUnwantedDismissProps,
           styles: concatStyleSets({
@@ -226,9 +226,8 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
   // gap space uses pixels
   return (
     <ContextualMenu
-      id="chat-composite-message-contextual-menu"
       alignTargetEdge={true}
-      gapSpace={5 /*px*/}
+      gapSpace={2 /*px*/}
       isBeakVisible={false}
       items={menuItems}
       hidden={props.hidden}
@@ -236,7 +235,7 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
       onDismiss={props.onDismiss}
       directionalHint={DirectionalHint.topRightEdge}
       className={chatMessageMenuStyle}
-      calloutProps={preventUnwantedDismissProps}
+      calloutProps={calloutMenuProps}
     />
   );
 };
@@ -248,4 +247,9 @@ const preventUnwantedDismissProps = {
   preventDismissOnEvent: (ev: Event | React.FocusEvent | React.KeyboardEvent | React.MouseEvent): boolean => {
     return ev.type === 'resize';
   }
+};
+
+const calloutMenuProps = {
+  ...preventUnwantedDismissProps,
+  styles: { root: { marginRight: '3px' } }
 };

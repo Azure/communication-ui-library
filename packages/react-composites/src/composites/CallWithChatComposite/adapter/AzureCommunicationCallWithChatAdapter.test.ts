@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
+
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import { StubChatThreadClient } from '../../ChatComposite/adapter/StubChatClient';

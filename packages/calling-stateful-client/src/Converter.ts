@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import {
   RemoteParticipant as SdkRemoteParticipant,
@@ -9,6 +9,8 @@ import {
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(acs-close-captions) */
+import { CaptionsInfo as AcsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { CallKind } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
@@ -33,6 +35,8 @@ import { Features } from '@azure/communication-calling';
 import { VideoEffectName } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
 import { LocalVideoStreamVideoEffectsState } from './CallClientState';
+import { RaisedHand } from '@azure/communication-calling';
+import { RaisedHandState } from './CallClientState';
 
 /**
  * @private
@@ -64,7 +68,8 @@ export function convertSdkRemoteStreamToDeclarativeRemoteStream(
     isAvailable: stream.isAvailable,
     /* @conditional-compile-remove(video-stream-is-receiving-flag) */
     isReceiving: stream.isReceiving,
-    view: undefined
+    view: undefined,
+    streamSize: stream.size
   };
 }
 
@@ -74,7 +79,7 @@ export function convertSdkRemoteStreamToDeclarativeRemoteStream(
 export function convertSdkParticipantToDeclarativeParticipant(
   participant: SdkRemoteParticipant
 ): DeclarativeRemoteParticipant {
-  const declarativeVideoStreams = {};
+  const declarativeVideoStreams: { [key: number]: DeclarativeRemoteVideoStream } = {};
   for (const videoStream of participant.videoStreams) {
     declarativeVideoStreams[videoStream.id] = convertSdkRemoteStreamToDeclarativeRemoteStream(videoStream);
   }
@@ -85,7 +90,12 @@ export function convertSdkParticipantToDeclarativeParticipant(
     callEndReason: participant.callEndReason,
     videoStreams: declarativeVideoStreams,
     isMuted: participant.isMuted,
-    isSpeaking: participant.isSpeaking
+    isSpeaking: participant.isSpeaking,
+    raisedHand: undefined,
+    /* @conditional-compile-remove(hide-attendee-name) */
+    role: participant.role,
+    /* @conditional-compile-remove(spotlight) */
+    spotlight: undefined
   };
 }
 
@@ -95,7 +105,7 @@ export function convertSdkParticipantToDeclarativeParticipant(
  * Note at the time of writing only one LocalVideoStream is supported by the SDK.
  */
 export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
-  const declarativeRemoteParticipants = {};
+  const declarativeRemoteParticipants: { [key: string]: DeclarativeRemoteParticipant } = {};
   call.remoteParticipants.forEach((participant: SdkRemoteParticipant) => {
     declarativeRemoteParticipants[toFlatCommunicationIdentifier(participant.identifier)] =
       convertSdkParticipantToDeclarativeParticipant(participant);
@@ -122,6 +132,13 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     remoteParticipants: declarativeRemoteParticipants,
     remoteParticipantsEnded: {},
     recording: { isRecordingActive: false },
+    /* @conditional-compile-remove(local-recording-notification) */
+    localRecording: { isLocalRecordingActive: false },
+    /* @conditional-compile-remove(ppt-live) */
+    pptLive: { isActive: false },
+    raiseHand: { raisedHands: [] },
+    /* @conditional-compile-remove(reaction) */
+    localParticipantReaction: undefined,
     transcription: { isTranscriptionActive: false },
     screenShareRemoteParticipant: undefined,
     startTime: new Date(),
@@ -142,10 +159,12 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     transfer: {
       acceptedTransfers: {}
     },
-    /* @conditional-compile-remove(optimal-video-count) */
     optimalVideoCount: {
       maxRemoteVideoStreams: call.feature(Features.OptimalVideoCount).optimalVideoCount
-    }
+    },
+    /* @conditional-compile-remove(hide-attendee-name) */
+    // TODO: Replace this once the SDK supports hide attendee name
+    hideAttendeeNames: false
   };
 }
 
@@ -178,8 +197,19 @@ export function convertFromSDKToDeclarativeVideoStreamRendererView(
 /**
  * @private
  */
-export function convertFromSDKToCaptionInfoState(caption: TeamsCaptionsInfo): CaptionsInfo {
+export function convertFromTeamsSDKToCaptionInfoState(caption: TeamsCaptionsInfo): CaptionsInfo {
   return {
+    ...caption
+  };
+}
+
+/* @conditional-compile-remove(acs-close-captions) */
+/**
+ * @private
+ */
+export function convertFromSDKToCaptionInfoState(caption: AcsCaptionsInfo): CaptionsInfo {
+  return {
+    captionText: caption.spokenText,
     ...caption
   };
 }
@@ -191,5 +221,14 @@ export function convertFromSDKToDeclarativeVideoStreamVideoEffects(
 ): LocalVideoStreamVideoEffectsState {
   return {
     activeEffects: videoEffects
+  };
+}
+
+/**
+ * @private
+ */
+export function convertFromSDKToRaisedHandState(raisedHand: RaisedHand): RaisedHandState {
+  return {
+    raisedHandOrderPosition: raisedHand.order
   };
 }

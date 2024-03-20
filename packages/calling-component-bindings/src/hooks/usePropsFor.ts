@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import {
   CameraButton,
@@ -15,6 +15,8 @@ import {
 import { Dialpad } from '@internal/react-components';
 /* @conditional-compile-remove(PSTN-calls) */
 import { HoldButton } from '@internal/react-components';
+import { RaiseHandButton } from '@internal/react-components';
+import { raiseHandButtonSelector } from '../callControlSelectors';
 import {
   CameraButtonSelector,
   cameraButtonSelector,
@@ -37,6 +39,12 @@ import { AreEqual } from '@internal/acs-ui-common';
 import { ParticipantsButton } from '@internal/react-components';
 import { ErrorBarSelector, errorBarSelector } from '../errorBarSelector';
 import { CommonCallingHandlers } from '../handlers/createCommonHandlers';
+/* @conditional-compile-remove(reaction) */
+import { reactionButtonSelector } from '../callControlSelectors';
+/* @conditional-compile-remove(reaction) */
+import { ReactionButton } from '@internal/react-components';
+/* @conditional-compile-remove(spotlight) */
+import { _ComponentCallingHandlers } from '../handlers/createHandlers';
 
 /**
  * Primary hook to get all hooks necessary for a calling Component.
@@ -59,7 +67,11 @@ import { CommonCallingHandlers } from '../handlers/createCommonHandlers';
 export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   component: Component
 ): GetSelector<Component> extends (props: any) => any
-  ? ReturnType<GetSelector<Component>> & Common<CommonCallingHandlers, Parameters<Component>[0]>
+  ? ReturnType<GetSelector<Component>> &
+      Common<
+        CommonCallingHandlers & /* @conditional-compile-remove(spotlight) */ _ComponentCallingHandlers,
+        Parameters<Component>[0]
+      >
   : undefined => {
   const selector = getSelector(component);
   const props = useSelector(selector);
@@ -129,6 +141,10 @@ export const getSelector = <Component extends (props: any) => JSX.Element | unde
   if (component === HoldButton) {
     return findConditionalCompiledSelector(component);
   }
+  /* @conditional-compile-remove(reaction) */
+  if (component === ReactionButton) {
+    return findConditionalCompiledSelector(component);
+  }
   return findSelector(component);
 };
 
@@ -158,6 +174,8 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
       return emptySelector;
     case ErrorBar:
       return errorBarSelector;
+    case RaiseHandButton:
+      return raiseHandButtonSelector;
   }
   return undefined;
 };
@@ -165,7 +183,13 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
 /* @conditional-compile-remove(PSTN-calls) */
 const findConditionalCompiledSelector = (component: (props: any) => JSX.Element | undefined): any => {
   switch (component) {
+    /* @conditional-compile-remove(PSTN-calls) */
     case HoldButton:
+      /* @conditional-compile-remove(PSTN-calls) */
       return holdButtonSelector;
+    /* @conditional-compile-remove(reaction) */
+    case ReactionButton:
+      /* @conditional-compile-remove(reaction) */
+      return reactionButtonSelector;
   }
 };

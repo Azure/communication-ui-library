@@ -1,13 +1,16 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { RefObject, useCallback, useEffect, useMemo } from 'react';
 import { SidePaneRenderer, useIsParticularSidePaneOpen } from './SidePaneProvider';
 import { SidePaneHeader } from '../../../common/SidePaneHeader';
 import { PeoplePaneContent } from '../../../common/PeoplePaneContent';
-import { CompositeLocale, useLocale } from '../../../localization';
+import { useLocale } from '../../../localization';
 import { ParticipantMenuItemsCallback, _DrawerMenuItemProps } from '@internal/react-components';
 import { AvatarPersonaDataCallback } from '../../../common/AvatarPersona';
+import { IButton } from '@fluentui/react';
+/* @conditional-compile-remove(spotlight) */
+import { IContextualMenuItem, IContextualMenuProps } from '@fluentui/react';
 
 const PEOPLE_SIDE_PANE_ID = 'people';
 
@@ -19,6 +22,21 @@ export const usePeoplePane = (props: {
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   mobileView?: boolean;
+  peopleButtonRef?: RefObject<IButton>;
+  /* @conditional-compile-remove(spotlight) */
+  spotlightedParticipantUserIds?: string[];
+  /* @conditional-compile-remove(spotlight) */
+  onStartLocalSpotlight?: () => Promise<void>;
+  /* @conditional-compile-remove(spotlight) */
+  onStopLocalSpotlight?: () => Promise<void>;
+  /* @conditional-compile-remove(spotlight) */
+  onStartRemoteSpotlight?: (userIds: string[]) => Promise<void>;
+  /* @conditional-compile-remove(spotlight) */
+  onStopRemoteSpotlight?: (userIds: string[]) => Promise<void>;
+  /* @conditional-compile-remove(spotlight) */
+  onStopAllSpotlight?: () => Promise<void>;
+  /* @conditional-compile-remove(spotlight) */
+  maxParticipantsToSpotlight?: number;
 }): {
   openPeoplePane: () => void;
   closePeoplePane: () => void;
@@ -30,14 +48,49 @@ export const usePeoplePane = (props: {
     onFetchAvatarPersonaData,
     onFetchParticipantMenuItems,
     setDrawerMenuItems,
-    mobileView
+    mobileView,
+    peopleButtonRef,
+    /* @conditional-compile-remove(spotlight) */
+    spotlightedParticipantUserIds,
+    /* @conditional-compile-remove(spotlight) */
+    onStartLocalSpotlight,
+    /* @conditional-compile-remove(spotlight) */
+    onStopLocalSpotlight,
+    /* @conditional-compile-remove(spotlight) */
+    onStartRemoteSpotlight,
+    /* @conditional-compile-remove(spotlight) */
+    onStopRemoteSpotlight,
+    /* @conditional-compile-remove(spotlight) */
+    onStopAllSpotlight,
+    /* @conditional-compile-remove(spotlight) */
+    maxParticipantsToSpotlight
   } = props;
 
   const closePane = useCallback(() => {
     updateSidePaneRenderer(undefined);
-  }, [updateSidePaneRenderer]);
+    peopleButtonRef?.current?.focus();
+  }, [peopleButtonRef, updateSidePaneRenderer]);
 
-  const localeStrings = localeTrampoline(useLocale());
+  const localeStrings = useLocale().strings.call;
+
+  /* @conditional-compile-remove(spotlight) */
+  const sidePaneHeaderMenuProps: IContextualMenuProps = useMemo(() => {
+    const menuItems: IContextualMenuItem[] = [];
+    if (onStopAllSpotlight && spotlightedParticipantUserIds && spotlightedParticipantUserIds.length > 0) {
+      menuItems.push({
+        key: 'stopAllSpotlightKey',
+        text: localeStrings.stopAllSpotlightMenuLabel,
+        iconProps: { iconName: 'StopAllSpotlightMenuButton', styles: { root: { lineHeight: 0 } } },
+        onClick: () => {
+          onStopAllSpotlight();
+        },
+        ariaLabel: localeStrings.stopAllSpotlightMenuLabel
+      });
+    }
+    return {
+      items: menuItems
+    };
+  }, [onStopAllSpotlight, spotlightedParticipantUserIds, localeStrings.stopAllSpotlightMenuLabel]);
 
   const onRenderHeader = useCallback(
     () => (
@@ -46,22 +99,111 @@ export const usePeoplePane = (props: {
         headingText={localeStrings.peoplePaneTitle}
         dismissSidePaneButtonAriaLabel={localeStrings.dismissSidePaneButtonLabel}
         mobileView={mobileView ?? false}
+        /* @conditional-compile-remove(spotlight) */
+        moreSidePaneButtonAriaLabel={localeStrings.peoplePaneMoreButtonAriaLabel}
+        /* @conditional-compile-remove(spotlight) */
+        menuProps={sidePaneHeaderMenuProps}
       />
     ),
-    [mobileView, closePane, localeStrings]
+    [mobileView, closePane, localeStrings, /* @conditional-compile-remove(spotlight) */ sidePaneHeaderMenuProps]
   );
+
+  /* @conditional-compile-remove(spotlight) */
+  const onFetchParticipantMenuItemsForCallComposite = useCallback(
+    (participantId: string, myUserId?: string, defaultMenuItems?: IContextualMenuItem[]): IContextualMenuItem[] => {
+      const _defaultMenuItems: IContextualMenuItem[] = defaultMenuItems ?? [];
+      const isSpotlighted = spotlightedParticipantUserIds?.find((p) => p === participantId);
+      const isMe = myUserId === participantId;
+      if (isSpotlighted) {
+        const stopSpotlightMenuText = isMe
+          ? localeStrings.stopSpotlightOnSelfMenuLabel
+          : localeStrings.stopSpotlightMenuLabel;
+        const onStopSpotlight = isMe
+          ? onStopLocalSpotlight
+          : onStopRemoteSpotlight
+          ? () => {
+              onStopRemoteSpotlight([participantId]);
+            }
+          : undefined;
+        if (onStopSpotlight && stopSpotlightMenuText) {
+          _defaultMenuItems.push({
+            key: 'stop-spotlight',
+            text: stopSpotlightMenuText,
+            onClick: onStopSpotlight,
+            iconProps: {
+              iconName: 'StopSpotlightContextualMenuItem',
+              styles: { root: { lineHeight: 0 } }
+            },
+            ariaLabel: stopSpotlightMenuText
+          });
+        }
+      } else {
+        const startSpotlightMenuText =
+          spotlightedParticipantUserIds && spotlightedParticipantUserIds.length > 0
+            ? localeStrings.addSpotlightMenuLabel
+            : localeStrings.startSpotlightMenuLabel;
+        const maxSpotlightedParticipantsReached = maxParticipantsToSpotlight
+          ? spotlightedParticipantUserIds
+            ? spotlightedParticipantUserIds.length >= maxParticipantsToSpotlight
+            : false
+          : false;
+        const onStartSpotlight = isMe
+          ? onStartLocalSpotlight
+          : onStartRemoteSpotlight
+          ? () => {
+              onStartRemoteSpotlight([participantId]);
+            }
+          : undefined;
+        if (onStartSpotlight && startSpotlightMenuText) {
+          _defaultMenuItems.push({
+            key: 'start-spotlight',
+            text: startSpotlightMenuText,
+            onClick: onStartSpotlight,
+            iconProps: {
+              iconName: 'StartSpotlightContextualMenuItem',
+              styles: { root: { lineHeight: 0 } }
+            },
+            ariaLabel: startSpotlightMenuText,
+            disabled: maxSpotlightedParticipantsReached,
+            title: maxSpotlightedParticipantsReached ? localeStrings.spotlightLimitReachedMenuTitle : undefined
+          });
+        }
+      }
+      return onFetchParticipantMenuItems
+        ? onFetchParticipantMenuItems(participantId, myUserId, _defaultMenuItems)
+        : _defaultMenuItems;
+    },
+    [
+      spotlightedParticipantUserIds,
+      onStartLocalSpotlight,
+      onStopLocalSpotlight,
+      onStartRemoteSpotlight,
+      onStopRemoteSpotlight,
+      onFetchParticipantMenuItems,
+      localeStrings.stopSpotlightMenuLabel,
+      localeStrings.stopSpotlightOnSelfMenuLabel,
+      localeStrings.addSpotlightMenuLabel,
+      localeStrings.startSpotlightMenuLabel,
+      localeStrings.spotlightLimitReachedMenuTitle,
+      maxParticipantsToSpotlight
+    ]
+  );
+
+  let _onFetchParticipantMenuItems = onFetchParticipantMenuItems;
+  /* @conditional-compile-remove(spotlight) */
+  _onFetchParticipantMenuItems = onFetchParticipantMenuItemsForCallComposite;
 
   const onRenderContent = useCallback((): JSX.Element => {
     return (
       <PeoplePaneContent
         inviteLink={inviteLink}
         onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-        onFetchParticipantMenuItems={onFetchParticipantMenuItems}
+        onFetchParticipantMenuItems={_onFetchParticipantMenuItems}
         setDrawerMenuItems={setDrawerMenuItems}
         mobileView={mobileView}
       />
     );
-  }, [inviteLink, mobileView, onFetchAvatarPersonaData, onFetchParticipantMenuItems, setDrawerMenuItems]);
+  }, [inviteLink, mobileView, onFetchAvatarPersonaData, _onFetchParticipantMenuItems, setDrawerMenuItems]);
 
   const sidePaneRenderer: SidePaneRenderer = useMemo(
     () => ({
@@ -86,12 +228,4 @@ export const usePeoplePane = (props: {
   }, [isOpen, openPane]);
 
   return { openPeoplePane: openPane, closePeoplePane: closePane, isPeoplePaneOpen: isOpen };
-};
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const localeTrampoline = (locale: CompositeLocale): any => {
-  /* @conditional-compile-remove(new-call-control-bar) */
-  return locale.strings.call;
-
-  return locale.strings.callWithChat;
 };

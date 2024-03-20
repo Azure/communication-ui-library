@@ -1,15 +1,10 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 // eslint-disable-next-line no-restricted-imports
 import { Icon, IContextualMenuItem, mergeStyleSets } from '@fluentui/react';
-import { ControlBarButton, _DrawerMenuItemProps } from '@internal/react-components';
+import { ControlBarButton, ControlBarButtonProps, _DrawerMenuItemProps } from '@internal/react-components';
 import React from 'react';
-import {
-  _CommonCallControlOptions,
-  CustomCallControlButtonCallbackArgs,
-  CustomControlButtonProps
-} from '../types/CommonCallControlOptions';
 import { CallControlDisplayType } from '../types/CommonCallControlOptions';
 import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
 
@@ -25,10 +20,103 @@ export const CUSTOM_BUTTON_OPTIONS = {
   MAX_SECONDARY_DESKTOP_CUSTOM_BUTTONS: 2
 };
 
-/** @private */
+/**
+ * Custom Buttons array as ControlBarButtons.
+ * Return type for {@link generateCustomCallControlBarButton}
+ *
+ * @public
+ */
 export type CustomButtons = {
   [key in CustomCallControlButtonPlacement]: typeof ControlBarButton[] | undefined;
 };
+
+/**
+ * Arguments for {@link CustomCallControlButtonCallback}.
+ *
+ * @public
+ */
+export interface CustomCallControlButtonCallbackArgs {
+  /**
+   * Buttons should reduce the size to fit a smaller viewport when `displayType` is `'compact'`.
+   *
+   * @defaultValue `'default'`
+   */
+  displayType?: CallControlDisplayType;
+}
+
+/**
+ * Response from {@link CustomCallControlButtonCallback}.
+ * Includes the base props necessary to render a {@link ControlBarButton} or {@link DrawerMenuItem}.
+ *
+ * @public
+ */
+export interface CustomCallControlButtonProps {
+  /**
+   * Where to place the custom button relative to other buttons.
+   */
+  placement: CustomCallControlButtonPlacement;
+  /**
+   * Icon to render. Icon is a non-default icon name that needs to be registered as a
+   * custom icon using registerIcons through fluentui. Examples include icons from the fluentui library
+   */
+  iconName?: string;
+  /**
+   * Calback for when button is clicked
+   */
+  onItemClick?: () => void;
+  /**
+   * Whether the buttons is disabled
+   *
+   * @defaultValue true
+   */
+  disabled?: boolean;
+  /**
+   * Whether the label is displayed or not.
+   * If no value is set, showLabel will follow composite rules
+   */
+  showLabel?: boolean;
+  /**
+   * A unique id set for the standard HTML id attibute
+   */
+  id?: string;
+  /**
+   * Optional strings to override in component
+   */
+  strings?: CustomCallControlButtonStrings;
+}
+
+/**
+ * Strings for CustomCallControlButtons
+ *
+ * @public
+ */
+export interface CustomCallControlButtonStrings {
+  /**
+   * Optional label for the button
+   */
+  label?: string;
+  /**
+   * Text that is shown in Tooltip content
+   */
+  tooltipContent?: string;
+  /**
+   * The aria label of the button for the benefit of screen readers.
+   */
+  ariaLabel?: string;
+  /**
+   * Detailed description of the button for the benefit of screen readers.
+   */
+  ariaDescription?: string;
+}
+
+/**
+ * onRenderButton is a custom prop that can be passed to override the default rendering of the button
+ * This is useful for custom buttons that need to render more than just an icon and label and is used
+ * for CallWithChat button notification badge.
+ *
+ * @private
+ */
+export type _InternalCustomButtonType = (props: ControlBarButtonProps) => JSX.Element;
 
 /** @private */
 export const generateCustomCallControlBarButton = (
@@ -53,23 +141,29 @@ const generateCustomControlBarButtons = (
     ? customButtons
         .filter((buttonProps) => buttonProps.placement === placement)
         .map((buttonProps, i) => (internalProps) => {
-          if (buttonProps['onRenderButton']) {
-            return buttonProps['onRenderButton'](internalProps);
+          // onRenderButton is a custom prop that can be passed to override the default rendering of the button
+          // This is useful for custom buttons that need to render more than just an icon and label and is used
+          // for CallWithChat button notification badge. However, onRenderButton is not a public prop and is
+          // not documented in the API. This is a temporary solution and will need to be revisited.
+          if ('onRenderButton' in buttonProps) {
+            return (buttonProps['onRenderButton'] as _InternalCustomButtonType)(internalProps);
           }
           return (
             <ControlBarButton
-              ariaDescription={buttonProps.ariaDescription ?? internalProps.ariaDescription}
-              ariaLabel={buttonProps.ariaLabel ?? internalProps.ariaLabel}
+              ariaDescription={buttonProps.strings?.ariaDescription ?? internalProps.ariaDescription}
+              ariaLabel={
+                buttonProps.strings?.ariaLabel ?? buttonProps.strings?.tooltipContent ?? internalProps.ariaLabel
+              }
               disabled={buttonProps.disabled ?? internalProps.disabled}
               id={buttonProps.id ?? internalProps.id}
-              key={buttonProps.key ?? `${buttonProps.placement}_${i}`}
+              key={`${buttonProps.placement}_${i}`}
               onClick={buttonProps.onItemClick ?? internalProps.onClick}
               onRenderIcon={() => (
-                <Icon iconName={buttonProps.iconName ?? internalProps.iconProps?.iconName ?? 'ControlButtonOptions'} />
+                <Icon iconName={buttonProps.iconName ?? internalProps.iconProps?.iconName ?? 'DefaultCustomButton'} />
               )}
               showLabel={buttonProps.showLabel ?? internalProps.showLabel}
-              text={buttonProps.text ?? internalProps.text}
-              styles={mergeStyleSets(internalProps.styles, buttonProps.styles)}
+              styles={mergeStyleSets(internalProps.styles)}
+              strings={buttonProps.strings}
             />
           );
         })
@@ -87,11 +181,11 @@ const generateCustomDrawerButtons = (
           (buttonProps, i): _DrawerMenuItemProps => ({
             ...buttonProps,
             disabled: buttonProps.disabled,
-            iconProps: { iconName: buttonProps.iconName },
+            iconProps: { iconName: buttonProps.iconName ?? 'DefaultCustomButton', styles: { root: { lineHeight: 0 } } },
             id: buttonProps.id,
-            itemKey: buttonProps.key ? '' + buttonProps.key : `${buttonProps.placement}_${i}`,
+            itemKey: `${buttonProps.placement}_${i}`,
             onItemClick: buttonProps.onItemClick,
-            text: buttonProps.text
+            text: buttonProps.strings?.label
           })
         )
     : [];
@@ -154,7 +248,7 @@ export const drawerMenuItemToContextualMenuItem = (item: _DrawerMenuItemProps): 
  * The response indicates where the custom button should be placed.
  *
  * Performance tip: This callback is only called when either the callback or its arguments change.
- * @beta
+ * @public
  */
 export type CustomCallControlButtonCallback = (
   args: CustomCallControlButtonCallbackArgs
@@ -173,35 +267,15 @@ export type CustomCallControlButtonCallback = (
  *
  * Only 'primary' placement works when legacy call control is enabled in call composite
  *
- * @beta
+ * @public
  */
 export type CustomCallControlButtonPlacement = 'primary' | 'overflow' | 'secondary';
-
-/**
- * Response from {@link CustomCallControlButtonCallback}.
- *
- * Includes the icon and placement prop necessary to indicate where to place the
- * {@link ControlBarButton} and a {@link DrawerMenuItem}
- *
- * @beta
- */
-export interface CustomCallControlButtonProps extends CustomControlButtonProps {
-  /**
-   * Where to place the custom button relative to other buttons.
-   */
-  placement: CustomCallControlButtonPlacement;
-  /**
-   * Icon to render. Icon is a non-default icon name that needs to be registered as a
-   * custom icon using registerIcons through fluentui. Examples include icons from the fluentui library
-   */
-  iconName?: string;
-}
 
 /** @private */
 export const onFetchCustomButtonPropsTrampoline = (
   options?: CommonCallControlOptions
 ): CustomCallControlButtonCallback[] | undefined => {
   let response: CustomCallControlButtonCallback[] | undefined = undefined;
-  response = (options as _CommonCallControlOptions)?.onFetchCustomButtonProps;
+  response = options?.onFetchCustomButtonProps;
   return response;
 };

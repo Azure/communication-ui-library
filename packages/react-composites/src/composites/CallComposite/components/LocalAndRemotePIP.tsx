@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React, { useMemo } from 'react';
 import {
@@ -14,11 +14,17 @@ import {
 
 import { useLocale } from '../../localization';
 
+import { RaisedHand } from '@internal/react-components';
+
 /**
  * @private
  */
 export interface LocalAndRemotePIPProps {
-  localParticipant: { displayName?: string; videoStream?: VideoGalleryStream };
+  localParticipant: {
+    displayName?: string;
+    videoStream?: VideoGalleryStream;
+    raisedHand?: RaisedHand;
+  };
   dominantRemoteParticipant?: {
     userId: string;
     displayName?: string;
@@ -62,14 +68,16 @@ export const LocalAndRemotePIP = (props: LocalAndRemotePIPProps): JSX.Element =>
       showMuteIndicator: false,
       showCameraSwitcherInLocalPreview: false,
       isAvailable: localParticipant.videoStream?.isAvailable,
-      renderElement: localParticipant.videoStream?.renderElement
+      renderElement: localParticipant.videoStream?.renderElement,
+      raisedHand: localParticipant.raisedHand
     }),
     [
       localParticipant.displayName,
       localParticipant.videoStream?.isAvailable,
       localParticipant.videoStream?.renderElement,
       onCreateLocalStreamView,
-      onDisposeLocalStreamView
+      onDisposeLocalStreamView,
+      localParticipant.raisedHand
     ]
   );
 
@@ -107,14 +115,14 @@ export const LocalAndRemotePIP = (props: LocalAndRemotePIPProps): JSX.Element =>
   const primaryTileProps: _PictureInPictureInPictureTileProps = useMemo(
     () => ({
       children: remoteVideoTileProps ? (
-        <_RemoteVideoTile {...remoteVideoTileProps} />
+        <_RemoteVideoTile {...remoteVideoTileProps} strings={locale.component.strings.videoGallery} />
       ) : (
         <_LocalVideoTile {...localVideoTileProps} />
       ),
       // TODO: when the calling SDK provides height/width stream information - update this to reflect the stream orientation.
       orientation: 'portrait'
     }),
-    [localVideoTileProps, remoteVideoTileProps]
+    [localVideoTileProps, remoteVideoTileProps, locale.component.strings.videoGallery]
   );
 
   // If we are showing the local participant as the primary tile, show nothing for the secondary tile

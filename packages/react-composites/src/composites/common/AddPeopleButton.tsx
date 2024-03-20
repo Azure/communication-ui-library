@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
+
 import { concatStyleSets, DefaultButton, IButtonStyles, PrimaryButton, Stack, useTheme } from '@fluentui/react';
 import copy from 'copy-to-clipboard';
 import React, { useCallback, useMemo, useState } from 'react';
@@ -75,7 +76,7 @@ export const AddPeopleButton = (props: AddPeopleButtonProps): JSX.Element => {
     );
   } else {
     return (
-      <Stack tokens={peoplePaneContainerTokens} data-ui-id="people-pane-content">
+      <Stack tokens={peoplePaneContainerTokens} data-ui-id="people-pane-content" verticalFill>
         <AddPeopleDropdown
           strings={strings}
           mobileView={mobileView}
@@ -83,7 +84,9 @@ export const AddPeopleButton = (props: AddPeopleButtonProps): JSX.Element => {
           onAddParticipant={props.onAddParticipant}
           alternateCallerId={props.alternateCallerId}
         />
-        {participantList}
+        <Stack.Item grow styles={{ root: { overflowY: 'hidden' } }}>
+          {participantList}
+        </Stack.Item>
       </Stack>
     );
   }
@@ -109,7 +112,7 @@ export const AddPeopleButton = (props: AddPeopleButtonProps): JSX.Element => {
     );
   } else {
     return (
-      <Stack tokens={peoplePaneContainerTokens} data-ui-id="people-pane-content">
+      <Stack tokens={peoplePaneContainerTokens} data-ui-id="people-pane-content" verticalFill>
         {inviteLink && (
           <Stack styles={copyLinkButtonStackStyles}>
             <Announcer announcementString={copyInviteLinkAnnouncerStrings} ariaLive={'polite'} />
@@ -124,7 +127,9 @@ export const AddPeopleButton = (props: AddPeopleButtonProps): JSX.Element => {
             />
           </Stack>
         )}
-        {participantList}
+        <Stack.Item grow styles={{ root: { overflowY: 'hidden' } }}>
+          {participantList}
+        </Stack.Item>
       </Stack>
     );
   }

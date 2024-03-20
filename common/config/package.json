@@ -10,19 +10,23 @@
     "build:stable": "",
     "clean": "",
     "test": "",
+    "test:ci-coverage": "",
     "test:stable": "",
     "prettier": "",
     "prettier:check": ""
   },
   "devDependencies": {
+    "@actions/core": "^1.10.1",
     "@octokit/rest": "~19.0.3",
-    "@rollup/plugin-commonjs": "~17.1.0",
-    "@types/node": "^16.11.7",
+    "@playwright/test": "~1.39.0",
+    "@rollup/plugin-commonjs": "~25.0.7",
+    "@rollup/plugin-json": "^6.0.1",
+    "@types/node": "^20.11.25",
     "beachball": "2.31.13",
-    "rollup": "~2.42.4",
+    "rollup": "^4.12.1",
     "rollup-plugin-sourcemaps": "~0.6.3",
     "rollup-plugin-svg": "~2.0.0",
-    "ts-node": "^9.1.1",
-    "typescript": "4.3.5"
+    "ts-node": "^10.9.2",
+    "typescript": "5.4.2"
   }
 }

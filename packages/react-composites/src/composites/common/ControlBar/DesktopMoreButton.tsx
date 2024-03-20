@@ -1,25 +1,25 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { IContextualMenuItem } from '@fluentui/react';
 import { ControlBarButtonProps } from '@internal/react-components';
+import { VideoGalleryLayout } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
 import { _StartCaptionsButton } from '@internal/react-components';
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButton } from '@internal/react-components';
 import React from 'react';
+import { useState } from 'react';
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
 import { useMemo, useCallback } from 'react';
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { usePropsFor } from '../../CallComposite/hooks/usePropsFor';
-/*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+/*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
 import { buttonFlyoutIncreasedSizeStyles } from '../../CallComposite/styles/Buttons.styles';
 import { MoreButton } from '../MoreButton';
-/*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+/*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
 import { useLocale } from '../../localization';
-/* @conditional-compile-remove(control-bar-button-injection) */
 import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
-/* @conditional-compile-remove(control-bar-button-injection) */
 import {
   CUSTOM_BUTTON_OPTIONS,
   generateCustomCallDesktopOverflowButtons,
@@ -32,6 +32,9 @@ import { _startCaptionsButtonSelector } from '@internal/calling-component-bindin
 /* @conditional-compile-remove(close-captions) */
 import { useAdaptedSelector } from '../../CallComposite/hooks/useAdaptedSelector';
 import { _preventDismissOnEvent } from '@internal/acs-ui-common';
+import { showDtmfDialer } from '../../CallComposite/utils/MediaGalleryUtils';
+import { useSelector } from '../../CallComposite/hooks/useSelector';
+import { getTargetCallees } from '../../CallComposite/selectors/baseSelectors';
 
 /** @private */
 export interface DesktopMoreButtonProps extends ControlBarButtonProps {
@@ -39,9 +42,13 @@ export interface DesktopMoreButtonProps extends ControlBarButtonProps {
   onClickShowDialpad?: () => void;
   /* @conditional-compile-remove(close-captions) */
   isCaptionsSupported?: boolean;
-  /* @conditional-compile-remove(control-bar-button-injection) */
   callControls?: boolean | CommonCallControlOptions;
   onCaptionsSettingsClick?: () => void;
+  onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'horizontalTop') => void;
+  onUserSetGalleryLayout?: (layout: VideoGalleryLayout) => void;
+  userSetGalleryLayout?: VideoGalleryLayout;
+  onSetDialpadPage?: () => void;
+  dtmfDialerPresent?: boolean;
 }
 
 /**
@@ -64,6 +71,18 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     });
   }, [startCaptionsButtonHandlers, startCaptionsButtonProps.currentSpokenLanguage]);
 
+  /* @conditional-compile-remove(overflow-top-composite) */
+  const [galleryPositionTop, setGalleryPositionTop] = useState<boolean>(false);
+  const [focusedContentOn, setFocusedContentOn] = useState<boolean>(false);
+  const [previousLayout, setPreviousLayout] = useState<VideoGalleryLayout>(
+    props.userSetGalleryLayout ?? 'floatingLocalVideo'
+  );
+
+  const callees = useSelector(getTargetCallees);
+  const allowDtmfDialer = showDtmfDialer(callees);
+
+  const [dtmfDialerChecked, setDtmfDialerChecked] = useState<boolean>(props.dtmfDialerPresent ?? false);
+
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
   const moreButtonStrings = useMemo(
     () => ({
@@ -74,6 +93,15 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
   );
 
   const moreButtonContextualMenuItems: IContextualMenuItem[] = [];
+
+  /* @conditional-compile-remove(close-captions) */
+  const menuSubIconStyleSet = {
+    root: {
+      height: 'unset',
+      lineHeight: '100%',
+      width: '1.25rem'
+    }
+  };
 
   /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   moreButtonContextualMenuItems.push({
@@ -93,14 +121,6 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
   /* @conditional-compile-remove(close-captions) */
   if (props.isCaptionsSupported) {
     const captionsContextualMenuItems: IContextualMenuItem[] = [];
-
-    const menuSubIconStyleSet = {
-      root: {
-        height: 'unset',
-        lineHeight: '100%',
-        width: '1.25rem'
-      }
-    };
 
     moreButtonContextualMenuItems.push({
       key: 'liveCaptionsKey',
@@ -165,23 +185,181 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     }
   }
 
-  /*@conditional-compile-remove(PSTN-calls) */
-  if (props.onClickShowDialpad) {
-    moreButtonContextualMenuItems.push({
-      key: 'showDialpadKey',
-      text: localeStrings.strings.callWithChat.openDtmfDialpadLabel,
-      onClick: () => {
-        props.onClickShowDialpad && props.onClickShowDialpad();
+  const dtmfDialerScreenOption = {
+    key: 'dtmfDialerScreenKey',
+    itemProps: {
+      styles: buttonFlyoutIncreasedSizeStyles
+    },
+    text: !dtmfDialerChecked
+      ? localeStrings.strings.call.dtmfDialerMoreButtonLabelOn
+      : localeStrings.strings.call.dtmfDialerMoreButtonLabelOff,
+    onClick: () => {
+      props.onSetDialpadPage && props.onSetDialpadPage();
+      setDtmfDialerChecked(!dtmfDialerChecked);
+    },
+    iconProps: {
+      iconName: 'DtmfDialpadButton',
+      styles: { root: { lineHeight: 0 } }
+    }
+  };
+  /**
+   * Only render the dtmf dialer if the dialpad for PSTN calls is not present
+   */
+  if (props.onSetDialpadPage && allowDtmfDialer) {
+    moreButtonContextualMenuItems.push(dtmfDialerScreenOption);
+  }
+
+  if (props.onUserSetOverflowGalleryPositionChange) {
+    const galleryOptions = {
+      key: 'overflowGalleryPositionKey',
+      iconProps: {
+        iconName: 'GalleryOptions',
+        styles: { root: { lineHeight: 0 } }
       },
-      iconProps: { iconName: 'Dialpad', styles: { root: { lineHeight: 0 } } },
       itemProps: {
         styles: buttonFlyoutIncreasedSizeStyles
       },
-      disabled: props.disableButtonsForHoldScreen
-    });
+      submenuIconProps: {
+        styles: menuSubIconStyleSet
+      },
+      text: localeStrings.strings.call.moreButtonGalleryControlLabel,
+      disabled: props.disableButtonsForHoldScreen,
+      subMenuProps: {
+        items: [
+          {
+            key: 'dynamicSelectionKey',
+            text: localeStrings.strings.call.moreButtonGalleryFloatingLocalLayoutLabel,
+            canCheck: true,
+            itemProps: {
+              styles: buttonFlyoutIncreasedSizeStyles
+            },
+            isChecked: props.userSetGalleryLayout === 'floatingLocalVideo',
+            onClick: () => {
+              props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('floatingLocalVideo');
+              setFocusedContentOn(false);
+            },
+            iconProps: {
+              iconName: 'FloatingLocalVideoGalleryLayout',
+              styles: { root: { lineHeight: 0 } }
+            }
+          },
+          {
+            key: 'speakerSelectionKey',
+            text: localeStrings.strings.call.moreButtonGallerySpeakerLayoutLabel,
+            canCheck: true,
+            itemProps: {
+              styles: buttonFlyoutIncreasedSizeStyles
+            },
+            isChecked: props.userSetGalleryLayout === 'speaker',
+            onClick: () => {
+              props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('speaker');
+              setFocusedContentOn(false);
+            },
+            iconProps: {
+              iconName: 'SpeakerGalleryLayout',
+              styles: { root: { lineHeight: 0 } }
+            }
+          },
+          {
+            key: 'focusedContentSelectionKey',
+            text: localeStrings.strings.call.moreButtonGalleryFocusedContentLayoutLabel,
+            canCheck: true,
+            itemProps: {
+              styles: buttonFlyoutIncreasedSizeStyles
+            },
+            isChecked: focusedContentOn,
+            onClick: () => {
+              if (focusedContentOn === false) {
+                setPreviousLayout(props.userSetGalleryLayout ?? 'floatingLocalVideo');
+                props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('focusedContent');
+                setFocusedContentOn(true);
+              } else {
+                props.onUserSetGalleryLayout && props.onUserSetGalleryLayout(previousLayout);
+                setFocusedContentOn(false);
+              }
+            },
+            iconProps: {
+              iconName: 'FocusedContentGalleryLayout',
+              styles: { root: { lineHeight: 0 } }
+            }
+          }
+        ],
+        calloutProps: {
+          preventDismissOnEvent: _preventDismissOnEvent
+        }
+      }
+    };
+
+    /* @conditional-compile-remove(gallery-layout-composite) */
+    const galleryOption = {
+      key: 'defaultSelectionKey',
+      text: localeStrings.strings.call.moreButtonGalleryDefaultLayoutLabel,
+      canCheck: true,
+      itemProps: {
+        styles: buttonFlyoutIncreasedSizeStyles
+      },
+      isChecked: props.userSetGalleryLayout === 'default',
+      onClick: () => {
+        props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('default');
+        setFocusedContentOn(false);
+      },
+      iconProps: {
+        iconName: 'DefaultGalleryLayout',
+        styles: { root: { lineHeight: 0 } }
+      }
+    };
+    /* @conditional-compile-remove(large-gallery) */
+    const largeGalleryOption = {
+      key: 'largeGallerySelectionKey',
+      text: localeStrings.strings.call.moreButtonLargeGalleryDefaultLayoutLabel,
+      canCheck: true,
+      itemProps: {
+        styles: buttonFlyoutIncreasedSizeStyles
+      },
+      isChecked: props.userSetGalleryLayout === 'largeGallery',
+      onClick: () => {
+        props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('largeGallery');
+        setFocusedContentOn(false);
+      },
+      iconProps: {
+        iconName: 'LargeGalleryLayout',
+        styles: { root: { lineHeight: 0 } }
+      }
+    };
+
+    /* @conditional-compile-remove(overflow-top-composite) */
+    const overflowGalleryOption = {
+      key: 'topKey',
+      text: localeStrings.strings.call.moreButtonGalleryPositionToggleLabel,
+      canCheck: true,
+      topDivider: true,
+      itemProps: {
+        styles: buttonFlyoutIncreasedSizeStyles
+      },
+      iconProps: {
+        iconName: 'OverflowGalleryTop',
+        styles: { root: { lineHeight: 0 } }
+      },
+      isChecked: galleryPositionTop,
+      onClick: () => {
+        if (galleryPositionTop === false) {
+          props.onUserSetOverflowGalleryPositionChange && props.onUserSetOverflowGalleryPositionChange('horizontalTop');
+          setGalleryPositionTop(true);
+        } else {
+          props.onUserSetOverflowGalleryPositionChange && props.onUserSetOverflowGalleryPositionChange('Responsive');
+          setGalleryPositionTop(false);
+        }
+      }
+    };
+    /* @conditional-compile-remove(large-gallery) */
+    galleryOptions.subMenuProps?.items?.push(largeGalleryOption);
+    /* @conditional-compile-remove(gallery-layout-composite) */
+    galleryOptions.subMenuProps?.items?.push(galleryOption);
+    /* @conditional-compile-remove(overflow-top-composite) */
+    galleryOptions.subMenuProps?.items?.push(overflowGalleryOption);
+    moreButtonContextualMenuItems.push(galleryOptions);
   }
 
-  /* @conditional-compile-remove(control-bar-button-injection) */
   const customDrawerButtons = useMemo(
     () =>
       generateCustomCallDesktopOverflowButtons(
@@ -191,7 +369,6 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     [props.callControls]
   );
 
-  /* @conditional-compile-remove(control-bar-button-injection) */
   customDrawerButtons['primary'].slice(CUSTOM_BUTTON_OPTIONS.MAX_PRIMARY_DESKTOP_CUSTOM_BUTTONS).forEach((element) => {
     moreButtonContextualMenuItems.push({
       itemProps: {
@@ -200,7 +377,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
       ...element
     });
   });
-  /* @conditional-compile-remove(control-bar-button-injection) */
+
   customDrawerButtons['secondary']
     .slice(CUSTOM_BUTTON_OPTIONS.MAX_SECONDARY_DESKTOP_CUSTOM_BUTTONS)
     .forEach((element) => {
@@ -212,7 +389,6 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
       });
     });
 
-  /* @conditional-compile-remove(control-bar-button-injection) */
   customDrawerButtons['overflow'].forEach((element) => {
     moreButtonContextualMenuItems.push({
       itemProps: {

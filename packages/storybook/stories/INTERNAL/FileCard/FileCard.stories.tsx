@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { Icon } from '@fluentui/react';
 import { _FileCard } from '@internal/react-components';

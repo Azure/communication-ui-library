@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import EventEmitter from 'events';
-import produce, { enableMapSet, enablePatches, Patch } from 'immer';
+import { enableMapSet, enablePatches, produce, Patch } from 'immer';
 import {
   ChatClientState,
   ChatErrors,
@@ -19,13 +19,17 @@ import { _safeJSONStringify, toFlatCommunicationIdentifier } from '@internal/acs
 import { Constants } from './Constants';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-chat';
 import { chatStatefulLogger } from './Logger';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import type { CommunicationTokenCredential } from '@azure/communication-common';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { ResourceDownloadQueue, fetchImageSource } from './ResourceDownloadQueue';
 
 enableMapSet();
 // Needed to generate state diff for verbose logging.
 enablePatches();
 
 /**
- * @private
+ * @internal
  */
 export class ChatContext {
   private _state: ChatClientState = {
@@ -38,10 +42,22 @@ export class ChatContext {
   private _logger: AzureLogger;
   private _emitter: EventEmitter;
   private typingIndicatorInterval: number | undefined = undefined;
-
-  constructor(maxListeners?: number) {
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  private _inlineImageQueue: ResourceDownloadQueue | undefined = undefined;
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  private _fullsizeImageQueue: ResourceDownloadQueue | undefined = undefined;
+  constructor(
+    maxListeners?: number,
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ credential?: CommunicationTokenCredential,
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ endpoint?: string
+  ) {
     this._logger = createClientLogger('communication-react:chat-context');
     this._emitter = new EventEmitter();
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    if (credential) {
+      this._inlineImageQueue = new ResourceDownloadQueue(this, { credential, endpoint: endpoint ?? '' });
+      this._fullsizeImageQueue = new ResourceDownloadQueue(this, { credential, endpoint: endpoint ?? '' });
+    }
     if (maxListeners) {
       this._emitter.setMaxListeners(maxListeners);
     }
@@ -62,6 +78,67 @@ export class ChatContext {
     if (!this._batchMode && this._state !== priorState) {
       this._emitter.emit('stateChanged', this._state);
     }
+  }
+
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  public dispose(): void {
+    this.modifyState((draft: ChatClientState) => {
+      this._inlineImageQueue?.cancelAllRequests();
+      this._fullsizeImageQueue?.cancelAllRequests();
+      Object.keys(draft.threads).forEach((threadId) => {
+        const thread = draft.threads[threadId];
+        Object.keys(thread.chatMessages).forEach((messageId) => {
+          const cache = thread.chatMessages[messageId].resourceCache;
+          if (cache) {
+            Object.keys(cache).forEach((resourceUrl) => {
+              const resource = cache[resourceUrl];
+              if (resource.sourceUrl) {
+                URL.revokeObjectURL(resource.sourceUrl);
+              }
+            });
+          }
+          thread.chatMessages[messageId].resourceCache = undefined;
+        });
+      });
+    });
+    // Any item in queue should be removed.
+  }
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  public async downloadResourceToCache(threadId: string, messageId: string, resourceUrl: string): Promise<void> {
+    let message = this.getState().threads[threadId]?.chatMessages[messageId];
+    if (message && this._fullsizeImageQueue) {
+      if (!message.resourceCache) {
+        message = { ...message, resourceCache: {} };
+      }
+      // Need to discuss retry logic in case of failure
+      this._fullsizeImageQueue.addMessage(message);
+      await this._fullsizeImageQueue.startQueue(threadId, fetchImageSource, {
+        singleUrl: resourceUrl
+      });
+    }
+  }
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  public removeResourceFromCache(threadId: string, messageId: string, resourceUrl: string): void {
+    this.modifyState((draft: ChatClientState) => {
+      const message = draft.threads[threadId]?.chatMessages[messageId];
+      if (message && this._fullsizeImageQueue && this._fullsizeImageQueue.containsMessageWithSameAttachments(message)) {
+        this._fullsizeImageQueue?.cancelRequest(resourceUrl);
+      } else if (
+        message &&
+        this._inlineImageQueue &&
+        this._inlineImageQueue.containsMessageWithSameAttachments(message)
+      ) {
+        this._inlineImageQueue?.cancelRequest(resourceUrl);
+      }
+      if (message && message.resourceCache && message.resourceCache[resourceUrl]) {
+        const resource = message.resourceCache[resourceUrl];
+        if (resource.sourceUrl) {
+          URL.revokeObjectURL(resource.sourceUrl);
+        }
+
+        delete message.resourceCache[resourceUrl];
+      }
+    });
   }
 
   public setThread(threadId: string, threadState: ChatThreadClientState): void {
@@ -280,6 +357,8 @@ export class ChatContext {
   }
 
   public setChatMessage(threadId: string, message: ChatMessageWithStatus): void {
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    this.parseAttachments(threadId, message);
     const { id: messageId, clientMessageId } = message;
     if (messageId || clientMessageId) {
       this.modifyState((draft: ChatClientState) => {
@@ -297,6 +376,22 @@ export class ChatContext {
           this.filterTypingIndicatorForUser(thread, message.sender);
         }
       });
+    }
+  }
+
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  private parseAttachments(threadId: string, message: ChatMessageWithStatus): void {
+    const attachments = message.content?.attachments;
+    if (message.type === 'html' && attachments && attachments.length > 0) {
+      if (
+        this._inlineImageQueue &&
+        !this._inlineImageQueue.containsMessageWithSameAttachments(message) &&
+        message.resourceCache === undefined
+      ) {
+        // Need to discuss retry logic in case of failure
+        this._inlineImageQueue.addMessage(message);
+        this._inlineImageQueue.startQueue(threadId, fetchImageSource);
+      }
     }
   }
 

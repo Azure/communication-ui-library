@@ -1,9 +1,10 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
+
 /* @conditional-compile-remove(close-captions) */
 import { CallClientState, CaptionsInfo } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(close-captions) */
-import { CallingBaseSelectorProps, getStartCaptionsInProgress } from './baseSelectors';
+import { CallingBaseSelectorProps, getStartCaptionsInProgress, getSupportedCaptionLanguages } from './baseSelectors';
 /* @conditional-compile-remove(close-captions) */
 import {
   getCaptions,
@@ -17,7 +18,7 @@ import * as reselect from 'reselect';
 /* @conditional-compile-remove(close-captions) */
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(close-captions) */
-import { _CaptionsInfo } from '@internal/react-components';
+import { _CaptionsInfo, _SupportedCaptionLanguage, _SupportedSpokenLanguage } from '@internal/react-components';
 
 /* @conditional-compile-remove(close-captions) */
 /**
@@ -44,35 +45,52 @@ export const _startCaptionsButtonSelector: _StartCaptionsButtonSelector = resele
   (isCaptionsFeatureActive, currentCaptionLanguage, currentSpokenLanguage) => {
     return {
       checked: isCaptionsFeatureActive ?? false,
-      currentCaptionLanguage: currentCaptionLanguage ?? 'en-us',
+      currentCaptionLanguage: currentCaptionLanguage ?? '',
       currentSpokenLanguage: currentSpokenLanguage ?? 'en-us'
     };
   }
 );
+
 /* @conditional-compile-remove(close-captions) */
 /**
- * Selector type for components for Changing spoken language
+ * Selector type for components for Changing caption language and spoken language
  * @internal
  */
-export type _ChangeSpokenLanguageSelector = (
+export type _CaptionSettingsSelector = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ) => {
-  supportedSpokenLanguages: string[];
-  currentSpokenLanguage: string;
+  supportedCaptionLanguages: _SupportedCaptionLanguage[];
+  currentCaptionLanguage: _SupportedCaptionLanguage;
+  supportedSpokenLanguages: _SupportedSpokenLanguage[];
+  currentSpokenLanguage: _SupportedSpokenLanguage;
   isCaptionsFeatureActive: boolean;
 };
 
 /* @conditional-compile-remove(close-captions) */
 /**
- * Selector for {@link ChangeSpokenLanguageButton} component.
+ * Selector for Changing caption language and spoken language
  *
  * @internal
  */
-export const _changeSpokenLanguageSelector: _ChangeSpokenLanguageSelector = reselect.createSelector(
-  [getSupportedSpokenLanguages, getCurrentSpokenLanguage, getCaptionsStatus],
-  (supportedSpokenLanguages, currentSpokenLanguage, isCaptionsFeatureActive) => {
+export const _captionSettingsSelector: _CaptionSettingsSelector = reselect.createSelector(
+  [
+    getSupportedCaptionLanguages,
+    getCurrentCaptionLanguage,
+    getSupportedSpokenLanguages,
+    getCurrentSpokenLanguage,
+    getCaptionsStatus
+  ],
+  (
+    supportedCaptionLanguages,
+    currentCaptionLanguage,
+    supportedSpokenLanguages,
+    currentSpokenLanguage,
+    isCaptionsFeatureActive
+  ) => {
     return {
+      supportedCaptionLanguages: supportedCaptionLanguages ?? [],
+      currentCaptionLanguage: currentCaptionLanguage ?? 'en',
       supportedSpokenLanguages: supportedSpokenLanguages ?? ['en-us'],
       currentSpokenLanguage: currentSpokenLanguage ?? 'en-us',
       isCaptionsFeatureActive: isCaptionsFeatureActive ?? false

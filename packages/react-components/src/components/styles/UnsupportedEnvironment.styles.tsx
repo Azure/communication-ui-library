@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { IButtonStyles, ILinkStyles, IStackStyles, ITextStyles, Theme } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';

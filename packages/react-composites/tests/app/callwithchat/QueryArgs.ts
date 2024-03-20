@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { jsonDateDeserializer } from '../lib/utils';
 import type { CallWithChatCompositeOptions, _FakeChatAdapterArgs } from '../../../src';

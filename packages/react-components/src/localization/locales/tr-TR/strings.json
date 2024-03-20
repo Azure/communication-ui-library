@@ -7,7 +7,11 @@
     "mutedIconLabel": "Ses kapatıldı",
     "displayNamePlaceholder": "Adsız katılımcı",
     "participantStateRinging": "Arıyor...",
-    "participantStateHold": "Beklemede"
+    "participantStateHold": "Beklemede",
+    "attendeeRole": "Katılımcı"
+  },
+  "ParticipantList": {
+    "overflowParticipantCount": "{overflowCount} tane daha"
   },
   "typingIndicator": {
     "singleUser": "{user} yazıyor...",
@@ -25,8 +29,29 @@
     "uploading": "Karşıya yükleniyor",
     "uploadCompleted": "Karşıya yükleme tamamlandı"
   },
+  "richTextSendBox": {
+    "placeholderText": "Bir mesaj girin",
+    "textTooLong": "İletinizin uzunluğu üst sınırı aşıyor.",
+    "sendButtonAriaLabel": "Mesaj gönder",
+    "fileUploadsPendingError": "Karşıya yükleniyor... Lütfen bekleyin.",
+    "removeFile": "Dosyayı kaldır",
+    "uploading": "Yükleniyor",
+    "uploadCompleted": "Karşıya yükleme tamamlandı",
+    "boldTooltip": "Kalın",
+    "italicTooltip": "İtalik",
+    "underlineTooltip": "Altı çizili",
+    "bulletListTooltip": "Madde işaretli liste",
+    "numberListTooltip": "Numaralandırılmış liste",
+    "increaseIndentTooltip": "Girintiyi artır",
+    "decreaseIndentTooltip": "Girintiyi azalt",
+    "richTextFormatButtonTooltip": "Biçim"
+  },
   "mentionPopover": {
     "mentionPopoverHeader": "Öneriler"
+  },
+  "imageOverlay": {
+    "downloadButtonLabel": "İndir",
+    "dismissButtonAriaLabel": "Kapat"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "İleti gönderildi",
@@ -109,6 +134,24 @@
     "tooltipOnContent": "Ekranınızı sunuluyor",
     "tooltipOffContent": "Ekranınızı sunun"
   },
+  "raiseHandButton": {
+    "offLabel": "Kaldır",
+    "onLabel": "İndir",
+    "tooltipDisabledContent": "El Kaldırma eylemi devre dışı bırakıldı",
+    "tooltipOnContent": "Eli İndirme",
+    "tooltipOffContent": "El Kaldırma"
+  },
+  "reactionButton": {
+    "label": "Tepki ver",
+    "ariaLabel": "Tepki Düğmesi, Bir tepki gönder",
+    "tooltipDisabledContent": "Tepki eylemi devre dışı bırakıldı",
+    "tooltipContent": "Tepki gönder",
+    "likeReactionTooltipContent": "Beğen",
+    "heartReactionTooltipContent": "Aşk",
+    "laughReactionTooltipContent": "Kahkaha",
+    "applauseReactionTooltipContent": "Alkış",
+    "surprisedReactionTooltipContent": "Şaşırmış"
+  },
   "messageThread": {
     "yesterday": "Dün",
     "sunday": "Pazar",
@@ -133,13 +176,14 @@
     "newMessagesIndicator": "Yeni iletiler",
     "noDisplayNameSub": "Ad yok",
     "editBoxCancelButton": "İptal",
-    "editBoxSubmitButton": "Gönder",
+    "editBoxSubmitButton": "Bitti",
     "messageReadCount": "{messageReadByCount} / {remoteParticipantsCount} katılımcı tarafından okundu",
     "actionMenuMoreOptions": "Diğer Seçenekler",
     "downloadFile": "Dosyayı indir",
     "blockedWarningText": "Bu ileti kuruluş ilkesi nedeniyle silindi.",
     "blockedWarningLinkText": "Ayrıntılar",
-    "fileCardGroupMessage": "İletide {fileCount} ek var"
+    "fileCardGroupMessage": "İletide {fileCount} ek var",
+    "messageDeletedAnnouncementAriaLabel": "İleti silindi"
   },
   "errorBar": {
     "unableToReachChatService": "Çevrimdışısınız",
@@ -175,7 +219,8 @@
     "failedToJoinCallGeneric": "Aramaya katılınamadı.",
     "failedToJoinCallInvalidMeetingLink": "Toplantıya katılınamıyor. Geçersiz Bağlantı.",
     "cameraFrozenForRemoteParticipants": "Aramadaki kullanıcılar videonuzu görmekte sorun yaşıyor. Lütfen cihazlarınızı ve ağlarınızı kontrol edin.",
-    "unableToStartVideoEffect": "Video efekti uygulanamıyor."
+    "unableToStartVideoEffect": "Video efekti uygulanamıyor.",
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "Öne çıkarılan katılımcı sayısı zaten üst sınırı geçtiğinden katılımcılarda öne çıkarma özelliği başlatılamıyor."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Ekranınızı paylaşıyorsunuz.",
@@ -193,7 +238,13 @@
     "pinParticipantMenuItemAriaLabel": "{participantName} adlı katılımcıyı sabitle",
     "unpinParticipantMenuItemAriaLabel": "{participantName} adlı katılımcının sabitlemesini kaldır",
     "pinnedParticipantAnnouncementAriaLabel": "{participantName} adlı katılımcı sabitlendi",
-    "unpinnedParticipantAnnouncementAriaLabel": "{participantName} adlı katılımcının sabitlemesi kaldırıldı"
+    "unpinnedParticipantAnnouncementAriaLabel": "{participantName} adlı katılımcının sabitlemesi kaldırıldı",
+    "startSpotlightVideoTileMenuLabel": "Herkes için öne çıkar",
+    "addSpotlightVideoTileMenuLabel": "Öne çıkarma ekle",
+    "spotlightLimitReachedMenuTitle": "Öne çıkarma sınırına ulaşıldı",
+    "stopSpotlightVideoTileMenuLabel": "Öne çıkarmayı durdur",
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Öne çıkarmadan çık",
+    "attendeeRole": "Katılımcı"
   },
   "dialpad": {
     "placeholderText": "Telefon numarası gir",
@@ -324,7 +375,7 @@
     "step3DigitText": "3",
     "step4DigitText": "4"
   },
-  "VerticalGallery": {
+  "verticalGallery": {
     "leftNavButtonAriaLabel": "önceki sayfa",
     "rightNavButtonAriaLabel": "sonraki sayfa"
   }

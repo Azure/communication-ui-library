@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { Icon, PrimaryButton, Separator, Stack, TextField } from '@fluentui/react';
 import {

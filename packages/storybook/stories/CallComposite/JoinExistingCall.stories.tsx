@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { CallComposite } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
@@ -32,6 +32,7 @@ const JoinExistingCallStory = (args: ArgsFrom<typeof storyControls>, context): J
       {areAllKnobsSet ? (
         <ContosoCallContainer
           fluentTheme={context.theme}
+          rtl={context.globals.rtl === 'rtl'}
           locator={args.callLocator}
           userId={{ communicationUserId: args.userId }}
           token={args.token}

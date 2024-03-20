@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { registerIcons } from '@fluentui/react';
 import * as acs_ui_common from '@internal/acs-ui-common';
@@ -13,6 +13,13 @@ import { verticalGalleryContainerStyle } from './VideoGallery/styles/VideoGaller
 import { HORIZONTAL_GALLERY_GAP } from './styles/HorizontalGallery.styles';
 import { VideoTile } from './VideoTile';
 import { render } from '@testing-library/react';
+
+jest.mock('@internal/acs-ui-common', () => {
+  return {
+    __esModule: true,
+    ...jest.requireActual('@internal/acs-ui-common')
+  };
+});
 
 describe('ResponsiveVerticalGallery tests', () => {
   beforeAll(() => {

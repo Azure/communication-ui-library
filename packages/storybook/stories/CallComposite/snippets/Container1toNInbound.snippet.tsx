@@ -23,6 +23,7 @@ export type ContainerProps = {
   token: string;
   formFactor?: 'desktop' | 'mobile';
   fluentTheme?: PartialTheme | Theme;
+  rtl?: boolean;
   locale?: CompositeLocale;
   options?: CallCompositeOptions;
 };

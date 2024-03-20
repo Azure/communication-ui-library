@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { ChatClient } from '@azure/communication-chat';
 import { getToken } from './getToken';
@@ -46,7 +46,7 @@ export const createChatThreadAndUsers = async (displayName: string): Promise<Ide
   };
 };
 
-export const verifyParamExists = <T>(params: T, paramName: string): void => {
+export const verifyParamExists = <T>(params: { [key: string]: T }, paramName: string): void => {
   if (!params[paramName]) {
     throw `${paramName} was not included in the query parameters of the URL.`;
   }

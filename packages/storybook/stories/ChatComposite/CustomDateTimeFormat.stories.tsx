@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ChatComposite, COMPONENT_LOCALE_EN_US, COMPOSITE_LOCALE_EN_US } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
@@ -73,6 +73,7 @@ const CustomDateTimeFormatStory = (args: ArgsFrom<typeof storyControls>, context
       {containerProps ? (
         <ContosoChatContainer
           fluentTheme={context.theme}
+          rtl={context.globals.rtl === 'rtl'}
           {...containerProps}
           locale={{
             component: { strings, onDisplayDateTimeString },

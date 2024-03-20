@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "using correct host layer id for pipip",
-  "packageName": "@azure/communication-react",
-  "email": "alkwa@microsoft.com",
-  "dependentChangeType": "patch"
-}

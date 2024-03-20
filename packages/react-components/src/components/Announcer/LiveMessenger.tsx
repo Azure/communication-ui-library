@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 /// Adapted from: https://github.com/AlmeroSteyn/react-aria-live/blob/master/src/modules/LiveMessenger.js
 

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "update unsubscribe logic for captions",
-  "packageName": "@azure/communication-react",
-  "email": "alkwa@microsoft.com",
-  "dependentChangeType": "patch"
-}

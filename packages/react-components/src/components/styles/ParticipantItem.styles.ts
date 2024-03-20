@@ -1,22 +1,19 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { IStyle, mergeStyles } from '@fluentui/react';
 
 /**
  * @private
  */
-export const participantItemContainerStyle = (options: {
-  localparticipant: boolean | undefined;
-  clickable: boolean;
-}): IStyle => {
+export const participantItemContainerStyle = (options: { clickable: boolean }): IStyle => {
   return {
     paddingTop: '0.25rem',
     paddingBottom: '0.25rem',
     display: 'flex',
     maxWidth: '100%',
     minWidth: '8rem',
-    cursor: options.localparticipant || !options.clickable ? 'default' : 'pointer',
+    cursor: !options.clickable ? 'default' : 'pointer',
     alignItems: 'center'
   };
 };
@@ -41,8 +38,7 @@ export const participantStateStringStyles: IStyle = {
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
   lineHeight: 'normal',
-  paddingLeft: '1rem',
-  marginLeft: 'auto',
+  marginLeft: '0.5rem',
   marginRight: 0
 };
 

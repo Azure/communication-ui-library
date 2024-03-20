@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
-import { IButtonStyles, IStyle, mergeStyles, Theme } from '@fluentui/react';
+import { IButtonStyles, IStyle, mergeStyles, Theme, ITheme } from '@fluentui/react';
+/* @conditional-compile-remove(reaction) */
+import { keyframes, memoizeFunction } from '@fluentui/react';
 
 /**
  * @private
@@ -141,4 +143,74 @@ export const moreButtonStyles: IButtonStyles = {
   rootExpanded: {
     background: 'none'
   }
+};
+
+/**
+ * @private
+ */
+export const raiseHandContainerStyles = (theme: ITheme, limitedSpace: boolean): string =>
+  mergeStyles(
+    {
+      alignItems: 'center',
+      padding: '0.2rem 0.3rem',
+      backgroundColor: theme.palette.white,
+      opacity: 0.9,
+      borderRadius: '1rem',
+      margin: '0.5rem',
+      width: 'fit-content',
+      position: 'absolute'
+    },
+    limitedSpace && raiseHandLimitedSpaceStyles
+  );
+
+/**
+ * @private
+ */
+export const raiseHandLimitedSpaceStyles: IStyle = {
+  // position centrally
+  marginLeft: 'auto',
+  marginRight: 'auto',
+  left: 0,
+  right: 0,
+  // position at the bottom
+  bottom: 0
+};
+
+/* @conditional-compile-remove(reaction) */
+/**
+ * @private
+ */
+export const playFrames = memoizeFunction(() =>
+  keyframes({
+    from: {
+      backgroundPosition: '0px 8568px'
+    },
+    to: {
+      backgroundPosition: '0px 0px'
+    }
+  })
+);
+
+/* @conditional-compile-remove(reaction) */
+/**
+ * @private
+ */
+export const reactionRenderingStyle = (args: { spriteImageUrl: string; personaSize: number }): string => {
+  const imageUrl = `url(${args.spriteImageUrl})`;
+  return mergeStyles({
+    height: '100%',
+    width: '100%',
+    overflow: 'hidden',
+    animationName: playFrames(),
+    backgroundImage: imageUrl,
+    animationDuration: '5.12s',
+    animationTimingFunction: `steps(102)`,
+    backgroundSize: `cover`,
+    animationPlayState: 'running',
+    animationIterationCount: 'infinite',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundPosition: `center`,
+    transform: `scale(${84 < args.personaSize ? 84 / args.personaSize : args.personaSize / 84})`
+  });
 };

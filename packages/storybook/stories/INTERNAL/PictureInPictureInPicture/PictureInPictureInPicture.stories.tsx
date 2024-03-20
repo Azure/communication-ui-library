@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { StreamMedia, VideoTile } from '@azure/communication-react';
 import { _PictureInPictureInPicture as PictureInPictureInPictureComponent } from '@internal/react-components';

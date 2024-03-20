@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { CallWithChatComposite } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
@@ -45,7 +45,11 @@ const JoinTeamsMeetingStory = (args: ArgsFrom<typeof storyControls>, context): J
     <>
       <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
         {meetingProps ? (
-          <CallWithChatExperienceWithErrorChecks fluentTheme={context.theme} {...meetingProps} />
+          <CallWithChatExperienceWithErrorChecks
+            fluentTheme={context.theme}
+            rtl={context.globals.rtl === 'rtl'}
+            {...meetingProps}
+          />
         ) : (
           <ConfigJoinMeetingHintBanner />
         )}

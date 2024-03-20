@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ChatMessageReadReceipt, ChatThreadClient, ChatParticipant } from '@azure/communication-chat';
 import { ChatMessageWithStatus } from '..';
@@ -21,7 +21,7 @@ export const messageTemplate: ChatMessageWithStatus = {
     communicationUserId: 'UserId'
   },
   senderDisplayName: 'User',
-  type: 'text',
+  type: 'html',
   sequenceId: '',
   version: '',
   status: 'delivered',

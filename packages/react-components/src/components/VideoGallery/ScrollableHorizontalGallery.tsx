@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
-import { Stack } from '@fluentui/react';
+import { IStyle, Stack, mergeStyles } from '@fluentui/react';
 import React, { useEffect, useRef } from 'react';
 import { useDraggable } from 'react-use-draggable-scroll';
 import {
@@ -16,8 +16,9 @@ import {
 export const ScrollableHorizontalGallery = (props: {
   horizontalGalleryElements?: JSX.Element[];
   onFetchTilesToRender?: (indexes: number[]) => void;
+  containerStyles?: IStyle;
 }): JSX.Element => {
-  const { horizontalGalleryElements, onFetchTilesToRender } = props;
+  const { horizontalGalleryElements, onFetchTilesToRender, containerStyles } = props;
 
   useEffect(() => {
     const indexesArray = [...Array(horizontalGalleryElements?.length).keys()];
@@ -30,7 +31,11 @@ export const ScrollableHorizontalGallery = (props: {
   const { events: dragabbleEvents } = useDraggable(ref);
 
   return (
-    <div ref={ref} {...dragabbleEvents} className={scrollableHorizontalGalleryContainerStyles}>
+    <div
+      ref={ref}
+      {...dragabbleEvents}
+      className={mergeStyles(scrollableHorizontalGalleryContainerStyles, containerStyles)}
+    >
       <Stack
         data-ui-id="scrollable-horizontal-gallery"
         horizontal={true}

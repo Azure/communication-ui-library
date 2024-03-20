@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { MessageBar, MessageBarType } from '@fluentui/react';
 import React, { useEffect } from 'react';
@@ -66,6 +66,7 @@ export const SendBoxErrorBar = (props: SendBoxErrorBarProps): JSX.Element => {
       <>
         <Announcer announcementString={errorMessage} ariaLive={'polite'} />
         <MessageBar
+          data-testid={'send-box-message-bar'}
           messageBarType={MessageBarType.warning}
           styles={{
             iconContainer: {

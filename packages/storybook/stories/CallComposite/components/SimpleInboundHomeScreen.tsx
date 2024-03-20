@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { Call, CallAgent, IncomingCall, IncomingCallEvent } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
@@ -20,7 +20,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const headerTitle = 'Inbound Azure Communication User Sample';
 
   const [incomingCall, setIncomingCall] = useState<IncomingCall>();
-  const interval = useRef<NodeJS.Timer>();
+  const interval = useRef<NodeJS.Timeout>();
 
   // @TODO: Add a method in declarative callAgent to get a declarative Incoming Call Object. Use that object here.
   console.log('incoming calls', callState.incomingCalls);

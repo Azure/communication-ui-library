@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import {
   ContextualMenuItemType,
@@ -27,8 +27,6 @@ import { OnRenderAvatarCallback } from '../types/OnRender';
 import { ParticipantListParticipant } from '../types';
 import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(rooms) */
-import { _usePermissions } from '../permissions/PermissionsProvider';
 import { Announcer } from './Announcer';
 
 /**

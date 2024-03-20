@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import path from 'path';
 import { readFileSync } from 'fs';
@@ -13,7 +13,7 @@ const ENV_PREFIX = 'COMMUNICATION_REACT_FLAVOR=';
  *
  * Parses the relevant environment file and returns the build flavor as string.
  *
- * @return 'stable' | 'beta'
+ * @return 'stable' | 'beta' | 'beta-release'
  */
 export function getBuildFlavor() {
     const data = readFileSync(ENV_FILE, 'utf8');

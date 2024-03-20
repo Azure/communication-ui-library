@@ -7,7 +7,11 @@
     "mutedIconLabel": "Mykistetty",
     "displayNamePlaceholder": "Nimetön osallistuja",
     "participantStateRinging": "Soitetaan...",
-    "participantStateHold": "Pidossa"
+    "participantStateHold": "Pidossa",
+    "attendeeRole": "Osallistuja"
+  },
+  "ParticipantList": {
+    "overflowParticipantCount": "+{overflowCount} lisää"
   },
   "typingIndicator": {
     "singleUser": "{user} käyttäjä kirjoittaa parhaillaan...",
@@ -25,8 +29,29 @@
     "uploading": "Ladataan palvelimeen",
     "uploadCompleted": "Ladattu palvelimeen"
   },
+  "richTextSendBox": {
+    "placeholderText": "Kirjoita viesti",
+    "textTooLong": "Viestin pituus ylittää enimmäispituuden.",
+    "sendButtonAriaLabel": "Lähetä viesti",
+    "fileUploadsPendingError": "Ladataan... Odota.",
+    "removeFile": "Poista tiedosto",
+    "uploading": "Ladataan",
+    "uploadCompleted": "Lataus valmis",
+    "boldTooltip": "Lihavoi",
+    "italicTooltip": "Kursivointi",
+    "underlineTooltip": "Alleviivaa",
+    "bulletListTooltip": "Luettelomerkeillä varustettu luettelo",
+    "numberListTooltip": "Numeroitu luettelo",
+    "increaseIndentTooltip": "Suurenna sisennystä",
+    "decreaseIndentTooltip": "Pienennä sisennystä",
+    "richTextFormatButtonTooltip": "Muoto"
+  },
   "mentionPopover": {
     "mentionPopoverHeader": "Ehdotuksia"
+  },
+  "imageOverlay": {
+    "downloadButtonLabel": "Lataa",
+    "dismissButtonAriaLabel": "Sulje"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Viesti on lähetetty",
@@ -109,6 +134,24 @@
     "tooltipOnContent": "Näyttösi näytetään muille osallistujille",
     "tooltipOffContent": "Näytä oma näyttösi"
   },
+  "raiseHandButton": {
+    "offLabel": "Nosta",
+    "onLabel": "Laske",
+    "tooltipDisabledContent": "Nosta käsi -toiminto on poistettu käytöstä",
+    "tooltipOnContent": "Laske käsi",
+    "tooltipOffContent": "Nosta käsi"
+  },
+  "reactionButton": {
+    "label": "Reagoi",
+    "ariaLabel": "Reagoi-painike, lähetä reaktio",
+    "tooltipDisabledContent": "Reaktiotoiminto on poistettu käytöstä",
+    "tooltipContent": "Lähetä reaktio",
+    "likeReactionTooltipContent": "Tykkää",
+    "heartReactionTooltipContent": "Ihastu",
+    "laughReactionTooltipContent": "Naura",
+    "applauseReactionTooltipContent": "Suosionosoitus",
+    "surprisedReactionTooltipContent": "Yllättynyt"
+  },
   "messageThread": {
     "yesterday": "eilen",
     "sunday": "sunnuntaina",
@@ -133,13 +176,14 @@
     "newMessagesIndicator": "Uudet viestit",
     "noDisplayNameSub": "Ei nimeä",
     "editBoxCancelButton": "Peruuta",
-    "editBoxSubmitButton": "Lähetä",
+    "editBoxSubmitButton": "Valmis",
     "messageReadCount": "{messageReadByCount}/{remoteParticipantsCount} osallistujaa on lukenut viestin",
     "actionMenuMoreOptions": "Lisää vaihtoehtoja",
     "downloadFile": "Lataa tiedosto",
     "blockedWarningText": "Tämä viesti poistettiin organisaation käytännön vuoksi.",
     "blockedWarningLinkText": "Lisätiedot",
-    "fileCardGroupMessage": "Viestissä on {fileCount} liite"
+    "fileCardGroupMessage": "Viestissä on {fileCount} liite",
+    "messageDeletedAnnouncementAriaLabel": "Viesti on poistettu"
   },
   "errorBar": {
     "unableToReachChatService": "Olet offline-tilassa",
@@ -175,7 +219,8 @@
     "failedToJoinCallGeneric": "Puheluun liittyminen epäonnistui.",
     "failedToJoinCallInvalidMeetingLink": "Kokoukseen liittyminen ei onnistu. Linkki on virheellinen.",
     "cameraFrozenForRemoteParticipants": "Puhelun käyttäjillä on videokuvan näkymiseen liittyviä ongelmia. Tarkista laitteesi ja verkkosi.",
-    "unableToStartVideoEffect": "Videotehosteen käyttäminen ei onnistu."
+    "unableToStartVideoEffect": "Videotehosteen käyttäminen ei onnistu.",
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "Osallistujien korostusta ei voi aloittaa, koska enimmäismäärä osallistujia on jo valokeilassa."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Näyttösi jaetaan parhaillaan",
@@ -193,7 +238,13 @@
     "pinParticipantMenuItemAriaLabel": "Kiinnitä {participantName}",
     "unpinParticipantMenuItemAriaLabel": "Poista henkilön {participantName} kiinnitys",
     "pinnedParticipantAnnouncementAriaLabel": "Kiinnitetty {participantName}",
-    "unpinnedParticipantAnnouncementAriaLabel": "Poistettu henkilön {participantName} kiinnitys"
+    "unpinnedParticipantAnnouncementAriaLabel": "Poistettu henkilön {participantName} kiinnitys",
+    "startSpotlightVideoTileMenuLabel": "Lisää valokeilaan kaikille",
+    "addSpotlightVideoTileMenuLabel": "Lisää valokeilaan",
+    "spotlightLimitReachedMenuTitle": "Spotlight-raja saavutettu",
+    "stopSpotlightVideoTileMenuLabel": "Poista valokeilasta",
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Valokeila",
+    "attendeeRole": "Osallistuja"
   },
   "dialpad": {
     "placeholderText": "Anna puhelinnumero",
@@ -324,7 +375,7 @@
     "step3DigitText": "3",
     "step4DigitText": "4"
   },
-  "VerticalGallery": {
+  "verticalGallery": {
     "leftNavButtonAriaLabel": "edellinen sivu",
     "rightNavButtonAriaLabel": "seuraava sivu"
   }

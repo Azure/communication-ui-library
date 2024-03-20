@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ChatClientState } from '@internal/chat-stateful-client';
 import { createSelector } from 'reselect';

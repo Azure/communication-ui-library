@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { Spinner, SpinnerSize, Stack } from '@fluentui/react';
 import React, { useEffect } from 'react';
@@ -29,6 +29,9 @@ export const RemoteScreenShare = React.memo(
     isMuted?: boolean;
     isSpeaking?: boolean;
     renderElement?: HTMLElement;
+    participantVideoScalingMode?: VideoStreamOptions;
+    /* @conditional-compile-remove(ppt-live) */
+    isPPTLive?: boolean;
   }) => {
     const {
       userId,
@@ -37,12 +40,23 @@ export const RemoteScreenShare = React.memo(
       renderElement,
       onCreateRemoteStreamView,
       onDisposeRemoteStreamView,
-      isReceiving
+      isReceiving,
+      participantVideoScalingMode,
+      /* @conditional-compile-remove(ppt-live) */
+      isPPTLive
     } = props;
     const locale = useLocale();
 
     if (!renderElement) {
-      onCreateRemoteStreamView && onCreateRemoteStreamView(userId);
+      /**
+       * TODO: We need to pass in the scaling mode of the screen share participant to this function because when we
+       * call this it will recreate both streams (video and screen share) and we need to make sure that the scaling
+       * mode is the same as before we started the screen share.
+       *
+       * We should deprecate the current function and replace it with a
+       * createRemoteScreenShareStreamView and createRemoteVideoStreamView.
+       */
+      onCreateRemoteStreamView && onCreateRemoteStreamView(userId, participantVideoScalingMode);
     }
 
     useEffect(() => {
@@ -57,6 +71,22 @@ export const RemoteScreenShare = React.memo(
           participant: displayName
         })
       : '';
+    /* @conditional-compile-remove(ppt-live) */
+    if (isPPTLive) {
+      return (
+        <VideoTile
+          renderElement={
+            renderElement ? (
+              <StreamMedia
+                videoStreamElement={renderElement}
+                loadingState={isReceiving === false ? 'loading' : 'none'}
+              />
+            ) : undefined
+          }
+          onRenderPlaceholder={() => <LoadingSpinner loadingMessage={loadingMessage} />}
+        />
+      );
+    }
 
     return (
       <VideoTile

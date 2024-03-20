@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "[FileDownloadCards] cleaning up some unused property",
-  "packageName": "@azure/communication-react",
-  "email": "joshlai@microsoft.com",
-  "dependentChangeType": "patch"
-}

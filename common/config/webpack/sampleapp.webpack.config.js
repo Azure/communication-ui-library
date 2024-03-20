@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 const path = require('path');
 const webpack = require('webpack');
@@ -9,7 +9,9 @@ const CopyPlugin = require("copy-webpack-plugin");
 
 const webpackConfig = (sampleAppDir, env, babelConfig) => {
   const config = {
-    entry: './src/index.tsx',
+    entry: {
+      build: './src/index.tsx'
+    },
     mode: env.production ? 'production' : 'development',
     ...(env.production || !env.development ? {} : { devtool: 'eval-source-map' }),
     resolve:  {
@@ -27,12 +29,11 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
         '@internal/calling-stateful-client': path.resolve(sampleAppDir, '../../packages/calling-stateful-client/src'),
         '@internal/calling-component-bindings': path.resolve(sampleAppDir, '../../packages/calling-component-bindings/src'),
         '@internal/acs-ui-common': path.resolve(sampleAppDir, '../../packages/acs-ui-common/src'),
-        '@internal/northstar-wrapper': path.resolve(sampleAppDir, '../../packages/northstar-wrapper/src')
       }
     },
     output: {
       path: path.join(sampleAppDir, env.production ? '/dist/build' : 'dist'),
-      filename: 'build.js'
+      filename: '[name].bundle.js'
     },
     module: {
       rules: [
@@ -42,7 +43,8 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
           options: {
             transpileOnly: true
           },
-          exclude: /dist/
+          exclude: /dist/,
+          sideEffects: false
         },
         {
           test: /\.css$/i,
@@ -51,6 +53,10 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
         {
           test: /\.svg/,
           type: 'asset/inline'
+        },
+        {
+          test: /\.mp3$/,
+          loader: 'file-loader'
         }
       ]
     },
@@ -63,15 +69,16 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
         __CALLINGVERSION__: JSON.stringify(require(path.resolve(sampleAppDir, 'package.json')).dependencies['@azure/communication-calling']),
         __CHATVERSION__: JSON.stringify(require(path.resolve(sampleAppDir, 'package.json')).dependencies['@azure/communication-chat']),
         __COMMUNICATIONREACTVERSION__: JSON.stringify(require(path.resolve(sampleAppDir, 'package.json')).dependencies['@azure/communication-react']),
-        __BUILDTIME__: JSON.stringify(new Date().toLocaleString())
+        __BUILDTIME__: JSON.stringify(new Date().toLocaleString()),
+        __COMMITID__: `"${process.env.REACT_APP_COMMIT_SHA || ''}"`,
       }),
       new BundleAnalyzerPlugin({
-        analyzerMode: 'json',
+        analyzerMode: 'json'
       }),
       new CopyPlugin({
         patterns: [
           { from: path.resolve(sampleAppDir, "public/manifest.json"), to: "manifest.json" },
-          { from: path.resolve(sampleAppDir, "public/backgrounds"), to: "backgrounds",  noErrorOnMissing: true },
+          { from: path.resolve(sampleAppDir, "public/assets"), to: "assets",  noErrorOnMissing: true },
         ]
       })
     ],
@@ -111,6 +118,10 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
         },
         {
           path: '/addUserToRoom',
+          target: 'http://[::1]:8080'
+        },
+        {
+          path: '/uploadToAzureBlobStorage',
           target: 'http://[::1]:8080'
         }
       ]

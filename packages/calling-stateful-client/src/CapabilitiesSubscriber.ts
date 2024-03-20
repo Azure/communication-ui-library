@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 /* @conditional-compile-remove(capabilities) */
-import { CapabilitiesFeature } from '@azure/communication-calling';
+import { CapabilitiesChangeInfo, CapabilitiesFeature } from '@azure/communication-calling';
 /* @conditional-compile-remove(capabilities) */
 import { CallContext } from './CallContext';
 /* @conditional-compile-remove(capabilities) */
@@ -33,7 +33,7 @@ export class CapabilitiesSubscriber {
     this._capabilitiesFeature.off('capabilitiesChanged', this.capabilitiesChanged);
   };
 
-  private capabilitiesChanged = (): void => {
-    this._context.setCapabilities(this._callIdRef.callId, this._capabilitiesFeature.capabilities);
+  private capabilitiesChanged = (data: CapabilitiesChangeInfo): void => {
+    this._context.setCapabilities(this._callIdRef.callId, this._capabilitiesFeature.capabilities, data);
   };
 }

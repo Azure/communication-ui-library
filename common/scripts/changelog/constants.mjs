@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import path from 'path';
 import { REPO_ROOT } from '../lib/index.mjs';

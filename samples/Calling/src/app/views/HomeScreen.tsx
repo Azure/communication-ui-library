@@ -1,23 +1,12 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
-import React, { /* useEffect, */ useState } from 'react';
-import {
-  Stack,
-  PrimaryButton,
-  Image,
-  ChoiceGroup,
-  IChoiceGroupOption,
-  Text,
-  TextField,
-  Callout,
-  mergeStyles,
-  Link
-} from '@fluentui/react';
-/* @conditional-compile-remove(teams-adhoc-call) */
-import { IButtonStyles, IStackStyles, IStackTokens, ITextFieldProps, IconButton } from '@fluentui/react';
+import React, { useState } from 'react';
+import { Stack, PrimaryButton, Image, ChoiceGroup, IChoiceGroupOption, Text, TextField } from '@fluentui/react';
 /* @conditional-compile-remove(PSTN-calls) */
-import { registerIcons } from '@fluentui/react';
+import { Label } from '@fluentui/react';
+/* @conditional-compile-remove(PSTN-calls) */
+import { registerIcons, Callout, mergeStyles, Link } from '@fluentui/react';
 import heroSVG from '../../assets/hero.svg';
 import {
   imgStyle,
@@ -32,9 +21,9 @@ import {
   teamsItemStyle,
   buttonStyle
 } from '../styles/HomeScreen.styles';
+import { outboundTextField } from '../styles/HomeScreen.styles';
 /* @conditional-compile-remove(PSTN-calls) */
 import {
-  outboundTextField,
   dialpadOptionStyles,
   alternateCallerIdCalloutStyles,
   alternateCallerIdCalloutTitleStyles,
@@ -57,16 +46,23 @@ import { Dialpad } from '@azure/communication-react';
 import { Backspace20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
 import { useIsMobile } from '../utils/useIsMobile';
-/* @conditional-compile-remove(teams-adhoc-call) */
-import { useBoolean, useId } from '@fluentui/react-hooks';
+import { CallAdapterLocator } from '@azure/communication-react';
+
+export type CallOption =
+  | 'ACSCall'
+  | 'TeamsMeeting'
+  | /* @conditional-compile-remove(rooms) */ 'Rooms'
+  | /* @conditional-compile-remove(rooms) */ 'StartRooms'
+  | /* @conditional-compile-remove(teams-identity-support) */ 'TeamsIdentity'
+  | /* @conditional-compile-remove(one-to-n-calling) */ '1:N'
+  | /* @conditional-compile-remove(PSTN-calls) */ 'PSTN'
+  | 'TeamsAdhoc';
 
 export interface HomeScreenProps {
   startCallHandler(callDetails: {
     displayName: string;
-    /* @conditional-compile-remove(rooms) */
-    callLocator?: TeamsMeetingLinkLocator | RoomLocator;
-    /* @conditional-compile-remove(rooms) */
-    option?: string;
+    callLocator?: CallAdapterLocator | TeamsMeetingLinkLocator | /* @conditional-compile-remove(rooms) */ RoomLocator;
+    option?: CallOption;
     /* @conditional-compile-remove(rooms) */
     role?: string;
     /* @conditional-compile-remove(PSTN-calls) */
@@ -77,18 +73,19 @@ export interface HomeScreenProps {
     teamsToken?: string;
     /* @conditional-compile-remove(teams-identity-support) */
     teamsId?: string;
-    /* @conditional-compile-remove(teams-adhoc-call) */
     outboundTeamsUsers?: string[];
   }): void;
   joiningExistingCall: boolean;
 }
+
+type ICallChoiceGroupOption = IChoiceGroupOption & { key: CallOption };
 
 export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const imageProps = { src: heroSVG.toString() };
   const headerTitle = props.joiningExistingCall ? 'Join Call' : 'Start or join a call';
   const callOptionsGroupLabel = 'Select a call option';
   const buttonText = 'Next';
-  const callOptions: IChoiceGroupOption[] = [
+  const callOptions: ICallChoiceGroupOption[] = [
     { key: 'ACSCall', text: 'Start a call' },
     /* @conditional-compile-remove(rooms) */
     { key: 'StartRooms', text: 'Start a Rooms call' },
@@ -101,8 +98,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
     { key: '1:N', text: 'Start a 1:N ACS Call' },
     /* @conditional-compile-remove(PSTN-calls) */
     { key: 'PSTN', text: 'Start a PSTN Call' },
-    /* @conditional-compile-remove(teams-adhoc-call) */
-    { key: 'TeamsAdhoc', text: 'Call a Teams User' }
+    { key: 'TeamsAdhoc', text: 'Call a Teams User or voice application' }
   ];
   /* @conditional-compile-remove(rooms) */
   const roomIdLabel = 'Room ID';
@@ -123,7 +119,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const defaultDisplayName = localStorageAvailable ? getDisplayNameFromLocalStorage() : null;
   const [displayName, setDisplayName] = useState<string | undefined>(defaultDisplayName ?? undefined);
 
-  const [chosenCallOption, setChosenCallOption] = useState<IChoiceGroupOption>(callOptions[0]);
+  const [chosenCallOption, setChosenCallOption] = useState<ICallChoiceGroupOption>(callOptions[0]);
   const [callLocator, setCallLocator] = useState<
     TeamsMeetingLinkLocator | /* @conditional-compile-remove(rooms) */ RoomLocator
   >();
@@ -139,7 +135,6 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const [teamsToken, setTeamsToken] = useState<string>();
   /* @conditional-compile-remove(teams-identity-support) */
   const [teamsId, setTeamsId] = useState<string>();
-  /* @conditional-compile-remove(teams-adhoc-call) */
   const [outboundTeamsUsers, setOutboundTeamsUsers] = useState<string | undefined>();
 
   /* @conditional-compile-remove(PSTN-calls) */
@@ -153,7 +148,6 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const pstnCallChosen: boolean = chosenCallOption.key === 'PSTN';
   /* @conditional-compile-remove(PSTN-calls) */
   const acsCallChosen: boolean = chosenCallOption.key === '1:N';
-  /* @conditional-compile-remove(teams-adhoc-call) */
   const teamsAdhocChosen: boolean = chosenCallOption.key === 'TeamsAdhoc';
 
   const buttonEnabled =
@@ -164,7 +158,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
       (((chosenCallOption.key === 'Rooms' && callLocator) || chosenCallOption.key === 'StartRooms') &&
         chosenRoomsRoleOption) ||
       /* @conditional-compile-remove(PSTN-calls) */ (pstnCallChosen && dialPadParticipant && alternateCallerId) ||
-      /* @conditional-compile-remove(teams-adhoc-call) */ (teamsAdhocChosen && outboundTeamsUsers) ||
+      (teamsAdhocChosen && outboundTeamsUsers) ||
       /* @conditional-compile-remove(one-to-n-calling) */ (outboundParticipants && acsCallChosen) ||
       /* @conditional-compile-remove(teams-identity-support) */ (teamsIdentityChosen &&
         callLocator &&
@@ -177,8 +171,11 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   /* @conditional-compile-remove(PSTN-calls) */
   const isMobileSession = useIsMobile();
 
-  /* @conditional-compile-remove(teams-adhoc-call) */
-  const outboundTeamsUsersTextFieldLabelId: string = useId('outbound-teams-users-text-field');
+  let showDisplayNameField = true;
+  /* @conditional-compile-remove(teams-identity-support) */
+  showDisplayNameField = !teamsIdentityChosen;
+
+  const [teamsIdFormatError, setTeamsIdFormatError] = useState<boolean>(false);
 
   return (
     <Stack
@@ -203,13 +200,20 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 defaultSelectedKey="ACSCall"
                 options={callOptions}
                 required={true}
-                onChange={(_, option) => option && setChosenCallOption(option)}
+                onChange={(_, option) => {
+                  option && setChosenCallOption(option as ICallChoiceGroupOption);
+                  /* @conditional-compile-remove(teams-adhoc-call) */
+                  /* @conditional-compile-remove(teams-identity-support) */
+                  setTeamsIdFormatError(false);
+                }}
               />
             )}
             {(teamsCallChosen || /* @conditional-compile-remove(teams-identity-support) */ teamsIdentityChosen) && (
               <TextField
                 className={teamsItemStyle}
                 iconProps={{ iconName: 'Link' }}
+                label={'Meeting Link'}
+                required
                 placeholder={'Enter a Teams meeting link'}
                 onChange={(_, newValue) => newValue && setCallLocator({ meetingLink: newValue })}
               />
@@ -221,6 +225,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                   <TextField
                     className={teamsItemStyle}
                     label={teamsTokenLabel}
+                    required
                     placeholder={'Enter a Teams Token'}
                     onChange={(_, newValue) => setTeamsToken(newValue)}
                   />
@@ -234,8 +239,23 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                   <TextField
                     className={teamsItemStyle}
                     label={teamsIdLabel}
-                    placeholder={'Enter a Teams id'}
-                    onChange={(_, newValue) => setTeamsId(`8:orgid:${newValue}`)}
+                    required
+                    placeholder={'Enter a Teams user ID (8:orgid:<UUID>)'}
+                    errorMessage={
+                      teamsIdFormatError ? `Teams user ID should be in the format '8:orgid:<UUID>'` : undefined
+                    }
+                    onChange={(_, newValue) => {
+                      if (!newValue) {
+                        setTeamsIdFormatError(false);
+                        setTeamsId(undefined);
+                      } else if (newValue.match(/8:orgid:[a-zA-Z0-9-]+/)) {
+                        setTeamsIdFormatError(false);
+                        setTeamsId(newValue);
+                      } else {
+                        setTeamsIdFormatError(true);
+                        setTeamsId(undefined);
+                      }
+                    }}
                   />
                 </Stack>
               )
@@ -246,6 +266,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                   <TextField
                     className={teamsItemStyle}
                     label={roomIdLabel}
+                    required
                     placeholder={'Enter a room ID'}
                     onChange={(_, newValue) => setCallLocator(newValue ? { roomId: newValue } : undefined)}
                   />
@@ -271,34 +292,47 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                   <TextField
                     className={outboundTextField}
                     label={'Participants'}
+                    required
                     placeholder={"Comma seperated ACS user ID's"}
                     onChange={(_, newValue) => setOutboundParticipants(newValue)}
                   />
                 </Stack>
               )
             }
-            {
-              /* @conditional-compile-remove(teams-adhoc-call) */ teamsAdhocChosen && (
-                <Stack>
-                  <TextField
-                    className={outboundTextField}
-                    label={'Teams user ID'}
-                    placeholder={'Enter a Teams user ID'}
-                    onChange={(_, newValue) => setOutboundTeamsUsers(newValue)}
-                    onRenderLabel={(props?: ITextFieldProps) => (
-                      <TeamsUserIdsTextFieldLabel id={outboundTeamsUsersTextFieldLabelId} {...props} />
-                    )}
-                  />
-                </Stack>
-              )
-            }
+            {teamsAdhocChosen && (
+              <Stack>
+                <TextField
+                  className={outboundTextField}
+                  label={'Teams user ID'}
+                  required
+                  placeholder={'Enter a Teams user ID (8:orgid:<UUID>)'}
+                  errorMessage={
+                    teamsIdFormatError ? `Teams user ID should be in the format '8:orgid:<UUID>'` : undefined
+                  }
+                  onChange={(_, newValue) => {
+                    if (!newValue) {
+                      setTeamsIdFormatError(false);
+                      setOutboundTeamsUsers(undefined);
+                    } else if (newValue.match(/8:orgid:[a-zA-Z0-9-]+/)) {
+                      setTeamsIdFormatError(false);
+                      setOutboundTeamsUsers(newValue);
+                    } else {
+                      setTeamsIdFormatError(true);
+                      setOutboundTeamsUsers(undefined);
+                    }
+                  }}
+                />
+              </Stack>
+            )}
             {
               /* @conditional-compile-remove(PSTN-calls) */ pstnCallChosen && (
                 <Stack>
-                  <Text style={{ paddingBottom: '0.5rem' }}>Please dial the number you wish to call.</Text>
+                  <Label required style={{ paddingBottom: '0.5rem' }}>
+                    Please dial the number you wish to call.
+                  </Label>
                   <Stack styles={dialpadOptionStyles}>
                     <Dialpad
-                      isMobile={isMobileSession}
+                      longPressTrigger={isMobileSession ? 'touch' : 'mouseAndTouch'}
                       onChange={(newValue) => {
                         /**
                          * We need to pass in the formatting for the phone number string in the onChange handler
@@ -346,7 +380,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
               )
             }
           </Stack>
-          {!teamsIdentityChosen && <DisplayNameField defaultName={displayName} setName={setDisplayName} />}
+          {showDisplayNameField && <DisplayNameField defaultName={displayName} setName={setDisplayName} />}
           <PrimaryButton
             disabled={!buttonEnabled}
             className={buttonStyle}
@@ -356,7 +390,6 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 displayName && saveDisplayNameToLocalStorage(displayName);
                 /* @conditional-compile-remove(one-to-n-calling) */
                 const acsParticipantsToCall = parseParticipants(outboundParticipants);
-                /* @conditional-compile-remove(teams-adhoc-call) */
                 const teamsParticipantsToCall = parseParticipants(outboundTeamsUsers);
                 /* @conditional-compile-remove(PSTN-calls) */
                 const dialpadParticipantToCall = parseParticipants(dialPadParticipant);
@@ -376,7 +409,6 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                   teamsToken,
                   /* @conditional-compile-remove(teams-identity-support) */
                   teamsId,
-                  /* @conditional-compile-remove(teams-adhoc-call) */
                   outboundTeamsUsers: teamsParticipantsToCall
                 });
               }
@@ -391,7 +423,6 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   );
 };
 
-/* @conditional-compile-remove(one-to-n-calling)  */ /* @conditional-compile-remove(PSTN-calls) */
 /**
  * splits the participant Id's so we can call multiple people.
  */
@@ -401,56 +432,4 @@ const parseParticipants = (participantsString?: string): string[] | undefined =>
   } else {
     return undefined;
   }
-};
-
-/* @conditional-compile-remove(teams-adhoc-call) */
-/**
- * Label for Teams user ID's text field. Comes with a Callout with description.
- */
-const TeamsUserIdsTextFieldLabel = (props: ITextFieldProps): JSX.Element => {
-  const [isCalloutVisible, { toggle: toggleIsCalloutVisible }] = useBoolean(false);
-  const descriptionId: string = useId('description');
-  const iconButtonId: string = useId('iconButton');
-
-  const teamsUserIdsTextFieldstackTokens: IStackTokens = {
-    childrenGap: '0.25rem',
-    maxWidth: '18.75rem'
-  };
-  const calloutStackStyles: Partial<IStackStyles> = { root: { padding: 10 } };
-  const iconButtonStyles: Partial<IButtonStyles> = { root: { height: '1.625rem' } };
-  const iconProps = { iconName: 'Info' };
-
-  return (
-    <>
-      <Stack horizontal verticalAlign="center">
-        <label
-          className={mergeStyles({ fontWeight: 600, paddingTop: '0.3125rem', paddingBottom: '0.3125rem' })}
-          id={props.id}
-        >
-          {props.label}
-        </label>
-        <IconButton
-          id={iconButtonId}
-          iconProps={iconProps}
-          title="Info"
-          ariaLabel="Info"
-          onClick={toggleIsCalloutVisible}
-          styles={iconButtonStyles}
-        />
-      </Stack>
-      {isCalloutVisible && (
-        <Callout
-          target={'#' + iconButtonId}
-          setInitialFocus
-          onDismiss={toggleIsCalloutVisible}
-          ariaDescribedBy={descriptionId}
-          role="alertdialog"
-        >
-          <Stack tokens={teamsUserIdsTextFieldstackTokens} horizontalAlign="start" styles={calloutStackStyles}>
-            <span id={descriptionId}>{"A Teams user ID should be in the format '8:orgid:<UUID>'"}</span>
-          </Stack>
-        </Callout>
-      )}
-    </>
-  );
 };

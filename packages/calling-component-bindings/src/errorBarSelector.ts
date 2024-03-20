@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import {
   CallingBaseSelectorProps,
@@ -174,6 +174,20 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
       );
     } else {
       appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'CallAgent.join', 'failedToJoinCallGeneric');
+    }
+
+    /* @conditional-compile-remove(spotlight) */
+    if (
+      latestErrors['Call.feature']?.message.match(
+        /Call\.feature: startSpotlight failed\. \d+ is the max number of participants that can be Spotlighted/g
+      )
+    ) {
+      appendActiveErrorIfDefined(
+        activeErrorMessages,
+        latestErrors,
+        'Call.feature',
+        'startSpotlightWhileMaxParticipantsAreSpotlighted'
+      );
     }
 
     // We only return the first few errors to avoid filling up the UI with too many `MessageBar`s.

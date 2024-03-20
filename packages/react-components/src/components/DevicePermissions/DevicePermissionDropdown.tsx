@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { Dropdown, IDropdownOption, IDropdownStyles, Stack, Text } from '@fluentui/react';
 import React from 'react';

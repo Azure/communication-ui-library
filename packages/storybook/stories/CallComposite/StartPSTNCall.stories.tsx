@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { CallComposite } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
@@ -35,7 +35,8 @@ const StartPSTNCallStory = (args: ArgsFrom<typeof storyControls>, context): JSX.
         <ContosoCallContainerPSTN
           alternateCallerId={args.alternateCallerId}
           fluentTheme={context.theme}
-          locator={args.callLocator}
+          rtl={context.globals.rtl === 'rtl'}
+          targetCallees={args.callLocator}
           userId={{ communicationUserId: args.userId }}
           token={args.token}
           displayName={args.displayName}

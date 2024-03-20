@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React from 'react';
 import { IIconStyles, IStackStyles, ITheme, memoizeFunction, Stack, useTheme, Text } from '@fluentui/react';
@@ -17,13 +17,13 @@ export type NotificationIconProps = {
 export const NotificationIcon = (props: NotificationIconProps): JSX.Element => {
   const { chatMessagesCount, label } = props;
   const theme = useTheme();
-  const renderNumber = (numberOfMessages): JSX.Element => {
+  const renderNumber = (numberOfMessages: number): JSX.Element => {
     if (numberOfMessages < 1) {
       return <></>;
     } else {
       const textNumberOfMessages = numberOfMessages < 9 ? numberOfMessages : '9+';
       return (
-        <Text role={'status'} aria-label={textNumberOfMessages + label} styles={notificationTextStyles(theme)}>
+        <Text role={'status'} aria-label={textNumberOfMessages + (label ?? '')} styles={notificationTextStyles(theme)}>
           {textNumberOfMessages}
         </Text>
       );

@@ -1,71 +1,79 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { formatDateForChatMessage, formatTimeForChatMessage, formatTimestampForChatMessage } from './Datetime';
 import { COMPONENT_LOCALE_EN_US } from '../../localization/locales';
 
-const createMockDate = (datetime: {
+const createMockDate = (dateTime: {
   year?: number;
   month?: number;
   day?: number;
   hour?: number;
   min?: number;
   sec?: number;
-  milli?: number;
 }): Date =>
   new Date(
-    datetime.year ?? 2000,
-    datetime.month ?? 0,
-    datetime.day ?? 1,
-    datetime.hour ?? 0,
-    datetime.min ?? 0,
-    datetime.sec ?? 0,
-    datetime.milli ?? 0
+    dateTime.year ?? 2000,
+    dateTime.month ?? 0,
+    dateTime.day ?? 1,
+    dateTime.hour ?? 0,
+    dateTime.min ?? 0,
+    dateTime.sec ?? 0
   );
 
 describe('datetime tests', () => {
-  test('datetime.formatTimeForChatMessage should formatTime for am properly', () => {
-    expect(formatTimeForChatMessage(createMockDate({ hour: 11, min: 11 }))).toEqual('11:11 a.m.');
+  test('datetime.formatTimeForChatMessage should formatTime with seconds properly', () => {
+    const messageDate = createMockDate({ hour: 11, min: 11, sec: 11 });
+    expect(formatTimeForChatMessage(messageDate)).toEqual(
+      messageDate.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })
+    );
   });
 
-  test('datetime.formatTimeForChatMessage should formatTime for pm properly', () => {
-    expect(formatTimeForChatMessage(createMockDate({ hour: 20, min: 20 }))).toEqual('8:20 p.m.');
+  test('datetime.formatTimeForChatMessage should formatTime properly', () => {
+    const messageDate = createMockDate({ hour: 20, min: 20 });
+    expect(formatTimeForChatMessage(messageDate)).toEqual(
+      messageDate.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })
+    );
   });
 
   test('datetime.formatTimeForChatMessage should account for single digit minutes', () => {
-    expect(formatTimeForChatMessage(createMockDate({ hour: 20, min: 1 }))).toEqual('8:01 p.m.');
+    const messageDate = createMockDate({ hour: 20, min: 1 });
+    expect(formatTimeForChatMessage(messageDate)).toEqual(
+      messageDate.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })
+    );
   });
 
   test('datetime.formatTimeForChatMessage should work for single digit hours', () => {
-    expect(formatTimeForChatMessage(createMockDate({ hour: 2, min: 1 }))).toEqual('2:01 a.m.');
+    const messageDate = createMockDate({ hour: 2, min: 1 });
+    expect(formatTimeForChatMessage(messageDate)).toEqual(
+      messageDate.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })
+    );
   });
 
   test('datetime.formatDateForChatMessage should format date properly with month starting at 0', () => {
-    expect(formatDateForChatMessage(createMockDate({ year: 2000, month: 0, day: 30, hour: 0, min: 0 }))).toEqual(
-      '2000-01-30'
-    );
+    const date = createMockDate({ year: 2000, month: 0, day: 30, hour: 0, min: 0 });
+    expect(formatDateForChatMessage(date)).toEqual(date.toLocaleDateString());
   });
 
   test('datetime.formatDateForChatMessage should format date properly with single digit day', () => {
-    expect(formatDateForChatMessage(createMockDate({ year: 2000, month: 0, day: 1, hour: 0, min: 0 }))).toEqual(
-      '2000-01-01'
-    );
+    const date = createMockDate({ year: 2000, month: 0, day: 1, hour: 0, min: 0 });
+    expect(formatDateForChatMessage(date)).toEqual(date.toLocaleDateString());
   });
 
   test('datetime.formatDateForChatMessage should format date properly with multiple digit month', () => {
-    expect(formatDateForChatMessage(createMockDate({ year: 2000, month: 10, day: 1, hour: 0, min: 0 }))).toEqual(
-      '2000-11-01'
-    );
+    const date = createMockDate({ year: 2000, month: 10, day: 1, hour: 0, min: 0 });
+    expect(formatDateForChatMessage(date)).toEqual(date.toLocaleDateString());
   });
 
   test('datetime.formatTimestampForChatMessage should format date from same day properly', () => {
+    const messageDate = createMockDate({ year: 2000, month: 10, day: 1, hour: 4, min: 0 });
     expect(
       formatTimestampForChatMessage(
-        createMockDate({ year: 2000, month: 10, day: 1, hour: 4, min: 0 }),
+        messageDate,
         createMockDate({ year: 2000, month: 10, day: 1, hour: 5, min: 0 }),
         COMPONENT_LOCALE_EN_US.strings.messageThread
       )
-    ).toEqual('4:00 a.m.');
+    ).toEqual(messageDate.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }));
   });
 
   test('datetime.formatTimestampForChatMessage should format date from yesterday properly', () => {
@@ -75,7 +83,7 @@ describe('datetime tests', () => {
         createMockDate({ year: 2000, month: 10, day: 10, hour: 5, min: 0 }),
         COMPONENT_LOCALE_EN_US.strings.messageThread
       )
-    ).toEqual('Yesterday 4:00 a.m.');
+    ).toEqual('Yesterday 4:00 AM');
   });
 
   test('datetime.formatTimestampForChatMessage should format date from same week properly', () => {
@@ -85,16 +93,17 @@ describe('datetime tests', () => {
         createMockDate({ year: 2000, month: 10, day: 10, hour: 5, min: 0 }),
         COMPONENT_LOCALE_EN_US.strings.messageThread
       )
-    ).toEqual('Wednesday 4:00 a.m.');
+    ).toEqual('Wednesday 4:00 AM');
   });
 
   test('datetime.formatTimestampForChatMessage should format date from long time ago properly', () => {
+    const messageDate = createMockDate({ year: 1999, month: 10, day: 8, hour: 4, min: 0 });
     expect(
       formatTimestampForChatMessage(
-        createMockDate({ year: 1999, month: 10, day: 8, hour: 4, min: 0 }),
+        messageDate,
         createMockDate({ year: 2000, month: 10, day: 10, hour: 5, min: 0 }),
         COMPONENT_LOCALE_EN_US.strings.messageThread
       )
-    ).toEqual('1999-11-08 4:00 a.m.');
+    ).toEqual(`${messageDate.toLocaleDateString()} 4:00 AM`);
   });
 });

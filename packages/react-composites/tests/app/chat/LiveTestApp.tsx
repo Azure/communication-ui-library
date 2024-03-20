@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { Stack } from '@fluentui/react';
@@ -56,14 +56,14 @@ export const LiveTestApp = (): JSX.Element => {
 
   React.useEffect(() => {
     if (adapter && uploadedFiles.length) {
-      uploadedFiles.forEach((file) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      uploadedFiles.forEach((file: any) => {
         if (file.uploadComplete) {
           const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
           fileUploads[0].notifyUploadCompleted({
             name: file.name,
             extension: file.extension,
             url: file.url,
-            attachmentType: 'fileSharing',
             id: ''
           });
         } else if (file.error) {

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { mergeStyles } from '@fluentui/react';
 /* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(unsupported-browser) */
@@ -40,27 +40,48 @@ import {
   WifiWarning20Filled,
   SpeakerMute16Filled,
   MicProhibited16Filled,
-  VideoProhibited16Filled
-} from '@fluentui/react-icons';
-/* @conditional-compile-remove(close-captions) */
-import {
-  ClosedCaption20Regular,
-  ClosedCaptionOff20Regular,
-  Settings20Regular,
-  PersonVoice20Regular
-} from '@fluentui/react-icons';
-/* @conditional-compile-remove(call-readiness) */
-import { Important20Filled } from '@fluentui/react-icons';
-/* @conditional-compile-remove(video-background-effects) */
-import { VideoBackgroundEffect20Filled, VideoBackgroundEffect20Regular } from '@fluentui/react-icons';
-/* @conditional-compile-remove(pinned-participants) */
-import {
+  VideoProhibited16Filled,
   Pin16Filled,
   Pin16Regular,
   PinOff16Regular,
   ScaleFit20Regular,
   ScaleFill20Regular
 } from '@fluentui/react-icons';
+/* @conditional-compile-remove(rich-text-editor) */
+import {
+  TextBold20Regular,
+  TextItalic20Regular,
+  TextUnderlineCharacterU20Regular,
+  TextBulletList20Regular,
+  TextNumberListLtr20Regular,
+  TextIndentDecrease20Regular,
+  TextIndentIncrease20Regular,
+  DividerTall24Regular,
+  TextEditStyle20Regular,
+  TextEditStyle20Filled
+} from '@fluentui/react-icons';
+/* @conditional-compile-remove(reaction) */
+import { Emoji20Regular } from '@fluentui/react-icons';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { Star28Regular, Star28Filled } from '@fluentui/react-icons';
+import {
+  HandRight20Filled,
+  HandRightOff20Filled,
+  HandRight20Regular,
+  HandRightOff20Regular
+} from '@fluentui/react-icons';
+/* @conditional-compile-remove(close-captions) */
+import {
+  ClosedCaption20Regular,
+  ClosedCaptionOff20Regular,
+  Settings20Regular,
+  PersonVoice20Regular,
+  Translate20Regular
+} from '@fluentui/react-icons';
+/* @conditional-compile-remove(call-readiness) */
+import { Important20Filled } from '@fluentui/react-icons';
+/* @conditional-compile-remove(video-background-effects) */
+import { VideoBackgroundEffect20Filled, VideoBackgroundEffect20Regular } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { Backspace20Regular } from '@fluentui/react-icons';
@@ -71,13 +92,19 @@ import { Sparkle20Filled, VideoProhibited20Filled, MicProhibited20Filled } from 
 /* @conditional-compile-remove(file-sharing) */
 import { ArrowDownload16Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
-import { CallPause20Regular, CallPause20Filled, Play20Regular, People20Regular } from '@fluentui/react-icons';
+import { CallPause20Regular, CallPause20Filled, Play20Regular } from '@fluentui/react-icons';
+/* @conditional-compile-remove(dialpad) */
+import { People20Regular } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(data-loss-prevention) */
 import { Prohibited16Regular } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(unsupported-browser) */
 import { Warning20Filled } from '@fluentui/react-icons';
+
+/* @conditional-compile-remove(spotlight) */
+import { VideoPersonStar20Filled, VideoPersonStarOff20Filled } from '@fluentui/react-icons';
+
 import { _pxToRem } from '@internal/acs-ui-common';
 
 import React from 'react';
@@ -215,6 +242,18 @@ const GalleryRightButton = (): JSX.Element => {
   return rtl ? <ChevronLeft20Regular /> : <ChevronRight20Regular />;
 };
 
+const ControlButtonRaiseHandIcon = (): JSX.Element => {
+  /* @conditional-compile-remove(reaction) */
+  return <HandRight20Regular />;
+  return <HandRight20Filled />;
+};
+
+const ControlButtonLowerHandIcon = (): JSX.Element => {
+  /* @conditional-compile-remove(reaction) */
+  return <HandRightOff20Regular />;
+  return <HandRightOff20Filled />;
+};
+
 /**
  * The default set of icons that are available to use in the UI components.
  *
@@ -235,6 +274,12 @@ export const DEFAULT_COMPONENT_ICONS = {
   ControlButtonParticipantsContextualMenuItem: <People20Regular />,
   ControlButtonScreenShareStart: <ShareScreenStart20Filled />,
   ControlButtonScreenShareStop: <ShareScreenStop20Filled />,
+  ControlButtonRaiseHand: <ControlButtonRaiseHandIcon />,
+  ControlButtonLowerHand: <ControlButtonLowerHandIcon />,
+  RaiseHandContextualMenuItem: <HandRight20Regular />,
+  LowerHandContextualMenuItem: <HandRightOff20Regular />,
+  /* @conditional-compile-remove(reaction) */
+  ReactionButtonIcon: <Emoji20Regular />,
   /* @conditional-compile-remove(file-sharing) */
   CancelFileUpload: <Dismiss16Regular />,
   /* @conditional-compile-remove(file-sharing) */
@@ -273,6 +318,8 @@ export const DEFAULT_COMPONENT_ICONS = {
   ParticipantItemOptions: <></>,
   ParticipantItemOptionsHovered: <MoreHorizontal20Filled />,
   ParticipantItemScreenShareStart: <ShareScreenStart20Filled />,
+  /* @conditional-compile-remove(spotlight) */
+  ParticipantItemSpotlighted: <VideoPersonStar20Filled />,
   /* @conditional-compile-remove(PSTN-calls) */
   HoldCallContextualMenuItem: <CallPause20Regular />,
   /* @conditional-compile-remove(PSTN-calls) */
@@ -298,17 +345,11 @@ export const DEFAULT_COMPONENT_ICONS = {
   UnsupportedEnvironmentWarning: <UnsupportedEnvironmentWarning />,
   /* @conditional-compile-remove(call-readiness) */
   BrowserPermissionDeniedError: <BrowserPermissionDenied20Filled />,
-  /* @conditional-compile-remove(pinned-participants) */
   VideoTilePinned: <Pin16Filled />,
-  /* @conditional-compile-remove(pinned-participants) */
   VideoTileMoreOptions: <MoreHorizontal20Filled />,
-  /* @conditional-compile-remove(pinned-participants) */
   VideoTileScaleFit: <ScaleFit20Regular />,
-  /* @conditional-compile-remove(pinned-participants) */
   VideoTileScaleFill: <ScaleFill20Regular />,
-  /* @conditional-compile-remove(pinned-participants) */
   PinParticipant: <Pin16Regular />,
-  /* @conditional-compile-remove(pinned-participants) */
   UnpinParticipant: <PinOff16Regular />,
   SplitButtonPrimaryActionCameraOn: <Video20Filled />,
   SplitButtonPrimaryActionCameraOff: <VideoOff20Filled />,
@@ -330,7 +371,39 @@ export const DEFAULT_COMPONENT_ICONS = {
   CaptionsSettingsIcon: <Settings20Regular />,
   /* @conditional-compile-remove(close-captions) */
   ChangeSpokenLanguageIcon: <PersonVoice20Regular />,
+  /* @conditional-compile-remove(close-captions) */
+  ChangeCaptionLanguageIcon: <Translate20Regular />,
   ContextMenuCameraIcon: <Video20Regular />,
   ContextMenuMicIcon: <Mic20Regular />,
-  ContextMenuSpeakerIcon: <Speaker220Regular />
+  ContextMenuSpeakerIcon: <Speaker220Regular />,
+  /* @conditional-compile-remove(end-of-call-survey) */
+  SurveyStarIcon: <Star28Regular />,
+  /* @conditional-compile-remove(end-of-call-survey) */
+  SurveyStarIconFilled: <Star28Filled />,
+  /* @conditional-compile-remove(spotlight) */
+  StartSpotlightContextualMenuItem: <VideoPersonStar20Filled />,
+  /* @conditional-compile-remove(spotlight) */
+  StopSpotlightContextualMenuItem: <VideoPersonStarOff20Filled />,
+  /* @conditional-compile-remove(spotlight) */
+  VideoTileSpotlighted: <VideoPersonStar20Filled style={{ height: '16px', width: '16px' }} />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RichTextBoldButtonIcon: <TextBold20Regular />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RichTextItalicButtonIcon: <TextItalic20Regular />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RichTextUnderlineButtonIcon: <TextUnderlineCharacterU20Regular />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RichTextBulletListButtonIcon: <TextBulletList20Regular />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RichTextNumberListButtonIcon: <TextNumberListLtr20Regular />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RichTextIndentDecreaseButtonIcon: <TextIndentDecrease20Regular />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RichTextIndentIncreaseButtonIcon: <TextIndentIncrease20Regular />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RichTextDividerIcon: <DividerTall24Regular />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RichTextEditorButtonIcon: <TextEditStyle20Regular />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RichTextEditorButtonIconFilled: <TextEditStyle20Filled />
 };

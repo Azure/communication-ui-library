@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import {
@@ -9,13 +9,16 @@ import {
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+import { RaisedHand } from '@azure/communication-calling';
 /* @conditional-compile-remove(capabilities) */
-import { ParticipantCapabilities } from '@azure/communication-calling';
+import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(acs-close-captions) */
+import { CaptionsInfo as AcsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(rooms) */
+/* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
 import { ParticipantRole } from '@azure/communication-calling';
 import { AzureLogger, createClientLogger, getLogLevel } from '@azure/logger';
 import EventEmitter from 'events';
@@ -41,6 +44,8 @@ import {
 } from './CallClientState';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from './CallClientState';
+/* @conditional-compile-remove(reaction) */
+import { ReactionState } from './CallClientState';
 /* @conditional-compile-remove(call-transfer) */
 import { AcceptedTransfer } from './CallClientState';
 import { callingStatefulLogger } from './Logger';
@@ -48,7 +53,18 @@ import { CallIdHistory } from './CallIdHistory';
 /* @conditional-compile-remove(video-background-effects) */
 import { LocalVideoStreamVideoEffectsState } from './CallClientState';
 /* @conditional-compile-remove(close-captions) */
+import { convertFromTeamsSDKToCaptionInfoState } from './Converter';
+/* @conditional-compile-remove(acs-close-captions) */
 import { convertFromSDKToCaptionInfoState } from './Converter';
+import { convertFromSDKToRaisedHandState } from './Converter';
+/* @conditional-compile-remove(reaction) */
+import { ReactionMessage } from '@azure/communication-calling';
+/* @conditional-compile-remove(spotlight) */
+import { SpotlightedParticipant } from '@azure/communication-calling';
+/* @conditional-compile-remove(local-recording-notification) */
+import { LocalRecordingInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(local-recording-notification) */
+import { RecordingInfo } from '@azure/communication-calling';
 
 enableMapSet();
 // Needed to generate state diff for verbose logging.
@@ -69,6 +85,8 @@ export class CallContext {
   private _emitter: EventEmitter;
   private _atomicId: number;
   private _callIdHistory: CallIdHistory = new CallIdHistory();
+  /* @conditional-compile-remove(reaction) */
+  private _timeOutId: { [key: string]: NodeJS.Timeout } = {};
 
   constructor(
     userId: CommunicationIdentifierKind,
@@ -156,9 +174,12 @@ export class CallContext {
         existingCall.localVideoStreams = call.localVideoStreams;
         existingCall.remoteParticipants = call.remoteParticipants;
         existingCall.transcription.isTranscriptionActive = call.transcription.isTranscriptionActive;
-        /* @conditional-compile-remove(optimal-video-count) */
         existingCall.optimalVideoCount.maxRemoteVideoStreams = call.optimalVideoCount.maxRemoteVideoStreams;
         existingCall.recording.isRecordingActive = call.recording.isRecordingActive;
+        existingCall.raiseHand.raisedHands = call.raiseHand.raisedHands;
+        /* @conditional-compile-remove(ppt-live) */
+        existingCall.pptLive.isActive = call.pptLive.isActive;
+        existingCall.raiseHand.localParticipantRaisedHand = call.raiseHand.localParticipantRaisedHand;
         /* @conditional-compile-remove(rooms) */
         existingCall.role = call.role;
         /* @conditional-compile-remove(total-participant-count) */
@@ -249,6 +270,11 @@ export class CallContext {
         addRemoteParticipant.forEach((participant: RemoteParticipantState) => {
           call.remoteParticipants[toFlatCommunicationIdentifier(participant.identifier)] = participant;
         });
+        // TODO: need to remove after contentSharingRole avaible in WebCalling SDK.
+        /* @conditional-compile-remove(ppt-live) */
+        if (!call.contentSharingRemoteParticipant) {
+          call.contentSharingRemoteParticipant = toFlatCommunicationIdentifier(addRemoteParticipant[0].identifier);
+        }
       }
     });
   }
@@ -271,11 +297,29 @@ export class CallContext {
     });
   }
 
-  public setCallLocalVideoStream(callId: string, streams: LocalVideoStreamState[]): void {
+  public setCallLocalVideoStream(
+    callId: string,
+    streamsAdded: LocalVideoStreamState[],
+    streamsRemoved: LocalVideoStreamState[]
+  ): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        call.localVideoStreams = streams;
+        for (const removedStream of streamsRemoved) {
+          const index = call.localVideoStreams.findIndex((i) => i.mediaStreamType === removedStream.mediaStreamType);
+          if (index > -1) {
+            call.localVideoStreams.splice(index, 1);
+          }
+        }
+
+        for (const addedStream of streamsAdded) {
+          const index = call.localVideoStreams.findIndex((i) => i.mediaStreamType === addedStream.mediaStreamType);
+          if (index > -1) {
+            call.localVideoStreams[index] = addedStream;
+          } else {
+            call.localVideoStreams.push(addedStream);
+          }
+        }
       }
     });
   }
@@ -302,7 +346,7 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(rooms) */
+  /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
   public setRole(callId: string, role: ParticipantRole): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -340,6 +384,136 @@ export class CallContext {
     });
   }
 
+  /* @conditional-compile-remove(local-recording-notification) */
+  public setCallRecordingInfos(
+    callId: string,
+    recordingInfosAdded: RecordingInfo[],
+    lastStoppedRecording: RecordingInfo[]
+  ): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.recording.activeRecordings = recordingInfosAdded;
+        call.recording.lastStoppedRecording = lastStoppedRecording;
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(local-recording-notification) */
+  public setCallLocalRecordingActive(callId: string, isRecordingActive: boolean): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.localRecording.isLocalRecordingActive = isRecordingActive;
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(local-recording-notification) */
+  public setCallLocalRecordingInfos(
+    callId: string,
+    localRecordingInfosAdded: LocalRecordingInfo[],
+    lastStoppedRecording: LocalRecordingInfo[]
+  ): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.localRecording.activeLocalRecordings = localRecordingInfosAdded;
+        call.localRecording.lastStoppedLocalRecording = lastStoppedRecording;
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(ppt-live) */
+  public setCallPPTLiveActive(callId: string, isActive: boolean): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.pptLive.isActive = isActive;
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(ppt-live) */
+  public setCallParticipantPPTLive(callId: string, target: HTMLElement | undefined): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      const participantKey = call.contentSharingRemoteParticipant;
+      if (call && participantKey) {
+        const participant = call.remoteParticipants[participantKey];
+        if (participant) {
+          participant.contentSharingStream = target;
+        }
+      }
+    });
+  }
+
+  public setCallRaisedHands(callId: string, raisedHands: RaisedHand[]): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.raiseHand.raisedHands = raisedHands.map((raisedHand) => {
+          return convertFromSDKToRaisedHandState(raisedHand);
+        });
+        const raisedHand = raisedHands.find(
+          (raisedHand) =>
+            toFlatCommunicationIdentifier(raisedHand.identifier) === toFlatCommunicationIdentifier(this._state.userId)
+        );
+        if (raisedHand) {
+          call.raiseHand.localParticipantRaisedHand = convertFromSDKToRaisedHandState(raisedHand);
+        } else {
+          call.raiseHand.localParticipantRaisedHand = undefined;
+        }
+      }
+    });
+  }
+
+  public setParticipantIsRaisedHand(callId: string, participantKey: string, raisedHand: RaisedHand | undefined): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        const participant = call.remoteParticipants[participantKey];
+        if (participant) {
+          participant.raisedHand = raisedHand ? convertFromSDKToRaisedHandState(raisedHand) : raisedHand;
+        }
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(reaction) */
+  public setReceivedReactionFromParticipant(
+    callId: string,
+    participantKey: string,
+    reactionMessage: ReactionMessage | null
+  ): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+
+      if (!call) {
+        return;
+      }
+
+      clearTimeout(this._timeOutId[participantKey]);
+
+      const participant = call.remoteParticipants[participantKey];
+      const newReactionState: ReactionState | undefined = reactionMessage
+        ? { reactionMessage: reactionMessage, receivedOn: new Date() }
+        : undefined;
+
+      if (participantKey === toFlatCommunicationIdentifier(this._state.userId)) {
+        call.localParticipantReaction = newReactionState;
+      } else {
+        participant.reactionState = newReactionState;
+      }
+
+      if (reactionMessage) {
+        this._timeOutId[participantKey] = setTimeout(() => {
+          clearParticipantReactionState(this, callId, participantKey);
+        }, 5120);
+      }
+    });
+  }
+
   public setCallTranscriptionActive(callId: string, isTranscriptionActive: boolean): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -350,11 +524,67 @@ export class CallContext {
   }
 
   /* @conditional-compile-remove(capabilities) */
-  public setCapabilities(callId: string, capabilities: ParticipantCapabilities): void {
+  public setCapabilities(
+    callId: string,
+    capabilities: ParticipantCapabilities,
+    capabilitiesChangeInfo: CapabilitiesChangeInfo
+  ): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        call.capabilities = { capabilities: capabilities };
+        call.capabilitiesFeature = { capabilities, latestCapabilitiesChangeInfo: capabilitiesChangeInfo };
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(spotlight) */
+  public setSpotlight(
+    callId: string,
+    spotlightedParticipants: SpotlightedParticipant[],
+    maxParticipantsToSpotlight: number
+  ): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.spotlight = { ...call.spotlight, spotlightedParticipants, maxParticipantsToSpotlight };
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(spotlight) */
+  public setParticipantSpotlighted(callId: string, spotlightedParticipant: SpotlightedParticipant): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        const participant = call.remoteParticipants[toFlatCommunicationIdentifier(spotlightedParticipant.identifier)];
+        if (participant) {
+          participant.spotlight = { spotlightedOrderPosition: spotlightedParticipant.order };
+        } else if (
+          call.spotlight &&
+          toFlatCommunicationIdentifier(draft.userId) ===
+            toFlatCommunicationIdentifier(spotlightedParticipant.identifier)
+        ) {
+          call.spotlight.localParticipantSpotlight = { spotlightedOrderPosition: spotlightedParticipant.order };
+        }
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(spotlight) */
+  public setParticipantNotSpotlighted(callId: string, spotlightedParticipant: SpotlightedParticipant): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        const participant = call.remoteParticipants[toFlatCommunicationIdentifier(spotlightedParticipant.identifier)];
+        if (participant) {
+          participant.spotlight = undefined;
+        } else if (
+          call.spotlight &&
+          toFlatCommunicationIdentifier(draft.userId) ===
+            toFlatCommunicationIdentifier(spotlightedParticipant.identifier)
+        ) {
+          call.spotlight.localParticipantSpotlight = undefined;
+        }
       }
     });
   }
@@ -368,12 +598,19 @@ export class CallContext {
     });
   }
 
-  public setLocalVideoStreamRendererView(callId: string, view: VideoStreamRendererViewState | undefined): void {
+  public setLocalVideoStreamRendererView(
+    callId: string,
+    localVideoMediaStreamType: string,
+    view: VideoStreamRendererViewState | undefined
+  ): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        if (call.localVideoStreams.length > 0) {
-          call.localVideoStreams[0].view = view;
+        const localVideoStream = call.localVideoStreams.find(
+          (localVideoStream) => localVideoStream.mediaStreamType === localVideoMediaStreamType
+        );
+        if (localVideoStream) {
+          localVideoStream.view = view;
         }
       }
     });
@@ -403,7 +640,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(optimal-video-count) */
   public setOptimalVideoCount(callId: string, optimalVideoCount: number): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -507,6 +743,26 @@ export class CallContext {
           const stream = participant.videoStreams[streamId];
           if (stream) {
             stream.isReceiving = isReceiving;
+          }
+        }
+      }
+    });
+  }
+
+  public setRemoteVideoStreamSize(
+    callId: string,
+    participantKey: string,
+    streamId: number,
+    size: { width: number; height: number }
+  ): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        const participant = call.remoteParticipants[participantKey];
+        if (participant) {
+          const stream = participant.videoStreams[streamId];
+          if (stream) {
+            stream.streamSize = size;
           }
         }
       }
@@ -692,8 +948,7 @@ export class CallContext {
   public deleteDeviceManagerUnparentedView(localVideoStream: LocalVideoStreamState): void {
     this.modifyState((draft: CallClientState) => {
       const foundIndex = draft.deviceManager.unparentedViews.findIndex(
-        (stream) =>
-          stream.source.id === localVideoStream.source.id && stream.mediaStreamType === localVideoStream.mediaStreamType
+        (stream) => stream.mediaStreamType === localVideoStream.mediaStreamType
       );
       if (foundIndex !== -1) {
         draft.deviceManager.unparentedViews.splice(foundIndex, 1);
@@ -708,8 +963,7 @@ export class CallContext {
   ): void {
     this.modifyState((draft: CallClientState) => {
       const foundIndex = draft.deviceManager.unparentedViews.findIndex(
-        (stream) =>
-          stream.source.id === localVideoStream.source.id && stream.mediaStreamType === localVideoStream.mediaStreamType
+        (stream) => stream.mediaStreamType === localVideoStream.mediaStreamType
       );
       if (foundIndex !== -1) {
         draft.deviceManager.unparentedViews[foundIndex].videoEffects = videoEffects;
@@ -748,7 +1002,24 @@ export class CallContext {
     }
   }
   /* @conditional-compile-remove(close-captions) */
-  public addCaption(callId: string, caption: TeamsCaptionsInfo): void {
+  public addTeamsCaption(callId: string, caption: TeamsCaptionsInfo): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        const currentCaptionLanguage = call.captionsFeature.currentCaptionLanguage;
+        if (
+          caption.captionLanguage.toUpperCase() === currentCaptionLanguage.toUpperCase() ||
+          currentCaptionLanguage === '' ||
+          currentCaptionLanguage === undefined
+        ) {
+          this.processNewCaption(call.captionsFeature.captions, convertFromTeamsSDKToCaptionInfoState(caption));
+        }
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(acs-close-captions) */
+  public addCaption(callId: string, caption: AcsCaptionsInfo): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
@@ -756,6 +1027,17 @@ export class CallContext {
       }
     });
   }
+
+  /* @conditional-compile-remove(close-captions) */
+  public clearCaptions(callId: string): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.captionsFeature.captions = [];
+      }
+    });
+  }
+
   /* @conditional-compile-remove(close-captions) */
   setIsCaptionActive(callId: string, isCaptionsActive: boolean): void {
     this.modifyState((draft: CallClientState) => {
@@ -914,3 +1196,8 @@ const findOldestCallEnded = (calls: { [key: string]: { endTime?: Date } }): stri
   }
   return oldestCallId;
 };
+
+/* @conditional-compile-remove(reaction) */
+function clearParticipantReactionState(callContext: CallContext, callId: string, participantKey: string): void {
+  callContext.setReceivedReactionFromParticipant(callId, participantKey, null);
+}

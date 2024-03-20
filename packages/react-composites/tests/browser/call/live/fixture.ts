@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { TEST_PARTICIPANTS } from '../../common/constants';
 import { createCallUsers, usePagePerParticipantWithCallPermissions } from '../../common/fixtureHelpers';

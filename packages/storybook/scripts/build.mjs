@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { getBuildFlavor, exec, getExtraEnv } from './common.mjs';
 import { quote } from 'shell-quote';
