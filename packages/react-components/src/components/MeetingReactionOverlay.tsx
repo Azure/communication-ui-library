@@ -17,6 +17,13 @@ import { ParticipantVideoTileOverlay } from './VideoGallery/ParticipantVideoTile
 import { RemoteContentShareReactionOverlay } from './VideoGallery/RemoteContentShareReactionOverlay';
 
 /* @conditional-compile-remove(reaction) */
+/**
+ * Reaction overlay component props
+ *
+ * Can be used with {@link VideoTile}.
+ *
+ * @internal
+ */
 export interface MeetingReactionOverlayProps {
   /**
    * Reaction rendering overlay type. i.e. single reaction rendering on grid-tile, screen share mode overlay
@@ -40,12 +47,27 @@ export interface MeetingReactionOverlayProps {
   remoteParticipants?: VideoGalleryRemoteParticipant[];
 }
 
-// Emoji max size
+/* @conditional-compile-remove(reaction) */
+/**
+ * Emoji max size
+ * @private
+ */
 const DEFAULT_EMOJI_MAX_SIZE_PX = 100;
-// Emoji min size
+/* @conditional-compile-remove(reaction) */
+/**
+ * Emoji min size
+ * @private
+ */
 const DEFAULT_EMOJI_MIN_SIZE_PX = 32;
 
 /* @conditional-compile-remove(reaction) */
+/**
+ * Reaction overlay component
+ *
+ * Can be used with {@link VideoTile}.
+ *
+ * @internal
+ */
 export const MeetingReactionOverlay = (props: MeetingReactionOverlayProps): JSX.Element => {
   const { overlayMode, reaction, reactionResources, localParticipant, remoteParticipants } = props;
   const [emojiSize, setEmojiSize] = useState(1);

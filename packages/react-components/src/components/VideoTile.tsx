@@ -19,7 +19,6 @@ import { useTheme } from '../theming';
 import { BaseCustomStyles, CustomAvatarOptions, OnRenderAvatarCallback } from '../types';
 import { CallingTheme } from '../theming';
 import { RaisedHand } from '../types';
-/* @conditional-compile-remove(raise-hand) */
 import { RaisedHandIcon } from './assets/RaisedHandIcon';
 /* @conditional-compile-remove(one-to-n-calling) */
 /* @conditional-compile-remove(PSTN-calls) */

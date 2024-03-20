@@ -5,8 +5,9 @@
 import { keyframes, memoizeFunction } from '@fluentui/react';
 
 /* @conditional-compile-remove(reaction) */
-/*
+/**
  * Generate random float between two numbers, including min and max
+ * @private
  */
 export function getRandomFloat(minValue: number, maxValue: number): number {
   return minValue + Math.random() * (maxValue - minValue);
@@ -15,14 +16,16 @@ export function getRandomFloat(minValue: number, maxValue: number): number {
 /* @conditional-compile-remove(reaction) */
 /**
  * Generate random int between two numbers, including min and max
+ * @private
  */
-export function getRandomInt(minValue: number, maxValue: number) {
+export function getRandomInt(minValue: number, maxValue: number): number {
   return Math.floor(getRandomFloat(minValue, maxValue + 1));
 }
 
 /* @conditional-compile-remove(reaction) */
 /**
  * Calculate the start position for a new reaction in the prescriptive wave pattern
+ * @private
  */
 export function generateStartPositionWave(
   index: number,
@@ -36,7 +39,9 @@ export function generateStartPositionWave(
   // To get alternating sequence, we take n % 2 (which gives 0 or 1), multiple result by 2
   // and subtract 1, which will result in -1 or 1
   const direction = index === 0 ? 0 : (index % 2) * 2 - 1;
-  if (direction === 0) return midPointCoordinate;
+  if (direction === 0) {
+    return midPointCoordinate;
+  }
 
   // Now we get how far the reaction starts from center
   const adjustment = scaleStartPos(index);
@@ -44,6 +49,9 @@ export function generateStartPositionWave(
 }
 
 /* @conditional-compile-remove(reaction) */
+/**
+ * @private
+ */
 export const reactionOverlayStyle: React.CSSProperties = {
   bottom: '0',
   height: '50%',
@@ -53,6 +61,9 @@ export const reactionOverlayStyle: React.CSSProperties = {
 };
 
 /* @conditional-compile-remove(reaction) */
+/**
+ * @private
+ */
 export function getReactionMovementStyle(reactionXPoint: number): React.CSSProperties {
   return {
     position: 'absolute',
@@ -61,6 +72,9 @@ export function getReactionMovementStyle(reactionXPoint: number): React.CSSPrope
 }
 
 /* @conditional-compile-remove(reaction) */
+/**
+ * @private
+ */
 function scaleStartPos(index: number): number {
   switch (index) {
     case 1:
@@ -105,6 +119,9 @@ function scaleStartPos(index: number): number {
 }
 
 /* @conditional-compile-remove(reaction) */
+/**
+ * @private
+ */
 const ReactionStyleBuckets: Array<IReactionStyleBucket> = [
   {
     sizeScale: 1,
@@ -124,6 +141,9 @@ const ReactionStyleBuckets: Array<IReactionStyleBucket> = [
 ];
 
 /* @conditional-compile-remove(reaction) */
+/**
+ * @private
+ */
 const ReactionBurstStyleBuckets: Array<IReactionStyleBucket> = [
   {
     sizeScale: 0.6,
@@ -146,6 +166,9 @@ const ReactionBurstStyleBuckets: Array<IReactionStyleBucket> = [
 ];
 
 /* @conditional-compile-remove(reaction) */
+/**
+ * @private
+ */
 export interface IReactionStyleBucket {
   sizeScale: number;
   opacityMax: number;
@@ -158,6 +181,7 @@ export interface IReactionStyleBucket {
  * Return a style bucket based on the number of active sprites.
  * For example, the first three reactions should appear at maximum
  * height, width, and opacity.
+ * @private
  */
 export function getReactionStyleBucket(activeSpritesCount: number): IReactionStyleBucket {
   const index = activeSpritesCount < 3 ? 0 : activeSpritesCount < 5 ? getRandomInt(0, 1) : getRandomInt(0, 2);
@@ -167,6 +191,7 @@ export function getReactionStyleBucket(activeSpritesCount: number): IReactionSty
 /* @conditional-compile-remove(reaction) */
 /**
  * Return a style bucket for burst scenario
+ * @private
  */
 export function getReactionBurstStyleBucket(): IReactionStyleBucket {
   const index = getRandomInt(0, ReactionBurstStyleBuckets.length - 1);
@@ -174,6 +199,9 @@ export function getReactionBurstStyleBucket(): IReactionStyleBucket {
 }
 
 /* @conditional-compile-remove(reaction) */
+/**
+ * @private
+ */
 export const moveFrames = memoizeFunction((maxHeight, travelHeight) =>
   keyframes({
     '0%': {
@@ -186,6 +214,9 @@ export const moveFrames = memoizeFunction((maxHeight, travelHeight) =>
 );
 
 /* @conditional-compile-remove(reaction) */
+/**
+ * @private
+ */
 export const moveAnimationStyles = (maxHeight: number, travelHeight: number): React.CSSProperties => {
   return {
     animationName: moveFrames(maxHeight, travelHeight),
@@ -195,6 +226,10 @@ export const moveAnimationStyles = (maxHeight: number, travelHeight: number): Re
   };
 };
 
+/* @conditional-compile-remove(reaction) */
+/**
+ * @private
+ */
 export const opacityTransition = memoizeFunction((maxOpacity) =>
   keyframes({
     '0%': {
@@ -214,6 +249,10 @@ export const opacityTransition = memoizeFunction((maxOpacity) =>
   })
 );
 
+/* @conditional-compile-remove(reaction) */
+/**
+ * @private
+ */
 export const opacityAnimationStyles = (maxOpacity: number): React.CSSProperties => {
   return {
     animationName: opacityTransition(maxOpacity),
@@ -222,6 +261,10 @@ export const opacityAnimationStyles = (maxOpacity: number): React.CSSProperties 
   };
 };
 
+/* @conditional-compile-remove(reaction) */
+/**
+ * @private
+ */
 export const spriteFrames = memoizeFunction((numOfFrames, displaySizePx) =>
   keyframes({
     from: {
@@ -233,6 +276,10 @@ export const spriteFrames = memoizeFunction((numOfFrames, displaySizePx) =>
   })
 );
 
+/* @conditional-compile-remove(reaction) */
+/**
+ * @private
+ */
 export const spriteAnimationStyles = (
   numOfFrames: number,
   displaySizePx: number,

@@ -89,14 +89,7 @@ export const RemoteScreenShare = React.memo(
     if (isPPTLive) {
       return (
         <VideoTile
-          renderElement={
-            renderElement ? (
-              <StreamMedia
-                videoStreamElement={renderElement}
-                loadingState={isReceiving === false ? 'loading' : 'none'}
-              />
-            ) : undefined
-          }
+          renderElement={renderElement}
           onRenderPlaceholder={() => <LoadingSpinner loadingMessage={loadingMessage} />}
         />
       );

@@ -13,6 +13,13 @@ import { Stack, mergeStyles } from '@fluentui/react';
 import { reactionRenderingStyle, videoContainerStyles } from '../styles/VideoTile.styles';
 
 /* @conditional-compile-remove(reaction) */
+/**
+ * Reaction overlay component for Grid
+ *
+ * Can be used with {@link MeetingReactionOverlay}.
+ *
+ * @internal
+ */
 export const ParticipantVideoTileOverlay = React.memo(
   (props: { reaction?: Reaction; reactionResources: ReactionResources; emojiSize?: number }) => {
     const { reaction, reactionResources, emojiSize = 44 } = props;
@@ -24,7 +31,7 @@ export const ParticipantVideoTileOverlay = React.memo(
         : '';
     const currentTimestamp = new Date();
     const currentUnixTimeStamp = Math.floor(currentTimestamp.getTime() / 1000);
-    const receivedUnixTimestamp = reaction ? Math.floor(reaction.receivedAt.getTime() / 1000) : undefined;
+    const receivedUnixTimestamp = reaction ? Math.floor(reaction.receivedOn.getTime() / 1000) : undefined;
     const canRenderReaction =
       (receivedUnixTimestamp ? currentUnixTimeStamp - receivedUnixTimestamp < 3000 : false) &&
       backgroundImageUrl !== undefined;
