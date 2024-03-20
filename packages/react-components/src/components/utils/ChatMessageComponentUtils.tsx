@@ -100,7 +100,7 @@ const defaultOnRenderFileDownloads = (
       /* @conditional-compile-remove(file-sharing) */
       downloadHandler={fileDownloadHandler}
       /* @conditional-compile-remove(file-sharing) */
-      strings={{ downloadFile: strings.downloadFile, fileCardGroupMessage: strings.fileCardGroupMessage }}
+      strings={{ downloadAttachment: strings.downloadAttachment, attachmentCardGroupMessage: strings.attachmentCardGroupMessage }}
     />
   );
   return undefined;

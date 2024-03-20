@@ -7,14 +7,14 @@ import { useLocale } from '../../localization';
 import { ParticipantState } from '../../types';
 
 /**
- * Conditionally modify locale strings passed to the file card
+ * Conditionally modify locale strings passed to the attachment card
  * @returns file upload card strings
  */
 export const useLocaleAttachmentCardStringsTrampoline = (): _AttachmentUploadCardsStrings => {
   /* @conditional-compile-remove(file-sharing) */
   return useLocale().strings.sendBox;
   return {
-    removeFile: '',
+    removeAttachment: '',
     uploadCompleted: '',
     uploading: ''
   };

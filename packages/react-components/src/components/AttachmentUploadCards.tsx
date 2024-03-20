@@ -54,7 +54,7 @@ export interface ActiveFileUpload {
  */
 export interface _AttachmentUploadCardsStrings {
   /** Aria label to notify user when focus is on cancel attachment upload button. */
-  removeFile: string;
+  removeAttachment: string;
   /** Aria label to notify user attachment uploading starts. */
   uploading: string;
   /** Aria label to notify user attachment is uploaded. */
@@ -91,11 +91,11 @@ export const _AttachmentUploadCards = (props: FileUploadCardsProps): JSX.Element
 
   const localeStrings = useLocaleAttachmentCardStringsTrampoline();
 
-  const removeFileButtonString = useMemo(
+  const removeAttachmentButtonString = useMemo(
     () => () => {
-      return props.strings?.removeFile ?? localeStrings.removeFile;
+      return props.strings?.removeAttachment ?? localeStrings.removeAttachment;
     },
-    [props.strings?.removeFile, localeStrings.removeFile]
+    [props.strings?.removeAttachment, localeStrings.removeAttachment]
   );
 
   if (!attachments || attachments.length === 0) {
@@ -114,7 +114,7 @@ export const _AttachmentUploadCards = (props: FileUploadCardsProps): JSX.Element
               key={attachment.id}
               attachmentExtension={extension(attachment.filename)}
               actionIcon={
-                <IconButton className={iconButtonClassName} ariaLabel={removeFileButtonString()}>
+                <IconButton className={iconButtonClassName} ariaLabel={removeAttachmentButtonString()}>
                   <Icon iconName="CancelFileUpload" style={actionIconStyle} />
                 </IconButton>
               }

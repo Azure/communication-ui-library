@@ -11,7 +11,7 @@ import React, { useState } from 'react';
 
 export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
   const [overlayImageItem, setOverlayImageItem] =
-    useState<{ imageSrc: string; title: string; titleIcon: JSX.Element; downloadFilename: string }>();
+    useState<{ imageSrc: string; title: string; titleIcon: JSX.Element; downloadImagename: string }>();
 
   const onInlineImageClicked = (attachmentId: string, messageId: string): Promise<void> => {
     const filteredMessages = messages?.filter((message) => {
@@ -35,7 +35,7 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
     const overlayImage = {
       title,
       titleIcon,
-      downloadFilename: attachmentId,
+      downloadImagename: attachmentId,
       imageSrc: imgSrc
     };
     setOverlayImageItem(overlayImage);

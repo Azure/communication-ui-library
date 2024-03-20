@@ -60,8 +60,8 @@ export interface AttachmentMetadata {
  */
 export interface _AttachmentDownloadCardsStrings {
   /** Aria label to notify user when focus is on attachment download button. */
-  downloadFile: string;
-  fileCardGroupMessage: string;
+  downloadAttachment: string;
+  attachmentCardGroupMessage: string;
 }
 
 /**
@@ -151,11 +151,11 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
   const [showSpinner, setShowSpinner] = useState(false);
   const localeStrings = useLocaleStringsTrampoline();
 
-  const downloadFileButtonString = useMemo(
+  const downloadAttachmentButtonString = useMemo(
     () => () => {
-      return props.strings?.downloadFile ?? localeStrings.downloadFile;
+      return props.strings?.downloadAttachment ?? localeStrings.downloadAttachment;
     },
-    [props.strings?.downloadFile, localeStrings.downloadFile]
+    [props.strings?.downloadAttachment, localeStrings.downloadAttachment]
   );
 
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
@@ -165,18 +165,18 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
     return true;
   }, []);
 
-  const fileCardGroupDescription = useMemo(
+  const attachmentCardGroupDescription = useMemo(
     () => () => {
-      const fileGroupLocaleString = props.strings?.fileCardGroupMessage ?? localeStrings.fileCardGroupMessage;
+      const fileGroupLocaleString = props.strings?.attachmentCardGroupMessage ?? localeStrings.attachmentCardGroupMessage;
       /* @conditional-compile-remove(file-sharing) */
       return _formatString(fileGroupLocaleString, {
-        fileCount: `${fileMetadata?.length ?? 0}`
+        attachmentCount: `${fileMetadata?.length ?? 0}`
       });
       return _formatString(fileGroupLocaleString, {
-        fileCount: `${fileMetadata?.length ?? 0}`
+        attachmentCount: `${fileMetadata?.length ?? 0}`
       });
     },
-    [props.strings?.fileCardGroupMessage, localeStrings.fileCardGroupMessage, fileMetadata]
+    [props.strings?.attachmentCardGroupMessage, localeStrings.attachmentCardGroupMessage, fileMetadata]
   );
 
   const fileDownloadHandler = useCallback(
@@ -210,10 +210,10 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
 
   return (
     <div style={attachmentDownloadCardsStyle} data-ui-id="file-download-card-group">
-      <_AttachmentCardGroup ariaLabel={fileCardGroupDescription()}>
+      <_AttachmentCardGroup ariaLabel={attachmentCardGroupDescription()}>
         {fileMetadata &&
           fileMetadata.map((attachment) => (
-            <TooltipHost content={downloadFileButtonString()} key={attachment.name}>
+            <TooltipHost content={downloadAttachmentButtonString()} key={attachment.name}>
               <_AttachmentCard
                 attachmentName={attachment.name}
                 key={attachment.name}
@@ -225,7 +225,7 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
                     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ isShowDownloadIcon(
                       attachment
                     ) ? (
-                    <IconButton className={iconButtonClassName} ariaLabel={downloadFileButtonString()}>
+                    <IconButton className={iconButtonClassName} ariaLabel={downloadAttachmentButtonString()}>
                       <DownloadIconTrampoline />
                     </IconButton>
                   ) : undefined
@@ -252,5 +252,5 @@ const DownloadIconTrampoline = (): JSX.Element => {
 const useLocaleStringsTrampoline = (): _AttachmentDownloadCardsStrings => {
   /* @conditional-compile-remove(file-sharing) */
   return useLocale().strings.messageThread;
-  return { downloadFile: '', fileCardGroupMessage: '' };
+  return { downloadAttachment: '', attachmentCardGroupMessage: '' };
 };

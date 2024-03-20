@@ -137,7 +137,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   const [contentValue, setContentValue] = useState('');
   const [contentValueOverflow, setContentValueOverflow] = useState(false);
   /* @conditional-compile-remove(file-sharing) */
-  const [fileUploadsPendingError, setFileUploadsPendingError] = useState<SendBoxErrorBarError | undefined>(undefined);
+  const [attachmentUploadsPendingError, setFileUploadsPendingError] = useState<SendBoxErrorBarError | undefined>(undefined);
   const editorComponentRef = useRef<RichTextEditorComponentRef>(null);
 
   const contentTooLongMessage = useMemo(
@@ -163,7 +163,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     setFileUploadsPendingError(undefined);
 
     // if (hasIncompleteFileUploads(activeFileUploads)) {
-    //   setFileUploadsPendingError({ message: strings.fileUploadsPendingError, timestamp: Date.now() });
+    //   setFileUploadsPendingError({ message: strings.attachmentUploadsPendingError, timestamp: Date.now() });
     //   return;
     // }
 
@@ -192,16 +192,16 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       !!systemMessage ||
       !!contentTooLongMessage ||
       /* @conditional-compile-remove(file-sharing) */
-      !!fileUploadsPendingError ||
+      !!attachmentUploadsPendingError ||
       /* @conditional-compile-remove(file-sharing) */
-      !!activeFileUploads?.filter((fileUpload) => fileUpload.error).pop()?.error
+      !!activeFileUploads?.filter((attachmentUpload) => attachmentUpload.error).pop()?.error
     );
   }, [
     /* @conditional-compile-remove(file-sharing) */
     activeFileUploads,
     contentTooLongMessage,
     /* @conditional-compile-remove(file-sharing) */
-    fileUploadsPendingError,
+    attachmentUploadsPendingError,
     systemMessage
   ]);
 
@@ -226,9 +226,9 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   const sendBoxErrorsProps: RichTextSendBoxErrorsProps = useMemo(() => {
     return {
       /* @conditional-compile-remove(file-sharing) */
-      fileUploadsPendingError: fileUploadsPendingError,
+      attachmentUploadsPendingError: attachmentUploadsPendingError,
       /* @conditional-compile-remove(file-sharing) */
-      fileUploadError: activeFileUploads?.filter((fileUpload) => fileUpload.error).pop()?.error,
+      attachmentUploadError: activeFileUploads?.filter((attachmentUpload) => attachmentUpload.error).pop()?.error,
       systemMessage: systemMessage,
       textTooLongMessage: contentTooLongMessage
     };
@@ -237,7 +237,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     activeFileUploads,
     contentTooLongMessage,
     /* @conditional-compile-remove(file-sharing) */
-    fileUploadsPendingError,
+    attachmentUploadsPendingError,
     systemMessage
   ]);
 

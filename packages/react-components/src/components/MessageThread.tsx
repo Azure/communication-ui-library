@@ -214,8 +214,8 @@ export interface MessageThreadStrings {
   /** Aria label to announce when a message is deleted */
   messageDeletedAnnouncementAriaLabel: string;
   /* @conditional-compile-remove(file-sharing) */
-  /** String for download file button in file card */
-  downloadFile: string;
+  /** String for download file button in attachment card */
+  downloadAttachment: string;
   /* @conditional-compile-remove(data-loss-prevention) */
   /** String for policy violation message removal */
   blockedWarningText: string;
@@ -224,7 +224,7 @@ export interface MessageThreadStrings {
   blockedWarningLinkText: string;
   /* @conditional-compile-remove(file-sharing) */
   /** String for aria text in file attachment group*/
-  fileCardGroupMessage: string;
+  attachmentCardGroupMessage: string;
 }
 
 /**
