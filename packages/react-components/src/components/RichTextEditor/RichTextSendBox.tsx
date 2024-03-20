@@ -286,7 +286,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         /* @conditional-compile-remove(file-sharing) */
         onRenderFileUploads={onRenderFileUploads}
         /* @conditional-compile-remove(file-sharing) */
-        activeFileUploads={activeFileUploads}
+        hasFiles={hasCompletedFileUploads(activeFileUploads) || hasIncompleteFileUploads(activeFileUploads)}
       />
     </Stack>
   );

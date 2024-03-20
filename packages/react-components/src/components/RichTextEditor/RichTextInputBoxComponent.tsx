@@ -21,8 +21,6 @@ import {
   inputBoxRichTextStackStyle,
   richTextBorderBoxStyle
 } from '../styles/RichTextInputBoxComponent.styles';
-/* @conditional-compile-remove(file-sharing) */
-import { ActiveFileUpload } from '../FileUploadCards';
 
 /**
  * @private
@@ -44,7 +42,7 @@ export interface RichTextInputBoxComponentProps {
   /* @conditional-compile-remove(file-sharing) */
   onRenderFileUploads?: () => JSX.Element;
   /* @conditional-compile-remove(file-sharing) */
-  activeFileUploads?: ActiveFileUpload[];
+  hasFiles?: boolean;
   // props for min and max height for the rich text editor
   // otherwise the editor will grow to fit the content
   richTextEditorStyleProps: (isExpanded: boolean) => RichTextEditorStyleProps;
@@ -66,7 +64,7 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
     /* @conditional-compile-remove(file-sharing) */
     onRenderFileUploads,
     /* @conditional-compile-remove(file-sharing) */
-    activeFileUploads,
+    hasFiles,
     richTextEditorStyleProps
   } = props;
   const theme = useTheme();
@@ -132,8 +130,7 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
   );
 
   const useHorizontalLayout =
-    !showRichTextEditorFormatting &&
-    /* @conditional-compile-remove(file-sharing) */ (activeFileUploads?.length ?? 0) === 0;
+    !showRichTextEditorFormatting && /* @conditional-compile-remove(file-sharing) */ !hasFiles;
 
   return (
     <div
