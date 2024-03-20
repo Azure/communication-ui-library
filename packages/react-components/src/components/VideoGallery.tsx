@@ -533,7 +533,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     styles?.localVideo,
     theme.effects.roundedCorner4,
     localVideoTileSize,
-
     layout,
     showLocalVideoTileLabel,
     /* @conditional-compile-remove(spotlight) */
@@ -740,8 +739,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       onRenderRemoteVideoTile,
       defaultOnRenderVideoTile,
       pinnedParticipants,
-      overflowGalleryPosition,
-      localVideoTileSize,
       overflowGalleryPosition,
       localVideoTileSize,
       /* @conditional-compile-remove(spotlight) */ spotlightedParticipants
