@@ -654,7 +654,7 @@ jobs:
       - name: Build dependencies
         run: rush build -t @azure/communication-react
       - name: Build
-        run: rush build -o calling
+        run: rush build:minify -o calling
       - name: Tests
         run: rush test -o calling
       # upload bundle stats.json which will be consumed later
@@ -700,7 +700,7 @@ jobs:
       - name: Build dependencies
         run: rush build -t @azure/communication-react
       - name: Build
-        run: rush build -o chat
+        run: rush build:minify -o chat
       - name: Tests
         run: rush test -o chat
       # upload bundle stats.json which will be consumed later
@@ -746,7 +746,7 @@ jobs:
       - name: Build dependencies
         run: rush build -t @azure/communication-react
       - name: Build
-        run: rush build -o callwithchat
+        run: rush build:minify -o callwithchat
       - name: Tests
         run: rush test -o callwithchat
       # upload bundle stats.json which will be consumed later
