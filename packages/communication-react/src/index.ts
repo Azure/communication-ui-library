@@ -347,7 +347,6 @@ export type {
   BrowserPermissionDeniedStyles,
   BrowserPermissionDeniedIOSProps
 } from '../../react-components/src';
-/* @conditional-compile-remove(vertical-gallery) */
 export type { OverflowGalleryPosition } from '../../react-components/src';
 export type { LocalVideoTileSize } from '../../react-components/src';
 export * from '../../react-components/src/localization/locales';
@@ -386,7 +385,6 @@ export type { UnsupportedBrowserVersionStrings, UnsupportedBrowserVersionProps }
 export { UnsupportedOperatingSystem } from '../../react-components/src';
 /* @conditional-compile-remove(unsupported-browser) */
 export type { UnsupportedOperatingSystemStrings, UnsupportedOperatingSystemProps } from '../../react-components/src';
-/* @conditional-compile-remove(vertical-gallery) */
 export type {
   VerticalGalleryStyles,
   VerticalGalleryStrings,
