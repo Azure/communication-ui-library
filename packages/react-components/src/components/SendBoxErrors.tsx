@@ -20,7 +20,9 @@ export const SendBoxErrors = (props: SendBoxErrorsProps): JSX.Element => {
 
   const errorToDisplay = React.useMemo(() => {
     if (attachmentUploadError && attachmentUploadsPendingError) {
-      return attachmentUploadError.timestamp > attachmentUploadsPendingError.timestamp ? attachmentUploadError : attachmentUploadsPendingError;
+      return attachmentUploadError.timestamp > attachmentUploadsPendingError.timestamp
+        ? attachmentUploadError
+        : attachmentUploadsPendingError;
     }
     return attachmentUploadError || attachmentUploadsPendingError;
   }, [attachmentUploadError, attachmentUploadsPendingError]);

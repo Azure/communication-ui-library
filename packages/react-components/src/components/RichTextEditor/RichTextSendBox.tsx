@@ -137,7 +137,9 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   const [contentValue, setContentValue] = useState('');
   const [contentValueOverflow, setContentValueOverflow] = useState(false);
   /* @conditional-compile-remove(file-sharing) */
-  const [attachmentUploadsPendingError, setFileUploadsPendingError] = useState<SendBoxErrorBarError | undefined>(undefined);
+  const [attachmentUploadsPendingError, setFileUploadsPendingError] = useState<SendBoxErrorBarError | undefined>(
+    undefined
+  );
   const editorComponentRef = useRef<RichTextEditorComponentRef>(null);
 
   const contentTooLongMessage = useMemo(

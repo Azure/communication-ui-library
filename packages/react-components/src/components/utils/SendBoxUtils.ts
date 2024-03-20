@@ -17,7 +17,9 @@ const EMPTY_MESSAGE_REGEX = /^\s*$/;
 export const hasIncompleteFileUploads = (activeFileUploads: ActiveFileUpload[] | undefined): boolean => {
   return !!(
     activeFileUploads?.length &&
-    !activeFileUploads.filter((attachmentUpload) => !attachmentUpload.error).every((attachmentUpload) => attachmentUpload.uploadComplete)
+    !activeFileUploads
+      .filter((attachmentUpload) => !attachmentUpload.error)
+      .every((attachmentUpload) => attachmentUpload.uploadComplete)
   );
 };
 

@@ -203,7 +203,9 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   const sendTextFieldRef = React.useRef<ITextField>(null);
 
   /* @conditional-compile-remove(file-sharing) */
-  const [attachmentUploadsPendingError, setAttachmentUploadsPendingError] = useState<SendBoxErrorBarError | undefined>(undefined);
+  const [attachmentUploadsPendingError, setAttachmentUploadsPendingError] = useState<SendBoxErrorBarError | undefined>(
+    undefined
+  );
 
   const sendMessageOnClick = (): void => {
     // don't send a message when disabled

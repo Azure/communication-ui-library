@@ -167,7 +167,8 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
 
   const attachmentCardGroupDescription = useMemo(
     () => () => {
-      const fileGroupLocaleString = props.strings?.attachmentCardGroupMessage ?? localeStrings.attachmentCardGroupMessage;
+      const fileGroupLocaleString =
+        props.strings?.attachmentCardGroupMessage ?? localeStrings.attachmentCardGroupMessage;
       /* @conditional-compile-remove(file-sharing) */
       return _formatString(fileGroupLocaleString, {
         attachmentCount: `${fileMetadata?.length ?? 0}`
