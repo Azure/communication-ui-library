@@ -23,7 +23,9 @@ export const richTextEditorStyle = (props: { minHeight: string; maxHeight: strin
  */
 export const richTextEditorWrapperStyle = (theme: Theme, addTopOffset: boolean, addRightOffset: boolean): string => {
   return mergeStyles({
-    padding: `${addTopOffset ? '0.5rem' : '0'} ${addRightOffset ? '0.75rem' : '0'} 0 0.75rem`,
+    paddingTop: `${addTopOffset ? '0.5rem' : '0'}`,
+    paddingInlineStart: `0.75rem`,
+    paddingInlineEnd: `${addRightOffset ? '0.75rem' : '0'}`,
     lineHeight: '1.25rem',
     maxWidth: '100%',
     color: theme.palette.neutralPrimary
