@@ -3824,7 +3824,6 @@ export interface RemoteParticipantState {
 export interface RemoteVideoStreamState {
     id: number;
     isAvailable: boolean;
-    // @beta
     isReceiving: boolean;
     mediaStreamType: MediaStreamType;
     streamSize?: {
