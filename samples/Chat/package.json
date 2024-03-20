@@ -5,6 +5,7 @@
   "description": "This is a sample application to show how the ACS Chat Web SDK can be used to build a group chat experience. The client-side application is a React based user interface which uses React Hooks for handling complex state while leveraging Microsoft Fluent UI for how things look.",
   "scripts": {
     "build": "rushx clean && concurrently --kill-others-on-fail \"rushx _typecheck\" \"rushx webpack\"",
+    "build:minify": "rushx clean && concurrently --kill-others-on-fail \"rushx _typecheck\" \"rushx webpack:minify\"",
     "clean": "rimraf dist",
     "package": "copyfiles -E -u 3 \"../Server/dist/**/*\" dist",
     "start": "concurrently \"cd ../Server && rushx start:dev\" \"rushx start:app\"",
@@ -20,6 +21,7 @@
     "lint:fix": "eslint */**/*.{ts,tsx} --fix",
     "lint:quiet": "eslint */**/*.{ts,tsx} --quiet",
     "webpack": "rushx _by-flavor \"webpack --mode=production --env production\"",
+    "webpack:minify": "rushx _by-flavor \"webpack --mode=production --env production --env minify\"",
     "_current-flavor": "echo You are running under COMMUNICATION_REACT_FLAVOR: && env-cmd -f ../../common/config/env/.env node -p process.env.COMMUNICATION_REACT_FLAVOR",
     "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell",
     "_stable-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/stable.env --use-shell",
