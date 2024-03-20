@@ -1,8 +1,8 @@
 {
   "type": "none",
   "area": "improvement",
-  "workstream": "Dependency updates",
-  "comment": "patch updates",
+  "workstream": "Vertical-gallery",
+  "comment": "Remove conditional compilation code comments",
   "packageName": "@azure/communication-react",
   "email": "dmceachern@microsoft.com",
   "dependentChangeType": "none"

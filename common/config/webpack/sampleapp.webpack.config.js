@@ -12,6 +12,11 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
     entry: {
       build: './src/index.tsx'
     },
+    optimization: env.minify ? {} : {
+      mangleExports: false,
+      minimize: false,
+      minimizer: []
+    },
     mode: env.production ? 'production' : 'development',
     ...(env.production || !env.development ? {} : { devtool: 'eval-source-map' }),
     resolve:  {
