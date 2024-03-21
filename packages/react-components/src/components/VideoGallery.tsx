@@ -297,7 +297,6 @@ export interface VideoGalleryProps {
    * @defaultValue 'horizontalBottom'
    */
   overflowGalleryPosition?: OverflowGalleryPosition;
-  /* @conditional-compile-remove(rooms) */
   /**
    * Determines the aspect ratio of local video tile in the video gallery.
    * @remarks 'followDeviceOrientation' will be responsive to the screen orientation and will change between 9:16 (portrait) and
@@ -373,7 +372,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onUnpinParticipant: onUnpinParticipantHandler,
     remoteVideoTileMenu = DEFAULT_REMOTE_VIDEO_TILE_MENU_OPTIONS,
     overflowGalleryPosition = 'horizontalBottom',
-    /* @conditional-compile-remove(rooms) */
     localVideoTileSize = 'followDeviceOrientation',
     /* @conditional-compile-remove(spotlight) */
     spotlightedParticipants,
@@ -442,7 +440,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   /**
    * Utility function for memoized rendering of LocalParticipant.
    */
-  const localVideoTile = useMemo((): JSX.Element /* @conditional-compile-remove(rooms) */ | undefined => {
+  const localVideoTile = useMemo((): JSX.Element | undefined => {
     if (localVideoTileSize === 'hidden') {
       return undefined;
     }

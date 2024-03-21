@@ -19,7 +19,6 @@ import { participantListContainerStyles, peoplePaneContainerStyle } from './styl
 import { convertContextualMenuItemToDrawerMenuItem } from './ConvertContextualMenuItemToDrawerMenuItem';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { CallCompositeStrings } from '../CallComposite';
-import { CommonCallAdapter } from '../CallComposite';
 import { AddPeopleButton } from './AddPeopleButton';
 /* @conditional-compile-remove(PSTN-calls) */
 import { PhoneNumberIdentifier } from '@azure/communication-common';
@@ -70,7 +69,7 @@ export const PeoplePaneContent = (props: {
   const alternateCallerId = adapter.getState().alternateCallerId;
 
   const participantListDefaultProps = usePropsFor(ParticipantList);
-  const removeButtonAllowed = hasRemoveParticipantsPermissionTrampoline(adapter);
+  const removeButtonAllowed = adapter.getState().call?.capabilitiesFeature?.capabilities.removeParticipant.isPresent;
   const setDrawerMenuItemsForParticipant: (participant?: ParticipantListParticipant) => void = useMemo(() => {
     return (participant?: ParticipantListParticipant) => {
       if (participant) {
@@ -197,18 +196,4 @@ const createDefaultContextualMenuItems = (
     });
   }
   return menuItems;
-};
-
-/**
- * @private
- */
-const hasRemoveParticipantsPermissionTrampoline = (adapter: CommonCallAdapter): boolean => {
-  /* @conditional-compile-remove(rooms) */
-  const role = adapter.getState().call?.role;
-  /* @conditional-compile-remove(rooms) */
-  const canRemove = role === 'Presenter' || role === 'Unknown' || role === undefined;
-  /* @conditional-compile-remove(rooms) */
-  return canRemove;
-  // Return true if stable.
-  return true;
 };

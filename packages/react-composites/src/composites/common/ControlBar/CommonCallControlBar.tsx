@@ -265,6 +265,9 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   /* @conditional-compile-remove(spotlight) */
   const showExitSpotlightButton = options?.exitSpotlightButton !== false;
 
+  const showCaptionsButton =
+    props.isCaptionsSupported && /* @conditional-compile-remove(acs-close-captions) */ isEnabled(options.captions);
+
   const showDesktopMoreButton =
     /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */ isEnabled(
       options?.moreButton
@@ -273,12 +276,10 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
       /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ isEnabled(
         options?.holdButton
       ) ||
-      /* @conditional-compile-remove(close-captions) */ props.isCaptionsSupported ||
+      /* @conditional-compile-remove(close-captions) */ showCaptionsButton ||
       props.onUserSetGalleryLayout);
 
-  /*@conditional-compile-remove(rooms) */
   const role = props.callAdapter.getState().call?.role;
-  /*@conditional-compile-remove(rooms) */
   const hideRaiseHandButtonInRoomsCall =
     props.callAdapter.getState().isRoomsCall && role && ['Consumer', 'Unknown'].includes(role);
   /*@conditional-compile-remove(reaction) */
@@ -363,16 +364,14 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                           />
                         )
                     }
-                    {!props.mobileView &&
-                      isEnabled(options.raiseHandButton) &&
-                      /* @conditional-compile-remove(rooms) */ !hideRaiseHandButtonInRoomsCall && (
-                        <RaiseHand
-                          displayType={options.displayType}
-                          styles={commonButtonStyles}
-                          /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-                          disabled={props.disableButtonsForHoldScreen || isDisabled(options.microphoneButton)}
-                        />
-                      )}
+                    {!props.mobileView && isEnabled(options.raiseHandButton) && !hideRaiseHandButtonInRoomsCall && (
+                      <RaiseHand
+                        displayType={options.displayType}
+                        styles={commonButtonStyles}
+                        /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+                        disabled={props.disableButtonsForHoldScreen || isDisabled(options.microphoneButton)}
+                      />
+                    )}
                     {showDtmfDialerButton(options) && props.onSetDialpadPage !== undefined && (
                       <DtmfDialpadButton
                         styles={commonButtonStyles}
@@ -438,7 +437,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         onClickShowDialpad={props.onClickShowDialpad}
                         callControls={props.callControls}
                         /* @conditional-compile-remove(close-captions) */
-                        isCaptionsSupported={props.isCaptionsSupported}
+                        isCaptionsSupported={showCaptionsButton}
                         /* @conditional-compile-remove(close-captions) */
                         onCaptionsSettingsClick={openCaptionsSettingsModal}
                         onUserSetOverflowGalleryPositionChange={props.onUserSetOverflowGalleryPositionChange}

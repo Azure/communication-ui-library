@@ -24,7 +24,6 @@ import { _formatString } from '@internal/acs-ui-common';
 import { useParticipantChangedAnnouncement } from '../utils/MediaGalleryUtils';
 import { RemoteVideoTileMenuOptions } from '../CallComposite';
 import { LocalVideoTileOptions } from '../CallComposite';
-/* @conditional-compile-remove(rooms) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
 /* @conditional-compile-remove(spotlight) */
 import { PromptProps } from './Prompt';
@@ -82,11 +81,8 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const cameraSwitcherCallback = useHandlers(LocalVideoCameraCycleButton);
   const announcerString = useParticipantChangedAnnouncement();
 
-  /* @conditional-compile-remove(rooms) */
   const adapter = useAdapter();
-  /* @conditional-compile-remove(rooms) */
   const userRole = adapter.getState().call?.role;
-  /* @conditional-compile-remove(rooms) */
   const isRoomsCall = adapter.getState().isRoomsCall;
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -181,7 +177,6 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         onRenderAvatar={onRenderAvatar}
         remoteVideoTileMenu={remoteVideoTileMenuOptions}
         overflowGalleryPosition={overflowGalleryPosition}
-        /* @conditional-compile-remove(rooms) */
         localVideoTileSize={
           props.localVideoTileOptions === false || userRole === 'Consumer' || (isRoomsCall && userRole === 'Unknown')
             ? 'hidden'
@@ -204,15 +199,12 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   }, [
     videoGalleryProps,
     props.isMobile,
-    /* @conditional-compile-remove(rooms) */
     props.localVideoTileOptions,
     cameraSwitcherProps,
     onRenderAvatar,
     remoteVideoTileMenuOptions,
     overflowGalleryPosition,
-    /* @conditional-compile-remove(rooms) */
     userRole,
-    /* @conditional-compile-remove(rooms) */
     isRoomsCall,
     containerAspectRatio,
 
