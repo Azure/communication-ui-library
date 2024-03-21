@@ -9,7 +9,7 @@ import { _AttachmentCardGroup } from './AttachmentCardGroup';
 // import { iconButtonClassName } from './styles/IconButton.styles';
 import { useMemo } from 'react';
 import { useLocaleFileCardStringsTrampoline } from './utils/common';
-import { AttachmentMetadata } from './AttachmentDownloadCards';
+import { AttachmentMetadata } from '../types/Attachment';
 
 /**
  * Strings of _AttachmentUploadCards that can be overridden.
@@ -70,7 +70,7 @@ export const _AttachmentUploadCards = (props: _AttachmentUploadCardsProps): JSX.
     <_AttachmentCardGroup>
       {files &&
         files
-          .filter((file) => !file.error)
+          .filter((file) => !(file.progress !== -1))
           .map((file) => (
             <_AttachmentCard
               file={file}

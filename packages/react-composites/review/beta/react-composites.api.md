@@ -9,6 +9,10 @@
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AttachmentDownloadOptions } from '@internal/react-components';
 import { AttachmentMetadata } from '@internal/react-components';
+import { AttachmentOptions } from '@internal/react-components';
+import { AttachmentUploadHandler } from '@internal/react-components';
+import { AttachmentUploadManager } from '@internal/react-components';
+import { AttachmentUploadOptions } from '@internal/react-components';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import type { BackgroundBlurConfig } from '@azure/communication-calling';
 import type { BackgroundReplacementConfig } from '@azure/communication-calling';
@@ -96,6 +100,10 @@ export interface AdapterState<TState> {
     onStateChange(handler: (state: TState) => void): void;
 }
 
+export { AttachmentDownloadOptions }
+
+export { AttachmentOptions }
+
 // @beta (undocumented)
 export interface AttachmentUploadAdapter {
     // (undocumented)
@@ -114,30 +122,11 @@ export interface AttachmentUploadAdapter {
     updateAttachmentUploadProgress: (id: string, progress: number) => void;
 }
 
-// @beta
-export type AttachmentUploadError = {
-    message: string;
-    timestamp: number;
-};
+export { AttachmentUploadHandler }
 
-// @beta
-export type AttachmentUploadHandler = (attachmentUploads: AttachmentUploadManager[]) => void;
+export { AttachmentUploadManager }
 
-// @beta
-export interface AttachmentUploadManager {
-    file?: File;
-    id: string;
-    notifyUploadCompleted: (metadata: AttachmentMetadata) => void;
-    notifyUploadFailed: (message: string) => void;
-    notifyUploadProgressChanged: (value: number) => void;
-}
-
-// @beta (undocumented)
-export interface AttachmentUploadOptions {
-    acceptedMimeTypes?: string[];
-    canUploadMultiple?: boolean;
-    handler: AttachmentUploadHandler;
-}
+export { AttachmentUploadOptions }
 
 // @beta
 export type AttachmentUploadsUiState = Record<string, AttachmentMetadata>;
@@ -1041,7 +1030,7 @@ export type CallWithChatCompositeIcons = {
 // @public
 export type CallWithChatCompositeOptions = {
     callControls?: boolean | CallWithChatControlOptions;
-    fileSharingOptions?: FileSharingOptions;
+    attachmentOptions?: AttachmentOptions;
     deviceChecks?: DeviceCheckOptions;
     onPermissionsTroubleshootingClick?: (permissionsState: {
         camera: PermissionState;
@@ -1245,7 +1234,7 @@ export type ChatCompositeOptions = {
     participantPane?: boolean;
     topic?: boolean;
     autoFocus?: 'sendBoxTextField';
-    fileSharingOptions?: FileSharingOptions;
+    attachmentOptions?: AttachmentOptions;
     richTextEditor?: boolean | RichTextEditorOptions;
 };
 
@@ -1700,14 +1689,6 @@ export interface _FakeChatAdapters {
         model: Model;
         threadId: string;
     };
-}
-
-// @beta (undocumented)
-export interface FileSharingOptions {
-    // (undocumented)
-    downloadOptions?: AttachmentDownloadOptions;
-    // (undocumented)
-    uploadOptions?: AttachmentUploadOptions;
 }
 
 // @public

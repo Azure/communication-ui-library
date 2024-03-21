@@ -17,7 +17,7 @@ import { hasCompletedAttachmentUploads } from '../utils/SendBoxUtils';
 import { RichTextEditorComponentRef } from './RichTextEditor';
 import { useTheme } from '../../theming';
 import { richTextActionButtonsStyle, sendBoxRichTextEditorStyle } from '../styles/RichTextEditor.styles';
-import { AttachmentMetadata } from '../AttachmentDownloadCards';
+import { AttachmentMetadata } from '../../types/Attachment';
 
 /**
  * Strings of {@link RichTextSendBox} that can be overridden.
@@ -193,7 +193,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       /* @conditional-compile-remove(file-sharing) */
       !!fileUploadsPendingError ||
       /* @conditional-compile-remove(file-sharing) */
-      !!activeFileUploads?.filter((fileUpload) => fileUpload.error).pop()?.error
+      !!activeFileUploads?.filter((fileUpload) => fileUpload.uploadError).pop()?.uploadError
     );
   }, [
     /* @conditional-compile-remove(file-sharing) */
@@ -227,7 +227,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       /* @conditional-compile-remove(file-sharing) */
       fileUploadsPendingError: fileUploadsPendingError,
       /* @conditional-compile-remove(file-sharing) */
-      fileUploadError: activeFileUploads?.filter((fileUpload) => fileUpload.error).pop()?.error,
+      fileUploadError: activeFileUploads?.filter((fileUpload) => fileUpload.uploadError).pop()?.uploadError,
       systemMessage: systemMessage,
       textTooLongMessage: contentTooLongMessage
     };

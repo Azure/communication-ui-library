@@ -11,7 +11,8 @@ import { _AttachmentCardGroup } from './AttachmentCardGroup';
 // import { iconButtonClassName } from './styles/IconButton.styles';
 import { _formatString } from '@internal/acs-ui-common';
 import { ArrowDownload24Filled /*, Open24Filled, Open24Regular*/ } from '@fluentui/react-icons';
-import { SendBoxErrorBarError } from './SendBoxErrorBar';
+import { ChatMessage } from '../types';
+import { AttachmentMenuAction, AttachmentMetadata } from '../types/Attachment';
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
@@ -24,51 +25,6 @@ export type ChatAttachmentType =
   | /* @conditional-compile-remove(file-sharing) */ 'file';
 
 /**
- * Metadata containing basic information about the uploaded file.
- *
- * @beta
- */
-export interface AttachmentMetadata {
-  /**
-   * Extension hint, useful for rendering a specific icon.
-   * An unknown or empty extension will be rendered as a generic icon.
-   * Example: `pdf`
-   */
-  extension: string;
-  /**
-   * Unique ID of the file.
-   */
-  id: string;
-  /**
-   * File name to be displayed.
-   */
-  name: string;
-  /**
-   * Download URL for the file.
-   */
-  url?: string;
-  /* @conditional-compile-remove(file-sharing) */
-  /*
-   * Optional dictionary of meta data associated with the file.
-   */
-  payload?: Record<string, string>;
-
-  /**
-   * A number between 0 and 1 indicating the progress of the upload.
-   * This is unrelated to the `uploadComplete` property.
-   * It is only used to show the progress of the upload.
-   * Progress of 1 doesn't mark the upload as complete, set the `uploadComplete`
-   * property to true to mark the upload as complete.
-   */
-  progress?: number;
-
-  /**
-   * Error to be displayed to the user if the upload fails.
-   */
-  error?: SendBoxErrorBarError;
-}
-
-/**
  * Strings of _AttachmentDownloadCards that can be overridden.
  *
  * @internal
@@ -77,22 +33,6 @@ export interface _AttachmentDownloadCardsStrings {
   /** Aria label to notify user when focus is on file download button. */
   downloadFile: string;
   fileCardGroupMessage: string;
-}
-
-/**
- * @beta
- */
-export interface AttachmentDownloadOptions {
-  menuActions: AttachmentMenuAction[];
-}
-
-/**
- * @beta
- */
-export interface AttachmentMenuAction {
-  name: string;
-  icon: JSX.Element;
-  onClick: (attachment: AttachmentMetadata) => void;
 }
 
 /**
@@ -110,6 +50,7 @@ export const defaultAttachmentMenuAction: AttachmentMenuAction = {
  * @internal
  */
 export interface _AttachmentDownloadCardsProps {
+  message?: ChatMessage;
   /**
    * A chat message metadata that includes file metadata
    */
@@ -117,7 +58,7 @@ export interface _AttachmentDownloadCardsProps {
   /**
    * Optional callback to handle file download
    */
-  menuActions?: AttachmentMenuAction[];
+  actionForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
   /**
    * Optional callback that runs if downloadHandler returns {@link AttachmentDownloadError}.
    */
@@ -138,7 +79,7 @@ export interface _AttachmentDownloadCardsProps {
  * @internal
  */
 export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): JSX.Element => {
-  const { attachment } = props;
+  const { attachment, message } = props;
   // const [showSpinner, setShowSpinner] = useState(false);
   const localeStrings = useLocaleStringsTrampoline();
 
@@ -187,7 +128,7 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
           attachment
             .filter((attachment) => {
               /* @conditional-compile-remove(file-sharing) */
-              return attachment.payload?.teamsFileAttachment !== 'true';
+              return attachment ? attachment.payload?.teamsFileAttachment !== 'true' : true;
               return true;
             })
             .map((file) => file as unknown as AttachmentMetadata)
@@ -195,7 +136,7 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
               <_AttachmentCard
                 file={file}
                 key={file.id}
-                menuActions={props.menuActions ?? [defaultAttachmentMenuAction]}
+                menuActions={props.actionForAttachment?.(file, message) ?? [defaultAttachmentMenuAction]}
                 onDownloadErrorMessage={props.onDownloadErrorMessage}
               />
             ))}

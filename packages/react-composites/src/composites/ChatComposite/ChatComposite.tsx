@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 import { CommunicationParticipant, MessageRenderer, MessageProps } from '@internal/react-components';
+/* @conditional-compile-remove(file-sharing) */
+import { AttachmentOptions } from '@internal/react-components';
 import React from 'react';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { ChatCompositeIcons } from '../common/icons';
@@ -9,8 +11,6 @@ import { ChatAdapter } from './adapter/ChatAdapter';
 import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
 import { chatScreenContainerStyle } from './styles/Chat.styles';
 import { ChatScreen } from './ChatScreen';
-/* @conditional-compile-remove(file-sharing) */
-import { FileSharingOptions } from './ChatScreen';
 
 /**
  * Props for {@link ChatComposite}.
@@ -83,7 +83,7 @@ export type ChatCompositeOptions = {
    * If undefined, file sharing feature will be disabled.
    * @beta
    */
-  fileSharingOptions?: FileSharingOptions;
+  attachmentOptions?: AttachmentOptions;
   /* @conditional-compile-remove(rich-text-editor) */
   /**
    * Properties for configuring the richTextEditor feature.
@@ -135,7 +135,7 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
             onRenderMessage={onRenderMessage}
             onFetchParticipantMenuItems={onFetchParticipantMenuItems}
             /* @conditional-compile-remove(file-sharing) */
-            fileSharingOptions={options?.fileSharingOptions}
+            attachmentOptions={options?.attachmentOptions}
           />
         </ChatAdapterProvider>
       </BaseProvider>

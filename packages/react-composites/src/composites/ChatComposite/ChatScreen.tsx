@@ -13,7 +13,6 @@ import {
   MessageRenderer,
   MessageThread,
   MessageThreadStyles,
-  AttachmentDownloadOptions,
   ParticipantMenuItemsCallback,
   SendBoxStylesProps,
   TypingIndicator,
@@ -29,7 +28,6 @@ import { AvatarPersona, AvatarPersonaDataCallback, AvatarPersonaProps } from '..
 import { useAdapter } from './adapter/ChatAdapterProvider';
 import { ChatCompositeOptions } from './ChatComposite';
 import { ChatHeader, getHeaderProps } from './ChatHeader';
-import { AttachmentUploadButtonWrapper as AttachmentUploadButton, AttachmentUploadOptions } from './file-sharing';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
 
@@ -54,6 +52,8 @@ import { ImageOverlay } from '@internal/react-components';
 /* @conditional-compile-remove(image-overlay) */
 import { InlineImage } from '@internal/react-components';
 import { SendBox } from '../common/SendBox';
+/* @conditional-compile-remove(file-sharing) */
+import { AttachmentOptions } from '@internal/react-components';
 import { ResourceFetchResult } from '@internal/chat-stateful-client';
 
 /**
@@ -66,7 +66,8 @@ export type ChatScreenProps = {
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   styles?: ChatScreenStyles;
-  fileSharingOptions?: FileSharingOptions;
+  /* @conditional-compile-remove(file-sharing) */
+  attachmentOptions?: AttachmentOptions;
   formFactor?: 'desktop' | 'mobile';
 };
 
@@ -78,14 +79,6 @@ export type ChatScreenStyles = {
   sendBox?: SendBoxStylesProps;
   typingIndicator?: TypingIndicatorStylesProps;
 };
-
-/**
- * @beta
- */
-export interface FileSharingOptions {
-  uploadOptions?: AttachmentUploadOptions;
-  downloadOptions?: AttachmentDownloadOptions;
-}
 
 /**
  * @private
@@ -110,7 +103,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     onRenderTypingIndicator,
     options,
     styles,
-    fileSharingOptions,
+    /* @conditional-compile-remove(file-sharing) */
+    attachmentOptions: attachmentOptions,
     formFactor
   } = props;
 
@@ -204,32 +198,21 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   const userId = toFlatCommunicationIdentifier(adapter.getState().userId);
 
-  const attachmentUploadButtonOnChange = useCallback(
-    (files: FileList | null): void => {
-      if (!files) {
-        return;
-      }
-
-      /* @conditional-compile-remove(file-sharing) */
-      const attachmentUploads = adapter.registeractiveAttachmentUploads(Array.from(files));
-      /* @conditional-compile-remove(file-sharing) */
-      fileSharingOptions?.uploadOptions?.handler(attachmentUploads);
-    },
-    [adapter, fileSharingOptions]
-  );
-
   /* @conditional-compile-remove(file-sharing) */
   const onRenderAttachmentDownloads = useCallback(
     (userId: string, message: ChatMessage) => (
       <_AttachmentDownloadCards
+        message={message}
+        /* @conditional-compile-remove(file-sharing) */
         attachment={message.files || []}
-        menuActions={fileSharingOptions?.downloadOptions?.menuActions}
+        /* @conditional-compile-remove(file-sharing) */
+        actionForAttachment={attachmentOptions?.downloadOptions?.actionForAttachment}
         onDownloadErrorMessage={(errorMessage: string) => {
           setDownloadErrorMessage(errorMessage);
         }}
       />
     ),
-    [fileSharingOptions?.downloadOptions?.menuActions]
+    [attachmentOptions?.downloadOptions?.actionForAttachment]
   );
 
   /* @conditional-compile-remove(image-overlay) */
@@ -356,23 +339,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [overlayImageItem?.attachmentId]
   );
 
-  const AttachFileButton = useCallback(() => {
-    if (!fileSharingOptions?.uploadOptions?.handler) {
-      return null;
-    }
-    return (
-      <AttachmentUploadButton
-        acceptedMimeTypes={fileSharingOptions?.uploadOptions?.acceptedMimeTypes}
-        canUploadMultiple={fileSharingOptions?.uploadOptions?.canUploadMultiple}
-        onChange={attachmentUploadButtonOnChange}
-      />
-    );
-  }, [
-    fileSharingOptions?.uploadOptions?.acceptedMimeTypes,
-    fileSharingOptions?.uploadOptions?.canUploadMultiple,
-    fileSharingOptions?.uploadOptions?.handler,
-    attachmentUploadButtonOnChange
-  ]);
   return (
     <Stack className={chatContainer} grow>
       {options?.topic !== false && <ChatHeader {...headerProps} />}
@@ -397,7 +363,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             /* @conditional-compile-remove(image-overlay) */
             inlineImageOptions={inlineImageOptions}
             /* @conditional-compile-remove(file-sharing) */
-            attachmentMenuActions={fileSharingOptions?.downloadOptions?.menuActions}
+            attachmentOptions={attachmentOptions}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
           />
@@ -410,11 +376,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
               )}
             </div>
             <Stack horizontal={formFactor === 'mobile'}>
-              {formFactor === 'mobile' && (
-                <Stack verticalAlign="center">
-                  <AttachFileButton />
-                </Stack>
-              )}
+              {formFactor === 'mobile' && <Stack verticalAlign="center"></Stack>}
               <Stack grow>
                 <SendBox
                   options={options}
@@ -423,7 +385,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                   adapter={adapter}
                 />
               </Stack>
-              {formFactor !== 'mobile' && <AttachFileButton />}
             </Stack>
           </Stack>
         </Stack>

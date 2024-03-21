@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { AttachmentMetadata } from '@internal/react-components';
-import { AttachmentUploadManager } from '../file-sharing';
+/* @conditional-compile-remove(file-sharing) */
+import { AttachmentMetadata, AttachmentUploadManager } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { produce } from 'immer';
 /* @conditional-compile-remove(file-sharing) */
@@ -12,12 +12,14 @@ import { ChatContext } from './AzureCommunicationChatAdapter';
 /* @conditional-compile-remove(file-sharing) */
 import { ChatAdapterState } from './ChatAdapter';
 
+/* @conditional-compile-remove(file-sharing) */
 /**
  * A record containing {@link AttachmentMetadata} mapped to unique ids.
  * @beta
  */
 export type AttachmentUploadsUiState = Record<string, AttachmentMetadata>;
 
+/* @conditional-compile-remove(file-sharing) */
 /**
  * @beta
  */

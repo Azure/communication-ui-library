@@ -86,8 +86,10 @@ export const _AttachmentDownloadCards: (props: _AttachmentDownloadCardsProps) =>
 
 // @internal (undocumented)
 export interface _AttachmentDownloadCardsProps {
+    actionForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
     attachment?: AttachmentMetadata[];
-    menuActions?: AttachmentMenuAction[];
+    // (undocumented)
+    message?: ChatMessage;
     onDownloadErrorMessage?: (errMsg: string) => void;
     strings?: _AttachmentDownloadCardsStrings;
 }
@@ -102,7 +104,7 @@ export interface _AttachmentDownloadCardsStrings {
 // @beta (undocumented)
 export interface AttachmentDownloadOptions {
     // (undocumented)
-    menuActions: AttachmentMenuAction[];
+    actionForAttachment: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
 }
 
 // @beta (undocumented)
@@ -117,14 +119,23 @@ export interface AttachmentMenuAction {
 
 // @beta
 export interface AttachmentMetadata {
-    error?: SendBoxErrorBarError;
     extension: string;
     id: string;
     name: string;
     // (undocumented)
     payload?: Record<string, string>;
     progress?: number;
+    // (undocumented)
+    uploadError?: Error;
     url?: string;
+}
+
+// @beta (undocumented)
+export interface AttachmentOptions {
+    // (undocumented)
+    downloadOptions?: AttachmentDownloadOptions;
+    // (undocumented)
+    uploadOptions?: AttachmentUploadOptions;
 }
 
 // @internal
@@ -132,6 +143,25 @@ export interface _AttachmentUploadCardsStrings {
     removeFile: string;
     uploadCompleted: string;
     uploading: string;
+}
+
+// @beta
+export type AttachmentUploadHandler = (attachmentUploads: AttachmentUploadManager[]) => void;
+
+// @beta
+export interface AttachmentUploadManager {
+    file?: File;
+    id: string;
+    notifyUploadCompleted: (metadata: AttachmentMetadata) => void;
+    notifyUploadFailed: (message: string) => void;
+    notifyUploadProgressChanged: (value: number) => void;
+}
+
+// @beta (undocumented)
+export interface AttachmentUploadOptions {
+    acceptedMimeTypes?: string[];
+    canUploadMultiple?: boolean;
+    handler: AttachmentUploadHandler;
 }
 
 // @internal
@@ -1572,7 +1602,7 @@ export type MessageThreadProps = {
     onSendMessage?: (content: string) => Promise<void>;
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
-    attachmentMenuActions?: AttachmentMenuAction[];
+    attachmentOptions?: AttachmentOptions;
     onDisplayDateTimeString?: (messageDate: Date) => string;
     mentionOptions?: MentionOptions;
     inlineImageOptions?: InlineImageOptions;
@@ -2081,6 +2111,8 @@ export interface SendBoxProps {
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
     onSendMessage?: (content: string) => Promise<void>;
     onTyping?: () => Promise<void>;
+    // (undocumented)
+    sendBoxStatusMessage?: string;
     strings?: Partial<SendBoxStrings>;
     styles?: SendBoxStylesProps;
     supportNewline?: boolean;

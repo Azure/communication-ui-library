@@ -7,6 +7,7 @@ import { Common, fromFlatCommunicationIdentifier } from '@internal/acs-ui-common
 import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { ChatMessage, ChatMessageReadReceipt, ChatThreadClient, SendMessageOptions } from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
+/* @conditional-compile-remove(file-sharing) */
 import { AttachmentMetadata } from '@internal/react-components';
 
 /**
@@ -31,6 +32,7 @@ export type ChatHandlers = {
     options?: {
       /* @conditional-compile-remove(file-sharing) */
       metadata?: Record<string, string>;
+      /* @conditional-compile-remove(file-sharing) */
       attachmentMetadata?: AttachmentMetadata[];
     }
   ) => Promise<void>;
@@ -64,10 +66,12 @@ export const createDefaultChatHandlers = memoizeOne(
         content: string,
         options?: {
           metadata?: Record<string, string>;
+          /* @conditional-compile-remove(file-sharing) */
           attachmentMetadata?: AttachmentMetadata[];
         }
       ) => {
         const updatedMetadata = options?.metadata ? { ...options.metadata } : {};
+        /* @conditional-compile-remove(file-sharing) */
         updatedMetadata.fileSharingMetadata = JSON.stringify(options?.attachmentMetadata || []);
         await chatThreadClient.updateMessage(messageId, { content, metadata: updatedMetadata });
       },

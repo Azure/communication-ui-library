@@ -57,7 +57,7 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
     /* @conditional-compile-remove(mention) */
     mentionOptions,
     /* @conditional-compile-remove(file-sharing) */
-    attachmentMenuAction,
+    actionForAttachment,
     userId,
     /* @conditional-compile-remove(file-sharing) */
     onRenderAttachmentDownloads,
@@ -102,7 +102,7 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
             /* @conditional-compile-remove(mention) */
             mentionOptions={mentionOptions}
             /* @conditional-compile-remove(file-sharing) */
-            attachmentMenuAction={attachmentMenuAction}
+            actionForAttachment={actionForAttachment}
           />
         );
       }
@@ -123,7 +123,7 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
       /* @conditional-compile-remove(mention) */
       mentionOptions,
       /* @conditional-compile-remove(file-sharing) */
-      attachmentMenuAction,
+      actionForAttachment,
       // eslint-disable-next-line react-hooks/exhaustive-deps
       new Date().toDateString()
     ]

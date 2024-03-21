@@ -45,9 +45,7 @@ import { AzureCommunicationAttachmentUploadAdapter } from './AzureCommunicationA
 import { useEffect, useRef, useState } from 'react';
 import { _isValidIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(file-sharing) */
-import { AttachmentMetadata } from '@internal/react-components';
-/* @conditional-compile-remove(file-sharing) */
-import { AttachmentUploadManager } from '../file-sharing';
+import { AttachmentMetadata, AttachmentUploadManager } from '@internal/react-components';
 
 /**
  * Context of Chat, which is a centralized context for all state updates

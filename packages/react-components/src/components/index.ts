@@ -48,7 +48,7 @@ export type { ImageOverlayProps } from './ImageOverlay';
 export type { InlineImageOptions, InlineImage } from './ChatMessage/ChatMessageContent';
 
 /* @conditional-compile-remove(file-sharing) */
-export type { AttachmentMenuAction, AttachmentDownloadOptions } from './AttachmentDownloadCards';
+export * from '../types/Attachment';
 
 export { MessageStatusIndicator } from './MessageStatusIndicator';
 export type { MessageStatusIndicatorProps, MessageStatusIndicatorStrings } from './MessageStatusIndicator';

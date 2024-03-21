@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(file-sharing) */
-import { AttachmentMetadata } from '../AttachmentDownloadCards';
+import { AttachmentMetadata } from '../../types/Attachment';
 
 /**
  * @private
@@ -18,7 +18,7 @@ export const hasIncompleteAttachmentUploads = (activeAttachmentUploads: Attachme
   return !!(
     activeAttachmentUploads?.length &&
     !activeAttachmentUploads
-      .filter((attachmentUpload) => !attachmentUpload.error)
+      .filter((attachmentUpload) => !attachmentUpload.uploadError)
       .every((attachmentUpload) => attachmentUpload.progress === 1)
   );
 };
@@ -28,7 +28,7 @@ export const hasIncompleteAttachmentUploads = (activeAttachmentUploads: Attachme
  * @private
  */
 export const hasCompletedAttachmentUploads = (activeAttachmentUploads: AttachmentMetadata[] | undefined): boolean => {
-  return !!activeAttachmentUploads?.find((file) => !file.error);
+  return !!activeAttachmentUploads?.find((file) => !file.uploadError);
 };
 
 /**

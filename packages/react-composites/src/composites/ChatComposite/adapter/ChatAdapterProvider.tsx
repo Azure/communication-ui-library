@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 import React, { createContext, useContext } from 'react';
-import { AttachmentUploadManager } from '../file-sharing';
+/* @conditional-compile-remove(file-sharing) */
+import { AttachmentUploadManager } from '@internal/react-components';
+/* @conditional-compile-remove(file-sharing) */
 import { AttachmentUploadAdapter } from './AzureCommunicationAttachmentUploadAdapter';
 import { ChatAdapter } from './ChatAdapter';
 
@@ -35,6 +37,7 @@ export const useAdapter = (): ChatAdapter => {
   return adapter;
 };
 
+/* @conditional-compile-remove(file-sharing) */
 /**
  * @private
  */

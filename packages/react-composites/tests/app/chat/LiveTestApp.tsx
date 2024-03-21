@@ -130,7 +130,7 @@ export const LiveTestApp = (): JSX.Element => {
             locale={useFrLocale ? COMPOSITE_LOCALE_FR_FR : undefined}
             options={{
               participantPane: showParticipantPane,
-              fileSharingOptions: useFileSharing
+              attachmentOptions: useFileSharing
                 ? {
                     downloadOptions: {
                       menuActions: [defaultAttachmentMenuAction]

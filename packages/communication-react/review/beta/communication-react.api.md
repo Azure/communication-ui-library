@@ -142,7 +142,7 @@ export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : fa
 // @beta (undocumented)
 export interface AttachmentDownloadOptions {
     // (undocumented)
-    menuActions: AttachmentMenuAction[];
+    actionForAttachment: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
 }
 
 // @beta (undocumented)
@@ -157,14 +157,23 @@ export interface AttachmentMenuAction {
 
 // @beta
 export interface AttachmentMetadata {
-    error?: SendBoxErrorBarError;
     extension: string;
     id: string;
     name: string;
     // (undocumented)
     payload?: Record<string, string>;
     progress?: number;
+    // (undocumented)
+    uploadError?: Error;
     url?: string;
+}
+
+// @beta (undocumented)
+export interface AttachmentOptions {
+    // (undocumented)
+    downloadOptions?: AttachmentDownloadOptions;
+    // (undocumented)
+    uploadOptions?: AttachmentUploadOptions;
 }
 
 // @beta (undocumented)
@@ -184,12 +193,6 @@ export interface AttachmentUploadAdapter {
     // (undocumented)
     updateAttachmentUploadProgress: (id: string, progress: number) => void;
 }
-
-// @beta
-export type AttachmentUploadError = {
-    message: string;
-    timestamp: number;
-};
 
 // @beta
 export type AttachmentUploadHandler = (attachmentUploads: AttachmentUploadManager[]) => void;
@@ -1354,7 +1357,7 @@ export type CallWithChatCompositeIcons = {
 // @public
 export type CallWithChatCompositeOptions = {
     callControls?: boolean | CallWithChatControlOptions;
-    fileSharingOptions?: FileSharingOptions;
+    attachmentOptions?: AttachmentOptions;
     deviceChecks?: DeviceCheckOptions;
     onPermissionsTroubleshootingClick?: (permissionsState: {
         camera: PermissionState;
@@ -1770,7 +1773,7 @@ export type ChatCompositeOptions = {
     participantPane?: boolean;
     topic?: boolean;
     autoFocus?: 'sendBoxTextField';
-    fileSharingOptions?: FileSharingOptions;
+    attachmentOptions?: AttachmentOptions;
     richTextEditor?: boolean | RichTextEditorOptions;
 };
 
@@ -2921,14 +2924,6 @@ export interface ErrorBarStrings {
 // @public
 export type ErrorType = keyof ErrorBarStrings;
 
-// @beta (undocumented)
-export interface FileSharingOptions {
-    // (undocumented)
-    downloadOptions?: AttachmentDownloadOptions;
-    // (undocumented)
-    uploadOptions?: AttachmentUploadOptions;
-}
-
 // @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;
 
@@ -3325,7 +3320,7 @@ export type MessageThreadProps = {
     onSendMessage?: (content: string) => Promise<void>;
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
-    attachmentMenuActions?: AttachmentMenuAction[];
+    attachmentOptions?: AttachmentOptions;
     onDisplayDateTimeString?: (messageDate: Date) => string;
     mentionOptions?: MentionOptions;
     inlineImageOptions?: InlineImageOptions;
@@ -3921,6 +3916,8 @@ export interface SendBoxProps {
     onRenderSystemMessage?: (systemMessage: string | undefined) => React_2.ReactElement;
     onSendMessage?: (content: string) => Promise<void>;
     onTyping?: () => Promise<void>;
+    // (undocumented)
+    sendBoxStatusMessage?: string;
     strings?: Partial<SendBoxStrings>;
     styles?: SendBoxStylesProps;
     supportNewline?: boolean;

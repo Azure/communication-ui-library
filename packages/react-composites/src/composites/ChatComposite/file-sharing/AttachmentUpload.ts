@@ -1,37 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+/* @conditional-compile-remove(file-sharing) */
 import { EventEmitter } from 'events';
+/* @conditional-compile-remove(file-sharing) */
 import { nanoid } from 'nanoid';
+/* @conditional-compile-remove(file-sharing) */
 import { _MAX_EVENT_LISTENERS } from '@internal/acs-ui-common';
-import { AttachmentMetadata } from '@internal/react-components';
-import { AttachmentUploadHandler } from './AttachmentUploadHandler';
+/* @conditional-compile-remove(file-sharing) */
+import { AttachmentMetadata, AttachmentUploadManager } from '@internal/react-components';
 
-/**
- * @beta
- */
-export interface AttachmentUploadOptions {
-  /**
-   * A string containing the comma separated list of accepted file types.
-   * Similar to the `accept` attribute of the `<input type="file" />` element.
-   * Accepts any type of file if not specified.
-   * @beta
-   */
-  acceptedMimeTypes?: string[];
-  /**
-   * Allows multiple files to be selected if set to `true`.
-   * Similar to the `multiple` attribute of the `<input type="file" />` element.
-   * @defaultValue false
-   * @beta
-   */
-  canUploadMultiple?: boolean;
-  /**
-   * A function of type {@link AttachmentUploadHandler} for handling file uploads.
-   * @beta
-   */
-  handler: AttachmentUploadHandler;
-}
-
+/* @conditional-compile-remove(file-sharing) */
 /**
  * @beta
  * Error message to be displayed to the user if the upload fails.
@@ -41,39 +20,7 @@ export type AttachmentUploadError = {
   timestamp: number;
 };
 
-/**
- * A wrapper object for a file that is being uploaded.
- * Allows managing file uploads by providing common functions for updating the
- * upload progress, canceling an upload, completing an upload etc.
- * @beta
- */
-export interface AttachmentUploadManager {
-  /**
-   * Unique identifier for the file upload.
-   */
-  id: string;
-  /**
-   * HTML {@link File} object for the uploaded file.
-   */
-  file?: File;
-  /**
-   * Update the progress of the upload.
-   * @param value - number between 0 and 1
-   */
-  notifyUploadProgressChanged: (value: number) => void;
-  /**
-   * Mark the upload as complete.
-   * Requires the `metadata` param containing uploaded file information.
-   * @param metadata - {@link AttachmentMetadata}
-   */
-  notifyUploadCompleted: (metadata: AttachmentMetadata) => void;
-  /**
-   * Mark the upload as failed.
-   * @param message - An error message that can be displayed to the user.
-   */
-  notifyUploadFailed: (message: string) => void;
-}
-
+/* @conditional-compile-remove(file-sharing) */
 /**
  * A wrapper object for a file that is being uploaded.
  * Provides common functions for updating the upload progress, canceling an upload etc.
@@ -142,34 +89,42 @@ export class AttachmentUpload implements AttachmentUploadManager, AttachmentUplo
   }
 }
 
+/* @conditional-compile-remove(file-sharing) */
 /**
  * Events emitted by the AttachmentUpload class.
  * @beta
  */
 type AttachmentUploadEvents = 'uploadProgressChange' | 'uploadComplete' | 'uploadFail';
 
+/* @conditional-compile-remove(file-sharing) */
 /**
  * Events listeners supported by the AttachmentUpload class.
  * @beta
  */
 type AttachmentUploadEventListener = UploadProgressListener | UploadCompleteListener | UploadFailedListener;
 
+/* @conditional-compile-remove(file-sharing) */
 /**
  * Listener for `uploadProgressed` event.
  * @beta
  */
 type UploadProgressListener = (id: string, value: number) => void;
+
+/* @conditional-compile-remove(file-sharing) */
 /**
  * Listener for `uploadComplete` event.
  * @beta
  */
 type UploadCompleteListener = (id: string, metadata: AttachmentMetadata) => void;
+
+/* @conditional-compile-remove(file-sharing) */
 /**
  * Listener for `uploadFailed` event.
  * @beta
  */
 type UploadFailedListener = (id: string, message: string) => void;
 
+/* @conditional-compile-remove(file-sharing) */
 /**
  * @beta
  */

@@ -27,7 +27,9 @@ import { MessageThreadStrings } from '../MessageThread';
 import { chatMessageActionMenuProps } from './ChatMessageActionMenu';
 import { ComponentSlotStyle, OnRenderAvatarCallback } from '../../types';
 /* @conditional-compile-remove(file-sharing) */
-import { AttachmentMenuAction, _AttachmentDownloadCards } from '../AttachmentDownloadCards';
+import { _AttachmentDownloadCards } from '../AttachmentDownloadCards';
+/* @conditional-compile-remove(file-sharing) */
+import { AttachmentMenuAction, AttachmentMetadata } from '../../types/Attachment';
 import { ComponentLocale, useLocale } from '../../localization';
 /* @conditional-compile-remove(mention) */
 import { MentionDisplayOptions } from '../MentionPopover';
@@ -62,13 +64,11 @@ type ChatMessageComponentAsMessageBubbleProps = {
    * Whether to overlap avatar and message when the view is width constrained.
    */
   shouldOverlapAvatarAndMessage: boolean;
-  /* @conditional-compile-remove(file-sharing) */
   /**
    * Optional callback to render uploaded files in the message component.
    */
-  onRenderAttachmentDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
   /* @conditional-compile-remove(file-sharing) */
-  attachmentMenuAction?: AttachmentMenuAction[];
+  onRenderAttachmentDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
   remoteParticipantsCount?: number;
   onActionButtonClick: (
     message: ChatMessage,
@@ -98,6 +98,8 @@ type ChatMessageComponentAsMessageBubbleProps = {
    * @beta
    */
   inlineImageOptions?: InlineImageOptions;
+  /* @conditional-compile-remove(file-sharing) */
+  actionForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
 };
 
 const generateDefaultTimestamp = (
@@ -148,7 +150,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     showMessageStatus,
     messageStatus,
     /* @conditional-compile-remove(file-sharing) */
-    attachmentMenuAction,
+    actionForAttachment,
     /* @conditional-compile-remove(image-overlay) */
     inlineImageOptions,
     shouldOverlapAvatarAndMessage
@@ -207,10 +209,11 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     /* @conditional-compile-remove(file-sharing) */
     return (
       <_AttachmentDownloadCards
+        message={message as ChatMessage}
         /* @conditional-compile-remove(file-sharing) */
         attachment={(message as ChatMessage).files || []}
         /* @conditional-compile-remove(file-sharing) */
-        menuActions={attachmentMenuAction}
+        actionForAttachment={actionForAttachment}
         /* @conditional-compile-remove(file-sharing) */
         strings={{ downloadFile: strings.downloadFile, fileCardGroupMessage: strings.fileCardGroupMessage }}
       />
@@ -219,7 +222,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     message,
     strings,
     /* @conditional-compile-remove(file-sharing) */
-    attachmentMenuAction
+    actionForAttachment
   ]);
 
   const editedOn = 'editedOn' in message ? message.editedOn : undefined;

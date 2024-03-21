@@ -36,13 +36,13 @@ export * from './Strings';
 
 /* @conditional-compile-remove(file-sharing) */
 export type {
+  AttachmentOptions,
+  AttachmentDownloadOptions,
   AttachmentUploadOptions,
   AttachmentUploadHandler,
-  AttachmentUploadManager,
-  AttachmentUploadError
-} from './file-sharing';
-/* @conditional-compile-remove(file-sharing) */
-export type { FileSharingOptions } from './ChatScreen';
+  AttachmentUploadManager
+} from '@internal/react-components';
+
 /* @conditional-compile-remove(file-sharing) */
 export type {
   AttachmentUploadsUiState,

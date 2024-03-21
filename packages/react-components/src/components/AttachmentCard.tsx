@@ -42,7 +42,7 @@ import {
   // ShareRegular,
   // WindowNew24Regular
 } from '@fluentui/react-icons';
-import { AttachmentMetadata, AttachmentMenuAction } from './AttachmentDownloadCards';
+import { AttachmentMetadata, AttachmentMenuAction } from '../types/Attachment';
 
 /**
  * @internal
@@ -160,7 +160,7 @@ const getMenuItems = (
                   try {
                     menuItem.onClick(attachment);
                   } catch (e) {
-                    console.error(e);
+                    // console.error(e);
                     onDownloadErrorMessage?.((e as Error).message);
                   }
                 }}

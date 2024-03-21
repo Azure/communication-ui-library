@@ -15,7 +15,7 @@ import { DefaultSystemMessage } from './DefaultSystemMessage';
 /* @conditional-compile-remove(image-overlay) */
 import { InlineImageOptions } from './ChatMessageContent';
 /* @conditional-compile-remove(file-sharing) */
-import { AttachmentMenuAction } from '../AttachmentDownloadCards';
+import { AttachmentMenuAction, AttachmentMetadata } from '../../types/Attachment';
 
 /**
  * Props for {@link ChatMessageComponentWrapper}
@@ -53,7 +53,7 @@ export type ChatMessageComponentWrapperProps = _ChatMessageProps & {
     ) => void
   ) => void;
   /* @conditional-compile-remove(file-sharing) */
-  attachmentMenuAction?: AttachmentMenuAction[];
+  actionForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
   /* @conditional-compile-remove(date-time-customization) */
   onDisplayDateTimeString?: (messageDate: Date) => string;
   /* @conditional-compile-remove(image-overlay) */

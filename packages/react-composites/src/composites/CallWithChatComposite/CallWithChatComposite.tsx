@@ -27,7 +27,7 @@ import {
 } from '@internal/react-components';
 import { useId } from '@fluentui/react-hooks';
 /* @conditional-compile-remove(file-sharing) */
-import { FileSharingOptions } from '../ChatComposite';
+import { AttachmentOptions } from '@internal/react-components';
 import { containerDivStyles } from '../common/ContainerRectProps';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { CallCompositeInner, CallCompositeOptions } from '../CallComposite/CallComposite';
@@ -108,7 +108,7 @@ export type CallWithChatCompositeOptions = {
    * If undefined, file sharing feature will be disabled.
    * @beta
    */
-  fileSharingOptions?: FileSharingOptions;
+  attachmentOptions?: AttachmentOptions;
   /* @conditional-compile-remove(call-readiness) */
   /**
    * Device permissions check options for your call.
@@ -284,7 +284,7 @@ type CallWithChatScreenProps = {
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   /* @conditional-compile-remove(file-sharing) */
-  fileSharingOptions?: FileSharingOptions;
+  attachmentOptions?: AttachmentOptions;
   rtl?: boolean;
   /* @conditional-compile-remove(call-readiness) */
   deviceChecks?: DeviceCheckOptions;
@@ -582,14 +582,14 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
           /* @conditional-compile-remove(chat-composite-participant-pane) */
           participantPane: false,
           /* @conditional-compile-remove(file-sharing) */
-          fileSharingOptions: props.fileSharingOptions
+          attachmentOptions: props.attachmentOptions
         }}
         onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
       />
     ),
     [
       chatAdapter,
-      /* @conditional-compile-remove(file-sharing) */ props.fileSharingOptions,
+      /* @conditional-compile-remove(file-sharing) */ props.attachmentOptions,
       props.onFetchAvatarPersonaData,
       theme
     ]
@@ -692,7 +692,7 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         fluentTheme={fluentTheme}
         remoteVideoTileMenuOptions={options?.remoteVideoTileMenuOptions}
         /* @conditional-compile-remove(file-sharing) */
-        fileSharingOptions={options?.fileSharingOptions}
+        attachmentOptions={options?.attachmentOptions}
         /* @conditional-compile-remove(click-to-call) */
         localVideoTile={options?.localVideoTile}
         galleryOptions={options?.galleryOptions}
