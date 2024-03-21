@@ -400,16 +400,14 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     });
   }
 
-  /*@conditional-compile-remove(rooms) */
   const role = callAdapter.getState().call?.role;
-  /*@conditional-compile-remove(rooms) */
   const hideRaiseHandButtonInRoomsCall =
     callAdapter.getState().isRoomsCall && role && ['Consumer', 'Unknown'].includes(role);
 
   if (
     drawerSelectionOptions !== false &&
     isEnabled(drawerSelectionOptions?.raiseHandButton) &&
-    /*@conditional-compile-remove(rooms) */ !hideRaiseHandButtonInRoomsCall
+    !hideRaiseHandButtonInRoomsCall
   ) {
     const raiseHandIcon = raiseHandButtonProps.checked ? 'LowerHandContextualMenuItem' : 'RaiseHandContextualMenuItem';
     drawerMenuItems.push({

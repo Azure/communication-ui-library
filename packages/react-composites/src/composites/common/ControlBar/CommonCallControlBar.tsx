@@ -276,9 +276,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
       /* @conditional-compile-remove(close-captions) */ props.isCaptionsSupported ||
       props.onUserSetGalleryLayout);
 
-  /*@conditional-compile-remove(rooms) */
   const role = props.callAdapter.getState().call?.role;
-  /*@conditional-compile-remove(rooms) */
   const hideRaiseHandButtonInRoomsCall =
     props.callAdapter.getState().isRoomsCall && role && ['Consumer', 'Unknown'].includes(role);
   /*@conditional-compile-remove(reaction) */
