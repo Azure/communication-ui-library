@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 import { IIconProps, IStyle, PartialTheme } from '@fluentui/react';
-/* @conditional-compile-remove(image-overlay) */
 import { IOverlayStyles } from '@fluentui/react';
 
 /**
@@ -17,7 +16,6 @@ export const downloadIcon: IIconProps = {
   iconName: 'Download'
 };
 
-/* @conditional-compile-remove(image-overlay) */
 /**
  * @private
  */

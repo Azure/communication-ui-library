@@ -6,23 +6,19 @@ import React, { useCallback, useState } from 'react';
 import { useMemo } from 'react';
 /* @conditional-compile-remove(file-sharing) */
 import { useLocale } from '../localization';
-import { _FileCard } from './FileCard';
-import { _FileCardGroup } from './FileCardGroup';
+import { _AttachmentCard } from './AttachmentCard';
+import { _AttachmentCardGroup } from './AttachmentCardGroup';
 import { iconButtonClassName } from './styles/IconButton.styles';
 import { _formatString } from '@internal/acs-ui-common';
 
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * Represents the type of attachment
  * @public
  */
-export type ChatAttachmentType =
-  | 'unknown'
-  | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'image'
-  | /* @conditional-compile-remove(file-sharing) */ 'file';
+export type ChatAttachmentType = 'unknown' | 'image' | /* @conditional-compile-remove(file-sharing) */ 'file';
 
 /**
- * Metadata containing basic information about the uploaded file.
+ * Metadata containing basic information about the uploaded attachment.
  *
  * @beta
  */
@@ -34,7 +30,7 @@ export interface AttachmentMetadata {
    */
   extension: string;
   /**
-   * Unique ID of the file.
+   * Unique ID of the attachment.
    */
   /* @conditional-compile-remove(file-sharing) */
   id: string;
@@ -43,30 +39,30 @@ export interface AttachmentMetadata {
    */
   name: string;
   /**
-   * Download URL for the file.
+   * Download URL for the attachment.
    */
   url: string;
   /* @conditional-compile-remove(file-sharing) */
   /*
-   * Optional dictionary of meta data associated with the file.
+   * Optional dictionary of meta data associated with the attachment.
    */
   payload?: Record<string, string>;
 }
 
 /**
- * Strings of _FileDownloadCards that can be overridden.
+ * Strings of _AttachmentDownloadCards that can be overridden.
  *
  * @internal
  */
-export interface _FileDownloadCardsStrings {
-  /** Aria label to notify user when focus is on file download button. */
-  downloadFile: string;
-  fileCardGroupMessage: string;
+export interface _AttachmentDownloadCardsStrings {
+  /** Aria label to notify user when focus is on attachment download button. */
+  downloadAttachment: string;
+  attachmentCardGroupMessage: string;
 }
 
 /**
  * @beta
- * A file download error returned via a {@link FileDownloadHandler}.
+ * A attachment download error returned via a {@link FileDownloadHandler}.
  * This error message is used to render an error message in the UI.
  */
 export interface FileDownloadError {
@@ -77,17 +73,17 @@ export interface FileDownloadError {
 /**
  * @beta
  *
- * A callback function for handling file downloads.
- * The function needs to return a promise that resolves to a file download URL.
+ * A callback function for handling attachment downloads.
+ * The function needs to return a promise that resolves to a attachment download URL.
  * If the promise is rejected, the {@link Error.message} will be used to display an error message to the user.
  *
  * @example
  * ```ts
- * const fileDownloadHandler: FileDownloadHandler = async (userId, fileData) => {
+ * const attachmentDownloadHandler: FileDownloadHandler = async (userId, attachmentData) => {
  *   if (isUnauthorizedUser(userId)) {
- *     return { errorMessage: 'You don’t have permission to download this file.' };
+ *     return { errorMessage: 'You don’t have permission to download this attachment.' };
  *   } else {
- *     return new URL(fileData.url);
+ *     return new URL(attachmentData.url);
  *   }
  * }
  *
@@ -101,7 +97,7 @@ export interface FileDownloadError {
  * )
  *
  * ```
- * @param userId - The user ID of the user downloading the file.
+ * @param userId - The user ID of the user downloading the attachment.
  * @param fileMetadata - The {@link AttachmentMetadata} containing file `url`, `extension` and `name`.
  */
 export type FileDownloadHandler = (
@@ -112,7 +108,7 @@ export type FileDownloadHandler = (
 /**
  * @internal
  */
-export interface _FileDownloadCardsProps {
+export interface _AttachmentDownloadCardsProps {
   /**
    * User id of the local participant
    */
@@ -122,8 +118,8 @@ export interface _FileDownloadCardsProps {
    */
   fileMetadata?: AttachmentMetadata[];
   /**
-   * A function of type {@link FileDownloadHandler} for handling file downloads.
-   * If the function is not specified, the file's `url` will be opened in a new tab to
+   * A function of type {@link FileDownloadHandler} for handling attachment downloads.
+   * If the function is not specified, the attachment's `url` will be opened in a new tab to
    * initiate the download.
    */
   downloadHandler?: FileDownloadHandler;
@@ -132,12 +128,12 @@ export interface _FileDownloadCardsProps {
    */
   onDownloadErrorMessage?: (errMsg: string) => void;
   /**
-   * Optional aria label strings for file download cards
+   * Optional aria label strings for attachment download cards
    */
-  strings?: _FileDownloadCardsStrings;
+  strings?: _AttachmentDownloadCardsStrings;
 }
 
-const fileDownloadCardsStyle = {
+const attachmentDownloadCardsStyle = {
   marginTop: '0.25rem'
 };
 
@@ -146,37 +142,37 @@ const actionIconStyle = { height: '1rem' };
 /**
  * @internal
  */
-export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element => {
+export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): JSX.Element => {
   const { userId, fileMetadata } = props;
   const [showSpinner, setShowSpinner] = useState(false);
   const localeStrings = useLocaleStringsTrampoline();
 
-  const downloadFileButtonString = useMemo(
+  const downloadAttachmentButtonString = useMemo(
     () => () => {
-      return props.strings?.downloadFile ?? localeStrings.downloadFile;
+      return props.strings?.downloadAttachment ?? localeStrings.downloadAttachment;
     },
-    [props.strings?.downloadFile, localeStrings.downloadFile]
+    [props.strings?.downloadAttachment, localeStrings.downloadAttachment]
   );
 
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const isShowDownloadIcon = useCallback((attachment: AttachmentMetadata): boolean => {
     /* @conditional-compile-remove(file-sharing) */
     return attachment.payload?.teamsFileAttachment !== 'true';
     return true;
   }, []);
 
-  const fileCardGroupDescription = useMemo(
+  const attachmentCardGroupDescription = useMemo(
     () => () => {
-      const fileGroupLocaleString = props.strings?.fileCardGroupMessage ?? localeStrings.fileCardGroupMessage;
+      const fileGroupLocaleString =
+        props.strings?.attachmentCardGroupMessage ?? localeStrings.attachmentCardGroupMessage;
       /* @conditional-compile-remove(file-sharing) */
       return _formatString(fileGroupLocaleString, {
-        fileCount: `${fileMetadata?.length ?? 0}`
+        attachmentCount: `${fileMetadata?.length ?? 0}`
       });
       return _formatString(fileGroupLocaleString, {
-        fileCount: `${fileMetadata?.length ?? 0}`
+        attachmentCount: `${fileMetadata?.length ?? 0}`
       });
     },
-    [props.strings?.fileCardGroupMessage, localeStrings.fileCardGroupMessage, fileMetadata]
+    [props.strings?.attachmentCardGroupMessage, localeStrings.attachmentCardGroupMessage, fileMetadata]
   );
 
   const fileDownloadHandler = useCallback(
@@ -200,39 +196,34 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
     },
     [props]
   );
-  if (
-    !fileMetadata ||
-    fileMetadata.length === 0 ||
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ !fileMetadata
-  ) {
+  if (!fileMetadata || fileMetadata.length === 0 || !fileMetadata) {
     return <></>;
   }
 
   return (
-    <div style={fileDownloadCardsStyle} data-ui-id="file-download-card-group">
-      <_FileCardGroup ariaLabel={fileCardGroupDescription()}>
+    <div style={attachmentDownloadCardsStyle} data-ui-id="file-download-card-group">
+      <_AttachmentCardGroup ariaLabel={attachmentCardGroupDescription()}>
         {fileMetadata &&
-          fileMetadata.map((file) => (
-            <TooltipHost content={downloadFileButtonString()} key={file.name}>
-              <_FileCard
-                fileName={file.name}
-                key={file.name}
-                fileExtension={file.extension}
+          fileMetadata.map((attachment) => (
+            <TooltipHost content={downloadAttachmentButtonString()} key={attachment.name}>
+              <_AttachmentCard
+                attachmentName={attachment.name}
+                key={attachment.name}
+                attachmentExtension={attachment.extension}
                 actionIcon={
                   showSpinner ? (
                     <Spinner size={SpinnerSize.medium} aria-live={'polite'} role={'status'} />
-                  ) : true &&
-                    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ isShowDownloadIcon(file) ? (
-                    <IconButton className={iconButtonClassName} ariaLabel={downloadFileButtonString()}>
+                  ) : true && isShowDownloadIcon(attachment) ? (
+                    <IconButton className={iconButtonClassName} ariaLabel={downloadAttachmentButtonString()}>
                       <DownloadIconTrampoline />
                     </IconButton>
                   ) : undefined
                 }
-                actionHandler={() => fileDownloadHandler(userId, file)}
+                actionHandler={() => fileDownloadHandler(userId, attachment)}
               />
             </TooltipHost>
           ))}
-      </_FileCardGroup>
+      </_AttachmentCardGroup>
     </div>
   );
 };
@@ -247,8 +238,8 @@ const DownloadIconTrampoline = (): JSX.Element => {
   return <Icon iconName="EditBoxCancel" style={actionIconStyle} />;
 };
 
-const useLocaleStringsTrampoline = (): _FileDownloadCardsStrings => {
+const useLocaleStringsTrampoline = (): _AttachmentDownloadCardsStrings => {
   /* @conditional-compile-remove(file-sharing) */
   return useLocale().strings.messageThread;
-  return { downloadFile: '', fileCardGroupMessage: '' };
+  return { downloadAttachment: '', attachmentCardGroupMessage: '' };
 };

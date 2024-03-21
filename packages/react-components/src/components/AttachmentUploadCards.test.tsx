@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-import { _FileUploadCards, FileUploadCardsProps } from './FileUploadCards';
+import { _AttachmentUploadCards, FileUploadCardsProps } from './AttachmentUploadCards';
 import { render, screen } from '@testing-library/react';
 import { registerIcons } from '@fluentui/react';
 
@@ -10,7 +10,7 @@ describe('FileUploadCards should be rendered properly', () => {
   beforeEach(() => {
     registerIcons({
       icons: {
-        cancelfileupload: <></>,
+        cancelattachmentupload: <></>,
         genericfile24_svg: <></>
       }
     });
@@ -45,5 +45,5 @@ const renderFileUploadCardWithDefaults = (props?: Partial<FileUploadCardsProps>)
     ...(props ?? {})
   };
 
-  render(<_FileUploadCards {...mergedProps} />);
+  render(<_AttachmentUploadCards {...mergedProps} />);
 };

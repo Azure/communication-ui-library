@@ -152,7 +152,6 @@ export {
   COMPONENT_LOCALE_ZH_CN,
   COMPONENT_LOCALE_ZH_TW
 } from '../../react-components/src';
-/* @conditional-compile-remove(image-overlay) */
 export { ImageOverlay } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export { HoldButton } from '../../react-components/src';
@@ -311,7 +310,6 @@ export { RichTextSendBox } from '../../react-components/src';
 export type { RichTextSendBoxProps, RichTextSendBoxStrings } from '../../react-components/src';
 /* @conditional-compile-remove(spotlight) */
 export type { Spotlight } from '../../react-components/src';
-/* @conditional-compile-remove(image-overlay) */
 export type { ImageOverlayProps, ImageOverlayStrings } from '../../react-components/src';
 /* @conditional-compile-remove(data-loss-prevention) */
 export type { BlockedMessage } from '../../react-components/src';
@@ -333,9 +331,7 @@ export type {
 } from '../../react-components/src';
 /* @conditional-compile-remove(file-sharing) */
 export type { AttachmentMetadata } from '../../react-components/src';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 export type { ChatAttachmentType } from '../../react-components/src';
-/* @conditional-compile-remove(image-overlay) */
 export type { InlineImageOptions, InlineImage } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonProps, HoldButtonStrings, VideoTileStrings } from '../../react-components/src';
@@ -368,7 +364,6 @@ export type {
   ChatErrorTarget
 } from '../../chat-stateful-client/src';
 
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 export type { ResourceFetchResult } from '../../chat-stateful-client/src';
 export * from '../../react-composites/src/index-public';
 export * from './mergedHooks';
