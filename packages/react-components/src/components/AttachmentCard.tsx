@@ -125,7 +125,10 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
     marginTop: _pxToRem(4),
     width: '5.75rem',
     overflow: 'hidden',
-    textOverflow: 'ellipsis'
+    textOverflow: 'ellipsis',
+    span: {
+      whiteSpace: 'nowrap'
+    }
   });
 
   return (

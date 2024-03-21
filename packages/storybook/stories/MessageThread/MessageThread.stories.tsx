@@ -40,7 +40,8 @@ import {
   GenerateMockCustomMessage,
   GetAvatarUrlByUserId,
   GenerateMockNewChatMessageWithInlineImage,
-  GenerateMockNewChatMessageWithMention
+  GenerateMockNewChatMessageWithMention,
+  GenerateMockNewChatMessageWithFileAttachment
 } from './placeholdermessages';
 import { MessageThreadWithBlockedMessagesExample } from './snippets/BlockedMessages.snippet';
 import { MessageThreadWithCustomAvatarExample } from './snippets/CustomAvatar.snippet';
@@ -374,6 +375,7 @@ const MessageThreadStory = (args): JSX.Element => {
     { key: 'newMessage', text: 'New Message' },
     { key: 'newMessageOthers', text: 'New Message from others' },
     { key: 'newMessageWithInlineImage', text: 'New Message with Inline Image' },
+    { key: 'newMessageWithFileAttachment', text: 'New Message with File Attachment' },
     { key: 'newMessageWithMention', text: 'New Message with Mention' },
     { key: 'newSystemMessage', text: 'New System Message' },
     { key: 'newCustomMessage', text: 'New Custom Message' }
@@ -400,6 +402,10 @@ const MessageThreadStory = (args): JSX.Element => {
 
   const onSendNewMessageWithInlineImage = (): void => {
     setChatMessages([...chatMessages, GenerateMockNewChatMessageWithInlineImage()]);
+  };
+
+  const onSendNewMessageWithFileAttachment = (): void => {
+    setChatMessages([...chatMessages, GenerateMockNewChatMessageWithFileAttachment()]);
   };
 
   const onSendNewMessageWithMention = (): void => {
@@ -518,6 +524,9 @@ const MessageThreadStory = (args): JSX.Element => {
         break;
       case 'newCustomMessage':
         onSendCustomMessage();
+        break;
+      case 'newMessageWithFileAttachment':
+        onSendNewMessageWithFileAttachment();
         break;
       default:
         console.log('Invalid message type');

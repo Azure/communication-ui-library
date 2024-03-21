@@ -37,7 +37,7 @@ describe('AttachmentCard should be rendered properly', () => {
   });
 });
 
-describe('Filecard action handler should be called', () => {
+describe('AttachmentCard action handler should be called', () => {
   beforeEach(() => {
     registerIcons({
       icons: {
