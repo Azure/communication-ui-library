@@ -15,7 +15,7 @@ export const inputBoxRichTextStackStyle = mergeStyles({ overflow: 'hidden' });
 /**
  * @private
  */
-export const inputBoxRichTextStackItemStyle = mergeStyles({ paddingBottom: '0.375rem' });
+export const inputBoxRichTextStackItemStyle = mergeStyles({ paddingBottom: '0.25rem' });
 
 /**
  * @private

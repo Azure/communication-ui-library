@@ -150,6 +150,7 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
         disabled: !!disabled
       })}
     >
+      {/* This layout is used for the compact view when formatting options are not shown */}
       <Stack
         grow
         horizontal={useHorizontalLayout}
@@ -157,9 +158,8 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
         className={inputBoxContentStackStyle}
         wrap={useHorizontalLayout}
       >
-        {/* fixes the issue when flex box can grow to be bigger than parent */}
+        {/* Fixes the issue when flex box can grow to be bigger than parent */}
         <Stack grow className={inputBoxRichTextStackStyle}>
-          {/* Add padding to stack.item */}
           <Stack.Item className={inputBoxRichTextStackItemStyle}>
             <RichTextEditor
               initialContent={initialContent}
