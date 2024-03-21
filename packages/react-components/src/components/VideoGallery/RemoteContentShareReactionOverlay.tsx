@@ -22,6 +22,7 @@ import {
   reactionOverlayStyle,
   spriteAnimationStyles
 } from '../styles/ReactionOverlay.style';
+/* @conditional-compile-remove(reaction) */
 import {
   REACTION_NUMBER_OF_ANIMATION_FRAMES,
   REACTION_SCREEN_SHARE_ANIMATION_TIME_MS,
@@ -38,6 +39,7 @@ type VisibleReaction = {
   styleBucket: IReactionStyleBucket;
 };
 
+/* @conditional-compile-remove(reaction) */
 type ReceivedReaction = {
   id: string;
   status: 'animating' | 'completedAnimating' | 'ignored';
