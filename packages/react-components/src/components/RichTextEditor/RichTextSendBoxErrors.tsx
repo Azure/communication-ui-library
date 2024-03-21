@@ -9,9 +9,9 @@ import { SendBoxErrorBar, SendBoxErrorBarError } from '../SendBoxErrorBar';
  */
 export interface RichTextSendBoxErrorsProps {
   /* @conditional-compile-remove(file-sharing) */
-  fileUploadsPendingError?: SendBoxErrorBarError;
+  attachmentUploadsPendingError?: SendBoxErrorBarError;
   /* @conditional-compile-remove(file-sharing) */
-  fileUploadError?: SendBoxErrorBarError;
+  attachmentUploadError?: SendBoxErrorBarError;
   systemMessage?: string;
   textTooLongMessage?: string;
 }
@@ -22,9 +22,9 @@ export interface RichTextSendBoxErrorsProps {
 export const RichTextSendBoxErrors = (props: RichTextSendBoxErrorsProps): JSX.Element => {
   const {
     /* @conditional-compile-remove(file-sharing) */
-    fileUploadError,
+    attachmentUploadError,
     /* @conditional-compile-remove(file-sharing) */
-    fileUploadsPendingError,
+    attachmentUploadsPendingError,
     systemMessage,
     textTooLongMessage
   } = props;
@@ -58,12 +58,12 @@ export const RichTextSendBoxErrors = (props: RichTextSendBoxErrorsProps): JSX.El
         errors.push(prev);
       }
       /* @conditional-compile-remove(file-sharing) */
-      if (fileUploadsPendingError) {
-        errors.push(fileUploadsPendingError);
+      if (attachmentUploadsPendingError) {
+        errors.push(attachmentUploadsPendingError);
       }
       /* @conditional-compile-remove(file-sharing) */
-      if (fileUploadError) {
-        errors.push(fileUploadError);
+      if (attachmentUploadError) {
+        errors.push(attachmentUploadError);
       }
       if (errors.length === 0) {
         return undefined;
@@ -73,8 +73,8 @@ export const RichTextSendBoxErrors = (props: RichTextSendBoxErrorsProps): JSX.El
       return sortedErrors[0];
     });
   }, [
-    /* @conditional-compile-remove(file-sharing) */ fileUploadError,
-    /* @conditional-compile-remove(file-sharing) */ fileUploadsPendingError
+    /* @conditional-compile-remove(file-sharing) */ attachmentUploadError,
+    /* @conditional-compile-remove(file-sharing) */ attachmentUploadsPendingError
   ]);
 
   const onDismiss = useCallback(() => {

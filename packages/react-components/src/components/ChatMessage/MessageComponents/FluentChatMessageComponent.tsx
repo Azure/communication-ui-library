@@ -46,7 +46,6 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
     onRenderAvatar,
     /* @conditional-compile-remove(date-time-customization) */
     onDisplayDateTimeString,
-    /* @conditional-compile-remove(image-overlay) */
     inlineImageOptions,
     /* @conditional-compile-remove(file-sharing) */
     fileDownloadHandler,
@@ -84,7 +83,6 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
             shouldOverlapAvatarAndMessage={shouldOverlapAvatarAndMessage}
             /* @conditional-compile-remove(date-time-customization) */
             onDisplayDateTimeString={onDisplayDateTimeString}
-            /* @conditional-compile-remove(image-overlay) */
             inlineImageOptions={inlineImageOptions}
             /* @conditional-compile-remove(file-sharing) */
             fileDownloadHandler={fileDownloadHandler}
@@ -101,7 +99,6 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
       userId,
       /* @conditional-compile-remove(date-time-customization) */
       onDisplayDateTimeString,
-      /* @conditional-compile-remove(image-overlay) */
       inlineImageOptions,
       /* @conditional-compile-remove(file-sharing) */
       fileDownloadHandler,
