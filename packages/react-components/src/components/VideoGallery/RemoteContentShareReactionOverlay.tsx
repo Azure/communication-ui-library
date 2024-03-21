@@ -35,6 +35,7 @@ type VisibleReaction = {
   reaction: Reaction;
   id: string;
   reactionMovementIndex: number;
+  styleBucket: IReactionStyleBucket;
 };
 
 type ReceivedReaction = {
@@ -112,7 +113,12 @@ export const RemoteContentShareReactionOverlay = React.memo(
         };
         setVisibleReactions((prev) => [
           ...visibleReactions,
-          { reaction: reaction, id: combinedKey, reactionMovementIndex: prev.length }
+          {
+            reaction: reaction,
+            id: combinedKey,
+            reactionMovementIndex: prev.length,
+            styleBucket: getReactionStyleBucket(prev.length)
+          }
         ]);
         return;
       },
@@ -191,7 +197,7 @@ export const RemoteContentShareReactionOverlay = React.memo(
                 <div
                   style={moveAnimationStyles(
                     containerHeight / 2, // dividing by two because reactionOverlayStyle height is set to 50%
-                    (containerHeight / 2) * (1 - styleBucket(visibleReactions.length).heightMaxScale)
+                    (containerHeight / 2) * (1 - reaction.styleBucket.heightMaxScale)
                   )}
                 >
                   <div>
@@ -199,7 +205,7 @@ export const RemoteContentShareReactionOverlay = React.memo(
                       onAnimationEnd={() => {
                         removeVisibleReaction(reaction.reaction.reactionType, reaction.id);
                       }}
-                      style={opacityAnimationStyles(styleBucket(visibleReactions.length).opacityMax)}
+                      style={opacityAnimationStyles(reaction.styleBucket.opacityMax)}
                     >
                       <div style={reactionMovementStyle(reaction.reactionMovementIndex)}>
                         <div
