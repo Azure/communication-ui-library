@@ -71,7 +71,7 @@ jobs:
 
       # Install dependencies
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.2
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Install dependencies
         run: rush install --max-install-attempts 3
 

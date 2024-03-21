@@ -168,6 +168,17 @@
     },
     {
       "commandKind": "bulk",
+      "name": "build:minify",
+      "summary": "Primiarily used for samples. Build all projects that haven't been built, or have changed since they were last built using minified code",
+      "description": "This command is similar to \"rush build\", except this will minify sample projects.",
+      "safeForSimultaneousRushProcesses": false,
+      "enableParallelism": true,
+      "ignoreDependencyOrder": false,
+      "ignoreMissingScript": false,
+      "allowWarningsInSuccessfulBuild": true
+    },
+    {
+      "commandKind": "bulk",
       "name": "test",
       "summary": "Run tests in each project.",
       "description": "Run jest tests in each project.",

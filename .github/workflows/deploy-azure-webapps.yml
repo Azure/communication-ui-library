@@ -40,7 +40,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
 
       - name: Install Rush
-        run: npm install -g @microsoft/rush@5.112.2
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
 
       - name: Set commit SHA as environment variable
         run: echo "REACT_APP_COMMIT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV

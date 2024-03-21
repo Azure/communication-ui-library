@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-import React, { useCallback, useImperativeHandle, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
 import { ContentEdit, Watermark } from 'roosterjs-editor-plugins';
 import { Editor } from 'roosterjs-editor-core';
 import type { EditorOptions, IEditor } from 'roosterjs-editor-types-compatible';
@@ -95,9 +95,18 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     return editor.current;
   }, []);
 
+  const placeholderPlugin = React.useMemo(() => {
+    return new Watermark('');
+  }, []);
+
+  useEffect(() => {
+    if (placeholderText !== undefined) {
+      placeholderPlugin.updateWatermark(placeholderText);
+    }
+  }, [placeholderPlugin, placeholderText]);
+
   const plugins = useMemo(() => {
     const contentEdit = new ContentEdit();
-    const placeholderPlugin = new Watermark(placeholderText || '');
     const updateContentPlugin = createUpdateContentPlugin(
       UpdateMode.OnContentChangedEvent | UpdateMode.OnUserInput,
       (content: string) => {
@@ -105,13 +114,12 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
       }
     );
     return [contentEdit, placeholderPlugin, updateContentPlugin, ribbonPlugin];
-  }, [onChange, placeholderText, ribbonPlugin]);
+  }, [onChange, placeholderPlugin, ribbonPlugin]);
 
   const ribbon = useMemo(() => {
     const buttons = ribbonButtons(theme);
 
     return (
-      //TODO: Add localization for watermark plugin https://github.com/microsoft/roosterjs/issues/2430
       <Ribbon
         styles={ribbonStyle}
         buttons={buttons}
@@ -125,12 +133,13 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
           }
         }}
         strings={ribbonButtonsStrings(strings)}
+        data-testid={'rich-text-editor-ribbon'}
       />
     );
   }, [strings, ribbonPlugin, theme]);
 
   return (
-    <div>
+    <div data-testid={'rich-text-editor-wrapper'}>
       {showRichTextEditorFormatting && ribbon}
       <div className={richTextEditorWrapperStyle(theme, !showRichTextEditorFormatting, showRichTextEditorFormatting)}>
         <Rooster
@@ -143,6 +152,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
           imageSelectionBorderColor={'blue'}
           // doNotAdjustEditorColor is used to fix the default background color for Rooster component
           doNotAdjustEditorColor={true}
+          data-testid={'rooster-rich-text-editor'}
           // if we don't use 'allowKeyboardEventPropagation' only the enter key is caught
           onKeyDown={props.onKeyDown}
         />

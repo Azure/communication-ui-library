@@ -7,7 +7,8 @@
     "mutedIconLabel": "Ses kapatıldı",
     "displayNamePlaceholder": "Adsız katılımcı",
     "participantStateRinging": "Arıyor...",
-    "participantStateHold": "Beklemede"
+    "participantStateHold": "Beklemede",
+    "attendeeRole": "Katılımcı"
   },
   "ParticipantList": {
     "overflowParticipantCount": "{overflowCount} tane daha"
@@ -23,10 +24,27 @@
     "placeholderText": "Bir mesaj girin",
     "textTooLong": "İletinizin uzunluğu üst sınırı aşıyor.",
     "sendButtonAriaLabel": "İleti gönder",
-    "fileUploadsPendingError": "Karşıya yükleniyor... Lütfen bekleyin.",
-    "removeFile": "Dosyayı kaldır",
+    "attachmentUploadsPendingError": "Karşıya yükleniyor... Lütfen bekleyin.",
+    "removeAttachment": "Dosyayı kaldır",
     "uploading": "Karşıya yükleniyor",
     "uploadCompleted": "Karşıya yükleme tamamlandı"
+  },
+  "richTextSendBox": {
+    "placeholderText": "Bir mesaj girin",
+    "textTooLong": "İletinizin uzunluğu üst sınırı aşıyor.",
+    "sendButtonAriaLabel": "Mesaj gönder",
+    "attachmentUploadsPendingError": "Karşıya yükleniyor... Lütfen bekleyin.",
+    "removeAttachment": "Dosyayı kaldır",
+    "uploading": "Yükleniyor",
+    "uploadCompleted": "Karşıya yükleme tamamlandı",
+    "boldTooltip": "Kalın",
+    "italicTooltip": "İtalik",
+    "underlineTooltip": "Altı çizili",
+    "bulletListTooltip": "Madde işaretli liste",
+    "numberListTooltip": "Numaralandırılmış liste",
+    "increaseIndentTooltip": "Girintiyi artır",
+    "decreaseIndentTooltip": "Girintiyi azalt",
+    "richTextFormatButtonTooltip": "Biçim"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Öneriler"
@@ -125,6 +143,7 @@
   },
   "reactionButton": {
     "label": "Tepki ver",
+    "ariaLabel": "Tepki Düğmesi, Bir tepki gönder",
     "tooltipDisabledContent": "Tepki eylemi devre dışı bırakıldı",
     "tooltipContent": "Tepki gönder",
     "likeReactionTooltipContent": "Beğen",
@@ -160,10 +179,10 @@
     "editBoxSubmitButton": "Bitti",
     "messageReadCount": "{messageReadByCount} / {remoteParticipantsCount} katılımcı tarafından okundu",
     "actionMenuMoreOptions": "Diğer Seçenekler",
-    "downloadFile": "Dosyayı indir",
+    "downloadAttachment": "Dosyayı indir",
     "blockedWarningText": "Bu ileti kuruluş ilkesi nedeniyle silindi.",
     "blockedWarningLinkText": "Ayrıntılar",
-    "fileCardGroupMessage": "İletide {fileCount} ek var",
+    "attachmentCardGroupMessage": "İletide {attachmentCount} ek var",
     "messageDeletedAnnouncementAriaLabel": "İleti silindi"
   },
   "errorBar": {
@@ -224,7 +243,8 @@
     "addSpotlightVideoTileMenuLabel": "Öne çıkarma ekle",
     "spotlightLimitReachedMenuTitle": "Öne çıkarma sınırına ulaşıldı",
     "stopSpotlightVideoTileMenuLabel": "Öne çıkarmayı durdur",
-    "stopSpotlightOnSelfVideoTileMenuLabel": "Öne çıkarmadan çık"
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Öne çıkarmadan çık",
+    "attendeeRole": "Katılımcı"
   },
   "dialpad": {
     "placeholderText": "Telefon numarası gir",
@@ -358,6 +378,5 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "önceki sayfa",
     "rightNavButtonAriaLabel": "sonraki sayfa"
-  },
-  "AttendeeRole": "Katılımcı"
+  }
 }

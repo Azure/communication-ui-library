@@ -76,7 +76,7 @@ export const editorTextBoxButtonStyle: IStyle = {
 /**
  * @private
  */
-export const fileUploadCardsStyles = mergeStyles({
+export const attachmentUploadCardsStyles = mergeStyles({
   margin: '0 0.25rem 0.25rem 0.25rem',
   maxHeight: '12.5rem',
   overflow: 'auto'
@@ -85,7 +85,7 @@ export const fileUploadCardsStyles = mergeStyles({
 /**
  * @private
  */
-export const fileCardBoxStyle = mergeStyles({
+export const attachmentCardBoxStyle = mergeStyles({
   width: '100%',
   padding: '0.50rem'
 });

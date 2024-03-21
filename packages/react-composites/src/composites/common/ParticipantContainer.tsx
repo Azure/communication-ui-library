@@ -83,7 +83,6 @@ export const ParticipantListWithHeading = (props: {
                 {...options}
                 {...{ hidePersonaDetails: !!options?.text }}
                 dataProvider={onFetchAvatarPersonaData}
-                /* @conditional-compile-remove(raise-hand) */
                 allowActiveBorder={true}
               />
               {options?.text && (

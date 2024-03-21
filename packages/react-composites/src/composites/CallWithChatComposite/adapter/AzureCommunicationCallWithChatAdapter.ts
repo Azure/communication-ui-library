@@ -47,7 +47,6 @@ import {
   MessageEditedListener,
   MessageDeletedListener
 } from '../../ChatComposite';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ResourceDetails } from '../../ChatComposite';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadManager } from '../../ChatComposite';
@@ -199,9 +198,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.unmute.bind(this);
     this.startScreenShare.bind(this);
     this.stopScreenShare.bind(this);
-    /* @conditional-compile-remove(raise-hand) */
     this.raiseHand.bind(this);
-    /* @conditional-compile-remove(raise-hand) */
     this.lowerHand.bind(this);
     /* @conditional-compile-remove(reaction) */
     this.onReactionClick.bind(this);
@@ -232,9 +229,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.updateFileUploadErrorMessage = this.updateFileUploadErrorMessage.bind(this);
     /* @conditional-compile-remove(file-sharing) */
     this.updateFileUploadMetadata = this.updateFileUploadMetadata.bind(this);
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     this.downloadResourceToCache = this.downloadResourceToCache.bind(this);
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     this.removeResourceFromCache = this.removeResourceFromCache.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
     this.holdCall.bind(this);
@@ -373,12 +368,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   public async stopScreenShare(): Promise<void> {
     await this.callAdapter.stopScreenShare();
   }
-  /* @conditional-compile-remove(raise-hand) */
   /** Raise hand for local user. */
   public async raiseHand(): Promise<void> {
     await this.callAdapter.raiseHand();
   }
-  /* @conditional-compile-remove(raise-hand) */
   /** Lower hand for local user. */
   public async lowerHand(): Promise<void> {
     await this.callAdapter.lowerHand();
@@ -479,11 +472,9 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   public updateFileUploadMetadata = (id: string, metadata: AttachmentMetadata): void => {
     this.chatAdapter.updateFileUploadMetadata(id, metadata);
   };
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   public async downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void> {
     this.chatAdapter.downloadResourceToCache(resourceDetails);
   }
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   public removeResourceFromCache(resourceDetails: ResourceDetails): void {
     this.chatAdapter.removeResourceFromCache(resourceDetails);
   }

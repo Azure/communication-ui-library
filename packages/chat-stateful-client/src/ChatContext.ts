@@ -19,9 +19,7 @@ import { _safeJSONStringify, toFlatCommunicationIdentifier } from '@internal/acs
 import { Constants } from './Constants';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-chat';
 import { chatStatefulLogger } from './Logger';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import type { CommunicationTokenCredential } from '@azure/communication-common';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ResourceDownloadQueue, fetchImageSource } from './ResourceDownloadQueue';
 
 enableMapSet();
@@ -42,20 +40,14 @@ export class ChatContext {
   private _logger: AzureLogger;
   private _emitter: EventEmitter;
   private typingIndicatorInterval: number | undefined = undefined;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   private _inlineImageQueue: ResourceDownloadQueue | undefined = undefined;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   private _fullsizeImageQueue: ResourceDownloadQueue | undefined = undefined;
-  constructor(
-    maxListeners?: number,
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ credential?: CommunicationTokenCredential
-  ) {
+  constructor(maxListeners?: number, credential?: CommunicationTokenCredential, endpoint?: string) {
     this._logger = createClientLogger('communication-react:chat-context');
     this._emitter = new EventEmitter();
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     if (credential) {
-      this._inlineImageQueue = new ResourceDownloadQueue(this, credential);
-      this._fullsizeImageQueue = new ResourceDownloadQueue(this, credential);
+      this._inlineImageQueue = new ResourceDownloadQueue(this, { credential, endpoint: endpoint ?? '' });
+      this._fullsizeImageQueue = new ResourceDownloadQueue(this, { credential, endpoint: endpoint ?? '' });
     }
     if (maxListeners) {
       this._emitter.setMaxListeners(maxListeners);
@@ -79,7 +71,6 @@ export class ChatContext {
     }
   }
 
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   public dispose(): void {
     this.modifyState((draft: ChatClientState) => {
       this._inlineImageQueue?.cancelAllRequests();
@@ -91,7 +82,9 @@ export class ChatContext {
           if (cache) {
             Object.keys(cache).forEach((resourceUrl) => {
               const resource = cache[resourceUrl];
-              URL.revokeObjectURL(resource.sourceUrl);
+              if (resource.sourceUrl) {
+                URL.revokeObjectURL(resource.sourceUrl);
+              }
             });
           }
           thread.chatMessages[messageId].resourceCache = undefined;
@@ -100,7 +93,6 @@ export class ChatContext {
     });
     // Any item in queue should be removed.
   }
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   public async downloadResourceToCache(threadId: string, messageId: string, resourceUrl: string): Promise<void> {
     let message = this.getState().threads[threadId]?.chatMessages[messageId];
     if (message && this._fullsizeImageQueue) {
@@ -114,7 +106,6 @@ export class ChatContext {
       });
     }
   }
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   public removeResourceFromCache(threadId: string, messageId: string, resourceUrl: string): void {
     this.modifyState((draft: ChatClientState) => {
       const message = draft.threads[threadId]?.chatMessages[messageId];
@@ -129,7 +120,10 @@ export class ChatContext {
       }
       if (message && message.resourceCache && message.resourceCache[resourceUrl]) {
         const resource = message.resourceCache[resourceUrl];
-        URL.revokeObjectURL(resource.sourceUrl);
+        if (resource.sourceUrl) {
+          URL.revokeObjectURL(resource.sourceUrl);
+        }
+
         delete message.resourceCache[resourceUrl];
       }
     });
@@ -351,7 +345,6 @@ export class ChatContext {
   }
 
   public setChatMessage(threadId: string, message: ChatMessageWithStatus): void {
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     this.parseAttachments(threadId, message);
     const { id: messageId, clientMessageId } = message;
     if (messageId || clientMessageId) {
@@ -373,7 +366,6 @@ export class ChatContext {
     }
   }
 
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   private parseAttachments(threadId: string, message: ChatMessageWithStatus): void {
     const attachments = message.content?.attachments;
     if (message.type === 'html' && attachments && attachments.length > 0) {

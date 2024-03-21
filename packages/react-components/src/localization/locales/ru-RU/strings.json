@@ -7,7 +7,8 @@
     "mutedIconLabel": "Микрофон отключен",
     "displayNamePlaceholder": "Участник без имени",
     "participantStateRinging": "Выполняется вызов...",
-    "participantStateHold": "На удержании"
+    "participantStateHold": "На удержании",
+    "attendeeRole": "Участник"
   },
   "ParticipantList": {
     "overflowParticipantCount": "и еще {overflowCount}"
@@ -23,10 +24,27 @@
     "placeholderText": "Введите сообщение",
     "textTooLong": "Длина сообщения превышает максимально допустимую.",
     "sendButtonAriaLabel": "Отправить сообщение",
-    "fileUploadsPendingError": "Выполняется загрузка. Подождите...",
-    "removeFile": "Удалить файл",
+    "attachmentUploadsPendingError": "Выполняется загрузка. Подождите...",
+    "removeAttachment": "Удалить файл",
     "uploading": "Отправка",
     "uploadCompleted": "Отправка завершена"
+  },
+  "richTextSendBox": {
+    "placeholderText": "Введите сообщение",
+    "textTooLong": "Длина сообщения превышает максимально допустимую.",
+    "sendButtonAriaLabel": "Отправить сообщение",
+    "attachmentUploadsPendingError": "Производится отправка... Подождите.",
+    "removeAttachment": "Удалить файл",
+    "uploading": "Отправка",
+    "uploadCompleted": "Отправка завершена",
+    "boldTooltip": "Полужирный",
+    "italicTooltip": "Курсив",
+    "underlineTooltip": "Подчеркнуть",
+    "bulletListTooltip": "Маркированный список",
+    "numberListTooltip": "Нумерованный список",
+    "increaseIndentTooltip": "Увеличить отступ",
+    "decreaseIndentTooltip": "Уменьшить отступ",
+    "richTextFormatButtonTooltip": "Формат"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Рекомендации"
@@ -125,6 +143,7 @@
   },
   "reactionButton": {
     "label": "Отреагировать",
+    "ariaLabel": "Кнопка \"Отреагировать\", отправить реакцию",
     "tooltipDisabledContent": "Действие реакции отключено",
     "tooltipContent": "Отправка реакции",
     "likeReactionTooltipContent": "Нравится",
@@ -160,10 +179,10 @@
     "editBoxSubmitButton": "Готово",
     "messageReadCount": "Прочитали: {messageReadByCount} из {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Дополнительные параметры",
-    "downloadFile": "Скачать файл",
+    "downloadAttachment": "Скачать файл",
     "blockedWarningText": "Это сообщение было удалено политикой организации.",
     "blockedWarningLinkText": "Сведения",
-    "fileCardGroupMessage": "Сообщение содержит {fileCount} вложение",
+    "attachmentCardGroupMessage": "Сообщение содержит {attachmentCount} вложение",
     "messageDeletedAnnouncementAriaLabel": "Сообщение удалено"
   },
   "errorBar": {
@@ -224,7 +243,8 @@
     "addSpotlightVideoTileMenuLabel": "Добавить закрепление",
     "spotlightLimitReachedMenuTitle": "Достигнуто предельное число закреплений",
     "stopSpotlightVideoTileMenuLabel": "Не закреплять",
-    "stopSpotlightOnSelfVideoTileMenuLabel": "Открепить"
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Открепить",
+    "attendeeRole": "Участник"
   },
   "dialpad": {
     "placeholderText": "Введите номер телефона",
@@ -358,6 +378,5 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "предыдущая страница",
     "rightNavButtonAriaLabel": "следующая страница"
-  },
-  "AttendeeRole": "Участник"
+  }
 }

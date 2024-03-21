@@ -61,6 +61,7 @@ import { IStyleFunctionOrObject } from '@fluentui/react';
 import { ITextFieldStyles } from '@fluentui/react';
 import { LatestMediaDiagnostics } from '@azure/communication-calling';
 import { LatestNetworkDiagnostics } from '@azure/communication-calling';
+import { LocalRecordingInfo } from '@azure/communication-calling';
 import { LocalVideoStream } from '@azure/communication-calling';
 import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { MediaStreamType } from '@azure/communication-calling';
@@ -79,6 +80,7 @@ import { PropertyChangedEvent } from '@azure/communication-calling';
 import { default as React_2 } from 'react';
 import { Reaction as Reaction_2 } from '@azure/communication-calling';
 import { ReactionMessage } from '@azure/communication-calling';
+import { RecordingInfo } from '@azure/communication-calling';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/communication-calling';
 import { RoomCallLocator } from '@azure/communication-calling';
@@ -656,7 +658,7 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
 
 // @public
 export interface CallCompositeStrings {
-    addSpotlightParticipantListMenuLabel: string;
+    addSpotlightMenuLabel: string;
     blurBackgroundEffectButtonLabel?: string;
     blurBackgroundTooltip?: string;
     callRejectedMoreDetails?: string;
@@ -795,7 +797,7 @@ export interface CallCompositeStrings {
     selectedPeopleButtonLabel: string;
     soundLabel: string;
     spokenLanguageStrings?: SpokenLanguageStrings;
-    spotlightLimitReachedParticipantListMenuTitle: string;
+    spotlightLimitReachedMenuTitle: string;
     spotlightPrompt: SpotlightPromptStrings;
     starRatingAriaLabel: string;
     starSurveyFiveStarText: string;
@@ -809,10 +811,10 @@ export interface CallCompositeStrings {
     startCaptionsButtonOnLabel?: string;
     startCaptionsButtonTooltipOffContent?: string;
     startCaptionsButtonTooltipOnContent?: string;
-    startSpotlightParticipantListMenuLabel: string;
+    startSpotlightMenuLabel: string;
     stopAllSpotlightMenuLabel: string;
-    stopSpotlightOnSelfParticipantListMenuLabel: string;
-    stopSpotlightParticipantListMenuLabel: string;
+    stopSpotlightMenuLabel: string;
+    stopSpotlightOnSelfMenuLabel: string;
     surveyConfirmButtonLabel: string;
     surveyIssues: SurveyIssues;
     SurveyIssuesHeadingStrings: SurveyIssuesHeadingStrings;
@@ -950,7 +952,6 @@ export interface CallState {
     callerInfo: CallerInfo;
     capabilitiesFeature?: CapabilitiesFeatureState;
     captionsFeature: CaptionsCallFeatureState;
-    // @beta
     contentSharingRemoteParticipant?: string;
     diagnostics: DiagnosticsCallFeatureState;
     direction: CallDirection;
@@ -963,9 +964,9 @@ export interface CallState {
     kind: CallKind;
     // @beta
     localParticipantReaction?: ReactionState;
+    localRecording: LocalRecordingCallFeatureState;
     localVideoStreams: LocalVideoStreamState[];
     optimalVideoCount: OptimalVideoCountFeatureState;
-    // @beta
     pptLive: PPTLiveCallFeatureState;
     raiseHand: RaiseHandCallFeature;
     recording: RecordingCallFeature;
@@ -1657,7 +1658,7 @@ export type ChatAdapterUiState = {
 };
 
 // @public
-export type ChatAttachmentType = 'unknown' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'image' | /* @conditional-compile-remove(file-sharing) */ 'file';
+export type ChatAttachmentType = 'unknown' | 'image' | /* @conditional-compile-remove(file-sharing) */ 'file';
 
 // @public
 export type ChatBaseSelectorProps = {
@@ -2491,7 +2492,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     SurveyStarIconFilled: React_2.JSX.Element;
     StartSpotlightContextualMenuItem: React_2.JSX.Element;
     StopSpotlightContextualMenuItem: React_2.JSX.Element;
-    VideoSpotlighted: React_2.JSX.Element;
+    VideoTileSpotlighted: React_2.JSX.Element;
     RichTextBoldButtonIcon: React_2.JSX.Element;
     RichTextItalicButtonIcon: React_2.JSX.Element;
     RichTextUnderlineButtonIcon: React_2.JSX.Element;
@@ -2648,7 +2649,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     SurveyStarIconFilled: React_2.JSX.Element;
     StartSpotlightContextualMenuItem: React_2.JSX.Element;
     StopSpotlightContextualMenuItem: React_2.JSX.Element;
-    VideoSpotlighted: React_2.JSX.Element;
+    VideoTileSpotlighted: React_2.JSX.Element;
     RichTextBoldButtonIcon: React_2.JSX.Element;
     RichTextItalicButtonIcon: React_2.JSX.Element;
     RichTextUnderlineButtonIcon: React_2.JSX.Element;
@@ -3142,6 +3143,13 @@ export type LocalizationProviderProps = {
     children: React_2.ReactNode;
 };
 
+// @beta
+export interface LocalRecordingCallFeatureState {
+    activeLocalRecordings?: LocalRecordingInfo[];
+    isLocalRecordingActive: boolean;
+    lastStoppedLocalRecording?: LocalRecordingInfo[];
+}
+
 // @public (undocumented)
 export interface LocalVideoCameraCycleButtonProps {
     ariaDescription?: string;
@@ -3344,9 +3352,10 @@ export type MessageThreadSelector = (state: ChatClientState, props: ChatBaseSele
 // @public
 export interface MessageThreadStrings {
     actionMenuMoreOptions?: string;
+    attachmentCardGroupMessage: string;
     blockedWarningLinkText: string;
     blockedWarningText: string;
-    downloadFile: string;
+    downloadAttachment: string;
     editBoxCancelButton: string;
     editBoxPlaceholderText: string;
     editBoxSubmitButton: string;
@@ -3354,7 +3363,6 @@ export interface MessageThreadStrings {
     editedTag: string;
     editMessage: string;
     failToSendTag?: string;
-    fileCardGroupMessage: string;
     friday: string;
     liveAuthorIntro: string;
     messageContentAriaText: string;
@@ -3680,7 +3688,7 @@ export type ParticipantsRemovedListener = (event: {
 // @public
 export type ParticipantState = 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
 
-// @beta
+// @public
 export interface PPTLiveCallFeatureState {
     isActive: boolean;
 }
@@ -3788,13 +3796,14 @@ export type ReadReceiptsBySenderId = {
 
 // @public
 export interface RecordingCallFeature {
+    activeRecordings?: RecordingInfo[];
     isRecordingActive: boolean;
+    lastStoppedRecording?: RecordingInfo[];
 }
 
 // @public
 export interface RemoteParticipantState {
     callEndReason?: CallEndReason;
-    // @beta
     contentSharingStream?: HTMLElement;
     displayName?: string;
     identifier: CommunicationIdentifierKind;
@@ -3815,7 +3824,6 @@ export interface RemoteParticipantState {
 export interface RemoteVideoStreamState {
     id: number;
     isAvailable: boolean;
-    // @beta
     isReceiving: boolean;
     mediaStreamType: MediaStreamType;
     streamSize?: {
@@ -3839,7 +3847,7 @@ export type ResourceDetails = {
 
 // @public
 export type ResourceFetchResult = {
-    sourceUrl: string;
+    sourceUrl?: string;
     error?: Error;
 };
 
@@ -3939,9 +3947,9 @@ export type SendBoxSelector = (state: ChatClientState, props: ChatBaseSelectorPr
 
 // @public
 export interface SendBoxStrings {
-    fileUploadsPendingError: string;
+    attachmentUploadsPendingError: string;
     placeholderText: string;
-    removeFile: string;
+    removeAttachment: string;
     sendButtonAriaLabel: string;
     textTooLong: string;
     uploadCompleted: string;
@@ -4413,7 +4421,7 @@ export const useDeviceManager: () => StatefulDeviceManager | undefined;
 export const usePropsFor: <Component extends (props: any) => JSX.Element>(component: Component, type?: 'calling' | 'chat') => ComponentProps<Component>;
 
 // @public
-export const useSelector: <ParamT extends Selector | undefined>(selector: ParamT, selectorProps?: (ParamT extends Selector ? Parameters<ParamT>[1] : undefined) | undefined, type?: 'calling' | 'chat') => ParamT extends Selector ? ReturnType<ParamT> : undefined;
+export const useSelector: <ParamT extends Selector | undefined>(selector: ParamT, selectorProps?: ParamT extends Selector ? Parameters<ParamT>[1] : undefined, type?: 'calling' | 'chat') => ParamT extends Selector ? ReturnType<ParamT> : undefined;
 
 // @beta
 export const useTeamsCall: () => undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
@@ -4523,9 +4531,9 @@ export interface VideoGalleryProps {
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
     onStartLocalSpotlight?: () => Promise<void>;
-    onStartRemoteSpotlight?: (userIds?: string[]) => Promise<void>;
+    onStartRemoteSpotlight?: (userIds: string[]) => Promise<void>;
     onStopLocalSpotlight?: () => Promise<void>;
-    onStopRemoteSpotlight?: (userIds?: string[]) => Promise<void>;
+    onStopRemoteSpotlight?: (userIds: string[]) => Promise<void>;
     onUnpinParticipant?: (userId: string) => void;
     overflowGalleryPosition?: OverflowGalleryPosition;
     pinnedParticipants?: string[];

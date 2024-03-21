@@ -129,8 +129,6 @@ const extractAttachmentUrl = (attachment: ChatAttachment): string => {
 };
 const processChatMessageContent = (message: ChatMessageWithStatus): string | undefined => {
   let content = message.content?.message;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-
   if (
     message.content?.attachments &&
     message.content?.attachments.length > 0 &&
@@ -138,7 +136,6 @@ const processChatMessageContent = (message: ChatMessageWithStatus): string | und
   ) {
     const attachments: ChatAttachment[] = message.content?.attachments;
     // Fill in the src here
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     if (content) {
       const document = new DOMParser().parseFromString(content ?? '', 'text/html');
       document.querySelectorAll('img').forEach((img) => {
@@ -167,7 +164,6 @@ const processChatMessageContent = (message: ChatMessageWithStatus): string | und
   return content;
 };
 
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 const generateImageAttachmentImgHtml = (message: ChatMessageWithStatus, attachment: ChatAttachment): string => {
   if (attachment.previewUrl !== undefined) {
     const contentType = extractAttachmentContentTypeFromName(attachment.name);
@@ -180,11 +176,10 @@ const generateImageAttachmentImgHtml = (message: ChatMessageWithStatus, attachme
   return '';
 };
 
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 const getResourceSourceUrl = (result?: ResourceFetchResult): string => {
   let src = '';
   if (result) {
-    if (result.error) {
+    if (result.error || !result.sourceUrl) {
       // In case of an error we set src to some invalid value to show broken image
       src = 'blob://';
     } else {
@@ -194,7 +189,6 @@ const getResourceSourceUrl = (result?: ResourceFetchResult): string => {
   return src;
 };
 
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 const extractAttachmentContentTypeFromName = (name?: string): string => {
   if (name === undefined) {
     return '';
@@ -376,10 +370,7 @@ const isMessageValidToRender = (message: ChatMessageWithStatus): boolean => {
   if (message.deletedOn) {
     return false;
   }
-  if (
-    message.metadata?.fileSharingMetadata ||
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ message.content?.attachments
-  ) {
+  if (message.metadata?.fileSharingMetadata || message.content?.attachments) {
     return true;
   }
   /* @conditional-compile-remove(data-loss-prevention) */

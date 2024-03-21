@@ -28,7 +28,8 @@ export const buildUrlForChatAppUsingFakeAdapter = (
   serverUrl: string,
   fakeChatAdapterArgs: _FakeChatAdapterArgs
 ): string => {
-  return `${serverUrl}?fakeChatAdapterArgs=${JSON.stringify(fakeChatAdapterArgs)}`;
+  const args = { ...fakeChatAdapterArgs, serverUrl: serverUrl };
+  return `${serverUrl}?fakeChatAdapterArgs=${JSON.stringify(args)}`;
 };
 
 /**
