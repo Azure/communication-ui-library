@@ -149,13 +149,20 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   let videoStream: VideoGalleryStream | undefined = undefined;
   let screenShareStream: VideoGalleryStream | undefined = undefined;
 
+  /**
+   * There is a bug from the calling sdk where if a user leaves and rejoins immediately
+   * it adds 2 more potential streams this remote participant can use. The old 2 streams
+   * still show as available and that is how we got a frozen stream in this case. The stopgap
+   * until streams accurately reflect their availability is to always prioritize the latest streams of a certain type
+   * e.g findLast instead of find
+   */
   const sdkRemoteVideoStream =
-    Object.values(rawVideoStreamsArray).find((i) => i.mediaStreamType === 'Video' && i.isAvailable) ||
-    Object.values(rawVideoStreamsArray).find((i) => i.mediaStreamType === 'Video');
+    Object.values(rawVideoStreamsArray).findLast((i) => i.mediaStreamType === 'Video' && i.isAvailable) ||
+    Object.values(rawVideoStreamsArray).findLast((i) => i.mediaStreamType === 'Video');
 
   const sdkScreenShareStream =
-    Object.values(rawVideoStreamsArray).find((i) => i.mediaStreamType === 'ScreenSharing' && i.isAvailable) ||
-    Object.values(rawVideoStreamsArray).find((i) => i.mediaStreamType === 'ScreenSharing');
+    Object.values(rawVideoStreamsArray).findLast((i) => i.mediaStreamType === 'ScreenSharing' && i.isAvailable) ||
+    Object.values(rawVideoStreamsArray).findLast((i) => i.mediaStreamType === 'ScreenSharing');
 
   if (sdkRemoteVideoStream) {
     videoStream = convertRemoteVideoStreamToVideoGalleryStream(sdkRemoteVideoStream);
