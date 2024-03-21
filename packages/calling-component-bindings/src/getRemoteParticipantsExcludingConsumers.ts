@@ -17,7 +17,6 @@ export const getRemoteParticipantsExcludingConsumers = createSelector(
         [keys: string]: RemoteParticipantState;
       }
     | undefined => {
-    /* @conditional-compile-remove(rooms) */
     {
       const newRemoteParticipants = { ...remoteParticipants };
       Object.keys(newRemoteParticipants).forEach((k) => {
@@ -27,6 +26,5 @@ export const getRemoteParticipantsExcludingConsumers = createSelector(
       });
       return newRemoteParticipants;
     }
-    return remoteParticipants;
   }
 );
