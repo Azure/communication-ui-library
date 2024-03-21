@@ -37,6 +37,11 @@ type VisibleReaction = {
   reactionMovementIndex: number;
 };
 
+type ReceivedReaction = {
+  id: string;
+  status: 'animating' | 'completedAnimating' | 'ignored';
+};
+
 /* @conditional-compile-remove(reaction) */
 /**
  * Reaction overlay component for presentation mode
@@ -58,9 +63,10 @@ export const RemoteContentShareReactionOverlay = React.memo(
     // Reactions that are currently being animated
     const [visibleReactions, setVisibleReactions] = useState<VisibleReaction[]>([]);
 
-    // Dict of userId to reaction IDs. These are the set of ignored reactions when there were
-    // too many reactions of the same type already playing.
-    const ignoredReactions = useRef<Record<string, string>>({});
+    // Dict of userId to a reaction status. This is used to track the latest received reaction
+    // per user to avoid animating the same reaction multiple times and to limit the number of
+    // active reactions of a certain type.
+    const latestReceivedReaction = useRef<Record<string, ReceivedReaction>>({});
 
     // Track the number of active reactions of each type to limit the number of active reactions
     // of a certain type.
@@ -84,20 +90,26 @@ export const RemoteContentShareReactionOverlay = React.memo(
       (reaction: Reaction, userId: string): void => {
         const combinedKey = getCombinedKey(userId, reaction.reactionType, reaction.receivedOn);
 
-        const alreadyShowing = visibleReactions.find((reaction) => reaction.id === combinedKey);
-        const alreadyIgnored = ignoredReactions.current[userId] === combinedKey;
-        if (alreadyShowing || alreadyIgnored) {
+        const alreadyHandled = latestReceivedReaction.current[userId]?.id === combinedKey;
+        if (alreadyHandled) {
           return;
         }
 
         const activeCount = activeTypeCount.current[reaction.reactionType];
         // Limit the number of active reactions of a certain type to 10
         if (activeCount >= 10) {
-          ignoredReactions.current[userId] = combinedKey;
+          latestReceivedReaction.current[userId] = {
+            id: combinedKey,
+            status: 'ignored'
+          };
           return;
         }
 
         activeTypeCount.current[reaction.reactionType] += 1;
+        latestReceivedReaction.current[userId] = {
+          id: combinedKey,
+          status: 'animating'
+        };
         setVisibleReactions((prev) => [
           ...visibleReactions,
           { reaction: reaction, id: combinedKey, reactionMovementIndex: prev.length }
@@ -109,6 +121,11 @@ export const RemoteContentShareReactionOverlay = React.memo(
 
     const removeVisibleReaction = (reactionType: string, id: string): void => {
       activeTypeCount.current[reactionType] -= 1;
+      Object.entries(latestReceivedReaction.current).forEach(([userId, reaction]) => {
+        if (reaction.id === id) {
+          latestReceivedReaction.current[userId].status = 'completedAnimating';
+        }
+      });
       setVisibleReactions(visibleReactions.filter((reaction) => reaction.id !== id));
     };
 
