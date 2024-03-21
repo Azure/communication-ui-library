@@ -1318,7 +1318,7 @@ export type ChatAdapterUiState = {
 };
 
 // @public
-export type ChatAttachmentType = 'unknown' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'image';
+export type ChatAttachmentType = 'unknown' | 'image';
 
 // @public
 export type ChatBaseSelectorProps = {
@@ -3079,6 +3079,7 @@ export interface RemoteParticipantState {
 export interface RemoteVideoStreamState {
     id: number;
     isAvailable: boolean;
+    isReceiving: boolean;
     mediaStreamType: MediaStreamType;
     streamSize?: {
         width: number;

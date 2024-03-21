@@ -1,8 +1,8 @@
 {
-  "type": "prerelease",
+  "type": "minor",
   "area": "feature",
-  "workstream": "Call Transfer",
-  "comment": "Update Transfer API to use new SDK 'transferAccepted' event",
+  "workstream": "Is receiving spinner",
+  "comment": "Stabilize feature ",
   "packageName": "@azure/communication-react",
   "email": "dmceachern@microsoft.com",
   "dependentChangeType": "patch"

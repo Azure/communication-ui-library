@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "fix",
-  "workstream": "UpdateMessage",
-  "comment": "Bug Fix metadata was not being sent up to the handler",
-  "packageName": "@azure/communication-react",
-  "email": "9044372+JoshuaLai@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "area": "fix",
-  "workstream": "InlineImages",
-  "comment": "BugFix on showing broken img icon into the image gallery on error",
-  "packageName": "@azure/communication-react",
-  "email": "9044372+JoshuaLai@users.noreply.github.com",
-  "dependentChangeType": "none"
-}
