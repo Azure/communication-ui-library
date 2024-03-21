@@ -273,6 +273,11 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     );
   }, [localeStrings.sendButtonAriaLabel, onRenderSendIcon, sendMessageOnClick]);
 
+  /* @conditional-compile-remove(file-sharing) */
+  const hasFileUploads = useMemo(() => {
+    return hasCompletedFileUploads(activeFileUploads) || hasIncompleteFileUploads(activeFileUploads);
+  }, [activeFileUploads]);
+
   return (
     <Stack>
       <RichTextSendBoxErrors {...sendBoxErrorsProps} />
@@ -288,7 +293,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         /* @conditional-compile-remove(file-sharing) */
         onRenderFileUploads={onRenderFileUploads}
         /* @conditional-compile-remove(file-sharing) */
-        hasFiles={hasCompletedFileUploads(activeFileUploads) || hasIncompleteFileUploads(activeFileUploads)}
+        hasFiles={hasFileUploads}
       />
     </Stack>
   );
