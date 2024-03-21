@@ -279,9 +279,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
       /* @conditional-compile-remove(close-captions) */ showCaptionsButton ||
       props.onUserSetGalleryLayout);
 
-  /*@conditional-compile-remove(rooms) */
   const role = props.callAdapter.getState().call?.role;
-  /*@conditional-compile-remove(rooms) */
   const hideRaiseHandButtonInRoomsCall =
     props.callAdapter.getState().isRoomsCall && role && ['Consumer', 'Unknown'].includes(role);
   /*@conditional-compile-remove(reaction) */
@@ -366,16 +364,14 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                           />
                         )
                     }
-                    {!props.mobileView &&
-                      isEnabled(options.raiseHandButton) &&
-                      /* @conditional-compile-remove(rooms) */ !hideRaiseHandButtonInRoomsCall && (
-                        <RaiseHand
-                          displayType={options.displayType}
-                          styles={commonButtonStyles}
-                          /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-                          disabled={props.disableButtonsForHoldScreen || isDisabled(options.microphoneButton)}
-                        />
-                      )}
+                    {!props.mobileView && isEnabled(options.raiseHandButton) && !hideRaiseHandButtonInRoomsCall && (
+                      <RaiseHand
+                        displayType={options.displayType}
+                        styles={commonButtonStyles}
+                        /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+                        disabled={props.disableButtonsForHoldScreen || isDisabled(options.microphoneButton)}
+                      />
+                    )}
                     {showDtmfDialerButton(options) && props.onSetDialpadPage !== undefined && (
                       <DtmfDialpadButton
                         styles={commonButtonStyles}
