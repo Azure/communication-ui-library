@@ -13,6 +13,7 @@ import { videoContainerStyles } from '../styles/VideoTile.styles';
 import { getEmojiResource } from './utils/videoGalleryLayoutUtils';
 /* @conditional-compile-remove(reaction) */
 import {
+  IReactionStyleBucket,
   generateStartPositionWave,
   getReactionMovementStyle,
   getReactionStyleBucket,
@@ -73,7 +74,7 @@ export const RemoteContentShareReactionOverlay = React.memo(
 
     // Used to track the total number of reactions ever played. This is a helper variable
     // to calculate the reaction movement index (i.e. the .left position of the reaction)
-    const totalReactionCounter = useRef<number>(0);
+    const visibleReactionPosition = useRef<boolean[]>(new Array<boolean>(55).fill(false));
 
     const remoteParticipantReactions: Reaction[] = useMemo(
       () =>
@@ -82,6 +83,11 @@ export const RemoteContentShareReactionOverlay = React.memo(
           .filter((reaction): reaction is Reaction => !!reaction) ?? [],
       [remoteParticipants]
     );
+
+    // We can optimize this by applying data structure algorithm and bring this search to log2 N
+    const findFirstEmptyPosition = (): number => {
+      return visibleReactionPosition.current.findIndex((item) => item === false);
+    };
 
     const updateVisibleReactions = useCallback(
       (reaction: Reaction, userId: string): void => {
@@ -107,7 +113,8 @@ export const RemoteContentShareReactionOverlay = React.memo(
           id: combinedKey,
           status: 'animating'
         };
-        const reactionMovementIndex = totalReactionCounter.current++ % 50;
+        const reactionMovementIndex = findFirstEmptyPosition();
+        visibleReactionPosition.current[reactionMovementIndex] = true;
         setVisibleReactions([
           ...visibleReactions,
           {
@@ -122,14 +129,15 @@ export const RemoteContentShareReactionOverlay = React.memo(
       [activeTypeCount, visibleReactions]
     );
 
-    const removeVisibleReaction = (reactionType: string, id: string): void => {
+    const removeVisibleReaction = (reactionType: string, id: string, index: number): void => {
+      setVisibleReactions(visibleReactions.filter((reaction) => reaction.id !== id));
+      visibleReactionPosition.current[index] = false;
       activeTypeCount.current[reactionType] -= 1;
       Object.entries(latestReceivedReaction.current).forEach(([userId, reaction]) => {
         if (reaction.id === id) {
           latestReceivedReaction.current[userId].status = 'completedAnimating';
         }
       });
-      setVisibleReactions(visibleReactions.filter((reaction) => reaction.id !== id));
     };
 
     // Update visible reactions when local participant sends a reaction
@@ -149,13 +157,13 @@ export const RemoteContentShareReactionOverlay = React.memo(
     }, [remoteParticipantReactions, remoteParticipants, updateVisibleReactions]);
 
     // Note: canRenderReaction shouldn't be needed as we remove the animation on the onAnimationEnd event
-    const canRenderReaction = (reaction: Reaction, id: string): boolean => {
+    const canRenderReaction = (reaction: Reaction, id: string, movementIndex: number): boolean => {
       // compare current time to reaction.received at and see if more than 4 seconds has elapsed
       const canRender = Date.now() - getReceivedUnixTime(reaction.receivedOn) < REACTION_SCREEN_SHARE_ANIMATION_TIME_MS;
 
       // Clean up the reaction if it's not in the visible reaction list
       if (!canRender) {
-        removeVisibleReaction(reaction?.reactionType, id);
+        removeVisibleReaction(reaction?.reactionType, id, movementIndex);
       }
 
       return canRender;
@@ -183,7 +191,7 @@ export const RemoteContentShareReactionOverlay = React.memo(
         {visibleReactions.map((reaction) => (
           <div key={reaction.id} style={reactionOverlayStyle}>
             <div className="reaction-item">
-              {canRenderReaction(reaction.reaction, reaction.id) && (
+              {canRenderReaction(reaction.reaction, reaction.id, reaction.reactionMovementIndex) && (
                 // First div - Section that fixes the travel height and applies the movement animation
                 // Second div - Keeps track of active sprites and responsible for marking, counting and removing reactions
                 // Third div - Responsible for opacity controls as the sprite emoji animates
@@ -198,7 +206,11 @@ export const RemoteContentShareReactionOverlay = React.memo(
                   <div>
                     <div
                       onAnimationEnd={() => {
-                        removeVisibleReaction(reaction.reaction.reactionType, reaction.id);
+                        removeVisibleReaction(
+                          reaction.reaction.reactionType,
+                          reaction.id,
+                          reaction.reactionMovementIndex
+                        );
                       }}
                       style={opacityAnimationStyles(reaction.styleBucket.opacityMax)}
                     >
