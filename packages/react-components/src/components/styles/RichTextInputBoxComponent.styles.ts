@@ -20,14 +20,7 @@ export const inputBoxRichTextStackItemStyle = mergeStyles({ paddingBottom: '0.37
 /**
  * @private
  */
-export const inputBoxContentStackStyle = (useHorizontalLayout: boolean): string => {
-  return mergeStyles({
-    overflow: 'hidden',
-    horizontal: useHorizontalLayout,
-    horizontalAlign: useHorizontalLayout ? 'end' : 'space-between',
-    wrap: useHorizontalLayout
-  });
-};
+export const inputBoxContentStackStyle = mergeStyles({ overflow: 'hidden' });
 
 /**
  * @private
