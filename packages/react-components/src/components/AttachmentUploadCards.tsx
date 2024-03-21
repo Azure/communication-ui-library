@@ -113,11 +113,7 @@ export const _AttachmentUploadCards = (props: FileUploadCardsProps): JSX.Element
               progress={attachment.progress}
               key={attachment.id}
               attachmentExtension={extension(attachment.filename)}
-              actionIcon={
-                // <IconButton className={iconButtonClassName} ariaLabel={removeAttachmentButtonString()}>
-                <Icon iconName="CancelFileUpload" style={actionIconStyle} />
-                // </IconButton>
-              }
+              actionIcon={<Icon iconName="CancelFileUpload" style={actionIconStyle} />}
               actionHandler={() => {
                 props.onCancelFileUpload && props.onCancelFileUpload(attachment.id);
               }}

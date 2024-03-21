@@ -64,7 +64,7 @@ export interface _AttachmentCardProps {
 
 /**
  * @internal
- * A component for displaying a file card with file icon and progress bar.
+ * A component for displaying an attachment card with attachment icon and progress bar.
  */
 export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
   const { attachmentName, attachmentExtension, progress, actionIcon, actionHandler } = props;
@@ -78,7 +78,9 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
       name: actionIcon && actionIcon?.props.ariaLabel,
       icon: actionIcon ?? <></>,
       onClick: (attachment: AttachmentMetadata) => {
-        actionHandler?.();
+        if (attachment) {
+          actionHandler?.();
+        }
         // window.open((attachment as AttachmentMetadata).url, '_blank', 'noopener,noreferrer');
       }
     }
@@ -93,7 +95,7 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
   };
 
   // placeholder before refactoring the props
-  const onDownloadErrorMessage = (errorMessage: string) => {
+  const onDownloadErrorMessage = (errorMessage: string): void => {
     console.log(errorMessage);
   };
 
@@ -122,7 +124,7 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
   });
 
   const fileNameContainerClassName = mergeStyles({
-    marginTop: _pxToRem(4),
+    marginTop: _pxToRem(5),
     width: '5.75rem',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
@@ -132,7 +134,7 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
   });
 
   return (
-    <div>
+    <div data-is-focusable={true}>
       <Announcer announcementString={announcerString} ariaLive={'polite'} />
       <Card className={containerClassName} size="small" role="listitem">
         <CardHeader

@@ -223,10 +223,8 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
                   showSpinner ? (
                     <Spinner size={SpinnerSize.medium} aria-live={'polite'} role={'status'} />
                   ) : true && isShowDownloadIcon(attachment) ? (
-                    // <IconButton className={iconButtonClassName} ariaLabel={downloadAttachmentButtonString()}>
                     <DownloadIconTrampoline />
-                  ) : // </IconButton>
-                  undefined
+                  ) : undefined
                 }
                 actionHandler={() => fileDownloadHandler(userId, attachment)}
               />
