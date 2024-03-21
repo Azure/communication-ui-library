@@ -1,21 +1,27 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Icon } from '@fluentui/react';
+import { Icon, useTheme } from '@fluentui/react';
 import { _AttachmentCard } from '@internal/react-components';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
+import { FluentV9ThemeProvider } from '../../../../react-components/src/theming/FluentV9ThemeProvider';
 import { COMPONENT_FOLDER_PREFIX } from '../../constants';
 import { hiddenControl } from '../../controlsUtils';
 
 const AttachmentCardStory = (args): JSX.Element => {
+  const theme = useTheme();
   return (
-    <_AttachmentCard
-      fileName={args.fileName}
-      fileExtension={args.fileExtension}
-      actionIcon={<Icon iconName={args.actionIconName} />}
-      progress={args.progress}
-    />
+    <FluentV9ThemeProvider v8Theme={theme}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+        <_AttachmentCard
+          attachmentName={args.fileName}
+          attachmentExtension={args.fileExtension}
+          actionIcon={<Icon iconName={args.actionIconName} />}
+          progress={args.progress}
+        />
+      </div>
+    </FluentV9ThemeProvider>
   );
 };
 
@@ -24,8 +30,8 @@ const AttachmentCardStory = (args): JSX.Element => {
 export const AttachmentCard = AttachmentCardStory.bind({});
 
 export default {
-  id: `${COMPONENT_FOLDER_PREFIX}-internal-filecard`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Internal/File Card`,
+  id: `${COMPONENT_FOLDER_PREFIX}-internal-attachmentcard`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Internal/Attachment Card`,
   component: _AttachmentCard,
   argTypes: {
     fileName: { control: 'text', defaultValue: 'SampleFileName.pdf' },

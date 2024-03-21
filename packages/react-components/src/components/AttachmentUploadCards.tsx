@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Icon, IconButton } from '@fluentui/react';
+import { Icon } from '@fluentui/react';
 import React from 'react';
 import { _AttachmentCard } from './AttachmentCard';
 import { _AttachmentCardGroup } from './AttachmentCardGroup';
 import { extension } from './utils';
-import { iconButtonClassName } from './styles/IconButton.styles';
-import { useMemo } from 'react';
-import { useLocaleAttachmentCardStringsTrampoline } from './utils/common';
+// import { iconButtonClassName } from './styles/IconButton.styles';
+// import { useMemo } from 'react';
+// import { useLocaleAttachmentCardStringsTrampoline } from './utils/common';
 import { SendBoxErrorBarError } from './SendBoxErrorBar';
 
 /**
@@ -89,14 +89,14 @@ const actionIconStyle = { height: '1rem' };
 export const _AttachmentUploadCards = (props: FileUploadCardsProps): JSX.Element => {
   const attachments = props.activeFileUploads;
 
-  const localeStrings = useLocaleAttachmentCardStringsTrampoline();
+  // const localeStrings = useLocaleAttachmentCardStringsTrampoline();
 
-  const removeAttachmentButtonString = useMemo(
-    () => () => {
-      return props.strings?.removeAttachment ?? localeStrings.removeAttachment;
-    },
-    [props.strings?.removeAttachment, localeStrings.removeAttachment]
-  );
+  // const removeAttachmentButtonString = useMemo(
+  //   () => () => {
+  //     return props.strings?.removeAttachment ?? localeStrings.removeAttachment;
+  //   },
+  //   [props.strings?.removeAttachment, localeStrings.removeAttachment]
+  // );
 
   if (!attachments || attachments.length === 0) {
     return <></>;
@@ -114,9 +114,9 @@ export const _AttachmentUploadCards = (props: FileUploadCardsProps): JSX.Element
               key={attachment.id}
               attachmentExtension={extension(attachment.filename)}
               actionIcon={
-                <IconButton className={iconButtonClassName} ariaLabel={removeAttachmentButtonString()}>
-                  <Icon iconName="CancelFileUpload" style={actionIconStyle} />
-                </IconButton>
+                // <IconButton className={iconButtonClassName} ariaLabel={removeAttachmentButtonString()}>
+                <Icon iconName="CancelFileUpload" style={actionIconStyle} />
+                // </IconButton>
               }
               actionHandler={() => {
                 props.onCancelFileUpload && props.onCancelFileUpload(attachment.id);

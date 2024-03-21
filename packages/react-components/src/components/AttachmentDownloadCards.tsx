@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Icon, IconButton, Spinner, SpinnerSize, TooltipHost } from '@fluentui/react';
+import { Icon, Spinner, SpinnerSize, TooltipHost } from '@fluentui/react';
 import React, { useCallback, useState } from 'react';
 import { useMemo } from 'react';
 /* @conditional-compile-remove(file-sharing) */
 import { useLocale } from '../localization';
 import { _AttachmentCard } from './AttachmentCard';
 import { _AttachmentCardGroup } from './AttachmentCardGroup';
-import { iconButtonClassName } from './styles/IconButton.styles';
+// import { iconButtonClassName } from './styles/IconButton.styles';
 import { _formatString } from '@internal/acs-ui-common';
 
 /**
@@ -47,6 +47,15 @@ export interface AttachmentMetadata {
    * Optional dictionary of meta data associated with the attachment.
    */
   payload?: Record<string, string>;
+}
+
+/**
+ * @beta
+ */
+export interface AttachmentMenuAction {
+  name: string;
+  icon: JSX.Element;
+  onClick: (attachment: AttachmentMetadata) => void;
 }
 
 /**
@@ -214,10 +223,10 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
                   showSpinner ? (
                     <Spinner size={SpinnerSize.medium} aria-live={'polite'} role={'status'} />
                   ) : true && isShowDownloadIcon(attachment) ? (
-                    <IconButton className={iconButtonClassName} ariaLabel={downloadAttachmentButtonString()}>
-                      <DownloadIconTrampoline />
-                    </IconButton>
-                  ) : undefined
+                    // <IconButton className={iconButtonClassName} ariaLabel={downloadAttachmentButtonString()}>
+                    <DownloadIconTrampoline />
+                  ) : // </IconButton>
+                  undefined
                 }
                 actionHandler={() => fileDownloadHandler(userId, attachment)}
               />
