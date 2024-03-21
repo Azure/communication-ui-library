@@ -150,13 +150,7 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
         disabled: !!disabled
       })}
     >
-      <Stack
-        grow
-        horizontal={useHorizontalLayout}
-        horizontalAlign={useHorizontalLayout ? 'end' : 'space-between'}
-        className={inputBoxContentStackStyle}
-        wrap={useHorizontalLayout}
-      >
+      <Stack grow className={inputBoxContentStackStyle(useHorizontalLayout)}>
         {/* fixes the issue when flex box can grow to be bigger than parent */}
         <Stack grow className={inputBoxRichTextStackStyle}>
           {/* Add padding to stack.item */}
