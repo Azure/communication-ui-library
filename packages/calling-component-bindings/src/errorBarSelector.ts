@@ -157,7 +157,7 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
     }
 
     appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.unmute', 'unmuteGeneric');
-    /* @conditional-compile-remove(video-background-effects) */
+
     appendActiveErrorIfDefined(
       activeErrorMessages,
       latestErrors,
