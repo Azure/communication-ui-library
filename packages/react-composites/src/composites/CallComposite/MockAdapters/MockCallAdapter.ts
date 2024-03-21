@@ -14,7 +14,7 @@ import { CallKind } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { EventEmitter } from 'events';
-import type { CallAdapter, CallAdapterState } from './adapter';
+import type { CallAdapter, CallAdapterState } from '../adapter';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 

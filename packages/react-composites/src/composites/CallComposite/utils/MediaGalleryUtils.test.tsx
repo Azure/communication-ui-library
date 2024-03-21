@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import { COMPOSITE_LOCALE_EN_US } from '../../localization/locales';
 import { LocalizationProvider } from '../../localization/LocalizationProvider';
 import { CallAdapterProvider } from '../adapter/CallAdapterProvider';
-import { _MockCallAdapter } from '../MockCallAdapter';
+import { _MockCallAdapter } from '../MockAdapters/MockCallAdapter';
 import { useParticipantChangedAnnouncement } from './MediaGalleryUtils';
 import { act } from 'react-dom/test-utils';
 import { initializeIcons } from '@fluentui/react';
