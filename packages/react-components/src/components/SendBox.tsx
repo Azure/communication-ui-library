@@ -23,6 +23,7 @@ import { hasCompletedFileUploads, hasIncompleteFileUploads } from './utils/SendB
 import { MAXIMUM_LENGTH_OF_MESSAGE, isMessageTooLong, sanitizeText } from './utils/SendBoxUtils';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from './MentionPopover';
+/* @conditional-compile-remove(file-sharing) */
 import { FluentV9ThemeProvider } from '../theming/FluentV9ThemeProvider';
 
 /**
