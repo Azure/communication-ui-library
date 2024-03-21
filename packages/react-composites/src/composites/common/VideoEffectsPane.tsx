@@ -140,17 +140,10 @@ export const VideoEffectsPaneContent = (props: {
     };
     adapter.updateSelectedVideoBackgroundEffect(noneEffect);
   }
-  return VideoEffectsPaneTrampoline(
-    onDismissError,
-    activeVideoEffectError,
-
-    selectableVideoEffects,
-
-    onEffectChange
-  );
+  return VideoEffectsPaneBody(onDismissError, activeVideoEffectError, selectableVideoEffects, onEffectChange);
 };
 
-const VideoEffectsPaneTrampoline = (
+const VideoEffectsPaneBody = (
   onDismissError: (error: ActiveErrorMessage) => void,
   activeVideoEffectError?: ActiveErrorMessage,
   selectableVideoEffects?: _VideoEffectsItemProps[],
@@ -185,7 +178,6 @@ const VideoEffectsPaneTrampoline = (
       />
     </Stack>
   );
-  return <></>;
 };
 
 const backgroundPickerStyles = {
