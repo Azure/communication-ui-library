@@ -1658,7 +1658,7 @@ export type ChatAdapterUiState = {
 };
 
 // @public
-export type ChatAttachmentType = 'unknown' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'image' | /* @conditional-compile-remove(file-sharing) */ 'file';
+export type ChatAttachmentType = 'unknown' | 'image' | /* @conditional-compile-remove(file-sharing) */ 'file';
 
 // @public
 export type ChatBaseSelectorProps = {
@@ -3353,9 +3353,10 @@ export type MessageThreadSelector = (state: ChatClientState, props: ChatBaseSele
 // @public
 export interface MessageThreadStrings {
     actionMenuMoreOptions?: string;
+    attachmentCardGroupMessage: string;
     blockedWarningLinkText: string;
     blockedWarningText: string;
-    downloadFile: string;
+    downloadAttachment: string;
     editBoxCancelButton: string;
     editBoxPlaceholderText: string;
     editBoxSubmitButton: string;
@@ -3363,7 +3364,6 @@ export interface MessageThreadStrings {
     editedTag: string;
     editMessage: string;
     failToSendTag?: string;
-    fileCardGroupMessage: string;
     friday: string;
     liveAuthorIntro: string;
     messageContentAriaText: string;
@@ -3948,9 +3948,9 @@ export type SendBoxSelector = (state: ChatClientState, props: ChatBaseSelectorPr
 
 // @public
 export interface SendBoxStrings {
-    fileUploadsPendingError: string;
+    attachmentUploadsPendingError: string;
     placeholderText: string;
-    removeFile: string;
+    removeAttachment: string;
     sendButtonAriaLabel: string;
     textTooLong: string;
     uploadCompleted: string;

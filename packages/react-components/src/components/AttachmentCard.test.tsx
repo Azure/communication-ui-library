@@ -2,33 +2,33 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-import { _FileCard, _FileCardProps } from './FileCard';
+import { _AttachmentCard, _AttachmentCardProps } from './AttachmentCard';
 import { render, screen } from '@testing-library/react';
 import { Icon, IconButton, registerIcons } from '@fluentui/react';
 
-describe('FileCard should be rendered properly', () => {
+describe('AttachmentCard should be rendered properly', () => {
   beforeEach(() => {
     registerIcons({
       icons: {
         docx24_svg: <></>,
-        cancelfileupload: <></>
+        cancelattachmentupload: <></>
       }
     });
   });
 
   it('should render the component', () => {
-    renderFileCardWithDefaults();
-    expect(screen.getByText('MockFileCard')).toBeDefined();
+    renderAttachmentCardWithDefaults();
+    expect(screen.getByText('MockAttachmentCard')).toBeDefined();
   });
 
   it('should render the component with progress bar', () => {
-    renderFileCardWithDefaults({ progress: 0.5 });
+    renderAttachmentCardWithDefaults({ progress: 0.5 });
     const progressIndicator = screen.getByRole('progressbar');
     expect(progressIndicator.style.width).toBe('50%');
   });
 
   it('should render the component with action icon', () => {
-    renderFileCardWithDefaults({
+    renderAttachmentCardWithDefaults({
       actionIcon: (
         <IconButton>
           <Icon iconName="CancelFileUpload" />
@@ -44,7 +44,7 @@ describe('FileCard should be rendered properly', () => {
 describe('Filecard action handler should be called', () => {
   it('should call the action handler when action icon is clicked', () => {
     const actionHandler = jest.fn();
-    renderFileCardWithDefaults({
+    renderAttachmentCardWithDefaults({
       actionIcon: (
         <IconButton>
           <Icon iconName="CancelFileUpload" />
@@ -59,12 +59,12 @@ describe('Filecard action handler should be called', () => {
   });
 });
 
-const renderFileCardWithDefaults = (props?: Partial<_FileCardProps>): void => {
-  const mergedProps: _FileCardProps = {
-    fileName: 'MockFileCard',
-    fileExtension: 'docx',
+const renderAttachmentCardWithDefaults = (props?: Partial<_AttachmentCardProps>): void => {
+  const mergedProps: _AttachmentCardProps = {
+    attachmentName: 'MockAttachmentCard',
+    attachmentExtension: 'docx',
     ...(props ?? {})
   };
 
-  render(<_FileCard {...mergedProps} />);
+  render(<_AttachmentCard {...mergedProps} />);
 };

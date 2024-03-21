@@ -39,7 +39,6 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
     onActionButtonClick,
     /* @conditional-compile-remove(date-time-customization) */
     onDisplayDateTimeString,
-    /* @conditional-compile-remove(image-overlay) */
     inlineImageOptions,
     /* @conditional-compile-remove(mention) */
     mentionOptions,
@@ -84,7 +83,6 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
             onActionButtonClick={onActionButtonClick}
             /* @conditional-compile-remove(date-time-customization) */
             onDisplayDateTimeString={onDisplayDateTimeString}
-            /* @conditional-compile-remove(image-overlay) */
             inlineImageOptions={inlineImageOptions}
             /* @conditional-compile-remove(mention) */
             mentionOptions={mentionOptions}
@@ -105,7 +103,6 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
       userId,
       /* @conditional-compile-remove(date-time-customization) */
       onDisplayDateTimeString,
-      /* @conditional-compile-remove(image-overlay) */
       inlineImageOptions,
       /* @conditional-compile-remove(mention) */
       mentionOptions,
