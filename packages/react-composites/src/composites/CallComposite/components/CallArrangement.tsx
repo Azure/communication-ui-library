@@ -211,11 +211,12 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   );
 
   /* @conditional-compile-remove(spotlight) */
-  const canSpotlight = adapter.getState().call?.capabilitiesFeature?.capabilities.spotlightParticipant.isPresent;
+  const canRemoveSpotlight =
+    adapter.getState().call?.capabilitiesFeature?.capabilities.removeParticipantsSpotlight.isPresent;
   /* @conditional-compile-remove(spotlight) */
   const stopAllSpotlight = useMemo(
-    () => (canSpotlight ? () => adapter.stopAllSpotlight() : undefined),
-    [canSpotlight, adapter]
+    () => (canRemoveSpotlight ? () => adapter.stopAllSpotlight() : undefined),
+    [canRemoveSpotlight, adapter]
   );
 
   /* @conditional-compile-remove(spotlight) */
