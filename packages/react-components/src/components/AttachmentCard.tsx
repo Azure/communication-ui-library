@@ -88,8 +88,9 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
 
   // placeholder before refactoring the props
   const attachment: AttachmentMetadata = {
-    extension: attachmentExtension,
+    /* @conditional-compile-remove(file-sharing) */
     id: 'attachmentId',
+    extension: attachmentExtension,
     name: attachmentName,
     url: 'https://localhost' // placeholder not used
   };
