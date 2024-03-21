@@ -308,19 +308,28 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     return props.onRenderFileUploads ? (
       props.onRenderFileUploads()
     ) : (
-      <Stack className={attachmentUploadCardsStyles}>
-        <_AttachmentUploadCards
-          activeFileUploads={activeFileUploads}
-          onCancelFileUpload={props.onCancelFileUpload}
-          strings={{
-            removeAttachment: props.strings?.removeAttachment ?? localeStrings.removeAttachment,
-            uploading: props.strings?.uploading ?? localeStrings.uploading,
-            uploadCompleted: props.strings?.uploadCompleted ?? localeStrings.uploadCompleted
-          }}
-        />
-      </Stack>
+      <FluentV9ThemeProvider v8Theme={theme}>
+        <Stack className={attachmentUploadCardsStyles}>
+          <_AttachmentUploadCards
+            activeFileUploads={activeFileUploads}
+            onCancelFileUpload={props.onCancelFileUpload}
+            strings={{
+              removeAttachment: props.strings?.removeAttachment ?? localeStrings.removeAttachment,
+              uploading: props.strings?.uploading ?? localeStrings.uploading,
+              uploadCompleted: props.strings?.uploadCompleted ?? localeStrings.uploadCompleted
+            }}
+          />
+        </Stack>
+      </FluentV9ThemeProvider>
     );
-  }, [activeFileUploads, props, localeStrings]);
+  }, [
+    activeFileUploads,
+    props,
+    theme,
+    localeStrings.removeAttachment,
+    localeStrings.uploading,
+    localeStrings.uploadCompleted
+  ]);
 
   return (
     <Stack
@@ -378,7 +387,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
         </InputBoxComponent>
         {
           /* @conditional-compile-remove(file-sharing) */
-          <FluentV9ThemeProvider v8Theme={theme}>onRenderFileUploads()</FluentV9ThemeProvider>
+          onRenderFileUploads()
         }
       </Stack>
     </Stack>
