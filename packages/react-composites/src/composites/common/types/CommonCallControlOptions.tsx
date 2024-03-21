@@ -104,4 +104,10 @@ export type CommonCallControlOptions = {
    * Show or hide the exit spotlight button in the composite control bar when local participant is spotlighted.
    */
   exitSpotlightButton?: boolean;
+  /* @conditional-compile-remove(acs-close-captions) */
+  /**
+   * Show, Hide or Disable captions during a call.
+   * @defaultValue true
+   */
+  captions?: boolean;
 };
