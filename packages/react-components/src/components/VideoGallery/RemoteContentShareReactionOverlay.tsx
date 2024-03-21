@@ -79,6 +79,10 @@ export const RemoteContentShareReactionOverlay = React.memo(
       surprised: 0
     });
 
+    // Used to track the total number of reactions ever played. This is a helper variable
+    // to calculate the reaction movement index (i.e. the .left position of the reaction)
+    const totalReactionCounter = useRef<number>(0);
+
     const remoteParticipantReactions: Reaction[] = useMemo(
       () =>
         remoteParticipants
@@ -111,13 +115,14 @@ export const RemoteContentShareReactionOverlay = React.memo(
           id: combinedKey,
           status: 'animating'
         };
-        setVisibleReactions((prev) => [
+        const reactionMovementIndex = totalReactionCounter.current++ % 50;
+        setVisibleReactions([
           ...visibleReactions,
           {
             reaction: reaction,
             id: combinedKey,
-            reactionMovementIndex: prev.length,
-            styleBucket: getReactionStyleBucket(prev.length)
+            reactionMovementIndex: reactionMovementIndex,
+            styleBucket: getReactionStyleBucket(reactionMovementIndex)
           }
         ]);
         return;
