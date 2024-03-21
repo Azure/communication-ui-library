@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(reaction) */
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 /* @conditional-compile-remove(reaction) */
 import { Reaction, ReactionResources, VideoGalleryLocalParticipant, VideoGalleryRemoteParticipant } from '../../types';
 /* @conditional-compile-remove(reaction) */
@@ -107,24 +107,27 @@ export const RemoteContentShareReactionOverlay = React.memo(
       return isFirstTime === undefined;
     };
 
-    const updateVisibleReactions = (reaction: Reaction, userId: string): boolean => {
-      const combinedKey = getCombinedKey(userId, reaction.reactionType, reaction.receivedOn);
-      console.log('Mohtasim - combined key ' + combinedKey);
-      const isInQueue = visibleReactions.findIndex((reaction) => reaction.id === combinedKey);
-      if (isInQueue !== -1) {
-        return false;
-      }
+    const updateVisibleReactions = useCallback(
+      (reaction: Reaction, userId: string): boolean => {
+        const combinedKey = getCombinedKey(userId, reaction.reactionType, reaction.receivedOn);
+        console.log('Mohtasim - combined key ' + combinedKey);
+        const isInQueue = visibleReactions.findIndex((reaction) => reaction.id === combinedKey);
+        if (isInQueue !== -1) {
+          return false;
+        }
 
-      const activeCountItem = activeTypeCount.find((item) => item.reactionType === reaction.reactionType);
-      const activeCount = activeCountItem === undefined ? 0 : activeCountItem.count;
-      if (activeCount > 10) {
-        return false;
-      }
+        const activeCountItem = activeTypeCount.find((item) => item.reactionType === reaction.reactionType);
+        const activeCount = activeCountItem === undefined ? 0 : activeCountItem.count;
+        if (activeCount > 10) {
+          return false;
+        }
 
-      setVisibleReactions([...visibleReactions, { reaction: reaction, id: combinedKey }]);
+        setVisibleReactions([...visibleReactions, { reaction: reaction, id: combinedKey }]);
 
-      return true;
-    };
+        return true;
+      },
+      [activeTypeCount, visibleReactions]
+    );
 
     const removeVisibleReaction = (reactionType: string, id: string): void => {
       console.log('Mohtasim - trying to remove with id ' + id);
@@ -145,7 +148,13 @@ export const RemoteContentShareReactionOverlay = React.memo(
           updateVisibleReactions(participant.reaction, participant.userId);
         }
       });
-    }, [localParticipant?.reaction, remoteParticipantReactions]);
+    }, [
+      localParticipant?.reaction,
+      localParticipant?.userId,
+      remoteParticipantReactions,
+      remoteParticipants,
+      updateVisibleReactions
+    ]);
 
     const cleanupIfGarbage = (reaction: Reaction | undefined, id: string): void => {
       if (reaction?.reactionType) {
@@ -189,7 +198,7 @@ export const RemoteContentShareReactionOverlay = React.memo(
         })}
       >
         {visibleReactions.map((reaction, index) => (
-          <div style={reactionOverlayStyle}>
+          <div key={reaction.reaction.reactionType + index} style={reactionOverlayStyle}>
             <div className="reaction-item">
               <React.Fragment key={reaction.id ?? reaction?.reaction.receivedOn.getMilliseconds()}>
                 {canRenderReaction(reaction.reaction, reaction.id ?? '') && shouldRender(reaction.id ?? '') && (
