@@ -46,6 +46,10 @@ type ReceivedReaction = {
 };
 
 /* @conditional-compile-remove(reaction) */
+/**
+ * The overlay responsible for rendering multiple reactions all at once in presentation mode
+ * @internal
+ */
 export const RemoteContentShareReactionOverlay = React.memo(
   (props: {
     reactionResources: ReactionResources;
@@ -174,12 +178,14 @@ export const RemoteContentShareReactionOverlay = React.memo(
     const containerHeight = hostDivHeight ?? 0;
     const containerWidth = hostDivWidth ?? REACTION_START_DISPLAY_SIZE - REACTION_START_DISPLAY_SIZE;
 
-    const styleBucket = (activeSprites: number) => getReactionStyleBucket(activeSprites);
-    const displaySizePx = (activeSprites: number) => REACTION_START_DISPLAY_SIZE * styleBucket(activeSprites).sizeScale;
+    const styleBucket = (activeSprites: number): IReactionStyleBucket => getReactionStyleBucket(activeSprites);
+    const displaySizePx = (activeSprites: number): number =>
+      REACTION_START_DISPLAY_SIZE * styleBucket(activeSprites).sizeScale;
 
-    const leftPosition = (position: number) =>
+    const leftPosition = (position: number): number =>
       generateStartPositionWave(position, containerWidth / 2, true /* isOriginAtCanvasCenter */);
-    const reactionMovementStyle = (position: number) => getReactionMovementStyle(leftPosition(position));
+    const reactionMovementStyle = (position: number): React.CSSProperties =>
+      getReactionMovementStyle(leftPosition(position));
 
     return (
       <Stack
