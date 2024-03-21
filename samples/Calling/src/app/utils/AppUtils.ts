@@ -2,10 +2,7 @@
 // Licensed under the MIT License.
 
 import { GroupLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
-/* @conditional-compile-remove(rooms) */
-import { RoomCallLocator } from '@azure/communication-calling';
-/* @conditional-compile-remove(rooms) */
-import { ParticipantRole } from '@azure/communication-calling';
+import { ParticipantRole, RoomCallLocator } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */
 import { CallParticipantsLocator } from '@azure/communication-react';
 import { v1 as generateGUID } from 'uuid';
@@ -43,7 +40,6 @@ export const getGroupIdFromUrl = (): GroupLocator | undefined => {
 
 export const createGroupId = (): GroupLocator => ({ groupId: generateGUID() });
 
-/* @conditional-compile-remove(rooms) */
 /**
  * Create an ACS room
  */
@@ -60,7 +56,6 @@ export const createRoom = async (): Promise<string> => {
   return body['id'];
 };
 
-/* @conditional-compile-remove(rooms) */
 /**
  * Add user to an ACS room with a given roomId and role
  */
@@ -96,7 +91,6 @@ export const getIsCTE = (): boolean | undefined => {
   return urlParams.get('isCTE') === 'true';
 };
 
-/* @conditional-compile-remove(rooms) */
 /**
  * Get room id from the url's query params.
  */

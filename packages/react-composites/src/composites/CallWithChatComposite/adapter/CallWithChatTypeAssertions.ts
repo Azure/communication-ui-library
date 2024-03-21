@@ -92,7 +92,7 @@ type CallWithChatClientStateInternal = Omit<
   | /* @conditional-compile-remove(call-transfer) */ 'acceptedTransferCallState'
   | 'cameraStatus'
   | 'sounds'
-  | /* @conditional-compile-remove(rooms) */ 'isRoomsCall'
+  | 'isRoomsCall'
   | 'targetCallees'
 >;
 

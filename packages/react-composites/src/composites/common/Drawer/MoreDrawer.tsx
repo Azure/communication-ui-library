@@ -50,7 +50,6 @@ import { CaptionLanguageSettingsDrawer } from './CaptionLanguageSettingsDrawer';
 import { themedToggleButtonStyle } from './MoreDrawer.styles';
 /* @conditional-compile-remove(close-captions) */
 import { _spokenLanguageToCaptionLanguage } from '@internal/react-components';
-/* @conditional-compile-remove(rooms) */
 import { useAdapter } from '../../CallComposite/adapter/CallAdapterProvider';
 import { useSelector } from '../../CallComposite/hooks/useSelector';
 import { getTargetCallees } from '../../CallComposite/selectors/baseSelectors';
@@ -186,7 +185,6 @@ const inferCallWithChatControlOptions = (
 export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   /* @conditional-compile-remove(close-captions) */
   const theme = useTheme();
-  /* @conditional-compile-remove(rooms) */
   const callAdapter = useAdapter();
   const drawerMenuItems: DrawerMenuItemProps[] = [];
 
@@ -407,16 +405,14 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     });
   }
 
-  /*@conditional-compile-remove(rooms) */
   const role = callAdapter.getState().call?.role;
-  /*@conditional-compile-remove(rooms) */
   const hideRaiseHandButtonInRoomsCall =
     callAdapter.getState().isRoomsCall && role && ['Consumer', 'Unknown'].includes(role);
 
   if (
     drawerSelectionOptions !== false &&
     isEnabled(drawerSelectionOptions?.raiseHandButton) &&
-    /*@conditional-compile-remove(rooms) */ !hideRaiseHandButtonInRoomsCall
+    !hideRaiseHandButtonInRoomsCall
   ) {
     const raiseHandIcon = raiseHandButtonProps.checked ? 'LowerHandContextualMenuItem' : 'RaiseHandContextualMenuItem';
     drawerMenuItems.push({

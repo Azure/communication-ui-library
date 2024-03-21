@@ -23,16 +23,12 @@ const ACCESS_DENIED_TEAMS_MEETING_SUB_CODE = 5854;
 const REMOTE_PSTN_USER_HUNG_UP = 560000;
 const REMOVED_FROM_CALL_SUB_CODES = [5000, 5300, REMOTE_PSTN_USER_HUNG_UP];
 const CALL_REJECTED_CODE = 603;
-/* @conditional-compile-remove(rooms) */
 /** @private */
 export const ROOM_NOT_FOUND_SUB_CODE = 5732;
-/* @conditional-compile-remove(rooms) */
 /** @private */
 export const ROOM_NOT_VALID_SUB_CODE = 5829;
-/* @conditional-compile-remove(rooms) */
 /** @private */
 export const NOT_INVITED_TO_ROOM_SUB_CODE = 5828;
-/* @conditional-compile-remove(rooms) */
 /** @private */
 export const INVITE_TO_ROOM_REMOVED_SUB_CODE = 5317;
 /** @private */
@@ -139,7 +135,6 @@ export const getEndedCallPageProps = (
   let moreDetails = locale.strings.call.leftCallMoreDetails;
   let disableStartCallButton = false;
   let iconName: keyof CallCompositeIcons = 'NoticePageLeftCall';
-  /* @conditional-compile-remove(rooms) */
   switch (endedCall?.callEndReason?.subCode) {
     case ROOM_NOT_FOUND_SUB_CODE:
       if (locale.strings.call.roomNotFoundTitle) {

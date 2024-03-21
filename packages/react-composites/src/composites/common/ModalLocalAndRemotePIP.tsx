@@ -8,7 +8,6 @@ import { useHandlers } from '../CallComposite/hooks/useHandlers';
 import { useSelector } from '../CallComposite/hooks/useSelector';
 import { localAndRemotePIPSelector } from '../CallComposite/selectors/localAndRemotePIPSelector';
 import { _ModalClone, _ICoordinates } from '@internal/react-components';
-/* @conditional-compile-remove(rooms) */
 import { _RemoteVideoTile } from '@internal/react-components';
 import {
   hiddenStyle,
@@ -16,7 +15,6 @@ import {
   modalStyle,
   PIPContainerStyle
 } from './styles/ModalLocalAndRemotePIP.styles';
-/* @conditional-compile-remove(rooms) */
 import { useAdapter } from '../CallComposite/adapter/CallAdapterProvider';
 import { useLocale } from '../localization';
 
@@ -56,9 +54,7 @@ export const ModalLocalAndRemotePIP = (props: {
 }): JSX.Element | null => {
   const rootStyles = props.hidden ? hiddenStyle : PIPContainerStyle;
 
-  /* @conditional-compile-remove(rooms) */
   const adapter = useAdapter();
-  /* @conditional-compile-remove(rooms) */
   const role = adapter.getState().call?.role;
 
   const locale = useLocale();
@@ -98,7 +94,6 @@ export const ModalLocalAndRemotePIP = (props: {
 
   const pictureInPictureHandlers = useHandlers(LocalAndRemotePIP);
   const localAndRemotePIP = useMemo(() => {
-    /* @conditional-compile-remove(rooms) */
     if (role === 'Consumer' && pictureInPictureProps.dominantRemoteParticipant?.userId) {
       return (
         <Stack tabIndex={0} aria-label={props.strings?.dismissModalAriaLabel ?? ''} onKeyDown={onKeyDown}>
@@ -115,16 +110,8 @@ export const ModalLocalAndRemotePIP = (props: {
         <LocalAndRemotePIP {...pictureInPictureProps} {...pictureInPictureHandlers} />
       </Stack>
     );
-  }, [
-    /* @conditional-compile-remove(rooms) */ role,
-    onKeyDown,
-    pictureInPictureProps,
-    props,
-    pictureInPictureHandlers,
-    locale.component.strings.videoGallery
-  ]);
+  }, [role, onKeyDown, pictureInPictureProps, props, pictureInPictureHandlers, locale.component.strings.videoGallery]);
 
-  /* @conditional-compile-remove(rooms) */
   if (role === 'Consumer' && !pictureInPictureProps.dominantRemoteParticipant) {
     return null;
   }

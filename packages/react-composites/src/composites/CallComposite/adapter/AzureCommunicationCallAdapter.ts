@@ -32,6 +32,7 @@ import {
   RemoteParticipant,
   PermissionConstraints,
   PropertyChangedEvent,
+  RoomCallLocator,
   StartCallOptions,
   VideoOptions,
   Call
@@ -54,8 +55,6 @@ import type { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/c
 import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support)) */
 import { TeamsCallAgent } from '@azure/communication-calling';
-/* @conditional-compile-remove(rooms) */
-import { RoomCallLocator } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */ /* @conditional-compile-remove(video-background-effects) */ /* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(capabilities) */
 import { Features } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -147,7 +146,6 @@ class CallContext {
   constructor(
     clientState: CallClientState,
     isTeamsCall: boolean,
-    /* @conditional-compile-remove(rooms) */
     isRoomsCall: boolean,
     options?: {
       maxListeners?: number;
@@ -173,7 +171,7 @@ class CallContext {
       page: 'configuration',
       latestErrors: clientState.latestErrors,
       isTeamsCall,
-      /* @conditional-compile-remove(rooms) */ isRoomsCall,
+      isRoomsCall,
       /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: clientState.alternateCallerId,
       /* @conditional-compile-remove(unsupported-browser) */ environmentInfo: clientState.environmentInfo,
       /* @conditional-compile-remove(unsupported-browser) */ unsupportedBrowserVersionsAllowed: false,
@@ -413,7 +411,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.deviceManager = deviceManager;
     const isTeamsMeeting = this.locator ? 'meetingLink' in this.locator : false;
 
-    /* @conditional-compile-remove(rooms) */
     const isRoomsCall = this.locator ? 'roomId' in this.locator : false;
 
     /* @conditional-compile-remove(video-background-effects) */
@@ -422,7 +419,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.context = new CallContext(
       callClient.getState(),
       isTeamsMeeting,
-      /* @conditional-compile-remove(rooms) */ isRoomsCall,
+      isRoomsCall,
       /* @conditional-compile-remove(video-background-effects) */ options,
       this.targetCallees
     );
@@ -673,7 +670,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
   private _joinCall(audioOptions: AudioOptions, videoOptions: VideoOptions): CallTypeOf<AgentType> {
     const isTeamsMeeting = this.locator ? 'meetingLink' in this.locator : false;
-    /* @conditional-compile-remove(rooms) */
     const isRoomsCall = this.locator ? 'roomId' in this.locator : false;
 
     /* @conditional-compile-remove(teams-identity-support) */
@@ -693,7 +689,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
         videoOptions
       }) as CallTypeOf<AgentType>;
     }
-    /* @conditional-compile-remove(rooms) */
     if (isRoomsCall) {
       return this.callAgent.join(this.locator as RoomCallLocator, {
         audioOptions,
@@ -1179,7 +1174,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.call?.on('idChanged', this.callIdChanged.bind(this));
     /* @conditional-compile-remove(close-captions) */
     this.call?.on('stateChanged', this.subscribeToCaptionEvents.bind(this));
-    /* @conditional-compile-remove(rooms) */
     this.call?.on('roleChanged', this.roleChanged.bind(this));
     /* @conditional-compile-remove(call-transfer) */
     this.call?.feature(Features.Transfer).on('transferAccepted', this.transferAccepted.bind(this));
@@ -1198,7 +1192,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.call?.off('isMutedChanged', this.isMyMutedChanged.bind(this));
     this.call?.off('isScreenSharingOnChanged', this.isScreenSharingOnChanged.bind(this));
     this.call?.off('idChanged', this.callIdChanged.bind(this));
-    /* @conditional-compile-remove(rooms) */
     this.call?.off('roleChanged', this.roleChanged.bind(this));
 
     /* @conditional-compile-remove(close-captions) */
@@ -1309,7 +1302,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.emitter.emit('capabilitiesChanged', data);
   }
 
-  /* @conditional-compile-remove(rooms) */
   private roleChanged(): void {
     if (this.call?.role === 'Consumer') {
       this.call?.feature(Features.RaiseHand).lowerHand();
@@ -1359,7 +1351,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   off(event: 'transferAccepted', listener: TransferAcceptedListener): void;
   /* @conditional-compile-remove(capabilities) */
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
-  /* @conditional-compile-remove(rooms) */
   off(event: 'roleChanged', listener: PropertyChangedEvent): void;
   /* @conditional-compile-remove(spotlight) */
   off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
@@ -1419,7 +1410,7 @@ export type CallParticipantsLocator = {
 export type CallAdapterLocator =
   | TeamsMeetingLinkLocator
   | GroupCallLocator
-  | /* @conditional-compile-remove(rooms) */ RoomCallLocator
+  | RoomCallLocator
   | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator;
 
 /**

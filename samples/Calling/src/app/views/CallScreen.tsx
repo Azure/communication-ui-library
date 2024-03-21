@@ -6,6 +6,7 @@ import { CommunicationUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(teams-identity-support) */
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import {
+  AzureCommunicationCallAdapterOptions,
   CallAdapterLocator,
   CallAdapterState,
   useAzureCommunicationCallAdapter,
@@ -15,8 +16,6 @@ import {
 } from '@azure/communication-react';
 /* @conditional-compile-remove(teams-identity-support) */
 import { useTeamsCallAdapter, TeamsCallAdapter } from '@azure/communication-react';
-/* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(video-background-effects) */
-import { AzureCommunicationCallAdapterOptions } from '@azure/communication-react';
 /* @conditional-compile-remove(video-background-effects) */
 import { onResolveVideoEffectDependencyLazy } from '@azure/communication-react';
 /* @conditional-compile-remove(teams-identity-support) */
@@ -154,7 +153,6 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
     throw new Error('A MicrosoftTeamsUserIdentifier must be provided for Teams Identity Call.');
   }
 
-  /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(video-background-effects) */
   const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(() => {
     return {
       /* @conditional-compile-remove(video-background-effects) */
@@ -175,7 +173,6 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
       ...adapterArgs,
       userId,
       locator,
-      /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(unsupported-browser) */ /* @conditional-compile-remove(video-background-effects) */
       options: callAdapterOptions
     },
     afterCreate
@@ -191,7 +188,6 @@ const AzureCommunicationOutboundCallScreen = (props: AzureCommunicationCallScree
     throw new Error('A MicrosoftTeamsUserIdentifier must be provided for Teams Identity Call.');
   }
 
-  /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(video-background-effects) */
   const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(() => {
     return {
       /* @conditional-compile-remove(video-background-effects) */
@@ -220,7 +216,6 @@ const AzureCommunicationOutboundCallScreen = (props: AzureCommunicationCallScree
       ...adapterArgs,
       userId,
       targetCallees: targetCallees,
-      /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(unsupported-browser) */ /* @conditional-compile-remove(video-background-effects) */
       options: callAdapterOptions
     },
     afterCreate

@@ -82,11 +82,8 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   NoticePageJoinCallFailedDueToNoNetwork: <WifiWarning20Filled />,
   NoticePageLeftCall: <CallEnd20Filled />,
   NoticePageRemovedFromCall: <Info20Filled />,
-  /* @conditional-compile-remove(rooms) */
   NoticePageNotInvitedToRoom: <Info20Filled />,
-  /* @conditional-compile-remove(rooms) */
   NoticePageRoomNotFound: <Info20Filled />,
-  /* @conditional-compile-remove(rooms) */
   NoticePageRoomNotValid: <Info20Filled />,
   NoticePageCallRejected: <Info20Filled />,
   NoticePageCallTimeout: <Info20Filled />,
@@ -98,7 +95,6 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   PeoplePaneOpenDialpad: <Dialpad20Regular />,
   /* @conditional-compile-remove(PSTN-calls) */
   DialpadStartCall: <Call20Regular />,
-  /* @conditional-compile-remove(rooms) */
   NoticePageInviteToRoomRemoved: <Info20Filled />,
   /* @conditional-compile-remove(video-background-effects) */
   BlurVideoBackground: <VideoBackgroundEffect20Regular />,
@@ -222,11 +218,8 @@ export type CallCompositeIcons = {
   NoticePageLeftCall?: JSX.Element;
   NoticePageRemovedFromCall?: JSX.Element;
   NoticePageCallRejected?: JSX.Element;
-  /* @conditional-compile-remove(rooms) */
   NoticePageNotInvitedToRoom?: JSX.Element;
-  /* @conditional-compile-remove(rooms) */
   NoticePageRoomNotFound?: JSX.Element;
-  /* @conditional-compile-remove(rooms) */
   NoticePageRoomNotValid?: JSX.Element;
   NoticePageCallTimeout?: JSX.Element;
   OptionsCamera?: JSX.Element;
@@ -244,7 +237,6 @@ export type CallCompositeIcons = {
   PeoplePaneOpenDialpad?: JSX.Element;
   /* @conditional-compile-remove(PSTN-calls) */
   DialpadStartCall?: JSX.Element;
-  /* @conditional-compile-remove(rooms) */
   NoticePageInviteToRoomRemoved?: JSX.Element;
   /* @conditional-compile-remove(video-background-effects) */
   BlurVideoBackground?: JSX.Element;

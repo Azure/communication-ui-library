@@ -126,8 +126,6 @@ module.exports = {
     "capabilities",
     // Closed captions
     "close-captions",
-    // rooms
-    "rooms",
     // Feature for the DTMF dialer for Teams voice apps
     "dtmf-dialer",
     // dialpad
