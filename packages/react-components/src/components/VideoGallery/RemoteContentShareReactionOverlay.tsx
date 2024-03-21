@@ -190,7 +190,7 @@ export const RemoteContentShareReactionOverlay = React.memo(
                 // Fifth div - Play Animation as the other animation applies on the base play animation for the sprite
                 <div
                   style={moveAnimationStyles(
-                    containerHeight / 2,
+                    containerHeight / 2, // dividing by two because reactionOverlayStyle height is set to 50%
                     (containerHeight / 2) * (1 - styleBucket(visibleReactions.length).heightMaxScale)
                   )}
                 >
