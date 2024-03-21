@@ -15,7 +15,7 @@ import { getRole } from './baseSelectors';
 import { isHideAttendeeNamesEnabled } from './baseSelectors';
 import { CallParticipantListParticipant } from '@internal/react-components';
 import { _isRingingPSTNParticipant, _updateUserDisplayNames } from './utils/callUtils';
-import { memoizedConvertAllremoteParticipantsBetaRelease } from './utils/participantListSelectorUtils';
+import { memoizedConvertAllremoteParticipants } from './utils/participantListSelectorUtils';
 /* @conditional-compile-remove(spotlight) */
 import { memoizedConvertAllremoteParticipantsBetaSpotlight } from './utils/participantListSelectorUtils';
 /* @conditional-compile-remove(reaction) */
@@ -120,7 +120,7 @@ const convertRemoteParticipantsToParticipantListParticipants = (
   return memoizedConvertAllremoteParticipantsBetaSpotlight(conversionCallback);
   /* @conditional-compile-remove(reaction) */
   return memoizedConvertAllremoteParticipantsBeta(conversionCallback);
-  return memoizedConvertAllremoteParticipantsBetaRelease(conversionCallback);
+  return memoizedConvertAllremoteParticipants(conversionCallback);
 };
 
 /**

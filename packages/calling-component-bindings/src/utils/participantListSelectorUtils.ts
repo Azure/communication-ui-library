@@ -49,7 +49,7 @@ const convertRemoteParticipantToParticipantListParticipant = (
 /**
  * @private
  */
-export const memoizedConvertAllremoteParticipantsBetaRelease = memoizeFnAll(
+export const memoizedConvertAllremoteParticipants = memoizeFnAll(
   (
     userId: string,
     displayName: string | undefined,
