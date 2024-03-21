@@ -128,7 +128,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   const environmentInfo = adapter.getState().environmentInfo;
 
   let disableStartCallButton = !microphonePermissionGranted || deviceState.microphones?.length === 0;
-  /* @conditional-compile-remove(rooms) */
   const role = adapter.getState().call?.role;
 
   /* @conditional-compile-remove(video-background-effects) */
@@ -136,7 +135,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
 
   let filteredLatestErrors: ActiveErrorMessage[] = props.latestErrors;
 
-  /* @conditional-compile-remove(rooms) */
   // TODO: move this logic to the error bar selector once role is plumbed from the headless SDK
   if (role !== 'Consumer') {
     filteredLatestErrors = filteredLatestErrors.filter(
@@ -149,7 +147,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
     filteredLatestErrors = filteredLatestErrors.filter((e) => e.type !== 'unableToStartVideoEffect');
   }
 
-  /* @conditional-compile-remove(rooms) */
   if (role === 'Consumer') {
     // If user's role permissions do not allow access to the microphone button then DO NOT disable the start call button
     // because microphone device permission is not needed for the user's role
@@ -190,9 +187,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
     </Stack.Item>
   );
 
-  let mobileWithPreview = mobileView;
-  /* @conditional-compile-remove(rooms) */
-  mobileWithPreview = mobileWithPreview && role !== 'Consumer';
+  const mobileWithPreview = mobileView && role !== 'Consumer';
 
   /* @conditional-compile-remove(call-readiness) */
   const permissionsState: {
@@ -357,10 +352,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
             verticalFill={mobileWithPreview}
             tokens={deviceConfigurationStackTokens}
           >
-            {localPreviewTrampoline(
-              mobileWithPreview,
-              /* @conditional-compile-remove(rooms) */ !!(role === 'Consumer')
-            )}
+            {localPreviewTrampoline(mobileWithPreview, !!(role === 'Consumer'))}
             <Stack styles={mobileView ? undefined : configurationSectionStyle}>
               {!mobileWithPreview && (
                 <Stack
@@ -435,7 +427,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
 };
 
 const localPreviewTrampoline = (mobileView: boolean, doNotShow?: boolean): JSX.Element | undefined => {
-  /* @conditional-compile-remove(rooms) */
   if (doNotShow) {
     return undefined;
   }

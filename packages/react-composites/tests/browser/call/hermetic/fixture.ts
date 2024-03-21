@@ -399,7 +399,7 @@ const presenterCapabilitiesInRoomsCall: ParticipantCapabilities = {
   unmuteMic: { isPresent: true, reason: 'Capable' },
   pstnDialOut: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   raiseHand: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
-  removeParticipant: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  removeParticipant: { isPresent: true, reason: 'Capable' },
   removeParticipantsSpotlight: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   shareScreen: { isPresent: true, reason: 'Capable' },
   spotlightParticipant: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },

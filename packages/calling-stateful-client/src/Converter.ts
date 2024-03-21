@@ -143,7 +143,6 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     screenShareRemoteParticipant: undefined,
     startTime: new Date(),
     endTime: undefined,
-    /* @conditional-compile-remove(rooms) */
     role: call.role,
     /* @conditional-compile-remove(close-captions) */
     captionsFeature: {
