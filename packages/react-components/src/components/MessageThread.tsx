@@ -33,9 +33,9 @@ import { useLocale } from '../localization/LocalizationProvider';
 import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
 import getParticipantsWhoHaveReadMessage from './utils/getParticipantsWhoHaveReadMessage';
 /* @conditional-compile-remove(file-sharing) */
-import { FileDownloadHandler } from './FileDownloadCards';
+import { FileDownloadHandler } from './AttachmentDownloadCards';
 /* @conditional-compile-remove(file-sharing) */
-import { AttachmentMetadata } from './FileDownloadCards';
+import { AttachmentMetadata } from './AttachmentDownloadCards';
 import { useTheme } from '../theming';
 import { FluentV9ThemeProvider } from './../theming/FluentV9ThemeProvider';
 import LiveAnnouncer from './Announcer/LiveAnnouncer';
@@ -213,8 +213,8 @@ export interface MessageThreadStrings {
   /** Aria label to announce when a message is deleted */
   messageDeletedAnnouncementAriaLabel: string;
   /* @conditional-compile-remove(file-sharing) */
-  /** String for download file button in file card */
-  downloadFile: string;
+  /** String for download file button in attachment card */
+  downloadAttachment: string;
   /* @conditional-compile-remove(data-loss-prevention) */
   /** String for policy violation message removal */
   blockedWarningText: string;
@@ -223,7 +223,7 @@ export interface MessageThreadStrings {
   blockedWarningLinkText: string;
   /* @conditional-compile-remove(file-sharing) */
   /** String for aria text in file attachment group*/
-  fileCardGroupMessage: string;
+  attachmentCardGroupMessage: string;
 }
 
 /**

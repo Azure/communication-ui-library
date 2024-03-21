@@ -44,8 +44,7 @@ import { ChatScreenPeoplePane } from './ChatScreenPeoplePane';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(file-sharing) */
 import { FileDownloadErrorBar } from './FileDownloadErrorBar';
-/* @conditional-compile-remove(file-sharing) */
-import { _FileDownloadCards } from '@internal/react-components';
+import { _AttachmentDownloadCards } from '@internal/react-components';
 import { ImageOverlay } from '@internal/react-components';
 import { InlineImage } from '@internal/react-components';
 import { SendBox } from '../common/SendBox';
@@ -236,7 +235,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   /* @conditional-compile-remove(file-sharing) */
   const onRenderFileDownloads = useCallback(
     (userId: string, message: ChatMessage) => (
-      <_FileDownloadCards
+      <_AttachmentDownloadCards
         userId={userId}
         fileMetadata={message.files || []}
         downloadHandler={fileSharing?.downloadHandler}

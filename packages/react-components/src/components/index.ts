@@ -44,7 +44,7 @@ export type { ImageOverlayProps } from './ImageOverlay';
 export type { InlineImageOptions, InlineImage } from './ChatMessage/ChatMessageContent';
 
 /* @conditional-compile-remove(file-sharing) */
-export type { ActiveFileUpload } from './FileUploadCards';
+export type { ActiveFileUpload } from './AttachmentUploadCards';
 
 export { MessageStatusIndicator } from './MessageStatusIndicator';
 export type { MessageStatusIndicatorProps, MessageStatusIndicatorStrings } from './MessageStatusIndicator';
@@ -205,11 +205,11 @@ export type {
 export * from './Drawer';
 /* @conditional-compile-remove(file-sharing) */
 export type { SendBoxErrorBarError } from './SendBoxErrorBar';
-export * from './FileCard';
-export * from './FileCardGroup';
+export * from './AttachmentCard';
+export * from './AttachmentCardGroup';
 export * from './ModalClone/ModalClone';
-export * from './FileDownloadCards';
-export type { _FileUploadCardsStrings } from './FileUploadCards';
+export * from './AttachmentDownloadCards';
+export type { _AttachmentUploadCardsStrings } from './AttachmentUploadCards';
 
 export { _useContainerHeight, _useContainerWidth } from './utils/responsive';
 
