@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(reaction) */
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 /* @conditional-compile-remove(reaction) */
 import { Reaction, ReactionResources, VideoGalleryLocalParticipant, VideoGalleryRemoteParticipant } from '../../types';
 /* @conditional-compile-remove(reaction) */
@@ -22,12 +22,19 @@ import {
   reactionOverlayStyle,
   spriteAnimationStyles
 } from '../styles/ReactionOverlay.style';
+import {
+  REACTION_NUMBER_OF_ANIMATION_FRAMES,
+  REACTION_SCREEN_SHARE_ANIMATION_TIME_MS,
+  REACTION_START_DISPLAY_SIZE,
+  getCombinedKey,
+  getReceivedUnixTime
+} from './utils/reactionUtils';
 
 /* @conditional-compile-remove(reaction) */
-type ReactionStateType = {
+type VisibleReaction = {
   reaction: Reaction;
-  id?: string;
-  url?: string;
+  id: string;
+  reactionMovementIndex: number;
 };
 
 /* @conditional-compile-remove(reaction) */
@@ -48,131 +55,89 @@ export const RemoteContentShareReactionOverlay = React.memo(
   }) => {
     const { reactionResources, localParticipant, remoteParticipants, hostDivHeight, hostDivWidth } = props;
 
-    const REACTION_START_DISPLAY_SIZE = 44;
-    const REACTION_NUMBER_OF_ANIMATION_FRAMES = 51;
-    const [visibleReactions, setVisibleReactions] = useState<ReactionStateType[]>([]);
-    const [isCurrentlyActive, setIsCurrentlyActive] = useState<string[]>([]);
-    const [activeTypeCount, setActiveTypeCount] = useState([
-      { reactionType: 'like', count: 0 },
-      { reactionType: 'heart', count: 0 },
-      { reactionType: 'laugh', count: 0 },
-      { reactionType: 'applause', count: 0 },
-      { reactionType: 'surprised', count: 0 }
-    ]);
+    // Reactions that are currently being animated
+    const [visibleReactions, setVisibleReactions] = useState<VisibleReaction[]>([]);
 
-    const getReceivedUnixTime = (receivedTime: Date): number => {
-      return Math.floor(receivedTime.getTime() / 1000);
-    };
+    // Dict of userId to reaction IDs. These are the set of ignored reactions when there were
+    // too many reactions of the same type already playing.
+    const ignoredReactions = useRef<Record<string, string>>({});
 
-    const getCombinedKey = (userId: string, reactionType: string, receivedAt: Date): string => {
-      const receivedTime =
-        receivedAt.getFullYear() +
-        ':' +
-        receivedAt.getMonth() +
-        ':' +
-        receivedAt.getDay() +
-        ':' +
-        receivedAt.getHours() +
-        ':' +
-        receivedAt.getMinutes() +
-        ':' +
-        receivedAt.getSeconds() +
-        ':' +
-        receivedAt.getMilliseconds();
+    // Track the number of active reactions of each type to limit the number of active reactions
+    // of a certain type.
+    const activeTypeCount = useRef<Record<string, number>>({
+      like: 0,
+      heart: 0,
+      laugh: 0,
+      applause: 0,
+      surprised: 0
+    });
 
-      return userId + reactionType + receivedTime;
-    };
-
-    const remoteParticipantReactions = useMemo(
-      () => remoteParticipants?.map((remoteParticipant) => remoteParticipant.reaction),
+    const remoteParticipantReactions: Reaction[] = useMemo(
+      () =>
+        remoteParticipants
+          ?.map((remoteParticipant) => remoteParticipant.reaction)
+          .filter((reaction): reaction is Reaction => !!reaction) ?? [],
       [remoteParticipants]
     );
 
-    const markAsCurrentlyActive = (reaction: Reaction, id: string): void => {
-      setIsCurrentlyActive([...isCurrentlyActive, id]);
-
-      setActiveTypeCount((prevActiveCounts) =>
-        prevActiveCounts.map((item) =>
-          item.reactionType === reaction.reactionType ? { ...item, count: item.count + 1 } : item
-        )
-      );
-    };
-
-    const shouldRender = (id: string): boolean => {
-      if (id === '') {
-        return false;
-      }
-      const isFirstTime = isCurrentlyActive.find((prevId) => prevId === id);
-      console.log('Mohtasim - isReceivedForFirstTime ' + isFirstTime);
-      return isFirstTime === undefined;
-    };
-
     const updateVisibleReactions = useCallback(
-      (reaction: Reaction, userId: string): boolean => {
+      (reaction: Reaction, userId: string): void => {
         const combinedKey = getCombinedKey(userId, reaction.reactionType, reaction.receivedOn);
-        console.log('Mohtasim - combined key ' + combinedKey);
-        const isInQueue = visibleReactions.findIndex((reaction) => reaction.id === combinedKey);
-        if (isInQueue !== -1) {
-          return false;
+
+        const alreadyShowing = visibleReactions.find((reaction) => reaction.id === combinedKey);
+        const alreadyIgnored = ignoredReactions.current[userId] === combinedKey;
+        if (alreadyShowing || alreadyIgnored) {
+          return;
         }
 
-        const activeCountItem = activeTypeCount.find((item) => item.reactionType === reaction.reactionType);
-        const activeCount = activeCountItem === undefined ? 0 : activeCountItem.count;
-        if (activeCount > 10) {
-          return false;
+        const activeCount = activeTypeCount.current[reaction.reactionType];
+        // Limit the number of active reactions of a certain type to 10
+        if (activeCount >= 10) {
+          ignoredReactions.current[userId] = combinedKey;
+          return;
         }
 
-        setVisibleReactions([...visibleReactions, { reaction: reaction, id: combinedKey }]);
-
-        return true;
+        activeTypeCount.current[reaction.reactionType] += 1;
+        setVisibleReactions((prev) => [
+          ...visibleReactions,
+          { reaction: reaction, id: combinedKey, reactionMovementIndex: prev.length }
+        ]);
+        return;
       },
       [activeTypeCount, visibleReactions]
     );
 
     const removeVisibleReaction = (reactionType: string, id: string): void => {
-      console.log('Mohtasim - trying to remove with id ' + id);
-      visibleReactions.filter((reaction) => reaction.id !== id);
-      isCurrentlyActive.filter((item) => item !== id);
-      setActiveTypeCount((prevActiveCounts) =>
-        prevActiveCounts.map((item) => (item.reactionType === reactionType ? { ...item, count: item.count - 1 } : item))
-      );
+      activeTypeCount.current[reactionType] -= 1;
+      setVisibleReactions(visibleReactions.filter((reaction) => reaction.id !== id));
     };
 
+    // Update visible reactions when local participant sends a reaction
     useEffect(() => {
-      if (localParticipant?.reaction !== undefined) {
+      if (localParticipant?.reaction) {
         updateVisibleReactions(localParticipant.reaction, localParticipant.userId);
       }
+    }, [localParticipant, updateVisibleReactions]);
 
+    // Update visible reactions when remote participants send a reaction
+    useEffect(() => {
       remoteParticipants?.map((participant) => {
-        if (participant?.reaction !== undefined) {
+        if (participant?.reaction) {
           updateVisibleReactions(participant.reaction, participant.userId);
         }
       });
-    }, [
-      localParticipant?.reaction,
-      localParticipant?.userId,
-      remoteParticipantReactions,
-      remoteParticipants,
-      updateVisibleReactions
-    ]);
+    }, [remoteParticipantReactions, remoteParticipants, updateVisibleReactions]);
 
-    const cleanupIfGarbage = (reaction: Reaction | undefined, id: string): void => {
-      if (reaction?.reactionType) {
+    // Note: canRenderReaction shouldn't be needed as we remove the animation on the onAnimationEnd event
+    const canRenderReaction = (reaction: Reaction, id: string): boolean => {
+      // compare current time to reaction.received at and see if more than 4 seconds has elapsed
+      const canRender = Date.now() - getReceivedUnixTime(reaction.receivedOn) < REACTION_SCREEN_SHARE_ANIMATION_TIME_MS;
+
+      // Clean up the reaction if it's not in the visible reaction list
+      if (!canRender) {
         removeVisibleReaction(reaction?.reactionType, id);
       }
-    };
 
-    const canRenderReaction = (reaction: Reaction | undefined, id: string): boolean => {
-      if (reaction === undefined) {
-        return false;
-      }
-      const currentTimestamp = new Date();
-      const currentUnixTimeStamp = Math.floor(currentTimestamp.getTime() / 1000);
-      const receivedUnixTimestamp = reaction ? getReceivedUnixTime(reaction.receivedOn) : 0;
-      const canRender = receivedUnixTimestamp ? currentUnixTimeStamp - receivedUnixTimestamp < 4133 : false;
-      if (!canRender) {
-        cleanupIfGarbage(reaction, id);
-      }
       return canRender;
     };
 
@@ -197,41 +162,41 @@ export const RemoteContentShareReactionOverlay = React.memo(
           backgroundColor: 'transparent'
         })}
       >
-        {visibleReactions.map((reaction, index) => (
-          <div key={reaction.reaction.reactionType + index} style={reactionOverlayStyle}>
+        {visibleReactions.map((reaction) => (
+          <div key={reaction.id} style={reactionOverlayStyle}>
             <div className="reaction-item">
-              <React.Fragment key={reaction.id ?? reaction?.reaction.receivedOn.getMilliseconds()}>
-                {canRenderReaction(reaction.reaction, reaction.id ?? '') && shouldRender(reaction.id ?? '') && (
-                  // First div - Section that fixes the travel height and applies the movement animation
-                  // Second div - Keeps track of active sprites and responsible for marking, counting and removing reactions
-                  // Third div - Responsible for opacity controls as the sprite emoji animates
-                  // Fourth div - Responsible for calculating the point of X axis where the reaction will start animation
-                  // Fifth div - Play Animation as the other animation applies on the base play animation for the sprite
-                  <div
-                    style={moveAnimationStyles(
-                      containerHeight,
-                      containerHeight * (1 - styleBucket(isCurrentlyActive.length).heightMaxScale)
-                    )}
-                  >
+              {canRenderReaction(reaction.reaction, reaction.id) && (
+                // First div - Section that fixes the travel height and applies the movement animation
+                // Second div - Keeps track of active sprites and responsible for marking, counting and removing reactions
+                // Third div - Responsible for opacity controls as the sprite emoji animates
+                // Fourth div - Responsible for calculating the point of X axis where the reaction will start animation
+                // Fifth div - Play Animation as the other animation applies on the base play animation for the sprite
+                <div
+                  style={moveAnimationStyles(
+                    containerHeight,
+                    containerHeight * (1 - styleBucket(visibleReactions.length).heightMaxScale)
+                  )}
+                >
+                  <div>
                     <div
-                      onAnimationEnd={() => removeVisibleReaction(reaction.reaction.reactionType, reaction.id ?? '')}
-                      onAnimationStart={() => markAsCurrentlyActive(reaction.reaction, reaction.id ?? '')}
+                      onAnimationEnd={() => {
+                        removeVisibleReaction(reaction.reaction.reactionType, reaction.id);
+                      }}
+                      style={opacityAnimationStyles(styleBucket(visibleReactions.length).opacityMax)}
                     >
-                      <div style={opacityAnimationStyles(styleBucket(isCurrentlyActive.length).opacityMax)}>
-                        <div style={reactionMovementStyle(index)}>
-                          <div
-                            style={spriteAnimationStyles(
-                              REACTION_NUMBER_OF_ANIMATION_FRAMES,
-                              displaySizePx(isCurrentlyActive.length),
-                              getEmojiResource(reaction?.reaction.reactionType ?? '', reactionResources) ?? ''
-                            )}
-                          />
-                        </div>
+                      <div style={reactionMovementStyle(reaction.reactionMovementIndex)}>
+                        <div
+                          style={spriteAnimationStyles(
+                            REACTION_NUMBER_OF_ANIMATION_FRAMES,
+                            displaySizePx(visibleReactions.length),
+                            getEmojiResource(reaction?.reaction.reactionType, reactionResources) ?? ''
+                          )}
+                        />
                       </div>
                     </div>
                   </div>
-                )}
-              </React.Fragment>
+                </div>
+              )}
             </div>
           </div>
         ))}
