@@ -85,7 +85,6 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   NoticePageNotInvitedToRoom: <Info20Filled />,
   NoticePageRoomNotFound: <Info20Filled />,
   NoticePageRoomNotValid: <Info20Filled />,
-  /* @conditional-compile-remove(calling-sounds) */
   NoticePageCallRejected: <Info20Filled />,
   NoticePageCallTimeout: <Info20Filled />,
   /* @conditional-compile-remove(file-sharing) */
@@ -218,7 +217,6 @@ export type CallCompositeIcons = {
   NoticePageJoinCallFailedDueToNoNetwork?: JSX.Element;
   NoticePageLeftCall?: JSX.Element;
   NoticePageRemovedFromCall?: JSX.Element;
-  /* @conditional-compile-remove(calling-sounds) */
   NoticePageCallRejected?: JSX.Element;
   NoticePageNotInvitedToRoom?: JSX.Element;
   NoticePageRoomNotFound?: JSX.Element;

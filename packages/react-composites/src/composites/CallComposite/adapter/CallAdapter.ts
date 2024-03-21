@@ -118,7 +118,6 @@ export type CallAdapterClientState = {
   userId: CommunicationIdentifierKind;
   displayName?: string;
   call?: CallState;
-  /* @conditional-compile-remove(calling-sounds) */
   /**
    * State to track who the original call went out to. will be undefined the call is not a outbound
    * modality. This includes, groupCalls, Rooms calls, and Teams InteropMeetings.
@@ -175,7 +174,6 @@ export type CallAdapterClientState = {
    * Hide attendee names in teams meeting
    */
   hideAttendeeNames?: boolean;
-  /* @conditional-compile-remove(calling-sounds) */
   /**
    * State to track the sounds to be used in the call.
    */
