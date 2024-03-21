@@ -8,7 +8,6 @@ import { ChatMessageContent } from '../ChatMessage/ChatMessageContent';
 import { BlockedMessage } from '../../types/ChatMessage';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessageContent } from '../ChatMessage/ChatMessageContent';
-/* @conditional-compile-remove(image-overlay) */
 import { InlineImageOptions } from '../ChatMessage/ChatMessageContent';
 import { MessageThreadStrings } from '../MessageThread';
 /* @conditional-compile-remove(mention) */
@@ -39,7 +38,6 @@ export function getMessageBubbleContent(
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage,
   strings: MessageThreadStrings,
   userId: string,
-  /* @conditional-compile-remove(image-overlay) */
   inlineImageOptions: InlineImageOptions | undefined,
   /* @conditional-compile-remove(file-sharing) */
   onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element,
@@ -63,7 +61,6 @@ export function getMessageBubbleContent(
         strings={strings}
         /* @conditional-compile-remove(mention) */
         mentionDisplayOptions={mentionDisplayOptions}
-        /* @conditional-compile-remove(image-overlay) */
         inlineImageOptions={inlineImageOptions}
       />
       {

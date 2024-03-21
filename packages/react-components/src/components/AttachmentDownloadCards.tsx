@@ -11,15 +11,11 @@ import { _AttachmentCardGroup } from './AttachmentCardGroup';
 import { iconButtonClassName } from './styles/IconButton.styles';
 import { _formatString } from '@internal/acs-ui-common';
 
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * Represents the type of attachment
  * @public
  */
-export type ChatAttachmentType =
-  | 'unknown'
-  | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'image'
-  | /* @conditional-compile-remove(file-sharing) */ 'file';
+export type ChatAttachmentType = 'unknown' | 'image' | /* @conditional-compile-remove(file-sharing) */ 'file';
 
 /**
  * Metadata containing basic information about the uploaded attachment.
@@ -158,7 +154,6 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
     [props.strings?.downloadAttachment, localeStrings.downloadAttachment]
   );
 
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const isShowDownloadIcon = useCallback((attachment: AttachmentMetadata): boolean => {
     /* @conditional-compile-remove(file-sharing) */
     return attachment.payload?.teamsFileAttachment !== 'true';
@@ -201,11 +196,7 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
     },
     [props]
   );
-  if (
-    !fileMetadata ||
-    fileMetadata.length === 0 ||
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ !fileMetadata
-  ) {
+  if (!fileMetadata || fileMetadata.length === 0 || !fileMetadata) {
     return <></>;
   }
 
@@ -222,10 +213,7 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
                 actionIcon={
                   showSpinner ? (
                     <Spinner size={SpinnerSize.medium} aria-live={'polite'} role={'status'} />
-                  ) : true &&
-                    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ isShowDownloadIcon(
-                      attachment
-                    ) ? (
+                  ) : true && isShowDownloadIcon(attachment) ? (
                     <IconButton className={iconButtonClassName} ariaLabel={downloadAttachmentButtonString()}>
                       <DownloadIconTrampoline />
                     </IconButton>
