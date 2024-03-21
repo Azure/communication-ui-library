@@ -265,6 +265,9 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   /* @conditional-compile-remove(spotlight) */
   const showExitSpotlightButton = options?.exitSpotlightButton !== false;
 
+  const showCaptionsButton =
+    props.isCaptionsSupported && /* @conditional-compile-remove(acs-close-captions) */ isEnabled(options.captions);
+
   const showDesktopMoreButton =
     /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */ isEnabled(
       options?.moreButton
@@ -273,7 +276,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
       /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ isEnabled(
         options?.holdButton
       ) ||
-      /* @conditional-compile-remove(close-captions) */ props.isCaptionsSupported ||
+      /* @conditional-compile-remove(close-captions) */ showCaptionsButton ||
       props.onUserSetGalleryLayout);
 
   /*@conditional-compile-remove(rooms) */
@@ -438,7 +441,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         onClickShowDialpad={props.onClickShowDialpad}
                         callControls={props.callControls}
                         /* @conditional-compile-remove(close-captions) */
-                        isCaptionsSupported={props.isCaptionsSupported}
+                        isCaptionsSupported={showCaptionsButton}
                         /* @conditional-compile-remove(close-captions) */
                         onCaptionsSettingsClick={openCaptionsSettingsModal}
                         onUserSetOverflowGalleryPositionChange={props.onUserSetOverflowGalleryPositionChange}
