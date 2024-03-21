@@ -323,66 +323,64 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   }, [activeFileUploads, props, localeStrings]);
 
   return (
-    <FluentV9ThemeProvider v8Theme={theme}>
+    <Stack
+      className={mergeStyles(
+        sendBoxWrapperStyles,
+        { overflow: 'visible' } // This is needed for the mention popup to be visible
+      )}
+    >
+      {/* @conditional-compile-remove(file-sharing) */ <SendBoxErrors {...sendBoxErrorsProps} />}
       <Stack
-        className={mergeStyles(
-          sendBoxWrapperStyles,
-          { overflow: 'visible' } // This is needed for the mention popup to be visible
-        )}
+        className={borderAndBoxShadowStyle({
+          theme,
+          hasErrorMessage: !!errorMessage,
+          disabled: !!disabled
+        })}
       >
-        {/* @conditional-compile-remove(file-sharing) */ <SendBoxErrors {...sendBoxErrorsProps} />}
-        <Stack
-          className={borderAndBoxShadowStyle({
-            theme,
-            hasErrorMessage: !!errorMessage,
-            disabled: !!disabled
-          })}
+        <InputBoxComponent
+          autoFocus={autoFocus}
+          data-ui-id={ids.sendboxTextField}
+          disabled={disabled}
+          errorMessage={onRenderSystemMessage ? onRenderSystemMessage(errorMessage) : errorMessage}
+          textFieldRef={sendTextFieldRef}
+          id="sendbox"
+          placeholderText={strings.placeholderText}
+          textValue={textValue}
+          onChange={(_, newValue) => setText(newValue)}
+          onKeyDown={(ev) => {
+            const keyWasSendingMessage = ev.key === 'Enter' && (ev.shiftKey === false || !supportNewline);
+            if (!keyWasSendingMessage) {
+              onTyping?.();
+            }
+          }}
+          onEnterKeyDown={() => {
+            sendMessageOnClick();
+          }}
+          styles={mergedStyles}
+          supportNewline={supportNewline}
+          maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
+          /* @conditional-compile-remove(mention) */
+          mentionLookupOptions={mentionLookupOptions}
         >
-          <InputBoxComponent
-            autoFocus={autoFocus}
-            data-ui-id={ids.sendboxTextField}
-            disabled={disabled}
-            errorMessage={onRenderSystemMessage ? onRenderSystemMessage(errorMessage) : errorMessage}
-            textFieldRef={sendTextFieldRef}
-            id="sendbox"
-            placeholderText={strings.placeholderText}
-            textValue={textValue}
-            onChange={(_, newValue) => setText(newValue)}
-            onKeyDown={(ev) => {
-              const keyWasSendingMessage = ev.key === 'Enter' && (ev.shiftKey === false || !supportNewline);
-              if (!keyWasSendingMessage) {
-                onTyping?.();
+          <InputBoxButton
+            onRenderIcon={onRenderSendIcon}
+            onClick={(e) => {
+              if (!textValueOverflow) {
+                sendMessageOnClick();
               }
+              e.stopPropagation();
             }}
-            onEnterKeyDown={() => {
-              sendMessageOnClick();
-            }}
-            styles={mergedStyles}
-            supportNewline={supportNewline}
-            maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
-            /* @conditional-compile-remove(mention) */
-            mentionLookupOptions={mentionLookupOptions}
-          >
-            <InputBoxButton
-              onRenderIcon={onRenderSendIcon}
-              onClick={(e) => {
-                if (!textValueOverflow) {
-                  sendMessageOnClick();
-                }
-                e.stopPropagation();
-              }}
-              id={'sendIconWrapper'}
-              className={mergedSendButtonStyle}
-              ariaLabel={localeStrings.sendButtonAriaLabel}
-              tooltipContent={localeStrings.sendButtonAriaLabel}
-            />
-          </InputBoxComponent>
-          {
-            /* @conditional-compile-remove(file-sharing) */
-            onRenderFileUploads()
-          }
-        </Stack>
+            id={'sendIconWrapper'}
+            className={mergedSendButtonStyle}
+            ariaLabel={localeStrings.sendButtonAriaLabel}
+            tooltipContent={localeStrings.sendButtonAriaLabel}
+          />
+        </InputBoxComponent>
+        {
+          /* @conditional-compile-remove(file-sharing) */
+          <FluentV9ThemeProvider v8Theme={theme}>onRenderFileUploads()</FluentV9ThemeProvider>
+        }
       </Stack>
-    </FluentV9ThemeProvider>
+    </Stack>
   );
 };
