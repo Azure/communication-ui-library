@@ -14,13 +14,13 @@ import { RichTextEditorComponentRef } from './RichTextEditor';
 import { useTheme } from '../../theming';
 import { richTextActionButtonsStyle, sendBoxRichTextEditorStyle } from '../styles/RichTextEditor.styles';
 /* @conditional-compile-remove(file-sharing) */
-import { ActiveFileUpload, _FileUploadCards } from '../AttachmentUploadCards';
+import { ActiveFileUpload, _AttachmentUploadCards } from '../AttachmentUploadCards';
 /* @conditional-compile-remove(file-sharing) */
 import { hasCompletedFileUploads, hasIncompleteFileUploads } from '../utils/SendBoxUtils';
 /* @conditional-compile-remove(file-sharing) */
 import { SendBoxErrorBarError } from '../SendBoxErrorBar';
 /* @conditional-compile-remove(file-sharing) */
-import { fileUploadCardsStyles } from '../styles/SendBox.styles';
+import { attachmentUploadCardsStyles } from '../styles/SendBox.styles';
 
 /**
  * Strings of {@link RichTextSendBox} that can be overridden.
@@ -184,7 +184,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     disabled,
     onSendMessage,
     /* @conditional-compile-remove(file-sharing) */ activeFileUploads,
-    /* @conditional-compile-remove(file-sharing) */ strings.fileUploadsPendingError
+    /* @conditional-compile-remove(file-sharing) */ strings.attachmentUploadsPendingError
   ]);
 
   const hasErrorMessage = useMemo(() => {
@@ -244,19 +244,19 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   /* @conditional-compile-remove(file-sharing) */
   const onRenderFileUploads = useCallback(() => {
     return (
-      <Stack className={fileUploadCardsStyles}>
-        <_FileUploadCards
+      <Stack className={attachmentUploadCardsStyles}>
+        <_AttachmentUploadCards
           activeFileUploads={activeFileUploads}
           onCancelFileUpload={onCancelFileUpload}
           strings={{
-            removeFile: strings.removeFile,
+            removeAttachment: strings.removeAttachment,
             uploading: strings.uploading,
             uploadCompleted: strings.uploadCompleted
           }}
         />
       </Stack>
     );
-  }, [activeFileUploads, onCancelFileUpload, strings.removeFile, strings.uploadCompleted, strings.uploading]);
+  }, [activeFileUploads, onCancelFileUpload, strings.removeAttachment, strings.uploadCompleted, strings.uploading]);
 
   const sendButton = useMemo(() => {
     return (
