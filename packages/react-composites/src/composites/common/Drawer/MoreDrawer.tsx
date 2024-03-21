@@ -220,6 +220,11 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
 
   const drawerSelectionOptions = inferCallWithChatControlOptions(props.callControls);
 
+  const showCaptionsButton =
+    props.isCaptionsSupported &&
+    /* @conditional-compile-remove(acs-close-captions) */ drawerSelectionOptions !== false &&
+    /* @conditional-compile-remove(acs-close-captions) */ isEnabled(drawerSelectionOptions.captions);
+
   /* @conditional-compile-remove(reaction) */
   if (props.reactionResources !== undefined) {
     drawerMenuItems.push({
@@ -475,7 +480,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   }, [captionSettingsProp.isCaptionsFeatureActive, startCaptionsButtonHandlers, currentSpokenLanguage]);
 
   /* @conditional-compile-remove(close-captions) */
-  if (props.isCaptionsSupported) {
+  if (showCaptionsButton) {
     const captionsDrawerItems: DrawerMenuItemProps[] = [];
 
     const spokenLanguageString = supportedSpokenLanguageStrings
@@ -580,7 +585,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   /* @conditional-compile-remove(close-captions) */
   return (
     <>
-      {isSpokenLanguageDrawerOpen && props.isCaptionsSupported && (
+      {isSpokenLanguageDrawerOpen && showCaptionsButton && (
         <SpokenLanguageSettingsDrawer
           onLightDismiss={props.onLightDismiss}
           selectLanguage={setCurrentSpokenLanguage}
@@ -590,7 +595,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
           supportedLanguageStrings={supportedSpokenLanguageStrings}
         />
       )}
-      {isCaptionLanguageDrawerOpen && props.isCaptionsSupported && (
+      {isCaptionLanguageDrawerOpen && showCaptionsButton && (
         <CaptionLanguageSettingsDrawer
           onLightDismiss={props.onLightDismiss}
           selectLanguage={setCurrentCaptionLanguage}
