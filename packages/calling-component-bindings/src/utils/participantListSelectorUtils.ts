@@ -19,33 +19,6 @@ import { Reaction } from '@internal/react-components';
 /* @conditional-compile-remove(reaction) */
 import memoizeOne from 'memoize-one';
 
-/**
- * @private
- */
-export const memoizedConvertAllremoteParticipants = memoizeFnAll(
-  (
-    userId: string,
-    displayName: string | undefined,
-    state: RemoteParticipantState,
-    isMuted: boolean,
-    isScreenSharing: boolean,
-    isSpeaking: boolean,
-    raisedHand: RaisedHandState | undefined,
-    localUserCanRemoveOthers: boolean
-  ): CallParticipantListParticipant => {
-    return convertRemoteParticipantToParticipantListParticipant(
-      userId,
-      displayName,
-      state,
-      isMuted,
-      isScreenSharing,
-      isSpeaking,
-      raisedHand,
-      localUserCanRemoveOthers
-    );
-  }
-);
-
 const convertRemoteParticipantToParticipantListParticipant = (
   userId: string,
   displayName: string | undefined,
@@ -73,7 +46,6 @@ const convertRemoteParticipantToParticipantListParticipant = (
   };
 };
 
-/* @conditional-compile-remove(rooms) */
 /**
  * @private
  */
@@ -191,7 +163,6 @@ export const memoizedSpotlight = memoizeOne(
   }
 );
 
-/* @conditional-compile-remove(rooms) */
 const convertRemoteParticipantToParticipantListParticipantBetaRelease = (
   userId: string,
   displayName: string | undefined,

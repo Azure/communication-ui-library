@@ -15,13 +15,11 @@ import { getRole } from './baseSelectors';
 import { isHideAttendeeNamesEnabled } from './baseSelectors';
 import { CallParticipantListParticipant } from '@internal/react-components';
 import { _isRingingPSTNParticipant, _updateUserDisplayNames } from './utils/callUtils';
-import { memoizedConvertAllremoteParticipants } from './utils/participantListSelectorUtils';
+import { memoizedConvertAllremoteParticipantsBetaRelease } from './utils/participantListSelectorUtils';
 /* @conditional-compile-remove(spotlight) */
 import { memoizedConvertAllremoteParticipantsBetaSpotlight } from './utils/participantListSelectorUtils';
 /* @conditional-compile-remove(reaction) */
 import { memoizedConvertToVideoTileReaction } from './utils/participantListSelectorUtils';
-/* @conditional-compile-remove(rooms) */
-import { memoizedConvertAllremoteParticipantsBetaRelease } from './utils/participantListSelectorUtils';
 /* @conditional-compile-remove(reaction) */
 import { memoizedConvertAllremoteParticipantsBeta } from './utils/participantListSelectorUtils';
 /* @conditional-compile-remove(spotlight) */
@@ -122,9 +120,7 @@ const convertRemoteParticipantsToParticipantListParticipants = (
   return memoizedConvertAllremoteParticipantsBetaSpotlight(conversionCallback);
   /* @conditional-compile-remove(reaction) */
   return memoizedConvertAllremoteParticipantsBeta(conversionCallback);
-  /* @conditional-compile-remove(rooms) */
   return memoizedConvertAllremoteParticipantsBetaRelease(conversionCallback);
-  return memoizedConvertAllremoteParticipants(conversionCallback);
 };
 
 /**
@@ -231,7 +227,5 @@ const updateUserDisplayNamesTrampoline = (remoteParticipants: RemoteParticipantS
 };
 
 const localUserCanRemoveOthersTrampoline = (role?: string): boolean => {
-  /* @conditional-compile-remove(rooms) */
   return role === 'Presenter' || role === 'Unknown' || role === undefined;
-  return true;
 };

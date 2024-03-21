@@ -128,8 +128,6 @@ module.exports = {
     "capabilities",
     // Closed captions
     "close-captions",
-    // rooms
-    "rooms",
     // feature for calling sounds
     "calling-sounds",
     // Feature for the DTMF dialer for Teams voice apps

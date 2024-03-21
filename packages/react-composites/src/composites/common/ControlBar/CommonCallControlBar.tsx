@@ -363,16 +363,14 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                           />
                         )
                     }
-                    {!props.mobileView &&
-                      isEnabled(options.raiseHandButton) &&
-                      /* @conditional-compile-remove(rooms) */ !hideRaiseHandButtonInRoomsCall && (
-                        <RaiseHand
-                          displayType={options.displayType}
-                          styles={commonButtonStyles}
-                          /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-                          disabled={props.disableButtonsForHoldScreen || isDisabled(options.microphoneButton)}
-                        />
-                      )}
+                    {!props.mobileView && isEnabled(options.raiseHandButton) && !hideRaiseHandButtonInRoomsCall && (
+                      <RaiseHand
+                        displayType={options.displayType}
+                        styles={commonButtonStyles}
+                        /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+                        disabled={props.disableButtonsForHoldScreen || isDisabled(options.microphoneButton)}
+                      />
+                    )}
                     {showDtmfDialerButton(options) && props.onSetDialpadPage !== undefined && (
                       <DtmfDialpadButton
                         styles={commonButtonStyles}

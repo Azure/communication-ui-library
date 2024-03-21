@@ -127,7 +127,6 @@ export type CallAdapterClientState = {
   devices: DeviceManagerState;
   endedCall?: CallState;
   isTeamsCall: boolean;
-  /* @conditional-compile-remove(rooms) */
   /**
    * State to track whether the call is a rooms call.
    */
@@ -906,7 +905,6 @@ export interface CallAdapterSubscribers {
    * Subscribe function for 'capabilitiesChanged' event.
    */
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
-  /* @conditional-compile-remove(rooms) */
   /**
    * Subscribe function for 'roleChanged' event.
    */
@@ -995,7 +993,6 @@ export interface CallAdapterSubscribers {
    * Unsubscribe function for 'capabilitiesChanged' event.
    */
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
-  /* @conditional-compile-remove(rooms) */
   /**
    * Unsubscribe function for 'roleChanged' event.
    */
