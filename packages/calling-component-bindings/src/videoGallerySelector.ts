@@ -13,10 +13,9 @@ import {
   getIsMuted,
   getIsScreenSharingOn,
   getLocalVideoStreams,
+  getRole,
   getScreenShareRemoteParticipant
 } from './baseSelectors';
-/* @conditional-compile-remove(rooms) */
-import { getRole } from './baseSelectors';
 /* @conditional-compile-remove(hide-attendee-name) */
 import { isHideAttendeeNamesEnabled } from './baseSelectors';
 import { getOptimalVideoCount } from './baseSelectors';
@@ -74,7 +73,6 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     getIdentifier,
     getDominantSpeakers,
     getOptimalVideoCount,
-    /* @conditional-compile-remove(rooms) */
     getRole,
     getLocalParticipantRaisedHand,
     /* @conditional-compile-remove(hide-attendee-name) */
@@ -96,7 +94,6 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     identifier: string,
     dominantSpeakers,
     optimalVideoCount,
-    /* @conditional-compile-remove(rooms) */
     role,
     raisedHand,
     /* @conditional-compile-remove(hide-attendee-name) */
@@ -145,7 +142,6 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
         isMuted,
         isScreenSharingOn,
         localVideoStream,
-        /* @conditional-compile-remove(rooms) */
         role,
         raisedHand,
         /* @conditional-compile-remove(reaction) */
