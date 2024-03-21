@@ -362,7 +362,7 @@ export interface RemoteVideoStreamState {
   isAvailable: boolean;
   /**
    * Proxy of {@link @azure/communication-calling#RemoteVideoStream.isReceiving}.
-   * @beta
+   * @public
    */
   /* @conditional-compile-remove(video-stream-is-receiving-flag) */
   isReceiving: boolean;

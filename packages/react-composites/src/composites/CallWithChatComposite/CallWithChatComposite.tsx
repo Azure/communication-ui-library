@@ -32,7 +32,6 @@ import { containerDivStyles } from '../common/ContainerRectProps';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { CallCompositeInner, CallCompositeOptions } from '../CallComposite/CallComposite';
 import { RemoteVideoTileMenuOptions } from '../CallComposite/CallComposite';
-/* @conditional-compile-remove(click-to-call) */
 import { LocalVideoTileOptions } from '../CallComposite/CallComposite';
 /* @conditional-compile-remove(call-readiness) */
 import { DeviceCheckOptions } from '../CallComposite/CallComposite';
@@ -168,7 +167,6 @@ export type CallWithChatCompositeOptions = {
    * Remote participant video tile menu options
    */
   remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
-  /* @conditional-compile-remove(click-to-call) */
   /**
    * Options for controlling the local video tile.
    *
@@ -299,7 +297,6 @@ type CallWithChatScreenProps = {
   /* @conditional-compile-remove(unsupported-browser) */
   onEnvironmentInfoTroubleshootingClick?: () => void;
   remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
-  /* @conditional-compile-remove(click-to-call) */
   localVideoTile?: boolean | LocalVideoTileOptions;
   galleryOptions?: {
     layout?: VideoGalleryLayout;
@@ -528,7 +525,6 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       remoteVideoTileMenuOptions: props.remoteVideoTileMenuOptions,
 
       galleryOptions: props.galleryOptions,
-      /* @conditional-compile-remove(click-to-call) */
       localVideoTile: props.localVideoTile,
       /* @conditional-compile-remove(end-of-call-survey) */
       surveyOptions: surveyOptions,
@@ -556,7 +552,6 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       props.onPermissionsTroubleshootingClick,
 
       props.galleryOptions,
-      /* @conditional-compile-remove(click-to-call) */
       props.localVideoTile,
       props.remoteVideoTileMenuOptions,
       /* @conditional-compile-remove(end-of-call-survey) */
@@ -691,7 +686,6 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         remoteVideoTileMenuOptions={options?.remoteVideoTileMenuOptions}
         /* @conditional-compile-remove(file-sharing) */
         fileSharing={options?.fileSharing}
-        /* @conditional-compile-remove(click-to-call) */
         localVideoTile={options?.localVideoTile}
         galleryOptions={options?.galleryOptions}
         /* @conditional-compile-remove(custom-branding) */

@@ -355,9 +355,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   SplitButtonPrimaryActionCameraOff: <VideoOff20Filled />,
   SplitButtonPrimaryActionMicUnmuted: <Mic20Filled />,
   SplitButtonPrimaryActionMicMuted: <MicOff20Filled />,
-  /* @conditional-compile-remove(vertical-gallery) */
   VerticalGalleryLeftButton: <GalleryLeftButton />,
-  /* @conditional-compile-remove(vertical-gallery) */
   VerticalGalleryRightButton: <GalleryRightButton />,
   /* @conditional-compile-remove(video-background-effects) */
   ControlButtonVideoEffectsOption: <VideoBackgroundEffect20Regular />,
@@ -385,7 +383,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(spotlight) */
   StopSpotlightContextualMenuItem: <VideoPersonStarOff20Filled />,
   /* @conditional-compile-remove(spotlight) */
-  VideoSpotlighted: <VideoPersonStar20Filled style={{ height: '16px', width: '16px' }} />,
+  VideoTileSpotlighted: <VideoPersonStar20Filled style={{ height: '16px', width: '16px' }} />,
   /* @conditional-compile-remove(rich-text-editor) */
   RichTextBoldButtonIcon: <TextBold20Regular />,
   /* @conditional-compile-remove(rich-text-editor) */

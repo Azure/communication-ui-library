@@ -45,10 +45,6 @@ module.exports = {
     "total-participant-count",
     // feature for tracking environment info API different than unsupported browser. stable use of environment info affects other components possibly sooner
     "calling-environment-info",
-    // feature for vertical gallery layouts in VideoGallery
-    "vertical-gallery",
-    // Feature for updates needed for Click to Call (C2C) scenarios
-    "click-to-call",
     // a demo feature flag for those beta feature not ready for beta release
     "in-progress-beta-feature-demo",
     // Feature for call transfer
@@ -132,8 +128,6 @@ module.exports = {
     "capabilities",
     // Closed captions
     "close-captions",
-    // feature  for vertical overflow gallery
-    "vertical-gallery",
     // rooms
     "rooms",
     // feature for calling sounds
@@ -142,17 +136,13 @@ module.exports = {
     "dtmf-dialer",
     // dialpad
     "dialpad",
-    // Feature for updates needed for Click to Call (C2C) scenarios
-    "click-to-call",
     // Feature for call transfer
     "call-transfer",
-    // Feature image overlay
-    "image-overlay",
-    // Chat teams interop to display images and file attachments in chat messages
-    "teams-inline-images-and-file-sharing",
     // custom branding for the composites
     "custom-branding",
     // Feature for PPT Live for teams meeting
-    'ppt-live'
+    'ppt-live',
+    // Support Calling SDK isReceiving flag, shows a loading spinner on the video tile when isAvailable is true but isReceiving is false
+    "video-stream-is-receiving-flag",
   ]
 }
