@@ -25,12 +25,12 @@
     // Call composite sample code starts here
     const displayName = testParams.displayName ?? 'Bob';
 
-    const callAdapter = await callComposite.loadCallComposite(
+    const callAdapter = await outboundCallComposite.loadCallComposite(
       {
         userId: user,
         token: token,
         displayName: displayName,
-        targetCallees: [{ teamsAppId: '<Enter your teams app Id>', cloud: 'public' }] // Provide any GUID to join a group
+        targetCallees: [{ teamsAppId: '<Enter your teams app id>', cloud: 'public' }] // Provide any GUID to join a group
       },
       document.getElementById('outbound-call-composite-container')
     );
