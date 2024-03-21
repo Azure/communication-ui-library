@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(file-sharing) */
-import { ActiveFileUpload } from '../FileUploadCards';
+import { ActiveFileUpload } from '../AttachmentUploadCards';
 
 /**
  * @private
@@ -17,7 +17,9 @@ const EMPTY_MESSAGE_REGEX = /^\s*$/;
 export const hasIncompleteFileUploads = (activeFileUploads: ActiveFileUpload[] | undefined): boolean => {
   return !!(
     activeFileUploads?.length &&
-    !activeFileUploads.filter((fileUpload) => !fileUpload.error).every((fileUpload) => fileUpload.uploadComplete)
+    !activeFileUploads
+      .filter((attachmentUpload) => !attachmentUpload.error)
+      .every((attachmentUpload) => attachmentUpload.uploadComplete)
   );
 };
 

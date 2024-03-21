@@ -22,7 +22,7 @@ describe('ImageOverlay default layout tests', () => {
   const titleIconTestId1 = 'titleIconTestId1';
   const imageInfo = {
     imageSrc: 'images/inlineImageExample1.png',
-    downloadFilename: 'downloadFilename',
+    downloadAttachmentname: 'downloadAttachmentname',
     altText: 'altText',
     title: 'title',
     titleIcon: <div data-testid={titleIconTestId1}></div>
