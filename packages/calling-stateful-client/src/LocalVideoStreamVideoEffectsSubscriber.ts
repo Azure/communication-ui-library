@@ -1,18 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(video-background-effects) */
 import { VideoEffectErrorPayload, VideoEffectsFeature } from '@azure/communication-calling';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { LocalVideoStreamState } from './CallClientState';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { CallContext } from './CallContext';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { CallIdRef } from './CallIdRef';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { convertFromSDKToDeclarativeVideoStreamVideoEffects } from './Converter';
 
-/* @conditional-compile-remove(video-background-effects) */
 /**
  * Subscribes to a LocalVideoStream's video effects events and updates the call context appropriately.
  * @private

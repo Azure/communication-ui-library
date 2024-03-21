@@ -81,7 +81,7 @@ export interface CameraButtonStrings {
    * Title for primary action section of split button
    */
   cameraPrimaryActionSplitButtonTitle?: string;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Title for video effects menu item
    */
@@ -153,7 +153,7 @@ export interface CameraButtonProps extends ControlBarButtonProps {
    * Styles for {@link CameraButton} and the device selection flyout.
    */
   styles?: Partial<CameraButtonStyles>;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Callback when a effects is clicked
    */
@@ -228,7 +228,7 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   );
 
   const splitButtonMenuItems: IContextualMenuItem[] = [];
-  /* @conditional-compile-remove(video-background-effects) */
+
   if (props.onClickVideoEffects) {
     splitButtonMenuItems.push({
       key: 'effects',

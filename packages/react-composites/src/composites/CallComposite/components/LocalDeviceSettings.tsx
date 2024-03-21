@@ -3,7 +3,7 @@
 
 import { AudioDeviceInfo, VideoDeviceInfo } from '@azure/communication-calling';
 import { Dropdown, IDropdownOption, Label, mergeStyles, Stack } from '@fluentui/react';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { DefaultButton } from '@fluentui/react';
 /* @conditional-compile-remove(call-readiness) */
 import { useEffect } from 'react';
@@ -24,7 +24,7 @@ import { ConfigurationPageMicDropdown } from './ConfigurationPageMicDropdown';
 /* @conditional-compile-remove(call-readiness) */
 import { useHandlers } from '../hooks/useHandlers';
 import { cameraAndVideoEffectsContainerStyleDesktop } from '../styles/CallConfiguration.styles';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { effectsButtonStyles } from '../styles/CallConfiguration.styles';
 
 type iconType = 'Camera' | 'Microphone' | 'Speaker';
@@ -91,7 +91,7 @@ export interface LocalDeviceSettingsType {
   onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
   /* @conditional-compile-remove(call-readiness) */
   onClickEnableDevicePermission?: () => void;
-  /* @conditional-compile-remove(video-background-effects) */
+
   onClickVideoEffects?: () => void;
 }
 
@@ -102,7 +102,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
   const theme = useTheme();
   const locale = useLocale();
   const adapter = useAdapter();
-  /* @conditional-compile-remove(video-background-effects) */
+
   const onResolveVideoEffectDependency = adapter.getState().onResolveVideoEffectDependency;
   const defaultPlaceHolder = locale.strings.call.defaultPlaceHolder;
   const cameraLabel = locale.strings.call.cameraLabel;
@@ -247,19 +247,16 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
             >
               {cameraLabel}
             </Label>
-            {
-              /* @conditional-compile-remove(video-background-effects) */
-              onResolveVideoEffectDependency && (
-                <DefaultButton
-                  iconProps={{ iconName: 'ConfigurationScreenVideoEffectsButton' }}
-                  styles={effectsButtonStyles(theme)}
-                  onClick={props.onClickVideoEffects}
-                  data-ui-id={'call-config-video-effects-button'}
-                >
-                  {locale.strings.call.configurationPageVideoEffectsButtonLabel}
-                </DefaultButton>
-              )
-            }
+            {onResolveVideoEffectDependency && (
+              <DefaultButton
+                iconProps={{ iconName: 'ConfigurationScreenVideoEffectsButton' }}
+                styles={effectsButtonStyles(theme)}
+                onClick={props.onClickVideoEffects}
+                data-ui-id={'call-config-video-effects-button'}
+              >
+                {locale.strings.call.configurationPageVideoEffectsButtonLabel}
+              </DefaultButton>
+            )}
           </Stack>
           <ConfigurationPageCameraDropdown
             cameraGrantedDropdown={cameraGrantedDropdown}

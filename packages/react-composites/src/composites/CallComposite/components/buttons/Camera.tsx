@@ -19,7 +19,7 @@ export const Camera = (props: {
   styles?: ControlBarButtonStyles;
   splitButtonsForDeviceSelection?: boolean;
   disabled?: boolean;
-  /* @conditional-compile-remove(video-background-effects) */
+
   onClickVideoEffects?: (showVideoEffects: boolean) => void;
   componentRef?: React.RefObject<IButton>;
   disableTooltip?: boolean;
@@ -49,7 +49,6 @@ export const Camera = (props: {
           ? () => <_HighContrastAwareIcon disabled={true} iconName={'ControlButtonCameraProhibited'} />
           : undefined
       }
-      /* @conditional-compile-remove(video-background-effects) */
       onClickVideoEffects={props.onClickVideoEffects}
       componentRef={props.componentRef}
     />
