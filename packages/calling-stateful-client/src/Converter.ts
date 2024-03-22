@@ -29,11 +29,10 @@ import { CaptionsInfo } from './CallClientState';
 import { _isACSCall } from './TypeGuards';
 import { CallCommon, IncomingCallCommon } from './BetaToStableTypes';
 
-/* @conditional-compile-remove(video-background-effects) */
 import { Features } from '@azure/communication-calling';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { VideoEffectName } from '@azure/communication-calling';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { LocalVideoStreamVideoEffectsState } from './CallClientState';
 import { RaisedHand } from '@azure/communication-calling';
 import { RaisedHandState } from './CallClientState';
@@ -44,14 +43,13 @@ import { RaisedHandState } from './CallClientState';
 export function convertSdkLocalStreamToDeclarativeLocalStream(
   stream: SdkLocalVideoStream
 ): DeclarativeLocalVideoStream {
-  /* @conditional-compile-remove(video-background-effects) */
   const localVideoStreamEffectsAPI = stream.feature(Features.VideoEffects);
 
   return {
     source: stream.source,
     mediaStreamType: stream.mediaStreamType,
     view: undefined,
-    /* @conditional-compile-remove(video-background-effects) */
+
     videoEffects: convertFromSDKToDeclarativeVideoStreamVideoEffects(localVideoStreamEffectsAPI.activeEffects)
   };
 }
@@ -143,7 +141,6 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     screenShareRemoteParticipant: undefined,
     startTime: new Date(),
     endTime: undefined,
-    /* @conditional-compile-remove(rooms) */
     role: call.role,
     /* @conditional-compile-remove(close-captions) */
     captionsFeature: {
@@ -214,7 +211,6 @@ export function convertFromSDKToCaptionInfoState(caption: AcsCaptionsInfo): Capt
   };
 }
 
-/* @conditional-compile-remove(video-background-effects) */
 /** @private */
 export function convertFromSDKToDeclarativeVideoStreamVideoEffects(
   videoEffects: VideoEffectName[]

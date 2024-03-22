@@ -226,7 +226,7 @@ export const memoizeLocalParticipant = memoizeOne(
     isMuted,
     isScreenSharingOn,
     localVideoStream,
-    /* @conditional-compile-remove(rooms) */ role,
+    role,
     raisedHand,
     /* @conditional-compile-remove(reaction) */ reaction,
     /* @conditional-compile-remove(spotlight) */ localSpotlight,
@@ -241,7 +241,6 @@ export const memoizeLocalParticipant = memoizeOne(
       isMirrored: localVideoStream?.view?.isMirrored,
       renderElement: localVideoStream?.view?.target
     },
-    /* @conditional-compile-remove(rooms) */
     role,
     raisedHand: raisedHand,
     /* @conditional-compile-remove(reaction) */

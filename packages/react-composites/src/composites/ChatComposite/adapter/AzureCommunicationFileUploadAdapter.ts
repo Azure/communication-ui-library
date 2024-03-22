@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { AttachmentMetadata } from '@internal/react-components';
-import { FileUploadManager, FileUploadState } from '../file-sharing';
+import { FileUploadManager, FileUploadState } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { produce } from 'immer';
 /* @conditional-compile-remove(file-sharing) */

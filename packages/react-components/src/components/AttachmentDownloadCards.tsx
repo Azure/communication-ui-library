@@ -10,44 +10,13 @@ import { _AttachmentCard } from './AttachmentCard';
 import { _AttachmentCardGroup } from './AttachmentCardGroup';
 import { iconButtonClassName } from './styles/IconButton.styles';
 import { _formatString } from '@internal/acs-ui-common';
+import { AttachmentMetadata, FileDownloadHandler } from '../types/Attachment';
 
 /**
  * Represents the type of attachment
  * @public
  */
 export type ChatAttachmentType = 'unknown' | 'image' | /* @conditional-compile-remove(file-sharing) */ 'file';
-
-/**
- * Metadata containing basic information about the uploaded attachment.
- *
- * @beta
- */
-export interface AttachmentMetadata {
-  /**
-   * Extension hint, useful for rendering a specific icon.
-   * An unknown or empty extension will be rendered as a generic icon.
-   * Example: `pdf`
-   */
-  extension: string;
-  /**
-   * Unique ID of the attachment.
-   */
-  /* @conditional-compile-remove(file-sharing) */
-  id: string;
-  /**
-   * File name to be displayed.
-   */
-  name: string;
-  /**
-   * Download URL for the attachment.
-   */
-  url: string;
-  /* @conditional-compile-remove(file-sharing) */
-  /*
-   * Optional dictionary of meta data associated with the attachment.
-   */
-  payload?: Record<string, string>;
-}
 
 /**
  * Strings of _AttachmentDownloadCards that can be overridden.
@@ -59,51 +28,6 @@ export interface _AttachmentDownloadCardsStrings {
   downloadAttachment: string;
   attachmentCardGroupMessage: string;
 }
-
-/**
- * @beta
- * A attachment download error returned via a {@link FileDownloadHandler}.
- * This error message is used to render an error message in the UI.
- */
-export interface FileDownloadError {
-  /** The error message to display in the UI */
-  errorMessage: string;
-}
-
-/**
- * @beta
- *
- * A callback function for handling attachment downloads.
- * The function needs to return a promise that resolves to a attachment download URL.
- * If the promise is rejected, the {@link Error.message} will be used to display an error message to the user.
- *
- * @example
- * ```ts
- * const attachmentDownloadHandler: FileDownloadHandler = async (userId, attachmentData) => {
- *   if (isUnauthorizedUser(userId)) {
- *     return { errorMessage: 'You don’t have permission to download this attachment.' };
- *   } else {
- *     return new URL(attachmentData.url);
- *   }
- * }
- *
- * const App = () => (
- *   <ChatComposite
- *     ...
- *     fileSharing={{
- *       fileDownloadHandler: fileDownloadHandler
- *     }}
- *   />
- * )
- *
- * ```
- * @param userId - The user ID of the user downloading the attachment.
- * @param fileMetadata - The {@link AttachmentMetadata} containing file `url`, `extension` and `name`.
- */
-export type FileDownloadHandler = (
-  userId: string,
-  fileMetadata: AttachmentMetadata
-) => Promise<URL | FileDownloadError>;
 
 /**
  * @internal
