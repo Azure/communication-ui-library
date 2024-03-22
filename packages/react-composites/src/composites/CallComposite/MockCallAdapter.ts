@@ -29,7 +29,7 @@ export class _MockCallAdapter implements CallAdapter {
     localParticipantRole?: ParticipantRole;
   }) {
     this.state = {
-      ...createDefaultCallAdapterState(/* @conditional-compile-remove(rooms) */ testState.localParticipantRole)
+      ...createDefaultCallAdapterState(testState.localParticipantRole)
     };
 
     if (testState.askDevicePermission) {
@@ -180,20 +180,19 @@ export class _MockCallAdapter implements CallAdapter {
   stopCaptions(): Promise<void> {
     throw Error('stopCaptions not implemented');
   }
-  /* @conditional-compile-remove(video-background-effects) */
+
   startVideoBackgroundEffect(): Promise<void> {
     throw new Error('startVideoBackgroundEffect not implemented.');
   }
 
-  /* @conditional-compile-remove(video-background-effects) */
   stopVideoBackgroundEffects(): Promise<void> {
     throw new Error('stopVideoBackgroundEffects not implemented.');
   }
-  /* @conditional-compile-remove(video-background-effects) */
+
   updateBackgroundPickerImages(): void {
     throw new Error('updateBackgroundPickerImages not implemented.');
   }
-  /* @conditional-compile-remove(video-background-effects) */
+
   public updateSelectedVideoBackgroundEffect(): void {
     throw new Error('updateSelectedVideoBackgroundEffect not implemented.');
   }
@@ -247,7 +246,6 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
       pptLive: { isActive: false },
       /* @conditional-compile-remove(reaction) */
       localParticipantReaction: undefined,
-      /* @conditional-compile-remove(rooms) */
       role,
       /* @conditional-compile-remove(close-captions) */
       captionsFeature: {
@@ -285,7 +283,6 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
       deviceAccess: { video: true, audio: true }
     },
     isTeamsCall: false,
-    /* @conditional-compile-remove(rooms) */
     isRoomsCall: false,
     latestErrors: {}
   };

@@ -6,6 +6,7 @@ import {
   AudioDeviceInfo,
   DeviceAccess,
   DominantSpeakersInfo,
+  ParticipantRole,
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
@@ -18,8 +19,6 @@ import { TeamsCaptionsInfo } from '@azure/communication-calling';
 import { CaptionsInfo as AcsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
-import { ParticipantRole } from '@azure/communication-calling';
 import { AzureLogger, createClientLogger, getLogLevel } from '@azure/logger';
 import EventEmitter from 'events';
 import { enableMapSet, enablePatches, Patch, produce } from 'immer';
@@ -50,7 +49,7 @@ import { ReactionState } from './CallClientState';
 import { AcceptedTransfer } from './CallClientState';
 import { callingStatefulLogger } from './Logger';
 import { CallIdHistory } from './CallIdHistory';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { LocalVideoStreamVideoEffectsState } from './CallClientState';
 /* @conditional-compile-remove(close-captions) */
 import { convertFromTeamsSDKToCaptionInfoState } from './Converter';
@@ -180,7 +179,6 @@ export class CallContext {
         /* @conditional-compile-remove(ppt-live) */
         existingCall.pptLive.isActive = call.pptLive.isActive;
         existingCall.raiseHand.localParticipantRaisedHand = call.raiseHand.localParticipantRaisedHand;
-        /* @conditional-compile-remove(rooms) */
         existingCall.role = call.role;
         /* @conditional-compile-remove(total-participant-count) */
         existingCall.totalParticipantCount = call.totalParticipantCount;
@@ -324,7 +322,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(video-background-effects) */
   public setCallLocalVideoStreamVideoEffects(callId: string, videoEffects: LocalVideoStreamVideoEffectsState): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -346,7 +343,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
   public setRole(callId: string, role: ParticipantRole): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -649,7 +645,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(rooms) */
   public setParticipantRole(callId: string, participantKey: string, role: ParticipantRole): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -956,7 +951,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(video-background-effects) */
   public setDeviceManagerUnparentedViewVideoEffects(
     localVideoStream: LocalVideoStreamState,
     videoEffects: LocalVideoStreamVideoEffectsState
