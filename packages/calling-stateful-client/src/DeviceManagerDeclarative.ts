@@ -4,7 +4,7 @@
 import { AudioDeviceInfo, DeviceAccess, DeviceManager, VideoDeviceInfo } from '@azure/communication-calling';
 import { CallContext } from './CallContext';
 import { InternalCallContext } from './InternalCallContext';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { LocalVideoStream } from '@azure/communication-calling';
 
 /**
@@ -20,7 +20,6 @@ export interface StatefulDeviceManager extends DeviceManager {
    */
   selectCamera: (device: VideoDeviceInfo) => void;
 
-  /* @conditional-compile-remove(video-background-effects) */
   /**
    * Gets the list of unparented video streams. This is a list of video streams that have not been added to a
    * {@link @azure/communication-calling#Call}. This is useful for developers who want to interact with rendered
@@ -209,7 +208,7 @@ export const deviceManagerDeclaratify = (
     configurable: false,
     value: (videoDeviceInfo: VideoDeviceInfo) => proxyDeviceManager.selectCamera(videoDeviceInfo)
   });
-  /* @conditional-compile-remove(video-background-effects) */
+
   Object.defineProperty(deviceManager, 'getUnparentedVideoStreams', {
     configurable: false,
     value: (): LocalVideoStream[] => internalContext.getUnparentedRenderInfos()

@@ -87,12 +87,12 @@ type CallWithChatClientStateInternal = Omit<
   | 'userId'
   | /* @conditional-compile-remove(PSTN-calls) */ 'alternateCallerId'
   | /* @conditional-compile-remove(unsupported-browser) */ 'features'
-  | /* @conditional-compile-remove(video-background-effects) */ 'videoBackgroundImages'
-  | /* @conditional-compile-remove(video-background-effects) */ 'selectedVideoBackgroundEffect'
+  | 'videoBackgroundImages'
+  | 'selectedVideoBackgroundEffect'
   | /* @conditional-compile-remove(call-transfer) */ 'acceptedTransferCallState'
   | 'cameraStatus'
   | 'sounds'
-  | /* @conditional-compile-remove(rooms) */ 'isRoomsCall'
+  | 'isRoomsCall'
   | 'targetCallees'
 >;
 

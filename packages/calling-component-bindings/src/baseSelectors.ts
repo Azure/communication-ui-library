@@ -42,9 +42,7 @@ export const getDeviceManager = (state: CallClientState): DeviceManagerState => 
  * @private
  */
 export const getRole = (state: CallClientState, props: CallingBaseSelectorProps): ParticipantRole | undefined => {
-  /* @conditional-compile-remove(rooms) */
   return state.calls[props.callId]?.role;
-  return 'Unknown';
 };
 
 /**
