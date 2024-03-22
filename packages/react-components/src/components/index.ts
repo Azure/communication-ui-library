@@ -211,6 +211,17 @@ export * from './ModalClone/ModalClone';
 export * from './AttachmentDownloadCards';
 export type { _AttachmentUploadCardsStrings } from './AttachmentUploadCards';
 
+export type {
+  AttachmentMetadata,
+  FileUploadHandler,
+  FileUploadManager,
+  FileUploadState,
+  FileUploadError
+} from '../types/Attachment';
+
+/* @conditional-compile-remove(file-sharing) */
+export type { FileDownloadHandler, FileDownloadError } from '../types/Attachment';
+
 export { _useContainerHeight, _useContainerWidth } from './utils/responsive';
 
 export { _ComplianceBanner } from './ComplianceBanner';
