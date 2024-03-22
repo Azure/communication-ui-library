@@ -63,8 +63,6 @@ module.exports = {
     "hide-attendee-name",
     // custom branding for the composites
     "custom-branding",
-    // Feature for sounds during different calling events
-    "calling-sounds",
     // Feature for end of call survey
     'end-of-call-survey',
     // Feature for the DTMF dialer for Teams voice apps
@@ -122,16 +120,10 @@ module.exports = {
     // Demo feature. Used in live-documentation of conditional compilation.
     // Do not use in production code.
     "stabilizedDemo",
-    // feature for blurred background and replace background effects
-    "video-background-effects",
     // Feature for capabilities
     "capabilities",
     // Closed captions
     "close-captions",
-    // rooms
-    "rooms",
-    // feature for calling sounds
-    "calling-sounds",
     // Feature for the DTMF dialer for Teams voice apps
     "dtmf-dialer",
     // dialpad

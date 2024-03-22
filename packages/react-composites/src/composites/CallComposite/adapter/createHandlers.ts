@@ -15,7 +15,7 @@ import {
   _isTeamsCall,
   _isTeamsCallAgent
 } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 
 /**
@@ -35,7 +35,7 @@ export function createHandlers<AgentType extends CallAgent | TeamsCallAgent>(
   callAgent: AgentType,
   deviceManager: StatefulDeviceManager | undefined,
   call: CallCommon | undefined,
-  /* @conditional-compile-remove(video-background-effects) */
+
   options?: {
     onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
   }
@@ -47,7 +47,7 @@ export function createHandlers<AgentType extends CallAgent | TeamsCallAgent>(
       callAgent,
       deviceManager,
       call,
-      /* @conditional-compile-remove(video-background-effects) */
+
       options
     ) as CallHandlersOf<AgentType>;
   }
@@ -59,7 +59,7 @@ export function createHandlers<AgentType extends CallAgent | TeamsCallAgent>(
       callAgent,
       deviceManager,
       call,
-      /* @conditional-compile-remove(video-background-effects) */
+
       options
     ) as CallHandlersOf<AgentType>;
   }
