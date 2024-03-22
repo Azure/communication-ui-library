@@ -200,7 +200,9 @@ export const convertFileUploadsUiStateToMessageMetadata = (
         fileMetadata.push(file.metadata);
       }
     });
-    return { fileSharingMetadata: JSON.stringify(fileMetadata) };
+    if (fileMetadata.length > 0) {
+      return { fileSharingMetadata: JSON.stringify(fileMetadata) };
+    }
   }
   return undefined;
 };
