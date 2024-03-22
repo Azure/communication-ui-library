@@ -120,8 +120,6 @@ module.exports = {
     // Demo feature. Used in live-documentation of conditional compilation.
     // Do not use in production code.
     "stabilizedDemo",
-    // feature for blurred background and replace background effects
-    "video-background-effects",
     // Feature for capabilities
     "capabilities",
     // Closed captions
