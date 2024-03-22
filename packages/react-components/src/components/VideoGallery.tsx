@@ -694,6 +694,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       onDisposeRemoteStreamView={onDisposeRemoteScreenShareStreamView}
       isReceiving={screenShareParticipant.screenShareStream?.isReceiving}
       participantVideoScalingMode={selectedScalingModeState[screenShareParticipant.userId]}
+      /* @conditional-compile-remove(reaction) */
+      localParticipant={localParticipant}
+      /* @conditional-compile-remove(reaction) */
+      remoteParticipants={remoteParticipants}
+      /* @conditional-compile-remove(reaction) */
+      reactionResources={reactionResources}
       /* @conditional-compile-remove(ppt-live) */
       isPPTLive={!screenShareParticipant.screenShareStream?.id}
     />

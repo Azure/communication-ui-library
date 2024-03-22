@@ -174,3 +174,53 @@ const getStopRemoteSpotlightWithPromptCallback = (
     setIsPromptOpen(true);
   };
 };
+
+/* @conditional-compile-remove(spotlight) */
+/**
+ * @internal
+ */
+export const useStopAllSpotlightCallbackWithPrompt = (
+  stopAllSpotlight?: () => Promise<void>,
+  setIsPromptOpen?: (isOpen: boolean) => void,
+  setPromptProps?: (promptProps: PromptProps) => void
+): {
+  stopAllSpotlightWithPrompt?: (userIds?: string[]) => Promise<void>;
+} => {
+  const strings = useLocale().strings.call;
+
+  return useMemo(() => {
+    if (!setIsPromptOpen || !setPromptProps) {
+      return {
+        stopAllSpotlightWithPrompt: stopAllSpotlight
+      };
+    }
+    return {
+      stopAllSpotlightWithPrompt: stopAllSpotlight
+        ? getStopAllSpotlightCallbackWithPromptCallback(stopAllSpotlight, setIsPromptOpen, setPromptProps, strings)
+        : undefined
+    };
+  }, [stopAllSpotlight, setIsPromptOpen, setPromptProps, strings]);
+};
+
+/* @conditional-compile-remove(spotlight) */
+const getStopAllSpotlightCallbackWithPromptCallback = (
+  stopAllSpotlight: () => void,
+  setIsPromptOpen: (isOpen: boolean) => void,
+  setPromptProps: (promptProps: PromptProps) => void,
+  strings: CallCompositeStrings
+): (() => Promise<void>) => {
+  return async (): Promise<void> => {
+    setPromptProps({
+      heading: strings.spotlightPrompt.stopAllSpotlightHeading,
+      text: strings.spotlightPrompt.stopAllSpotlightText,
+      confirmButtonLabel: strings.spotlightPrompt.stopSpotlightConfirmButtonLabel,
+      cancelButtonLabel: strings.spotlightPrompt.stopSpotlightCancelButtonLabel,
+      onConfirm: () => {
+        stopAllSpotlight();
+        setIsPromptOpen(false);
+      },
+      onCancel: () => setIsPromptOpen(false)
+    });
+    setIsPromptOpen(true);
+  };
+};

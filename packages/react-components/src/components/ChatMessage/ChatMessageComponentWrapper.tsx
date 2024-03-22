@@ -8,7 +8,7 @@ import { ChatMessage, OnRenderAvatarCallback } from '../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types';
 /* @conditional-compile-remove(file-sharing) */
-import { FileDownloadHandler } from '../AttachmentDownloadCards';
+import { FileDownloadHandler } from '../../types/Attachment';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from '../MentionPopover';
 import { MessageStatusIndicatorProps } from '../MessageStatusIndicator';

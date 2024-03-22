@@ -23,6 +23,8 @@ import { RaisedHand } from '../types';
 import { useTheme } from '../theming';
 /* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '../types/ReactionTypes';
+/* @conditional-compile-remove(reaction) */
+import { MeetingReactionOverlay } from './MeetingReactionOverlay';
 /* @conditional-compile-remove(spotlight) */
 import { useVideoTileContextualMenuProps } from './VideoGallery/useVideoTileContextualMenuProps';
 /* @conditional-compile-remove(spotlight) */
@@ -231,6 +233,12 @@ export const _LocalVideoTile = React.memo(
       showCameraSwitcherInLocalPreview
     ]);
 
+    /* @conditional-compile-remove(reaction) */
+    const reactionOverlay =
+      reactionResources !== undefined ? (
+        <MeetingReactionOverlay overlayMode="grid-tiles" reaction={reaction} reactionResources={reactionResources} />
+      ) : undefined;
+
     return (
       <Stack
         className={mergeStyles({ width: '100%', height: '100%' })}
@@ -249,8 +257,6 @@ export const _LocalVideoTile = React.memo(
           showMuteIndicator={showMuteIndicator}
           personaMinSize={props.personaMinSize}
           raisedHand={raisedHand}
-          /* @conditional-compile-remove(reaction) */
-          reaction={reaction}
           /* @conditional-compile-remove(spotlight) */
           isSpotlighted={isSpotlighted}
           {...videoTileContextualMenuProps}
@@ -261,7 +267,7 @@ export const _LocalVideoTile = React.memo(
             )
           }
           /* @conditional-compile-remove(reaction) */
-          reactionResources={reactionResources}
+          overlay={reactionOverlay}
         >
           {
             /* @conditional-compile-remove(spotlight) */ drawerMenuItemProps.length > 0 && (
