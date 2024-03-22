@@ -4660,12 +4660,12 @@ export interface VideoTileProps {
     noVideoAvailableAriaLabel?: string;
     onLongTouch?: () => void;
     onRenderPlaceholder?: OnRenderAvatarCallback;
+    // @beta
+    overlay?: JSX.Element | null;
     participantState?: ParticipantState;
     personaMaxSize?: number;
     personaMinSize?: number;
     raisedHand?: RaisedHand;
-    // @beta
-    reactionOverlay?: JSX.Element | null;
     // @beta
     reactionResources?: ReactionResources;
     renderElement?: JSX.Element | null;
