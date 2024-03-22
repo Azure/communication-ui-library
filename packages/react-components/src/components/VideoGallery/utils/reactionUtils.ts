@@ -14,20 +14,7 @@ export const REACTION_SCREEN_SHARE_ANIMATION_TIME_MS = 4133;
 /* @conditional-compile-remove(reaction) */
 /** @private */
 export const getCombinedKey = (userId: string, reactionType: string, receivedAt: Date): string => {
-  const receivedTime =
-    receivedAt.getFullYear() +
-    ':' +
-    receivedAt.getMonth() +
-    ':' +
-    receivedAt.getDay() +
-    ':' +
-    receivedAt.getHours() +
-    ':' +
-    receivedAt.getMinutes() +
-    ':' +
-    receivedAt.getSeconds() +
-    ':' +
-    receivedAt.getMilliseconds();
+  const receivedTime = receivedAt.toISOString();
 
   return userId + reactionType + receivedTime;
 };
@@ -35,5 +22,5 @@ export const getCombinedKey = (userId: string, reactionType: string, receivedAt:
 /* @conditional-compile-remove(reaction) */
 /** @private */
 export const getReceivedUnixTime = (receivedTime: Date): number => {
-  return Math.floor(receivedTime.getTime());
+  return receivedTime.getTime();
 };

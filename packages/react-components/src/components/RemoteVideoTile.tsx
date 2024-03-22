@@ -236,7 +236,7 @@ export const _RemoteVideoTile = React.memo(
           /* @conditional-compile-remove(spotlight) */
           isSpotlighted={isSpotlighted}
           /* @conditional-compile-remove(reaction) */
-          reactionOverlay={reactionOverlay}
+          overlay={reactionOverlay}
         />
         {drawerMenuItemProps.length > 0 && (
           <Layer hostId={props.drawerMenuHostId}>

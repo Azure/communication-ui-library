@@ -267,7 +267,7 @@ export const _LocalVideoTile = React.memo(
             )
           }
           /* @conditional-compile-remove(reaction) */
-          reactionOverlay={reactionOverlay}
+          overlay={reactionOverlay}
         >
           {
             /* @conditional-compile-remove(spotlight) */ drawerMenuItemProps.length > 0 && (

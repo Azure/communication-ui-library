@@ -101,7 +101,7 @@ export const RemoteScreenShare = React.memo(
           }
           onRenderPlaceholder={() => <LoadingSpinner loadingMessage={loadingMessage} />}
           /* @conditional-compile-remove(reaction) */
-          reactionOverlay={
+          overlay={
             <MeetingReactionOverlay
               reactionResources={reactionResources!}
               localParticipant={localParticipant}
@@ -124,7 +124,7 @@ export const RemoteScreenShare = React.memo(
         }
         onRenderPlaceholder={() => <LoadingSpinner loadingMessage={loadingMessage} />}
         /* @conditional-compile-remove(reaction) */
-        reactionOverlay={
+        overlay={
           <MeetingReactionOverlay
             reactionResources={reactionResources!}
             localParticipant={localParticipant}

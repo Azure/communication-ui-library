@@ -90,7 +90,7 @@ export interface VideoTileProps {
    * Overlay component responsible for rendering reaction
    * @beta
    */
-  reactionOverlay?: JSX.Element | null;
+  overlay?: JSX.Element | null;
   /** Determines if the video is mirrored or not. */
   isMirrored?: boolean;
   /** Custom render Component function for no video is available. Render a Persona Icon if undefined. */
@@ -254,7 +254,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     onRenderPlaceholder,
     renderElement,
     /* @conditional-compile-remove(reaction) */
-    reactionOverlay,
+    overlay: reactionOverlay,
     showLabel = true,
     showMuteIndicator = true,
     styles,

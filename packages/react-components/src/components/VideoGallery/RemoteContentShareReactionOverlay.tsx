@@ -46,6 +46,13 @@ type ReceivedReaction = {
 };
 
 /* @conditional-compile-remove(reaction) */
+const MAX_NUMBER_OF_EMOJIS = 50;
+/* @conditional-compile-remove(reaction) */
+const NUMBER_OF_EMOJI_TYPES = 5;
+/* @conditional-compile-remove(reaction) */
+const REACTION_POSITION_ARRAY_SIZE = 55;
+
+/* @conditional-compile-remove(reaction) */
 /**
  * The overlay responsible for rendering multiple reactions all at once in presentation mode
  * @internal
@@ -63,7 +70,7 @@ export const RemoteContentShareReactionOverlay = React.memo(
     // Reactions that are currently being animated
     const [visibleReactions, setVisibleReactions] = useState<VisibleReaction[]>([]);
 
-    // Dict of userId to a reaction status. This is used to track the latest received reaction
+    // Dictionary of userId to a reaction status. This is used to track the latest received reaction
     // per user to avoid animating the same reaction multiple times and to limit the number of
     // active reactions of a certain type.
     const latestReceivedReaction = useRef<Record<string, ReceivedReaction>>({});
@@ -80,7 +87,7 @@ export const RemoteContentShareReactionOverlay = React.memo(
 
     // Used to track the total number of reactions ever played. This is a helper variable
     // to calculate the reaction movement index (i.e. the .left position of the reaction)
-    const visibleReactionPosition = useRef<boolean[]>(new Array<boolean>(55).fill(false));
+    const visibleReactionPosition = useRef<boolean[]>(new Array<boolean>(REACTION_POSITION_ARRAY_SIZE).fill(false));
 
     const remoteParticipantReactions: Reaction[] = useMemo(
       () =>
@@ -90,7 +97,6 @@ export const RemoteContentShareReactionOverlay = React.memo(
       [remoteParticipants]
     );
 
-    // We can optimize this by applying data structure algorithm and bring this search to log2 N
     const findFirstEmptyPosition = (): number => {
       return visibleReactionPosition.current.findIndex((item) => item === false);
     };
@@ -105,8 +111,8 @@ export const RemoteContentShareReactionOverlay = React.memo(
         }
 
         const activeCount = activeTypeCount.current[reaction.reactionType];
-        // Limit the number of active reactions of a certain type to 10
-        if (activeCount >= 10) {
+
+        if (activeCount >= MAX_NUMBER_OF_EMOJIS / NUMBER_OF_EMOJI_TYPES) {
           latestReceivedReaction.current[userId] = {
             id: combinedKey,
             status: 'ignored'
@@ -176,14 +182,13 @@ export const RemoteContentShareReactionOverlay = React.memo(
     };
 
     const containerHeight = hostDivHeight ?? 0;
-    const containerWidth = hostDivWidth ?? REACTION_START_DISPLAY_SIZE - REACTION_START_DISPLAY_SIZE;
+    const containerWidth = hostDivWidth ?? 0;
 
     const styleBucket = (activeSprites: number): IReactionStyleBucket => getReactionStyleBucket(activeSprites);
     const displaySizePx = (activeSprites: number): number =>
       REACTION_START_DISPLAY_SIZE * styleBucket(activeSprites).sizeScale;
 
-    const leftPosition = (position: number): number =>
-      generateStartPositionWave(position, containerWidth / 2, true /* isOriginAtCanvasCenter */);
+    const leftPosition = (position: number): number => generateStartPositionWave(position, containerWidth / 2, true);
     const reactionMovementStyle = (position: number): React.CSSProperties =>
       getReactionMovementStyle(leftPosition(position));
 
@@ -201,36 +206,34 @@ export const RemoteContentShareReactionOverlay = React.memo(
             <div className="reaction-item">
               {canRenderReaction(reaction.reaction, reaction.id, reaction.reactionMovementIndex) && (
                 // First div - Section that fixes the travel height and applies the movement animation
-                // Second div - Keeps track of active sprites and responsible for marking, counting and removing reactions
-                // Third div - Responsible for opacity controls as the sprite emoji animates
-                // Fourth div - Responsible for calculating the point of X axis where the reaction will start animation
-                // Fifth div - Play Animation as the other animation applies on the base play animation for the sprite
+                // Second div - Keeps track of active sprites and responsible for marking, counting
+                //              and removing reactions. Responsible for opacity controls as the sprite emoji animates
+                // Third div - Responsible for calculating the point of X axis where the reaction will start animation
+                // Fourth div - Play Animation as the other animation applies on the base play animation for the sprite
                 <div
                   style={moveAnimationStyles(
                     containerHeight / 2, // dividing by two because reactionOverlayStyle height is set to 50%
                     (containerHeight / 2) * (1 - reaction.styleBucket.heightMaxScale)
                   )}
                 >
-                  <div>
-                    <div
-                      onAnimationEnd={() => {
-                        removeVisibleReaction(
-                          reaction.reaction.reactionType,
-                          reaction.id,
-                          reaction.reactionMovementIndex
-                        );
-                      }}
-                      style={opacityAnimationStyles(reaction.styleBucket.opacityMax)}
-                    >
-                      <div style={reactionMovementStyle(reaction.reactionMovementIndex)}>
-                        <div
-                          style={spriteAnimationStyles(
-                            REACTION_NUMBER_OF_ANIMATION_FRAMES,
-                            displaySizePx(visibleReactions.length),
-                            getEmojiResource(reaction?.reaction.reactionType, reactionResources) ?? ''
-                          )}
-                        />
-                      </div>
+                  <div
+                    onAnimationEnd={() => {
+                      removeVisibleReaction(
+                        reaction.reaction.reactionType,
+                        reaction.id,
+                        reaction.reactionMovementIndex
+                      );
+                    }}
+                    style={opacityAnimationStyles(reaction.styleBucket.opacityMax)}
+                  >
+                    <div style={reactionMovementStyle(reaction.reactionMovementIndex)}>
+                      <div
+                        style={spriteAnimationStyles(
+                          REACTION_NUMBER_OF_ANIMATION_FRAMES,
+                          displaySizePx(visibleReactions.length),
+                          getEmojiResource(reaction?.reaction.reactionType, reactionResources) ?? ''
+                        )}
+                      />
                     </div>
                   </div>
                 </div>

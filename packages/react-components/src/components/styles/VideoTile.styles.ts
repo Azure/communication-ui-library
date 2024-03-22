@@ -5,6 +5,12 @@ import { IButtonStyles, IStyle, mergeStyles, Theme, ITheme } from '@fluentui/rea
 /* @conditional-compile-remove(reaction) */
 import { keyframes, memoizeFunction } from '@fluentui/react';
 
+/* @conditional-compile-remove(reaction) */
+/**
+ * @private
+ */
+const DEFAULT_ORIGINAL_EMOJI_SIZE = 84;
+
 /**
  * @private
  */
@@ -195,7 +201,7 @@ export const playFrames = memoizeFunction(() =>
 /**
  * @private
  */
-export const reactionRenderingStyle = (args: { spriteImageUrl: string; emojiSize: number }): string => {
+export const reactionRenderingStyle = (args: { spriteImageUrl?: string; emojiSize: number }): string => {
   const imageUrl = `url(${args.spriteImageUrl})`;
   return mergeStyles({
     height: '100%',
@@ -211,6 +217,10 @@ export const reactionRenderingStyle = (args: { spriteImageUrl: string; emojiSize
     justifyContent: 'center',
     alignItems: 'center',
     backgroundPosition: `center`,
-    transform: `scale(${84 < args.emojiSize ? 84 / args.emojiSize : args.emojiSize / 84})`
+    transform: `scale(${
+      DEFAULT_ORIGINAL_EMOJI_SIZE < args.emojiSize
+        ? DEFAULT_ORIGINAL_EMOJI_SIZE / args.emojiSize
+        : args.emojiSize / DEFAULT_ORIGINAL_EMOJI_SIZE
+    })`
   });
 };

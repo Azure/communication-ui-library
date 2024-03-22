@@ -73,6 +73,7 @@ export function getReactionMovementStyle(reactionXPoint: number): React.CSSPrope
 
 /* @conditional-compile-remove(reaction) */
 /**
+ * Scale metric to determine the start position of a reaction in presentation mode to avoid overlap.
  * @private
  */
 function scaleStartPos(index: number): number {

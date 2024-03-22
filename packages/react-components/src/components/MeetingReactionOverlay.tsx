@@ -50,15 +50,21 @@ export interface MeetingReactionOverlayProps {
 /* @conditional-compile-remove(reaction) */
 /**
  * Emoji max size
- * @private
+ * @internal
  */
 const DEFAULT_EMOJI_MAX_SIZE_PX = 100;
 /* @conditional-compile-remove(reaction) */
 /**
  * Emoji min size
- * @private
+ * @internal
  */
 const DEFAULT_EMOJI_MIN_SIZE_PX = 32;
+/* @conditional-compile-remove(reaction) */
+/**
+ * Emoji resize scale constant
+ * @internal
+ */
+const REACTION_EMOJI_RESIZE_SCALE_CONSTANT = 3;
 
 /* @conditional-compile-remove(reaction) */
 /**
@@ -70,18 +76,20 @@ const DEFAULT_EMOJI_MIN_SIZE_PX = 32;
  */
 export const MeetingReactionOverlay = (props: MeetingReactionOverlayProps): JSX.Element => {
   const { overlayMode, reaction, reactionResources, localParticipant, remoteParticipants } = props;
-  const [emojiSize, setEmojiSize] = useState(1);
+  const [emojiSizePx, setEmojiSizePx] = useState(0);
   const [divHeight, setDivHeight] = useState(0);
   const [divWidth, setDivWidth] = useState(0);
   const videoTileRef = useRef<HTMLDivElement>(null);
 
   const observer = useRef(
     new ResizeObserver((entries): void => {
-      const { width, height } = entries[0].contentRect;
-      const personaCalcSize = Math.min(width, height) / 3;
+      const domRect = entries.at(0)?.contentRect;
+      const width = domRect !== undefined ? domRect.width : 0;
+      const height = domRect !== undefined ? domRect.height : 0;
+      const reactionEmojiCalcSize = Math.min(width, height) / REACTION_EMOJI_RESIZE_SCALE_CONSTANT;
       // we only want to set the persona size if it has changed
-      if (personaCalcSize !== emojiSize) {
-        setEmojiSize(Math.max(Math.min(personaCalcSize, DEFAULT_EMOJI_MAX_SIZE_PX), DEFAULT_EMOJI_MIN_SIZE_PX));
+      if (reactionEmojiCalcSize !== emojiSizePx) {
+        setEmojiSizePx(Math.max(Math.min(reactionEmojiCalcSize, DEFAULT_EMOJI_MAX_SIZE_PX), DEFAULT_EMOJI_MIN_SIZE_PX));
       }
 
       if (height !== divHeight) {
@@ -102,12 +110,14 @@ export const MeetingReactionOverlay = (props: MeetingReactionOverlayProps): JSX.
     return () => currentObserver.disconnect();
   }, [videoTileRef]);
 
-  // Check for image resource validity and if not throw warning or error here.
-
   if (overlayMode === 'grid-tiles') {
     return (
       <div ref={videoTileRef} style={{ width: '100%', height: '100%' }}>
-        <ParticipantVideoTileOverlay emojiSize={emojiSize} reaction={reaction} reactionResources={reactionResources} />
+        <ParticipantVideoTileOverlay
+          emojiSize={emojiSizePx}
+          reaction={reaction}
+          reactionResources={reactionResources}
+        />
       </div>
     );
   } else if (props.overlayMode === 'screen-share' || props.overlayMode === 'content-share') {
@@ -123,6 +133,6 @@ export const MeetingReactionOverlay = (props: MeetingReactionOverlayProps): JSX.
       </div>
     );
   } else {
-    return <div></div>;
+    return <></>;
   }
 };
