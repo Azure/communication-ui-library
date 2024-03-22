@@ -13,7 +13,6 @@ import { initializeIcons } from '@fluentui/react';
 initializeIcons();
 export const loadCallComposite = async function (args, htmlElement, props) {
   const { userId, token, displayName, targetCallees } = args;
-  console.log('targetCallees', targetCallees);
   const adapter = await createAzureCommunicationCallAdapter({
     userId,
     displayName: displayName ?? 'anonymous',
@@ -24,7 +23,6 @@ export const loadCallComposite = async function (args, htmlElement, props) {
       })
     ]
   });
-  console.log('adapter', adapter);
 
   if (!htmlElement) {
     throw new Error('Failed to find the root element');
