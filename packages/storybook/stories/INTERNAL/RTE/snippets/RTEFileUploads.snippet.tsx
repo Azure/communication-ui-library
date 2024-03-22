@@ -1,10 +1,10 @@
-import { SendBox, FluentThemeProvider } from '@azure/communication-react';
+import { FluentThemeProvider, RichTextSendBox } from '@azure/communication-react';
 import React from 'react';
 
-export const FileUploadsExample: () => JSX.Element = () => (
+export const RTEFileUploadsExample: () => JSX.Element = () => (
   <FluentThemeProvider>
     <div style={{ width: '31.25rem' }}>
-      <SendBox
+      <RichTextSendBox
         activeFileUploads={[
           {
             id: '1',
@@ -19,6 +19,9 @@ export const FileUploadsExample: () => JSX.Element = () => (
             uploadComplete: false
           }
         ]}
+        onSendMessage={async () => {
+          return;
+        }}
       />
     </div>
   </FluentThemeProvider>
