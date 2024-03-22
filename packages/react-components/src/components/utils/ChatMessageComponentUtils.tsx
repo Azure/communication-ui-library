@@ -14,7 +14,7 @@ import { MessageThreadStrings } from '../MessageThread';
 import { MentionDisplayOptions } from '../MentionPopover';
 import { _AttachmentDownloadCards } from '../AttachmentDownloadCards';
 /* @conditional-compile-remove(file-sharing) */
-import { FileDownloadHandler } from '../AttachmentDownloadCards';
+import { FileDownloadHandler } from '../../types/Attachment';
 import { formatTimeForChatMessage, formatTimestampForChatMessage } from './Datetime';
 import { ComponentLocale } from '../../localization/LocalizationProvider';
 import { chatMessageEditedTagStyle } from '../styles/ChatMessageComponent.styles';

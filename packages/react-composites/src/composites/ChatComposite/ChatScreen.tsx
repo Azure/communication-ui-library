@@ -25,8 +25,10 @@ import { AvatarPersona, AvatarPersonaDataCallback, AvatarPersonaProps } from '..
 import { useAdapter } from './adapter/ChatAdapterProvider';
 import { ChatCompositeOptions } from './ChatComposite';
 import { ChatHeader, getHeaderProps } from './ChatHeader';
+/* @conditional-compile-remove(file-sharing) */
 import { FileDownloadHandler } from '@internal/react-components';
-import { FileUploadButtonWrapper as FileUploadButton, FileUploadHandler } from './file-sharing';
+import { FileUploadHandler } from '@internal/react-components';
+import { FileUploadButtonWrapper as FileUploadButton } from './file-sharing';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
 
@@ -97,6 +99,7 @@ export interface FileSharingOptions {
    * @beta
    */
   uploadHandler: FileUploadHandler;
+  /* @conditional-compile-remove(file-sharing) */
   /**
    * A function of type {@link FileDownloadHandler} for handling file downloads.
    * If the function is not specified, the file's `url` will be opened in a new tab to
