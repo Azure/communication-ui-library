@@ -29,11 +29,11 @@ export type { TeamsCallingHandlers } from './handlers/createTeamsCallHandlers';
 export type { CommonCallingHandlers } from './handlers/createCommonHandlers';
 /* @conditional-compile-remove(close-captions) */
 export type { CaptionsOptions } from './handlers/createCommonHandlers';
-/* @conditional-compile-remove(video-background-effects) */
+
 export type { VideoBackgroundEffectsDependency } from './handlers/createCommonHandlers';
 /* @conditional-compile-remove(spotlight) */
 export type { _ComponentCallingHandlers } from './handlers/createHandlers';
-/* @conditional-compile-remove(video-background-effects) */
+
 export type { CallingHandlersOptions } from './handlers/createHandlers';
 /* @conditional-compile-remove(teams-identity-support) */
 export { useTeamsCall, useTeamsCallAgent } from './providers';

@@ -27,7 +27,7 @@ import { Announcer } from './Announcer';
 import { useEffect, useState } from 'react';
 import { _AttachmentUploadCardsStrings } from './AttachmentUploadCards';
 import { useLocaleAttachmentCardStringsTrampoline } from './utils/common';
-import { AttachmentMetadata, AttachmentMenuAction } from './AttachmentDownloadCards';
+import { AttachmentMetadata, AttachmentMenuAction } from '../types/Attachment';
 import { MoreHorizontal24Filled } from '@fluentui/react-icons';
 
 /**

@@ -15,7 +15,7 @@ import { BlockedMessage } from '../../../types/ChatMessage';
 import { MessageThreadStrings } from '../../MessageThread';
 import { ComponentSlotStyle } from '../../../types';
 /* @conditional-compile-remove(file-sharing) */
-import { FileDownloadHandler } from '../../AttachmentDownloadCards';
+import { FileDownloadHandler } from '../../../types/Attachment';
 import { _AttachmentDownloadCards } from '../../AttachmentDownloadCards';
 import { useLocale } from '../../../localization';
 /* @conditional-compile-remove(mention) */

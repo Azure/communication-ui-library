@@ -6,7 +6,6 @@ import React from 'react';
 import { _AttachmentCard } from './AttachmentCard';
 import { _AttachmentCardGroup } from './AttachmentCardGroup';
 import { extension } from './utils';
-// import { iconButtonClassName } from './styles/IconButton.styles';
 // import { useMemo } from 'react';
 // import { useLocaleAttachmentCardStringsTrampoline } from './utils/common';
 import { SendBoxErrorBarError } from './SendBoxErrorBar';
