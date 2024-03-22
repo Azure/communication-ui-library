@@ -17,17 +17,13 @@
   <script src="./outboundCallComposite.js"></script>
   <script src="./service.js"></script>
   <script type="module">
-    const testParams = service.loadConfigFromUrlQuery();
-    const { user, token } = testParams.token
-      ? { token: testParams.token, user: { communicationUserId: testParams.userId } }
-      : { ...(await service.createUserWithToken()) };
-    const groupId = await service.createGUID();
-    // Call composite sample code starts here
-    const displayName = testParams.displayName ?? 'Bob';
+    const userId = { communicationUserId: '<Enter your userId from your ACS resource>' };
+    const token = '<Enter your token from your ACS resource>';
+    const displayName = 'Customer';
 
     const callAdapter = await outboundCallComposite.loadCallComposite(
       {
-        userId: user,
+        userId: userId,
         token: token,
         displayName: displayName,
         targetCallees: [{ teamsAppId: '<Enter your teams app id>', cloud: 'public' }] // Provide the identifier you want to call, can be flat as a string.

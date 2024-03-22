@@ -19,7 +19,14 @@ body {
 }
 
 #outbound-call-composite-container {
-  height: 100%;
+  height: 22rem;
+  width: 32rem;
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.2);
+  border-radius: 1rem;
+  padding: 0.5rem;
 }
 
 #callWithChat-composite-container {

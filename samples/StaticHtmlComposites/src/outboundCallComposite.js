@@ -28,6 +28,20 @@ export const loadCallComposite = async function (args, htmlElement, props) {
     throw new Error('Failed to find the root element');
   }
 
-  createRoot(htmlElement).render(React.createElement(CallComposite, { ...props, adapter }, null));
+  const callCompositeOptions = {
+    callControls: {
+      cameraButton: true,
+      screenShareButton: true,
+      moreButton: false,
+      peopleButton: false,
+      raisedHandButton: false,
+      displayType: 'compact'
+    },
+    localVideoTile: { position: 'floating' }
+  };
+
+  createRoot(htmlElement).render(
+    React.createElement(CallComposite, { ...props, adapter, options: callCompositeOptions }, null)
+  );
   return adapter;
 };
