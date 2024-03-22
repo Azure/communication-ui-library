@@ -417,7 +417,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   cameraButtonRef={cameraButtonRef}
                   /* @conditional-compile-remove(spotlight) */
                   onStopLocalSpotlight={
-                    !hideSpotlightButtons && localParticipant.spotlight ? onStopLocalSpotlight : undefined
+                    !hideSpotlightButtons && localParticipant.spotlight ? onStopLocalSpotlightWithPrompt : undefined
                   }
                 />
               )}
