@@ -109,8 +109,8 @@ export const useChatMessageRenderStyles = makeStyles({
     marginTop: '0',
     marginRight: '0',
     marginBottom: '0',
-    marginLeft: '50px',
-    width: `calc(100% - 50px)`
+    marginLeft: '3.125rem',
+    width: `calc(100% - 3.125rem)`
   },
   bodyCommon: {
     ...shorthands.padding('0'),
@@ -159,13 +159,13 @@ export const useChatMyMessageStyles = makeStyles({
     }
   },
   body: {
-    paddingBottom: '10px',
+    paddingBottom: '0.625rem',
     marginTop: '1rem',
     maxWidth: '100%',
     minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`,
     marginLeft: '0rem',
     // This makes message bubble show border in high contrast mode making each message distinguishable
-    ...shorthands.border('1px', 'solid', 'transparent'),
+    ...shorthands.border('0.0625rem', 'solid', 'transparent'),
 
     '&:hover ~ .fui-ChatMyMessage__actions': {
       visibility: 'visible'
@@ -184,9 +184,9 @@ export const useChatMyMessageStyles = makeStyles({
   menu: {
     boxShadow: tokens.shadow4,
     backgroundColor: tokens.colorNeutralBackground1,
-    marginRight: '1px',
+    marginRight: '0.0625rem',
     position: 'absolute',
-    top: '-2px',
+    top: '-0.125rem',
     right: '0',
     ...shorthands.borderRadius(tokens.borderRadiusMedium),
     zIndex: 1,
@@ -199,7 +199,7 @@ export const useChatMyMessageStyles = makeStyles({
     }
   },
   menuAttached: {
-    top: '-18px'
+    top: '-1.125rem'
   },
   menuHidden: {
     visibility: 'hidden'
@@ -240,10 +240,10 @@ export const useChatMessageStyles = makeStyles({
     maxWidth: '100%',
     minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`,
     marginRight: '0rem',
-    paddingBottom: '10px',
+    paddingBottom: '0.625rem',
     zIndex: CHAT_MESSAGE_ZINDEX,
     // This makes message bubble show border in high contrast mode making each message distinguishable
-    ...shorthands.border('1px', 'solid', 'transparent'),
+    ...shorthands.border('0.0625rem', 'solid', 'transparent'),
     '& > div:first-of-type': {
       flexWrap: 'wrap'
     },
@@ -269,19 +269,19 @@ export const useChatMessageStyles = makeStyles({
       clear: 'left',
       minHeight: '2.25rem',
       width: 'fit-content',
-      marginTop: '7px',
-      marginRight: '0px',
-      marginLeft: '0px',
-      marginBottom: '7px',
-      paddingTop: '7px',
-      paddingRight: '15px',
-      paddingLeft: '15px',
-      paddingBottom: '7px',
+      marginTop: '0.4375rem',
+      marginRight: '0rem',
+      marginLeft: '0rem',
+      marginBottom: '0.4375rem',
+      paddingTop: '0.4375rem',
+      paddingRight: '0.9375rem',
+      paddingLeft: '0.9375rem',
+      paddingBottom: '0.4375rem',
       ...shorthands.border('solid'),
-      ...shorthands.borderRadius('4px'),
-      ...shorthands.borderWidth('1px'),
+      ...shorthands.borderRadius('0.25rem'),
+      ...shorthands.borderWidth('0.0625rem'),
       ...shorthands.borderColor(tokens.colorNeutralStroke1Selected),
-      borderLeftWidth: '4px'
+      borderLeftWidth: '0.25rem'
     },
     '& table': {
       backgroundColor: tokens.colorBrandBackgroundInverted,
@@ -291,13 +291,13 @@ export const useChatMessageStyles = makeStyles({
       width: '100%',
 
       '& tr': {
-        ...shorthands.border('1px', 'solid', `${tokens.colorNeutralStroke1Selected}`),
+        ...shorthands.border('0.0625rem', 'solid', `${tokens.colorNeutralStroke1Selected}`),
 
         '& td': {
-          ...shorthands.border('1px', 'solid', `${tokens.colorNeutralStroke1Selected}`),
+          ...shorthands.border('0.0625rem', 'solid', `${tokens.colorNeutralStroke1Selected}`),
           wordBreak: 'normal',
-          paddingTop: '0px',
-          paddingRight: '5px'
+          paddingTop: '0rem',
+          paddingRight: '0.3125rem'
         }
       }
     }
@@ -306,7 +306,7 @@ export const useChatMessageStyles = makeStyles({
     '& img[src=""]': {
       display: 'block',
       position: 'relative',
-      marginBottom: '5px'
+      marginBottom: '0.3125rem'
     },
     '& img[src=""]:after': {
       backgroundColor: tokens.colorNeutralBackground1Selected,
@@ -349,7 +349,7 @@ export const useChatMessageCommonStyles = makeStyles({
     color: tokens.colorNeutralForeground2,
 
     // This makes message bubble show border in high contrast mode making each message distinguishable
-    ...shorthands.border('1px', 'solid', 'transparent'),
+    ...shorthands.border('0.0625rem', 'solid', 'transparent'),
     '& i': {
       paddingTop: '0.25rem'
     },
