@@ -189,18 +189,20 @@ export class AzureCommunicationFileUploadAdapter implements FileUploadAdapter {
  * @param fileUploadUiState {@link FileUploadsUiState}
  * @private
  */
-export const convertFileUploadsUiStateToMessageMetadata = (fileUploads?: FileUploadsUiState): FileSharingMetadata => {
-  const fileMetadata: AttachmentMetadata[] = [];
+export const convertFileUploadsUiStateToMessageMetadata = (
+  fileUploads?: FileUploadsUiState
+): FileSharingMetadata | undefined => {
   if (fileUploads) {
+    const fileMetadata: AttachmentMetadata[] = [];
     Object.keys(fileUploads).forEach((key) => {
       const file = fileUploads[key];
       if (!file.error && file.metadata) {
         fileMetadata.push(file.metadata);
       }
     });
+    return { fileSharingMetadata: JSON.stringify(fileMetadata) };
   }
-
-  return { fileSharingMetadata: JSON.stringify(fileMetadata) };
+  return undefined;
 };
 
 /* @conditional-compile-remove(file-sharing) */
