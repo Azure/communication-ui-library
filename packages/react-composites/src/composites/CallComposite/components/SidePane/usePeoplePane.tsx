@@ -99,13 +99,9 @@ export const usePeoplePane = (props: {
         headingText={localeStrings.peoplePaneTitle}
         dismissSidePaneButtonAriaLabel={localeStrings.dismissSidePaneButtonLabel}
         mobileView={mobileView ?? false}
-        /* @conditional-compile-remove(spotlight) */
-        moreSidePaneButtonAriaLabel={localeStrings.peoplePaneMoreButtonAriaLabel}
-        /* @conditional-compile-remove(spotlight) */
-        menuProps={sidePaneHeaderMenuProps}
       />
     ),
-    [mobileView, closePane, localeStrings, /* @conditional-compile-remove(spotlight) */ sidePaneHeaderMenuProps]
+    [mobileView, closePane, localeStrings]
   );
 
   /* @conditional-compile-remove(spotlight) */
@@ -201,9 +197,18 @@ export const usePeoplePane = (props: {
         onFetchParticipantMenuItems={_onFetchParticipantMenuItems}
         setDrawerMenuItems={setDrawerMenuItems}
         mobileView={mobileView}
+        /* @conditional-compile-remove(spotlight) */
+        participantListHeadingMoreButtonProps={sidePaneHeaderMenuProps}
       />
     );
-  }, [inviteLink, mobileView, onFetchAvatarPersonaData, _onFetchParticipantMenuItems, setDrawerMenuItems]);
+  }, [
+    inviteLink,
+    mobileView,
+    onFetchAvatarPersonaData,
+    _onFetchParticipantMenuItems,
+    setDrawerMenuItems,
+    /* @conditional-compile-remove(spotlight) */ sidePaneHeaderMenuProps
+  ]);
 
   const sidePaneRenderer: SidePaneRenderer = useMemo(
     () => ({

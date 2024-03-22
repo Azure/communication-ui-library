@@ -4096,6 +4096,8 @@ export interface SpotlightPromptStrings {
     startSpotlightHeading: string;
     startSpotlightOnSelfText: string;
     startSpotlightText: string;
+    stopAllSpotlightHeading: string;
+    stopAllSpotlightText: string;
     stopSpotlightCancelButtonLabel: string;
     stopSpotlightConfirmButtonLabel: string;
     stopSpotlightHeading: string;
