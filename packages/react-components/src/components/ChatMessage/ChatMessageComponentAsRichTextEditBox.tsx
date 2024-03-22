@@ -166,7 +166,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
           disabled={false}
           actionComponents={actionButtons}
           richTextEditorStyleProps={editBoxRichTextEditorStyle}
-          supportHorizontalLayout={false}
+          isHorizontalLayoutDisabled={true}
         />
       </Stack>
     );

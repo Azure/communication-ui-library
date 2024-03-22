@@ -3864,7 +3864,6 @@ export interface RichTextSendBoxProps {
     activeFileUploads?: ActiveFileUpload[];
     disabled?: boolean;
     onCancelFileUpload?: (fileId: string) => void;
-    onRenderFileUploads?: () => JSX.Element;
     onSendMessage: (content: string) => Promise<void>;
     strings?: Partial<RichTextSendBoxStrings>;
     systemMessage?: string;
