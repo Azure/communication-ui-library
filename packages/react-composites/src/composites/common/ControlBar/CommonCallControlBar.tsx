@@ -52,6 +52,9 @@ import { DtmfDialpadButton } from './DtmfDialerButton';
 import { ExitSpotlightButton } from '../ExitSpotlightButton';
 /* @conditional-compile-remove(spotlight) */
 import { useLocale } from '../../localization';
+/* @conditional-compile-remove(end-call-options) */
+import { isBoolean } from '../utils';
+
 /**
  * @private
  */
@@ -446,7 +449,16 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         onSetDialpadPage={props.onSetDialpadPage}
                       />
                     )}
-                    <EndCall displayType="compact" styles={endCallButtonStyles} />
+                    <EndCall
+                      displayType="compact"
+                      styles={endCallButtonStyles}
+                      /* @conditional-compile-remove(end-call-options) */
+                      enableEndCallMenu={
+                        !isBoolean(props.callControls) &&
+                        !isBoolean(props.callControls?.endCallButton) &&
+                        props.callControls?.endCallButton?.enableMenu
+                      }
+                    />
                   </ControlBar>
                 </div>
               </Stack.Item>

@@ -39,7 +39,15 @@ export type CommonCallControlOptions = {
    * Show or Hide EndCall button during a call.
    * @defaultValue true
    */
-  endCallButton?: boolean;
+  endCallButton?:
+    | boolean
+    | /* @conditional-compile-remove(end-call-options) */ {
+        /**
+         * whether to make end call button a split menu button, which will enable end call for everybody functionality.
+         * @defaultValue false
+         */
+        enableMenu: boolean;
+      };
   /**
    * Show or Hide Microphone button during a call.
    * @defaultValue true
