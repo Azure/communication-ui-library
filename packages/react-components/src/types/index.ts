@@ -14,3 +14,4 @@ export * from './SurveyIssues';
 export * from './SurveyIssuesHeadingStrings';
 export * from './CallSurveyImprovementSuggestions';
 export * from './ReactionTypes';
+export * from './Attachment';
