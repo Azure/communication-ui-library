@@ -32,16 +32,13 @@ export type {
   AzureCommunicationOutboundCallAdapterArgs
 } from './adapter';
 
-/* @conditional-compile-remove(video-background-effects) */
 export type { AzureCommunicationCallAdapterOptions } from './adapter';
 
-/* @conditional-compile-remove(video-background-effects) */
 export type { CommonCallAdapterOptions } from './adapter';
 
 /* @conditional-compile-remove(teams-adhoc-call) */
 export type { CallParticipantsLocator } from './adapter';
 
-/* @conditional-compile-remove(video-background-effects) */
 export type {
   VideoBackgroundImage,
   VideoBackgroundEffect,
@@ -94,7 +91,6 @@ export type { CapabilityChangedNotificationStrings } from './components/Capabili
 /* @conditional-compile-remove(spotlight) */
 export type { SpotlightChangedListener } from './adapter';
 
-/* @conditional-compile-remove(calling-sounds) */
 export type { CallingSounds, SoundEffect } from './adapter';
 
 /* @conditional-compile-remove(spotlight) */

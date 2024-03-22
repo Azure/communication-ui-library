@@ -39,7 +39,6 @@ export type {
   CommonCallingHandlers
 } from '../../calling-component-bindings/src';
 
-/* @conditional-compile-remove(video-background-effects) */
 export type { VideoBackgroundEffectsDependency, CallingHandlersOptions } from '../../calling-component-bindings/src';
 
 /* @conditional-compile-remove(close-captions) */
