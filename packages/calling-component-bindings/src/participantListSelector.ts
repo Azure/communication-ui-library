@@ -20,13 +20,10 @@ import { memoizedConvertAllremoteParticipants } from './utils/participantListSel
 import { memoizedConvertAllremoteParticipantsBetaSpotlight } from './utils/participantListSelectorUtils';
 /* @conditional-compile-remove(reaction) */
 import { memoizedConvertToVideoTileReaction } from './utils/participantListSelectorUtils';
-/* @conditional-compile-remove(rooms) */
-import { memoizedConvertAllremoteParticipantsBetaRelease } from './utils/participantListSelectorUtils';
 /* @conditional-compile-remove(reaction) */
 import { memoizedConvertAllremoteParticipantsBeta } from './utils/participantListSelectorUtils';
 /* @conditional-compile-remove(spotlight) */
 import { memoizedSpotlight } from './utils/participantListSelectorUtils';
-/* @conditional-compile-remove(raise-hand) */
 import { getLocalParticipantRaisedHand } from './baseSelectors';
 /* @conditional-compile-remove(reaction) */
 import { getLocalParticipantReactionState } from './baseSelectors';
@@ -98,7 +95,6 @@ const convertRemoteParticipantsToParticipantListParticipants = (
             participant.isMuted,
             isScreenSharing,
             participant.isSpeaking,
-            /* @conditional-compile-remove(raise-hand) */
             participant.raisedHand,
             localUserCanRemoveOthers,
             /* @conditional-compile-remove(reaction) */
@@ -124,8 +120,6 @@ const convertRemoteParticipantsToParticipantListParticipants = (
   return memoizedConvertAllremoteParticipantsBetaSpotlight(conversionCallback);
   /* @conditional-compile-remove(reaction) */
   return memoizedConvertAllremoteParticipantsBeta(conversionCallback);
-  /* @conditional-compile-remove(rooms) */
-  return memoizedConvertAllremoteParticipantsBetaRelease(conversionCallback);
   return memoizedConvertAllremoteParticipants(conversionCallback);
 };
 
@@ -156,7 +150,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     getRemoteParticipantsExcludingConsumers,
     getIsScreenSharingOn,
     getIsMuted,
-    /* @conditional-compile-remove(raise-hand) */ getLocalParticipantRaisedHand,
+    getLocalParticipantRaisedHand,
     getRole,
     getParticipantCount,
     /* @conditional-compile-remove(hide-attendee-name) */
@@ -172,7 +166,6 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     remoteParticipants,
     isScreenSharingOn,
     isMuted,
-    /* @conditional-compile-remove(raise-hand) */
     raisedHand,
     role,
     partitipantCount,
@@ -207,7 +200,6 @@ export const participantListSelector: ParticipantListSelector = createSelector(
       displayName: displayName,
       isScreenSharing: isScreenSharingOn,
       isMuted: isMuted,
-      /* @conditional-compile-remove(raise-hand) */
       raisedHand: raisedHand,
       state: 'Connected',
       // Local participant can never remove themselves.
@@ -235,7 +227,5 @@ const updateUserDisplayNamesTrampoline = (remoteParticipants: RemoteParticipantS
 };
 
 const localUserCanRemoveOthersTrampoline = (role?: string): boolean => {
-  /* @conditional-compile-remove(rooms) */
   return role === 'Presenter' || role === 'Unknown' || role === undefined;
-  return true;
 };

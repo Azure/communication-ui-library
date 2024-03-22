@@ -7,7 +7,8 @@
     "mutedIconLabel": "Ljudet är avstängt",
     "displayNamePlaceholder": "Namnlös deltagare",
     "participantStateRinging": "Ringer...",
-    "participantStateHold": "Parkerat"
+    "participantStateHold": "Parkerat",
+    "attendeeRole": "Deltagare"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} till"
@@ -23,10 +24,27 @@
     "placeholderText": "Skriv ett meddelande",
     "textTooLong": "Meddelandelängden överskrider maxgränsen.",
     "sendButtonAriaLabel": "Skicka meddelande",
-    "fileUploadsPendingError": "Uppladdning pågår... Vänta.",
-    "removeFile": "Ta bort filen",
+    "attachmentUploadsPendingError": "Uppladdning pågår... Vänta.",
+    "removeAttachment": "Ta bort filen",
     "uploading": "Laddar upp",
     "uploadCompleted": "Uppladdningen har slutförts"
+  },
+  "richTextSendBox": {
+    "placeholderText": "Skriv ett meddelande",
+    "textTooLong": "Meddelandelängden överskrider maxgränsen.",
+    "sendButtonAriaLabel": "Skicka meddelande",
+    "attachmentUploadsPendingError": "Laddar upp... Var god vänta.",
+    "removeAttachment": "Ta bort fil",
+    "uploading": "Laddar upp",
+    "uploadCompleted": "Uppladdningen har slutförts",
+    "boldTooltip": "Fet",
+    "italicTooltip": "Kursiv",
+    "underlineTooltip": "Understruken",
+    "bulletListTooltip": "Punktlista",
+    "numberListTooltip": "Numrerad lista",
+    "increaseIndentTooltip": "Öka indrag",
+    "decreaseIndentTooltip": "Minska indrag",
+    "richTextFormatButtonTooltip": "Format"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Förslag"
@@ -125,6 +143,7 @@
   },
   "reactionButton": {
     "label": "Reagera",
+    "ariaLabel": "React-knapp, skicka en reaktion",
     "tooltipDisabledContent": "Reaktionsåtgärden är inaktiverad",
     "tooltipContent": "Skicka en reaktion",
     "likeReactionTooltipContent": "Gilla",
@@ -160,10 +179,10 @@
     "editBoxSubmitButton": "Klar",
     "messageReadCount": "Läst av {messageReadByCount} av {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Fler alternativ",
-    "downloadFile": "Ladda ner fil",
+    "downloadAttachment": "Ladda ner fil",
     "blockedWarningText": "Det här meddelandet har tagits bort på grund av en organisationsprincip.",
     "blockedWarningLinkText": "Information",
-    "fileCardGroupMessage": "Meddelandet har {fileCount} bifogad fil",
+    "attachmentCardGroupMessage": "Meddelandet har {attachmentCount} bifogad fil",
     "messageDeletedAnnouncementAriaLabel": "Meddelandet har tagits bort"
   },
   "errorBar": {
@@ -224,7 +243,8 @@
     "addSpotlightVideoTileMenuLabel": "Lägg till uppmärksammande",
     "spotlightLimitReachedMenuTitle": "Spotlight-gränsen har nåtts",
     "stopSpotlightVideoTileMenuLabel": "Sluta uppmärksamma",
-    "stopSpotlightOnSelfVideoTileMenuLabel": "Spotlight"
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Spotlight",
+    "attendeeRole": "Deltagare"
   },
   "dialpad": {
     "placeholderText": "Ange telefonnummer",
@@ -358,6 +378,5 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "föregående sida",
     "rightNavButtonAriaLabel": "nästa sida"
-  },
-  "AttendeeRole": "Deltagare"
+  }
 }

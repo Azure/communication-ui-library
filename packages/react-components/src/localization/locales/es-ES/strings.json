@@ -7,7 +7,8 @@
     "mutedIconLabel": "Silenciado",
     "displayNamePlaceholder": "Participante sin nombre",
     "participantStateRinging": "Llamando...",
-    "participantStateHold": "En espera"
+    "participantStateHold": "En espera",
+    "attendeeRole": "Asistente"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} más"
@@ -23,10 +24,27 @@
     "placeholderText": "Escribir un mensaje",
     "textTooLong": "La longitud del mensaje supera el límite máximo.",
     "sendButtonAriaLabel": "Enviar mensaje",
-    "fileUploadsPendingError": "Cargando... Espere.",
-    "removeFile": "Quitar archivo",
+    "attachmentUploadsPendingError": "Cargando... Espere.",
+    "removeAttachment": "Quitar archivo",
     "uploading": "Cargando",
     "uploadCompleted": "Carga completada"
+  },
+  "richTextSendBox": {
+    "placeholderText": "Escribir un mensaje",
+    "textTooLong": "La longitud del mensaje supera el límite máximo.",
+    "sendButtonAriaLabel": "Enviar mensaje",
+    "attachmentUploadsPendingError": "Cargando... Espere.",
+    "removeAttachment": "Quitar archivo",
+    "uploading": "Cargando",
+    "uploadCompleted": "Carga completada",
+    "boldTooltip": "Negrita",
+    "italicTooltip": "Cursiva",
+    "underlineTooltip": "Subrayado",
+    "bulletListTooltip": "Lista con viñetas",
+    "numberListTooltip": "Lista numerada",
+    "increaseIndentTooltip": "Aumentar sangría",
+    "decreaseIndentTooltip": "Reducir sangría",
+    "richTextFormatButtonTooltip": "Formato"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Sugerencias"
@@ -125,6 +143,7 @@
   },
   "reactionButton": {
     "label": "Reaccionar",
+    "ariaLabel": "Botón Reaccionar, Enviar una reacción",
     "tooltipDisabledContent": "La acción de reacción está deshabilitada",
     "tooltipContent": "Enviar una reacción",
     "likeReactionTooltipContent": "Me gusta",
@@ -160,10 +179,10 @@
     "editBoxSubmitButton": "Listo",
     "messageReadCount": "Leído por {messageReadByCount} de {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Más opciones",
-    "downloadFile": "Descargar archivo",
+    "downloadAttachment": "Descargar archivo",
     "blockedWarningText": "Este mensaje se eliminó debido a la directiva de la organización.",
     "blockedWarningLinkText": "Detalles",
-    "fileCardGroupMessage": "El mensaje tiene {fileCount} datos adjuntos",
+    "attachmentCardGroupMessage": "El mensaje tiene {attachmentCount} datos adjuntos",
     "messageDeletedAnnouncementAriaLabel": "El mensaje se ha eliminado"
   },
   "errorBar": {
@@ -224,7 +243,8 @@
     "addSpotlightVideoTileMenuLabel": "Agregar primer plano",
     "spotlightLimitReachedMenuTitle": "Se alcanzó el límite de primer plano",
     "stopSpotlightVideoTileMenuLabel": "Dejar de poner en primer plano",
-    "stopSpotlightOnSelfVideoTileMenuLabel": "Primer plano"
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Primer plano",
+    "attendeeRole": "Asistente"
   },
   "dialpad": {
     "placeholderText": "Introduzca el número de teléfono",
@@ -358,6 +378,5 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "página anterior",
     "rightNavButtonAriaLabel": "página siguiente"
-  },
-  "AttendeeRole": "Asistente"
+  }
 }

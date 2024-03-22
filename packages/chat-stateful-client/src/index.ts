@@ -8,6 +8,7 @@ export {
 } from './StatefulChatClient';
 export type { StatefulChatClient, StatefulChatClientArgs, StatefulChatClientOptions } from './StatefulChatClient';
 export type { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
+export type { ResourceFetchResult } from './types/ChatMessageWithStatus';
 export { ChatError } from './ChatClientState';
 export type {
   ChatClientState,

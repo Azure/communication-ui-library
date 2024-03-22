@@ -3,7 +3,6 @@
 
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { ChatClient, ChatMessage } from '@azure/communication-chat';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import {
@@ -13,10 +12,8 @@ import {
 import { ChatAdapter, ChatAdapterState } from './ChatAdapter';
 import { StubChatClient, StubChatThreadClient, failingPagedAsyncIterator, pagedAsyncIterator } from './StubChatClient';
 import { createStatefulChatClientMock } from '../../../mocks';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { MockStatefulChatClient } from '../../../mocks';
 import { AdapterError } from '../../common/adapters';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { StatefulChatClient } from '@internal/chat-stateful-client';
 
 jest.useFakeTimers();
@@ -148,7 +145,6 @@ describe('Error is reflected in state and events', () => {
     expect(errorListener.errors[0].target).toBe('ChatThreadClient.sendTypingNotification');
   });
 
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   it('when downloadResourceToCache is called should call to stateful client', async () => {
     const threadClient = new StubChatThreadClient('threadId') as unknown as ChatThreadClient;
     const statefulChatClient = new MockStatefulChatClient(threadClient) as unknown as StatefulChatClient;
@@ -161,7 +157,6 @@ describe('Error is reflected in state and events', () => {
     expect(mockDownloadResourceToCache).toHaveBeenCalled();
   });
 
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   it('when dispose is called should call to stateful client dispose', async () => {
     const threadClient = new StubChatThreadClient('threadId') as unknown as ChatThreadClient;
     const statefulChatClient = new MockStatefulChatClient(threadClient) as unknown as StatefulChatClient;
@@ -171,7 +166,6 @@ describe('Error is reflected in state and events', () => {
     adapter.dispose();
     expect(mockStatefulDispose).toHaveBeenCalledTimes(1);
   });
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   it('when removeResourceFromCache is called should call to stateful client removeResourceFromCache', async () => {
     const threadClient = new StubChatThreadClient('threadId') as unknown as ChatThreadClient;
     const statefulChatClient = new MockStatefulChatClient(threadClient) as unknown as StatefulChatClient;

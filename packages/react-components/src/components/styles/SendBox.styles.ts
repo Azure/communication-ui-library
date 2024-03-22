@@ -40,23 +40,25 @@ export const sendIconStyle = (props: {
   theme: Theme;
   hasText: boolean;
   /* @conditional-compile-remove(file-sharing) */ hasFile: boolean;
+  disabled?: boolean;
   hasErrorMessage: boolean;
   customSendIconStyle?: IStyle;
+  defaultTextColor?: string;
 }): string => {
   const {
     theme,
     hasText,
+    disabled = false,
     /* @conditional-compile-remove(file-sharing) */ hasFile,
     hasErrorMessage,
-    customSendIconStyle
+    customSendIconStyle,
+    defaultTextColor = theme.palette.neutralTertiary
   } = props;
   const hasNoContent = !hasText && /* @conditional-compile-remove(file-sharing) */ !hasFile;
   return mergeStyles(
+    editorTextBoxButtonStyle,
     {
-      width: '1.25rem',
-      height: '1.25rem',
-      margin: 'auto',
-      color: hasErrorMessage || hasNoContent ? theme.palette.neutralTertiary : theme.palette.themePrimary
+      color: disabled || hasErrorMessage || hasNoContent ? defaultTextColor : theme.palette.themePrimary
     },
     customSendIconStyle
   );
@@ -65,7 +67,16 @@ export const sendIconStyle = (props: {
 /**
  * @private
  */
-export const fileUploadCardsStyles = mergeStyles({
+export const editorTextBoxButtonStyle: IStyle = {
+  width: '1.25rem',
+  height: '1.25rem',
+  margin: 'auto'
+};
+
+/**
+ * @private
+ */
+export const attachmentUploadCardsStyles = mergeStyles({
   margin: '0 0.25rem 0.25rem 0.25rem',
   maxHeight: '12.5rem',
   overflow: 'auto'
@@ -74,7 +85,7 @@ export const fileUploadCardsStyles = mergeStyles({
 /**
  * @private
  */
-export const fileCardBoxStyle = mergeStyles({
+export const attachmentCardBoxStyle = mergeStyles({
   width: '100%',
   padding: '0.50rem'
 });
@@ -96,14 +107,26 @@ export const borderAndBoxShadowStyle = (props: {
   hasErrorMessage: boolean;
   disabled: boolean;
 }): string => {
-  const { theme, hasErrorMessage, disabled } = props;
-  const borderColor = hasErrorMessage ? theme.semanticColors.errorText : theme.palette.neutralSecondary;
+  return mergeStyles(borderEditBoxStyle({ ...props, defaultBorderColor: props.theme.palette.neutralSecondary }));
+};
+
+/**
+ * @private
+ */
+export const borderEditBoxStyle = (props: {
+  theme: Theme;
+  defaultBorderColor?: string;
+  hasErrorMessage: boolean;
+  disabled: boolean;
+}): IStyle => {
+  const { theme, hasErrorMessage, disabled, defaultBorderColor } = props;
+  const borderColor = hasErrorMessage ? theme.semanticColors.errorText : defaultBorderColor;
   const borderColorActive = hasErrorMessage ? theme.semanticColors.errorText : theme.palette.themePrimary;
 
   const borderThickness = disabled ? 0 : defaultSendBoxInactiveBorderThicknessREM;
   const borderActiveThickness = disabled ? 0 : defaultSendBoxActiveBorderThicknessREM;
 
-  return mergeStyles({
+  return {
     borderRadius: theme.effects.roundedCorner4,
     border: `${borderThickness}rem solid ${borderColor}`,
 
@@ -115,5 +138,5 @@ export const borderAndBoxShadowStyle = (props: {
       border: `${borderActiveThickness}rem solid ${borderColorActive}`,
       margin: `${defaultSendBoxActiveBorderThicknessREM - borderActiveThickness}rem`
     }
-  });
+  };
 };

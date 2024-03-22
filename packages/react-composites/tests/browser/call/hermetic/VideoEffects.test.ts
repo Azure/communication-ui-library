@@ -21,7 +21,6 @@ import {
 import type { MockCallAdapterState } from '../../../common';
 import type { LocalVideoStreamState } from '@internal/calling-stateful-client';
 
-/* @conditional-compile-remove(video-background-effects) */
 test.describe('Video background effects tests in call screen', async () => {
   test('blur video effect is not enabled when camera if off', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
@@ -67,7 +66,6 @@ test.describe('Video background effects tests in call screen', async () => {
   });
 });
 
-/* @conditional-compile-remove(video-background-effects) */
 test.describe('Video background effects tests in config screen', async () => {
   test('blur video effect is not enabled when camera if off', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
@@ -101,7 +99,6 @@ test.describe('Video background effects tests in config screen', async () => {
   });
 });
 
-/* @conditional-compile-remove(video-background-effects) */
 test.describe('Custom video background effects tests in call screen', async () => {
   test('custom video effect is not enabled when camera is off', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
@@ -149,7 +146,6 @@ test.describe('Custom video background effects tests in call screen', async () =
   });
 });
 
-/* @conditional-compile-remove(video-background-effects) */
 test.describe('Custom Video background effects tests in config screen', async () => {
   test('custom video effect is not enabled when camera is off', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
@@ -191,7 +187,6 @@ test.describe('Custom Video background effects tests in config screen', async ()
   });
 });
 
-/* @conditional-compile-remove(video-background-effects) */
 test.describe('Video background effects error tests', async () => {
   test('video effect error when effect fails and side pane is closed', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));

@@ -6,18 +6,19 @@ import { RichTextInputBoxComponent } from './RichTextInputBoxComponent';
 import { Icon, Stack } from '@fluentui/react';
 import { useLocale } from '../../localization';
 import { SendBoxStrings } from '../SendBox';
-import { sendButtonStyle, sendIconStyle } from '../styles/SendBox.styles';
+import { sendIconStyle } from '../styles/SendBox.styles';
 import { InputBoxButton } from '../InputBoxButton';
 import { RichTextSendBoxErrors, RichTextSendBoxErrorsProps } from './RichTextSendBoxErrors';
 /* @conditional-compile-remove(file-sharing) */
-import { ActiveFileUpload } from '../FileUploadCards';
+import { ActiveFileUpload } from '../AttachmentUploadCards';
 /* @conditional-compile-remove(file-sharing) */
 import { SendBoxErrorBarError } from '../SendBoxErrorBar';
-import { exceedsMaxAllowedLength, sanitizeText } from '../utils/SendBoxUtils';
+import { isMessageTooLong, sanitizeText } from '../utils/SendBoxUtils';
 /* @conditional-compile-remove(file-sharing) */
 import { hasCompletedFileUploads } from '../utils/SendBoxUtils';
 import { RichTextEditorComponentRef } from './RichTextEditor';
 import { useTheme } from '../../theming';
+import { richTextActionButtonsStyle, sendBoxRichTextEditorStyle } from '../styles/RichTextEditor.styles';
 
 /**
  * Strings of {@link RichTextSendBox} that can be overridden.
@@ -53,6 +54,10 @@ export interface RichTextSendBoxStrings extends SendBoxStrings {
    * Tooltip text for the decrease indent button.
    */
   decreaseIndentTooltip: string;
+  /**
+   * Tooltip text for the rich text format button button.
+   */
+  richTextFormatButtonTooltip: string;
 }
 
 /**
@@ -125,12 +130,16 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     return locale.strings.sendBox;
   }, [/* @conditional-compile-remove(rich-text-editor) */ locale.strings.richTextSendBox, locale.strings.sendBox]);
 
-  const strings = { ...localeStrings, ...props.strings };
+  const strings = useMemo(() => {
+    return { ...localeStrings, ...props.strings };
+  }, [localeStrings, props.strings]);
 
   const [contentValue, setContentValue] = useState('');
   const [contentValueOverflow, setContentValueOverflow] = useState(false);
   /* @conditional-compile-remove(file-sharing) */
-  const [fileUploadsPendingError, setFileUploadsPendingError] = useState<SendBoxErrorBarError | undefined>(undefined);
+  const [attachmentUploadsPendingError, setFileUploadsPendingError] = useState<SendBoxErrorBarError | undefined>(
+    undefined
+  );
   const editorComponentRef = useRef<RichTextEditorComponentRef>(null);
 
   const contentTooLongMessage = useMemo(
@@ -143,11 +152,11 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       return;
     }
 
-    setContentValueOverflow(exceedsMaxAllowedLength(newValue.length));
+    setContentValueOverflow(isMessageTooLong(newValue.length));
     setContentValue(newValue);
   }, []);
 
-  const sendMessageOnClick = (): void => {
+  const sendMessageOnClick = useCallback((): void => {
     if (disabled || contentValueOverflow) {
       return;
     }
@@ -156,7 +165,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     setFileUploadsPendingError(undefined);
 
     // if (hasIncompleteFileUploads(activeFileUploads)) {
-    //   setFileUploadsPendingError({ message: strings.fileUploadsPendingError, timestamp: Date.now() });
+    //   setFileUploadsPendingError({ message: strings.attachmentUploadsPendingError, timestamp: Date.now() });
     //   return;
     // }
 
@@ -169,25 +178,32 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     ) {
       onSendMessage(message);
       setContentValue('');
+      editorComponentRef.current?.setEmptyContent();
     }
     editorComponentRef.current?.focus();
-  };
+  }, [
+    /* @conditional-compile-remove(file-sharing) */ activeFileUploads,
+    contentValue,
+    contentValueOverflow,
+    disabled,
+    onSendMessage
+  ]);
 
   const hasErrorMessage = useMemo(() => {
     return (
       !!systemMessage ||
       !!contentTooLongMessage ||
       /* @conditional-compile-remove(file-sharing) */
-      !!fileUploadsPendingError ||
+      !!attachmentUploadsPendingError ||
       /* @conditional-compile-remove(file-sharing) */
-      !!activeFileUploads?.filter((fileUpload) => fileUpload.error).pop()?.error
+      !!activeFileUploads?.filter((attachmentUpload) => attachmentUpload.error).pop()?.error
     );
   }, [
     /* @conditional-compile-remove(file-sharing) */
     activeFileUploads,
     contentTooLongMessage,
     /* @conditional-compile-remove(file-sharing) */
-    fileUploadsPendingError,
+    attachmentUploadsPendingError,
     systemMessage
   ]);
 
@@ -200,19 +216,21 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
           hasText: !!contentValue,
           /* @conditional-compile-remove(file-sharing) */
           hasFile: false,
-          hasErrorMessage: hasErrorMessage
+          hasErrorMessage: hasErrorMessage,
+          defaultTextColor: theme.palette.neutralSecondary,
+          disabled: disabled
         })}
       />
     ),
-    [contentValue, hasErrorMessage, theme]
+    [contentValue, disabled, hasErrorMessage, theme]
   );
 
   const sendBoxErrorsProps: RichTextSendBoxErrorsProps = useMemo(() => {
     return {
       /* @conditional-compile-remove(file-sharing) */
-      fileUploadsPendingError: fileUploadsPendingError,
+      attachmentUploadsPendingError: attachmentUploadsPendingError,
       /* @conditional-compile-remove(file-sharing) */
-      fileUploadError: activeFileUploads?.filter((fileUpload) => fileUpload.error).pop()?.error,
+      attachmentUploadError: activeFileUploads?.filter((attachmentUpload) => attachmentUpload.error).pop()?.error,
       systemMessage: systemMessage,
       textTooLongMessage: contentTooLongMessage
     };
@@ -221,9 +239,24 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     activeFileUploads,
     contentTooLongMessage,
     /* @conditional-compile-remove(file-sharing) */
-    fileUploadsPendingError,
+    attachmentUploadsPendingError,
     systemMessage
   ]);
+
+  const sendButton = useMemo(() => {
+    return (
+      <InputBoxButton
+        onRenderIcon={onRenderSendIcon}
+        onClick={(e) => {
+          sendMessageOnClick();
+          e.stopPropagation(); // Prevents the click from bubbling up and triggering a focus event on the chat.
+        }}
+        className={richTextActionButtonsStyle}
+        ariaLabel={localeStrings.sendButtonAriaLabel}
+        tooltipContent={localeStrings.sendButtonAriaLabel}
+      />
+    );
+  }, [localeStrings.sendButtonAriaLabel, onRenderSendIcon, sendMessageOnClick]);
 
   return (
     <Stack>
@@ -231,22 +264,13 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       <RichTextInputBoxComponent
         placeholderText={strings.placeholderText}
         onChange={setContent}
+        onEnterKeyDown={sendMessageOnClick}
         editorComponentRef={editorComponentRef}
         strings={strings}
         disabled={disabled}
+        actionComponents={sendButton}
+        richTextEditorStyleProps={sendBoxRichTextEditorStyle}
       />
-      <Stack.Item align="end">
-        <InputBoxButton
-          onRenderIcon={onRenderSendIcon}
-          onClick={(e) => {
-            sendMessageOnClick();
-            e.stopPropagation(); // Prevents the click from bubbling up and triggering a focus event on the chat.
-          }}
-          className={sendButtonStyle}
-          ariaLabel={localeStrings.sendButtonAriaLabel}
-          tooltipContent={localeStrings.sendButtonAriaLabel}
-        />
-      </Stack.Item>
     </Stack>
   );
 };

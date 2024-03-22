@@ -4,7 +4,6 @@
 import React from 'react';
 import { _formatString } from '@internal/acs-ui-common';
 import parse, { HTMLReactParserOptions, Element as DOMElement } from 'html-react-parser';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { attributesToProps } from 'html-react-parser';
 import Linkify from 'react-linkify';
 import { ChatMessage } from '../../types/ChatMessage';
@@ -27,7 +26,6 @@ type ChatMessageContentProps = {
   strings: MessageThreadStrings;
   /* @conditional-compile-remove(mention) */
   mentionDisplayOptions?: MentionDisplayOptions;
-  /* @conditional-compile-remove(image-overlay) */
   inlineImageOptions?: InlineImageOptions;
 };
 
@@ -44,24 +42,22 @@ type MessageContentWithLiveAriaProps = {
   content: JSX.Element;
 };
 
-/* @conditional-compile-remove(image-overlay) */
 /**
  * InlineImage's state, as reflected in the UI.
  *
- * @beta
+ * @public
  */
 export interface InlineImage {
   /** ID of the message that the inline image is belonged to */
   messageId: string;
   /** Attributes of the inline image */
-  imgAttrs: React.ImgHTMLAttributes<HTMLImageElement>;
+  imageAttributes: React.ImgHTMLAttributes<HTMLImageElement>;
 }
 
-/* @conditional-compile-remove(image-overlay) */
 /**
  * Options to display inline image in the inline image scenario.
  *
- * @beta
+ * @public
  */
 export interface InlineImageOptions {
   /**
@@ -167,22 +163,7 @@ export const BlockedMessageContent = (props: BlockedMessageContentProps): JSX.El
   );
 };
 
-// https://stackoverflow.com/questions/28899298/extract-the-text-out-of-html-string-using-javascript
-const extractContent = (s: string): string => {
-  const span = document.createElement('span');
-  span.innerHTML = s;
-  return span.textContent || span.innerText;
-};
-
-const generateLiveMessage = (props: ChatMessageContentProps): string => {
-  const liveAuthor = _formatString(props.strings.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
-
-  return `${props.message.editedOn ? props.strings.editedTag : ''} ${
-    props.message.mine ? '' : liveAuthor
-  } ${extractContent(props.message.content || '')} `;
-};
-
-const messageContentAriaText = (props: ChatMessageContentProps): string | undefined => {
+const extractContentForAllyMessage = (props: ChatMessageContentProps): string => {
   if (props.message.content) {
     // Replace all <img> tags with 'image' for aria.
     const parsedContent = DOMPurify.sanitize(props.message.content, {
@@ -201,23 +182,39 @@ const messageContentAriaText = (props: ChatMessageContentProps): string | undefi
 
     // Strip all html tags from the content for aria.
     const message = DOMPurify.sanitize(parsedContent, { ALLOWED_TAGS: [] });
-
-    return props.message.mine
-      ? _formatString(props.strings.messageContentMineAriaText, {
-          message: message
-        })
-      : _formatString(props.strings.messageContentAriaText, {
-          author: `${props.message.senderDisplayName}`,
-          message: message
-        });
+    return message;
   }
-  return undefined;
+  return '';
 };
 
-/* @conditional-compile-remove(image-overlay) */
+const generateLiveMessage = (props: ChatMessageContentProps): string => {
+  const liveAuthor = _formatString(props.strings.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
+
+  return `${props.message.editedOn ? props.strings.editedTag : ''} ${
+    props.message.mine ? '' : liveAuthor
+  } ${extractContentForAllyMessage(props)} `;
+};
+
+const messageContentAriaText = (props: ChatMessageContentProps): string | undefined => {
+  const message = extractContentForAllyMessage(props);
+  return props.message.mine
+    ? _formatString(props.strings.messageContentMineAriaText, {
+        message: message
+      })
+    : _formatString(props.strings.messageContentAriaText, {
+        author: `${props.message.senderDisplayName}`,
+        message: message
+      });
+};
+
 const defaultOnRenderInlineImage = (inlineImage: InlineImage): JSX.Element => {
   return (
-    <img key={inlineImage.imgAttrs.id} tabIndex={0} data-ui-id={inlineImage.imgAttrs.id} {...inlineImage.imgAttrs} />
+    <img
+      key={inlineImage.imageAttributes.id}
+      tabIndex={0}
+      data-ui-id={inlineImage.imageAttributes.id}
+      {...inlineImage.imageAttributes}
+    />
   );
 };
 
@@ -240,14 +237,11 @@ const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
         }
 
         // Transform inline images
-        /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
         if (domNode.name && domNode.name === 'img' && domNode.attribs && domNode.attribs.id) {
           domNode.attribs['aria-label'] = domNode.attribs.name;
           const imgProps = attributesToProps(domNode.attribs);
-          /* @conditional-compile-remove(image-overlay) */
-          const inlineImageProps: InlineImage = { messageId: props.message.messageId, imgAttrs: imgProps };
+          const inlineImageProps: InlineImage = { messageId: props.message.messageId, imageAttributes: imgProps };
 
-          /* @conditional-compile-remove(image-overlay) */
           return props.inlineImageOptions?.onRenderInlineImage
             ? props.inlineImageOptions.onRenderInlineImage(inlineImageProps, defaultOnRenderInlineImage)
             : defaultOnRenderInlineImage(inlineImageProps);

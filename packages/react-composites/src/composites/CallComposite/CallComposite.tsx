@@ -36,9 +36,7 @@ import { HoldPage } from './pages/HoldPage';
 import { UnsupportedBrowserPage } from './pages/UnsupportedBrowser';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey } from '@azure/communication-calling';
-import { PermissionConstraints } from '@azure/communication-calling';
-/* @conditional-compile-remove(rooms) */
-import { ParticipantRole } from '@azure/communication-calling';
+import { ParticipantRole, PermissionConstraints } from '@azure/communication-calling';
 import { MobileChatSidePaneTabHeaderProps } from '../common/TabHeader';
 import { InjectedSidePaneProps, SidePaneProvider, SidePaneRenderer } from './components/SidePane/SidePaneProvider';
 import {
@@ -125,7 +123,6 @@ export interface RemoteVideoTileMenuOptions {
   isHidden?: boolean;
 }
 
-/* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(vertical-gallery) */
 /**
  * Options for the local video tile in the Call composite.
  *
@@ -219,7 +216,6 @@ export type CallCompositeOptions = {
    * Remote participant video tile menu options
    */
   remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
-  /* @conditional-compile-remove(click-to-call) */
   /**
    * Options for controlling the local video tile.
    *
@@ -353,7 +349,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   useEffect(() => {
     (async () => {
       const constrain = getQueryOptions({
-        /* @conditional-compile-remove(rooms) */ role: adapter.getState().call?.role
+        role: adapter.getState().call?.role
       });
       await adapter.askDevicePermission(constrain);
       adapter.queryCameras();
@@ -430,6 +426,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const callees = useSelector(getTargetCallees) as StartCallIdentifier[];
   const locale = useLocale();
   const palette = useTheme().palette;
+  /* @conditional-compile-remove(PSTN-calls) */
+  const alternateCallerId = adapter.getState().alternateCallerId;
   const leavePageStyle = useMemo(() => leavingPageStyle(palette), [palette]);
   let pageElement: JSX.Element | undefined;
   switch (page) {
@@ -439,7 +437,12 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           mobileView={props.mobileView}
           startCallHandler={(): void => {
             if (callees) {
-              adapter.startCall(callees);
+              adapter.startCall(
+                callees,
+                /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
+                  ? { alternateCallerId: { phoneNumber: alternateCallerId } }
+                  : {}
+              );
             } else {
               adapter.joinCall({
                 microphoneOn: 'keep',
@@ -715,10 +718,7 @@ export const CallCompositeInner = (props: CallCompositeProps & InternalCallCompo
   );
 };
 
-const getQueryOptions = (options: {
-  /* @conditional-compile-remove(rooms) */ role?: ParticipantRole;
-}): PermissionConstraints => {
-  /* @conditional-compile-remove(rooms) */
+const getQueryOptions = (options: { role?: ParticipantRole }): PermissionConstraints => {
   if (options.role === 'Consumer') {
     return {
       video: false,

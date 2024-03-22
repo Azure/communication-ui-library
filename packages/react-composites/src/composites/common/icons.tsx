@@ -27,7 +27,6 @@ import { MicProhibited20Filled, VideoProhibited20Filled } from '@fluentui/react-
 import { Grid20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
 import { PersonAdd20Regular, Call20Regular } from '@fluentui/react-icons';
-/* @conditional-compile-remove(dtmf-dialer) */
 import { Dialpad20Regular } from '@fluentui/react-icons';
 import { DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
 import React from 'react';
@@ -35,7 +34,7 @@ import React from 'react';
 import { FontIcon, IIconProps, Spinner, SpinnerSize } from '@fluentui/react';
 /* @conditional-compile-remove(file-sharing) */
 import { Attach20Regular } from '@fluentui/react-icons';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { VideoBackgroundEffect20Regular, VideoPerson20Filled } from '@fluentui/react-icons';
 import {
   PersonSquare20Regular,
@@ -83,13 +82,9 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   NoticePageJoinCallFailedDueToNoNetwork: <WifiWarning20Filled />,
   NoticePageLeftCall: <CallEnd20Filled />,
   NoticePageRemovedFromCall: <Info20Filled />,
-  /* @conditional-compile-remove(rooms) */
   NoticePageNotInvitedToRoom: <Info20Filled />,
-  /* @conditional-compile-remove(rooms) */
   NoticePageRoomNotFound: <Info20Filled />,
-  /* @conditional-compile-remove(rooms) */
   NoticePageRoomNotValid: <Info20Filled />,
-  /* @conditional-compile-remove(calling-sounds) */
   NoticePageCallRejected: <Info20Filled />,
   NoticePageCallTimeout: <Info20Filled />,
   /* @conditional-compile-remove(file-sharing) */
@@ -100,11 +95,10 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   PeoplePaneOpenDialpad: <Dialpad20Regular />,
   /* @conditional-compile-remove(PSTN-calls) */
   DialpadStartCall: <Call20Regular />,
-  /* @conditional-compile-remove(rooms) */
   NoticePageInviteToRoomRemoved: <Info20Filled />,
-  /* @conditional-compile-remove(video-background-effects) */
+
   BlurVideoBackground: <VideoBackgroundEffect20Regular />,
-  /* @conditional-compile-remove(video-background-effects) */
+
   RemoveVideoBackgroundEffect: <VideoPerson20Filled />,
   GalleryOptions: <Grid20Regular />,
   OverflowGalleryTop: <WindowHeaderHorizontal20Regular />,
@@ -113,9 +107,7 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   FloatingLocalVideoGalleryLayout: <BoardSplit20Regular />,
   FocusedContentGalleryLayout: <ContentView20Regular />,
   LargeGalleryLayout: <Table20Regular />,
-  /* @conditional-compile-remove(control-bar-button-injection) */
   DefaultCustomButton: <Circle20Regular />,
-  /* @conditional-compile-remove(dtmf-dialer) */
   DtmfDialpadButton: <Dialpad20Regular />,
   /* @conditional-compile-remove(spotlight) */
   PeoplePaneMoreButton: <MoreHorizontal20Filled />,
@@ -189,13 +181,10 @@ export type CallCompositeIcons = {
   ControlButtonCameraProhibited?: JSX.Element;
   /* @conditional-compile-remove(capabilities) */
   ControlButtonMicProhibited?: JSX.Element;
-  /* @conditional-compile-remove(raise-hand) */
   ControlButtonRaiseHand?: JSX.Element;
-  /* @conditional-compile-remove(raise-hand) */
   ControlButtonLowerHand?: JSX.Element;
   /* @conditional-compile-remove(spotlight) */
   ControlButtonExitSpotlight?: JSX.Element;
-  /* @conditional-compile-remove(raise-hand) */
   RaiseHandContextualMenuItem?: JSX.Element;
   /* @conditional-compile-remove(reaction) */
   ReactionContextualMenuItem?: JSX.Element;
@@ -228,13 +217,9 @@ export type CallCompositeIcons = {
   NoticePageJoinCallFailedDueToNoNetwork?: JSX.Element;
   NoticePageLeftCall?: JSX.Element;
   NoticePageRemovedFromCall?: JSX.Element;
-  /* @conditional-compile-remove(calling-sounds) */
   NoticePageCallRejected?: JSX.Element;
-  /* @conditional-compile-remove(rooms) */
   NoticePageNotInvitedToRoom?: JSX.Element;
-  /* @conditional-compile-remove(rooms) */
   NoticePageRoomNotFound?: JSX.Element;
-  /* @conditional-compile-remove(rooms) */
   NoticePageRoomNotValid?: JSX.Element;
   NoticePageCallTimeout?: JSX.Element;
   OptionsCamera?: JSX.Element;
@@ -252,11 +237,10 @@ export type CallCompositeIcons = {
   PeoplePaneOpenDialpad?: JSX.Element;
   /* @conditional-compile-remove(PSTN-calls) */
   DialpadStartCall?: JSX.Element;
-  /* @conditional-compile-remove(rooms) */
   NoticePageInviteToRoomRemoved?: JSX.Element;
-  /* @conditional-compile-remove(video-background-effects) */
+
   BlurVideoBackground?: JSX.Element;
-  /* @conditional-compile-remove(video-background-effects) */
+
   RemoveVideoBackgroundEffect?: JSX.Element;
   GalleryOptions?: JSX.Element;
   SpeakerGalleryLayout?: JSX.Element;
@@ -265,9 +249,7 @@ export type CallCompositeIcons = {
   FocusedContentGalleryLayout?: JSX.Element;
   OverflowGalleryTop?: JSX.Element;
   LargeGalleryLayout?: JSX.Element;
-  /* @conditional-compile-remove(control-bar-button-injection) */
   DefaultCustomButton?: JSX.Element;
-  /* @conditional-compile-remove(dtmf-dialer) */
   DtmfDialpadButton?: JSX.Element;
   /* @conditional-compile-remove(spotlight) */
   PeoplePaneMoreButton?: JSX.Element;
@@ -356,9 +338,7 @@ export type CallWithChatCompositeIcons = {
   PeoplePaneOpenDialpad?: JSX.Element;
   /* @conditional-compile-remove(PSTN-calls) */
   DialpadStartCall?: JSX.Element;
-  /* @conditional-compile-remove(control-bar-button-injection) */
   DefaultCustomButton?: JSX.Element;
-  /* @conditional-compile-remove(dtmf-dialer) */
   DtmfDialpadButton?: JSX.Element;
 
   // Chat icons

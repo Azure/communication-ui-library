@@ -51,3 +51,29 @@ Most often, you should write a combination of unit-tests and hermetic browser te
 | browser: hermetic | fast-ish, less-flakey, e2e/static | Validate features, composite snapshots      |
 | browser: live     | -slow, -flakey, +faithful         | Smoke testing, critical user journeys       |
 | storybook         | ??                                | ??                                          |
+
+## Tests coverage
+
+### Get unit tests coverage locally
+`rushx test:coverage` command can be used to generate jest tests coverage reports locally for some packages. Currently the command is available for:
+- acs-ui-common
+- calling-component-binding
+- calling-stateful-client
+- chat-component-binding
+- chat-stateful-client
+- react-components
+- react-composites
+
+After running the command in a Terminal, a new `temp/jest/coverage/` folder will be created under the repository root folder and an HTML report will be generated. 
+The report will be rewritten if `rushx test:coverage` is run again (even for an another package). In order to save the report to an another folder, use `rushx test:coverage --coverageDirectory <new-path-to-save-coverage-report>`.
+
+### Download unit tests coverage report from CI workflow
+Unit tests coverage is calculated for @azure/communication-react as part of the CI workflow. The coverage results are compared to the main branch coverage and a comment with this information is posted in a PR. The reports posted in CI workflow artifacts can be used to get an HTML report for @azure/communication-react if needed. 
+
+Steps to create an HTML coverage report from the CI workflow artifacts:
+- Download coverage reports from the PR artifacts
+- Open `detailed-full/coverage-report.json`
+- Update `/home/runner/work/communication-ui-library` in `detailed-full/coverage-report.json` to a folder where communication-react project is located locally.
+- Save the file
+- Run in Terminal `npx nyc report --temp-dir '<path-to-jest-coverage-report-{flavor}-folder>/detailed-full/' --report-dir <directory-path-where-html-report-will-be-saved> --reporter lcov`. This step is needed to generate an HTTML report from the JSON one.
+- Open `index.html` file rom `lcov-report` folder for coverage preview.

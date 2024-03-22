@@ -11,7 +11,6 @@ import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CallParticipantListParticipant } from '@internal/react-components';
 /* @conditional-compile-remove(spotlight) */
 import { Spotlight } from '@internal/react-components';
-/* @conditional-compile-remove(raise-hand) */
 import { RaisedHandState } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(reaction) */
 import { ReactionState } from '@internal/calling-stateful-client';
@@ -19,33 +18,6 @@ import { ReactionState } from '@internal/calling-stateful-client';
 import { Reaction } from '@internal/react-components';
 /* @conditional-compile-remove(reaction) */
 import memoizeOne from 'memoize-one';
-
-/**
- * @private
- */
-export const memoizedConvertAllremoteParticipants = memoizeFnAll(
-  (
-    userId: string,
-    displayName: string | undefined,
-    state: RemoteParticipantState,
-    isMuted: boolean,
-    isScreenSharing: boolean,
-    isSpeaking: boolean,
-    raisedHand: RaisedHandState | undefined,
-    localUserCanRemoveOthers: boolean
-  ): CallParticipantListParticipant => {
-    return convertRemoteParticipantToParticipantListParticipant(
-      userId,
-      displayName,
-      state,
-      isMuted,
-      isScreenSharing,
-      isSpeaking,
-      raisedHand,
-      localUserCanRemoveOthers
-    );
-  }
-);
 
 const convertRemoteParticipantToParticipantListParticipant = (
   userId: string,
@@ -74,11 +46,10 @@ const convertRemoteParticipantToParticipantListParticipant = (
   };
 };
 
-/* @conditional-compile-remove(rooms) */
 /**
  * @private
  */
-export const memoizedConvertAllremoteParticipantsBetaRelease = memoizeFnAll(
+export const memoizedConvertAllremoteParticipants = memoizeFnAll(
   (
     userId: string,
     displayName: string | undefined,
@@ -192,7 +163,6 @@ export const memoizedSpotlight = memoizeOne(
   }
 );
 
-/* @conditional-compile-remove(rooms) */
 const convertRemoteParticipantToParticipantListParticipantBetaRelease = (
   userId: string,
   displayName: string | undefined,

@@ -7,7 +7,8 @@
     "mutedIconLabel": "Disattivato",
     "displayNamePlaceholder": "Partecipante senza nome",
     "participantStateRinging": "Chiamata in corso...",
-    "participantStateHold": "Per l'attesa"
+    "participantStateHold": "Per l'attesa",
+    "attendeeRole": "Partecipante"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} altro"
@@ -23,10 +24,27 @@
     "placeholderText": "Immetti un messaggio",
     "textTooLong": "La lunghezza del messaggio supera il limite massimo.",
     "sendButtonAriaLabel": "Invio messaggio",
-    "fileUploadsPendingError": "Caricamento in corso... Attendere.",
-    "removeFile": "Rimuovi file",
+    "attachmentUploadsPendingError": "Caricamento in corso... Attendere.",
+    "removeAttachment": "Rimuovi file",
     "uploading": "Caricamento in corso",
     "uploadCompleted": "Caricamento completato"
+  },
+  "richTextSendBox": {
+    "placeholderText": "Immetti un messaggio",
+    "textTooLong": "La lunghezza del messaggio supera il limite massimo.",
+    "sendButtonAriaLabel": "Invia messaggio",
+    "attachmentUploadsPendingError": "Caricamento... Attendi.",
+    "removeAttachment": "Rimuovi file",
+    "uploading": "Caricamento",
+    "uploadCompleted": "Caricamento completato",
+    "boldTooltip": "Grassetto",
+    "italicTooltip": "Corsivo",
+    "underlineTooltip": "Sottolineato",
+    "bulletListTooltip": "Elenco puntato",
+    "numberListTooltip": "Elenco numerato",
+    "increaseIndentTooltip": "Aumenta rientro",
+    "decreaseIndentTooltip": "Riduci rientro",
+    "richTextFormatButtonTooltip": "Formato"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggerimenti"
@@ -125,6 +143,7 @@
   },
   "reactionButton": {
     "label": "Reagisci",
+    "ariaLabel": "Pulsante Reagisci, Invia una reazione",
     "tooltipDisabledContent": "L'azione di reazione è disabilitata",
     "tooltipContent": "Invia una reazione",
     "likeReactionTooltipContent": "Mi piace",
@@ -160,10 +179,10 @@
     "editBoxSubmitButton": "Fatto",
     "messageReadCount": "Letto da {messageReadByCount} di {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Altre opzioni",
-    "downloadFile": "Scarica file",
+    "downloadAttachment": "Scarica file",
     "blockedWarningText": "Questo messaggio è stato eliminato a causa dei criteri dell'organizzazione.",
     "blockedWarningLinkText": "Dettagli",
-    "fileCardGroupMessage": "Il messaggio contiene {fileCount} allegato",
+    "attachmentCardGroupMessage": "Il messaggio contiene {attachmentCount} allegato",
     "messageDeletedAnnouncementAriaLabel": "Il messaggio è stato eliminato"
   },
   "errorBar": {
@@ -224,7 +243,8 @@
     "addSpotlightVideoTileMenuLabel": "Metti in evidenza",
     "spotlightLimitReachedMenuTitle": "È stato raggiunto il limite di contenuti in evidenza",
     "stopSpotlightVideoTileMenuLabel": "Interrompi la posizione in evidenza",
-    "stopSpotlightOnSelfVideoTileMenuLabel": "Chiudi visualizzazione in evidenza"
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Chiudi visualizzazione in evidenza",
+    "attendeeRole": "Partecipante"
   },
   "dialpad": {
     "placeholderText": "Inserisci numero di telefono",
@@ -358,6 +378,5 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "Pagina precedente",
     "rightNavButtonAriaLabel": "Pagina successiva"
-  },
-  "AttendeeRole": "Partecipante"
+  }
 }

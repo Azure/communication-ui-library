@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { ChatMessageWithStatus } from '@internal/chat-stateful-client';
+import { ChatMessageWithStatus, ResourceFetchResult } from '@internal/chat-stateful-client';
 import { messageThreadSelector } from './messageThreadSelector';
 import { ChatAttachment, ChatMessageType, ChatParticipant } from '@azure/communication-chat';
 
@@ -62,7 +62,6 @@ describe('messageThreadSelector tests', () => {
     ]);
   });
 
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   test('should parse HTML messages with image tag correctly with attachments', async (): Promise<void> => {
     const messageText = '<p>Hello <img alt="image" src="" id="1"></p>';
     const imageContent = 'data:image/png;base64,iVBORw0KGgoAAAA';
@@ -71,7 +70,7 @@ describe('messageThreadSelector tests', () => {
     const result = messageThreadSelectorResultFunc(
       '1',
       getChatMessages(messageText, 'html', [{ id: '1', attachmentType: 'image', previewUrl: 'testURL' }], {
-        testURL: imageContent
+        testURL: { sourceUrl: imageContent }
       }),
       Date.now(),
       false,
@@ -99,8 +98,7 @@ const getChatMessages = (
   messageText: string,
   type: ChatMessageType,
   attachments?: ChatAttachment[],
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  resourceCache?: Record<string, string>
+  resourceCache?: Record<string, ResourceFetchResult>
 ): { [key: string]: ChatMessageWithStatus } => {
   const chatMessages: { [key: string]: ChatMessageWithStatus } = {};
   chatMessages['0'] = {
@@ -115,7 +113,6 @@ const getChatMessages = (
       message: messageText,
       attachments: attachments
     },
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     resourceCache: resourceCache
   };
   return chatMessages;
