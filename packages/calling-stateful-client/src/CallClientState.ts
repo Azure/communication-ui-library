@@ -12,6 +12,7 @@ import {
   LatestMediaDiagnostics,
   LatestNetworkDiagnostics,
   MediaStreamType,
+  ParticipantRole,
   RemoteParticipantState as RemoteParticipantStatus,
   ScalingMode,
   VideoDeviceInfo
@@ -20,14 +21,12 @@ import {
 import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsResultType } from '@azure/communication-calling';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { VideoEffectName } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { CallKind } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
-import { ParticipantRole } from '@azure/communication-calling';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 /* @conditional-compile-remove(reaction) */
 import { ReactionMessage } from '@azure/communication-calling';
@@ -309,7 +308,7 @@ export interface LocalVideoStreamState {
    * API. This can be undefined if the stream has not yet been rendered and defined after createView creates the view.
    */
   view?: VideoStreamRendererViewState;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Stores the state of the video effects.
    * @public
@@ -317,7 +316,6 @@ export interface LocalVideoStreamState {
   videoEffects?: LocalVideoStreamVideoEffectsState;
 }
 
-/* @conditional-compile-remove(video-background-effects) */
 /**
  * State only version of a LocalVideoStream's {@link @azure/communication-calling#VideoEffectsFeature}.
  *
@@ -362,7 +360,7 @@ export interface RemoteVideoStreamState {
   isAvailable: boolean;
   /**
    * Proxy of {@link @azure/communication-calling#RemoteVideoStream.isReceiving}.
-   * @beta
+   * @public
    */
   /* @conditional-compile-remove(video-stream-is-receiving-flag) */
   isReceiving: boolean;
@@ -434,7 +432,6 @@ export interface RemoteParticipantState {
    * Proxy of {@link @azure/communication-calling#RemoteParticipant.isSpeaking}.
    */
   isSpeaking: boolean;
-  /* @conditional-compile-remove(rooms) */
   /**
    * Proxy of {@link @azure/communication-calling#RemoteParticipant.role}.
    */
@@ -605,7 +602,6 @@ export interface CallState {
    * Stores the latest call diagnostics.
    */
   diagnostics: DiagnosticsCallFeatureState;
-  /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
   /**
    * Proxy of {@link @azure/communication-calling#Call.role}.
    */

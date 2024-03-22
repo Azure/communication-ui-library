@@ -25,7 +25,6 @@ describe('ParticipantList tests for different roles', () => {
       />
     );
   });
-  /* @conditional-compile-remove(rooms) */
   test('ParticipantList should have enabled remove menu item for Presenter role', async () => {
     const { container } = render(
       <ParticipantList
@@ -40,7 +39,6 @@ describe('ParticipantList tests for different roles', () => {
     expect(removeMenuItem.disabled).toBe(false);
   });
 
-  /* @conditional-compile-remove(rooms) */
   test('ParticipantList should have disabled remove menu item for Attendee role', async () => {
     const { container } = render(
       <ParticipantList
@@ -53,7 +51,6 @@ describe('ParticipantList tests for different roles', () => {
     expect(removeMenuItem).toBeFalsy();
   });
 
-  /* @conditional-compile-remove(rooms) */
   test('ParticipantList should have disabled remove menu item for Consumer role', async () => {
     const { container } = render(
       <ParticipantList
@@ -67,7 +64,6 @@ describe('ParticipantList tests for different roles', () => {
   });
 });
 
-/* @conditional-compile-remove(rooms) */
 const getRemoveParticipantButton = (container: HTMLElement): HTMLButtonElement => {
   // RTL renders everything in a div on the body element. Fluent however renders flyouts
   // directly on the body element. So we need to get the parent of the container.
@@ -75,5 +71,4 @@ const getRemoveParticipantButton = (container: HTMLElement): HTMLButtonElement =
   return body?.querySelector('button[data-ui-id="participant-list-remove-participant-button"]') as HTMLButtonElement;
 };
 
-/* @conditional-compile-remove(rooms) */
 const mockMyUser = { userId: '0', displayName: 'me', isRemovable: false };

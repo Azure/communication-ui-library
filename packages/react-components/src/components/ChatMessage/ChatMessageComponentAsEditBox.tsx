@@ -13,9 +13,9 @@ import { InputBoxButton } from '../InputBoxButton';
 import { MessageThreadStrings } from '../MessageThread';
 import { useChatMyMessageStyles } from '../styles/MessageThread.styles';
 import { ChatMessage } from '../../types';
-import { _FileUploadCards } from '../FileUploadCards';
+import { _AttachmentUploadCards } from '../AttachmentUploadCards';
 /* @conditional-compile-remove(file-sharing) */
-import { AttachmentMetadata } from '../FileDownloadCards';
+import { AttachmentMetadata } from '../../types/Attachment';
 import {
   chatMessageFailedTagStyle,
   editChatMessageFailedTagStyle,
@@ -114,7 +114,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
       !!attachmentMetadata &&
       attachmentMetadata.length > 0 && (
         <div style={{ margin: '0.25rem' }}>
-          <_FileUploadCards
+          <_AttachmentUploadCards
             activeFileUploads={attachmentMetadata?.map((file) => ({
               id: file.name,
               filename: file.name,

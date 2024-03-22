@@ -93,11 +93,11 @@ export interface CommonCallingHandlers {
   /* @conditional-compile-remove(call-readiness) */
   askDevicePermission: (constrain: PermissionConstraints) => Promise<void>;
   onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => void;
-  /* @conditional-compile-remove(video-background-effects) */
+
   onRemoveVideoBackgroundEffects: () => Promise<void>;
-  /* @conditional-compile-remove(video-background-effects) */
+
   onBlurVideoBackground: (backgroundBlurConfig?: BackgroundBlurConfig) => Promise<void>;
-  /* @conditional-compile-remove(video-background-effects) */
+
   onReplaceVideoBackground: (backgroundReplacementConfig: BackgroundReplacementConfig) => Promise<void>;
   /* @conditional-compile-remove(close-captions) */
   onStartCaptions: (options?: CaptionsOptions) => Promise<void>;
@@ -404,14 +404,22 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         return;
       }
 
+      /**
+       * There is a bug from the calling sdk where if a user leaves and rejoins immediately
+       * it adds 2 more potential streams this remote participant can use. The old 2 streams
+       * still show as available and that is how we got a frozen stream in this case. The stopgap
+       * until streams accurately reflect their availability is to always prioritize the latest streams of a certain type
+       * e.g findLast instead of find
+       */
       // Find the first available stream, if there is none, then get the first stream
       const remoteVideoStream =
-        Object.values(participant.videoStreams).find((i) => i.mediaStreamType === 'Video' && i.isAvailable) ||
-        Object.values(participant.videoStreams).find((i) => i.mediaStreamType === 'Video');
+        Object.values(participant.videoStreams).findLast((i) => i.mediaStreamType === 'Video' && i.isAvailable) ||
+        Object.values(participant.videoStreams).findLast((i) => i.mediaStreamType === 'Video');
 
       const screenShareStream =
-        Object.values(participant.videoStreams).find((i) => i.mediaStreamType === 'ScreenSharing' && i.isAvailable) ||
-        Object.values(participant.videoStreams).find((i) => i.mediaStreamType === 'ScreenSharing');
+        Object.values(participant.videoStreams).findLast(
+          (i) => i.mediaStreamType === 'ScreenSharing' && i.isAvailable
+        ) || Object.values(participant.videoStreams).findLast((i) => i.mediaStreamType === 'ScreenSharing');
 
       let createViewResult: CreateViewResult | undefined = undefined;
       if (remoteVideoStream && remoteVideoStream.isAvailable && !remoteVideoStream.view) {
@@ -537,7 +545,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
     };
 
-    /* @conditional-compile-remove(video-background-effects) */
     const onRemoveVideoBackgroundEffects = async (): Promise<void> => {
       const stream =
         call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video') ||
@@ -551,7 +558,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
     };
 
-    /* @conditional-compile-remove(video-background-effects) */
     const onBlurVideoBackground = async (backgroundBlurConfig?: BackgroundBlurConfig): Promise<void> => {
       const stream =
         call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video') ||
@@ -567,7 +573,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
     };
 
-    /* @conditional-compile-remove(video-background-effects) */
     const onReplaceVideoBackground = async (
       backgroundReplacementConfig: BackgroundReplacementConfig
     ): Promise<void> => {
@@ -684,11 +689,11 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */ onSendDtmfTone,
       /* @conditional-compile-remove(call-readiness) */
       askDevicePermission,
-      /* @conditional-compile-remove(video-background-effects) */
+
       onRemoveVideoBackgroundEffects,
-      /* @conditional-compile-remove(video-background-effects) */
+
       onBlurVideoBackground,
-      /* @conditional-compile-remove(video-background-effects) */
+
       onReplaceVideoBackground,
       /* @conditional-compile-remove(close-captions) */
       onStartCaptions,
