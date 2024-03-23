@@ -5,18 +5,22 @@ import React, { ReactNode, useCallback, useMemo, useState } from 'react';
 import { BaseCustomStyles } from '../../types';
 import { RichTextEditor, RichTextEditorComponentRef, RichTextEditorStyleProps } from './RichTextEditor';
 import { RichTextSendBoxStrings } from './RichTextSendBox';
-import { richTextBorderBoxStyle } from '../styles/RichTextInputBoxComponent.styles';
 import { useTheme } from '../../theming';
 import { Icon, Stack } from '@fluentui/react';
 import { InputBoxButton } from '../InputBoxButton';
+import { isEnterKeyEventFromCompositionSession } from '../utils';
 import {
   richTextActionButtonsDividerStyle,
   richTextActionButtonsStackStyle,
   richTextActionButtonsStyle,
   richTextFormatButtonIconStyle
 } from '../styles/RichTextEditor.styles';
-import { inputBoxContentStackStyle, inputBoxRichTextStackStyle } from '../styles/RichTextInputBoxComponent.styles';
-import { isEnterKeyEventFromCompositionSession } from '../utils';
+import {
+  inputBoxContentStackStyle,
+  inputBoxRichTextStackItemStyle,
+  inputBoxRichTextStackStyle,
+  richTextBorderBoxStyle
+} from '../styles/RichTextInputBoxComponent.styles';
 
 /**
  * @private
@@ -35,10 +39,14 @@ export interface RichTextInputBoxComponentProps {
   strings: Partial<RichTextSendBoxStrings>;
   disabled: boolean;
   actionComponents: ReactNode;
+  /* @conditional-compile-remove(file-sharing) */
+  onRenderFileUploads?: () => JSX.Element;
+  /* @conditional-compile-remove(file-sharing) */
+  hasFiles?: boolean;
   // props for min and max height for the rich text editor
   // otherwise the editor will grow to fit the content
   richTextEditorStyleProps: (isExpanded: boolean) => RichTextEditorStyleProps;
-  supportHorizontalLayout?: boolean;
+  isHorizontalLayoutDisabled?: boolean;
 }
 
 /**
@@ -54,8 +62,12 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
     disabled,
     strings,
     actionComponents,
+    /* @conditional-compile-remove(file-sharing) */
+    onRenderFileUploads,
+    /* @conditional-compile-remove(file-sharing) */
+    hasFiles,
     richTextEditorStyleProps,
-    supportHorizontalLayout = true
+    isHorizontalLayoutDisabled = false
   } = props;
   const theme = useTheme();
   const [showRichTextEditorFormatting, setShowRichTextEditorFormatting] = useState(false);
@@ -119,6 +131,18 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
     [onEnterKeyDown, showRichTextEditorFormatting]
   );
 
+  const useHorizontalLayout = useMemo(() => {
+    return (
+      !isHorizontalLayoutDisabled &&
+      !showRichTextEditorFormatting &&
+      /* @conditional-compile-remove(file-sharing) */ !hasFiles
+    );
+  }, [
+    isHorizontalLayoutDisabled,
+    showRichTextEditorFormatting,
+    /* @conditional-compile-remove(file-sharing) */ hasFiles
+  ]);
+
   return (
     <div
       className={richTextBorderBoxStyle({
@@ -126,24 +150,29 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
         disabled: !!disabled
       })}
     >
+      {/* This layout is used for the compact view when formatting options are not shown */}
       <Stack
         grow
-        horizontal={supportHorizontalLayout && !showRichTextEditorFormatting}
+        horizontal={useHorizontalLayout}
+        horizontalAlign={useHorizontalLayout ? 'end' : 'space-between'}
         className={inputBoxContentStackStyle}
+        wrap={useHorizontalLayout}
       >
-        {/* fixes the issue when flex box can grow to be bigger than parent */}
+        {/* Fixes the issue when flex box can grow to be bigger than parent */}
         <Stack grow className={inputBoxRichTextStackStyle}>
-          <RichTextEditor
-            initialContent={initialContent}
-            placeholderText={placeholderText}
-            onChange={onChange}
-            onKeyDown={onKeyDown}
-            ref={editorComponentRef}
-            strings={strings}
-            showRichTextEditorFormatting={showRichTextEditorFormatting}
-            styles={richTextEditorStyle}
-          />
-          {/* File Upload */}
+          <Stack.Item className={inputBoxRichTextStackItemStyle}>
+            <RichTextEditor
+              initialContent={initialContent}
+              placeholderText={placeholderText}
+              onChange={onChange}
+              onKeyDown={onKeyDown}
+              ref={editorComponentRef}
+              strings={strings}
+              showRichTextEditorFormatting={showRichTextEditorFormatting}
+              styles={richTextEditorStyle}
+            />
+          </Stack.Item>
+          {/* @conditional-compile-remove(file-sharing) */ onRenderFileUploads && onRenderFileUploads()}
         </Stack>
         {actionButtons}
       </Stack>

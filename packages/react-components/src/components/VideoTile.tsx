@@ -13,16 +13,12 @@ import {
   Text
 } from '@fluentui/react';
 import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
-/* @conditional-compile-remove(reaction) */
-import { useCallback, useEffect } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { ComponentLocale, useLocale } from '../localization';
 import { useTheme } from '../theming';
 import { BaseCustomStyles, CustomAvatarOptions, OnRenderAvatarCallback } from '../types';
 import { CallingTheme } from '../theming';
 import { RaisedHand } from '../types';
-/* @conditional-compile-remove(reaction) */
-import { Reaction } from '../types';
 import { RaisedHandIcon } from './assets/RaisedHandIcon';
 /* @conditional-compile-remove(one-to-n-calling) */
 /* @conditional-compile-remove(PSTN-calls) */
@@ -38,8 +34,6 @@ import {
   tileInfoContainerStyle,
   participantStateStringStyles
 } from './styles/VideoTile.styles';
-/* @conditional-compile-remove(reaction) */
-import { reactionRenderingStyle } from './styles/VideoTile.styles';
 import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
 import { pinIconStyle } from './styles/VideoTile.styles';
 import useLongPress from './utils/useLongPress';
@@ -47,8 +41,6 @@ import { moreButtonStyles } from './styles/VideoTile.styles';
 import { raiseHandContainerStyles } from './styles/VideoTile.styles';
 /* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '../types/ReactionTypes';
-/* @conditional-compile-remove(reaction) */
-import { getEmojiResource } from './VideoGallery/utils/videoGalleryLayoutUtils';
 
 /**
  * Strings of {@link VideoTile} that can be overridden.
@@ -93,6 +85,12 @@ export interface VideoTileProps {
   userId?: string;
   /** Component with the video stream. */
   renderElement?: JSX.Element | null;
+  /* @conditional-compile-remove(reaction) */
+  /**
+   * Overlay component responsible for rendering reaction
+   * @beta
+   */
+  overlay?: JSX.Element | null;
   /** Determines if the video is mirrored or not. */
   isMirrored?: boolean;
   /** Custom render Component function for no video is available. Render a Persona Icon if undefined. */
@@ -146,13 +144,6 @@ export interface VideoTileProps {
 
   /** Whether the participant is raised hand. Show a indicator (border) and icon with order */
   raisedHand?: RaisedHand;
-
-  /* @conditional-compile-remove(reaction) */
-  /**
-   * When the participant has reacted, animate the reaction.
-   * @beta
-   * */
-  reaction?: Reaction;
 
   /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */
@@ -262,6 +253,8 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     isPinned,
     onRenderPlaceholder,
     renderElement,
+    /* @conditional-compile-remove(reaction) */
+    overlay: reactionOverlay,
     showLabel = true,
     showMuteIndicator = true,
     styles,
@@ -269,21 +262,16 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     noVideoAvailableAriaLabel,
     isSpeaking,
     raisedHand,
-    /* @conditional-compile-remove(reaction) */
-    reaction,
     personaMinSize = DEFAULT_PERSONA_MIN_SIZE_PX,
     personaMaxSize = DEFAULT_PERSONA_MAX_SIZE_PX,
-    contextualMenu,
-    /* @conditional-compile-remove(reaction) */
-    reactionResources
+    contextualMenu
   } = props;
 
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const [isFocused, setIsFocused] = useState<boolean>(false);
   // need to set a default otherwise the resizeObserver will get stuck in an infinite loop.
   const [personaSize, setPersonaSize] = useState<number>(1);
-  /* @conditional-compile-remove(reaction) */
-  const [isValidImageSource, setIsValidImageSource] = useState<boolean>(false);
+
   const videoTileRef = useRef<HTMLDivElement>(null);
 
   const locale = useLocale();
@@ -360,45 +348,6 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const callingPalette = (theme as unknown as CallingTheme).callingPalette;
   raisedHandBackgroundColor = callingPalette.raiseHandGold;
 
-  /* @conditional-compile-remove(reaction) */
-  const backgroundImageUrl =
-    reaction !== undefined && reactionResources !== undefined
-      ? getEmojiResource(reaction?.reactionType, reactionResources)
-      : '';
-  /* @conditional-compile-remove(reaction) */
-  const currentTimestamp = new Date();
-  /* @conditional-compile-remove(reaction) */
-  const currentUnixTimeStamp = Math.floor(currentTimestamp.getTime() / 1000);
-  /* @conditional-compile-remove(reaction) */
-  const receivedUnixTimestamp = reaction ? Math.floor(reaction.receivedOn.getTime() / 1000) : undefined;
-  /* @conditional-compile-remove(reaction) */
-  const canRenderReaction =
-    (receivedUnixTimestamp ? currentUnixTimeStamp - receivedUnixTimestamp < 3000 : false) &&
-    backgroundImageUrl !== undefined;
-  /* @conditional-compile-remove(reaction) */
-  useEffect(() => {
-    if (!backgroundImageUrl || backgroundImageUrl.length === 0) {
-      return;
-    }
-
-    fetch(`${backgroundImageUrl}`)
-      .then((res) => setIsValidImageSource(res.ok))
-      .catch((warning) => console.warn(`Sprite image for animation rendering failed with warning: ${warning}`));
-
-    return () => setIsValidImageSource(false);
-  }, [backgroundImageUrl]);
-  /* @conditional-compile-remove(reaction) */
-  const spriteImageUrl = backgroundImageUrl !== undefined ? backgroundImageUrl : '';
-  /* @conditional-compile-remove(reaction) */
-  const reactionContainerStyles = useCallback(
-    () =>
-      reactionRenderingStyle({
-        spriteImageUrl,
-        personaSize
-      }),
-    [spriteImageUrl, personaSize]
-  );
-
   return (
     <Stack
       data-ui-id={ids.videoTile}
@@ -451,24 +400,9 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
             )}
           </Stack>
         )}
-
         {
           /* @conditional-compile-remove(reaction) */
-          canRenderReaction && isValidImageSource && (
-            <Stack
-              className={mergeStyles(videoContainerStyles, {
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: reaction ? 'rgba(0, 0, 0, 0.5)' : 'transparent'
-              })}
-            >
-              <div style={{ height: '33.33%' }}></div>
-              <div style={{ height: '84px', width: '84px' }}>
-                <div className={reactionContainerStyles()} />
-              </div>
-            </Stack>
-          )
+          reactionOverlay
         }
         {(canShowLabel || participantStateString) && (
           <Stack horizontal className={tileInfoContainerStyle} tokens={tileInfoContainerTokens}>
