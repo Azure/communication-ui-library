@@ -20937,7 +20937,7 @@ packages:
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-WAf/OATeLSldSVATNjoOAgrPs2pCG9wZzkcbbFuGwaWu1r+DsoNyRucZALURr6azOHqWQWSJMhpLq+yERNKc8Q==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-lqDMMb6sNY7vgDykm5R3twqXaXRnN8bYRyfucRT558EWXG+4irGmviYNsrJ38hyswOudoGF+T2gKkQ8NMwsnCg==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
@@ -21183,7 +21183,7 @@ packages:
     dev: false
 
   file:projects/react-components.tgz:
-    resolution: {integrity: sha512-LpQ4PFHuuowAXW49wkNCeMrXCGBP6AK12qdN46o1yozIck3rZeDfOzmngNL5MoGhrh+qTezDNj4CQ46PpL1GaQ==, tarball: file:projects/react-components.tgz}
+    resolution: {integrity: sha512-x26B+p1xMH3AYyZK5tcxKCi4tbfr8QHpQ3AcceDKG1D45lG5/o1MivxlyCqW6kRME3hJPQ9t2iceTcaZ24XaXg==, tarball: file:projects/react-components.tgz}
     name: '@rush-temp/react-components'
     version: 0.0.0
     dependencies:
@@ -21505,7 +21505,7 @@ packages:
     dev: false
 
   file:projects/server.tgz:
-    resolution: {integrity: sha512-dDE4ZybI7kkHKOljIkTCN0lFoNHfqyAAFbbOIHBWSKLDwk1dz3PO6j5eQ5qBQ0a9ao3MSmAwGABimcDrLutBFA==, tarball: file:projects/server.tgz}
+    resolution: {integrity: sha512-URfPyeiZSwrNEJzhyrptCRcqs5UuyyCeibt0oDTNmdVrMQm9YoRfaXh7fY9vyh6j50JrBSd9Ixv6LkcOeKiJhA==, tarball: file:projects/server.tgz}
     name: '@rush-temp/server'
     version: 0.0.0
     dependencies:
@@ -21529,6 +21529,7 @@ packages:
       cookie-parser: 1.4.6
       copy-webpack-plugin: 11.0.0(webpack@5.89.0)
       cors: 2.8.5
+      cpx: 1.5.0
       debug: 2.6.9
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0(eslint@7.32.0)
