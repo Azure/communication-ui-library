@@ -172,7 +172,13 @@ const getMenuItems = (
     <ToolbarButton
       aria-label={menuActions[0].name}
       icon={menuActions[0].icon}
-      onClick={() => menuActions[0].onClick(attachment)}
+      onClick={() => {
+        try {
+          menuActions[0].onClick(attachment);
+        } catch (e) {
+          handleOnClickError?.((e as Error).message);
+        }
+      }}
     />
   ) : (
     <Toolbar>
@@ -190,7 +196,6 @@ const getMenuItems = (
                   try {
                     menuItem.onClick(attachment);
                   } catch (e) {
-                    console.error(e);
                     handleOnClickError?.((e as Error).message);
                   }
                 }}

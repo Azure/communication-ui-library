@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Icon } from '@fluentui/react';
+import { Icon, mergeStyles } from '@fluentui/react';
 import React from 'react';
 import { _AttachmentCard } from './AttachmentCard';
 import { _AttachmentCardGroup } from './AttachmentCardGroup';
@@ -101,7 +101,7 @@ export const _AttachmentUploadCards = (props: FileUploadCardsProps): JSX.Element
               progress={attachment.progress}
               key={attachment.id}
               attachmentExtension={extension(attachment.filename)}
-              actionIcon={<Icon iconName="CancelFileUpload" style={actionIconStyle} />}
+              actionIcon={<Icon iconName="CancelFileUpload" className={mergeStyles(actionIconStyle)} />}
               actionHandler={() => {
                 props.onCancelFileUpload && props.onCancelFileUpload(attachment.id);
               }}
