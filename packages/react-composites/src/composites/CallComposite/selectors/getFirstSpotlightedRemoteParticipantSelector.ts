@@ -27,9 +27,7 @@ export const getFirstSpotlightedRemoteParticipant = reselect.createSelector(
     const firstSpotlightedRemoteParticipant = remoteParticipants
       ? findFirstSpotlightedRemoteParticipant(remoteParticipants, spotlightedParticipantUserIds)
       : undefined;
-    return firstSpotlightedRemoteParticipant
-      ? _videoGalleryRemoteParticipantsMemo(_updateUserDisplayNames([firstSpotlightedRemoteParticipant]))[0]
-      : undefined;
+    return firstSpotlightedRemoteParticipant;
   }
 );
 

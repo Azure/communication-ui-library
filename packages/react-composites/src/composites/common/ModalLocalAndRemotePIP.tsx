@@ -93,11 +93,8 @@ export const ModalLocalAndRemotePIP = (props: {
   );
 
   const pictureInPictureHandlers = useHandlers(LocalAndRemotePIP);
-  let remoteParticipant = pictureInPictureProps.dominantRemoteParticipant;
-  /* @conditional-compile-remove(spotlight) */
-  if (pictureInPictureProps.firstSpotlightedRemoteParticipant) {
-    remoteParticipant = pictureInPictureProps.firstSpotlightedRemoteParticipant;
-  }
+  const remoteParticipant = pictureInPictureProps.remoteParticipant;
+
   const localAndRemotePIP = useMemo(() => {
     if (role === 'Consumer' && remoteParticipant?.userId) {
       return (

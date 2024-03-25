@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { _isInCall, _isPreviewOn, _videoGalleryRemoteParticipantsMemo } from '@internal/calling-component-bindings';
+import { _updateUserDisplayNames, _videoGalleryRemoteParticipantsMemo } from '@internal/calling-component-bindings';
+import { RemoteParticipantState } from '@internal/calling-stateful-client';
 import * as reselect from 'reselect';
 import { localVideoSelector } from './localVideoStreamSelector';
 import { dominantRemoteParticipantSelector } from './dominantRemoteParticipantSelector';
@@ -24,19 +25,32 @@ export const localAndRemotePIPSelector = reselect.createSelector(
   ],
   (
     displayName,
-    dominantRemoteParticipant,
+    dominantRemoteParticipantState,
     localVideoStreamInfo,
     raisedHand,
-    /* @conditional-compile-remove(spotlight) */ firstSpotlightedRemoteParticipant
+    /* @conditional-compile-remove(spotlight) */ firstSpotlightedRemoteParticipantState
   ) => {
+    let remoteParticipantState = dominantRemoteParticipantState;
+    /* @conditional-compile-remove(spotlight) */
+    if (firstSpotlightedRemoteParticipantState) {
+      remoteParticipantState = firstSpotlightedRemoteParticipantState;
+    }
+    const remoteParticipant = remoteParticipantState
+      ? _videoGalleryRemoteParticipantsMemo(updateUserDisplayNamesTrampoline([remoteParticipantState]))[0]
+      : undefined;
     return {
       localParticipant: {
         displayName,
         videoStream: localVideoStreamInfo,
-        raisedHand: raisedHand
+        raisedHand
       },
-      dominantRemoteParticipant,
-      /* @conditional-compile-remove(spotlight) */ firstSpotlightedRemoteParticipant
+      remoteParticipant
     };
   }
 );
+
+const updateUserDisplayNamesTrampoline = (remoteParticipants: RemoteParticipantState[]): RemoteParticipantState[] => {
+  /* @conditional-compile-remove(PSTN-calls) */
+  return _updateUserDisplayNames(remoteParticipants);
+  return remoteParticipants;
+};
