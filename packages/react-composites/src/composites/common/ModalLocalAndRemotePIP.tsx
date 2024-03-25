@@ -93,26 +93,43 @@ export const ModalLocalAndRemotePIP = (props: {
   );
 
   const pictureInPictureHandlers = useHandlers(LocalAndRemotePIP);
+  let remoteParticipant = pictureInPictureProps.dominantRemoteParticipant;
+  /* @conditional-compile-remove(spotlight) */
+  if (pictureInPictureProps.firstSpotlightedRemoteParticipant) {
+    remoteParticipant = pictureInPictureProps.firstSpotlightedRemoteParticipant;
+  }
   const localAndRemotePIP = useMemo(() => {
-    if (role === 'Consumer' && pictureInPictureProps.dominantRemoteParticipant?.userId) {
+    if (role === 'Consumer' && remoteParticipant?.userId) {
       return (
         <Stack tabIndex={0} aria-label={props.strings?.dismissModalAriaLabel ?? ''} onKeyDown={onKeyDown}>
           <_RemoteVideoTile
             strings={locale.component.strings.videoGallery}
-            {...pictureInPictureProps.dominantRemoteParticipant}
-            remoteParticipant={pictureInPictureProps.dominantRemoteParticipant}
+            {...remoteParticipant}
+            remoteParticipant={remoteParticipant}
           />
         </Stack>
       );
     }
     return (
       <Stack tabIndex={0} aria-label={props.strings?.dismissModalAriaLabel ?? ''} onKeyDown={onKeyDown}>
-        <LocalAndRemotePIP {...pictureInPictureProps} {...pictureInPictureHandlers} />
+        <LocalAndRemotePIP
+          {...pictureInPictureProps}
+          {...pictureInPictureHandlers}
+          remoteParticipant={remoteParticipant}
+        />
       </Stack>
     );
-  }, [role, onKeyDown, pictureInPictureProps, props, pictureInPictureHandlers, locale.component.strings.videoGallery]);
+  }, [
+    role,
+    onKeyDown,
+    pictureInPictureProps,
+    props,
+    pictureInPictureHandlers,
+    locale.component.strings.videoGallery,
+    remoteParticipant
+  ]);
 
-  if (role === 'Consumer' && !pictureInPictureProps.dominantRemoteParticipant) {
+  if (role === 'Consumer' && !remoteParticipant) {
     return null;
   }
 
