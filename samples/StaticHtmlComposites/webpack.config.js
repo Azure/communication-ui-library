@@ -7,6 +7,7 @@ const config = {
   entry: {
     chatComposite: './src/chatComposite.js',
     callComposite: './src/callComposite.js',
+    outboundCallComposite: './src/outboundCallComposite.js',
     callWithChatComposite: './src/callWithChatComposite.js',
     service: './src/service.js'
   },
@@ -52,6 +53,10 @@ const config = {
     new HtmlWebpackPlugin({
       template: './callComposite.html',
       filename: 'callComposite.html'
+    }),
+    new HtmlWebpackPlugin({
+      template: './outboundCallComposite.html',
+      filename: 'outboundCallComposite.html'
     }),
     new HtmlWebpackPlugin({
       template: './chatComposite.html',
