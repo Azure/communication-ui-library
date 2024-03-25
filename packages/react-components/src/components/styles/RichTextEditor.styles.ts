@@ -105,6 +105,15 @@ const ribbonOverflowButtonRootStyles = (theme: Theme): IStyle => {
             color: theme.palette.neutralPrimary
           }
         }
+      },
+      '.ribbon-table-button-regular-icon': {
+        display: 'inline-block',
+        margin: '-0.25rem 0.25rem 0 0.25rem',
+        width: '1.25rem',
+        height: '1.25rem'
+      },
+      '.ribbon-table-button-filled-icon': {
+        display: 'none'
       }
     }
   };
@@ -143,6 +152,11 @@ export const ribbonButtonStyle = (theme: Theme): Partial<IButtonStyles> => {
   };
 };
 
+const rootRibbonTableButtonStyle = (theme: Theme): IStyle => {
+  // merge IStyles props
+  return Object.assign({ minWidth: 'auto' }, ribbonTableButtonRootStyles(theme, false));
+};
+
 /**
  * @private
  */
@@ -150,27 +164,7 @@ export const ribbonTableButtonStyle = (theme: Theme): Partial<IButtonStyles> => 
   return {
     icon: { height: 'auto' },
     menuIcon: { height: 'auto' },
-    root: {
-      // TODO_vhuseinova: check if ribbonTableButtonRootStyles can be used here
-      minWidth: 'auto',
-      backgroundColor: 'transparent',
-      selectors: {
-        '.ribbon-table-button-regular-icon': {
-          position: 'absolute',
-          left: 0,
-          right: 0,
-          color: theme.palette.neutralPrimary,
-          visibility: 'visible'
-        },
-        '.ribbon-table-button-filled-icon': {
-          position: 'absolute',
-          left: 0,
-          right: 0,
-          color: theme.palette.themePrimary,
-          visibility: 'hidden'
-        }
-      }
-    },
+    root: rootRibbonTableButtonStyle(theme),
     rootChecked: ribbonTableButtonRootStyles(theme, true),
     rootHovered: ribbonTableButtonRootStyles(theme, true),
     rootCheckedHovered: ribbonTableButtonRootStyles(theme, true),
@@ -185,18 +179,18 @@ const ribbonTableButtonRootStyles = (theme: Theme, isSelected: boolean): IStyle 
     backgroundColor: 'transparent',
     selectors: {
       '.ribbon-table-button-regular-icon': {
-        position: 'absolute',
-        left: 0,
-        right: 0,
+        width: '1.25rem',
+        height: '1.25rem',
+        marginTop: '-0.25rem',
         color: theme.palette.neutralPrimary,
-        visibility: isSelected ? 'hidden' : 'visible'
+        display: isSelected ? 'none' : 'inline-block'
       },
       '.ribbon-table-button-filled-icon': {
-        position: 'absolute',
-        left: 0,
-        right: 0,
+        width: '1.25rem',
+        height: '1.25rem',
+        marginTop: '-0.25rem',
         color: theme.palette.themePrimary,
-        visibility: isSelected ? 'visible' : 'hidden'
+        display: isSelected ? 'inline-block' : 'none'
       }
     }
   };
@@ -312,13 +306,4 @@ export const insertTableMenuTitleStyles = mergeStyles({
   height: '1rem',
   fontSize: '0.75rem',
   marginBottom: '0.5rem'
-});
-
-/**
- * @private
- */
-export const tableIconContainerStyles = mergeStyles({
-  width: '1.25rem',
-  height: '1.25rem',
-  marginTop: '-0.125rem'
 });

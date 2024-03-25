@@ -34,11 +34,10 @@ const tableEditInsertMenuItem: ContextMenuItem<string> = {
   },
   onClick
 };
-// TODO_vhuseinova: add icons
+
 const tableEditDeleteMenuItem: ContextMenuItem<string> = {
   key: 'menuNameTableDelete',
   unlocalizedText: 'Delete123',
-
   subItems: {
     menuNameTableDeleteColumn: 'Delete column2323',
     menuNameTableDeleteRow: 'Delete row',

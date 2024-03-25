@@ -2,15 +2,11 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-import { Icon } from '@fluentui/react';
+import { Icon, Stack } from '@fluentui/react';
 import { insertTable as insertTableAction } from './insertTableAction';
 import type { RibbonButton } from 'roosterjs-react';
 import type { Theme } from '@fluentui/react';
-import {
-  insertTableMenuTablePane,
-  ribbonTableButtonStyle,
-  tableIconContainerStyles
-} from '../../../styles/RichTextEditor.styles';
+import { insertTableMenuTablePane, ribbonTableButtonStyle } from '../../../styles/RichTextEditor.styles';
 import { RichTextInsertTablePane } from './RichTextInsertTablePane';
 import { ColumnRowReplaceString, parseKey } from '../../../utils/RichTextTableUtils';
 
@@ -58,9 +54,9 @@ export const insertTableButton = (theme: Theme): RibbonButton<string> => {
 const TableIcon = (): JSX.Element => {
   return (
     // update the visibility of the Table Icon with css classes that are triggered by command bar's state
-    <div className={tableIconContainerStyles}>
+    <Stack>
       <Icon iconName="RichTextInsertTableFilledIcon" className={'ribbon-table-button-filled-icon'} />
       <Icon iconName="RichTextInsertTableRegularIcon" className={'ribbon-table-button-regular-icon'} />
-    </div>
+    </Stack>
   );
 };
