@@ -27,7 +27,6 @@ import { MicProhibited20Filled, VideoProhibited20Filled } from '@fluentui/react-
 import { Grid20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
 import { PersonAdd20Regular, Call20Regular } from '@fluentui/react-icons';
-/* @conditional-compile-remove(dtmf-dialer) */
 import { Dialpad20Regular } from '@fluentui/react-icons';
 import { DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
 import React from 'react';
@@ -115,7 +114,6 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   LargeGalleryLayout: <Table20Regular />,
   /* @conditional-compile-remove(control-bar-button-injection) */
   DefaultCustomButton: <Circle20Regular />,
-  /* @conditional-compile-remove(dtmf-dialer) */
   DtmfDialpadButton: <Dialpad20Regular />,
   /* @conditional-compile-remove(spotlight) */
   PeoplePaneMoreButton: <MoreHorizontal20Filled />,
@@ -267,7 +265,6 @@ export type CallCompositeIcons = {
   LargeGalleryLayout?: JSX.Element;
   /* @conditional-compile-remove(control-bar-button-injection) */
   DefaultCustomButton?: JSX.Element;
-  /* @conditional-compile-remove(dtmf-dialer) */
   DtmfDialpadButton?: JSX.Element;
   /* @conditional-compile-remove(spotlight) */
   PeoplePaneMoreButton?: JSX.Element;
@@ -358,7 +355,6 @@ export type CallWithChatCompositeIcons = {
   DialpadStartCall?: JSX.Element;
   /* @conditional-compile-remove(control-bar-button-injection) */
   DefaultCustomButton?: JSX.Element;
-  /* @conditional-compile-remove(dtmf-dialer) */
   DtmfDialpadButton?: JSX.Element;
 
   // Chat icons

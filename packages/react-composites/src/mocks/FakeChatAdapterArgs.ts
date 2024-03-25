@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 import { ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
-import type { FileMetadata } from '@internal/react-components';
+import type { AttachmentMetadata } from '@internal/react-components';
 
 /**
  * Type to represent a file upload the local participant will perform.
  * @internal
  */
-export type _MockFileUpload = FileMetadata & {
+export type _MockFileUpload = AttachmentMetadata & {
   uploadComplete?: boolean;
   error?: string;
   progress?: number;
@@ -61,6 +61,10 @@ export type _FakeChatAdapterArgs = {
    * Determines if the first remote participant will send a fixed message with a inline image.
    */
   sendRemoteInlineImageMessage?: boolean;
+  /**
+   * Local server url
+   */
+  serverUrl?: string;
   /**
    * Overwrites the url of the inline image that the first remote participant will send.
    */

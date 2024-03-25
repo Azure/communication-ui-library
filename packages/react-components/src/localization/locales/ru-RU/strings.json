@@ -7,7 +7,8 @@
     "mutedIconLabel": "Микрофон отключен",
     "displayNamePlaceholder": "Участник без имени",
     "participantStateRinging": "Выполняется вызов...",
-    "participantStateHold": "На удержании"
+    "participantStateHold": "На удержании",
+    "attendeeRole": "Участник"
   },
   "ParticipantList": {
     "overflowParticipantCount": "и еще {overflowCount}"
@@ -27,6 +28,23 @@
     "removeFile": "Удалить файл",
     "uploading": "Отправка",
     "uploadCompleted": "Отправка завершена"
+  },
+  "richTextSendBox": {
+    "placeholderText": "Введите сообщение",
+    "textTooLong": "Длина сообщения превышает максимально допустимую.",
+    "sendButtonAriaLabel": "Отправить сообщение",
+    "fileUploadsPendingError": "Производится отправка... Подождите.",
+    "removeFile": "Удалить файл",
+    "uploading": "Отправка",
+    "uploadCompleted": "Отправка завершена",
+    "boldTooltip": "Полужирный",
+    "italicTooltip": "Курсив",
+    "underlineTooltip": "Подчеркнуть",
+    "bulletListTooltip": "Маркированный список",
+    "numberListTooltip": "Нумерованный список",
+    "increaseIndentTooltip": "Увеличить отступ",
+    "decreaseIndentTooltip": "Уменьшить отступ",
+    "richTextFormatButtonTooltip": "Формат"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Рекомендации"
@@ -125,6 +143,7 @@
   },
   "reactionButton": {
     "label": "Отреагировать",
+    "ariaLabel": "Кнопка \"Отреагировать\", отправить реакцию",
     "tooltipDisabledContent": "Действие реакции отключено",
     "tooltipContent": "Отправка реакции",
     "likeReactionTooltipContent": "Нравится",
@@ -224,7 +243,8 @@
     "addSpotlightVideoTileMenuLabel": "Добавить закрепление",
     "spotlightLimitReachedMenuTitle": "Достигнуто предельное число закреплений",
     "stopSpotlightVideoTileMenuLabel": "Не закреплять",
-    "stopSpotlightOnSelfVideoTileMenuLabel": "Открепить"
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Открепить",
+    "attendeeRole": "Участник"
   },
   "dialpad": {
     "placeholderText": "Введите номер телефона",
@@ -358,6 +378,5 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "предыдущая страница",
     "rightNavButtonAriaLabel": "следующая страница"
-  },
-  "AttendeeRole": "Участник"
+  }
 }

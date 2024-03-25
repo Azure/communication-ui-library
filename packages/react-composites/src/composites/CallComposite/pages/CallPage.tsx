@@ -7,7 +7,6 @@ import { _isInCall } from '@internal/calling-component-bindings';
 import { ActiveErrorMessage, ErrorBar, ParticipantMenuItemsCallback } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
 import React from 'react';
-/* @conditional-compile-remove(dtmf-dialer) */ /* @conditional-compile-remove(spotlight) */
 import { useState } from 'react';
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { useLocale } from '../../localization';
@@ -21,7 +20,6 @@ import { useSelector } from '../hooks/useSelector';
 import { callStatusSelector } from '../selectors/callStatusSelector';
 import { complianceBannerSelector } from '../selectors/complianceBannerSelector';
 import { mediaGallerySelector } from '../selectors/mediaGallerySelector';
-/* @conditional-compile-remove(dtmf-dialer) */
 import { getRemoteParticipantsConnectedSelector } from '../selectors/mediaGallerySelector';
 import { mutedNotificationSelector } from '../selectors/mutedNotificationSelector';
 import { networkReconnectTileSelector } from '../selectors/networkReconnectTileSelector';
@@ -30,11 +28,8 @@ import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
 import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
 /* @conditional-compile-remove(capabilities) */
 import { CapabilitiesChangeNotificationBarProps } from '../components/CapabilitiesChangedNotificationBar';
-/* @conditional-compile-remove(dtmf-dialer) */
 import { DtmfDialpadPage } from './DtmfDialpadPage';
-/* @conditional-compile-remove(dtmf-dialer) */
 import { showDtmfDialer } from '../utils/MediaGalleryUtils';
-/* @conditional-compile-remove(dtmf-dialer) */
 import { getTargetCallees } from '../selectors/baseSelectors';
 /* @conditional-compile-remove(spotlight) */
 import { Prompt, PromptProps } from '../components/Prompt';
@@ -88,14 +83,10 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   const errorBarProps = usePropsFor(ErrorBar);
   const mutedNotificationProps = useSelector(mutedNotificationSelector);
   const networkReconnectTileProps = useSelector(networkReconnectTileSelector);
-  /* @conditional-compile-remove(dtmf-dialer) */
   const remoteParticipantsConnected = useSelector(getRemoteParticipantsConnectedSelector);
 
-  /* @conditional-compile-remove(dtmf-dialer) */
   const callees = useSelector(getTargetCallees);
-  /* @conditional-compile-remove(dtmf-dialer) */
   const renderDtmfDialerFromStart = showDtmfDialer(callees, remoteParticipantsConnected);
-  /* @conditional-compile-remove(dtmf-dialer) */
   const [dtmfDialerPresent, setDtmfDialerPresent] = useState<boolean>(renderDtmfDialerFromStart);
 
   const strings = useLocale().strings.call;
@@ -110,7 +101,6 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   const [promptProps, setPromptProps] = useState<PromptProps>();
 
   const onRenderGalleryContentTrampoline = (): JSX.Element => {
-    /* @conditional-compile-remove(dtmf-dialer) */
     if (dtmfDialerPresent) {
       return (
         <DtmfDialpadPage
@@ -149,24 +139,6 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         />
       );
     }
-    return (
-      <MediaGallery
-        isMobile={mobileView}
-        {...mediaGalleryProps}
-        {...mediaGalleryHandlers}
-        onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-        remoteVideoTileMenuOptions={options?.remoteVideoTileMenuOptions}
-        drawerMenuHostId={drawerMenuHostId}
-        /* @conditional-compile-remove(click-to-call) */
-        localVideoTileOptions={options?.localVideoTile}
-        userSetOverflowGalleryPosition={userSetOverflowGalleryPosition}
-        userSetGalleryLayout={galleryLayout}
-        /* @conditional-compile-remove(spotlight) */
-        setIsPromptOpen={setIsPromptOpen}
-        /* @conditional-compile-remove(spotlight) */
-        setPromptProps={setPromptProps}
-      />
-    );
   };
 
   return (
@@ -208,9 +180,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         userSetGalleryLayout={galleryLayout}
         /* @conditional-compile-remove(capabilities) */
         capabilitiesChangedNotificationBarProps={props.capabilitiesChangedNotificationBarProps}
-        /* @conditional-compile-remove(dtmf-dialer) */
         onSetDialpadPage={() => setDtmfDialerPresent(!dtmfDialerPresent)}
-        /* @conditional-compile-remove(dtmf-dialer) */
         dtmfDialerPresent={dtmfDialerPresent}
         /* @conditional-compile-remove(spotlight) */
         setIsPromptOpen={setIsPromptOpen}

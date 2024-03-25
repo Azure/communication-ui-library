@@ -30,6 +30,8 @@ export const RemoteScreenShare = React.memo(
     isSpeaking?: boolean;
     renderElement?: HTMLElement;
     participantVideoScalingMode?: VideoStreamOptions;
+    /* @conditional-compile-remove(ppt-live) */
+    isPPTLive?: boolean;
   }) => {
     const {
       userId,
@@ -39,7 +41,9 @@ export const RemoteScreenShare = React.memo(
       onCreateRemoteStreamView,
       onDisposeRemoteStreamView,
       isReceiving,
-      participantVideoScalingMode
+      participantVideoScalingMode,
+      /* @conditional-compile-remove(ppt-live) */
+      isPPTLive
     } = props;
     const locale = useLocale();
 
@@ -67,6 +71,22 @@ export const RemoteScreenShare = React.memo(
           participant: displayName
         })
       : '';
+    /* @conditional-compile-remove(ppt-live) */
+    if (isPPTLive) {
+      return (
+        <VideoTile
+          renderElement={
+            renderElement ? (
+              <StreamMedia
+                videoStreamElement={renderElement}
+                loadingState={isReceiving === false ? 'loading' : 'none'}
+              />
+            ) : undefined
+          }
+          onRenderPlaceholder={() => <LoadingSpinner loadingMessage={loadingMessage} />}
+        />
+      );
+    }
 
     return (
       <VideoTile

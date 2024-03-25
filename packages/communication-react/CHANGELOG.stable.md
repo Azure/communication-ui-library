@@ -1,10 +1,48 @@
 # Change Log - @azure/communication-react
 
-This log was last generated on Mon, 12 Feb 2024 18:52:29 GMT and should not be manually modified.
+This log was last generated on Thu, 14 Mar 2024 03:50:48 GMT and should not be manually modified.
 
 <!-- Start content -->
 
-## [1.13.0](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.13.0)
+## [1.14.0](https://github.com/azure/communication-ui-library/tree/1.14.0)
+
+Thu, 14 Mar 2024 03:50:48 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.13.0...1.14.0)
+
+### Teams Interop Chat Image Sharing - General Availability
+
+We are excited to announce that the Azure Communication Services Web UI Library now has the ability to receive Teams interop images inline. Additionally, we have enabled users to click on an individual image to view it in a new ImageOverlay component. This component displays the selected image in full screen and allows users to download the image.
+
+### CallComposite and CallWithChatComposite Custom Branding - General Availability
+
+The CallComposite and CallWithChatComposite now support applying a background image and logo to the Configuration Page. This allows developers to unify their customers' joining experiences if they have a Teams Premium feature enabled called Teams Meeting Themes.
+
+### Features
+
+- Stabilize Custom Branding ([PR #4211](https://github.com/azure/communication-ui-library/pull/4211) by 2684369+JamesBurnside@users.noreply.github.com)
+- Stabilize Teams Interop Inline Images([PR #4196](https://github.com/Azure/communication-ui-library/pull/4196) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
+
+### Improvements
+
+- Update Transfer API to use new SDK 'transferAccepted' event ([PR #4114](https://github.com/azure/communication-ui-library/pull/4114) by dmceachern@microsoft.com)
+- Add noImplicitAny support in samples ([PR #4199](https://github.com/azure/communication-ui-library/pull/4199) by edwardlee@microsoft.com)
+- Add noImplicitAny support in react-composites and communication-react ([PR #4166](https://github.com/azure/communication-ui-library/pull/4166) by edwardlee@microsoft.com)
+- Add NoImplicitAny support for react-components ([PR #4168](https://github.com/azure/communication-ui-library/pull/4168) by edwardlee@microsoft.com)
+- Add noImplicitAny support in Storybook ([PR #4206](https://github.com/azure/communication-ui-library/pull/4206) by edwardlee@microsoft.com)
+ 
+### Bug Fixes
+
+- Update gallery logic to not include local participant in grid calculations ([PR #4136](https://github.com/azure/communication-ui-library/pull/4136) by dmceachern@microsoft.com)
+- Hangup Call to transfer target when leaving in mid-transfer ([PR #4155](https://github.com/azure/communication-ui-library/pull/4155) by dmceachern@microsoft.com)
+- Set correct microphone aria label in Lobby scenarios ([PR #4247](https://github.com/azure/communication-ui-library/pull/4247) by alkwa@microsoft.com)
+- Fix for a deleted message accessibility announcement ([PR #4169](https://github.com/azure/communication-ui-library/pull/4169) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Fix missing alternate Caller id ([PR #4216](https://github.com/azure/communication-ui-library/pull/4216) by dmceachern@microsoft.com)
+- Resolve issue where edited label is missing from received messages ([PR #4150](https://github.com/azure/communication-ui-library/pull/4150) by 73612854+palatter@users.noreply.github.com)
+- Fix error when spoken language and caption language show up empty on initiation  ([PR #4228](https://github.com/azure/communication-ui-library/pull/4228) by 96077406+carocao-msft@users.noreply.github.com)
+- Update Calling sounds to not play end call sound when transfer happens ([PR #4163](https://github.com/azure/communication-ui-library/pull/4163) by dmceachern@microsoft.com)
+- Fix hanging express.close if have unclosed connection ([PR #4138](https://github.com/azure/communication-ui-library/pull/4138) by 77021369+jimchou-dev@users.noreply.github.com)
+
+## [1.13.0](https://github.com/azure/communication-ui-library/tree/1.13.0)
 
 Mon, 12 Feb 2024 18:52:29 GMT 
 [Compare changes](https://github.com/azure/communication-ui-library/compare/1.12.0...1.13.0)

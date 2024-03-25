@@ -7,7 +7,6 @@ import { ControlBarButtonStyles, MicrophoneButton } from '@internal/react-compon
 import { _HighContrastAwareIcon } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { CallControlDisplayType } from '../../../common/types/CommonCallControlOptions';
-import { useLocale } from '../../../localization';
 import { usePropsFor } from '../../hooks/usePropsFor';
 import { useSelector } from '../../hooks/useSelector';
 import { getCallStatus, getLocalMicrophoneEnabled } from '../../selectors/baseSelectors';
@@ -28,7 +27,6 @@ export const Microphone = (props: {
   const microphoneButtonProps = usePropsFor(MicrophoneButton);
   const callStatus = useSelector(getCallStatus);
   const isLocalMicrophoneEnabled = useSelector(getLocalMicrophoneEnabled);
-  const strings = useLocale().strings.call;
   /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
   const adapter = useAdapter();
   /* @conditional-compile-remove(rooms) */
@@ -46,14 +44,6 @@ export const Microphone = (props: {
     // page until the user successfully joins the call.
     microphoneButtonProps.checked = isLocalMicrophoneEnabled;
   }
-  const microphoneButtonStrings = _isInLobbyOrConnecting(callStatus)
-    ? {
-        strings: {
-          tooltipOffContent: strings.microphoneToggleInLobbyNotAllowed,
-          tooltipOnContent: strings.microphoneToggleInLobbyNotAllowed
-        }
-      }
-    : {};
   const styles = useMemo(() => concatButtonBaseStyles(props.styles ?? {}), [props.styles]);
   // tab focus on MicrophoneButton on page load
   return (
@@ -63,7 +53,6 @@ export const Microphone = (props: {
       showLabel={props.displayType !== 'compact'}
       disableTooltip={props.disableTooltip}
       styles={styles}
-      {...microphoneButtonStrings}
       enableDeviceSelectionMenu={props.splitButtonsForDeviceSelection}
       disabled={
         microphoneButtonProps.disabled ||

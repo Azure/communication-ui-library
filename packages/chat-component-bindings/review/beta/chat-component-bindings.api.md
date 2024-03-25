@@ -20,6 +20,7 @@ import { ParticipantList } from '@internal/react-components';
 import { ParticipantListParticipant } from '@internal/react-components';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
+import { RichTextSendBox } from '@internal/react-components';
 import { SendBox } from '@internal/react-components';
 import { SendMessageOptions } from '@azure/communication-chat';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
@@ -81,7 +82,7 @@ export type ErrorBarSelector = (state: ChatClientState, props: ChatBaseSelectorP
 };
 
 // @public
-export type GetChatSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof SendBox> extends true ? SendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? MessageThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? TypingIndicatorSelector : AreEqual<Component, typeof ParticipantList> extends true ? ChatParticipantListSelector : AreEqual<Component, typeof ErrorBar> extends true ? ErrorBarSelector : undefined;
+export type GetChatSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof SendBox> extends true ? SendBoxSelector : AreEqual<Component, typeof RichTextSendBox> extends true ? SendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? MessageThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? TypingIndicatorSelector : AreEqual<Component, typeof ParticipantList> extends true ? ChatParticipantListSelector : AreEqual<Component, typeof ErrorBar> extends true ? ErrorBarSelector : undefined;
 
 // @public
 export const getChatSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetChatSelector<Component>;

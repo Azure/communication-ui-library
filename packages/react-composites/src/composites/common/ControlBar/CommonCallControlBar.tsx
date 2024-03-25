@@ -48,7 +48,6 @@ import { Reaction } from '../../CallComposite/components/buttons/Reaction';
 import { useSelector } from '../../CallComposite/hooks/useSelector';
 /* @conditional-compile-remove(reaction) */
 import { capabilitySelector } from '../../CallComposite/selectors/capabilitySelector';
-/* @conditional-compile-remove(dtmf-dialer) */
 import { DtmfDialpadButton } from './DtmfDialerButton';
 /* @conditional-compile-remove(spotlight) */
 import { ExitSpotlightButton } from '../ExitSpotlightButton';
@@ -82,9 +81,7 @@ export interface CommonCallControlBarProps {
   cameraButtonRef?: React.RefObject<IButton>;
   /* @conditional-compile-remove(video-background-effects) */
   videoBackgroundPickerRef?: React.RefObject<IButton>;
-  /* @conditional-compile-remove(dtmf-dialer) */
   onSetDialpadPage?: () => void;
-  /* @conditional-compile-remove(dtmf-dialer) */
   dtmfDialerPresent?: boolean;
   /* @conditional-compile-remove(spotlight) */
   onStopLocalSpotlight?: () => void;
@@ -377,20 +374,17 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                           />
                         )
                     }
-                    {
-                      /* @conditional-compile-remove(dtmf-dialer) */ showDtmfDialerButton(options) &&
-                        props.onSetDialpadPage !== undefined && (
-                          <DtmfDialpadButton
-                            styles={commonButtonStyles}
-                            displayType={options.displayType}
-                            onClick={() => {
-                              if (props.onSetDialpadPage !== undefined) {
-                                props.onSetDialpadPage();
-                              }
-                            }}
-                          />
-                        )
-                    }
+                    {showDtmfDialerButton(options) && props.onSetDialpadPage !== undefined && (
+                      <DtmfDialpadButton
+                        styles={commonButtonStyles}
+                        displayType={options.displayType}
+                        onClick={() => {
+                          if (props.onSetDialpadPage !== undefined) {
+                            props.onSetDialpadPage();
+                          }
+                        }}
+                      />
+                    )}
                     {
                       /* @conditional-compile-remove(spotlight) */ showExitSpotlightButton &&
                         props.onStopLocalSpotlight && (
@@ -452,9 +446,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         onUserSetOverflowGalleryPositionChange={props.onUserSetOverflowGalleryPositionChange}
                         onUserSetGalleryLayout={props.onUserSetGalleryLayout}
                         userSetGalleryLayout={props.userSetGalleryLayout}
-                        /* @conditional-compile-remove(dtmf-dialer) */
                         dtmfDialerPresent={props.dtmfDialerPresent}
-                        /* @conditional-compile-remove(dtmf-dialer) */
                         onSetDialpadPage={props.onSetDialpadPage}
                       />
                     )}
@@ -629,7 +621,6 @@ const getDesktopEndCallButtonStyles = (theme: ITheme): ControlBarButtonStyles =>
 
 const isEnabled = (option: unknown): boolean => option !== false;
 
-/* @conditional-compile-remove(dtmf-dialer) */
 const showDtmfDialerButton = (options: CommonCallControlOptions | CallWithChatControlOptions): boolean => {
   if (options.moreButton === false && options.dtmfDialerButton !== false) {
     return true;

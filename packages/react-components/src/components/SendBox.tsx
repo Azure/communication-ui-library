@@ -20,7 +20,7 @@ import { fileUploadCardsStyles } from './styles/SendBox.styles';
 import { SendBoxErrorBarError } from './SendBoxErrorBar';
 /* @conditional-compile-remove(file-sharing) */
 import { hasCompletedFileUploads, hasIncompleteFileUploads } from './utils/SendBoxUtils';
-import { MAXIMUM_LENGTH_OF_MESSAGE, exceedsMaxAllowedLength, sanitizeText } from './utils/SendBoxUtils';
+import { MAXIMUM_LENGTH_OF_MESSAGE, isMessageTooLong, sanitizeText } from './utils/SendBoxUtils';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from './MentionPopover';
 
@@ -239,7 +239,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       return;
     }
 
-    setTextValueOverflow(exceedsMaxAllowedLength(newValue.length));
+    setTextValueOverflow(isMessageTooLong(newValue.length));
     setTextValue(newValue);
   };
 

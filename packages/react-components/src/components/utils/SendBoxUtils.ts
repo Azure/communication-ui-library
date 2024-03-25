@@ -32,7 +32,7 @@ export const hasCompletedFileUploads = (activeFileUploads: ActiveFileUpload[] | 
 /**
  * @private
  */
-export const exceedsMaxAllowedLength = (valueLength: number): boolean => {
+export const isMessageTooLong = (valueLength: number): boolean => {
   return valueLength > MAXIMUM_LENGTH_OF_MESSAGE;
 };
 
