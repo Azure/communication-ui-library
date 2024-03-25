@@ -315,8 +315,10 @@
       "startSpotlightCancelButtonLabel": "İptal",
       "stopSpotlightHeading": "Bu video için öne çıkarma durdurulsun mu?",
       "stopSpotlightOnSelfHeading": "Öne çıkarmadan çıkılsın mı?",
+      "stopAllSpotlightHeading": "Tüm videolarda öne çıkarma durdurulsun mu?",
       "stopSpotlightText": "Bu video artık toplantıdaki herkes için öne çıkarılmayacak.",
       "stopSpotlightOnSelfText": "Videonuz toplantıdaki herkes için artık öne çıkarılmayacak.",
+      "stopAllSpotlightText": "Artık videolar toplantıdaki herkes için öne çıkarılmayacak.",
       "stopSpotlightConfirmButtonLabel": "Öne çıkarmayı durdur",
       "stopSpotlightOnSelfConfirmButtonLabel": "Öne çıkarmadan çık",
       "stopSpotlightCancelButtonLabel": "İptal"
