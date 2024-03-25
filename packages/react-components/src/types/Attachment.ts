@@ -34,7 +34,7 @@ export interface AttachmentMetadata {
 }
 
 /**
- * @beta
+ * @internal
  */
 export interface AttachmentMenuAction {
   name: string;

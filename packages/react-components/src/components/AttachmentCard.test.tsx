@@ -24,7 +24,8 @@ describe('AttachmentCard should be rendered properly', () => {
   it('should render the component with progress bar', () => {
     renderAttachmentCardWithDefaults({ progress: 0.5 });
     const progressIndicator = screen.getByRole('progressbar');
-    expect(progressIndicator.innerHTML).toContain('50%');
+    const progressBar = progressIndicator.firstElementChild as HTMLElement;
+    expect(progressBar.style.width).toContain('50%');
   });
 
   it('should render the component with action icon', () => {

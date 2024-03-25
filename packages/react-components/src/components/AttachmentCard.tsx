@@ -3,8 +3,7 @@
 
 import {
   // eslint-disable-next-line no-restricted-imports
-  Icon,
-  mergeStyles
+  Icon
 } from '@fluentui/react';
 import {
   Card,
@@ -24,11 +23,12 @@ import { getFileTypeIconProps } from '@fluentui/react-file-type-icons';
 import React from 'react';
 import { _pxToRem } from '@internal/acs-ui-common';
 import { Announcer } from './Announcer';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
 import { _AttachmentUploadCardsStrings } from './AttachmentUploadCards';
 import { useLocaleAttachmentCardStringsTrampoline } from './utils/common';
 import { AttachmentMetadata, AttachmentMenuAction } from '../types/Attachment';
 import { MoreHorizontal24Filled } from '@fluentui/react-icons';
+import { useAttachmentCardStyles, fileNameContainerClassName } from './styles/AttachmentCard.styles';
 
 /**
  * @internal
@@ -65,42 +65,47 @@ export interface _AttachmentCardProps {
 /**
  * @internal
  * A component for displaying an attachment card with attachment icon and progress bar.
+ *
+ * `_AttachmentCard` internally uses the `Card` component from `@fluentui/react-components`. You can checkout the details about these components [here](https://react.fluentui.dev/?path=/docs/components-card).
  */
 export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
   const { attachmentName, attachmentExtension, progress, actionIcon, actionHandler } = props;
-  // const { file, progress, menuActions, onDownloadErrorMessage } = props;
-  // const fileName = attachmentName;
-  // const fileExtension = file.extension && file.extension !== '' ? file.extension : file.name.split('.').pop();
+  const attachmentCardStyles = useAttachmentCardStyles();
 
   // default/placeholder before actual code implemented
-  const menuActions: AttachmentMenuAction[] = [
-    {
-      name: actionIcon && actionIcon?.props.ariaLabel,
-      icon: actionIcon ?? <></>,
-      onClick: (attachment: AttachmentMetadata) => {
-        if (attachment) {
-          actionHandler?.();
+  const menuActions = useMemo(() => {
+    return [
+      {
+        name: actionIcon && actionIcon?.props.ariaLabel,
+        icon: actionIcon ?? <></>,
+        onClick: (attachment: AttachmentMetadata) => {
+          if (attachment) {
+            actionHandler?.();
+          }
         }
-        // window.open((attachment as AttachmentMetadata).url, '_blank', 'noopener,noreferrer');
       }
-    }
-  ];
+    ];
+  }, [actionIcon, actionHandler]);
 
   // placeholder before refactoring the props
-  const attachment: AttachmentMetadata = {
-    /* @conditional-compile-remove(file-sharing) */
-    id: 'attachmentId',
-    extension: attachmentExtension,
-    name: attachmentName,
-    url: 'https://localhost' // placeholder not used
-  };
+  const attachment = useMemo(() => {
+    return {
+      /* @conditional-compile-remove(file-sharing) */
+      id: 'attachmentId',
+      extension: attachmentExtension,
+      name: attachmentName,
+      url: 'https://localhost' // placeholder not used
+    };
+  }, [attachmentExtension, attachmentName]);
 
   // placeholder before refactoring the props
-  const onDownloadErrorMessage = (errorMessage: string): void => {
+  const onDownloadErrorMessage = useCallback((errorMessage: string): void => {
     console.log(errorMessage);
-  };
+  }, []);
 
-  const isUploadComplete = progress !== undefined && progress > 0 && progress < 1;
+  const isUploadComplete = useMemo(() => {
+    return progress !== undefined && progress > 0 && progress < 1;
+  }, [progress]);
 
   const [announcerString, setAnnouncerString] = useState<string | undefined>(undefined);
   const localeStrings = useLocaleAttachmentCardStringsTrampoline();
@@ -119,25 +124,10 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
     }
   }, [progress, showProgressIndicator, attachmentName, uploadStartedString, uploadCompletedString]);
 
-  const containerClassName = mergeStyles({
-    width: '12rem',
-    minWidth: '75%'
-  });
-
-  const fileNameContainerClassName = mergeStyles({
-    marginTop: _pxToRem(5),
-    width: '5.75rem',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    span: {
-      whiteSpace: 'nowrap'
-    }
-  });
-
   return (
     <div data-is-focusable={true}>
       <Announcer announcementString={announcerString} ariaLive={'polite'} />
-      <Card className={containerClassName} size="small" role="listitem">
+      <Card className={attachmentCardStyles.root} size="small" role="listitem">
         <CardHeader
           image={
             <Icon
@@ -173,8 +163,11 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
 const getMenuItems = (
   menuActions: AttachmentMenuAction[],
   attachment: AttachmentMetadata,
-  onDownloadErrorMessage?: (errMsg: string) => void
+  handleOnClickError?: (errMsg: string) => void
 ): JSX.Element => {
+  if (menuActions.length === 0) {
+    return <></>;
+  }
   return menuActions.length === 1 ? (
     <ToolbarButton
       aria-label={menuActions[0].name}
@@ -198,7 +191,7 @@ const getMenuItems = (
                     menuItem.onClick(attachment);
                   } catch (e) {
                     console.error(e);
-                    onDownloadErrorMessage?.((e as Error).message);
+                    handleOnClickError?.((e as Error).message);
                   }
                 }}
               >

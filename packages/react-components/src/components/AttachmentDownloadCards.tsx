@@ -8,7 +8,6 @@ import { useMemo } from 'react';
 import { useLocale } from '../localization';
 import { _AttachmentCard } from './AttachmentCard';
 import { _AttachmentCardGroup } from './AttachmentCardGroup';
-// import { iconButtonClassName } from './styles/IconButton.styles';
 import { _formatString } from '@internal/acs-ui-common';
 import { AttachmentMetadata, FileDownloadHandler } from '../types/Attachment';
 

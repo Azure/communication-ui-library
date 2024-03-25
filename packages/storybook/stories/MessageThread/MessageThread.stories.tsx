@@ -375,7 +375,7 @@ const MessageThreadStory = (args): JSX.Element => {
     { key: 'newMessage', text: 'New Message' },
     { key: 'newMessageOthers', text: 'New Message from others' },
     { key: 'newMessageWithInlineImage', text: 'New Message with Inline Image' },
-    { key: 'newMessageWithFileAttachment', text: 'New Message with File Attachment' },
+    { key: 'newMessageWithAttachment', text: 'New Message with File Attachment' },
     { key: 'newMessageWithMention', text: 'New Message with Mention' },
     { key: 'newSystemMessage', text: 'New System Message' },
     { key: 'newCustomMessage', text: 'New Custom Message' }
@@ -404,7 +404,7 @@ const MessageThreadStory = (args): JSX.Element => {
     setChatMessages([...chatMessages, GenerateMockNewChatMessageWithInlineImage()]);
   };
 
-  const onSendNewMessageWithFileAttachment = (): void => {
+  const onSendNewMessageWithAttachment = (): void => {
     setChatMessages([...chatMessages, GenerateMockNewChatMessageWithFileAttachment()]);
   };
 
@@ -525,8 +525,8 @@ const MessageThreadStory = (args): JSX.Element => {
       case 'newCustomMessage':
         onSendCustomMessage();
         break;
-      case 'newMessageWithFileAttachment':
-        onSendNewMessageWithFileAttachment();
+      case 'newMessageWithAttachment':
+        onSendNewMessageWithAttachment();
         break;
       default:
         console.log('Invalid message type');
