@@ -61,6 +61,8 @@ export interface MediaGalleryProps {
   localVideoTileOptions?: boolean | LocalVideoTileOptions;
   userSetOverflowGalleryPosition?: 'Responsive' | 'horizontalTop';
   userSetGalleryLayout: VideoGalleryLayout;
+  pinnedParticipants?: string[];
+  setPinnedParticipants?: (pinnedParticipants: string[]) => void;
   /* @conditional-compile-remove(spotlight) */
   setIsPromptOpen: (isOpen: boolean) => void;
   /* @conditional-compile-remove(spotlight) */
@@ -73,8 +75,13 @@ export interface MediaGalleryProps {
  * @private
  */
 export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
-  /* @conditional-compile-remove(spotlight) */
-  const { setIsPromptOpen, setPromptProps, hideSpotlightButtons } = props;
+  const {
+    pinnedParticipants = [],
+    setPinnedParticipants,
+    /* @conditional-compile-remove(spotlight) */ setIsPromptOpen,
+    /* @conditional-compile-remove(spotlight) */ setPromptProps,
+    /* @conditional-compile-remove(spotlight) */ hideSpotlightButtons
+  } = props;
 
   const videoGalleryProps = usePropsFor(VideoGallery);
   const cameraSwitcherCameras = useSelector(localVideoCameraCycleButtonSelector);
@@ -159,6 +166,24 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     setPromptProps
   );
 
+  const onPinParticipant = useMemo(() => {
+    return setPinnedParticipants
+      ? (userId: string) => {
+          if (!pinnedParticipants.includes(userId)) {
+            setPinnedParticipants(pinnedParticipants.concat(userId));
+          }
+        }
+      : undefined;
+  }, [setPinnedParticipants, pinnedParticipants]);
+
+  const onUnpinParticipant = useMemo(() => {
+    return setPinnedParticipants
+      ? (userId: string) => {
+          setPinnedParticipants(pinnedParticipants.filter((participantId) => participantId !== userId));
+        }
+      : undefined;
+  }, [setPinnedParticipants, pinnedParticipants]);
+
   const VideoGalleryMemoized = useMemo(() => {
     const layoutBasedOnUserSelection = (): VideoGalleryLayout => {
       return props.localVideoTileOptions ? layoutBasedOnTilePosition : props.userSetGalleryLayout;
@@ -184,6 +209,9 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
             ? '9:16'
             : '16:9'
         }
+        pinnedParticipants={pinnedParticipants}
+        onPinParticipant={onPinParticipant}
+        onUnpinParticipant={onUnpinParticipant}
         /* @conditional-compile-remove(reaction) */
         reactionResources={reactionResources}
         /* @conditional-compile-remove(spotlight) */
@@ -209,6 +237,9 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     containerAspectRatio,
 
     props.userSetGalleryLayout,
+    pinnedParticipants,
+    onPinParticipant,
+    onUnpinParticipant,
     layoutBasedOnTilePosition,
     /* @conditional-compile-remove(reaction) */
     reactionResources,
