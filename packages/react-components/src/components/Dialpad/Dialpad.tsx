@@ -17,7 +17,6 @@ import {
 } from '@fluentui/react';
 import { _formatString } from '@internal/acs-ui-common';
 import { useState } from 'react';
-/* @conditional-compile-remove(dialpad) */
 import { useLocale } from '../../localization';
 import {
   buttonStyles,
@@ -445,11 +444,9 @@ const DialpadContainer = (props: {
  * @public
  */
 export const Dialpad = (props: DialpadProps): JSX.Element => {
-  /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
   const localeStrings = useLocale().strings.dialpad;
 
   const dialpadLocaleStringsTrampoline = (): DialpadStrings => {
-    /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
     return localeStrings;
     // Even though the component strings type doesn't have `DialpadStrings` in stable build,
     // the string values exist. So unsafe cast for stable build.
