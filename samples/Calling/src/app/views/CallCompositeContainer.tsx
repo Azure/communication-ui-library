@@ -23,7 +23,10 @@ export const CallCompositeContainer = (props: CallCompositeContainerProps): JSX.
       /* @conditional-compile-remove(call-readiness) */ onPermissionsTroubleshootingClick,
       /* @conditional-compile-remove(call-readiness) */ onNetworkingTroubleShootingClick,
       callControls: {
-        screenShareButton: shouldHideScreenShare ? false : undefined
+        screenShareButton: shouldHideScreenShare ? false : undefined,
+        endCallButton: {
+          enableMenu: true
+        }
       }
     }),
     [shouldHideScreenShare]
