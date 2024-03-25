@@ -48,11 +48,7 @@ CallWithChatAdapterManagementRequiredTypeAssertion;
 
 type CallWithChatControlOptionsInternal = Omit<
   CallControlOptions,
-  | 'endCallButton'
-  | 'devicesButton'
-  | /* @conditional-compile-remove(control-bar-button-injection) */ 'onFetchCustomButtonProps'
-  | 'participantsButton'
-  | 'legacyControlBarExperience'
+  'endCallButton' | 'devicesButton' | 'onFetchCustomButtonProps' | 'participantsButton' | 'legacyControlBarExperience'
 >;
 
 const CallWithChatControlOptionsTypeAssertion = (
@@ -91,13 +87,13 @@ type CallWithChatClientStateInternal = Omit<
   | 'userId'
   | /* @conditional-compile-remove(PSTN-calls) */ 'alternateCallerId'
   | /* @conditional-compile-remove(unsupported-browser) */ 'features'
-  | /* @conditional-compile-remove(video-background-effects) */ 'videoBackgroundImages'
-  | /* @conditional-compile-remove(video-background-effects) */ 'selectedVideoBackgroundEffect'
+  | 'videoBackgroundImages'
+  | 'selectedVideoBackgroundEffect'
   | /* @conditional-compile-remove(call-transfer) */ 'acceptedTransferCallState'
   | 'cameraStatus'
-  | /* @conditional-compile-remove(calling-sounds) */ 'sounds'
-  | /* @conditional-compile-remove(rooms) */ 'isRoomsCall'
-  | /* @conditional-compile-remove(calling-sounds) */ 'targetCallees'
+  | 'sounds'
+  | 'isRoomsCall'
+  | 'targetCallees'
 >;
 
 const CallWithChatClientStateTypeAssertion = (value: CallWithChatClientState): CallWithChatClientStateInternal => value;

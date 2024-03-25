@@ -32,7 +32,6 @@ import {
   ParticipantsRemovedListener,
   TopicChangedListener
 } from './ChatAdapter';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ResourceDetails } from './ChatAdapter';
 import { AdapterError } from '../../common/adapters';
 /* @conditional-compile-remove(file-sharing) */
@@ -44,7 +43,7 @@ import { _isValidIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(file-sharing) */
 import { AttachmentMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
-import { FileUploadManager } from '../file-sharing';
+import { FileUploadManager } from '@internal/react-components';
 
 /**
  * Context of Chat, which is a centralized context for all state updates
@@ -175,15 +174,12 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.updateFileUploadErrorMessage = this.updateFileUploadErrorMessage.bind(this);
     /* @conditional-compile-remove(file-sharing) */
     this.updateFileUploadMetadata = this.updateFileUploadMetadata.bind(this);
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     this.downloadResourceToCache = this.downloadResourceToCache.bind(this);
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     this.removeResourceFromCache = this.removeResourceFromCache.bind(this);
   }
 
   dispose(): void {
     this.unsubscribeAllEvents();
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     this.chatClient.dispose();
   }
 
@@ -323,7 +319,6 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.fileUploadAdapter.updateFileUploadMetadata(id, metadata);
   }
 
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   async downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void> {
     this.chatClient.downloadResourceToCache(
       resourceDetails.threadId,
@@ -332,7 +327,6 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     );
   }
 
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   removeResourceFromCache(resourceDetails: ResourceDetails): void {
     this.chatClient.removeResourceFromCache(
       resourceDetails.threadId,

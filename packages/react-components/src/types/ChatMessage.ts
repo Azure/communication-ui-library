@@ -4,7 +4,7 @@
 import { MessageStatus } from '@internal/acs-ui-common';
 import { CommunicationParticipant } from './CommunicationParticipant';
 /* @conditional-compile-remove(file-sharing) */
-import { AttachmentMetadata } from '../components/FileDownloadCards';
+import { AttachmentMetadata } from './Attachment';
 
 /**
  * Indicate whether a chat message should be displayed merged with the message before / after it.

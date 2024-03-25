@@ -444,7 +444,7 @@ const MessageThreadStory = (args): JSX.Element => {
   };
 
   const [overlayImageItem, setOverlayImageItem] =
-    useState<{ imageSrc: string; title: string; titleIcon: JSX.Element; downloadFilename: string }>();
+    useState<{ imageSrc: string; title: string; titleIcon: JSX.Element; downloadAttachmentname: string }>();
 
   const onInlineImageClicked = (attachmentId: string, messageId: string): Promise<void> => {
     const messages = chatMessages?.filter((message) => {
@@ -465,7 +465,7 @@ const MessageThreadStory = (args): JSX.Element => {
         setOverlayImageItem({
           title,
           titleIcon,
-          downloadFilename: attachmentId,
+          downloadAttachmentname: attachmentId,
           imageSrc: img.src
         });
       }

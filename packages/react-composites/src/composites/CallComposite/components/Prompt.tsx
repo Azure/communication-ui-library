@@ -49,9 +49,9 @@ export const Prompt = (props: PromptProps): JSX.Element => {
       <Stack verticalAlign="center" className={mergeStyles({ minHeight: '6rem' })}>
         <Text className={mergeStyles({ fontSize: '0.875rem' })}>{props.text}</Text>
       </Stack>
-      <Stack horizontal reversed tokens={{ childrenGap: '0.5rem' }}>
-        <DefaultButton styles={buttonTextStyles} text={props.cancelButtonLabel} onClick={props.onCancel} />
+      <Stack horizontal horizontalAlign="end" tokens={{ childrenGap: '0.5rem' }}>
         <PrimaryButton styles={buttonTextStyles} text={props.confirmButtonLabel} onClick={props.onConfirm} />
+        <DefaultButton styles={buttonTextStyles} text={props.cancelButtonLabel} onClick={props.onCancel} />
       </Stack>
     </Modal>
   );
@@ -111,6 +111,10 @@ export interface SpotlightPromptStrings {
    */
   stopSpotlightOnSelfHeading: string;
   /**
+   * Heading for prompt when stopping all spotlight
+   */
+  stopAllSpotlightHeading: string;
+  /**
    * Text for prompt when stopping spotlight on participant
    */
   stopSpotlightText: string;
@@ -119,7 +123,11 @@ export interface SpotlightPromptStrings {
    */
   stopSpotlightOnSelfText: string;
   /**
-   * Label for button to confirm stopping spotlight on participant in prompt
+   * Text for prompt when stopping all spotlight
+   */
+  stopAllSpotlightText: string;
+  /**
+   * Label for button to confirm stopping spotlight on participant(s) in prompt
    */
   stopSpotlightConfirmButtonLabel: string;
   /**
@@ -127,7 +135,7 @@ export interface SpotlightPromptStrings {
    */
   stopSpotlightOnSelfConfirmButtonLabel: string;
   /**
-   * Label for button to cancel stopping spotlight on participant in prompt
+   * Label for button to cancel stopping spotlight on participant(s) in prompt
    */
   stopSpotlightCancelButtonLabel: string;
 }

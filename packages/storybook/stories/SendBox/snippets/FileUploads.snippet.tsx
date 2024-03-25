@@ -13,7 +13,7 @@ export const FileUploadsExample: () => JSX.Element = () => (
             uploadComplete: false
           },
           {
-            id: '1',
+            id: '2',
             filename: 'SampleXl.xlsx',
             progress: 0.33,
             uploadComplete: false

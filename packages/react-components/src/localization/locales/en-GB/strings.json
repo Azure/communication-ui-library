@@ -7,7 +7,8 @@
     "mutedIconLabel": "Muted",
     "displayNamePlaceholder": "Unnamed participant",
     "participantStateRinging": "Calling...",
-    "participantStateHold": "On hold"
+    "participantStateHold": "On hold",
+    "attendeeRole": "Attendee"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} more"
@@ -23,10 +24,27 @@
     "placeholderText": "Enter a message",
     "textTooLong": "Your message length is over the maximum limit.",
     "sendButtonAriaLabel": "Send message",
-    "fileUploadsPendingError": "Uploading... Please wait.",
-    "removeFile": "Remove file",
+    "attachmentUploadsPendingError": "Uploading... Please wait.",
+    "removeAttachment": "Remove file",
     "uploading": "Uploading",
     "uploadCompleted": "Upload completed"
+  },
+  "richTextSendBox": {
+    "placeholderText": "Enter a message",
+    "textTooLong": "Your message length is over the maximum limit.",
+    "sendButtonAriaLabel": "Send message",
+    "attachmentUploadsPendingError": "Uploading... Please wait.",
+    "removeAttachment": "Remove file",
+    "uploading": "Uploading",
+    "uploadCompleted": "Upload completed",
+    "boldTooltip": "Bold",
+    "italicTooltip": "Italic",
+    "underlineTooltip": "Underline",
+    "bulletListTooltip": "Bulleted list",
+    "numberListTooltip": "Numbered list",
+    "increaseIndentTooltip": "Increase indent",
+    "decreaseIndentTooltip": "Decrease indent",
+    "richTextFormatButtonTooltip": "Format"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggestions"
@@ -125,6 +143,7 @@
   },
   "reactionButton": {
     "label": "React",
+    "ariaLabel": "React Button, Send a reaction",
     "tooltipDisabledContent": "Reaction action is disabled",
     "tooltipContent": "Send a reaction",
     "likeReactionTooltipContent": "Like",
@@ -160,10 +179,10 @@
     "editBoxSubmitButton": "Done",
     "messageReadCount": "Read by {messageReadByCount} of {remoteParticipantsCount}",
     "actionMenuMoreOptions": "More Options",
-    "downloadFile": "Download file",
+    "downloadAttachment": "Download file",
     "blockedWarningText": "This message was deleted due to organisational policy.",
     "blockedWarningLinkText": "Details",
-    "fileCardGroupMessage": "The message has {fileCount} attachment",
+    "attachmentCardGroupMessage": "The message has {attachmentCount} attachment",
     "messageDeletedAnnouncementAriaLabel": "The message is deleted"
   },
   "errorBar": {
@@ -224,7 +243,8 @@
     "addSpotlightVideoTileMenuLabel": "Add spotlight",
     "spotlightLimitReachedMenuTitle": "Spotlight limit reached",
     "stopSpotlightVideoTileMenuLabel": "Stop spotlighting",
-    "stopSpotlightOnSelfVideoTileMenuLabel": "Exit spotlight"
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Exit spotlight",
+    "attendeeRole": "Attendee"
   },
   "dialpad": {
     "placeholderText": "Enter phone number",
@@ -358,6 +378,5 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "previous page",
     "rightNavButtonAriaLabel": "next page"
-  },
-  "AttendeeRole": "Attendee"
+  }
 }

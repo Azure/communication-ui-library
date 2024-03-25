@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "area": "fix",
+  "workstream": "Fix pieline problem of snapshot generation",
+  "comment": "Fix pieline problem of snapshot generation",
+  "packageName": "@azure/communication-react",
+  "email": "jiangnanhello@live.com",
+  "dependentChangeType": "none"
+}

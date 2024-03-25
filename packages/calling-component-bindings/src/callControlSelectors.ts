@@ -16,10 +16,8 @@ import {
 import { getLocalParticipantReactionState } from './baseSelectors';
 /* @conditional-compile-remove(capabilities) */
 import { getCapabilities, getRole } from './baseSelectors';
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(raise-hand) */
 import { getCallState } from './baseSelectors';
 import { _isPreviewOn } from './utils/callUtils';
-/* @conditional-compile-remove(raise-hand) */
 import { getLocalParticipantRaisedHand } from './baseSelectors';
 /**
  * Selector type for {@link MicrophoneButton} component.
@@ -140,7 +138,6 @@ export type ScreenShareButtonSelector = (
   /* @conditional-compile-remove(capabilities) */ /* @conditional-compile-remove(PSTN-calls) */ disabled?: boolean;
 };
 
-/* @conditional-compile-remove(raise-hand) */
 /**
  * Selector type for {@link RaiseHandButton} component.
  *
@@ -154,7 +151,6 @@ export type RaiseHandButtonSelector = (
   disabled?: boolean;
 };
 
-/* @conditional-compile-remove(raise-hand) */
 /**
  * Selector for {@link RaiseHandButton} component.
  *
