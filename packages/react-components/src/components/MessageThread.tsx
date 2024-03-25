@@ -1085,19 +1085,19 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
       )}
       <LiveAnnouncer>
         <FluentV9ThemeProvider v8Theme={theme}>
-          {latestDeletedMessageId && (
-            <Announcer
-              key={latestDeletedMessageId}
-              announcementString={deletedMessageAriaLabel}
-              ariaLive={'assertive'}
-            />
-          )}
           <Chat
             // styles?.chatContainer used in className and style prop as style prop can't handle CSS selectors
             className={mergeClasses(classes.root, mergeStyles(styles?.chatContainer))}
             ref={chatScrollDivRef}
             style={{ ...createStyleFromV8Style(styles?.chatContainer) }}
           >
+            {latestDeletedMessageId && (
+              <Announcer
+                key={latestDeletedMessageId}
+                announcementString={deletedMessageAriaLabel}
+                ariaLive={'polite'}
+              />
+            )}
             {messagesToDisplay.map((message: _ChatMessageProps): JSX.Element => {
               return (
                 <MemoChatMessageComponentWrapper
