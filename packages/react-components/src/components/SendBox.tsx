@@ -309,8 +309,8 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     return props.onRenderFileUploads ? (
       props.onRenderFileUploads()
     ) : (
-      <FluentV9ThemeProvider v8Theme={theme}>
-        <Stack className={attachmentUploadCardsStyles}>
+      <Stack className={attachmentUploadCardsStyles}>
+        <FluentV9ThemeProvider v8Theme={theme}>
           <_AttachmentUploadCards
             activeFileUploads={activeFileUploads}
             onCancelFileUpload={props.onCancelFileUpload}
@@ -320,8 +320,8 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
               uploadCompleted: props.strings?.uploadCompleted ?? localeStrings.uploadCompleted
             }}
           />
-        </Stack>
-      </FluentV9ThemeProvider>
+        </FluentV9ThemeProvider>
+      </Stack>
     );
   }, [
     activeFileUploads,
