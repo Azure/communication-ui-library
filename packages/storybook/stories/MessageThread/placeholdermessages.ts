@@ -89,11 +89,11 @@ export const GenerateMockNewChatMessageWithFileAttachment = (): ChatMessage => {
     messageType: 'chat',
     ...UserThree,
     messageId: Math.random().toString(),
-    content: '<p>Check out these files:&nbsp;</p>',
+    content: 'Check out these files:',
     createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
     mine: true,
     attached: false,
-    contentType: 'html',
+    contentType: 'text',
     files: [
       {
         id: 'SomeUniqueId1',
