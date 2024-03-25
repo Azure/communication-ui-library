@@ -1,13 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { concatStyleSets, Icon, IContextualMenuProps, IStyle, PartialTheme } from '@fluentui/react';
+import { concatStyleSets, Icon, IStyle, PartialTheme } from '@fluentui/react';
+/* @conditional-compile-remove(end-call-options) */
+import { IContextualMenuProps } from '@fluentui/react';
 import React from 'react';
 import { useLocale } from '../localization';
 import { useTheme } from '../theming';
 import { CallingTheme, darkTheme, lightTheme } from '../theming/themes';
 import { isDarkThemed } from '../theming/themeUtils';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
+/* @conditional-compile-remove(end-call-options) */
 import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-ui-common';
 
 /**
@@ -128,12 +131,18 @@ const getButtonStyles = (
       forcedColorAdjust: 'auto',
       border: `1px ${theme.palette?.neutralQuaternaryAlt} solid`
     },
+    ' i': {
+      color: theme.callingPalette.iconWhite
+    },
     ':focus::after': { outlineColor: `${theme.callingPalette.iconWhite} !important` } // added !important to avoid override by FluentUI button styles
   },
   pressed: {
     color: theme.callingPalette.iconWhite,
     background: theme.callingPalette.callRed,
-    boarder: 'none',
+    border: 'none',
+    ' i': {
+      color: theme.callingPalette.iconWhite
+    },
     '@media (forced-colors: active)': {
       forcedColorAdjust: 'auto'
     }
@@ -141,7 +150,10 @@ const getButtonStyles = (
   hovered: {
     color: theme.callingPalette.iconWhite,
     background: theme.callingPalette.callRed,
-    boarder: 'none',
+    border: 'none',
+    ' i': {
+      color: theme.callingPalette.iconWhite
+    },
     '@media (forced-colors: active)': {
       forcedColorAdjust: 'auto'
     }
@@ -159,7 +171,13 @@ const darkThemeCallButtonStyles = {
   label: {
     color: darkTheme.callingPalette.iconWhite
   },
-  splitButtonMenuButton: darkThemeButtonStyles.regular,
+  splitButtonMenuButton: {
+    ...(darkThemeButtonStyles.regular as object),
+    borderTop: 'none',
+    borderRight: 'none',
+    borderBottom: 'none',
+    '&:hover': darkThemeButtonStyles.hovered
+  },
   splitButtonMenuButtonChecked: darkThemeButtonStyles.hovered,
   splitButtonMenuButtonExpanded: darkThemeButtonStyles.pressed
 };
@@ -170,6 +188,9 @@ const lightThemeCallButtonStyles = {
   rootPressed: lightThemeButtonStyles.pressed,
   splitButtonMenuButton: {
     ...(lightThemeButtonStyles.regular as object),
+    borderTop: 'none',
+    borderRight: 'none',
+    borderBottom: 'none',
     '&:hover': lightThemeButtonStyles.hovered
   },
   splitButtonMenuButtonChecked: lightThemeButtonStyles.hovered,
