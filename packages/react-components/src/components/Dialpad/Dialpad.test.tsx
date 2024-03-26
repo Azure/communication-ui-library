@@ -29,12 +29,6 @@ describe('Dialpad tests', () => {
   beforeEach(() => {
     mockSendDTMF.mockClear();
   });
-  /*
-   * Localization depends on public API for `LocalizationProvider` that does not
-   * have the strings for the beta-only `Dialpad` component.
-   * skip this test for stable build.
-   *
-   */
   test('Should localize default text ', async () => {
     const dialpadStrings: DialpadStrings = {
       placeholderText: Math.random().toString(),
