@@ -25,7 +25,7 @@
     "textTooLong": "Meddelandelängden överskrider maxgränsen.",
     "sendButtonAriaLabel": "Skicka meddelande",
     "attachmentUploadsPendingError": "Uppladdning pågår... Vänta.",
-    "removeAttachment": "Ta bort filen",
+    "removeAttachment": "Ta bort fil",
     "uploading": "Laddar upp",
     "uploadCompleted": "Uppladdningen har slutförts"
   },
@@ -34,7 +34,7 @@
     "textTooLong": "Meddelandelängden överskrider maxgränsen.",
     "sendButtonAriaLabel": "Skicka meddelande",
     "attachmentUploadsPendingError": "Laddar upp... Var god vänta.",
-    "removeAttachment": "Ta bort fil",
+    "removeAttachment": "Ta bort filen",
     "uploading": "Laddar upp",
     "uploadCompleted": "Uppladdningen har slutförts",
     "boldTooltip": "Fet",
@@ -182,7 +182,7 @@
     "downloadAttachment": "Ladda ner fil",
     "blockedWarningText": "Det här meddelandet har tagits bort på grund av en organisationsprincip.",
     "blockedWarningLinkText": "Information",
-    "attachmentCardGroupMessage": "Meddelandet har {attachmentCount} bifogad fil",
+    "attachmentCardGroupMessage": "Meddelandet har {attachmentCount} bifogade filer.",
     "messageDeletedAnnouncementAriaLabel": "Meddelandet har tagits bort"
   },
   "errorBar": {
