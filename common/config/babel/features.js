@@ -126,8 +126,6 @@ module.exports = {
     "close-captions",
     // Feature for the DTMF dialer for Teams voice apps
     "dtmf-dialer",
-    // dialpad
-    "dialpad",
     // Feature for call transfer
     "call-transfer",
     // custom branding for the composites
