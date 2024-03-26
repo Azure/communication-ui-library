@@ -315,8 +315,10 @@
       "startSpotlightCancelButtonLabel": "Cancel",
       "stopSpotlightHeading": "Stop spotlighting this video?",
       "stopSpotlightOnSelfHeading": "Exit spotlight?",
+      "stopAllSpotlightHeading": "Stop spotlighting all videos?",
       "stopSpotlightText": "This video will no longer be highlighted for everyone in the meeting.",
       "stopSpotlightOnSelfText": "Your video will no longer be highlighted for everyone in the meeting.",
+      "stopAllSpotlightText": "The videos will no longer be highlighted for everyone in the meeting.",
       "stopSpotlightConfirmButtonLabel": "Stop spotlighting",
       "stopSpotlightOnSelfConfirmButtonLabel": "Exit spotlight",
       "stopSpotlightCancelButtonLabel": "Cancel"
