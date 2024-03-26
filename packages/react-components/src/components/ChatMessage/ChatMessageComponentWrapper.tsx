@@ -8,7 +8,7 @@ import { ChatMessage, OnRenderAvatarCallback } from '../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types';
 /* @conditional-compile-remove(file-sharing) */
-import { FileDownloadHandler } from '../../types/Attachment';
+import { AttachmentMenuAction, AttachmentMetadata } from '../../types/Attachment';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from '../MentionPopover';
 import { MessageStatusIndicatorProps } from '../MessageStatusIndicator';
@@ -43,7 +43,7 @@ export type ChatMessageComponentWrapperProps = _ChatMessageProps & {
   participantCount?: number;
   readCount?: number;
   /* @conditional-compile-remove(file-sharing) */
-  onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+  onRenderAttachmentDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
   onActionButtonClick: (
     message: ChatMessage,
     setMessageReadBy: (
@@ -53,8 +53,10 @@ export type ChatMessageComponentWrapperProps = _ChatMessageProps & {
       }[]
     ) => void
   ) => void;
-  /* @conditional-compile-remove(file-sharing) */
-  fileDownloadHandler?: FileDownloadHandler;
+  /**
+   * Optional callback to define custom actions for attachments.
+   */
+  actionForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
   /* @conditional-compile-remove(date-time-customization) */
   onDisplayDateTimeString?: (messageDate: Date) => string;
   inlineImageOptions?: InlineImageOptions;

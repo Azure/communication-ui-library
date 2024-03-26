@@ -38,7 +38,7 @@ describe('FileDownloadCards should be rendered properly', () => {
 });
 
 const renderFileDownloadCardsWithDefaults = (props: MockDownloadCardProps): void => {
-  render(<_AttachmentDownloadCards userId={props.userId} fileMetadata={props.fileMetadata} />);
+  render(<_AttachmentDownloadCards attachments={props.fileMetadata} />);
 };
 
 interface MockDownloadCardProps {

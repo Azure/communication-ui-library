@@ -152,12 +152,12 @@ export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : fa
 
 // @beta
 export interface AttachmentMetadata {
-    extension: string;
+    extension?: string;
     id: string;
     name: string;
-    // (undocumented)
-    payload?: Record<string, string>;
-    url: string;
+    progress?: number;
+    uploadStatus?: AttachmentUploadStatus;
+    url?: string;
 }
 
 // @public
@@ -2871,6 +2871,11 @@ export interface ErrorBarStrings {
 export type ErrorType = keyof ErrorBarStrings;
 
 // @beta
+export interface FileDownloadError {
+    errorMessage: string;
+}
+
+// @public (undocumented)
 export interface FileDownloadError {
     errorMessage: string;
 }

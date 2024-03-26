@@ -48,20 +48,20 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
     onDisplayDateTimeString,
     inlineImageOptions,
     /* @conditional-compile-remove(file-sharing) */
-    fileDownloadHandler,
+    actionForAttachment,
     userId,
     /* @conditional-compile-remove(file-sharing) */
-    onRenderFileDownloads,
+    onRenderAttachmentDownloads,
     /* @conditional-compile-remove(mention) */
     mentionOptions
   } = props;
   const chatMessageRenderStyles = useChatMessageRenderStyles();
 
-  const onRenderFileDownloadsMemo = useMemo(() => {
+  const onRenderAttachmentDownloadsMemo = useMemo(() => {
     /* @conditional-compile-remove(file-sharing) */
-    return onRenderFileDownloads;
+    return onRenderAttachmentDownloads;
     return undefined;
-  }, [/* @conditional-compile-remove(file-sharing) */ onRenderFileDownloads]);
+  }, [/* @conditional-compile-remove(file-sharing) */ onRenderAttachmentDownloads]);
 
   // To rerender the defaultChatMessageRenderer if app running across days(every new day chat time stamp
   // needs to be regenerated), the dependency on "new Date().toDateString()"" is added.
@@ -75,7 +75,7 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
           <ChatMessageComponentAsMessageBubble
             {...messageProps}
             /* @conditional-compile-remove(file-sharing) */
-            onRenderFileDownloads={onRenderFileDownloadsMemo}
+            onRenderAttachmentDownloads={onRenderAttachmentDownloads}
             /* @conditional-compile-remove(file-sharing) */
             strings={messageProps.strings}
             message={messageProps.message}
@@ -85,7 +85,7 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
             onDisplayDateTimeString={onDisplayDateTimeString}
             inlineImageOptions={inlineImageOptions}
             /* @conditional-compile-remove(file-sharing) */
-            fileDownloadHandler={fileDownloadHandler}
+            actionForAttachment={actionForAttachment}
             /* @conditional-compile-remove(mention) */
             mentionDisplayOptions={mentionOptions?.displayOptions}
           />
@@ -94,14 +94,14 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
       return <></>;
     },
     [
-      onRenderFileDownloadsMemo,
+      onRenderAttachmentDownloadsMemo,
       shouldOverlapAvatarAndMessage,
       userId,
       /* @conditional-compile-remove(date-time-customization) */
       onDisplayDateTimeString,
       inlineImageOptions,
       /* @conditional-compile-remove(file-sharing) */
-      fileDownloadHandler,
+      actionForAttachment,
       /* @conditional-compile-remove(mention) */
       mentionOptions,
       // eslint-disable-next-line react-hooks/exhaustive-deps

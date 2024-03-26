@@ -88,17 +88,17 @@ const extractTeamsAttachmentsMetadata = (
         id: attachment.id,
         name: attachment.name ?? '',
         extension: contentType ?? '',
-        url: extractAttachmentUrl(attachment),
-        payload: { teamsFileAttachment: 'true' }
+        url: extractAttachmentUrl(attachment)
       });
     }
   });
   return {
     files
-  };
+  }; 
 };
 
 /* @conditional-compile-remove(data-loss-prevention) */
+   
 const convertToUiBlockedMessage = (
   message: ChatMessageWithStatus,
   userId: string,

@@ -8,7 +8,8 @@ import { MessageThreadStrings } from '../../MessageThread';
 import { ChatMessage, ComponentSlotStyle, OnRenderAvatarCallback } from '../../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../../types';
-import { FileDownloadHandler, AttachmentMetadata } from '../../../types/Attachment';
+/* @conditional-compile-remove(file-sharing) */
+import { AttachmentMenuAction, AttachmentMetadata } from '../../../types/Attachment';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from '../../MentionPopover';
 import { InlineImageOptions } from '../ChatMessageContent';
@@ -53,14 +54,6 @@ type ChatMyMessageComponentProps = {
    * Whether to overlap avatar and message when the view is width constrained.
    */
   shouldOverlapAvatarAndMessage: boolean;
-  /**
-   * Optional callback to render uploaded files in the message component.
-   */
-  onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
-  /**
-   * Optional function called when someone clicks on the file download icon.
-   */
-  fileDownloadHandler?: FileDownloadHandler;
   remoteParticipantsCount?: number;
   onActionButtonClick: (
     message: ChatMessage,
@@ -89,6 +82,16 @@ type ChatMyMessageComponentProps = {
    * @beta
    */
   inlineImageOptions?: InlineImageOptions;
+  /* @conditional-compile-remove(file-sharing) */
+  /**
+   * Optional callback to render message attachments in the message component.
+   */
+  onRenderAttachmentDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+  /* @conditional-compile-remove(file-sharing) */
+  /**
+   * Optional callback to define custom actions for attachments.
+   */
+  actionForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
 };
 
 /**
@@ -149,6 +152,10 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
         inlineImageOptions={props.inlineImageOptions}
         /* @conditional-compile-remove(mention) */
         mentionDisplayOptions={props.mentionOptions?.displayOptions}
+        /* @conditional-compile-remove(file-sharing) */
+        onRenderAttachmentDownloads={props.onRenderAttachmentDownloads}
+        /* @conditional-compile-remove(file-sharing) */
+        actionForAttachment={props.actionForAttachment}
       />
     );
   }

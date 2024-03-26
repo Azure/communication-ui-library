@@ -1,24 +1,37 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Icon, Spinner, SpinnerSize, TooltipHost } from '@fluentui/react';
-import React, { useCallback, useState } from 'react';
+import { TooltipHost } from '@fluentui/react';
+import React from 'react';
 import { useMemo } from 'react';
 /* @conditional-compile-remove(file-sharing) */
 import { useLocale } from '../localization';
 import { _AttachmentCard } from './AttachmentCard';
 import { _AttachmentCardGroup } from './AttachmentCardGroup';
 import { _formatString } from '@internal/acs-ui-common';
-import { AttachmentMetadata, FileDownloadHandler } from '../types/Attachment';
-import { Open20Regular } from '@fluentui/react-icons';
+import { AttachmentMenuAction, AttachmentMetadata } from '../types/Attachment';
 /* @conditional-compile-remove(file-sharing) */
 import { ArrowDownload20Regular } from '@fluentui/react-icons';
+import { ChatMessage } from '../types';
 
 /**
  * Represents the type of attachment
  * @public
  */
 export type ChatAttachmentType = 'unknown' | 'image' | /* @conditional-compile-remove(file-sharing) */ 'file';
+
+/**
+ * @beta
+ * 
+ * The default menu action for downloading attachments. This action will open the attachment's URL in a new tab.
+ */
+export const defaultAttachmentMenuAction: AttachmentMenuAction = {
+  name: 'Download',
+  icon: <ArrowDownload20Regular />,
+  onClick: (attachment: AttachmentMetadata) => {
+    window.open((attachment as AttachmentMetadata).url, '_blank', 'noopener,noreferrer');
+  }
+};
 
 /**
  * Strings of _AttachmentDownloadCards that can be overridden.
@@ -36,19 +49,17 @@ export interface _AttachmentDownloadCardsStrings {
  */
 export interface _AttachmentDownloadCardsProps {
   /**
-   * User id of the local participant
+   * A chat message metadata that includes file metadata
    */
-  userId: string;
+  attachments?: AttachmentMetadata[];
   /**
    * A chat message metadata that includes file metadata
    */
-  fileMetadata?: AttachmentMetadata[];
+  message?: ChatMessage;
   /**
-   * A function of type {@link FileDownloadHandler} for handling attachment downloads.
-   * If the function is not specified, the attachment's `url` will be opened in a new tab to
-   * initiate the download.
+   * Optional callback to handle file download
    */
-  downloadHandler?: FileDownloadHandler;
+  actionForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
   /**
    * Optional callback that runs if downloadHandler returns {@link FileDownloadError}.
    */
@@ -63,14 +74,11 @@ const attachmentDownloadCardsStyle = {
   marginTop: '0.25rem'
 };
 
-const actionIconStyle = { height: '1rem' };
-
 /**
  * @internal
  */
 export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): JSX.Element => {
-  const { userId, fileMetadata } = props;
-  const [showSpinner, setShowSpinner] = useState(false);
+  const { attachments, message } = props;
   const localeStrings = useLocaleStringsTrampoline();
 
   const downloadAttachmentButtonString = useMemo(
@@ -80,72 +88,36 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
     [props.strings?.downloadAttachment, localeStrings.downloadAttachment]
   );
 
-  const isShowDownloadIcon = useCallback((attachment: AttachmentMetadata): boolean => {
-    /* @conditional-compile-remove(file-sharing) */
-    return attachment.payload?.teamsFileAttachment !== 'true';
-    return true;
-  }, []);
-
   const attachmentCardGroupDescription = useMemo(
     () => () => {
       const fileGroupLocaleString =
         props.strings?.attachmentCardGroupMessage ?? localeStrings.attachmentCardGroupMessage;
       /* @conditional-compile-remove(file-sharing) */
       return _formatString(fileGroupLocaleString, {
-        attachmentCount: `${fileMetadata?.length ?? 0}`
+        attachmentCount: `${attachments?.length ?? 0}`
       });
       return _formatString(fileGroupLocaleString, {
-        attachmentCount: `${fileMetadata?.length ?? 0}`
+        attachmentCount: `${attachments?.length ?? 0}`
       });
     },
-    [props.strings?.attachmentCardGroupMessage, localeStrings.attachmentCardGroupMessage, fileMetadata]
+    [props.strings?.attachmentCardGroupMessage, localeStrings.attachmentCardGroupMessage, attachments]
   );
 
-  const fileDownloadHandler = useCallback(
-    async (userId: string, file: AttachmentMetadata) => {
-      if (!props.downloadHandler) {
-        window.open(file.url, '_blank', 'noopener,noreferrer');
-      } else {
-        setShowSpinner(true);
-        try {
-          const response = await props.downloadHandler(userId, file);
-          setShowSpinner(false);
-          if (response instanceof URL) {
-            window.open(response.toString(), '_blank', 'noopener,noreferrer');
-          } else {
-            props.onDownloadErrorMessage && props.onDownloadErrorMessage(response.errorMessage);
-          }
-        } finally {
-          setShowSpinner(false);
-        }
-      }
-    },
-    [props]
-  );
-  if (!fileMetadata || fileMetadata.length === 0 || !fileMetadata) {
+  if (!attachments || attachments.length === 0 || !attachments) {
     return <></>;
   }
 
   return (
     <div style={attachmentDownloadCardsStyle} data-ui-id="file-download-card-group">
       <_AttachmentCardGroup ariaLabel={attachmentCardGroupDescription()}>
-        {fileMetadata &&
-          fileMetadata.map((attachment) => (
+        {attachments &&
+          attachments.map((attachment) => (
             <TooltipHost content={downloadAttachmentButtonString()} key={attachment.name}>
               <_AttachmentCard
-                attachmentName={attachment.name}
-                key={attachment.name}
-                attachmentExtension={attachment.extension}
-                actionIcon={
-                  showSpinner ? (
-                    <Spinner size={SpinnerSize.medium} aria-live={'polite'} role={'status'} />
-                  ) : true && isShowDownloadIcon(attachment) ? (
-                    <DownloadIconTrampoline />
-                  ) : (
-                    <Open20Regular />
-                  )
-                }
-                actionHandler={() => fileDownloadHandler(userId, attachment)}
+                attachment={attachment}
+                key={attachment.id}
+                menuActions={props.actionForAttachment?.(attachment, message) ?? [defaultAttachmentMenuAction]}
+                onDownloadErrorMessage={props.onDownloadErrorMessage}
               />
             </TooltipHost>
           ))}
@@ -154,15 +126,6 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
   );
 };
 
-/**
- * @private
- */
-const DownloadIconTrampoline = (): JSX.Element => {
-  // @conditional-compile-remove(file-sharing)
-  return <ArrowDownload20Regular data-ui-id={'file-download-card-download-icon'} />;
-  // Return _some_ available icon, as the real icon is beta-only.
-  return <Icon iconName="EditBoxCancel" style={actionIconStyle} />;
-};
 
 const useLocaleStringsTrampoline = (): _AttachmentDownloadCardsStrings => {
   /* @conditional-compile-remove(file-sharing) */

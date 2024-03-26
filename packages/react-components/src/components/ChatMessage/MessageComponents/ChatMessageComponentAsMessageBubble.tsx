@@ -13,9 +13,7 @@ import { ChatMessage } from '../../../types/ChatMessage';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../../types/ChatMessage';
 import { MessageThreadStrings } from '../../MessageThread';
-import { ComponentSlotStyle } from '../../../types';
-/* @conditional-compile-remove(file-sharing) */
-import { FileDownloadHandler } from '../../../types/Attachment';
+import { AttachmentMenuAction, AttachmentMetadata, ComponentSlotStyle } from '../../../types';
 import { _AttachmentDownloadCards } from '../../AttachmentDownloadCards';
 import { useLocale } from '../../../localization';
 /* @conditional-compile-remove(mention) */
@@ -42,14 +40,14 @@ type ChatMessageComponentAsMessageBubbleProps = {
   shouldOverlapAvatarAndMessage: boolean;
   /* @conditional-compile-remove(file-sharing) */
   /**
-   * Optional callback to render uploaded files in the message component.
+   * Optional callback to render message attachments in the message component.
    */
-  onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+  onRenderAttachmentDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
   /* @conditional-compile-remove(file-sharing) */
   /**
-   * Optional function called when someone clicks on the file download icon.
+   * Optional callback to define custom actions for attachments.
    */
-  fileDownloadHandler?: FileDownloadHandler;
+  actionForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
   /**
    * Optional function to provide customized date format.
    * @beta
@@ -81,11 +79,11 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     messageContainerStyle,
     strings,
     /* @conditional-compile-remove(file-sharing) */
-    fileDownloadHandler,
+    onRenderAttachmentDownloads,
     inlineImageOptions,
     shouldOverlapAvatarAndMessage,
     /* @conditional-compile-remove(file-sharing) */
-    onRenderFileDownloads,
+    actionForAttachment,
     /* @conditional-compile-remove(mention) */
     mentionDisplayOptions,
     onDisplayDateTimeString
@@ -113,19 +111,19 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
       strings,
       userId,
       inlineImageOptions,
-      /* @conditional-compile-remove(file-sharing) */
-      onRenderFileDownloads,
       /* @conditional-compile-remove(mention) */
       mentionDisplayOptions,
       /* @conditional-compile-remove(file-sharing) */
-      fileDownloadHandler
+      onRenderAttachmentDownloads,
+      /* @conditional-compile-remove(file-sharing) */
+      actionForAttachment
     );
   }, [
-    /* @conditional-compile-remove(file-sharing) */ fileDownloadHandler,
+    /* @conditional-compile-remove(file-sharing) */ actionForAttachment,
     inlineImageOptions,
     /* @conditional-compile-remove(mention) */ mentionDisplayOptions,
     message,
-    /* @conditional-compile-remove(file-sharing) */ onRenderFileDownloads,
+    /* @conditional-compile-remove(file-sharing) */ onRenderAttachmentDownloads,
     strings,
     userId
   ]);

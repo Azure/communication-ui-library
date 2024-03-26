@@ -213,6 +213,7 @@ export type { _AttachmentUploadCardsStrings } from './AttachmentUploadCards';
 
 export type {
   AttachmentMetadata,
+  AttachmentUploadStatus,
   FileUploadHandler,
   FileUploadManager,
   FileUploadState,
@@ -220,7 +221,7 @@ export type {
 } from '../types/Attachment';
 
 /* @conditional-compile-remove(file-sharing) */
-export type { FileDownloadHandler, FileDownloadError } from '../types/Attachment';
+export type { AttachmentMenuAction, AttachmentDownloadOptions } from '../types/Attachment';
 
 export { _useContainerHeight, _useContainerWidth } from './utils/responsive';
 

@@ -30,7 +30,11 @@ describe('AttachmentCard should be rendered properly', () => {
 
   it('should render the component with action icon', () => {
     renderAttachmentCardWithDefaults({
-      actionIcon: <Icon iconName="CancelFileUpload" />
+      menuActions:[{
+        name: 'Cancel',
+        icon: (<Icon iconName="CancelFileUpload" />),
+        onClick: () => {}
+      }]
     });
 
     const button = screen.getAllByRole('button');
@@ -51,8 +55,11 @@ describe('AttachmentCard action handler should be called', () => {
   it('should call the action handler when action icon is clicked', () => {
     const actionHandler = jest.fn();
     renderAttachmentCardWithDefaults({
-      actionIcon: <Icon iconName="CancelFileUpload" />,
-      actionHandler: actionHandler
+      menuActions:[{
+        name: 'Cancel',
+        icon: (<Icon iconName="CancelFileUpload" />),
+        onClick: actionHandler
+      }]
     });
 
     const button = screen.getAllByRole('button')[0];
@@ -63,8 +70,12 @@ describe('AttachmentCard action handler should be called', () => {
 
 const renderAttachmentCardWithDefaults = (props?: Partial<_AttachmentCardProps>): void => {
   const mergedProps: _AttachmentCardProps = {
-    attachmentName: 'MockAttachmentCard',
-    attachmentExtension: 'docx',
+    attachment: {
+      id: 'mockId',
+      name: 'MockAttachmentCard',
+      extension: 'docx'
+    },
+    menuActions: props?.menuActions ?? [],
     ...(props ?? {})
   };
 
