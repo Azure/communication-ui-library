@@ -87,7 +87,6 @@ import { Important20Filled } from '@fluentui/react-icons';
 
 import { VideoBackgroundEffect20Filled, VideoBackgroundEffect20Regular } from '@fluentui/react-icons';
 
-/* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { Backspace20Regular } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(call-readiness) */
@@ -97,7 +96,6 @@ import { Sparkle20Filled, VideoProhibited20Filled, MicProhibited20Filled } from 
 import { ArrowDownload16Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CallPause20Regular, CallPause20Filled, Play20Regular } from '@fluentui/react-icons';
-/* @conditional-compile-remove(dialpad) */
 import { People20Regular } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -274,7 +272,6 @@ export const DEFAULT_COMPONENT_ICONS = {
   ControlButtonMicOn: <Mic20Filled />,
   ControlButtonOptions: <Settings20Filled />,
   ControlButtonParticipants: <People20Filled />,
-  /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
   ControlButtonParticipantsContextualMenuItem: <People20Regular />,
   ControlButtonScreenShareStart: <ShareScreenStart20Filled />,
   ControlButtonScreenShareStop: <ShareScreenStop20Filled />,
@@ -333,7 +330,6 @@ export const DEFAULT_COMPONENT_ICONS = {
   SendBoxSend: <Send20Regular />,
   SendBoxSendHovered: <Send20Filled />,
   VideoTileMicOff: <MicOff16Filled />,
-  /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
   DialpadBackspace: <Backspace20Regular />,
   /* @conditional-compile-remove(call-readiness) */
   SitePermissionsSparkle: <SitePermissionSparkle20Filled />,

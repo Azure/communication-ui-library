@@ -34,6 +34,15 @@ export interface AttachmentMetadata {
 }
 
 /**
+ * @internal
+ */
+export interface AttachmentMenuAction {
+  name: string;
+  icon: JSX.Element;
+  onClick: (attachment: AttachmentMetadata) => void;
+}
+
+/**
  * @beta
  * A attachment download error returned via a {@link FileDownloadHandler}.
  * This error message is used to render an error message in the UI.
