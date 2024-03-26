@@ -4,21 +4,24 @@
 import { Icon, Spinner, SpinnerSize, TooltipHost } from '@fluentui/react';
 import React, { useCallback, useState } from 'react';
 import { useMemo } from 'react';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { useLocale } from '../localization';
 import { _AttachmentCard } from './AttachmentCard';
 import { _AttachmentCardGroup } from './AttachmentCardGroup';
 import { _formatString } from '@internal/acs-ui-common';
 import { AttachmentMetadata, FileDownloadHandler } from '../types/Attachment';
 import { Open20Regular } from '@fluentui/react-icons';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { ArrowDownload20Regular } from '@fluentui/react-icons';
 
 /**
  * Represents the type of attachment
  * @public
  */
-export type ChatAttachmentType = 'unknown' | 'image' | /* @conditional-compile-remove(file-sharing) */ 'file';
+export type ChatAttachmentType =
+  | 'unknown'
+  | 'image'
+  | /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ 'file';
 
 /**
  * Strings of _AttachmentDownloadCards that can be overridden.
@@ -81,7 +84,7 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
   );
 
   const isShowDownloadIcon = useCallback((attachment: AttachmentMetadata): boolean => {
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     return attachment.payload?.teamsFileAttachment !== 'true';
     return true;
   }, []);
@@ -90,7 +93,7 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
     () => () => {
       const fileGroupLocaleString =
         props.strings?.attachmentCardGroupMessage ?? localeStrings.attachmentCardGroupMessage;
-      /* @conditional-compile-remove(file-sharing) */
+      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
       return _formatString(fileGroupLocaleString, {
         attachmentCount: `${fileMetadata?.length ?? 0}`
       });
@@ -158,14 +161,14 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
  * @private
  */
 const DownloadIconTrampoline = (): JSX.Element => {
-  // @conditional-compile-remove(file-sharing)
+  // @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload)
   return <ArrowDownload20Regular data-ui-id={'file-download-card-download-icon'} />;
   // Return _some_ available icon, as the real icon is beta-only.
   return <Icon iconName="EditBoxCancel" style={actionIconStyle} />;
 };
 
 const useLocaleStringsTrampoline = (): _AttachmentDownloadCardsStrings => {
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   return useLocale().strings.messageThread;
   return { downloadAttachment: '', attachmentCardGroupMessage: '' };
 };
