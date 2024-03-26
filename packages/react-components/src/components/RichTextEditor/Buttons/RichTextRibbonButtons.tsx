@@ -16,7 +16,9 @@ const dividerRibbonButton = (theme: Theme, key: string): RibbonButton<string> =>
     commandBarProperties: {
       // show the item correctly for the overflow menu
       itemType: ContextualMenuItemType.Divider,
-      buttonStyles: ribbonDividerStyle(theme)
+      buttonStyles: ribbonDividerStyle(theme),
+      // this is still needed to remove checkmark icon space even though it is a divider
+      canCheck: false
     }
   };
 };

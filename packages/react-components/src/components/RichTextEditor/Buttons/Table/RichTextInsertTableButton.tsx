@@ -46,7 +46,8 @@ export const insertTableButton = (theme: Theme): RibbonButton<string> => {
         console.log('onRenderIcon', item);
         return <TableIcon />;
       },
-      buttonStyles: ribbonTableButtonStyle(theme)
+      buttonStyles: ribbonTableButtonStyle(theme),
+      canCheck: false
     }
   };
 };
