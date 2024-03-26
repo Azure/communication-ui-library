@@ -104,7 +104,7 @@ export const LargeGalleryLayout = (props: LargeGalleryProps): JSX.Element => {
   });
 
   if (localVideoComponent) {
-    if (screenShareComponent || spotlightedParticipantUserIds.length > 0) {
+    if (screenShareComponent || /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds.length > 0) {
       overflowGalleryTiles = [localVideoComponent].concat(overflowGalleryTiles);
     } else {
       gridTiles = [localVideoComponent].concat(gridTiles);
