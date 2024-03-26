@@ -25,7 +25,7 @@
     "textTooLong": "Długość wiadomości przekracza maksymalny limit.",
     "sendButtonAriaLabel": "Wyślij wiadomość",
     "attachmentUploadsPendingError": "Trwa przekazywanie... Czekaj.",
-    "removeAttachment": "Usuwanie pliku",
+    "removeAttachment": "Usuń plik",
     "uploading": "Przekazywanie",
     "uploadCompleted": "Zakończono przekazywanie"
   },
@@ -34,7 +34,7 @@
     "textTooLong": "Długość wiadomości przekracza maksymalny limit.",
     "sendButtonAriaLabel": "Wyślij wiadomość",
     "attachmentUploadsPendingError": "Trwa przekazywanie... Czekaj.",
-    "removeAttachment": "Usuń plik",
+    "removeAttachment": "Usuwanie pliku",
     "uploading": "Przekazywanie",
     "uploadCompleted": "Zakończono przekazywanie",
     "boldTooltip": "Pogrubienie",
@@ -182,7 +182,7 @@
     "downloadAttachment": "Pobierz plik",
     "blockedWarningText": "Ta wiadomość została usunięta ze względu na zasady organizacyjne.",
     "blockedWarningLinkText": "Szczegóły",
-    "attachmentCardGroupMessage": "Wiadomość ma następującą liczbę załączników: {attachmentCount}",
+    "attachmentCardGroupMessage": "Wiadomość ma {attachmentCount} załącznik",
     "messageDeletedAnnouncementAriaLabel": "Wiadomość została usunięta"
   },
   "errorBar": {
