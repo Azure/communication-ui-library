@@ -157,7 +157,6 @@ export { HoldButton } from '../../react-components/src';
 
 export { RaiseHandButton } from '../../react-components/src';
 
-/* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 export { Dialpad } from '../../react-components/src';
 
 /* @conditional-compile-remove(call-readiness) */
@@ -312,7 +311,6 @@ export type { Spotlight } from '../../react-components/src';
 export type { ImageOverlayProps, ImageOverlayStrings } from '../../react-components/src';
 /* @conditional-compile-remove(data-loss-prevention) */
 export type { BlockedMessage } from '../../react-components/src';
-/* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 export type {
   DialpadMode,
   DialpadProps,

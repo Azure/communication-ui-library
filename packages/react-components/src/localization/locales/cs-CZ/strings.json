@@ -182,7 +182,7 @@
     "downloadAttachment": "Stáhnout soubor",
     "blockedWarningText": "Tato zpráva se odstranila kvůli zásadám organizace.",
     "blockedWarningLinkText": "Podrobnosti",
-    "attachmentCardGroupMessage": "Zpráva obsahuje počet příloh: {attachmentCount}",
+    "attachmentCardGroupMessage": "Zpráva obsahuje {attachmentCount} přílohu",
     "messageDeletedAnnouncementAriaLabel": "Zpráva se odstranila."
   },
   "errorBar": {

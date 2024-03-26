@@ -315,8 +315,10 @@
       "startSpotlightCancelButtonLabel": "ביטול",
       "stopSpotlightHeading": "להפסיק להאיר בזרקור וידאו זה?",
       "stopSpotlightOnSelfHeading": "לצאת מזרקור?",
+      "stopAllSpotlightHeading": "להפסיק להציב זרקור על כל סרטוני הווידאו?",
       "stopSpotlightText": "וידאו זה לא יסומן עוד עבור כל האנשים בפגישה.",
       "stopSpotlightOnSelfText": "סרטון הווידאו שלך לא יסומן עוד עבור כל האנשים בפגישה.",
+      "stopAllSpotlightText": "סרטוני הווידאו לא יסומנו עוד עבור כל האנשים בפגישה.",
       "stopSpotlightConfirmButtonLabel": "הפסק להציב זרקור",
       "stopSpotlightOnSelfConfirmButtonLabel": "צא מזרקור",
       "stopSpotlightCancelButtonLabel": "ביטול"
