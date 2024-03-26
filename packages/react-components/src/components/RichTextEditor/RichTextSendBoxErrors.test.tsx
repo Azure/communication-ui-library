@@ -40,7 +40,7 @@ describe('RichTextSendBoxErrors should be shown correctly', () => {
   /* @conditional-compile-remove(file-sharing) */
   test('MessageBar should show file uploads error', async () => {
     const text = 'Test file uploads error';
-    render(<RichTextSendBoxErrors attachmentUploadError={{ message: text, timestamp: Date.now() }} />);
+    render(<RichTextSendBoxErrors attachmentuploadMessage={{ message: text, timestamp: Date.now() }} />);
     const sendBoxErrorComponent = await screen.findByText(text);
 
     expect(sendBoxErrorComponent).not.toBeNull();

@@ -183,6 +183,8 @@ export type {
   ParticipantsButtonStyles
 } from './ParticipantsButton';
 
+export type { AttachmentUploadStatus } from '../types/Attachment';
+
 export { ScreenShareButton } from './ScreenShareButton';
 export type { ScreenShareButtonProps, ScreenShareButtonStrings } from './ScreenShareButton';
 

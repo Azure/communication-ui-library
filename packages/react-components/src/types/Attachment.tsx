@@ -4,6 +4,14 @@
 import { ChatMessage } from '.';
 
 /**
+ * @beta
+ */
+export interface AttachmentUploadStatus {
+  message: string;
+  timestamp: number;
+}
+
+/**
  * Metadata containing basic information about the uploaded file.
  *
  * @beta
@@ -36,8 +44,7 @@ export interface AttachmentMetadata {
    * property to true to mark the upload as complete.
    */
   progress?: number;
-  payload?: Record<string, string>;
-  uploadError?: Error;
+  uploadMessage?: AttachmentUploadStatus;
 }
 
 /**

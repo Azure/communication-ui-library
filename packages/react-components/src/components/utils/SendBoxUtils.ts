@@ -18,7 +18,7 @@ export const hasIncompleteAttachmentUploads = (activeAttachmentUploads: Attachme
   return !!(
     activeAttachmentUploads?.length &&
     !activeAttachmentUploads
-      .filter((attachmentUpload) => !attachmentUpload.uploadError)
+      .filter((attachmentUpload) => !attachmentUpload.uploadMessage)
       .every((attachmentUpload) => attachmentUpload.progress === 1)
   );
 };
@@ -28,7 +28,7 @@ export const hasIncompleteAttachmentUploads = (activeAttachmentUploads: Attachme
  * @private
  */
 export const hasCompletedAttachmentUploads = (activeAttachmentUploads: AttachmentMetadata[] | undefined): boolean => {
-  return !!activeAttachmentUploads?.find((file) => !file.uploadError);
+  return !!activeAttachmentUploads?.find((file) => !file.uploadMessage);
 };
 
 /**

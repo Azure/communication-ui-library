@@ -31,6 +31,7 @@ export * from './theming';
 export * from './theming/generateTheme';
 
 export type {
+  AttachmentUploadStatus,
   BaseCustomStyles,
   CallParticipantListParticipant,
   ChatMessage,

@@ -128,7 +128,7 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
           attachment
             .filter((attachment) => {
               /* @conditional-compile-remove(file-sharing) */
-              return attachment ? attachment.payload?.teamsFileAttachment !== 'true' : true;
+              // return attachment ? attachment.payload?.teamsFileAttachment !== 'true' : true;
               return true;
             })
             .map((file) => file as unknown as AttachmentMetadata)

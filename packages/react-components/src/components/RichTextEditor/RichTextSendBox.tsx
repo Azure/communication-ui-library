@@ -193,7 +193,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       /* @conditional-compile-remove(file-sharing) */
       !!fileUploadsPendingError ||
       /* @conditional-compile-remove(file-sharing) */
-      !!activeFileUploads?.filter((fileUpload) => fileUpload.uploadError).pop()?.uploadError
+      !!activeFileUploads?.filter((fileUpload) => fileUpload.uploadMessage).pop()?.uploadMessage
     );
   }, [
     /* @conditional-compile-remove(file-sharing) */
@@ -227,7 +227,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       /* @conditional-compile-remove(file-sharing) */
       fileUploadsPendingError: fileUploadsPendingError,
       /* @conditional-compile-remove(file-sharing) */
-      fileUploadError: activeFileUploads?.filter((fileUpload) => fileUpload.uploadError).pop()?.uploadError,
+      fileuploadMessage: activeFileUploads?.filter((fileUpload) => fileUpload.uploadMessage).pop()?.uploadMessage,
       systemMessage: systemMessage,
       textTooLongMessage: contentTooLongMessage
     };

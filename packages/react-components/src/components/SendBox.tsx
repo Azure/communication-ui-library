@@ -282,7 +282,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
 
   /* @conditional-compile-remove(file-sharing) */
   const onRenderAttachmentUploads = useCallback(() => {
-    if (!activeAttachmentUploads?.filter((upload) => !upload.uploadError).length) {
+    if (!activeAttachmentUploads?.filter((upload) => !upload.uploadMessage).length) {
       return null;
     }
     return props.onRenderAttachmentUploads ? (

@@ -122,11 +122,9 @@ export interface AttachmentMetadata {
     extension: string;
     id: string;
     name: string;
-    // (undocumented)
-    payload?: Record<string, string>;
     progress?: number;
     // (undocumented)
-    uploadError?: Error;
+    uploadMessage?: AttachmentUploadStatus;
     url?: string;
 }
 
@@ -162,6 +160,14 @@ export interface AttachmentUploadOptions {
     acceptedMimeTypes?: string[];
     canUploadMultiple?: boolean;
     handler: AttachmentUploadHandler;
+}
+
+// @beta (undocumented)
+export interface AttachmentUploadStatus {
+    // (undocumented)
+    message: string;
+    // (undocumented)
+    timestamp: number;
 }
 
 // @internal

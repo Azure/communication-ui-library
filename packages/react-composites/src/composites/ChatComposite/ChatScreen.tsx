@@ -2,11 +2,12 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(image-overlay) */
-import { isIOS } from '@fluentui/react';
+import { Icon, isIOS } from '@fluentui/react';
 import { mergeStyles, Stack } from '@fluentui/react';
 /* @conditional-compile-remove(image-overlay) */
 import { PersonaSize } from '@fluentui/react';
 import {
+  AttachmentMenuAction,
   CommunicationParticipant,
   ErrorBar,
   MessageProps,
@@ -20,7 +21,7 @@ import {
   useTheme
 } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
-import { ChatMessage } from '@internal/react-components';
+import { ChatMessage, defaultAttachmentMenuAction } from '@internal/react-components';
 import React, { useCallback, useEffect, useMemo } from 'react';
 /* @conditional-compile-remove(image-overlay) */
 import { useState } from 'react';
@@ -198,6 +199,17 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   const userId = toFlatCommunicationIdentifier(adapter.getState().userId);
 
+  const getDefaultActionForAttachment = useCallback((message: ChatMessage): AttachmentMenuAction => {
+    if (message.senderId?.includes('8:orgid')) {
+      return {
+        name: defaultAttachmentMenuAction.name,
+        icon: <Icon iconName="Download" />,
+        onClick: defaultAttachmentMenuAction.onClick
+      };
+    }
+    return defaultAttachmentMenuAction;
+  }, []);
+
   /* @conditional-compile-remove(file-sharing) */
   const onRenderAttachmentDownloads = useCallback(
     (userId: string, message: ChatMessage) => (
@@ -206,13 +218,16 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         /* @conditional-compile-remove(file-sharing) */
         attachment={message.files || []}
         /* @conditional-compile-remove(file-sharing) */
-        actionForAttachment={attachmentOptions?.downloadOptions?.actionForAttachment}
+        actionForAttachment={
+          attachmentOptions?.downloadOptions?.actionForAttachment ??
+          ((a, m) => [getDefaultActionForAttachment(message)])
+        }
         onDownloadErrorMessage={(errorMessage: string) => {
           setDownloadErrorMessage(errorMessage);
         }}
       />
     ),
-    [attachmentOptions?.downloadOptions?.actionForAttachment]
+    [attachmentOptions?.downloadOptions?.actionForAttachment, getDefaultActionForAttachment]
   );
 
   /* @conditional-compile-remove(image-overlay) */

@@ -11,7 +11,7 @@ export interface RichTextSendBoxErrorsProps {
   /* @conditional-compile-remove(file-sharing) */
   attachmentUploadsPendingError?: SendBoxErrorBarError;
   /* @conditional-compile-remove(file-sharing) */
-  attachmentUploadError?: SendBoxErrorBarError;
+  attachmentuploadMessage?: SendBoxErrorBarError;
   systemMessage?: string;
   textTooLongMessage?: string;
 }
@@ -22,7 +22,7 @@ export interface RichTextSendBoxErrorsProps {
 export const RichTextSendBoxErrors = (props: RichTextSendBoxErrorsProps): JSX.Element => {
   const {
     /* @conditional-compile-remove(file-sharing) */
-    attachmentUploadError,
+    attachmentuploadMessage,
     /* @conditional-compile-remove(file-sharing) */
     attachmentUploadsPendingError,
     systemMessage,
@@ -62,8 +62,8 @@ export const RichTextSendBoxErrors = (props: RichTextSendBoxErrorsProps): JSX.El
         errors.push(attachmentUploadsPendingError);
       }
       /* @conditional-compile-remove(file-sharing) */
-      if (attachmentUploadError) {
-        errors.push(attachmentUploadError);
+      if (attachmentuploadMessage) {
+        errors.push(attachmentuploadMessage);
       }
       if (errors.length === 0) {
         return undefined;
@@ -73,7 +73,7 @@ export const RichTextSendBoxErrors = (props: RichTextSendBoxErrorsProps): JSX.El
       return sortedErrors[0];
     });
   }, [
-    /* @conditional-compile-remove(file-sharing) */ attachmentUploadError,
+    /* @conditional-compile-remove(file-sharing) */ attachmentuploadMessage,
     /* @conditional-compile-remove(file-sharing) */ attachmentUploadsPendingError
   ]);
 
