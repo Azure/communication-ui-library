@@ -37,9 +37,9 @@ const tableEditInsertMenuItem: ContextMenuItem<string> = {
 
 const tableEditDeleteMenuItem: ContextMenuItem<string> = {
   key: 'menuNameTableDelete',
-  unlocalizedText: 'Delete123',
+  unlocalizedText: 'Delete',
   subItems: {
-    menuNameTableDeleteColumn: 'Delete column2323',
+    menuNameTableDeleteColumn: 'Delete column',
     menuNameTableDeleteRow: 'Delete row',
     menuNameTableDeleteTable: 'Delete table'
   },
