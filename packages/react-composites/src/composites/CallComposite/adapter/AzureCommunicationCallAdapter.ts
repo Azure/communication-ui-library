@@ -659,7 +659,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     const isTeamsMeeting = this.locator ? 'meetingLink' in this.locator : false;
     /* @conditional-compile-remove(meeting-id) */
     const isTeamsMeetingId = this.locator ? 'meetingId' in this.locator : false;
-    /* @conditional-compile-remove(rooms) */
     const isRoomsCall = this.locator ? 'roomId' in this.locator : false;
 
     /* @conditional-compile-remove(teams-identity-support) */
