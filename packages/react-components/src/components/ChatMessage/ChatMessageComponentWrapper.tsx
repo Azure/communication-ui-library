@@ -7,7 +7,7 @@ import { MessageProps, MessageRenderer, MessageThreadStyles, _ChatMessageProps }
 import { ChatMessage, OnRenderAvatarCallback } from '../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { FileDownloadHandler } from '../../types/Attachment';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from '../MentionPopover';
@@ -42,7 +42,7 @@ export type ChatMessageComponentWrapperProps = _ChatMessageProps & {
   showMessageStatus?: boolean;
   participantCount?: number;
   readCount?: number;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
   onActionButtonClick: (
     message: ChatMessage,
@@ -53,7 +53,7 @@ export type ChatMessageComponentWrapperProps = _ChatMessageProps & {
       }[]
     ) => void
   ) => void;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   fileDownloadHandler?: FileDownloadHandler;
   /* @conditional-compile-remove(date-time-customization) */
   onDisplayDateTimeString?: (messageDate: Date) => string;

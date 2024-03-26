@@ -16,7 +16,7 @@ export interface AttachmentMetadata {
   /**
    * Unique ID of the attachment.
    */
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   id: string;
   /**
    * File name to be displayed.
@@ -26,7 +26,7 @@ export interface AttachmentMetadata {
    * Download URL for the attachment.
    */
   url: string;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /*
    * Optional dictionary of meta data associated with the attachment.
    */
