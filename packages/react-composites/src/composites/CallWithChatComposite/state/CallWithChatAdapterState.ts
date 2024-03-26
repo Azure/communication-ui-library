@@ -9,7 +9,7 @@ import { CallAdapter, CallAdapterState, CallCompositePage } from '../../CallComp
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
-import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
+import { ChatAdapterState } from '../../ChatComposite';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadsUiState } from '../../ChatComposite';
 import { AdapterErrors } from '../../common/adapters';
@@ -115,16 +115,12 @@ export interface CallWithChatAdapterState extends CallWithChatAdapterUiState, Ca
 /**
  * @private
  */
-export function callWithChatAdapterStateFromBackingStates(
-  callAdapter: CallAdapter,
-  chatAdapter: ChatAdapter
-): CallWithChatAdapterState {
+export function callWithChatAdapterStateFromBackingStates(callAdapter: CallAdapter): CallWithChatAdapterState {
   const callAdapterState = callAdapter.getState();
-  const chatAdapterState = chatAdapter.getState();
 
   return {
     call: callAdapterState.call,
-    chat: chatAdapterState.thread,
+    chat: undefined,
     userId: callAdapterState.userId,
     page: callAdapterState.page,
     displayName: callAdapterState.displayName,
@@ -132,18 +128,18 @@ export function callWithChatAdapterStateFromBackingStates(
     isLocalPreviewMicrophoneEnabled: callAdapterState.isLocalPreviewMicrophoneEnabled,
     isTeamsCall: callAdapterState.isTeamsCall,
     latestCallErrors: callAdapterState.latestErrors,
-    latestChatErrors: chatAdapterState.latestErrors,
+    latestChatErrors: {},
     /* @conditional-compile-remove(file-sharing) */
-    fileUploads: chatAdapterState.fileUploads,
+    fileUploads: {},
     /* @conditional-compile-remove(PSTN-calls) */
     alternateCallerId: callAdapterState.alternateCallerId,
     /* @conditional-compile-remove(unsupported-browser) */
     environmentInfo: callAdapterState.environmentInfo,
-
+    /* @conditional-compile-remove(video-background-effects) */
     videoBackgroundImages: callAdapterState.videoBackgroundImages,
-
+    /* @conditional-compile-remove(video-background-effects) */
     onResolveVideoEffectDependency: callAdapterState.onResolveVideoEffectDependency,
-
+    /* @conditional-compile-remove(video-background-effects) */
     selectedVideoBackgroundEffect: callAdapterState.selectedVideoBackgroundEffect,
     /* @conditional-compile-remove(hide-attendee-name) */
     /** Hide attendee names in teams meeting */
