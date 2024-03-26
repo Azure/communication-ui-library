@@ -10,7 +10,9 @@ import { _AttachmentCard } from './AttachmentCard';
 import { _AttachmentCardGroup } from './AttachmentCardGroup';
 import { _formatString } from '@internal/acs-ui-common';
 import { AttachmentMetadata, FileDownloadHandler } from '../types/Attachment';
-import { Open20Filled, ArrowDownload20Filled } from '@fluentui/react-icons';
+import { Open20Regular } from '@fluentui/react-icons';
+/* @conditional-compile-remove(file-sharing) */
+import { ArrowDownload20Regular } from '@fluentui/react-icons';
 
 /**
  * Represents the type of attachment
@@ -140,7 +142,7 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
                   ) : true && isShowDownloadIcon(attachment) ? (
                     <DownloadIconTrampoline />
                   ) : (
-                    <Open20Filled />
+                    <Open20Regular />
                   )
                 }
                 actionHandler={() => fileDownloadHandler(userId, attachment)}
@@ -157,7 +159,7 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
  */
 const DownloadIconTrampoline = (): JSX.Element => {
   // @conditional-compile-remove(file-sharing)
-  return <ArrowDownload20Filled />;
+  return <ArrowDownload20Regular />;
   // Return _some_ available icon, as the real icon is beta-only.
   return <Icon iconName="EditBoxCancel" style={actionIconStyle} />;
 };
