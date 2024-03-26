@@ -14,7 +14,6 @@ import {
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
-/* @conditional-compile-remove(dialpad) */
 import { DtmfTone } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
@@ -85,7 +84,6 @@ export interface CommonCallingHandlers {
   onDisposeLocalStreamView: () => Promise<void>;
   onDisposeRemoteVideoStreamView: (userId: string) => Promise<void>;
   onDisposeRemoteScreenShareStreamView: (userId: string) => Promise<void>;
-  /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
   onSendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
   onRemoveParticipant(userId: string): Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
@@ -531,7 +529,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       await disposeAllLocalPreviewViews(callClient);
     };
 
-    /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
     const onSendDtmfTone = async (dtmfTone: DtmfTone): Promise<void> => await call?.sendDtmf(dtmfTone);
 
     const notImplemented = (): any => {
@@ -686,7 +683,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onAddParticipant: notImplemented,
       onRemoveParticipant: notImplemented,
       onStartCall: notImplemented,
-      /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */ onSendDtmfTone,
+      onSendDtmfTone,
       /* @conditional-compile-remove(call-readiness) */
       askDevicePermission,
 
