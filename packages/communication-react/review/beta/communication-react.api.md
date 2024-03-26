@@ -1658,7 +1658,7 @@ export type ChatAdapterUiState = {
 };
 
 // @public
-export type ChatAttachmentType = 'unknown' | 'image' | /* @conditional-compile-remove(file-sharing) */ 'file';
+export type ChatAttachmentType = 'unknown' | 'image' | /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ 'file';
 
 // @public
 export type ChatBaseSelectorProps = {
