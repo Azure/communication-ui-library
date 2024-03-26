@@ -127,7 +127,7 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
   }
 
   return (
-    <div style={attachmentDownloadCardsStyle} data-ui-id="file-download-card-download-icon">
+    <div style={attachmentDownloadCardsStyle} data-ui-id="file-download-card-group">
       <_AttachmentCardGroup ariaLabel={attachmentCardGroupDescription()}>
         {fileMetadata &&
           fileMetadata.map((attachment) => (
@@ -159,7 +159,7 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
  */
 const DownloadIconTrampoline = (): JSX.Element => {
   // @conditional-compile-remove(file-sharing)
-  return <ArrowDownload20Regular data-ui-id={'file-download-card-group'} />;
+  return <ArrowDownload20Regular data-ui-id={'file-download-card-download-icon'} />;
   // Return _some_ available icon, as the real icon is beta-only.
   return <Icon iconName="EditBoxCancel" style={actionIconStyle} />;
 };
