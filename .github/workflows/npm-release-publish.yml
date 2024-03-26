@@ -152,14 +152,17 @@ jobs:
           git tag ${{ steps.version.outputs.version }}
           git push --tags
 
-      # Upload non-react releases
+      # Upload non-react releases for public preview
       - name: Upload Public Preview Release
+        if: ${{ github.event.inputs.release-flavor == 'beta' }}
         uses: softprops/action-gh-release@v1
         with:
           name: PublicPreview ${{ steps.version.outputs.version }}
           tag_name: PublicPreview/${{ steps.version.outputs.version }}
           files: |
             ./samples/StaticHtmlComposites/dist/callComposite.js
+            ./samples/StaticHtmlComposites/dist/outboundCallComposite.js
             ./samples/StaticHtmlComposites/dist/chatComposite.js
+            ./samples/StaticHtmlComposites/dist/callWithChatComposite.js
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -107,18 +107,15 @@ export interface ChatAdapterThreadManagement {
    *
    */
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /**
    * Downloads a resource into the cache for the given message.
    */
   downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /**
    * Removes a resource from the cache for the given message.
    */
   removeResourceFromCache(resourceDetails: ResourceDetails): void;
 }
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * Details required for download a resource to cache.
  *

@@ -21,11 +21,11 @@ export const richTextEditorStyle = (props: { minHeight: string; maxHeight: strin
 /**
  * @private
  */
-export const richTextEditorWrapperStyle = (theme: Theme, addTopOffset: boolean, addRightOffset: boolean): string => {
+export const richTextEditorWrapperStyle = (theme: Theme, addTopOffset: boolean): string => {
   return mergeStyles({
     paddingTop: `${addTopOffset ? '0.5rem' : '0'}`,
     paddingInlineStart: `0.75rem`,
-    paddingInlineEnd: `${addRightOffset ? '0.75rem' : '0'}`,
+    paddingInlineEnd: `0.75rem`,
     lineHeight: '1.25rem',
     maxWidth: '100%',
     color: theme.palette.neutralPrimary,

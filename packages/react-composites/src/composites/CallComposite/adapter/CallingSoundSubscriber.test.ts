@@ -1,12 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(calling-sounds) */
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { createMockCall } from '../../CallComposite/adapter/TestUtils';
-/* @conditional-compile-remove(calling-sounds) */
 import { CallingSounds } from './CallAdapter';
-/* @conditional-compile-remove(calling-sounds) */
 import { CallingSoundSubscriber } from './CallingSoundSubscriber';
 
 const audioMocks = {
@@ -26,7 +23,6 @@ describe('Calling sound subscriber tests', () => {
     const mockCall = createMockCall();
     expect(mockCall).toBeDefined();
   });
-  /* @conditional-compile-remove(calling-sounds) */
   test('should play ringing sound when call is ringing', () => {
     const callee: CommunicationIdentifier[] = [{ communicationUserId: '8:orgid:30138458-6b40-40d6-8c29-6b127031581a' }];
     const call = createMockCall();
@@ -44,7 +40,6 @@ describe('Calling sound subscriber tests', () => {
     expect(audioMocks.Audio.play).toHaveBeenCalled();
   });
 
-  /* @conditional-compile-remove(calling-sounds) */
   test('should play ended sound when call is ended', () => {
     const callee: CommunicationIdentifier[] = [{ communicationUserId: '8:orgid:30138458-6b40-40d6-8c29-6b127031581a' }];
     const call = createMockCall();
@@ -63,7 +58,6 @@ describe('Calling sound subscriber tests', () => {
     expect(audioMocks.Audio.play).toHaveBeenCalled();
   });
 
-  /* @conditional-compile-remove(calling-sounds) */
   test('should not play sound when call is made to PSTN user', () => {
     const callee: CommunicationIdentifier[] = [{ phoneNumber: '+14045554444' }];
     const call = createMockCall();
@@ -77,7 +71,6 @@ describe('Calling sound subscriber tests', () => {
     expect(audioMocks.Audio.play).not.toHaveBeenCalled();
   });
 
-  /* @conditional-compile-remove(calling-sounds) */
   test('should play busy sound when call is rejected', () => {
     const callee: CommunicationIdentifier[] = [{ phoneNumber: '+14045554444' }];
     const call = createMockCall();

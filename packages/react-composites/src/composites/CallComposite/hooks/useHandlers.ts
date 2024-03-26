@@ -8,7 +8,7 @@ import { CommonProperties, toFlatCommunicationIdentifier } from '@internal/acs-u
 import { ReactElement } from 'react';
 import memoizeOne from 'memoize-one';
 import { CommonCallAdapter } from '..';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { VideoBackgroundBlurEffect, VideoBackgroundReplacementEffect } from '..';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isCameraOn } from '../utils';
@@ -17,8 +17,12 @@ import { DtmfTone } from '@azure/communication-calling';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(reaction) */
 import { Reaction } from '@azure/communication-calling';
-/* @conditional-compile-remove(video-background-effects) */
-import type { BackgroundReplacementConfig, BackgroundBlurConfig } from '@azure/communication-calling';
+
+import type {
+  BackgroundReplacementConfig,
+  BackgroundBlurConfig,
+  ParticipantCapabilities
+} from '@azure/communication-calling';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -40,14 +44,14 @@ export const useHandlers = <PropsT>(
 ): Pick<CommonCallingHandlers, CommonProperties<CommonCallingHandlers, PropsT>> &
   /* @conditional-compile-remove(spotlight) */ Partial<_ComponentCallingHandlers> => {
   const adapter = useAdapter();
-  const canSpotlight = !!adapter.getState().call?.capabilitiesFeature?.capabilities.spotlightParticipant.isPresent;
-  return createCompositeHandlers(adapter, canSpotlight);
+  const capabilities = adapter.getState().call?.capabilitiesFeature?.capabilities;
+  return createCompositeHandlers(adapter, capabilities);
 };
 
 const createCompositeHandlers = memoizeOne(
   (
     adapter: CommonCallAdapter,
-    canSpotlight: boolean
+    capabilities?: ParticipantCapabilities
   ): CommonCallingHandlers & /* @conditional-compile-remove(spotlight) */ Partial<_ComponentCallingHandlers> => {
     return {
       onCreateLocalStreamView: async (options) => {
@@ -153,11 +157,11 @@ const createCompositeHandlers = memoizeOne(
       askDevicePermission: async (constrain) => {
         return adapter.askDevicePermission(constrain);
       },
-      /* @conditional-compile-remove(video-background-effects) */
+
       onRemoveVideoBackgroundEffects: async () => {
         return await adapter.stopVideoBackgroundEffects();
       },
-      /* @conditional-compile-remove(video-background-effects) */
+
       onBlurVideoBackground: async (backgroundBlurConfig?: BackgroundBlurConfig) => {
         const blurConfig: VideoBackgroundBlurEffect = {
           effectName: 'blur',
@@ -165,7 +169,7 @@ const createCompositeHandlers = memoizeOne(
         };
         return await adapter.startVideoBackgroundEffect(blurConfig);
       },
-      /* @conditional-compile-remove(video-background-effects) */
+
       onReplaceVideoBackground: async (backgroundReplacementConfig: BackgroundReplacementConfig) => {
         const replacementConfig: VideoBackgroundReplacementEffect = {
           effectName: 'replacement',
@@ -206,7 +210,7 @@ const createCompositeHandlers = memoizeOne(
         await adapter.stopAllSpotlight();
       },
       /* @conditional-compile-remove(spotlight) */
-      onStartLocalSpotlight: canSpotlight
+      onStartLocalSpotlight: capabilities?.spotlightParticipant.isPresent
         ? async (): Promise<void> => {
             await adapter.startSpotlight();
           }
@@ -216,13 +220,13 @@ const createCompositeHandlers = memoizeOne(
         await adapter.stopSpotlight();
       },
       /* @conditional-compile-remove(spotlight) */
-      onStartRemoteSpotlight: canSpotlight
+      onStartRemoteSpotlight: capabilities?.spotlightParticipant.isPresent
         ? async (userIds?: string[]): Promise<void> => {
             await adapter.startSpotlight(userIds);
           }
         : undefined,
       /* @conditional-compile-remove(spotlight) */
-      onStopRemoteSpotlight: canSpotlight
+      onStopRemoteSpotlight: capabilities?.removeParticipantsSpotlight.isPresent
         ? async (userIds?: string[]): Promise<void> => {
             await adapter.stopSpotlight(userIds);
           }

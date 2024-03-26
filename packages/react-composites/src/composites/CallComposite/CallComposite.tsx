@@ -36,9 +36,7 @@ import { HoldPage } from './pages/HoldPage';
 import { UnsupportedBrowserPage } from './pages/UnsupportedBrowser';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey } from '@azure/communication-calling';
-import { PermissionConstraints } from '@azure/communication-calling';
-/* @conditional-compile-remove(rooms) */
-import { ParticipantRole } from '@azure/communication-calling';
+import { ParticipantRole, PermissionConstraints } from '@azure/communication-calling';
 import { MobileChatSidePaneTabHeaderProps } from '../common/TabHeader';
 import { InjectedSidePaneProps, SidePaneProvider, SidePaneRenderer } from './components/SidePane/SidePaneProvider';
 import {
@@ -351,7 +349,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   useEffect(() => {
     (async () => {
       const constrain = getQueryOptions({
-        /* @conditional-compile-remove(rooms) */ role: adapter.getState().call?.role
+        role: adapter.getState().call?.role
       });
       await adapter.askDevicePermission(constrain);
       adapter.queryCameras();
@@ -432,6 +430,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const alternateCallerId = adapter.getState().alternateCallerId;
   const leavePageStyle = useMemo(() => leavingPageStyle(palette), [palette]);
   let pageElement: JSX.Element | undefined;
+  const [pinnedParticipants, setPinnedParticipants] = useState<string[]>([]);
   switch (page) {
     case 'configuration':
       pageElement = (
@@ -592,6 +591,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           userSetOverflowGalleryPosition={userSetOverflowGalleryPosition}
           /* @conditional-compile-remove(capabilities) */
           capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
+          pinnedParticipants={pinnedParticipants}
+          setPinnedParticipants={setPinnedParticipants}
         />
       );
       break;
@@ -720,10 +721,7 @@ export const CallCompositeInner = (props: CallCompositeProps & InternalCallCompo
   );
 };
 
-const getQueryOptions = (options: {
-  /* @conditional-compile-remove(rooms) */ role?: ParticipantRole;
-}): PermissionConstraints => {
-  /* @conditional-compile-remove(rooms) */
+const getQueryOptions = (options: { role?: ParticipantRole }): PermissionConstraints => {
   if (options.role === 'Consumer') {
     return {
       video: false,

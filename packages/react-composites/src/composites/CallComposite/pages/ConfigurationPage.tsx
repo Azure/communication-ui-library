@@ -49,13 +49,13 @@ import { ConfigurationPageErrorBar } from '../components/ConfigurationPageErrorB
 import { getDevicePermissionState } from '../utils';
 /* @conditional-compile-remove(call-readiness) */
 import { CallReadinessModal, CallReadinessModalFallBack } from '../components/CallReadinessModal';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM, useVideoEffectsPane } from '../components/SidePane/useVideoEffectsPane';
 import { SidePane } from '../components/SidePane/SidePane';
 import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { useIsParticularSidePaneOpen } from '../components/SidePane/SidePaneProvider';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { localVideoSelector } from '../../CallComposite/selectors/localVideoStreamSelector';
 /* @conditional-compile-remove(capabilities) */
 import { CapabilitiesChangeNotificationBarProps } from '../components/CapabilitiesChangedNotificationBar';
@@ -128,15 +128,12 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   const environmentInfo = adapter.getState().environmentInfo;
 
   let disableStartCallButton = !microphonePermissionGranted || deviceState.microphones?.length === 0;
-  /* @conditional-compile-remove(rooms) */
   const role = adapter.getState().call?.role;
 
-  /* @conditional-compile-remove(video-background-effects) */
   const isCameraOn = useSelector(localVideoSelector).isAvailable;
 
   let filteredLatestErrors: ActiveErrorMessage[] = props.latestErrors;
 
-  /* @conditional-compile-remove(rooms) */
   // TODO: move this logic to the error bar selector once role is plumbed from the headless SDK
   if (role !== 'Consumer') {
     filteredLatestErrors = filteredLatestErrors.filter(
@@ -144,12 +141,10 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
     );
   }
 
-  /* @conditional-compile-remove(video-background-effects) */
   if ((useIsParticularSidePaneOpen('videoeffects') || !isCameraOn) && errorBarProps) {
     filteredLatestErrors = filteredLatestErrors.filter((e) => e.type !== 'unableToStartVideoEffect');
   }
 
-  /* @conditional-compile-remove(rooms) */
   if (role === 'Consumer') {
     // If user's role permissions do not allow access to the microphone button then DO NOT disable the start call button
     // because microphone device permission is not needed for the user's role
@@ -190,9 +185,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
     </Stack.Item>
   );
 
-  let mobileWithPreview = mobileView;
-  /* @conditional-compile-remove(rooms) */
-  mobileWithPreview = mobileWithPreview && role !== 'Consumer';
+  const mobileWithPreview = mobileView && role !== 'Consumer';
 
   /* @conditional-compile-remove(call-readiness) */
   const permissionsState: {
@@ -238,7 +231,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   /* @conditional-compile-remove(call-readiness) */
   const forceShowingCheckPermissions = !minimumFallbackTimerElapsed;
 
-  /* @conditional-compile-remove(video-background-effects) */
   const { toggleVideoEffectsPane, closeVideoEffectsPane, isVideoEffectsPaneOpen } = useVideoEffectsPane(
     props.updateSidePaneRenderer,
     mobileView,
@@ -247,10 +239,9 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   );
 
   const startCall = useCallback(async () => {
-    /* @conditional-compile-remove(video-background-effects) */
     closeVideoEffectsPane();
     startCallHandler();
-  }, [startCallHandler, /* @conditional-compile-remove(video-background-effects) */ closeVideoEffectsPane]);
+  }, [startCallHandler, closeVideoEffectsPane]);
 
   const panelLayerProps = useMemo(
     () => ({
@@ -357,10 +348,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
             verticalFill={mobileWithPreview}
             tokens={deviceConfigurationStackTokens}
           >
-            {localPreviewTrampoline(
-              mobileWithPreview,
-              /* @conditional-compile-remove(rooms) */ !!(role === 'Consumer')
-            )}
+            {localPreviewTrampoline(mobileWithPreview, !!(role === 'Consumer'))}
             <Stack styles={mobileView ? undefined : configurationSectionStyle}>
               {!mobileWithPreview && (
                 <Stack
@@ -390,7 +378,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
                     onClickEnableDevicePermission={() => {
                       setIsPermissionsModalDismissed(true);
                     }}
-                    /* @conditional-compile-remove(video-background-effects) */
                     onClickVideoEffects={toggleVideoEffectsPane}
                   />
                 </Stack>
@@ -410,7 +397,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           </Stack>
         </Stack>
         <Panel
-          /* @conditional-compile-remove(video-background-effects) */
           isOpen={isVideoEffectsPaneOpen}
           hasCloseButton={false}
           isBlocking={false}
@@ -419,7 +405,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           focusTrapZoneProps={panelFocusProps}
           layerProps={panelLayerProps}
           type={PanelType.custom}
-          /* @conditional-compile-remove(video-background-effects) */
           customWidth={`${VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM}rem`}
         >
           <SidePane
@@ -435,7 +420,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
 };
 
 const localPreviewTrampoline = (mobileView: boolean, doNotShow?: boolean): JSX.Element | undefined => {
-  /* @conditional-compile-remove(rooms) */
   if (doNotShow) {
     return undefined;
   }

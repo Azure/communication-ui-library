@@ -8,14 +8,13 @@ import { ChatMessageContent } from '../ChatMessage/ChatMessageContent';
 import { BlockedMessage } from '../../types/ChatMessage';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessageContent } from '../ChatMessage/ChatMessageContent';
-/* @conditional-compile-remove(image-overlay) */
 import { InlineImageOptions } from '../ChatMessage/ChatMessageContent';
 import { MessageThreadStrings } from '../MessageThread';
 /* @conditional-compile-remove(mention) */
 import { MentionDisplayOptions } from '../MentionPopover';
-import { _FileDownloadCards } from '../FileDownloadCards';
+import { _AttachmentDownloadCards } from '../AttachmentDownloadCards';
 /* @conditional-compile-remove(file-sharing) */
-import { FileDownloadHandler } from '../FileDownloadCards';
+import { FileDownloadHandler } from '../../types/Attachment';
 import { formatTimeForChatMessage, formatTimestampForChatMessage } from './Datetime';
 import { ComponentLocale } from '../../localization/LocalizationProvider';
 import { chatMessageEditedTagStyle } from '../styles/ChatMessageComponent.styles';
@@ -39,7 +38,6 @@ export function getMessageBubbleContent(
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage,
   strings: MessageThreadStrings,
   userId: string,
-  /* @conditional-compile-remove(image-overlay) */
   inlineImageOptions: InlineImageOptions | undefined,
   /* @conditional-compile-remove(file-sharing) */
   onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element,
@@ -63,7 +61,6 @@ export function getMessageBubbleContent(
         strings={strings}
         /* @conditional-compile-remove(mention) */
         mentionDisplayOptions={mentionDisplayOptions}
-        /* @conditional-compile-remove(image-overlay) */
         inlineImageOptions={inlineImageOptions}
       />
       {
@@ -93,14 +90,17 @@ const defaultOnRenderFileDownloads = (
 ): JSX.Element | undefined => {
   /* @conditional-compile-remove(file-sharing) */
   return (
-    <_FileDownloadCards
+    <_AttachmentDownloadCards
       userId={userId}
       /* @conditional-compile-remove(file-sharing) */
       fileMetadata={(message as ChatMessage).files || []}
       /* @conditional-compile-remove(file-sharing) */
       downloadHandler={fileDownloadHandler}
       /* @conditional-compile-remove(file-sharing) */
-      strings={{ downloadFile: strings.downloadFile, fileCardGroupMessage: strings.fileCardGroupMessage }}
+      strings={{
+        downloadAttachment: strings.downloadAttachment,
+        attachmentCardGroupMessage: strings.attachmentCardGroupMessage
+      }}
     />
   );
   return undefined;
