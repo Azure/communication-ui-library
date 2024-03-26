@@ -42,12 +42,12 @@ const PinnedParticipantsDisabledExampleText =
   require('!!raw-loader!./snippets/PinnedParticipantsDisabled.snippet.tsx').default;
 const PinnedParticipantsMobileExampleText =
   require('!!raw-loader!./snippets/PinnedParticipantsMobile.snippet.tsx').default;
+const PPTLiveSharingFromViewerExampleText =
+  require('!!raw-loader!./snippets/PPTLiveSharingFromViewer.snippet.tsx').default;
 const ScreenSharingFromPresenterExampleText =
   require('!!raw-loader!./snippets/ScreenSharingFromPresenter.snippet.tsx').default;
 const ScreenSharingFromViewerExampleText =
   require('!!raw-loader!./snippets/ScreenSharingFromViewer.snippet.tsx').default;
-const PPTLiveSharingFromViewerExampleText =
-  require('!!raw-loader!./snippets/PPTLiveSharingFromViewer.snippet.tsx').default;
 const speakerLayoutExampleText = require('!!raw-loader!./snippets/SpeakerLayout.snippet.tsx').default;
 const WithHorizontalGalleryExampleText = require('!!raw-loader!./snippets/WithHorizontalGallery.snippet.tsx').default;
 const WithVerticalGalleryExampleText = require('!!raw-loader!./snippets/WithVerticalGallery.snippet.tsx').default;
