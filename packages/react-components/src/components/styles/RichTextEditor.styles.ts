@@ -33,10 +33,10 @@ export const richTextEditorWrapperStyle = (theme: Theme, addTopOffset: boolean):
     '& table': {
       background: 'transparent',
       borderCollapse: 'collapse',
-      tableLayout: 'auto',
       width: '100%',
       borderSpacing: '0',
-      verticalAlign: 'top',
+      // don't shrink/expand cells during the input to the table
+      tableLayout: 'fixed',
 
       '& tr': {
         background: 'transparent',
@@ -46,7 +46,8 @@ export const richTextEditorWrapperStyle = (theme: Theme, addTopOffset: boolean):
           background: 'transparent',
           border: `1px solid ${theme.palette.neutralLight}`,
           wordBreak: 'normal',
-          padding: '0.125rem 0.25rem'
+          padding: '0.125rem 0.25rem',
+          verticalAlign: 'top'
         }
       }
     }
