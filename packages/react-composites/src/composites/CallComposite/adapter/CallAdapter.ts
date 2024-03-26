@@ -708,12 +708,14 @@ export interface CallAdapterCallOperations {
   submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
   /* @conditional-compile-remove(spotlight) */
   /**
-   * Start spotlight
+   * Start spotlight for local and remote participants by their user ids.
+   * If no array of user ids is passed then action is performed on local participant.
    */
   startSpotlight(userIds?: string[]): Promise<void>;
   /* @conditional-compile-remove(spotlight) */
   /**
-   * Stop spotlight
+   * Stop spotlight for local and remote participants by their user ids.
+   * If no array of user ids is passed then action is performed on local participant.
    */
   stopSpotlight(userIds?: string[]): Promise<void>;
   /* @conditional-compile-remove(spotlight) */
