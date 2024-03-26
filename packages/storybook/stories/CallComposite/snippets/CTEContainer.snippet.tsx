@@ -1,4 +1,4 @@
-import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
+import { TeamsMeetingIdLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { AzureCommunicationTokenCredential, MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import {
   CallComposite,
@@ -13,7 +13,9 @@ import React, { useMemo } from 'react';
 export type ContainerProps = {
   userId: MicrosoftTeamsUserIdentifier;
   token: string;
-  locator: string;
+  meetingLink?: string;
+  meetingId?: string;
+  meetingPasscode?: string;
   formFactor?: 'desktop' | 'mobile';
   fluentTheme?: PartialTheme | Theme;
   rtl?: boolean;
@@ -24,9 +26,16 @@ export type ContainerProps = {
 
 const isTeamsMeetingLink = (link: string): boolean => link.startsWith('https://teams.microsoft.com/l/meetup-join');
 
-const createCallAdapterLocator = (locator: string): TeamsMeetingLinkLocator | undefined => {
-  if (isTeamsMeetingLink(locator)) {
+const createCallAdapterLocator = (
+  locator?: string,
+  meetingId?: string,
+  meetingPasscode?: string
+): TeamsMeetingLinkLocator | TeamsMeetingIdLocator | undefined => {
+  if (locator && isTeamsMeetingLink(locator)) {
     return { meetingLink: locator };
+  }
+  if (meetingId && meetingPasscode) {
+    return { meetingId: meetingId, passcode: meetingPasscode };
   }
   return undefined;
 };
@@ -41,7 +50,10 @@ export const ContosoCTECallContainer = (props: ContainerProps): JSX.Element => {
     }
   }, [props.token]);
 
-  const locator = useMemo(() => createCallAdapterLocator(props.locator), [props.locator]);
+  const locator = useMemo(
+    () => createCallAdapterLocator(props.meetingLink, props.meetingId, props.meetingPasscode),
+    [props.meetingLink, props.meetingId, props.meetingPasscode]
+  );
 
   const adapter = useTeamsCallAdapter(
     {
@@ -54,7 +66,7 @@ export const ContosoCTECallContainer = (props: ContainerProps): JSX.Element => {
   );
 
   if (!locator) {
-    return <>Provided call locator '{props.locator}' is not recognized.</>;
+    return <>Provided call locator '{props.meetingLink ? props.meetingLink : props.meetingId}' is not recognized.</>;
   }
 
   if (adapter) {
