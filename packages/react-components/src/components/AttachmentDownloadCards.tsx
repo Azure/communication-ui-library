@@ -1,16 +1,18 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Icon, IconButton, Spinner, SpinnerSize, TooltipHost } from '@fluentui/react';
+import { Icon, Spinner, SpinnerSize, TooltipHost } from '@fluentui/react';
 import React, { useCallback, useState } from 'react';
 import { useMemo } from 'react';
 /* @conditional-compile-remove(file-sharing) */
 import { useLocale } from '../localization';
 import { _AttachmentCard } from './AttachmentCard';
 import { _AttachmentCardGroup } from './AttachmentCardGroup';
-import { iconButtonClassName } from './styles/IconButton.styles';
 import { _formatString } from '@internal/acs-ui-common';
 import { AttachmentMetadata, FileDownloadHandler } from '../types/Attachment';
+import { Open20Regular } from '@fluentui/react-icons';
+/* @conditional-compile-remove(file-sharing) */
+import { ArrowDownload20Regular } from '@fluentui/react-icons';
 
 /**
  * Represents the type of attachment
@@ -138,10 +140,10 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
                   showSpinner ? (
                     <Spinner size={SpinnerSize.medium} aria-live={'polite'} role={'status'} />
                   ) : true && isShowDownloadIcon(attachment) ? (
-                    <IconButton className={iconButtonClassName} ariaLabel={downloadAttachmentButtonString()}>
-                      <DownloadIconTrampoline />
-                    </IconButton>
-                  ) : undefined
+                    <DownloadIconTrampoline />
+                  ) : (
+                    <Open20Regular />
+                  )
                 }
                 actionHandler={() => fileDownloadHandler(userId, attachment)}
               />
@@ -157,7 +159,7 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
  */
 const DownloadIconTrampoline = (): JSX.Element => {
   // @conditional-compile-remove(file-sharing)
-  return <Icon data-ui-id="file-download-card-download-icon" iconName="DownloadFile" style={actionIconStyle} />;
+  return <ArrowDownload20Regular data-ui-id={'file-download-card-download-icon'} />;
   // Return _some_ available icon, as the real icon is beta-only.
   return <Icon iconName="EditBoxCancel" style={actionIconStyle} />;
 };

@@ -23,6 +23,8 @@ import { hasCompletedFileUploads, hasIncompleteFileUploads } from './utils/SendB
 import { MAXIMUM_LENGTH_OF_MESSAGE, isMessageTooLong, sanitizeText } from './utils/SendBoxUtils';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from './MentionPopover';
+/* @conditional-compile-remove(file-sharing) */
+import { FluentV9ThemeProvider } from '../theming/FluentV9ThemeProvider';
 
 /**
  * Fluent styles for {@link Sendbox}.
@@ -308,18 +310,27 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       props.onRenderFileUploads()
     ) : (
       <Stack className={attachmentUploadCardsStyles}>
-        <_AttachmentUploadCards
-          activeFileUploads={activeFileUploads}
-          onCancelFileUpload={props.onCancelFileUpload}
-          strings={{
-            removeAttachment: props.strings?.removeAttachment ?? localeStrings.removeAttachment,
-            uploading: props.strings?.uploading ?? localeStrings.uploading,
-            uploadCompleted: props.strings?.uploadCompleted ?? localeStrings.uploadCompleted
-          }}
-        />
+        <FluentV9ThemeProvider v8Theme={theme}>
+          <_AttachmentUploadCards
+            activeFileUploads={activeFileUploads}
+            onCancelFileUpload={props.onCancelFileUpload}
+            strings={{
+              removeAttachment: props.strings?.removeAttachment ?? localeStrings.removeAttachment,
+              uploading: props.strings?.uploading ?? localeStrings.uploading,
+              uploadCompleted: props.strings?.uploadCompleted ?? localeStrings.uploadCompleted
+            }}
+          />
+        </FluentV9ThemeProvider>
       </Stack>
     );
-  }, [activeFileUploads, props, localeStrings]);
+  }, [
+    activeFileUploads,
+    props,
+    theme,
+    localeStrings.removeAttachment,
+    localeStrings.uploading,
+    localeStrings.uploadCompleted
+  ]);
 
   return (
     <Stack
