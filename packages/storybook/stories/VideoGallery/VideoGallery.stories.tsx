@@ -22,13 +22,12 @@ import { MobileWrapper } from './snippets/MobileWrapper';
 import { OVC3x3VideoGalleryExample } from './snippets/OVC3x3.snippet';
 import { PinnedParticipantsDisabledExample } from './snippets/PinnedParticipantsDisabled.snippet';
 import { PinnedParticipantsMobileExample } from './snippets/PinnedParticipantsMobile.snippet';
+import { PPTLiveSharingFromViewerExample } from './snippets/PPTLiveSharingFromViewer.snippet';
 import { ScreenSharingFromPresenterExample } from './snippets/ScreenSharingFromPresenter.snippet';
 import { ScreenSharingFromViewerExample } from './snippets/ScreenSharingFromViewer.snippet';
 import { SpeakerLayoutExample } from './snippets/SpeakerLayout.snippet';
 import { WithHorizontalGalleryExample } from './snippets/WithHorizontalGallery.snippet';
 import { WithVerticalGalleryExample } from './snippets/WithVerticalGallery.snippet';
-import { PPTLiveSharingFromViewerExample } from './snippets/PPTLiveSharingFromViewer.snippet';
-
 const CustomAvatarVideoGalleryExampleText = require('!!raw-loader!./snippets/CustomAvatar.snippet.tsx').default;
 const CustomStyleVideoGalleryExampleText = require('!!raw-loader!./snippets/CustomStyle.snippet.tsx').default;
 const DefaultVideoGalleryExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
