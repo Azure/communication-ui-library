@@ -22,6 +22,8 @@ betaTest.describe('RichTextInputBoxComponent tests', () => {
     await expect(component).toHaveScreenshot('richtextinputboxcomponent-hover.png');
 
     await formatButton.click();
+    //move mouse to the format button so the screenshots are consistent
+    await formatButton.hover();
     await expect(component).toHaveScreenshot('richtextinputboxcomponent-with-format-toolbar.png');
   });
 
