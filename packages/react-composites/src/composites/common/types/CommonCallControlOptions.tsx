@@ -46,7 +46,7 @@ export type CommonCallControlOptions = {
          * whether to make end call button a split menu button, which will enable end call for everybody functionality.
          * @defaultValue false
          */
-        enableMenu: boolean;
+        hangUpForEveryone?: false | 'splitButtonAction';
       };
   /**
    * Show or Hide Microphone button during a call.

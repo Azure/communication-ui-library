@@ -456,7 +456,8 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                       enableEndCallMenu={
                         !isBoolean(props.callControls) &&
                         !isBoolean(props.callControls?.endCallButton) &&
-                        props.callControls?.endCallButton?.enableMenu
+                        !props.mobileView &&
+                        props.callControls?.endCallButton?.hangUpForEveryone === 'splitButtonAction'
                       }
                     />
                   </ControlBar>

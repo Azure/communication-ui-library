@@ -1883,7 +1883,7 @@ export type CommonCallControlOptions = {
         disabled: boolean;
     };
     endCallButton?: boolean | /* @conditional-compile-remove(end-call-options) */ {
-        enableMenu: boolean;
+        hangUpForEveryone?: false | 'splitButtonAction';
     };
     microphoneButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
         disabled: boolean;
