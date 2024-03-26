@@ -315,8 +315,10 @@
       "startSpotlightCancelButtonLabel": "取消",
       "stopSpotlightHeading": "停止聚焦此视频?",
       "stopSpotlightOnSelfHeading": "退出聚焦?",
+      "stopAllSpotlightHeading": "是否停止聚焦所有视频?",
       "stopSpotlightText": "将不再为会议中的每个人突出显示此视频。",
       "stopSpotlightOnSelfText": "将不再对会议中的每个人突出显示你的视频。",
+      "stopAllSpotlightText": "将不再对会议中的每个人突出显示该视频。",
       "stopSpotlightConfirmButtonLabel": "停止聚焦",
       "stopSpotlightOnSelfConfirmButtonLabel": "退出聚焦",
       "stopSpotlightCancelButtonLabel": "取消"

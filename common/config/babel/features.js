@@ -100,10 +100,6 @@ module.exports = {
     "gallery-layout-composite",
     // feature for hiding attendee name in the teams meeting
     "hide-attendee-name",
-    // Feature for end of call survey
-    'end-of-call-survey',
-    // Feature for end of call survey self host version
-    'end-of-call-survey-self-host',
     // Feature for meeting reactions
     'reaction',
     // Feature for Rich Text Editor (RTE) support
@@ -126,8 +122,6 @@ module.exports = {
     "close-captions",
     // Feature for the DTMF dialer for Teams voice apps
     "dtmf-dialer",
-    // dialpad
-    "dialpad",
     // Feature for call transfer
     "call-transfer",
     // custom branding for the composites
