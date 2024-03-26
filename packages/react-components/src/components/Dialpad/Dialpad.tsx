@@ -446,13 +446,7 @@ const DialpadContainer = (props: {
 export const Dialpad = (props: DialpadProps): JSX.Element => {
   const localeStrings = useLocale().strings.dialpad;
 
-  const dialpadLocaleStringsTrampoline = (): DialpadStrings => {
-    return localeStrings;
-    // Even though the component strings type doesn't have `DialpadStrings` in stable build,
-    // the string values exist. So unsafe cast for stable build.
-    return '' as unknown as DialpadStrings;
-  };
-  const strings = { ...dialpadLocaleStringsTrampoline(), ...props.strings };
+  const strings = { ...localeStrings, ...props.strings };
   return <DialpadContainer strings={strings} {...props} />;
 };
 
