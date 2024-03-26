@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { _updateUserDisplayNames, _videoGalleryRemoteParticipantsMemo } from '@internal/calling-component-bindings';
+import { _videoGalleryRemoteParticipantsMemo } from '@internal/calling-component-bindings';
+/* @conditional-compile-remove(PSTN-calls) */
+import { _updateUserDisplayNames } from '@internal/calling-component-bindings';
 import { RemoteParticipantState } from '@internal/calling-stateful-client';
 import * as reselect from 'reselect';
 import { localVideoSelector } from './localVideoStreamSelector';
