@@ -19,6 +19,8 @@ import {
 } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(spotlight) */
+import { SpotlightedParticipant } from '@azure/communication-calling';
 import { CallAdapterState, CallCompositePage } from '../adapter/CallAdapter';
 
 import { VideoBackgroundEffect } from '../adapter/CallAdapter';
@@ -222,3 +224,10 @@ export const getTargetCallees = (state: CallAdapterState): CommunicationIdentifi
  * @private
  */
 export const getStartTime = (state: CallAdapterState): Date | undefined => state.call?.startTime;
+
+/* @conditional-compile-remove(spotlight) */
+/**
+ * @private
+ */
+export const getSpotlightedParticipants = (state: CallAdapterState): SpotlightedParticipant[] | undefined =>
+  state.call?.spotlight?.spotlightedParticipants;
