@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { ActiveFileUpload } from '../AttachmentUploadCards';
 
 /**
@@ -10,7 +10,7 @@ import { ActiveFileUpload } from '../AttachmentUploadCards';
 export const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
 const EMPTY_MESSAGE_REGEX = /^\s*$/;
 
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 /**
  * @private
  */
@@ -23,7 +23,7 @@ export const hasIncompleteFileUploads = (activeFileUploads: ActiveFileUpload[] |
   );
 };
 
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 /**
  * @private
  */
