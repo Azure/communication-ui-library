@@ -21,7 +21,7 @@ We are excited to announce that the Azure Communication Services Web UI Library 
 - Move End of Call Survey feature to beta
 - Move PowerPoint Live sessions feature to beta
 - Add localRecordingNotification to calling-stateful-client ([PR #4265](https://github.com/azure/communication-ui-library/pull/4265) by edwardlee@microsoft.com)
-- Introduce new JS bundles for making outbound calls to teams voice applications ([commit](https://github.com/azure/communication-ui-library/commit/not available) by dmceachern@microsoft.com)
+- Introduce new JS bundles for making outbound calls to teams voice applications ([PR #4315](https://github.com/Azure/communication-ui-library/pull/4315) by dmceachern@microsoft.com)
 - Remove the InlineImageMetadata type ([PR #4212](https://github.com/azure/communication-ui-library/pull/4212) by 9044372+JoshuaLai@users.noreply.github.com)
 - Introduce new ability in the queue to cancel inflight request ([PR #4237](https://github.com/azure/communication-ui-library/pull/4237) by 9044372+JoshuaLai@users.noreply.github.com)
 - In cases of errors when fetch inline images, Chat Stateful Client now returns an empty string ([PR #4230](https://github.com/azure/communication-ui-library/pull/4230) by 9044372+JoshuaLai@users.noreply.github.com)
@@ -45,7 +45,6 @@ We are excited to announce that the Azure Communication Services Web UI Library 
 - Validate that the src you are fetching from and endpoint match ([PR #4251](https://github.com/azure/communication-ui-library/pull/4251) by 9044372+JoshuaLai@users.noreply.github.com)
 - Rename Files to Attachments ([PR #4303](https://github.com/azure/communication-ui-library/pull/4303) by 109105353+jpeng-ms@users.noreply.github.com)
 - Relocate File Sharing Data Models to Component level from Composite ([PR #4314](https://github.com/azure/communication-ui-library/pull/4314) by 109105353+jpeng-ms@users.noreply.github.com)
-
 
 ### Bug Fixes
 - Fix order of dominant speakers in overflow gallery ([PR #4276](https://github.com/azure/communication-ui-library/pull/4276) by miguelgamis@microsoft.com)
@@ -614,7 +613,7 @@ This feature includes:
 - Teams identity support on adapter layer ([PR #2426](https://github.com/azure/communication-ui-library/pull/2426) by jinan@microsoft.com)
 - VideoTile provides a prop `onLongTouch` that allows users to trigger a custom callback when VideoTile is long touched ([PR #2556](https://github.com/azure/communication-ui-library/pull/2556) by anjulgarg@live.com)
 - Drawer menu for mobile devices to video gallery ([PR #2613](https://github.com/azure/communication-ui-library/pull/2613) [PR #2557](https://github.com/azure/communication-ui-library/pull/2557) by anjulgarg@live.com)
-- Disable pin menu button on remote VideoTile of VideoGallery when max pinned remote video tiles is reached ([commit](https://github.com/azure/communication-ui-library/commit/not available) by miguelgamis@microsoft.com)
+- Disable pin menu button on remote VideoTile of VideoGallery when max pinned remote video tiles is reached ([PR #2610](https://github.com/Azure/communication-ui-library/pull/2610) by miguelgamis@microsoft.com)
 - ScalingMode to VideoGalleryStream type ([PR #2566](https://github.com/azure/communication-ui-library/pull/2566) by anjulgarg@live.com)
 - Fit/Fill options to VideoGallery video tiles ([PR #2574](https://github.com/azure/communication-ui-library/pull/2574) by anjulgarg@live.com)
 - VideoGallery announces when participants are pinned and unpinned. Added aria labels for pin and unpin menu item ([PR #2662](https://github.com/azure/communication-ui-library/pull/2662) by 79475487+mgamis-msft@users.noreply.github.com)
