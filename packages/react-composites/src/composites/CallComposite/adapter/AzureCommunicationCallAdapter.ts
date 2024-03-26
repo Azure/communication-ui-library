@@ -693,7 +693,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
         videoOptions
       }) as CallTypeOf<AgentType>;
     }
-    /* @conditional-compile-remove(rooms) */
     if (isRoomsCall) {
       return this.callAgent.join(this.locator as RoomCallLocator, {
         audioOptions,
