@@ -1,8 +1,85 @@
 # Change Log - @azure/communication-react
 
-This log was last generated on Mon, 26 Feb 2024 16:19:15 GMT and should not be manually modified.
+This log was last generated on Tue, 26 Mar 2024 17:38:26 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.15.0-beta.1](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.15.0-beta.1)
+
+Tue, 26 Mar 2024 17:38:26 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.14.0...@azure/communication-react_v1.15.0-beta.1)
+
+### Features
+- We are excited to announce that the ACS Web UI Library now has the ability to receive Teams interop images inline. Additionally, we have enabled users to click on an individual image to view it in a new ImageOverlay component. This component displays the selected image in full screen and allows users to download the image. ([commit](https://github.com/azure/communication-ui-library/commit/not available) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
+- [Calling] Reaction mobile view buttons (#4260) ([commit](https://github.com/azure/communication-ui-library/commit/not available) by mbellah@microsoft.com)
+- Add localRecordingNotification to calling-stateful-client ([PR #4265](https://github.com/azure/communication-ui-library/pull/4265) by edwardlee@microsoft.com)
+- Add composite option to disable captions ([commit](https://github.com/azure/communication-ui-library/commit/not available) by 96077406+carocao-msft@users.noreply.github.com)
+- Add adapter function to stop all spotligh t. Add people pane menu button to stop all spotlight. ([PR #4202](https://github.com/azure/communication-ui-library/pull/4202) by 79475487+mgamis-msft@users.noreply.github.com)
+- PresentationMode Overlay ([commit](https://github.com/azure/communication-ui-library/commit/not available) by mbellah@microsoft.com)
+- Assign first spotlighted remote participant, if any, to PiPiP in mobile people pane ([commit](https://github.com/azure/communication-ui-library/commit/not available) by 79475487+mgamis-msft@users.noreply.github.com)
+- Implement ACS Captions ([PR #4229](https://github.com/azure/communication-ui-library/pull/4229) by 96077406+carocao-msft@users.noreply.github.com)
+- Release 1.14.0-beta.1 merge back of pre-release branch ([PR #4191](https://github.com/azure/communication-ui-library/pull/4191) by 3941071+emlynmac@users.noreply.github.com)
+- Componentizing the reaction button for mobile view ([commit](https://github.com/azure/communication-ui-library/commit/not available) by mbellah@microsoft.com)
+- We are excited to announce that the Azure Communication Services Web UI Library now can view PowerPoint Live sessions initiated by a Teams client. Users can follow along with the current slide the presenter is sharing and view presenter annotations. Developers can use this functionality today through our composites (e.g CallComposite, CallWithChatComposite) as well as through components (e.g VideoGallery). ([commit](https://github.com/azure/communication-ui-library/commit/not available) by 93549644+ShaunaSong@users.noreply.github.com)
+- The UI Library now supports End of Call survey, with the feature added to the CallComposite and CallwithChatComposite on web. The survey supports feedback for the categories of overall quality, audio, video, and screenshare. This survey appears at the end of composite experience. By default, users are taken to a “thank you for your feedback” page after survey is submitted, and taken to the end call screen if survey is skipped. We provide abilities to overwrite those default screens. The survey can be disabled or enabled. The data received is sent to Contoso’s local Azure monitoring where it can be validated for overall call quality. When free form text survey is enabled, the free form text data collected are not sent to local Azure monitoring and will need to be handled by Contoso. ([commit](https://github.com/azure/communication-ui-library/commit/not available) by 96077406+carocao-msft@users.noreply.github.com)
+- Introduce new JS bundles for making outbound calls to teams voice applications ([commit](https://github.com/azure/communication-ui-library/commit/not available) by dmceachern@microsoft.com)
+- Chat Stateful Client now returns and empty string in cases of errors ([PR #4230](https://github.com/azure/communication-ui-library/pull/4230) by 9044372+JoshuaLai@users.noreply.github.com)
+- Stabilize feature  ([PR #4302](https://github.com/azure/communication-ui-library/pull/4302) by dmceachern@microsoft.com)
+- We are excited to announce that the Azure Communication Services Web UI Library now can view PowerPoint Live sessions initiated by a Teams client. Users can follow along with the current slide the presenter is sharing and view presenter annotations. Developers can use this functionality today through our composites (e.g CallComposite, CallWithChatComposite) as well as through components (e.g VideoGallery). ([PR #4264](https://github.com/azure/communication-ui-library/pull/4264) by 93549644+ShaunaSong@users.noreply.github.com)
+- Introduce new concept of ResourceResult ([PR #4223](https://github.com/azure/communication-ui-library/pull/4223) by 9044372+JoshuaLai@users.noreply.github.com)
+- Remove the InlineImageMetadata type ([PR #4212](https://github.com/azure/communication-ui-library/pull/4212) by 9044372+JoshuaLai@users.noreply.github.com)
+- Introduce new ability in the queue to cancel inflight request ([PR #4237](https://github.com/azure/communication-ui-library/pull/4237) by 9044372+JoshuaLai@users.noreply.github.com)
+- Add basic API and Lazy Loading  ([PR #4186](https://github.com/azure/communication-ui-library/pull/4186) by 73612854+palatter@users.noreply.github.com)
+- Add styling for send and message edit boxes ([PR #4224](https://github.com/azure/communication-ui-library/pull/4224) by 98852890+vhuseinova-msft@users.noreply.github.com)
+### Improvements
+- Making sourceUrl optional ([commit](https://github.com/azure/communication-ui-library/commit/not available) by 9044372+JoshuaLai@users.noreply.github.com)
+- Componentizing the reaction button for mobile view ([commit](https://github.com/azure/communication-ui-library/commit/not available) by mbellah@microsoft.com)
+- Reaction mobile view button animations ([commit](https://github.com/azure/communication-ui-library/commit/not available) by mbellah@microsoft.com)
+- Reaction mobile button PR feedback ([commit](https://github.com/azure/communication-ui-library/commit/not available) by mbellah@microsoft.com)
+- CC refactor and UI styles unit update ([commit](https://github.com/azure/communication-ui-library/commit/not available) by mbellah@microsoft.com)
+- Reaction mobile view button animations ([commit](https://github.com/azure/communication-ui-library/commit/not available) by mbellah@microsoft.com)
+- Rename imgAttrs to imageAttributes ([PR #4242](https://github.com/azure/communication-ui-library/pull/4242) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
+- In Composite, use adapter state to get the full size cached image src ([PR #4207](https://github.com/azure/communication-ui-library/pull/4207) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
+- In the chat composite, if the message contains image that's not an ACS image, we will render the image but it will not be clickable to view and download in the ImageOverlay ([PR #4214](https://github.com/azure/communication-ui-library/pull/4214) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
+- Update mention api to include isActive argument ([PR #4183](https://github.com/azure/communication-ui-library/pull/4183) by 73612854+palatter@users.noreply.github.com)
+- Change screenShareParicipant to be optional ([PR #4204](https://github.com/azure/communication-ui-library/pull/4204) by 93549644+ShaunaSong@users.noreply.github.com)
+- Making sourceUrl optional ([PR #4268](https://github.com/azure/communication-ui-library/pull/4268) by 9044372+JoshuaLai@users.noreply.github.com)
+- Remove AttachmentMetadata ([PR #4217](https://github.com/azure/communication-ui-library/pull/4217) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
+- Remove @azure/core-rest-pipeline from dependencies ([PR #4294](https://github.com/azure/communication-ui-library/pull/4294) by 2684369+JamesBurnside@users.noreply.github.com)
+- Hide participant information ([PR #4254](https://github.com/azure/communication-ui-library/pull/4254) by 93549644+ShaunaSong@users.noreply.github.com)
+- Update localized strings ([PR #4179](https://github.com/azure/communication-ui-library/pull/4179) by 3941071+emlynmac@users.noreply.github.com)
+- Upgrade Typescript to 5.4.2 ([PR #4284](https://github.com/azure/communication-ui-library/pull/4284) by 2684369+JamesBurnside@users.noreply.github.com)
+- update sdk version ([PR #4221](https://github.com/azure/communication-ui-library/pull/4221) by 93549644+ShaunaSong@users.noreply.github.com)
+- TDBuild - updating localized resource files. ([PR #4263](https://github.com/azure/communication-ui-library/pull/4263) by alkwa@microsoft.com)
+- Validate that the src you are fetching from and endpoint match ([PR #4251](https://github.com/azure/communication-ui-library/pull/4251) by 9044372+JoshuaLai@users.noreply.github.com)
+- Renamed Files to Attachments ([PR #4303](https://github.com/azure/communication-ui-library/pull/4303) by 109105353+jpeng-ms@users.noreply.github.com)
+- Relocate File Sharing Data Models to Component level from Composite ([PR #4314](https://github.com/azure/communication-ui-library/pull/4314) by 109105353+jpeng-ms@users.noreply.github.com)
+- Add more CCs for inline image ([PR #4187](https://github.com/azure/communication-ui-library/pull/4187) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
+- Turning off reaction feature usage in sample ([PR #4171](https://github.com/azure/communication-ui-library/pull/4171) by mbellah@microsoft.com)
+- Updates for the Rich Text Editor styling ([PR #4195](https://github.com/azure/communication-ui-library/pull/4195) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Remove conditional compile statements from codebase for DTMF dialer ([PR #4226](https://github.com/azure/communication-ui-library/pull/4226) by dmceachern@microsoft.com)
+- groom changelog ([PR #4180](https://github.com/azure/communication-ui-library/pull/4180) by 2684369+JamesBurnside@users.noreply.github.com)
+- Remove conditional-compilation flags for Gallery-layouts ([PR #4205](https://github.com/azure/communication-ui-library/pull/4205) by dmceachern@microsoft.com)
+- run CI on release branches ([PR #4181](https://github.com/azure/communication-ui-library/pull/4181) by 2684369+JamesBurnside@users.noreply.github.com)
+- Remove inline image CCs that's combined with other flags ([PR #4227](https://github.com/azure/communication-ui-library/pull/4227) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
+- Improve generate-api-diff output to more easily see errors ([PR #4192](https://github.com/azure/communication-ui-library/pull/4192) by 2684369+JamesBurnside@users.noreply.github.com)
+- Update hotfix instructions ([PR #4232](https://github.com/azure/communication-ui-library/pull/4232) by 2684369+JamesBurnside@users.noreply.github.com)
+### Bug Fixes
+- Fix order of dominant speakers in overflow gallery ([PR #4276](https://github.com/azure/communication-ui-library/pull/4276) by miguelgamis@microsoft.com)
+- prioritize the last stream of each type that is available ([PR #4300](https://github.com/azure/communication-ui-library/pull/4300) by alkwa@microsoft.com)
+- Bug Fix metadata was not being sent up to the handler ([PR #4213](https://github.com/azure/communication-ui-library/pull/4213) by 9044372+JoshuaLai@users.noreply.github.com)
+- Fixed the issue where image placeholder being shown when fetching failed ([PR #4172](https://github.com/azure/communication-ui-library/pull/4172) by 109105353+jpeng-ms@users.noreply.github.com)
+- Add key to MsftMention tag ([PR #4188](https://github.com/azure/communication-ui-library/pull/4188) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
+- Disable clicking before inline image is loaded ([PR #4248](https://github.com/azure/communication-ui-library/pull/4248) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
+- Subscribe to LocalRecordingNotification in Teams interop calls only ([PR #4321](https://github.com/azure/communication-ui-library/pull/4321) by edwardlee@microsoft.com)
+- Ensure theme is memoized for calls to useTheme ([PR #4301](https://github.com/azure/communication-ui-library/pull/4301) by 2684369+JamesBurnside@users.noreply.github.com)
+- Reaction button ally bug for announcement ([PR #4233](https://github.com/azure/communication-ui-library/pull/4233) by mbellah@microsoft.com)
+- Ensure fileSharingMetadata is only set if there are valid objects ([PR #4322](https://github.com/azure/communication-ui-library/pull/4322) by 3941071+emlynmac@users.noreply.github.com)
+- Retain pinned participants after holding call in CallComposite and CallWithChatComposite ([PR #4319](https://github.com/azure/communication-ui-library/pull/4319) by 79475487+mgamis-msft@users.noreply.github.com)
+- Fix the local screen share ([PR #4255](https://github.com/azure/communication-ui-library/pull/4255) by 93549644+ShaunaSong@users.noreply.github.com)
+- Fix inline image live message content for accessibility ([PR #4236](https://github.com/azure/communication-ui-library/pull/4236) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
+- Remove CC in Storybook ([PR #4200](https://github.com/azure/communication-ui-library/pull/4200) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
+
 
 ## [1.14.0-beta.2](https://github.com/azure/communication-ui-library/tree/1.14.0-beta.2)
 
