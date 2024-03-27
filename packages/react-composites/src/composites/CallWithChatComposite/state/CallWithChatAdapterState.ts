@@ -10,7 +10,7 @@ import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite
 
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { FileUploadsUiState } from '../../ChatComposite';
 import { AdapterErrors } from '../../common/adapters';
 /* @conditional-compile-remove(unsupported-browser) */
@@ -36,7 +36,7 @@ export interface CallWithChatAdapterUiState {
    * @public
    */
   page: CallCompositePage;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /**
    * Files being uploaded by a user in the current thread.
    * Should be set to null once the upload is complete.
@@ -133,7 +133,7 @@ export function callWithChatAdapterStateFromBackingStates(
     isTeamsCall: callAdapterState.isTeamsCall,
     latestCallErrors: callAdapterState.latestErrors,
     latestChatErrors: chatAdapterState.latestErrors,
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     fileUploads: chatAdapterState.fileUploads,
     /* @conditional-compile-remove(PSTN-calls) */
     alternateCallerId: callAdapterState.alternateCallerId,
@@ -164,7 +164,7 @@ export function mergeChatAdapterStateIntoCallWithChatAdapterState(
     ...existingCallWithChatAdapterState,
     chat: chatAdapterState.thread,
     latestChatErrors: chatAdapterState.latestErrors,
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     fileUploads: chatAdapterState.fileUploads
   };
 }
