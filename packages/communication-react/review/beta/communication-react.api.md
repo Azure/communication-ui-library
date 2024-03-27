@@ -2509,6 +2509,10 @@ export const DEFAULT_COMPONENT_ICONS: {
     RichTextDividerIcon: React_2.JSX.Element;
     RichTextEditorButtonIcon: React_2.JSX.Element;
     RichTextEditorButtonIconFilled: React_2.JSX.Element;
+    RichTextInsertTableRegularIcon: React_2.JSX.Element;
+    RichTextInsertTableFilledIcon: React_2.JSX.Element;
+    RichTextTableInsertMenuIcon: React_2.JSX.Element;
+    RichTextTableDeleteMenuIcon: React_2.JSX.Element;
 };
 
 // @public
@@ -2666,6 +2670,10 @@ export const DEFAULT_COMPOSITE_ICONS: {
     RichTextDividerIcon: React_2.JSX.Element;
     RichTextEditorButtonIcon: React_2.JSX.Element;
     RichTextEditorButtonIconFilled: React_2.JSX.Element;
+    RichTextInsertTableRegularIcon: React_2.JSX.Element;
+    RichTextInsertTableFilledIcon: React_2.JSX.Element;
+    RichTextTableInsertMenuIcon: React_2.JSX.Element;
+    RichTextTableDeleteMenuIcon: React_2.JSX.Element;
 };
 
 // @beta
@@ -3880,7 +3888,18 @@ export interface RichTextSendBoxStrings extends SendBoxStrings {
     boldTooltip: string;
     bulletListTooltip: string;
     decreaseIndentTooltip: string;
+    deleteColumnMenu: string;
+    deleteRowMenu: string;
+    deleteRowOrColumnMenu: string;
+    deleteTableMenu: string;
     increaseIndentTooltip: string;
+    insertColumnLeftMenu: string;
+    insertColumnRightMenu: string;
+    insertRowAboveMenu: string;
+    insertRowBelowMenu: string;
+    insertRowOrColumnMenu: string;
+    insertTableMenuTitle: string;
+    insertTableTooltip: string;
     italicTooltip: string;
     numberListTooltip: string;
     richTextFormatButtonTooltip: string;
