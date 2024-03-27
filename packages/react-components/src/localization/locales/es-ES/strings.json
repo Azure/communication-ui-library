@@ -182,7 +182,7 @@
     "downloadAttachment": "Descargar archivo",
     "blockedWarningText": "Este mensaje se eliminó debido a la directiva de la organización.",
     "blockedWarningLinkText": "Detalles",
-    "attachmentCardGroupMessage": "El mensaje tiene {attachmentCount} datos adjuntos",
+    "attachmentCardGroupMessage": "El mensaje tiene {attachmentCount} archivo adjunto",
     "messageDeletedAnnouncementAriaLabel": "El mensaje se ha eliminado"
   },
   "errorBar": {

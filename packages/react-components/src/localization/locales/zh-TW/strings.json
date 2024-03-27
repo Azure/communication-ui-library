@@ -182,7 +182,7 @@
     "downloadAttachment": "下載檔案",
     "blockedWarningText": "由於組織原則，已刪除此訊息。",
     "blockedWarningLinkText": "詳細資料",
-    "attachmentCardGroupMessage": "郵件有 {attachmentCount} 個附件",
+    "attachmentCardGroupMessage": "這則訊息有 {attachmentCount} 個附件",
     "messageDeletedAnnouncementAriaLabel": "訊息已刪除"
   },
   "errorBar": {
