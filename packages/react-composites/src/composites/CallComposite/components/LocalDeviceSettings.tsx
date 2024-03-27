@@ -250,8 +250,9 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
             {onResolveVideoEffectDependency && (
               <DefaultButton
                 iconProps={{ iconName: 'ConfigurationScreenVideoEffectsButton' }}
-                styles={effectsButtonStyles(theme)}
+                styles={effectsButtonStyles(theme, props.cameras.length === 0)}
                 onClick={props.onClickVideoEffects}
+                disabled={!cameraPermissionGranted}
                 data-ui-id={'call-config-video-effects-button'}
               >
                 {locale.strings.call.configurationPageVideoEffectsButtonLabel}
