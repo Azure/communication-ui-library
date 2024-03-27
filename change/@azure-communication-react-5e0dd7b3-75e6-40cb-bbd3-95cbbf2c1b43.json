@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "Disbale the PPTLive keyboard navigation",
+  "comment": "Disable keyboard",
+  "packageName": "@azure/communication-react",
+  "email": "93549644+ShaunaSong@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
