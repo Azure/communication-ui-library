@@ -79,6 +79,8 @@ module.exports = {
     'spotlight',
     // Feature for tracking beta start call identifier
     'start-call-beta',
+    // Join meeting with meetingId and passcode
+    'meeting-id',
     // Image overlay theme
     'image-overlay-theme',
      // Close captions feature for ACS calls
@@ -108,6 +110,8 @@ module.exports = {
     'rich-text-editor',
     // Feature for spotlight
     'spotlight',
+    // Join meeting with meetingId and passcode
+    'meeting-id',
     // Close captions feature for ACS calls
     "acs-close-captions",
   ],
