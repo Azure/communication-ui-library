@@ -21,6 +21,7 @@ import { hasCompletedFileUploads, hasIncompleteFileUploads } from '../utils/Send
 import { SendBoxErrorBarError } from '../SendBoxErrorBar';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { attachmentUploadCardsStyles } from '../styles/SendBox.styles';
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { FluentV9ThemeProvider } from '../../theming/FluentV9ThemeProvider';
 
 /**
