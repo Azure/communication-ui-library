@@ -57,6 +57,7 @@ export interface CallPageProps {
   onCloseChatPane?: () => void;
   pinnedParticipants?: string[];
   setPinnedParticipants?: (pinnedParticipants: string[]) => void;
+  compositeAudioContext?: AudioContext;
 }
 
 /**
@@ -75,7 +76,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
     onSetUserSetOverflowGalleryPosition,
     onCloseChatPane,
     pinnedParticipants,
-    setPinnedParticipants
+    setPinnedParticipants,
+    compositeAudioContext
   } = props;
 
   // To use useProps to get these states, we need to create another file wrapping Call,
@@ -119,6 +121,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
           capabilitiesChangedNotificationBarProps={props.capabilitiesChangedNotificationBarProps}
           onSetDialpadPage={() => setDtmfDialerPresent(!dtmfDialerPresent)}
           dtmfDialerPresent={dtmfDialerPresent}
+          compositeAudioContext={compositeAudioContext}
         />
       );
     } else {

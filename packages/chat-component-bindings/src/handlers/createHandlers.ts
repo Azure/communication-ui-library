@@ -27,9 +27,9 @@ export type ChatHandlers = {
   onUpdateMessage: (
     messageId: string,
     content: string,
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     options?: {
-      /* @conditional-compile-remove(file-sharing) */
+      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
       metadata?: Record<string, string>;
       attachmentMetadata?: AttachmentMetadata[];
     }
