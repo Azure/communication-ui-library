@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
 import { ContentEdit, Watermark } from 'roosterjs-editor-plugins';
 import { Editor } from 'roosterjs-editor-core';
-import type { EditorOptions, IEditor } from 'roosterjs-editor-types-compatible';
+import type { DefaultFormat, EditorOptions, IEditor } from 'roosterjs-editor-types-compatible';
 import {
   Rooster,
   createUpdateContentPlugin,
@@ -99,8 +99,8 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
       // Remove default values for background color and color
       // setBackgroundColor and setTextColor can't be used here as they cause the editor to be focused
       // color will be set in richTextEditorWrapperStyle instead of inline styles
-      div.style.backgroundColor = '';
-      div.style.color = '';
+      // div.style.backgroundColor = '';
+      // div.style.color = '';
 
       return editor.current;
     },
@@ -156,11 +156,21 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     );
   }, [strings, ribbonPlugin, theme]);
 
+  const defaultFormat: DefaultFormat = useMemo(() => {
+    // without setting any styles, text input is not handled properly for tables (when insert or paste one in the editor)
+    // because of https://github.com/microsoft/roosterjs/blob/14dbb947e3ae94580109cbd05e48ceb05327c4dc/packages/roosterjs-editor-core/lib/corePlugins/TypeInContainerPlugin.ts#L75
+    // this issue is fixed for content model package
+    return {
+      backgroundColor: 'transparent'
+    };
+  }, []);
+
   return (
     <div data-testid={'rich-text-editor-wrapper'}>
       {showRichTextEditorFormatting && ribbon}
       <div className={richTextEditorWrapperStyle(theme, !showRichTextEditorFormatting)}>
         <Rooster
+          defaultFormat={defaultFormat}
           initialContent={initialContent}
           inDarkMode={isDarkThemed(theme)}
           plugins={plugins}

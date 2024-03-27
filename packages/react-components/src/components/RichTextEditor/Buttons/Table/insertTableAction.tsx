@@ -22,11 +22,6 @@ export const insertTable = (editor: IEditor, columns: number, rows: number): voi
       const td = document.createElement('td') as HTMLTableCellElement;
       tr.appendChild(td);
       td.appendChild(document.createElement('br'));
-      // without setting any styles, input is not handled properly for the cell
-      // because of https://github.com/microsoft/roosterjs/blob/14dbb947e3ae94580109cbd05e48ceb05327c4dc/packages/roosterjs-editor-core/lib/corePlugins/TypeInContainerPlugin.ts#L75
-      // this issue is fixed for content model package and this line can be removed after the migration
-      // top is used because it is one of the shortest available style prop
-      td.style.top = '0';
     }
   }
 
