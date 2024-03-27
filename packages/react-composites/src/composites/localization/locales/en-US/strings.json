@@ -325,7 +325,8 @@
       "stopSpotlightCancelButtonLabel": "Cancel"
     },
     "exitSpotlightButtonLabel": "Exit spotlight",
-    "exitSpotlightButtonTooltip": "Exit spotlight"
+    "exitSpotlightButtonTooltip": "Exit spotlight",
+    "invalidMeetingIdentifier": "Invalid meeting ID or passcode"
   },
   "chat": {
     "chatListHeader": "In this chat",

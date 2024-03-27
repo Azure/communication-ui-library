@@ -30,6 +30,28 @@ describe('Adapter is created as expected', () => {
     const adapter = await createAzureCommunicationCallWithChatAdapterFromClients(args);
     expect(adapter).toBeDefined();
   });
+
+  /* @conditional-compile-remove(meeting-id) */
+  it('when creating a new adapter from stateful client with meeting id', async () => {
+    const mockCallClient = new MockCallClient() as unknown as StatefulCallClient;
+    const mockCallAgent = new MockCallAgent();
+    const locator = { meetingId: '123', passcode: 'qwe' };
+    const statefulChatClient = createStatefulChatClientMock(new StubChatThreadClient());
+    const threadClient = statefulChatClient.getChatThreadClient('threadId');
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    const options = { credential: stubCommunicationTokenCredential() };
+    const args = {
+      callClient: mockCallClient,
+      callAgent: mockCallAgent,
+      callLocator: locator,
+      chatClient: statefulChatClient,
+      chatThreadClient: threadClient,
+      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+      options: options
+    };
+    const adapter = await createAzureCommunicationCallWithChatAdapterFromClients(args);
+    expect(adapter).toBeDefined();
+  });
 });
 /**
  * Stub implementation of CommunicationTokenCredential

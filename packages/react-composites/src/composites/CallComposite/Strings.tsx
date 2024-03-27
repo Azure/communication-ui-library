@@ -834,4 +834,9 @@ export interface CallCompositeStrings {
    * Tooltip for button to exit spotlight
    */
   exitSpotlightButtonTooltip: string;
+  /* @conditional-compile-remove(meeting-id) */
+  /**
+   * Error message when the meeting identifier or passcode is invalid
+   */
+  invalidMeetingIdentifier: string;
 }
