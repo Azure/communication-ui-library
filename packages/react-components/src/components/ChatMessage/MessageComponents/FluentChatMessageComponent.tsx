@@ -48,7 +48,7 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
     onDisplayDateTimeString,
     inlineImageOptions,
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    actionForAttachment,
+    actionsForAttachment,
     userId,
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     onRenderAttachmentDownloads,
@@ -84,7 +84,7 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
             onDisplayDateTimeString={onDisplayDateTimeString}
             inlineImageOptions={inlineImageOptions}
             /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-            actionForAttachment={actionForAttachment}
+            actionsForAttachment={actionsForAttachment}
             /* @conditional-compile-remove(mention) */
             mentionDisplayOptions={mentionOptions?.displayOptions}
           />
@@ -101,7 +101,7 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
       onDisplayDateTimeString,
       inlineImageOptions,
       /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-      actionForAttachment,
+      actionsForAttachment,
       /* @conditional-compile-remove(mention) */
       mentionOptions?.displayOptions
     ]

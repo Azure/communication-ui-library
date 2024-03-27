@@ -84,7 +84,7 @@ type ChatMyMessageComponentAsMessageBubbleProps = {
   /**
    * Optional callback to define custom actions for attachments.
    */
-  actionForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
+  actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
 };
 
 /** @private */
@@ -114,7 +114,7 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     onRenderAttachmentDownloads,
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    actionForAttachment
+    actionsForAttachment
   } = props;
 
   const formattedTimestamp = useMemo(() => {
@@ -189,10 +189,10 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
       /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
       onRenderAttachmentDownloads,
       /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-      actionForAttachment
+      actionsForAttachment
     );
   }, [
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ actionForAttachment,
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ actionsForAttachment,
     inlineImageOptions,
     /* @conditional-compile-remove(mention) */ mentionDisplayOptions,
     message,

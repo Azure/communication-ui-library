@@ -33,7 +33,7 @@ describe('AttachmentCard should be rendered properly', () => {
       menuActions: [
         {
           name: 'Cancel',
-          icon: <Icon iconName="CancelFileUpload" />,
+          icon: <Icon iconName="CancelAttachmentUpload" />,
           onClick: () => {}
         }
       ]
@@ -49,7 +49,7 @@ describe('AttachmentCard action handler should be called', () => {
     registerIcons({
       icons: {
         docx24_svg: <></>,
-        cancelfileupload: <></>
+        cancelattachmentupload: <></>
       }
     });
   });
@@ -60,7 +60,7 @@ describe('AttachmentCard action handler should be called', () => {
       menuActions: [
         {
           name: 'Cancel',
-          icon: <Icon iconName="CancelFileUpload" />,
+          icon: <Icon iconName="CancelAttachmentUpload" />,
           onClick: actionHandler
         }
       ]

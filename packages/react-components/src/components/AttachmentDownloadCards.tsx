@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { Icon, TooltipHost } from '@fluentui/react';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useMemo } from 'react';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { useLocale } from '../localization';
@@ -49,7 +49,7 @@ export interface _AttachmentDownloadCardsProps {
   /**
    * Optional callback to handle file download
    */
-  actionForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
+  actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
   /**
    * Optional callback that runs if downloadHandler returns {@link FileDownloadError}.
    */
@@ -64,14 +64,34 @@ const attachmentDownloadCardsStyle = {
   marginTop: '0.25rem'
 };
 
-const actionIconStyle = { height: '1rem' };
-
 /**
  * @internal
  */
 export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): JSX.Element => {
   const { attachments, message } = props;
   const localeStrings = useLocaleStringsTrampoline();
+
+  const getMenuActions = useCallback(
+    (
+      attachment: AttachmentMetadata,
+      localeStrings: _AttachmentDownloadCardsStrings,
+      message?: ChatMessage,
+      action?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[]
+    ): AttachmentMenuAction[] => {
+      const defaultMenuActions = getDefaultMenuActions(localeStrings, message);
+      try {
+        const actions = action?.(attachment, message);
+        if (actions && actions.length > 0) {
+          return actions;
+        } else {
+          return defaultMenuActions;
+        }
+      } catch (error) {
+        return defaultMenuActions;
+      }
+    },
+    []
+  );
 
   const downloadAttachmentButtonString = useMemo(
     () => () => {
@@ -108,9 +128,7 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
               <_AttachmentCard
                 attachment={attachment}
                 key={attachment.id}
-                menuActions={
-                  props.actionForAttachment?.(attachment, message) ?? getDefaultMenuActions(localeStrings, message)
-                }
+                menuActions={getMenuActions(attachment, localeStrings, message, props.actionsForAttachment)}
                 onDownloadErrorMessage={props.onDownloadErrorMessage}
               />
             </TooltipHost>
@@ -118,16 +136,6 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
       </_AttachmentCardGroup>
     </div>
   );
-};
-
-/**
- * @private
- */
-const getDownloadIconTrampoline = (): JSX.Element => {
-  // @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload)
-  <Icon iconName="DownloadFile" data-ui-id="file-download-card-download-icon" />;
-  // Return _some_ available icon, as the real icon is beta-only.
-  return <Icon iconName="EditBoxCancel" style={actionIconStyle} />;
 };
 
 /**
@@ -147,7 +155,7 @@ const getDefaultMenuActions = (
   chatMessage?: ChatMessage
 ): AttachmentMenuAction[] => {
   // if message is sent by a Teams user, we need to use a different icon ("open")
-  if (chatMessage?.senderId?.includes('9:orgid')) {
+  if (chatMessage?.senderId?.includes('8:orgid:')) {
     return [
       {
         ...defaultAttachmentMenuAction,
@@ -184,7 +192,7 @@ export const defaultAttachmentMenuAction: AttachmentMenuAction = {
    */
   name: 'Download',
   // this is the icon shown on the right of the file card
-  icon: getDownloadIconTrampoline(),
+  icon: <Icon iconName="DownloadFile" data-ui-id="file-download-card-download-icon" />,
   // this is the action that runs when the icon is clicked
   onClick: (attachment: AttachmentMetadata) => {
     window.open((attachment as AttachmentMetadata).url, '_blank', 'noopener,noreferrer');

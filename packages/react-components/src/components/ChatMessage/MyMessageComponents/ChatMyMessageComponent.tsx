@@ -92,7 +92,7 @@ type ChatMyMessageComponentProps = {
   /**
    * Optional callback to define custom actions for attachments.
    */
-  actionForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
+  actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
 };
 
 /**
@@ -153,10 +153,6 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
         inlineImageOptions={props.inlineImageOptions}
         /* @conditional-compile-remove(mention) */
         mentionDisplayOptions={props.mentionOptions?.displayOptions}
-        /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-        onRenderAttachmentDownloads={props.onRenderAttachmentDownloads}
-        /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-        actionForAttachment={props.actionForAttachment}
       />
     );
   }

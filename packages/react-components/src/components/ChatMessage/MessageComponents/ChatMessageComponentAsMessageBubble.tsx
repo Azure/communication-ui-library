@@ -49,7 +49,7 @@ type ChatMessageComponentAsMessageBubbleProps = {
   /**
    * Optional callback to define custom actions for attachments.
    */
-  actionForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
+  actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
   /**
    * Optional function to provide customized date format.
    * @beta
@@ -85,7 +85,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     inlineImageOptions,
     shouldOverlapAvatarAndMessage,
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    actionForAttachment,
+    actionsForAttachment,
     /* @conditional-compile-remove(mention) */
     mentionDisplayOptions,
     onDisplayDateTimeString
@@ -118,10 +118,10 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
       /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
       onRenderAttachmentDownloads,
       /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-      actionForAttachment
+      actionsForAttachment
     );
   }, [
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ actionForAttachment,
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ actionsForAttachment,
     inlineImageOptions,
     /* @conditional-compile-remove(mention) */ mentionDisplayOptions,
     message,

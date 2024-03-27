@@ -36,7 +36,7 @@ import { useAttachmentCardStyles, fileNameContainerClassName } from './styles/At
  */
 export interface _AttachmentCardProps {
   /**
-   * File.
+   * Attachment details including name, extension, url, etc.
    */
   attachment: AttachmentMetadata;
   /**
@@ -98,7 +98,9 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
               data-ui-id={'filetype-icon'}
               iconName={
                 getFileTypeIconProps({
-                  extension: attachment.extension ?? attachment.name.split('.').pop() ?? '',
+                  extension: useMemo((): string => {
+                    return attachment.extension ?? attachment.name.split('.').pop() ?? '';
+                  }, [attachment]),
                   size: 24,
                   imageFileType: 'svg'
                 }).iconName

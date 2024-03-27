@@ -50,7 +50,7 @@ export function getMessageBubbleContent(
   /**
    * Optional callback to define custom actions for attachments.
    */
-  actionForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[]
+  actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[]
 ): JSX.Element {
   /* @conditional-compile-remove(data-loss-prevention) */
   if (message.messageType === 'blocked') {
@@ -76,7 +76,7 @@ export function getMessageBubbleContent(
               message,
               strings,
               /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-              actionForAttachment
+              actionsForAttachment
             )
       }
     </div>
@@ -90,7 +90,7 @@ export function getMessageBubbleContent(
 const defaultOnRenderFileDownloads = (
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage,
   strings: MessageThreadStrings,
-  actionForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[]
+  actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[]
 ): JSX.Element | undefined => {
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   return (
@@ -99,7 +99,7 @@ const defaultOnRenderFileDownloads = (
       /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
       attachments={(message as ChatMessage).files || []}
       /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-      actionForAttachment={actionForAttachment}
+      actionsForAttachment={actionsForAttachment}
       /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
       strings={{
         downloadAttachment: strings.downloadAttachment,

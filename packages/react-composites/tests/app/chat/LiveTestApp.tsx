@@ -80,7 +80,7 @@ export const LiveTestApp = (): JSX.Element => {
     }
   }, [adapter, uploadedFiles]);
 
-  const actionForAttachment = (): AttachmentMenuAction[] => {
+  const actionsForAttachment = (): AttachmentMenuAction[] => {
     if (failFileDownload) {
       return [
         {
@@ -142,7 +142,7 @@ export const LiveTestApp = (): JSX.Element => {
               participantPane: showParticipantPane,
               fileSharing: useFileSharing
                 ? {
-                    actionForAttachment: actionForAttachment,
+                    actionsForAttachment: actionsForAttachment,
                     uploadHandler: () => {
                       //noop
                     },

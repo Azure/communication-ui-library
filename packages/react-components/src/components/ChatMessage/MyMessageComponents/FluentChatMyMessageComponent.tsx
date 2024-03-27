@@ -46,7 +46,7 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
     defaultStatusRenderer,
     statusToRender,
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    actionForAttachment,
+    actionsForAttachment,
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     onRenderAttachmentDownloads
   } = props;
@@ -89,7 +89,7 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
             /* @conditional-compile-remove(mention) */
             mentionOptions={mentionOptions}
             /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-            actionForAttachment={actionForAttachment}
+            actionsForAttachment={actionsForAttachment}
           />
         );
       }
@@ -110,7 +110,7 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
       /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
       onRenderAttachmentDownloadsMemo,
       /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-      actionForAttachment,
+      actionsForAttachment,
       // eslint-disable-next-line react-hooks/exhaustive-deps
       new Date().toDateString()
     ]

@@ -1119,7 +1119,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
                   readCount={readCountForHoveredIndicator}
                   participantCount={participantCount}
                   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-                  actionForAttachment={attachmentOptions?.downloadOptions?.actionForAttachment}
+                  actionsForAttachment={attachmentOptions?.downloadOptions?.actionsForAttachment}
                   inlineImageOptions={inlineImageOptions}
                   /* @conditional-compile-remove(date-time-customization) */
                   onDisplayDateTimeString={onDisplayDateTimeString}

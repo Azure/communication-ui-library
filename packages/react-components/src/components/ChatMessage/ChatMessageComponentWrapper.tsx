@@ -62,7 +62,7 @@ export type ChatMessageComponentWrapperProps = _ChatMessageProps & {
   /**
    * Optional callback to define custom actions for attachments.
    */
-  actionForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
+  actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
 };
 
 /**

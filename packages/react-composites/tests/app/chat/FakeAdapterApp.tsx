@@ -73,7 +73,7 @@ export const FakeAdapterApp = (): JSX.Element => {
     })();
   }, [fakeAdapters]);
 
-  const actionForAttachment = (): AttachmentMenuAction[] => {
+  const actionsForAttachment = (): AttachmentMenuAction[] => {
     if (fakeChatAdapterArgs.failFileDownload) {
       return [
         {
@@ -106,7 +106,7 @@ export const FakeAdapterApp = (): JSX.Element => {
               participantPane: fakeChatAdapterArgs.showParticipantPane ?? false,
               fileSharing: fakeChatAdapterArgs.fileSharingEnabled
                 ? {
-                    actionForAttachment: actionForAttachment,
+                    actionsForAttachment: actionsForAttachment,
                     uploadHandler: () => {
                       //noop
                     },

@@ -19,7 +19,7 @@ describe('FileDownloadCards should be rendered properly', () => {
   });
 
   it('should render if it is FileSharingMetadata', async () => {
-    const metadata: AttachmentMetadata = {
+    const attachment: AttachmentMetadata = {
       name: 'MockAttachmentCard',
       extension: 'docx',
       url: 'mockUrl',
@@ -28,7 +28,7 @@ describe('FileDownloadCards should be rendered properly', () => {
 
     const props = {
       userId: 'MockUserId',
-      fileMetadata: [metadata]
+      attachment: [attachment]
     };
     renderFileDownloadCardsWithDefaults(props);
     const card = await screen.findByText('MockAttachmentCard');
@@ -37,10 +37,10 @@ describe('FileDownloadCards should be rendered properly', () => {
 });
 
 const renderFileDownloadCardsWithDefaults = (props: MockDownloadCardProps): void => {
-  render(<_AttachmentDownloadCards attachments={props.fileMetadata} />);
+  render(<_AttachmentDownloadCards attachments={props.attachment} />);
 };
 
 interface MockDownloadCardProps {
   userId: string;
-  fileMetadata: AttachmentMetadata[];
+  attachment: AttachmentMetadata[];
 }

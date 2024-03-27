@@ -103,7 +103,7 @@ export interface FileSharingOptions {
   /**
    * A temp function until this interface is deprecated
    */
-  actionForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
+  actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
 }
 
 /**
@@ -240,13 +240,13 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         attachments={message.files}
         message={message}
         // temp walkaround until upload is refactored
-        actionForAttachment={fileSharing?.actionForAttachment}
+        actionsForAttachment={fileSharing?.actionsForAttachment}
         onDownloadErrorMessage={(errorMessage: string) => {
           setDownloadErrorMessage(errorMessage);
         }}
       />
     ),
-    [fileSharing?.actionForAttachment]
+    [fileSharing?.actionsForAttachment]
   );
 
   const onInlineImageClicked = useCallback(

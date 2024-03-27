@@ -66,7 +66,7 @@ export interface AttachmentDownloadOptions {
   // A callback function that defines what action user can perform on an attachment.
   // by default, the UI library would have default actions that opens file URL in a new tab
   // provide this callback function to override the default actions or add new actions.
-  actionForAttachment: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
+  actionsForAttachment: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
 }
 
 /**
@@ -91,7 +91,7 @@ export interface AttachmentUploadOptions {
    * Accepts any type of file if not specified.
    * @beta
    */
-  acceptedMimeTypes?: string[];
+  acceptedMediaTypes?: string[];
   /**
    * Allows multiple files to be selected if set to `true`.
    * Similar to the `multiple` attribute of the `<input type="file" />` element.

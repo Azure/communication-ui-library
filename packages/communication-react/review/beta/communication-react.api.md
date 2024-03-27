@@ -153,7 +153,7 @@ export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : fa
 // @beta
 export interface AttachmentDownloadOptions {
     // (undocumented)
-    actionForAttachment: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
+    actionsForAttachment: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
 }
 
 // @beta
@@ -198,7 +198,7 @@ export interface AttachmentUploadManager {
 
 // @beta (undocumented)
 export interface AttachmentUploadOptions {
-    acceptedMimeTypes?: string[];
+    acceptedMediaTypes?: string[];
     canUploadMultiple?: boolean;
     handler: AttachmentUploadHandler;
 }
@@ -2926,7 +2926,7 @@ export type ErrorType = keyof ErrorBarStrings;
 // @beta
 export interface FileSharingOptions {
     accept?: string;
-    actionForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
+    actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
     multiple?: boolean;
     uploadHandler: FileUploadHandler;
 }
