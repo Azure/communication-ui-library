@@ -61,7 +61,7 @@ describe('RichTextSendBox should return text correctly', () => {
     });
     fireEvent.click(sendButton);
     // Check the updated value is correct
-    const result = '<div>Test<br></div>';
+    const result = '<div style="background-color: transparent;">Test<br></div>';
     expect(changedValue).toEqual(result);
   });
 });
