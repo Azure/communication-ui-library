@@ -50,7 +50,10 @@ interface CallWithChatArgs {
   credentials: Credentials;
   endpointUrl: string;
   displayName: string;
-  locator: CallAndChatLocator | TeamsMeetingLinkLocator | TeamsMeetingIdLocator;
+  locator:
+    | CallAndChatLocator
+    | TeamsMeetingLinkLocator
+    | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
   /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId?: string;
 }
 type AppPages = 'home' | 'call' | 'error';
@@ -197,7 +200,7 @@ const callLocatorGen = (
 
 const getTeamsLocator = (
   teamsLocator: TeamsMeetingLinkLocator | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator
-): TeamsMeetingLinkLocator | TeamsMeetingIdLocator | undefined => {
+): TeamsMeetingLinkLocator | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator | undefined => {
   if ('meetingLink' in teamsLocator) {
     return teamsLocator;
   }

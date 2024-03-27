@@ -98,8 +98,8 @@ const App = (): JSX.Element => {
       // Show a simplified join home screen if joining an existing call
       const joiningExistingCall: boolean =
         !!getGroupIdFromUrl() ||
-        !!getTeamsLinkFromUrl() /* @conditional-compile-remove(meeting-id) */ ||
-        !!getMeetingIdFromUrl() ||
+        !!getTeamsLinkFromUrl() ||
+        /* @conditional-compile-remove(meeting-id) */ !!getMeetingIdFromUrl() ||
         !!getRoomIdFromUrl();
       return (
         <HomeScreen
