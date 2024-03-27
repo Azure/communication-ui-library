@@ -10,7 +10,6 @@ import { _AttachmentCard } from './AttachmentCard';
 import { _AttachmentCardGroup } from './AttachmentCardGroup';
 import { _formatString } from '@internal/acs-ui-common';
 import { AttachmentMenuAction, AttachmentMetadata } from '../types/Attachment';
-/* @conditional-compile-remove(file-sharing) */
 import { ArrowDownload20Regular } from '@fluentui/react-icons';
 import { ChatMessage } from '../types';
 
@@ -22,7 +21,7 @@ export type ChatAttachmentType = 'unknown' | 'image' | /* @conditional-compile-r
 
 /**
  * @beta
- * 
+ *
  * The default menu action for downloading attachments. This action will open the attachment's URL in a new tab.
  */
 export const defaultAttachmentMenuAction: AttachmentMenuAction = {
@@ -125,7 +124,6 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
     </div>
   );
 };
-
 
 const useLocaleStringsTrampoline = (): _AttachmentDownloadCardsStrings => {
   /* @conditional-compile-remove(file-sharing) */

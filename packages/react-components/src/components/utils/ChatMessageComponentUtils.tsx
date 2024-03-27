@@ -50,7 +50,7 @@ export function getMessageBubbleContent(
   /**
    * Optional callback to define custom actions for attachments.
    */
-  actionForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[],
+  actionForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[]
 ): JSX.Element {
   /* @conditional-compile-remove(data-loss-prevention) */
   if (message.messageType === 'blocked') {
@@ -75,7 +75,7 @@ export function getMessageBubbleContent(
           : defaultOnRenderFileDownloads(
               message,
               strings,
-              /* @conditional-compile-remove(file-sharing) */ 
+              /* @conditional-compile-remove(file-sharing) */
               actionForAttachment
             )
       }
@@ -95,7 +95,7 @@ const defaultOnRenderFileDownloads = (
   /* @conditional-compile-remove(file-sharing) */
   return (
     <_AttachmentDownloadCards
-      message={(message as ChatMessage)}
+      message={message as ChatMessage}
       /* @conditional-compile-remove(file-sharing) */
       attachments={(message as ChatMessage).files || []}
       /* @conditional-compile-remove(file-sharing) */

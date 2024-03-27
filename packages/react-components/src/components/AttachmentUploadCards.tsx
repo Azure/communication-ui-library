@@ -111,10 +111,12 @@ export const _AttachmentUploadCards = (props: FileUploadCardsProps): JSX.Element
                 name: attachment.filename,
                 extension: extension(attachment.filename),
                 progress: attachment.progress,
-                uploadStatus: attachment.error ? {
-                  message: attachment.error?.message,
-                  timestamp: attachment.error?.timestamp
-                } : undefined
+                uploadStatus: attachment.error
+                  ? {
+                      message: attachment.error?.message,
+                      timestamp: attachment.error?.timestamp
+                    }
+                  : undefined
               }}
               progress={attachment.progress}
               key={attachment.id}

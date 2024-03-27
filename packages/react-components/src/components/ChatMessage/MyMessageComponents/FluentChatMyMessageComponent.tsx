@@ -42,16 +42,16 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
     inlineImageOptions,
     /* @conditional-compile-remove(mention) */
     mentionOptions,
+    userId,
+    defaultStatusRenderer,
+    statusToRender,
     /* @conditional-compile-remove(file-sharing) */
     actionForAttachment,
-    userId,
     /* @conditional-compile-remove(file-sharing) */
-    onRenderAttachmentDownloads,
-    defaultStatusRenderer,
-    statusToRender
+    onRenderAttachmentDownloads
   } = props;
   const chatMessageRenderStyles = useChatMessageRenderStyles();
-
+  /* @conditional-compile-remove(file-sharing) */
   const onRenderAttachmentDownloadsMemo = useMemo(() => {
     /* @conditional-compile-remove(file-sharing) */
     return onRenderAttachmentDownloads;
@@ -96,7 +96,6 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
     [
       onActionButtonClick,
       onRenderAvatar,
-      onRenderAttachmentDownloadsMemo,
       participantCount,
       shouldOverlapAvatarAndMessage,
       showMessageStatus,
@@ -106,6 +105,8 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
       inlineImageOptions,
       /* @conditional-compile-remove(mention) */
       mentionOptions,
+      /* @conditional-compile-remove(file-sharing) */
+      onRenderAttachmentDownloadsMemo,
       /* @conditional-compile-remove(file-sharing) */
       actionForAttachment,
       // eslint-disable-next-line react-hooks/exhaustive-deps

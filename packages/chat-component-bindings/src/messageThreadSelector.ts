@@ -94,11 +94,11 @@ const extractTeamsAttachmentsMetadata = (
   });
   return {
     files
-  }; 
+  };
 };
 
 /* @conditional-compile-remove(data-loss-prevention) */
-   
+
 const convertToUiBlockedMessage = (
   message: ChatMessageWithStatus,
   userId: string,

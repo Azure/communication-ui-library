@@ -212,8 +212,12 @@ export * from './AttachmentDownloadCards';
 export type { _AttachmentUploadCardsStrings } from './AttachmentUploadCards';
 
 export type {
+  AttachmentOptions,
+  AttachmentUploadOptions,
+  AttachmentUploadHandler,
   AttachmentMetadata,
   AttachmentUploadStatus,
+  AttachmentUploadManager,
   FileUploadHandler,
   FileUploadManager,
   FileUploadState,

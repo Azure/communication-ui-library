@@ -26,6 +26,7 @@ type ChatMyMessageComponentProps = {
     content: string,
     metadata?: Record<string, string>,
     options?: {
+      /* @conditional-compile-remove(file-sharing) */
       attachmentMetadata?: AttachmentMetadata[];
     }
   ) => Promise<void>;

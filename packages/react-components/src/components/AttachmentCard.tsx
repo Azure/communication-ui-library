@@ -29,7 +29,6 @@ import { useLocaleAttachmentCardStringsTrampoline } from './utils/common';
 import { AttachmentMetadata, AttachmentMenuAction } from '../types/Attachment';
 import { MoreHorizontal24Filled } from '@fluentui/react-icons';
 import { useAttachmentCardStyles, fileNameContainerClassName } from './styles/AttachmentCard.styles';
-import { defaultAttachmentMenuAction } from './AttachmentDownloadCards';
 
 /**
  * @internal
@@ -47,7 +46,7 @@ export interface _AttachmentCardProps {
   /**
    * An array of menu actions to be displayed in the attachment card.
    */
-  menuActions?: AttachmentMenuAction[];
+  menuActions: AttachmentMenuAction[];
   /**
    * Optional arialabel strings for file cards
    */
@@ -111,7 +110,7 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
               <Text title={attachment.name}>{attachment.name}</Text>
             </div>
           }
-          action={getMenuItems(menuActions ?? [defaultAttachmentMenuAction], attachment, onDownloadErrorMessage)}
+          action={getMenuItems(menuActions, attachment, onDownloadErrorMessage)}
         />
       </Card>
       {isUploadComplete ? (

@@ -57,6 +57,7 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
   } = props;
   const chatMessageRenderStyles = useChatMessageRenderStyles();
 
+  /* @conditional-compile-remove(file-sharing) */
   const onRenderAttachmentDownloadsMemo = useMemo(() => {
     /* @conditional-compile-remove(file-sharing) */
     return onRenderAttachmentDownloads;
@@ -75,7 +76,7 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
           <ChatMessageComponentAsMessageBubble
             {...messageProps}
             /* @conditional-compile-remove(file-sharing) */
-            onRenderAttachmentDownloads={onRenderAttachmentDownloads}
+            onRenderAttachmentDownloads={onRenderAttachmentDownloadsMemo}
             /* @conditional-compile-remove(file-sharing) */
             strings={messageProps.strings}
             message={messageProps.message}
@@ -94,18 +95,17 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
       return <></>;
     },
     [
+      /* @conditional-compile-remove(file-sharing) */
       onRenderAttachmentDownloadsMemo,
-      shouldOverlapAvatarAndMessage,
       userId,
+      shouldOverlapAvatarAndMessage,
       /* @conditional-compile-remove(date-time-customization) */
       onDisplayDateTimeString,
       inlineImageOptions,
       /* @conditional-compile-remove(file-sharing) */
       actionForAttachment,
       /* @conditional-compile-remove(mention) */
-      mentionOptions,
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      new Date().toDateString()
+      mentionOptions?.displayOptions
     ]
   );
 

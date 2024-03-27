@@ -114,7 +114,7 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
     /* @conditional-compile-remove(file-sharing) */
     onRenderAttachmentDownloads,
     /* @conditional-compile-remove(file-sharing) */
-    actionForAttachment,
+    actionForAttachment
   } = props;
 
   const formattedTimestamp = useMemo(() => {

@@ -665,6 +665,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     /* @conditional-compile-remove(mention) */
     mentionOptions,
     inlineImageOptions,
+    /* @conditional-compile-remove(file-sharing) */
     attachmentOptions,
     /* @conditional-compile-remove(file-sharing) */
     onRenderAttachmentDownloads

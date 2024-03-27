@@ -13,7 +13,9 @@ import { ChatMessage } from '../../../types/ChatMessage';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../../types/ChatMessage';
 import { MessageThreadStrings } from '../../MessageThread';
-import { AttachmentMenuAction, AttachmentMetadata, ComponentSlotStyle } from '../../../types';
+import { ComponentSlotStyle } from '../../../types';
+/* @conditional-compile-remove(file-sharing) */
+import { AttachmentMenuAction, AttachmentMetadata } from '../../../types';
 import { _AttachmentDownloadCards } from '../../AttachmentDownloadCards';
 import { useLocale } from '../../../localization';
 /* @conditional-compile-remove(mention) */

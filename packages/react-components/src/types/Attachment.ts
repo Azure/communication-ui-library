@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { ChatMessage } from "./ChatMessage";
+import { ChatMessage } from './ChatMessage';
 
 /**
  * Metadata containing basic information about the uploaded attachment.
@@ -18,7 +18,6 @@ export interface AttachmentMetadata {
   /**
    * Unique ID of the attachment.
    */
-  /* @conditional-compile-remove(file-sharing) */
   id: string;
   /**
    * File name to be displayed.
@@ -39,17 +38,8 @@ export interface AttachmentMetadata {
 }
 
 /**
- * @internal
- */
-export interface AttachmentMenuAction {
-  name: string;
-  icon: JSX.Element;
-  onClick: (attachment: AttachmentMetadata) => void;
-}
-
-/**
  * @beta
- * A attachment upload status object that contains message to be shown to 
+ * A attachment upload status object that contains message to be shown to
  * the user and a timestamp.
  */
 export interface AttachmentUploadStatus {
@@ -59,7 +49,7 @@ export interface AttachmentUploadStatus {
 
 /**
  * @beta
- * 
+ *
  * Attachment Options that defines behaviour for uploading and downloading attachments.
  */
 export interface AttachmentOptions {
@@ -69,7 +59,7 @@ export interface AttachmentOptions {
 
 /**
  * @beta
- * 
+ *
  * Attachment download options defines the list of actions that can be performed on an attachment.
  */
 export interface AttachmentDownloadOptions {
@@ -81,7 +71,7 @@ export interface AttachmentDownloadOptions {
 
 /**
  * @beta
- * 
+ *
  * Attachment menu action defines buttons that can be shown on the attachment card.
  * If there's one action, it will be shown as a button, if there are multiple actions, it will be shown as a dropdown.
  */

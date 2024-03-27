@@ -30,11 +30,13 @@ describe('AttachmentCard should be rendered properly', () => {
 
   it('should render the component with action icon', () => {
     renderAttachmentCardWithDefaults({
-      menuActions:[{
-        name: 'Cancel',
-        icon: (<Icon iconName="CancelFileUpload" />),
-        onClick: () => {}
-      }]
+      menuActions: [
+        {
+          name: 'Cancel',
+          icon: <Icon iconName="CancelFileUpload" />,
+          onClick: () => {}
+        }
+      ]
     });
 
     const button = screen.getAllByRole('button');
@@ -55,11 +57,13 @@ describe('AttachmentCard action handler should be called', () => {
   it('should call the action handler when action icon is clicked', () => {
     const actionHandler = jest.fn();
     renderAttachmentCardWithDefaults({
-      menuActions:[{
-        name: 'Cancel',
-        icon: (<Icon iconName="CancelFileUpload" />),
-        onClick: actionHandler
-      }]
+      menuActions: [
+        {
+          name: 'Cancel',
+          icon: <Icon iconName="CancelFileUpload" />,
+          onClick: actionHandler
+        }
+      ]
     });
 
     const button = screen.getAllByRole('button')[0];

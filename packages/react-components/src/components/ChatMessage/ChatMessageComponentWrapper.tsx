@@ -42,8 +42,6 @@ export type ChatMessageComponentWrapperProps = _ChatMessageProps & {
   showMessageStatus?: boolean;
   participantCount?: number;
   readCount?: number;
-  /* @conditional-compile-remove(file-sharing) */
-  onRenderAttachmentDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
   onActionButtonClick: (
     message: ChatMessage,
     setMessageReadBy: (
@@ -53,15 +51,18 @@ export type ChatMessageComponentWrapperProps = _ChatMessageProps & {
       }[]
     ) => void
   ) => void;
-  /**
-   * Optional callback to define custom actions for attachments.
-   */
-  actionForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
   /* @conditional-compile-remove(date-time-customization) */
   onDisplayDateTimeString?: (messageDate: Date) => string;
   inlineImageOptions?: InlineImageOptions;
   /* @conditional-compile-remove(mention) */
   mentionOptions?: MentionOptions;
+  /* @conditional-compile-remove(file-sharing) */
+  onRenderAttachmentDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+  /* @conditional-compile-remove(file-sharing) */
+  /**
+   * Optional callback to define custom actions for attachments.
+   */
+  actionForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
 };
 
 /**
