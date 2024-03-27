@@ -134,6 +134,7 @@ const getMenuItems = (
   }
   return menuActions.length === 1 ? (
     <ToolbarButton
+      data-ui-id={'file-download-card-download-icon'}
       aria-label={menuActions[0].name}
       icon={menuActions[0].icon}
       onClick={() => {
