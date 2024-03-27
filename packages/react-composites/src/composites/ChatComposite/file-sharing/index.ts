@@ -11,7 +11,7 @@ export type {
   AttachmentUploadManager
 } from '@internal/react-components';
 
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 export type { AttachmentDownloadOptions } from '@internal/react-components';
 
 /**
