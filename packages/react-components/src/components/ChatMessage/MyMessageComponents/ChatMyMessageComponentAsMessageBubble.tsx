@@ -16,7 +16,7 @@ import { BlockedMessage } from '../../../types/ChatMessage';
 import { MessageThreadStrings } from '../../MessageThread';
 import { chatMessageActionMenuProps } from '../ChatMessageActionMenu';
 import { ComponentSlotStyle, OnRenderAvatarCallback } from '../../../types';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { AttachmentMenuAction, AttachmentMetadata } from '../../../types/Attachment';
 import { _AttachmentDownloadCards } from '../../AttachmentDownloadCards';
 import { useLocale } from '../../../localization';
@@ -75,12 +75,12 @@ type ChatMyMessageComponentAsMessageBubbleProps = {
    * @beta
    */
   inlineImageOptions?: InlineImageOptions;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /**
    * Optional callback to render message attachments in the message component.
    */
   onRenderAttachmentDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /**
    * Optional callback to define custom actions for attachments.
    */
@@ -111,9 +111,9 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
     /* @conditional-compile-remove(mention) */
     mentionDisplayOptions,
     onDisplayDateTimeString,
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     onRenderAttachmentDownloads,
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     actionForAttachment
   } = props;
 
@@ -186,17 +186,17 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
       inlineImageOptions,
       /* @conditional-compile-remove(mention) */
       mentionDisplayOptions,
-      /* @conditional-compile-remove(file-sharing) */
+      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
       onRenderAttachmentDownloads,
-      /* @conditional-compile-remove(file-sharing) */
+      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
       actionForAttachment
     );
   }, [
-    /* @conditional-compile-remove(file-sharing) */ actionForAttachment,
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ actionForAttachment,
     inlineImageOptions,
     /* @conditional-compile-remove(mention) */ mentionDisplayOptions,
     message,
-    /* @conditional-compile-remove(file-sharing) */ onRenderAttachmentDownloads,
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ onRenderAttachmentDownloads,
     strings,
     userId
   ]);

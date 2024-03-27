@@ -7,7 +7,7 @@ import { MessageProps, MessageRenderer, MessageThreadStyles, _ChatMessageProps }
 import { ChatMessage, OnRenderAvatarCallback } from '../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { AttachmentMenuAction, AttachmentMetadata } from '../../types/Attachment';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from '../MentionPopover';
@@ -56,9 +56,9 @@ export type ChatMessageComponentWrapperProps = _ChatMessageProps & {
   inlineImageOptions?: InlineImageOptions;
   /* @conditional-compile-remove(mention) */
   mentionOptions?: MentionOptions;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   onRenderAttachmentDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /**
    * Optional callback to define custom actions for attachments.
    */

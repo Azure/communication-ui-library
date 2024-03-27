@@ -43,7 +43,7 @@ export type { ImageOverlayProps } from './ImageOverlay';
 
 export type { InlineImageOptions, InlineImage } from './ChatMessage/ChatMessageContent';
 
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 export type { ActiveFileUpload } from './AttachmentUploadCards';
 
 export { MessageStatusIndicator } from './MessageStatusIndicator';
@@ -203,7 +203,7 @@ export type {
 } from './PictureInPictureInPicture/PictureInPictureInPictureTile';
 
 export * from './Drawer';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 export type { SendBoxErrorBarError } from './SendBoxErrorBar';
 export * from './AttachmentCard';
 export * from './AttachmentCardGroup';
@@ -224,7 +224,7 @@ export type {
   FileUploadError
 } from '../types/Attachment';
 
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 export type { AttachmentMenuAction, AttachmentDownloadOptions } from '../types/Attachment';
 
 export { _useContainerHeight, _useContainerWidth } from './utils/responsive';

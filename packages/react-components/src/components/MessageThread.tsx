@@ -32,7 +32,7 @@ import { memoizeFnAll, MessageStatus } from '@internal/acs-ui-common';
 import { useLocale } from '../localization/LocalizationProvider';
 import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
 import getParticipantsWhoHaveReadMessage from './utils/getParticipantsWhoHaveReadMessage';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { AttachmentMetadata, AttachmentOptions } from '../types/Attachment';
 import { useTheme } from '../theming';
 import { FluentV9ThemeProvider } from './../theming/FluentV9ThemeProvider';
@@ -210,7 +210,7 @@ export interface MessageThreadStrings {
   actionMenuMoreOptions?: string;
   /** Aria label to announce when a message is deleted */
   messageDeletedAnnouncementAriaLabel: string;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /** String for download file button in attachment card */
   downloadAttachment: string;
   /* @conditional-compile-remove(data-loss-prevention) */
@@ -219,7 +219,7 @@ export interface MessageThreadStrings {
   /* @conditional-compile-remove(data-loss-prevention) */
   /** String for policy violation message removal details link */
   blockedWarningLinkText: string;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /** String for aria text in file attachment group*/
   attachmentCardGroupMessage: string;
 }
@@ -345,9 +345,9 @@ const getLastChatMessageForCurrentUser = (messages: Message[]): ChatMessage | un
 export type UpdateMessageCallback = (
   messageId: string,
   content: string,
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   options?: {
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     metadata?: Record<string, string>;
     attachmentMetadata?: AttachmentMetadata[];
   }
@@ -457,7 +457,7 @@ export type MessageThreadProps = {
    * `messageRenderer` is not provided for `CustomMessage` and thus only available for `ChatMessage` and `SystemMessage`.
    */
   onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /**
    * Optional callback to render attachments in the message component.
    * @beta
@@ -509,7 +509,7 @@ export type MessageThreadProps = {
    */
   strings?: Partial<MessageThreadStrings>;
 
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /**
    * @beta
    * Optional attachment options, which defines behvaiour for uploading and downloading attachments.
@@ -665,9 +665,9 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     /* @conditional-compile-remove(mention) */
     mentionOptions,
     inlineImageOptions,
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     attachmentOptions,
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     onRenderAttachmentDownloads
   } = props;
   // We need this state to wait for one tick and scroll to bottom after messages have been initialized.
@@ -1115,14 +1115,14 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
                   onActionButtonClick={onActionButtonClickMemo}
                   readCount={readCountForHoveredIndicator}
                   participantCount={participantCount}
-                  /* @conditional-compile-remove(file-sharing) */
+                  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
                   actionForAttachment={attachmentOptions?.downloadOptions?.actionForAttachment}
                   inlineImageOptions={inlineImageOptions}
                   /* @conditional-compile-remove(date-time-customization) */
                   onDisplayDateTimeString={onDisplayDateTimeString}
                   /* @conditional-compile-remove(mention) */
                   mentionOptions={mentionOptions}
-                  /* @conditional-compile-remove(file-sharing) */
+                  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
                   onRenderAttachmentDownloads={onRenderAttachmentDownloads}
                 />
               );

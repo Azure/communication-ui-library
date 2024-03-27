@@ -47,22 +47,21 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
     /* @conditional-compile-remove(date-time-customization) */
     onDisplayDateTimeString,
     inlineImageOptions,
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     actionForAttachment,
     userId,
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     onRenderAttachmentDownloads,
     /* @conditional-compile-remove(mention) */
     mentionOptions
   } = props;
   const chatMessageRenderStyles = useChatMessageRenderStyles();
 
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   const onRenderAttachmentDownloadsMemo = useMemo(() => {
-    /* @conditional-compile-remove(file-sharing) */
     return onRenderAttachmentDownloads;
     return undefined;
-  }, [/* @conditional-compile-remove(file-sharing) */ onRenderAttachmentDownloads]);
+  }, [onRenderAttachmentDownloads]);
 
   // To rerender the defaultChatMessageRenderer if app running across days(every new day chat time stamp
   // needs to be regenerated), the dependency on "new Date().toDateString()"" is added.
@@ -75,9 +74,8 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
         return (
           <ChatMessageComponentAsMessageBubble
             {...messageProps}
-            /* @conditional-compile-remove(file-sharing) */
+            /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
             onRenderAttachmentDownloads={onRenderAttachmentDownloadsMemo}
-            /* @conditional-compile-remove(file-sharing) */
             strings={messageProps.strings}
             message={messageProps.message}
             userId={userId}
@@ -85,7 +83,7 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
             /* @conditional-compile-remove(date-time-customization) */
             onDisplayDateTimeString={onDisplayDateTimeString}
             inlineImageOptions={inlineImageOptions}
-            /* @conditional-compile-remove(file-sharing) */
+            /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
             actionForAttachment={actionForAttachment}
             /* @conditional-compile-remove(mention) */
             mentionDisplayOptions={mentionOptions?.displayOptions}
@@ -95,14 +93,14 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
       return <></>;
     },
     [
-      /* @conditional-compile-remove(file-sharing) */
+      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
       onRenderAttachmentDownloadsMemo,
       userId,
       shouldOverlapAvatarAndMessage,
       /* @conditional-compile-remove(date-time-customization) */
       onDisplayDateTimeString,
       inlineImageOptions,
-      /* @conditional-compile-remove(file-sharing) */
+      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
       actionForAttachment,
       /* @conditional-compile-remove(mention) */
       mentionOptions?.displayOptions

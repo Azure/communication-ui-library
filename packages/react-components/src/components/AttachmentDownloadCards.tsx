@@ -4,7 +4,7 @@
 import { TooltipHost } from '@fluentui/react';
 import React from 'react';
 import { useMemo } from 'react';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { useLocale } from '../localization';
 import { _AttachmentCard } from './AttachmentCard';
 import { _AttachmentCardGroup } from './AttachmentCardGroup';
@@ -17,7 +17,10 @@ import { ChatMessage } from '../types';
  * Represents the type of attachment
  * @public
  */
-export type ChatAttachmentType = 'unknown' | 'image' | /* @conditional-compile-remove(file-sharing) */ 'file';
+export type ChatAttachmentType =
+  | 'unknown'
+  | 'image'
+  | /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ 'file';
 
 /**
  * @beta
@@ -91,7 +94,7 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
     () => () => {
       const fileGroupLocaleString =
         props.strings?.attachmentCardGroupMessage ?? localeStrings.attachmentCardGroupMessage;
-      /* @conditional-compile-remove(file-sharing) */
+      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
       return _formatString(fileGroupLocaleString, {
         attachmentCount: `${attachments?.length ?? 0}`
       });
@@ -126,7 +129,7 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
 };
 
 const useLocaleStringsTrampoline = (): _AttachmentDownloadCardsStrings => {
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   return useLocale().strings.messageThread;
   return { downloadAttachment: '', attachmentCardGroupMessage: '' };
 };

@@ -1,24 +1,24 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { ChatErrors, ChatThreadClientState } from '@internal/chat-stateful-client';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { produce } from 'immer';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { v1 as generateGUID } from 'uuid';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { ChatAdapterState } from '..';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { ChatContext } from './AzureCommunicationChatAdapter';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { AzureCommunicationFileUploadAdapter } from './AzureCommunicationFileUploadAdapter';
 
 test('workaround for conditional compilation. Test suite must contain at least one test', () => {
   expect(true).toBeTruthy();
 });
 
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 describe('registerFileUploads()', () => {
   test('should create file uploads in state', () => {
     const chatContext = createChatContext();
@@ -67,7 +67,7 @@ describe('registerFileUploads()', () => {
   });
 });
 
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 describe('clearFileUploads()', () => {
   test('should remove all file uploads from state', () => {
     const chatContext = createChatContext();
@@ -78,7 +78,7 @@ describe('clearFileUploads()', () => {
   });
 });
 
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 describe('cancelFileUpload()', () => {
   test('should remove file upload from state', () => {
     const chatContext = createChatContext();
@@ -91,7 +91,7 @@ describe('cancelFileUpload()', () => {
   });
 });
 
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 const createChatContext = (): ChatContext =>
   new ChatContext(
     {
@@ -105,7 +105,7 @@ const createChatContext = (): ChatContext =>
     'threadId'
   );
 
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 const generateFiles = (quantity: number): File[] => {
   return Array.from({ length: quantity }, () => new File([], generateGUID(), { type: 'text/plain' }));
 };
