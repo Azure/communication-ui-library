@@ -23,7 +23,7 @@ describe('FileDownloadCards should be rendered properly', () => {
       name: 'MockAttachmentCard',
       extension: 'docx',
       url: 'mockUrl',
-      /* @conditional-compile-remove(file-sharing) */
+      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
       id: 'mockId'
     };
 

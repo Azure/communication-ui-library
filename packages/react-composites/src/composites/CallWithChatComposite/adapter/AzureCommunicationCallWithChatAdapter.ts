@@ -25,7 +25,7 @@ import { StartCaptionsOptions } from '@azure/communication-calling';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { AttachmentMetadata, FileUploadManager } from '@internal/react-components';
 import {
   ParticipantsJoinedListener,
@@ -155,7 +155,7 @@ class CallWithChatContext {
 export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapter {
   private callAdapter: CallAdapter;
   private chatAdapterPromise: Promise<ChatAdapter>;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   private chatAdapter: ChatAdapter | undefined;
   private context: CallWithChatContext;
   private onChatStateChange: (newChatAdapterState: ChatAdapterState) => void;
@@ -174,7 +174,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.chatAdapterPromise = chatAdapterPromise;
     this.chatAdapterPromise.then((chatAdapter) => {
       chatAdapter.onStateChange(this.onChatStateChange);
-      /* @conditional-compile-remove(file-sharing) */
+      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
       this.chatAdapter = chatAdapter;
       this.context.updateClientStateWithChatState(chatAdapter.getState());
     });
@@ -224,19 +224,19 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.deleteMessage.bind(this);
     this.on.bind(this);
     this.off.bind(this);
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     this.registerActiveFileUploads = this.registerActiveFileUploads.bind(this);
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     this.registerCompletedFileUploads = this.registerCompletedFileUploads.bind(this);
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     this.clearFileUploads = this.clearFileUploads.bind(this);
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     this.cancelFileUpload = this.cancelFileUpload.bind(this);
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     this.updateFileUploadProgress = this.updateFileUploadProgress.bind(this);
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     this.updateFileUploadErrorMessage = this.updateFileUploadErrorMessage.bind(this);
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     this.updateFileUploadMetadata = this.updateFileUploadMetadata.bind(this);
     this.downloadResourceToCache = this.downloadResourceToCache.bind(this);
     this.removeResourceFromCache = this.removeResourceFromCache.bind(this);
@@ -452,7 +452,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     content: string,
     metadata?: Record<string, string>,
     options?: {
-      /* @conditional-compile-remove(file-sharing) */
+      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
       attachmentMetadata?: AttachmentMetadata[];
     }
   ): Promise<void> {
@@ -461,7 +461,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         messageId,
         content,
         metadata,
-        /* @conditional-compile-remove(file-sharing) */ options
+        /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ options
       );
     });
   }
@@ -471,39 +471,39 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
       return adapter.deleteMessage(messageId);
     });
   }
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   public registerActiveFileUploads = (files: File[]): FileUploadManager[] => {
     return this.chatAdapter?.registerActiveFileUploads(files) ?? [];
   };
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   public registerCompletedFileUploads = (metadata: AttachmentMetadata[]): FileUploadManager[] => {
     return this.chatAdapter?.registerCompletedFileUploads(metadata) ?? [];
   };
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   public clearFileUploads = (): void => {
     this.chatAdapterPromise.then((adapter) => {
       adapter.clearFileUploads();
     });
   };
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   public cancelFileUpload = (id: string): void => {
     this.chatAdapterPromise.then((adapter) => {
       adapter.cancelFileUpload(id);
     });
   };
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   public updateFileUploadProgress = (id: string, progress: number): void => {
     this.chatAdapterPromise.then((adapter) => {
       adapter.updateFileUploadProgress(id, progress);
     });
   };
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   public updateFileUploadErrorMessage = (id: string, errorMessage: string): void => {
     this.chatAdapterPromise.then((adapter) => {
       adapter.updateFileUploadErrorMessage(id, errorMessage);
     });
   };
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   public updateFileUploadMetadata = (id: string, metadata: AttachmentMetadata): void => {
     this.chatAdapterPromise.then((adapter) => {
       adapter.updateFileUploadMetadata(id, metadata);
