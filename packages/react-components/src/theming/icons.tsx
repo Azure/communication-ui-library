@@ -278,7 +278,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(reaction) */
   ReactionButtonIcon: <Emoji20Regular />,
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  CancelFileUpload: <Dismiss16Regular />,
+  CancelAttachmentUpload: <Dismiss16Regular />,
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   DownloadFile: <ArrowDownload16Regular />,
   /* @conditional-compile-remove(data-loss-prevention) */
