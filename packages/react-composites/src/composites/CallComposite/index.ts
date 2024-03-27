@@ -8,6 +8,8 @@ export type { DeviceCheckOptions } from './CallComposite';
 export type { LocalVideoTileOptions } from './CallComposite';
 export type { CallControlOptions } from './types/CallControlOptions';
 
+export { SpotlightNotification } from './components/SpotlightNotification';
+
 export * from './Strings';
 
 export {

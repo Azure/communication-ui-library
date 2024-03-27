@@ -67,6 +67,7 @@
     "stopSpotlightOnSelfMenuLabel": "Exit spotlight",
     "spotlightLimitReachedMenuTitle": "Spotlight limit reached",
     "stopAllSpotlightMenuLabel": "Stop all spotlights",
+    "spotlightedMessage": "You're spotlighted",
     "returnToCallButtonAriaDescription": "Return to Call",
     "returnToCallButtonAriaLabel": "Back",
     "roomNotFoundDetails": "The room ID provided could not be found.",

@@ -85,8 +85,11 @@ import { PromptProps } from './Prompt';
 import {
   useLocalSpotlightCallbacksWithPrompt,
   useRemoteSpotlightCallbacksWithPrompt,
+  useSpotlightNotification,
   useStopAllSpotlightCallbackWithPrompt
 } from '../utils/spotlightUtils';
+/* @conditional-compile-remove(spotlight) */
+import { SpotlightNotification } from './SpotlightNotification';
 
 /**
  * @private
@@ -208,6 +211,13 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     onStopRemoteSpotlight,
     setIsPromptOpen,
     setPromptProps
+  );
+
+  /* @conditional-compile-remove(spotlight) */
+  const { showSpotlightedNotification, dismissSpotlightNotification } = useSpotlightNotification(
+    adapter,
+    localParticipant.userId,
+    !!localParticipant.spotlight
   );
 
   /* @conditional-compile-remove(spotlight) */
@@ -473,6 +483,11 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                           </Stack>
                         )
                     }
+                    {showSpotlightedNotification && (
+                      <Stack horizontalAlign="center" styles={bannerNotificationStyles}>
+                        <SpotlightNotification onDismiss={dismissSpotlightNotification} />
+                      </Stack>
+                    )}
                     {canUnmute && !!props.mutedNotificationProps && (
                       <MutedNotification {...props.mutedNotificationProps} />
                     )}

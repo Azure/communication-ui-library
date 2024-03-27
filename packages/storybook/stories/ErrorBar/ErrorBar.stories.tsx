@@ -7,7 +7,7 @@
  * WHEN THE COMPOSITE ERROR HANDLING STORY HAS BEEN COMPLETED.
  */
 
-import { ErrorBar as ErrorBarComponent, useTheme } from '@azure/communication-react';
+import { ErrorBar as ErrorBarComponent, SpotlightNotification, useTheme } from '@azure/communication-react';
 import { mergeStyles } from '@fluentui/react';
 import { Canvas, Description, Heading, Props, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
@@ -70,12 +70,11 @@ const ErrorBarStory = (args): JSX.Element => {
         background: theme.palette.neutralLighterAlt,
         padding: '2em',
         width: '75%',
-        height: '50%'
+        height: '50%',
+        display: 'inline-block'
       })}
     >
-      <ErrorBarComponent
-        activeErrorMessages={args.errorTypes.map((t) => ({ type: t, timestamp: new Date(Date.now()) }))}
-      />
+      <SpotlightNotification onDismiss={() => {}} />
     </div>
   );
 };

@@ -21,7 +21,7 @@ import {
   Circle20Regular
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(spotlight) */
-import { MoreHorizontal20Filled, VideoPersonStarOff20Filled } from '@fluentui/react-icons';
+import { MoreHorizontal20Filled, VideoPersonStarOff20Filled, VideoPersonStar20Filled } from '@fluentui/react-icons';
 /* @conditional-compile-remove(capabilities) */
 import { MicProhibited20Filled, VideoProhibited20Filled } from '@fluentui/react-icons';
 import { Grid20Regular } from '@fluentui/react-icons';
@@ -112,7 +112,9 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   /* @conditional-compile-remove(spotlight) */
   PeoplePaneMoreButton: <MoreHorizontal20Filled />,
   /* @conditional-compile-remove(spotlight) */
-  StopAllSpotlightMenuButton: <VideoPersonStarOff20Filled />
+  StopAllSpotlightMenuButton: <VideoPersonStarOff20Filled />,
+  /* @conditional-compile-remove(spotlight) */
+  Spotlighted: <VideoPersonStar20Filled />
 };
 
 /**
@@ -255,6 +257,8 @@ export type CallCompositeIcons = {
   PeoplePaneMoreButton?: JSX.Element;
   /* @conditional-compile-remove(spotlight) */
   StopAllSpotlightMenuButton?: JSX.Element;
+  /* @conditional-compile-remove(spotlight) */
+  Spotlighted?: JSX.Element;
 };
 
 /**
