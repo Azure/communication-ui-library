@@ -239,9 +239,9 @@ test.describe('Filesharing Global Errorbar', async () => {
     const testMessageText = 'Hello!';
     await sendMessage(page, testMessageText);
     await waitForMessageDelivered(page);
-    await waitForSelector(page, dataUiId('file-download-card-group'));
+    await waitForSelector(page, dataUiId('attachment-download-card-group'));
 
-    await page.locator(dataUiId('file-download-card-download-icon')).click();
+    await page.locator(dataUiId('attachment-download-card-download-icon')).click();
     expect(
       await stableScreenshot(page, {
         stubMessageTimestamps: true,
@@ -274,7 +274,7 @@ test.describe('Filesharing Message Thread', async () => {
     const testMessageText = 'Hello!';
 
     await sendMessage(page, testMessageText);
-    await page.waitForSelector(dataUiId('file-download-card-group'));
+    await page.waitForSelector(dataUiId('attachment-download-card-group'));
 
     expect(
       await stableScreenshot(page, {
@@ -333,7 +333,7 @@ test.describe('Filesharing Edit Message', async () => {
 
     await sendMessage(page, testMessageText);
     await waitForMessageDelivered(page);
-    await page.waitForSelector(dataUiId('file-download-card-group'));
+    await page.waitForSelector(dataUiId('attachment-download-card-group'));
     await page.locator(dataUiId('chat-composite-message')).click();
     await page.locator(dataUiId('chat-composite-message-action-icon')).click();
     await page.waitForSelector(dataUiId('chat-composite-message-contextual-menu-edit-action'));

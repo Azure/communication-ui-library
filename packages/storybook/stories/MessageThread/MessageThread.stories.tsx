@@ -41,7 +41,7 @@ import {
   GetAvatarUrlByUserId,
   GenerateMockNewChatMessageWithInlineImage,
   GenerateMockNewChatMessageWithMention,
-  GenerateMockNewChatMessageWithFileAttachment
+  GenerateMockNewChatMessageWithAttachment
 } from './placeholdermessages';
 import { MessageThreadWithBlockedMessagesExample } from './snippets/BlockedMessages.snippet';
 import { MessageThreadWithCustomAvatarExample } from './snippets/CustomAvatar.snippet';
@@ -54,7 +54,7 @@ import { MessageThreadWithCustomTimestampExample } from './snippets/CustomTimest
 import { DefaultMessageThreadExample } from './snippets/Default.snippet';
 import { MessageThreadWithMessageStatusIndicatorExample } from './snippets/MessageStatusIndicator.snippet';
 import { MessageWithCustomMentionRenderer } from './snippets/MessageWithCustomMentionRenderer.snippet';
-import { MessageWithFile } from './snippets/MessageWithFile.snippet';
+import { MessageWithAttachment } from './snippets/MessageWithAttachment.snippet';
 import { MessageThreadWithSystemMessagesExample } from './snippets/SystemMessages.snippet';
 import { MessageThreadWithInlineImageExample } from './snippets/WithInlineImageMessage.snippet';
 import { MessageThreadWithMessageDateExample } from './snippets/WithMessageDate.snippet';
@@ -77,9 +77,9 @@ const MessageThreadWithCustomTimestampExampleText =
 const DefaultMessageThreadExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
 const MessageThreadWithMessageStatusIndicatorExampleText =
   require('!!raw-loader!./snippets/MessageStatusIndicator.snippet.tsx').default;
+const MessageWithAttachmentText = require('!!raw-loader!./snippets/MessageWithAttachment.snippet.tsx').default;
 const MessageWithCustomMentionRendererText =
   require('!!raw-loader!./snippets/MessageWithCustomMentionRenderer.snippet.tsx').default;
-const MessageWithFileText = require('!!raw-loader!./snippets/MessageWithFile.snippet.tsx').default;
 const ExampleConstantsText = require('!!raw-loader!./snippets/placeholdermessages.ts').default;
 const MessageThreadWithSystemMessagesExampleText =
   require('!!raw-loader!./snippets/SystemMessages.snippet.tsx').default;
@@ -110,7 +110,7 @@ const Docs: () => JSX.Element = () => {
   const refCustomAvatar = useRef(null);
   const refCustomTimestamp = useRef(null);
   const refDisplayInlineImages = useRef(null);
-  const refDisplayFileAttachments = useRef(null);
+  const refDisplayAttachments = useRef(null);
   const refMentionOfUsers = useRef(null);
   const refProps = useRef(null);
 
@@ -152,8 +152,8 @@ const Docs: () => JSX.Element = () => {
       scrollToRef(refCustomTimestamp);
     } else if (url.includes('display-inline-image-with-messages') && refDisplayInlineImages.current) {
       scrollToRef(refDisplayInlineImages);
-    } else if (url.includes('display-file-attachments-with-messages') && refDisplayFileAttachments.current) {
-      scrollToRef(refDisplayFileAttachments);
+    } else if (url.includes('display-attachments-with-messages') && refDisplayAttachments.current) {
+      scrollToRef(refDisplayAttachments);
     } else if (url.includes('mention-of-users-with-a-custom-renderer-within-messages') && refMentionOfUsers.current) {
       scrollToRef(refMentionOfUsers);
     } else if (url.includes('props') && refProps.current) {
@@ -173,7 +173,7 @@ const Docs: () => JSX.Element = () => {
     refCustomAvatar,
     refCustomTimestamp,
     refDisplayInlineImages,
-    refDisplayFileAttachments,
+    refDisplayAttachments,
     refMentionOfUsers,
     refProps
   ]);
@@ -330,18 +330,19 @@ const Docs: () => JSX.Element = () => {
         </Canvas>
       </div>
 
-      <div ref={refDisplayFileAttachments}>
-        <Heading>Display File Attachments with Messages</Heading>
+      <div ref={refDisplayAttachments}>
+        <Heading>Display Attachments with Messages</Heading>
         <DetailedBetaBanner />
         <Description>
-          MessageThread component provides UI for displaying file attachments in a message. This allows developers to
-          implement a file sharing feature using the pure UI component with minimal effort. Developers can write their
-          own file download logic and utilize the UI provided by MessageThread. Clicking on the file attachment opens it
-          in a new browser tab. Developers can override this behavior as well using MessageThread props. [The file types
-          icons](./?path=/docs/icons--page) should be initialized before rendering MessageThread component.
+          MessageThread component provides UI for displaying attachments in a message. This allows developers to
+          implement a attachments sharing feature using the pure UI component with minimal effort. Developers can write
+          their own attachment download logic and utilize the UI provided by MessageThread. Clicking on the attachment
+          opens it in a new browser tab. Developers can override this behavior as well using MessageThread props. [The
+          attachment types icons](./?path=/docs/icons--page) should be initialized before rendering MessageThread
+          component.
         </Description>
-        <Canvas mdxSource={MessageWithFileText}>
-          <MessageWithFile />
+        <Canvas mdxSource={MessageWithAttachmentText}>
+          <MessageWithAttachment />
         </Canvas>
       </div>
 
@@ -375,7 +376,7 @@ const MessageThreadStory = (args): JSX.Element => {
     { key: 'newMessage', text: 'New Message' },
     { key: 'newMessageOthers', text: 'New Message from others' },
     { key: 'newMessageWithInlineImage', text: 'New Message with Inline Image' },
-    { key: 'newMessageWithAttachment', text: 'New Message with File Attachment' },
+    { key: 'newMessageWithAttachment', text: 'New Message with Attachment' },
     { key: 'newMessageWithMention', text: 'New Message with Mention' },
     { key: 'newSystemMessage', text: 'New System Message' },
     { key: 'newCustomMessage', text: 'New Custom Message' }
@@ -405,7 +406,7 @@ const MessageThreadStory = (args): JSX.Element => {
   };
 
   const onSendNewMessageWithAttachment = (): void => {
-    setChatMessages([...chatMessages, GenerateMockNewChatMessageWithFileAttachment()]);
+    setChatMessages([...chatMessages, GenerateMockNewChatMessageWithAttachment()]);
   };
 
   const onSendNewMessageWithMention = (): void => {
