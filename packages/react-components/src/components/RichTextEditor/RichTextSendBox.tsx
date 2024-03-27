@@ -21,6 +21,8 @@ import { hasCompletedFileUploads, hasIncompleteFileUploads } from '../utils/Send
 import { SendBoxErrorBarError } from '../SendBoxErrorBar';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { attachmentUploadCardsStyles } from '../styles/SendBox.styles';
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+import { FluentV9ThemeProvider } from '../../theming/FluentV9ThemeProvider';
 
 /**
  * Strings of {@link RichTextSendBox} that can be overridden.
@@ -57,9 +59,53 @@ export interface RichTextSendBoxStrings extends SendBoxStrings {
    */
   decreaseIndentTooltip: string;
   /**
+   * Tooltip text insert table button.
+   */
+  insertTableTooltip: string;
+  /**
    * Tooltip text for the rich text format button button.
    */
   richTextFormatButtonTooltip: string;
+  /**
+   * Text for the insert menu item.
+   */
+  insertRowOrColumnMenu: string;
+  /**
+   * Title for the insert table menu.
+   */
+  insertTableMenuTitle: string;
+  /**
+   * Text for the insert menu item to insert row above the current selection.
+   */
+  insertRowAboveMenu: string;
+  /**
+   * Text for the insert menu item to insert row below the current selection.
+   */
+  insertRowBelowMenu: string;
+  /**
+   * Text for the insert menu item to insert column to the left from the current selection.
+   */
+  insertColumnLeftMenu: string;
+  /**
+   * Text for the insert menu item to insert column to the right from the current selection.
+   */
+  insertColumnRightMenu: string;
+  /**
+   * Text for the delete row or column menu.
+   */
+  deleteRowOrColumnMenu: string;
+  /**
+   * Text for the delete column menu.
+   */
+  deleteColumnMenu: string;
+  /**
+   * Text for the delete row menu.
+   */
+  deleteRowMenu: string;
+  /**
+   * Text for the delete table menu.
+   */
+  deleteTableMenu: string;
 }
 
 /**
@@ -247,18 +293,27 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   const onRenderFileUploads = useCallback(() => {
     return (
       <Stack className={attachmentUploadCardsStyles}>
-        <_AttachmentUploadCards
-          activeFileUploads={activeFileUploads}
-          onCancelFileUpload={onCancelFileUpload}
-          strings={{
-            removeAttachment: strings.removeAttachment,
-            uploading: strings.uploading,
-            uploadCompleted: strings.uploadCompleted
-          }}
-        />
+        <FluentV9ThemeProvider v8Theme={theme}>
+          <_AttachmentUploadCards
+            activeFileUploads={activeFileUploads}
+            onCancelFileUpload={onCancelFileUpload}
+            strings={{
+              removeAttachment: strings.removeAttachment,
+              uploading: strings.uploading,
+              uploadCompleted: strings.uploadCompleted
+            }}
+          />
+        </FluentV9ThemeProvider>
       </Stack>
     );
-  }, [activeFileUploads, onCancelFileUpload, strings.removeAttachment, strings.uploadCompleted, strings.uploading]);
+  }, [
+    activeFileUploads,
+    onCancelFileUpload,
+    strings.removeAttachment,
+    strings.uploadCompleted,
+    strings.uploading,
+    theme
+  ]);
 
   const sendButton = useMemo(() => {
     return (
