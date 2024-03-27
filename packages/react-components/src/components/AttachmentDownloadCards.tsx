@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { TooltipHost } from '@fluentui/react';
+import { Icon, TooltipHost } from '@fluentui/react';
 import React from 'react';
 import { useMemo } from 'react';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
@@ -10,7 +10,6 @@ import { _AttachmentCard } from './AttachmentCard';
 import { _AttachmentCardGroup } from './AttachmentCardGroup';
 import { _formatString } from '@internal/acs-ui-common';
 import { AttachmentMenuAction, AttachmentMetadata } from '../types/Attachment';
-import { ArrowDownload20Regular } from '@fluentui/react-icons';
 import { ChatMessage } from '../types';
 
 /**
@@ -29,7 +28,7 @@ export type ChatAttachmentType =
  */
 export const defaultAttachmentMenuAction: AttachmentMenuAction = {
   name: 'Download',
-  icon: <ArrowDownload20Regular />,
+  icon: <Icon iconName="DownloadFile" />,
   onClick: (attachment: AttachmentMetadata) => {
     window.open((attachment as AttachmentMetadata).url, '_blank', 'noopener,noreferrer');
   }
@@ -118,7 +117,7 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
               <_AttachmentCard
                 attachment={attachment}
                 key={attachment.id}
-                menuActions={props.actionForAttachment?.(attachment, message) ?? [defaultAttachmentMenuAction]}
+                menuActions={props.actionForAttachment?.(attachment, message) ?? getDefaultMenuActions(message)}
                 onDownloadErrorMessage={props.onDownloadErrorMessage}
               />
             </TooltipHost>
@@ -132,4 +131,18 @@ const useLocaleStringsTrampoline = (): _AttachmentDownloadCardsStrings => {
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   return useLocale().strings.messageThread;
   return { downloadAttachment: '', attachmentCardGroupMessage: '' };
+};
+
+const getDefaultMenuActions = (chatMessage?: ChatMessage): AttachmentMenuAction[] => {
+  // if message is sent by a Teams user, we need to use a different icon ("open")
+  if (chatMessage?.senderId?.includes('9:orgid')) {
+    return [
+      {
+        ...defaultAttachmentMenuAction,
+        icon: <Icon iconName="OpenFile" />
+      }
+    ];
+  }
+  // otherwise, use the default icon ("download")
+  return [defaultAttachmentMenuAction];
 };
