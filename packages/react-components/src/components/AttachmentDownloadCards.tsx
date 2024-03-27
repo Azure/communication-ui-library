@@ -22,19 +22,6 @@ export type ChatAttachmentType =
   | /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ 'file';
 
 /**
- * @beta
- *
- * The default menu action for downloading attachments. This action will open the attachment's URL in a new tab.
- */
-export const defaultAttachmentMenuAction: AttachmentMenuAction = {
-  name: 'Download',
-  icon: <Icon iconName="DownloadFile" />,
-  onClick: (attachment: AttachmentMetadata) => {
-    window.open((attachment as AttachmentMetadata).url, '_blank', 'noopener,noreferrer');
-  }
-};
-
-/**
  * Strings of _AttachmentDownloadCards that can be overridden.
  *
  * @internal
@@ -42,6 +29,8 @@ export const defaultAttachmentMenuAction: AttachmentMenuAction = {
 export interface _AttachmentDownloadCardsStrings {
   /** Aria label to notify user when focus is on attachment download button. */
   downloadAttachment: string;
+  /** Aria label to notify user when focus is on attachment open button. */
+  openAttachment: string;
   attachmentCardGroupMessage: string;
 }
 
@@ -74,6 +63,8 @@ export interface _AttachmentDownloadCardsProps {
 const attachmentDownloadCardsStyle = {
   marginTop: '0.25rem'
 };
+
+const actionIconStyle = { height: '1rem' };
 
 /**
  * @internal
@@ -117,7 +108,9 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
               <_AttachmentCard
                 attachment={attachment}
                 key={attachment.id}
-                menuActions={props.actionForAttachment?.(attachment, message) ?? getDefaultMenuActions(message)}
+                menuActions={
+                  props.actionForAttachment?.(attachment, message) ?? getDefaultMenuActions(localeStrings, message)
+                }
                 onDownloadErrorMessage={props.onDownloadErrorMessage}
               />
             </TooltipHost>
@@ -127,22 +120,73 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
   );
 };
 
+/**
+ * @private
+ */
+const getDownloadIconTrampoline = (): JSX.Element => {
+  // @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload)
+  <Icon iconName="DownloadFile" data-ui-id="file-download-card-download-icon" />;
+  // Return _some_ available icon, as the real icon is beta-only.
+  return <Icon iconName="EditBoxCancel" style={actionIconStyle} />;
+};
+
+/**
+ * @private
+ */
 const useLocaleStringsTrampoline = (): _AttachmentDownloadCardsStrings => {
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   return useLocale().strings.messageThread;
-  return { downloadAttachment: '', attachmentCardGroupMessage: '' };
+  return { downloadAttachment: '', openAttachment: '', attachmentCardGroupMessage: '' };
 };
 
-const getDefaultMenuActions = (chatMessage?: ChatMessage): AttachmentMenuAction[] => {
+/**
+ * @private
+ */
+const getDefaultMenuActions = (
+  locale: _AttachmentDownloadCardsStrings,
+  chatMessage?: ChatMessage
+): AttachmentMenuAction[] => {
   // if message is sent by a Teams user, we need to use a different icon ("open")
   if (chatMessage?.senderId?.includes('9:orgid')) {
     return [
       {
         ...defaultAttachmentMenuAction,
+        name: locale.openAttachment,
         icon: <Icon iconName="OpenFile" />
       }
     ];
   }
   // otherwise, use the default icon ("download")
-  return [defaultAttachmentMenuAction];
+  return [
+    {
+      ...defaultAttachmentMenuAction,
+      name: locale.downloadAttachment
+    }
+  ];
+};
+
+/**
+ * @beta
+ *
+ * The default menu action for downloading attachments. This action will open the attachment's URL in a new tab.
+ */
+export const defaultAttachmentMenuAction: AttachmentMenuAction = {
+  /**
+   *
+   * name is used for aria-label only when there's one button. For multiple buttons, it's used as a label.
+   * by default it's an unlocalized string when this is used as a imported constant,
+   * but you can overwrite it with your own localized string.
+   *
+   * i.e. defaultAttachmentMenuAction.name = localize('Download');
+   *
+   * when no action is provided, the UI library will overwrite this name
+   * with a localized string this string when it's used in the UI.
+   */
+  name: 'Download',
+  // this is the icon shown on the right of the file card
+  icon: getDownloadIconTrampoline(),
+  // this is the action that runs when the icon is clicked
+  onClick: (attachment: AttachmentMetadata) => {
+    window.open((attachment as AttachmentMetadata).url, '_blank', 'noopener,noreferrer');
+  }
 };

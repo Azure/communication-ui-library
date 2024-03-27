@@ -180,6 +180,7 @@
     "messageReadCount": "Read by {messageReadByCount} of {remoteParticipantsCount}",
     "actionMenuMoreOptions": "More Options",
     "downloadAttachment": "Download file",
+    "openAttachment": "Open file",
     "blockedWarningText": "This message was deleted due to organizational policy.",
     "blockedWarningLinkText": "Details",
     "attachmentCardGroupMessage": "The message has {attachmentCount} attachment",

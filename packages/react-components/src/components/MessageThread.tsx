@@ -211,8 +211,11 @@ export interface MessageThreadStrings {
   /** Aria label to announce when a message is deleted */
   messageDeletedAnnouncementAriaLabel: string;
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  /** String for download file button in attachment card */
+  /** String for download attachment button in attachment card */
   downloadAttachment: string;
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /** String for open attachment button in attachment card */
+  openAttachment: string;
   /* @conditional-compile-remove(data-loss-prevention) */
   /** String for policy violation message removal */
   blockedWarningText: string;

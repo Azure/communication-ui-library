@@ -103,6 +103,7 @@ const defaultOnRenderFileDownloads = (
       /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
       strings={{
         downloadAttachment: strings.downloadAttachment,
+        openAttachment: strings.openAttachment,
         attachmentCardGroupMessage: strings.attachmentCardGroupMessage
       }}
     />

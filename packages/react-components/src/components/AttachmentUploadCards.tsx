@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Icon } from '@fluentui/react';
+import { Icon, mergeStyles } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import { _AttachmentCard } from './AttachmentCard';
 import { _AttachmentCardGroup } from './AttachmentCardGroup';
@@ -125,7 +125,7 @@ export const _AttachmentUploadCards = (props: FileUploadCardsProps): JSX.Element
                   name: props.strings?.removeAttachment ?? 'Remove',
                   icon: (
                     <div aria-label={removeFileButtonString()}>
-                      <Icon iconName="CancelAttachmentUpload" style={actionIconStyle} />
+                      <Icon iconName="CancelAttachmentUpload" className={mergeStyles(actionIconStyle)} />
                     </div>
                   ),
                   onClick: () => {
