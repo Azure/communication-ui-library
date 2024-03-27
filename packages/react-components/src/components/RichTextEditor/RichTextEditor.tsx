@@ -96,12 +96,6 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   const editorCreator = useCallback(
     (div: HTMLDivElement, options: EditorOptions) => {
       editor.current = new Editor(div, options);
-      // Remove default values for background color and color
-      // setBackgroundColor and setTextColor can't be used here as they cause the editor to be focused
-      // color will be set in richTextEditorWrapperStyle instead of inline styles
-      // div.style.backgroundColor = '';
-      // div.style.color = '';
-
       return editor.current;
     },
     // trigger force editor reset when strings are changed to update context menu strings
