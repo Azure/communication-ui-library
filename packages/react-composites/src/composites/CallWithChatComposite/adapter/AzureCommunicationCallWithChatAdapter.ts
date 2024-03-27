@@ -461,7 +461,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         messageId,
         content,
         metadata,
-        /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) options
+        /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ options
       );
     });
   }
