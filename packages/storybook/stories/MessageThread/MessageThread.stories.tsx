@@ -53,8 +53,8 @@ import { MessageThreadWithCustomMessageStatusIndicatorExample } from './snippets
 import { MessageThreadWithCustomTimestampExample } from './snippets/CustomTimestamp.snippet';
 import { DefaultMessageThreadExample } from './snippets/Default.snippet';
 import { MessageThreadWithMessageStatusIndicatorExample } from './snippets/MessageStatusIndicator.snippet';
-import { MessageWithCustomMentionRenderer } from './snippets/MessageWithCustomMentionRenderer.snippet';
 import { MessageWithAttachment } from './snippets/MessageWithAttachment.snippet';
+import { MessageWithCustomMentionRenderer } from './snippets/MessageWithCustomMentionRenderer.snippet';
 import { MessageThreadWithSystemMessagesExample } from './snippets/SystemMessages.snippet';
 import { MessageThreadWithInlineImageExample } from './snippets/WithInlineImageMessage.snippet';
 import { MessageThreadWithMessageDateExample } from './snippets/WithMessageDate.snippet';
