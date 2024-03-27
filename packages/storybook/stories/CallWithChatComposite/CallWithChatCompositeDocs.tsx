@@ -175,6 +175,8 @@ export const Docs: () => JSX.Element = () => {
           easy playground to join an existing Teams meeting. This is useful if you want to explore the composite in a
           Teams interop scenario.
         </Description>
+        <Description>- Use Teams meeting link</Description>
+        <Description>- Use Teams MeetingId and passcode</Description>
       </div>
       <Heading>Customize Call Controls</Heading>
       <Description>
