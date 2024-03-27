@@ -82,7 +82,14 @@ export const LiveTestApp = (): JSX.Element => {
 
   const actionForAttachment = (): AttachmentMenuAction[] => {
     if (failFileDownload) {
-      throw Error('You don’t have permission to download this file.');
+      return [
+        {
+          ...defaultAttachmentMenuAction,
+          onClick: () => {
+            throw Error('You don’t have permission to download this file.');
+          }
+        }
+      ];
     }
     return [defaultAttachmentMenuAction];
   };

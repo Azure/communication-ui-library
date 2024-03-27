@@ -75,7 +75,14 @@ export const FakeAdapterApp = (): JSX.Element => {
 
   const actionForAttachment = (): AttachmentMenuAction[] => {
     if (fakeChatAdapterArgs.failFileDownload) {
-      throw Error('You don’t have permission to download this file.');
+      return [
+        {
+          ...defaultAttachmentMenuAction,
+          onClick: () => {
+            throw Error('You don’t have permission to download this file.');
+          }
+        }
+      ];
     }
     return [defaultAttachmentMenuAction];
   };
