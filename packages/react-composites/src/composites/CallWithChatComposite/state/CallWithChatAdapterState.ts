@@ -129,6 +129,7 @@ export function callWithChatAdapterStateFromBackingStates(callAdapter: CallAdapt
     isTeamsCall: callAdapterState.isTeamsCall,
     latestCallErrors: callAdapterState.latestErrors,
     latestChatErrors: {},
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     fileUploads: {},
     /* @conditional-compile-remove(PSTN-calls) */
     alternateCallerId: callAdapterState.alternateCallerId,
