@@ -5,10 +5,10 @@ import { mergeStyles, useTheme } from '@fluentui/react';
 import { Description, Heading, Source, Subheading, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
-import { COMPONENT_FOLDER_PREFIX } from '../../constants';
+import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { SurveyExample } from './components/SurveyExample';
 import { exampleDisableSurvey, exampleOnSurveyClosed, exampleOnSurveySubmitted } from './SurveyDocs';
+import { EXAMPLES_FOLDER_PREFIX } from '../constants';
 
 const getDocs: () => JSX.Element = () => {
   /* eslint-disable react/no-unescaped-entities */
@@ -94,8 +94,8 @@ const SurveyStory = (): JSX.Element => {
 export const Survey = SurveyStory.bind({});
 
 export default {
-  id: `${COMPONENT_FOLDER_PREFIX}-internal-Survey`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Internal/Survey`,
+  id: `${EXAMPLES_FOLDER_PREFIX}-Survey`,
+  title: `${EXAMPLES_FOLDER_PREFIX}/Survey`,
   component: SurveyExample,
   parameters: {
     docs: {
