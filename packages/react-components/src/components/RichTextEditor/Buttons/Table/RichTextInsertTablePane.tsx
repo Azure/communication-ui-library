@@ -13,33 +13,44 @@ import {
 import { ColumnRowReplaceString, createKey } from '../../../utils/RichTextTableUtils';
 
 // This file uses RoosterJS React package implementation with updates to UI components and styles.
-const MaxRows = 5;
-const MaxColumns = 5;
+const RowColumnInitialValue = 0;
+
+interface RichTextInsertTablePaneProps {
+  theme: Theme;
+  item: IContextualMenuItem;
+  onClick: (e: React.MouseEvent<Element> | React.KeyboardEvent<Element>, item: IContextualMenuItem) => void;
+  maxRowsNumber: number;
+  maxColumnsNumber: number;
+}
 
 /**
  * @private
  * Component for the insert table pane
  */
-export const RichTextInsertTablePane = (props: {
-  theme: Theme;
-  item: IContextualMenuItem;
-  onClick: (e: React.MouseEvent<Element> | React.KeyboardEvent<Element>, item: IContextualMenuItem) => void;
-}): JSX.Element => {
-  const { item, onClick, theme } = props;
-  const [column, setColumn] = React.useState(1);
-  const [row, setRow] = React.useState(1);
+export const RichTextInsertTablePane = (props: RichTextInsertTablePaneProps): JSX.Element => {
+  const { item, onClick, theme, maxColumnsNumber, maxRowsNumber } = props;
+  const [column, setColumn] = React.useState(RowColumnInitialValue);
+  const [row, setRow] = React.useState(RowColumnInitialValue);
 
-  const updateSize = React.useCallback((target?: HTMLElement) => {
-    if (target !== undefined) {
-      const column = parseInt(target.dataset.column ?? '-1');
-      const row = parseInt(target.dataset.row ?? '-1');
+  const updateSize = React.useCallback(
+    (target?: HTMLElement) => {
+      if (target !== undefined && target.dataset.column !== undefined && target.dataset.row !== undefined) {
+        const column = parseInt(target.dataset.column);
+        const row = parseInt(target.dataset.row);
 
-      if (column > 0 && column <= MaxColumns && row > 0 && row <= MaxRows) {
-        setColumn(column);
-        setRow(row);
+        if (
+          column >= RowColumnInitialValue &&
+          column < maxColumnsNumber &&
+          row >= RowColumnInitialValue &&
+          row < maxRowsNumber
+        ) {
+          setColumn(column);
+          setRow(row);
+        }
       }
-    }
-  }, []);
+    },
+    [maxColumnsNumber, maxRowsNumber]
+  );
 
   const onMouseEnter = React.useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -52,7 +63,7 @@ export const RichTextInsertTablePane = (props: {
     (e: React.MouseEvent<HTMLButtonElement>) => {
       onClick(e, {
         ...item,
-        key: createKey(row, column)
+        key: createKey(formatRowColumnText(row), formatRowColumnText(column))
       });
     },
     [row, column, onClick, item]
@@ -61,8 +72,8 @@ export const RichTextInsertTablePane = (props: {
   const items = React.useMemo(() => {
     const items: JSX.Element[] = [];
 
-    for (let i = 1; i <= MaxRows; i++) {
-      for (let j = 1; j <= MaxColumns; j++) {
+    for (let i = 0; i < maxRowsNumber; i++) {
+      for (let j = 0; j < maxColumnsNumber; j++) {
         const key = `cell_${i}_${j}`;
         const isSelected = j <= column && i <= row;
         items.push(
@@ -85,17 +96,17 @@ export const RichTextInsertTablePane = (props: {
     }
 
     return items;
-  }, [column, row, theme, onClickButton, onMouseEnter, item.text]);
+  }, [maxRowsNumber, maxColumnsNumber, column, row, theme, onClickButton, onMouseEnter, item.text]);
 
   const text = useMemo(() => {
-    return formatText(item.text ?? '', row, column);
+    return formatText(item.text ?? '', formatRowColumnText(row), formatRowColumnText(column));
   }, [column, item.text, row]);
 
   return (
     <div>
       <div className={insertTableMenuTitleStyles}>{text}</div>
       <FocusZone
-        defaultTabbableElement="cell_1_1"
+        defaultTabbableElement={`cell_${RowColumnInitialValue}_${RowColumnInitialValue}`}
         direction={FocusZoneDirection.bidirectional}
         onActiveElementChanged={updateSize}
         className={insertTableMenuFocusZone(theme)}
@@ -106,7 +117,10 @@ export const RichTextInsertTablePane = (props: {
   );
 };
 
-/** @private */
-export function formatText(text: string, row: number, column: number): string {
+const formatText = (text: string, row: number, column: number): string => {
   return text.replace(`${ColumnRowReplaceString}`, `${column.toString()} x ${row.toString()}`);
-}
+};
+
+const formatRowColumnText = (value: number): number => {
+  return value + 1;
+};

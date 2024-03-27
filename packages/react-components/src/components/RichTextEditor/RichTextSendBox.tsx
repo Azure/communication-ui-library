@@ -21,6 +21,7 @@ import { hasCompletedFileUploads, hasIncompleteFileUploads } from '../utils/Send
 import { SendBoxErrorBarError } from '../SendBoxErrorBar';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { attachmentUploadCardsStyles } from '../styles/SendBox.styles';
+import { FluentV9ThemeProvider } from '../../theming/FluentV9ThemeProvider';
 
 /**
  * Strings of {@link RichTextSendBox} that can be overridden.
@@ -291,18 +292,27 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   const onRenderFileUploads = useCallback(() => {
     return (
       <Stack className={attachmentUploadCardsStyles}>
-        <_AttachmentUploadCards
-          activeFileUploads={activeFileUploads}
-          onCancelFileUpload={onCancelFileUpload}
-          strings={{
-            removeAttachment: strings.removeAttachment,
-            uploading: strings.uploading,
-            uploadCompleted: strings.uploadCompleted
-          }}
-        />
+        <FluentV9ThemeProvider v8Theme={theme}>
+          <_AttachmentUploadCards
+            activeFileUploads={activeFileUploads}
+            onCancelFileUpload={onCancelFileUpload}
+            strings={{
+              removeAttachment: strings.removeAttachment,
+              uploading: strings.uploading,
+              uploadCompleted: strings.uploadCompleted
+            }}
+          />
+        </FluentV9ThemeProvider>
       </Stack>
     );
-  }, [activeFileUploads, onCancelFileUpload, strings.removeAttachment, strings.uploadCompleted, strings.uploading]);
+  }, [
+    activeFileUploads,
+    onCancelFileUpload,
+    strings.removeAttachment,
+    strings.uploadCompleted,
+    strings.uploading,
+    theme
+  ]);
 
   const sendButton = useMemo(() => {
     return (

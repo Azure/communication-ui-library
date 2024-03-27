@@ -6,6 +6,9 @@ import { KnownRibbonButtonKey, RibbonButton, getButtons } from 'roosterjs-react'
 import { ribbonButtonStyle, ribbonDividerStyle } from '../../styles/RichTextEditor.styles';
 import { insertTableButton } from './Table/RichTextInsertTableButton';
 
+const MaxRowsNumber = 5;
+const MaxColumnsNumber = 5;
+
 const dividerRibbonButton = (theme: Theme, key: string): RibbonButton<string> => {
   return {
     key: key,
@@ -90,7 +93,7 @@ export const ribbonButtons = (theme: Theme): RibbonButton<string>[] => {
     indentIncreaseButton(theme),
     indentDecreaseButton(theme),
     dividerRibbonButton(theme, 'RichTextRibbonTableDivider'),
-    insertTableButton(theme)
+    insertTableButton(theme, MaxRowsNumber, MaxColumnsNumber)
   ].forEach((item) => {
     if (item !== undefined) {
       buttons.push(item);

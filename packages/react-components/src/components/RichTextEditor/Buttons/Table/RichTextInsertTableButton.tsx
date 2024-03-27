@@ -15,7 +15,11 @@ import { ColumnRowReplaceString, parseKey } from '../../../utils/RichTextTableUt
 /**
  * "Insert table" button for the RoosterJS ribbon
  */
-export const insertTableButton = (theme: Theme): RibbonButton<string> => {
+export const insertTableButton = (
+  theme: Theme,
+  maxRowsNumber: number,
+  maxColumnsNumber: number
+): RibbonButton<string> => {
   return {
     key: 'buttonNameInsertTable',
     unlocalizedText: 'Insert table',
@@ -31,7 +35,15 @@ export const insertTableButton = (theme: Theme): RibbonButton<string> => {
         insertTablePane: `Insert ${ColumnRowReplaceString} table`
       },
       itemRender: (item, onClick) => {
-        return <RichTextInsertTablePane item={item} onClick={onClick} theme={theme} />;
+        return (
+          <RichTextInsertTablePane
+            item={item}
+            onClick={onClick}
+            theme={theme}
+            maxColumnsNumber={maxColumnsNumber}
+            maxRowsNumber={maxRowsNumber}
+          />
+        );
       },
       commandBarSubMenuProperties: {
         className: insertTableMenuTablePane
