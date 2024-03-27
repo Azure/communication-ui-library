@@ -14,7 +14,7 @@ export const getUserId = (state: ChatAdapterState): CommunicationIdentifierKind 
  * @private
  */
 export const getFileUploads = (state: ChatAdapterState): FileUploadsUiState | undefined => {
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   return state?.fileUploads;
   return undefined;
 };

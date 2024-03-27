@@ -58,7 +58,11 @@ import {
   TextIndentIncrease20Regular,
   DividerTall24Regular,
   TextEditStyle20Regular,
-  TextEditStyle20Filled
+  TextEditStyle20Filled,
+  Table20Regular,
+  Table20Filled,
+  TableAdd20Regular,
+  TableDismiss20Regular
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(reaction) */
 import { Emoji20Regular } from '@fluentui/react-icons';
@@ -88,7 +92,7 @@ import { Backspace20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(call-readiness) */
 import { Sparkle20Filled, VideoProhibited20Filled, MicProhibited20Filled } from '@fluentui/react-icons';
 
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { ArrowDownload16Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CallPause20Regular, CallPause20Filled, Play20Regular } from '@fluentui/react-icons';
@@ -277,9 +281,9 @@ export const DEFAULT_COMPONENT_ICONS = {
   LowerHandContextualMenuItem: <HandRightOff20Regular />,
   /* @conditional-compile-remove(reaction) */
   ReactionButtonIcon: <Emoji20Regular />,
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   CancelFileUpload: <Dismiss16Regular />,
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   DownloadFile: <ArrowDownload16Regular />,
   /* @conditional-compile-remove(data-loss-prevention) */
   DataLossPreventionProhibited: <DataLossPreventionProhibited16Regular />,
@@ -399,5 +403,13 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(rich-text-editor) */
   RichTextEditorButtonIcon: <TextEditStyle20Regular />,
   /* @conditional-compile-remove(rich-text-editor) */
-  RichTextEditorButtonIconFilled: <TextEditStyle20Filled />
+  RichTextEditorButtonIconFilled: <TextEditStyle20Filled />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RichTextInsertTableRegularIcon: <Table20Regular />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RichTextInsertTableFilledIcon: <Table20Filled />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RichTextTableInsertMenuIcon: <TableAdd20Regular />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RichTextTableDeleteMenuIcon: <TableDismiss20Regular />
 };

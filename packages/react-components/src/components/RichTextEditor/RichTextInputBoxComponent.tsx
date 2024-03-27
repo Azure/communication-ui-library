@@ -39,9 +39,9 @@ export interface RichTextInputBoxComponentProps {
   strings: Partial<RichTextSendBoxStrings>;
   disabled: boolean;
   actionComponents: ReactNode;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   onRenderFileUploads?: () => JSX.Element;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   hasFiles?: boolean;
   // props for min and max height for the rich text editor
   // otherwise the editor will grow to fit the content
@@ -62,9 +62,9 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
     disabled,
     strings,
     actionComponents,
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     onRenderFileUploads,
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     hasFiles,
     richTextEditorStyleProps,
     isHorizontalLayoutDisabled = false
@@ -135,12 +135,12 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
     return (
       !isHorizontalLayoutDisabled &&
       !showRichTextEditorFormatting &&
-      /* @conditional-compile-remove(file-sharing) */ !hasFiles
+      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ !hasFiles
     );
   }, [
     isHorizontalLayoutDisabled,
     showRichTextEditorFormatting,
-    /* @conditional-compile-remove(file-sharing) */ hasFiles
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ hasFiles
   ]);
 
   return (
@@ -172,7 +172,10 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
               styles={richTextEditorStyle}
             />
           </Stack.Item>
-          {/* @conditional-compile-remove(file-sharing) */ onRenderFileUploads && onRenderFileUploads()}
+          {
+            /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ onRenderFileUploads &&
+              onRenderFileUploads()
+          }
         </Stack>
         {actionButtons}
       </Stack>

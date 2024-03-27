@@ -90,7 +90,7 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
   // placeholder before refactoring the props
   const attachment = useMemo(() => {
     return {
-      /* @conditional-compile-remove(file-sharing) */
+      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
       id: 'attachmentId',
       extension: attachmentExtension,
       name: attachmentName,

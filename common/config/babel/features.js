@@ -26,8 +26,10 @@ module.exports = {
     "dialpad",
     // Data loss prevention feature
     "data-loss-prevention",
-    // Ability to upload/download files in message thread.
-    "file-sharing",
+    // Ability to download files attachments in message thread.
+    "attachment-download",
+    // Ability to upload files attachments in message thread.
+    "attachment-upload",
     // Mention feature
     "mention",
     // 1 to N Calling feature.
@@ -77,6 +79,8 @@ module.exports = {
     'spotlight',
     // Feature for tracking beta start call identifier
     'start-call-beta',
+    // Join meeting with meetingId and passcode
+    'meeting-id',
     // Image overlay theme
     'image-overlay-theme',
      // Close captions feature for ACS calls
@@ -106,6 +110,8 @@ module.exports = {
     'rich-text-editor',
     // Feature for spotlight
     'spotlight',
+    // Join meeting with meetingId and passcode
+    'meeting-id',
     // Close captions feature for ACS calls
     "acs-close-captions",
   ],
