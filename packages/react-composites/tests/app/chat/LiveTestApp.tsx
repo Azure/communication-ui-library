@@ -30,7 +30,7 @@ export const LiveTestApp = (): JSX.Element => {
   const useFrLocale = Boolean(params.useFrLocale);
   const customDataModel = params.customDataModel;
   const useFileSharing = Boolean(params.useFileSharing);
-  const failFileDownload = Boolean(params.failDownload);
+  const failAttachmentDownload = Boolean(params.failDownload);
   const uploadedFiles = React.useMemo(() => (params.uploadedFiles ? JSON.parse(params.uploadedFiles) : []), []);
   const showParticipantPane = params.showParticipantPane === 'true' ? true : false;
 
@@ -81,12 +81,12 @@ export const LiveTestApp = (): JSX.Element => {
   }, [adapter, uploadedFiles]);
 
   const actionsForAttachment = (): AttachmentMenuAction[] => {
-    if (failFileDownload) {
+    if (failAttachmentDownload) {
       return [
         {
           ...defaultAttachmentMenuAction,
           onClick: () => {
-            throw Error('You don’t have permission to download this file.');
+            throw Error('You don’t have permission to download this attachment.');
           }
         }
       ];

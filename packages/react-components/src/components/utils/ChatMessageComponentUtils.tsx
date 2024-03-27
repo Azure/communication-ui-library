@@ -72,7 +72,7 @@ export function getMessageBubbleContent(
       {
         /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ onRenderAttachmentDownloads
           ? onRenderAttachmentDownloads(userId, message)
-          : defaultOnRenderFileDownloads(
+          : defaultOnRenderAttachmentDownloads(
               message,
               strings,
               /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
@@ -84,10 +84,10 @@ export function getMessageBubbleContent(
 }
 
 /**
- * Default component for rendering file downloads.
+ * Default component for rendering attachment downloads.
  */
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-const defaultOnRenderFileDownloads = (
+const defaultOnRenderAttachmentDownloads = (
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage,
   strings: MessageThreadStrings,
   actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[]

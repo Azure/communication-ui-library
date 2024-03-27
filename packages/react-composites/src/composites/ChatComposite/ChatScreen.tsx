@@ -45,7 +45,7 @@ import { participantListContainerPadding } from '../common/styles/ParticipantCon
 import { ChatScreenPeoplePane } from './ChatScreenPeoplePane';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { FileDownloadErrorBar } from './FileDownloadErrorBar';
+import { AttachmentDownloadErrorBar } from './AttachmentDownloadErrorBar';
 import { _AttachmentDownloadCards } from '@internal/react-components';
 import { ImageOverlay } from '@internal/react-components';
 import { InlineImage } from '@internal/react-components';
@@ -391,11 +391,11 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           {options?.errorBar !== false && <ErrorBar {...errorBarProps} />}
           {
             /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-            <FileDownloadErrorBar
+            <AttachmentDownloadErrorBar
               onDismissDownloadErrorMessage={useCallback(() => {
                 setDownloadErrorMessage('');
               }, [])}
-              fileDownloadErrorMessage={downloadErrorMessage || ''}
+              attachmentDownloadErrorMessage={downloadErrorMessage || ''}
             />
           }
           <MessageThread

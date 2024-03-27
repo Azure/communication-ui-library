@@ -280,9 +280,9 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   CancelAttachmentUpload: <Dismiss16Regular />,
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  DownloadFile: <ArrowDownload20Regular />,
+  DownloadAttachment: <ArrowDownload20Regular />,
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  OpenFile: <Open20Regular />,
+  OpenAttachment: <Open20Regular />,
   /* @conditional-compile-remove(data-loss-prevention) */
   DataLossPreventionProhibited: <DataLossPreventionProhibited16Regular />,
   EditBoxCancel: <Dismiss20Regular />,

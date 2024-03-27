@@ -84,7 +84,7 @@ export const GenerateMockNewChatMessageWithInlineImage = (): ChatMessage => {
   };
 };
 
-export const GenerateMockNewChatMessageWithFileAttachment = (): ChatMessage => {
+export const GenerateMockNewChatMessageWithAttachment = (): ChatMessage => {
   return {
     messageType: 'chat',
     ...UserThree,

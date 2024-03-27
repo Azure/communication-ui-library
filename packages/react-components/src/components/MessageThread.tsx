@@ -223,7 +223,7 @@ export interface MessageThreadStrings {
   /** String for policy violation message removal details link */
   blockedWarningLinkText: string;
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  /** String for aria text in file attachment group*/
+  /** String for aria text in attachment card group*/
   attachmentCardGroupMessage: string;
 }
 
