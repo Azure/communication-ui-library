@@ -3,8 +3,10 @@
 
 import { concatStyleSets, Icon, IStyle, PartialTheme } from '@fluentui/react';
 /* @conditional-compile-remove(end-call-options) */
-import { IContextualMenuProps } from '@fluentui/react';
+import { IContextualMenuProps, DefaultButton, Dialog, DialogFooter, DialogType, PrimaryButton } from '@fluentui/react';
 import React from 'react';
+/* @conditional-compile-remove(end-call-options) */
+import { useCallback } from 'react';
 import { useLocale } from '../localization';
 import { useTheme } from '../theming';
 import { CallingTheme, darkTheme, lightTheme } from '../theming/themes';
@@ -25,6 +27,38 @@ export interface EndCallButtonStrings {
   label: string;
   /** Tooltip content. */
   tooltipContent?: string;
+
+  /* @conditional-compile-remove(end-call-options) */
+  /* Label for leave option when ending call */
+  leaveOption?: string;
+
+  /* @conditional-compile-remove(end-call-options) */
+  /* Label for end the whole call option when ending call */
+  endCallOption?: string;
+
+  /* @conditional-compile-remove(end-call-options) */
+  /* Label for confirm button in hang up confirm dialog */
+  hangUpConfirmButtonLabel?: string;
+
+  /* @conditional-compile-remove(end-call-options) */
+  /* Label for cancel button in hang up confirm dialog */
+  hangUpCancelButtonLabel?: string;
+
+  /* @conditional-compile-remove(end-call-options) */
+  /* Title of confirm dialog when leaving */
+  leaveConfirmDialogTitle?: string;
+
+  /* @conditional-compile-remove(end-call-options) */
+  /* Content of confirm dialog when leaving */
+  leaveConfirmDialogContent?: string;
+
+  /* @conditional-compile-remove(end-call-options) */
+  /* Title of confirm dialog when leaving */
+  endCallConfirmDialogTitle?: string;
+
+  /* @conditional-compile-remove(end-call-options) */
+  /* Content of confirm dialog when leaving */
+  endCallConfirmDialogContent?: string;
 }
 
 /**
@@ -64,6 +98,23 @@ const onRenderEndCallIcon = (): JSX.Element => <Icon iconName="ControlButtonEndC
 export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
   const { styles, /* @conditional-compile-remove(end-call-options) */ enableEndCallMenu, onHangUp } = props;
 
+  /* @conditional-compile-remove(end-call-options) */
+  const [showHangUpConfirm, setShowHangUpConfirm] = React.useState(false);
+
+  /* @conditional-compile-remove(end-call-options) */
+  const toggleConfirm = useCallback(() => {
+    setShowHangUpConfirm(!showHangUpConfirm);
+  }, [showHangUpConfirm]);
+
+  /* @conditional-compile-remove(end-call-options) */
+  const onHangUpConfirm = useCallback(
+    (hangUpForEveryone?: boolean) => {
+      onHangUp && onHangUp(hangUpForEveryone);
+      toggleConfirm();
+    },
+    [onHangUp, toggleConfirm]
+  );
+
   const localeStrings = useLocale().strings.endCallButton;
   const strings = { ...localeStrings, ...props.strings };
 
@@ -79,18 +130,18 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
     items: [
       {
         key: 'endForSelf',
-        text: 'Leave',
-        title: 'Leave',
+        text: localeStrings.leaveOption,
+        title: localeStrings.leaveOption,
         onClick: () => {
           onHangUp && onHangUp();
         }
       },
       {
         key: 'endForEveryone',
-        text: 'End call',
-        title: 'End call',
+        text: localeStrings.endCallOption,
+        title: localeStrings.endCallOption,
         onClick: () => {
-          onHangUp && onHangUp(true);
+          toggleConfirm();
         }
       }
     ],
@@ -106,18 +157,40 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
   };
 
   return (
-    <ControlBarButton
-      {...props}
-      /* @conditional-compile-remove(end-call-options) */
-      split={enableEndCallMenu}
-      /* @conditional-compile-remove(end-call-options) */
-      menuProps={enableEndCallMenu ? defaultMenuProps : undefined}
-      onClick={onHangUp ? () => onHangUp() : props.onClick}
-      styles={componentStyles}
-      onRenderIcon={props.onRenderIcon ?? onRenderEndCallIcon}
-      strings={strings}
-      labelKey={props.labelKey ?? 'endCallButtonLabel'}
-    />
+    <>
+      {
+        /* @conditional-compile-remove(end-call-options) */
+        <ConfirmDialog
+          title={
+            (enableEndCallMenu ? localeStrings.endCallConfirmDialogTitle : localeStrings.leaveConfirmDialogTitle) ?? ''
+          }
+          content={
+            (enableEndCallMenu
+              ? localeStrings.endCallConfirmDialogContent
+              : localeStrings.endCallConfirmDialogContent) ?? ''
+          }
+          onConfirm={() => onHangUpConfirm(enableEndCallMenu)} // if enableEndCallMenu is true, that means the dialog is triggered by hangUpForEveryone button
+          isOpen={showHangUpConfirm}
+          onClose={toggleConfirm}
+        />
+      }
+      <ControlBarButton
+        {...props}
+        /* @conditional-compile-remove(end-call-options) */
+        menuProps={enableEndCallMenu ? defaultMenuProps : undefined}
+        onClick={
+          onHangUp
+            ? props.showLabel //TODO: we don't have mobile UX yet, showLabel === desktop UX, will need to change when we have it
+              ? toggleConfirm
+              : () => onHangUp()
+            : props.onClick
+        }
+        styles={componentStyles}
+        onRenderIcon={props.onRenderIcon ?? onRenderEndCallIcon}
+        strings={strings}
+        labelKey={props.labelKey ?? 'endCallButtonLabel'}
+      />
+    </>
   );
 };
 
@@ -138,7 +211,7 @@ const getButtonStyles = (
   },
   pressed: {
     color: theme.callingPalette.iconWhite,
-    background: theme.callingPalette.callRed,
+    background: theme.callingPalette.callRedDarker,
     border: 'none',
     ' i': {
       color: theme.callingPalette.iconWhite
@@ -149,7 +222,7 @@ const getButtonStyles = (
   },
   hovered: {
     color: theme.callingPalette.iconWhite,
-    background: theme.callingPalette.callRed,
+    background: theme.callingPalette.callRedDark,
     border: 'none',
     ' i': {
       color: theme.callingPalette.iconWhite
@@ -199,4 +272,37 @@ const lightThemeCallButtonStyles = {
   label: {
     color: lightTheme.callingPalette.iconWhite
   }
+};
+
+/* @conditional-compile-remove(end-call-options) */
+type ConfirmDialogProps = {
+  title: string;
+  content: string;
+  onConfirm: () => void;
+  isOpen: boolean;
+  onClose: () => void;
+};
+
+/* @conditional-compile-remove(end-call-options) */
+const ConfirmDialog = ({ title, content, onConfirm, isOpen, onClose }: ConfirmDialogProps): JSX.Element => {
+  const strings = useLocale().strings.endCallButton;
+  return (
+    <Dialog
+      hidden={!isOpen}
+      onDismiss={onClose}
+      dialogContentProps={{
+        type: DialogType.normal,
+        title,
+        subText: content
+      }}
+      modalProps={{
+        isBlocking: true
+      }}
+    >
+      <DialogFooter>
+        <PrimaryButton onClick={onConfirm} text={strings.hangUpConfirmButtonLabel} />
+        <DefaultButton onClick={onClose} text={strings.hangUpCancelButtonLabel} />
+      </DialogFooter>
+    </Dialog>
+  );
 };
