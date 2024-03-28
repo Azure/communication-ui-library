@@ -20937,7 +20937,7 @@ packages:
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-lqDMMb6sNY7vgDykm5R3twqXaXRnN8bYRyfucRT558EWXG+4irGmviYNsrJ38hyswOudoGF+T2gKkQ8NMwsnCg==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-VIaiSJ2XrbWa0YyeQczupc4NjJxwGo19e87ZZDBHXi0ipOmIxGV2wanVy+Rb97vjjX8lTlzBcfWpaeTZKUjWNw==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
@@ -21013,6 +21013,7 @@ packages:
       rollup: 4.12.1
       roosterjs-editor-api: 8.61.0
       roosterjs-editor-core: 8.61.0
+      roosterjs-editor-dom: 8.61.0
       roosterjs-editor-plugins: 8.61.0
       roosterjs-editor-types-compatible: 8.61.0
       roosterjs-react: 8.55.0(@fluentui/react@8.115.6)(react-dom@18.2.0)(react@18.2.0)
@@ -21183,7 +21184,7 @@ packages:
     dev: false
 
   file:projects/react-components.tgz:
-    resolution: {integrity: sha512-x26B+p1xMH3AYyZK5tcxKCi4tbfr8QHpQ3AcceDKG1D45lG5/o1MivxlyCqW6kRME3hJPQ9t2iceTcaZ24XaXg==, tarball: file:projects/react-components.tgz}
+    resolution: {integrity: sha512-5xhOHY/lZ1l2lSoFXBbA/DiB1YICMGvin49SMWxFjZkGsKbjqj5vq0b4HcY0A7lWUfJpr2D07/HCaD3y0QpftQ==, tarball: file:projects/react-components.tgz}
     name: '@rush-temp/react-components'
     version: 0.0.0
     dependencies:
@@ -21260,6 +21261,7 @@ packages:
       rollup: 4.12.1
       roosterjs-editor-api: 8.61.0
       roosterjs-editor-core: 8.61.0
+      roosterjs-editor-dom: 8.61.0
       roosterjs-editor-plugins: 8.61.0
       roosterjs-editor-types-compatible: 8.61.0
       roosterjs-react: 8.55.0(@fluentui/react@8.115.6)(react-dom@18.2.0)(react@18.2.0)
