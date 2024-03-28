@@ -70,11 +70,11 @@ export default {
     systemMessage: { control: 'text', defaultValue: undefined },
     isSendBoxWithWarning: { control: 'boolean', defaultValue: false, name: 'Has warning/information message' },
     strings: hiddenControl,
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     onRenderFileUploads: hiddenControl,
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     activeFileUploads: hiddenControl,
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     onCancelFileUpload: hiddenControl,
     onSendMessage: hiddenControl
   },

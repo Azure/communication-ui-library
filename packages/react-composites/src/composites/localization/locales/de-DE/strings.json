@@ -315,8 +315,10 @@
       "startSpotlightCancelButtonLabel": "Abbrechen",
       "stopSpotlightHeading": "Dieses Video aus dem Spotlight nehmen?",
       "stopSpotlightOnSelfHeading": "Spotlight verlassen?",
+      "stopAllSpotlightHeading": "Spotlighting aller Videos beenden?",
       "stopSpotlightText": "Dieses Video wird nicht mehr für alle Teilnehmer der Besprechung hervorgehoben.",
       "stopSpotlightOnSelfText": "Ihr Video wird nicht mehr für alle Teilnehmer der Besprechung hervor gehoben.",
+      "stopAllSpotlightText": "Die Videos werden nicht mehr für alle Teilnehmer der Besprechung hervorgehoben.",
       "stopSpotlightConfirmButtonLabel": "Spotlight beenden",
       "stopSpotlightOnSelfConfirmButtonLabel": "Spotlight beenden",
       "stopSpotlightCancelButtonLabel": "Abbrechen"

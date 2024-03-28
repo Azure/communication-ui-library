@@ -12,6 +12,7 @@ import React from 'react';
 import { CallCompositeIcon } from '../../common/icons';
 import { useLocale } from '../../localization';
 import {
+  deviceSelectionContainerStyles,
   dropDownStyles,
   dropDownTitleIconStyles,
   mainStackTokens,
@@ -236,7 +237,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
   };
 
   return (
-    <Stack data-ui-id="call-composite-device-settings" tokens={mainStackTokens}>
+    <Stack data-ui-id="call-composite-device-settings" tokens={mainStackTokens} styles={deviceSelectionContainerStyles}>
       {roleCanUseCamera && (
         <Stack>
           <Stack horizontal horizontalAlign="space-between" styles={cameraAndVideoEffectsContainerStyleDesktop}>
@@ -250,8 +251,9 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
             {onResolveVideoEffectDependency && (
               <DefaultButton
                 iconProps={{ iconName: 'ConfigurationScreenVideoEffectsButton' }}
-                styles={effectsButtonStyles(theme)}
+                styles={effectsButtonStyles(theme, !cameraPermissionGranted)}
                 onClick={props.onClickVideoEffects}
+                disabled={!cameraPermissionGranted}
                 data-ui-id={'call-config-video-effects-button'}
               >
                 {locale.strings.call.configurationPageVideoEffectsButtonLabel}
