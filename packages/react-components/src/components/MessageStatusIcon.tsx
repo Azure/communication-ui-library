@@ -28,7 +28,7 @@ export const MessageStatusIcon = (props: MessageStatusIconProps): JSX.Element =>
   return (
     <>
       {/* live message is used here so that aria labels are announced on mobile */}
-      {ariaLabel && <LiveMessage message={ariaLabel} ariaLive="polite" />}
+      {ariaLabel && shouldAnnounce && <LiveMessage message={ariaLabel} ariaLive="polite" />}
       <div
         // make icon accessible
         tabIndex={0}
