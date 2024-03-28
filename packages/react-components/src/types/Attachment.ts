@@ -91,14 +91,14 @@ export interface AttachmentUploadOptions {
    * Accepts any type of file if not specified.
    * @beta
    */
-  allowedMediaTypes?: string[];
+  supportedMediaTypes?: string[];
   /**
    * Allows multiple files to be selected if set to `true`.
    * Similar to the `multiple` attribute of the `<input type="file" />` element.
    * @defaultValue false
    * @beta
    */
-  allowUploadMultiple?: boolean;
+  disableMultipleUploads?: boolean;
   /**
    * A function of type {@link AttachmentUploadHandler} for handling file uploads.
    * @beta
