@@ -22,6 +22,7 @@ imageElement.style.maxWidth = decodeURIComponent('100%25');
 imageElement.style.maxHeight = decodeURIComponent('100%25');
 mockVideoElement.appendChild(imageElement);
 const mockScreenShareStream = {
+  id: 1,
   isAvailable: true,
   renderElement: mockVideoElement as HTMLElement
 };

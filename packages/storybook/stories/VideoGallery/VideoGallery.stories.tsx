@@ -22,12 +22,12 @@ import { MobileWrapper } from './snippets/MobileWrapper';
 import { OVC3x3VideoGalleryExample } from './snippets/OVC3x3.snippet';
 import { PinnedParticipantsDisabledExample } from './snippets/PinnedParticipantsDisabled.snippet';
 import { PinnedParticipantsMobileExample } from './snippets/PinnedParticipantsMobile.snippet';
+import { PPTLiveSharingFromViewerExample } from './snippets/PPTLiveSharingFromViewer.snippet';
 import { ScreenSharingFromPresenterExample } from './snippets/ScreenSharingFromPresenter.snippet';
 import { ScreenSharingFromViewerExample } from './snippets/ScreenSharingFromViewer.snippet';
 import { SpeakerLayoutExample } from './snippets/SpeakerLayout.snippet';
 import { WithHorizontalGalleryExample } from './snippets/WithHorizontalGallery.snippet';
 import { WithVerticalGalleryExample } from './snippets/WithVerticalGallery.snippet';
-
 const CustomAvatarVideoGalleryExampleText = require('!!raw-loader!./snippets/CustomAvatar.snippet.tsx').default;
 const CustomStyleVideoGalleryExampleText = require('!!raw-loader!./snippets/CustomStyle.snippet.tsx').default;
 const DefaultVideoGalleryExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
@@ -42,6 +42,8 @@ const PinnedParticipantsDisabledExampleText =
   require('!!raw-loader!./snippets/PinnedParticipantsDisabled.snippet.tsx').default;
 const PinnedParticipantsMobileExampleText =
   require('!!raw-loader!./snippets/PinnedParticipantsMobile.snippet.tsx').default;
+const PPTLiveSharingFromViewerExampleText =
+  require('!!raw-loader!./snippets/PPTLiveSharingFromViewer.snippet.tsx').default;
 const ScreenSharingFromPresenterExampleText =
   require('!!raw-loader!./snippets/ScreenSharingFromPresenter.snippet.tsx').default;
 const ScreenSharingFromViewerExampleText =
@@ -235,7 +237,8 @@ const getDocs: () => JSX.Element = () => {
       </Stack>
       <Heading>Screen Sharing Experience</Heading>
       <Description>
-        The screen shared is the only element placed in the GridLayout and all remote participants are placed in the
+        The screen shared is the only element placed in the [Grid
+        Layout](./?path=/docs/ui-components-gridlayout--grid-layout) and all remote participants are placed in the
         horizontal gallery in the lower section. To be able to view this screen share, the sharing participant should
         have their `isScreenSharingOn` prop set to true as well as a defined `screenShareStream` prop (see
         `localParticipant` and `remoteParticipants` props).
@@ -251,7 +254,17 @@ const getDocs: () => JSX.Element = () => {
       <Canvas mdxSource={ScreenSharingFromViewerExampleText}>
         <ScreenSharingFromViewerExample />
       </Canvas>
-
+      <Heading>PowerPoint Live (PPTLive) Experience</Heading>
+      <Description>
+        The shared PPTLive is the only element placed in the [Grid
+        Layout](./?path=/docs/ui-components-gridlayout--grid-layout) and all remote participants are placed in the
+        horizontal gallery in the lower section. To be able to view this shared PPTLive, the sharing participant should
+        have their `isScreenSharingOn` prop set to true as well as a defined `screenShareStream` prop (see
+        `remoteParticipants` props).
+      </Description>
+      <Canvas mdxSource={PPTLiveSharingFromViewerExampleText}>
+        <PPTLiveSharingFromViewerExample />
+      </Canvas>
       <Heading>Custom Avatar</Heading>
       <Description>
         Rendering of avatars can be customized through the VideoGallery callback `onRenderAvatar`.
