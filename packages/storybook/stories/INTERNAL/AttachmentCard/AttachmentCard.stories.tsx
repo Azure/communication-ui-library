@@ -3,7 +3,7 @@
 
 import { useTheme } from '@fluentui/react';
 import { ArrowDownload24Filled, Open24Filled, Pin24Regular, Share24Regular } from '@fluentui/react-icons';
-import { AttachmentMetadata, _AttachmentCard as AttachmentCardComponent } from '@internal/react-components';
+import { AttachmentMetata, _AttachmentCard as AttachmentCardComponent } from '@internal/react-components';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { FluentV9ThemeProvider } from '../../../../react-components/src/theming/FluentV9ThemeProvider';
@@ -24,7 +24,7 @@ const AttachmentCardStory = (args): JSX.Element => {
 // This ensures that storybook hoists the story instead of creating a folder with a single entry.
 export const AttachmentCard = AttachmentCardStory.bind({});
 
-const attachment: AttachmentMetadata = {
+const attachment: AttachmentMetata = {
   extension: 'pdf',
   id: '42839hdwe-dfr2-323fcfwe',
   name: 'SampleAttachmentName.pdf',

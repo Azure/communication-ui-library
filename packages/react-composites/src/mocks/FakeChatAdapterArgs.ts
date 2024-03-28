@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 import { ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
-import type { AttachmentMetadata } from '@internal/react-components';
+import type { AttachmentMetata } from '@internal/react-components';
 
 /**
- * Type to represent a file upload the local participant will perform.
+ * Type to represent a attachment upload the local participant will perform.
  * @internal
  */
-export type _MockFileUpload = AttachmentMetadata & {
+export type _MockAttachmentUpload = AttachmentMetata & {
   uploadComplete?: boolean;
   error?: string;
   progress?: number;
@@ -43,12 +43,12 @@ export type _FakeChatAdapterArgs = {
    */
   fileSharingEnabled?: boolean;
   /**
-   * Array of {@link FileUpload} the local participant will perform when. Property `fileSharingEnabled`
+   * Array of {@link AttachmentUpload} the local participant will perform when. Property `fileSharingEnabled`
    * needs to be enabled.
    */
-  fileUploads?: _MockFileUpload[];
+  attachmentUploads?: _MockAttachmentUpload[];
   /**
-   * Determines if array of {@link FileUpload} the local participant will perform in property `fileUploads`
+   * Determines if array of {@link AttachmentUpload} the local participant will perform in property `attachmentUploads`
    * will fail. Property `fileSharingEnabled` needs to be enabled.
    */
   failFileDownload?: boolean;

@@ -29,7 +29,7 @@ import { DEFAULT_DATA_LOSS_PREVENTION_POLICY_URL } from './utils/constants';
 import { ACSKnownMessageType } from './utils/constants';
 import { updateMessagesWithAttached } from './utils/updateMessagesWithAttached';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata } from '@internal/react-components';
+import { AttachmentMetata } from '@internal/react-components';
 import { ChatAttachment } from '@azure/communication-chat';
 import type { ChatParticipant } from '@azure/communication-chat';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
@@ -61,8 +61,8 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
 );
 
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-const extractAttachedFilesMetadata = (metadata: Record<string, string>): AttachmentMetadata[] => {
-  const fileMetadata = metadata.fileSharingMetadata;
+const extractAttachedFilesMetadata = (metadata: Record<string, string>): AttachmentMetata[] => {
+  const fileMetadata = metadata.attachmentHandlingMetadata;
   if (!fileMetadata) {
     return [];
   }
@@ -77,9 +77,9 @@ const extractAttachedFilesMetadata = (metadata: Record<string, string>): Attachm
 const extractTeamsAttachmentsMetadata = (
   attachments: ChatAttachment[]
 ): {
-  files: AttachmentMetadata[];
+  files: AttachmentMetata[];
 } => {
-  const files: AttachmentMetadata[] = [];
+  const files: AttachmentMetata[] = [];
   attachments.forEach((attachment) => {
     const attachmentType = attachment.attachmentType as ChatAttachmentType;
     const contentType = extractAttachmentContentTypeFromName(attachment.name);
@@ -198,8 +198,8 @@ const extractAttachmentContentTypeFromName = (name?: string): string => {
 };
 
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-const extractAttachmentsMetadata = (message: ChatMessageWithStatus): { files?: AttachmentMetadata[] } => {
-  let files: AttachmentMetadata[] = [];
+const extractAttachmentsMetadata = (message: ChatMessageWithStatus): { files?: AttachmentMetata[] } => {
+  let files: AttachmentMetata[] = [];
   if (message.metadata) {
     files = files.concat(extractAttachedFilesMetadata(message.metadata));
   }
@@ -366,7 +366,7 @@ const isMessageValidToRender = (message: ChatMessageWithStatus): boolean => {
   if (message.deletedOn) {
     return false;
   }
-  if (message.metadata?.fileSharingMetadata || message.content?.attachments?.length) {
+  if (message.metadata?.attachmentHandlingMetadata || message.content?.attachments?.length) {
     return true;
   }
   /* @conditional-compile-remove(data-loss-prevention) */

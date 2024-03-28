@@ -9,7 +9,7 @@ import { ChatMessage, ComponentSlotStyle, OnRenderAvatarCallback } from '../../.
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../../types';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { AttachmentMenuAction, AttachmentMetadata } from '../../../types/Attachment';
+import { AttachmentMenuAction, AttachmentMetata } from '../../../types/Attachment';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from '../../MentionPopover';
 import { InlineImageOptions } from '../ChatMessageContent';
@@ -27,7 +27,7 @@ type ChatMyMessageComponentProps = {
     metadata?: Record<string, string>,
     options?: {
       /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-      attachmentMetadata?: AttachmentMetadata[];
+      attachmentMetadata?: AttachmentMetata[];
     }
   ) => Promise<void>;
   onCancelEditMessage?: (messageId: string) => void;
@@ -92,7 +92,7 @@ type ChatMyMessageComponentProps = {
   /**
    * Optional callback to define custom actions for attachments.
    */
-  actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
+  actionsForAttachment?: (attachment: AttachmentMetata, message?: ChatMessage) => AttachmentMenuAction[];
 };
 
 /**

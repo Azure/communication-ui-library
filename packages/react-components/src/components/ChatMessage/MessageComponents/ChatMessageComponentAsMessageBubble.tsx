@@ -15,7 +15,7 @@ import { BlockedMessage } from '../../../types/ChatMessage';
 import { MessageThreadStrings } from '../../MessageThread';
 import { ComponentSlotStyle } from '../../../types';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { AttachmentMenuAction, AttachmentMetadata } from '../../../types';
+import { AttachmentMenuAction, AttachmentMetata } from '../../../types';
 import { _AttachmentDownloadCards } from '../../AttachmentDownloadCards';
 import { useLocale } from '../../../localization';
 /* @conditional-compile-remove(mention) */
@@ -49,7 +49,7 @@ type ChatMessageComponentAsMessageBubbleProps = {
   /**
    * Optional callback to define custom actions for attachments.
    */
-  actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
+  actionsForAttachment?: (attachment: AttachmentMetata, message?: ChatMessage) => AttachmentMenuAction[];
   /**
    * Optional function to provide customized date format.
    * @beta

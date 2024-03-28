@@ -13,7 +13,7 @@ import {
   COMPOSITE_LOCALE_FR_FR,
   _FakeChatAdapterArgs,
   _useFakeChatAdapters,
-  _MockFileUpload
+  _MockAttachmentUpload
 } from '../../../src';
 // eslint-disable-next-line no-restricted-imports
 import { IDS } from '../../browser/common/constants';
@@ -48,8 +48,8 @@ export const FakeAdapterApp = (): JSX.Element => {
         return;
       }
 
-      if (fakeChatAdapterArgs.fileUploads) {
-        handleFileUploads(fakeAdapters.local, fakeChatAdapterArgs.fileUploads);
+      if (fakeChatAdapterArgs.attachmentUploads) {
+        handleAttachmentUploads(fakeAdapters.local, fakeChatAdapterArgs.attachmentUploads);
       }
 
       if (fakeChatAdapterArgs.sendRemoteFileSharingMessage && fakeChatAdapterArgs.remoteParticipants.length > 0) {
@@ -126,11 +126,11 @@ export const FakeAdapterApp = (): JSX.Element => {
   );
 };
 
-const handleFileUploads = (adapter: ChatAdapter, fileUploads: _MockFileUpload[]): void => {
-  fileUploads.forEach((file) => {
+const handleAttachmentUploads = (adapter: ChatAdapter, attachmentUploads: _MockAttachmentUpload[]): void => {
+  attachmentUploads.forEach((file) => {
     if (file.uploadComplete) {
-      const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
-      fileUploads[0].notifyUploadCompleted({
+      const attachmentUploads = adapter.registerAttachmentMetatas([new File([], file.name)]);
+      attachmentUploads[0].notifyUploadCompleted({
         name: file.name,
         extension: file.extension,
         url: file.url,
@@ -138,13 +138,13 @@ const handleFileUploads = (adapter: ChatAdapter, fileUploads: _MockFileUpload[])
         id: file.id
       });
     } else if (file.error) {
-      const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
-      fileUploads[0].notifyUploadFailed(file.error);
+      const attachmentUploads = adapter.registerAttachmentMetatas([new File([], file.name)]);
+      attachmentUploads[0].notifyUploadFailed(file.error);
     } else if (file.progress) {
-      const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
-      fileUploads[0].notifyUploadProgressChanged(file.progress);
+      const attachmentUploads = adapter.registerAttachmentMetatas([new File([], file.name)]);
+      attachmentUploads[0].notifyUploadProgressChanged(file.progress);
     } else {
-      adapter.registerCompletedFileUploads([file]);
+      adapter.registerCompletedAttachmentUploads([file]);
     }
   });
 };
@@ -161,7 +161,7 @@ const sendRemoteFileSharingMessage = (
       senderDisplayName: remoteParticipant.displayName,
       type: 'text',
       metadata: {
-        fileSharingMetadata: JSON.stringify([
+        attachmentHandlingMetadata: JSON.stringify([
           { name: 'SampleFile1.pdf', extension: 'pdf', attachmentType: 'file', id: uuidv4() }
         ])
       }

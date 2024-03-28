@@ -15,7 +15,7 @@ import { useChatMyMessageStyles } from '../styles/MessageThread.styles';
 import { ChatMessage } from '../../types';
 import { _AttachmentUploadCards } from '../AttachmentUploadCards';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata } from '../../types/Attachment';
+import { AttachmentMetata } from '../../types/Attachment';
 import {
   chatMessageFailedTagStyle,
   editChatMessageFailedTagStyle,
@@ -38,7 +38,7 @@ export type ChatMessageComponentAsEditBoxProps = {
     metadata?: Record<string, string>,
     options?: {
       /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-      attachmentMetadata?: AttachmentMetadata[];
+      attachmentMetadata?: AttachmentMetata[];
     }
   ) => void;
   message: ChatMessage;
@@ -110,18 +110,18 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
   }, [theme.palette.themePrimary]);
 
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  const onRenderFileUploads = useCallback(() => {
+  const onRenderAttachmentUploads = useCallback(() => {
     return (
       !!attachmentMetadata &&
       attachmentMetadata.length > 0 && (
         <div style={{ margin: '0.25rem' }}>
           <_AttachmentUploadCards
-            activeFileUploads={attachmentMetadata?.map((file) => ({
+            activeAttachmentUploads={attachmentMetadata?.map((file) => ({
               id: file.name,
-              filename: file.name,
+              name: file.name,
               progress: 1
             }))}
-            onCancelFileUpload={(fileId) => {
+            onCancelAttachmentUpload={(fileId) => {
               setAttachedFilesMetadata(attachmentMetadata?.filter((file) => file.name !== fileId));
             }}
           />
@@ -209,7 +209,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
           </Stack.Item>
         </Stack>
         {
-          /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ onRenderFileUploads()
+          /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ onRenderAttachmentUploads()
         }
       </>
     );

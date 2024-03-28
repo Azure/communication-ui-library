@@ -17,7 +17,7 @@ import { MessageThreadStrings } from '../../MessageThread';
 import { chatMessageActionMenuProps } from '../ChatMessageActionMenu';
 import { ComponentSlotStyle, OnRenderAvatarCallback } from '../../../types';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { AttachmentMenuAction, AttachmentMetadata } from '../../../types/Attachment';
+import { AttachmentMenuAction, AttachmentMetata } from '../../../types/Attachment';
 import { _AttachmentDownloadCards } from '../../AttachmentDownloadCards';
 import { useLocale } from '../../../localization';
 /* @conditional-compile-remove(mention) */
@@ -84,7 +84,7 @@ type ChatMyMessageComponentAsMessageBubbleProps = {
   /**
    * Optional callback to define custom actions for attachments.
    */
-  actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
+  actionsForAttachment?: (attachment: AttachmentMetata, message?: ChatMessage) => AttachmentMenuAction[];
 };
 
 /** @private */

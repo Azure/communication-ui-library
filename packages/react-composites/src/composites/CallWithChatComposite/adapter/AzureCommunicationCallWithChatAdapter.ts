@@ -26,7 +26,7 @@ import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata, FileUploadManager } from '@internal/react-components';
+import { AttachmentMetata, AttachmentUploadManager } from '@internal/react-components';
 import {
   ParticipantsJoinedListener,
   ParticipantsLeftListener,
@@ -225,19 +225,19 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.on.bind(this);
     this.off.bind(this);
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    this.registerActiveFileUploads = this.registerActiveFileUploads.bind(this);
+    this.registerAttachmentMetatas = this.registerAttachmentMetatas.bind(this);
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    this.registerCompletedFileUploads = this.registerCompletedFileUploads.bind(this);
+    this.registerCompletedAttachmentUploads = this.registerCompletedAttachmentUploads.bind(this);
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    this.clearFileUploads = this.clearFileUploads.bind(this);
+    this.clearAttachmentUploads = this.clearAttachmentUploads.bind(this);
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    this.cancelFileUpload = this.cancelFileUpload.bind(this);
+    this.cancelAttachmentUpload = this.cancelAttachmentUpload.bind(this);
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    this.updateFileUploadProgress = this.updateFileUploadProgress.bind(this);
+    this.updateAttachmentUploadProgress = this.updateAttachmentUploadProgress.bind(this);
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    this.updateFileUploadErrorMessage = this.updateFileUploadErrorMessage.bind(this);
+    this.updateAttachmentUploadStatusMessage = this.updateAttachmentUploadStatusMessage.bind(this);
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    this.updateFileUploadMetadata = this.updateFileUploadMetadata.bind(this);
+    this.updateAttachmentUploadMetadata = this.updateAttachmentUploadMetadata.bind(this);
     this.downloadResourceToCache = this.downloadResourceToCache.bind(this);
     this.removeResourceFromCache = this.removeResourceFromCache.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
@@ -453,7 +453,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     metadata?: Record<string, string>,
     options?: {
       /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-      attachmentMetadata?: AttachmentMetadata[];
+      attachmentMetadata?: AttachmentMetata[];
     }
   ): Promise<void> {
     return this.chatAdapterPromise.then((adapter) => {
@@ -472,41 +472,41 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     });
   }
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  public registerActiveFileUploads = (files: File[]): FileUploadManager[] => {
-    return this.chatAdapter?.registerActiveFileUploads(files) ?? [];
+  public registerAttachmentMetatas = (files: File[]): AttachmentUploadManager[] => {
+    return this.chatAdapter?.registerAttachmentMetatas(files) ?? [];
   };
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  public registerCompletedFileUploads = (metadata: AttachmentMetadata[]): FileUploadManager[] => {
-    return this.chatAdapter?.registerCompletedFileUploads(metadata) ?? [];
+  public registerCompletedAttachmentUploads = (metadata: AttachmentMetata[]): AttachmentUploadManager[] => {
+    return this.chatAdapter?.registerCompletedAttachmentUploads(metadata) ?? [];
   };
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  public clearFileUploads = (): void => {
+  public clearAttachmentUploads = (): void => {
     this.chatAdapterPromise.then((adapter) => {
-      adapter.clearFileUploads();
+      adapter.clearAttachmentUploads();
     });
   };
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  public cancelFileUpload = (id: string): void => {
+  public cancelAttachmentUpload = (id: string): void => {
     this.chatAdapterPromise.then((adapter) => {
-      adapter.cancelFileUpload(id);
+      adapter.cancelAttachmentUpload(id);
     });
   };
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  public updateFileUploadProgress = (id: string, progress: number): void => {
+  public updateAttachmentUploadProgress = (id: string, progress: number): void => {
     this.chatAdapterPromise.then((adapter) => {
-      adapter.updateFileUploadProgress(id, progress);
+      adapter.updateAttachmentUploadProgress(id, progress);
     });
   };
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  public updateFileUploadErrorMessage = (id: string, errorMessage: string): void => {
+  public updateAttachmentUploadStatusMessage = (id: string, errorMessage: string): void => {
     this.chatAdapterPromise.then((adapter) => {
-      adapter.updateFileUploadErrorMessage(id, errorMessage);
+      adapter.updateAttachmentUploadStatusMessage(id, errorMessage);
     });
   };
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  public updateFileUploadMetadata = (id: string, metadata: AttachmentMetadata): void => {
+  public updateAttachmentUploadMetadata = (id: string, metadata: AttachmentMetata): void => {
     this.chatAdapterPromise.then((adapter) => {
-      adapter.updateFileUploadMetadata(id, metadata);
+      adapter.updateAttachmentUploadMetadata(id, metadata);
     });
   };
   public async downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void> {

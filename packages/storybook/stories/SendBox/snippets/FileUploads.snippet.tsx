@@ -1,11 +1,11 @@
 import { SendBox, FluentThemeProvider } from '@azure/communication-react';
 import React from 'react';
 
-export const FileUploadsExample: () => JSX.Element = () => (
+export const AttachmentUploadsExample: () => JSX.Element = () => (
   <FluentThemeProvider>
     <div style={{ width: '31.25rem' }}>
       <SendBox
-        activeFileUploads={[
+        activeAttachmentUploads={[
           {
             id: '1',
             filename: 'Sample.pdf',

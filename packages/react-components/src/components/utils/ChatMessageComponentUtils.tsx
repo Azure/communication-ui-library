@@ -14,7 +14,7 @@ import { MessageThreadStrings } from '../MessageThread';
 import { MentionDisplayOptions } from '../MentionPopover';
 import { _AttachmentDownloadCards } from '../AttachmentDownloadCards';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { AttachmentMenuAction, AttachmentMetadata } from '../../types/Attachment';
+import { AttachmentMenuAction, AttachmentMetata } from '../../types/Attachment';
 import { formatTimeForChatMessage, formatTimestampForChatMessage } from './Datetime';
 import { ComponentLocale } from '../../localization/LocalizationProvider';
 import { chatMessageEditedTagStyle } from '../styles/ChatMessageComponent.styles';
@@ -50,7 +50,7 @@ export function getMessageBubbleContent(
   /**
    * Optional callback to define custom actions for attachments.
    */
-  actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[]
+  actionsForAttachment?: (attachment: AttachmentMetata, message?: ChatMessage) => AttachmentMenuAction[]
 ): JSX.Element {
   /* @conditional-compile-remove(data-loss-prevention) */
   if (message.messageType === 'blocked') {
@@ -90,7 +90,7 @@ export function getMessageBubbleContent(
 const defaultOnRenderAttachmentDownloads = (
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage,
   strings: MessageThreadStrings,
-  actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[]
+  actionsForAttachment?: (attachment: AttachmentMetata, message?: ChatMessage) => AttachmentMenuAction[]
 ): JSX.Element | undefined => {
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   return (

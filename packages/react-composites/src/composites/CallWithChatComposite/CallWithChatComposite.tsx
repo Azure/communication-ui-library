@@ -26,8 +26,6 @@ import {
   useTheme
 } from '@internal/react-components';
 import { useId } from '@fluentui/react-hooks';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { FileSharingOptions } from '../ChatComposite';
 import { containerDivStyles } from '../common/ContainerRectProps';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { CallCompositeInner, CallCompositeOptions } from '../CallComposite/CallComposite';
@@ -48,6 +46,7 @@ import { SidePaneHeader } from '../common/SidePaneHeader';
 import { CallControlOptions } from '../CallComposite/types/CallControlOptions';
 import { useUnreadMessagesTracker } from './ChatButton/useUnreadMessagesTracker';
 import { VideoGalleryLayout } from '@internal/react-components';
+import { AttachmentOptions } from '@internal/react-components';
 
 /**
  * Props required for the {@link CallWithChatComposite}
@@ -108,7 +107,7 @@ export type CallWithChatCompositeOptions = {
    * If undefined, file sharing feature will be disabled.
    * @beta
    */
-  fileSharing?: FileSharingOptions;
+  attachmentOptions?: AttachmentOptions;
   /* @conditional-compile-remove(call-readiness) */
   /**
    * Device permissions check options for your call.
@@ -283,7 +282,7 @@ type CallWithChatScreenProps = {
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  fileSharing?: FileSharingOptions;
+  attachmentOptions?: AttachmentOptions;
   rtl?: boolean;
   /* @conditional-compile-remove(call-readiness) */
   deviceChecks?: DeviceCheckOptions;
@@ -575,14 +574,14 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
           /* @conditional-compile-remove(chat-composite-participant-pane) */
           participantPane: false,
           /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-          fileSharing: props.fileSharing
+          attachmentOptions: props.attachmentOptions
         }}
         onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
       />
     ),
     [
       chatAdapter,
-      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ props.fileSharing,
+      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ props.attachmentOptions,
       props.onFetchAvatarPersonaData,
       theme
     ]
@@ -685,7 +684,7 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         fluentTheme={fluentTheme}
         remoteVideoTileMenuOptions={options?.remoteVideoTileMenuOptions}
         /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-        fileSharing={options?.fileSharing}
+        attachmentOptions={options?.attachmentOptions}
         localVideoTile={options?.localVideoTile}
         galleryOptions={options?.galleryOptions}
         /* @conditional-compile-remove(custom-branding) */
