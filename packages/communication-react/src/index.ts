@@ -323,8 +323,8 @@ export type {
 export type {
   ActiveFileUpload,
   SendBoxErrorBarError,
-  FileDownloadHandler,
-  FileDownloadError
+  AttachmentMenuAction,
+  AttachmentOptions
 } from '../../react-components/src';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 export type { AttachmentMetadata } from '../../react-components/src';
