@@ -17,9 +17,9 @@ import { MentionsExample } from './snippets/Mentions.snippet';
 import { SendBoxExample } from './snippets/SendBox.snippet';
 import { SendBoxWithSystemMessageExample } from './snippets/SendBoxWithSystemMessage.snippet';
 
+const AttachmentUploadsExampleText = require('!!raw-loader!./snippets/AttachmentUploads.snippet.tsx').default;
 const CustomIconExampleText = require('!!raw-loader!./snippets/CustomIcon.snippet.tsx').default;
 const CustomStylingExampleText = require('!!raw-loader!./snippets/CustomStyling.snippet.tsx').default;
-const AttachmentUploadsExampleText = require('!!raw-loader!./snippets/AttachmentUploads.snippet.tsx').default;
 const MentionsExampleText = require('!!raw-loader!./snippets/Mentions.snippet.tsx').default;
 const SendBoxExampleText = require('!!raw-loader!./snippets/SendBox.snippet.tsx').default;
 const SendBoxWithSystemMessageExampleText =
