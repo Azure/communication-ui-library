@@ -19,6 +19,7 @@ import { ParticipantListWithHeading } from '../common/ParticipantContainer';
 import { peoplePaneContainerTokens } from '../common/styles/ParticipantContainer.styles';
 import { participantListContainerStyles, peoplePaneContainerStyle } from './styles/PeoplePaneContent.styles';
 import { convertContextualMenuItemToDrawerMenuItem } from './ConvertContextualMenuItemToDrawerMenuItem';
+import { CommonCallAdapter } from '../CallComposite';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { CallCompositeStrings } from '../CallComposite';
 import { AddPeopleButton } from './AddPeopleButton';
@@ -78,7 +79,7 @@ export const PeoplePaneContent = (props: {
   const alternateCallerId = adapter.getState().alternateCallerId;
 
   const participantListDefaultProps = usePropsFor(ParticipantList);
-  const removeButtonAllowed = adapter.getState().call?.capabilitiesFeature?.capabilities.removeParticipant.isPresent;
+  const removeButtonAllowed = canRemoveParticipants(adapter);
   const setDrawerMenuItemsForParticipant: (participant?: ParticipantListParticipant) => void = useMemo(() => {
     return (participant?: ParticipantListParticipant) => {
       if (participant) {
@@ -219,4 +220,14 @@ const createDefaultContextualMenuItems = (
     });
   }
   return menuItems;
+};
+
+const canRemoveParticipants = (adapter: CommonCallAdapter): boolean => {
+  // TODO: We should be using the removeParticipant capability here but there is an SDK bug for Rooms where a
+  // Presenter's removeParticipant capability is {isPresent: false, reason: 'CapabilityNotApplicableForTheCallType'}.
+  // But a Presenter in Rooms should be able to remove participants according to the following documentation
+  // https://learn.microsoft.com/en-us/azure/communication-services/concepts/rooms/room-concept#predefined-participant-roles-and-permissions
+  const role = adapter.getState().call?.role;
+  const canRemove = role === 'Presenter' || role === 'Unknown' || role === undefined;
+  return canRemove;
 };
