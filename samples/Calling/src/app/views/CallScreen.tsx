@@ -16,7 +16,7 @@ import {
 } from '@azure/communication-react';
 /* @conditional-compile-remove(teams-identity-support) */
 import { useTeamsCallAdapter, TeamsCallAdapter } from '@azure/communication-react';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { onResolveVideoEffectDependencyLazy } from '@azure/communication-react';
 /* @conditional-compile-remove(teams-identity-support) */
 import type { TeamsAdapterOptions } from '@azure/communication-react';
@@ -119,7 +119,6 @@ const TeamsCallScreen = (props: TeamsCallScreenProps): JSX.Element => {
     throw new Error('A MicrosoftTeamsUserIdentifier must be provided for Teams Identity Call.');
   }
 
-  /* @conditional-compile-remove(video-background-effects) */
   const teamsAdapterOptions: TeamsAdapterOptions = useMemo(
     () => ({
       videoBackgroundOptions: {
@@ -134,7 +133,7 @@ const TeamsCallScreen = (props: TeamsCallScreenProps): JSX.Element => {
       ...adapterArgs,
       userId,
       locator,
-      /* @conditional-compile-remove(video-background-effects) */ options: teamsAdapterOptions
+      options: teamsAdapterOptions
     },
     afterCreate
   );
@@ -155,7 +154,6 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
 
   const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(() => {
     return {
-      /* @conditional-compile-remove(video-background-effects) */
       videoBackgroundOptions: {
         videoBackgroundImages,
         onResolveDependency: onResolveVideoEffectDependencyLazy
@@ -164,6 +162,14 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
         callEnded: { url: '/assets/sounds/callEnded.mp3' },
         callRinging: { url: '/assets/sounds/callRinging.mp3' },
         callBusy: { url: '/assets/sounds/callBusy.mp3' }
+      },
+      /* @conditional-compile-remove(reaction) */
+      reactionResources: {
+        likeReaction: { url: '/assets/reactions/likeEmoji.png', frameCount: 102 },
+        heartReaction: { url: '/assets/reactions/heartEmoji.png', frameCount: 102 },
+        laughReaction: { url: '/assets/reactions/laughEmoji.png', frameCount: 102 },
+        applauseReaction: { url: '/assets/reactions/clapEmoji.png', frameCount: 102 },
+        surprisedReaction: { url: '/assets/reactions/surprisedEmoji.png', frameCount: 102 }
       }
     };
   }, []);
@@ -190,7 +196,6 @@ const AzureCommunicationOutboundCallScreen = (props: AzureCommunicationCallScree
 
   const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(() => {
     return {
-      /* @conditional-compile-remove(video-background-effects) */
       videoBackgroundOptions: {
         videoBackgroundImages,
         onResolveDependency: onResolveVideoEffectDependencyLazy
@@ -237,7 +242,6 @@ const convertPageStateToString = (state: CallAdapterState): string => {
   }
 };
 
-/* @conditional-compile-remove(video-background-effects) */
 const videoBackgroundImages = [
   {
     key: 'ab1',

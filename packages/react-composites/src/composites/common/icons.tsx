@@ -32,9 +32,9 @@ import { DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
 import React from 'react';
 // eslint-disable-next-line no-restricted-imports
 import { FontIcon, IIconProps, Spinner, SpinnerSize } from '@fluentui/react';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { Attach20Regular } from '@fluentui/react-icons';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { VideoBackgroundEffect20Regular, VideoPerson20Filled } from '@fluentui/react-icons';
 import {
   PersonSquare20Regular,
@@ -87,7 +87,7 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   NoticePageRoomNotValid: <Info20Filled />,
   NoticePageCallRejected: <Info20Filled />,
   NoticePageCallTimeout: <Info20Filled />,
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   SendBoxAttachFile: <Attach20Regular />,
   /* @conditional-compile-remove(PSTN-calls) */
   PeoplePaneAddPerson: <PersonAdd20Regular />,
@@ -96,9 +96,9 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   /* @conditional-compile-remove(PSTN-calls) */
   DialpadStartCall: <Call20Regular />,
   NoticePageInviteToRoomRemoved: <Info20Filled />,
-  /* @conditional-compile-remove(video-background-effects) */
+
   BlurVideoBackground: <VideoBackgroundEffect20Regular />,
-  /* @conditional-compile-remove(video-background-effects) */
+
   RemoveVideoBackgroundEffect: <VideoPerson20Filled />,
   GalleryOptions: <Grid20Regular />,
   OverflowGalleryTop: <WindowHeaderHorizontal20Regular />,
@@ -146,7 +146,7 @@ export type ChatCompositeIcons = {
   ParticipantItemOptionsHovered?: JSX.Element;
   SendBoxSend?: JSX.Element;
   SendBoxSendHovered?: JSX.Element;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   SendBoxAttachFile?: JSX.Element;
 };
 
@@ -238,9 +238,9 @@ export type CallCompositeIcons = {
   /* @conditional-compile-remove(PSTN-calls) */
   DialpadStartCall?: JSX.Element;
   NoticePageInviteToRoomRemoved?: JSX.Element;
-  /* @conditional-compile-remove(video-background-effects) */
+
   BlurVideoBackground?: JSX.Element;
-  /* @conditional-compile-remove(video-background-effects) */
+
   RemoveVideoBackgroundEffect?: JSX.Element;
   GalleryOptions?: JSX.Element;
   SpeakerGalleryLayout?: JSX.Element;

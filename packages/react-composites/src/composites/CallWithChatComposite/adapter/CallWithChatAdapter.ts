@@ -44,10 +44,10 @@ import { DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { SendMessageOptions } from '@azure/communication-chat';
 import { JoinCallOptions } from '../../CallComposite/adapter/CallAdapter';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { AttachmentMetadata } from '@internal/react-components';
-/* @conditional-compile-remove(file-sharing) */
-import { FileUploadManager } from '../../ChatComposite';
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+import { FileUploadManager } from '@internal/react-components';
 /* @conditional-compile-remove(PSTN-calls) */
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { UnknownIdentifier, MicrosoftTeamsAppIdentifier } from '@azure/communication-common';
@@ -68,7 +68,7 @@ import {
 import { CapabilitiesChangedListener } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(spotlight) */
 import { SpotlightChangedListener } from '../../CallComposite/adapter/CallAdapter';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 
 /* @conditional-compile-remove(end-of-call-survey) */
@@ -376,25 +376,25 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /** @beta */
   registerActiveFileUploads: (files: File[]) => FileUploadManager[];
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /** @beta */
   registerCompletedFileUploads: (metadata: AttachmentMetadata[]) => FileUploadManager[];
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /** @beta */
   clearFileUploads: () => void;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /** @beta */
   cancelFileUpload: (id: string) => void;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /** @beta */
   updateFileUploadProgress: (id: string, progress: number) => void;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /** @beta */
   updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /** @beta */
   updateFileUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
   /** @public */
@@ -459,21 +459,20 @@ export interface CallWithChatAdapterManagement {
    */
   stopCaptions(): Promise<void>;
 
-  /* @conditional-compile-remove(video-background-effects) */
   /**
    * Start the video background effect.
    *
    * @public
    */
   startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Stop the video background effect.
    *
    * @public
    */
   stopVideoBackgroundEffects(): Promise<void>;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Override the background picker images for background replacement effect.
    *
@@ -482,7 +481,7 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Update the selected video background effect
    *

@@ -26,8 +26,10 @@ module.exports = {
     "dialpad",
     // Data loss prevention feature
     "data-loss-prevention",
-    // Ability to upload/download files in message thread.
-    "file-sharing",
+    // Ability to download files attachments in message thread.
+    "attachment-download",
+    // Ability to upload files attachments in message thread.
+    "attachment-upload",
     // Mention feature
     "mention",
     // 1 to N Calling feature.
@@ -77,6 +79,8 @@ module.exports = {
     'spotlight',
     // Feature for tracking beta start call identifier
     'start-call-beta',
+    // Join meeting with meetingId and passcode
+    'meeting-id',
     // Image overlay theme
     'image-overlay-theme',
      // Close captions feature for ACS calls
@@ -100,16 +104,14 @@ module.exports = {
     "gallery-layout-composite",
     // feature for hiding attendee name in the teams meeting
     "hide-attendee-name",
-    // Feature for end of call survey
-    'end-of-call-survey',
-    // Feature for end of call survey self host version
-    'end-of-call-survey-self-host',
     // Feature for meeting reactions
     'reaction',
     // Feature for Rich Text Editor (RTE) support
     'rich-text-editor',
     // Feature for spotlight
     'spotlight',
+    // Join meeting with meetingId and passcode
+    'meeting-id',
     // Close captions feature for ACS calls
     "acs-close-captions",
   ],
@@ -120,16 +122,12 @@ module.exports = {
     // Demo feature. Used in live-documentation of conditional compilation.
     // Do not use in production code.
     "stabilizedDemo",
-    // feature for blurred background and replace background effects
-    "video-background-effects",
     // Feature for capabilities
     "capabilities",
     // Closed captions
     "close-captions",
     // Feature for the DTMF dialer for Teams voice apps
     "dtmf-dialer",
-    // dialpad
-    "dialpad",
     // Feature for call transfer
     "call-transfer",
     // custom branding for the composites

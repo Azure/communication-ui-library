@@ -34,16 +34,16 @@ import {
 } from './ChatAdapter';
 import { ResourceDetails } from './ChatAdapter';
 import { AdapterError } from '../../common/adapters';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { FileUploadAdapter, convertFileUploadsUiStateToMessageMetadata } from './AzureCommunicationFileUploadAdapter';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { AzureCommunicationFileUploadAdapter } from './AzureCommunicationFileUploadAdapter';
 import { useEffect, useRef, useState } from 'react';
 import { _isValidIdentifier } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { AttachmentMetadata } from '@internal/react-components';
-/* @conditional-compile-remove(file-sharing) */
-import { FileUploadManager } from '../file-sharing';
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+import { FileUploadManager } from '@internal/react-components';
 
 /**
  * Context of Chat, which is a centralized context for all state updates
@@ -102,7 +102,7 @@ export class ChatContext {
       latestErrors: clientState.latestErrors
     };
 
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     updatedState = { ...updatedState, fileUploads: this.state.fileUploads };
 
     this.setState(updatedState);
@@ -116,7 +116,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   private chatClient: StatefulChatClient;
   private chatThreadClient: ChatThreadClient;
   private context: ChatContext;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   private fileUploadAdapter: FileUploadAdapter;
   private handlers: ChatHandlers;
   private emitter: EventEmitter = new EventEmitter();
@@ -126,7 +126,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.chatClient = chatClient;
     this.chatThreadClient = chatThreadClient;
     this.context = new ChatContext(chatClient.getState(), chatThreadClient.threadId);
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     this.fileUploadAdapter = new AzureCommunicationFileUploadAdapter(this.context);
 
     const onStateChange = (clientState: ChatClientState): void => {
@@ -160,19 +160,19 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.loadPreviousChatMessages = this.loadPreviousChatMessages.bind(this);
     this.on = this.on.bind(this);
     this.off = this.off.bind(this);
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     this.registerActiveFileUploads = this.registerActiveFileUploads.bind(this);
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     this.registerCompletedFileUploads = this.registerCompletedFileUploads.bind(this);
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     this.clearFileUploads = this.clearFileUploads.bind(this);
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     this.cancelFileUpload = this.cancelFileUpload.bind(this);
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     this.updateFileUploadProgress = this.updateFileUploadProgress.bind(this);
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     this.updateFileUploadErrorMessage = this.updateFileUploadErrorMessage.bind(this);
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     this.updateFileUploadMetadata = this.updateFileUploadMetadata.bind(this);
     this.downloadResourceToCache = this.downloadResourceToCache.bind(this);
     this.removeResourceFromCache = this.removeResourceFromCache.bind(this);
@@ -210,13 +210,13 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
 
   async sendMessage(content: string, options: SendMessageOptions = {}): Promise<void> {
     await this.asyncTeeErrorToEventEmitter(async () => {
-      /* @conditional-compile-remove(file-sharing) */
+      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
       options.metadata = {
         ...options.metadata,
         ...convertFileUploadsUiStateToMessageMetadata(this.context.getState().fileUploads)
       };
 
-      /* @conditional-compile-remove(file-sharing) */
+      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
       /**
        * All the current uploads need to be clear from the state before a message has been sent.
        * This ensures the following behavior:
@@ -265,14 +265,14 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     content: string,
     metadata?: Record<string, string>,
     options?: {
-      /* @conditional-compile-remove(file-sharing) */
+      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
       attachmentMetadata?: AttachmentMetadata[];
     }
   ): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      /* @conditional-compile-remove(file-sharing) */
+      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
       const updatedOptions = { attachmentMetadata: options?.attachmentMetadata, metadata: metadata };
-      /* @conditional-compile-remove(file-sharing) */
+      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
       return await this.handlers.onUpdateMessage(messageId, content, updatedOptions);
       return await this.handlers.onUpdateMessage(messageId, content);
     });
@@ -284,37 +284,37 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     });
   }
 
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   registerActiveFileUploads(files: File[]): FileUploadManager[] {
     return this.fileUploadAdapter.registerActiveFileUploads(files);
   }
 
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   registerCompletedFileUploads(metadata: AttachmentMetadata[]): FileUploadManager[] {
     return this.fileUploadAdapter.registerCompletedFileUploads(metadata);
   }
 
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   clearFileUploads(): void {
     this.fileUploadAdapter.clearFileUploads();
   }
 
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   cancelFileUpload(id: string): void {
     this.fileUploadAdapter.cancelFileUpload(id);
   }
 
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   updateFileUploadProgress(id: string, progress: number): void {
     this.fileUploadAdapter.updateFileUploadProgress(id, progress);
   }
 
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   updateFileUploadErrorMessage(id: string, errorMessage: string): void {
     this.fileUploadAdapter.updateFileUploadErrorMessage(id, errorMessage);
   }
 
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   updateFileUploadMetadata(id: string, metadata: AttachmentMetadata): void {
     this.fileUploadAdapter.updateFileUploadMetadata(id, metadata);
   }
@@ -556,6 +556,43 @@ export const _createAzureCommunicationChatAdapterInner = async (
   const adapter = await createAzureCommunicationChatAdapterFromClient(chatClient, chatThreadClient);
 
   return adapter;
+};
+
+/**
+ * This inner function to create ChatAdapterPromise in case when threadID is not avaialble.
+ * ThreadId is a promise to allow for lazy initialization of the adapter.
+ * @internal
+ */
+export const _createLazyAzureCommunicationChatAdapterInner = async (
+  endpoint: string,
+  userId: CommunicationUserIdentifier,
+  displayName: string,
+  credential: CommunicationTokenCredential,
+  threadId: Promise<string>,
+  telemetryImplementationHint: _TelemetryImplementationHint = 'Chat'
+): Promise<ChatAdapter> => {
+  if (!_isValidIdentifier(userId)) {
+    throw new Error('Provided userId is invalid. Please provide valid identifier object.');
+  }
+
+  const chatClient = _createStatefulChatClientInner(
+    {
+      userId,
+      displayName,
+      endpoint,
+      credential
+    },
+    undefined,
+    telemetryImplementationHint
+  );
+  return threadId.then(async (threadId) => {
+    const chatThreadClient = await chatClient.getChatThreadClient(threadId);
+    await chatClient.startRealtimeNotifications();
+
+    const adapter = await createAzureCommunicationChatAdapterFromClient(chatClient, chatThreadClient);
+
+    return adapter;
+  });
 };
 
 /**

@@ -1856,10 +1856,10 @@ export function createAzureCommunicationCallAdapter(args: AzureCommunicationCall
 export function createAzureCommunicationCallAdapter(args: AzureCommunicationOutboundCallAdapterArgs): Promise<CallAdapter>;
 
 // @public
-export function createAzureCommunicationCallAdapterFromClient(callClient: StatefulCallClient, callAgent: CallAgent, targetCallees: StartCallIdentifier[], /* @conditional-compile-remove(video-background-effects) */ options?: AzureCommunicationCallAdapterOptions): Promise<CallAdapter>;
+export function createAzureCommunicationCallAdapterFromClient(callClient: StatefulCallClient, callAgent: CallAgent, targetCallees: StartCallIdentifier[], options?: AzureCommunicationCallAdapterOptions): Promise<CallAdapter>;
 
 // @public
-export function createAzureCommunicationCallAdapterFromClient(callClient: StatefulCallClient, callAgent: CallAgent, locator: CallAdapterLocator, /* @conditional-compile-remove(video-background-effects) */ options?: AzureCommunicationCallAdapterOptions): Promise<CallAdapter>;
+export function createAzureCommunicationCallAdapterFromClient(callClient: StatefulCallClient, callAgent: CallAgent, locator: CallAdapterLocator, options?: AzureCommunicationCallAdapterOptions): Promise<CallAdapter>;
 
 // @public
 export const createAzureCommunicationCallWithChatAdapter: ({ userId, displayName, credential, endpoint, locator, callAdapterOptions }: AzureCommunicationCallWithChatAdapterArgs) => Promise<CallWithChatAdapter>;
@@ -1874,7 +1874,7 @@ export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, user
 export function createAzureCommunicationChatAdapterFromClient(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient): Promise<ChatAdapter>;
 
 // @public
-export type CreateDefaultCallingHandlers = (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, /* @conditional-compile-remove(video-background-effects) */ options?: CallingHandlersOptions) => CallingHandlers;
+export type CreateDefaultCallingHandlers = (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, options?: CallingHandlersOptions) => CallingHandlers;
 
 // @public
 export const createDefaultCallingHandlers: CreateDefaultCallingHandlers;
@@ -2233,6 +2233,7 @@ export type DialpadMode = 'dtmf' | 'dialer';
 export interface DialpadProps {
     dialpadMode?: DialpadMode;
     disableDtmfPlayback?: boolean;
+    dtmfAudioContext?: AudioContext;
     longPressTrigger?: LongPressTrigger;
     onChange?: (input: string) => void;
     onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;

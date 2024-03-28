@@ -25,15 +25,16 @@ import {
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from './CallClientState';
 
-/* @conditional-compile-remove(teams-identity-support) */
+/* @conditional-compile-remove(teams-identity-support) */ /* @conditional-compile-remove(meeting-id) */
 import { _isACSCall } from './TypeGuards';
+/* @conditional-compile-remove(meeting-id) */
+import { _isTeamsCall } from './TypeGuards';
 import { CallCommon, IncomingCallCommon } from './BetaToStableTypes';
 
-/* @conditional-compile-remove(video-background-effects) */
 import { Features } from '@azure/communication-calling';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { VideoEffectName } from '@azure/communication-calling';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { LocalVideoStreamVideoEffectsState } from './CallClientState';
 import { RaisedHand } from '@azure/communication-calling';
 import { RaisedHandState } from './CallClientState';
@@ -44,14 +45,13 @@ import { RaisedHandState } from './CallClientState';
 export function convertSdkLocalStreamToDeclarativeLocalStream(
   stream: SdkLocalVideoStream
 ): DeclarativeLocalVideoStream {
-  /* @conditional-compile-remove(video-background-effects) */
   const localVideoStreamEffectsAPI = stream.feature(Features.VideoEffects);
 
   return {
     source: stream.source,
     mediaStreamType: stream.mediaStreamType,
     view: undefined,
-    /* @conditional-compile-remove(video-background-effects) */
+
     videoEffects: convertFromSDKToDeclarativeVideoStreamVideoEffects(localVideoStreamEffectsAPI.activeEffects)
   };
 }
@@ -163,7 +163,9 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     },
     /* @conditional-compile-remove(hide-attendee-name) */
     // TODO: Replace this once the SDK supports hide attendee name
-    hideAttendeeNames: false
+    hideAttendeeNames: false,
+    /* @conditional-compile-remove(meeting-id) */
+    info: _isACSCall(call) ? call.info : _isTeamsCall(call) ? call.info : undefined
   };
 }
 
@@ -213,7 +215,6 @@ export function convertFromSDKToCaptionInfoState(caption: AcsCaptionsInfo): Capt
   };
 }
 
-/* @conditional-compile-remove(video-background-effects) */
 /** @private */
 export function convertFromSDKToDeclarativeVideoStreamVideoEffects(
   videoEffects: VideoEffectName[]

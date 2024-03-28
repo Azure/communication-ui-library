@@ -25,9 +25,9 @@ export type {
   CallAdapterLocator,
   AzureCommunicationOutboundCallAdapterArgs
 } from './AzureCommunicationCallAdapter';
-/* @conditional-compile-remove(video-background-effects) */
+
 export type { AzureCommunicationCallAdapterOptions } from './AzureCommunicationCallAdapter';
-/* @conditional-compile-remove(video-background-effects) */
+
 export type { CommonCallAdapterOptions } from './AzureCommunicationCallAdapter';
 
 /* @conditional-compile-remove(teams-adhoc-call) */

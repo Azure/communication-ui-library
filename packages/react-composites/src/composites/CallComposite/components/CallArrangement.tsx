@@ -54,7 +54,7 @@ import { getCallStatus, getIsTeamsCall, getCaptionsStatus } from '../selectors/b
 import { drawerContainerStyles } from '../styles/CallComposite.styles';
 import { SidePane } from './SidePane/SidePane';
 import { usePeoplePane } from './SidePane/usePeoplePane';
-/* @conditional-compile-remove(video-background-effects) */
+
 import {
   useVideoEffectsPane,
   VIDEO_EFFECTS_SIDE_PANE_ID,
@@ -62,14 +62,14 @@ import {
 } from './SidePane/useVideoEffectsPane';
 import { isDisabled } from '../utils';
 import { SidePaneRenderer, useIsSidePaneOpen } from './SidePane/SidePaneProvider';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { useIsParticularSidePaneOpen } from './SidePane/SidePaneProvider';
 import { ModalLocalAndRemotePIP } from '../../common/ModalLocalAndRemotePIP';
 import { getPipStyles } from '../../common/styles/ModalLocalAndRemotePIP.styles';
 import { useMinMaxDragPosition } from '../../common/utils';
 import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
 import { CommonCallControlOptions } from '../../common/types/CommonCallControlOptions';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { localVideoSelector } from '../../CallComposite/selectors/localVideoStreamSelector';
 /* @conditional-compile-remove(capabilities) */
 import {
@@ -82,7 +82,11 @@ import { usePropsFor } from '../hooks/usePropsFor';
 /* @conditional-compile-remove(spotlight) */
 import { PromptProps } from './Prompt';
 /* @conditional-compile-remove(spotlight) */
-import { useLocalSpotlightCallbacksWithPrompt, useRemoteSpotlightCallbacksWithPrompt } from '../utils/spotlightUtils';
+import {
+  useLocalSpotlightCallbacksWithPrompt,
+  useRemoteSpotlightCallbacksWithPrompt,
+  useStopAllSpotlightCallbackWithPrompt
+} from '../utils/spotlightUtils';
 
 /**
  * @private
@@ -207,7 +211,20 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   );
 
   /* @conditional-compile-remove(spotlight) */
-  const canSpotlight = adapter.getState().call?.capabilitiesFeature?.capabilities.spotlightParticipant.isPresent;
+  const canRemoveSpotlight =
+    adapter.getState().call?.capabilitiesFeature?.capabilities.removeParticipantsSpotlight.isPresent;
+  /* @conditional-compile-remove(spotlight) */
+  const stopAllSpotlight = useMemo(
+    () => (canRemoveSpotlight ? () => adapter.stopAllSpotlight() : undefined),
+    [canRemoveSpotlight, adapter]
+  );
+
+  /* @conditional-compile-remove(spotlight) */
+  const { stopAllSpotlightWithPrompt } = useStopAllSpotlightCallbackWithPrompt(
+    stopAllSpotlight,
+    setIsPromptOpen,
+    setPromptProps
+  );
 
   const spotlightPeoplePaneProps = useMemo(() => {
     /* @conditional-compile-remove(spotlight) */
@@ -217,20 +234,19 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       onStopLocalSpotlight: hideSpotlightButtons ? undefined : onStopLocalSpotlightWithPrompt,
       onStartRemoteSpotlight: hideSpotlightButtons ? undefined : onStartRemoteSpotlightWithPrompt,
       onStopRemoteSpotlight: hideSpotlightButtons ? undefined : onStopRemoteSpotlightWithPrompt,
-      onStopAllSpotlight: hideSpotlightButtons || !canSpotlight ? undefined : () => adapter.stopAllSpotlight(),
+      onStopAllSpotlight: hideSpotlightButtons ? undefined : stopAllSpotlightWithPrompt,
       maxParticipantsToSpotlight
     };
     return {};
   }, [
-    /* @conditional-compile-remove(spotlight) */ adapter,
     /* @conditional-compile-remove(spotlight) */ hideSpotlightButtons,
     /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight,
     /* @conditional-compile-remove(spotlight) */ onStartLocalSpotlightWithPrompt,
     /* @conditional-compile-remove(spotlight) */ onStartRemoteSpotlightWithPrompt,
     /* @conditional-compile-remove(spotlight) */ onStopLocalSpotlightWithPrompt,
     /* @conditional-compile-remove(spotlight) */ onStopRemoteSpotlightWithPrompt,
-    /* @conditional-compile-remove(spotlight) */ spotlightedParticipants,
-    /* @conditional-compile-remove(spotlight) */ canSpotlight
+    /* @conditional-compile-remove(spotlight) */ stopAllSpotlightWithPrompt,
+    /* @conditional-compile-remove(spotlight) */ spotlightedParticipants
   ]);
 
   const { isPeoplePaneOpen, openPeoplePane, closePeoplePane } = usePeoplePane({
@@ -279,10 +295,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     };
   }, [isMobileWithActivePane, props.mobileView]);
 
-  /* @conditional-compile-remove(video-background-effects) */
   const onResolveVideoEffectDependency = adapter.getState().onResolveVideoEffectDependency;
 
-  /* @conditional-compile-remove(video-background-effects) */
   const { openVideoEffectsPane } = useVideoEffectsPane(
     props.updateSidePaneRenderer,
     props.mobileView,
@@ -310,7 +324,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
   let filteredLatestErrors: ActiveErrorMessage[] = props.errorBarProps !== false ? props.latestErrors : [];
 
-  /* @conditional-compile-remove(video-background-effects) */
   const isCameraOn = useSelector(localVideoSelector).isAvailable;
 
   // TODO: move this logic to the error bar selector once role is plumbed from the headless SDK
@@ -320,9 +333,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     );
   }
 
-  /* @conditional-compile-remove(video-background-effects) */
   const isVideoPaneOpen = useIsParticularSidePaneOpen(VIDEO_EFFECTS_SIDE_PANE_ID);
-  /* @conditional-compile-remove(video-background-effects) */
+
   if ((isVideoPaneOpen || !isCameraOn) && props.errorBarProps) {
     filteredLatestErrors = filteredLatestErrors.filter((e) => e.type !== 'unableToStartVideoEffect');
   }
@@ -346,43 +358,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
         (notification) => notification.capabilityName !== 'shareScreen'
       )
     : props.capabilitiesChangedNotificationBarProps?.capabilitiesChangedNotifications;
-
-  /* @conditional-compile-remove(spotlight) */
-  const onHeaderMenuClick = useMemo(() => {
-    if (!props.mobileView) {
-      return undefined;
-    }
-    const headerMenuItems: _DrawerMenuItemProps[] = [];
-    if (isPeoplePaneOpen) {
-      if (spotlightedParticipants && spotlightedParticipants.length > 0 && !hideSpotlightButtons && canSpotlight) {
-        headerMenuItems.push({
-          itemKey: 'stopAllSpotlightKey',
-          text: locale.strings.call.stopAllSpotlightMenuLabel,
-          iconProps: {
-            iconName: 'StopAllSpotlightMenuButton',
-            styles: { root: { lineHeight: 0 } }
-          },
-          onItemClick: () => {
-            adapter.stopAllSpotlight();
-            setDrawerMenuItems([]);
-          }
-        });
-      }
-    }
-    return headerMenuItems.length > 0
-      ? () => {
-          setDrawerMenuItems(headerMenuItems);
-        }
-      : undefined;
-  }, [
-    props.mobileView,
-    isPeoplePaneOpen,
-    spotlightedParticipants,
-    hideSpotlightButtons,
-    canSpotlight,
-    locale.strings.call.stopAllSpotlightMenuLabel,
-    adapter
-  ]);
 
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)} id={props.id}>
@@ -431,7 +406,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   isTeamsCall={isTeamsCall}
                   /* @conditional-compile-remove(close-captions) */
                   isCaptionsOn={isCaptionsOn}
-                  /* @conditional-compile-remove(video-background-effects) */
                   onClickVideoEffects={onResolveVideoEffectDependency ? openVideoEffectsPane : undefined}
                   displayVertical={verticalControlBar}
                   onUserSetOverflowGalleryPositionChange={props.onUserSetOverflowGalleryPositionChange}
@@ -443,7 +417,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   cameraButtonRef={cameraButtonRef}
                   /* @conditional-compile-remove(spotlight) */
                   onStopLocalSpotlight={
-                    !hideSpotlightButtons && localParticipant.spotlight ? onStopLocalSpotlight : undefined
+                    !hideSpotlightButtons && localParticipant.spotlight ? onStopLocalSpotlightWithPrompt : undefined
                   }
                 />
               )}
@@ -521,7 +495,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
             </Stack.Item>
             <SidePane
               mobileView={props.mobileView}
-              /* @conditional-compile-remove(video-background-effects) */
               maxWidth={isVideoPaneOpen ? `${VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM}rem` : undefined}
               minWidth={isVideoPaneOpen ? `${VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM}rem` : undefined}
               updateSidePaneRenderer={props.updateSidePaneRenderer}
@@ -536,8 +509,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
               }
               onChatButtonClicked={props.mobileChatTabHeader?.onClick}
               disableChatButton={props.mobileChatTabHeader?.disabled}
-              /* @conditional-compile-remove(spotlight) */
-              onHeaderMenuClick={onHeaderMenuClick}
             />
             {props.mobileView && (
               <ModalLocalAndRemotePIP

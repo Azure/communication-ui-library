@@ -219,7 +219,7 @@ export interface ErrorBarStrings {
    * Error bar string letting you know remote participants see a frozen stream for you.
    */
   cameraFrozenForRemoteParticipants?: string;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Unable to start effect
    */

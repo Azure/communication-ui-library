@@ -55,6 +55,9 @@ export interface CallPageProps {
   userSetOverflowGalleryPosition?: 'Responsive' | 'horizontalTop';
   onSetUserSetOverflowGalleryPosition?: (position: 'Responsive' | 'horizontalTop') => void;
   onCloseChatPane?: () => void;
+  pinnedParticipants?: string[];
+  setPinnedParticipants?: (pinnedParticipants: string[]) => void;
+  compositeAudioContext?: AudioContext;
 }
 
 /**
@@ -71,7 +74,10 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
     onUserSetGalleryLayoutChange,
     userSetOverflowGalleryPosition = 'Responsive',
     onSetUserSetOverflowGalleryPosition,
-    onCloseChatPane
+    onCloseChatPane,
+    pinnedParticipants,
+    setPinnedParticipants,
+    compositeAudioContext
   } = props;
 
   // To use useProps to get these states, we need to create another file wrapping Call,
@@ -115,6 +121,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
           capabilitiesChangedNotificationBarProps={props.capabilitiesChangedNotificationBarProps}
           onSetDialpadPage={() => setDtmfDialerPresent(!dtmfDialerPresent)}
           dtmfDialerPresent={dtmfDialerPresent}
+          compositeAudioContext={compositeAudioContext}
         />
       );
     } else {
@@ -129,6 +136,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
           localVideoTileOptions={options?.localVideoTile}
           userSetOverflowGalleryPosition={userSetOverflowGalleryPosition}
           userSetGalleryLayout={galleryLayout}
+          pinnedParticipants={pinnedParticipants}
+          setPinnedParticipants={setPinnedParticipants}
           /* @conditional-compile-remove(spotlight) */
           setIsPromptOpen={setIsPromptOpen}
           /* @conditional-compile-remove(spotlight) */

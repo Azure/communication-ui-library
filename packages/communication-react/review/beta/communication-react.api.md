@@ -19,6 +19,7 @@ import { CallClientOptions } from '@azure/communication-calling';
 import { CallDirection } from '@azure/communication-calling';
 import { CallEndReason } from '@azure/communication-calling';
 import { CallerInfo } from '@azure/communication-calling';
+import { CallInfo } from '@azure/communication-calling';
 import { CallKind } from '@azure/communication-calling';
 import { CallState as CallState_2 } from '@azure/communication-calling';
 import { CallSurvey } from '@azure/communication-calling';
@@ -91,6 +92,8 @@ import { StartCallOptions } from '@azure/communication-calling';
 import { StartCaptionsOptions } from '@azure/communication-calling';
 import { TeamsCall } from '@azure/communication-calling';
 import { TeamsCallAgent } from '@azure/communication-calling';
+import { TeamsCallInfo } from '@azure/communication-calling';
+import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
 import { TransferEventArgs } from '@azure/communication-calling';
@@ -151,13 +154,64 @@ export type AreParamEqual<A extends (props: any) => JSX.Element | undefined, B e
 export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
 // @beta
-export interface AttachmentMetadata {
-    extension: string;
-    id: string;
+export interface AttachmentDownloadOptions {
+    // (undocumented)
+    actionsForAttachment: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
+}
+
+// @beta
+export interface AttachmentMenuAction {
+    // (undocumented)
+    icon: JSX.Element;
+    // (undocumented)
     name: string;
     // (undocumented)
-    payload?: Record<string, string>;
-    url: string;
+    onClick: (attachment: AttachmentMetadata) => Promise<void>;
+}
+
+// @beta
+export interface AttachmentMetadata {
+    extension?: string;
+    id: string;
+    name: string;
+    progress?: number;
+    uploadStatus?: AttachmentUploadStatus;
+    url?: string;
+}
+
+// @beta
+export interface AttachmentOptions {
+    // (undocumented)
+    downloadOptions?: AttachmentDownloadOptions;
+    // (undocumented)
+    uploadOptions?: AttachmentUploadOptions;
+}
+
+// @beta
+export type AttachmentUploadHandler = (attachmentUploads: AttachmentUploadManager[]) => void;
+
+// @beta
+export interface AttachmentUploadManager {
+    file?: File;
+    id: string;
+    notifyUploadCompleted: (metadata: AttachmentMetadata) => void;
+    notifyUploadFailed: (message: string) => void;
+    notifyUploadProgressChanged: (value: number) => void;
+}
+
+// @beta (undocumented)
+export interface AttachmentUploadOptions {
+    disableMultipleUploads?: boolean;
+    handler: AttachmentUploadHandler;
+    supportedMediaTypes?: string[];
+}
+
+// @beta
+export interface AttachmentUploadStatus {
+    // (undocumented)
+    message: string;
+    // (undocumented)
+    timestamp: number;
 }
 
 // @public
@@ -192,7 +246,7 @@ export type AzureCommunicationCallWithChatAdapterArgs = {
     userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
-    locator: CallAndChatLocator | TeamsMeetingLinkLocator;
+    locator: CallAndChatLocator | TeamsMeetingLinkLocator | /** @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
     alternateCallerId?: string;
     callAdapterOptions?: AzureCommunicationCallAdapterOptions;
 };
@@ -413,7 +467,7 @@ export interface CallAdapterDeviceManagement {
 }
 
 // @public
-export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | RoomCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator;
+export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | RoomCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
 
 // @public
 export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
@@ -726,6 +780,7 @@ export interface CallCompositeStrings {
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
     failedToJoinTeamsMeetingReasonAccessDeniedTitle: string;
     holdScreenLabel: string;
+    invalidMeetingIdentifier: string;
     inviteToRoomRemovedDetails?: string;
     inviteToRoomRemovedTitle: string;
     learnMore: string;
@@ -959,6 +1014,7 @@ export interface CallState {
     endTime: Date | undefined;
     hideAttendeeNames?: boolean;
     id: string;
+    info?: CallInfo | TeamsCallInfo;
     isMuted: boolean;
     isScreenSharingOn: boolean;
     kind: CallKind;
@@ -1658,7 +1714,7 @@ export type ChatAdapterUiState = {
 };
 
 // @public
-export type ChatAttachmentType = 'unknown' | 'image' | /* @conditional-compile-remove(file-sharing) */ 'file';
+export type ChatAttachmentType = 'unknown' | 'image' | /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ 'file';
 
 // @public
 export type ChatBaseSelectorProps = {
@@ -2417,8 +2473,9 @@ export const DEFAULT_COMPONENT_ICONS: {
     RaiseHandContextualMenuItem: React_2.JSX.Element;
     LowerHandContextualMenuItem: React_2.JSX.Element;
     ReactionButtonIcon: React_2.JSX.Element;
-    CancelFileUpload: React_2.JSX.Element;
-    DownloadFile: React_2.JSX.Element;
+    CancelAttachmentUpload: React_2.JSX.Element;
+    DownloadAttachment: React_2.JSX.Element;
+    OpenAttachment: React_2.JSX.Element;
     DataLossPreventionProhibited: React_2.JSX.Element;
     EditBoxCancel: React_2.JSX.Element;
     EditBoxSubmit: React_2.JSX.Element;
@@ -2504,6 +2561,10 @@ export const DEFAULT_COMPONENT_ICONS: {
     RichTextDividerIcon: React_2.JSX.Element;
     RichTextEditorButtonIcon: React_2.JSX.Element;
     RichTextEditorButtonIconFilled: React_2.JSX.Element;
+    RichTextInsertTableRegularIcon: React_2.JSX.Element;
+    RichTextInsertTableFilledIcon: React_2.JSX.Element;
+    RichTextTableInsertMenuIcon: React_2.JSX.Element;
+    RichTextTableDeleteMenuIcon: React_2.JSX.Element;
 };
 
 // @public
@@ -2606,8 +2667,9 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MoreDrawerSpeakers?: JSX.Element | undefined;
     ChatMessageOptions: React_2.JSX.Element;
     ControlButtonParticipantsContextualMenuItem: React_2.JSX.Element;
-    CancelFileUpload: React_2.JSX.Element;
-    DownloadFile: React_2.JSX.Element;
+    CancelAttachmentUpload: React_2.JSX.Element;
+    DownloadAttachment: React_2.JSX.Element;
+    OpenAttachment: React_2.JSX.Element;
     DataLossPreventionProhibited: React_2.JSX.Element;
     ErrorBarCallVideoRecoveredBySystem: React_2.JSX.Element;
     ErrorBarCallVideoStoppedBySystem: React_2.JSX.Element;
@@ -2661,6 +2723,10 @@ export const DEFAULT_COMPOSITE_ICONS: {
     RichTextDividerIcon: React_2.JSX.Element;
     RichTextEditorButtonIcon: React_2.JSX.Element;
     RichTextEditorButtonIconFilled: React_2.JSX.Element;
+    RichTextInsertTableRegularIcon: React_2.JSX.Element;
+    RichTextInsertTableFilledIcon: React_2.JSX.Element;
+    RichTextTableInsertMenuIcon: React_2.JSX.Element;
+    RichTextTableDeleteMenuIcon: React_2.JSX.Element;
 };
 
 // @beta
@@ -2751,6 +2817,7 @@ export type DialpadMode = 'dtmf' | 'dialer';
 export interface DialpadProps {
     dialpadMode?: DialpadMode;
     disableDtmfPlayback?: boolean;
+    dtmfAudioContext?: AudioContext;
     longPressTrigger?: LongPressTrigger;
     onChange?: (input: string) => void;
     onClickDialpadButton?: (buttonValue: string, buttonIndex: number) => void;
@@ -2871,17 +2938,9 @@ export interface ErrorBarStrings {
 export type ErrorType = keyof ErrorBarStrings;
 
 // @beta
-export interface FileDownloadError {
-    errorMessage: string;
-}
-
-// @beta
-export type FileDownloadHandler = (userId: string, fileMetadata: AttachmentMetadata) => Promise<URL | FileDownloadError>;
-
-// @beta
 export interface FileSharingOptions {
     accept?: string;
-    downloadHandler?: FileDownloadHandler;
+    actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
     multiple?: boolean;
     uploadHandler: FileUploadHandler;
 }
@@ -3330,14 +3389,14 @@ export type MessageThreadProps = {
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
-    onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+    onRenderAttachmentDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
     onUpdateMessage?: UpdateMessageCallback;
     onCancelEditMessage?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (content: string) => Promise<void>;
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
-    fileDownloadHandler?: FileDownloadHandler;
+    attachmentOptions?: AttachmentOptions;
     onDisplayDateTimeString?: (messageDate: Date) => string;
     mentionOptions?: MentionOptions;
     inlineImageOptions?: InlineImageOptions;
@@ -3373,6 +3432,7 @@ export interface MessageThreadStrings {
     monday: string;
     newMessagesIndicator: string;
     noDisplayNameSub: string;
+    openAttachment: string;
     participantJoined: string;
     participantLeft: string;
     removeMessage: string;
@@ -3864,7 +3924,6 @@ export interface RichTextSendBoxProps {
     activeFileUploads?: ActiveFileUpload[];
     disabled?: boolean;
     onCancelFileUpload?: (fileId: string) => void;
-    onRenderFileUploads?: () => JSX.Element;
     onSendMessage: (content: string) => Promise<void>;
     strings?: Partial<RichTextSendBoxStrings>;
     systemMessage?: string;
@@ -3875,7 +3934,18 @@ export interface RichTextSendBoxStrings extends SendBoxStrings {
     boldTooltip: string;
     bulletListTooltip: string;
     decreaseIndentTooltip: string;
+    deleteColumnMenu: string;
+    deleteRowMenu: string;
+    deleteRowOrColumnMenu: string;
+    deleteTableMenu: string;
     increaseIndentTooltip: string;
+    insertColumnLeftMenu: string;
+    insertColumnRightMenu: string;
+    insertRowAboveMenu: string;
+    insertRowBelowMenu: string;
+    insertRowOrColumnMenu: string;
+    insertTableMenuTitle: string;
+    insertTableTooltip: string;
     italicTooltip: string;
     numberListTooltip: string;
     richTextFormatButtonTooltip: string;
@@ -4097,6 +4167,8 @@ export interface SpotlightPromptStrings {
     startSpotlightHeading: string;
     startSpotlightOnSelfText: string;
     startSpotlightText: string;
+    stopAllSpotlightHeading: string;
+    stopAllSpotlightText: string;
     stopSpotlightCancelButtonLabel: string;
     stopSpotlightConfirmButtonLabel: string;
     stopSpotlightHeading: string;
@@ -4660,12 +4732,12 @@ export interface VideoTileProps {
     noVideoAvailableAriaLabel?: string;
     onLongTouch?: () => void;
     onRenderPlaceholder?: OnRenderAvatarCallback;
+    // @beta
+    overlay?: JSX.Element | null;
     participantState?: ParticipantState;
     personaMaxSize?: number;
     personaMinSize?: number;
     raisedHand?: RaisedHand;
-    // @beta
-    reaction?: Reaction;
     // @beta
     reactionResources?: ReactionResources;
     renderElement?: JSX.Element | null;
