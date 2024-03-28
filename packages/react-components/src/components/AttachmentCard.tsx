@@ -28,7 +28,7 @@ import { _AttachmentUploadCardsStrings } from './AttachmentUploadCards';
 import { useLocaleAttachmentCardStringsTrampoline } from './utils/common';
 import { AttachmentMetadata, AttachmentMenuAction } from '../types/Attachment';
 import { MoreHorizontal24Filled } from '@fluentui/react-icons';
-import { useAttachmentCardStyles, fileNameContainerClassName } from './styles/AttachmentCard.styles';
+import { useAttachmentCardStyles, attachmentNameContainerClassName } from './styles/AttachmentCard.styles';
 
 /**
  * @internal
@@ -40,7 +40,7 @@ export interface _AttachmentCardProps {
    */
   attachment: AttachmentMetadata;
   /**
-   * Optional property to indicate progress of file upload.
+   * Optional property to indicate progress of attachment upload.
    */
   progress?: number;
   /**
@@ -48,7 +48,7 @@ export interface _AttachmentCardProps {
    */
   menuActions: AttachmentMenuAction[];
   /**
-   * Optional arialabel strings for file cards
+   * Optional aria label strings for attachment upload cards
    */
   strings?: _AttachmentUploadCardsStrings;
   /**
@@ -95,7 +95,7 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
         <CardHeader
           image={
             <Icon
-              data-ui-id={'filetype-icon'}
+              data-ui-id={'attachmenttype-icon'}
               iconName={
                 getFileTypeIconProps({
                   extension: useMemo((): string => {
@@ -108,7 +108,7 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
             />
           }
           header={
-            <div className={fileNameContainerClassName}>
+            <div className={attachmentNameContainerClassName}>
               <Text title={attachment.name}>{attachment.name}</Text>
             </div>
           }

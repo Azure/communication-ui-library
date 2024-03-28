@@ -39,19 +39,19 @@ export interface _AttachmentDownloadCardsStrings {
  */
 export interface _AttachmentDownloadCardsProps {
   /**
-   * A chat message metadata that includes file metadata
+   * A chat message metadata that includes attachment metadata
    */
   attachments?: AttachmentMetadata[];
   /**
-   * A chat message metadata that includes file metadata
+   * A chat message metadata that includes attachment metadata
    */
   message?: ChatMessage;
   /**
-   * Optional callback to handle file download
+   * Optional callback to handle attachment download
    */
   actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
   /**
-   * Optional callback that runs if downloadHandler returns {@link FileDownloadError}.
+   * Optional callback that runs if downloadHandler returns an error.
    */
   onActionHandlerFailed?: (errMsg: string) => void;
   /**
@@ -102,13 +102,13 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
 
   const attachmentCardGroupDescription = useMemo(
     () => () => {
-      const fileGroupLocaleString =
+      const attachmentGroupLocaleString =
         props.strings?.attachmentCardGroupMessage ?? localeStrings.attachmentCardGroupMessage;
       /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-      return _formatString(fileGroupLocaleString, {
+      return _formatString(attachmentGroupLocaleString, {
         attachmentCount: `${attachments?.length ?? 0}`
       });
-      return _formatString(fileGroupLocaleString, {
+      return _formatString(attachmentGroupLocaleString, {
         attachmentCount: `${attachments?.length ?? 0}`
       });
     },
@@ -120,7 +120,7 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
   }
 
   return (
-    <div style={attachmentDownloadCardsStyle} data-ui-id="file-download-card-group">
+    <div style={attachmentDownloadCardsStyle} data-ui-id="attachment-download-card-group">
       <_AttachmentCardGroup ariaLabel={attachmentCardGroupDescription()}>
         {attachments &&
           attachments.map((attachment) => (
@@ -160,7 +160,7 @@ const getDefaultMenuActions = (
       {
         ...defaultAttachmentMenuAction,
         name: locale.openAttachment,
-        icon: <Icon iconName="OpenFile" />
+        icon: <Icon iconName="OpenAttachment" />
       }
     ];
   }
@@ -191,8 +191,8 @@ export const defaultAttachmentMenuAction: AttachmentMenuAction = {
    * with a localized string this string when it's used in the UI.
    */
   name: 'Download',
-  // this is the icon shown on the right of the file card
-  icon: <Icon iconName="DownloadFile" data-ui-id="file-download-card-download-icon" />,
+  // this is the icon shown on the right of the attachment card
+  icon: <Icon iconName="DownloadAttachment" data-ui-id="attachment-download-card-download-icon" />,
   // this is the action that runs when the icon is clicked
   onClick: (attachment: AttachmentMetadata) => {
     return new Promise<void>((resolve) => {

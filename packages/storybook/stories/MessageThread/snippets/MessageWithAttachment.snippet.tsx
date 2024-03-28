@@ -4,7 +4,7 @@ import React from 'react';
 
 initializeFileTypeIcons();
 
-export const MessageWithFile: () => JSX.Element = () => {
+export const MessageWithAttachment: () => JSX.Element = () => {
   return (
     <FluentThemeProvider>
       <MessageThread
