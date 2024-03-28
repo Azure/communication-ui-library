@@ -956,8 +956,10 @@ export class TeamsMeetingIdProvider implements ChatThreadProvider {
         }
       };
       this.callAdapter.then((adapter) => {
-        if (adapter.getState().call?.state === 'Connected' && adapter.getState().call?.info?.threadId) {
-          resolve(adapter.getState().call?.info?.threadId!);
+        const callState = adapter.getState().call?.state;
+        const threadId = adapter.getState().call?.info?.threadId;
+        if (callState === 'Connected' && threadId) {
+          resolve(threadId);
         } else {
           adapter.offStateChange(stateChangeListener);
         }
