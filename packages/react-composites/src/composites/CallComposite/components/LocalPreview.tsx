@@ -125,7 +125,7 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
             strings={
               props.mobileView ? { tooltipOnContent: '', tooltipOffContent: '', tooltipDisabledContent: '' } : {}
             }
-            styles={localPreviewButtonStyle}
+            styles={localPreviewButtonStyle(props.mobileView)}
           />
           <CameraButton
             data-ui-id="call-composite-local-device-settings-camera-button"
@@ -143,7 +143,7 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
                   }
                 : {}
             }
-            styles={localPreviewButtonStyle}
+            styles={localPreviewButtonStyle(props.mobileView)}
           />
           {props.showDevicesButton && (
             <DevicesButton

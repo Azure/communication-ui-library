@@ -94,7 +94,7 @@ export const configurationSectionStyle: IStackStyles = {
 export const selectionContainerStyle = (theme: ITheme, noSpeakerDropdownShown?: boolean): string =>
   mergeStyles({
     width: '100%',
-    height: noSpeakerDropdownShown ? 'auto' : `${CONFIGURATION_PAGE_SECTION_HEIGHT_REM}rem`,
+    minHeight: noSpeakerDropdownShown ? 'auto' : `${CONFIGURATION_PAGE_SECTION_HEIGHT_REM}rem`,
     padding: '1rem',
     borderRadius: theme.effects.roundedCorner6,
     border: `0.0625rem solid ${theme.palette.neutralLight}`,
@@ -246,7 +246,7 @@ export const cameraAndVideoEffectsContainerStyleDesktop: IStackItemStyles = {
 /**
  * @private
  */
-export const effectsButtonStyles = (theme: Theme): IButtonStyles => {
+export const effectsButtonStyles = (theme: Theme, disabled?: boolean): IButtonStyles => {
   return {
     root: {
       background: 'transparent',
@@ -254,26 +254,41 @@ export const effectsButtonStyles = (theme: Theme): IButtonStyles => {
       color: theme.palette.themePrimary,
       // Top and bottom padding needs to be 5px to match the label padding
       padding: '5px 0.25rem',
-      ':hover, :focus': {
-        color: theme.palette.themePrimary
-      },
+      ':hover, :focus': disabled
+        ? {}
+        : {
+            color: theme.palette.themePrimary
+          },
       svg: {
         height: '1rem',
         width: '1rem'
       }
     },
-    rootChecked: {
-      color: theme.palette.themePrimary
-    },
-    rootHovered: {
-      color: theme.palette.themePrimary
-    },
-    rootPressed: {
-      color: theme.palette.themePrimary
-    },
-    rootFocused: {
-      color: theme.palette.themePrimary
-    }
+    labelHovered: disabled
+      ? {}
+      : {
+          color: theme.palette.themePrimary
+        },
+    rootChecked: disabled
+      ? {}
+      : {
+          color: theme.palette.themePrimary
+        },
+    rootHovered: disabled
+      ? {}
+      : {
+          color: theme.palette.themePrimary
+        },
+    rootPressed: disabled
+      ? {}
+      : {
+          color: theme.palette.themePrimary
+        },
+    rootFocused: disabled
+      ? {}
+      : {
+          color: theme.palette.themePrimary
+        }
   };
 };
 
