@@ -78,6 +78,9 @@ export const optionIconStyles = mergeStyles({
   verticalAlign: 'text-top'
 });
 
+/**
+ * @private
+ */
 export const deviceSelectionContainerStyles: IStackStyles = {
   root: {
     /**
