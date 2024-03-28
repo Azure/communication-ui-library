@@ -8,7 +8,8 @@ import { MessageThreadStrings } from '../../MessageThread';
 import { ChatMessage, ComponentSlotStyle, OnRenderAvatarCallback } from '../../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../../types';
-import { FileDownloadHandler, AttachmentMetadata } from '../../../types/Attachment';
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+import { AttachmentMenuAction, AttachmentMetadata } from '../../../types/Attachment';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from '../../MentionPopover';
 import { InlineImageOptions } from '../ChatMessageContent';
@@ -25,6 +26,7 @@ type ChatMyMessageComponentProps = {
     content: string,
     metadata?: Record<string, string>,
     options?: {
+      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
       attachmentMetadata?: AttachmentMetadata[];
     }
   ) => Promise<void>;
@@ -53,14 +55,6 @@ type ChatMyMessageComponentProps = {
    * Whether to overlap avatar and message when the view is width constrained.
    */
   shouldOverlapAvatarAndMessage: boolean;
-  /**
-   * Optional callback to render uploaded files in the message component.
-   */
-  onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
-  /**
-   * Optional function called when someone clicks on the file download icon.
-   */
-  fileDownloadHandler?: FileDownloadHandler;
   remoteParticipantsCount?: number;
   onActionButtonClick: (
     message: ChatMessage,
@@ -89,6 +83,16 @@ type ChatMyMessageComponentProps = {
    * @beta
    */
   inlineImageOptions?: InlineImageOptions;
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /**
+   * Optional callback to render message attachments in the message component.
+   */
+  onRenderAttachmentDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /**
+   * Optional callback to define custom actions for attachments.
+   */
+  actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
 };
 
 /**

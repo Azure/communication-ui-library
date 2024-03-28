@@ -17,7 +17,7 @@ import { MessageThreadStrings } from '../../MessageThread';
 import { chatMessageActionMenuProps } from '../ChatMessageActionMenu';
 import { ComponentSlotStyle, OnRenderAvatarCallback } from '../../../types';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { FileDownloadHandler } from '../../../types/Attachment';
+import { AttachmentMenuAction, AttachmentMetadata } from '../../../types/Attachment';
 import { _AttachmentDownloadCards } from '../../AttachmentDownloadCards';
 import { useLocale } from '../../../localization';
 /* @conditional-compile-remove(mention) */
@@ -47,16 +47,6 @@ type ChatMyMessageComponentAsMessageBubbleProps = {
    * Whether the status indicator for each message is displayed or not.
    */
   showMessageStatus?: boolean;
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  /**
-   * Optional callback to render uploaded files in the message component.
-   */
-  onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  /**
-   * Optional function called when someone clicks on the file download icon.
-   */
-  fileDownloadHandler?: FileDownloadHandler;
   remoteParticipantsCount?: number;
   onActionButtonClick: (
     message: ChatMessage,
@@ -85,6 +75,16 @@ type ChatMyMessageComponentAsMessageBubbleProps = {
    * @beta
    */
   inlineImageOptions?: InlineImageOptions;
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /**
+   * Optional callback to render message attachments in the message component.
+   */
+  onRenderAttachmentDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /**
+   * Optional callback to define custom actions for attachments.
+   */
+  actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
 };
 
 /** @private */
@@ -107,14 +107,14 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
     onRenderAvatar,
     showMessageStatus,
     messageStatus,
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    fileDownloadHandler,
     inlineImageOptions,
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    onRenderFileDownloads,
     /* @conditional-compile-remove(mention) */
     mentionDisplayOptions,
-    onDisplayDateTimeString
+    onDisplayDateTimeString,
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+    onRenderAttachmentDownloads,
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+    actionsForAttachment
   } = props;
 
   const formattedTimestamp = useMemo(() => {
@@ -184,19 +184,19 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
       strings,
       userId,
       inlineImageOptions,
-      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-      onRenderFileDownloads,
       /* @conditional-compile-remove(mention) */
       mentionDisplayOptions,
       /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-      fileDownloadHandler
+      onRenderAttachmentDownloads,
+      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+      actionsForAttachment
     );
   }, [
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ fileDownloadHandler,
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ actionsForAttachment,
     inlineImageOptions,
     /* @conditional-compile-remove(mention) */ mentionDisplayOptions,
     message,
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ onRenderFileDownloads,
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ onRenderAttachmentDownloads,
     strings,
     userId
   ]);
