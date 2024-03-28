@@ -24,9 +24,9 @@ const getDocs: () => JSX.Element = () => {
       <Heading>Display File Uploads</Heading>
       <DetailedBetaBanner />
       <Description>
-        RichTextSendBox component provides UI for displaying active attachment uploads in the RichTextSendBox. This allows
-        developers to implement a file sharing feature using the pure UI component with minimal effort. Developers can
-        write their own attachment upload logic and utilize the UI provided by RichTextSendBox.
+        RichTextSendBox component provides UI for displaying active attachment uploads in the RichTextSendBox. This
+        allows developers to implement a file sharing feature using the pure UI component with minimal effort.
+        Developers can write their own attachment upload logic and utilize the UI provided by RichTextSendBox.
       </Description>
       <Canvas mdxSource={RTEAttachmentUploadsExampleText}>
         <RTEAttachmentUploadsExample />
