@@ -241,7 +241,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         message={message}
         // temp walkaround until upload is refactored
         actionsForAttachment={fileSharing?.actionsForAttachment}
-        onDownloadErrorMessage={(errorMessage: string) => {
+        onActionHandlerFailed={(errorMessage: string) => {
           setDownloadErrorMessage(errorMessage);
         }}
       />
@@ -376,8 +376,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     }
     return (
       <FileUploadButton
-        accept={fileSharing?.accept}
-        multiple={fileSharing?.multiple}
+        accept={fileSharing?.accept ?? '*'}
+        multiple={fileSharing?.multiple ?? true}
         onChange={fileUploadButtonOnChange}
       />
     );

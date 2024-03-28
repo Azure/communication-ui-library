@@ -130,6 +130,7 @@ export const _AttachmentUploadCards = (props: FileUploadCardsProps): JSX.Element
                   ),
                   onClick: () => {
                     props.onCancelFileUpload && props.onCancelFileUpload(attachment.id);
+                    return Promise.resolve();
                   }
                 }
               ]}

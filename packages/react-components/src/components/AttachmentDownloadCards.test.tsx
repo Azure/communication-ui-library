@@ -28,7 +28,7 @@ describe('AttachmentDownloadCards should be rendered properly', () => {
 
     const props = {
       userId: 'MockUserId',
-      attachment: [attachment]
+      attachments: [attachment]
     };
     renderAttachmentDownloadCardsWithDefaults(props);
     const card = await screen.findByText('MockAttachmentCard');
@@ -37,10 +37,10 @@ describe('AttachmentDownloadCards should be rendered properly', () => {
 });
 
 const renderAttachmentDownloadCardsWithDefaults = (props: MockDownloadCardProps): void => {
-  render(<_AttachmentDownloadCards attachments={props.attachment} />);
+  render(<_AttachmentDownloadCards {...props} />);
 };
 
 interface MockDownloadCardProps {
   userId: string;
-  attachment: AttachmentMetadata[];
+  attachments: AttachmentMetadata[];
 }
