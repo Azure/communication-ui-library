@@ -155,7 +155,6 @@ class CallWithChatContext {
 export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapter {
   private callAdapter: CallAdapter;
   private chatAdapterPromise: Promise<ChatAdapter>;
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   private chatAdapter: ChatAdapter | undefined;
   private context: CallWithChatContext;
   private onChatStateChange: (newChatAdapterState: ChatAdapterState) => void;
@@ -174,7 +173,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.chatAdapterPromise = chatAdapterPromise;
     this.chatAdapterPromise.then((chatAdapter) => {
       chatAdapter.onStateChange(this.onChatStateChange);
-      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
       this.chatAdapter = chatAdapter;
       this.context.updateClientStateWithChatState(chatAdapter.getState());
     });
