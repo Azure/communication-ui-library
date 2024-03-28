@@ -20,7 +20,7 @@ import { peoplePaneContainerTokens } from '../common/styles/ParticipantContainer
 import { participantListContainerStyles, peoplePaneContainerStyle } from './styles/PeoplePaneContent.styles';
 import { convertContextualMenuItemToDrawerMenuItem } from './ConvertContextualMenuItemToDrawerMenuItem';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
-import { CallCompositeStrings } from '../CallComposite';
+import { CallCompositeStrings, CommonCallAdapter } from '../CallComposite';
 import { AddPeopleButton } from './AddPeopleButton';
 /* @conditional-compile-remove(PSTN-calls) */
 import { PhoneNumberIdentifier } from '@azure/communication-common';
@@ -78,7 +78,7 @@ export const PeoplePaneContent = (props: {
   const alternateCallerId = adapter.getState().alternateCallerId;
 
   const participantListDefaultProps = usePropsFor(ParticipantList);
-  const removeButtonAllowed = adapter.getState().call?.capabilitiesFeature?.capabilities.removeParticipant.isPresent;
+  const removeButtonAllowed = canRemoveParticipants(adapter);
   const setDrawerMenuItemsForParticipant: (participant?: ParticipantListParticipant) => void = useMemo(() => {
     return (participant?: ParticipantListParticipant) => {
       if (participant) {
@@ -219,4 +219,11 @@ const createDefaultContextualMenuItems = (
     });
   }
   return menuItems;
+};
+
+const canRemoveParticipants = (adapter: CommonCallAdapter): boolean => {
+  const removeParticipantCapability = adapter.getState().call?.capabilitiesFeature?.capabilities.removeParticipant;
+  // If 'removeParticipant' capability is undefined then we will default to true
+  const canRemoveParticipants = removeParticipantCapability ? removeParticipantCapability.isPresent : true;
+  return canRemoveParticipants;
 };

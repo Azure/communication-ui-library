@@ -37,7 +37,10 @@ export interface OrganizedParticipantsResult {
 
 const DEFAULT_MAX_OVERFLOW_GALLERY_DOMINANT_SPEAKERS = 6;
 const DEFAULT_MAX_VIDEO_SREAMS = 4;
-const MAX_GRID_PARTICIPANTS_NOT_LARGE_GALLERY = 9;
+/**
+ * @private
+ */
+export const MAX_GRID_PARTICIPANTS_NOT_LARGE_GALLERY = 9;
 
 const getOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedParticipantsResult => {
   const {
