@@ -201,9 +201,9 @@ export interface AttachmentUploadManager {
 
 // @beta (undocumented)
 export interface AttachmentUploadOptions {
-    allowedMediaTypes?: string[];
-    allowUploadMultiple?: boolean;
+    disableMultipleUploads?: boolean;
     handler: AttachmentUploadHandler;
+    supportedMediaTypes?: string[];
 }
 
 // @beta
