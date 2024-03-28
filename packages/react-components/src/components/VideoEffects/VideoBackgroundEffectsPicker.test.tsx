@@ -44,7 +44,7 @@ const TEST_PICKER_OPTIONS = [
 ];
 
 describe('Background Picker should have the correct number of tiles', () => {
-  test.only('Background Picker should have 7 tiles when items are set to wrap', async () => {
+  test('Background Picker should have 7 tiles when items are set to wrap', async () => {
     const { container } = render(
       <_VideoBackgroundEffectsPicker options={TEST_PICKER_OPTIONS} itemsPerRow="wrap" ignoreFocusOnMount={true} />
     );
