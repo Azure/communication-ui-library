@@ -92,11 +92,27 @@ export const RemoteScreenShare = React.memo(
       return (
         <VideoTile
           renderElement={
+            // Add the layer on top of the pptlive stream to diable keyboard event
+            // TODO need to remove after we have navigation feature ready
             renderElement ? (
-              <StreamMedia
-                videoStreamElement={renderElement}
-                loadingState={isReceiving === false ? 'loading' : 'none'}
-              />
+              <div style={{ top: 0, left: 0, width: '100%', height: '100%' }}>
+                <StreamMedia
+                  videoStreamElement={renderElement}
+                  loadingState={isReceiving === false ? 'loading' : 'none'}
+                />
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    backgroundColor: 'transparent',
+                    pointerEvents: 'none',
+                    zIndex: 1
+                  }}
+                ></div>
+              </div>
             ) : undefined
           }
           onRenderPlaceholder={() => <LoadingSpinner loadingMessage={loadingMessage} />}
