@@ -559,6 +559,43 @@ export const _createAzureCommunicationChatAdapterInner = async (
 };
 
 /**
+ * This inner function to create ChatAdapterPromise in case when threadID is not avaialble.
+ * ThreadId is a promise to allow for lazy initialization of the adapter.
+ * @internal
+ */
+export const _createLazyAzureCommunicationChatAdapterInner = async (
+  endpoint: string,
+  userId: CommunicationUserIdentifier,
+  displayName: string,
+  credential: CommunicationTokenCredential,
+  threadId: Promise<string>,
+  telemetryImplementationHint: _TelemetryImplementationHint = 'Chat'
+): Promise<ChatAdapter> => {
+  if (!_isValidIdentifier(userId)) {
+    throw new Error('Provided userId is invalid. Please provide valid identifier object.');
+  }
+
+  const chatClient = _createStatefulChatClientInner(
+    {
+      userId,
+      displayName,
+      endpoint,
+      credential
+    },
+    undefined,
+    telemetryImplementationHint
+  );
+  return threadId.then(async (threadId) => {
+    const chatThreadClient = await chatClient.getChatThreadClient(threadId);
+    await chatClient.startRealtimeNotifications();
+
+    const adapter = await createAzureCommunicationChatAdapterFromClient(chatClient, chatThreadClient);
+
+    return adapter;
+  });
+};
+
+/**
  * A custom React hook to simplify the creation of {@link ChatAdapter}.
  *
  * Similar to {@link createAzureCommunicationChatAdapter}, but takes care of asynchronous

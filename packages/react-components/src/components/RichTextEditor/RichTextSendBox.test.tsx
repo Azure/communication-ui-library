@@ -10,21 +10,27 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { registerIcons } from '@fluentui/react';
 
+const icons: {
+  [key: string]: string | JSX.Element;
+} = {
+  sendboxsend: <></>,
+  richtextboldbuttonicon: <></>,
+  richtextitalicbuttonicon: <></>,
+  richtextunderlinebuttonicon: <></>,
+  richtextbulletlistbuttonicon: <></>,
+  richtextnumberlistbuttonicon: <></>,
+  richtextindentdecreasebuttonicon: <></>,
+  richtextindentincreasebuttonicon: <></>,
+  richtextdividericon: <></>,
+  richtexteditorbuttonicon: <></>,
+  richtextinserttableregularicon: <></>,
+  richtextinserttablefilledicon: <></>
+};
+
 describe('RichTextSendBox should return text correctly', () => {
   beforeAll(() => {
     registerIcons({
-      icons: {
-        sendboxsend: <></>,
-        richtextboldbuttonicon: <></>,
-        richtextitalicbuttonicon: <></>,
-        richtextunderlinebuttonicon: <></>,
-        richtextbulletlistbuttonicon: <></>,
-        richtextnumberlistbuttonicon: <></>,
-        richtextindentdecreasebuttonicon: <></>,
-        richtextindentincreasebuttonicon: <></>,
-        richtextdividericon: <></>,
-        richtexteditorbuttonicon: <></>
-      }
+      icons: icons
     });
   });
   test('HTML string should be correct when send button is clicked', async () => {
@@ -55,7 +61,7 @@ describe('RichTextSendBox should return text correctly', () => {
     });
     fireEvent.click(sendButton);
     // Check the updated value is correct
-    const result = '<div>Test<br></div>';
+    const result = '<div style="background-color: transparent;">Test<br></div>';
     expect(changedValue).toEqual(result);
   });
 });
@@ -64,18 +70,7 @@ describe('RichTextSendBox should return text correctly', () => {
 describe('RichTextSendBox should work with localization', () => {
   beforeAll(() => {
     registerIcons({
-      icons: {
-        sendboxsend: <></>,
-        richtextboldbuttonicon: <></>,
-        richtextitalicbuttonicon: <></>,
-        richtextunderlinebuttonicon: <></>,
-        richtextbulletlistbuttonicon: <></>,
-        richtextnumberlistbuttonicon: <></>,
-        richtextindentdecreasebuttonicon: <></>,
-        richtextindentincreasebuttonicon: <></>,
-        richtextdividericon: <></>,
-        richtexteditorbuttonicon: <></>
-      }
+      icons: icons
     });
   });
   test('Should localize placeholder', async () => {
