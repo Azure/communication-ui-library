@@ -8,15 +8,13 @@ export const RTEAttachmentUploadsExample: () => JSX.Element = () => (
         activeAttachmentUploads={[
           {
             id: '1',
-            filename: 'Sample.pdf',
-            progress: 0.75,
-            uploadComplete: false
+            name: 'Sample.pdf',
+            progress: 0.75
           },
           {
             id: '2',
-            filename: 'SampleXl.xlsx',
-            progress: 0.33,
-            uploadComplete: false
+            name: 'SampleXl.xlsx',
+            progress: 0.33
           }
         ]}
         onSendMessage={async () => {
