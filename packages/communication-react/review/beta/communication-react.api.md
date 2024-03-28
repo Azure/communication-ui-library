@@ -2474,8 +2474,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     LowerHandContextualMenuItem: React_2.JSX.Element;
     ReactionButtonIcon: React_2.JSX.Element;
     CancelAttachmentUpload: React_2.JSX.Element;
-    DownloadFile: React_2.JSX.Element;
-    OpenFile: React_2.JSX.Element;
+    DownloadAttachment: React_2.JSX.Element;
+    OpenAttachment: React_2.JSX.Element;
     DataLossPreventionProhibited: React_2.JSX.Element;
     EditBoxCancel: React_2.JSX.Element;
     EditBoxSubmit: React_2.JSX.Element;
@@ -2668,8 +2668,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ChatMessageOptions: React_2.JSX.Element;
     ControlButtonParticipantsContextualMenuItem: React_2.JSX.Element;
     CancelAttachmentUpload: React_2.JSX.Element;
-    DownloadFile: React_2.JSX.Element;
-    OpenFile: React_2.JSX.Element;
+    DownloadAttachment: React_2.JSX.Element;
+    OpenAttachment: React_2.JSX.Element;
     DataLossPreventionProhibited: React_2.JSX.Element;
     ErrorBarCallVideoRecoveredBySystem: React_2.JSX.Element;
     ErrorBarCallVideoStoppedBySystem: React_2.JSX.Element;
