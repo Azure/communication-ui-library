@@ -77,7 +77,7 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
   const { gridParticipants, overflowGalleryParticipants } = useOrganizedParticipants({
     remoteParticipants,
     dominantSpeakers,
-    maxRemoteVideoStreams,
+    maxGridParticipants: maxRemoteVideoStreams,
     isScreenShareActive: !!screenShareComponent,
     maxOverflowGalleryDominantSpeakers: screenShareComponent
       ? childrenPerPage.current - (pinnedParticipantUserIds.length % childrenPerPage.current)

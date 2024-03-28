@@ -54,7 +54,6 @@ export const LargeGalleryLayout = (props: LargeGalleryProps): JSX.Element => {
     return parentWidth && parentHeight
       ? calculateMaxTilesInLargeGrid(parentWidth, parentHeight)
       : maxRemoteVideoStreams;
-    return maxRemoteVideoStreams;
   };
 
   // This is for tracking the number of children in the first page of overflow gallery.
@@ -65,7 +64,7 @@ export const LargeGalleryLayout = (props: LargeGalleryProps): JSX.Element => {
     remoteParticipants,
     localParticipant,
     dominantSpeakers,
-    maxRemoteVideoStreams: maxStreamsTrampoline(),
+    maxGridParticipants: maxStreamsTrampoline(),
     isScreenShareActive: !!screenShareComponent,
     maxOverflowGalleryDominantSpeakers: screenShareComponent
       ? childrenPerPage.current - ((pinnedParticipantUserIds.length + 1) % childrenPerPage.current)
