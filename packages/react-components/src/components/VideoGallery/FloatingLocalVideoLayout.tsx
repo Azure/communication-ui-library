@@ -23,7 +23,7 @@ import {
 } from './styles/FloatingLocalVideo.styles';
 import { innerLayoutStyle, layerHostStyle, rootLayoutStyle } from './styles/FloatingLocalVideoLayout.styles';
 import { videoGalleryLayoutGap } from './styles/Layout.styles';
-import { useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
+import { MAX_GRID_PARTICIPANTS_NOT_LARGE_GALLERY, useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
 import { OverflowGallery } from './OverflowGallery';
 import { LocalVideoTileSize } from '../VideoGallery';
 
@@ -80,10 +80,11 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
   // This is for tracking the number of children in the first page of overflow gallery.
   // This number will be used for the maxOverflowGalleryDominantSpeakers when organizing the remote participants.
   const childrenPerPage = useRef(4);
+  const remoteVideosOn = remoteParticipants.filter((p) => p.videoStream?.isAvailable).length > 0;
   const { gridParticipants, overflowGalleryParticipants } = useOrganizedParticipants({
     remoteParticipants,
     dominantSpeakers,
-    maxRemoteVideoStreams,
+    maxGridParticipants: remoteVideosOn ? maxRemoteVideoStreams : MAX_GRID_PARTICIPANTS_NOT_LARGE_GALLERY,
     isScreenShareActive: !!screenShareComponent,
     maxOverflowGalleryDominantSpeakers: screenShareComponent
       ? childrenPerPage.current - (pinnedParticipantUserIds.length % childrenPerPage.current)
