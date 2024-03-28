@@ -182,7 +182,7 @@
     "downloadAttachment": "Dosyayı indir",
     "blockedWarningText": "Bu ileti kuruluş ilkesi nedeniyle silindi.",
     "blockedWarningLinkText": "Ayrıntılar",
-    "attachmentCardGroupMessage": "İletide {attachmentCount} ek var",
+    "attachmentCardGroupMessage": "İletinin {attachmentCount} eki var",
     "messageDeletedAnnouncementAriaLabel": "İleti silindi"
   },
   "errorBar": {

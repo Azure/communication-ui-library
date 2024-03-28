@@ -182,7 +182,7 @@
     "downloadAttachment": "Lataa tiedosto",
     "blockedWarningText": "Tämä viesti poistettiin organisaation käytännön vuoksi.",
     "blockedWarningLinkText": "Lisätiedot",
-    "attachmentCardGroupMessage": "Viestissä on {attachmentCount} liite",
+    "attachmentCardGroupMessage": "Viestissä on {attachmentCount} liitettä",
     "messageDeletedAnnouncementAriaLabel": "Viesti on poistettu"
   },
   "errorBar": {

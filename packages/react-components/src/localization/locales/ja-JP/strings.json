@@ -25,7 +25,7 @@
     "textTooLong": "メッセージの長さが上限を超えています。",
     "sendButtonAriaLabel": "メッセージの送信",
     "attachmentUploadsPendingError": "アップロード中です... お待ちください。",
-    "removeAttachment": "ファイルを削除します",
+    "removeAttachment": "ファイルの削除",
     "uploading": "アップロード中",
     "uploadCompleted": "アップロードが完了しました"
   },
@@ -34,7 +34,7 @@
     "textTooLong": "メッセージの長さが上限を超えています。",
     "sendButtonAriaLabel": "メッセージの送信",
     "attachmentUploadsPendingError": "アップロード中...お待ちください。",
-    "removeAttachment": "ファイルの削除",
+    "removeAttachment": "ファイルを削除します",
     "uploading": "アップロード中",
     "uploadCompleted": "アップロード完了",
     "boldTooltip": "太字",
@@ -182,7 +182,7 @@
     "downloadAttachment": "ファイルをダウンロード",
     "blockedWarningText": "組織のポリシーにより、このメッセージは削除されました。",
     "blockedWarningLinkText": "詳細",
-    "attachmentCardGroupMessage": "メッセージには {attachmentCount} 個の添付ファイルがあります",
+    "attachmentCardGroupMessage": "メッセージに添付ファイルが {attachmentCount} 個あります",
     "messageDeletedAnnouncementAriaLabel": "メッセージが削除されます"
   },
   "errorBar": {

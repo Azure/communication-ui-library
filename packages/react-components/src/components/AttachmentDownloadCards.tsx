@@ -1,53 +1,27 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Icon, IconButton, Spinner, SpinnerSize, TooltipHost } from '@fluentui/react';
+import { Icon, Spinner, SpinnerSize, TooltipHost } from '@fluentui/react';
 import React, { useCallback, useState } from 'react';
 import { useMemo } from 'react';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { useLocale } from '../localization';
 import { _AttachmentCard } from './AttachmentCard';
 import { _AttachmentCardGroup } from './AttachmentCardGroup';
-import { iconButtonClassName } from './styles/IconButton.styles';
 import { _formatString } from '@internal/acs-ui-common';
+import { AttachmentMetadata, FileDownloadHandler } from '../types/Attachment';
+import { Open20Regular } from '@fluentui/react-icons';
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+import { ArrowDownload20Regular } from '@fluentui/react-icons';
 
 /**
  * Represents the type of attachment
  * @public
  */
-export type ChatAttachmentType = 'unknown' | 'image' | /* @conditional-compile-remove(file-sharing) */ 'file';
-
-/**
- * Metadata containing basic information about the uploaded attachment.
- *
- * @beta
- */
-export interface AttachmentMetadata {
-  /**
-   * Extension hint, useful for rendering a specific icon.
-   * An unknown or empty extension will be rendered as a generic icon.
-   * Example: `pdf`
-   */
-  extension: string;
-  /**
-   * Unique ID of the attachment.
-   */
-  /* @conditional-compile-remove(file-sharing) */
-  id: string;
-  /**
-   * File name to be displayed.
-   */
-  name: string;
-  /**
-   * Download URL for the attachment.
-   */
-  url: string;
-  /* @conditional-compile-remove(file-sharing) */
-  /*
-   * Optional dictionary of meta data associated with the attachment.
-   */
-  payload?: Record<string, string>;
-}
+export type ChatAttachmentType =
+  | 'unknown'
+  | 'image'
+  | /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ 'file';
 
 /**
  * Strings of _AttachmentDownloadCards that can be overridden.
@@ -59,51 +33,6 @@ export interface _AttachmentDownloadCardsStrings {
   downloadAttachment: string;
   attachmentCardGroupMessage: string;
 }
-
-/**
- * @beta
- * A attachment download error returned via a {@link FileDownloadHandler}.
- * This error message is used to render an error message in the UI.
- */
-export interface FileDownloadError {
-  /** The error message to display in the UI */
-  errorMessage: string;
-}
-
-/**
- * @beta
- *
- * A callback function for handling attachment downloads.
- * The function needs to return a promise that resolves to a attachment download URL.
- * If the promise is rejected, the {@link Error.message} will be used to display an error message to the user.
- *
- * @example
- * ```ts
- * const attachmentDownloadHandler: FileDownloadHandler = async (userId, attachmentData) => {
- *   if (isUnauthorizedUser(userId)) {
- *     return { errorMessage: 'You don’t have permission to download this attachment.' };
- *   } else {
- *     return new URL(attachmentData.url);
- *   }
- * }
- *
- * const App = () => (
- *   <ChatComposite
- *     ...
- *     fileSharing={{
- *       fileDownloadHandler: fileDownloadHandler
- *     }}
- *   />
- * )
- *
- * ```
- * @param userId - The user ID of the user downloading the attachment.
- * @param fileMetadata - The {@link AttachmentMetadata} containing file `url`, `extension` and `name`.
- */
-export type FileDownloadHandler = (
-  userId: string,
-  fileMetadata: AttachmentMetadata
-) => Promise<URL | FileDownloadError>;
 
 /**
  * @internal
@@ -155,7 +84,7 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
   );
 
   const isShowDownloadIcon = useCallback((attachment: AttachmentMetadata): boolean => {
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     return attachment.payload?.teamsFileAttachment !== 'true';
     return true;
   }, []);
@@ -164,7 +93,7 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
     () => () => {
       const fileGroupLocaleString =
         props.strings?.attachmentCardGroupMessage ?? localeStrings.attachmentCardGroupMessage;
-      /* @conditional-compile-remove(file-sharing) */
+      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
       return _formatString(fileGroupLocaleString, {
         attachmentCount: `${fileMetadata?.length ?? 0}`
       });
@@ -214,10 +143,10 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
                   showSpinner ? (
                     <Spinner size={SpinnerSize.medium} aria-live={'polite'} role={'status'} />
                   ) : true && isShowDownloadIcon(attachment) ? (
-                    <IconButton className={iconButtonClassName} ariaLabel={downloadAttachmentButtonString()}>
-                      <DownloadIconTrampoline />
-                    </IconButton>
-                  ) : undefined
+                    <DownloadIconTrampoline />
+                  ) : (
+                    <Open20Regular />
+                  )
                 }
                 actionHandler={() => fileDownloadHandler(userId, attachment)}
               />
@@ -232,14 +161,14 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
  * @private
  */
 const DownloadIconTrampoline = (): JSX.Element => {
-  // @conditional-compile-remove(file-sharing)
-  return <Icon data-ui-id="file-download-card-download-icon" iconName="DownloadFile" style={actionIconStyle} />;
+  // @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload)
+  return <ArrowDownload20Regular data-ui-id={'file-download-card-download-icon'} />;
   // Return _some_ available icon, as the real icon is beta-only.
   return <Icon iconName="EditBoxCancel" style={actionIconStyle} />;
 };
 
 const useLocaleStringsTrampoline = (): _AttachmentDownloadCardsStrings => {
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   return useLocale().strings.messageThread;
   return { downloadAttachment: '', attachmentCardGroupMessage: '' };
 };

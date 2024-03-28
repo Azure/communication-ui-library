@@ -315,8 +315,10 @@
       "startSpotlightCancelButtonLabel": "Отмена",
       "stopSpotlightHeading": "Больше не рекомендовать это видео?",
       "stopSpotlightOnSelfHeading": "Выйти из работы с важным?",
+      "stopAllSpotlightHeading": "Отменить все рекомендации видео?",
       "stopSpotlightText": "Ваше видео больше не будет помечено как важное для всех участников собрания.",
       "stopSpotlightOnSelfText": "Ваше видео больше не будет выделено для всех участников собрания.",
+      "stopAllSpotlightText": "Видео больше не будут выделены для всех участников собрания.",
       "stopSpotlightConfirmButtonLabel": "Больше не помечать важное",
       "stopSpotlightOnSelfConfirmButtonLabel": "Выйти из важного",
       "stopSpotlightCancelButtonLabel": "Отмена"

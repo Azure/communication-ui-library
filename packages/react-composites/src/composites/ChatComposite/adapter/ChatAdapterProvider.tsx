@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import React, { createContext, useContext } from 'react';
-import { FileUploadManager } from '../file-sharing';
+import { FileUploadManager } from '@internal/react-components';
 import { FileUploadAdapter } from './AzureCommunicationFileUploadAdapter';
 import { ChatAdapter } from './ChatAdapter';
 
@@ -39,7 +39,7 @@ export const useAdapter = (): ChatAdapter => {
  * @private
  */
 export const useFileUploadAdapter = (): FileUploadAdapter => {
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   return useAdapter();
   // A stub that short-circuits all logic because none of the fields are available.
   return {

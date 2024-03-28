@@ -28,7 +28,7 @@ describe('RichTextSendBoxErrors should be shown correctly', () => {
     expect(sendBoxErrorComponent).not.toBeNull();
   });
 
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   test('MessageBar should show file uploads pending error', async () => {
     const text = 'Test file uploads pending error';
     render(<RichTextSendBoxErrors attachmentUploadsPendingError={{ message: text, timestamp: Date.now() }} />);
@@ -37,7 +37,7 @@ describe('RichTextSendBoxErrors should be shown correctly', () => {
     expect(sendBoxErrorComponent).not.toBeNull();
   });
 
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   test('MessageBar should show file uploads error', async () => {
     const text = 'Test file uploads error';
     render(<RichTextSendBoxErrors attachmentUploadError={{ message: text, timestamp: Date.now() }} />);

@@ -2,7 +2,8 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-import { AttachmentMetadata, _AttachmentDownloadCards } from './AttachmentDownloadCards';
+import { AttachmentMetadata } from '../types/Attachment';
+import { _AttachmentDownloadCards } from './AttachmentDownloadCards';
 import { render, screen } from '@testing-library/react';
 import { registerIcons } from '@fluentui/react';
 
@@ -22,7 +23,7 @@ describe('FileDownloadCards should be rendered properly', () => {
       name: 'MockAttachmentCard',
       extension: 'docx',
       url: 'mockUrl',
-      /* @conditional-compile-remove(file-sharing) */
+      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
       id: 'mockId'
     };
 

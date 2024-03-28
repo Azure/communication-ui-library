@@ -16,8 +16,8 @@ import { BlockedMessage } from '../../../types/ChatMessage';
 import { MessageThreadStrings } from '../../MessageThread';
 import { chatMessageActionMenuProps } from '../ChatMessageActionMenu';
 import { ComponentSlotStyle, OnRenderAvatarCallback } from '../../../types';
-/* @conditional-compile-remove(file-sharing) */
-import { FileDownloadHandler } from '../../AttachmentDownloadCards';
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+import { FileDownloadHandler } from '../../../types/Attachment';
 import { _AttachmentDownloadCards } from '../../AttachmentDownloadCards';
 import { useLocale } from '../../../localization';
 /* @conditional-compile-remove(mention) */
@@ -47,12 +47,12 @@ type ChatMyMessageComponentAsMessageBubbleProps = {
    * Whether the status indicator for each message is displayed or not.
    */
   showMessageStatus?: boolean;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /**
    * Optional callback to render uploaded files in the message component.
    */
   onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /**
    * Optional function called when someone clicks on the file download icon.
    */
@@ -107,10 +107,10 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
     onRenderAvatar,
     showMessageStatus,
     messageStatus,
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     fileDownloadHandler,
     inlineImageOptions,
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     onRenderFileDownloads,
     /* @conditional-compile-remove(mention) */
     mentionDisplayOptions,
@@ -184,19 +184,19 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
       strings,
       userId,
       inlineImageOptions,
-      /* @conditional-compile-remove(file-sharing) */
+      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
       onRenderFileDownloads,
       /* @conditional-compile-remove(mention) */
       mentionDisplayOptions,
-      /* @conditional-compile-remove(file-sharing) */
+      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
       fileDownloadHandler
     );
   }, [
-    /* @conditional-compile-remove(file-sharing) */ fileDownloadHandler,
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ fileDownloadHandler,
     inlineImageOptions,
     /* @conditional-compile-remove(mention) */ mentionDisplayOptions,
     message,
-    /* @conditional-compile-remove(file-sharing) */ onRenderFileDownloads,
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ onRenderFileDownloads,
     strings,
     userId
   ]);

@@ -182,7 +182,7 @@
     "downloadAttachment": "Scarica file",
     "blockedWarningText": "Questo messaggio è stato eliminato a causa dei criteri dell'organizzazione.",
     "blockedWarningLinkText": "Dettagli",
-    "attachmentCardGroupMessage": "Il messaggio contiene {attachmentCount} allegato",
+    "attachmentCardGroupMessage": "Il messaggio ha allegati: {attachmentCount}.",
     "messageDeletedAnnouncementAriaLabel": "Il messaggio è stato eliminato"
   },
   "errorBar": {

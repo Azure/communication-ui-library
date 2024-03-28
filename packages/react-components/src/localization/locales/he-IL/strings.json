@@ -25,7 +25,7 @@
     "textTooLong": "אורך ההודעה שלך חורג מהמגבלה המרבית.",
     "sendButtonAriaLabel": "שלח הודעה",
     "attachmentUploadsPendingError": "מעלה... אנא המתן.",
-    "removeAttachment": "הסר קובץ",
+    "removeAttachment": "הסרת קובץ",
     "uploading": "מעלה",
     "uploadCompleted": "ההעלאה הושלמה"
   },
@@ -34,7 +34,7 @@
     "textTooLong": "אורך ההודעה שלך חורג מהמגבלה המרבית.",
     "sendButtonAriaLabel": "שלח הודעה",
     "attachmentUploadsPendingError": "מעלה... המתן.",
-    "removeAttachment": "הסרת קובץ",
+    "removeAttachment": "הסר קובץ",
     "uploading": "מעלה",
     "uploadCompleted": "ההעלאה הושלמה",
     "boldTooltip": "מודגש",
@@ -182,7 +182,7 @@
     "downloadAttachment": "הורד קובץ",
     "blockedWarningText": "הודעה זו נמחקה עקב מדיניות ארגונית.",
     "blockedWarningLinkText": "פרטים",
-    "attachmentCardGroupMessage": "ההודעה כוללת קובץ מצורף {attachmentCount}",
+    "attachmentCardGroupMessage": "ההודעה כוללת {attachmentCount} קבצים מצורפים.",
     "messageDeletedAnnouncementAriaLabel": "ההודעה נמחקת"
   },
   "errorBar": {

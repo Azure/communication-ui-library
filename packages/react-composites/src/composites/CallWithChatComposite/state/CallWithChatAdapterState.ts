@@ -9,8 +9,8 @@ import { CallAdapter, CallAdapterState, CallCompositePage } from '../../CallComp
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
-import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
-/* @conditional-compile-remove(file-sharing) */
+import { ChatAdapterState } from '../../ChatComposite';
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { FileUploadsUiState } from '../../ChatComposite';
 import { AdapterErrors } from '../../common/adapters';
 /* @conditional-compile-remove(unsupported-browser) */
@@ -36,7 +36,7 @@ export interface CallWithChatAdapterUiState {
    * @public
    */
   page: CallCompositePage;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /**
    * Files being uploaded by a user in the current thread.
    * Should be set to null once the upload is complete.
@@ -115,16 +115,12 @@ export interface CallWithChatAdapterState extends CallWithChatAdapterUiState, Ca
 /**
  * @private
  */
-export function callWithChatAdapterStateFromBackingStates(
-  callAdapter: CallAdapter,
-  chatAdapter: ChatAdapter
-): CallWithChatAdapterState {
+export function callWithChatAdapterStateFromBackingStates(callAdapter: CallAdapter): CallWithChatAdapterState {
   const callAdapterState = callAdapter.getState();
-  const chatAdapterState = chatAdapter.getState();
 
   return {
     call: callAdapterState.call,
-    chat: chatAdapterState.thread,
+    chat: undefined,
     userId: callAdapterState.userId,
     page: callAdapterState.page,
     displayName: callAdapterState.displayName,
@@ -132,18 +128,15 @@ export function callWithChatAdapterStateFromBackingStates(
     isLocalPreviewMicrophoneEnabled: callAdapterState.isLocalPreviewMicrophoneEnabled,
     isTeamsCall: callAdapterState.isTeamsCall,
     latestCallErrors: callAdapterState.latestErrors,
-    latestChatErrors: chatAdapterState.latestErrors,
-    /* @conditional-compile-remove(file-sharing) */
-    fileUploads: chatAdapterState.fileUploads,
+    latestChatErrors: {},
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+    fileUploads: {},
     /* @conditional-compile-remove(PSTN-calls) */
     alternateCallerId: callAdapterState.alternateCallerId,
     /* @conditional-compile-remove(unsupported-browser) */
     environmentInfo: callAdapterState.environmentInfo,
-
     videoBackgroundImages: callAdapterState.videoBackgroundImages,
-
     onResolveVideoEffectDependency: callAdapterState.onResolveVideoEffectDependency,
-
     selectedVideoBackgroundEffect: callAdapterState.selectedVideoBackgroundEffect,
     /* @conditional-compile-remove(hide-attendee-name) */
     /** Hide attendee names in teams meeting */
@@ -164,7 +157,7 @@ export function mergeChatAdapterStateIntoCallWithChatAdapterState(
     ...existingCallWithChatAdapterState,
     chat: chatAdapterState.thread,
     latestChatErrors: chatAdapterState.latestErrors,
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     fileUploads: chatAdapterState.fileUploads
   };
 }
