@@ -154,13 +154,64 @@ export type AreParamEqual<A extends (props: any) => JSX.Element | undefined, B e
 export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
 // @beta
-export interface AttachmentMetadata {
-    extension: string;
-    id: string;
+export interface AttachmentDownloadOptions {
+    // (undocumented)
+    actionsForAttachment: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
+}
+
+// @beta
+export interface AttachmentMenuAction {
+    // (undocumented)
+    icon: JSX.Element;
+    // (undocumented)
     name: string;
     // (undocumented)
-    payload?: Record<string, string>;
-    url: string;
+    onClick: (attachment: AttachmentMetadata) => Promise<void>;
+}
+
+// @beta
+export interface AttachmentMetadata {
+    extension?: string;
+    id: string;
+    name: string;
+    progress?: number;
+    uploadStatus?: AttachmentUploadStatus;
+    url?: string;
+}
+
+// @beta
+export interface AttachmentOptions {
+    // (undocumented)
+    downloadOptions?: AttachmentDownloadOptions;
+    // (undocumented)
+    uploadOptions?: AttachmentUploadOptions;
+}
+
+// @beta
+export type AttachmentUploadHandler = (attachmentUploads: AttachmentUploadManager[]) => void;
+
+// @beta
+export interface AttachmentUploadManager {
+    file?: File;
+    id: string;
+    notifyUploadCompleted: (metadata: AttachmentMetadata) => void;
+    notifyUploadFailed: (message: string) => void;
+    notifyUploadProgressChanged: (value: number) => void;
+}
+
+// @beta (undocumented)
+export interface AttachmentUploadOptions {
+    disableMultipleUploads?: boolean;
+    handler: AttachmentUploadHandler;
+    supportedMediaTypes?: string[];
+}
+
+// @beta
+export interface AttachmentUploadStatus {
+    // (undocumented)
+    message: string;
+    // (undocumented)
+    timestamp: number;
 }
 
 // @public
@@ -2422,8 +2473,9 @@ export const DEFAULT_COMPONENT_ICONS: {
     RaiseHandContextualMenuItem: React_2.JSX.Element;
     LowerHandContextualMenuItem: React_2.JSX.Element;
     ReactionButtonIcon: React_2.JSX.Element;
-    CancelFileUpload: React_2.JSX.Element;
+    CancelAttachmentUpload: React_2.JSX.Element;
     DownloadFile: React_2.JSX.Element;
+    OpenFile: React_2.JSX.Element;
     DataLossPreventionProhibited: React_2.JSX.Element;
     EditBoxCancel: React_2.JSX.Element;
     EditBoxSubmit: React_2.JSX.Element;
@@ -2509,6 +2561,10 @@ export const DEFAULT_COMPONENT_ICONS: {
     RichTextDividerIcon: React_2.JSX.Element;
     RichTextEditorButtonIcon: React_2.JSX.Element;
     RichTextEditorButtonIconFilled: React_2.JSX.Element;
+    RichTextInsertTableRegularIcon: React_2.JSX.Element;
+    RichTextInsertTableFilledIcon: React_2.JSX.Element;
+    RichTextTableInsertMenuIcon: React_2.JSX.Element;
+    RichTextTableDeleteMenuIcon: React_2.JSX.Element;
 };
 
 // @public
@@ -2611,8 +2667,9 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MoreDrawerSpeakers?: JSX.Element | undefined;
     ChatMessageOptions: React_2.JSX.Element;
     ControlButtonParticipantsContextualMenuItem: React_2.JSX.Element;
-    CancelFileUpload: React_2.JSX.Element;
+    CancelAttachmentUpload: React_2.JSX.Element;
     DownloadFile: React_2.JSX.Element;
+    OpenFile: React_2.JSX.Element;
     DataLossPreventionProhibited: React_2.JSX.Element;
     ErrorBarCallVideoRecoveredBySystem: React_2.JSX.Element;
     ErrorBarCallVideoStoppedBySystem: React_2.JSX.Element;
@@ -2666,6 +2723,10 @@ export const DEFAULT_COMPOSITE_ICONS: {
     RichTextDividerIcon: React_2.JSX.Element;
     RichTextEditorButtonIcon: React_2.JSX.Element;
     RichTextEditorButtonIconFilled: React_2.JSX.Element;
+    RichTextInsertTableRegularIcon: React_2.JSX.Element;
+    RichTextInsertTableFilledIcon: React_2.JSX.Element;
+    RichTextTableInsertMenuIcon: React_2.JSX.Element;
+    RichTextTableDeleteMenuIcon: React_2.JSX.Element;
 };
 
 // @beta
@@ -2877,17 +2938,9 @@ export interface ErrorBarStrings {
 export type ErrorType = keyof ErrorBarStrings;
 
 // @beta
-export interface FileDownloadError {
-    errorMessage: string;
-}
-
-// @beta
-export type FileDownloadHandler = (userId: string, fileMetadata: AttachmentMetadata) => Promise<URL | FileDownloadError>;
-
-// @beta
 export interface FileSharingOptions {
     accept?: string;
-    downloadHandler?: FileDownloadHandler;
+    actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
     multiple?: boolean;
     uploadHandler: FileUploadHandler;
 }
@@ -3336,14 +3389,14 @@ export type MessageThreadProps = {
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
-    onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+    onRenderAttachmentDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
     onUpdateMessage?: UpdateMessageCallback;
     onCancelEditMessage?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (content: string) => Promise<void>;
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
-    fileDownloadHandler?: FileDownloadHandler;
+    attachmentOptions?: AttachmentOptions;
     onDisplayDateTimeString?: (messageDate: Date) => string;
     mentionOptions?: MentionOptions;
     inlineImageOptions?: InlineImageOptions;
@@ -3379,6 +3432,7 @@ export interface MessageThreadStrings {
     monday: string;
     newMessagesIndicator: string;
     noDisplayNameSub: string;
+    openAttachment: string;
     participantJoined: string;
     participantLeft: string;
     removeMessage: string;
@@ -3880,7 +3934,18 @@ export interface RichTextSendBoxStrings extends SendBoxStrings {
     boldTooltip: string;
     bulletListTooltip: string;
     decreaseIndentTooltip: string;
+    deleteColumnMenu: string;
+    deleteRowMenu: string;
+    deleteRowOrColumnMenu: string;
+    deleteTableMenu: string;
     increaseIndentTooltip: string;
+    insertColumnLeftMenu: string;
+    insertColumnRightMenu: string;
+    insertRowAboveMenu: string;
+    insertRowBelowMenu: string;
+    insertRowOrColumnMenu: string;
+    insertTableMenuTitle: string;
+    insertTableTooltip: string;
     italicTooltip: string;
     numberListTooltip: string;
     richTextFormatButtonTooltip: string;
