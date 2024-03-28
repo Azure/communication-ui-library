@@ -54,6 +54,8 @@ import { ExitSpotlightButton } from '../ExitSpotlightButton';
 import { useLocale } from '../../localization';
 /* @conditional-compile-remove(end-call-options) */
 import { isBoolean } from '../utils';
+/* @conditional-compile-remove(end-call-options) */
+import { getIsTeamsCall } from '../../CallComposite/selectors/baseSelectors';
 
 /**
  * @private
@@ -133,6 +135,13 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
 
   /* @conditional-compile-remove(close-captions) */
   const [showCaptionsSettingsModal, setShowCaptionsSettingsModal] = useState(false);
+
+  /* @conditional-compile-remove(end-call-options) */
+  // If the hangup capability is not present, we default to true
+  const isHangUpForEveryoneAllowed =
+    useSelector((state) => state.call?.capabilitiesFeature?.capabilities.hangUpForEveryOne.isPresent) ?? true;
+  /* @conditional-compile-remove(end-call-options) */
+  const isTeams = useSelector(getIsTeamsCall);
 
   const handleResize = useCallback((): void => {
     setControlBarButtonsWidth(controlBarContainerRef.current ? controlBarContainerRef.current.offsetWidth : 0);
@@ -457,7 +466,9 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         !isBoolean(props.callControls) &&
                         !isBoolean(props.callControls?.endCallButton) &&
                         !props.mobileView &&
-                        props.callControls?.endCallButton?.hangUpForEveryone === 'splitButtonAction'
+                        isHangUpForEveryoneAllowed &&
+                        !isTeams && // Temporary disable it for Teams call, since capability does not give the right value
+                        props.callControls?.endCallButton?.hangUpForEveryone === 'endCallOptions'
                       }
                     />
                   </ControlBar>

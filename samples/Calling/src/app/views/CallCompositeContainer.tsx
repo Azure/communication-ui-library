@@ -26,7 +26,7 @@ export const CallCompositeContainer = (props: CallCompositeContainerProps): JSX.
         screenShareButton: shouldHideScreenShare ? false : undefined,
         /* @conditional-compile-remove(end-call-options) */
         endCallButton: {
-          hangUpForEveryone: 'splitButtonAction'
+          hangUpForEveryone: 'endCallOptions'
         }
       }
     }),

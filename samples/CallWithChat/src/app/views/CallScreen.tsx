@@ -161,7 +161,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
         screenShareButton: shouldHideScreenShare ? false : undefined,
         /* @conditional-compile-remove(end-call-options) */
         endCallButton: {
-          hangUpForEveryone: 'splitButtonAction'
+          hangUpForEveryone: 'endCallOptions'
         }
       }
     }),
