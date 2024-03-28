@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-import { act, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { _VideoBackgroundEffectsPicker } from './VideoBackgroundEffectsPicker';
 
 const TEST_PICKER_OPTIONS = [
