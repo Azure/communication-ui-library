@@ -12,6 +12,8 @@ import { groupCallLeaveButtonCompressedStyle, groupCallLeaveButtonStyle } from '
 export const EndCall = (props: {
   displayType?: CallControlDisplayType;
   styles?: ControlBarButtonStyles;
+  /* @conditional-compile-remove(end-call-options) */
+  enableEndCallMenu?: boolean;
 }): JSX.Element => {
   const compactMode = props.displayType === 'compact';
   const hangUpButtonProps = usePropsFor(EndCallButton);
@@ -29,6 +31,8 @@ export const EndCall = (props: {
       {...hangUpButtonProps}
       styles={styles}
       showLabel={!compactMode}
+      /* @conditional-compile-remove(end-call-options) */
+      enableEndCallMenu={props.enableEndCallMenu ?? false}
     />
   );
 };
