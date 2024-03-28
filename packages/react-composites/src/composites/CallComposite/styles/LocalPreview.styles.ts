@@ -63,7 +63,7 @@ export const localPreviewTileStyle = {
 export const localPreviewButtonStyle = (isMobile: boolean): IButtonStyles => {
   return {
     root: {
-      width: !isMobile ? _pxToRem(75) : 'unset', // we only want to enforce this for desktop views
+      minWidth: !isMobile ? _pxToRem(75) : 'unset', // we only want to enforce this for desktop views
       '@media (forced-colors: active)': {
         ':focus': {
           border: '1px solid !important' // we need bang important to override fluents colours
