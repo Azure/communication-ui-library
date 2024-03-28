@@ -48,7 +48,7 @@ export interface _AttachmentCardProps {
    */
   menuActions: AttachmentMenuAction[];
   /**
-   * Optional arialabel strings for attachment upload cards
+   * Optional aria label strings for attachment upload cards
    */
   strings?: _AttachmentUploadCardsStrings;
   /**
