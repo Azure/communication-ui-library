@@ -1,20 +1,27 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Theme } from '@fluentui/react';
-import { KnownRibbonButtonKey, LocalizedStrings, RibbonButton, getButtons } from 'roosterjs-react';
-import { ribbonButtonStyle, ribbonDividerStyle } from '../styles/RichTextEditor.styles';
-import { RichTextSendBoxStrings } from './RichTextSendBox';
+import { ContextualMenuItemType, Theme } from '@fluentui/react';
+import { KnownRibbonButtonKey, RibbonButton, getButtons } from 'roosterjs-react';
+import { ribbonButtonStyle, ribbonDividerStyle } from '../../styles/RichTextEditor.styles';
+import { insertTableButton } from './Table/RichTextInsertTableButton';
 
-const dividerRibbonButton = (theme: Theme): RibbonButton<string> => {
+const MaxRowsNumber = 5;
+const MaxColumnsNumber = 5;
+
+const dividerRibbonButton = (theme: Theme, key: string): RibbonButton<string> => {
   return {
-    key: 'Divider',
+    key: key,
     iconName: 'RichTextDividerIcon',
     unlocalizedText: '',
     onClick: () => {},
     isDisabled: () => true,
     commandBarProperties: {
-      buttonStyles: ribbonDividerStyle(theme)
+      // show the item correctly for the overflow menu
+      itemType: ContextualMenuItemType.Divider,
+      buttonStyles: ribbonDividerStyle(theme),
+      // this is still needed to remove checkmark icon space even though it is a divider
+      canCheck: false
     }
   };
 };
@@ -80,11 +87,13 @@ export const ribbonButtons = (theme: Theme): RibbonButton<string>[] => {
     boldButton(theme),
     italicButton(theme),
     underlineButton(theme),
-    dividerRibbonButton(theme),
+    dividerRibbonButton(theme, 'RichTextRibbonTextFormatDivider'),
     bulletListButton(theme),
     numberListButton(theme),
     indentIncreaseButton(theme),
-    indentDecreaseButton(theme)
+    indentDecreaseButton(theme),
+    dividerRibbonButton(theme, 'RichTextRibbonTableDivider'),
+    insertTableButton(theme, MaxRowsNumber, MaxColumnsNumber)
   ].forEach((item) => {
     if (item !== undefined) {
       buttons.push(item);
@@ -92,19 +101,4 @@ export const ribbonButtons = (theme: Theme): RibbonButton<string>[] => {
   });
 
   return buttons;
-};
-
-/**
- * @private
- */
-export const ribbonButtonsStrings = (strings: Partial<RichTextSendBoxStrings>): LocalizedStrings<string> => {
-  return {
-    buttonNameBold: strings.boldTooltip,
-    buttonNameItalic: strings.italicTooltip,
-    buttonNameUnderline: strings.underlineTooltip,
-    buttonNameBulletedList: strings.bulletListTooltip,
-    buttonNameNumberedList: strings.numberListTooltip,
-    buttonNameIncreaseIndent: strings.increaseIndentTooltip,
-    buttonNameDecreaseIndent: strings.decreaseIndentTooltip
-  };
 };
