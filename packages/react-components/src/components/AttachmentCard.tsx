@@ -54,7 +54,7 @@ export interface _AttachmentCardProps {
   /**
    * Optional callback that runs if menu bar action onclick throws.
    */
-  onDownloadErrorMessage?: (errMsg: string) => void;
+  onActionHandlerFailed?: (errMsg: string) => void;
 }
 
 /**
@@ -64,7 +64,7 @@ export interface _AttachmentCardProps {
  * `_AttachmentCard` internally uses the `Card` component from `@fluentui/react-components`. You can checkout the details about these components [here](https://react.fluentui.dev/?path=/docs/components-card).
  */
 export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
-  const { attachment, progress, menuActions, onDownloadErrorMessage } = props;
+  const { attachment, progress, menuActions, onActionHandlerFailed } = props;
   const attachmentCardStyles = useAttachmentCardStyles();
 
   const isUploadComplete = useMemo(() => {
@@ -112,7 +112,7 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
               <Text title={attachment.name}>{attachment.name}</Text>
             </div>
           }
-          action={getMenuItems(menuActions, attachment, onDownloadErrorMessage)}
+          action={getMenuItems(menuActions, attachment, onActionHandlerFailed)}
         />
       </Card>
       {isUploadComplete ? (
@@ -158,9 +158,9 @@ const getMenuItems = (
               <MenuItem
                 key={index}
                 icon={menuItem.icon}
-                onClick={() => {
+                onClick={async () => {
                   try {
-                    menuItem.onClick(attachment);
+                    await menuItem.onClick(attachment);
                   } catch (e) {
                     handleOnClickError?.((e as Error).message);
                   }

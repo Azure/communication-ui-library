@@ -34,7 +34,9 @@ describe('AttachmentCard should be rendered properly', () => {
         {
           name: 'Cancel',
           icon: <Icon iconName="CancelAttachmentUpload" />,
-          onClick: () => {}
+          onClick: () => {
+            return Promise.resolve();
+          }
         }
       ]
     });

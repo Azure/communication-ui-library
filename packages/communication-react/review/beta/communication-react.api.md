@@ -163,7 +163,7 @@ export interface AttachmentMenuAction {
     // (undocumented)
     name: string;
     // (undocumented)
-    onClick: (attachment: AttachmentMetadata) => void;
+    onClick: (attachment: AttachmentMetadata) => Promise<void>;
 }
 
 // @beta
@@ -198,8 +198,8 @@ export interface AttachmentUploadManager {
 
 // @beta (undocumented)
 export interface AttachmentUploadOptions {
-    acceptedMediaTypes?: string[];
-    canUploadMultiple?: boolean;
+    allowedMediaTypes?: string[];
+    allowUploadMultiple?: boolean;
     handler: AttachmentUploadHandler;
 }
 

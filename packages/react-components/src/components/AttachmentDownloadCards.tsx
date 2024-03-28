@@ -53,7 +53,7 @@ export interface _AttachmentDownloadCardsProps {
   /**
    * Optional callback that runs if downloadHandler returns {@link FileDownloadError}.
    */
-  onDownloadErrorMessage?: (errMsg: string) => void;
+  onActionHandlerFailed?: (errMsg: string) => void;
   /**
    * Optional aria label strings for attachment download cards
    */
@@ -129,7 +129,7 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
                 attachment={attachment}
                 key={attachment.id}
                 menuActions={getMenuActions(attachment, localeStrings, message, props.actionsForAttachment)}
-                onDownloadErrorMessage={props.onDownloadErrorMessage}
+                onActionHandlerFailed={props.onActionHandlerFailed}
               />
             </TooltipHost>
           ))}
@@ -195,6 +195,9 @@ export const defaultAttachmentMenuAction: AttachmentMenuAction = {
   icon: <Icon iconName="DownloadFile" data-ui-id="file-download-card-download-icon" />,
   // this is the action that runs when the icon is clicked
   onClick: (attachment: AttachmentMetadata) => {
-    window.open((attachment as AttachmentMetadata).url, '_blank', 'noopener,noreferrer');
+    return new Promise<void>((resolve) => {
+      window.open((attachment as AttachmentMetadata).url, '_blank', 'noopener,noreferrer');
+      resolve();
+    });
   }
 };

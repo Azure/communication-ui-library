@@ -78,7 +78,7 @@ export interface AttachmentDownloadOptions {
 export interface AttachmentMenuAction {
   name: string;
   icon: JSX.Element;
-  onClick: (attachment: AttachmentMetadata) => void;
+  onClick: (attachment: AttachmentMetadata) => Promise<void>;
 }
 
 /**
@@ -91,14 +91,14 @@ export interface AttachmentUploadOptions {
    * Accepts any type of file if not specified.
    * @beta
    */
-  acceptedMediaTypes?: string[];
+  allowedMediaTypes?: string[];
   /**
    * Allows multiple files to be selected if set to `true`.
    * Similar to the `multiple` attribute of the `<input type="file" />` element.
    * @defaultValue false
    * @beta
    */
-  canUploadMultiple?: boolean;
+  allowUploadMultiple?: boolean;
   /**
    * A function of type {@link AttachmentUploadHandler} for handling file uploads.
    * @beta
