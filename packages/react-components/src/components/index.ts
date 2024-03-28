@@ -212,7 +212,12 @@ export * from './AttachmentDownloadCards';
 export type { _AttachmentUploadCardsStrings } from './AttachmentUploadCards';
 
 export type {
+  AttachmentOptions,
+  AttachmentUploadOptions,
+  AttachmentUploadHandler,
   AttachmentMetadata,
+  AttachmentUploadStatus,
+  AttachmentUploadManager,
   FileUploadHandler,
   FileUploadManager,
   FileUploadState,
@@ -220,7 +225,7 @@ export type {
 } from '../types/Attachment';
 
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-export type { FileDownloadHandler, FileDownloadError } from '../types/Attachment';
+export type { AttachmentMenuAction, AttachmentDownloadOptions } from '../types/Attachment';
 
 export { _useContainerHeight, _useContainerWidth } from './utils/responsive';
 

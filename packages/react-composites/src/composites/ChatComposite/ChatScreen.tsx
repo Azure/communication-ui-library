@@ -4,6 +4,8 @@
 import { isIOS } from '@fluentui/react';
 import { mergeStyles, Stack } from '@fluentui/react';
 import { PersonaSize } from '@fluentui/react';
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+import { AttachmentMetadata } from '@internal/react-components';
 import {
   CommunicationParticipant,
   ErrorBar,
@@ -18,15 +20,13 @@ import {
   useTheme
 } from '@internal/react-components';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { ChatMessage } from '@internal/react-components';
+import { AttachmentMenuAction, ChatMessage } from '@internal/react-components';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { useState } from 'react';
 import { AvatarPersona, AvatarPersonaDataCallback, AvatarPersonaProps } from '../common/AvatarPersona';
 import { useAdapter } from './adapter/ChatAdapterProvider';
 import { ChatCompositeOptions } from './ChatComposite';
 import { ChatHeader, getHeaderProps } from './ChatHeader';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { FileDownloadHandler } from '@internal/react-components';
 import { FileUploadHandler } from '@internal/react-components';
 import { FileUploadButtonWrapper as FileUploadButton } from './file-sharing';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
@@ -101,11 +101,9 @@ export interface FileSharingOptions {
   uploadHandler: FileUploadHandler;
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /**
-   * A function of type {@link FileDownloadHandler} for handling file downloads.
-   * If the function is not specified, the file's `url` will be opened in a new tab to
-   * initiate the download.
+   * A temp function until this interface is deprecated
    */
-  downloadHandler?: FileDownloadHandler;
+  actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
 }
 
 /**
@@ -236,18 +234,19 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   );
 
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  const onRenderFileDownloads = useCallback(
+  const onRenderAttachmentDownloads = useCallback(
     (userId: string, message: ChatMessage) => (
       <_AttachmentDownloadCards
-        userId={userId}
-        fileMetadata={message.files || []}
-        downloadHandler={fileSharing?.downloadHandler}
-        onDownloadErrorMessage={(errorMessage: string) => {
+        attachments={message.files}
+        message={message}
+        // temp walkaround until upload is refactored
+        actionsForAttachment={fileSharing?.actionsForAttachment}
+        onActionHandlerFailed={(errorMessage: string) => {
           setDownloadErrorMessage(errorMessage);
         }}
       />
     ),
-    [fileSharing?.downloadHandler]
+    [fileSharing?.actionsForAttachment]
   );
 
   const onInlineImageClicked = useCallback(
@@ -377,8 +376,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     }
     return (
       <FileUploadButton
-        accept={fileSharing?.accept}
-        multiple={fileSharing?.multiple}
+        accept={fileSharing?.accept ?? '*'}
+        multiple={fileSharing?.multiple ?? true}
         onChange={fileUploadButtonOnChange}
       />
     );
@@ -404,7 +403,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             onRenderAvatar={onRenderAvatarCallback}
             onRenderMessage={onRenderMessage}
             /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-            onRenderFileDownloads={onRenderFileDownloads}
+            onRenderAttachmentDownloads={onRenderAttachmentDownloads}
             inlineImageOptions={inlineImageOptions}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
