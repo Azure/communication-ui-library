@@ -223,8 +223,11 @@ const createDefaultContextualMenuItems = (
 };
 
 const canRemoveParticipants = (adapter: CommonCallAdapter): boolean => {
-  const removeParticipantCapability = adapter.getState().call?.capabilitiesFeature?.capabilities.removeParticipant;
-  // If 'removeParticipant' capability is undefined then we will default to true
-  const canRemoveParticipants = removeParticipantCapability ? removeParticipantCapability.isPresent : true;
-  return canRemoveParticipants;
+  // TODO: We should be using the removeParticipant capability here but there is an SDK bug for Rooms where a
+  // Presenter's removeParticipant capability is {isPresent: false, reason: 'CapabilityNotApplicableForTheCallType'}.
+  // But a Presenter in Rooms should be able to remove participants according to the following documentation
+  // https://learn.microsoft.com/en-us/azure/communication-services/concepts/rooms/room-concept#predefined-participant-roles-and-permissions
+  const role = adapter.getState().call?.role;
+  const canRemove = role === 'Presenter' || role === 'Unknown' || role === undefined;
+  return canRemove;
 };
