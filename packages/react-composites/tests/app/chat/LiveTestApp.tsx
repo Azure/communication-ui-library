@@ -140,13 +140,16 @@ export const LiveTestApp = (): JSX.Element => {
             locale={useFrLocale ? COMPOSITE_LOCALE_FR_FR : undefined}
             options={{
               participantPane: showParticipantPane,
-              fileSharing: useFileSharing
+              attachmentOptions: useFileSharing
                 ? {
-                    actionsForAttachment: actionsForAttachment,
-                    uploadHandler: () => {
-                      //noop
+                    downloadOptions: {
+                      actionsForAttachment: actionsForAttachment
                     },
-                    multiple: true
+                    uploadOptions: {
+                      handler: () => {
+                        // noop
+                      }
+                    }
                   }
                 : undefined
             }}

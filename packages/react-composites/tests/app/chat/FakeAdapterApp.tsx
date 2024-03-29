@@ -104,13 +104,16 @@ export const FakeAdapterApp = (): JSX.Element => {
             onRenderMessage={fakeChatAdapterArgs.customDataModelEnabled ? customOnRenderMessage : undefined}
             options={{
               participantPane: fakeChatAdapterArgs.showParticipantPane ?? false,
-              fileSharing: fakeChatAdapterArgs.fileSharingEnabled
+              attachmentOptions: fakeChatAdapterArgs.fileSharingEnabled
                 ? {
-                    actionsForAttachment: actionsForAttachment,
-                    uploadHandler: () => {
-                      //noop
+                    downloadOptions: {
+                      actionsForAttachment: actionsForAttachment
                     },
-                    multiple: true
+                    uploadOptions: {
+                      handler: () => {
+                        // noop
+                      }
+                    }
                   }
                 : undefined
             }}
