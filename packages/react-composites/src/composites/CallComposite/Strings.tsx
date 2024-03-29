@@ -280,6 +280,11 @@ export interface CallCompositeStrings {
    * Label for menu item to stop all spotlight
    */
   stopAllSpotlightMenuLabel: string;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Message shown to the user when they are spotlighted
+   */
+  spotlightedMessage: string;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Label for add people dropdown

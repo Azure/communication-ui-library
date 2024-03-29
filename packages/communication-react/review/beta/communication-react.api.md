@@ -659,6 +659,7 @@ export type CallCompositeIcons = {
     DtmfDialpadButton?: JSX.Element;
     PeoplePaneMoreButton?: JSX.Element;
     StopAllSpotlightMenuButton?: JSX.Element;
+    Spotlighted?: JSX.Element;
 };
 
 // @public
@@ -852,6 +853,7 @@ export interface CallCompositeStrings {
     selectedPeopleButtonLabel: string;
     soundLabel: string;
     spokenLanguageStrings?: SpokenLanguageStrings;
+    spotlightedMessage: string;
     spotlightLimitReachedMenuTitle: string;
     spotlightPrompt: SpotlightPromptStrings;
     starRatingAriaLabel: string;
@@ -2656,6 +2658,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     DtmfDialpadButton?: JSX.Element | undefined;
     PeoplePaneMoreButton?: JSX.Element | undefined;
     StopAllSpotlightMenuButton?: JSX.Element | undefined;
+    Spotlighted?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;

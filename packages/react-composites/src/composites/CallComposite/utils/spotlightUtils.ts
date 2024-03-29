@@ -2,13 +2,17 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(spotlight) */
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 /* @conditional-compile-remove(spotlight) */
 import { CallCompositeStrings } from '../Strings';
 /* @conditional-compile-remove(spotlight) */
 import { PromptProps } from '../components/Prompt';
 /* @conditional-compile-remove(spotlight) */
 import { useLocale } from '../../localization';
+/* @conditional-compile-remove(spotlight) */
+import { CommonCallAdapter } from '../adapter';
+/* @conditional-compile-remove(spotlight) */
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
 /* @conditional-compile-remove(spotlight) */
 /**
@@ -223,4 +227,36 @@ const getStopAllSpotlightCallbackWithPromptCallback = (
     });
     setIsPromptOpen(true);
   };
+};
+
+/* @conditional-compile-remove(spotlight) */
+/**
+ * @internal
+ */
+export const useSpotlightNotification = (
+  adapter: CommonCallAdapter,
+  localUserId: string,
+  isLocalUserSpotlighted?: boolean
+): {
+  showSpotlightedNotification: boolean;
+  dismissSpotlightNotification: () => void;
+} => {
+  const [showSpotlightedNotification, setShowSpotlightedNotification] = useState(!!isLocalUserSpotlighted);
+  adapter.on('spotlightChanged', (e) => {
+    const spotlightedLocalParticipant = e.added.find(
+      (spotlightedParticipant) => toFlatCommunicationIdentifier(spotlightedParticipant.identifier) === localUserId
+    );
+    if (spotlightedLocalParticipant) {
+      setShowSpotlightedNotification(true);
+      return;
+    }
+    const removedSpotlightLocalParticipant = e.removed.find(
+      (spotlightedParticipant) => toFlatCommunicationIdentifier(spotlightedParticipant.identifier) === localUserId
+    );
+    if (removedSpotlightLocalParticipant) {
+      setShowSpotlightedNotification(false);
+      return;
+    }
+  });
+  return { showSpotlightedNotification, dismissSpotlightNotification: () => setShowSpotlightedNotification(false) };
 };
