@@ -19,7 +19,7 @@ export const hasIncompleteAttachmentUploads = (activeAttachmentUploads: Attachme
     activeAttachmentUploads?.length &&
     !activeAttachmentUploads
       .filter((attachmentUpload) => !attachmentUpload.uploadError)
-      .every((attachmentUpload) => attachmentUpload.progress === 1)
+      .every((attachmentUpload) => attachmentUpload.progress === 1 || !attachmentUpload.progress)
   );
 };
 
