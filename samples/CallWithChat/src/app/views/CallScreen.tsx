@@ -158,7 +158,11 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const options: CallWithChatCompositeOptions = useMemo(
     () => ({
       callControls: {
-        screenShareButton: shouldHideScreenShare ? false : undefined
+        screenShareButton: shouldHideScreenShare ? false : undefined,
+        /* @conditional-compile-remove(end-call-options) */
+        endCallButton: {
+          hangUpForEveryone: 'endCallOptions'
+        }
       }
     }),
     [shouldHideScreenShare]

@@ -77,8 +77,8 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
       <input
         ref={inputRef}
         hidden
-        multiple={multiple}
-        accept={accept}
+        multiple={multiple ?? true}
+        accept={accept ?? '*'}
         type="file"
         onClick={(e) => {
           // To ensure that `onChange` is fired even if the same file is picked again.
