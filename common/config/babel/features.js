@@ -110,6 +110,8 @@ module.exports = {
     "hide-attendee-name",
     // Feature for meeting reactions
     'reaction',
+    // Feature for PPT Live for teams meeting
+    'ppt-live',
     // Feature for Rich Text Editor (RTE) support
     'rich-text-editor',
     // Feature for spotlight
