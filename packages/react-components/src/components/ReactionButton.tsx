@@ -69,10 +69,10 @@ export interface ReactionButtonStrings {
   likeReactionTooltipContent?: string;
   /** Tooltip content of heart reaction button. */
   heartReactionTooltipContent?: string;
-  /** Tooltip content of laugh reaction button. */
-  laughReactionTooltipContent?: string;
   /** Tooltip content of clap reaction button. */
   applauseReactionTooltipContent?: string;
+  /** Tooltip content of laugh reaction button. */
+  laughReactionTooltipContent?: string;
   /** Tooltip content of surprised reaction button. */
   surprisedReactionTooltipContent?: string;
 }
@@ -95,19 +95,19 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
   );
 
   const [isHoveredMap, setIsHoveredMap] = useState(new Map());
-  const emojis = ['like', 'heart', 'laugh', 'applause', 'surprised'];
+  const emojis = ['like', 'heart', 'applause', 'laugh', 'surprised'];
   const emojiButtonTooltip: Map<string, string | undefined> = new Map([
     ['like', strings.likeReactionTooltipContent],
     ['heart', strings.heartReactionTooltipContent],
-    ['laugh', strings.laughReactionTooltipContent],
     ['applause', strings.applauseReactionTooltipContent],
+    ['laugh', strings.laughReactionTooltipContent],
     ['surprised', strings.surprisedReactionTooltipContent]
   ]);
   const emojiResource: Map<string, string | undefined> = new Map([
     ['like', props.reactionResources.likeReaction?.url],
     ['heart', props.reactionResources.heartReaction?.url],
-    ['laugh', props.reactionResources.laughReaction?.url],
     ['applause', props.reactionResources.applauseReaction?.url],
+    ['laugh', props.reactionResources.laughReaction?.url],
     ['surprised', props.reactionResources.surprisedReaction?.url]
   ]);
 
