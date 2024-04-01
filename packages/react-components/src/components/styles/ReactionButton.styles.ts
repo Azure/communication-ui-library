@@ -28,7 +28,7 @@ export const playFrames = memoizeFunction(() =>
  *
  * @private
  */
-export const emojiStyles = (backgroundImage: string, animationPlayState: string): IStyle => {
+export const emojiStyles = (backgroundImage: string): IStyle => {
   const imageResourceUrl = `url(${backgroundImage})`;
   return {
     display: 'flex',
@@ -41,12 +41,12 @@ export const emojiStyles = (backgroundImage: string, animationPlayState: string)
     backgroundSize: `2.75rem 133.875rem`,
     transition: 'opacity 2s',
     backgroundColor: 'transparent',
-    transform: `${animationPlayState === 'running' ? 'scale(0.8)' : 'scale(0.6)'}`,
+    transform: 'scale(0.6)',
     ':hover': {
+      transform: 'scale(0.8)',
       animationName: playFrames(),
       animationDuration: '8.12s',
       animationTimingFunction: `steps(102)`,
-      animationPlayState: animationPlayState,
       animationIterationCount: 'infinite',
       backgroundColor: 'unset'
     }
