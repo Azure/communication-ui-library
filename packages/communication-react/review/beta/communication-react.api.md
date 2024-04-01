@@ -1977,7 +1977,7 @@ export type CommonCallControlOptions = {
         disabled: boolean;
     };
     exitSpotlightButton?: boolean;
-    captions?: boolean;
+    captionsButton?: boolean;
 };
 
 // @public
