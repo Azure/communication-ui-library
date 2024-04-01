@@ -49,7 +49,6 @@ import { ReactionState } from './CallClientState';
 import { AcceptedTransfer } from './CallClientState';
 import { callingStatefulLogger } from './Logger';
 import { CallIdHistory } from './CallIdHistory';
-
 import { LocalVideoStreamVideoEffectsState } from './CallClientState';
 /* @conditional-compile-remove(close-captions) */
 import { convertFromTeamsSDKToCaptionInfoState } from './Converter';
@@ -74,6 +73,11 @@ enablePatches();
  * @private
  */
 export const MAX_CALL_HISTORY_LENGTH = 10;
+/* @conditional-compile-remove(reaction) */
+/**
+ * @private
+ */
+export const REACTION_ANIMATION_TIME_MS = 4133;
 
 /**
  * @private
@@ -507,7 +511,7 @@ export class CallContext {
       if (reactionMessage) {
         this._timeOutId[participantKey] = setTimeout(() => {
           clearParticipantReactionState(this, callId, participantKey);
-        }, 5120);
+        }, REACTION_ANIMATION_TIME_MS);
       }
     });
   }
