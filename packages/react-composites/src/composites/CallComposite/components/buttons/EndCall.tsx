@@ -3,11 +3,15 @@
 
 import { concatStyleSets } from '@fluentui/react';
 import { ControlBarButtonStyles, EndCallButton } from '@internal/react-components';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
+/* @conditional-compile-remove(end-call-options) */
+import { useState, useCallback } from 'react';
 import { CallControlDisplayType } from '../../../common/types/CommonCallControlOptions';
 import { usePropsFor } from '../../hooks/usePropsFor';
 import { groupCallLeaveButtonCompressedStyle, groupCallLeaveButtonStyle } from '../../styles/Buttons.styles';
+/* @conditional-compile-remove(end-call-options) */
 import { Prompt } from '../Prompt';
+/* @conditional-compile-remove(end-call-options) */
 import { useLocale } from '../../../localization';
 
 /** @private */
@@ -72,7 +76,9 @@ export const EndCall = (props: {
     ]
   );
 
+  /* @conditional-compile-remove(end-call-options) */
   const [promptHeading, setPromptHeading] = useState<string>();
+  /* @conditional-compile-remove(end-call-options) */
   const [promptText, setPromptText] = useState<string>();
 
   const styles = useMemo(

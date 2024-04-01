@@ -5,7 +5,6 @@ import { concatStyleSets, Icon, IStyle, PartialTheme } from '@fluentui/react';
 /* @conditional-compile-remove(end-call-options) */
 import { IContextualMenuProps } from '@fluentui/react';
 import React from 'react';
-/* @conditional-compile-remove(end-call-options) */
 import { useLocale } from '../localization';
 import { useTheme } from '../theming';
 import { CallingTheme, darkTheme, lightTheme } from '../theming/themes';
