@@ -321,13 +321,13 @@ export type {
 } from '../../react-components/src';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 export type {
-  ActiveFileUpload,
+  AttachmentMetadata,
   SendBoxErrorBarError,
   AttachmentMenuAction,
   AttachmentOptions
 } from '../../react-components/src';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-export type { AttachmentMetadata } from '../../react-components/src';
+export { defaultAttachmentMenuAction } from '../../react-components/src';
 export type { ChatAttachmentType } from '../../react-components/src';
 export type { InlineImageOptions, InlineImage } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
