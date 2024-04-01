@@ -86,7 +86,9 @@ module.exports = {
      // Close captions feature for ACS calls
      "acs-close-captions",
     // Feature for local recording notification for teams meetings
-    'local-recording-notification'
+    'local-recording-notification',
+    // Feature for end call options 
+    'end-call-options'
   ],
   // A list of in progress beta feature.
   // These features are still beta feature but "in progress"

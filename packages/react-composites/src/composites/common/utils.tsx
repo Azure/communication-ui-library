@@ -16,6 +16,13 @@ interface MinMaxDragPosition {
 /**
  * @private
  */
+export const isBoolean = (value: unknown): value is boolean => {
+  return value !== null && typeof value === 'boolean';
+};
+
+/**
+ * @private
+ */
 // Use document.getElementById until Fluent's Stack supports componentRef property: https://github.com/microsoft/fluentui/issues/20410
 export const useMinMaxDragPosition = (modalLayerHostId: string, rtl?: boolean): MinMaxDragPosition => {
   const modalHostRef = useRef<HTMLElement>(document.getElementById(modalLayerHostId));
