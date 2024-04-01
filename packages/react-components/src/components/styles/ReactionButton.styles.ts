@@ -31,7 +31,7 @@ export const playFrames = memoizeFunction(() =>
 export const emojiStyles = (
   backgroundImage: string,
   animationPlayState: string,
-  frameCount?: number
+  frameCount: number
 ): React.CSSProperties => {
   const imageResourceUrl = `url(${backgroundImage})`;
   const steps = frameCount ?? 51;

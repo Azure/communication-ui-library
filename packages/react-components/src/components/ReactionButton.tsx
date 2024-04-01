@@ -125,8 +125,8 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
     <div style={reactionEmojiMenuStyles()}>
       {emojis.map((emoji, index) => {
         const resourceUrl = emojiResource.get(emoji);
-        const frameCount =
-          props.reactionResources !== undefined ? getEmojiFrameCount(emoji, props.reactionResources) : undefined;
+        const frameCount: number =
+          props.reactionResources !== undefined ? getEmojiFrameCount(emoji, props.reactionResources) : 0;
         return (
           <TooltipHost
             key={index}
