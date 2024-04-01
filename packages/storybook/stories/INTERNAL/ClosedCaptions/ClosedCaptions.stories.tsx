@@ -45,7 +45,7 @@ const getDocs: () => JSX.Element = () => {
         automatically, so the spoken language selected needs to match the language that will be used in the call. The
         caption language selected is the language individual user prefers to see the captions displayed in. For example,
         a user can choose to have captions translated and displayed in 'Chinese' when the language used in the call is
-        'English' by setting the caption language to 'Chinese'
+        'English' by setting the caption language to 'Chinese'.
       </Description>
 
       <Subheading>ACS Based Captions</Subheading>
