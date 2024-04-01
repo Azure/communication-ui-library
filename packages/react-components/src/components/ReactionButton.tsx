@@ -123,6 +123,9 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
     <div style={reactionEmojiMenuStyles()}>
       {emojis.map((emoji, index) => {
         const resourceUrl = emojiResource.get(emoji);
+        const classname = mergeStyles(
+          emojiStyles(resourceUrl ? resourceUrl : '', isHoveredMap.get(emoji) ? 'running' : 'paused')
+        );
         return (
           <TooltipHost
             key={index}
@@ -141,7 +144,7 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
                 });
                 dismissMenu();
               }}
-              style={emojiStyles(resourceUrl ? resourceUrl : '', isHoveredMap.get(emoji) ? 'running' : 'paused')}
+              className={classname}
               onMouseEnter={() =>
                 setIsHoveredMap((prevMap) => {
                   return new Map(prevMap).set(emoji, true);

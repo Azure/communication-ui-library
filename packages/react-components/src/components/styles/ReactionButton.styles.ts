@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(reaction) */
-import { ITooltipHostStyles, keyframes, memoizeFunction } from '@fluentui/react';
+import { ITooltipHostStyles, keyframes, memoizeFunction, IStyle } from '@fluentui/react';
 /* @conditional-compile-remove(reaction) */
 import React from 'react';
 
@@ -28,7 +28,7 @@ export const playFrames = memoizeFunction(() =>
  *
  * @private
  */
-export const emojiStyles = (backgroundImage: string, animationPlayState: string): React.CSSProperties => {
+export const emojiStyles = (backgroundImage: string, animationPlayState: string): IStyle => {
   const imageResourceUrl = `url(${backgroundImage})`;
   return {
     display: 'flex',
@@ -36,18 +36,20 @@ export const emojiStyles = (backgroundImage: string, animationPlayState: string)
     height: '100%',
     width: '100%',
     backgroundImage: imageResourceUrl,
-    animationName: playFrames(),
-    animationDuration: '8.12s',
-    animationTimingFunction: `steps(102)`,
-    animationPlayState: animationPlayState,
-    animationIterationCount: 'infinite',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundPosition: 'center',
     backgroundSize: `2.75rem 133.875rem`,
     transition: 'opacity 2s',
     backgroundColor: 'transparent',
-    transform: `${animationPlayState === 'running' ? 'scale(0.8)' : 'scale(0.6)'}`
+    transform: `${animationPlayState === 'running' ? 'scale(0.8)' : 'scale(0.6)'}`,
+    ':hover': {
+      animationName: playFrames(),
+      animationDuration: '8.12s',
+      animationTimingFunction: `steps(102)`,
+      animationPlayState: animationPlayState,
+      animationIterationCount: 'infinite',
+      backgroundColor: 'unset'
+    }
   };
 };
 
