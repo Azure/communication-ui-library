@@ -110,19 +110,15 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
   }, [theme.palette.themePrimary]);
 
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  const onRenderFileUploads = useCallback(() => {
+  const onRenderAttachmentUploads = useCallback(() => {
     return (
       !!attachmentMetadata &&
       attachmentMetadata.length > 0 && (
         <div style={{ margin: '0.25rem' }}>
           <_AttachmentUploadCards
-            activeFileUploads={attachmentMetadata?.map((file) => ({
-              id: file.name,
-              filename: file.name,
-              progress: 1
-            }))}
-            onCancelFileUpload={(fileId) => {
-              setAttachedFilesMetadata(attachmentMetadata?.filter((file) => file.name !== fileId));
+            activeAttachmentUploads={attachmentMetadata}
+            onCancelAttachmentUpload={(fileId) => {
+              setAttachedFilesMetadata(attachmentMetadata?.filter((file) => file.id !== fileId));
             }}
           />
         </div>
@@ -209,7 +205,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
           </Stack.Item>
         </Stack>
         {
-          /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ onRenderFileUploads()
+          /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ onRenderAttachmentUploads()
         }
       </>
     );
