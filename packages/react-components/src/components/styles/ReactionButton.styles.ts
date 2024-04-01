@@ -28,8 +28,9 @@ export const playFrames = memoizeFunction(() =>
  *
  * @private
  */
-export const emojiStyles = (backgroundImage: string): IStyle => {
+export const emojiStyles = (backgroundImage: string, frameCount: number): IStyle => {
   const imageResourceUrl = `url(${backgroundImage})`;
+  const steps = frameCount ?? 51;
   return {
     display: 'flex',
     flexDirection: 'column',
@@ -46,7 +47,7 @@ export const emojiStyles = (backgroundImage: string): IStyle => {
       transform: 'scale(0.8)',
       animationName: playFrames(),
       animationDuration: '8.12s',
-      animationTimingFunction: `steps(102)`,
+      animationTimingFunction: `steps(${steps})`,
       animationIterationCount: 'infinite',
       backgroundColor: 'unset'
     }

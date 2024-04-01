@@ -108,6 +108,8 @@ module.exports = {
     "hide-attendee-name",
     // Feature for meeting reactions
     'reaction',
+    // Feature for PPT Live for teams meeting
+    'ppt-live',
     // Feature for Rich Text Editor (RTE) support
     'rich-text-editor',
     // Feature for spotlight
@@ -134,8 +136,6 @@ module.exports = {
     "call-transfer",
     // custom branding for the composites
     "custom-branding",
-    // Feature for PPT Live for teams meeting
-    'ppt-live',
     // Support Calling SDK isReceiving flag, shows a loading spinner on the video tile when isAvailable is true but isReceiving is false
     "video-stream-is-receiving-flag",
   ]
