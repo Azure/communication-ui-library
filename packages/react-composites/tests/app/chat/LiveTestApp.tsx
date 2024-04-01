@@ -31,7 +31,7 @@ export const LiveTestApp = (): JSX.Element => {
   const customDataModel = params.customDataModel;
   const useFileSharing = Boolean(params.useFileSharing);
   const failAttachmentDownload = Boolean(params.failDownload);
-  const uploadedFiles = React.useMemo(() => (params.uploadedFiles ? JSON.parse(params.uploadedFiles) : []), []);
+  const uploadAttachments = React.useMemo(() => (params.uploadAttachments ? JSON.parse(params.uploadAttachments) : []), []);
   const showParticipantPane = params.showParticipantPane === 'true' ? true : false;
 
   const args = useMemo(
@@ -56,9 +56,9 @@ export const LiveTestApp = (): JSX.Element => {
   });
 
   React.useEffect(() => {
-    if (adapter && uploadedFiles.length) {
+    if (adapter && uploadAttachments.length) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      uploadedFiles.forEach((attachment: any) => {
+      uploadAttachments.forEach((attachment: any) => {
         if (attachment.uploadComplete) {
           const attachmentUploads = adapter.registerActiveUploads([new File([], attachment.name)]);
           attachmentUploads[0].notifyCompleted({
@@ -79,7 +79,7 @@ export const LiveTestApp = (): JSX.Element => {
         }
       });
     }
-  }, [adapter, uploadedFiles]);
+  }, [adapter, uploadAttachments]);
 
   const actionsForAttachment = (): AttachmentMenuAction[] => {
     if (failAttachmentDownload) {
