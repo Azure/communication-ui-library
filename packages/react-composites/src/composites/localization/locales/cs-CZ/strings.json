@@ -315,8 +315,10 @@
       "startSpotlightCancelButtonLabel": "Zrušit",
       "stopSpotlightHeading": "Chcete přestat zobrazovat toto video v hlavním výběru?",
       "stopSpotlightOnSelfHeading": "Ukončit hlavní výběr?",
+      "stopAllSpotlightHeading": "Zastavit zobrazování všech videí v hlavním výběru?",
       "stopSpotlightText": "Účastníkům se už toto video nebude zvýrazňovat.",
       "stopSpotlightOnSelfText": "Účastníkům se už vaše video nebude zvýrazňovat.",
+      "stopAllSpotlightText": "Účastníkům schůzky se už videa nebudou zvýrazňovat.",
       "stopSpotlightConfirmButtonLabel": "Zastavit přidávání do hlavního výběru",
       "stopSpotlightOnSelfConfirmButtonLabel": "Ukončit hlavní výběr",
       "stopSpotlightCancelButtonLabel": "Zrušit"

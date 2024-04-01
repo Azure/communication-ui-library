@@ -25,7 +25,7 @@
     "textTooLong": "La longueur de votre message dépasse la limite maximale.",
     "sendButtonAriaLabel": "Envoyer un message",
     "attachmentUploadsPendingError": "Chargement en cours... Veuillez patienter.",
-    "removeAttachment": "Supprimer un fichier",
+    "removeAttachment": "Supprimer le fichier",
     "uploading": "Chargement",
     "uploadCompleted": "Téléchargement terminé"
   },
@@ -34,7 +34,7 @@
     "textTooLong": "La longueur de votre message dépasse la limite maximale.",
     "sendButtonAriaLabel": "Envoyer un message",
     "attachmentUploadsPendingError": "Chargement en cours... Veuillez patienter.",
-    "removeAttachment": "Supprimer le fichier",
+    "removeAttachment": "Supprimer un fichier",
     "uploading": "Téléchargement",
     "uploadCompleted": "Chargement terminé",
     "boldTooltip": "Gras",
@@ -182,7 +182,7 @@
     "downloadAttachment": "Télécharger un fichier",
     "blockedWarningText": "Ce message a été supprimé en raison d’une stratégie de l’organisation.",
     "blockedWarningLinkText": "Détails",
-    "attachmentCardGroupMessage": "Le message a {attachmentCount} pièce jointe",
+    "attachmentCardGroupMessage": "Le message a {attachmentCount} pièce jointe",
     "messageDeletedAnnouncementAriaLabel": "Le message est supprimé"
   },
   "errorBar": {

@@ -579,7 +579,7 @@ async function maskVideos(page: Page): Promise<void> {
  * type of file being loaded (e.g.- .pdf, .docx, .png, .txt)
  */
 const awaitFileTypeIcon = async (page: Page): Promise<void> => {
-  const fileTypeIconId: string = dataUiId(IDS.fileTypeIcon);
+  const fileTypeIconId: string = dataUiId(IDS.attachmentTypeIcon);
   await waitForFunction(
     page,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

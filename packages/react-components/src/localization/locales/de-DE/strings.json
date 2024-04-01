@@ -182,7 +182,7 @@
     "downloadAttachment": "Datei herunterladen",
     "blockedWarningText": "Diese Nachricht wurde aufgrund einer Organisationsrichtlinie gelöscht.",
     "blockedWarningLinkText": "Details",
-    "attachmentCardGroupMessage": "Die Nachricht weist eine {attachmentCount}-Anlage auf",
+    "attachmentCardGroupMessage": "Die Nachricht enthält {attachmentCount} Anlage.",
     "messageDeletedAnnouncementAriaLabel": "Die Nachricht wurde gelöscht"
   },
   "errorBar": {

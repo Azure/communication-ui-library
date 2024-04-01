@@ -315,8 +315,10 @@
       "startSpotlightCancelButtonLabel": "Annuler",
       "stopSpotlightHeading": "Arrêter la mise en évidence de cette vidéo ?",
       "stopSpotlightOnSelfHeading": "Quitter la mise en évidence ?",
+      "stopAllSpotlightHeading": "Voulez-vous arrêter de mettre en évidence toutes les vidéos ?",
       "stopSpotlightText": "Cette vidéo ne sera plus mise en évidence pour tous les participants à la réunion.",
       "stopSpotlightOnSelfText": "Votre vidéo ne sera plus mise en surbrillance pour tous les participants à la réunion.",
+      "stopAllSpotlightText": "Les vidéo n’apparaissent plus en surbrillance pour tous les participants à la réunion.",
       "stopSpotlightConfirmButtonLabel": "Arrêter la mise en évidence",
       "stopSpotlightOnSelfConfirmButtonLabel": "Quitter la mise en évidence",
       "stopSpotlightCancelButtonLabel": "Annuler"

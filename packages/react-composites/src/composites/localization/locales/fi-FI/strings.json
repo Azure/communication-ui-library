@@ -315,8 +315,10 @@
       "startSpotlightCancelButtonLabel": "Peruuta",
       "stopSpotlightHeading": "Haluatko poistaa videon valokeilasta?",
       "stopSpotlightOnSelfHeading": "Haluatko poistua valokeilasta?",
+      "stopAllSpotlightHeading": "Poistetaanko kaikki videot valokeilasta?",
       "stopSpotlightText": "Videota ei enää korosteta kaikille kokouksen osallistujille.",
       "stopSpotlightOnSelfText": "Videota ei enää korosteta kaikille kokouksen osallistujille.",
+      "stopAllSpotlightText": "Videoita ei enää korosteta kaikille kokouksen osallistujille.",
       "stopSpotlightConfirmButtonLabel": "Poista valokeilasta",
       "stopSpotlightOnSelfConfirmButtonLabel": "Valokeila",
       "stopSpotlightCancelButtonLabel": "Peruuta"

@@ -315,8 +315,10 @@
       "startSpotlightCancelButtonLabel": "Annuleren",
       "stopSpotlightHeading": "Wilt u deze video niet meer spotlighten?",
       "stopSpotlightOnSelfHeading": "Spotlight afsluiten?",
+      "stopAllSpotlightHeading": "Stoppen met het uitlichten van alle video's?",
       "stopSpotlightText": "Deze video wordt niet meer gemarkeerd voor iedereen in de vergadering.",
       "stopSpotlightOnSelfText": "Uw video wordt niet meer gemarkeerd voor iedereen in de vergadering.",
+      "stopAllSpotlightText": "De video's worden niet meer gemarkeerd voor iedereen in de vergadering.",
       "stopSpotlightConfirmButtonLabel": "Spotlighten stoppen",
       "stopSpotlightOnSelfConfirmButtonLabel": "Spotlight afsluiten",
       "stopSpotlightCancelButtonLabel": "Annuleren"

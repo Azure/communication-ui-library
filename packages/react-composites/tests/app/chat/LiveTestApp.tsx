@@ -4,12 +4,13 @@
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { Stack } from '@fluentui/react';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { _IdentifierProvider, FileDownloadError, FileDownloadHandler, MessageProps } from '@internal/react-components';
+import { _IdentifierProvider, defaultAttachmentMenuAction, MessageProps } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { ChatComposite, COMPOSITE_LOCALE_FR_FR, useAzureCommunicationChatAdapter } from '../../../src';
 // eslint-disable-next-line no-restricted-imports
 import { IDS } from '../../browser/common/constants';
 import { verifyParamExists } from '../lib/utils';
+import { AttachmentMenuAction } from '@internal/react-components';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -29,7 +30,7 @@ export const LiveTestApp = (): JSX.Element => {
   const useFrLocale = Boolean(params.useFrLocale);
   const customDataModel = params.customDataModel;
   const useFileSharing = Boolean(params.useFileSharing);
-  const failFileDownload = Boolean(params.failDownload);
+  const failAttachmentDownload = Boolean(params.failDownload);
   const uploadedFiles = React.useMemo(() => (params.uploadedFiles ? JSON.parse(params.uploadedFiles) : []), []);
   const showParticipantPane = params.showParticipantPane === 'true' ? true : false;
 
@@ -79,14 +80,18 @@ export const LiveTestApp = (): JSX.Element => {
     }
   }, [adapter, uploadedFiles]);
 
-  const fileDownloadHandler: FileDownloadHandler = (userId, fileData): Promise<URL | FileDownloadError> => {
-    return new Promise((resolve) => {
-      if (failFileDownload) {
-        resolve({ errorMessage: 'You don’t have permission to download this file.' });
-      } else {
-        resolve(new URL(fileData.url));
-      }
-    });
+  const actionsForAttachment = (): AttachmentMenuAction[] => {
+    if (failAttachmentDownload) {
+      return [
+        {
+          ...defaultAttachmentMenuAction,
+          onClick: () => {
+            throw Error('You don’t have permission to download this attachment.');
+          }
+        }
+      ];
+    }
+    return [defaultAttachmentMenuAction];
   };
 
   return (
@@ -137,7 +142,7 @@ export const LiveTestApp = (): JSX.Element => {
               participantPane: showParticipantPane,
               fileSharing: useFileSharing
                 ? {
-                    downloadHandler: fileDownloadHandler,
+                    actionsForAttachment: actionsForAttachment,
                     uploadHandler: () => {
                       //noop
                     },

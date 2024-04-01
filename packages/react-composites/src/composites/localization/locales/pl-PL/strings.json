@@ -315,8 +315,10 @@
       "startSpotlightCancelButtonLabel": "Anuluj",
       "stopSpotlightHeading": "Zatrzymać wyróżnianie tego klipu wideo?",
       "stopSpotlightOnSelfHeading": "Zakończyć wyróżnianie?",
+      "stopAllSpotlightHeading": "Zatrzymać wyróżnianie wszystkich klipów wideo?",
       "stopSpotlightText": "Klip wideo nie będzie już wyróżniany dla wszystkich osób na spotkaniu.",
       "stopSpotlightOnSelfText": "Twój klip wideo nie będzie już wyróżniany dla wszystkich osób na spotkaniu.",
+      "stopAllSpotlightText": "Klipy wideo nie będą już wyróżniane dla wszystkich osób na spotkaniu.",
       "stopSpotlightConfirmButtonLabel": "Zatrzymaj wyróżnianie",
       "stopSpotlightOnSelfConfirmButtonLabel": "Zakończ wyróżnienie",
       "stopSpotlightCancelButtonLabel": "Anuluj"
