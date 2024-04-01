@@ -165,7 +165,7 @@ const sendRemoteFileSharingMessage = (
       senderDisplayName: remoteParticipant.displayName,
       type: 'text',
       metadata: {
-        attachmentHandlingMetadata: JSON.stringify([
+        fileSharingMetadata: JSON.stringify([
           { name: 'SampleFile1.pdf', extension: 'pdf', attachmentType: 'file', id: uuidv4() }
         ])
       }

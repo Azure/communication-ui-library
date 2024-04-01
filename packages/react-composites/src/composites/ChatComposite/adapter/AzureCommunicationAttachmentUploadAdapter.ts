@@ -5,7 +5,7 @@ import { AttachmentUploadManager, AttachmentMetadata } from '@internal/react-com
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { produce } from 'immer';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { AttachmentHandlingMetadata, AttachmentUpload } from '../file-sharing';
+import { FileSharingMetadata, AttachmentUpload } from '../file-sharing';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { ChatContext } from './AzureCommunicationChatAdapter';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
@@ -207,7 +207,7 @@ export class AzureCommunicationAttachmentUploadAdapter implements AttachmentUplo
  */
 export const convertAttachmentUploadsUiStateToMessageMetadata = (
   attachmentUploads?: AttachmentUploadsUiState
-): AttachmentHandlingMetadata | undefined => {
+): FileSharingMetadata | undefined => {
   if (attachmentUploads) {
     const fileMetadata: AttachmentMetadata[] = [];
     Object.keys(attachmentUploads).forEach((key) => {
@@ -223,7 +223,7 @@ export const convertAttachmentUploadsUiStateToMessageMetadata = (
       }
     });
     if (fileMetadata.length > 0) {
-      return { attachmentHandlingMetadata: JSON.stringify(fileMetadata) };
+      return { fileSharingMetadata: JSON.stringify(fileMetadata) };
     }
   }
   return undefined;

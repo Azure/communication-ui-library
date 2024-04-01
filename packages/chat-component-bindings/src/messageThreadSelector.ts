@@ -62,7 +62,7 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
 
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 const extractAttachedFilesMetadata = (metadata: Record<string, string>): AttachmentMetadata[] => {
-  const fileMetadata = metadata.attachmentHandlingMetadata;
+  const fileMetadata = metadata.fileSharingMetadata;
   if (!fileMetadata) {
     return [];
   }
@@ -366,7 +366,7 @@ const isMessageValidToRender = (message: ChatMessageWithStatus): boolean => {
   if (message.deletedOn) {
     return false;
   }
-  if (message.metadata?.attachmentHandlingMetadata || message.content?.attachments?.length) {
+  if (message.metadata?.fileSharingMetadata || message.content?.attachments?.length) {
     return true;
   }
   /* @conditional-compile-remove(data-loss-prevention) */

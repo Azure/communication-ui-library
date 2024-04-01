@@ -19,6 +19,6 @@ export type { AttachmentDownloadOptions } from '@internal/react-components';
  * Metadata used for setting uploaded files by a user using chat composite in a group call.
  * @internal
  */
-export type AttachmentHandlingMetadata = {
-  attachmentHandlingMetadata: string;
+export type FileSharingMetadata = {
+  fileSharingMetadata: string;
 };
