@@ -19,9 +19,9 @@ const addFileSharingSnippet = `
 adapter={chatAdapter}
 options={{
   fileSharing: {
-    uploadHandler: fileUploadHandler,
+    uploadHandler: attachmentUploadHandler,
     /* If fileDownloadHandler is not provided. The file URL is opened in a new tab.
-    You can find examples of fileDownloadHandler and fileUploadHandler in this tutorial
+    You can find examples of fileDownloadHandler and attachmentUploadHandler in this tutorial
     https://docs.microsoft.com/en-us/azure/communication-services/tutorials/file-sharing-tutorial */
     downloadHandler: fileDownloadHandler,
     accept: 'image/png, image/jpeg, text/plain, .docx',

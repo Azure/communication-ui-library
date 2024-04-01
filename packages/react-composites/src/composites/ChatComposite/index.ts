@@ -35,10 +35,8 @@ export * from './Strings';
 
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 export type {
-  FileUploadHandler,
-  FileUploadManager,
-  FileUploadState,
-  FileUploadError,
+  AttachmentOptions,
+  AttachmentMetadata,
   AttachmentUploadStatus,
   AttachmentUploadOptions,
   AttachmentDownloadOptions,
@@ -46,6 +44,7 @@ export type {
   AttachmentUploadManager
 } from './file-sharing';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-export type { FileSharingOptions } from './ChatScreen';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-export type { FileUploadsUiState, FileUploadAdapter } from './adapter/AzureCommunicationFileUploadAdapter';
+export type {
+  AttachmentUploadsUiState,
+  AttachmentUploadAdapter
+} from './adapter/AzureCommunicationAttachmentUploadAdapter';
