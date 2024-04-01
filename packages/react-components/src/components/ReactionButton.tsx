@@ -28,6 +28,8 @@ import { emojiStyles, reactionEmojiMenuStyles, reactionToolTipHostStyle } from '
 import { isDarkThemed } from '../theming/themeUtils';
 /* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '..';
+/* @conditional-compile-remove(reaction) */
+import { getEmojiFrameCount } from './VideoGallery/utils/videoGalleryLayoutUtils';
 
 /* @conditional-compile-remove(reaction) */
 /**
@@ -123,6 +125,8 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
     <div style={reactionEmojiMenuStyles()}>
       {emojis.map((emoji, index) => {
         const resourceUrl = emojiResource.get(emoji);
+        const frameCount =
+          props.reactionResources !== undefined ? getEmojiFrameCount(emoji, props.reactionResources) : undefined;
         return (
           <TooltipHost
             key={index}
@@ -141,7 +145,11 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
                 });
                 dismissMenu();
               }}
-              style={emojiStyles(resourceUrl ? resourceUrl : '', isHoveredMap.get(emoji) ? 'running' : 'paused')}
+              style={emojiStyles(
+                resourceUrl ? resourceUrl : '',
+                isHoveredMap.get(emoji) ? 'running' : 'paused',
+                frameCount
+              )}
               onMouseEnter={() =>
                 setIsHoveredMap((prevMap) => {
                   return new Map(prevMap).set(emoji, true);
