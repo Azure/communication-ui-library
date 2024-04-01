@@ -83,8 +83,6 @@ module.exports = {
     'meeting-id',
     // Image overlay theme
     'image-overlay-theme',
-    // Feature for PPT Live for teams meeting
-    'ppt-live',
      // Close captions feature for ACS calls
      "acs-close-captions",
     // Feature for local recording notification for teams meetings
@@ -138,6 +136,8 @@ module.exports = {
     "call-transfer",
     // custom branding for the composites
     "custom-branding",
+    // Feature for PPT Live for teams meeting
+    'ppt-live',
     // Support Calling SDK isReceiving flag, shows a loading spinner on the video tile when isAvailable is true but isReceiving is false
     "video-stream-is-receiving-flag",
   ]
