@@ -154,13 +154,64 @@ export type AreParamEqual<A extends (props: any) => JSX.Element | undefined, B e
 export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
 // @beta
-export interface AttachmentMetadata {
-    extension: string;
-    id: string;
+export interface AttachmentDownloadOptions {
+    // (undocumented)
+    actionsForAttachment: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
+}
+
+// @beta
+export interface AttachmentMenuAction {
+    // (undocumented)
+    icon: JSX.Element;
+    // (undocumented)
     name: string;
     // (undocumented)
-    payload?: Record<string, string>;
-    url: string;
+    onClick: (attachment: AttachmentMetadata) => Promise<void>;
+}
+
+// @beta
+export interface AttachmentMetadata {
+    extension?: string;
+    id: string;
+    name: string;
+    progress?: number;
+    uploadStatus?: AttachmentUploadStatus;
+    url?: string;
+}
+
+// @beta
+export interface AttachmentOptions {
+    // (undocumented)
+    downloadOptions?: AttachmentDownloadOptions;
+    // (undocumented)
+    uploadOptions?: AttachmentUploadOptions;
+}
+
+// @beta
+export type AttachmentUploadHandler = (attachmentUploads: AttachmentUploadManager[]) => void;
+
+// @beta
+export interface AttachmentUploadManager {
+    file?: File;
+    id: string;
+    notifyUploadCompleted: (metadata: AttachmentMetadata) => void;
+    notifyUploadFailed: (message: string) => void;
+    notifyUploadProgressChanged: (value: number) => void;
+}
+
+// @beta (undocumented)
+export interface AttachmentUploadOptions {
+    disableMultipleUploads?: boolean;
+    handler: AttachmentUploadHandler;
+    supportedMediaTypes?: string[];
+}
+
+// @beta
+export interface AttachmentUploadStatus {
+    // (undocumented)
+    message: string;
+    // (undocumented)
+    timestamp: number;
 }
 
 // @public
@@ -721,6 +772,8 @@ export interface CallCompositeStrings {
     dtmfDialerMoreButtonLabelOff?: string;
     dtmfDialerMoreButtonLabelOn?: string;
     dtmfDialpadPlaceholderText: string;
+    endCallConfirmDialogContent?: string;
+    endCallConfirmDialogTitle?: string;
     endOfSurveyText: string;
     exitSpotlightButtonLabel: string;
     exitSpotlightButtonTooltip: string;
@@ -728,11 +781,15 @@ export interface CallCompositeStrings {
     failedToJoinCallDueToNoNetworkTitle: string;
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
     failedToJoinTeamsMeetingReasonAccessDeniedTitle: string;
+    hangUpCancelButtonLabel?: string;
+    hangUpConfirmButtonLabel?: string;
     holdScreenLabel: string;
     invalidMeetingIdentifier: string;
     inviteToRoomRemovedDetails?: string;
     inviteToRoomRemovedTitle: string;
     learnMore: string;
+    leaveConfirmDialogContent?: string;
+    leaveConfirmDialogTitle?: string;
     leavingCallTitle?: string;
     leftCallMoreDetails?: string;
     leftCallTitle: string;
@@ -1887,7 +1944,9 @@ export type CommonCallControlOptions = {
     cameraButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
         disabled: boolean;
     };
-    endCallButton?: boolean;
+    endCallButton?: boolean | /* @conditional-compile-remove(end-call-options) */ {
+        hangUpForEveryone?: false | 'endCallOptions';
+    };
     microphoneButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
         disabled: boolean;
     };
@@ -2422,8 +2481,9 @@ export const DEFAULT_COMPONENT_ICONS: {
     RaiseHandContextualMenuItem: React_2.JSX.Element;
     LowerHandContextualMenuItem: React_2.JSX.Element;
     ReactionButtonIcon: React_2.JSX.Element;
-    CancelFileUpload: React_2.JSX.Element;
-    DownloadFile: React_2.JSX.Element;
+    CancelAttachmentUpload: React_2.JSX.Element;
+    DownloadAttachment: React_2.JSX.Element;
+    OpenAttachment: React_2.JSX.Element;
     DataLossPreventionProhibited: React_2.JSX.Element;
     EditBoxCancel: React_2.JSX.Element;
     EditBoxSubmit: React_2.JSX.Element;
@@ -2615,8 +2675,9 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MoreDrawerSpeakers?: JSX.Element | undefined;
     ChatMessageOptions: React_2.JSX.Element;
     ControlButtonParticipantsContextualMenuItem: React_2.JSX.Element;
-    CancelFileUpload: React_2.JSX.Element;
-    DownloadFile: React_2.JSX.Element;
+    CancelAttachmentUpload: React_2.JSX.Element;
+    DownloadAttachment: React_2.JSX.Element;
+    OpenAttachment: React_2.JSX.Element;
     DataLossPreventionProhibited: React_2.JSX.Element;
     ErrorBarCallVideoRecoveredBySystem: React_2.JSX.Element;
     ErrorBarCallVideoStoppedBySystem: React_2.JSX.Element;
@@ -2823,13 +2884,16 @@ export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
 
 // @public
 export interface EndCallButtonProps extends ControlBarButtonProps {
-    onHangUp?: () => Promise<void>;
+    enableEndCallMenu?: boolean;
+    onHangUp?: (forEveryone?: boolean) => Promise<void>;
     strings?: EndCallButtonStrings;
 }
 
 // @public
 export interface EndCallButtonStrings {
+    endCallOption?: string;
     label: string;
+    leaveOption?: string;
     tooltipContent?: string;
 }
 
@@ -2885,17 +2949,9 @@ export interface ErrorBarStrings {
 export type ErrorType = keyof ErrorBarStrings;
 
 // @beta
-export interface FileDownloadError {
-    errorMessage: string;
-}
-
-// @beta
-export type FileDownloadHandler = (userId: string, fileMetadata: AttachmentMetadata) => Promise<URL | FileDownloadError>;
-
-// @beta
 export interface FileSharingOptions {
     accept?: string;
-    downloadHandler?: FileDownloadHandler;
+    actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
     multiple?: boolean;
     uploadHandler: FileUploadHandler;
 }
@@ -3344,14 +3400,14 @@ export type MessageThreadProps = {
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
-    onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+    onRenderAttachmentDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
     onUpdateMessage?: UpdateMessageCallback;
     onCancelEditMessage?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (content: string) => Promise<void>;
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
-    fileDownloadHandler?: FileDownloadHandler;
+    attachmentOptions?: AttachmentOptions;
     onDisplayDateTimeString?: (messageDate: Date) => string;
     mentionOptions?: MentionOptions;
     inlineImageOptions?: InlineImageOptions;
@@ -3387,6 +3443,7 @@ export interface MessageThreadStrings {
     monday: string;
     newMessagesIndicator: string;
     noDisplayNameSub: string;
+    openAttachment: string;
     participantJoined: string;
     participantLeft: string;
     removeMessage: string;

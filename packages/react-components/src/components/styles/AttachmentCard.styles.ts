@@ -18,7 +18,7 @@ export const useAttachmentCardStyles = makeStyles({
 /**
  * @private
  */
-export const fileNameContainerClassName = mergeStyles({
+export const attachmentNameContainerClassName = mergeStyles({
   marginTop: _pxToRem(5),
   width: '5.75rem',
   overflow: 'hidden',
