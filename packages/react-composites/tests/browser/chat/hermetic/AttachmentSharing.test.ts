@@ -265,7 +265,7 @@ test.describe('Filesharing Message Thread', async () => {
             name: 'SampleFile1.pdf',
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
-            uploadComplete: true,
+            progress: 1,
             attachmentType: 'file'
           }
         ]
@@ -320,7 +320,7 @@ test.describe('Filesharing Edit Message', async () => {
             name: 'SampleFile1.pdf',
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
-            uploadComplete: true,
+            progress: 1,
             attachmentType: 'file'
           }
         ]
