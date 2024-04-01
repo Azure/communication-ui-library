@@ -13,13 +13,8 @@ Tue, 26 Mar 2024 17:38:26 GMT
 
 The UI Library now supports End of Call Survey, with the feature added to the CallComposite and CallwithChatComposite on web. The survey supports feedback for the categories of overall quality, audio, video, and screenshare. This survey appears at the end of composite experience. By default, users are taken to a “thank you for your feedback” page after survey is submitted, and taken to the end call screen if survey is skipped. We provide abilities to overwrite those default screens. The survey can be disabled or enabled. The data received is sent to Contoso’s local Azure monitoring where it can be validated for overall call quality. When free form text survey is enabled, the free form text data collected are not sent to local Azure monitoring and will need to be handled by Contoso.
 
-### PowerPoint Live Sessions - Public Preview
-
-We are excited to announce that the Azure Communication Services Web UI Library now can view PowerPoint Live sessions initiated by a Teams client. Users can follow along with the current slide the presenter is sharing and view presenter annotations. Developers can use this functionality today through our composites (e.g CallComposite, CallWithChatComposite) as well as through components (e.g VideoGallery).
-
 ### Features
 - Move End of Call Survey feature to beta
-- Move PowerPoint Live sessions feature to beta
 - Add localRecordingNotification to calling-stateful-client ([PR #4265](https://github.com/azure/communication-ui-library/pull/4265) by edwardlee@microsoft.com)
 - Introduce new JS bundles for making outbound calls to teams voice applications ([PR #4315](https://github.com/Azure/communication-ui-library/pull/4315) by dmceachern@microsoft.com)
 - Remove the InlineImageMetadata type ([PR #4212](https://github.com/azure/communication-ui-library/pull/4212) by 9044372+JoshuaLai@users.noreply.github.com)
@@ -29,7 +24,6 @@ We are excited to announce that the Azure Communication Services Web UI Library 
 
 ### Improvements
 - Change screenShareParticipant to be optional ([PR #4204](https://github.com/azure/communication-ui-library/pull/4204) by 93549644+ShaunaSong@users.noreply.github.com)
-- Hide participant information ([PR #4254](https://github.com/azure/communication-ui-library/pull/4254) by 93549644+ShaunaSong@users.noreply.github.com)
 - Upgrade Typescript to 5.4.2 ([PR #4284](https://github.com/azure/communication-ui-library/pull/4284) by 2684369+JamesBurnside@users.noreply.github.com)
 - Update SDK version ([PR #4221](https://github.com/azure/communication-ui-library/pull/4221) by 93549644+ShaunaSong@users.noreply.github.com)
 - Run CI on release branches ([PR #4181](https://github.com/azure/communication-ui-library/pull/4181) by 2684369+JamesBurnside@users.noreply.github.com)
@@ -57,7 +51,6 @@ We are excited to announce that the Azure Communication Services Web UI Library 
 - Ensure theme is memoized for calls to useTheme ([PR #4301](https://github.com/azure/communication-ui-library/pull/4301) by 2684369+JamesBurnside@users.noreply.github.com)
 - Ensure fileSharingMetadata is only set if there are valid objects ([PR #4322](https://github.com/azure/communication-ui-library/pull/4322) by 3941071+emlynmac@users.noreply.github.com)
 - Retain pinned participants after holding call in CallComposite and CallWithChatComposite ([PR #4319](https://github.com/azure/communication-ui-library/pull/4319) by 79475487+mgamis-msft@users.noreply.github.com)
-- Fix the local screen share ([PR #4255](https://github.com/azure/communication-ui-library/pull/4255) by 93549644+ShaunaSong@users.noreply.github.com)
 - Fix inline image live message announcement content for accessibility ([PR #4236](https://github.com/azure/communication-ui-library/pull/4236) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
 
 
