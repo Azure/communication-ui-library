@@ -28,7 +28,7 @@ export const hasIncompleteAttachmentUploads = (activeAttachmentUploads: Attachme
  * @private
  */
 export const hasCompletedAttachmentUploads = (activeAttachmentUploads: AttachmentMetadata[] | undefined): boolean => {
-  return !!activeAttachmentUploads?.find((file) => !file.uploadError);
+  return !!activeAttachmentUploads?.find((attachment) => !attachment.uploadError);
 };
 
 /**

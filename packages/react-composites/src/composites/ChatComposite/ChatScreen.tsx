@@ -204,7 +204,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const onRenderAttachmentDownloads = useCallback(
     (userId: string, message: ChatMessage) => (
       <_AttachmentDownloadCards
-        attachments={message.files}
+        attachments={message.attachments || []}
         message={message}
         // temp walkaround until upload is refactored
         actionsForAttachment={attachmentOptions?.downloadOptions?.actionsForAttachment}
@@ -337,7 +337,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [overlayImageItem?.attachmentId]
   );
 
-  const AttachFileButton = useCallback(() => {
+  const AttachmentButton = useCallback(() => {
     if (!attachmentOptions?.uploadOptions?.handler) {
       return null;
     }
@@ -391,7 +391,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             <Stack horizontal={formFactor === 'mobile'}>
               {formFactor === 'mobile' && (
                 <Stack verticalAlign="center">
-                  <AttachFileButton />
+                  <AttachmentButton />
                 </Stack>
               )}
               <Stack grow>
@@ -402,7 +402,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                   adapter={adapter}
                 />
               </Stack>
-              {formFactor !== 'mobile' && <AttachFileButton />}
+              {formFactor !== 'mobile' && <AttachmentButton />}
             </Stack>
           </Stack>
         </Stack>

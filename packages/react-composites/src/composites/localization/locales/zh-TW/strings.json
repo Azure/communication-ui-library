@@ -328,7 +328,7 @@
   },
   "chat": {
     "chatListHeader": "在此聊天中",
-    "uploadFile": "上傳檔案"
+    "uploadAttachment": "上傳檔案"
   },
   "callWithChat": {
     "chatButtonLabel": "聊天",

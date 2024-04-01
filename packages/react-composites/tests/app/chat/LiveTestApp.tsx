@@ -58,23 +58,23 @@ export const LiveTestApp = (): JSX.Element => {
   React.useEffect(() => {
     if (adapter && uploadedFiles.length) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      uploadedFiles.forEach((file: any) => {
-        if (file.uploadComplete) {
-          const attachmentUploads = adapter.registerActiveUploads([new File([], file.name)]);
+      uploadedFiles.forEach((attachment: any) => {
+        if (attachment.uploadComplete) {
+          const attachmentUploads = adapter.registerActiveUploads([new File([], attachment.name)]);
           attachmentUploads[0].notifyCompleted({
-            name: file.name,
-            extension: file.extension,
-            url: file.url,
+            name: attachment.name,
+            extension: attachment.extension,
+            url: attachment.url,
             id: ''
           });
-        } else if (file.error) {
-          const attachmentUploads = adapter.registerActiveUploads([new File([], file.name)]);
-          attachmentUploads[0].notifyFailed(file.error);
-        } else if (file.progress) {
-          const attachmentUploads = adapter.registerActiveUploads([new File([], file.name)]);
-          attachmentUploads[0].notifyProgressChanged(file.progress);
+        } else if (attachment.error) {
+          const attachmentUploads = adapter.registerActiveUploads([new File([], attachment.name)]);
+          attachmentUploads[0].notifyFailed(attachment.error);
+        } else if (attachment.progress) {
+          const attachmentUploads = adapter.registerActiveUploads([new File([], attachment.name)]);
+          attachmentUploads[0].notifyProgressChanged(attachment.progress);
         } else {
-          adapter.registerCompletedUploads([file]);
+          adapter.registerCompletedUploads([attachment]);
         }
       });
     }

@@ -1802,7 +1802,7 @@ export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcon
 // @public
 export interface ChatCompositeStrings {
     chatListHeader: string;
-    uploadFile: string;
+    uploadAttachment: string;
 }
 
 // @public
@@ -1845,6 +1845,8 @@ export type ChatHandlers = {
 export interface ChatMessage extends MessageCommon {
     // (undocumented)
     attached?: MessageAttachedStatus;
+    // @beta
+    attachments?: AttachmentMetadata[];
     // (undocumented)
     clientMessageId?: string;
     // (undocumented)
@@ -1857,8 +1859,6 @@ export interface ChatMessage extends MessageCommon {
     editedOn?: Date;
     // (undocumented)
     failureReason?: string;
-    // @beta
-    files?: AttachmentMetadata[];
     // (undocumented)
     messageType: 'chat';
     metadata?: Record<string, string>;
@@ -3879,7 +3879,7 @@ export const RichTextSendBox: (props: RichTextSendBoxProps) => JSX.Element;
 export interface RichTextSendBoxProps {
     activeAttachmentUploads?: AttachmentMetadata[];
     disabled?: boolean;
-    onCancelAttachmentUpload?: (fileId: string) => void;
+    onCancelAttachmentUpload?: (attachmentId: string) => void;
     onSendMessage: (content: string) => Promise<void>;
     strings?: Partial<RichTextSendBoxStrings>;
     systemMessage?: string;
@@ -3953,7 +3953,7 @@ export interface SendBoxProps {
     // @beta
     mentionLookupOptions?: MentionLookupOptions;
     // @beta
-    onCancelAttachmentUpload?: (fileId: string) => void;
+    onCancelAttachmentUpload?: (attachmentId: string) => void;
     // @beta
     onRenderAttachmentUploads?: () => JSX.Element;
     onRenderIcon?: (isHover: boolean) => JSX.Element;

@@ -328,7 +328,7 @@
   },
   "chat": {
     "chatListHeader": "В этом чате",
-    "uploadFile": "Отправить файл"
+    "uploadAttachment": "Отправить файл"
   },
   "callWithChat": {
     "chatButtonLabel": "Чат",
