@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { AttachmentUploadManager, AttachmentMetata } from '@internal/react-components';
+import { AttachmentUploadManager, AttachmentMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { produce } from 'immer';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
@@ -12,22 +12,22 @@ import { ChatContext } from './AzureCommunicationChatAdapter';
 import { ChatAdapterState } from './ChatAdapter';
 
 /**
- * A record containing {@link AttachmentMetata} mapped to unique ids.
+ * A record containing {@link AttachmentMetadata} mapped to unique ids.
  * @beta
  */
-export type AttachmentUploadsUiState = Record<string, AttachmentMetata>;
+export type AttachmentUploadsUiState = Record<string, AttachmentMetadata>;
 
 /**
  * @beta
  */
 export interface AttachmentUploadAdapter {
   registerActiveUploads: (files: File[]) => AttachmentUploadManager[];
-  registerCompletedUploads: (metadata: AttachmentMetata[]) => AttachmentUploadManager[];
+  registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadManager[];
   clearUploads: () => void;
   cancelUpload: (id: string) => void;
   updateUploadProgress: (id: string, progress: number) => void;
   updateUploadStatusMessage: (id: string, errorMessage: string) => void;
-  updateUploadMetadata: (id: string, metadata: AttachmentMetata) => void;
+  updateUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
 }
 
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
@@ -65,7 +65,7 @@ class AttachmentUploadContext {
 
   public updateAttachmentUpload(
     id: string,
-    data: Partial<Pick<AttachmentMetata, 'progress' | 'id' | 'name' | 'extension' | 'uploadError' | 'url'>>
+    data: Partial<Pick<AttachmentMetadata, 'progress' | 'id' | 'name' | 'extension' | 'uploadError' | 'url'>>
   ): void {
     this.chatContext.setState(
       produce(this.chatContext.getState(), (draft: ChatAdapterState) => {
@@ -114,8 +114,8 @@ export class AzureCommunicationAttachmentUploadAdapter implements AttachmentUplo
   private deleteErroneousAttachmentUploads(): void {
     const attachmentUploads = this.context.getAttachmentUploads() || {};
     const ids = Object.values(attachmentUploads)
-      .filter((item: AttachmentMetata) => item.uploadError)
-      .map((item: AttachmentMetata) => item.id);
+      .filter((item: AttachmentMetadata) => item.uploadError)
+      .map((item: AttachmentMetadata) => item.id);
 
     ids.forEach((id) => {
       const attachmentUpload = this.findAttachmentUpload(id);
@@ -125,7 +125,7 @@ export class AzureCommunicationAttachmentUploadAdapter implements AttachmentUplo
     this.deleteAttachmentUploads(ids);
   }
 
-  private registerAttachmentUploads(files: File[] | AttachmentMetata[]): AttachmentUploadManager[] {
+  private registerAttachmentUploads(files: File[] | AttachmentMetadata[]): AttachmentUploadManager[] {
     this.deleteErroneousAttachmentUploads();
     const attachmentUploads: AttachmentUpload[] = [];
     files.forEach((file) => attachmentUploads.push(new AttachmentUpload(file)));
@@ -139,7 +139,7 @@ export class AzureCommunicationAttachmentUploadAdapter implements AttachmentUplo
     return this.registerAttachmentUploads(files);
   }
 
-  registerCompletedUploads(metadata: AttachmentMetata[]): AttachmentUploadManager[] {
+  registerCompletedUploads(metadata: AttachmentMetadata[]): AttachmentUploadManager[] {
     return this.registerAttachmentUploads(metadata);
   }
 
@@ -169,7 +169,7 @@ export class AzureCommunicationAttachmentUploadAdapter implements AttachmentUplo
     });
   }
 
-  updateUploadMetadata(id: string, metadata: AttachmentMetata): void {
+  updateUploadMetadata(id: string, metadata: AttachmentMetadata): void {
     this.context.updateAttachmentUpload(id, {
       progress: 1,
       id: metadata.id,
@@ -201,7 +201,7 @@ export const convertAttachmentUploadsUiStateToMessageMetadata = (
   attachmentUploads?: AttachmentUploadsUiState
 ): AttachmentHandlingMetadata | undefined => {
   if (attachmentUploads) {
-    const fileMetadata: AttachmentMetata[] = [];
+    const fileMetadata: AttachmentMetadata[] = [];
     Object.keys(attachmentUploads).forEach((key) => {
       const attachment = attachmentUploads[key];
       if (attachment && !attachment.uploadError) {

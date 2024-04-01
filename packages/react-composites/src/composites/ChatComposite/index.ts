@@ -36,7 +36,7 @@ export * from './Strings';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 export type {
   AttachmentOptions,
-  AttachmentMetata,
+  AttachmentMetadata,
   AttachmentUploadStatus,
   AttachmentUploadOptions,
   AttachmentDownloadOptions,

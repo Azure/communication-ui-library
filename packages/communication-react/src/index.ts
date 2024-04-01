@@ -321,7 +321,7 @@ export type {
 } from '../../react-components/src';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 export type {
-  AttachmentMetata,
+  AttachmentMetadata,
   SendBoxErrorBarError,
   AttachmentMenuAction,
   AttachmentOptions

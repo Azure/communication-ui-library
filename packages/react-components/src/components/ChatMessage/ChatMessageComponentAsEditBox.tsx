@@ -15,7 +15,7 @@ import { useChatMyMessageStyles } from '../styles/MessageThread.styles';
 import { ChatMessage } from '../../types';
 import { _AttachmentUploadCards } from '../AttachmentUploadCards';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetata } from '../../types/Attachment';
+import { AttachmentMetadata } from '../../types/Attachment';
 import {
   chatMessageFailedTagStyle,
   editChatMessageFailedTagStyle,
@@ -38,7 +38,7 @@ export type ChatMessageComponentAsEditBoxProps = {
     metadata?: Record<string, string>,
     options?: {
       /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-      attachmentMetadata?: AttachmentMetata[];
+      attachmentMetadata?: AttachmentMetadata[];
     }
   ) => void;
   message: ChatMessage;

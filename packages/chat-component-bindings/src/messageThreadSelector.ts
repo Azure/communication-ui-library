@@ -29,7 +29,7 @@ import { DEFAULT_DATA_LOSS_PREVENTION_POLICY_URL } from './utils/constants';
 import { ACSKnownMessageType } from './utils/constants';
 import { updateMessagesWithAttached } from './utils/updateMessagesWithAttached';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetata } from '@internal/react-components';
+import { AttachmentMetadata } from '@internal/react-components';
 import { ChatAttachment } from '@azure/communication-chat';
 import type { ChatParticipant } from '@azure/communication-chat';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
@@ -61,7 +61,7 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
 );
 
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-const extractAttachedFilesMetadata = (metadata: Record<string, string>): AttachmentMetata[] => {
+const extractAttachedFilesMetadata = (metadata: Record<string, string>): AttachmentMetadata[] => {
   const fileMetadata = metadata.attachmentHandlingMetadata;
   if (!fileMetadata) {
     return [];
@@ -77,9 +77,9 @@ const extractAttachedFilesMetadata = (metadata: Record<string, string>): Attachm
 const extractTeamsAttachmentsMetadata = (
   attachments: ChatAttachment[]
 ): {
-  files: AttachmentMetata[];
+  files: AttachmentMetadata[];
 } => {
-  const files: AttachmentMetata[] = [];
+  const files: AttachmentMetadata[] = [];
   attachments.forEach((attachment) => {
     const attachmentType = attachment.attachmentType as ChatAttachmentType;
     const contentType = extractAttachmentContentTypeFromName(attachment.name);
@@ -198,8 +198,8 @@ const extractAttachmentContentTypeFromName = (name?: string): string => {
 };
 
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-const extractAttachmentsMetadata = (message: ChatMessageWithStatus): { files?: AttachmentMetata[] } => {
-  let files: AttachmentMetata[] = [];
+const extractAttachmentsMetadata = (message: ChatMessageWithStatus): { files?: AttachmentMetadata[] } => {
+  let files: AttachmentMetadata[] = [];
   if (message.metadata) {
     files = files.concat(extractAttachedFilesMetadata(message.metadata));
   }

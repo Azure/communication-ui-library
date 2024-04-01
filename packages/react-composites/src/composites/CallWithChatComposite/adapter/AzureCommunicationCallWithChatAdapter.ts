@@ -26,7 +26,7 @@ import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetata, AttachmentUploadManager } from '@internal/react-components';
+import { AttachmentMetadata, AttachmentUploadManager } from '@internal/react-components';
 import {
   ParticipantsJoinedListener,
   ParticipantsLeftListener,
@@ -453,7 +453,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     metadata?: Record<string, string>,
     options?: {
       /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-      attachmentMetadata?: AttachmentMetata[];
+      attachmentMetadata?: AttachmentMetadata[];
     }
   ): Promise<void> {
     return this.chatAdapterPromise.then((adapter) => {
@@ -476,7 +476,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return this.chatAdapter?.registerActiveUploads(files) ?? [];
   };
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  public registerCompletedUploads = (metadata: AttachmentMetata[]): AttachmentUploadManager[] => {
+  public registerCompletedUploads = (metadata: AttachmentMetadata[]): AttachmentUploadManager[] => {
     return this.chatAdapter?.registerCompletedUploads(metadata) ?? [];
   };
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
@@ -504,7 +504,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     });
   };
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  public updateUploadMetadata = (id: string, metadata: AttachmentMetata): void => {
+  public updateUploadMetadata = (id: string, metadata: AttachmentMetadata): void => {
     this.chatAdapterPromise.then((adapter) => {
       adapter.updateUploadMetadata(id, metadata);
     });

@@ -8,7 +8,7 @@ import { ChatMessage } from './ChatMessage';
  *
  * @beta
  */
-export interface AttachmentMetata {
+export interface AttachmentMetadata {
   /**
    * Extension hint, useful for rendering a specific icon.
    * An unknown or empty extension will be rendered as a generic icon.
@@ -66,7 +66,7 @@ export interface AttachmentDownloadOptions {
   // A callback function that defines what action user can perform on an attachment.
   // by default, the UI library would have default actions that opens file URL in a new tab
   // provide this callback function to override the default actions or add new actions.
-  actionsForAttachment: (attachment: AttachmentMetata, message?: ChatMessage) => AttachmentMenuAction[];
+  actionsForAttachment: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
 }
 
 /**
@@ -78,7 +78,7 @@ export interface AttachmentDownloadOptions {
 export interface AttachmentMenuAction {
   name: string;
   icon: JSX.Element;
-  onClick: (attachment: AttachmentMetata) => Promise<void>;
+  onClick: (attachment: AttachmentMetadata) => Promise<void>;
 }
 
 /**
@@ -131,9 +131,9 @@ export interface AttachmentUploadManager {
   /**
    * Mark the upload as complete.
    * Requires the `metadata` param containing uploaded file information.
-   * @param metadata - {@link AttachmentMetata}
+   * @param metadata - {@link AttachmentMetadata}
    */
-  notifyCompleted: (metadata: AttachmentMetata) => void;
+  notifyCompleted: (metadata: AttachmentMetadata) => void;
   /**
    * Mark the upload as failed.
    * @param message - An error message that can be displayed to the user.

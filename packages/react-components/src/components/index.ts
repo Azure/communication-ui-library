@@ -211,7 +211,7 @@ export type { _AttachmentUploadCardsStrings } from './AttachmentUploadCards';
 export type {
   AttachmentOptions,
   AttachmentUploadOptions,
-  AttachmentMetata,
+  AttachmentMetadata,
   AttachmentUploadStatus,
   AttachmentUploadHandler,
   AttachmentUploadManager

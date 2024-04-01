@@ -7,7 +7,7 @@ import { Common, fromFlatCommunicationIdentifier } from '@internal/acs-ui-common
 import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { ChatMessage, ChatMessageReadReceipt, ChatThreadClient, SendMessageOptions } from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
-import { AttachmentMetata } from '@internal/react-components';
+import { AttachmentMetadata } from '@internal/react-components';
 
 /**
  * Object containing all the handlers required for chat components.
@@ -31,7 +31,7 @@ export type ChatHandlers = {
     options?: {
       /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
       metadata?: Record<string, string>;
-      attachmentMetadata?: AttachmentMetata[];
+      attachmentMetadata?: AttachmentMetadata[];
     }
   ) => Promise<void>;
   onDeleteMessage: (messageId: string) => Promise<void>;
@@ -64,7 +64,7 @@ export const createDefaultChatHandlers = memoizeOne(
         content: string,
         options?: {
           metadata?: Record<string, string>;
-          attachmentMetadata?: AttachmentMetata[];
+          attachmentMetadata?: AttachmentMetadata[];
         }
       ) => {
         const updatedMetadata = options?.metadata ? { ...options.metadata } : {};

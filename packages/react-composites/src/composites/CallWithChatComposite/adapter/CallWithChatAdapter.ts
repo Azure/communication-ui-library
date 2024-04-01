@@ -45,7 +45,7 @@ import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react
 import { SendMessageOptions } from '@azure/communication-chat';
 import { JoinCallOptions } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetata } from '@internal/react-components';
+import { AttachmentMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { AttachmentUploadManager } from '@internal/react-components';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -381,7 +381,7 @@ export interface CallWithChatAdapterManagement {
   registerActiveUploads: (files: File[]) => AttachmentUploadManager[];
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /** @beta */
-  registerCompletedUploads: (metadata: AttachmentMetata[]) => AttachmentUploadManager[];
+  registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadManager[];
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /** @beta */
   clearUploads: () => void;
@@ -396,7 +396,7 @@ export interface CallWithChatAdapterManagement {
   updateUploadStatusMessage: (id: string, errorMessage: string) => void;
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /** @beta */
-  updateUploadMetadata: (id: string, metadata: AttachmentMetata) => void;
+  updateUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
   /** @public */
   downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
   /** @public */

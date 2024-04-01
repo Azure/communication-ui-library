@@ -44,7 +44,7 @@ import { AzureCommunicationAttachmentUploadAdapter } from './AzureCommunicationA
 import { useEffect, useRef, useState } from 'react';
 import { _isValidIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetata } from '@internal/react-components';
+import { AttachmentMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { AttachmentUploadManager } from '@internal/react-components';
 
@@ -269,7 +269,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     metadata?: Record<string, string>,
     options?: {
       /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-      attachmentMetadata?: AttachmentMetata[];
+      attachmentMetadata?: AttachmentMetadata[];
     }
   ): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
@@ -293,7 +293,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  registerCompletedUploads(metadata: AttachmentMetata[]): AttachmentUploadManager[] {
+  registerCompletedUploads(metadata: AttachmentMetadata[]): AttachmentUploadManager[] {
     return this.attachmentUploadAdapter.registerCompletedUploads(metadata);
   }
 
@@ -318,7 +318,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  updateUploadMetadata(id: string, metadata: AttachmentMetata): void {
+  updateUploadMetadata(id: string, metadata: AttachmentMetadata): void {
     this.attachmentUploadAdapter.updateUploadMetadata(id, metadata);
   }
 

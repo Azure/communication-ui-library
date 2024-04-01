@@ -26,7 +26,7 @@ import { Announcer } from './Announcer';
 import { useEffect, useState, useMemo } from 'react';
 import { _AttachmentUploadCardsStrings } from './AttachmentUploadCards';
 import { useLocaleAttachmentCardStringsTrampoline } from './utils/common';
-import { AttachmentMetata, AttachmentMenuAction } from '../types/Attachment';
+import { AttachmentMetadata, AttachmentMenuAction } from '../types/Attachment';
 import { MoreHorizontal24Filled } from '@fluentui/react-icons';
 import { useAttachmentCardStyles, attachmentNameContainerClassName } from './styles/AttachmentCard.styles';
 
@@ -38,7 +38,7 @@ export interface _AttachmentCardProps {
   /**
    * Attachment details including name, extension, url, etc.
    */
-  attachment: AttachmentMetata;
+  attachment: AttachmentMetadata;
   /**
    * An array of menu actions to be displayed in the attachment card.
    */
@@ -124,7 +124,7 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
 
 const getMenuItems = (
   menuActions: AttachmentMenuAction[],
-  attachment: AttachmentMetata,
+  attachment: AttachmentMetadata,
   handleOnClickError?: (errMsg: string) => void
 ): JSX.Element => {
   if (menuActions.length === 0) {

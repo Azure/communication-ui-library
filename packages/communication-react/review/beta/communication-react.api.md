@@ -147,7 +147,7 @@ export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : fa
 // @beta
 export interface AttachmentDownloadOptions {
     // (undocumented)
-    actionsForAttachment: (attachment: AttachmentMetata, message?: ChatMessage) => AttachmentMenuAction[];
+    actionsForAttachment: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
 }
 
 // @beta
@@ -157,11 +157,11 @@ export interface AttachmentMenuAction {
     // (undocumented)
     name: string;
     // (undocumented)
-    onClick: (attachment: AttachmentMetata) => Promise<void>;
+    onClick: (attachment: AttachmentMetadata) => Promise<void>;
 }
 
 // @beta
-export interface AttachmentMetata {
+export interface AttachmentMetadata {
     extension?: string;
     id: string;
     name: string;
@@ -187,9 +187,9 @@ export interface AttachmentUploadAdapter {
     // (undocumented)
     registerActiveUploads: (files: File[]) => AttachmentUploadManager[];
     // (undocumented)
-    registerCompletedUploads: (metadata: AttachmentMetata[]) => AttachmentUploadManager[];
+    registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadManager[];
     // (undocumented)
-    updateUploadMetadata: (id: string, metadata: AttachmentMetata) => void;
+    updateUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
     // (undocumented)
     updateUploadProgress: (id: string, progress: number) => void;
     // (undocumented)
@@ -203,7 +203,7 @@ export type AttachmentUploadHandler = (attachmentUploads: AttachmentUploadManage
 export interface AttachmentUploadManager {
     file?: File;
     id: string;
-    notifyCompleted: (metadata: AttachmentMetata) => void;
+    notifyCompleted: (metadata: AttachmentMetadata) => void;
     notifyFailed: (message: string) => void;
     notifyProgressChanged: (value: number) => void;
 }
@@ -224,7 +224,7 @@ export interface AttachmentUploadStatus {
 }
 
 // @beta
-export type AttachmentUploadsUiState = Record<string, AttachmentMetata>;
+export type AttachmentUploadsUiState = Record<string, AttachmentMetadata>;
 
 // @public
 export type AvatarPersonaData = {
@@ -1105,7 +1105,7 @@ export interface CallWithChatAdapterManagement {
     // @beta (undocumented)
     registerActiveUploads: (files: File[]) => AttachmentUploadManager[];
     // @beta (undocumented)
-    registerCompletedUploads: (metadata: AttachmentMetata[]) => AttachmentUploadManager[];
+    registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadManager[];
     removeParticipant(userId: string): Promise<void>;
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
@@ -1142,7 +1142,7 @@ export interface CallWithChatAdapterManagement {
     updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void>;
     updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
     // @beta (undocumented)
-    updateUploadMetadata: (id: string, metadata: AttachmentMetata) => void;
+    updateUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
     // @beta (undocumented)
     updateUploadProgress: (id: string, progress: number) => void;
     // @beta (undocumented)
@@ -1715,7 +1715,7 @@ export interface ChatAdapterThreadManagement {
     sendTypingIndicator(): Promise<void>;
     setTopic(topicName: string): Promise<void>;
     updateMessage(messageId: string, content: string, metadata?: Record<string, string>, options?: {
-        attachmentMetadata?: AttachmentMetata[];
+        attachmentMetadata?: AttachmentMetadata[];
     }): Promise<void>;
 }
 
@@ -1836,7 +1836,7 @@ export type ChatHandlers = {
     onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
     onUpdateMessage: (messageId: string, content: string, options?: {
         metadata?: Record<string, string>;
-        attachmentMetadata?: AttachmentMetata[];
+        attachmentMetadata?: AttachmentMetadata[];
     }) => Promise<void>;
     onDeleteMessage: (messageId: string) => Promise<void>;
 };
@@ -1858,7 +1858,7 @@ export interface ChatMessage extends MessageCommon {
     // (undocumented)
     failureReason?: string;
     // @beta
-    files?: AttachmentMetata[];
+    files?: AttachmentMetadata[];
     // (undocumented)
     messageType: 'chat';
     metadata?: Record<string, string>;
@@ -3877,7 +3877,7 @@ export const RichTextSendBox: (props: RichTextSendBoxProps) => JSX.Element;
 
 // @beta
 export interface RichTextSendBoxProps {
-    activeAttachmentUploads?: AttachmentMetata[];
+    activeAttachmentUploads?: AttachmentMetadata[];
     disabled?: boolean;
     onCancelAttachmentUpload?: (fileId: string) => void;
     onSendMessage: (content: string) => Promise<void>;
@@ -3947,7 +3947,7 @@ export interface SendBoxErrorBarError {
 // @public
 export interface SendBoxProps {
     // @beta
-    activeAttachmentUploads?: AttachmentMetata[];
+    activeAttachmentUploads?: AttachmentMetadata[];
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
     // @beta
@@ -4416,7 +4416,7 @@ export interface UnsupportedOperatingSystemStrings {
 // @public
 export type UpdateMessageCallback = (messageId: string, content: string, options?: {
     metadata?: Record<string, string>;
-    attachmentMetadata?: AttachmentMetata[];
+    attachmentMetadata?: AttachmentMetadata[];
 }) => Promise<void>;
 
 // @public

@@ -9,7 +9,7 @@ import { useLocale } from '../localization';
 import { _AttachmentCard } from './AttachmentCard';
 import { _AttachmentCardGroup } from './AttachmentCardGroup';
 import { _formatString } from '@internal/acs-ui-common';
-import { AttachmentMenuAction, AttachmentMetata } from '../types/Attachment';
+import { AttachmentMenuAction, AttachmentMetadata } from '../types/Attachment';
 import { ChatMessage } from '../types';
 
 /**
@@ -41,7 +41,7 @@ export interface _AttachmentDownloadCardsProps {
   /**
    * A chat message metadata that includes attachment metadata
    */
-  attachments?: AttachmentMetata[];
+  attachments?: AttachmentMetadata[];
   /**
    * A chat message metadata that includes attachment metadata
    */
@@ -49,7 +49,7 @@ export interface _AttachmentDownloadCardsProps {
   /**
    * Optional callback to handle attachment download
    */
-  actionsForAttachment?: (attachment: AttachmentMetata, message?: ChatMessage) => AttachmentMenuAction[];
+  actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
   /**
    * Optional callback that runs if downloadHandler returns an error.
    */
@@ -73,10 +73,10 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
 
   const getMenuActions = useCallback(
     (
-      attachment: AttachmentMetata,
+      attachment: AttachmentMetadata,
       localeStrings: _AttachmentDownloadCardsStrings,
       message?: ChatMessage,
-      action?: (attachment: AttachmentMetata, message?: ChatMessage) => AttachmentMenuAction[]
+      action?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[]
     ): AttachmentMenuAction[] => {
       const defaultMenuActions = getDefaultMenuActions(localeStrings, message);
       try {
@@ -194,9 +194,9 @@ export const defaultAttachmentMenuAction: AttachmentMenuAction = {
   // this is the icon shown on the right of the attachment card
   icon: <Icon iconName="DownloadAttachment" data-ui-id="attachment-download-card-download-icon" />,
   // this is the action that runs when the icon is clicked
-  onClick: (attachment: AttachmentMetata) => {
+  onClick: (attachment: AttachmentMetadata) => {
     return new Promise<void>((resolve) => {
-      window.open((attachment as AttachmentMetata).url, '_blank', 'noopener,noreferrer');
+      window.open((attachment as AttachmentMetadata).url, '_blank', 'noopener,noreferrer');
       resolve();
     });
   }

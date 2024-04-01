@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-import { AttachmentMetata } from '../types/Attachment';
+import { AttachmentMetadata } from '../types/Attachment';
 import { _AttachmentDownloadCards } from './AttachmentDownloadCards';
 import { render, screen } from '@testing-library/react';
 import { registerIcons } from '@fluentui/react';
@@ -19,7 +19,7 @@ describe('AttachmentDownloadCards should be rendered properly', () => {
   });
 
   it('should render if it is AttachmentSharingMetadata', async () => {
-    const attachment: AttachmentMetata = {
+    const attachment: AttachmentMetadata = {
       name: 'MockAttachmentCard',
       extension: 'docx',
       url: 'mockUrl',
@@ -42,5 +42,5 @@ const renderAttachmentDownloadCardsWithDefaults = (props: MockDownloadCardProps)
 
 interface MockDownloadCardProps {
   userId: string;
-  attachments: AttachmentMetata[];
+  attachments: AttachmentMetadata[];
 }

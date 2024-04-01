@@ -5,7 +5,7 @@ import { EventEmitter } from 'events';
 import { nanoid } from 'nanoid';
 import { _MAX_EVENT_LISTENERS } from '@internal/acs-ui-common';
 import {
-  AttachmentMetata,
+  AttachmentMetadata,
   AttachmentUploadHandler,
   AttachmentUploadManager,
   AttachmentUploadStatus
@@ -25,11 +25,11 @@ export class AttachmentUpload implements AttachmentUploadManager, AttachmentUplo
    */
   public readonly name: string;
   /**
-   * Optional object of type {@link AttachmentMetata}
+   * Optional object of type {@link AttachmentMetadata}
    */
-  public metadata?: AttachmentMetata;
+  public metadata?: AttachmentMetadata;
 
-  constructor(data: File | AttachmentMetata) {
+  constructor(data: File | AttachmentMetadata) {
     this._emitter = new EventEmitter();
     this._emitter.setMaxListeners(_MAX_EVENT_LISTENERS);
     this.id = nanoid();
@@ -38,7 +38,7 @@ export class AttachmentUpload implements AttachmentUploadManager, AttachmentUplo
     } else {
       this.metadata = data;
     }
-    const name = (data as unknown as AttachmentMetata)?.name;
+    const name = (data as unknown as AttachmentMetadata)?.name;
     this.name = name;
   }
 
@@ -46,7 +46,7 @@ export class AttachmentUpload implements AttachmentUploadManager, AttachmentUplo
     this._emitter.emit('uploadProgressChange', this.id, value);
   }
 
-  notifyCompleted(metadata: AttachmentMetata): void {
+  notifyCompleted(metadata: AttachmentMetadata): void {
     this._emitter.emit('uploadComplete', this.id, metadata);
   }
 
@@ -79,7 +79,7 @@ export class AttachmentUpload implements AttachmentUploadManager, AttachmentUplo
   }
 }
 
-export type { AttachmentMetata, AttachmentUploadHandler, AttachmentUploadManager, AttachmentUploadStatus };
+export type { AttachmentMetadata, AttachmentUploadHandler, AttachmentUploadManager, AttachmentUploadStatus };
 
 /**
  * Events emitted by the AttachmentUpload class.
@@ -102,7 +102,7 @@ type UploadProgressListener = (id: string, value: number) => void;
  * Listener for `uploadComplete` event.
  * @beta
  */
-type UploadCompleteListener = (id: string, metadata: AttachmentMetata) => void;
+type UploadCompleteListener = (id: string, metadata: AttachmentMetadata) => void;
 /**
  * Listener for `uploadFailed` event.
  * @beta
