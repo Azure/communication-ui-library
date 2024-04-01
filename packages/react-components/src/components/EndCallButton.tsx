@@ -27,11 +27,11 @@ export interface EndCallButtonStrings {
   tooltipContent?: string;
 
   /* @conditional-compile-remove(end-call-options) */
-  /* Label for leave option when ending call */
+  /** Label for leave option when ending call */
   leaveOption?: string;
 
   /* @conditional-compile-remove(end-call-options) */
-  /* Label for end the whole call option when ending call */
+  /** Label for end the whole call option when ending call */
   endCallOption?: string;
 }
 

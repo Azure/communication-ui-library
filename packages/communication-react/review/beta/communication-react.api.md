@@ -2891,10 +2891,8 @@ export interface EndCallButtonProps extends ControlBarButtonProps {
 
 // @public
 export interface EndCallButtonStrings {
-    // (undocumented)
     endCallOption?: string;
     label: string;
-    // (undocumented)
     leaveOption?: string;
     tooltipContent?: string;
 }
