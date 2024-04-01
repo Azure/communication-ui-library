@@ -93,6 +93,12 @@ type ChatMyMessageComponentProps = {
    * Optional callback to define custom actions for attachments.
    */
   actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
+  /* @conditional-compile-remove(rich-text-editor) */
+  /**
+   * Optional flag to enable rich text editor.
+   * @beta
+   */
+  enableRichTextEditor?: boolean;
 };
 
 /**

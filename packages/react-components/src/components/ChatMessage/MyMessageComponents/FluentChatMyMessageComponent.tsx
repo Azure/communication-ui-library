@@ -48,7 +48,9 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     actionsForAttachment,
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    onRenderAttachmentDownloads
+    onRenderAttachmentDownloads,
+    /* @conditional-compile-remove(rich-text-editor) */
+    enableRichTextEditor
   } = props;
   const chatMessageRenderStyles = useChatMessageRenderStyles();
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
@@ -90,29 +92,26 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
             mentionOptions={mentionOptions}
             /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
             actionsForAttachment={actionsForAttachment}
+            /* @conditional-compile-remove(rich-text-editor) */
+            enableRichTextEditor={enableRichTextEditor}
           />
         );
       }
       return <></>;
     },
     [
-      onActionButtonClick,
-      onRenderAvatar,
+      onRenderAttachmentDownloadsMemo,
+      userId,
       participantCount,
       shouldOverlapAvatarAndMessage,
+      onRenderAvatar,
       showMessageStatus,
-      userId,
-      /* @conditional-compile-remove(date-time-customization) */
+      onActionButtonClick,
       onDisplayDateTimeString,
       inlineImageOptions,
-      /* @conditional-compile-remove(mention) */
       mentionOptions,
-      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-      onRenderAttachmentDownloadsMemo,
-      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
       actionsForAttachment,
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      new Date().toDateString()
+      enableRichTextEditor
     ]
   );
 
