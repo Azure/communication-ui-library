@@ -404,6 +404,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     };
   }, [adapter]);
 
+  const compositeAudioContext = useRef<AudioContext>(new AudioContext());
+
   /* @conditional-compile-remove(capabilities) */
   const capabilitiesChangedInfoAndRole = useSelector(capabilitiesChangedInfoAndRoleSelector);
 
@@ -593,6 +595,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
           pinnedParticipants={pinnedParticipants}
           setPinnedParticipants={setPinnedParticipants}
+          compositeAudioContext={compositeAudioContext.current}
         />
       );
       break;

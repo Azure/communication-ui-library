@@ -191,6 +191,8 @@ export class CallContext {
         existingCall.captionsFeature.currentSpokenLanguage = call.captionsFeature.currentSpokenLanguage;
         /* @conditional-compile-remove(close-captions) */
         existingCall.captionsFeature.currentCaptionLanguage = call.captionsFeature.currentCaptionLanguage;
+        /* @conditional-compile-remove(meeting-id) */
+        existingCall.info = call.info;
       } else {
         draft.calls[latestCallId] = call;
       }

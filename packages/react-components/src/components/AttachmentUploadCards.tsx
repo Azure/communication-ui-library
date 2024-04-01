@@ -1,15 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Icon, IconButton } from '@fluentui/react';
-import React from 'react';
+import { Icon, mergeStyles } from '@fluentui/react';
+import React, { useMemo } from 'react';
 import { _AttachmentCard } from './AttachmentCard';
 import { _AttachmentCardGroup } from './AttachmentCardGroup';
 import { extension } from './utils';
-import { iconButtonClassName } from './styles/IconButton.styles';
-import { useMemo } from 'react';
-import { useLocaleAttachmentCardStringsTrampoline } from './utils/common';
 import { SendBoxErrorBarError } from './SendBoxErrorBar';
+import { useLocaleAttachmentCardStringsTrampoline } from './utils/common';
 
 /**
  * Attributes required for SendBox to show attachment uploads like name, progress etc.
@@ -88,10 +86,8 @@ const actionIconStyle = { height: '1rem' };
  */
 export const _AttachmentUploadCards = (props: FileUploadCardsProps): JSX.Element => {
   const attachments = props.activeFileUploads;
-
   const localeStrings = useLocaleAttachmentCardStringsTrampoline();
-
-  const removeAttachmentButtonString = useMemo(
+  const removeFileButtonString = useMemo(
     () => () => {
       return props.strings?.removeAttachment ?? localeStrings.removeAttachment;
     },
@@ -109,18 +105,35 @@ export const _AttachmentUploadCards = (props: FileUploadCardsProps): JSX.Element
           .filter((attachment) => !attachment.error)
           .map((attachment) => (
             <_AttachmentCard
-              attachmentName={attachment.filename}
+              // temp converter before upload is refactored
+              attachment={{
+                id: attachment.id,
+                name: attachment.filename,
+                extension: extension(attachment.filename),
+                progress: attachment.progress,
+                uploadStatus: attachment.error
+                  ? {
+                      message: attachment.error?.message,
+                      timestamp: attachment.error?.timestamp
+                    }
+                  : undefined
+              }}
               progress={attachment.progress}
               key={attachment.id}
-              attachmentExtension={extension(attachment.filename)}
-              actionIcon={
-                <IconButton className={iconButtonClassName} ariaLabel={removeAttachmentButtonString()}>
-                  <Icon iconName="CancelFileUpload" style={actionIconStyle} />
-                </IconButton>
-              }
-              actionHandler={() => {
-                props.onCancelFileUpload && props.onCancelFileUpload(attachment.id);
-              }}
+              menuActions={[
+                {
+                  name: props.strings?.removeAttachment ?? 'Remove',
+                  icon: (
+                    <div aria-label={removeFileButtonString()}>
+                      <Icon iconName="CancelAttachmentUpload" className={mergeStyles(actionIconStyle)} />
+                    </div>
+                  ),
+                  onClick: () => {
+                    props.onCancelFileUpload && props.onCancelFileUpload(attachment.id);
+                    return Promise.resolve();
+                  }
+                }
+              ]}
               strings={props.strings}
             />
           ))}
