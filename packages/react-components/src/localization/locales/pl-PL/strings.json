@@ -7,7 +7,8 @@
     "mutedIconLabel": "Wyciszono",
     "displayNamePlaceholder": "Uczestnik bez nazwy",
     "participantStateRinging": "Trwa łączenie…",
-    "participantStateHold": "Zawieszony"
+    "participantStateHold": "Zawieszony",
+    "attendeeRole": "Uczestnik"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} więcej"
@@ -23,15 +24,32 @@
     "placeholderText": "Wprowadź wiadomość",
     "textTooLong": "Długość wiadomości przekracza maksymalny limit.",
     "sendButtonAriaLabel": "Wyślij wiadomość",
-    "fileUploadsPendingError": "Trwa przekazywanie... Czekaj.",
-    "removeFile": "Usuwanie pliku",
+    "attachmentUploadsPendingError": "Trwa przekazywanie... Czekaj.",
+    "removeAttachment": "Usuń plik",
     "uploading": "Przekazywanie",
     "uploadCompleted": "Zakończono przekazywanie"
+  },
+  "richTextSendBox": {
+    "placeholderText": "Wprowadź wiadomość",
+    "textTooLong": "Długość wiadomości przekracza maksymalny limit.",
+    "sendButtonAriaLabel": "Wyślij wiadomość",
+    "attachmentUploadsPendingError": "Trwa przekazywanie... Czekaj.",
+    "removeAttachment": "Usuwanie pliku",
+    "uploading": "Przekazywanie",
+    "uploadCompleted": "Zakończono przekazywanie",
+    "boldTooltip": "Pogrubienie",
+    "italicTooltip": "Kursywa",
+    "underlineTooltip": "Podkreślenie",
+    "bulletListTooltip": "Lista punktowana",
+    "numberListTooltip": "Lista numerowana",
+    "increaseIndentTooltip": "Zwiększ wcięcie",
+    "decreaseIndentTooltip": "Zmniejsz wcięcie",
+    "richTextFormatButtonTooltip": "Formatowanie"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Sugestie"
   },
-  "imageGallery": {
+  "imageOverlay": {
     "downloadButtonLabel": "Pobierz",
     "dismissButtonAriaLabel": "Zamknij"
   },
@@ -123,6 +141,17 @@
     "tooltipOnContent": "Opuść rękę",
     "tooltipOffContent": "Podnieś rękę"
   },
+  "reactionButton": {
+    "label": "Zareaguj",
+    "ariaLabel": "Przycisk reagowania, Wyślij reakcję",
+    "tooltipDisabledContent": "Akcja reakcji jest wyłączona",
+    "tooltipContent": "Wyślij reakcję",
+    "likeReactionTooltipContent": "Lubię",
+    "heartReactionTooltipContent": "Miłość",
+    "laughReactionTooltipContent": "Śmiech",
+    "applauseReactionTooltipContent": "Aplauz",
+    "surprisedReactionTooltipContent": "Niespodzianka"
+  },
   "messageThread": {
     "yesterday": "Wczoraj",
     "sunday": "Niedziela",
@@ -150,10 +179,10 @@
     "editBoxSubmitButton": "Gotowe",
     "messageReadCount": "Przeczytane przez {messageReadByCount} z {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Więcej opcji",
-    "downloadFile": "Pobierz plik",
+    "downloadAttachment": "Pobierz plik",
     "blockedWarningText": "Ta wiadomość została usunięta ze względu na zasady organizacyjne.",
     "blockedWarningLinkText": "Szczegóły",
-    "fileCardGroupMessage": "Wiadomość ma następującą liczbę załączników: {fileCount}",
+    "attachmentCardGroupMessage": "Wiadomość ma {attachmentCount} załącznik",
     "messageDeletedAnnouncementAriaLabel": "Wiadomość została usunięta"
   },
   "errorBar": {
@@ -190,7 +219,8 @@
     "failedToJoinCallGeneric": "Nie można dołączyć do rozmowy.",
     "failedToJoinCallInvalidMeetingLink": "Nie można dołączyć do spotkania. Nieprawidłowy link.",
     "cameraFrozenForRemoteParticipants": "Użytkownicy w trakcie rozmowy mają problemy z wyświetleniem Twojego wideo. Sprawdź urządzenia i sieć.",
-    "unableToStartVideoEffect": "Nie można zastosować efektu wideo."
+    "unableToStartVideoEffect": "Nie można zastosować efektu wideo.",
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "Nie można rozpocząć wyróżnienia uczestników, ponieważ maksymalna liczba uczestników jest już wyróżniona."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Udostępniasz ekran",
@@ -208,7 +238,13 @@
     "pinParticipantMenuItemAriaLabel": "Przypnij uczestnika {participantName}",
     "unpinParticipantMenuItemAriaLabel": "Odepnij uczestnika {participantName}",
     "pinnedParticipantAnnouncementAriaLabel": "Przypięty uczestnik {participantName}",
-    "unpinnedParticipantAnnouncementAriaLabel": "Odpięty uczestnik {participantName}"
+    "unpinnedParticipantAnnouncementAriaLabel": "Odpięty uczestnik {participantName}",
+    "startSpotlightVideoTileMenuLabel": "Wyróżnij dla wszystkich",
+    "addSpotlightVideoTileMenuLabel": "Dodaj wyróżnienie",
+    "spotlightLimitReachedMenuTitle": "Osiągnięto limit wyróżnienia",
+    "stopSpotlightVideoTileMenuLabel": "Zatrzymaj wyróżnianie",
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Zakończ wyróżnienie",
+    "attendeeRole": "Uczestnik"
   },
   "dialpad": {
     "placeholderText": "Wprowadź numer telefonu",
@@ -342,6 +378,5 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "poprzednia strona",
     "rightNavButtonAriaLabel": "następna strona"
-  },
-  "AttendeeRole": "Uczestnik"
+  }
 }

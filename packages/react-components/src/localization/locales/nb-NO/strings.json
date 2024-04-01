@@ -7,7 +7,8 @@
     "mutedIconLabel": "Dempet",
     "displayNamePlaceholder": "Deltaker uten navn",
     "participantStateRinging": "Ringer ...",
-    "participantStateHold": "På vent"
+    "participantStateHold": "På vent",
+    "attendeeRole": "Deltaker"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} flere"
@@ -23,15 +24,32 @@
     "placeholderText": "Skriv en melding",
     "textTooLong": "Meldingslengden er over maksimumsgrensen.",
     "sendButtonAriaLabel": "Send melding",
-    "fileUploadsPendingError": "Laster opp. Vent litt ...",
-    "removeFile": "Fjern fil",
+    "attachmentUploadsPendingError": "Laster opp. Vent litt ...",
+    "removeAttachment": "Fjern fil",
     "uploading": "Laster opp",
     "uploadCompleted": "Opplasting fullført"
+  },
+  "richTextSendBox": {
+    "placeholderText": "Skriv en melding",
+    "textTooLong": "Meldingslengden er over maksimumsgrensen.",
+    "sendButtonAriaLabel": "Send melding",
+    "attachmentUploadsPendingError": "Laster opp ... Vent litt.",
+    "removeAttachment": "Fjern fil",
+    "uploading": "Laster opp",
+    "uploadCompleted": "Opplasting fullført",
+    "boldTooltip": "Fet",
+    "italicTooltip": "Kursiv",
+    "underlineTooltip": "Understreking",
+    "bulletListTooltip": "Punktliste",
+    "numberListTooltip": "Nummerert liste",
+    "increaseIndentTooltip": "Øk innrykk",
+    "decreaseIndentTooltip": "Reduser innrykk",
+    "richTextFormatButtonTooltip": "Format"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Forslag"
   },
-  "imageGallery": {
+  "imageOverlay": {
     "downloadButtonLabel": "Last ned",
     "dismissButtonAriaLabel": "Lukk"
   },
@@ -123,6 +141,17 @@
     "tooltipOnContent": "Ta ned hånden",
     "tooltipOffContent": "Rekke opp hånden"
   },
+  "reactionButton": {
+    "label": "Reager",
+    "ariaLabel": "Reager-knapp, send en reaksjon",
+    "tooltipDisabledContent": "Reaksjonshandling er deaktivert",
+    "tooltipContent": "Send en reaksjon",
+    "likeReactionTooltipContent": "Liker",
+    "heartReactionTooltipContent": "Kjærlighet",
+    "laughReactionTooltipContent": "Latter",
+    "applauseReactionTooltipContent": "Applaus",
+    "surprisedReactionTooltipContent": "Overrasket"
+  },
   "messageThread": {
     "yesterday": "I går",
     "sunday": "Søndag",
@@ -150,10 +179,10 @@
     "editBoxSubmitButton": "Fullført",
     "messageReadCount": "Lest av {messageReadByCount} av {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Flere alternativer",
-    "downloadFile": "Last ned fil",
+    "downloadAttachment": "Last ned fil",
     "blockedWarningText": "Denne meldingen ble slettet på grunn av en organisasjonspolicy.",
     "blockedWarningLinkText": "Detaljer",
-    "fileCardGroupMessage": "Meldingen har {fileCount} vedlegg",
+    "attachmentCardGroupMessage": "Meldingen har {attachmentCount} vedlegg",
     "messageDeletedAnnouncementAriaLabel": "Meldingen er slettet"
   },
   "errorBar": {
@@ -190,7 +219,8 @@
     "failedToJoinCallGeneric": "Kan ikke bli med i samtalen.",
     "failedToJoinCallInvalidMeetingLink": "Kan ikke bli med i møtet. Ugyldig kobling.",
     "cameraFrozenForRemoteParticipants": "Brukere i samtalen har problemer med å se videoen. Kontroller enhetene og nettverket.",
-    "unableToStartVideoEffect": "Kan ikke bruke videoeffekt."
+    "unableToStartVideoEffect": "Kan ikke bruke videoeffekt.",
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "Kan ikke starte rampelys på deltaker(e) fordi maksimalt antall deltakere allerede er satt i rampelyset."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Du deler skjermen",
@@ -208,7 +238,13 @@
     "pinParticipantMenuItemAriaLabel": "Fest {participantName}",
     "unpinParticipantMenuItemAriaLabel": "Løsne {participantName}",
     "pinnedParticipantAnnouncementAriaLabel": "Festet {participantName}",
-    "unpinnedParticipantAnnouncementAriaLabel": "Løsnet {participantName}"
+    "unpinnedParticipantAnnouncementAriaLabel": "Løsnet {participantName}",
+    "startSpotlightVideoTileMenuLabel": "Sett i rampelyset for alle",
+    "addSpotlightVideoTileMenuLabel": "Legg til rampelys",
+    "spotlightLimitReachedMenuTitle": "Rampelys-grensen er nådd",
+    "stopSpotlightVideoTileMenuLabel": "Fjern fra rampelyset",
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Rampelys av",
+    "attendeeRole": "Deltaker"
   },
   "dialpad": {
     "placeholderText": "Skriv inn telefonnummeret",
@@ -342,6 +378,5 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "forrige side",
     "rightNavButtonAriaLabel": "neste side"
-  },
-  "AttendeeRole": "Deltaker"
+  }
 }

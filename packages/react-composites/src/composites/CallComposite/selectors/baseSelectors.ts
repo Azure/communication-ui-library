@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import { CallState as SDKCallStatus, DominantSpeakersInfo } from '@azure/communication-calling';
+import { ParticipantCapabilities } from '@azure/communication-calling';
 import { VideoDeviceInfo, AudioDeviceInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(capabilities) */
 import { CapabilitiesChangeInfo } from '@azure/communication-calling';
@@ -18,13 +19,16 @@ import {
 } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(spotlight) */
+import { SpotlightedParticipant } from '@azure/communication-calling';
 import { CallAdapterState, CallCompositePage } from '../adapter/CallAdapter';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { VideoBackgroundEffect } from '../adapter/CallAdapter';
 import { _isInCall, _isPreviewOn, _dominantSpeakersWithFlatId } from '@internal/calling-component-bindings';
 import { AdapterErrors } from '../../common/adapters';
-/* @conditional-compile-remove(raise-hand) */
 import { RaisedHandState } from '@internal/calling-stateful-client';
+import { CommunicationIdentifier } from '@azure/communication-common';
+
 /**
  * @private
  */
@@ -55,12 +59,17 @@ export const getDeviceManager = (state: CallAdapterState): DeviceManagerState =>
  */
 export const getIsScreenShareOn = (state: CallAdapterState): boolean => state.call?.isScreenSharingOn ?? false;
 
-/* @conditional-compile-remove(raise-hand) */
 /**
  * @private
  */
 export const getLocalParticipantRaisedHand = (state: CallAdapterState): RaisedHandState | undefined =>
   state.call?.raiseHand.localParticipantRaisedHand;
+
+/**
+ * @private
+ */
+export const getCapabilites = (state: CallAdapterState): ParticipantCapabilities | undefined =>
+  state.call?.capabilitiesFeature?.capabilities;
 
 /**
  * @private
@@ -145,7 +154,6 @@ export const getRemoteParticipants = (
  */
 export const getEnvironmentInfo = (state: CallAdapterState): EnvironmentInfo | undefined => state.environmentInfo;
 
-/* @conditional-compile-remove(video-background-effects) */
 /**
  * @private
  */
@@ -206,3 +214,20 @@ export const getLatestErrors = (state: CallAdapterState): AdapterErrors => state
 export const getLatestCapabilitiesChangedInfo = (state: CallAdapterState): CapabilitiesChangeInfo | undefined => {
   return state.call?.capabilitiesFeature?.latestCapabilitiesChangeInfo;
 };
+
+/**
+ * @private
+ */
+export const getTargetCallees = (state: CallAdapterState): CommunicationIdentifier[] | undefined => state.targetCallees;
+
+/**
+ * @private
+ */
+export const getStartTime = (state: CallAdapterState): Date | undefined => state.call?.startTime;
+
+/* @conditional-compile-remove(spotlight) */
+/**
+ * @private
+ */
+export const getSpotlightedParticipants = (state: CallAdapterState): SpotlightedParticipant[] | undefined =>
+  state.call?.spotlight?.spotlightedParticipants;

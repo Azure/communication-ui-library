@@ -7,7 +7,8 @@
     "mutedIconLabel": "Gedempt",
     "displayNamePlaceholder": "Naamloze deelnemer",
     "participantStateRinging": "Bellen...",
-    "participantStateHold": "In de wacht"
+    "participantStateHold": "In de wacht",
+    "attendeeRole": "Genodigde"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} meer"
@@ -23,15 +24,32 @@
     "placeholderText": "Een bericht invoeren",
     "textTooLong": "De lengte van uw bericht overschrijdt de maximumlimiet.",
     "sendButtonAriaLabel": "Bericht verzenden",
-    "fileUploadsPendingError": "Uploaden.... Een ogenblik geduld.",
-    "removeFile": "Bestand verwijderen",
+    "attachmentUploadsPendingError": "Uploaden.... Een ogenblik geduld.",
+    "removeAttachment": "Bestand verwijderen",
     "uploading": "Uploaden",
     "uploadCompleted": "Upload voltooid"
+  },
+  "richTextSendBox": {
+    "placeholderText": "Een bericht invoeren",
+    "textTooLong": "De lengte van uw bericht overschrijdt de maximumlimiet.",
+    "sendButtonAriaLabel": "Bericht verzenden",
+    "attachmentUploadsPendingError": "Uploaden... Een ogenblik geduld.",
+    "removeAttachment": "Bestand verwijderen",
+    "uploading": "Uploaden",
+    "uploadCompleted": "Upload voltooid",
+    "boldTooltip": "Vet",
+    "italicTooltip": "Cursief",
+    "underlineTooltip": "Onderstrepen",
+    "bulletListTooltip": "Lijst met opsommingstekens",
+    "numberListTooltip": "Genummerde lijst",
+    "increaseIndentTooltip": "Inspringing vergroten",
+    "decreaseIndentTooltip": "Inspringing verkleinen",
+    "richTextFormatButtonTooltip": "Indeling"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggesties"
   },
-  "imageGallery": {
+  "imageOverlay": {
     "downloadButtonLabel": "Downloaden",
     "dismissButtonAriaLabel": "Sluiten"
   },
@@ -123,6 +141,17 @@
     "tooltipOnContent": "Hand laten zakken",
     "tooltipOffContent": "Hand opsteken"
   },
+  "reactionButton": {
+    "label": "Reageren",
+    "ariaLabel": "Knop Regageren, een reactie verzenden",
+    "tooltipDisabledContent": "Reactieactie is uitgeschakeld",
+    "tooltipContent": "Verzend een reactie",
+    "likeReactionTooltipContent": "Vind ik leuk",
+    "heartReactionTooltipContent": "Hartje",
+    "laughReactionTooltipContent": "Lachen",
+    "applauseReactionTooltipContent": "Applaus",
+    "surprisedReactionTooltipContent": "Verrast"
+  },
   "messageThread": {
     "yesterday": "Gisteren",
     "sunday": "Zondag",
@@ -150,10 +179,10 @@
     "editBoxSubmitButton": "Gereed",
     "messageReadCount": "Gelezen door {messageReadByCount} van {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Meer opties",
-    "downloadFile": "Bestand downloaden",
+    "downloadAttachment": "Bestand downloaden",
     "blockedWarningText": "Dit bericht is verwijderd vanwege organisatiebeleid.",
     "blockedWarningLinkText": "Details",
-    "fileCardGroupMessage": "Het bericht heeft {fileCount} bijlage",
+    "attachmentCardGroupMessage": "Het bericht heeft {attachmentCount} bijlage",
     "messageDeletedAnnouncementAriaLabel": "Het bericht is verwijderd"
   },
   "errorBar": {
@@ -190,7 +219,8 @@
     "failedToJoinCallGeneric": "Deelnemen aan gesprek mislukt.",
     "failedToJoinCallInvalidMeetingLink": "Kan niet deelnemen aan vergadering. Ongeldige koppeling.",
     "cameraFrozenForRemoteParticipants": "Gebruikers in het gesprek ondervinden problemen bij het zien van uw video. Controleer uw apparaten en netwerk.",
-    "unableToStartVideoEffect": "Kan video-effect niet toepassen."
+    "unableToStartVideoEffect": "Kan video-effect niet toepassen.",
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "Kan de deelnemer(s) niet in de spotlight plaatsen omdat het maximum aantal deelnemers in de spotlight is bereikt."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "U deelt uw scherm",
@@ -208,7 +238,13 @@
     "pinParticipantMenuItemAriaLabel": "{participantName} vastmaken",
     "unpinParticipantMenuItemAriaLabel": "{participantName} losmaken",
     "pinnedParticipantAnnouncementAriaLabel": "{participantName} vastgemaakt",
-    "unpinnedParticipantAnnouncementAriaLabel": "{participantName} losgemaakt"
+    "unpinnedParticipantAnnouncementAriaLabel": "{participantName} losgemaakt",
+    "startSpotlightVideoTileMenuLabel": "Spotlight voor iedereen",
+    "addSpotlightVideoTileMenuLabel": "Spotlight toevoegen",
+    "spotlightLimitReachedMenuTitle": "Spotlightlimiet bereikt",
+    "stopSpotlightVideoTileMenuLabel": "Spotlighten stoppen",
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Spotlight afsluiten",
+    "attendeeRole": "Genodigde"
   },
   "dialpad": {
     "placeholderText": "Telefoonnummer invoeren",
@@ -342,6 +378,5 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "vorige pagina",
     "rightNavButtonAriaLabel": "volgende pagina"
-  },
-  "AttendeeRole": "Genodigde"
+  }
 }

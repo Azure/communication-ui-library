@@ -3,6 +3,7 @@
 
 import { IIconProps, MessageBarType } from '@fluentui/react';
 import { ActiveErrorMessage, ErrorType } from './ErrorBar';
+import { _SupportedSpokenLanguage } from '../types';
 
 /**
  * @private
@@ -224,7 +225,7 @@ export function chunk<T>(options: T[], itemsPerRow: number): T[][] {
 /**
  * @private
  */
-export const defaultSpokenLanguage = 'en-us';
+export const defaultSpokenLanguage: _SupportedSpokenLanguage = 'en-us';
 
 /**
  * @private

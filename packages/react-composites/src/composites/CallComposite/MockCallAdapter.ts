@@ -29,7 +29,7 @@ export class _MockCallAdapter implements CallAdapter {
     localParticipantRole?: ParticipantRole;
   }) {
     this.state = {
-      ...createDefaultCallAdapterState(/* @conditional-compile-remove(rooms) */ testState.localParticipantRole)
+      ...createDefaultCallAdapterState(testState.localParticipantRole)
     };
 
     if (testState.askDevicePermission) {
@@ -97,13 +97,14 @@ export class _MockCallAdapter implements CallAdapter {
   stopScreenShare(): Promise<void> {
     throw Error('stopScreenShare not implemented');
   }
-  /* @conditional-compile-remove(raise-hand) */
   raiseHand(): Promise<void> {
     throw Error('raiseHand not implemented');
   }
-  /* @conditional-compile-remove(raise-hand) */
   lowerHand(): Promise<void> {
     throw Error('lowerHand not implemented');
+  }
+  onReactionClick(emoji: string): Promise<void> {
+    throw Error(`Reaction of type ${emoji} send not successful`);
   }
   removeParticipant(): Promise<void> {
     throw Error('removeParticipant not implemented');
@@ -179,26 +180,37 @@ export class _MockCallAdapter implements CallAdapter {
   stopCaptions(): Promise<void> {
     throw Error('stopCaptions not implemented');
   }
-  /* @conditional-compile-remove(video-background-effects) */
+
   startVideoBackgroundEffect(): Promise<void> {
     throw new Error('startVideoBackgroundEffect not implemented.');
   }
 
-  /* @conditional-compile-remove(video-background-effects) */
   stopVideoBackgroundEffects(): Promise<void> {
     throw new Error('stopVideoBackgroundEffects not implemented.');
   }
-  /* @conditional-compile-remove(video-background-effects) */
+
   updateBackgroundPickerImages(): void {
     throw new Error('updateBackgroundPickerImages not implemented.');
   }
-  /* @conditional-compile-remove(video-background-effects) */
+
   public updateSelectedVideoBackgroundEffect(): void {
     throw new Error('updateSelectedVideoBackgroundEffect not implemented.');
   }
   /* @conditional-compile-remove(end-of-call-survey) */ // eslint-disable-next-line @typescript-eslint/no-unused-vars
   submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined> {
     throw Error('submitStarSurvey not implemented');
+  }
+  /* @conditional-compile-remove(spotlight) */ // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  startSpotlight(userIds?: string[]): Promise<void> {
+    throw Error('startSpotlight not implemented');
+  }
+  /* @conditional-compile-remove(spotlight) */ // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  stopSpotlight(userIds?: string[]): Promise<void> {
+    throw Error('stopSpotlight not implemented');
+  }
+  /* @conditional-compile-remove(spotlight) */
+  stopAllSpotlight(): Promise<void> {
+    throw Error('stopAllSpotlight not implemented');
   }
 }
 
@@ -218,6 +230,8 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
       direction: 'Incoming',
       transcription: { isTranscriptionActive: false },
       recording: { isRecordingActive: false },
+      /* @conditional-compile-remove(local-recording-notification) */
+      localRecording: { isLocalRecordingActive: false },
       startTime: new Date(500000000000),
       endTime: new Date(500000000000),
       diagnostics: { network: { latest: {} }, media: { latest: {} } },
@@ -227,11 +241,11 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
       isScreenSharingOn: false,
       remoteParticipants: {},
       remoteParticipantsEnded: {},
-      /* @conditional-compile-remove(raise-hand) */
       raiseHand: { raisedHands: [] },
+      /* @conditional-compile-remove(ppt-live) */
+      pptLive: { isActive: false },
       /* @conditional-compile-remove(reaction) */
       localParticipantReaction: undefined,
-      /* @conditional-compile-remove(rooms) */
       role,
       /* @conditional-compile-remove(close-captions) */
       captionsFeature: {
@@ -247,7 +261,6 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
       transfer: {
         acceptedTransfers: {}
       },
-      /* @conditional-compile-remove(optimal-video-count) */
       optimalVideoCount: {
         maxRemoteVideoStreams: 4
       }
@@ -270,7 +283,6 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
       deviceAccess: { video: true, audio: true }
     },
     isTeamsCall: false,
-    /* @conditional-compile-remove(rooms) */
     isRoomsCall: false,
     latestErrors: {}
   };

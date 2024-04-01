@@ -5,12 +5,9 @@ import type { ChatMessage, ChatParticipant, SendMessageOptions } from '@azure/co
 import type { CommunicationIdentifierKind, CommunicationUserKind } from '@azure/communication-common';
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import type { AdapterError, AdapterErrors, AdapterState, Disposable } from '../../common/adapters';
-/* @conditional-compile-remove(file-sharing) */
-import { FileUploadAdapter } from './AzureCommunicationFileUploadAdapter';
-/* @conditional-compile-remove(file-sharing) */
-import { FileUploadsUiState } from './AzureCommunicationFileUploadAdapter';
-import { AttachmentDownloadResult } from '@internal/react-components';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+import { AttachmentUploadAdapter, AttachmentUploadsUiState } from './AzureCommunicationAttachmentUploadAdapter';
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { AttachmentMetadata } from '@internal/react-components';
 
 /**
@@ -22,14 +19,14 @@ export type ChatAdapterUiState = {
   // FIXME(Delete?)
   // Self-contained state for composite
   error?: Error;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /**
    * Files being uploaded by a user in the current thread.
    * Should be set to null once the upload is complete.
-   * Array of type {@link FileUploadsUiState}
+   * Array of type {@link AttachmentUploadsUiState}
    * @beta
    */
-  fileUploads?: FileUploadsUiState;
+  attachmentUploads?: AttachmentUploadsUiState;
 };
 
 /**
@@ -93,7 +90,7 @@ export interface ChatAdapterThreadManagement {
     messageId: string,
     content: string,
     metadata?: Record<string, string>,
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     options?: {
       attachmentMetadata?: AttachmentMetadata[];
     }
@@ -110,8 +107,25 @@ export interface ChatAdapterThreadManagement {
    *
    */
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
-  downloadAttachments: (options: { attachmentUrls: Record<string, string> }) => Promise<AttachmentDownloadResult[]>;
+  /**
+   * Downloads a resource into the cache for the given message.
+   */
+  downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
+  /**
+   * Removes a resource from the cache for the given message.
+   */
+  removeResourceFromCache(resourceDetails: ResourceDetails): void;
 }
+/**
+ * Details required for download a resource to cache.
+ *
+ * @public
+ */
+export type ResourceDetails = {
+  threadId: string;
+  messageId: string;
+  resourceUrl: string;
+};
 
 /**
  * Chat composite events that can be subscribed to.
@@ -203,8 +217,8 @@ export type ChatAdapter = ChatAdapterThreadManagement &
   AdapterState<ChatAdapterState> &
   Disposable &
   ChatAdapterSubscribers &
-  /* @conditional-compile-remove(file-sharing) */
-  FileUploadAdapter;
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  AttachmentUploadAdapter;
 
 /**
  * Callback for {@link ChatAdapterSubscribers} 'messageReceived' event.

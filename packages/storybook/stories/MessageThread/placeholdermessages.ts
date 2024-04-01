@@ -6,8 +6,7 @@ import {
   MessageAttachedStatus,
   ChatMessage,
   CustomMessage,
-  SystemMessage,
-  InlineImageMetadata
+  SystemMessage
 } from '@azure/communication-react';
 
 export const MessageThreadStoryContainerStyles = {
@@ -77,12 +76,38 @@ export const GenerateMockNewChatMessageWithInlineImage = (): ChatMessage => {
     ...UserThree,
     messageId: Math.random().toString(),
     content:
-      '<p>Check out this image:&nbsp;</p>\r\n<p><img alt="image" src="" itemscope="png" width="250" height="375" id="SomeImageId" style="vertical-align:bottom"></p><p>&nbsp;</p>\r\n',
+      '<p>Check out this image:&nbsp;</p>\r\n<p><img alt="image" src="images/inlineImageExample1.png" itemscope="png" width="250" height="375" id="SomeImageId" style="vertical-align:bottom"></p><p>&nbsp;</p>\r\n',
     createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
     mine: false,
     attached: false,
-    contentType: 'html',
-    inlineImages: GenerateMockMessageAttachments()
+    contentType: 'html'
+  };
+};
+
+export const GenerateMockNewChatMessageWithAttachment = (): ChatMessage => {
+  return {
+    messageType: 'chat',
+    ...UserThree,
+    messageId: Math.random().toString(),
+    content: 'Check out these files:',
+    createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
+    mine: true,
+    attached: false,
+    contentType: 'text',
+    files: [
+      {
+        id: 'SomeUniqueId1',
+        name: 'Annual Report.xlsx',
+        extension: 'xlsx',
+        url: 'https://www.sharepoint.com/'
+      },
+      {
+        id: 'SomeUniqueId2',
+        name: 'Business Report.pdf',
+        extension: 'pdf',
+        url: 'https://www.example.com/files/RouterConfig.xlsx'
+      }
+    ]
   };
 };
 
@@ -98,17 +123,6 @@ export const GenerateMockNewChatMessageWithMention = (): ChatMessage => {
     attached: false,
     contentType: 'html'
   };
-};
-
-const GenerateMockMessageAttachments = (): InlineImageMetadata[] => {
-  return [
-    {
-      id: 'SomeImageId',
-      attachmentType: 'inlineImage',
-      url: 'images/inlineImageExample1.png',
-      previewUrl: 'images/inlineImageExample1.png'
-    }
-  ];
 };
 
 export const GenerateMockSystemMessage = (): SystemMessage => {

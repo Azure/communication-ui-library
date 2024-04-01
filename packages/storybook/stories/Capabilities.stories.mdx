@@ -12,12 +12,12 @@ import CapabilitiesChangedListenerSnippetText from '!!raw-loader!./snippets/capa
 
 ## Overview
 
-Capabilities are actions that ACS users can perform during a call are controlled based on their role. Capabilites are only
+Capabilities are actions that ACS users can perform during a call which are defined based on their role. Capabilites are only
 present in certain types of calls like the Teams interop scenario.
 
 The capabilities of an ACS user are reflected in the Call and CallWithChat composites by disabling controls and notifications.
 For example, if the ACS user loses the capability to turn their video on and share their screen then this will be reflected in
-the call composite like shown in the screenshot below.
+the Call composite like shown in the screenshot below.
 
 <img style={{ width: 'auto', height: 'auto' }} src="images/capabilities-in-call-composite.png" />
 
@@ -46,10 +46,10 @@ a tenant. To learn more about Teams policies click
 [here](https://learn.microsoft.com/en-us/microsoftteams/assign-policies-users-and-groups). It is important to note that
 Teams policies cannot be applied to ACS users so their capabilities are not affected by Teams policies.
 
-Teams policies do, however, affect Teams users who use ACS to join a Teams meeting also known as CTE users. CTE is
-supported in beta version **1.5.1-beta.1** or later. For more on CTE users, click
-[here](path=/docs/communicationasteamsuser--page). Currently, the only capability affected by Teams policies for CTE
-users in Teams meetings is share screen.
+Teams policies do, however, affect Teams users who use ACS to join a Teams meeting which is also known as
+'Communication as Teams user'. 'Communication as Teams user' is supported in beta version **1.5.1-beta.1** or later. For
+more on using 'Communication as Teams user', click [here](path=/docs/communicationasteamsuser--page). Currently, the only
+capability affected by Teams policies for 'Communication as Teams user' in Teams meetings is share screen.
 
 ## Listening to changes in capabilities
 
@@ -59,6 +59,5 @@ The CallAdapter and CallWithChatAdapter allow you to listen to 'capabilitiesChan
 
 <Source code={CapabilitiesChangedListenerSnippetText} />
 
-It is important to note using the `CapabilitiesChangedListener` callback will not override the behavior of the Call and
-CallWithChat composite that handles enabling/disabling controls and show notifications based on the capabilities
-changed.
+It is important to note that using the `CapabilitiesChangedListener` callback will not override the behavior of
+enabling/disabling of corresponding controls and showing notifications in the Call and CallWithChat composites.

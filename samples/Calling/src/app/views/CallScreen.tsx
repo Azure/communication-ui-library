@@ -1,10 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+import { AzureCommunicationTokenCredential } from '@azure/communication-common';
+import { CommunicationUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(teams-identity-support) */
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import {
+  AzureCommunicationCallAdapterOptions,
   CallAdapterLocator,
   CallAdapterState,
   useAzureCommunicationCallAdapter,
@@ -14,12 +16,11 @@ import {
 } from '@azure/communication-react';
 /* @conditional-compile-remove(teams-identity-support) */
 import { useTeamsCallAdapter, TeamsCallAdapter } from '@azure/communication-react';
-/* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(video-background-effects) */
-import { AzureCommunicationCallAdapterOptions } from '@azure/communication-react';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { onResolveVideoEffectDependencyLazy } from '@azure/communication-react';
 /* @conditional-compile-remove(teams-identity-support) */
 import type { TeamsAdapterOptions } from '@azure/communication-react';
+import type { StartCallIdentifier } from '@azure/communication-react';
 import React, { useCallback, useMemo, useRef } from 'react';
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/AppUtils';
@@ -30,7 +31,8 @@ export interface CallScreenProps {
   userId:
     | CommunicationUserIdentifier
     | /* @conditional-compile-remove(teams-identity-support) */ MicrosoftTeamsUserIdentifier;
-  callLocator: CallAdapterLocator;
+  callLocator?: CallAdapterLocator;
+  targetCallees?: StartCallIdentifier[];
   displayName: string;
   /* @conditional-compile-remove(PSTN-calls) */
   alternateCallerId?: string;
@@ -58,8 +60,8 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       }
     });
     /* @conditional-compile-remove(call-transfer) */
-    adapter.on('transferRequested', (e) => {
-      e.accept();
+    adapter.on('transferAccepted', (e) => {
+      console.log('Call being transferred to: ' + e);
     });
   }, []);
 
@@ -91,8 +93,13 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   if (isTeamsIdentityCall) {
     return <TeamsCallScreen afterCreate={afterTeamsCallAdapterCreate} credential={credential} {...props} />;
   }
-
-  return <AzureCommunicationCallScreen afterCreate={afterCallAdapterCreate} credential={credential} {...props} />;
+  if (props.callLocator) {
+    return <AzureCommunicationCallScreen afterCreate={afterCallAdapterCreate} credential={credential} {...props} />;
+  } else {
+    return (
+      <AzureCommunicationOutboundCallScreen afterCreate={afterCallAdapterCreate} credential={credential} {...props} />
+    );
+  }
 };
 
 /* @conditional-compile-remove(teams-identity-support) */
@@ -104,7 +111,7 @@ type TeamsCallScreenProps = CallScreenProps & {
 /* @conditional-compile-remove(teams-identity-support) */
 const TeamsCallScreen = (props: TeamsCallScreenProps): JSX.Element => {
   const { afterCreate, callLocator: locator, userId, ...adapterArgs } = props;
-  if (!('meetingLink' in locator)) {
+  if (!(locator && 'meetingLink' in locator)) {
     throw new Error('A teams meeting locator must be provided for Teams Identity Call.');
   }
 
@@ -112,7 +119,6 @@ const TeamsCallScreen = (props: TeamsCallScreenProps): JSX.Element => {
     throw new Error('A MicrosoftTeamsUserIdentifier must be provided for Teams Identity Call.');
   }
 
-  /* @conditional-compile-remove(video-background-effects) */
   const teamsAdapterOptions: TeamsAdapterOptions = useMemo(
     () => ({
       videoBackgroundOptions: {
@@ -127,7 +133,7 @@ const TeamsCallScreen = (props: TeamsCallScreenProps): JSX.Element => {
       ...adapterArgs,
       userId,
       locator,
-      /* @conditional-compile-remove(video-background-effects) */ options: teamsAdapterOptions
+      options: teamsAdapterOptions
     },
     afterCreate
   );
@@ -146,19 +152,24 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
     throw new Error('A MicrosoftTeamsUserIdentifier must be provided for Teams Identity Call.');
   }
 
-  /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(video-background-effects) */
   const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(() => {
     return {
-      /* @conditional-compile-remove(video-background-effects) */
       videoBackgroundOptions: {
         videoBackgroundImages,
         onResolveDependency: onResolveVideoEffectDependencyLazy
       },
-      /* @conditional-compile-remove(calling-sounds) */
       callingSounds: {
         callEnded: { url: '/assets/sounds/callEnded.mp3' },
         callRinging: { url: '/assets/sounds/callRinging.mp3' },
         callBusy: { url: '/assets/sounds/callBusy.mp3' }
+      },
+      /* @conditional-compile-remove(reaction) */
+      reactionResources: {
+        likeReaction: { url: '/assets/reactions/likeEmoji.png', frameCount: 102 },
+        heartReaction: { url: '/assets/reactions/heartEmoji.png', frameCount: 102 },
+        laughReaction: { url: '/assets/reactions/laughEmoji.png', frameCount: 102 },
+        applauseReaction: { url: '/assets/reactions/clapEmoji.png', frameCount: 102 },
+        surprisedReaction: { url: '/assets/reactions/surprisedEmoji.png', frameCount: 102 }
       }
     };
   }, []);
@@ -168,7 +179,48 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
       ...adapterArgs,
       userId,
       locator,
-      /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(unsupported-browser) */ /* @conditional-compile-remove(video-background-effects) */
+      options: callAdapterOptions
+    },
+    afterCreate
+  );
+
+  return <CallCompositeContainer {...props} adapter={adapter} />;
+};
+
+const AzureCommunicationOutboundCallScreen = (props: AzureCommunicationCallScreenProps): JSX.Element => {
+  const { afterCreate, targetCallees: targetCallees, userId, ...adapterArgs } = props;
+
+  if (!('communicationUserId' in userId)) {
+    throw new Error('A MicrosoftTeamsUserIdentifier must be provided for Teams Identity Call.');
+  }
+
+  const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(() => {
+    return {
+      videoBackgroundOptions: {
+        videoBackgroundImages,
+        onResolveDependency: onResolveVideoEffectDependencyLazy
+      },
+      callingSounds: {
+        callEnded: { url: '/assets/sounds/callEnded.mp3' },
+        callRinging: { url: '/assets/sounds/callRinging.mp3' },
+        callBusy: { url: '/assets/sounds/callBusy.mp3' }
+      },
+      /* @conditional-compile-remove(reaction) */
+      reactionResources: {
+        likeReaction: { url: '/assets/reactions/likeEmoji.png', frameCount: 102 },
+        heartReaction: { url: '/assets/reactions/heartEmoji.png', frameCount: 102 },
+        laughReaction: { url: '/assets/reactions/laughEmoji.png', frameCount: 102 },
+        applauseReaction: { url: '/assets/reactions/clapEmoji.png', frameCount: 102 },
+        surprisedReaction: { url: '/assets/reactions/surprisedEmoji.png', frameCount: 102 }
+      }
+    };
+  }, []);
+
+  const adapter = useAzureCommunicationCallAdapter(
+    {
+      ...adapterArgs,
+      userId,
+      targetCallees: targetCallees,
       options: callAdapterOptions
     },
     afterCreate
@@ -190,7 +242,6 @@ const convertPageStateToString = (state: CallAdapterState): string => {
   }
 };
 
-/* @conditional-compile-remove(video-background-effects) */
 const videoBackgroundImages = [
   {
     key: 'ab1',

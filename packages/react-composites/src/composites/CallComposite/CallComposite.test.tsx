@@ -7,6 +7,10 @@ import { _MockCallAdapter } from './MockCallAdapter';
 import { CallComposite } from './CallComposite';
 import { render } from '@testing-library/react';
 
+window.AudioContext = jest.fn().mockImplementation(() => {
+  return {};
+});
+
 describe('CallComposite device permission test for different roles', () => {
   let audioDevicePermissionRequests = 0;
   let videoDevicePermissionRequests = 0;
@@ -40,7 +44,6 @@ describe('CallComposite device permission test for different roles', () => {
     expect(videoDevicePermissionRequests).toBe(1);
   });
 
-  /* @conditional-compile-remove(rooms) */
   test('Audio and video device permission should be requested for Presenter role', async () => {
     const adapter = new _MockCallAdapter({
       askDevicePermission: countDevicePermissionRequests,
@@ -51,7 +54,6 @@ describe('CallComposite device permission test for different roles', () => {
     expect(videoDevicePermissionRequests).toBe(1);
   });
 
-  /* @conditional-compile-remove(rooms) */
   test('Audio and video device permission should be requested for Attendee role', async () => {
     const adapter = new _MockCallAdapter({
       askDevicePermission: countDevicePermissionRequests,
@@ -62,7 +64,6 @@ describe('CallComposite device permission test for different roles', () => {
     expect(videoDevicePermissionRequests).toBe(1);
   });
 
-  /* @conditional-compile-remove(rooms) */
   test('Only audio device permission should be requested for Consumer role', async () => {
     const adapter = new _MockCallAdapter({
       askDevicePermission: countDevicePermissionRequests,

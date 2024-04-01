@@ -9,14 +9,15 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-permissions:
-  # Needed for Azure login
-  id-token: write
+permissions: read-all
 
 jobs:
   calling:
     name: Build and Deploy Calling App
     runs-on: ubuntu-latest
+    permissions:
+      # Needed for Azure login
+      id-token: write
     environment: staging
     steps:
       - uses: actions/checkout@v3
@@ -27,7 +28,7 @@ jobs:
         with:
           node-version: '20.x'
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.2
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Install dependencies
         run: rush install
       - name: Switch flavor for beta release build
@@ -56,6 +57,9 @@ jobs:
   chat:
     name: Build and Deploy Chat App
     runs-on: ubuntu-latest
+    permissions:
+      # Needed for Azure login
+      id-token: write
     environment: staging
     steps:
       - uses: actions/checkout@v3
@@ -66,7 +70,7 @@ jobs:
         with:
           node-version: '20.x'
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.2
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Install dependencies
         run: rush install
       - name: Switch flavor for beta release build
@@ -95,6 +99,9 @@ jobs:
   callwithchat:
     name: Build and Deploy CallWithChat App
     runs-on: ubuntu-latest
+    permissions:
+      # Needed for Azure login
+      id-token: write
     environment: staging
     steps:
       - uses: actions/checkout@v3
@@ -105,7 +112,7 @@ jobs:
         with:
           node-version: '20.x'
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.2
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Install dependencies
         run: rush install
       - name: Switch flavor for beta release build

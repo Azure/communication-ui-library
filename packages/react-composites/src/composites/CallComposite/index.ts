@@ -2,12 +2,9 @@
 // Licensed under the MIT License.
 
 export { CallComposite } from './CallComposite';
-export type { CallCompositeOptions, CallCompositeProps } from './CallComposite';
+export type { CallCompositeOptions, CallCompositeProps, RemoteVideoTileMenuOptions } from './CallComposite';
 /* @conditional-compile-remove(call-readiness) */
 export type { DeviceCheckOptions } from './CallComposite';
-/* @conditional-compile-remove(pinned-participants) */
-export type { RemoteVideoTileMenuOptions } from './CallComposite';
-/* @conditional-compile-remove(click-to-call) */
 export type { LocalVideoTileOptions } from './CallComposite';
 export type { CallControlOptions } from './types/CallControlOptions';
 
@@ -31,19 +28,17 @@ export type {
   AzureCommunicationCallAdapterArgs,
   CallAdapterLocator,
   CommonCallAdapter,
-  CallAdapterCallOperations
+  CallAdapterCallOperations,
+  AzureCommunicationOutboundCallAdapterArgs
 } from './adapter';
 
-/* @conditional-compile-remove(video-background-effects) */
 export type { AzureCommunicationCallAdapterOptions } from './adapter';
 
-/* @conditional-compile-remove(video-background-effects) */
 export type { CommonCallAdapterOptions } from './adapter';
 
 /* @conditional-compile-remove(teams-adhoc-call) */
 export type { CallParticipantsLocator } from './adapter';
 
-/* @conditional-compile-remove(video-background-effects) */
 export type {
   VideoBackgroundImage,
   VideoBackgroundEffect,
@@ -73,7 +68,8 @@ export type {
   NetworkDiagnosticChangedEvent,
   ParticipantsJoinedListener,
   ParticipantsLeftListener,
-  JoinCallOptions
+  JoinCallOptions,
+  StartCallIdentifier
 } from './adapter';
 
 /* @conditional-compile-remove(close-captions) */
@@ -85,12 +81,17 @@ export type {
 } from './adapter';
 
 /* @conditional-compile-remove(call-transfer) */
-export type { TransferRequestedListener } from './adapter';
+export type { TransferAcceptedListener } from './adapter';
 
 /* @conditional-compile-remove(capabilities) */
 export type { CapabilitiesChangedListener } from './adapter';
 /* @conditional-compile-remove(capabilities) */
 export type { CapabilityChangedNotificationStrings } from './components/CapabilitiesChangedNotificationBar';
 
-/* @conditional-compile-remove(calling-sounds) */
+/* @conditional-compile-remove(spotlight) */
+export type { SpotlightChangedListener } from './adapter';
+
 export type { CallingSounds, SoundEffect } from './adapter';
+
+/* @conditional-compile-remove(spotlight) */
+export type { SpotlightPromptStrings } from './components/Prompt';

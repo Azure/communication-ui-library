@@ -2,8 +2,7 @@
 // Licensed under the MIT License.
 
 import { GroupLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
-/* @conditional-compile-remove(rooms) */
-import { RoomLocator, ParticipantRole } from '@azure/communication-calling';
+import { ParticipantRole, RoomCallLocator } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */
 import { CallParticipantsLocator } from '@azure/communication-react';
 import { v1 as generateGUID } from 'uuid';
@@ -41,7 +40,6 @@ export const getGroupIdFromUrl = (): GroupLocator | undefined => {
 
 export const createGroupId = (): GroupLocator => ({ groupId: generateGUID() });
 
-/* @conditional-compile-remove(rooms) */
 /**
  * Create an ACS room
  */
@@ -58,7 +56,6 @@ export const createRoom = async (): Promise<string> => {
   return body['id'];
 };
 
-/* @conditional-compile-remove(rooms) */
 /**
  * Add user to an ACS room with a given roomId and role
  */
@@ -94,11 +91,10 @@ export const getIsCTE = (): boolean | undefined => {
   return urlParams.get('isCTE') === 'true';
 };
 
-/* @conditional-compile-remove(rooms) */
 /**
  * Get room id from the url's query params.
  */
-export const getRoomIdFromUrl = (): RoomLocator | undefined => {
+export const getRoomIdFromUrl = (): RoomCallLocator | undefined => {
   const urlParams = new URLSearchParams(window.location.search);
   const roomId = urlParams.get('roomId');
   return roomId ? { roomId } : undefined;
@@ -140,3 +136,6 @@ export const callingSDKVersion = __CALLINGVERSION__;
 
 declare let __COMMUNICATIONREACTVERSION__: string; //Injected by webpack
 export const communicationReactSDKVersion = __COMMUNICATIONREACTVERSION__;
+
+declare let __COMMITID__: string; //Injected by webpack
+export const commitID = __COMMITID__;

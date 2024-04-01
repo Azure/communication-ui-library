@@ -111,3 +111,6 @@ test-results/
 change-stable/
 
 apis/
+
+# To avoid accidental checkin of connection string secrets
+samples/Server/appsettings.json

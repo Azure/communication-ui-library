@@ -27,15 +27,13 @@ import {
 } from '../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../types';
-import { MessageStatusIndicator, MessageStatusIndicatorProps } from './MessageStatusIndicator';
+import { MessageStatusIndicatorProps } from './MessageStatusIndicator';
 import { memoizeFnAll, MessageStatus } from '@internal/acs-ui-common';
 import { useLocale } from '../localization/LocalizationProvider';
 import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
 import getParticipantsWhoHaveReadMessage from './utils/getParticipantsWhoHaveReadMessage';
-/* @conditional-compile-remove(file-sharing) */
-import { FileDownloadHandler } from './FileDownloadCards';
-import { AttachmentMetadata } from './FileDownloadCards';
-import { AttachmentDownloadResult } from './FileDownloadCards';
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+import { AttachmentMetadata, AttachmentOptions } from '../types/Attachment';
 import { useTheme } from '../theming';
 import { FluentV9ThemeProvider } from './../theming/FluentV9ThemeProvider';
 import LiveAnnouncer from './Announcer/LiveAnnouncer';
@@ -46,6 +44,8 @@ import {
   ChatMessageComponentWrapper,
   ChatMessageComponentWrapperProps
 } from './ChatMessage/ChatMessageComponentWrapper';
+import { InlineImageOptions } from './ChatMessage/ChatMessageContent';
+import { MessageStatusIndicatorInternal } from './MessageStatusIndicatorInternal';
 import { Announcer } from './Announcer';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
@@ -210,18 +210,21 @@ export interface MessageThreadStrings {
   actionMenuMoreOptions?: string;
   /** Aria label to announce when a message is deleted */
   messageDeletedAnnouncementAriaLabel: string;
-  /* @conditional-compile-remove(file-sharing) */
-  /** String for download file button in file card */
-  downloadFile: string;
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /** String for download attachment button in attachment card */
+  downloadAttachment: string;
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /** String for open attachment button in attachment card */
+  openAttachment: string;
   /* @conditional-compile-remove(data-loss-prevention) */
   /** String for policy violation message removal */
   blockedWarningText: string;
   /* @conditional-compile-remove(data-loss-prevention) */
   /** String for policy violation message removal details link */
   blockedWarningLinkText: string;
-  /* @conditional-compile-remove(file-sharing) */
-  /** String for aria text in file attachment group*/
-  fileCardGroupMessage: string;
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /** String for aria text in attachment card group*/
+  attachmentCardGroupMessage: string;
 }
 
 /**
@@ -328,6 +331,16 @@ const getLastChatMessageIdWithStatus = (messages: Message[], status: MessageStat
   return undefined;
 };
 
+const getLastChatMessageForCurrentUser = (messages: Message[]): ChatMessage | undefined => {
+  for (let i = messages.length - 1; i >= 0; i--) {
+    const message = messages[i];
+    if (message.messageType === 'chat' && message.mine) {
+      return message;
+    }
+  }
+  return undefined;
+};
+
 /**
  * @public
  * Callback function run when a message is updated.
@@ -335,9 +348,9 @@ const getLastChatMessageIdWithStatus = (messages: Message[], status: MessageStat
 export type UpdateMessageCallback = (
   messageId: string,
   content: string,
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   options?: {
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     metadata?: Record<string, string>;
     attachmentMetadata?: AttachmentMetadata[];
   }
@@ -447,18 +460,12 @@ export type MessageThreadProps = {
    * `messageRenderer` is not provided for `CustomMessage` and thus only available for `ChatMessage` and `SystemMessage`.
    */
   onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /**
-   * Optional callback to render attached files in the message component.
+   * Optional callback to render attachments in the message component.
    * @beta
    */
-  onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
-  /**
-   * Optional callback to retrieve the inline image in a message.
-   * @param attachment - AttachmentMetadata object we want to render
-   * @public
-   */
-  onFetchAttachments?: (attachments: AttachmentMetadata[]) => Promise<AttachmentDownloadResult[]>;
+  onRenderAttachmentDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
   /**
    * Optional callback to edit a message.
    *
@@ -505,14 +512,13 @@ export type MessageThreadProps = {
    */
   strings?: Partial<MessageThreadStrings>;
 
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /**
    * @beta
-   * Optional function called when someone clicks on the file download icon.
-   * If file attachments are defined in the `message.metadata` property using the `fileSharingMetadata` key,
-   * this function will be called with the data inside `fileSharingMetadata` key.
+   * Optional attachment options, which defines behvaiour for uploading and downloading attachments.
+   * As this moment, the uploadOptions would be ignored and this option is intended for download only.
    */
-  fileDownloadHandler?: FileDownloadHandler;
+  attachmentOptions?: AttachmentOptions;
 
   /* @conditional-compile-remove(date-time-customization) */
   /**
@@ -528,9 +534,9 @@ export type MessageThreadProps = {
   mentionOptions?: MentionOptions;
   /**
    * Optional callback called when an inline image is clicked.
-   * @public
+   * @beta
    */
-  onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
+  inlineImageOptions?: InlineImageOptions;
 };
 
 /**
@@ -659,12 +665,13 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     onSendMessage,
     /* @conditional-compile-remove(date-time-customization) */
     onDisplayDateTimeString,
-    onFetchAttachments,
     /* @conditional-compile-remove(mention) */
     mentionOptions,
-    onInlineImageClicked,
-    /* @conditional-compile-remove(file-sharing) */
-    onRenderFileDownloads
+    inlineImageOptions,
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+    attachmentOptions,
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+    onRenderAttachmentDownloads
   } = props;
   // We need this state to wait for one tick and scroll to bottom after messages have been initialized.
   // Otherwise chatScrollDivRef.current.clientHeight is wrong if we scroll to bottom before messages are initialized.
@@ -683,31 +690,6 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
 
   // readCount and participantCount will only need to be updated on-fly when user hover on an indicator
   const [readCountForHoveredIndicator, setReadCountForHoveredIndicator] = useState<number | undefined>(undefined);
-
-  const [inlineAttachments, setInlineAttachments] = useState<Record<string, Record<string, string>>>({});
-
-  const onFetchInlineAttachment = useCallback(
-    async (attachments: AttachmentMetadata[], messageId: string): Promise<void> => {
-      if (!onFetchAttachments || attachments.length === 0) {
-        return;
-      }
-      const attachmentDownloadResult = await onFetchAttachments(attachments);
-
-      if (attachmentDownloadResult.length > 0) {
-        setInlineAttachments((prev) => {
-          // The new state should always be based on the previous one
-          // otherwise there can be issues with renders
-          const listOfAttachments = prev[messageId] ?? {};
-          for (const result of attachmentDownloadResult) {
-            const { attachmentId, blobUrl } = result;
-            listOfAttachments[attachmentId] = blobUrl;
-          }
-          return { ...prev, [messageId]: listOfAttachments };
-        });
-      }
-    },
-    [onFetchAttachments]
-  );
 
   const localeStrings = useLocale().strings.messageThread;
   const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
@@ -731,6 +713,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
         // reset deleted message label in case if there was a value already (messages are deleted 1 after another)
         setDeletedMessageAriaLabel(undefined);
         setLatestDeletedMessageId(messageId);
+        lastChatMessageStatus.current = 'deleted';
         // we should set up latestDeletedMessageId before the onDeleteMessage call
         // as otherwise in very rare cases the messages array can be updated before latestDeletedMessageId
         await onDeleteMessage(messageId);
@@ -951,6 +934,21 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     // Only scroll to bottom if isAtBottomOfScrollRef is true
     isAtBottomOfScrollRef.current && scrollToBottom();
   }, [clientHeight, forceUpdate, scrollToBottom, chatMessagesInitialized]);
+  useEffect(() => {
+    const newStatus = getLastChatMessageForCurrentUser(newMessages)?.status;
+    if (newStatus !== undefined) {
+      if (lastChatMessageStatus.current === 'deleted' && newStatus === 'sending') {
+        // enforce message life cycle
+        // message status should always be [ sending -> delivered -> seen (optional) -> deleted ] or [sending -> failed -> deleted]
+        // not any other way around
+        // therefore, if current message status is deleted, we should only update it if newStatus is sending
+        lastChatMessageStatus.current = newStatus;
+      } else if (lastChatMessageStatus.current !== 'deleted') {
+        lastChatMessageStatus.current = newStatus;
+      }
+    }
+    // The hook should depend on newMessages not on messages as otherwise it will skip the sending status for a first message
+  }, [newMessages]);
 
   /**
    * This needs to run to update latestPreviousChatMessage & latestCurrentChatMessage.
@@ -985,6 +983,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages]);
 
+  const lastChatMessageStatus = useRef<string | undefined>(undefined);
   const participantCountRef = useRef(participantCount);
   const readReceiptsBySenderIdRef = useRef(readReceiptsBySenderId);
 
@@ -1007,6 +1006,11 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
       readCount: number,
       status?: MessageStatus
     ) => {
+      // we should only announce label if the message status isn't deleted
+      // because after message is deleted, we now need to render statusIndicator for previous messages
+      // and their status has been announced already and we should not announce them again
+      const shouldAnnounce = lastChatMessageStatus.current !== 'deleted';
+
       const onToggleToolTip = (isToggled: boolean): void => {
         if (isToggled && readReceiptsBySenderIdRef.current) {
           setReadCountForHoveredIndicator(
@@ -1017,12 +1021,13 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
         }
       };
       return (
-        <MessageStatusIndicator
+        <MessageStatusIndicatorInternal
           status={status}
           readCount={readCount}
           onToggleToolTip={onToggleToolTip}
           // -1 because participant count does not include myself
           remoteParticipantsCount={participantCount ? participantCount - 1 : 0}
+          shouldAnnounce={shouldAnnounce}
         />
       );
     },
@@ -1084,13 +1089,19 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
       )}
       <LiveAnnouncer>
         <FluentV9ThemeProvider v8Theme={theme}>
-          <Announcer announcementString={deletedMessageAriaLabel} ariaLive={'assertive'} />
           <Chat
             // styles?.chatContainer used in className and style prop as style prop can't handle CSS selectors
             className={mergeClasses(classes.root, mergeStyles(styles?.chatContainer))}
             ref={chatScrollDivRef}
             style={{ ...createStyleFromV8Style(styles?.chatContainer) }}
           >
+            {latestDeletedMessageId && (
+              <Announcer
+                key={latestDeletedMessageId}
+                announcementString={deletedMessageAriaLabel}
+                ariaLive={'polite'}
+              />
+            )}
             {messagesToDisplay.map((message: _ChatMessageProps): JSX.Element => {
               return (
                 <MemoChatMessageComponentWrapper
@@ -1107,17 +1118,15 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
                   onActionButtonClick={onActionButtonClickMemo}
                   readCount={readCountForHoveredIndicator}
                   participantCount={participantCount}
-                  /* @conditional-compile-remove(file-sharing) */
-                  fileDownloadHandler={props.fileDownloadHandler}
-                  onFetchInlineAttachment={onFetchInlineAttachment}
-                  inlineAttachments={inlineAttachments}
-                  onInlineImageClicked={onInlineImageClicked}
+                  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+                  actionsForAttachment={attachmentOptions?.downloadOptions?.actionsForAttachment}
+                  inlineImageOptions={inlineImageOptions}
                   /* @conditional-compile-remove(date-time-customization) */
                   onDisplayDateTimeString={onDisplayDateTimeString}
                   /* @conditional-compile-remove(mention) */
                   mentionOptions={mentionOptions}
-                  /* @conditional-compile-remove(file-sharing) */
-                  onRenderFileDownloads={onRenderFileDownloads}
+                  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+                  onRenderAttachmentDownloads={onRenderAttachmentDownloads}
                 />
               );
             })}

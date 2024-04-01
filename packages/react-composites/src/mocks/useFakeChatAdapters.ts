@@ -8,7 +8,7 @@ import type { ChatAdapter } from '../composites/ChatComposite/adapter/ChatAdapte
 import { FakeChatClient, IChatClient, Model } from '@internal/fake-backends';
 
 import { useEffect, useState } from 'react';
-import { ChatClient, ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
+import { ChatClient, ChatParticipant, ChatThreadClient, CreateChatThreadResult } from '@azure/communication-chat';
 import {
   CommunicationTokenCredential,
   CommunicationUserIdentifier,
@@ -89,7 +89,7 @@ export function _useFakeChatAdapters(args: _FakeChatAdapterArgs): _FakeChatAdapt
 const initializeAdapters = async (
   participants: ChatParticipant[],
   chatClientModel: Model,
-  thread
+  thread: CreateChatThreadResult
 ): Promise<ChatAdapter[]> => {
   const remoteAdapters: ChatAdapter[] = [];
   for (const participant of participants) {
@@ -106,6 +106,7 @@ const initializeAdapters = async (
       chatClient: remoteChatClient as IChatClient as ChatClient,
       chatThreadClient: remoteChatClient.getChatThreadClient(thread.chatThread?.id ?? 'INVALID_THREAD_ID')
     });
+
     remoteAdapters.push(remoteAdapter);
   }
   return remoteAdapters;
@@ -118,7 +119,7 @@ const initializeAdapter = async (
   const statefulChatClient = _createStatefulChatClientWithDeps(adapterInfo.chatClient, {
     userId: adapterInfo.userId as CommunicationUserIdentifier,
     displayName: adapterInfo.displayName,
-    endpoint: 'FAKE_ENDPOINT',
+    endpoint: 'http://FAKE_ENDPOINT',
     credential: fakeToken
   });
   statefulChatClient.startRealtimeNotifications();
@@ -126,9 +127,7 @@ const initializeAdapter = async (
     adapterInfo.chatThreadClient.threadId
   );
   registerChatThreadClientMethodErrors(chatThreadClient, chatThreadClientMethodErrors);
-  return await createAzureCommunicationChatAdapterFromClient(statefulChatClient, chatThreadClient, {
-    credential: fakeToken
-  });
+  return await createAzureCommunicationChatAdapterFromClient(statefulChatClient, chatThreadClient);
 };
 
 interface AdapterInfo {
@@ -170,11 +169,14 @@ const registerChatThreadClientMethodErrors = (
   chatThreadClientMethodErrors?: Partial<Record<keyof ChatThreadClient, _ChatThreadRestError>>
 ): void => {
   for (const k in chatThreadClientMethodErrors) {
-    chatThreadClient[k] = () => {
-      throw new RestError(chatThreadClientMethodErrors[k].message ?? '', {
-        code: chatThreadClientMethodErrors[k].code,
-        statusCode: chatThreadClientMethodErrors[k].statusCode
-      });
-    };
+    if (k in chatThreadClient) {
+      const key = k as keyof Omit<ChatThreadClient, 'threadId'>;
+      chatThreadClient[key] = () => {
+        throw new RestError(chatThreadClientMethodErrors[key]?.message ?? '', {
+          code: chatThreadClientMethodErrors[key]?.code,
+          statusCode: chatThreadClientMethodErrors[key]?.statusCode
+        });
+      };
+    }
   }
 };

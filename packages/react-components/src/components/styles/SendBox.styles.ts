@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { mergeStyles, IStyle, Theme } from '@fluentui/react';
+import { IStyle, mergeStyles, Theme } from '@fluentui/react';
 
 /**
  * @private
@@ -36,16 +36,49 @@ export const sendButtonStyle = mergeStyles({
 /**
  * @private
  */
-export const sendIconStyle = mergeStyles({
-  width: '1.25rem',
-  height: '1.25rem',
-  margin: 'auto'
-});
+export const sendIconStyle = (props: {
+  theme: Theme;
+  hasText: boolean;
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ hasFile: boolean;
+  disabled?: boolean;
+  hasErrorMessage: boolean;
+  customSendIconStyle?: IStyle;
+  defaultTextColor?: string;
+}): string => {
+  const {
+    theme,
+    hasText,
+    disabled = false,
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ hasFile,
+    hasErrorMessage,
+    customSendIconStyle,
+    defaultTextColor = theme.palette.neutralTertiary
+  } = props;
+  const hasNoContent =
+    !hasText &&
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ !hasFile;
+  return mergeStyles(
+    editorTextBoxButtonStyle,
+    {
+      color: disabled || hasErrorMessage || hasNoContent ? defaultTextColor : theme.palette.themePrimary
+    },
+    customSendIconStyle
+  );
+};
 
 /**
  * @private
  */
-export const fileUploadCardsStyles = mergeStyles({
+export const editorTextBoxButtonStyle: IStyle = {
+  width: '1.25rem',
+  height: '1.25rem',
+  margin: 'auto'
+};
+
+/**
+ * @private
+ */
+export const attachmentUploadCardsStyles = mergeStyles({
   margin: '0 0.25rem 0.25rem 0.25rem',
   maxHeight: '12.5rem',
   overflow: 'auto'
@@ -54,7 +87,7 @@ export const fileUploadCardsStyles = mergeStyles({
 /**
  * @private
  */
-export const fileCardBoxStyle = mergeStyles({
+export const attachmentCardBoxStyle = mergeStyles({
   width: '100%',
   padding: '0.50rem'
 });
@@ -75,9 +108,21 @@ export const borderAndBoxShadowStyle = (props: {
   theme: Theme;
   hasErrorMessage: boolean;
   disabled: boolean;
+}): string => {
+  return mergeStyles(borderEditBoxStyle({ ...props, defaultBorderColor: props.theme.palette.neutralSecondary }));
+};
+
+/**
+ * @private
+ */
+export const borderEditBoxStyle = (props: {
+  theme: Theme;
+  defaultBorderColor?: string;
+  hasErrorMessage: boolean;
+  disabled: boolean;
 }): IStyle => {
-  const { theme, hasErrorMessage, disabled } = props;
-  const borderColor = hasErrorMessage ? theme.semanticColors.errorText : theme.palette.neutralSecondary;
+  const { theme, hasErrorMessage, disabled, defaultBorderColor } = props;
+  const borderColor = hasErrorMessage ? theme.semanticColors.errorText : defaultBorderColor;
   const borderColorActive = hasErrorMessage ? theme.semanticColors.errorText : theme.palette.themePrimary;
 
   const borderThickness = disabled ? 0 : defaultSendBoxInactiveBorderThicknessREM;

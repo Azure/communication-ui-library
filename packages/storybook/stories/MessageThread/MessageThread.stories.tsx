@@ -8,10 +8,8 @@ import {
   CustomMessage,
   SystemMessage,
   MessageRenderer,
-  AttachmentMetadata,
-  AttachmentDownloadResult,
-  ImageGalleryImageProps,
-  ImageGallery
+  ImageOverlay,
+  InlineImage
 } from '@azure/communication-react';
 import {
   Persona,
@@ -42,7 +40,8 @@ import {
   GenerateMockCustomMessage,
   GetAvatarUrlByUserId,
   GenerateMockNewChatMessageWithInlineImage,
-  GenerateMockNewChatMessageWithMention
+  GenerateMockNewChatMessageWithMention,
+  GenerateMockNewChatMessageWithAttachment
 } from './placeholdermessages';
 import { MessageThreadWithBlockedMessagesExample } from './snippets/BlockedMessages.snippet';
 import { MessageThreadWithCustomAvatarExample } from './snippets/CustomAvatar.snippet';
@@ -54,8 +53,8 @@ import { MessageThreadWithCustomMessageStatusIndicatorExample } from './snippets
 import { MessageThreadWithCustomTimestampExample } from './snippets/CustomTimestamp.snippet';
 import { DefaultMessageThreadExample } from './snippets/Default.snippet';
 import { MessageThreadWithMessageStatusIndicatorExample } from './snippets/MessageStatusIndicator.snippet';
+import { MessageWithAttachment } from './snippets/MessageWithAttachment.snippet';
 import { MessageWithCustomMentionRenderer } from './snippets/MessageWithCustomMentionRenderer.snippet';
-import { MessageWithFile } from './snippets/MessageWithFile.snippet';
 import { MessageThreadWithSystemMessagesExample } from './snippets/SystemMessages.snippet';
 import { MessageThreadWithInlineImageExample } from './snippets/WithInlineImageMessage.snippet';
 import { MessageThreadWithMessageDateExample } from './snippets/WithMessageDate.snippet';
@@ -78,9 +77,9 @@ const MessageThreadWithCustomTimestampExampleText =
 const DefaultMessageThreadExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
 const MessageThreadWithMessageStatusIndicatorExampleText =
   require('!!raw-loader!./snippets/MessageStatusIndicator.snippet.tsx').default;
+const MessageWithAttachmentText = require('!!raw-loader!./snippets/MessageWithAttachment.snippet.tsx').default;
 const MessageWithCustomMentionRendererText =
   require('!!raw-loader!./snippets/MessageWithCustomMentionRenderer.snippet.tsx').default;
-const MessageWithFileText = require('!!raw-loader!./snippets/MessageWithFile.snippet.tsx').default;
 const ExampleConstantsText = require('!!raw-loader!./snippets/placeholdermessages.ts').default;
 const MessageThreadWithSystemMessagesExampleText =
   require('!!raw-loader!./snippets/SystemMessages.snippet.tsx').default;
@@ -111,7 +110,7 @@ const Docs: () => JSX.Element = () => {
   const refCustomAvatar = useRef(null);
   const refCustomTimestamp = useRef(null);
   const refDisplayInlineImages = useRef(null);
-  const refDisplayFileAttachments = useRef(null);
+  const refDisplayAttachments = useRef(null);
   const refMentionOfUsers = useRef(null);
   const refProps = useRef(null);
 
@@ -153,8 +152,8 @@ const Docs: () => JSX.Element = () => {
       scrollToRef(refCustomTimestamp);
     } else if (url.includes('display-inline-image-with-messages') && refDisplayInlineImages.current) {
       scrollToRef(refDisplayInlineImages);
-    } else if (url.includes('display-file-attachments-with-messages') && refDisplayFileAttachments.current) {
-      scrollToRef(refDisplayFileAttachments);
+    } else if (url.includes('display-attachments-with-messages') && refDisplayAttachments.current) {
+      scrollToRef(refDisplayAttachments);
     } else if (url.includes('mention-of-users-with-a-custom-renderer-within-messages') && refMentionOfUsers.current) {
       scrollToRef(refMentionOfUsers);
     } else if (url.includes('props') && refProps.current) {
@@ -174,7 +173,7 @@ const Docs: () => JSX.Element = () => {
     refCustomAvatar,
     refCustomTimestamp,
     refDisplayInlineImages,
-    refDisplayFileAttachments,
+    refDisplayAttachments,
     refMentionOfUsers,
     refProps
   ]);
@@ -325,30 +324,25 @@ const Docs: () => JSX.Element = () => {
       </div>
 
       <div ref={refDisplayInlineImages}>
-        <Heading>Display Inline Image with Messages</Heading>
-        <SingleLineBetaBanner />
-        <Description>
-          MessageThread component provides UI for displaying inline image attachments in a message. If an image is
-          protected by header-based authentication, developers can write there own HTTP call to get the image so you can
-          provide the applicable headers. By default the `previewUrl` is displayed in the message bubble.
-        </Description>
+        <Heading>Tapping Inline Images on Messages</Heading>
         <Canvas mdxSource={MessageThreadWithInlineImageExampleText}>
           <MessageThreadWithInlineImageExample />
         </Canvas>
       </div>
 
-      <div ref={refDisplayFileAttachments}>
-        <Heading>Display File Attachments with Messages</Heading>
+      <div ref={refDisplayAttachments}>
+        <Heading>Display Attachments with Messages</Heading>
         <DetailedBetaBanner />
         <Description>
-          MessageThread component provides UI for displaying file attachments in a message. This allows developers to
-          implement a file sharing feature using the pure UI component with minimal effort. Developers can write their
-          own file download logic and utilize the UI provided by MessageThread. Clicking on the file attachment opens it
-          in a new browser tab. Developers can override this behavior as well using MessageThread props. [The file types
-          icons](./?path=/docs/icons--page) should be initialized before rendering MessageThread component.
+          MessageThread component provides UI for displaying attachments in a message. This allows developers to
+          implement a attachments sharing feature using the pure UI component with minimal effort. Developers can write
+          their own attachment download logic and utilize the UI provided by MessageThread. Clicking on the attachment
+          opens it in a new browser tab. Developers can override this behavior as well using MessageThread props. [The
+          attachment types icons](./?path=/docs/icons--page) should be initialized before rendering MessageThread
+          component.
         </Description>
-        <Canvas mdxSource={MessageWithFileText}>
-          <MessageWithFile />
+        <Canvas mdxSource={MessageWithAttachmentText}>
+          <MessageWithAttachment />
         </Canvas>
       </div>
 
@@ -382,6 +376,7 @@ const MessageThreadStory = (args): JSX.Element => {
     { key: 'newMessage', text: 'New Message' },
     { key: 'newMessageOthers', text: 'New Message from others' },
     { key: 'newMessageWithInlineImage', text: 'New Message with Inline Image' },
+    { key: 'newMessageWithAttachment', text: 'New Message with Attachment' },
     { key: 'newMessageWithMention', text: 'New Message with Mention' },
     { key: 'newSystemMessage', text: 'New System Message' },
     { key: 'newCustomMessage', text: 'New Custom Message' }
@@ -408,6 +403,10 @@ const MessageThreadStory = (args): JSX.Element => {
 
   const onSendNewMessageWithInlineImage = (): void => {
     setChatMessages([...chatMessages, GenerateMockNewChatMessageWithInlineImage()]);
+  };
+
+  const onSendNewMessageWithAttachment = (): void => {
+    setChatMessages([...chatMessages, GenerateMockNewChatMessageWithAttachment()]);
   };
 
   const onSendNewMessageWithMention = (): void => {
@@ -451,19 +450,8 @@ const MessageThreadStory = (args): JSX.Element => {
     return Promise.resolve();
   };
 
-  const onFetchAttachments = async (attachments: AttachmentMetadata[]): Promise<AttachmentDownloadResult[]> => {
-    // Mocking promise
-    const delay = (): Promise<void> => new Promise((resolve) => setTimeout(resolve, 3000));
-    return await delay().then(() => {
-      return [
-        {
-          attachmentId: attachments[0].id,
-          blobUrl: attachments[0].previewUrl ?? ''
-        }
-      ];
-    });
-  };
-  const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps>>([]);
+  const [overlayImageItem, setOverlayImageItem] =
+    useState<{ imageSrc: string; title: string; titleIcon: JSX.Element; downloadAttachmentname: string }>();
 
   const onInlineImageClicked = (attachmentId: string, messageId: string): Promise<void> => {
     const messages = chatMessages?.filter((message) => {
@@ -474,27 +462,48 @@ const MessageThreadStory = (args): JSX.Element => {
     }
     const chatMessage = messages[0] as ChatMessage;
 
-    const attachments = chatMessage.inlineImages?.filter((attachment) => {
-      return attachment.id === attachmentId;
-    });
-
-    if (!attachments || attachments.length <= 0) {
-      return Promise.reject(`Attachment not found with id ${attachmentId}`);
-    }
-
-    const attachment = attachments[0];
     const title = 'Message Thread Image';
     const titleIcon = (
       <Persona text={chatMessage.senderDisplayName} size={PersonaSize.size32} hidePersonaDetails={true} />
     );
-    const galleryImage: ImageGalleryImageProps = {
-      title,
-      titleIcon,
-      downloadFilename: attachment.id,
-      imageUrl: attachment.url
-    };
-    setGalleryImages([galleryImage]);
+    const document = new DOMParser().parseFromString(chatMessage.content ?? '', 'text/html');
+    document.querySelectorAll('img').forEach((img) => {
+      if (img.id === attachmentId) {
+        setOverlayImageItem({
+          title,
+          titleIcon,
+          downloadAttachmentname: attachmentId,
+          imageSrc: img.src
+        });
+      }
+    });
     return Promise.resolve();
+  };
+
+  const inlineImageOptions = {
+    onRenderInlineImage: (
+      inlineImage: InlineImage,
+      defaultOnRender: (inlineImage: InlineImage) => JSX.Element
+    ): JSX.Element => {
+      return (
+        <span
+          data-ui-id={inlineImage.imageAttributes.id}
+          onClick={() => onInlineImageClicked(inlineImage.imageAttributes.id || '', inlineImage.messageId)}
+          tabIndex={0}
+          role="button"
+          style={{
+            cursor: 'pointer'
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              onInlineImageClicked(inlineImage.imageAttributes.id || '', inlineImage.messageId);
+            }
+          }}
+        >
+          {defaultOnRender(inlineImage)}
+        </span>
+      );
+    }
   };
 
   const onSendHandler = (): void => {
@@ -517,6 +526,9 @@ const MessageThreadStory = (args): JSX.Element => {
       case 'newCustomMessage':
         onSendCustomMessage();
         break;
+      case 'newMessageWithAttachment':
+        onSendNewMessageWithAttachment();
+        break;
       default:
         console.log('Invalid message type');
     }
@@ -531,8 +543,7 @@ const MessageThreadStory = (args): JSX.Element => {
         disableJumpToNewMessageButton={!args.enableJumpToNewMessageButton}
         onLoadPreviousChatMessages={onLoadPreviousMessages}
         onRenderMessage={onRenderMessage}
-        onFetchAttachments={onFetchAttachments}
-        onInlineImageClicked={onInlineImageClicked}
+        inlineImageOptions={inlineImageOptions}
         onUpdateMessage={onUpdateMessageCallback}
         onRenderAvatar={(userId?: string) => {
           return (
@@ -548,11 +559,14 @@ const MessageThreadStory = (args): JSX.Element => {
         }}
       />
       {
-        <ImageGallery
-          isOpen={galleryImages.length > 0}
-          images={galleryImages}
-          onDismiss={() => setGalleryImages([])}
-          onImageDownloadButtonClicked={() => {
+        <ImageOverlay
+          isOpen={overlayImageItem !== undefined}
+          imageSrc={overlayImageItem?.imageSrc || ''}
+          title="Image"
+          onDismiss={() => {
+            setOverlayImageItem(undefined);
+          }}
+          onDownloadButtonClicked={() => {
             alert('Download button clicked');
           }}
         />

@@ -7,7 +7,8 @@
     "mutedIconLabel": "已静音",
     "displayNamePlaceholder": "未命名的参与者",
     "participantStateRinging": "正在呼叫...",
-    "participantStateHold": "待机音乐"
+    "participantStateHold": "待机音乐",
+    "attendeeRole": "与会者"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} 个"
@@ -23,15 +24,32 @@
     "placeholderText": "输入消息",
     "textTooLong": "你的消息长度超过了最大限制。",
     "sendButtonAriaLabel": "发送消息",
-    "fileUploadsPendingError": "正在上载...请稍候。",
-    "removeFile": "删除文件",
+    "attachmentUploadsPendingError": "正在上载...请稍候。",
+    "removeAttachment": "删除文件",
     "uploading": "正在上传",
     "uploadCompleted": "已完成上传"
+  },
+  "richTextSendBox": {
+    "placeholderText": "输入消息",
+    "textTooLong": "你的消息长度超过了最大限制。",
+    "sendButtonAriaLabel": "发送信息",
+    "attachmentUploadsPendingError": "正在上传...请稍等。",
+    "removeAttachment": "删除文件",
+    "uploading": "正在上传",
+    "uploadCompleted": "已完成上传",
+    "boldTooltip": "粗体",
+    "italicTooltip": "斜体",
+    "underlineTooltip": "下划线",
+    "bulletListTooltip": "项目符号列表",
+    "numberListTooltip": "编号列表",
+    "increaseIndentTooltip": "增加缩进量",
+    "decreaseIndentTooltip": "减少缩进量",
+    "richTextFormatButtonTooltip": "格式"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "建议"
   },
-  "imageGallery": {
+  "imageOverlay": {
     "downloadButtonLabel": "下载",
     "dismissButtonAriaLabel": "关闭"
   },
@@ -123,6 +141,17 @@
     "tooltipOnContent": "手放下",
     "tooltipOffContent": "举手"
   },
+  "reactionButton": {
+    "label": "回应",
+    "ariaLabel": "回应按钮，发送回应",
+    "tooltipDisabledContent": "已禁用表情符号操作",
+    "tooltipContent": "发送表情符号",
+    "likeReactionTooltipContent": "点赞",
+    "heartReactionTooltipContent": "喜欢",
+    "laughReactionTooltipContent": "大笑",
+    "applauseReactionTooltipContent": "鼓掌",
+    "surprisedReactionTooltipContent": "惊讶"
+  },
   "messageThread": {
     "yesterday": "昨天",
     "sunday": "星期日",
@@ -150,10 +179,10 @@
     "editBoxSubmitButton": "完成",
     "messageReadCount": "{messageReadByCount}/{remoteParticipantsCount} 人已读",
     "actionMenuMoreOptions": "更多选项",
-    "downloadFile": "下载文件",
+    "downloadAttachment": "下载文件",
     "blockedWarningText": "由于组织策略，此消息已被删除。",
     "blockedWarningLinkText": "详细信息",
-    "fileCardGroupMessage": "该邮件包含 {fileCount} 个附件",
+    "attachmentCardGroupMessage": "该邮件包含 {attachmentCount} 个附件",
     "messageDeletedAnnouncementAriaLabel": "邮件已删除"
   },
   "errorBar": {
@@ -190,7 +219,8 @@
     "failedToJoinCallGeneric": "未能加入通话。",
     "failedToJoinCallInvalidMeetingLink": "无法加入会议。无效的链接。",
     "cameraFrozenForRemoteParticipants": "通话中的用户在查看视频时遇到问题。请检查你的设备和网络。",
-    "unableToStartVideoEffect": "无法应用视频效果。"
+    "unableToStartVideoEffect": "无法应用视频效果。",
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "无法开发聚焦参与者，因为聚焦的参与者人数已达到上限。"
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "你正在共享你的屏幕",
@@ -208,7 +238,13 @@
     "pinParticipantMenuItemAriaLabel": "固定 {participantName}",
     "unpinParticipantMenuItemAriaLabel": "取消固定 {participantName}",
     "pinnedParticipantAnnouncementAriaLabel": "已固定 {participantName}",
-    "unpinnedParticipantAnnouncementAriaLabel": "已取消固定 {participantName}"
+    "unpinnedParticipantAnnouncementAriaLabel": "已取消固定 {participantName}",
+    "startSpotlightVideoTileMenuLabel": "对所有人聚焦",
+    "addSpotlightVideoTileMenuLabel": "添加聚焦",
+    "spotlightLimitReachedMenuTitle": "已达到聚焦限制",
+    "stopSpotlightVideoTileMenuLabel": "停止聚焦",
+    "stopSpotlightOnSelfVideoTileMenuLabel": "退出聚焦",
+    "attendeeRole": "与会者"
   },
   "dialpad": {
     "placeholderText": "输入电话号码",
@@ -342,6 +378,5 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "上一页",
     "rightNavButtonAriaLabel": "下一页"
-  },
-  "AttendeeRole": "与会者"
+  }
 }

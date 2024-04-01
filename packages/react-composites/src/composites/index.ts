@@ -41,8 +41,6 @@ export * from './localization/locales';
 export type { CompositeStrings, CompositeLocale } from './localization';
 export type { AdapterError, AdapterErrors } from './common/adapters';
 export type { BaseCompositeProps } from './common/BaseComposite';
-
-/* @conditional-compile-remove(control-bar-button-injection) */
 export type {
   CustomCallControlButtonCallback,
   CustomCallControlButtonPlacement,
@@ -50,7 +48,6 @@ export type {
   CustomCallControlButtonStrings
 } from './common/ControlBar/CustomButton';
 
-/* @conditional-compile-remove(video-background-effects) */
 export { onResolveVideoEffectDependencyLazy } from './common/resolveVideoEffectDependencyLazy';
-/* @conditional-compile-remove(video-background-effects) */
+
 export { onResolveVideoEffectDependency } from './common/resolveVideoEffectDependency';

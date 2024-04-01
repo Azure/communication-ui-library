@@ -28,6 +28,8 @@ test.describe('Page state tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('call-failed-due-to-network-page.png');
   });
   test('Page when local participant left call', async ({ page, serverUrl }) => {
+    /* @conditional-compile-remove(end-of-call-survey) */
+    test.skip();
     const initialState = defaultMockCallAdapterState();
     initialState.page = 'leftCall';
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
@@ -43,7 +45,15 @@ test.describe('Page state tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('removed-from-call-page.png');
   });
 
-  /* @conditional-compile-remove(rooms) */
+  /* @conditional-compile-remove(end-of-call-survey) */
+  test('Page when local participant left call and see end of call survey', async ({ page, serverUrl }) => {
+    const initialState = defaultMockCallAdapterState();
+    initialState.page = 'leftCall';
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+    await waitForSelector(page, dataUiId('call-composite-survey'));
+    expect(await stableScreenshot(page)).toMatchSnapshot('survey-page.png');
+  });
+
   test('Page when local participant tries to join a room that cannot be not found', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState(undefined, undefined, true, ROOM_NOT_FOUND_SUB_CODE);
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
@@ -52,7 +62,6 @@ test.describe('Page state tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('room-not-found-page.png');
   });
 
-  /* @conditional-compile-remove(rooms) */
   test('Page when local participant tries to join a room that they are not invited to', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState(undefined, undefined, true, NOT_INVITED_TO_ROOM_SUB_CODE);
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
@@ -61,7 +70,6 @@ test.describe('Page state tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('permission-denied-to-room-page.png');
   });
 
-  /* @conditional-compile-remove(rooms) */
   test('Page when local participant has their invite to room removed', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState(undefined, undefined, true, INVITE_TO_ROOM_REMOVED_SUB_CODE);
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
@@ -72,9 +80,6 @@ test.describe('Page state tests', async () => {
 });
 
 // Copied from CallComposite.tsx
-/* @conditional-compile-remove(rooms) */
 const ROOM_NOT_FOUND_SUB_CODE = 5732;
-/* @conditional-compile-remove(rooms) */
 const NOT_INVITED_TO_ROOM_SUB_CODE = 5828;
-/* @conditional-compile-remove(rooms) */
 const INVITE_TO_ROOM_REMOVED_SUB_CODE = 5317;

@@ -14,7 +14,7 @@ export interface ChatCompositeStrings {
    */
   chatListHeader: string;
 
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /**
    * Upload File Button text
    */

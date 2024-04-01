@@ -2,10 +2,9 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-import { useEffect } from 'react';
 import { _formatString } from '@internal/acs-ui-common';
-import { Parser, ProcessNodeDefinitions, IsValidNodeDefinitions, ProcessingInstructionType } from 'html-to-react';
-
+import parse, { HTMLReactParserOptions, Element as DOMElement } from 'html-react-parser';
+import { attributesToProps } from 'html-react-parser';
 import Linkify from 'react-linkify';
 import { ChatMessage } from '../../types/ChatMessage';
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -17,7 +16,6 @@ import { MentionDisplayOptions, Mention } from '../MentionPopover';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { FontIcon, Stack } from '@fluentui/react';
 import { MessageThreadStrings } from '../MessageThread';
-import { AttachmentMetadata, InlineImageMetadata } from '../FileDownloadCards';
 import LiveMessage from '../Announcer/LiveMessage';
 /* @conditional-compile-remove(mention) */
 import { defaultOnMentionRender } from './MentionRenderer';
@@ -28,9 +26,7 @@ type ChatMessageContentProps = {
   strings: MessageThreadStrings;
   /* @conditional-compile-remove(mention) */
   mentionDisplayOptions?: MentionDisplayOptions;
-  attachmentsMap?: Record<string, string>;
-  onFetchAttachments?: (attachments: AttachmentMetadata[], messageId: string) => Promise<void>;
-  onInlineImageClicked?: (attachmentId: string) => void;
+  inlineImageOptions?: InlineImageOptions;
 };
 
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -45,6 +41,33 @@ type MessageContentWithLiveAriaProps = {
   ariaLabel?: string;
   content: JSX.Element;
 };
+
+/**
+ * InlineImage's state, as reflected in the UI.
+ *
+ * @public
+ */
+export interface InlineImage {
+  /** ID of the message that the inline image is belonged to */
+  messageId: string;
+  /** Attributes of the inline image */
+  imageAttributes: React.ImgHTMLAttributes<HTMLImageElement>;
+}
+
+/**
+ * Options to display inline image in the inline image scenario.
+ *
+ * @public
+ */
+export interface InlineImageOptions {
+  /**
+   * Optional callback to render an inline image of in a message.
+   */
+  onRenderInlineImage?: (
+    inlineImage: InlineImage,
+    defaultOnRender: (inlineImage: InlineImage) => JSX.Element
+  ) => JSX.Element;
+}
 
 /** @private */
 export const ChatMessageContent = (props: ChatMessageContentProps): JSX.Element => {
@@ -71,19 +94,6 @@ const MessageContentWithLiveAria = (props: MessageContentWithLiveAriaProps): JSX
 };
 
 const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Element => {
-  const { message, attachmentsMap, onFetchAttachments } = props;
-  useEffect(() => {
-    if (!attachmentsMap || !onFetchAttachments) {
-      return;
-    }
-    const attachments = message.inlineImages?.filter((inlinedImages) => {
-      return attachmentsMap[inlinedImages.id] === undefined;
-    });
-    if (attachments && attachments.length > 0) {
-      onFetchAttachments(attachments, message.messageId);
-    }
-  }, [message.inlineImages, message.messageId, onFetchAttachments, attachmentsMap]);
-
   return (
     <MessageContentWithLiveAria
       message={props.message}
@@ -153,11 +163,28 @@ export const BlockedMessageContent = (props: BlockedMessageContentProps): JSX.El
   );
 };
 
-// https://stackoverflow.com/questions/28899298/extract-the-text-out-of-html-string-using-javascript
-const extractContent = (s: string): string => {
-  const span = document.createElement('span');
-  span.innerHTML = s;
-  return span.textContent || span.innerText;
+const extractContentForAllyMessage = (props: ChatMessageContentProps): string => {
+  if (props.message.content) {
+    // Replace all <img> tags with 'image' for aria.
+    const parsedContent = DOMPurify.sanitize(props.message.content, {
+      ALLOWED_TAGS: ['img'],
+      RETURN_DOM_FRAGMENT: true
+    });
+
+    parsedContent.childNodes.forEach((child) => {
+      if (child.nodeName.toLowerCase() !== 'img') {
+        return;
+      }
+      const imageTextNode = document.createElement('div');
+      imageTextNode.innerHTML = 'image ';
+      parsedContent.replaceChild(imageTextNode, child);
+    });
+
+    // Strip all html tags from the content for aria.
+    const message = DOMPurify.sanitize(parsedContent, { ALLOWED_TAGS: [] });
+    return message;
+  }
+  return '';
 };
 
 const generateLiveMessage = (props: ChatMessageContentProps): string => {
@@ -165,112 +192,66 @@ const generateLiveMessage = (props: ChatMessageContentProps): string => {
 
   return `${props.message.editedOn ? props.strings.editedTag : ''} ${
     props.message.mine ? '' : liveAuthor
-  } ${extractContent(props.message.content || '')} `;
+  } ${extractContentForAllyMessage(props)} `;
 };
 
 const messageContentAriaText = (props: ChatMessageContentProps): string | undefined => {
-  // Strip all html tags from the content for aria.
-
-  return props.message.content
-    ? props.message.mine
-      ? _formatString(props.strings.messageContentMineAriaText, {
-          message: DOMPurify.sanitize(props.message.content, { ALLOWED_TAGS: [] })
-        })
-      : _formatString(props.strings.messageContentAriaText, {
-          author: `${props.message.senderDisplayName}`,
-          message: DOMPurify.sanitize(props.message.content, { ALLOWED_TAGS: [] })
-        })
-    : undefined;
+  const message = extractContentForAllyMessage(props);
+  return props.message.mine
+    ? _formatString(props.strings.messageContentMineAriaText, {
+        message: message
+      })
+    : _formatString(props.strings.messageContentAriaText, {
+        author: `${props.message.senderDisplayName}`,
+        message: message
+      });
 };
 
-const processNodeDefinitions = ProcessNodeDefinitions();
-const htmlToReactParser = Parser();
-
-const processInlineImage = (props: ChatMessageContentProps): ProcessingInstructionType => ({
-  // Custom <img> processing
-  shouldProcessNode: (node): boolean => {
-    function matchingImageNode(imageMetadata: InlineImageMetadata): boolean {
-      return imageMetadata.id === node.attribs.id;
-    }
-
-    // Process img node with id in attachments list
-    return (
-      node.name &&
-      node.name === 'img' &&
-      node.attribs &&
-      node.attribs.id &&
-      props.message.inlineImages?.find(matchingImageNode)
-    );
-  },
-  processNode: (node, children, index): JSX.Element => {
-    node.attribs = { ...node.attribs, 'aria-label': node.attribs.name };
-    // logic to check id in map/list
-    if (props.attachmentsMap && node.attribs.id in props.attachmentsMap) {
-      node.attribs = { ...node.attribs, src: props.attachmentsMap[node.attribs.id] };
-    }
-    const handleOnClick = (): void => {
-      props.onInlineImageClicked && props.onInlineImageClicked(node.attribs.id);
-    };
-
-    return (
-      <span
-        data-ui-id={node.attribs.id}
-        onClick={handleOnClick}
-        tabIndex={0}
-        role="button"
-        style={{
-          cursor: 'pointer'
-        }}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            handleOnClick();
-          }
-        }}
-      >
-        {processNodeDefinitions.processDefaultNode(node, children, index)}
-      </span>
-    );
-    return processNodeDefinitions.processDefaultNode(node, children, index);
-  }
-});
-
-/* @conditional-compile-remove(mention) */
-const processMention = (props: ChatMessageContentProps): ProcessingInstructionType => ({
-  shouldProcessNode: (node) => {
-    if (props.mentionDisplayOptions?.onRenderMention) {
-      // Override the handling of the <msft-mention> tag in the HTML if there's a custom renderer
-      return node.name === 'msft-mention';
-    }
-    return false;
-  },
-  processNode: (node) => {
-    if (props.mentionDisplayOptions?.onRenderMention) {
-      const { id } = node.attribs;
-      const mention: Mention = {
-        id: id,
-        displayText: node.children[0]?.data ?? ''
-      };
-      return props.mentionDisplayOptions.onRenderMention(mention, defaultOnMentionRender);
-    }
-    return processNodeDefinitions.processDefaultNode;
-  }
-});
+const defaultOnRenderInlineImage = (inlineImage: InlineImage): JSX.Element => {
+  return (
+    <img
+      key={inlineImage.imageAttributes.id}
+      tabIndex={0}
+      data-ui-id={inlineImage.imageAttributes.id}
+      {...inlineImage.imageAttributes}
+    />
+  );
+};
 
 const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
-  const steps: ProcessingInstructionType[] = [
-    processInlineImage(props),
-    /* @conditional-compile-remove(mention) */
-    processMention(props),
-    {
-      // Process everything else in the default way
-      shouldProcessNode: IsValidNodeDefinitions.alwaysValid,
-      processNode: processNodeDefinitions.processDefaultNode
-    }
-  ];
+  const options: HTMLReactParserOptions = {
+    transform(reactNode, domNode) {
+      if (domNode instanceof DOMElement && domNode.attribs) {
+        // Transform custom rendering of mentions
+        /* @conditional-compile-remove(mention) */
+        if (domNode.name === 'msft-mention') {
+          const { id } = domNode.attribs;
+          const mention: Mention = {
+            id: id,
+            displayText: (domNode.children[0] as unknown as Text).nodeValue ?? ''
+          };
+          if (props.mentionDisplayOptions?.onRenderMention) {
+            return props.mentionDisplayOptions.onRenderMention(mention, defaultOnMentionRender);
+          }
+          return defaultOnMentionRender(mention);
+        }
 
-  return htmlToReactParser.parseWithInstructions(
-    props.message.content ?? '',
-    IsValidNodeDefinitions.alwaysValid,
-    steps
-  );
+        // Transform inline images
+        if (domNode.name && domNode.name === 'img' && domNode.attribs && domNode.attribs.id) {
+          domNode.attribs['aria-label'] = domNode.attribs.name;
+          const imgProps = attributesToProps(domNode.attribs);
+          const inlineImageProps: InlineImage = { messageId: props.message.messageId, imageAttributes: imgProps };
+
+          return props.inlineImageOptions?.onRenderInlineImage
+            ? props.inlineImageOptions.onRenderInlineImage(inlineImageProps, defaultOnRenderInlineImage)
+            : defaultOnRenderInlineImage(inlineImageProps);
+
+          return <img key={imgProps.id as string} {...imgProps} />;
+        }
+      }
+      // Pass through the original node
+      return reactNode as unknown as JSX.Element;
+    }
+  };
+  return <>{parse(props.message.content ?? '', options)}</>;
 };

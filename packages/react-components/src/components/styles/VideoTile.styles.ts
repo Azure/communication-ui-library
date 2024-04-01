@@ -1,7 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { IButtonStyles, IStyle, keyframes, memoizeFunction, mergeStyles, Theme, ITheme } from '@fluentui/react';
+import { IButtonStyles, IStyle, mergeStyles, Theme, ITheme } from '@fluentui/react';
+/* @conditional-compile-remove(reaction) */
+import { keyframes, memoizeFunction } from '@fluentui/react';
+
+/* @conditional-compile-remove(reaction) */
+/**
+ * @private
+ */
+const DEFAULT_ORIGINAL_EMOJI_SIZE = 84;
 
 /**
  * @private
@@ -174,6 +182,7 @@ export const raiseHandLimitedSpaceStyles: IStyle = {
   bottom: 0
 };
 
+/* @conditional-compile-remove(reaction) */
 /**
  * @private
  */
@@ -187,24 +196,36 @@ export const playFrames = memoizeFunction(() =>
     }
   })
 );
+
 /* @conditional-compile-remove(reaction) */
 /**
  * @private
  */
-export const reactionRenderingStyle = (args: { backgroundImageUrl?: string; personaSize: number }): string =>
-  mergeStyles({
+export const reactionRenderingStyle = (args: {
+  spriteImageUrl?: string;
+  emojiSize: number;
+  frameCount?: number;
+}): string => {
+  const imageUrl = `url(${args.spriteImageUrl})`;
+  const steps = args.frameCount ?? 51;
+  return mergeStyles({
     height: '100%',
     width: '100%',
     overflow: 'hidden',
     animationName: playFrames(),
-    backgroundImage: args.backgroundImageUrl,
+    backgroundImage: imageUrl,
     animationDuration: '5.12s',
-    animationTimingFunction: `steps(102)`,
+    animationTimingFunction: `steps(${steps})`,
     backgroundSize: `cover`,
     animationPlayState: 'running',
     animationIterationCount: 'infinite',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundPosition: `center`,
-    transform: `scale(${84 < args.personaSize ? 84 / args.personaSize : args.personaSize / 84})`
+    transform: `scale(${
+      DEFAULT_ORIGINAL_EMOJI_SIZE < args.emojiSize
+        ? DEFAULT_ORIGINAL_EMOJI_SIZE / args.emojiSize
+        : args.emojiSize / DEFAULT_ORIGINAL_EMOJI_SIZE
+    })`
   });
+};

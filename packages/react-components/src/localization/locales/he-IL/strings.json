@@ -7,7 +7,8 @@
     "mutedIconLabel": "מושתק",
     "displayNamePlaceholder": "משתתף ללא שם",
     "participantStateRinging": "מתקשר...",
-    "participantStateHold": "בהמתנה"
+    "participantStateHold": "בהמתנה",
+    "attendeeRole": "משתתף"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} נוספים"
@@ -23,15 +24,32 @@
     "placeholderText": "הזן הודעה",
     "textTooLong": "אורך ההודעה שלך חורג מהמגבלה המרבית.",
     "sendButtonAriaLabel": "שלח הודעה",
-    "fileUploadsPendingError": "מעלה... אנא המתן.",
-    "removeFile": "הסר קובץ",
+    "attachmentUploadsPendingError": "מעלה... אנא המתן.",
+    "removeAttachment": "הסרת קובץ",
     "uploading": "מעלה",
     "uploadCompleted": "ההעלאה הושלמה"
+  },
+  "richTextSendBox": {
+    "placeholderText": "הזן הודעה",
+    "textTooLong": "אורך ההודעה שלך חורג מהמגבלה המרבית.",
+    "sendButtonAriaLabel": "שלח הודעה",
+    "attachmentUploadsPendingError": "מעלה... המתן.",
+    "removeAttachment": "הסר קובץ",
+    "uploading": "מעלה",
+    "uploadCompleted": "ההעלאה הושלמה",
+    "boldTooltip": "מודגש",
+    "italicTooltip": "נטוי",
+    "underlineTooltip": "קו תחתון",
+    "bulletListTooltip": "רשימה עם תבליטים",
+    "numberListTooltip": "רשימה ממוספרת",
+    "increaseIndentTooltip": "הגדל כניסה",
+    "decreaseIndentTooltip": "הקטן כניסה",
+    "richTextFormatButtonTooltip": "תבנית"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "הצעות"
   },
-  "imageGallery": {
+  "imageOverlay": {
     "downloadButtonLabel": "הורד",
     "dismissButtonAriaLabel": "סגור"
   },
@@ -123,6 +141,17 @@
     "tooltipOnContent": "הורד יד",
     "tooltipOffContent": "הרם יד"
   },
+  "reactionButton": {
+    "label": "תגובה",
+    "ariaLabel": "לחצן 'הגב', שלח תגובה",
+    "tooltipDisabledContent": "פעולת התגובה אינה זמינה",
+    "tooltipContent": "שלח תגובה",
+    "likeReactionTooltipContent": "אהבתי",
+    "heartReactionTooltipContent": "אהבה",
+    "laughReactionTooltipContent": "צחוק",
+    "applauseReactionTooltipContent": "תשואות",
+    "surprisedReactionTooltipContent": "מופתע"
+  },
   "messageThread": {
     "yesterday": "אתמול",
     "sunday": "יום ראשון",
@@ -150,10 +179,10 @@
     "editBoxSubmitButton": "בוצע",
     "messageReadCount": "נקרא על-ידי {messageReadByCount} מתוך {remoteParticipantsCount}",
     "actionMenuMoreOptions": "אפשרויות נוספות",
-    "downloadFile": "הורד קובץ",
+    "downloadAttachment": "הורד קובץ",
     "blockedWarningText": "הודעה זו נמחקה עקב מדיניות ארגונית.",
     "blockedWarningLinkText": "פרטים",
-    "fileCardGroupMessage": "ההודעה כוללת קובץ מצורף {fileCount}",
+    "attachmentCardGroupMessage": "ההודעה כוללת {attachmentCount} קבצים מצורפים.",
     "messageDeletedAnnouncementAriaLabel": "ההודעה נמחקת"
   },
   "errorBar": {
@@ -190,7 +219,8 @@
     "failedToJoinCallGeneric": "הצטרפות לשיחה נכשלה.",
     "failedToJoinCallInvalidMeetingLink": "לא ניתן להצטרף לפגישה. קישור לא חוקי.",
     "cameraFrozenForRemoteParticipants": "משתמשים בשיחה נתקלים בבעיות בהצגת הווידאו שלך. בדוק את המכשירים ואת הרשת שלך.",
-    "unableToStartVideoEffect": "לא ניתן להחיל אפקט וידאו."
+    "unableToStartVideoEffect": "לא ניתן להחיל אפקט וידאו.",
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "אין אפשרות להפעיל זרקור על משתתפים מכיוון שכבר יש זרקורים על המספר המרבי של משתתפים."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "אתה משתף את המסך שלך",
@@ -208,7 +238,13 @@
     "pinParticipantMenuItemAriaLabel": "הצמד את {participantName}",
     "unpinParticipantMenuItemAriaLabel": "בטל את הצמדת {participantName}",
     "pinnedParticipantAnnouncementAriaLabel": "{participantName} הוצמד",
-    "unpinnedParticipantAnnouncementAriaLabel": "הצמדת {participantName} בוטלה"
+    "unpinnedParticipantAnnouncementAriaLabel": "הצמדת {participantName} בוטלה",
+    "startSpotlightVideoTileMenuLabel": "הצבת זרקור עבור כולם",
+    "addSpotlightVideoTileMenuLabel": "הוסף זרקור",
+    "spotlightLimitReachedMenuTitle": "הגעת למגבלת הזרקורים",
+    "stopSpotlightVideoTileMenuLabel": "הפסק להציב זרקור",
+    "stopSpotlightOnSelfVideoTileMenuLabel": "צא מזרקור",
+    "attendeeRole": "משתתף"
   },
   "dialpad": {
     "placeholderText": "הזן מספר טלפון",
@@ -342,6 +378,5 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "הדף הקודם",
     "rightNavButtonAriaLabel": "הדף הבא"
-  },
-  "AttendeeRole": "משתתף"
+  }
 }

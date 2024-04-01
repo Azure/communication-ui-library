@@ -109,11 +109,13 @@ export const PeopleAndChatHeader = (props: PeopleAndChatHeaderProps): JSX.Elemen
           </Stack>
         </FocusZone>
       </Stack.Item>
-      {/* Hidden icon to take the same space as the actual back button on the left. */}
-      <DefaultButton
-        styles={mobilePaneHiddenIconStyles}
-        onRenderIcon={() => <CallWithChatCompositeIcon iconName="ChevronLeft" />}
-      ></DefaultButton>
+      {
+        /* Hidden icon to take the same space as the actual back button on the left. */
+        <DefaultButton
+          styles={mobilePaneHiddenIconStyles}
+          onRenderIcon={() => <CallWithChatCompositeIcon iconName="ChevronLeft" />}
+        />
+      }
     </Stack>
   );
 };

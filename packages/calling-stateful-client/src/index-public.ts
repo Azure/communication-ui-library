@@ -24,15 +24,13 @@ export type {
   VideoStreamRendererViewState
 } from './CallClientState';
 export type { CreateViewResult } from './StreamUtils';
-/* @conditional-compile-remove(raise-hand) */
 export type { RaiseHandCallFeatureState as RaiseHandCallFeature } from './CallClientState';
-/* @conditional-compile-remove(raise-hand) */
 export type { RaisedHandState } from './CallClientState';
 /* @conditional-compile-remove(one-to-n-calling) */
 export type { DeclarativeCallAgent, IncomingCallManagement } from './CallAgentDeclarative';
 /* @conditional-compile-remove(one-to-n-calling) */
 export type { DeclarativeIncomingCall } from './IncomingCallDeclarative';
-/* @conditional-compile-remove(video-background-effects) */
+
 export type { LocalVideoStreamVideoEffectsState } from './CallClientState';
 /* @conditional-compile-remove(capabilities) */
 export type { CapabilitiesFeatureState } from './CallClientState';
@@ -40,7 +38,12 @@ export type { CapabilitiesFeatureState } from './CallClientState';
 export type { CaptionsCallFeatureState, CaptionsInfo } from './CallClientState';
 /* @conditional-compile-remove(call-transfer) */
 export type { AcceptedTransfer, TransferFeatureState as TransferFeature } from './CallClientState';
-/* @conditional-compile-remove(optimal-video-count) */
 export type { OptimalVideoCountFeatureState } from './CallClientState';
+/* @conditional-compile-remove(ppt-live) */
+export type { PPTLiveCallFeatureState } from './CallClientState';
 /* @conditional-compile-remove(reaction) */
 export type { ReactionState } from './CallClientState';
+/* @conditional-compile-remove(spotlight) */
+export type { SpotlightCallFeatureState, SpotlightState } from './CallClientState';
+/* @conditional-compile-remove(local-recording-notification) */
+export type { LocalRecordingCallFeatureState } from './CallClientState';

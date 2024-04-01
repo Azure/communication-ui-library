@@ -2,32 +2,16 @@ import {
   FluentThemeProvider,
   MessageThread,
   Message,
-  AttachmentMetadata,
-  AttachmentDownloadResult,
-  ImageGalleryImageProps,
-  ImageGallery,
-  ChatMessage
+  ImageOverlay,
+  ChatMessage,
+  InlineImage
 } from '@azure/communication-react';
 import { Persona, PersonaSize } from '@fluentui/react';
 import React, { useState } from 'react';
 
 export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
-  const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps>>([]);
-
-  const onFetchAttachments = async (attachments: AttachmentMetadata[]): Promise<AttachmentDownloadResult[]> => {
-    // * Your custom function to fetch image behind authenticated blob storage/server
-    // const response = await fetchImage(attachment.previewUrl ?? '', token);
-    // const blob = await response.blob();
-
-    // * Create a blob url as <img> src
-    return [
-      {
-        attachmentId: attachments[0].id,
-        // blobUrl: URL.createObjectURL(blob);
-        blobUrl: attachments[0].attachmentType === 'inlineImage' ? attachments[0].previewUrl ?? '' : ''
-      }
-    ];
-  };
+  const [overlayImageItem, setOverlayImageItem] =
+    useState<{ imageSrc: string; title: string; titleIcon: JSX.Element; downloadImagename: string }>();
 
   const onInlineImageClicked = (attachmentId: string, messageId: string): Promise<void> => {
     const filteredMessages = messages?.filter((message) => {
@@ -37,28 +21,47 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
       return Promise.reject(`Message not found with messageId ${messageId}`);
     }
     const chatMessage = filteredMessages[0] as ChatMessage;
-
-    const specificImage = chatMessage.inlineImages?.filter((attachment) => {
-      return attachment.id === attachmentId;
-    });
-
-    if (!specificImage || specificImage.length <= 0) {
-      return Promise.reject(`Attachment not found with id ${attachmentId}`);
-    }
-
-    const attachment = specificImage[0];
     const title = 'Image';
     const titleIcon = (
       <Persona text={chatMessage.senderDisplayName} size={PersonaSize.size32} hidePersonaDetails={true} />
     );
-    const galleryImage: ImageGalleryImageProps = {
+    const document = new DOMParser().parseFromString(chatMessage.content ?? '', 'text/html');
+    let imgSrc = '';
+    document.querySelectorAll('img').forEach((img) => {
+      if (img.id === attachmentId) {
+        imgSrc = img.src;
+      }
+    });
+    const overlayImage = {
       title,
       titleIcon,
-      downloadFilename: attachment.id,
-      imageUrl: attachment.url
+      downloadImagename: attachmentId,
+      imageSrc: imgSrc
     };
-    setGalleryImages([galleryImage]);
+    setOverlayImageItem(overlayImage);
     return Promise.resolve();
+  };
+
+  const inlineImageOptions = {
+    onRenderInlineImage: (
+      inlineImage: InlineImage,
+      defaultOnRender: (inlineImage: InlineImage) => JSX.Element
+    ): JSX.Element => {
+      return (
+        <span
+          onClick={() => onInlineImageClicked(inlineImage.imageAttributes.id || '', inlineImage.messageId)}
+          tabIndex={0}
+          role="button"
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              onInlineImageClicked(inlineImage.imageAttributes.id || '', inlineImage.messageId);
+            }
+          }}
+        >
+          {defaultOnRender(inlineImage)}
+        </span>
+      );
+    }
   };
 
   const messages: Message[] = [
@@ -66,27 +69,13 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
       messageType: 'chat',
       senderId: 'user3',
       content:
-        '<p>How should I design my new house?</p><p><img alt="image" src="" itemscope="png" width="166.5625" height="250" id="SomeImageId1" style="vertical-align:bottom"></p><p><img alt="image" src="" itemscope="png" width="374.53183520599254" height="250" id="SomeImageId2" style="vertical-align:bottom"></p><p>&nbsp;</p>',
+        '<p>How should I design my new house?</p><p><img alt="image" src="images/inlineImageExample1.png" itemscope="png" width="166.5625" height="250" id="SomeImageId1" style="vertical-align:bottom"></p><p><img alt="image" src="images/inlineImageExample2.png" itemscope="png" width="374.53183520599254" height="250" id="SomeImageId2" style="vertical-align:bottom"></p><p>&nbsp;</p>',
       senderDisplayName: 'Miguel Garcia',
       messageId: Math.random().toString(),
       createdOn: new Date('2019-04-13T00:00:00.000+08:09'),
       mine: false,
       attached: false,
-      contentType: 'html',
-      inlineImages: [
-        {
-          id: 'SomeImageId1',
-          attachmentType: 'inlineImage',
-          url: 'images/inlineImageExample1.png',
-          previewUrl: 'images/inlineImageExample1.png'
-        },
-        {
-          id: 'SomeImageId2',
-          attachmentType: 'inlineImage',
-          url: 'images/inlineImageExample2.png',
-          previewUrl: 'images/inlineImageExample2.png'
-        }
-      ]
+      contentType: 'html'
     },
     {
       messageType: 'chat',
@@ -102,18 +91,16 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
   ];
   return (
     <FluentThemeProvider>
-      <MessageThread
-        userId={'1'}
-        messages={messages}
-        onFetchAttachments={onFetchAttachments}
-        onInlineImageClicked={onInlineImageClicked}
-      />
+      <MessageThread userId={'1'} messages={messages} inlineImageOptions={inlineImageOptions} />
       {
-        <ImageGallery
-          isOpen={galleryImages.length > 0}
-          images={galleryImages}
-          onDismiss={() => setGalleryImages([])}
-          onImageDownloadButtonClicked={() => {
+        <ImageOverlay
+          isOpen={overlayImageItem !== undefined}
+          imageSrc={overlayImageItem?.imageSrc || ''}
+          title="Image"
+          onDismiss={() => {
+            setOverlayImageItem(undefined);
+          }}
+          onDownloadButtonClicked={() => {
             alert('Download button clicked');
           }}
         />

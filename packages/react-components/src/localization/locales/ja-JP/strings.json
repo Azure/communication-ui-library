@@ -7,7 +7,8 @@
     "mutedIconLabel": "ミュート状態",
     "displayNamePlaceholder": "名前のない参加者",
     "participantStateRinging": "呼び出し中...",
-    "participantStateHold": "保留中"
+    "participantStateHold": "保留中",
+    "attendeeRole": "出席者"
   },
   "ParticipantList": {
     "overflowParticipantCount": "その他 {overflowCount} 個"
@@ -23,15 +24,32 @@
     "placeholderText": "メッセージを入力",
     "textTooLong": "メッセージの長さが上限を超えています。",
     "sendButtonAriaLabel": "メッセージの送信",
-    "fileUploadsPendingError": "アップロード中です... お待ちください。",
-    "removeFile": "ファイルを削除します",
+    "attachmentUploadsPendingError": "アップロード中です... お待ちください。",
+    "removeAttachment": "ファイルの削除",
     "uploading": "アップロード中",
     "uploadCompleted": "アップロードが完了しました"
+  },
+  "richTextSendBox": {
+    "placeholderText": "メッセージを入力してください",
+    "textTooLong": "メッセージの長さが上限を超えています。",
+    "sendButtonAriaLabel": "メッセージの送信",
+    "attachmentUploadsPendingError": "アップロード中...お待ちください。",
+    "removeAttachment": "ファイルを削除します",
+    "uploading": "アップロード中",
+    "uploadCompleted": "アップロード完了",
+    "boldTooltip": "太字",
+    "italicTooltip": "斜体",
+    "underlineTooltip": "下線",
+    "bulletListTooltip": "箇条書き",
+    "numberListTooltip": "番号付きリスト",
+    "increaseIndentTooltip": "インデントを増やす",
+    "decreaseIndentTooltip": "インデントを減らす",
+    "richTextFormatButtonTooltip": "形式"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "候補"
   },
-  "imageGallery": {
+  "imageOverlay": {
     "downloadButtonLabel": "ダウンロード",
     "dismissButtonAriaLabel": "閉じる"
   },
@@ -123,6 +141,17 @@
     "tooltipOnContent": "手を下げる",
     "tooltipOffContent": "手を挙げる"
   },
+  "reactionButton": {
+    "label": "リアクションする",
+    "ariaLabel": "リアクション ボタン、リアクションの送信",
+    "tooltipDisabledContent": "リアクション操作が無効になっています",
+    "tooltipContent": "リアクションを送信します",
+    "likeReactionTooltipContent": "高く評価",
+    "heartReactionTooltipContent": "大好き",
+    "laughReactionTooltipContent": "笑い",
+    "applauseReactionTooltipContent": "喝采",
+    "surprisedReactionTooltipContent": "驚いた"
+  },
   "messageThread": {
     "yesterday": "昨日",
     "sunday": "日曜日",
@@ -150,10 +179,10 @@
     "editBoxSubmitButton": "完了",
     "messageReadCount": "{remoteParticipantsCount} の {messageReadByCount} による読み取り",
     "actionMenuMoreOptions": "その他のオプション",
-    "downloadFile": "ファイルをダウンロード",
+    "downloadAttachment": "ファイルをダウンロード",
     "blockedWarningText": "組織のポリシーにより、このメッセージは削除されました。",
     "blockedWarningLinkText": "詳細",
-    "fileCardGroupMessage": "メッセージには {fileCount} 個の添付ファイルがあります",
+    "attachmentCardGroupMessage": "メッセージに添付ファイルが {attachmentCount} 個あります",
     "messageDeletedAnnouncementAriaLabel": "メッセージが削除されます"
   },
   "errorBar": {
@@ -190,7 +219,8 @@
     "failedToJoinCallGeneric": "通話に参加できませんでした",
     "failedToJoinCallInvalidMeetingLink": "会議に参加できません。リンクが無効です。",
     "cameraFrozenForRemoteParticipants": "通話のユーザーにビデオの表示で問題が発生しています。デバイスとネットワークを確認してください。",
-    "unableToStartVideoEffect": "ビデオ効果を適用できません。"
+    "unableToStartVideoEffect": "ビデオ効果を適用できません。",
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "最大数の参加者に既にスポットライトが設定されているため、参加者にスポットライトを開始できません。"
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "画面を共有しています",
@@ -208,7 +238,13 @@
     "pinParticipantMenuItemAriaLabel": "{participantName} さんをピン留めする",
     "unpinParticipantMenuItemAriaLabel": "{participantName} さんのピンを外す",
     "pinnedParticipantAnnouncementAriaLabel": "{participantName} さんをピン留めしました",
-    "unpinnedParticipantAnnouncementAriaLabel": "{participantName} さんのピンを外しました"
+    "unpinnedParticipantAnnouncementAriaLabel": "{participantName} さんのピンを外しました",
+    "startSpotlightVideoTileMenuLabel": "全員にスポットライトを設定",
+    "addSpotlightVideoTileMenuLabel": "スポットライトを追加",
+    "spotlightLimitReachedMenuTitle": "スポットライトの上限に達しました",
+    "stopSpotlightVideoTileMenuLabel": "スポットライトの設定を解除",
+    "stopSpotlightOnSelfVideoTileMenuLabel": "スポットライトを終了",
+    "attendeeRole": "出席者"
   },
   "dialpad": {
     "placeholderText": "電話番号を入力してください",
@@ -342,6 +378,5 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "前のページ",
     "rightNavButtonAriaLabel": "次のページ"
-  },
-  "AttendeeRole": "出席者"
+  }
 }

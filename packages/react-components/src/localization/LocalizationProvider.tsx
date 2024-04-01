@@ -17,11 +17,10 @@ import {
   TypingIndicatorStrings,
   VideoGalleryStrings
 } from '../components';
-/* @conditional-compile-remove(raise-hand) */
+
 import { RaiseHandButtonStrings } from '../components';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButtonStrings } from '../components';
-/* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { DialpadStrings } from '../components';
 /* @conditional-compile-remove(call-readiness) */
 import { SitePermissionsStrings } from '../components/DevicePermissions/SitePermissionsScaffolding';
@@ -39,13 +38,16 @@ import { COMPONENT_LOCALE_EN_US } from './locales';
 import { UnsupportedBrowserVersionStrings } from '../components/UnsupportedBrowserVersion';
 /* @conditional-compile-remove(unsupported-browser) */
 import { UnsupportedOperatingSystemStrings } from '../components/UnsupportedOperatingSystem';
-/* @conditional-compile-remove(vertical-gallery) */
 import { VerticalGalleryStrings } from '../components/VerticalGallery';
 /* @conditional-compile-remove(total-participant-count) */
 import { ParticipantListStrings } from '../components/ParticipantList';
 /* @conditional-compile-remove(mention) */
 import { MentionPopoverStrings } from '../components/MentionPopover';
-import { ImageGalleryStrings } from '../components/ImageGallery';
+import { ImageOverlayStrings } from '../components/ImageOverlay';
+/* @conditional-compile-remove(reaction) */
+import { ReactionButtonStrings } from '../components';
+/* @conditional-compile-remove(rich-text-editor) */
+import { RichTextSendBoxStrings } from '../components/RichTextEditor/RichTextSendBox';
 
 /**
  * Locale information for all components exported from this library.
@@ -85,26 +87,32 @@ export interface ComponentStrings {
   participantsButton: ParticipantsButtonStrings;
   /** Strings for ScreenShareButton */
   screenShareButton: ScreenShareButtonStrings;
-  /* @conditional-compile-remove(raise-hand) */
   /** Strings for RaiseHandButton */
   raiseHandButton: RaiseHandButtonStrings;
+  /* @conditional-compile-remove(reaction) */
+  /**
+   * Strings for ReactionButton
+   * @beta
+   * */
+  reactionButton: ReactionButtonStrings;
   /** Strings for TypingIndicator */
   typingIndicator: TypingIndicatorStrings;
   /** Strings for SendBox */
   sendBox: SendBoxStrings;
+  /* @conditional-compile-remove(rich-text-editor) */
+  /** Strings for RichTextSendBox */
+  richTextSendBox: RichTextSendBoxStrings;
   /* @conditional-compile-remove(mention) */
   /** Strings for MentionPopover */
   mentionPopover: MentionPopoverStrings;
-
-  /** Strings for ImageGallery */
-  imageGallery: ImageGalleryStrings;
+  /** Strings for ImageOverlay */
+  imageOverlay: ImageOverlayStrings;
   /** Strings for MessageStatusIndicator */
   messageStatusIndicator: MessageStatusIndicatorStrings;
   /** Strings for ErroBar */
   errorBar: ErrorBarStrings;
   /** Strings for VideoGallery */
   videoGallery: VideoGalleryStrings;
-  /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
   /** Strings for Dialpad */
   dialpad: DialpadStrings;
   /* @conditional-compile-remove(one-to-n-calling) */
@@ -165,7 +173,7 @@ export interface ComponentStrings {
   /* @conditional-compile-remove(call-readiness) */
   /** Strings for BrowserPemissionDeniedIOS */
   BrowserPermissionDeniedIOS: BrowserPermissionDeniedIOSStrings;
-  /* @conditional-compile-remove(vertical-gallery) */
+
   /**
    * Strings for the VerticalGallery.
    */
@@ -173,9 +181,6 @@ export interface ComponentStrings {
   /* @conditional-compile-remove(total-participant-count) */
   /** Strings for the participant list component */
   ParticipantList: ParticipantListStrings;
-  /* @conditional-compile-remove(hide-attendee-name) */
-  /** Strings for the attendee role */
-  AttendeeRole: string;
 }
 
 /**

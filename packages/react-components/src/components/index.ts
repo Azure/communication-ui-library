@@ -14,15 +14,20 @@ export { SendBox } from './SendBox';
 /* @conditional-compile-remove(mention) */
 export { _MentionPopover } from './MentionPopover';
 
-export { ImageGallery } from './ImageGallery';
-export type { ImageGalleryStrings } from './ImageGallery';
-
+export { ImageOverlay } from './ImageOverlay';
+export type { ImageOverlayStrings } from './ImageOverlay';
 export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox';
 
 /* @conditional-compile-remove(rich-text-editor) */
-export { RTESendBox } from './RTE/RTESendBox';
+export { RichTextSendBox } from './RichTextEditor/RichTextSendBox';
+// TODO: This component is exported only for testing purposes. Remove this when this component is added to composites
 /* @conditional-compile-remove(rich-text-editor) */
-export type { RTESendBoxProps } from './RTE/RTESendBox';
+export { ChatMessageComponentAsRichTextEditBox } from './ChatMessage/ChatMessageComponentAsRichTextEditBox';
+// TODO: This component is exported only for testing purposes. Remove this when this component is added to composites
+/* @conditional-compile-remove(rich-text-editor) */
+export type { ChatMessageComponentAsRichTextEditBoxProps } from './ChatMessage/ChatMessageComponentAsRichTextEditBox';
+/* @conditional-compile-remove(rich-text-editor) */
+export type { RichTextSendBoxProps, RichTextSendBoxStrings } from './RichTextEditor/RichTextSendBox';
 
 /* @conditional-compile-remove(mention) */
 export type {
@@ -34,10 +39,9 @@ export type {
   MentionPopoverStrings
 } from './MentionPopover';
 
-export type { ImageGalleryProps, ImageGalleryImageProps } from './ImageGallery';
+export type { ImageOverlayProps } from './ImageOverlay';
 
-/* @conditional-compile-remove(file-sharing) */
-export type { ActiveFileUpload } from './SendBox';
+export type { InlineImageOptions, InlineImage } from './ChatMessage/ChatMessageContent';
 
 export { MessageStatusIndicator } from './MessageStatusIndicator';
 export type { MessageStatusIndicatorProps, MessageStatusIndicatorStrings } from './MessageStatusIndicator';
@@ -76,12 +80,15 @@ export { Announcer } from './Announcer';
 export type { AnnouncerProps } from './Announcer';
 
 export { VideoGallery } from './VideoGallery';
-export type { VideoGalleryProps, VideoGalleryStrings, VideoGalleryStyles, VideoGalleryLayout } from './VideoGallery';
-/* @conditional-compile-remove(pinned-participants) */
-export type { VideoTileContextualMenuProps, VideoTileDrawerMenuProps } from './VideoGallery';
-/* @conditional-compile-remove(vertical-gallery) */
+export type {
+  VideoGalleryProps,
+  VideoGalleryStrings,
+  VideoGalleryStyles,
+  VideoGalleryLayout,
+  VideoTileContextualMenuProps,
+  VideoTileDrawerMenuProps
+} from './VideoGallery';
 export type { OverflowGalleryPosition } from './VideoGallery';
-/* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
 export type { LocalVideoTileSize } from './VideoGallery';
 export type { HorizontalGalleryStyles } from './HorizontalGallery';
 
@@ -170,11 +177,13 @@ export type {
 export { ScreenShareButton } from './ScreenShareButton';
 export type { ScreenShareButtonProps, ScreenShareButtonStrings } from './ScreenShareButton';
 
-/* @conditional-compile-remove(raise-hand) */
 export { RaiseHandButton } from './RaiseHandButton';
-/* @conditional-compile-remove(raise-hand) */
-export type { RaiseHandButtonProps, RaiseHandButtonStrings } from './RaiseHandButton';
 
+export type { RaiseHandButtonProps, RaiseHandButtonStrings } from './RaiseHandButton';
+/* @conditional-compile-remove(reaction) */
+export { ReactionButton } from './ReactionButton';
+/* @conditional-compile-remove(reaction) */
+export type { ReactionButtonProps, ReactionButtonStrings } from './ReactionButton';
 export { VideoTile } from './VideoTile';
 export type { VideoTileProps, VideoTileStylesProps } from './VideoTile';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -191,13 +200,25 @@ export type {
 } from './PictureInPictureInPicture/PictureInPictureInPictureTile';
 
 export * from './Drawer';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 export type { SendBoxErrorBarError } from './SendBoxErrorBar';
-export * from './FileCard';
-export * from './FileCardGroup';
+export * from './AttachmentCard';
+export * from './AttachmentCardGroup';
 export * from './ModalClone/ModalClone';
-export * from './FileDownloadCards';
-export type { _FileUploadCardsStrings } from './FileUploadCards';
+export * from './AttachmentDownloadCards';
+export type { _AttachmentUploadCardsStrings } from './AttachmentUploadCards';
+
+export type {
+  AttachmentOptions,
+  AttachmentUploadOptions,
+  AttachmentMetadata,
+  AttachmentUploadStatus,
+  AttachmentUploadHandler,
+  AttachmentUploadManager
+} from '../types/Attachment';
+
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+export type { AttachmentMenuAction, AttachmentDownloadOptions } from '../types/Attachment';
 
 export { _useContainerHeight, _useContainerWidth } from './utils/responsive';
 
@@ -205,6 +226,7 @@ export { _ComplianceBanner } from './ComplianceBanner';
 export type { _ComplianceBannerProps, _ComplianceBannerStrings } from './ComplianceBanner';
 export { Dialpad } from './Dialpad/Dialpad';
 export type { DialpadProps, DialpadStrings, DialpadStyles, DtmfTone } from './Dialpad/Dialpad';
+export type { DialpadMode, LongPressTrigger } from './Dialpad/Dialpad';
 /* @conditional-compile-remove(end-of-call-survey) */
 export { _StarSurvey } from './Survey/StarSurvey/StarSurvey';
 /* @conditional-compile-remove(end-of-call-survey) */

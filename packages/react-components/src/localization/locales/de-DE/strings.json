@@ -7,7 +7,8 @@
     "mutedIconLabel": "Stumm geschaltet",
     "displayNamePlaceholder": "Teilnehmer ohne Namen",
     "participantStateRinging": "Anrufen...",
-    "participantStateHold": "In der Warteschleife"
+    "participantStateHold": "In der Warteschleife",
+    "attendeeRole": "Teilnehmer"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} weitere"
@@ -23,15 +24,32 @@
     "placeholderText": "Nachricht eingeben",
     "textTooLong": "Ihre Nachrichtenlänge überschreitet den maximalen Grenzwert.",
     "sendButtonAriaLabel": "Nachricht senden",
-    "fileUploadsPendingError": "Wird hochgeladen... Bitte warten.",
-    "removeFile": "Datei entfernen",
+    "attachmentUploadsPendingError": "Wird hochgeladen... Bitte warten.",
+    "removeAttachment": "Datei entfernen",
     "uploading": "Hochladen",
     "uploadCompleted": "Upload abgeschlossen"
+  },
+  "richTextSendBox": {
+    "placeholderText": "Nachricht eingeben",
+    "textTooLong": "Ihre Nachrichtenlänge überschreitet den maximalen Grenzwert.",
+    "sendButtonAriaLabel": "Nachricht senden",
+    "attachmentUploadsPendingError": "Wird hochgeladen... Bitte warten.",
+    "removeAttachment": "Datei entfernen",
+    "uploading": "Wird hochgeladen",
+    "uploadCompleted": "Upload abgeschlossen",
+    "boldTooltip": "Fett",
+    "italicTooltip": "Kursiv",
+    "underlineTooltip": "Unterstreichen",
+    "bulletListTooltip": "Aufzählungsliste",
+    "numberListTooltip": "Nummerierte Liste",
+    "increaseIndentTooltip": "Einzug vergrößern",
+    "decreaseIndentTooltip": "Einzug verringern",
+    "richTextFormatButtonTooltip": "Formatieren"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Vorschläge"
   },
-  "imageGallery": {
+  "imageOverlay": {
     "downloadButtonLabel": "Herunterladen",
     "dismissButtonAriaLabel": "Schließen"
   },
@@ -123,6 +141,17 @@
     "tooltipOnContent": "Hand senken",
     "tooltipOffContent": "Hand heben"
   },
+  "reactionButton": {
+    "label": "Reagieren",
+    "ariaLabel": "Reaktionsschaltfläche, Reaktion senden",
+    "tooltipDisabledContent": "Reaktionsaktion ist deaktiviert",
+    "tooltipContent": "Reaktion senden",
+    "likeReactionTooltipContent": "Gefällt mir",
+    "heartReactionTooltipContent": "Liebe",
+    "laughReactionTooltipContent": "Lachen",
+    "applauseReactionTooltipContent": "Applaus",
+    "surprisedReactionTooltipContent": "Überrascht"
+  },
   "messageThread": {
     "yesterday": "Gestern",
     "sunday": "Sonntag",
@@ -150,10 +179,10 @@
     "editBoxSubmitButton": "Fertig",
     "messageReadCount": "Gelesen von {messageReadByCount} von {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Weitere Optionen",
-    "downloadFile": "Datei herunterladen",
+    "downloadAttachment": "Datei herunterladen",
     "blockedWarningText": "Diese Nachricht wurde aufgrund einer Organisationsrichtlinie gelöscht.",
     "blockedWarningLinkText": "Details",
-    "fileCardGroupMessage": "Die Nachricht weist eine {fileCount}-Anlage auf",
+    "attachmentCardGroupMessage": "Die Nachricht enthält {attachmentCount} Anlage.",
     "messageDeletedAnnouncementAriaLabel": "Die Nachricht wurde gelöscht"
   },
   "errorBar": {
@@ -190,7 +219,8 @@
     "failedToJoinCallGeneric": "Fehler bei der Teilnahme am Anruf.",
     "failedToJoinCallInvalidMeetingLink": "Teilnahme an Besprechung nicht möglich. Ungültiger Link.",
     "cameraFrozenForRemoteParticipants": "Benutzer im Anruf haben Probleme, Ihr Video zu sehen. Überprüfen Sie Ihre Geräte und Ihr Netzwerk.",
-    "unableToStartVideoEffect": "Videoeffekt kann nicht angewendet werden."
+    "unableToStartVideoEffect": "Videoeffekt kann nicht angewendet werden.",
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "Das Spotlight für Teilnehmer*innen kann nicht gestartet werden, da die maximale Anzahl von Teilnehmer*innen bereits im Spotlight ist."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Sie teilen Ihren Bildschirm",
@@ -208,7 +238,13 @@
     "pinParticipantMenuItemAriaLabel": "{participantName} anheften",
     "unpinParticipantMenuItemAriaLabel": "{participantName} lösen",
     "pinnedParticipantAnnouncementAriaLabel": "{participantName} angeheftet",
-    "unpinnedParticipantAnnouncementAriaLabel": "{participantName} gelöst"
+    "unpinnedParticipantAnnouncementAriaLabel": "{participantName} gelöst",
+    "startSpotlightVideoTileMenuLabel": "Spotlight für alle",
+    "addSpotlightVideoTileMenuLabel": "Spotlight hinzufügen",
+    "spotlightLimitReachedMenuTitle": "Spotlight-Limit erreicht",
+    "stopSpotlightVideoTileMenuLabel": "Spotlight beenden",
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Spotlight beenden",
+    "attendeeRole": "Teilnehmer"
   },
   "dialpad": {
     "placeholderText": "Telefonnummer eingeben",
@@ -342,6 +378,5 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "Vorherige Seite",
     "rightNavButtonAriaLabel": "Nächste Seite"
-  },
-  "AttendeeRole": "Teilnehmer"
+  }
 }

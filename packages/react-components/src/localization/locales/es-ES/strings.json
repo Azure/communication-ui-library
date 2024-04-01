@@ -7,7 +7,8 @@
     "mutedIconLabel": "Silenciado",
     "displayNamePlaceholder": "Participante sin nombre",
     "participantStateRinging": "Llamando...",
-    "participantStateHold": "En espera"
+    "participantStateHold": "En espera",
+    "attendeeRole": "Asistente"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} más"
@@ -23,15 +24,32 @@
     "placeholderText": "Escribir un mensaje",
     "textTooLong": "La longitud del mensaje supera el límite máximo.",
     "sendButtonAriaLabel": "Enviar mensaje",
-    "fileUploadsPendingError": "Cargando... Espere.",
-    "removeFile": "Quitar archivo",
+    "attachmentUploadsPendingError": "Cargando... Espere.",
+    "removeAttachment": "Quitar archivo",
     "uploading": "Cargando",
     "uploadCompleted": "Carga completada"
+  },
+  "richTextSendBox": {
+    "placeholderText": "Escribir un mensaje",
+    "textTooLong": "La longitud del mensaje supera el límite máximo.",
+    "sendButtonAriaLabel": "Enviar mensaje",
+    "attachmentUploadsPendingError": "Cargando... Espere.",
+    "removeAttachment": "Quitar archivo",
+    "uploading": "Cargando",
+    "uploadCompleted": "Carga completada",
+    "boldTooltip": "Negrita",
+    "italicTooltip": "Cursiva",
+    "underlineTooltip": "Subrayado",
+    "bulletListTooltip": "Lista con viñetas",
+    "numberListTooltip": "Lista numerada",
+    "increaseIndentTooltip": "Aumentar sangría",
+    "decreaseIndentTooltip": "Reducir sangría",
+    "richTextFormatButtonTooltip": "Formato"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Sugerencias"
   },
-  "imageGallery": {
+  "imageOverlay": {
     "downloadButtonLabel": "Descargar",
     "dismissButtonAriaLabel": "Cerrar"
   },
@@ -123,6 +141,17 @@
     "tooltipOnContent": "Bajar la mano",
     "tooltipOffContent": "Levantar la mano"
   },
+  "reactionButton": {
+    "label": "Reaccionar",
+    "ariaLabel": "Botón Reaccionar, Enviar una reacción",
+    "tooltipDisabledContent": "La acción de reacción está deshabilitada",
+    "tooltipContent": "Enviar una reacción",
+    "likeReactionTooltipContent": "Me gusta",
+    "heartReactionTooltipContent": "Amor",
+    "laughReactionTooltipContent": "Risa",
+    "applauseReactionTooltipContent": "Aplauso",
+    "surprisedReactionTooltipContent": "Sorprendido"
+  },
   "messageThread": {
     "yesterday": "Ayer",
     "sunday": "Domingo",
@@ -150,10 +179,10 @@
     "editBoxSubmitButton": "Listo",
     "messageReadCount": "Leído por {messageReadByCount} de {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Más opciones",
-    "downloadFile": "Descargar archivo",
+    "downloadAttachment": "Descargar archivo",
     "blockedWarningText": "Este mensaje se eliminó debido a la directiva de la organización.",
     "blockedWarningLinkText": "Detalles",
-    "fileCardGroupMessage": "El mensaje tiene {fileCount} datos adjuntos",
+    "attachmentCardGroupMessage": "El mensaje tiene {attachmentCount} archivo adjunto",
     "messageDeletedAnnouncementAriaLabel": "El mensaje se ha eliminado"
   },
   "errorBar": {
@@ -190,7 +219,8 @@
     "failedToJoinCallGeneric": "No se pudo unir a la llamada.",
     "failedToJoinCallInvalidMeetingLink": "No se puede unir a la reunión. Vínculo no válido.",
     "cameraFrozenForRemoteParticipants": "Los usuarios de la llamada tienen problemas para ver el vídeo. Compruebe los dispositivos y la red.",
-    "unableToStartVideoEffect": "No se puede aplicar el efecto de vídeo."
+    "unableToStartVideoEffect": "No se puede aplicar el efecto de vídeo.",
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "No se puede iniciar el primer plano en los participantes porque el número máximo de participantes ya está puesto en primer plano."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Está compartiendo su pantalla",
@@ -208,7 +238,13 @@
     "pinParticipantMenuItemAriaLabel": "Anclar {participantName}",
     "unpinParticipantMenuItemAriaLabel": "Desanclar {participantName}",
     "pinnedParticipantAnnouncementAriaLabel": "{participantName} anclado",
-    "unpinnedParticipantAnnouncementAriaLabel": "{participantName} desanclado"
+    "unpinnedParticipantAnnouncementAriaLabel": "{participantName} desanclado",
+    "startSpotlightVideoTileMenuLabel": "Poner en primer plano para todos",
+    "addSpotlightVideoTileMenuLabel": "Agregar primer plano",
+    "spotlightLimitReachedMenuTitle": "Se alcanzó el límite de primer plano",
+    "stopSpotlightVideoTileMenuLabel": "Dejar de poner en primer plano",
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Primer plano",
+    "attendeeRole": "Asistente"
   },
   "dialpad": {
     "placeholderText": "Introduzca el número de teléfono",
@@ -342,6 +378,5 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "página anterior",
     "rightNavButtonAriaLabel": "página siguiente"
-  },
-  "AttendeeRole": "Asistente"
+  }
 }

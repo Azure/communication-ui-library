@@ -12,6 +12,11 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
     entry: {
       build: './src/index.tsx'
     },
+    optimization: env.minify ? {} : {
+      mangleExports: false,
+      minimize: false,
+      minimizer: []
+    },
     mode: env.production ? 'production' : 'development',
     ...(env.production || !env.development ? {} : { devtool: 'eval-source-map' }),
     resolve:  {
@@ -43,7 +48,8 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
           options: {
             transpileOnly: true
           },
-          exclude: /dist/
+          exclude: /dist/,
+          sideEffects: false
         },
         {
           test: /\.css$/i,
@@ -68,7 +74,8 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
         __CALLINGVERSION__: JSON.stringify(require(path.resolve(sampleAppDir, 'package.json')).dependencies['@azure/communication-calling']),
         __CHATVERSION__: JSON.stringify(require(path.resolve(sampleAppDir, 'package.json')).dependencies['@azure/communication-chat']),
         __COMMUNICATIONREACTVERSION__: JSON.stringify(require(path.resolve(sampleAppDir, 'package.json')).dependencies['@azure/communication-react']),
-        __BUILDTIME__: JSON.stringify(new Date().toLocaleString())
+        __BUILDTIME__: JSON.stringify(new Date().toLocaleString()),
+        __COMMITID__: `"${process.env.REACT_APP_COMMIT_SHA || ''}"`,
       }),
       new BundleAnalyzerPlugin({
         analyzerMode: 'json'
@@ -76,7 +83,7 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
       new CopyPlugin({
         patterns: [
           { from: path.resolve(sampleAppDir, "public/manifest.json"), to: "manifest.json" },
-          { from: path.resolve(sampleAppDir, "public/assets"), to: "assets",  noErrorOnMissing: true }
+          { from: path.resolve(sampleAppDir, "public/assets"), to: "assets",  noErrorOnMissing: true },
         ]
       })
     ],

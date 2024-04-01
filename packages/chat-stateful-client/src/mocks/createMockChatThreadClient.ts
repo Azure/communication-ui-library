@@ -21,7 +21,7 @@ export const messageTemplate: ChatMessageWithStatus = {
     communicationUserId: 'UserId'
   },
   senderDisplayName: 'User',
-  type: 'text',
+  type: 'html',
   sequenceId: '',
   version: '',
   status: 'delivered',

@@ -1,10 +1,14 @@
-import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+import {
+  AzureCommunicationTokenCredential,
+  CommunicationUserIdentifier,
+  PhoneNumberIdentifier
+} from '@azure/communication-common';
 import {
   CallAdapter,
   CallComposite,
   CallCompositeOptions,
-  CallParticipantsLocator,
   CompositeLocale,
+  fromFlatCommunicationIdentifier,
   useAzureCommunicationCallAdapter
 } from '@azure/communication-react';
 import { PartialTheme, Theme } from '@fluentui/react';
@@ -14,7 +18,7 @@ export type ContainerProps = {
   alternateCallerId: string;
   userId: CommunicationUserIdentifier;
   token: string;
-  locator: string[];
+  targetCallees: string[];
   displayName: string;
   formFactor?: 'desktop' | 'mobile';
   fluentTheme?: PartialTheme | Theme;
@@ -24,11 +28,8 @@ export type ContainerProps = {
   options?: CallCompositeOptions;
 };
 
-const createCallAdapterLocator = (locator: string[]): CallParticipantsLocator | undefined => {
-  if (locator && locator.length > 0) {
-    return { participantIds: locator };
-  }
-  return undefined;
+const createTargetCallees = (targetCallees: string[]): PhoneNumberIdentifier[] => {
+  return targetCallees.map((c) => fromFlatCommunicationIdentifier(c) as PhoneNumberIdentifier);
 };
 
 export const ContosoCallContainerPSTN = (props: ContainerProps): JSX.Element => {
@@ -41,22 +42,22 @@ export const ContosoCallContainerPSTN = (props: ContainerProps): JSX.Element => 
     }
   }, [props.token]);
 
-  const locator = useMemo(() => createCallAdapterLocator(props.locator), [props.locator]);
+  const targetCallees = useMemo(() => createTargetCallees(props.targetCallees), [props.targetCallees]);
 
   const adapter = useAzureCommunicationCallAdapter(
     {
       userId: props.userId,
       displayName: props.displayName, // Max 256 Characters
       credential,
-      locator,
+      targetCallees,
       alternateCallerId: props.alternateCallerId
     },
     undefined,
     leaveCall
   );
 
-  if (!locator) {
-    return <>Provided call locator '{props.locator}' is not recognized.</>;
+  if (!targetCallees) {
+    return <>Please provide the identities of people you would like to call</>;
   }
 
   if (adapter) {

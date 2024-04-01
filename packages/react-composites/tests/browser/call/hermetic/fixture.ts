@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { Page, test as base } from '@playwright/test';
+import { Browser, Page, test as base } from '@playwright/test';
 import path from 'path';
 import { createTestServer } from '../../common/server';
 import { loadNewPageWithPermissionsForCalls } from '../../common/fixtureHelpers';
@@ -47,7 +47,7 @@ export interface TestFixture {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const usePage = async ({ browser }, use) => {
+const usePage = async ({ browser }: { browser: Browser }, use: (page: Page) => Promise<void>) => {
   await use(await loadNewPageWithPermissionsForCalls(browser));
 };
 
@@ -81,6 +81,8 @@ export function defaultMockCallAdapterState(
       direction: 'Incoming',
       transcription: { isTranscriptionActive: false },
       recording: { isRecordingActive: false },
+      /* @conditional-compile-remove(local-recording-notification) */
+      localRecording: { isLocalRecordingActive: false },
       startTime: new Date(500000000000),
       endTime: new Date(500000000000),
       diagnostics: { network: { latest: {} }, media: { latest: {} } },
@@ -90,8 +92,9 @@ export function defaultMockCallAdapterState(
       isScreenSharingOn: false,
       remoteParticipants,
       remoteParticipantsEnded: {},
-      /** @conditional-compile-remove(raise-hand) */
       raiseHand: { raisedHands: [] },
+      /** @conditional-compile-remove(ppt-live) */
+      pptLive: { isActive: false },
       role: role ?? 'Unknown',
       dominantSpeakers: dominantSpeakers,
       totalParticipantCount:
@@ -109,7 +112,6 @@ export function defaultMockCallAdapterState(
       transfer: {
         acceptedTransfers: {}
       },
-      /* @conditional-compile-remove(optimal-video-count) */
       optimalVideoCount: {
         maxRemoteVideoStreams: 4
       },
@@ -121,7 +123,8 @@ export function defaultMockCallAdapterState(
           ...defaultEndedCallState,
           callEndReason: {
             code: 0,
-            subCode: callEndReasonSubCode
+            subCode: callEndReasonSubCode,
+            /* @conditional-compile-remove(calling-beta-sdk) */ resultCategories: []
           }
         }
       : undefined,
@@ -144,7 +147,8 @@ export function defaultMockCallAdapterState(
     },
     isTeamsCall: false,
     isRoomsCall: isRoomsCall ?? false,
-    latestErrors: {}
+    latestErrors: {},
+    targetCallees: undefined
   };
 }
 
@@ -350,7 +354,7 @@ const consumerCapabilitiesInRoomsCall: ParticipantCapabilities = {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   },
-  reaction: {
+  useReactions: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   }
@@ -378,7 +382,7 @@ const attendeeCapabilitiesInRoomsCall: ParticipantCapabilities = {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   },
-  reaction: {
+  useReactions: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   }
@@ -395,7 +399,7 @@ const presenterCapabilitiesInRoomsCall: ParticipantCapabilities = {
   unmuteMic: { isPresent: true, reason: 'Capable' },
   pstnDialOut: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   raiseHand: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
-  removeParticipant: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  removeParticipant: { isPresent: true, reason: 'Capable' },
   removeParticipantsSpotlight: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   shareScreen: { isPresent: true, reason: 'Capable' },
   spotlightParticipant: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
@@ -406,7 +410,7 @@ const presenterCapabilitiesInRoomsCall: ParticipantCapabilities = {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   },
-  reaction: {
+  useReactions: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   }
@@ -420,6 +424,8 @@ const defaultEndedCallState: CallState = {
   direction: 'Incoming',
   transcription: { isTranscriptionActive: false },
   recording: { isRecordingActive: false },
+  /* @conditional-compile-remove(local-recording-notification) */
+  localRecording: { isLocalRecordingActive: false },
   startTime: new Date(500000000000),
   endTime: new Date(500000000000),
   diagnostics: { network: { latest: {} }, media: { latest: {} } },
@@ -429,8 +435,9 @@ const defaultEndedCallState: CallState = {
   isScreenSharingOn: false,
   remoteParticipants: {},
   remoteParticipantsEnded: {},
-  /** @conditional-compile-remove(raise-hand) */
   raiseHand: { raisedHands: [] },
+  /** @conditional-compile-remove(ppt-live) */
+  pptLive: { isActive: false },
   captionsFeature: {
     captions: [],
     supportedSpokenLanguages: [],
@@ -444,7 +451,6 @@ const defaultEndedCallState: CallState = {
   transfer: {
     acceptedTransfers: {}
   },
-  /* @conditional-compile-remove(optimal-video-count) */
   optimalVideoCount: {
     maxRemoteVideoStreams: 4
   }

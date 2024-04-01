@@ -151,7 +151,7 @@ describe('VideoGallery default layout tests', () => {
     expect(horizontalGalleryTiles.length).toBe(2);
     expect(horizontalGalleryTiles.filter(tileIsVideo).length).toBe(1);
 
-    expect(getDisplayName(horizontalGalleryTiles[0])).toBe('Local Participant');
+    expect(getDisplayName(horizontalGalleryTiles[0])).toBe('You');
     expect(tileIsVideo(horizontalGalleryTiles[0])).toBe(true);
     expect(getDisplayName(horizontalGalleryTiles[1])).toBe('Remote Screensharing Participant');
     expect(tileIsVideo(horizontalGalleryTiles[1])).toBe(false);
@@ -320,7 +320,6 @@ describe('VideoGallery floating local video layout tests', () => {
   });
 });
 
-/* @conditional-compile-remove(gallery-layouts) */
 describe('VideoGallery Speaker layout tests', () => {
   beforeAll(() => {
     mockVideoGalleryInternalHelpers();
@@ -389,7 +388,6 @@ describe('VideoGallery Speaker layout tests', () => {
   });
 });
 
-/* @conditional-compile-remove(gallery-layouts) */
 describe('VideoGallery Focused Content layout tests', () => {
   beforeAll(() => {
     mockVideoGalleryInternalHelpers();
@@ -428,7 +426,6 @@ describe('VideoGallery Focused Content layout tests', () => {
   });
 });
 
-// /* @conditional-compile-remove(pinned-participants) */
 describe('VideoGallery pinned participants tests', () => {
   beforeAll(() => {
     mockVideoGalleryInternalHelpers();
@@ -559,7 +556,6 @@ describe('VideoGallery pinned participants tests', () => {
   );
 });
 
-// /* @conditional-compile-remove(vertical-gallery) */
 describe('VideoGallery with vertical overflow gallery tests', () => {
   beforeAll(() => {
     mockVideoGalleryInternalHelpers();
@@ -644,7 +640,6 @@ describe('VideoGallery with vertical overflow gallery tests', () => {
     expect(tileIsVideo(verticalGalleryTiles[1])).toBe(true);
   });
 
-  /* @conditional-compile-remove(pinned-participants) */
   test('should render pinned participants in grid layout and others to vertical gallery', () => {
     const localParticipant = createLocalParticipant({
       videoStream: { isAvailable: true, renderElement: createVideoDivElement() }
@@ -692,7 +687,6 @@ const getGridLayout = (root: Element | null): Element | null =>
   root?.querySelector('[data-ui-id="grid-layout"]') ?? null;
 const getHorizontalGallery = (root: Element | null): Element | null =>
   root?.querySelector('[data-ui-id="responsive-horizontal-gallery"]') ?? null;
-/* @conditional-compile-remove(vertical-gallery) */
 const getVerticalGallery = (root: Element | null): Element | null =>
   root?.querySelector('[data-ui-id="responsive-vertical-gallery"]') ?? null;
 
@@ -753,7 +747,6 @@ const createRemoteParticipant = (attrs?: Partial<VideoGalleryRemoteParticipant>)
       isReceiving: attrs?.videoStream?.isReceiving ?? true,
       isMirrored: attrs?.videoStream?.isMirrored ?? false,
       renderElement: attrs?.videoStream?.renderElement ?? undefined,
-      /* @conditional-compile-remove(pinned-participants) */
       scalingMode: attrs?.videoStream?.scalingMode ?? 'Crop'
     },
     isScreenSharingOn: attrs?.isScreenSharingOn ?? false

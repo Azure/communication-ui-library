@@ -32,7 +32,7 @@ jobs:
   create_pre-release:
     name: Bump versions and make changelog for release
     runs-on: ubuntu-latest
-
+    permissions: read-all
     steps:
       # Check-out repo
       - uses: actions/checkout@v3
@@ -71,7 +71,7 @@ jobs:
 
       # Install dependencies
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.112.2
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Install dependencies
         run: rush install --max-install-attempts 3
 

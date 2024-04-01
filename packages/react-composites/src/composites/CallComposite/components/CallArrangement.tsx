@@ -15,8 +15,9 @@ import {
   ErrorBarProps,
   useTheme
 } from '@internal/react-components';
-/* @conditional-compile-remove(gallery-layouts) */
 import { VideoGalleryLayout } from '@internal/react-components';
+/* @conditional-compile-remove(spotlight) */
+import { VideoGallery } from '@internal/react-components';
 import React, { useMemo, useRef, useState } from 'react';
 import { useEffect } from 'react';
 import { useCallback } from 'react';
@@ -46,10 +47,6 @@ import { useSelector } from '../hooks/useSelector';
 import { callStatusSelector } from '../selectors/callStatusSelector';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { PreparedMoreDrawer } from '../../common/Drawer/PreparedMoreDrawer';
-/* @conditional-compile-remove(PSTN-calls) */
-import { SendDtmfDialpad } from '../../common/SendDtmfDialpad';
-/* @conditional-compile-remove(PSTN-calls) */
-import { useCallWithChatCompositeStrings } from '../../CallWithChatComposite/hooks/useCallWithChatCompositeStrings';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { getPage } from '../selectors/baseSelectors';
 /* @conditional-compile-remove(close-captions) */
@@ -57,7 +54,7 @@ import { getCallStatus, getIsTeamsCall, getCaptionsStatus } from '../selectors/b
 import { drawerContainerStyles } from '../styles/CallComposite.styles';
 import { SidePane } from './SidePane/SidePane';
 import { usePeoplePane } from './SidePane/usePeoplePane';
-/* @conditional-compile-remove(video-background-effects) */
+
 import {
   useVideoEffectsPane,
   VIDEO_EFFECTS_SIDE_PANE_ID,
@@ -65,14 +62,14 @@ import {
 } from './SidePane/useVideoEffectsPane';
 import { isDisabled } from '../utils';
 import { SidePaneRenderer, useIsSidePaneOpen } from './SidePane/SidePaneProvider';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { useIsParticularSidePaneOpen } from './SidePane/SidePaneProvider';
 import { ModalLocalAndRemotePIP } from '../../common/ModalLocalAndRemotePIP';
 import { getPipStyles } from '../../common/styles/ModalLocalAndRemotePIP.styles';
 import { useMinMaxDragPosition } from '../../common/utils';
 import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
 import { CommonCallControlOptions } from '../../common/types/CommonCallControlOptions';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { localVideoSelector } from '../../CallComposite/selectors/localVideoStreamSelector';
 /* @conditional-compile-remove(capabilities) */
 import {
@@ -80,6 +77,16 @@ import {
   CapabilitiesChangeNotificationBarProps
 } from './CapabilitiesChangedNotificationBar';
 import { useLocale } from '../../localization';
+/* @conditional-compile-remove(spotlight) */
+import { usePropsFor } from '../hooks/usePropsFor';
+/* @conditional-compile-remove(spotlight) */
+import { PromptProps } from './Prompt';
+/* @conditional-compile-remove(spotlight) */
+import {
+  useLocalSpotlightCallbacksWithPrompt,
+  useRemoteSpotlightCallbacksWithPrompt,
+  useStopAllSpotlightCallbackWithPrompt
+} from '../utils/spotlightUtils';
 
 /**
  * @private
@@ -100,15 +107,20 @@ export interface CallArrangementProps {
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
   latestErrors: ActiveErrorMessage[];
   onDismissError: (error: ActiveErrorMessage) => void;
-  /* @conditional-compile-remove(gallery-layouts) */
   onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'horizontalTop') => void;
-  /* @conditional-compile-remove(gallery-layouts) */
   onUserSetGalleryLayoutChange?: (layout: VideoGalleryLayout) => void;
-  /* @conditional-compile-remove(gallery-layouts) */
   userSetGalleryLayout?: VideoGalleryLayout;
   /* @conditional-compile-remove(capabilities) */
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
   onCloseChatPane?: () => void;
+  onSetDialpadPage?: () => void;
+  dtmfDialerPresent?: boolean;
+  /* @conditional-compile-remove(spotlight) */
+  setIsPromptOpen?: (isOpen: boolean) => void;
+  /* @conditional-compile-remove(spotlight) */
+  setPromptProps?: (props: PromptProps) => void;
+  /* @conditional-compile-remove(spotlight) */
+  hideSpotlightButtons?: boolean;
 }
 
 /**
@@ -162,7 +174,85 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       peopleButtonRef
     ]
   );
-  const { isPeoplePaneOpen, openPeoplePane, closePeoplePane } = usePeoplePane(peoplePaneProps);
+
+  const locale = useLocale();
+
+  /* @conditional-compile-remove(spotlight) */
+  const videoGalleryProps = usePropsFor(VideoGallery);
+
+  /* @conditional-compile-remove(spotlight) */
+  const { setPromptProps, setIsPromptOpen, hideSpotlightButtons } = props;
+
+  /* @conditional-compile-remove(spotlight) */
+  const {
+    onStartLocalSpotlight,
+    onStopLocalSpotlight,
+    onStartRemoteSpotlight,
+    onStopRemoteSpotlight,
+    spotlightedParticipants,
+    maxParticipantsToSpotlight,
+    localParticipant
+  } = videoGalleryProps;
+
+  /* @conditional-compile-remove(spotlight) */
+  const { onStartLocalSpotlightWithPrompt, onStopLocalSpotlightWithPrompt } = useLocalSpotlightCallbacksWithPrompt(
+    onStartLocalSpotlight,
+    onStopLocalSpotlight,
+    setIsPromptOpen,
+    setPromptProps
+  );
+
+  /* @conditional-compile-remove(spotlight) */
+  const { onStartRemoteSpotlightWithPrompt, onStopRemoteSpotlightWithPrompt } = useRemoteSpotlightCallbacksWithPrompt(
+    onStartRemoteSpotlight,
+    onStopRemoteSpotlight,
+    setIsPromptOpen,
+    setPromptProps
+  );
+
+  /* @conditional-compile-remove(spotlight) */
+  const canRemoveSpotlight =
+    adapter.getState().call?.capabilitiesFeature?.capabilities.removeParticipantsSpotlight.isPresent;
+  /* @conditional-compile-remove(spotlight) */
+  const stopAllSpotlight = useMemo(
+    () => (canRemoveSpotlight ? () => adapter.stopAllSpotlight() : undefined),
+    [canRemoveSpotlight, adapter]
+  );
+
+  /* @conditional-compile-remove(spotlight) */
+  const { stopAllSpotlightWithPrompt } = useStopAllSpotlightCallbackWithPrompt(
+    stopAllSpotlight,
+    setIsPromptOpen,
+    setPromptProps
+  );
+
+  const spotlightPeoplePaneProps = useMemo(() => {
+    /* @conditional-compile-remove(spotlight) */
+    return {
+      spotlightedParticipantUserIds: spotlightedParticipants,
+      onStartLocalSpotlight: hideSpotlightButtons ? undefined : onStartLocalSpotlightWithPrompt,
+      onStopLocalSpotlight: hideSpotlightButtons ? undefined : onStopLocalSpotlightWithPrompt,
+      onStartRemoteSpotlight: hideSpotlightButtons ? undefined : onStartRemoteSpotlightWithPrompt,
+      onStopRemoteSpotlight: hideSpotlightButtons ? undefined : onStopRemoteSpotlightWithPrompt,
+      onStopAllSpotlight: hideSpotlightButtons ? undefined : stopAllSpotlightWithPrompt,
+      maxParticipantsToSpotlight
+    };
+    return {};
+  }, [
+    /* @conditional-compile-remove(spotlight) */ hideSpotlightButtons,
+    /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight,
+    /* @conditional-compile-remove(spotlight) */ onStartLocalSpotlightWithPrompt,
+    /* @conditional-compile-remove(spotlight) */ onStartRemoteSpotlightWithPrompt,
+    /* @conditional-compile-remove(spotlight) */ onStopLocalSpotlightWithPrompt,
+    /* @conditional-compile-remove(spotlight) */ onStopRemoteSpotlightWithPrompt,
+    /* @conditional-compile-remove(spotlight) */ stopAllSpotlightWithPrompt,
+    /* @conditional-compile-remove(spotlight) */ spotlightedParticipants
+  ]);
+
+  const { isPeoplePaneOpen, openPeoplePane, closePeoplePane } = usePeoplePane({
+    ...peoplePaneProps,
+    ...spotlightPeoplePaneProps
+  });
   const togglePeoplePane = useCallback(() => {
     if (isPeoplePaneOpen) {
       closePeoplePane();
@@ -191,7 +281,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     }
   }, [props.mobileView, isSidePaneOpen]);
 
-  const locale = useLocale();
   const modalStrings = { dismissModalAriaLabel: locale.strings.call.dismissModalAriaLabel };
 
   const isMobileWithActivePane = props.mobileView && isSidePaneOpen;
@@ -206,23 +295,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     };
   }, [isMobileWithActivePane, props.mobileView]);
 
-  /* @conditional-compile-remove(PSTN-calls) */
-  const callWithChatStrings = useCallWithChatCompositeStrings();
-
-  /* @conditional-compile-remove(PSTN-calls) */
-  const dialpadStrings = useMemo(
-    () => ({
-      dialpadModalAriaLabel: callWithChatStrings.dialpadModalAriaLabel,
-      dialpadCloseModalButtonAriaLabel: callWithChatStrings.dialpadCloseModalButtonAriaLabel,
-      placeholderText: callWithChatStrings.dtmfDialpadPlaceholderText
-    }),
-    [callWithChatStrings]
-  );
-
-  /* @conditional-compile-remove(video-background-effects) */
   const onResolveVideoEffectDependency = adapter.getState().onResolveVideoEffectDependency;
 
-  /* @conditional-compile-remove(video-background-effects) */
   const { openVideoEffectsPane } = useVideoEffectsPane(
     props.updateSidePaneRenderer,
     props.mobileView,
@@ -242,37 +316,16 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     togglePeoplePane();
   }, [togglePeoplePane]);
 
-  /* @conditional-compile-remove(PSTN-calls) */
-  const alternateCallerId = useAdapter().getState().alternateCallerId;
-
-  /* @conditional-compile-remove(PSTN-calls) */
-  const [showDtmfDialpad, setShowDtmfDialpad] = useState(false);
-
-  /* @conditional-compile-remove(PSTN-calls) */
-  const onDismissDtmfDialpad = (): void => {
-    setShowDtmfDialpad(false);
-  };
-
-  /* @conditional-compile-remove(PSTN-calls) */
-  const onClickShowDialpad = (): void => {
-    setShowDtmfDialpad(true);
-  };
-
   const drawerContainerStylesValue = useMemo(() => drawerContainerStyles(DRAWER_Z_INDEX), []);
 
-  /* @conditional-compile-remove(rooms) */
   const role = adapter.getState().call?.role;
 
-  let canUnmute = true;
-  /* @conditional-compile-remove(rooms) */
-  canUnmute = role !== 'Consumer' ? true : false;
+  const canUnmute = role !== 'Consumer' ? true : false;
 
   let filteredLatestErrors: ActiveErrorMessage[] = props.errorBarProps !== false ? props.latestErrors : [];
 
-  /* @conditional-compile-remove(video-background-effects) */
   const isCameraOn = useSelector(localVideoSelector).isAvailable;
 
-  /* @conditional-compile-remove(rooms) */
   // TODO: move this logic to the error bar selector once role is plumbed from the headless SDK
   if (role === 'Consumer' && props.errorBarProps) {
     filteredLatestErrors = filteredLatestErrors.filter(
@@ -280,9 +333,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     );
   }
 
-  /* @conditional-compile-remove(video-background-effects) */
   const isVideoPaneOpen = useIsParticularSidePaneOpen(VIDEO_EFFECTS_SIDE_PANE_ID);
-  /* @conditional-compile-remove(video-background-effects) */
+
   if ((isVideoPaneOpen || !isCameraOn) && props.errorBarProps) {
     filteredLatestErrors = filteredLatestErrors.filter((e) => e.type !== 'unableToStartVideoEffect');
   }
@@ -349,22 +401,24 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   onPeopleButtonClicked={togglePeoplePane}
                   onMoreButtonClicked={onMoreButtonClicked}
                   /* @conditional-compile-remove(close-captions) */
-                  isCaptionsSupported={isTeamsCall && hasJoinedCall}
+                  isCaptionsSupported={hasJoinedCall}
+                  /* @conditional-compile-remove(close-captions) */
+                  isTeamsCall={isTeamsCall}
                   /* @conditional-compile-remove(close-captions) */
                   isCaptionsOn={isCaptionsOn}
-                  /* @conditional-compile-remove(video-background-effects) */
                   onClickVideoEffects={onResolveVideoEffectDependency ? openVideoEffectsPane : undefined}
-                  /* @conditional-compile-remove(PSTN-calls) */
-                  onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
                   displayVertical={verticalControlBar}
-                  /* @conditional-compile-remove(gallery-layouts) */
                   onUserSetOverflowGalleryPositionChange={props.onUserSetOverflowGalleryPositionChange}
-                  /* @conditional-compile-remove(gallery-layouts) */
                   onUserSetGalleryLayout={props.onUserSetGalleryLayoutChange}
-                  /* @conditional-compile-remove(gallery-layouts) */
                   userSetGalleryLayout={props.userSetGalleryLayout}
+                  onSetDialpadPage={props.onSetDialpadPage}
+                  dtmfDialerPresent={props.dtmfDialerPresent}
                   peopleButtonRef={peopleButtonRef}
                   cameraButtonRef={cameraButtonRef}
+                  /* @conditional-compile-remove(spotlight) */
+                  onStopLocalSpotlight={
+                    !hideSpotlightButtons && localParticipant.spotlight ? onStopLocalSpotlightWithPrompt : undefined
+                  }
                 />
               )}
             </Stack>
@@ -375,33 +429,21 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 callControls={props.callControlProps.options}
                 onLightDismiss={closeDrawer}
                 onPeopleButtonClicked={onMoreDrawerPeopleClicked}
-                /* @conditional-compile-remove(PSTN-calls) */
-                onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
                 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
                 disableButtonsForHoldScreen={isInLocalHold}
                 /* @conditional-compile-remove(close-captions) */
-                isCaptionsSupported={isTeamsCall && hasJoinedCall}
-                /* @conditional-compile-remove(gallery-layouts) */
+                isCaptionsSupported={hasJoinedCall}
+                /* @conditional-compile-remove(close-captions) */
+                isTeamsCall={isTeamsCall}
                 onUserSetGalleryLayout={props.onUserSetGalleryLayoutChange}
-                /* @conditional-compile-remove(gallery-layouts) */
                 userSetGalleryLayout={props.userSetGalleryLayout}
+                onSetDialpadPage={props.onSetDialpadPage}
+                dtmfDialerPresent={props.dtmfDialerPresent}
+                /* @conditional-compile-remove(reaction) */
+                reactionResources={adapter.getState().reactions}
               />
             </Stack>
           )}
-
-          {
-            /* @conditional-compile-remove(PSTN-calls) */
-            props.callControlProps?.options !== false && showDtmfDialpad && (
-              <Stack styles={drawerContainerStylesValue}>
-                <SendDtmfDialpad
-                  isMobile={props.mobileView}
-                  strings={dialpadStrings}
-                  showDialpad={showDtmfDialpad}
-                  onDismissDialpad={onDismissDtmfDialpad}
-                />
-              </Stack>
-            )
-          }
           <Stack horizontal grow>
             <Stack.Item style={callCompositeContainerCSS}>
               <Stack.Item styles={callGalleryStyles} grow>
@@ -443,6 +485,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                         <CaptionsBanner
                           isMobile={props.mobileView}
                           onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
+                          /* @conditional-compile-remove(close-captions) */
+                          isTeamsCall={isTeamsCall}
                         />
                       )
                   }
@@ -451,7 +495,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
             </Stack.Item>
             <SidePane
               mobileView={props.mobileView}
-              /* @conditional-compile-remove(video-background-effects) */
               maxWidth={isVideoPaneOpen ? `${VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM}rem` : undefined}
               minWidth={isVideoPaneOpen ? `${VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM}rem` : undefined}
               updateSidePaneRenderer={props.updateSidePaneRenderer}

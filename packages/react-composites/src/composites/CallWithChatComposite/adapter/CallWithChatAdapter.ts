@@ -23,6 +23,7 @@ import {
   ParticipantsAddedListener,
   ParticipantsRemovedListener
 } from '../../ChatComposite';
+import { ResourceDetails } from '../../ChatComposite';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 import type { AdapterError, AdapterState, Disposable } from '../../common/adapters';
 import {
@@ -33,20 +34,27 @@ import {
   StartCallOptions,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(reaction) */
+import { Reaction } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
-import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import { DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { SendMessageOptions } from '@azure/communication-chat';
 import { JoinCallOptions } from '../../CallComposite/adapter/CallAdapter';
-import { AttachmentDownloadResult } from '@internal/react-components';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { AttachmentMetadata } from '@internal/react-components';
-/* @conditional-compile-remove(file-sharing) */
-import { FileUploadManager } from '../../ChatComposite';
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+import { AttachmentUploadManager } from '@internal/react-components';
 /* @conditional-compile-remove(PSTN-calls) */
-import { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
+import { PhoneNumberIdentifier } from '@azure/communication-common';
+import { UnknownIdentifier, MicrosoftTeamsAppIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(one-to-n-calling) */
+import { CommunicationUserIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(teams-adhoc-call) */
+import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(close-captions) */
@@ -58,7 +66,9 @@ import {
 } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(capabilities) */
 import { CapabilitiesChangedListener } from '../../CallComposite/adapter/CallAdapter';
-/* @conditional-compile-remove(video-background-effects) */
+/* @conditional-compile-remove(spotlight) */
+import { SpotlightChangedListener } from '../../CallComposite/adapter/CallAdapter';
+
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 
 /* @conditional-compile-remove(end-of-call-survey) */
@@ -152,13 +162,21 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   startCall(participants: string[], options?: StartCallOptions): Call | undefined;
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Start the call.
    * @param participants - An array of {@link @azure/communication-common#CommunicationIdentifier} to be called
-   * @beta
+   * @public
    */
-  startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
+  startCall(
+    participants: (
+      | MicrosoftTeamsAppIdentifier
+      | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier
+      | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
+      | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
+      | UnknownIdentifier
+    )[],
+    options?: StartCallOptions
+  ): Call | undefined;
   /**
    * Start sharing the screen during a call.
    *
@@ -171,20 +189,26 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   stopScreenShare(): Promise<void>;
-  /* @conditional-compile-remove(raise-hand) */
   /**
    * Raise hand for local user.
    *
    * @public
    */
   raiseHand(): Promise<void>;
-  /* @conditional-compile-remove(raise-hand) */
   /**
    * Lower hand for local user.
    *
    * @public
    */
   lowerHand(): Promise<void>;
+  /* @conditional-compile-remove(reaction) */
+  /**
+   * Send Reaction to ongoing meeting.
+   * @param reaction - A value of type {@link @azure/communication-calling#Reaction}
+   *
+   * @beta
+   */
+  onReactionClick(reaction: Reaction): Promise<void>;
   /**
    * Create the html view for a stream.
    *
@@ -352,28 +376,31 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /** @beta */
-  registerActiveFileUploads: (files: File[]) => FileUploadManager[];
-  /* @conditional-compile-remove(file-sharing) */
+  registerActiveUploads: (files: File[]) => AttachmentUploadManager[];
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /** @beta */
-  registerCompletedFileUploads: (metadata: AttachmentMetadata[]) => FileUploadManager[];
-  /* @conditional-compile-remove(file-sharing) */
+  registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadManager[];
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /** @beta */
-  clearFileUploads: () => void;
-  /* @conditional-compile-remove(file-sharing) */
+  clearUploads: () => void;
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /** @beta */
-  cancelFileUpload: (id: string) => void;
-  /* @conditional-compile-remove(file-sharing) */
+  cancelUpload: (id: string) => void;
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /** @beta */
-  updateFileUploadProgress: (id: string, progress: number) => void;
-  /* @conditional-compile-remove(file-sharing) */
+  updateUploadProgress: (id: string, progress: number) => void;
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /** @beta */
-  updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
-  /* @conditional-compile-remove(file-sharing) */
+  updateUploadStatusMessage: (id: string, errorMessage: string) => void;
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /** @beta */
-  updateFileUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
-  downloadAttachments: (options: { attachmentUrls: Record<string, string> }) => Promise<AttachmentDownloadResult[]>;
+  updateUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
+  /** @public */
+  downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
+  /** @public */
+  removeResourceFromCache(resourceDetails: ResourceDetails): void;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Puts the Call in a Localhold.
@@ -397,11 +424,10 @@ export interface CallWithChatAdapterManagement {
   addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * send dtmf tone to another participant in the call in 1:1 calls
    *
-   * @beta
+   * @public
    */
   sendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
   /* @conditional-compile-remove(unsupported-browser) */
@@ -433,21 +459,20 @@ export interface CallWithChatAdapterManagement {
    */
   stopCaptions(): Promise<void>;
 
-  /* @conditional-compile-remove(video-background-effects) */
   /**
    * Start the video background effect.
    *
    * @public
    */
   startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Stop the video background effect.
    *
    * @public
    */
   stopVideoBackgroundEffects(): Promise<void>;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Override the background picker images for background replacement effect.
    *
@@ -456,7 +481,7 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Update the selected video background effect
    *
@@ -470,6 +495,21 @@ export interface CallWithChatAdapterManagement {
    * @beta
    */
   submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Start spotlight
+   */
+  startSpotlight(userIds?: string[]): Promise<void>;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Stop spotlight
+   */
+  stopSpotlight(userIds?: string[]): Promise<void>;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Stop all spotlights
+   */
+  stopAllSpotlight(): Promise<void>;
 }
 
 /**
@@ -499,6 +539,8 @@ export interface CallWithChatAdapterSubscriptions {
   on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
   /* @conditional-compile-remove(capabilities) */
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
+  /* @conditional-compile-remove(spotlight) */
+  on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
 
   off(event: 'callEnded', listener: CallEndedListener): void;
   off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -521,6 +563,8 @@ export interface CallWithChatAdapterSubscriptions {
   off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
   /* @conditional-compile-remove(capabilities) */
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
+  /* @conditional-compile-remove(spotlight) */
+  off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
 
   // Chat subscriptions
   on(event: 'messageReceived', listener: MessageReceivedListener): void;
@@ -576,6 +620,7 @@ export type CallWithChatEvent =
   | /* @conditional-compile-remove(close-captions) */ 'isCaptionLanguageChanged'
   | /* @conditional-compile-remove(close-captions) */ 'isSpokenLanguageChanged'
   | /* @conditional-compile-remove(capabilities) */ 'capabilitiesChanged'
+  | /* @conditional-compile-remove(spotlight) */ 'spotlightChanged'
   | 'messageReceived'
   | 'messageEdited'
   | 'messageDeleted'

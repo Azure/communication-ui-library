@@ -19,9 +19,9 @@ const addFileSharingSnippet = `
 adapter={chatAdapter}
 options={{
   fileSharing: {
-    uploadHandler: fileUploadHandler,
+    uploadHandler: attachmentUploadHandler,
     /* If fileDownloadHandler is not provided. The file URL is opened in a new tab.
-    You can find examples of fileDownloadHandler and fileUploadHandler in this tutorial
+    You can find examples of fileDownloadHandler and attachmentUploadHandler in this tutorial
     https://docs.microsoft.com/en-us/azure/communication-services/tutorials/file-sharing-tutorial */
     downloadHandler: fileDownloadHandler,
     accept: 'image/png, image/jpeg, text/plain, .docx',
@@ -148,7 +148,6 @@ export const Docs: () => JSX.Element = () => {
       </Description>
 
       <Heading>Custom Branding</Heading>
-      <SingleLineBetaBanner version="1.13.0-beta.1" />
       <Description>
         Along with applying a Fluent Theme to style the composites, you can also inject your own custom branding. You
         can inject a background and logo into the Composite configuration page to present to your users. This is done by

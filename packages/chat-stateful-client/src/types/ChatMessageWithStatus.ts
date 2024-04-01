@@ -17,4 +17,13 @@ export type ChatMessageWithStatus = ChatMessage & {
   status: MessageStatus;
   /* @conditional-compile-remove(data-loss-prevention) */
   policyViolation?: boolean;
+  resourceCache?: Record<string, ResourceFetchResult>;
+};
+/**
+ * Result of the Resource downloaded from stateful client
+ * @public
+ */
+export type ResourceFetchResult = {
+  sourceUrl?: string;
+  error?: Error;
 };

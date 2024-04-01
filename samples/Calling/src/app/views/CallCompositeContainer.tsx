@@ -23,7 +23,11 @@ export const CallCompositeContainer = (props: CallCompositeContainerProps): JSX.
       /* @conditional-compile-remove(call-readiness) */ onPermissionsTroubleshootingClick,
       /* @conditional-compile-remove(call-readiness) */ onNetworkingTroubleShootingClick,
       callControls: {
-        screenShareButton: shouldHideScreenShare ? false : undefined
+        screenShareButton: shouldHideScreenShare ? false : undefined,
+        /* @conditional-compile-remove(end-call-options) */
+        endCallButton: {
+          hangUpForEveryone: 'endCallOptions'
+        }
       }
     }),
     [shouldHideScreenShare]
@@ -44,7 +48,7 @@ export const CallCompositeContainer = (props: CallCompositeContainerProps): JSX.
 
   let callInvitationUrl: string | undefined = window.location.href;
   // Only show the call invitation url if the call is a group call or Teams call, do not show for Rooms, 1:1 or 1:N calls
-  if (!isGroupCallLocator(props.callLocator) && !isTeamsMeetingLinkLocator(props.callLocator)) {
+  if (props.callLocator && !isGroupCallLocator(props.callLocator) && !isTeamsMeetingLinkLocator(props.callLocator)) {
     callInvitationUrl = undefined;
   }
 

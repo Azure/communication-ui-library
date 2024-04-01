@@ -1,23 +1,24 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Icon, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
-/* @conditional-compile-remove(pinned-participants) */
-import { IconButton } from '@fluentui/react';
+import {
+  DirectionalHint,
+  Icon,
+  IconButton,
+  IContextualMenuProps,
+  IStyle,
+  mergeStyles,
+  Persona,
+  Stack,
+  Text
+} from '@fluentui/react';
 import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
-/* @conditional-compile-remove(reaction) */
-import { useCallback } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { ComponentLocale, useLocale } from '../localization';
 import { useTheme } from '../theming';
 import { BaseCustomStyles, CustomAvatarOptions, OnRenderAvatarCallback } from '../types';
-/* @conditional-compile-remove(raise-hand) */
 import { CallingTheme } from '../theming';
-/* @conditional-compile-remove(raise-hand) */
 import { RaisedHand } from '../types';
-/* @conditional-compile-remove(reaction) */
-import { Reaction } from '../types';
-/* @conditional-compile-remove(raise-hand) */
 import { RaisedHandIcon } from './assets/RaisedHandIcon';
 /* @conditional-compile-remove(one-to-n-calling) */
 /* @conditional-compile-remove(PSTN-calls) */
@@ -33,21 +34,13 @@ import {
   tileInfoContainerStyle,
   participantStateStringStyles
 } from './styles/VideoTile.styles';
-/* @conditional-compile-remove(reaction) */
-import { reactionRenderingStyle } from './styles/VideoTile.styles';
 import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
-/* @conditional-compile-remove(reaction) */
-import { reactionEmoji } from './utils/videoTileStylesUtils';
-/* @conditional-compile-remove(pinned-participants) */
 import { pinIconStyle } from './styles/VideoTile.styles';
-/* @conditional-compile-remove(pinned-participants) */
-import { DirectionalHint, IContextualMenuProps } from '@fluentui/react';
-/* @conditional-compile-remove(pinned-participants) */
 import useLongPress from './utils/useLongPress';
-/* @conditional-compile-remove(pinned-participants) */
 import { moreButtonStyles } from './styles/VideoTile.styles';
-/* @conditional-compile-remove(raise-hand) */
 import { raiseHandContainerStyles } from './styles/VideoTile.styles';
+/* @conditional-compile-remove(reaction) */
+import { ReactionResources } from '../types/ReactionTypes';
 
 /**
  * Strings of {@link VideoTile} that can be overridden.
@@ -92,6 +85,12 @@ export interface VideoTileProps {
   userId?: string;
   /** Component with the video stream. */
   renderElement?: JSX.Element | null;
+  /* @conditional-compile-remove(reaction) */
+  /**
+   * Overlay component responsible for rendering reaction
+   * @beta
+   */
+  overlay?: JSX.Element | null;
   /** Determines if the video is mirrored or not. */
   isMirrored?: boolean;
   /** Custom render Component function for no video is available. Render a Persona Icon if undefined. */
@@ -110,7 +109,6 @@ export interface VideoTileProps {
    * Whether the video is muted or not.
    */
   isMuted?: boolean;
-  /* @conditional-compile-remove(pinned-participants) */
   /**
    * If true, the video tile will show the pin icon.
    */
@@ -144,13 +142,8 @@ export interface VideoTileProps {
   /** Whether the participant in the videoTile is speaking. Shows a speaking indicator (border). */
   isSpeaking?: boolean;
 
-  /* @conditional-compile-remove(raise-hand) */
   /** Whether the participant is raised hand. Show a indicator (border) and icon with order */
   raisedHand?: RaisedHand;
-
-  /* @conditional-compile-remove(reaction) */
-  /** When the participant has reacted, animate the reaction. */
-  reaction?: Reaction;
 
   /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */
@@ -162,18 +155,27 @@ export interface VideoTileProps {
   /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */
   strings?: VideoTileStrings;
-  /* @conditional-compile-remove(pinned-participants) */
   /**
    * Display custom menu items in the VideoTile's contextual menu.
    * Uses Fluent UI ContextualMenu.
    * An ellipses icon will be displayed to open the contextual menu if this prop is defined.
    */
   contextualMenu?: IContextualMenuProps;
-  /* @conditional-compile-remove(pinned-participants) */
   /**
    * Callback triggered by video tile on touch and hold.
    */
   onLongTouch?: () => void;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * If true, the video tile will show the spotlighted icon.
+   */
+  isSpotlighted?: boolean;
+  /* @conditional-compile-remove(reaction) */
+  /**
+   * Reactions resources' url and metadata.
+   * @beta
+   */
+  reactionResources?: ReactionResources;
 }
 
 // Coin max size is set to PersonaSize.size100
@@ -204,15 +206,12 @@ const DefaultPlaceholder = (props: CustomAvatarOptions): JSX.Element => {
 
 const defaultPersonaStyles = { root: { margin: 'auto', maxHeight: '100%' } };
 
-/* @conditional-compile-remove(pinned-participants) */
 const videoTileMoreMenuIconProps = { iconName: undefined, style: { display: 'none' } };
-/* @conditional-compile-remove(pinned-participants) */
 const videoTileMoreMenuProps = {
   directionalHint: DirectionalHint.topLeftEdge,
   isBeakVisible: false,
   styles: { container: { maxWidth: '8rem' } }
 };
-/* @conditional-compile-remove(pinned-participants) */
 const VideoTileMoreOptionsButton = (props: {
   contextualMenu?: IContextualMenuProps;
   canShowContextMenuButton: boolean;
@@ -249,32 +248,30 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     initialsName,
     isMirrored,
     isMuted,
-    /* @conditional-compile-remove(pinned-participants) */
+    /* @conditional-compile-remove(spotlight) */
+    isSpotlighted,
     isPinned,
     onRenderPlaceholder,
     renderElement,
+    /* @conditional-compile-remove(reaction) */
+    overlay: reactionOverlay,
     showLabel = true,
     showMuteIndicator = true,
     styles,
     userId,
     noVideoAvailableAriaLabel,
     isSpeaking,
-    /* @conditional-compile-remove(raise-hand) */
     raisedHand,
-    /* @conditional-compile-remove(reaction) */
-    reaction,
     personaMinSize = DEFAULT_PERSONA_MIN_SIZE_PX,
     personaMaxSize = DEFAULT_PERSONA_MAX_SIZE_PX,
-    /* @conditional-compile-remove(pinned-participants) */
     contextualMenu
   } = props;
 
-  /* @conditional-compile-remove(pinned-participants) */
   const [isHovered, setIsHovered] = useState<boolean>(false);
-  /* @conditional-compile-remove(pinned-participants) */
   const [isFocused, setIsFocused] = useState<boolean>(false);
   // need to set a default otherwise the resizeObserver will get stuck in an infinite loop.
   const [personaSize, setPersonaSize] = useState<number>(1);
+
   const videoTileRef = useRef<HTMLDivElement>(null);
 
   const locale = useLocale();
@@ -301,7 +298,6 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     return () => currentObserver.disconnect();
   }, [videoTileRef]);
 
-  /* @conditional-compile-remove(pinned-participants) */
   const useLongPressProps = useMemo(() => {
     return {
       onLongPress: () => {
@@ -311,26 +307,15 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.onLongTouch]);
-  /* @conditional-compile-remove(pinned-participants) */
   const longPressHandlers = useLongPress(useLongPressProps);
-  const longPressHandlersTrampoline = useMemo(() => {
-    /* @conditional-compile-remove(pinned-participants) */
-    return longPressHandlers;
-    return {};
-  }, [
-    /* @conditional-compile-remove(pinned-participants) */
-    longPressHandlers
-  ]);
 
   const hoverHandlers = useMemo(() => {
-    /* @conditional-compile-remove(pinned-participants) */
     return {
       onMouseEnter: () => setIsHovered(true),
       onMouseLeave: () => setIsHovered(false),
       onFocus: () => setIsFocused(true),
       onBlur: () => setIsFocused(false)
     };
-    return {};
   }, []);
 
   const placeholderOptions = {
@@ -358,33 +343,10 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
   const canShowLabel = showLabel && (displayName || (showMuteIndicator && isMuted));
   const participantStateString = participantStateStringTrampoline(props, locale);
-  /* @conditional-compile-remove(pinned-participants) */
   const canShowContextMenuButton = isHovered || isFocused;
   let raisedHandBackgroundColor = '';
-  /* @conditional-compile-remove(raise-hand) */
   const callingPalette = (theme as unknown as CallingTheme).callingPalette;
-  /* @conditional-compile-remove(raise-hand) */
   raisedHandBackgroundColor = callingPalette.raiseHandGold;
-
-  /* @conditional-compile-remove(reaction) */
-  const backgroundImageUrl = reaction !== undefined ? reactionEmoji.get(reaction?.reactionType) : '';
-  /* @conditional-compile-remove(reaction) */
-  const currentTimestamp = new Date();
-  /* @conditional-compile-remove(reaction) */
-  const currentUnixTimeStamp = Math.floor(currentTimestamp.getTime() / 1000);
-  /* @conditional-compile-remove(reaction) */
-  const receivedUnixTimestamp = reaction ? Math.floor(reaction.receivedAt.getTime() / 1000) : undefined;
-  /* @conditional-compile-remove(reaction) */
-  const canRenderReaction = receivedUnixTimestamp ? currentUnixTimeStamp - receivedUnixTimestamp < 3000 : false;
-  /* @conditional-compile-remove(reaction) */
-  const reactionContainerStyles = useCallback(
-    () =>
-      reactionRenderingStyle({
-        backgroundImageUrl,
-        personaSize
-      }),
-    [backgroundImageUrl, personaSize]
-  );
 
   return (
     <Stack
@@ -395,7 +357,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           background: theme.palette.neutralLighter,
           borderRadius: theme.effects.roundedCorner4
         },
-        (isSpeaking || /* @conditional-compile-remove(raise-hand) */ raisedHand) && {
+        (isSpeaking || raisedHand) && {
           '&::after': {
             content: `''`,
             position: 'absolute',
@@ -408,7 +370,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
         },
         styles?.root
       )}
-      {...longPressHandlersTrampoline}
+      {...longPressHandlers}
     >
       <div ref={videoTileRef} style={{ width: '100%', height: '100%' }} {...hoverHandlers} data-is-focusable={true}>
         {isVideoRendered ? (
@@ -438,24 +400,9 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
             )}
           </Stack>
         )}
-
         {
           /* @conditional-compile-remove(reaction) */
-          canRenderReaction && (
-            <Stack
-              className={mergeStyles(videoContainerStyles, {
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: reaction ? 'rgba(0, 0, 0, 0.5)' : 'transparent'
-              })}
-            >
-              <div style={{ height: '33.33%' }}></div>
-              <div style={{ height: '84px', width: '84px' }}>
-                <div className={reactionContainerStyles()} />
-              </div>
-            </Stack>
-          )
+          reactionOverlay
         }
         {(canShowLabel || participantStateString) && (
           <Stack horizontal className={tileInfoContainerStyle} tokens={tileInfoContainerTokens}>
@@ -481,20 +428,22 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
                 </Stack>
               )}
               {
-                /* @conditional-compile-remove(pinned-participants) */
-                <VideoTileMoreOptionsButton
-                  contextualMenu={contextualMenu}
-                  canShowContextMenuButton={canShowContextMenuButton}
-                />
-              }
-              {
-                /* @conditional-compile-remove(pinned-participants) */
-                isPinned && (
+                /* @conditional-compile-remove(spotlight) */
+                isSpotlighted && (
                   <Stack className={mergeStyles(iconContainerStyle)}>
-                    <Icon iconName="VideoTilePinned" className={mergeStyles(pinIconStyle)} />
+                    <Icon iconName="VideoTileSpotlighted" />
                   </Stack>
                 )
               }
+              {isPinned && (
+                <Stack className={mergeStyles(iconContainerStyle)}>
+                  <Icon iconName="VideoTilePinned" className={mergeStyles(pinIconStyle)} />
+                </Stack>
+              )}
+              <VideoTileMoreOptionsButton
+                contextualMenu={contextualMenu}
+                canShowContextMenuButton={canShowContextMenuButton}
+              />
             </Stack>
           </Stack>
         )}
@@ -502,22 +451,20 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
         {children && (
           <Stack className={mergeStyles(overlayContainerStyles, styles?.overlayContainer)}>{children}</Stack>
         )}
-        {
-          /* @conditional-compile-remove(raise-hand) */ raisedHand && (
-            <Stack
-              horizontal={true}
-              tokens={{ childrenGap: '0.2rem' }}
-              className={raiseHandContainerStyles(theme, !canShowLabel)}
-            >
-              <Stack.Item>
-                <Text>{raisedHand.raisedHandOrderPosition}</Text>
-              </Stack.Item>
-              <Stack.Item>
-                <RaisedHandIcon />
-              </Stack.Item>
-            </Stack>
-          )
-        }
+        {raisedHand && (
+          <Stack
+            horizontal={true}
+            tokens={{ childrenGap: '0.2rem' }}
+            className={raiseHandContainerStyles(theme, !canShowLabel)}
+          >
+            <Stack.Item>
+              <Text>{raisedHand.raisedHandOrderPosition}</Text>
+            </Stack.Item>
+            <Stack.Item>
+              <RaisedHandIcon />
+            </Stack.Item>
+          </Stack>
+        )}
       </div>
     </Stack>
   );

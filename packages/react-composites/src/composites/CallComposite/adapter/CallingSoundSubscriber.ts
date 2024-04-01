@@ -3,7 +3,6 @@
 
 import { CallCommon } from '@azure/communication-calling';
 import { CallingSounds } from './CallAdapter';
-/* @conditional-compile-remove(calling-sounds) */
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifier } from '@azure/communication-common';
 
@@ -14,6 +13,9 @@ type CallingSoundsLoaded = {
 };
 
 const CALL_REJECTED_CODE = 603;
+
+const CALL_ENDED_CODE = 0;
+const CALL_TRANSFER_SUBCODE = 7015;
 
 /**
  * @private
@@ -45,7 +47,11 @@ export class CallingSoundSubscriber {
       if (this.call.state === 'Disconnected') {
         if (this.soundsLoaded?.callBusySound && this.call.callEndReason?.code === CALL_REJECTED_CODE) {
           this.playSound(this.soundsLoaded.callBusySound);
-        } else if (this.soundsLoaded?.callEndedSound) {
+        } else if (
+          this.soundsLoaded?.callEndedSound &&
+          this.call.callEndReason?.code === CALL_ENDED_CODE &&
+          this.call.callEndReason?.subCode !== CALL_TRANSFER_SUBCODE
+        ) {
           this.playSound(this.soundsLoaded.callEndedSound);
         }
       }
@@ -57,7 +63,7 @@ export class CallingSoundSubscriber {
   }
 
   public unsubscribeAll(): void {
-    this.call.off('stateChanged', this.onCallStateChanged);
+    this.call?.off('stateChanged', this.onCallStateChanged);
     if (this.soundsLoaded?.callRingingSound) {
       this.soundsLoaded.callRingingSound.pause();
     }
@@ -98,7 +104,6 @@ export class CallingSoundSubscriber {
  * sound when making an outbound call.
  */
 const shouldPlayRinging = (call: CallCommon, callee?: CommunicationIdentifier[]): boolean => {
-  /* @conditional-compile-remove(calling-sounds) */
   if (
     callee &&
     callee.length >= 1 &&

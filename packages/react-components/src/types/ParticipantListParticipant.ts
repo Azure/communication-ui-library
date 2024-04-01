@@ -17,7 +17,6 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
   isMuted?: boolean;
   /** Whether calling participant is speaking */
   isSpeaking?: boolean;
-  /* @conditional-compile-remove(raise-hand) */
   /** Whether calling participant is raised hand */
   raisedHand?: RaisedHand;
   /* @conditional-compile-remove(reaction) */
@@ -27,9 +26,24 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
    * @beta
    * */
   reaction?: Reaction;
+  /* @conditional-compile-remove(spotlight) */
+  /** Whether calling participant is spotlighted **/
+  spotlight?: Spotlight;
 };
 
-/* @conditional-compile-remove(raise-hand) */
+/* @conditional-compile-remove(spotlight) */
+/**
+ * Spotlight state with order
+ *
+ * @beta
+ */
+export type Spotlight = {
+  /**
+   * Specifies the order position of the spotlight
+   */
+  spotlightedOrderPosition?: number;
+};
+
 /**
  * Raised hand state with order
  *
@@ -53,7 +67,7 @@ export type Reaction = {
   /**
    * Received timestamp for the message as default Date format.
    */
-  receivedAt: Date;
+  receivedOn: Date;
 };
 
 /**

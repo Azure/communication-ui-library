@@ -26,14 +26,10 @@ import {
   useTheme
 } from '@internal/react-components';
 import { useId } from '@fluentui/react-hooks';
-/* @conditional-compile-remove(file-sharing) */
-import { FileSharingOptions } from '../ChatComposite';
 import { containerDivStyles } from '../common/ContainerRectProps';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { CallCompositeInner, CallCompositeOptions } from '../CallComposite/CallComposite';
-/* @conditional-compile-remove(pinned-participants) */
 import { RemoteVideoTileMenuOptions } from '../CallComposite/CallComposite';
-/* @conditional-compile-remove(click-to-call) */
 import { LocalVideoTileOptions } from '../CallComposite/CallComposite';
 /* @conditional-compile-remove(call-readiness) */
 import { DeviceCheckOptions } from '../CallComposite/CallComposite';
@@ -49,8 +45,9 @@ import {
 import { SidePaneHeader } from '../common/SidePaneHeader';
 import { CallControlOptions } from '../CallComposite/types/CallControlOptions';
 import { useUnreadMessagesTracker } from './ChatButton/useUnreadMessagesTracker';
-/* @conditional-compile-remove(gallery-layouts) */
 import { VideoGalleryLayout } from '@internal/react-components';
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+import { AttachmentOptions } from '@internal/react-components';
 
 /**
  * Props required for the {@link CallWithChatComposite}
@@ -105,13 +102,13 @@ export type CallWithChatCompositeOptions = {
    * If using the boolean values, true will cause default behavior across the whole control bar. False hides the whole control bar.
    */
   callControls?: boolean | CallWithChatControlOptions;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /**
    * Properties for configuring the File Sharing feature.
    * If undefined, file sharing feature will be disabled.
    * @beta
    */
-  fileSharing?: FileSharingOptions;
+  attachmentOptions?: AttachmentOptions;
   /* @conditional-compile-remove(call-readiness) */
   /**
    * Device permissions check options for your call.
@@ -166,19 +163,16 @@ export type CallWithChatCompositeOptions = {
    * if this is not supplied, the composite will not show a unsupported browser page.
    */
   onEnvironmentInfoTroubleshootingClick?: () => void;
-  /* @conditional-compile-remove(pinned-participants) */
   /**
    * Remote participant video tile menu options
    */
   remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
-  /* @conditional-compile-remove(click-to-call) */
   /**
    * Options for controlling the local video tile.
    *
    * @remarks if 'false' the local video tile will not be rendered.
    */
   localVideoTile?: boolean | LocalVideoTileOptions;
-  /* @conditional-compile-remove(gallery-layouts) */
   /**
    * Options for controlling the starting layout of the composite's video gallery
    */
@@ -194,10 +188,15 @@ export type CallWithChatCompositeOptions = {
    */
   surveyOptions?: {
     /**
-     * Hide call survey at the end of a call.
+     * Disable call survey at the end of a call.
      * @defaultValue false
      */
-    hideSurvey?: boolean;
+    disableSurvey?: boolean;
+    /**
+     * Optional callback to redirect users to custom screens when survey is done, note that default end call screen will be shown if this callback is not provided
+     * This callback can be used to redirect users to different screens depending on survey state, whether it is submitted, skipped or has a problem when submitting the survey
+     */
+    onSurveyClosed?: (surveyState: 'sent' | 'skipped' | 'error', surveyError?: string) => void;
     /**
      * Optional callback to handle survey data including free form text response
      * Note that free form text response survey option is only going to be enabled when this callback is provided
@@ -262,6 +261,17 @@ export type CallWithChatCompositeOptions = {
       url: string;
     };
   };
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Options for settings related to spotlight.
+   */
+  spotlight?: {
+    /**
+     * Flag to hide the menu buttons to start and stop spotlight for remote participants and the local participant.
+     * @defaultValue false
+     */
+    hideSpotlightButtons?: boolean;
+  };
 };
 
 type CallWithChatScreenProps = {
@@ -272,8 +282,8 @@ type CallWithChatScreenProps = {
   callControls?: boolean | CallWithChatControlOptions;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
-  /* @conditional-compile-remove(file-sharing) */
-  fileSharing?: FileSharingOptions;
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  attachmentOptions?: AttachmentOptions;
   rtl?: boolean;
   /* @conditional-compile-remove(call-readiness) */
   deviceChecks?: DeviceCheckOptions;
@@ -286,11 +296,8 @@ type CallWithChatScreenProps = {
   onNetworkingTroubleShootingClick?: () => void;
   /* @conditional-compile-remove(unsupported-browser) */
   onEnvironmentInfoTroubleshootingClick?: () => void;
-  /* @conditional-compile-remove(pinned-participants) */
   remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
-  /* @conditional-compile-remove(click-to-call) */
   localVideoTile?: boolean | LocalVideoTileOptions;
-  /* @conditional-compile-remove(gallery-layouts) */
   galleryOptions?: {
     layout?: VideoGalleryLayout;
   };
@@ -300,10 +307,15 @@ type CallWithChatScreenProps = {
    */
   surveyOptions?: {
     /**
-     * Hide call survey at the end of a call.
+     * Disable call survey at the end of a call.
      * @defaultValue false
      */
-    hideSurvey?: boolean;
+    disableSurvey?: boolean;
+    /**
+     * Optional callback to redirect users to custom screens when survey is done, note that default end call screen will be shown if this callback is not provided
+     * This callback can be used to redirect users to different screens depending on survey state, whether it is submitted, skipped or has a problem when submitting the survey
+     */
+    onSurveyClosed?: (surveyState: 'sent' | 'skipped' | 'error', surveyError?: string) => void;
     /**
      * Optional callback to handle survey data including free form text response
      * Note that free form text response survey option is only going to be enabled when this callback is provided
@@ -336,6 +348,10 @@ type CallWithChatScreenProps = {
   /* @conditional-compile-remove(custom-branding) */
   backgroundImage?: {
     url: string;
+  };
+  /* @conditional-compile-remove(spotlight) */
+  spotlight?: {
+    hideSpotlightButtons?: boolean;
   };
 };
 
@@ -482,9 +498,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   );
 
   const injectedCustomButtonsFromProps = useMemo(() => {
-    /* @conditional-compile-remove(control-bar-button-injection) */
     return [...(callControlOptionsFromProps.onFetchCustomButtonProps ?? [])];
-    return [];
   }, [callControlOptionsFromProps]);
 
   const callCompositeOptions: CallCompositeOptions = useMemo(
@@ -496,7 +510,6 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
               ...callControlOptionsFromProps,
               onFetchCustomButtonProps: [
                 ...(showChatButton ? [customChatButton] : []),
-                /* @conditional-compile-remove(control-bar-button-injection) */
                 ...injectedCustomButtonsFromProps
               ],
               legacyControlBarExperience: false
@@ -509,11 +522,9 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       onPermissionsTroubleshootingClick: props.onPermissionsTroubleshootingClick,
       /* @conditional-compile-remove(unsupported-browser) */
       onEnvironmentInfoTroubleshootingClick: props.onEnvironmentInfoTroubleshootingClick,
-      /* @conditional-compile-remove(pinned-participants) */
       remoteVideoTileMenuOptions: props.remoteVideoTileMenuOptions,
-      /* @conditional-compile-remove(gallery-layouts) */
+
       galleryOptions: props.galleryOptions,
-      /* @conditional-compile-remove(click-to-call) */
       localVideoTile: props.localVideoTile,
       /* @conditional-compile-remove(end-of-call-survey) */
       surveyOptions: surveyOptions,
@@ -521,7 +532,9 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       branding: {
         logo: props.logo,
         backgroundImage: props.backgroundImage
-      }
+      },
+      /* @conditional-compile-remove(spotlight) */
+      spotlight: props.spotlight
     }),
     [
       props.callControls,
@@ -537,18 +550,18 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       props.onNetworkingTroubleShootingClick,
       /* @conditional-compile-remove(call-readiness) */
       props.onPermissionsTroubleshootingClick,
-      /* @conditional-compile-remove(gallery-layouts) */
+
       props.galleryOptions,
-      /* @conditional-compile-remove(click-to-call) */
       props.localVideoTile,
-      /* @conditional-compile-remove(pinned-participants) */
       props.remoteVideoTileMenuOptions,
       /* @conditional-compile-remove(end-of-call-survey) */
       surveyOptions,
       /* @conditional-compile-remove(custom-branding) */
       props.logo,
       /* @conditional-compile-remove(custom-branding) */
-      props.backgroundImage
+      props.backgroundImage,
+      /* @conditional-compile-remove(spotlight) */
+      props.spotlight
     ]
   );
 
@@ -561,15 +574,15 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
           topic: false,
           /* @conditional-compile-remove(chat-composite-participant-pane) */
           participantPane: false,
-          /* @conditional-compile-remove(file-sharing) */
-          fileSharing: props.fileSharing
+          /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+          attachmentOptions: props.attachmentOptions
         }}
         onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
       />
     ),
     [
       chatAdapter,
-      /* @conditional-compile-remove(file-sharing) */ props.fileSharing,
+      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ props.attachmentOptions,
       props.onFetchAvatarPersonaData,
       theme
     ]
@@ -670,13 +683,10 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         callControls={options?.callControls}
         joinInvitationURL={joinInvitationURL}
         fluentTheme={fluentTheme}
-        /* @conditional-compile-remove(pinned-participants) */
         remoteVideoTileMenuOptions={options?.remoteVideoTileMenuOptions}
-        /* @conditional-compile-remove(file-sharing) */
-        fileSharing={options?.fileSharing}
-        /* @conditional-compile-remove(click-to-call) */
+        /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+        attachmentOptions={options?.attachmentOptions}
         localVideoTile={options?.localVideoTile}
-        /* @conditional-compile-remove(gallery-layouts) */
         galleryOptions={options?.galleryOptions}
         /* @conditional-compile-remove(custom-branding) */
         logo={options?.branding?.logo}
@@ -684,6 +694,8 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         backgroundImage={options?.branding?.backgroundImage}
         /* @conditional-compile-remove(end-of-call-survey) */
         surveyOptions={options?.surveyOptions}
+        /* @conditional-compile-remove(spotlight) */
+        spotlight={options?.spotlight}
       />
     </BaseProvider>
   );

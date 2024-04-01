@@ -7,6 +7,11 @@ import { useMemo, useRef, useState } from 'react';
 import { useLocale } from '../../localization';
 import { useSelector } from '../hooks/useSelector';
 import { getRemoteParticipantsConnectedSelector } from '../selectors/mediaGallerySelector';
+import {
+  CommunicationIdentifier,
+  isMicrosoftTeamsAppIdentifier,
+  isPhoneNumberIdentifier
+} from '@azure/communication-common';
 
 type ParticipantChangedAnnouncmentStrings = {
   participantJoinedNoticeString: string;
@@ -159,4 +164,31 @@ export const createAnnouncementString = (
     displayName3: sortedParticipants[2].displayName ?? strings.unnamedParticipantString,
     numOfParticipants: numberOfExtraParticipants.toString()
   });
+};
+
+/**
+ * determines if the media gallery should be replaced by the dtmf dialer
+ * @param callees Target callees to determine if the dtmf dialer should be shown
+ * @param remoteParticipants Remote participants to determine if the dtmf dialer should be shown if there are participants in the call
+ * when joining
+ * @returns whether the dialer should be the gallery content or not
+ */
+export const showDtmfDialer = (
+  callees?: CommunicationIdentifier[],
+  remoteParticipants?: RemoteParticipantState[]
+): boolean => {
+  let showDtmfDialer = false;
+  callees?.forEach((callee) => {
+    if (isMicrosoftTeamsAppIdentifier(callee) || isPhoneNumberIdentifier(callee)) {
+      showDtmfDialer = true;
+    }
+  });
+  if (remoteParticipants) {
+    remoteParticipants.forEach((participant) => {
+      if (!('phoneNumber' in participant.identifier || 'teamsAppId' in participant.identifier)) {
+        showDtmfDialer = false;
+      }
+    });
+  }
+  return showDtmfDialer;
 };

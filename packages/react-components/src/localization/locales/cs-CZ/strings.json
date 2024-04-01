@@ -7,7 +7,8 @@
     "mutedIconLabel": "Ztlumeno",
     "displayNamePlaceholder": "Nepojmenovaný účastník",
     "participantStateRinging": "Volání…",
-    "participantStateHold": "Pozastavený hovor"
+    "participantStateHold": "Pozastavený hovor",
+    "attendeeRole": "Účastník"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} další(ch)"
@@ -23,15 +24,32 @@
     "placeholderText": "Zadejte zprávu",
     "textTooLong": "Délka vaší zprávy překračuje maximální limit.",
     "sendButtonAriaLabel": "Poslat zprávu",
-    "fileUploadsPendingError": "Probíhá nahrávání... Počkejte prosím.",
-    "removeFile": "Odebrat soubor",
+    "attachmentUploadsPendingError": "Probíhá nahrávání... Počkejte prosím.",
+    "removeAttachment": "Odebrat soubor",
     "uploading": "Nahrávání",
     "uploadCompleted": "Nahrávání se dokončilo"
+  },
+  "richTextSendBox": {
+    "placeholderText": "Zadejte zprávu",
+    "textTooLong": "Délka vaší zprávy překračuje maximální limit.",
+    "sendButtonAriaLabel": "Poslat zprávu",
+    "attachmentUploadsPendingError": "Nahrávání… Počkejte prosím.",
+    "removeAttachment": "Odebrat soubor",
+    "uploading": "Nahrávání",
+    "uploadCompleted": "Nahrávání se dokončilo",
+    "boldTooltip": "Tučné",
+    "italicTooltip": "Kurzíva",
+    "underlineTooltip": "Podtržení",
+    "bulletListTooltip": "Seznam s odrážkami",
+    "numberListTooltip": "Číslovaný seznam",
+    "increaseIndentTooltip": "Zvětšit odsazení",
+    "decreaseIndentTooltip": "Zmenšit odsazení",
+    "richTextFormatButtonTooltip": "Formát"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Návrhy"
   },
-  "imageGallery": {
+  "imageOverlay": {
     "downloadButtonLabel": "Stáhnout",
     "dismissButtonAriaLabel": "Zavřít"
   },
@@ -123,6 +141,17 @@
     "tooltipOnContent": "Dát ruku dolů",
     "tooltipOffContent": "Zvednout ruku"
   },
+  "reactionButton": {
+    "label": "Reagovat",
+    "ariaLabel": "Tlačítko Reagovat, odeslat reakci",
+    "tooltipDisabledContent": "Akce reakce je zakázaná",
+    "tooltipContent": "Odeslání reakce",
+    "likeReactionTooltipContent": "To se mi líbí",
+    "heartReactionTooltipContent": "Láska",
+    "laughReactionTooltipContent": "Smích",
+    "applauseReactionTooltipContent": "Aplaus",
+    "surprisedReactionTooltipContent": "Překvapení"
+  },
   "messageThread": {
     "yesterday": "Včera",
     "sunday": "Neděle",
@@ -150,10 +179,10 @@
     "editBoxSubmitButton": "Hotovo",
     "messageReadCount": "Přečetl(a) {messageReadByCount} z {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Další možnosti",
-    "downloadFile": "Stáhnout soubor",
+    "downloadAttachment": "Stáhnout soubor",
     "blockedWarningText": "Tato zpráva se odstranila kvůli zásadám organizace.",
     "blockedWarningLinkText": "Podrobnosti",
-    "fileCardGroupMessage": "Zpráva obsahuje počet příloh: {fileCount}",
+    "attachmentCardGroupMessage": "Zpráva obsahuje {attachmentCount} přílohu",
     "messageDeletedAnnouncementAriaLabel": "Zpráva se odstranila."
   },
   "errorBar": {
@@ -190,7 +219,8 @@
     "failedToJoinCallGeneric": "K hovoru se nepovedlo připojit.",
     "failedToJoinCallInvalidMeetingLink": "Ke schůzce se nelze připojit. Neplatný odkaz.",
     "cameraFrozenForRemoteParticipants": "Uživatelé v hovoru mají problémy s zobrazením vašeho videa. Zkontrolujte prosím svá zařízení a síť.",
-    "unableToStartVideoEffect": "Nelze použít efekt videa."
+    "unableToStartVideoEffect": "Nelze použít efekt videa.",
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "Nelze zahájit vytváření hlavního výběru účastníků, protože je již v hlavním výběru maximální počet účastníků."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Sdílíte obrazovku",
@@ -208,7 +238,13 @@
     "pinParticipantMenuItemAriaLabel": "Připnout {participantName}",
     "unpinParticipantMenuItemAriaLabel": "Odepnout {participantName}",
     "pinnedParticipantAnnouncementAriaLabel": "Připnutý účastník {participantName}",
-    "unpinnedParticipantAnnouncementAriaLabel": "{participantName} odepnut"
+    "unpinnedParticipantAnnouncementAriaLabel": "{participantName} odepnut",
+    "startSpotlightVideoTileMenuLabel": "Přidat do hlavního výběru všem",
+    "addSpotlightVideoTileMenuLabel": "Přidat do hlavního výběru",
+    "spotlightLimitReachedMenuTitle": "Dosáhlo se limitu hlavního výběru",
+    "stopSpotlightVideoTileMenuLabel": "Zastavit přidávání do hlavního výběru",
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Ukončit hlavní výběr",
+    "attendeeRole": "Účastník"
   },
   "dialpad": {
     "placeholderText": "Zadejte telefonní číslo",
@@ -342,6 +378,5 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "předchozí stránka",
     "rightNavButtonAriaLabel": "další stránka"
-  },
-  "AttendeeRole": "Účastník"
+  }
 }

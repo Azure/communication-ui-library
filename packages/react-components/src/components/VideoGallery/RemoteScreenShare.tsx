@@ -7,8 +7,12 @@ import { useLocale } from '../../localization';
 import { StreamMedia } from '../StreamMedia';
 import { VideoTile } from '../VideoTile';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '../../types';
+/* @conditional-compile-remove(reaction) */
+import { ReactionResources, VideoGalleryLocalParticipant, VideoGalleryRemoteParticipant } from '../../types';
 import { loadingStyle } from './styles/RemoteScreenShare.styles';
 import { _formatString } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(reaction) */
+import { MeetingReactionOverlay } from '../MeetingReactionOverlay';
 
 /**
  * A memoized version of VideoTile for rendering the remote screen share stream. React.memo is used for a performance
@@ -30,6 +34,14 @@ export const RemoteScreenShare = React.memo(
     isSpeaking?: boolean;
     renderElement?: HTMLElement;
     participantVideoScalingMode?: VideoStreamOptions;
+    /* @conditional-compile-remove(reaction) */
+    reactionResources?: ReactionResources;
+    /* @conditional-compile-remove(reaction) */
+    localParticipant?: VideoGalleryLocalParticipant;
+    /* @conditional-compile-remove(reaction) */
+    remoteParticipants?: VideoGalleryRemoteParticipant[];
+    /* @conditional-compile-remove(ppt-live) */
+    isPPTLive?: boolean;
   }) => {
     const {
       userId,
@@ -39,7 +51,15 @@ export const RemoteScreenShare = React.memo(
       onCreateRemoteStreamView,
       onDisposeRemoteStreamView,
       isReceiving,
-      participantVideoScalingMode
+      participantVideoScalingMode,
+      /* @conditional-compile-remove(reaction) */
+      reactionResources,
+      /* @conditional-compile-remove(reaction) */
+      localParticipant,
+      /* @conditional-compile-remove(reaction) */
+      remoteParticipants,
+      /* @conditional-compile-remove(ppt-live) */
+      isPPTLive
     } = props;
     const locale = useLocale();
 
@@ -67,6 +87,31 @@ export const RemoteScreenShare = React.memo(
           participant: displayName
         })
       : '';
+    /* @conditional-compile-remove(ppt-live) */
+    if (isPPTLive) {
+      return (
+        <VideoTile
+          renderElement={
+            renderElement ? (
+              <StreamMedia
+                videoStreamElement={renderElement}
+                loadingState={isReceiving === false ? 'loading' : 'none'}
+              />
+            ) : undefined
+          }
+          onRenderPlaceholder={() => <LoadingSpinner loadingMessage={loadingMessage} />}
+          /* @conditional-compile-remove(reaction) */
+          overlay={
+            <MeetingReactionOverlay
+              reactionResources={reactionResources!}
+              localParticipant={localParticipant}
+              remoteParticipants={remoteParticipants}
+              overlayMode="screen-share"
+            />
+          }
+        />
+      );
+    }
 
     return (
       <VideoTile
@@ -78,6 +123,15 @@ export const RemoteScreenShare = React.memo(
           ) : undefined
         }
         onRenderPlaceholder={() => <LoadingSpinner loadingMessage={loadingMessage} />}
+        /* @conditional-compile-remove(reaction) */
+        overlay={
+          <MeetingReactionOverlay
+            reactionResources={reactionResources!}
+            localParticipant={localParticipant}
+            remoteParticipants={remoteParticipants}
+            overlayMode="screen-share"
+          />
+        }
       />
     );
   }

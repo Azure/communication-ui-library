@@ -4,6 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import { IButtonStyles, IStyle, ITextFieldStyles, Theme } from '@fluentui/react';
+import { _pxToRem } from '@internal/acs-ui-common';
 
 /**
  * @private
@@ -13,7 +14,8 @@ export const containerStyles = (theme: Theme): IStyle => {
     maxWidth: '16rem',
     textAlign: 'center',
     background: `${theme.palette.white}`,
-    borderRadius: '0.75rem'
+    borderRadius: '0.75rem',
+    margin: 'auto'
   };
 };
 
@@ -23,10 +25,13 @@ export const containerStyles = (theme: Theme): IStyle => {
 export const buttonStyles = (theme: Theme): IButtonStyles => ({
   root: {
     background: 'none',
+    fontWeight: 600,
+    fontSize: `${_pxToRem(20)}`,
     border: 'none',
     borderRadius: 0,
-    width: '100%',
-    padding: '1.875rem',
+    width: '3rem',
+    height: '3rem',
+    padding: `${_pxToRem(16)}, ${_pxToRem(5)}, ${_pxToRem(16)}, ${_pxToRem(5)}`,
     minWidth: 0,
     minHeight: 0
   }
@@ -39,35 +44,52 @@ export const digitStyles = (theme: Theme): IStyle => {
   return {
     fontSize: '1.25rem',
     fontWeight: theme.fonts.medium.fontWeight,
-    color: `${theme.palette.neutralPrimary}`
+    color: `${theme.palette.themePrimary}`
   };
 };
 
 /**
  * @private
  */
-export const textFieldStyles = (theme: Theme): Partial<ITextFieldStyles> => ({
+export const textFieldStyles = (theme: Theme, buttonPresent: boolean): Partial<ITextFieldStyles> => ({
   field: {
     padding: 0,
-    textAlign: 'left',
-    fontSize: '0.875rem',
-    paddingLeft: '0.5rem'
+    textAlign: 'center',
+    fontSize: `${_pxToRem(18)}`,
+    fontWeight: 400,
+    width: `${buttonPresent ? '10rem' : '12rem'}`,
+    height: '3rem',
+    borderRadius: '0.5rem',
+    position: 'relative',
+    overflowX: 'hidden',
+    textOverflow: 'clip'
   },
   root: {
     backgroundColor: `${theme.palette.neutralLighter}`,
-    borderRadius: '0.125rem',
-    marginBottom: '0.625rem'
+    marginBottom: '0.625rem',
+    height: '3rem',
+    borderRadius: '0.5rem'
   },
   fieldGroup: {
     border: 'none',
-    backgroundColor: `${theme.palette.neutralLighter}`
+    borderRadius: '0.5rem',
+    width: '12rem',
+    height: '3rem',
+    backgroundColor: `${theme.palette.neutralLighter}`,
+    ':after': {
+      borderRadius: '0.5rem'
+    }
   },
-
   errorMessage: {
     color: theme.semanticColors.errorText
   },
   suffix: {
-    padding: 0
+    padding: 0,
+    position: 'absolute',
+    right: '0.25rem',
+    top: '0.55rem',
+    transform: 'scale(1.15)',
+    background: 'unset'
   }
 });
 
@@ -90,10 +112,13 @@ export const letterStyles = (theme: Theme): IStyle => {
 export const iconButtonStyles = (theme: Theme): IButtonStyles => {
   return {
     root: {
-      color: `${theme.palette.black}`
+      color: `${theme.palette.black}`,
+      padding: 0,
+      background: 'transparent'
     },
     icon: {
       height: 'auto',
+      background: 'transparent',
       // Needed to keep the icon vertically centered.
       '> span': {
         display: 'flex'
