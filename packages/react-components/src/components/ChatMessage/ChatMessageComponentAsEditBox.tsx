@@ -117,7 +117,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
         <div style={{ margin: '0.25rem' }}>
           <_AttachmentUploadCards
             activeAttachmentUploads={attachmentMetadata}
-            onCancelAttachmentUpload={(fileId) => {
+            onCancelAttachmentUpload={(attachmentId) => {
               setAttachmentMetadata(attachmentMetadata?.filter((attachment) => attachment.id !== attachmentId));
             }}
           />

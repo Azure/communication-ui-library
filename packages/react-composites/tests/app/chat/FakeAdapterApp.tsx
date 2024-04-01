@@ -137,7 +137,7 @@ const handleAttachmentUploads = (adapter: ChatAdapter, attachmentUploads: _MockA
         name: attachment.name,
         extension: attachment.extension,
         url: attachment.url,
-        /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+        progress: 1,
         id: attachment.id
       });
     } else if (attachment.error) {
@@ -164,7 +164,7 @@ const sendRemoteFileSharingMessage = (
       senderDisplayName: remoteParticipant.displayName,
       type: 'text',
       metadata: {
-        attachmentHandlingMetadata: JSON.stringify([
+        fileSharingMetadata: JSON.stringify([
           { name: 'SampleFile1.pdf', extension: 'pdf', attachmentType: 'file', id: uuidv4() }
         ])
       }

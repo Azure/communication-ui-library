@@ -62,12 +62,12 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
 
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 const extractAttachmentMetadata = (metadata: Record<string, string>): AttachmentMetadata[] => {
-  const attachmentMetadats = metadata.attachmentHandlingMetadata;
-  if (!attachmentMetadats) {
+  const attachmentMetadata = metadata.fileSharingMetadata;
+  if (!attachmentMetadata) {
     return [];
   }
   try {
-    return JSON.parse(attachmentMetadats);
+    return JSON.parse(attachmentMetadata);
   } catch (e) {
     console.error(e);
     return [];
@@ -366,7 +366,7 @@ const isMessageValidToRender = (message: ChatMessageWithStatus): boolean => {
   if (message.deletedOn) {
     return false;
   }
-  if (message.metadata?.attachmentHandlingMetadata || message.content?.attachments?.length) {
+  if (message.metadata?.fileSharingMetadata || message.content?.attachments?.length) {
     return true;
   }
   /* @conditional-compile-remove(data-loss-prevention) */

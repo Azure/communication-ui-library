@@ -36,6 +36,7 @@ test.describe('Filesharing SendBox', async () => {
           {
             id: 'SomeMockId',
             name: 'SampleFile.pdf',
+            progress: 1,
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
             attachmentType: 'file'
@@ -43,6 +44,7 @@ test.describe('Filesharing SendBox', async () => {
           {
             id: 'SomeMockId',
             name: 'SampleXlsLoooongName.xlsx',
+            progress: 1,
             extension: 'xslx',
             url: 'https://sample.com/SampleXls.xlsx',
             attachmentType: 'file'
@@ -177,6 +179,7 @@ test.describe('Filesharing SendBox Errorbar', async () => {
             id: 'SomeMockId',
             name: 'SampleFile.pdf',
             extension: 'pdf',
+            progress: 1,
             url: 'https://sample.com/SampleFile.pdf',
             error: 'File too big. Select a file under 99 MB.',
             attachmentType: 'file'
@@ -228,6 +231,7 @@ test.describe('Filesharing Global Errorbar', async () => {
           {
             id: 'SomeMockId',
             name: 'Sample.pdf',
+            progress: 1,
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
             attachmentType: 'file'
@@ -265,7 +269,7 @@ test.describe('Filesharing Message Thread', async () => {
             name: 'SampleFile1.pdf',
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
-            uploadComplete: true,
+            progress: 1,
             attachmentType: 'file'
           }
         ]
@@ -320,7 +324,7 @@ test.describe('Filesharing Edit Message', async () => {
             name: 'SampleFile1.pdf',
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
-            uploadComplete: true,
+            progress: 1,
             attachmentType: 'file'
           }
         ]

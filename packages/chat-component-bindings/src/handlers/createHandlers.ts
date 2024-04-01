@@ -70,7 +70,7 @@ export const createDefaultChatHandlers = memoizeOne(
         const updatedMetadata = options?.metadata ? { ...options.metadata } : {};
         if (options?.attachmentMetadata && options?.attachmentMetadata.length > 0) {
           // Only create object if there are objects to add.
-          updatedMetadata.attachmentHandlingMetadata = JSON.stringify(options?.attachmentMetadata);
+          updatedMetadata.fileSharingMetadata = JSON.stringify(options?.attachmentMetadata);
         }
         await chatThreadClient.updateMessage(messageId, { content, metadata: updatedMetadata });
       },

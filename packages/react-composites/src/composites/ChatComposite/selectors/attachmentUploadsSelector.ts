@@ -8,9 +8,9 @@ import { getAttachmentUploads } from './baseSelectors';
  * @private
  */
 export const attachmentUploadsSelector = createSelector([getAttachmentUploads], (attachmentUploads) => {
-  const Attachments = Object.values(attachmentUploads || {}).map((attachmentUpload) => ({
+  const attachments = Object.values(attachmentUploads || {}).map((attachmentUpload) => ({
     ...attachmentUpload,
     uploadComplete: !!attachmentUpload
   }));
-  return { attachments: Attachments };
+  return { attachments };
 });

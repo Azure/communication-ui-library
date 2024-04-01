@@ -202,16 +202,19 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   const onRenderAttachmentDownloads = useCallback(
-    (userId: string, message: ChatMessage) => (
-      <_AttachmentDownloadCards
-        attachments={message.attachments || []}
-        message={message}
-        actionsForAttachment={attachmentOptions?.downloadOptions?.actionsForAttachment}
-        onActionHandlerFailed={(errorMessage: string) => {
-          setDownloadErrorMessage(errorMessage);
-        }}
-      />
-    ),
+    (userId: string, message: ChatMessage) =>
+      message?.attachments?.length ?? 0 > 0 ? (
+        <_AttachmentDownloadCards
+          attachments={message.attachments}
+          message={message}
+          actionsForAttachment={attachmentOptions?.downloadOptions?.actionsForAttachment}
+          onActionHandlerFailed={(errorMessage: string) => {
+            setDownloadErrorMessage(errorMessage);
+          }}
+        />
+      ) : (
+        <></>
+      ),
     [attachmentOptions?.downloadOptions?.actionsForAttachment]
   );
 
