@@ -87,6 +87,8 @@ import {
   useRemoteSpotlightCallbacksWithPrompt,
   useStopAllSpotlightCallbackWithPrompt
 } from '../utils/spotlightUtils';
+/* @conditional-compile-remove(acs-close-captions) */
+import { getCaptionsKind } from '../selectors/baseSelectors';
 
 /**
  * @private
@@ -339,8 +341,11 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     filteredLatestErrors = filteredLatestErrors.filter((e) => e.type !== 'unableToStartVideoEffect');
   }
 
+  /* @conditional-compile-remove(acs-close-captions) */
+  const isTeamsCaptions = useSelector(getCaptionsKind) === 'TeamsCaptions';
   /* @conditional-compile-remove(close-captions) */
-  const isTeamsCall = useSelector(getIsTeamsCall);
+  const isTeamsCall =
+    useSelector(getIsTeamsCall) || /* @conditional-compile-remove(acs-close-captions) */ isTeamsCaptions;
   /* @conditional-compile-remove(close-captions) */
   const hasJoinedCall = useSelector(getCallStatus) === 'Connected';
   /* @conditional-compile-remove(close-captions) */
