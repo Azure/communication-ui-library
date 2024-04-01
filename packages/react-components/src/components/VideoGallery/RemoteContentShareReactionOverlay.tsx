@@ -10,7 +10,7 @@ import { Stack, mergeStyles } from '@fluentui/react';
 /* @conditional-compile-remove(reaction) */
 import { videoContainerStyles } from '../styles/VideoTile.styles';
 /* @conditional-compile-remove(reaction) */
-import { getEmojiFrameCount, getEmojiResource } from './utils/videoGalleryLayoutUtils';
+import { getEmojiResource } from './utils/videoGalleryLayoutUtils';
 /* @conditional-compile-remove(reaction) */
 import {
   IReactionStyleBucket,
@@ -24,6 +24,7 @@ import {
 } from '../styles/ReactionOverlay.style';
 /* @conditional-compile-remove(reaction) */
 import {
+  REACTION_NUMBER_OF_ANIMATION_FRAMES,
   REACTION_SCREEN_SHARE_ANIMATION_TIME_MS,
   REACTION_START_DISPLAY_SIZE,
   getCombinedKey,
@@ -228,7 +229,7 @@ export const RemoteContentShareReactionOverlay = React.memo(
                     <div style={reactionMovementStyle(reaction.reactionMovementIndex)}>
                       <div
                         style={spriteAnimationStyles(
-                          getEmojiFrameCount(reaction?.reaction.reactionType, reactionResources) ?? 51,
+                          REACTION_NUMBER_OF_ANIMATION_FRAMES,
                           displaySizePx(visibleReactions.length),
                           getEmojiResource(reaction?.reaction.reactionType, reactionResources) ?? ''
                         )}
