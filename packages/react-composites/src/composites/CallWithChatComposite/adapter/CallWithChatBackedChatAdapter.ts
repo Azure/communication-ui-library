@@ -94,38 +94,38 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
   };
 
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  public registerAttachmentMetatas = (files: File[]): AttachmentUploadManager[] => {
-    return this.callWithChatAdapter.registerAttachmentMetatas(files);
+  public registerActiveUploads = (files: File[]): AttachmentUploadManager[] => {
+    return this.callWithChatAdapter.registerActiveUploads(files);
   };
 
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  public registerCompletedAttachmentUploads = (metadata: AttachmentMetata[]): AttachmentUploadManager[] => {
-    return this.callWithChatAdapter.registerCompletedAttachmentUploads(metadata);
+  public registerCompletedUploads = (metadata: AttachmentMetata[]): AttachmentUploadManager[] => {
+    return this.callWithChatAdapter.registerCompletedUploads(metadata);
   };
 
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  public clearAttachmentUploads = (): void => {
-    this.callWithChatAdapter.clearAttachmentUploads();
+  public clearUploads = (): void => {
+    this.callWithChatAdapter.clearUploads();
   };
 
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  public cancelAttachmentUpload = (id: string): void => {
-    this.callWithChatAdapter.cancelAttachmentUpload(id);
+  public cancelUpload = (id: string): void => {
+    this.callWithChatAdapter.cancelUpload(id);
   };
 
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  public updateAttachmentUploadProgress = (id: string, progress: number): void => {
-    this.callWithChatAdapter.updateAttachmentUploadProgress(id, progress);
+  public updateUploadProgress = (id: string, progress: number): void => {
+    this.callWithChatAdapter.updateUploadProgress(id, progress);
   };
 
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  public updateAttachmentUploadStatusMessage = (id: string, errorMessage: string): void => {
-    this.callWithChatAdapter.updateAttachmentUploadStatusMessage(id, errorMessage);
+  public updateUploadStatusMessage = (id: string, errorMessage: string): void => {
+    this.callWithChatAdapter.updateUploadStatusMessage(id, errorMessage);
   };
 
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  public updateAttachmentUploadMetadata = (id: string, metadata: AttachmentMetata): void => {
-    this.callWithChatAdapter.updateAttachmentUploadMetadata(id, metadata);
+  public updateUploadMetadata = (id: string, metadata: AttachmentMetata): void => {
+    this.callWithChatAdapter.updateUploadMetadata(id, metadata);
   };
 
   public async downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void> {

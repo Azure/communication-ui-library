@@ -23,22 +23,22 @@ describe('registerAttachmentUploads()', () => {
   test('should create attachment uploads in state', () => {
     const chatContext = createChatContext();
     const adapter = new AzureCommunicationAttachmentUploadAdapter(chatContext);
-    adapter.registerAttachmentMetatas(generateFiles(1));
+    adapter.registerActiveUploads(generateFiles(1));
     expect(Object.values(chatContext.getState().attachmentUploads || {}).length).toBe(1);
   });
 
   test('should append attachment uploads to state', () => {
     const chatContext = createChatContext();
     const adapter = new AzureCommunicationAttachmentUploadAdapter(chatContext);
-    adapter.registerAttachmentMetatas(generateFiles(1));
-    adapter.registerAttachmentMetatas(generateFiles(1));
+    adapter.registerActiveUploads(generateFiles(1));
+    adapter.registerActiveUploads(generateFiles(1));
     expect(Object.values(chatContext.getState().attachmentUploads || {}).length).toBe(2);
   });
 
   test('should append attachment uploads to state without changing existing attachment uploads', () => {
     const chatContext = createChatContext();
     const adapter = new AzureCommunicationAttachmentUploadAdapter(chatContext);
-    const attachmentUploads_1 = adapter.registerAttachmentMetatas(generateFiles(1));
+    const attachmentUploads_1 = adapter.registerActiveUploads(generateFiles(1));
     chatContext.setState(
       produce(chatContext.getState(), (draft: ChatAdapterState) => {
         if (draft.attachmentUploads?.[attachmentUploads_1[0].id]) {
@@ -46,7 +46,7 @@ describe('registerAttachmentUploads()', () => {
         }
       })
     );
-    adapter.registerAttachmentMetatas(generateFiles(1));
+    adapter.registerActiveUploads(generateFiles(1));
     expect(Object.values(chatContext.getState().attachmentUploads || {}).length).toBe(2);
     expect(chatContext.getState().attachmentUploads?.[attachmentUploads_1[0].id].progress).toBe(0.75);
   });
@@ -54,7 +54,7 @@ describe('registerAttachmentUploads()', () => {
   test('should remove erroneous attachment uploads from state', () => {
     const chatContext = createChatContext();
     const adapter = new AzureCommunicationAttachmentUploadAdapter(chatContext);
-    const attachmentUploads = adapter.registerAttachmentMetatas(generateFiles(2));
+    const attachmentUploads = adapter.registerActiveUploads(generateFiles(2));
     chatContext.setState(
       produce(chatContext.getState(), (draft: ChatAdapterState) => {
         if (draft.attachmentUploads?.[attachmentUploads[0].id]) {
@@ -65,31 +65,31 @@ describe('registerAttachmentUploads()', () => {
         }
       })
     );
-    adapter.registerAttachmentMetatas(generateFiles(2));
+    adapter.registerActiveUploads(generateFiles(2));
     expect(Object.values(chatContext.getState().attachmentUploads || {}).length).toBe(3);
   });
 });
 
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-describe('clearAttachmentUploads()', () => {
+describe('clearUploads()', () => {
   test('should remove all attachment uploads from state', () => {
     const chatContext = createChatContext();
     const adapter = new AzureCommunicationAttachmentUploadAdapter(chatContext);
-    adapter.registerAttachmentMetatas(generateFiles(5));
-    adapter.clearAttachmentUploads();
+    adapter.registerActiveUploads(generateFiles(5));
+    adapter.clearUploads();
     expect(Object.values(chatContext.getState().attachmentUploads || {}).length).toBe(0);
   });
 });
 
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-describe('cancelAttachmentUpload()', () => {
+describe('cancelUpload()', () => {
   test('should remove attachment upload from state', () => {
     const chatContext = createChatContext();
     const adapter = new AzureCommunicationAttachmentUploadAdapter(chatContext);
-    const attachmentUploads = adapter.registerAttachmentMetatas(generateFiles(5));
-    adapter.cancelAttachmentUpload(attachmentUploads[0].id);
+    const attachmentUploads = adapter.registerActiveUploads(generateFiles(5));
+    adapter.cancelUpload(attachmentUploads[0].id);
     expect(Object.values(chatContext.getState().attachmentUploads || {}).length).toBe(4);
-    adapter.cancelAttachmentUpload(attachmentUploads[1].id);
+    adapter.cancelUpload(attachmentUploads[1].id);
     expect(Object.values(chatContext.getState().attachmentUploads || {}).length).toBe(3);
   });
 });

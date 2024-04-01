@@ -43,25 +43,25 @@ export const useAttachmentUploadAdapter = (): AttachmentUploadAdapter => {
   return useAdapter();
   // A stub that short-circuits all logic because none of the fields are available.
   return {
-    registerAttachmentMetatas() {
+    registerActiveUploads() {
       return [] as AttachmentUploadManager[];
     },
-    registerCompletedAttachmentUploads() {
+    registerCompletedUploads() {
       return [] as AttachmentUploadManager[];
     },
-    cancelAttachmentUpload() {
+    cancelUpload() {
       // noop
     },
-    clearAttachmentUploads() {
+    clearUploads() {
       // noop
     },
-    updateAttachmentUploadStatusMessage() {
+    updateUploadStatusMessage() {
       // noop
     },
-    updateAttachmentUploadProgress() {
+    updateUploadProgress() {
       // noop
     },
-    updateAttachmentUploadMetadata() {
+    updateUploadMetadata() {
       // noop
     }
   };

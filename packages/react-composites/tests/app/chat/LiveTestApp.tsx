@@ -60,21 +60,21 @@ export const LiveTestApp = (): JSX.Element => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       uploadedFiles.forEach((file: any) => {
         if (file.uploadComplete) {
-          const attachmentUploads = adapter.registerAttachmentMetatas([new File([], file.name)]);
-          attachmentUploads[0].notifyUploadCompleted({
+          const attachmentUploads = adapter.registerActiveUploads([new File([], file.name)]);
+          attachmentUploads[0].notifyCompleted({
             name: file.name,
             extension: file.extension,
             url: file.url,
             id: ''
           });
         } else if (file.error) {
-          const attachmentUploads = adapter.registerAttachmentMetatas([new File([], file.name)]);
-          attachmentUploads[0].notifyUploadFailed(file.error);
+          const attachmentUploads = adapter.registerActiveUploads([new File([], file.name)]);
+          attachmentUploads[0].notifyFailed(file.error);
         } else if (file.progress) {
-          const attachmentUploads = adapter.registerAttachmentMetatas([new File([], file.name)]);
-          attachmentUploads[0].notifyUploadProgressChanged(file.progress);
+          const attachmentUploads = adapter.registerActiveUploads([new File([], file.name)]);
+          attachmentUploads[0].notifyProgressChanged(file.progress);
         } else {
-          adapter.registerCompletedAttachmentUploads([file]);
+          adapter.registerCompletedUploads([file]);
         }
       });
     }

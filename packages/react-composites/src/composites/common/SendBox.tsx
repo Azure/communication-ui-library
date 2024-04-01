@@ -58,7 +58,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
         /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
         activeAttachmentUploads={activeAttachmentUploads}
         /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-        onCancelAttachmentUpload={adapter.cancelAttachmentUpload}
+        onCancelAttachmentUpload={adapter.cancelUpload}
       />
     ),
     [

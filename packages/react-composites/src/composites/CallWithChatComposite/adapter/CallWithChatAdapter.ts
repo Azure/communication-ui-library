@@ -378,25 +378,25 @@ export interface CallWithChatAdapterManagement {
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /** @beta */
-  registerAttachmentMetatas: (files: File[]) => AttachmentUploadManager[];
+  registerActiveUploads: (files: File[]) => AttachmentUploadManager[];
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /** @beta */
-  registerCompletedAttachmentUploads: (metadata: AttachmentMetata[]) => AttachmentUploadManager[];
+  registerCompletedUploads: (metadata: AttachmentMetata[]) => AttachmentUploadManager[];
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /** @beta */
-  clearAttachmentUploads: () => void;
+  clearUploads: () => void;
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /** @beta */
-  cancelAttachmentUpload: (id: string) => void;
+  cancelUpload: (id: string) => void;
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /** @beta */
-  updateAttachmentUploadProgress: (id: string, progress: number) => void;
+  updateUploadProgress: (id: string, progress: number) => void;
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /** @beta */
-  updateAttachmentUploadStatusMessage: (id: string, errorMessage: string) => void;
+  updateUploadStatusMessage: (id: string, errorMessage: string) => void;
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /** @beta */
-  updateAttachmentUploadMetadata: (id: string, metadata: AttachmentMetata) => void;
+  updateUploadMetadata: (id: string, metadata: AttachmentMetata) => void;
   /** @public */
   downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
   /** @public */

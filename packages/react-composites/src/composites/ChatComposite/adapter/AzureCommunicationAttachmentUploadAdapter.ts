@@ -21,13 +21,13 @@ export type AttachmentUploadsUiState = Record<string, AttachmentMetata>;
  * @beta
  */
 export interface AttachmentUploadAdapter {
-  registerAttachmentMetatas: (files: File[]) => AttachmentUploadManager[];
-  registerCompletedAttachmentUploads: (metadata: AttachmentMetata[]) => AttachmentUploadManager[];
-  clearAttachmentUploads: () => void;
-  cancelAttachmentUpload: (id: string) => void;
-  updateAttachmentUploadProgress: (id: string, progress: number) => void;
-  updateAttachmentUploadStatusMessage: (id: string, errorMessage: string) => void;
-  updateAttachmentUploadMetadata: (id: string, metadata: AttachmentMetata) => void;
+  registerActiveUploads: (files: File[]) => AttachmentUploadManager[];
+  registerCompletedUploads: (metadata: AttachmentMetata[]) => AttachmentUploadManager[];
+  clearUploads: () => void;
+  cancelUpload: (id: string) => void;
+  updateUploadProgress: (id: string, progress: number) => void;
+  updateUploadStatusMessage: (id: string, errorMessage: string) => void;
+  updateUploadMetadata: (id: string, metadata: AttachmentMetata) => void;
 }
 
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
@@ -55,7 +55,7 @@ class AttachmentUploadContext {
     );
   }
 
-  public clearAttachmentUploads(): void {
+  public clearUploads(): void {
     this.chatContext.setState(
       produce(this.chatContext.getState(), (draft: ChatAdapterState) => {
         draft.attachmentUploads = {};
@@ -135,32 +135,32 @@ export class AzureCommunicationAttachmentUploadAdapter implements AttachmentUplo
     return attachmentUploads;
   }
 
-  registerAttachmentMetatas(files: File[]): AttachmentUploadManager[] {
+  registerActiveUploads(files: File[]): AttachmentUploadManager[] {
     return this.registerAttachmentUploads(files);
   }
 
-  registerCompletedAttachmentUploads(metadata: AttachmentMetata[]): AttachmentUploadManager[] {
+  registerCompletedUploads(metadata: AttachmentMetata[]): AttachmentUploadManager[] {
     return this.registerAttachmentUploads(metadata);
   }
 
-  clearAttachmentUploads(): void {
-    this.context.clearAttachmentUploads();
+  clearUploads(): void {
+    this.context.clearUploads();
     this.attachmentUploads.forEach((attachmentUpload) => this.unsubscribeAllEvents(attachmentUpload));
     this.attachmentUploads = [];
   }
 
-  cancelAttachmentUpload(id: string): void {
+  cancelUpload(id: string): void {
     this.deleteErroneousAttachmentUploads();
     const attachmentUpload = this.findAttachmentUpload(id);
     this.unsubscribeAllEvents(attachmentUpload);
     this.deleteAttachmentUploads([id]);
   }
 
-  updateAttachmentUploadProgress(id: string, progress: number): void {
+  updateUploadProgress(id: string, progress: number): void {
     this.context.updateAttachmentUpload(id, { progress });
   }
 
-  updateAttachmentUploadStatusMessage(id: string, errorMessage: string): void {
+  updateUploadStatusMessage(id: string, errorMessage: string): void {
     this.context.updateAttachmentUpload(id, {
       uploadError: {
         message: errorMessage,
@@ -169,7 +169,7 @@ export class AzureCommunicationAttachmentUploadAdapter implements AttachmentUplo
     });
   }
 
-  updateAttachmentUploadMetadata(id: string, metadata: AttachmentMetata): void {
+  updateUploadMetadata(id: string, metadata: AttachmentMetata): void {
     this.context.updateAttachmentUpload(id, {
       progress: 1,
       id: metadata.id,
@@ -180,15 +180,15 @@ export class AzureCommunicationAttachmentUploadAdapter implements AttachmentUplo
   }
 
   private subscribeAllEvents(attachmentUpload: AttachmentUpload): void {
-    attachmentUpload.on('uploadProgressChange', this.updateAttachmentUploadProgress.bind(this));
-    attachmentUpload.on('uploadComplete', this.updateAttachmentUploadMetadata.bind(this));
-    attachmentUpload.on('uploadFail', this.updateAttachmentUploadStatusMessage.bind(this));
+    attachmentUpload.on('uploadProgressChange', this.updateUploadProgress.bind(this));
+    attachmentUpload.on('uploadComplete', this.updateUploadMetadata.bind(this));
+    attachmentUpload.on('uploadFail', this.updateUploadStatusMessage.bind(this));
   }
 
   private unsubscribeAllEvents(attachmentUpload?: AttachmentUpload): void {
-    attachmentUpload?.off('uploadProgressChange', this.updateAttachmentUploadProgress.bind(this));
-    attachmentUpload?.off('uploadComplete', this.updateAttachmentUploadMetadata.bind(this));
-    attachmentUpload?.off('uploadFail', this.updateAttachmentUploadStatusMessage.bind(this));
+    attachmentUpload?.off('uploadProgressChange', this.updateUploadProgress.bind(this));
+    attachmentUpload?.off('uploadComplete', this.updateUploadMetadata.bind(this));
+    attachmentUpload?.off('uploadFail', this.updateUploadStatusMessage.bind(this));
   }
 }
 

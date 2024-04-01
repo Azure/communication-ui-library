@@ -123,21 +123,22 @@ export interface AttachmentUploadManager {
    */
   file?: File;
   /**
-   * Update the progress of the upload.
+   * Update the progress of the upload changed.
+   * A upload is considered complete when the progress reaches 1.
    * @param value - number between 0 and 1
    */
-  notifyUploadProgressChanged: (value: number) => void;
+  notifyProgressChanged: (value: number) => void;
   /**
    * Mark the upload as complete.
    * Requires the `metadata` param containing uploaded file information.
    * @param metadata - {@link AttachmentMetata}
    */
-  notifyUploadCompleted: (metadata: AttachmentMetata) => void;
+  notifyCompleted: (metadata: AttachmentMetata) => void;
   /**
    * Mark the upload as failed.
    * @param message - An error message that can be displayed to the user.
    */
-  notifyUploadFailed: (message: string) => void;
+  notifyFailed: (message: string) => void;
 }
 
 /**

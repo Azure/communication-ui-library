@@ -42,15 +42,15 @@ export class AttachmentUpload implements AttachmentUploadManager, AttachmentUplo
     this.name = name;
   }
 
-  notifyUploadProgressChanged(value: number): void {
+  notifyProgressChanged(value: number): void {
     this._emitter.emit('uploadProgressChange', this.id, value);
   }
 
-  notifyUploadCompleted(metadata: AttachmentMetata): void {
+  notifyCompleted(metadata: AttachmentMetata): void {
     this._emitter.emit('uploadComplete', this.id, metadata);
   }
 
-  notifyUploadFailed(message: string): void {
+  notifyFailed(message: string): void {
     this._emitter.emit('uploadFail', this.id, message);
   }
 

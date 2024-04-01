@@ -193,7 +193,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       }
 
       /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-      const attachmentUploads = adapter.registerAttachmentMetatas(Array.from(files));
+      const attachmentUploads = adapter.registerActiveUploads(Array.from(files));
       /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
       attachmentOptions?.uploadOptions?.handler(attachmentUploads);
     },

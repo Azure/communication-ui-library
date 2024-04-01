@@ -181,19 +181,19 @@ export interface AttachmentOptions {
 // @beta (undocumented)
 export interface AttachmentUploadAdapter {
     // (undocumented)
-    cancelAttachmentUpload: (id: string) => void;
+    cancelUpload: (id: string) => void;
     // (undocumented)
-    clearAttachmentUploads: () => void;
+    clearUploads: () => void;
     // (undocumented)
-    registerAttachmentMetatas: (files: File[]) => AttachmentUploadManager[];
+    registerActiveUploads: (files: File[]) => AttachmentUploadManager[];
     // (undocumented)
-    registerCompletedAttachmentUploads: (metadata: AttachmentMetata[]) => AttachmentUploadManager[];
+    registerCompletedUploads: (metadata: AttachmentMetata[]) => AttachmentUploadManager[];
     // (undocumented)
-    updateAttachmentUploadMetadata: (id: string, metadata: AttachmentMetata) => void;
+    updateUploadMetadata: (id: string, metadata: AttachmentMetata) => void;
     // (undocumented)
-    updateAttachmentUploadProgress: (id: string, progress: number) => void;
+    updateUploadProgress: (id: string, progress: number) => void;
     // (undocumented)
-    updateAttachmentUploadStatusMessage: (id: string, errorMessage: string) => void;
+    updateUploadStatusMessage: (id: string, errorMessage: string) => void;
 }
 
 // @beta
@@ -203,9 +203,9 @@ export type AttachmentUploadHandler = (attachmentUploads: AttachmentUploadManage
 export interface AttachmentUploadManager {
     file?: File;
     id: string;
-    notifyUploadCompleted: (metadata: AttachmentMetata) => void;
-    notifyUploadFailed: (message: string) => void;
-    notifyUploadProgressChanged: (value: number) => void;
+    notifyCompleted: (metadata: AttachmentMetata) => void;
+    notifyFailed: (message: string) => void;
+    notifyProgressChanged: (value: number) => void;
 }
 
 // @beta (undocumented)
@@ -1075,9 +1075,9 @@ export interface CallWithChatAdapterManagement {
     allowUnsupportedBrowserVersion(): void;
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     // @beta (undocumented)
-    cancelAttachmentUpload: (id: string) => void;
+    cancelUpload: (id: string) => void;
     // @beta (undocumented)
-    clearAttachmentUploads: () => void;
+    clearUploads: () => void;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     deleteMessage(messageId: string): Promise<void>;
     disposeLocalVideoStreamView(): Promise<void>;
@@ -1103,9 +1103,9 @@ export interface CallWithChatAdapterManagement {
     querySpeakers(): Promise<AudioDeviceInfo[]>;
     raiseHand(): Promise<void>;
     // @beta (undocumented)
-    registerAttachmentMetatas: (files: File[]) => AttachmentUploadManager[];
+    registerActiveUploads: (files: File[]) => AttachmentUploadManager[];
     // @beta (undocumented)
-    registerCompletedAttachmentUploads: (metadata: AttachmentMetata[]) => AttachmentUploadManager[];
+    registerCompletedUploads: (metadata: AttachmentMetata[]) => AttachmentUploadManager[];
     removeParticipant(userId: string): Promise<void>;
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
@@ -1138,15 +1138,15 @@ export interface CallWithChatAdapterManagement {
     // @beta
     submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
     unmute(): Promise<void>;
-    // @beta (undocumented)
-    updateAttachmentUploadMetadata: (id: string, metadata: AttachmentMetata) => void;
-    // @beta (undocumented)
-    updateAttachmentUploadProgress: (id: string, progress: number) => void;
-    // @beta (undocumented)
-    updateAttachmentUploadStatusMessage: (id: string, errorMessage: string) => void;
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
     updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void>;
     updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
+    // @beta (undocumented)
+    updateUploadMetadata: (id: string, metadata: AttachmentMetata) => void;
+    // @beta (undocumented)
+    updateUploadProgress: (id: string, progress: number) => void;
+    // @beta (undocumented)
+    updateUploadStatusMessage: (id: string, errorMessage: string) => void;
 }
 
 // @public
