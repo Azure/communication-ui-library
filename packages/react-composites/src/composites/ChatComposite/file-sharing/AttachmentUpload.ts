@@ -6,10 +6,9 @@ import { nanoid } from 'nanoid';
 import { _MAX_EVENT_LISTENERS } from '@internal/acs-ui-common';
 import {
   AttachmentMetadata,
-  FileUploadHandler,
-  FileUploadManager,
-  FileUploadState,
-  FileUploadError
+  AttachmentUploadHandler,
+  AttachmentUploadManager,
+  AttachmentUploadStatus
 } from '@internal/react-components';
 
 /**
@@ -17,14 +16,14 @@ import {
  * Provides common functions for updating the upload progress, canceling an upload etc.
  * @private
  */
-export class FileUpload implements FileUploadManager, FileUploadEventEmitter {
+export class AttachmentUpload implements AttachmentUploadManager, AttachmentUploadEventEmitter {
   private _emitter: EventEmitter;
   public readonly id: string;
   public readonly file?: File;
   /**
-   * Filename to be displayed in the UI during file upload.
+   * Name to be displayed in the UI during attachment upload.
    */
-  public readonly fileName: string;
+  public readonly name: string;
   /**
    * Optional object of type {@link AttachmentMetadata}
    */
@@ -40,18 +39,18 @@ export class FileUpload implements FileUploadManager, FileUploadEventEmitter {
       this.metadata = data;
     }
     const name = (data as unknown as AttachmentMetadata)?.name;
-    this.fileName = name;
+    this.name = name;
   }
 
-  notifyUploadProgressChanged(value: number): void {
+  notifyProgressChanged(value: number): void {
     this._emitter.emit('uploadProgressChange', this.id, value);
   }
 
-  notifyUploadCompleted(metadata: AttachmentMetadata): void {
+  notifyCompleted(metadata: AttachmentMetadata): void {
     this._emitter.emit('uploadComplete', this.id, metadata);
   }
 
-  notifyUploadFailed(message: string): void {
+  notifyFailed(message: string): void {
     this._emitter.emit('uploadFail', this.id, message);
   }
 
@@ -59,11 +58,11 @@ export class FileUpload implements FileUploadManager, FileUploadEventEmitter {
   on(event: 'uploadComplete', listener: UploadCompleteListener): void;
   on(event: 'uploadFail', listener: UploadFailedListener): void;
   /**
-   * File upload event subscriber.
-   * @param event - {@link FileUploadEvents}
-   * @param listener - {@link FileUploadEventListener}
+   * Attachment upload event subscriber.
+   * @param event - {@link AttachmentUploadEvents}
+   * @param listener - {@link AttachmentUploadEventListener}
    */
-  on(event: FileUploadEvents, listener: FileUploadEventListener): void {
+  on(event: AttachmentUploadEvents, listener: AttachmentUploadEventListener): void {
     this._emitter.addListener(event, listener);
   }
 
@@ -71,28 +70,28 @@ export class FileUpload implements FileUploadManager, FileUploadEventEmitter {
   off(event: 'uploadComplete', listener: UploadCompleteListener): void;
   off(event: 'uploadFail', listener: UploadFailedListener): void;
   /**
-   * File upload event unsubscriber.
-   * @param event - {@link FileUploadEvents}
-   * @param listener - {@link FileUploadEventListener}
+   * Attachment upload event unsubscriber.
+   * @param event - {@link AttachmentUploadEvents}
+   * @param listener - {@link AttachmentUploadEventListener}
    */
-  off(event: FileUploadEvents, listener: FileUploadEventListener): void {
+  off(event: AttachmentUploadEvents, listener: AttachmentUploadEventListener): void {
     this._emitter.removeListener(event, listener);
   }
 }
 
-export type { AttachmentMetadata, FileUploadHandler, FileUploadManager, FileUploadState, FileUploadError };
+export type { AttachmentMetadata, AttachmentUploadHandler, AttachmentUploadManager, AttachmentUploadStatus };
 
 /**
- * Events emitted by the FileUpload class.
+ * Events emitted by the AttachmentUpload class.
  * @beta
  */
-type FileUploadEvents = 'uploadProgressChange' | 'uploadComplete' | 'uploadFail';
+type AttachmentUploadEvents = 'uploadProgressChange' | 'uploadComplete' | 'uploadFail';
 
 /**
- * Events listeners supported by the FileUpload class.
+ * Events listeners supported by the AttachmentUpload class.
  * @beta
  */
-type FileUploadEventListener = UploadProgressListener | UploadCompleteListener | UploadFailedListener;
+type AttachmentUploadEventListener = UploadProgressListener | UploadCompleteListener | UploadFailedListener;
 
 /**
  * Listener for `uploadProgressed` event.
@@ -113,7 +112,7 @@ type UploadFailedListener = (id: string, message: string) => void;
 /**
  * @beta
  */
-interface FileUploadEventEmitter {
+interface AttachmentUploadEventEmitter {
   /**
    * Subscriber function for `uploadProgressed` event.
    */

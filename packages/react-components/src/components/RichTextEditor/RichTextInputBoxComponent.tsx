@@ -40,7 +40,7 @@ export interface RichTextInputBoxComponentProps {
   disabled: boolean;
   actionComponents: ReactNode;
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  onRenderFileUploads?: () => JSX.Element;
+  onRenderAttachmentUploads?: () => JSX.Element;
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   hasFiles?: boolean;
   // props for min and max height for the rich text editor
@@ -63,7 +63,7 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
     strings,
     actionComponents,
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    onRenderFileUploads,
+    onRenderAttachmentUploads,
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     hasFiles,
     richTextEditorStyleProps,
@@ -173,8 +173,8 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
             />
           </Stack.Item>
           {
-            /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ onRenderFileUploads &&
-              onRenderFileUploads()
+            /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ onRenderAttachmentUploads &&
+              onRenderAttachmentUploads()
           }
         </Stack>
         {actionButtons}

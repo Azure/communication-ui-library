@@ -1,22 +1,20 @@
 import { FluentThemeProvider, RichTextSendBox } from '@azure/communication-react';
 import React from 'react';
 
-export const RTEFileUploadsExample: () => JSX.Element = () => (
+export const RTEAttachmentUploadsExample: () => JSX.Element = () => (
   <FluentThemeProvider>
     <div style={{ width: '31.25rem' }}>
       <RichTextSendBox
-        activeFileUploads={[
+        activeAttachmentUploads={[
           {
             id: '1',
-            filename: 'Sample.pdf',
-            progress: 0.75,
-            uploadComplete: false
+            name: 'Sample.pdf',
+            progress: 0.75
           },
           {
             id: '2',
-            filename: 'SampleXl.xlsx',
-            progress: 0.33,
-            uploadComplete: false
+            name: 'SampleXl.xlsx',
+            progress: 0.33
           }
         ]}
         onSendMessage={async () => {
