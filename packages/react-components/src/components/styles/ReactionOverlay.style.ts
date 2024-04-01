@@ -184,7 +184,7 @@ export interface IReactionStyleBucket {
  * height, width, and opacity.
  * @private
  */
-export function getReactionStyleBucket(activeSpritesCount: number): IReactionStyleBucket {
+export function getReactionStyleBucket(): IReactionStyleBucket {
   //const index = activeSpritesCount < 3 ? 0 : activeSpritesCount < 5 ? getRandomInt(0, 1) : getRandomInt(0, 2);
   // Having dynamic emoji size on rendering animation impacts performance of the animation itself.
   // So we are choosing to use a fixed size for all cases.
