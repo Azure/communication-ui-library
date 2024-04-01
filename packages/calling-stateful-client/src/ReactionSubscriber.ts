@@ -16,10 +16,10 @@ export class ReactionSubscriber {
   private _context: CallContext;
   private _reaction: ReactionCallFeature;
 
-  constructor(callIdRef: CallIdRef, context: CallContext, raiseHand: ReactionCallFeature) {
+  constructor(callIdRef: CallIdRef, context: CallContext, reaction: ReactionCallFeature) {
     this._callIdRef = callIdRef;
     this._context = context;
-    this._reaction = raiseHand;
+    this._reaction = reaction;
 
     this.subscribe();
   }
