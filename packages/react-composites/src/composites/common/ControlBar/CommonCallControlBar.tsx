@@ -43,7 +43,7 @@ import { CaptionsSettingsModal } from '../CaptionsSettingsModal';
 import { RaiseHand } from '../../CallComposite/components/buttons/RaiseHand';
 /* @conditional-compile-remove(reaction) */
 import { Reaction } from '../../CallComposite/components/buttons/Reaction';
-/* @conditional-compile-remove(reaction) */
+/* @conditional-compile-remove(reaction) */ /* @conditional-compile-remove(end-call-options) */
 import { useSelector } from '../../CallComposite/hooks/useSelector';
 /* @conditional-compile-remove(reaction) */
 import { capabilitySelector } from '../../CallComposite/selectors/capabilitySelector';
