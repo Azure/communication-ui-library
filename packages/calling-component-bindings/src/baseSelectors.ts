@@ -21,7 +21,6 @@ import { SpotlightCallFeatureState } from '@internal/calling-stateful-client';
 import { ReactionState } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(raise-hand) */
 import { RaisedHandState } from '@internal/calling-stateful-client';
 import { _SupportedCaptionLanguage, _SupportedSpokenLanguage } from '@internal/react-components';
 
@@ -43,9 +42,7 @@ export const getDeviceManager = (state: CallClientState): DeviceManagerState => 
  * @private
  */
 export const getRole = (state: CallClientState, props: CallingBaseSelectorProps): ParticipantRole | undefined => {
-  /* @conditional-compile-remove(rooms) */
   return state.calls[props.callId]?.role;
-  return 'Unknown';
 };
 
 /**
@@ -94,7 +91,6 @@ export const getRemoteParticipants = (
   return state.calls[props.callId]?.remoteParticipants;
 };
 
-/* @conditional-compile-remove(raise-hand) */
 /**
  * @private
  */
@@ -139,7 +135,6 @@ export const getIsScreenSharingOn = (state: CallClientState, props: CallingBaseS
 export const getIsMuted = (state: CallClientState, props: CallingBaseSelectorProps): boolean | undefined =>
   state.calls[props.callId]?.isMuted;
 
-/* @conditional-compile-remove(optimal-video-count) */
 /**
  * @private
  */
@@ -185,7 +180,6 @@ export const getDiagnostics = (
   props: CallingBaseSelectorProps
 ): DiagnosticsCallFeatureState | undefined => state.calls[props.callId]?.diagnostics;
 
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(raise-hand) */
 /**
  * @private
  */

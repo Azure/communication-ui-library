@@ -11,7 +11,7 @@ import {
   getUserId
 } from './baseSelectors';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { ChatClientState, ChatMessageWithStatus } from '@internal/chat-stateful-client';
+import { ChatClientState, ChatMessageWithStatus, ResourceFetchResult } from '@internal/chat-stateful-client';
 import { memoizeFnAll } from '@internal/acs-ui-common';
 import {
   ChatMessage,
@@ -28,13 +28,12 @@ import { createSelector } from 'reselect';
 import { DEFAULT_DATA_LOSS_PREVENTION_POLICY_URL } from './utils/constants';
 import { ACSKnownMessageType } from './utils/constants';
 import { updateMessagesWithAttached } from './utils/updateMessagesWithAttached';
-/* @conditional-compile-remove(file-sharing) */
-import { FileMetadata } from '@internal/react-components';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { ChatAttachment, ChatAttachmentType } from '@azure/communication-chat';
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+import { AttachmentMetadata } from '@internal/react-components';
+import { ChatAttachment } from '@azure/communication-chat';
 import type { ChatParticipant } from '@azure/communication-chat';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { ChatAttachmentType as AttachmentType, InlineImageMetadata } from '@internal/react-components';
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+import { ChatAttachmentType } from '@internal/react-components';
 
 const memoizedAllConvertChatMessage = memoizeFnAll(
   (
@@ -61,8 +60,8 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
   }
 );
 
-/* @conditional-compile-remove(file-sharing) */
-const extractAttachedFilesMetadata = (metadata: Record<string, string>): FileMetadata[] => {
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+const extractAttachedFilesMetadata = (metadata: Record<string, string>): AttachmentMetadata[] => {
   const fileMetadata = metadata.fileSharingMetadata;
   if (!fileMetadata) {
     return [];
@@ -74,47 +73,27 @@ const extractAttachedFilesMetadata = (metadata: Record<string, string>): FileMet
     return [];
   }
 };
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 const extractTeamsAttachmentsMetadata = (
-  attachments: ChatAttachment[],
-  resourceCache?: Record<string, string>
+  attachments: ChatAttachment[]
 ): {
-  /* @conditional-compile-remove(file-sharing) */ files: FileMetadata[];
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ inlineImages: InlineImageMetadata[];
+  files: AttachmentMetadata[];
 } => {
-  /* @conditional-compile-remove(file-sharing) */
-  const files: FileMetadata[] = [];
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  const inlineImages: InlineImageMetadata[] = [];
+  const files: AttachmentMetadata[] = [];
   attachments.forEach((attachment) => {
-    const attachmentType = mapAttachmentType(attachment.attachmentType);
-    /* @conditional-compile-remove(file-sharing) */
+    const attachmentType = attachment.attachmentType as ChatAttachmentType;
     const contentType = extractAttachmentContentTypeFromName(attachment.name);
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-    if (attachmentType === 'inlineImage') {
-      inlineImages.push({
-        attachmentType: attachmentType,
-        id: attachment.id,
-        url: extractAttachmentUrl(attachment),
-        previewUrl: attachment.previewUrl,
-        fullSizeImageSrc: resourceCache?.[attachment.url ?? ''] ?? ''
-      });
-    }
-    /* @conditional-compile-remove(file-sharing) */
     if (attachmentType === 'file') {
       files.push({
-        attachmentType: attachmentType,
         id: attachment.id,
         name: attachment.name ?? '',
         extension: contentType ?? '',
-        url: extractAttachmentUrl(attachment),
-        payload: { teamsFileAttachment: 'true' }
+        url: extractAttachmentUrl(attachment)
       });
     }
   });
   return {
-    /* @conditional-compile-remove(file-sharing) */ files,
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ inlineImages
+    files
   };
 };
 
@@ -140,28 +119,12 @@ const convertToUiBlockedMessage = (
   };
 };
 
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-const mapAttachmentType = (attachmentType: ChatAttachmentType): AttachmentType => {
-  if (attachmentType === 'image') {
-    return 'inlineImage';
-  }
-  /* @conditional-compile-remove(file-sharing) */
-  if (attachmentType === 'file') {
-    return 'file';
-  }
-  return 'unknown';
-};
-
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 const extractAttachmentUrl = (attachment: ChatAttachment): string => {
-  /* @conditional-compile-remove(file-sharing) */
-  return attachment.attachmentType === 'file' && attachment.previewUrl ? attachment.previewUrl : attachment.url || '';
-  return attachment.url || '';
+  return attachment.previewUrl ? attachment.previewUrl : attachment.url || '';
 };
 const processChatMessageContent = (message: ChatMessageWithStatus): string | undefined => {
   let content = message.content?.message;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-
   if (
     message.content?.attachments &&
     message.content?.attachments.length > 0 &&
@@ -169,14 +132,13 @@ const processChatMessageContent = (message: ChatMessageWithStatus): string | und
   ) {
     const attachments: ChatAttachment[] = message.content?.attachments;
     // Fill in the src here
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     if (content) {
       const document = new DOMParser().parseFromString(content ?? '', 'text/html');
       document.querySelectorAll('img').forEach((img) => {
         const attachmentPreviewUrl = attachments.find((attachment) => attachment.id === img.id)?.previewUrl;
         if (attachmentPreviewUrl) {
-          const src = message.resourceCache?.[attachmentPreviewUrl] ?? '';
-          img.src = src;
+          const resourceCache = message.resourceCache?.[attachmentPreviewUrl];
+          img.src = getResourceSourceUrl(resourceCache);
         }
       });
       content = document.body.innerHTML;
@@ -198,18 +160,31 @@ const processChatMessageContent = (message: ChatMessageWithStatus): string | und
   return content;
 };
 
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 const generateImageAttachmentImgHtml = (message: ChatMessageWithStatus, attachment: ChatAttachment): string => {
   if (attachment.previewUrl !== undefined) {
     const contentType = extractAttachmentContentTypeFromName(attachment.name);
-    const src = message.resourceCache?.[attachment.previewUrl] ?? '';
+    const resourceCache = message.resourceCache?.[attachment.previewUrl];
+    const src = getResourceSourceUrl(resourceCache);
+
     return `\r\n<p><img alt="image" src="${src}" itemscope="${contentType}" id="${attachment.id}"></p>`;
   }
 
   return '';
 };
 
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+const getResourceSourceUrl = (result?: ResourceFetchResult): string => {
+  let src = '';
+  if (result) {
+    if (result.error || !result.sourceUrl) {
+      // In case of an error we set src to some invalid value to show broken image
+      src = 'blob://';
+    } else {
+      src = result.sourceUrl;
+    }
+  }
+  return src;
+};
+
 const extractAttachmentContentTypeFromName = (name?: string): string => {
   if (name === undefined) {
     return '';
@@ -222,36 +197,17 @@ const extractAttachmentContentTypeFromName = (name?: string): string => {
   return contentType;
 };
 
-/* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-const extractAttachmentsMetadata = (
-  message: ChatMessageWithStatus
-): {
-  /* @conditional-compile-remove(file-sharing) */ files: FileMetadata[];
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ inlineImages: InlineImageMetadata[];
-} => {
-  /* @conditional-compile-remove(file-sharing) */
-  let files: FileMetadata[] = [];
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  let inlineImages: InlineImageMetadata[] = [];
-
-  /* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+const extractAttachmentsMetadata = (message: ChatMessageWithStatus): { files?: AttachmentMetadata[] } => {
+  let files: AttachmentMetadata[] = [];
   if (message.metadata) {
     files = files.concat(extractAttachedFilesMetadata(message.metadata));
   }
-
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   if (message.content?.attachments) {
-    const teamsAttachments = extractTeamsAttachmentsMetadata(message.content?.attachments, message.resourceCache);
-    /* @conditional-compile-remove(file-sharing) */
+    const teamsAttachments = extractTeamsAttachmentsMetadata(message.content?.attachments);
     files = files.concat(teamsAttachments.files);
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-    inlineImages = inlineImages.concat(teamsAttachments.inlineImages);
   }
-
-  return {
-    /* @conditional-compile-remove(file-sharing) */ files,
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ inlineImages
-  };
+  return { files: files.length > 0 ? files : undefined };
 };
 const convertToUiChatMessage = (
   message: ChatMessageWithStatus,
@@ -260,11 +216,8 @@ const convertToUiChatMessage = (
   isLargeGroup: boolean
 ): ChatMessage => {
   const messageSenderId = message.sender !== undefined ? toFlatCommunicationIdentifier(message.sender) : userId;
-  /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  const {
-    /* @conditional-compile-remove(file-sharing) */ files,
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ inlineImages
-  } = extractAttachmentsMetadata(message);
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  const { files } = extractAttachmentsMetadata(message);
   return {
     messageType: 'chat',
     createdOn: message.createdOn,
@@ -279,10 +232,8 @@ const convertToUiChatMessage = (
     deletedOn: message.deletedOn,
     mine: messageSenderId === userId,
     metadata: message.metadata,
-    /* @conditional-compile-remove(file-sharing) */
-    files,
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-    inlineImages
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+    files
   };
 };
 const convertToUiSystemMessage = (message: ChatMessageWithStatus): SystemMessage => {
@@ -415,10 +366,7 @@ const isMessageValidToRender = (message: ChatMessageWithStatus): boolean => {
   if (message.deletedOn) {
     return false;
   }
-  if (
-    message.metadata?.fileSharingMetadata ||
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ message.content?.attachments
-  ) {
+  if (message.metadata?.fileSharingMetadata || message.content?.attachments?.length) {
     return true;
   }
   /* @conditional-compile-remove(data-loss-prevention) */

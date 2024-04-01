@@ -8,7 +8,6 @@ import { _createStatefulChatClientWithDeps, StatefulChatClient, StatefulChatClie
 import { createMockChatThreadClient } from './mocks/createMockChatThreadClient';
 import { createMockIterator } from './mocks/createMockIterator';
 import { MockCommunicationUserCredential } from './mocks/MockCommunicationUserCredential';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 
 /**
@@ -81,7 +80,6 @@ export const createStatefulChatClientMock = (): StatefulChatClientWithEventTrigg
     defaultClientArgs
   ) as StatefulChatClientWithEventTrigger;
 };
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * @private
  */
@@ -102,7 +100,6 @@ export const messageTemplate: ChatMessageWithStatus = {
   /* @conditional-compile-remove(data-loss-prevention) */
   policyViolation: false
 };
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * @private
  */
@@ -122,7 +119,7 @@ export const messageTemplateWithResourceCache: ChatMessageWithStatus = {
   status: 'delivered',
   /* @conditional-compile-remove(data-loss-prevention) */
   policyViolation: false,
-  resourceCache: { resource1Url: 'blob:resource1', resource2Url: 'blob:resource2' }
+  resourceCache: { resource1Url: { sourceUrl: 'blob:resource1' }, resource2Url: { sourceUrl: 'blob:resource2' } }
 };
 /**
  * @private

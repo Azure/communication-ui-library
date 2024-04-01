@@ -4,7 +4,7 @@
 import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(video-background-effects) */
+
 import type { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
 /* @conditional-compile-remove(reaction) */
 import { Reaction } from '@azure/communication-calling';
@@ -41,13 +41,12 @@ import type {
 import type { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
-/* @conditional-compile-remove(dtmf-dialer) */
 import { DtmfTone } from '@azure/communication-calling';
 import { CommunicationIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import type { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
@@ -119,7 +118,6 @@ export type CallAdapterClientState = {
   userId: CommunicationIdentifierKind;
   displayName?: string;
   call?: CallState;
-  /* @conditional-compile-remove(calling-sounds) */
   /**
    * State to track who the original call went out to. will be undefined the call is not a outbound
    * modality. This includes, groupCalls, Rooms calls, and Teams InteropMeetings.
@@ -128,7 +126,6 @@ export type CallAdapterClientState = {
   devices: DeviceManagerState;
   endedCall?: CallState;
   isTeamsCall: boolean;
-  /* @conditional-compile-remove(rooms) */
   /**
    * State to track whether the call is a rooms call.
    */
@@ -152,17 +149,17 @@ export type CallAdapterClientState = {
    * control bar with the CallComposite.
    */
   cameraStatus?: 'On' | 'Off';
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Default set of background images for background replacement effect.
    */
   videoBackgroundImages?: VideoBackgroundImage[];
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Dependency to be injected for video background effect.
    */
   onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * State to track the selected video background effect.
    */
@@ -177,7 +174,6 @@ export type CallAdapterClientState = {
    * Hide attendee names in teams meeting
    */
   hideAttendeeNames?: boolean;
-  /* @conditional-compile-remove(calling-sounds) */
   /**
    * State to track the sounds to be used in the call.
    */
@@ -293,7 +289,6 @@ export type DiagnosticChangedEventListner = (
   event: MediaDiagnosticChangedEvent | NetworkDiagnosticChangedEvent
 ) => void;
 
-/* @conditional-compile-remove(video-background-effects) */
 /**
  * Contains the attibutes of a background image like url, name etc.
  *
@@ -428,7 +423,6 @@ export type SpotlightChangedListener = (args: {
   removed: SpotlightedParticipant[];
 }) => void;
 
-/* @conditional-compile-remove(video-background-effects) */
 /**
  * Contains the attibutes of a selected video background effect
  *
@@ -451,7 +445,6 @@ export interface VideoBackgroundNoEffect {
   effectName: 'none';
 }
 
-/* @conditional-compile-remove(video-background-effects) */
 /**
  * Contains the attibutes of the blur video background effect
  *
@@ -464,7 +457,6 @@ export interface VideoBackgroundBlurEffect extends BackgroundBlurConfig {
   effectName: 'blur';
 }
 
-/* @conditional-compile-remove(video-background-effects) */
 /**
  * Contains the attibutes of a selected replacement video background effect
  *
@@ -529,14 +521,12 @@ export interface CallAdapterCallOperations {
    * @public
    */
   startScreenShare(): Promise<void>;
-  /* @conditional-compile-remove(raise-hand) */
   /**
    * Raise hand for current user
    *
    * @public
    */
   raiseHand(): Promise<void>;
-  /* @conditional-compile-remove(raise-hand) */
   /**
    * lower hand for current user
    *
@@ -645,7 +635,6 @@ export interface CallAdapterCallOperations {
   addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(dtmf-dialer) */
   /**
    * send dtmf tone to another participant in a 1:1 PSTN call
    *
@@ -680,21 +669,21 @@ export interface CallAdapterCallOperations {
    * Funtion to stop captions
    */
   stopCaptions(): Promise<void>;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Start the video background effect.
    *
    * @public
    */
   startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Stop the video background effect.
    *
    * @public
    */
   stopVideoBackgroundEffects(): Promise<void>;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Override the background picker images for background replacement effect.
    *
@@ -703,7 +692,7 @@ export interface CallAdapterCallOperations {
    * @public
    */
   updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Update the selected video background effect.
    *
@@ -729,6 +718,11 @@ export interface CallAdapterCallOperations {
    * If no array of user ids is passed then action is performed on local participant.
    */
   stopSpotlight(userIds?: string[]): Promise<void>;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Stop all spotlights
+   */
+  stopAllSpotlight(): Promise<void>;
 }
 
 /**
@@ -907,7 +901,6 @@ export interface CallAdapterSubscribers {
    * Subscribe function for 'capabilitiesChanged' event.
    */
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
-  /* @conditional-compile-remove(rooms) */
   /**
    * Subscribe function for 'roleChanged' event.
    */
@@ -996,7 +989,6 @@ export interface CallAdapterSubscribers {
    * Unsubscribe function for 'capabilitiesChanged' event.
    */
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
-  /* @conditional-compile-remove(rooms) */
   /**
    * Unsubscribe function for 'roleChanged' event.
    */

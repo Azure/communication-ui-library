@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 import { CommunicationUserIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(rooms) */
 import { ParticipantRole } from '@azure/communication-calling';
 import { fromFlatCommunicationIdentifier, StartCallIdentifier } from '@azure/communication-react';
 /* @conditional-compile-remove(teams-identity-support) */
@@ -25,7 +24,6 @@ import {
   navigateToHomePage,
   WEB_APP_TITLE
 } from './utils/AppUtils';
-/* @conditional-compile-remove(rooms) */
 import { createRoom, getRoomIdFromUrl, addUserToRoom } from './utils/AppUtils';
 import { useIsMobile } from './utils/useIsMobile';
 import { CallError } from './views/CallError';
@@ -96,10 +94,7 @@ const App = (): JSX.Element => {
     case 'home': {
       document.title = `home - ${WEB_APP_TITLE}`;
       // Show a simplified join home screen if joining an existing call
-      const joiningExistingCall: boolean =
-        !!getGroupIdFromUrl() ||
-        !!getTeamsLinkFromUrl() ||
-        /* @conditional-compile-remove(rooms) */ !!getRoomIdFromUrl();
+      const joiningExistingCall: boolean = !!getGroupIdFromUrl() || !!getTeamsLinkFromUrl() || !!getRoomIdFromUrl();
       return (
         <HomeScreen
           joiningExistingCall={joiningExistingCall}
@@ -109,12 +104,11 @@ const App = (): JSX.Element => {
             setAlternateCallerId(callDetails.alternateCallerId);
             let callLocator: CallAdapterLocator | undefined =
               callDetails.callLocator ||
-              /* @conditional-compile-remove(rooms) */ getRoomIdFromUrl() ||
+              getRoomIdFromUrl() ||
               getTeamsLinkFromUrl() ||
               getGroupIdFromUrl() ||
               createGroupId();
 
-            /* @conditional-compile-remove(rooms) */
             if (callDetails.option === 'Rooms') {
               callLocator = getRoomIdFromUrl() || callDetails.callLocator;
             }
@@ -136,7 +130,6 @@ const App = (): JSX.Element => {
               setTargetCallees(outboundTeamsUsers ?? []);
             }
 
-            /* @conditional-compile-remove(rooms) */
             // There is an API call involved with creating a room so lets only create one if we know we have to
             if (callDetails.option === 'StartRooms') {
               let roomId = '';
@@ -149,7 +142,6 @@ const App = (): JSX.Element => {
               callLocator = { roomId: roomId };
             }
 
-            /* @conditional-compile-remove(rooms) */
             if (callLocator && 'roomId' in callLocator) {
               if (userId && 'communicationUserId' in userId) {
                 await addUserToRoom(
@@ -239,7 +231,12 @@ const getJoinParams = (locator: CallAdapterLocator): string => {
   if ('meetingLink' in locator) {
     return '?teamsLink=' + encodeURIComponent(locator.meetingLink);
   }
-  /* @conditional-compile-remove(rooms) */
+  /* @conditional-compile-remove(meeting-id) */
+  if ('meetingId' in locator) {
+    return (
+      '?meetingId=' + encodeURIComponent(locator.meetingId) + (locator.passcode ? '&passcode=' + locator.passcode : '')
+    );
+  }
   if ('roomId' in locator) {
     return '?roomId=' + encodeURIComponent(locator.roomId);
   }

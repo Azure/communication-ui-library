@@ -7,7 +7,8 @@
     "mutedIconLabel": "음소거됨",
     "displayNamePlaceholder": "명명되지 않은 참가자",
     "participantStateRinging": "전화 거는 중...",
-    "participantStateHold": "대기 중"
+    "participantStateHold": "대기 중",
+    "attendeeRole": "참석자"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount}개 더 보기"
@@ -23,10 +24,27 @@
     "placeholderText": "메시지를 입력하세요",
     "textTooLong": "메시지 길이가 최대 제한을 초과했습니다.",
     "sendButtonAriaLabel": "메시지 보내기",
-    "fileUploadsPendingError": "업로드 중... 잠시만 기다려 주세요.",
-    "removeFile": "파일 제거",
+    "attachmentUploadsPendingError": "업로드 중... 잠시만 기다려 주세요.",
+    "removeAttachment": "파일 제거",
     "uploading": "업로드 중",
     "uploadCompleted": "업로드 완료"
+  },
+  "richTextSendBox": {
+    "placeholderText": "메시지 입력",
+    "textTooLong": "메시지 길이가 최대 제한을 초과했습니다.",
+    "sendButtonAriaLabel": "메시지 보내기",
+    "attachmentUploadsPendingError": "업로드 중... 잠시 기다려 주세요.",
+    "removeAttachment": "파일 제거",
+    "uploading": "업로드 중",
+    "uploadCompleted": "업로드 완료",
+    "boldTooltip": "굵게",
+    "italicTooltip": "기울임꼴",
+    "underlineTooltip": "밑줄",
+    "bulletListTooltip": "글머리 기호 목록",
+    "numberListTooltip": "번호 매기기 목록",
+    "increaseIndentTooltip": "들여쓰기",
+    "decreaseIndentTooltip": "내어쓰기",
+    "richTextFormatButtonTooltip": "형식"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "제안"
@@ -125,6 +143,7 @@
   },
   "reactionButton": {
     "label": "반응",
+    "ariaLabel": "반응 단추, 반응 보내기",
     "tooltipDisabledContent": "반응 동작을 사용할 수 없습니다.",
     "tooltipContent": "반응 보내기",
     "likeReactionTooltipContent": "좋아요",
@@ -160,10 +179,10 @@
     "editBoxSubmitButton": "완료",
     "messageReadCount": "{messageReadByCount}/{remoteParticipantsCount}명이 읽음",
     "actionMenuMoreOptions": "추가 옵션",
-    "downloadFile": "파일 다운로드",
+    "downloadAttachment": "파일 다운로드",
     "blockedWarningText": "조직 정책으로 인해 이 메시지가 삭제되었습니다.",
     "blockedWarningLinkText": "세부 정보",
-    "fileCardGroupMessage": "메시지에 {fileCount}개의 첨부 파일이 있습니다",
+    "attachmentCardGroupMessage": "메시지에 {attachmentCount}개의 첨부 파일이 있습니다.",
     "messageDeletedAnnouncementAriaLabel": "메시지가 삭제되었습니다."
   },
   "errorBar": {
@@ -224,7 +243,8 @@
     "addSpotlightVideoTileMenuLabel": "스포트라이트 추가",
     "spotlightLimitReachedMenuTitle": "스포트라이트 한도 도달",
     "stopSpotlightVideoTileMenuLabel": "스포트라이트 중지",
-    "stopSpotlightOnSelfVideoTileMenuLabel": "스포트라이트 종료"
+    "stopSpotlightOnSelfVideoTileMenuLabel": "스포트라이트 종료",
+    "attendeeRole": "참석자"
   },
   "dialpad": {
     "placeholderText": "전화 번호를 입력하세요.",
@@ -358,6 +378,5 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "이전 페이지",
     "rightNavButtonAriaLabel": "다음 페이지"
-  },
-  "AttendeeRole": "참석자"
+  }
 }

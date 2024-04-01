@@ -26,6 +26,7 @@ const storyControls = {
   displayName: controlsToAdd.requiredDisplayName,
   showParticipants: controlsToAdd.showChatParticipants,
   showTopic: controlsToAdd.showChatTopic,
+  showRichTextEditor: controlsToAdd.showRichTextEditor,
   compositeFormFactor: controlsToAdd.formFactor
 };
 
@@ -57,6 +58,7 @@ const TryChatCompositeStory = (args: ArgsFrom<typeof storyControls>, context): J
           locale={compositeLocale(locale)}
           showParticipants={args.showParticipants}
           showTopic={args.showTopic}
+          showRichTextEditor={args.showRichTextEditor}
           formFactor={args.compositeFormFactor}
         />
       )}

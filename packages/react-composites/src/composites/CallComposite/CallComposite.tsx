@@ -36,9 +36,7 @@ import { HoldPage } from './pages/HoldPage';
 import { UnsupportedBrowserPage } from './pages/UnsupportedBrowser';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey } from '@azure/communication-calling';
-import { PermissionConstraints } from '@azure/communication-calling';
-/* @conditional-compile-remove(rooms) */
-import { ParticipantRole } from '@azure/communication-calling';
+import { ParticipantRole, PermissionConstraints } from '@azure/communication-calling';
 import { MobileChatSidePaneTabHeaderProps } from '../common/TabHeader';
 import { InjectedSidePaneProps, SidePaneProvider, SidePaneRenderer } from './components/SidePane/SidePaneProvider';
 import {
@@ -50,7 +48,6 @@ import {
 import { TrackedErrors } from './types/ErrorTracking';
 import { usePropsFor } from './hooks/usePropsFor';
 import { deviceCountSelector } from './selectors/deviceCountSelector';
-/* @conditional-compile-remove(gallery-layouts) */
 import { VideoGalleryLayout } from '@internal/react-components';
 /* @conditional-compile-remove(capabilities) */
 import { capabilitiesChangedInfoAndRoleSelector } from './selectors/capabilitiesChangedInfoAndRoleSelector';
@@ -126,7 +123,6 @@ export interface RemoteVideoTileMenuOptions {
   isHidden?: boolean;
 }
 
-/* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(vertical-gallery) */
 /**
  * Options for the local video tile in the Call composite.
  *
@@ -220,14 +216,12 @@ export type CallCompositeOptions = {
    * Remote participant video tile menu options
    */
   remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
-  /* @conditional-compile-remove(click-to-call) */
   /**
    * Options for controlling the local video tile.
    *
    * @remarks if 'false' the local video tile will not be rendered.
    */
   localVideoTile?: boolean | LocalVideoTileOptions;
-  /* @conditional-compile-remove(gallery-layouts) */
   /**
    * Options for controlling the starting layout of the composite's video gallery
    */
@@ -355,7 +349,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   useEffect(() => {
     (async () => {
       const constrain = getQueryOptions({
-        /* @conditional-compile-remove(rooms) */ role: adapter.getState().call?.role
+        role: adapter.getState().call?.role
       });
       await adapter.askDevicePermission(constrain);
       adapter.queryCameras();
@@ -376,11 +370,9 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
 
   const [sidePaneRenderer, setSidePaneRenderer] = React.useState<SidePaneRenderer | undefined>();
   const [injectedSidePaneProps, setInjectedSidePaneProps] = React.useState<InjectedSidePaneProps>();
-  /* @conditional-compile-remove(gallery-layouts) */
   const [userSetGalleryLayout, setUserSetGalleryLayout] = useState<VideoGalleryLayout>(
     props.options?.galleryOptions?.layout ?? 'floatingLocalVideo'
   );
-  /* @conditional-compile-remove(gallery-layouts) */
   const [userSetOverflowGalleryPosition, setUserSetOverflowGalleryPosition] = useState<'Responsive' | 'horizontalTop'>(
     'Responsive'
   );
@@ -412,6 +404,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     };
   }, [adapter]);
 
+  const compositeAudioContext = useRef<AudioContext>(new AudioContext());
+
   /* @conditional-compile-remove(capabilities) */
   const capabilitiesChangedInfoAndRole = useSelector(capabilitiesChangedInfoAndRoleSelector);
 
@@ -434,8 +428,11 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const callees = useSelector(getTargetCallees) as StartCallIdentifier[];
   const locale = useLocale();
   const palette = useTheme().palette;
+  /* @conditional-compile-remove(PSTN-calls) */
+  const alternateCallerId = adapter.getState().alternateCallerId;
   const leavePageStyle = useMemo(() => leavingPageStyle(palette), [palette]);
   let pageElement: JSX.Element | undefined;
+  const [pinnedParticipants, setPinnedParticipants] = useState<string[]>([]);
   switch (page) {
     case 'configuration':
       pageElement = (
@@ -443,7 +440,12 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           mobileView={props.mobileView}
           startCallHandler={(): void => {
             if (callees) {
-              adapter.startCall(callees);
+              adapter.startCall(
+                callees,
+                /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
+                  ? { alternateCallerId: { phoneNumber: alternateCallerId } }
+                  : {}
+              );
             } else {
               adapter.joinCall({
                 microphoneOn: 'keep',
@@ -585,16 +587,15 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           onCloseChatPane={props.onCloseChatPane}
           latestErrors={latestErrors}
           onDismissError={onDismissError}
-          /* @conditional-compile-remove(gallery-layouts) */
           galleryLayout={userSetGalleryLayout}
-          /* @conditional-compile-remove(gallery-layouts) */
           onUserSetGalleryLayoutChange={setUserSetGalleryLayout}
-          /* @conditional-compile-remove(gallery-layouts) */
           onSetUserSetOverflowGalleryPosition={setUserSetOverflowGalleryPosition}
-          /* @conditional-compile-remove(gallery-layouts) */
           userSetOverflowGalleryPosition={userSetOverflowGalleryPosition}
           /* @conditional-compile-remove(capabilities) */
           capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
+          pinnedParticipants={pinnedParticipants}
+          setPinnedParticipants={setPinnedParticipants}
+          compositeAudioContext={compositeAudioContext.current}
         />
       );
       break;
@@ -723,10 +724,7 @@ export const CallCompositeInner = (props: CallCompositeProps & InternalCallCompo
   );
 };
 
-const getQueryOptions = (options: {
-  /* @conditional-compile-remove(rooms) */ role?: ParticipantRole;
-}): PermissionConstraints => {
-  /* @conditional-compile-remove(rooms) */
+const getQueryOptions = (options: { role?: ParticipantRole }): PermissionConstraints => {
   if (options.role === 'Consumer') {
     return {
       video: false,

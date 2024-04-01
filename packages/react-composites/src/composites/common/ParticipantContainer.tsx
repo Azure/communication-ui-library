@@ -10,8 +10,12 @@ import {
   participantListWrapper,
   displayNameStyles
 } from './styles/ParticipantContainer.styles';
+/* @conditional-compile-remove(spotlight) */
+import { headingMoreButtonStyles } from './styles/ParticipantContainer.styles';
 import { ParticipantList, ParticipantListProps, ParticipantMenuItemsCallback } from '@internal/react-components';
 import { FocusZone, Stack, Text, useTheme } from '@fluentui/react';
+/* @conditional-compile-remove(spotlight) */
+import { DefaultButton, IContextualMenuProps } from '@fluentui/react';
 import { AvatarPersona, AvatarPersonaDataCallback } from './AvatarPersona';
 import { useId } from '@fluentui/react-hooks';
 import { _formatString } from '@internal/acs-ui-common';
@@ -46,8 +50,22 @@ export const ParticipantListWithHeading = (props: {
   isMobile?: boolean;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
+  /* @conditional-compile-remove(spotlight) */
+  headingMoreButtonAriaLabel?: string;
+  /* @conditional-compile-remove(spotlight) */
+  onClickHeadingMoreButton?: () => void;
+  /* @conditional-compile-remove(spotlight) */
+  headingMoreButtonMenuProps?: IContextualMenuProps;
 }): JSX.Element => {
-  const { onFetchAvatarPersonaData, onFetchParticipantMenuItems, title, participantListProps } = props;
+  const {
+    onFetchAvatarPersonaData,
+    onFetchParticipantMenuItems,
+    title,
+    participantListProps,
+    /* @conditional-compile-remove(spotlight) */ headingMoreButtonAriaLabel,
+    /* @conditional-compile-remove(spotlight) */ onClickHeadingMoreButton,
+    /* @conditional-compile-remove(spotlight) */ headingMoreButtonMenuProps
+  } = props;
   const subheadingUniqueId = useId();
   const theme = useTheme();
   /* @conditional-compile-remove(total-participant-count) */
@@ -65,12 +83,29 @@ export const ParticipantListWithHeading = (props: {
 
   return (
     <Stack className={participantListStack}>
-      <Stack.Item styles={subheadingStyleThemed} aria-label={title} id={subheadingUniqueId}>
-        {paneTitleTrampoline(
-          title ?? '',
-          /* @conditional-compile-remove(total-participant-count) */ totalParticipantCount
-        )}
-      </Stack.Item>
+      <Stack horizontal horizontalAlign="space-between" verticalAlign="center">
+        <Stack.Item grow styles={subheadingStyleThemed} aria-label={title} id={subheadingUniqueId}>
+          {paneTitleTrampoline(
+            title ?? '',
+            /* @conditional-compile-remove(total-participant-count) */ totalParticipantCount
+          )}
+        </Stack.Item>
+        {
+          /* @conditional-compile-remove(spotlight) */ (onClickHeadingMoreButton ||
+            (headingMoreButtonMenuProps?.items && headingMoreButtonMenuProps.items.length > 0)) && (
+            <Stack.Item>
+              <DefaultButton
+                ariaLabel={headingMoreButtonAriaLabel}
+                styles={headingMoreButtonStyles(theme)}
+                iconProps={{ iconName: 'PeoplePaneMoreButton' }}
+                onClick={onClickHeadingMoreButton ? () => onClickHeadingMoreButton() : undefined}
+                menuProps={props.onClickHeadingMoreButton ? undefined : props.headingMoreButtonMenuProps}
+                onRenderMenuIcon={() => null}
+              />
+            </Stack.Item>
+          )
+        }
+      </Stack>
       <FocusZone className={participantListContainerStyle} shouldFocusOnMount={true}>
         <ParticipantList
           {...participantListProps}
@@ -83,7 +118,6 @@ export const ParticipantListWithHeading = (props: {
                 {...options}
                 {...{ hidePersonaDetails: !!options?.text }}
                 dataProvider={onFetchAvatarPersonaData}
-                /* @conditional-compile-remove(raise-hand) */
                 allowActiveBorder={true}
               />
               {options?.text && (

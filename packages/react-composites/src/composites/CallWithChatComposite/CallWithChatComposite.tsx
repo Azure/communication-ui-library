@@ -26,13 +26,12 @@ import {
   useTheme
 } from '@internal/react-components';
 import { useId } from '@fluentui/react-hooks';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { FileSharingOptions } from '../ChatComposite';
 import { containerDivStyles } from '../common/ContainerRectProps';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { CallCompositeInner, CallCompositeOptions } from '../CallComposite/CallComposite';
 import { RemoteVideoTileMenuOptions } from '../CallComposite/CallComposite';
-/* @conditional-compile-remove(click-to-call) */
 import { LocalVideoTileOptions } from '../CallComposite/CallComposite';
 /* @conditional-compile-remove(call-readiness) */
 import { DeviceCheckOptions } from '../CallComposite/CallComposite';
@@ -48,7 +47,6 @@ import {
 import { SidePaneHeader } from '../common/SidePaneHeader';
 import { CallControlOptions } from '../CallComposite/types/CallControlOptions';
 import { useUnreadMessagesTracker } from './ChatButton/useUnreadMessagesTracker';
-/* @conditional-compile-remove(gallery-layouts) */
 import { VideoGalleryLayout } from '@internal/react-components';
 
 /**
@@ -104,7 +102,7 @@ export type CallWithChatCompositeOptions = {
    * If using the boolean values, true will cause default behavior across the whole control bar. False hides the whole control bar.
    */
   callControls?: boolean | CallWithChatControlOptions;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /**
    * Properties for configuring the File Sharing feature.
    * If undefined, file sharing feature will be disabled.
@@ -169,14 +167,12 @@ export type CallWithChatCompositeOptions = {
    * Remote participant video tile menu options
    */
   remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
-  /* @conditional-compile-remove(click-to-call) */
   /**
    * Options for controlling the local video tile.
    *
    * @remarks if 'false' the local video tile will not be rendered.
    */
   localVideoTile?: boolean | LocalVideoTileOptions;
-  /* @conditional-compile-remove(gallery-layouts) */
   /**
    * Options for controlling the starting layout of the composite's video gallery
    */
@@ -286,7 +282,7 @@ type CallWithChatScreenProps = {
   callControls?: boolean | CallWithChatControlOptions;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   fileSharing?: FileSharingOptions;
   rtl?: boolean;
   /* @conditional-compile-remove(call-readiness) */
@@ -301,9 +297,7 @@ type CallWithChatScreenProps = {
   /* @conditional-compile-remove(unsupported-browser) */
   onEnvironmentInfoTroubleshootingClick?: () => void;
   remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
-  /* @conditional-compile-remove(click-to-call) */
   localVideoTile?: boolean | LocalVideoTileOptions;
-  /* @conditional-compile-remove(gallery-layouts) */
   galleryOptions?: {
     layout?: VideoGalleryLayout;
   };
@@ -504,9 +498,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   );
 
   const injectedCustomButtonsFromProps = useMemo(() => {
-    /* @conditional-compile-remove(control-bar-button-injection) */
     return [...(callControlOptionsFromProps.onFetchCustomButtonProps ?? [])];
-    return [];
   }, [callControlOptionsFromProps]);
 
   const callCompositeOptions: CallCompositeOptions = useMemo(
@@ -518,7 +510,6 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
               ...callControlOptionsFromProps,
               onFetchCustomButtonProps: [
                 ...(showChatButton ? [customChatButton] : []),
-                /* @conditional-compile-remove(control-bar-button-injection) */
                 ...injectedCustomButtonsFromProps
               ],
               legacyControlBarExperience: false
@@ -532,9 +523,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       /* @conditional-compile-remove(unsupported-browser) */
       onEnvironmentInfoTroubleshootingClick: props.onEnvironmentInfoTroubleshootingClick,
       remoteVideoTileMenuOptions: props.remoteVideoTileMenuOptions,
-      /* @conditional-compile-remove(gallery-layouts) */
+
       galleryOptions: props.galleryOptions,
-      /* @conditional-compile-remove(click-to-call) */
       localVideoTile: props.localVideoTile,
       /* @conditional-compile-remove(end-of-call-survey) */
       surveyOptions: surveyOptions,
@@ -560,9 +550,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       props.onNetworkingTroubleShootingClick,
       /* @conditional-compile-remove(call-readiness) */
       props.onPermissionsTroubleshootingClick,
-      /* @conditional-compile-remove(gallery-layouts) */
+
       props.galleryOptions,
-      /* @conditional-compile-remove(click-to-call) */
       props.localVideoTile,
       props.remoteVideoTileMenuOptions,
       /* @conditional-compile-remove(end-of-call-survey) */
@@ -585,7 +574,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
           topic: false,
           /* @conditional-compile-remove(chat-composite-participant-pane) */
           participantPane: false,
-          /* @conditional-compile-remove(file-sharing) */
+          /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
           fileSharing: props.fileSharing
         }}
         onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
@@ -593,7 +582,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     ),
     [
       chatAdapter,
-      /* @conditional-compile-remove(file-sharing) */ props.fileSharing,
+      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ props.fileSharing,
       props.onFetchAvatarPersonaData,
       theme
     ]
@@ -695,11 +684,9 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         joinInvitationURL={joinInvitationURL}
         fluentTheme={fluentTheme}
         remoteVideoTileMenuOptions={options?.remoteVideoTileMenuOptions}
-        /* @conditional-compile-remove(file-sharing) */
+        /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
         fileSharing={options?.fileSharing}
-        /* @conditional-compile-remove(click-to-call) */
         localVideoTile={options?.localVideoTile}
-        /* @conditional-compile-remove(gallery-layouts) */
         galleryOptions={options?.galleryOptions}
         /* @conditional-compile-remove(custom-branding) */
         logo={options?.branding?.logo}

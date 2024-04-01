@@ -18,7 +18,6 @@ import { _isRingingPSTNParticipant } from './callUtils';
 import { maskDisplayNameWithRole } from './callUtils';
 import { checkIsSpeaking } from './SelectorUtils';
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(raise-hand) */
 import { RaisedHandState } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(reaction) */
 import { Reaction } from '@internal/react-components';
@@ -83,8 +82,9 @@ export const _videoGalleryRemoteParticipantsMemo: _VideoGalleryRemoteParticipant
             participant.videoStreams,
             state,
             displayName,
-            /* @conditional-compile-remove(raise-hand) */
             participant.raisedHand,
+            /* @conditional-compile-remove(ppt-live) */
+            participant.contentSharingStream,
             /* @conditional-compile-remove(reaction) */
             remoteParticipantReaction,
             /* @conditional-compile-remove(spotlight) */
@@ -103,8 +103,9 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     videoStreams: { [key: number]: RemoteVideoStreamState },
     state: RemoteParticipantConnectionState,
     displayName?: string,
-    /* @conditional-compile-remove(raise-hand) */
     raisedHand?: unknown, // temp unknown type to build stable
+    /* @conditional-compile-remove(ppt-live) */
+    contentSharingStream?: HTMLElement,
     /* @conditional-compile-remove(reaction) */
     reaction?: unknown, // temp unknown type to build stable
     /* @conditional-compile-remove(spotlight) */
@@ -117,8 +118,9 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
       videoStreams,
       state,
       displayName,
-      /* @conditional-compile-remove(raise-hand) */
       raisedHand as RaisedHandState,
+      /* @conditional-compile-remove(ppt-live) */
+      contentSharingStream,
       /* @conditional-compile-remove(reaction) */
       reaction as Reaction,
       /* @conditional-compile-remove(spotlight) */
@@ -135,8 +137,9 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   videoStreams: { [key: number]: RemoteVideoStreamState },
   state: RemoteParticipantConnectionState,
   displayName?: string,
-  /* @conditional-compile-remove(raise-hand) */
   raisedHand?: unknown, // temp unknown type to build stable
+  /* @conditional-compile-remove(ppt-live) */
+  contentSharingStream?: HTMLElement,
   /* @conditional-compile-remove(reaction) */
   reaction?: unknown, // temp unknown type to build stable
   /* @conditional-compile-remove(spotlight) */
@@ -146,19 +149,31 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   let videoStream: VideoGalleryStream | undefined = undefined;
   let screenShareStream: VideoGalleryStream | undefined = undefined;
 
+  /**
+   * There is a bug from the calling sdk where if a user leaves and rejoins immediately
+   * it adds 2 more potential streams this remote participant can use. The old 2 streams
+   * still show as available and that is how we got a frozen stream in this case. The stopgap
+   * until streams accurately reflect their availability is to always prioritize the latest streams of a certain type
+   * e.g findLast instead of find
+   */
   const sdkRemoteVideoStream =
-    Object.values(rawVideoStreamsArray).find((i) => i.mediaStreamType === 'Video' && i.isAvailable) ||
-    Object.values(rawVideoStreamsArray).find((i) => i.mediaStreamType === 'Video');
+    Object.values(rawVideoStreamsArray).findLast((i) => i.mediaStreamType === 'Video' && i.isAvailable) ||
+    Object.values(rawVideoStreamsArray).findLast((i) => i.mediaStreamType === 'Video');
 
   const sdkScreenShareStream =
-    Object.values(rawVideoStreamsArray).find((i) => i.mediaStreamType === 'ScreenSharing' && i.isAvailable) ||
-    Object.values(rawVideoStreamsArray).find((i) => i.mediaStreamType === 'ScreenSharing');
+    Object.values(rawVideoStreamsArray).findLast((i) => i.mediaStreamType === 'ScreenSharing' && i.isAvailable) ||
+    Object.values(rawVideoStreamsArray).findLast((i) => i.mediaStreamType === 'ScreenSharing');
 
   if (sdkRemoteVideoStream) {
     videoStream = convertRemoteVideoStreamToVideoGalleryStream(sdkRemoteVideoStream);
   }
   if (sdkScreenShareStream) {
     screenShareStream = convertRemoteVideoStreamToVideoGalleryStream(sdkScreenShareStream);
+  }
+
+  /* @conditional-compile-remove(ppt-live) */
+  if (contentSharingStream) {
+    screenShareStream = convertRemoteContentSharingStreamToVideoGalleryStream(contentSharingStream);
   }
 
   return {
@@ -172,7 +187,6 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     /* @conditional-compile-remove(one-to-n-calling) */
     /* @conditional-compile-remove(PSTN-calls) */
     state,
-    /* @conditional-compile-remove(raise-hand) */
     raisedHand: raisedHand as RaisedHandState,
     /* @conditional-compile-remove(reaction) */
     reaction: reaction as Reaction,
@@ -194,6 +208,16 @@ const convertRemoteVideoStreamToVideoGalleryStream = (stream: RemoteVideoStreamS
   };
 };
 
+/* @conditional-compile-remove(ppt-live) */
+const convertRemoteContentSharingStreamToVideoGalleryStream = (stream: HTMLElement): VideoGalleryStream => {
+  return {
+    isAvailable: !!stream,
+    isReceiving: true,
+    isMirrored: false,
+    renderElement: stream
+  };
+};
+
 /** @private */
 export const memoizeLocalParticipant = memoizeOne(
   (
@@ -202,8 +226,8 @@ export const memoizeLocalParticipant = memoizeOne(
     isMuted,
     isScreenSharingOn,
     localVideoStream,
-    /* @conditional-compile-remove(rooms) */ role,
-    /* @conditional-compile-remove(raise-hand) */ raisedHand,
+    role,
+    raisedHand,
     /* @conditional-compile-remove(reaction) */ reaction,
     /* @conditional-compile-remove(spotlight) */ localSpotlight,
     /* @conditional-compile-remove(spotlight) */ capabilities
@@ -217,9 +241,7 @@ export const memoizeLocalParticipant = memoizeOne(
       isMirrored: localVideoStream?.view?.isMirrored,
       renderElement: localVideoStream?.view?.target
     },
-    /* @conditional-compile-remove(rooms) */
     role,
-    /* @conditional-compile-remove(raise-hand) */
     raisedHand: raisedHand,
     /* @conditional-compile-remove(reaction) */
     reaction: reaction,

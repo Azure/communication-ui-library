@@ -43,7 +43,7 @@
     "@types/http-errors": "^1.8.0",
     "@types/jest": "^29.5.11",
     "@types/morgan": "^1.9.2",
-    "@types/node": "^20.11.20",
+    "@types/node": "^20.11.25",
     "@types/supertest": "^2.0.12",
     "@types/webpack-node-externals": "^3.0.4",
     "@typescript-eslint/eslint-plugin": "^6.19.1",
@@ -65,7 +65,7 @@
     "ts-loader": "^8.0.12",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
-    "typescript": "5.3.3",
+    "typescript": "5.4.2",
     "webpack": "5.89.0",
     "webpack-cli": "^5.1.4",
     "webpack-node-externals": "^3.0.0"

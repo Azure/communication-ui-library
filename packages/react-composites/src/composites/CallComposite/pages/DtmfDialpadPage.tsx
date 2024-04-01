@@ -32,11 +32,13 @@ export interface DialpadPageProps {
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
   onSetDialpadPage: () => void;
   dtmfDialerPresent: boolean;
+  compositeAudioContext?: AudioContext;
 }
 
 interface DialpadPageContentProps {
   mobileView: boolean;
   adapter: CommonCallAdapter;
+  compositeAudioContext?: AudioContext;
 }
 
 const DtmfDialpadPageContent = (props: DialpadPageContentProps): JSX.Element => {
@@ -66,11 +68,11 @@ const DtmfDialpadPageContent = (props: DialpadPageContentProps): JSX.Element => 
         </Text>
         <Dialpad
           onSendDtmfTone={async (tone: DtmfTone) => {
-            /* @conditional-compile-remove(dtmf-dialer) */
             await adapter.sendDtmfTone(tone);
           }}
           longPressTrigger={props.mobileView ? 'touch' : 'mouseAndTouch'}
           dialpadMode={'dtmf'}
+          dtmfAudioContext={props.compositeAudioContext}
         ></Dialpad>
       </Stack>
     </Stack>
@@ -103,5 +105,5 @@ const DtmfDialerContentTimer = (): JSX.Element => {
 export const DtmfDialpadPage = (props: DialpadPageProps): JSX.Element => {
   const adapter = useAdapter();
 
-  return <DtmfDialpadPageContent adapter={adapter} mobileView={props.mobileView} />;
+  return <DtmfDialpadPageContent adapter={adapter} {...props} mobileView={props.mobileView} />;
 };

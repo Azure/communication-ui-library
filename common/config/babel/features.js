@@ -17,9 +17,6 @@ module.exports = {
     "chat-composite-participant-pane",
     // Close captions feature
     "close-captions",
-    // API for injecting custom buttons in he control bar for
-    // `CallComposite` and `CallWithChatComposite`.
-    "control-bar-button-injection",
     // props to allow Contoso to overwrite timestamp format for chat messages, one in locale and one in message thread component
     "date-time-customization",
     // Demo feature. Used in live-documentation of conditional compilation.
@@ -29,8 +26,10 @@ module.exports = {
     "dialpad",
     // Data loss prevention feature
     "data-loss-prevention",
-    // Ability to upload/download files in message thread.
-    "file-sharing",
+    // Ability to download files attachments in message thread.
+    "attachment-download",
+    // Ability to upload files attachments in message thread.
+    "attachment-upload",
     // Mention feature
     "mention",
     // 1 to N Calling feature.
@@ -41,8 +40,6 @@ module.exports = {
     "teams-adhoc-call",
     // Joining calls using teams token
     "teams-identity-support",
-    // Chat teams interop to display images and file attachments in chat messages
-    "teams-inline-images-and-file-sharing",
     "unsupported-browser",
     // Support Calling SDK isReceiving flag, shows a loading spinner on the video tile when isAvailable is true but isReceiving is false
     "video-stream-is-receiving-flag",
@@ -50,22 +47,12 @@ module.exports = {
     "total-participant-count",
     // feature for tracking environment info API different than unsupported browser. stable use of environment info affects other components possibly sooner
     "calling-environment-info",
-    // feature for vertical gallery layouts in VideoGallery
-    "vertical-gallery",
-    // Feature for updates needed for Click to Call (C2C) scenarios
-    "click-to-call",
     // a demo feature flag for those beta feature not ready for beta release
     "in-progress-beta-feature-demo",
     // Feature for call transfer
     "call-transfer",
-    // Optimal Video Count
-    "optimal-video-count",
     // Feature for capabilities
     "capabilities",
-    // Feature for custom video gallery layouts
-    "gallery-layouts",
-    // Feature image overlay
-    "image-overlay",
     // Feature for large Gallery layout
     "large-gallery",
     // feature for positioning the overflowGallery at the top of the screen in the composite
@@ -78,8 +65,6 @@ module.exports = {
     "hide-attendee-name",
     // custom branding for the composites
     "custom-branding",
-    // Feature for sounds during different calling events
-    "calling-sounds",
     // Feature for end of call survey
     'end-of-call-survey',
     // Feature for the DTMF dialer for Teams voice apps
@@ -93,7 +78,17 @@ module.exports = {
     // Feature for spotlight
     'spotlight',
     // Feature for tracking beta start call identifier
-    'start-call-beta'
+    'start-call-beta',
+    // Join meeting with meetingId and passcode
+    'meeting-id',
+    // Image overlay theme
+    'image-overlay-theme',
+     // Close captions feature for ACS calls
+     "acs-close-captions",
+    // Feature for local recording notification for teams meetings
+    'local-recording-notification',
+    // Feature for end call options 
+    'end-call-options'
   ],
   // A list of in progress beta feature.
   // These features are still beta feature but "in progress"
@@ -111,20 +106,16 @@ module.exports = {
     "gallery-layout-composite",
     // feature for hiding attendee name in the teams meeting
     "hide-attendee-name",
-    // custom branding for the composites
-    "custom-branding",
-    // Feature for end of call survey
-    'end-of-call-survey',
-    // Feature for PPT Live for teams meeting
-    'ppt-live',
-    // Feature for end of call survey self host version
-    'end-of-call-survey-self-host',
     // Feature for meeting reactions
     'reaction',
     // Feature for Rich Text Editor (RTE) support
     'rich-text-editor',
     // Feature for spotlight
-    'spotlight'
+    'spotlight',
+    // Join meeting with meetingId and passcode
+    'meeting-id',
+    // Close captions feature for ACS calls
+    "acs-close-captions",
   ],
   // A list of stabilized features.
   // These features can be listed in the conditional compilation directives without
@@ -133,34 +124,19 @@ module.exports = {
     // Demo feature. Used in live-documentation of conditional compilation.
     // Do not use in production code.
     "stabilizedDemo",
-    // feature for blurred background and replace background effects
-    "video-background-effects",
     // Feature for capabilities
     "capabilities",
     // Closed captions
     "close-captions",
-    // Optimal Video Count
-    "optimal-video-count",
-    // raise hands feature
-    "raise-hand",
-    // Feature for gallery layouts
-    "gallery-layouts",
-    // feature  for vertical overflow gallery
-    "vertical-gallery",
-    // API for injecting custom buttons in he control bar for
-    // `CallComposite` and `CallWithChatComposite`.
-    "control-bar-button-injection",
-    // rooms
-    "rooms",
-    // feature for calling sounds
-    "calling-sounds",
     // Feature for the DTMF dialer for Teams voice apps
     "dtmf-dialer",
-    // dialpad
-    "dialpad",
-    // Feature for updates needed for Click to Call (C2C) scenarios
-    "click-to-call",
     // Feature for call transfer
-    "call-transfer"
+    "call-transfer",
+    // custom branding for the composites
+    "custom-branding",
+    // Feature for PPT Live for teams meeting
+    'ppt-live',
+    // Support Calling SDK isReceiving flag, shows a loading spinner on the video tile when isAvailable is true but isReceiving is false
+    "video-stream-is-receiving-flag",
   ]
 }

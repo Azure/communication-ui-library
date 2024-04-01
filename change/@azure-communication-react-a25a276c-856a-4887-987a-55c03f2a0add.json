@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "area": "Feature",
-  "workstream": "UI Library supports receiving a Powerpoint Live stream",
-  "comment": "stateful client",
-  "packageName": "@azure/communication-react",
-  "email": "93549644+ShaunaSong@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -4,81 +4,13 @@
 import { EventEmitter } from 'events';
 import { nanoid } from 'nanoid';
 import { _MAX_EVENT_LISTENERS } from '@internal/acs-ui-common';
-import { AttachmentMetadata, FileMetadata } from '@internal/react-components';
-
-/**
- * Contains the state attributes of a file upload like name, progress etc.
- * @beta
- */
-export interface FileUploadState {
-  /**
-   * Unique identifier for the file upload.
-   */
-  id: string;
-
-  /**
-   * Filename extracted from the {@link File} object.
-   * This attribute is used to render the filename if `metadata.name` is not available.
-   */
-  filename: string;
-
-  /**
-   * A number between 0 and 1 indicating the progress of the upload.
-   */
-  progress: number;
-
-  /**
-   * Metadata {@link AttachmentMetadata} containing information about the uploaded file.
-   */
-  metadata?: AttachmentMetadata;
-
-  /**
-   * Error message to be displayed to the user if the upload fails.
-   */
-  error?: FileUploadError;
-}
-
-/**
- * @beta
- * Error message to be displayed to the user if the upload fails.
- */
-export type FileUploadError = {
-  message: string;
-  timestamp: number;
-};
-
-/**
- * A wrapper object for a file that is being uploaded.
- * Allows managing file uploads by providing common functions for updating the
- * upload progress, canceling an upload, completing an upload etc.
- * @beta
- */
-export interface FileUploadManager {
-  /**
-   * Unique identifier for the file upload.
-   */
-  id: string;
-  /**
-   * HTML {@link File} object for the uploaded file.
-   */
-  file?: File;
-  /**
-   * Update the progress of the upload.
-   * @param value - number between 0 and 1
-   */
-  notifyUploadProgressChanged: (value: number) => void;
-  /**
-   * Mark the upload as complete.
-   * Requires the `metadata` param containing uploaded file information.
-   * @param metadata - {@link AttachmentMetadata}
-   */
-  notifyUploadCompleted: (metadata: AttachmentMetadata) => void;
-  /**
-   * Mark the upload as failed.
-   * @param message - An error message that can be displayed to the user.
-   */
-  notifyUploadFailed: (message: string) => void;
-}
+import {
+  AttachmentMetadata,
+  FileUploadHandler,
+  FileUploadManager,
+  FileUploadState,
+  FileUploadError
+} from '@internal/react-components';
 
 /**
  * A wrapper object for a file that is being uploaded.
@@ -107,7 +39,7 @@ export class FileUpload implements FileUploadManager, FileUploadEventEmitter {
     } else {
       this.metadata = data;
     }
-    const name = (data as unknown as FileMetadata)?.name;
+    const name = (data as unknown as AttachmentMetadata)?.name;
     this.fileName = name;
   }
 
@@ -147,6 +79,8 @@ export class FileUpload implements FileUploadManager, FileUploadEventEmitter {
     this._emitter.removeListener(event, listener);
   }
 }
+
+export type { AttachmentMetadata, FileUploadHandler, FileUploadManager, FileUploadState, FileUploadError };
 
 /**
  * Events emitted by the FileUpload class.

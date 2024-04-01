@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(spotlight) */
 import {
   DefaultButton,
   IButtonStyles,
@@ -13,12 +12,9 @@ import {
   Theme,
   mergeStyles
 } from '@fluentui/react';
-/* @conditional-compile-remove(spotlight) */
 import { useTheme } from '@internal/react-components';
-/* @conditional-compile-remove(spotlight) */
 import React from 'react';
 
-/* @conditional-compile-remove(spotlight) */
 /**
  * @private
  */
@@ -33,7 +29,6 @@ export interface PromptProps {
   onCancel?: () => void;
 }
 
-/* @conditional-compile-remove(spotlight) */
 /**
  * @private
  */
@@ -49,15 +44,14 @@ export const Prompt = (props: PromptProps): JSX.Element => {
       <Stack verticalAlign="center" className={mergeStyles({ minHeight: '6rem' })}>
         <Text className={mergeStyles({ fontSize: '0.875rem' })}>{props.text}</Text>
       </Stack>
-      <Stack horizontal reversed tokens={{ childrenGap: '0.5rem' }}>
-        <DefaultButton styles={buttonTextStyles} text={props.cancelButtonLabel} onClick={props.onCancel} />
+      <Stack horizontal horizontalAlign="end" tokens={{ childrenGap: '0.5rem' }}>
         <PrimaryButton styles={buttonTextStyles} text={props.confirmButtonLabel} onClick={props.onConfirm} />
+        <DefaultButton styles={buttonTextStyles} text={props.cancelButtonLabel} onClick={props.onCancel} />
       </Stack>
     </Modal>
   );
 };
 
-/* @conditional-compile-remove(spotlight) */
 const iconButtonStyles = (theme: Theme): IButtonStyles => ({
   root: {
     position: 'absolute',
@@ -70,10 +64,8 @@ const iconButtonStyles = (theme: Theme): IButtonStyles => ({
   }
 });
 
-/* @conditional-compile-remove(spotlight) */
 const modalStyles = { main: { padding: '1.5rem ', maxWidth: '30rem' } };
 
-/* @conditional-compile-remove(spotlight) */
 const buttonTextStyles: IButtonStyles = { label: { fontSize: '0.875rem' } };
 
 /* @conditional-compile-remove(spotlight) */
@@ -111,6 +103,10 @@ export interface SpotlightPromptStrings {
    */
   stopSpotlightOnSelfHeading: string;
   /**
+   * Heading for prompt when stopping all spotlight
+   */
+  stopAllSpotlightHeading: string;
+  /**
    * Text for prompt when stopping spotlight on participant
    */
   stopSpotlightText: string;
@@ -119,7 +115,11 @@ export interface SpotlightPromptStrings {
    */
   stopSpotlightOnSelfText: string;
   /**
-   * Label for button to confirm stopping spotlight on participant in prompt
+   * Text for prompt when stopping all spotlight
+   */
+  stopAllSpotlightText: string;
+  /**
+   * Label for button to confirm stopping spotlight on participant(s) in prompt
    */
   stopSpotlightConfirmButtonLabel: string;
   /**
@@ -127,7 +127,7 @@ export interface SpotlightPromptStrings {
    */
   stopSpotlightOnSelfConfirmButtonLabel: string;
   /**
-   * Label for button to cancel stopping spotlight on participant in prompt
+   * Label for button to cancel stopping spotlight on participant(s) in prompt
    */
   stopSpotlightCancelButtonLabel: string;
 }

@@ -2,14 +2,14 @@
 // Licensed under the MIT License.
 
 import { AttachmentMetadata } from '@internal/react-components';
-import { FileUploadManager, FileUploadState } from '../file-sharing';
-/* @conditional-compile-remove(file-sharing) */
+import { FileUploadManager, FileUploadState } from '@internal/react-components';
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { produce } from 'immer';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { FileSharingMetadata, FileUpload } from '../file-sharing';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { ChatContext } from './AzureCommunicationChatAdapter';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { ChatAdapterState } from './ChatAdapter';
 
 /**
@@ -31,7 +31,7 @@ export interface FileUploadAdapter {
   updateFileUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
 }
 
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 /**
  * @internal
  */
@@ -88,7 +88,7 @@ class FileUploadContext {
   }
 }
 
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 /**
  * @internal
  */
@@ -184,26 +184,30 @@ export class AzureCommunicationFileUploadAdapter implements FileUploadAdapter {
   }
 }
 
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 /**
  * @param fileUploadUiState {@link FileUploadsUiState}
  * @private
  */
-export const convertFileUploadsUiStateToMessageMetadata = (fileUploads?: FileUploadsUiState): FileSharingMetadata => {
-  const fileMetadata: AttachmentMetadata[] = [];
+export const convertFileUploadsUiStateToMessageMetadata = (
+  fileUploads?: FileUploadsUiState
+): FileSharingMetadata | undefined => {
   if (fileUploads) {
+    const fileMetadata: AttachmentMetadata[] = [];
     Object.keys(fileUploads).forEach((key) => {
       const file = fileUploads[key];
       if (!file.error && file.metadata) {
         fileMetadata.push(file.metadata);
       }
     });
+    if (fileMetadata.length > 0) {
+      return { fileSharingMetadata: JSON.stringify(fileMetadata) };
+    }
   }
-
-  return { fileSharingMetadata: JSON.stringify(fileMetadata) };
+  return undefined;
 };
 
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 /**
  * @private
  */

@@ -11,7 +11,7 @@ import React, { useState } from 'react';
 
 export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
   const [overlayImageItem, setOverlayImageItem] =
-    useState<{ imageSrc: string; title: string; titleIcon: JSX.Element; downloadFilename: string }>();
+    useState<{ imageSrc: string; title: string; titleIcon: JSX.Element; downloadImagename: string }>();
 
   const onInlineImageClicked = (attachmentId: string, messageId: string): Promise<void> => {
     const filteredMessages = messages?.filter((message) => {
@@ -21,31 +21,27 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
       return Promise.reject(`Message not found with messageId ${messageId}`);
     }
     const chatMessage = filteredMessages[0] as ChatMessage;
-
-    const specificImage = chatMessage.inlineImages?.filter((attachment) => {
-      return attachment.id === attachmentId;
-    });
-
-    if (!specificImage || specificImage.length <= 0) {
-      return Promise.reject(`Attachment not found with id ${attachmentId}`);
-    }
-
-    const attachment = specificImage[0];
     const title = 'Image';
     const titleIcon = (
       <Persona text={chatMessage.senderDisplayName} size={PersonaSize.size32} hidePersonaDetails={true} />
     );
+    const document = new DOMParser().parseFromString(chatMessage.content ?? '', 'text/html');
+    let imgSrc = '';
+    document.querySelectorAll('img').forEach((img) => {
+      if (img.id === attachmentId) {
+        imgSrc = img.src;
+      }
+    });
     const overlayImage = {
       title,
       titleIcon,
-      downloadFilename: attachment.id,
-      imageSrc: attachment.url
+      downloadImagename: attachmentId,
+      imageSrc: imgSrc
     };
     setOverlayImageItem(overlayImage);
     return Promise.resolve();
   };
 
-  /* @conditional-compile-remove(image-overlay) */
   const inlineImageOptions = {
     onRenderInlineImage: (
       inlineImage: InlineImage,
@@ -53,12 +49,12 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
     ): JSX.Element => {
       return (
         <span
-          onClick={() => onInlineImageClicked(inlineImage.imgAttrs.id || '', inlineImage.messageId)}
+          onClick={() => onInlineImageClicked(inlineImage.imageAttributes.id || '', inlineImage.messageId)}
           tabIndex={0}
           role="button"
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
-              onInlineImageClicked(inlineImage.imgAttrs.id || '', inlineImage.messageId);
+              onInlineImageClicked(inlineImage.imageAttributes.id || '', inlineImage.messageId);
             }
           }}
         >
@@ -79,21 +75,7 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
       createdOn: new Date('2019-04-13T00:00:00.000+08:09'),
       mine: false,
       attached: false,
-      contentType: 'html',
-      inlineImages: [
-        {
-          id: 'SomeImageId1',
-          attachmentType: 'inlineImage',
-          url: 'images/inlineImageExample1.png',
-          previewUrl: 'images/inlineImageExample1.png'
-        },
-        {
-          id: 'SomeImageId2',
-          attachmentType: 'inlineImage',
-          url: 'images/inlineImageExample2.png',
-          previewUrl: 'images/inlineImageExample2.png'
-        }
-      ]
+      contentType: 'html'
     },
     {
       messageType: 'chat',

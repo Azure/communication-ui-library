@@ -4,13 +4,7 @@
 import { ChatParticipant, ChatMessage } from '@azure/communication-chat';
 import { getIdentifierKind } from '@azure/communication-common';
 import { _createStatefulChatClientWithDeps } from '@internal/chat-stateful-client';
-import {
-  _IdentifierProvider,
-  FileDownloadError,
-  FileDownloadHandler,
-  lightTheme,
-  darkTheme
-} from '@internal/react-components';
+import { _IdentifierProvider, lightTheme, darkTheme, defaultAttachmentMenuAction } from '@internal/react-components';
 import React, { useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import {
@@ -30,6 +24,7 @@ import {
 } from './CustomDataModel';
 import { FakeChatClient, Model, Thread } from '@internal/fake-backends';
 import { HiddenChatComposites } from '../lib/HiddenChatComposites';
+import { AttachmentMenuAction } from '@internal/react-components';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -71,20 +66,25 @@ export const FakeAdapterApp = (): JSX.Element => {
           fakeChatAdapterArgs.localParticipant,
           fakeChatAdapterArgs.remoteParticipants[0],
           fakeAdapters.service.threadId,
+          fakeChatAdapterArgs.serverUrl ?? '',
           fakeChatAdapterArgs.inlineImageUrl
         );
       }
     })();
   }, [fakeAdapters]);
 
-  const fileDownloadHandler: FileDownloadHandler = (_userId, fileData): Promise<URL | FileDownloadError> => {
-    return new Promise((resolve) => {
-      if (fakeChatAdapterArgs.failFileDownload) {
-        resolve({ errorMessage: 'You don’t have permission to download this file.' });
-      } else {
-        resolve(new URL(fileData.url));
-      }
-    });
+  const actionsForAttachment = (): AttachmentMenuAction[] => {
+    if (fakeChatAdapterArgs.failFileDownload) {
+      return [
+        {
+          ...defaultAttachmentMenuAction,
+          onClick: () => {
+            throw Error('You don’t have permission to download this file.');
+          }
+        }
+      ];
+    }
+    return [defaultAttachmentMenuAction];
   };
 
   if (!fakeAdapters) {
@@ -106,7 +106,7 @@ export const FakeAdapterApp = (): JSX.Element => {
               participantPane: fakeChatAdapterArgs.showParticipantPane ?? false,
               fileSharing: fakeChatAdapterArgs.fileSharingEnabled
                 ? {
-                    downloadHandler: fileDownloadHandler,
+                    actionsForAttachment: actionsForAttachment,
                     uploadHandler: () => {
                       //noop
                     },
@@ -134,9 +134,7 @@ const handleFileUploads = (adapter: ChatAdapter, fileUploads: _MockFileUpload[])
         name: file.name,
         extension: file.extension,
         url: file.url,
-        /* @conditional-compile-remove(file-sharing) */
-        attachmentType: 'file',
-        /* @conditional-compile-remove(file-sharing) */
+        /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
         id: file.id
       });
     } else if (file.error) {
@@ -176,11 +174,12 @@ const sendRemoteInlineImageMessage = (
   localParticipant: ChatParticipant,
   remoteParticipant: ChatParticipant,
   threadId: string,
+  serverUrl: string,
   inlineImageUrl?: string
 ): void => {
   const localParticipantId = getIdentifierKind(localParticipant.id);
   const remoteParticipantId = getIdentifierKind(remoteParticipant.id);
-  const imgSrc = inlineImageUrl || 'images/inlineImageExample1.png';
+  const imgSrc = serverUrl + (inlineImageUrl || '/images/inlineImageExample1.png');
   if (localParticipantId.kind === 'microsoftTeamsApp' || remoteParticipantId.kind === 'microsoftTeamsApp') {
     throw new Error('Unsupported identifier kind: microsoftBot');
   }
@@ -199,7 +198,7 @@ const sendRemoteInlineImageMessage = (
           attachmentType: 'image',
           name: '',
           url: imgSrc,
-          previewUrl: 'images/inlineImageExample1.png'
+          previewUrl: imgSrc
         }
       ]
     },

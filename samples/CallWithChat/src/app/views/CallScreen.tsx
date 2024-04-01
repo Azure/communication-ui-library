@@ -12,7 +12,7 @@ import {
   CallWithChatAdapter,
   CallWithChatCompositeOptions
 } from '@azure/communication-react';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { onResolveVideoEffectDependencyLazy, AzureCommunicationCallAdapterOptions } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
@@ -41,7 +41,6 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
   } = props;
 
-  /* @conditional-compile-remove(video-background-effects) */
   const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(() => {
     const videoBackgroundImages = [
       {
@@ -83,7 +82,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     return {
       videoBackgroundOptions: {
         videoBackgroundImages,
-        /* @conditional-compile-remove(video-background-effects) */
+
         onResolveDependency: onResolveVideoEffectDependencyLazy
       },
       /* @conditional-compile-remove(reaction) */
@@ -149,7 +148,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       endpoint,
       locator,
       /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-      /* @conditional-compile-remove(video-background-effects) */ callAdapterOptions: callAdapterOptions
+      callAdapterOptions: callAdapterOptions
     },
     afterAdapterCreate
   );
@@ -159,7 +158,11 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const options: CallWithChatCompositeOptions = useMemo(
     () => ({
       callControls: {
-        screenShareButton: shouldHideScreenShare ? false : undefined
+        screenShareButton: shouldHideScreenShare ? false : undefined,
+        /* @conditional-compile-remove(end-call-options) */
+        endCallButton: {
+          hangUpForEveryone: 'endCallOptions'
+        }
       }
     }),
     [shouldHideScreenShare]

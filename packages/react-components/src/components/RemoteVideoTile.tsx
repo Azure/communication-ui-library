@@ -26,6 +26,8 @@ import { VideoTile } from './VideoTile';
 import { _formatString } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '../types/ReactionTypes';
+/* @conditional-compile-remove(reaction) */
+import { MeetingReactionOverlay } from './MeetingReactionOverlay';
 
 /**
  * A memoized version of VideoTile for rendering remote participants. React.memo is used for a performance
@@ -191,6 +193,15 @@ export const _RemoteVideoTile = React.memo(
       return displayName;
     };
 
+    /* @conditional-compile-remove(reaction) */
+    const reactionOverlay = (
+      <MeetingReactionOverlay
+        overlayMode="grid-tiles"
+        reaction={remoteParticipant.reaction}
+        reactionResources={reactionResources!}
+      />
+    );
+
     /* @conditional-compile-remove(hide-attendee-name) */
     displayName = formatDisplayName();
     return (
@@ -207,10 +218,7 @@ export const _RemoteVideoTile = React.memo(
           displayName={displayName}
           onRenderPlaceholder={onRenderAvatar}
           isMuted={remoteParticipant.isMuted}
-          /* @conditional-compile-remove(raise-hand) */
           raisedHand={remoteParticipant.raisedHand}
-          /* @conditional-compile-remove(reaction) */
-          reaction={remoteParticipant.reaction}
           isSpeaking={remoteParticipant.isSpeaking}
           showMuteIndicator={showMuteIndicator}
           personaMinSize={props.personaMinSize}
@@ -228,7 +236,7 @@ export const _RemoteVideoTile = React.memo(
           /* @conditional-compile-remove(spotlight) */
           isSpotlighted={isSpotlighted}
           /* @conditional-compile-remove(reaction) */
-          reactionResources={reactionResources}
+          overlay={reactionOverlay}
         />
         {drawerMenuItemProps.length > 0 && (
           <Layer hostId={props.drawerMenuHostId}>

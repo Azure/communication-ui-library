@@ -203,6 +203,10 @@ export interface CallCompositeStrings {
    */
   peoplePaneTitle: string;
   /**
+   * Aria label of more button in people pane
+   */
+  peoplePaneMoreButtonAriaLabel: string;
+  /**
    * Aria label string for return to call back button
    */
   returnToCallButtonAriaLabel?: string;
@@ -250,27 +254,32 @@ export interface CallCompositeStrings {
   /**
    * Label for menu item to start spotlight on participant
    */
-  startSpotlightParticipantListMenuLabel: string;
+  startSpotlightMenuLabel: string;
   /* @conditional-compile-remove(spotlight) */
   /**
    * Label for menu item to add spotlight on participant
    */
-  addSpotlightParticipantListMenuLabel: string;
+  addSpotlightMenuLabel: string;
   /* @conditional-compile-remove(spotlight) */
   /**
    * Label for menu item to stop spotlight on participant
    */
-  stopSpotlightParticipantListMenuLabel: string;
+  stopSpotlightMenuLabel: string;
   /* @conditional-compile-remove(spotlight) */
   /**
    * Label for menu item to stop spotlight on local user
    */
-  stopSpotlightOnSelfParticipantListMenuLabel: string;
+  stopSpotlightOnSelfMenuLabel: string;
   /* @conditional-compile-remove(spotlight) */
   /**
    * Label for menu item to stop spotlight on local user
    */
-  spotlightLimitReachedParticipantListMenuTitle: string;
+  spotlightLimitReachedMenuTitle: string;
+  /* @conditional-compile-remove(spotlight) */
+  /**
+   * Label for menu item to stop all spotlight
+   */
+  stopAllSpotlightMenuLabel: string;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Label for add people dropdown
@@ -339,87 +348,79 @@ export interface CallCompositeStrings {
    * aria label for when the invite link has been actioned
    */
   copyInviteLinkActionedAriaLabel: string;
-  /* @conditional-compile-remove(rooms) */
   /**
    * Title text of the page shown to the user when the user attempts to join a room that cannot be found.
    */
   roomNotFoundTitle: string;
-  /* @conditional-compile-remove(rooms) */
   /**
    * More details text of the page shown to the user when the user attempts to join a room that cannot be found.
    */
   roomNotFoundDetails?: string;
-  /* @conditional-compile-remove(rooms) */
   /**
    * Title text of the page shown to the user when the user attempts to join a room that is not valid.
    */
   roomNotValidTitle: string;
-  /* @conditional-compile-remove(rooms) */
   /**
    * More details text of the page shown to the user when the user attempts to join a room that is not valid.
    */
   roomNotValidDetails?: string;
-  /* @conditional-compile-remove(rooms) */
   /**
    * Title text of the page shown to the user when the user's permission to join the room is removed.
    */
   inviteToRoomRemovedTitle: string;
-  /* @conditional-compile-remove(rooms) */
   /**
    * More details text of the page shown to the user when the user's permission to join the room is removed.
    */
   inviteToRoomRemovedDetails?: string;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Video Effects pane title.
    */
   videoEffectsPaneTitle: string;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Video Effects pane sub section title for choosing background.
    */
   videoEffectsPaneBackgroundSelectionTitle: string;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Label for the button to open effects
    */
   configurationPageVideoEffectsButtonLabel?: string;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Error message for video effect failure
    */
   unableToStartVideoEffect?: string;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Label for the blur video background effect item
    */
   blurBackgroundEffectButtonLabel?: string;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Tooltip text for the blur video background effect item
    */
   blurBackgroundTooltip?: string;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Label for the remove video background effect item
    */
   removeBackgroundEffectButtonLabel?: string;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Tooltip text for the blur video background effect item
    */
   removeBackgroundTooltip?: string;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Text to show when warning the user the camera is off and inform the user to turn the camera on to see the selected video background effect.
    */
   cameraOffBackgroundEffectWarningText?: string;
-  /* @conditional-compile-remove(rooms) */
   /**
    * Title text of the page shown to the user when the user attempts to join a room they are not invited to.
    */
   notInvitedToRoomTitle: string;
-  /* @conditional-compile-remove(rooms) */
   /**
    * More details text of the page shown to the user when the user attempts to join a room they are not invited to.
    */
@@ -647,37 +648,30 @@ export interface CallCompositeStrings {
    * More details text of the page shown to the user when target participant id is malformed
    */
   participantIdIsMalformedMoreDetails?: string;
-  /* @conditional-compile-remove(gallery-layouts) */
   /**
    * Controls label to move the overflow gallery around
    */
   moreButtonGalleryControlLabel?: string;
-  /* @conditional-compile-remove(gallery-layouts) */
   /**
    * Label for the toggle to move the overflow gallery to the top
    */
   moreButtonGalleryPositionToggleLabel?: string;
-  /* @conditional-compile-remove(gallery-layouts) */
   /**
    * Label for the selection of the speaker layout
    */
   moreButtonGallerySpeakerLayoutLabel?: string;
-  /* @conditional-compile-remove(gallery-layouts) */
   /**
    * Label for the selection of the default (Gallery) layout
    */
   moreButtonGalleryDefaultLayoutLabel?: string;
-  /* @conditional-compile-remove(gallery-layouts) */
   /**
    * Label for the selection of the default (Gallery) layout
    */
   moreButtonLargeGalleryDefaultLayoutLabel?: string;
-  /* @conditional-compile-remove(gallery-layouts) */
   /**
    * Label for the selection of the floatingLocalVideo (Dynamic) layout
    */
   moreButtonGalleryFloatingLocalLayoutLabel?: string;
-  /* @conditional-compile-remove(gallery-layouts) */
   /**
    * Label for the selection of the focusedContentLayout (Focused content) layout
    */
@@ -776,12 +770,10 @@ export interface CallCompositeStrings {
    * String for the dismiss control on the local and remote PIP on mobile
    */
   dismissModalAriaLabel?: string;
-  /* @conditional-compile-remove(calling-sounds) */
   /**
    * String for title when the call is rejected by the callee
    */
   callRejectedTitle?: string;
-  /* @conditional-compile-remove(calling-sounds) */
   /**
    * String for more details when the call is rejected by the callee
    */
@@ -802,27 +794,22 @@ export interface CallCompositeStrings {
    * String for more details when the call times out when calling a bot
    */
   callTimeoutBotDetails?: string;
-  /* @conditional-compile-remove(dtmf-dialer) */
   /**
    * Label for the control bar button to show the dtmf dialer when the more button is disabled
    */
   dtmfDialerButtonLabel?: string;
-  /* @conditional-compile-remove(dtmf-dialer) */
   /**
    * Tooltip for the control bar button to show the dtmf dialer when the more button is disabled
    */
   dtmfDialerButtonTooltipOn?: string;
-  /* @conditional-compile-remove(dtmf-dialer) */
   /**
    * Tooltip for the control bar button to hide the dtmf dialer when the more button is disabled
    */
   dtmfDialerButtonTooltipOff?: string;
-  /* @conditional-compile-remove(dtmf-dialer) */
   /**
    * Label to show the dtmf dialer in the more button menu
    */
   dtmfDialerMoreButtonLabelOn?: string;
-  /* @conditional-compile-remove(dtmf-dialer) */
   /**
    * Label to hide the dtmf dialer in the more button menu
    */
@@ -842,4 +829,39 @@ export interface CallCompositeStrings {
    * Tooltip for button to exit spotlight
    */
   exitSpotlightButtonTooltip: string;
+  /* @conditional-compile-remove(end-call-options) */
+  /**
+   * Label for confirm button in hang up confirm dialog
+   */
+  hangUpConfirmButtonLabel?: string;
+  /* @conditional-compile-remove(end-call-options) */
+  /**
+   * Label for cancel button in hang up confirm dialog
+   */
+  hangUpCancelButtonLabel?: string;
+  /* @conditional-compile-remove(end-call-options) */
+  /**
+   * Title of confirm dialog when leaving
+   */
+  leaveConfirmDialogTitle?: string;
+  /* @conditional-compile-remove(end-call-options) */
+  /**
+   * Content of confirm dialog when leaving
+   */
+  leaveConfirmDialogContent?: string;
+  /* @conditional-compile-remove(end-call-options) */
+  /**
+   * Title of confirm dialog when leaving
+   */
+  endCallConfirmDialogTitle?: string;
+  /* @conditional-compile-remove(end-call-options) */
+  /**
+   * Content of confirm dialog when leaving
+   */
+  endCallConfirmDialogContent?: string;
+  /* @conditional-compile-remove(meeting-id) */
+  /**
+   * Error message when the meeting identifier or passcode is invalid
+   */
+  invalidMeetingIdentifier: string;
 }

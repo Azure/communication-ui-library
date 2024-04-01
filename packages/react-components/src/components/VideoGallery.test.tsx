@@ -320,7 +320,6 @@ describe('VideoGallery floating local video layout tests', () => {
   });
 });
 
-/* @conditional-compile-remove(gallery-layouts) */
 describe('VideoGallery Speaker layout tests', () => {
   beforeAll(() => {
     mockVideoGalleryInternalHelpers();
@@ -389,7 +388,6 @@ describe('VideoGallery Speaker layout tests', () => {
   });
 });
 
-/* @conditional-compile-remove(gallery-layouts) */
 describe('VideoGallery Focused Content layout tests', () => {
   beforeAll(() => {
     mockVideoGalleryInternalHelpers();
@@ -558,7 +556,6 @@ describe('VideoGallery pinned participants tests', () => {
   );
 });
 
-// /* @conditional-compile-remove(vertical-gallery) */
 describe('VideoGallery with vertical overflow gallery tests', () => {
   beforeAll(() => {
     mockVideoGalleryInternalHelpers();
@@ -690,7 +687,6 @@ const getGridLayout = (root: Element | null): Element | null =>
   root?.querySelector('[data-ui-id="grid-layout"]') ?? null;
 const getHorizontalGallery = (root: Element | null): Element | null =>
   root?.querySelector('[data-ui-id="responsive-horizontal-gallery"]') ?? null;
-/* @conditional-compile-remove(vertical-gallery) */
 const getVerticalGallery = (root: Element | null): Element | null =>
   root?.querySelector('[data-ui-id="responsive-vertical-gallery"]') ?? null;
 
