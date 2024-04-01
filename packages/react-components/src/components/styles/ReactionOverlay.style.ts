@@ -185,13 +185,17 @@ export interface IReactionStyleBucket {
  * @private
  */
 export function getReactionStyleBucket(activeSpritesCount: number): IReactionStyleBucket {
-  const index = activeSpritesCount < 3 ? 0 : activeSpritesCount < 5 ? getRandomInt(0, 1) : getRandomInt(0, 2);
+  //const index = activeSpritesCount < 3 ? 0 : activeSpritesCount < 5 ? getRandomInt(0, 1) : getRandomInt(0, 2);
+  // Having dynamic emoji size on rendering animation impacts performance of the animation itself.
+  // So we are choosing to use a fixed size for all cases.
+  const index = 1;
   return ReactionStyleBuckets[index];
 }
 
 /* @conditional-compile-remove(reaction) */
 /**
  * Return a style bucket for burst scenario
+ * We can utilize this style when we allow more than 50 reactions at a time. Can be configured through ECS.
  * @private
  */
 export function getReactionBurstStyleBucket(): IReactionStyleBucket {
