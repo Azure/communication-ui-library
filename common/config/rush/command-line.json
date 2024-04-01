@@ -101,6 +101,14 @@
     },
     {
       "commandKind": "global",
+      "name": "us",
+      "summary": "SHORTNAME: update:stable",
+      "description": "SHORTNAME: update:stable",
+      "shellCommand": "rush update:stable",
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "global",
       "name": "build:all-flavors",
       "summary": "Build all packages for all flavors in one command",
       "description": "Build all packages for all flavors in one command. This command will switch current flavor to beta.",
