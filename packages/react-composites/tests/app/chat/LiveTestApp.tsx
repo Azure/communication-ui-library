@@ -60,21 +60,22 @@ export const LiveTestApp = (): JSX.Element => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       uploadedFiles.forEach((file: any) => {
         if (file.uploadComplete) {
-          const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
-          fileUploads[0].notifyUploadCompleted({
+          const attachmentUploads = adapter.registerActiveUploads([new File([], file.name)]);
+          attachmentUploads[0].notifyCompleted({
             name: file.name,
             extension: file.extension,
             url: file.url,
+            progress: 1,
             id: ''
           });
         } else if (file.error) {
-          const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
-          fileUploads[0].notifyUploadFailed(file.error);
+          const attachmentUploads = adapter.registerActiveUploads([new File([], file.name)]);
+          attachmentUploads[0].notifyFailed(file.error);
         } else if (file.progress) {
-          const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
-          fileUploads[0].notifyUploadProgressChanged(file.progress);
+          const attachmentUploads = adapter.registerActiveUploads([new File([], file.name)]);
+          attachmentUploads[0].notifyProgressChanged(file.progress);
         } else {
-          adapter.registerCompletedFileUploads([file]);
+          adapter.registerCompletedUploads([file]);
         }
       });
     }
@@ -140,13 +141,16 @@ export const LiveTestApp = (): JSX.Element => {
             locale={useFrLocale ? COMPOSITE_LOCALE_FR_FR : undefined}
             options={{
               participantPane: showParticipantPane,
-              fileSharing: useFileSharing
+              attachmentOptions: useFileSharing
                 ? {
-                    actionsForAttachment: actionsForAttachment,
-                    uploadHandler: () => {
-                      //noop
+                    downloadOptions: {
+                      actionsForAttachment: actionsForAttachment
                     },
-                    multiple: true
+                    uploadOptions: {
+                      handler: () => {
+                        // noop
+                      }
+                    }
                   }
                 : undefined
             }}

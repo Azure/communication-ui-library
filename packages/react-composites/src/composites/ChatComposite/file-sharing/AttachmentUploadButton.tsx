@@ -8,25 +8,27 @@ import { ChatCompositeIcon } from '../../common/icons';
 import { useLocale } from '../../localization';
 
 /**
- * Props for {@link FileUploadButton} component.
+ * Props for {@link AttachmentUploadButton} component.
  * @internal
  */
-export interface FileUploadButtonProps {
+export interface AttachmentUploadButtonProps {
   /**
-   * A string containing the comma separated list of accepted file types.
+   * A list of strings containing the comma separated list of supported media (aka. mime) types.
+   * i.e. ['image/*', 'video/*', 'audio/*']
+   * Default value is `['*']`, meaning all media types are supported.
    * Similar to the `accept` attribute of the `<input type="file" />` element.
    */
-  accept?: string;
+  supportedMediaTypes?: string[];
   /**
-   * Allows multiple files to be selected if set to `true`.
-   * Default value is `false`.
+   * Disable multiple files to be selected if set to `true`.
+   * Default value is `false`, meaning multiple files can be selected.
    * Similar to the `multiple` attribute of the `<input type="file" />` element.
    */
-  multiple?: boolean;
+  disableMultipleUploads?: boolean;
   /**
-   * onChange handler for the file upload button.
+   * onChange handler for the attachment upload button.
    * Similar to the `onChange` attribute of the `<input type="file" />` element.
-   * Called every time files are selected through the file upload button with a {@link FileList}
+   * Called every time files are selected through the attachment upload button with a {@link FileList}
    * of selected files.
    */
   onChange?: (files: FileList | null) => void;
@@ -35,12 +37,14 @@ export interface FileUploadButtonProps {
 /**
  * @internal
  */
-export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
+export const AttachmentUploadButton = (props: AttachmentUploadButtonProps): JSX.Element => {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const theme = useTheme();
-  const { accept, multiple = false, onChange } = props;
+  // default supportedMediaTypes is ['*'], meaning all media types are supported.
+  // default disableMultipleUploads is false, meaning multiple files can be selected.
+  const { supportedMediaTypes = ['*'], disableMultipleUploads = false, onChange } = props;
 
-  const fileUploadButtonClassName = mergeStyles({
+  const attachmentUploadButtonClassName = mergeStyles({
     width: '1.5rem',
     height: '1.5rem',
     cursor: 'pointer',
@@ -65,7 +69,7 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
       <Stack
         verticalAlign="center"
         horizontalAlign="center"
-        className={fileUploadButtonClassName}
+        className={attachmentUploadButtonClassName}
         onClick={() => {
           inputRef.current?.click();
         }}
@@ -77,8 +81,8 @@ export const FileUploadButton = (props: FileUploadButtonProps): JSX.Element => {
       <input
         ref={inputRef}
         hidden
-        multiple={multiple ?? true}
-        accept={accept ?? '*'}
+        multiple={!disableMultipleUploads}
+        accept={supportedMediaTypes.join(',')}
         type="file"
         onClick={(e) => {
           // To ensure that `onChange` is fired even if the same file is picked again.
@@ -100,20 +104,20 @@ const SendBoxAttachFileIconTrampoline = (): JSX.Element => {
 };
 
 /**
- * A wrapper to return {@link FileUploadButton} component conditionally.
+ * A wrapper to return {@link AttachmentUploadButton} component conditionally.
  * It will return `<></>` for stable builds.
  * @internal
  */
-export const FileUploadButtonWrapper = (
+export const AttachmentUploadButtonWrapper = (
   // To make conditional compilation not throw errors.
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  props: Pick<FileUploadButtonProps, 'accept' | 'multiple' | 'onChange'>
+  props: Pick<AttachmentUploadButtonProps, 'supportedMediaTypes' | 'disableMultipleUploads' | 'onChange'>
 ): JSX.Element => {
   return (
     <>
       {
         /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-        <FileUploadButton {...props} />
+        <AttachmentUploadButton {...props} />
       }
     </>
   );
