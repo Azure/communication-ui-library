@@ -121,23 +121,18 @@ function scaleStartPos(index: number): number {
 
 /* @conditional-compile-remove(reaction) */
 /**
+ * We have only one bucket item for presentation style of the reaction animation.
+ * We are choosing to keep the array so that, in future, with styles needed to get updated, one
+ * can add new styles and apply from here, rather than updating over the same style. Later we can remove
+ * the old ones.
+ * It is for the ease of testing and implementation.
  * @private
  */
 const ReactionStyleBuckets: Array<IReactionStyleBucket> = [
   {
-    sizeScale: 1,
-    heightMaxScale: 1 * 0.95,
-    opacityMax: 1
-  },
-  {
     sizeScale: 0.9,
     heightMaxScale: 0.7 * 0.95,
     opacityMax: 0.9
-  },
-  {
-    sizeScale: 0.8,
-    heightMaxScale: 0.4 * 0.95,
-    opacityMax: 0.8
   }
 ];
 
@@ -187,7 +182,7 @@ export interface IReactionStyleBucket {
 export function getReactionStyleBucket(): IReactionStyleBucket {
   // Having dynamic emoji size on rendering animation impacts performance of the animation itself.
   // So we are choosing to use a fixed size for all cases.
-  const index = 1;
+  const index = 0;
   return ReactionStyleBuckets[index];
 }
 
