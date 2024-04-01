@@ -772,6 +772,8 @@ export interface CallCompositeStrings {
     dtmfDialerMoreButtonLabelOff?: string;
     dtmfDialerMoreButtonLabelOn?: string;
     dtmfDialpadPlaceholderText: string;
+    endCallConfirmDialogContent?: string;
+    endCallConfirmDialogTitle?: string;
     endOfSurveyText: string;
     exitSpotlightButtonLabel: string;
     exitSpotlightButtonTooltip: string;
@@ -779,11 +781,15 @@ export interface CallCompositeStrings {
     failedToJoinCallDueToNoNetworkTitle: string;
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
     failedToJoinTeamsMeetingReasonAccessDeniedTitle: string;
+    hangUpCancelButtonLabel?: string;
+    hangUpConfirmButtonLabel?: string;
     holdScreenLabel: string;
     invalidMeetingIdentifier: string;
     inviteToRoomRemovedDetails?: string;
     inviteToRoomRemovedTitle: string;
     learnMore: string;
+    leaveConfirmDialogContent?: string;
+    leaveConfirmDialogTitle?: string;
     leavingCallTitle?: string;
     leftCallMoreDetails?: string;
     leftCallTitle: string;
@@ -1939,7 +1945,7 @@ export type CommonCallControlOptions = {
         disabled: boolean;
     };
     endCallButton?: boolean | /* @conditional-compile-remove(end-call-options) */ {
-        hangUpForEveryone?: false | 'splitButtonAction';
+        hangUpForEveryone?: false | 'endCallOptions';
     };
     microphoneButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
         disabled: boolean;
@@ -2885,7 +2891,11 @@ export interface EndCallButtonProps extends ControlBarButtonProps {
 
 // @public
 export interface EndCallButtonStrings {
+    // (undocumented)
+    endCallOption?: string;
     label: string;
+    // (undocumented)
+    leaveOption?: string;
     tooltipContent?: string;
 }
 
