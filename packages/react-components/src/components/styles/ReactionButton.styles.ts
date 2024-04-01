@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(reaction) */
-import { ITooltipHostStyles, keyframes, memoizeFunction } from '@fluentui/react';
+import { ITooltipHostStyles, keyframes, memoizeFunction, IStyle } from '@fluentui/react';
 /* @conditional-compile-remove(reaction) */
 import React from 'react';
 
