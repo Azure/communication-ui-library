@@ -784,6 +784,8 @@ export interface CallCompositeStrings {
     dtmfDialerMoreButtonLabelOff?: string;
     dtmfDialerMoreButtonLabelOn?: string;
     dtmfDialpadPlaceholderText: string;
+    endCallConfirmDialogContent?: string;
+    endCallConfirmDialogTitle?: string;
     endOfSurveyText: string;
     exitSpotlightButtonLabel: string;
     exitSpotlightButtonTooltip: string;
@@ -791,11 +793,15 @@ export interface CallCompositeStrings {
     failedToJoinCallDueToNoNetworkTitle: string;
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
     failedToJoinTeamsMeetingReasonAccessDeniedTitle: string;
+    hangUpCancelButtonLabel?: string;
+    hangUpConfirmButtonLabel?: string;
     holdScreenLabel: string;
     invalidMeetingIdentifier: string;
     inviteToRoomRemovedDetails?: string;
     inviteToRoomRemovedTitle: string;
     learnMore: string;
+    leaveConfirmDialogContent?: string;
+    leaveConfirmDialogTitle?: string;
     leavingCallTitle?: string;
     leftCallMoreDetails?: string;
     leftCallTitle: string;
@@ -1019,6 +1025,7 @@ export interface CallState {
     callerInfo: CallerInfo;
     capabilitiesFeature?: CapabilitiesFeatureState;
     captionsFeature: CaptionsCallFeatureState;
+    // @beta
     contentSharingRemoteParticipant?: string;
     diagnostics: DiagnosticsCallFeatureState;
     direction: CallDirection;
@@ -1035,6 +1042,7 @@ export interface CallState {
     localRecording: LocalRecordingCallFeatureState;
     localVideoStreams: LocalVideoStreamState[];
     optimalVideoCount: OptimalVideoCountFeatureState;
+    // @beta
     pptLive: PPTLiveCallFeatureState;
     raiseHand: RaiseHandCallFeature;
     recording: RecordingCallFeature;
@@ -1950,7 +1958,9 @@ export type CommonCallControlOptions = {
     cameraButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
         disabled: boolean;
     };
-    endCallButton?: boolean;
+    endCallButton?: boolean | /* @conditional-compile-remove(end-call-options) */ {
+        hangUpForEveryone?: false | 'endCallOptions';
+    };
     microphoneButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ {
         disabled: boolean;
     };
@@ -2888,13 +2898,16 @@ export const EndCallButton: (props: EndCallButtonProps) => JSX.Element;
 
 // @public
 export interface EndCallButtonProps extends ControlBarButtonProps {
-    onHangUp?: () => Promise<void>;
+    enableEndCallMenu?: boolean;
+    onHangUp?: (forEveryone?: boolean) => Promise<void>;
     strings?: EndCallButtonStrings;
 }
 
 // @public
 export interface EndCallButtonStrings {
+    endCallOption?: string;
     label: string;
+    leaveOption?: string;
     tooltipContent?: string;
 }
 
@@ -3705,7 +3718,7 @@ export type ParticipantsRemovedListener = (event: {
 // @public
 export type ParticipantState = 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
 
-// @public
+// @beta
 export interface PPTLiveCallFeatureState {
     isActive: boolean;
 }
@@ -3821,6 +3834,7 @@ export interface RecordingCallFeature {
 // @public
 export interface RemoteParticipantState {
     callEndReason?: CallEndReason;
+    // @beta
     contentSharingStream?: HTMLElement;
     displayName?: string;
     identifier: CommunicationIdentifierKind;

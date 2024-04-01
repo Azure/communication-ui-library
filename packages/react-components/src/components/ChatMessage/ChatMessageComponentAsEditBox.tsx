@@ -116,13 +116,9 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
       attachmentMetadata.length > 0 && (
         <div style={{ margin: '0.25rem' }}>
           <_AttachmentUploadCards
-            activeAttachmentUploads={attachmentMetadata?.map((attachment) => ({
-              id: attachment.name,
-              name: attachment.name,
-              progress: 1
-            }))}
-            onCancelAttachmentUpload={(attachmentId) => {
-              setAttachmentMetadata(attachmentMetadata?.filter((attachment) => attachment.name !== attachmentId));
+            activeAttachmentUploads={attachmentMetadata}
+            onCancelAttachmentUpload={(fileId) => {
+              setAttachmentMetadata(attachmentMetadata?.filter((attachment) => attachment.id !== attachmentId));
             }}
           />
         </div>

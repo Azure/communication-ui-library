@@ -1188,7 +1188,6 @@ export const createAzureCommunicationCallWithChatAdapterFromClients = async ({
   callLocator,
   chatClient,
   chatThreadClient,
-
   callAdapterOptions
 }: AzureCommunicationCallWithChatAdapterFromClientArgs): Promise<CallWithChatAdapter> => {
   const callAdapter = await createAzureCommunicationCallAdapterFromClient(
