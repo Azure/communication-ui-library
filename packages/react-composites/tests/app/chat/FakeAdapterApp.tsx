@@ -136,6 +136,7 @@ const handleAttachmentUploads = (adapter: ChatAdapter, attachmentUploads: _MockA
       attachmentUploads[0].notifyCompleted({
         name: file.name,
         extension: file.extension,
+        progress: 1,
         url: file.url,
         /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
         id: file.id

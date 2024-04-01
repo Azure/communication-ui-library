@@ -2750,6 +2750,9 @@ export const DEFAULT_COMPOSITE_ICONS: {
 };
 
 // @beta
+export const defaultAttachmentMenuAction: AttachmentMenuAction;
+
+// @beta
 export interface DeviceCheckOptions {
     camera: 'required' | 'optional' | 'doNotPrompt';
     microphone: 'required' | 'optional' | 'doNotPrompt';
