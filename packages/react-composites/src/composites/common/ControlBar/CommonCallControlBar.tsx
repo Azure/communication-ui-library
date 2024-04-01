@@ -460,6 +460,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                     )}
                     <EndCall
                       displayType="compact"
+                      mobileView={props.mobileView}
                       styles={endCallButtonStyles}
                       /* @conditional-compile-remove(end-call-options) */
                       enableEndCallMenu={

@@ -324,7 +324,13 @@
       "stopSpotlightCancelButtonLabel": "Cancel"
     },
     "exitSpotlightButtonLabel": "Exit spotlight",
-    "exitSpotlightButtonTooltip": "Exit spotlight"
+    "exitSpotlightButtonTooltip": "Exit spotlight",
+    "hangUpConfirmButtonLabel": "Confirm",
+    "hangUpCancelButtonLabel": "Cancel",
+    "leaveConfirmDialogTitle": "Leave the call?",
+    "leaveConfirmDialogContent": "Are you sure you want to leave the call?",
+    "endCallConfirmDialogTitle": "End the call?",
+    "endCallConfirmDialogContent": "You'll end the call for everyone."
   },
   "chat": {
     "chatListHeader": "In this chat",

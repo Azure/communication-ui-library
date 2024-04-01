@@ -68,13 +68,7 @@
     "label": "Leave",
     "tooltipContent": "Leave call",
     "leaveOption": "Leave",
-    "endCallOption": "End call",
-    "hangUpConfirmButtonLabel": "Confirm",
-    "hangUpCancelButtonLabel": "Cancel",
-    "leaveConfirmDialogTitle": "Leave the call?",
-    "leaveConfirmDialogContent": "Are you sure you want to leave the call?",
-    "endCallConfirmDialogTitle": "End the call?",
-    "endCallConfirmDialogContent": "You'll end the call for everyone."
+    "endCallOption": "End call"
   },
   "cameraButton": {
     "onLabel": "Camera",
