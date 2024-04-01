@@ -537,6 +537,14 @@ export type MessageThreadProps = {
    * @beta
    */
   inlineImageOptions?: InlineImageOptions;
+
+  /* @conditional-compile-remove(rich-text-editor) */
+  /**
+   * enables rich text editor
+   *
+   * @defaultValue `false`
+   */
+  enableRichTextEditor?: boolean;
 };
 
 /**
