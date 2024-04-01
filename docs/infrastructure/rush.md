@@ -68,6 +68,7 @@ Short commands
 * `rush sbr` --> `rush switch-flavor:beta-release`
 * `rush ss` --> `rush switch-flavor:stable`
 * `rush u` --> `rush update`
+* `rush us` --> `rush update:stable`
 * `rush baf` --> `rush build:all-flavours`
 * `rush bapi` --> `rush build-api:all-flavors`
 * `rush b` --> `rush build`
