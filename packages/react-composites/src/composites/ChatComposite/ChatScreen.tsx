@@ -206,7 +206,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       <_AttachmentDownloadCards
         attachments={message.files}
         message={message}
-        // temp walkaround until upload is refactored
         actionsForAttachment={attachmentOptions?.downloadOptions?.actionsForAttachment}
         onActionHandlerFailed={(errorMessage: string) => {
           setDownloadErrorMessage(errorMessage);

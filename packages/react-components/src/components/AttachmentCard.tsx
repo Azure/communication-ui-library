@@ -62,7 +62,9 @@ export interface _AttachmentCardProps {
 export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
   const { attachment, menuActions, onActionHandlerFailed } = props;
   const attachmentCardStyles = useAttachmentCardStyles();
-  const progress = attachment.progress;
+  const progress = useMemo(() => {
+    return attachment.progress;
+  }, [attachment.progress]);
   const isUploadComplete = useMemo(() => {
     return progress !== undefined && progress > 0 && progress < 1;
   }, [progress]);

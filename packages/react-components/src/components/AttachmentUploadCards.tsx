@@ -78,9 +78,15 @@ export const _AttachmentUploadCards = (props: AttachmentUploadCardsProps): JSX.E
                       <Icon iconName="CancelAttachmentUpload" className={mergeStyles(actionIconStyle)} />
                     </div>
                   ),
-                  onClick: () => {
-                    props.onCancelAttachmentUpload && props.onCancelAttachmentUpload(attachment.id);
-                    return Promise.resolve();
+                  onClick: (attachment) => {
+                    return new Promise((resolve, reject) => {
+                      try {
+                        props.onCancelAttachmentUpload && props.onCancelAttachmentUpload(attachment.id);
+                        resolve();
+                      } catch (e) {
+                        reject((e as Error).message);
+                      }
+                    });
                   }
                 }
               ]}

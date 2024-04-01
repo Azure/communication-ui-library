@@ -70,10 +70,13 @@ class AttachmentUploadContext {
     this.chatContext.setState(
       produce(this.chatContext.getState(), (draft: ChatAdapterState) => {
         if (draft.attachmentUploads?.[id]) {
-          draft.attachmentUploads[id] = {
+          draft.attachmentUploads[data.id ?? id] = {
             ...draft.attachmentUploads?.[id],
             ...data
           };
+          if (data.id) {
+            delete draft.attachmentUploads?.[id];
+          }
         }
       })
     );
@@ -83,7 +86,12 @@ class AttachmentUploadContext {
     this.chatContext.setState(
       produce(this.chatContext.getState(), (draft: ChatAdapterState) => {
         ids.forEach((id) => {
-          delete draft?.attachmentUploads?.[id];
+          const keys = Object.keys(draft?.attachmentUploads ?? []).filter(
+            (rawID) => draft.attachmentUploads?.[rawID].id === id
+          );
+          keys.forEach((key) => {
+            delete draft.attachmentUploads?.[key];
+          });
         });
       })
     );
