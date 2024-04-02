@@ -211,9 +211,7 @@ export const reactionRenderingStyle = (args: {
     overflow: 'hidden',
     animationName: playFrames(frameHeightPx, steps),
     backgroundImage: imageUrl,
-
-    // Divide by 2 here to make the animation play twice, repeat-logic needs passed in as part of the sprite resource interface
-    animationDuration: `${REACTION_SCREEN_SHARE_ANIMATION_TIME_MS / 1000 / 2}s`,
+    animationDuration: `${REACTION_SCREEN_SHARE_ANIMATION_TIME_MS / 1000}s`,
     animationTimingFunction: `steps(${steps})`,
     backgroundSize: `cover`,
     animationPlayState: 'running',
