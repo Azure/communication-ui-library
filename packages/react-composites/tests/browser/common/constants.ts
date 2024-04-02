@@ -41,7 +41,8 @@ export const IDS = {
   mentionSuggestionList: 'mention-suggestion-list',
   mentionSuggestionItem: 'mention-suggestion-item',
   reactionButton: 'call-composite-reaction-button',
-  reactionButtonSubMenu: 'reaction-sub-menu'
+  reactionButtonSubMenu: 'reaction-sub-menu',
+  reactionMobileDrawerMenuItem: 'reaction-mobile-drawer-menu-item'
 };
 
 export const spokenLanguageStrings = [

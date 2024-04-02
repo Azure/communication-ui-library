@@ -14,8 +14,7 @@ import { MockCallAdapterState } from 'common';
 
 /* @conditional-compile-remove(reaction) */
 test.describe('Reactions button tests', async () => {
-  test('Reactions button sub menu appears when button is clicked', async ({ page, serverUrl }, testInfo) => {
-    test.skip(isTestProfileMobile(testInfo));
+  test.only('Reactions button sub menu appears when button is clicked', async ({ page, serverUrl }, testInfo) => {
     const Paul = defaultMockRemoteParticipant('Paul Blurt');
     const Adam = defaultMockRemoteParticipant('Adam Sandler');
     const Loki = defaultMockRemoteParticipant('Loki Odinson');
@@ -35,11 +34,17 @@ test.describe('Reactions button tests', async () => {
     // Future Note: We should run tests to see reaction button with two or three reaction enojis
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
-    await waitForSelector(page, dataUiId(IDS.reactionButton));
-    await page.click(dataUiId(IDS.reactionButton));
-    await waitForSelector(page, dataUiId(IDS.reactionButtonSubMenu));
-
-    expect(await stableScreenshot(page)).toMatchSnapshot('reaction-sub-menu-in-ongoing-call.png');
+    if (isTestProfileMobile(testInfo)) {
+      await waitForSelector(page, dataUiId(IDS.moreButton));
+      await page.click(dataUiId(IDS.moreButton));
+      await waitForSelector(page, dataUiId(IDS.reactionMobileDrawerMenuItem));
+      expect(await stableScreenshot(page)).toMatchSnapshot('reaction-sub-menu-in-ongoing-call-in-mobile.png');
+    } else {
+      await waitForSelector(page, dataUiId(IDS.reactionButton));
+      await page.click(dataUiId(IDS.reactionButton));
+      await waitForSelector(page, dataUiId(IDS.reactionButtonSubMenu));
+      expect(await stableScreenshot(page)).toMatchSnapshot('reaction-sub-menu-in-ongoing-call-in-desktop.png');
+    }
   });
 
   test('Reactions button should not appear when capability is false', async ({ page, serverUrl }, testInfo) => {
@@ -65,8 +70,6 @@ test.describe('Reactions button tests', async () => {
       applauseReaction: { url: 'assets/reactions/clapEmoji.png', frameCount: 51 },
       surprisedReaction: { url: 'assets/reactions/surprisedEmoji.png', frameCount: 51 }
     };
-
-    // Future Note: We should run tests to see reaction button with two or three reaction enojis
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
 

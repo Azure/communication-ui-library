@@ -65,6 +65,7 @@ export const _ReactionDrawerMenuItem = (props: _ReactionMenuItemProps): JSX.Elem
 
   return (
     <Stack
+      data-ui-id="reaction-mobile-drawer-menu-item"
       id="reaction"
       role="menuitem"
       horizontal
