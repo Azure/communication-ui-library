@@ -406,7 +406,10 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   onPeopleButtonClicked={togglePeoplePane}
                   onMoreButtonClicked={onMoreButtonClicked}
                   /* @conditional-compile-remove(close-captions) */
-                  isCaptionsSupported={hasJoinedCall}
+                  isCaptionsSupported={
+                    (isTeamsCall && hasJoinedCall) ||
+                    /* @conditional-compile-remove(acs-close-captions) */ hasJoinedCall
+                  }
                   /* @conditional-compile-remove(close-captions) */
                   isTeamsCall={isTeamsCall}
                   /* @conditional-compile-remove(close-captions) */
@@ -437,7 +440,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
                 disableButtonsForHoldScreen={isInLocalHold}
                 /* @conditional-compile-remove(close-captions) */
-                isCaptionsSupported={hasJoinedCall}
+                isCaptionsSupported={
+                  (isTeamsCall && hasJoinedCall) || /* @conditional-compile-remove(acs-close-captions) */ hasJoinedCall
+                }
                 /* @conditional-compile-remove(close-captions) */
                 isTeamsCall={isTeamsCall}
                 onUserSetGalleryLayout={props.onUserSetGalleryLayoutChange}
