@@ -62,12 +62,14 @@ export const createDefaultChatHandlers = memoizeOne(
       onUpdateMessage: async (
         messageId: string,
         content: string,
+        /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
         options?: {
           metadata?: Record<string, string>;
           attachmentMetadata?: AttachmentMetadata[];
         }
       ) => {
         const updatedMetadata = options?.metadata ? { ...options.metadata } : {};
+        /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
         if (options?.attachmentMetadata && options?.attachmentMetadata.length > 0) {
           // Only create object if there are objects to add.
           updatedMetadata.fileSharingMetadata = JSON.stringify(options?.attachmentMetadata);

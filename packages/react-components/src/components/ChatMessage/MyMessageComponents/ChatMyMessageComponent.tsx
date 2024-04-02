@@ -120,10 +120,15 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
         onSubmit={async (text, metadata, options) => {
           props.onUpdateMessage &&
             message.messageId &&
-            (await props.onUpdateMessage(message.messageId, text, {
-              metadata: metadata ?? {},
-              attachmentMetadata: options?.attachmentMetadata ?? []
-            }));
+            (await props.onUpdateMessage(
+              message.messageId,
+              text,
+              /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+              {
+                metadata: metadata ?? {},
+                attachmentMetadata: options?.attachmentMetadata ?? []
+              }
+            ));
           setIsEditing(false);
         }}
         onCancel={(messageId) => {
