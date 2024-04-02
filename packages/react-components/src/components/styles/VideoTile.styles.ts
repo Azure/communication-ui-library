@@ -203,28 +203,20 @@ export const reactionRenderingStyle = (args: {
 }): string => {
   const imageUrl = `url(${args.spriteImageUrl})`;
   const steps = args.frameCount ?? 0;
-  const frameHeightPx = 128; // this needs to be calculated from the sprite file or passed in as part of the sprite resource interface
-  console.log(args);
+  const frameHeightPx = 128; // TODO: for more developer flexibility, we have this passed in as part of the sprite resource interface
   return mergeStyles({
     height: `${frameHeightPx}px`,
-    width: `${frameHeightPx}px`, // can this be left dynamic? we should only be concerned with height
+    width: `${frameHeightPx}px`,
     overflow: 'hidden',
     animationName: playFrames(frameHeightPx, steps),
     backgroundImage: imageUrl,
     animationDuration: `${REACTION_SCREEN_SHARE_ANIMATION_TIME_MS / 1000}s`,
     animationTimingFunction: `steps(${steps})`,
-    backgroundSize: `cover`,
     animationPlayState: 'running',
     animationIterationCount: 'infinite',
 
     // Scale the emoji to fit the parent container
-    transform: `scale(${
-      args.emojiSize / frameHeightPx
-      // Previous logic:
-      // DEFAULT_ORIGINAL_EMOJI_SIZE < args.emojiSize
-      //   ? DEFAULT_ORIGINAL_EMOJI_SIZE / args.emojiSize
-      //   : args.emojiSize / DEFAULT_ORIGINAL_EMOJI_SIZE // Why did this division flip?
-    })`,
+    transform: `scale(${args.emojiSize / frameHeightPx})`,
     transformOrigin: 'top left'
   });
 };
