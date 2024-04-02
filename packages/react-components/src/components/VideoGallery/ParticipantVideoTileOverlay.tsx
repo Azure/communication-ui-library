@@ -73,6 +73,11 @@ export const ParticipantVideoTileOverlay = React.memo(
       [spriteImageUrl, emojiSize, frameCount]
     );
 
+    const reactionValid = canRenderReaction && isValidImageSource;
+    if (!reactionValid) {
+      return <></>;
+    }
+
     return (
       <Stack
         className={mergeStyles(videoContainerStyles, {
@@ -83,11 +88,15 @@ export const ParticipantVideoTileOverlay = React.memo(
         })}
       >
         <div style={{ height: '33.33%' }}></div>
-        {canRenderReaction && isValidImageSource && (
-          <div style={{ minHeight: '84px', height: '84px', width: '84px' }}>
-            <div className={reactionContainerStyles()} />
-          </div>
-        )}
+        <div
+          style={{
+            minHeight: `${emojiSize}px`,
+            height: `${emojiSize}px`,
+            width: `${emojiSize}px`
+          }}
+        >
+          <div className={reactionContainerStyles()} />
+        </div>
       </Stack>
     );
   }

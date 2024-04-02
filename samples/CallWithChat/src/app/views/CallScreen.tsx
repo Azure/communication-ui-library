@@ -87,11 +87,11 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       },
       /* @conditional-compile-remove(reaction) */
       reactionResources: {
-        likeReaction: { url: '/assets/reactions/likeEmoji.png', frameCount: 102 },
-        heartReaction: { url: '/assets/reactions/heartEmoji.png', frameCount: 102 },
-        laughReaction: { url: '/assets/reactions/laughEmoji.png', frameCount: 102 },
-        applauseReaction: { url: '/assets/reactions/clapEmoji.png', frameCount: 102 },
-        surprisedReaction: { url: '/assets/reactions/surprisedEmoji.png', frameCount: 102 }
+        likeReaction: { url: '/assets/reactions/likeEmoji.png', frameCount: 51 },
+        heartReaction: { url: '/assets/reactions/heartEmoji.png', frameCount: 51 },
+        laughReaction: { url: '/assets/reactions/laughEmoji.png', frameCount: 51 },
+        applauseReaction: { url: '/assets/reactions/clapEmoji.png', frameCount: 51 },
+        surprisedReaction: { url: '/assets/reactions/surprisedEmoji.png', frameCount: 51 }
       }
     };
   }, []);

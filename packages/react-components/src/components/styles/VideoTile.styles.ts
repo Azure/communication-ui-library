@@ -4,12 +4,7 @@
 import { IButtonStyles, IStyle, mergeStyles, Theme, ITheme } from '@fluentui/react';
 /* @conditional-compile-remove(reaction) */
 import { keyframes, memoizeFunction } from '@fluentui/react';
-
-/* @conditional-compile-remove(reaction) */
-/**
- * @private
- */
-const DEFAULT_ORIGINAL_EMOJI_SIZE = 84;
+import { REACTION_SCREEN_SHARE_ANIMATION_TIME_MS } from '../VideoGallery/utils/reactionUtils';
 
 /**
  * @private
@@ -186,13 +181,13 @@ export const raiseHandLimitedSpaceStyles: IStyle = {
 /**
  * @private
  */
-export const playFrames = memoizeFunction(() =>
+export const playFrames = memoizeFunction((frameHightPx: number, frameCount: number) =>
   keyframes({
     from: {
-      backgroundPosition: '0px 8568px'
+      backgroundPosition: `0px 0px`
     },
     to: {
-      backgroundPosition: '0px 0px'
+      backgroundPosition: `0px ${frameCount * -frameHightPx}px`
     }
   })
 );
@@ -207,25 +202,31 @@ export const reactionRenderingStyle = (args: {
   frameCount?: number;
 }): string => {
   const imageUrl = `url(${args.spriteImageUrl})`;
-  const steps = args.frameCount ?? 51;
+  const steps = args.frameCount ?? 0;
+  const frameHeightPx = 128; // this needs to be calculated from the sprite file or passed in as part of the sprite resource interface
+  console.log(args);
   return mergeStyles({
-    height: '100%',
-    width: '100%',
+    height: `${frameHeightPx}px`,
+    width: `${frameHeightPx}px`, // can this be left dynamic? we should only be concerned with height
     overflow: 'hidden',
-    animationName: playFrames(),
+    animationName: playFrames(frameHeightPx, steps),
     backgroundImage: imageUrl,
-    animationDuration: '5.12s',
+
+    // Divide by 2 here to make the animation play twice, repeat-logic needs passed in as part of the sprite resource interface
+    animationDuration: `${REACTION_SCREEN_SHARE_ANIMATION_TIME_MS / 1000 / 2}s`,
     animationTimingFunction: `steps(${steps})`,
     backgroundSize: `cover`,
     animationPlayState: 'running',
     animationIterationCount: 'infinite',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundPosition: `center`,
+
+    // Scale the emoji to fit the parent container
     transform: `scale(${
-      DEFAULT_ORIGINAL_EMOJI_SIZE < args.emojiSize
-        ? DEFAULT_ORIGINAL_EMOJI_SIZE / args.emojiSize
-        : args.emojiSize / DEFAULT_ORIGINAL_EMOJI_SIZE
-    })`
+      args.emojiSize / frameHeightPx
+      // Previous logic:
+      // DEFAULT_ORIGINAL_EMOJI_SIZE < args.emojiSize
+      //   ? DEFAULT_ORIGINAL_EMOJI_SIZE / args.emojiSize
+      //   : args.emojiSize / DEFAULT_ORIGINAL_EMOJI_SIZE // Why did this division flip?
+    })`,
+    transformOrigin: 'top left'
   });
 };
