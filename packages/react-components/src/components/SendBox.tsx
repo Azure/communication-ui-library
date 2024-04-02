@@ -150,8 +150,8 @@ export interface SendBoxProps {
   autoFocus?: 'sendBoxTextField';
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /**
-   * Optional callback to render uploaded files in the SendBox. The sendBox will expand
-   * vertically to accommodate the uploaded files. Attachment uploads will
+   * Optional callback to render uploaded attachments in the SendBox. The sendBox will expand
+   * vertically to accommodate the uploaded attachments. Attachment uploads will
    * be rendered below the text area in sendBox.
    * @beta
    */
@@ -169,7 +169,7 @@ export interface SendBoxProps {
    * cancel icon.
    * @beta
    */
-  onCancelAttachmentUpload?: (fileId: string) => void;
+  onCancelAttachmentUpload?: (attachmentId: string) => void;
 }
 
 /**
@@ -217,7 +217,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       return;
     }
 
-    // Don't send message until all files have been uploaded successfully
+    // Don't send message until all attachments have been uploaded successfully
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     setAttachmentUploadsPendingError(undefined);
 
@@ -266,7 +266,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       sendIconStyle({
         theme,
         hasText: !!textValue,
-        /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ hasFile:
+        /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ hasAttachment:
           hasCompletedAttachmentUploads(activeAttachmentUploads),
         hasErrorMessage: !!errorMessage,
         customSendIconStyle: styles?.sendMessageIcon
@@ -290,7 +290,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     [mergedSendIconStyle, onRenderIcon, textValue]
   );
 
-  // Ensure that errors are cleared when there are no files in sendBox
+  // Ensure that errors are cleared when there are no attachments in sendBox
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   React.useEffect(() => {
     if (!activeAttachmentUploads?.filter((upload) => !upload.uploadError).length) {
