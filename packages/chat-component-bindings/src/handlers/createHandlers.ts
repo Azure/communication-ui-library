@@ -71,6 +71,10 @@ export const createDefaultChatHandlers = memoizeOne(
         if (options?.attachmentMetadata && options?.attachmentMetadata.length > 0) {
           // Only create object if there are objects to add.
           updatedMetadata.fileSharingMetadata = JSON.stringify(options?.attachmentMetadata);
+        } else {
+          // need to set fileSharingMetadata explicitly to empty array to remove existing attachments
+          // setting it to undefined or empty object will not remove the existing attachments
+          updatedMetadata.fileSharingMetadata = '[]';
         }
         await chatThreadClient.updateMessage(messageId, { content, metadata: updatedMetadata });
       },
