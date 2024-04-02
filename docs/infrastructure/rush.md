@@ -62,4 +62,15 @@ Other useful commands
 * `rush lint` -- perform lint across the whole repo
 * `rush changelog` -- generate change file for the changelog
 
+Short commands
+
+* `rush sb` --> `rush switch-flavor:beta`
+* `rush sbr` --> `rush switch-flavor:beta-release`
+* `rush ss` --> `rush switch-flavor:stable`
+* `rush u` --> `rush update`
+* `rush us` --> `rush update:stable`
+* `rush baf` --> `rush build:all-flavours`
+* `rush bapi` --> `rush build-api:all-flavors`
+* `rush b` --> `rush build`
+
 For more commands check out the official [docs](https://rushjs.io/pages/intro/welcome/) or our custom commands file: [common/config/rush/command-line.json](https://github.com/Azure/communication-ui-library/blob/main/common/config/rush/command-line.json).
