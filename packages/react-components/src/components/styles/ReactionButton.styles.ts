@@ -28,11 +28,7 @@ export const playFrames = memoizeFunction(() =>
  *
  * @private
  */
-export const emojiStyles = (
-  backgroundImage: string,
-  animationPlayState: string,
-  frameCount: number
-): React.CSSProperties => {
+export const emojiStyles = (backgroundImage: string, frameCount: number): IStyle => {
   const imageResourceUrl = `url(${backgroundImage})`;
   const steps = frameCount ?? 51;
   return {
@@ -41,18 +37,20 @@ export const emojiStyles = (
     height: '100%',
     width: '100%',
     backgroundImage: imageResourceUrl,
-    animationName: playFrames(),
-    animationDuration: '8.12s',
-    animationTimingFunction: `steps(${steps})`,
-    animationPlayState: animationPlayState,
-    animationIterationCount: 'infinite',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundPosition: 'center',
     backgroundSize: `2.75rem 133.875rem`,
     transition: 'opacity 2s',
     backgroundColor: 'transparent',
-    transform: `${animationPlayState === 'running' ? 'scale(0.8)' : 'scale(0.6)'}`
+    transform: 'scale(0.6)',
+    ':hover': {
+      transform: 'scale(0.8)',
+      animationName: playFrames(),
+      animationDuration: '8.12s',
+      animationTimingFunction: `steps(${steps})`,
+      animationIterationCount: 'infinite',
+      backgroundColor: 'unset'
+    }
   };
 };
 

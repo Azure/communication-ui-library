@@ -1,10 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-export * from './FileUpload';
-export * from './FileUploadButton';
+export * from './AttachmentUpload';
+export * from './AttachmentUploadButton';
 
 export type {
+  AttachmentOptions,
   AttachmentUploadStatus,
   AttachmentUploadOptions,
   AttachmentUploadHandler,
