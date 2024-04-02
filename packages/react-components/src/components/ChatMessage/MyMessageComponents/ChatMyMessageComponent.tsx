@@ -125,8 +125,8 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
               text,
               /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
               {
-                metadata: metadata ?? {},
-                attachmentMetadata: options?.attachmentMetadata ?? []
+                metadata: metadata,
+                attachmentMetadata: options?.attachmentMetadata
               }
             ));
           setIsEditing(false);
