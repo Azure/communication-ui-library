@@ -103,9 +103,8 @@ test.describe('Captions buttons in call control', () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
     await pageClick(page, dataUiId('common-call-composite-more-button'));
     if (isTestProfileMobile(testInfo)) {
-      page.keyboard.press('PageDown');
-      page.keyboard.press('PageDown');
-      page.keyboard.press('PageDown');
+      const captionsButton = page.locator(`[id="common-call-composite-captions-settings-button"]`);
+      captionsButton.scrollIntoViewIfNeeded();
     }
     expect(await stableScreenshot(page)).toMatchSnapshot(`caption-button-teams-call.png`);
   });
