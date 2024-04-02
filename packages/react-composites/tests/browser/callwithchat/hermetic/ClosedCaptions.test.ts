@@ -7,7 +7,7 @@ import { dataUiId, isTestProfileMobile, pageClick, stableScreenshot, waitForSele
 import { IDS, captionsFeatureState, captionsFeatureStateArabic } from '../../common/constants';
 import { defaultMockCallAdapterState, defaultMockRemoteParticipant } from '../../call/hermetic/fixture';
 
-/* @conditional-compile-remove(close-captions) */
+/* @conditional-compile-remove(acs-close-captions) */
 test.describe('Closed Captions Banner tests', async () => {
   test('Show loading banner when start captions is clicked but captions is not started yet', async ({
     page,
@@ -15,7 +15,6 @@ test.describe('Closed Captions Banner tests', async () => {
   }) => {
     const initialState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
     if (initialState?.call) {
-      initialState.isTeamsCall = true;
       initialState.call.captionsFeature = {
         ...captionsFeatureState,
         isCaptionsFeatureActive: false,
@@ -30,7 +29,6 @@ test.describe('Closed Captions Banner tests', async () => {
   test('Show closed captions banner when enabled', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
     if (initialState?.call) {
-      initialState.isTeamsCall = true;
       initialState.call.captionsFeature = captionsFeatureState;
     }
     await loadCallPage(page, serverUrl, initialState);
@@ -41,7 +39,6 @@ test.describe('Closed Captions Banner tests', async () => {
   test('Show RTL languages from right to left', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
     if (initialState?.call) {
-      initialState.isTeamsCall = true;
       initialState.call.captionsFeature = captionsFeatureStateArabic;
     }
     await loadCallPage(page, serverUrl, initialState);
@@ -55,7 +52,6 @@ test.describe('Closed Captions Banner tests', async () => {
     }
     const initialState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
     if (initialState?.call) {
-      initialState.isTeamsCall = true;
       initialState.call.captionsFeature = captionsFeatureState;
     }
     await loadCallPage(page, serverUrl, initialState);
@@ -66,7 +62,6 @@ test.describe('Closed Captions Banner tests', async () => {
   test('Hide closed captions banner when disabled', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
     if (initialState?.call) {
-      initialState.isTeamsCall = true;
       initialState.call.captionsFeature = {
         ...captionsFeatureState,
         isCaptionsFeatureActive: false,
@@ -84,7 +79,6 @@ test.describe('Closed Captions Banner tests', async () => {
     }
     const initialState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
     if (initialState?.call) {
-      initialState.isTeamsCall = true;
       initialState.call.captionsFeature = captionsFeatureState;
     }
     await loadCallPage(page, serverUrl, initialState);
@@ -99,7 +93,6 @@ test.describe('Closed Captions Banner tests', async () => {
     }
     const initialState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
     if (initialState?.call) {
-      initialState.isTeamsCall = true;
       initialState.call.captionsFeature = captionsFeatureState;
     }
 
@@ -116,7 +109,6 @@ test.describe('Closed Captions Banner tests', async () => {
     }
     const initialState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
     if (initialState?.call) {
-      initialState.isTeamsCall = true;
       initialState.call.captionsFeature = captionsFeatureState;
     }
 

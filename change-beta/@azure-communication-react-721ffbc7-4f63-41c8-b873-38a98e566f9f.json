@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "improvement",
-  "workstream": " Hide participant info for PPTlive",
-  "comment": "Hide participant information",
-  "packageName": "@azure/communication-react",
-  "email": "93549644+ShaunaSong@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
