@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "area": "feature",
+  "workstream": "Reaction",
+  "comment": "E2E reaction button snapshot test",
+  "packageName": "@azure/communication-react",
+  "email": "mbellah@microsoft.com",
+  "dependentChangeType": "patch"
+}
