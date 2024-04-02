@@ -20,7 +20,7 @@ export interface AttachmentMetadata {
    */
   id: string;
   /**
-   * File name to be displayed.
+   * Attachment name to be displayed.
    */
   name: string;
   /**
@@ -64,7 +64,7 @@ export interface AttachmentOptions {
  */
 export interface AttachmentDownloadOptions {
   // A callback function that defines what action user can perform on an attachment.
-  // by default, the UI library would have default actions that opens file URL in a new tab
+  // by default, the UI library would have default actions that opens attachment URL in a new tab
   // provide this callback function to override the default actions or add new actions.
   actionsForAttachment: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
 }
@@ -89,14 +89,14 @@ export interface AttachmentUploadOptions {
    * A list of strings containing the comma separated list of supported media (aka. mime) types.
    * i.e. ['image/*', 'video/*', 'audio/*']
    * Default value is `['*']`, meaning all media types are supported.
-   * Similar to the `accept` attribute of the `<input type="file" />` element.
+   * Similar to the `accept` attribute of the `<input type="attachment" />` element.
    * @beta
    */
   supportedMediaTypes?: string[];
   /**
-   * Disable multiple files to be selected if set to `true`.
-   * Default value is `false`, meaning multiple files can be selected.
-   * Similar to the `multiple` attribute of the `<input type="file" />` element.
+   * Disable multiple attachments to be selected if set to `true`.
+   * Default value is `false`, meaning multiple attachments can be selected.
+   * Similar to the `multiple` attribute of the `<input type="attachment" />` element.
    * @beta
    */
   disableMultipleUploads?: boolean;
@@ -108,7 +108,7 @@ export interface AttachmentUploadOptions {
 }
 
 /**
- * A wrapper object for a file that is being uploaded.
+ * A wrapper object for a attachment that is being uploaded.
  * Allows managing attachment uploads by providing common functions for updating the
  * upload progress, canceling an upload, completing an upload etc.
  * @beta
@@ -119,7 +119,7 @@ export interface AttachmentUploadManager {
    */
   id: string;
   /**
-   * HTML {@link File} object for the uploaded file.
+   * HTML {@link File} object for the uploaded attachment.
    */
   file?: File;
   /**
@@ -130,7 +130,7 @@ export interface AttachmentUploadManager {
   notifyProgressChanged: (value: number) => void;
   /**
    * Mark the upload as complete.
-   * Requires the `metadata` param containing uploaded file information.
+   * Requires the `metadata` param containing uploaded attachment information.
    * @param metadata - {@link AttachmentMetadata}
    */
   notifyCompleted: (metadata: AttachmentMetadata) => void;
@@ -145,6 +145,6 @@ export interface AttachmentUploadManager {
  * @beta
  * A callback function for handling attachment uploads.
  *
- * @param AttachmentUploads - The list of uploaded files. Each file is represented by an {@link AttachmentUpload} object.
+ * @param AttachmentUploads - The list of uploaded attachments. Each attachment is represented by an {@link AttachmentUpload} object.
  */
 export type AttachmentUploadHandler = (attachmentUploads: AttachmentUploadManager[]) => void;

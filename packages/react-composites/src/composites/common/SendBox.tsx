@@ -43,7 +43,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   const sendBoxProps = usePropsFor(SimpleSendBox);
 
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  const activeAttachmentUploads = useSelector(attachmentUploadsSelector).files;
+  const activeAttachmentUploads = useSelector(attachmentUploadsSelector).attachments;
 
   const sendBoxStyles = useMemo(() => {
     return Object.assign({}, styles);

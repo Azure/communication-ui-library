@@ -42,7 +42,7 @@ export interface RichTextInputBoxComponentProps {
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   onRenderAttachmentUploads?: () => JSX.Element;
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  hasFiles?: boolean;
+  hasAttachments?: boolean;
   // props for min and max height for the rich text editor
   // otherwise the editor will grow to fit the content
   richTextEditorStyleProps: (isExpanded: boolean) => RichTextEditorStyleProps;
@@ -65,7 +65,7 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     onRenderAttachmentUploads,
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    hasFiles,
+    hasAttachments,
     richTextEditorStyleProps,
     isHorizontalLayoutDisabled = false
   } = props;
@@ -135,12 +135,12 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
     return (
       !isHorizontalLayoutDisabled &&
       !showRichTextEditorFormatting &&
-      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ !hasFiles
+      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ !hasAttachments
     );
   }, [
     isHorizontalLayoutDisabled,
     showRichTextEditorFormatting,
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ hasFiles
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ hasAttachments
   ]);
 
   return (

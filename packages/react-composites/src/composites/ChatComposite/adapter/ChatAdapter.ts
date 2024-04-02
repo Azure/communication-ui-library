@@ -21,7 +21,7 @@ export type ChatAdapterUiState = {
   error?: Error;
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /**
-   * Files being uploaded by a user in the current thread.
+   * Attachments being uploaded by a user in the current thread.
    * Should be set to null once the upload is complete.
    * Array of type {@link AttachmentUploadsUiState}
    * @beta
