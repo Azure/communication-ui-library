@@ -84,6 +84,33 @@ export const GenerateMockNewChatMessageWithInlineImage = (): ChatMessage => {
   };
 };
 
+export const GenerateMockNewChatMessageWithAttachment = (): ChatMessage => {
+  return {
+    messageType: 'chat',
+    ...UserThree,
+    messageId: Math.random().toString(),
+    content: 'Check out these files:',
+    createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
+    mine: true,
+    attached: false,
+    contentType: 'text',
+    attachments: [
+      {
+        id: 'SomeUniqueId1',
+        name: 'Annual Report.xlsx',
+        extension: 'xlsx',
+        url: 'https://www.sharepoint.com/'
+      },
+      {
+        id: 'SomeUniqueId2',
+        name: 'Business Report.pdf',
+        extension: 'pdf',
+        url: 'https://www.example.com/files/RouterConfig.xlsx'
+      }
+    ]
+  };
+};
+
 export const GenerateMockNewChatMessageWithMention = (): ChatMessage => {
   return {
     messageType: 'chat',

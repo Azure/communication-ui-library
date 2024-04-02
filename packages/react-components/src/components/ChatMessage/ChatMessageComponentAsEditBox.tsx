@@ -14,7 +14,7 @@ import { MessageThreadStrings } from '../MessageThread';
 import { useChatMyMessageStyles } from '../styles/MessageThread.styles';
 import { ChatMessage } from '../../types';
 import { _AttachmentUploadCards } from '../AttachmentUploadCards';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { AttachmentMetadata } from '../../types/Attachment';
 import {
   chatMessageFailedTagStyle,
@@ -27,8 +27,8 @@ import {
 import { MentionLookupOptions } from '../MentionPopover';
 import { MAXIMUM_LENGTH_OF_MESSAGE } from '../utils/SendBoxUtils';
 import { getMessageState, onRenderCancelIcon, onRenderSubmitIcon } from '../utils/ChatMessageComponentAsEditBoxUtils';
-/* @conditional-compile-remove(file-sharing) */
-import { getMessageAttachedFilesMetadata } from '../utils/ChatMessageComponentAsEditBoxUtils';
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+import { getMessageWithAttachmentMetadata } from '../utils/ChatMessageComponentAsEditBoxUtils';
 
 /** @private */
 export type ChatMessageComponentAsEditBoxProps = {
@@ -37,7 +37,7 @@ export type ChatMessageComponentAsEditBoxProps = {
     text: string,
     metadata?: Record<string, string>,
     options?: {
-      /* @conditional-compile-remove(file-sharing) */
+      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
       attachmentMetadata?: AttachmentMetadata[];
     }
   ) => void;
@@ -56,13 +56,14 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
   const { mentionLookupOptions } = props;
 
   const [textValue, setTextValue] = useState<string>(message.content || '');
-  /* @conditional-compile-remove(file-sharing) */
-  const [attachmentMetadata, setAttachedFilesMetadata] = React.useState(getMessageAttachedFilesMetadata(message));
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  const [attachmentMetadata, setAttachmentMetadata] = React.useState(getMessageWithAttachmentMetadata(message));
   const editTextFieldRef = React.useRef<ITextField>(null);
   const theme = useTheme();
   const messageState = getMessageState(
     textValue,
-    /* @conditional-compile-remove(file-sharing) */ attachmentMetadata ?? []
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ attachmentMetadata ??
+      []
   );
   const submitEnabled = messageState === 'OK';
 
@@ -108,20 +109,16 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
     return concatStyleSets(editBoxStyleSet, { textField: { borderColor: theme.palette.themePrimary } });
   }, [theme.palette.themePrimary]);
 
-  /* @conditional-compile-remove(file-sharing) */
-  const onRenderFileUploads = useCallback(() => {
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  const onRenderAttachmentUploads = useCallback(() => {
     return (
       !!attachmentMetadata &&
       attachmentMetadata.length > 0 && (
         <div style={{ margin: '0.25rem' }}>
           <_AttachmentUploadCards
-            activeFileUploads={attachmentMetadata?.map((file) => ({
-              id: file.name,
-              filename: file.name,
-              progress: 1
-            }))}
-            onCancelFileUpload={(fileId) => {
-              setAttachedFilesMetadata(attachmentMetadata?.filter((file) => file.name !== fileId));
+            activeAttachmentUploads={attachmentMetadata}
+            onCancelAttachmentUpload={(attachmentId) => {
+              setAttachmentMetadata(attachmentMetadata?.filter((attachment) => attachment.id !== attachmentId));
             }}
           />
         </div>
@@ -149,7 +146,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
               onSubmit(
                 textValue,
                 message.metadata,
-                /* @conditional-compile-remove(file-sharing) */ {
+                /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ {
                   attachmentMetadata
                 }
               );
@@ -197,7 +194,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
                   onSubmit(
                     textValue,
                     message.metadata,
-                    /* @conditional-compile-remove(file-sharing) */ {
+                    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ {
                       attachmentMetadata
                     }
                   );
@@ -207,7 +204,9 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
             />
           </Stack.Item>
         </Stack>
-        {/* @conditional-compile-remove(file-sharing) */ onRenderFileUploads()}
+        {
+          /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ onRenderAttachmentUploads()
+        }
       </>
     );
   };

@@ -181,7 +181,6 @@ export interface ComponentStrings {
   /* @conditional-compile-remove(total-participant-count) */
   /** Strings for the participant list component */
   ParticipantList: ParticipantListStrings;
-  /* @conditional-compile-remove(hide-attendee-name) */
 }
 
 /**
