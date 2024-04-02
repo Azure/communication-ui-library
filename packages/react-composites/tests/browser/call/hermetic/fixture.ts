@@ -319,6 +319,7 @@ const getCapabilitiesFromRole = (
   role?: ParticipantRole,
   isReactionCapability?: boolean
 ): CapabilitiesFeatureState | undefined => {
+  /* @conditional-compile-remove(reaction) */
   if (isReactionCapability) {
     return {
       capabilities: presenterCapabilitiesInTeamsCall,
