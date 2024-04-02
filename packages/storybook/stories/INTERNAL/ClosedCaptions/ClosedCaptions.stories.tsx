@@ -23,8 +23,7 @@ const getDocs: () => JSX.Element = () => {
   /* eslint-disable react/no-unescaped-entities */
   return (
     <>
-      <Title>Captions</Title>
-      <Heading>Closed Captions</Heading>
+      <Title>Closed Captions</Title>
       <Description>
         Azure Communication Services UI Library is adding support for Closed Captions. Closed captions is a powerful
         tool that enables developers to enhance the accessibility of their videos. With closed captions, developers can
@@ -36,41 +35,42 @@ const getDocs: () => JSX.Element = () => {
         CallWithChatComposite experiences.
       </Description>
 
-      <Subheading>Interop Closed Captions</Subheading>
-      <Description>
-        Interop Closed Captions is enabled by default and are automatically included within the CallComposite and
-        CallWithChatComposite experiences during a call including one or more teams users. Captions can be enabled both
-        in Mobile Web sessions and in Desktop Web sessions. For interop captions, users can enable captions in the menu
-        and select the spoken language and caption language for the captions. Captions does not detect language
-        automatically, so the spoken language selected needs to match the language that will be used in the call. The
-        caption language selected is the language individual user prefers to see the captions displayed in. For example,
-        a user can choose to have captions translated and displayed in 'Chinese' when the language used in the call is
-        'English' by setting the caption language to 'Chinese'.
-      </Description>
-
-      <Subheading>ACS Based Captions</Subheading>
+      <Heading>ACS Based Captions</Heading>
       <SingleLineBetaBanner topOfPage={true} />
       <Description>
         ACS Closed Captions are enabled by default and are automatically included within the CallComposite and
         CallWithChatComposite experiences for calling scenarios involving ACS users only. Captions can be enabled both
-        in Mobile Web sessions and in Desktop Web sessions. For acs captions, users can enable captions in the menu and
-        select the spoken language for the captions. Captions does not detect language automatically, so the spoken
-        language selected needs to match the language that will be used in the call. Currently, ACS captions does not
-        support translation.
+        in Mobile Web sessions and in Desktop Web sessions.
+      </Description>
+      <Description>
+        For acs captions, users can enable captions in the menu and select the spoken language for the captions.
+        Captions does not detect language automatically, so the spoken language selected needs to match the language
+        that will be used in the call. Currently, ACS captions does not support translation.
       </Description>
 
-      <Subheading>How to use Captions</Subheading>
+      <Heading>Teams Interop Closed Captions</Heading>
+      <Description>
+        Teams Interop Closed Captions is enabled by default and are automatically included within the CallComposite and
+        CallWithChatComposite experiences during a call including one or more teams users.
+      </Description>
+      <Description>
+        The main difference between ACS Closed Captions and Teams Interop Closed Captions is that Teams Interop Closed
+        Captions supports translation. End users can choose to have captions translated to a different language by using
+        captions settings.
+      </Description>
+
+      <Heading>How to use Captions</Heading>
       <Description>
         Captions is automatically included within the CallComposite and CallWithChatComposite experiences. To turn on
         captions, users need to navigate to the control bar after call is connected, and click on more button. Inside
         the menu pop up, click on Turn on captions.
       </Description>
       <Description>
-        The spoken language is set to English by default. Change it if a different language is being used in the
-        meeting.
+        The spoken language is set to English by default. Your end user can use the UI to change the spoken language if
+        a different language is being used in the meeting. This changes this spoken language for all users in the call.
       </Description>
       <Description>
-        The caption language (Interop Closed Captions) is set to English by default. Change it by clicking on the
+        The caption language (Teams Interop Closed Captions) is set to English by default. Change it by clicking on the
         Caption Settings button after captions has already started if user prefers the captions to be translated to a
         different language.
       </Description>
