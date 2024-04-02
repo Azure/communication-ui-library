@@ -94,7 +94,7 @@ export const GenerateMockNewChatMessageWithAttachment = (): ChatMessage => {
     mine: true,
     attached: false,
     contentType: 'text',
-    files: [
+    attachments: [
       {
         id: 'SomeUniqueId1',
         name: 'Annual Report.xlsx',
