@@ -680,6 +680,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     attachmentOptions,
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     onRenderAttachmentDownloads,
+    /* @conditional-compile-remove(rich-text-editor) */
     enableRichTextEditor
   } = props;
   // We need this state to wait for one tick and scroll to bottom after messages have been initialized.
@@ -1136,7 +1137,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
                   mentionOptions={mentionOptions}
                   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
                   onRenderAttachmentDownloads={onRenderAttachmentDownloads}
-                  /* @condtional-compile-remove(rich-text-editor) */
+                  /* @conditional-compile-remove(rich-text-editor) */
                   enableRichTextEditor={enableRichTextEditor}
                 />
               );

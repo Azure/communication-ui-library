@@ -143,7 +143,8 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
         }}
         /* @conditional-compile-remove(mention) */
         mentionLookupOptions={props.mentionOptions?.lookupOptions}
-        enableRichTextEditor={props.enableRichTextEditor ?? false}
+        /* @conditional-compile-remove(rich-text-editor) */
+        enableRichTextEditor={props.enableRichTextEditor}
       />
     );
   } else {

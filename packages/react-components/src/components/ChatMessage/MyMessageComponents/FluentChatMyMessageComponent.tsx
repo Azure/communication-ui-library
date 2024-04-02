@@ -100,17 +100,24 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
       return <></>;
     },
     [
-      onRenderAttachmentDownloadsMemo,
-      userId,
+      onActionButtonClick,
+      onRenderAvatar,
       participantCount,
       shouldOverlapAvatarAndMessage,
-      onRenderAvatar,
       showMessageStatus,
-      onActionButtonClick,
+      userId,
+      /* @conditional-compile-remove(date-time-customization) */
       onDisplayDateTimeString,
       inlineImageOptions,
+      /* @conditional-compile-remove(mention) */
       mentionOptions,
+      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+      onRenderAttachmentDownloadsMemo,
+      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
       actionsForAttachment,
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      new Date().toDateString(),
+      /* @conditional-compile-remove(rich-text-editor) */
       enableRichTextEditor
     ]
   );

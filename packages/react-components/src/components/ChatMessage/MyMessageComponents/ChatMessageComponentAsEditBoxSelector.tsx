@@ -1,11 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+import React from 'react';
 /* @conditional-compile-remove(rich-text-editor) */
-import React, { Suspense } from 'react';
-import { AttachmentMetadata, ChatMessage } from '../../../types';
+import { Suspense } from 'react';
+import { ChatMessage } from '../../../types';
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+import { AttachmentMetadata } from '../../../types';
 import { MessageThreadStrings } from '../../MessageThread';
 import { ChatMessageComponentAsEditBox } from '../ChatMessageComponentAsEditBox';
+/* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from '../../MentionPopover';
 
 /* @conditional-compile-remove(rich-text-editor) */
@@ -32,7 +36,7 @@ export type ChatMessageComponentAsEditBoxSelectorProps = {
   strings: MessageThreadStrings;
   /* @conditional-compile-remove(mention) */
   mentionLookupOptions?: MentionLookupOptions;
-  enableRichTextEditor: boolean;
+  enableRichTextEditor?: boolean;
 };
 
 /**
@@ -41,6 +45,7 @@ export type ChatMessageComponentAsEditBoxSelectorProps = {
 export const ChatMessageComponentAsEditBoxSelector = (
   props: ChatMessageComponentAsEditBoxSelectorProps
 ): JSX.Element => {
+  // /* @conditional-compile-remove(rich-text-editor) */
   const { enableRichTextEditor } = props;
 
   // /* @conditional-compile-remove(rich-text-editor) */
