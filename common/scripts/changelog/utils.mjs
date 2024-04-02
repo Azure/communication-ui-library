@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-const NEW_CHANGE_FILE_REGEXP = /\s*A\s*change\/(.*\.json)\s*/;
+const NEW_CHANGE_FILE_REGEXP = /\s*change\/(.*\.json)\s*/;
 
 export function parseNewChangeFiles(stdout) {
     const lines = stdout.split('\n');
