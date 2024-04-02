@@ -44,7 +44,18 @@
     "numberListTooltip": "قائمة مرقّمة",
     "increaseIndentTooltip": "زيادة المسافة البادئة",
     "decreaseIndentTooltip": "إنقاص المسافة البادئة",
-    "richTextFormatButtonTooltip": "تنسيق"
+    "insertTableTooltip": "إدراج جدول",
+    "richTextFormatButtonTooltip": "تنسيق",
+    "insertRowOrColumnMenu": "إدراج",
+    "insertTableMenuTitle": "إدراج جدول بـ {column} x {row}",
+    "insertRowAboveMenu": "إدراج أعلاه",
+    "insertRowBelowMenu": "إدراج أدناه",
+    "insertColumnLeftMenu": "إدراج يساراً",
+    "insertColumnRightMenu": "إدراج يميناً",
+    "deleteRowOrColumnMenu": "حذف",
+    "deleteColumnMenu": "حذف العمود",
+    "deleteRowMenu": "حذف الصف",
+    "deleteTableMenu": "حذف الجدول"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "الاقتراحات"
@@ -66,7 +77,9 @@
   },
   "endCallButton": {
     "label": "مغادرة",
-    "tooltipContent": "مغادرة المكالمة"
+    "tooltipContent": "مغادرة المكالمة",
+    "leaveOption": "مغادرة",
+    "endCallOption": "إنهاء المكالمة"
   },
   "cameraButton": {
     "onLabel": "الكاميرا",
@@ -180,6 +193,7 @@
     "messageReadCount": "تمت القراءة بواسطة {messageReadByCount} من {remoteParticipantsCount}",
     "actionMenuMoreOptions": "المزيد من الخيارات",
     "downloadAttachment": "تنزيل ملف",
+    "openAttachment": "فتح ملف",
     "blockedWarningText": "تم حذف هذه الرسالة بسبب نهج تنظيمي.",
     "blockedWarningLinkText": "تفاصيل",
     "attachmentCardGroupMessage": "تحتوي الرسالة على مرفق {attachmentCount}",

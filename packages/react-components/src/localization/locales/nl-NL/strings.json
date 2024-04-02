@@ -44,7 +44,18 @@
     "numberListTooltip": "Genummerde lijst",
     "increaseIndentTooltip": "Inspringing vergroten",
     "decreaseIndentTooltip": "Inspringing verkleinen",
-    "richTextFormatButtonTooltip": "Indeling"
+    "insertTableTooltip": "Tabel invoegen",
+    "richTextFormatButtonTooltip": "Indeling",
+    "insertRowOrColumnMenu": "Invoegen",
+    "insertTableMenuTitle": "{column} x {row} tabel invoegen",
+    "insertRowAboveMenu": "Hierboven invoegen",
+    "insertRowBelowMenu": "Hieronder invoegen",
+    "insertColumnLeftMenu": "Links invoegen",
+    "insertColumnRightMenu": "Rechts invoegen",
+    "deleteRowOrColumnMenu": "Verwijderen",
+    "deleteColumnMenu": "Kolom verwijderen",
+    "deleteRowMenu": "Rij verwijderen",
+    "deleteTableMenu": "Tabel verwijderen"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggesties"
@@ -66,7 +77,9 @@
   },
   "endCallButton": {
     "label": "Verlaten",
-    "tooltipContent": "Gesprek verlaten"
+    "tooltipContent": "Gesprek verlaten",
+    "leaveOption": "Verlaten",
+    "endCallOption": "Gesprek beëindigen"
   },
   "cameraButton": {
     "onLabel": "Camera",
@@ -180,6 +193,7 @@
     "messageReadCount": "Gelezen door {messageReadByCount} van {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Meer opties",
     "downloadAttachment": "Bestand downloaden",
+    "openAttachment": "Bestand openen",
     "blockedWarningText": "Dit bericht is verwijderd vanwege organisatiebeleid.",
     "blockedWarningLinkText": "Details",
     "attachmentCardGroupMessage": "Het bericht heeft {attachmentCount} bijlage",

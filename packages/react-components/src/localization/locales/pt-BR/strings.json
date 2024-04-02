@@ -44,7 +44,18 @@
     "numberListTooltip": "Lista numerada",
     "increaseIndentTooltip": "Aumentar recuo",
     "decreaseIndentTooltip": "Diminuir recuo",
-    "richTextFormatButtonTooltip": "Formato"
+    "insertTableTooltip": "Inserir tabela",
+    "richTextFormatButtonTooltip": "Formato",
+    "insertRowOrColumnMenu": "Inserir",
+    "insertTableMenuTitle": "Inserir tabela {column} x {row}",
+    "insertRowAboveMenu": "Inserir acima",
+    "insertRowBelowMenu": "Inserir abaixo",
+    "insertColumnLeftMenu": "Inserir à esquerda",
+    "insertColumnRightMenu": "Inserir à direita",
+    "deleteRowOrColumnMenu": "Excluir",
+    "deleteColumnMenu": "Excluir coluna",
+    "deleteRowMenu": "Excluir linha",
+    "deleteTableMenu": "Excluir tabela"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Sugestões"
@@ -66,7 +77,9 @@
   },
   "endCallButton": {
     "label": "Sair",
-    "tooltipContent": "Sair da chamada"
+    "tooltipContent": "Sair da chamada",
+    "leaveOption": "Sair",
+    "endCallOption": "Encerrar chamada"
   },
   "cameraButton": {
     "onLabel": "Câmera",
@@ -180,6 +193,7 @@
     "messageReadCount": "Lido por {messageReadByCount} de {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Mais opções",
     "downloadAttachment": "Baixar arquivo",
+    "openAttachment": "Abrir arquivo",
     "blockedWarningText": "Esta mensagem foi excluída devido à política organizacional.",
     "blockedWarningLinkText": "Detalhes",
     "attachmentCardGroupMessage": "A mensagem tem {attachmentCount} anexo",

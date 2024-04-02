@@ -44,7 +44,18 @@
     "numberListTooltip": "Nummerierte Liste",
     "increaseIndentTooltip": "Einzug vergrößern",
     "decreaseIndentTooltip": "Einzug verringern",
-    "richTextFormatButtonTooltip": "Formatieren"
+    "insertTableTooltip": "Tabelle einfügen",
+    "richTextFormatButtonTooltip": "Formatieren",
+    "insertRowOrColumnMenu": "Einfügen",
+    "insertTableMenuTitle": "{column} x {row} Tabelle einfügen",
+    "insertRowAboveMenu": "Oben einfügen",
+    "insertRowBelowMenu": "Darunter einfügen",
+    "insertColumnLeftMenu": "Links einfügen",
+    "insertColumnRightMenu": "Rechts einfügen",
+    "deleteRowOrColumnMenu": "Löschen",
+    "deleteColumnMenu": "Spalte löschen",
+    "deleteRowMenu": "Zeile löschen",
+    "deleteTableMenu": "Tabelle löschen"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Vorschläge"
@@ -66,7 +77,9 @@
   },
   "endCallButton": {
     "label": "Verlassen",
-    "tooltipContent": "Anruf verlassen"
+    "tooltipContent": "Anruf verlassen",
+    "leaveOption": "Beenden",
+    "endCallOption": "Gespräch beenden"
   },
   "cameraButton": {
     "onLabel": "Kamera",
@@ -180,6 +193,7 @@
     "messageReadCount": "Gelesen von {messageReadByCount} von {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Weitere Optionen",
     "downloadAttachment": "Datei herunterladen",
+    "openAttachment": "Datei öffnen",
     "blockedWarningText": "Diese Nachricht wurde aufgrund einer Organisationsrichtlinie gelöscht.",
     "blockedWarningLinkText": "Details",
     "attachmentCardGroupMessage": "Die Nachricht enthält {attachmentCount} Anlage.",

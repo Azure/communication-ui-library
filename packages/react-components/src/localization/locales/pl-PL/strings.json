@@ -44,7 +44,18 @@
     "numberListTooltip": "Lista numerowana",
     "increaseIndentTooltip": "Zwiększ wcięcie",
     "decreaseIndentTooltip": "Zmniejsz wcięcie",
-    "richTextFormatButtonTooltip": "Formatowanie"
+    "insertTableTooltip": "Wstaw tabelę",
+    "richTextFormatButtonTooltip": "Formatowanie",
+    "insertRowOrColumnMenu": "Wstaw",
+    "insertTableMenuTitle": "Wstaw tabelę {column} x {row}",
+    "insertRowAboveMenu": "Wstaw powyżej",
+    "insertRowBelowMenu": "Wstaw poniżej",
+    "insertColumnLeftMenu": "Wstaw z lewej",
+    "insertColumnRightMenu": "Wstaw z prawej",
+    "deleteRowOrColumnMenu": "Usuń",
+    "deleteColumnMenu": "Usuń kolumnę",
+    "deleteRowMenu": "Usuń wiersz",
+    "deleteTableMenu": "Usuń tabelę"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Sugestie"
@@ -66,7 +77,9 @@
   },
   "endCallButton": {
     "label": "Wyjdź",
-    "tooltipContent": "Opuść rozmowę"
+    "tooltipContent": "Opuść rozmowę",
+    "leaveOption": "Opuść",
+    "endCallOption": "Zakończ połączenie"
   },
   "cameraButton": {
     "onLabel": "Kamera",
@@ -180,6 +193,7 @@
     "messageReadCount": "Przeczytane przez {messageReadByCount} z {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Więcej opcji",
     "downloadAttachment": "Pobierz plik",
+    "openAttachment": "Otwórz plik",
     "blockedWarningText": "Ta wiadomość została usunięta ze względu na zasady organizacyjne.",
     "blockedWarningLinkText": "Szczegóły",
     "attachmentCardGroupMessage": "Wiadomość ma {attachmentCount} załącznik",
