@@ -12,7 +12,7 @@ import {
 } from '@internal/react-components';
 
 /**
- * A wrapper object for a file that is being uploaded.
+ * A wrapper object for a attachments that is being uploaded.
  * Provides common functions for updating the upload progress, canceling an upload etc.
  * @private
  */

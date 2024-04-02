@@ -69,7 +69,7 @@ const getDocs: () => JSX.Element = () => {
         <CustomStylingExample />
       </Canvas>
 
-      <Heading>Display File Uploads</Heading>
+      <Heading>Display Attachment Uploads</Heading>
       <DetailedBetaBanner />
       <Description>
         SendBox component provides UI for displaying active attachment uploads in the SendBox. This allows developers to

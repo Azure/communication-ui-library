@@ -19,7 +19,7 @@ import { useChatMessageRichTextEditContainerStyles } from '../styles/ChatMessage
 import { MAXIMUM_LENGTH_OF_MESSAGE } from '../utils/SendBoxUtils';
 import { getMessageState, onRenderCancelIcon, onRenderSubmitIcon } from '../utils/ChatMessageComponentAsEditBoxUtils';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { getMessageAttachedFilesMetadata } from '../utils/ChatMessageComponentAsEditBoxUtils';
+import { getMessageWithAttachmentMetadata } from '../utils/ChatMessageComponentAsEditBoxUtils';
 import { RichTextEditorComponentRef } from '../RichTextEditor/RichTextEditor';
 import { RichTextInputBoxComponent } from '../RichTextEditor/RichTextInputBoxComponent';
 import { editBoxRichTextEditorStyle, richTextActionButtonsStyle } from '../styles/RichTextEditor.styles';
@@ -51,7 +51,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
 
   const [textValue, setTextValue] = useState<string>(message.content || '');
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  const [attachmentMetadata, _] = React.useState(getMessageAttachedFilesMetadata(message));
+  const [attachmentMetadata, _] = React.useState(getMessageWithAttachmentMetadata(message));
   const editTextFieldRef = React.useRef<RichTextEditorComponentRef>(null);
   const theme = useTheme();
   const messageState = getMessageState(

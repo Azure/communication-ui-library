@@ -142,7 +142,7 @@ export interface RichTextSendBoxProps {
    * cancel icon.
    * @beta
    */
-  onCancelAttachmentUpload?: (fileId: string) => void;
+  onCancelAttachmentUpload?: (attachmentId: string) => void;
   /**
    * Callback function used when the send button is clicked.
    */
@@ -204,7 +204,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     if (disabled || contentValueOverflow) {
       return;
     }
-    // Don't send message until all files have been uploaded successfully
+    // Don't send message until all attachments have been uploaded successfully
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     setAttachmentUploadsPendingError(undefined);
 
@@ -263,7 +263,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
           theme,
           hasText: !!contentValue,
           /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-          hasFile: false,
+          hasAttachment: false,
           hasErrorMessage: hasErrorMessage,
           defaultTextColor: theme.palette.neutralSecondary,
           disabled: disabled
@@ -355,7 +355,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
         onRenderAttachmentUploads={onRenderAttachmentUploads}
         /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-        hasFiles={hasAttachmentUploads}
+        hasAttachments={hasAttachmentUploads}
       />
     </Stack>
   );
