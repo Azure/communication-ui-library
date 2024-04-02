@@ -46,7 +46,7 @@ export const MessageWithCustomAttachment: () => JSX.Element = () => {
                     icon: <WindowNew24Regular />,
                     onClick: () => {
                       return new Promise((resolve) => {
-                        window.alert('open button clicked');
+                        window.alert('open button clicked for messageID: ' + message?.messageId);
                         resolve();
                       });
                     }
