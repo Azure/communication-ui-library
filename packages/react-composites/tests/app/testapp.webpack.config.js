@@ -61,7 +61,7 @@ module.exports = (appDir, babelConfig) => {
           { from: path.join(__dirname, 'fonts', 'segoeui-regular.woff2'), to: 'fonts' },
           { from: path.join(__dirname, 'fonts', 'segoeui-semibold.woff2'), to: 'fonts' },
           { from: path.join(__dirname, 'images'), to: 'images' },
-          { from: path.join(__dirname, 'public', 'backgrounds'), to: 'backgrounds' }
+          { from: path.resolve(__dirname, 'public/assets'), to: 'assets', noErrorOnMissing: true }
         ]
       })
     ],

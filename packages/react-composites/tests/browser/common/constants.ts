@@ -39,7 +39,9 @@ export const IDS = {
   verticalGalleryVideoTile: 'vertical-gallery-video-tile',
   horizontalGalleryVideoTile: 'horizontal-gallery-video-tile',
   mentionSuggestionList: 'mention-suggestion-list',
-  mentionSuggestionItem: 'mention-suggestion-item'
+  mentionSuggestionItem: 'mention-suggestion-item',
+  reactionButton: 'call-composite-reaction-button',
+  reactionButtonSubMenu: 'reaction-sub-menu'
 };
 
 export const spokenLanguageStrings = [
