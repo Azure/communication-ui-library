@@ -328,7 +328,7 @@
   },
   "chat": {
     "chatListHeader": "En este chat",
-    "uploadFile": "Subir archivo"
+    "uploadAttachment": "Subir archivo"
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",

@@ -23,7 +23,7 @@ export const IDS = {
   overflowGalleryLeftNavButton: 'overflow-gallery-left-nav-button',
   overflowGalleryRightNavButton: 'overflow-gallery-right-nav-button',
   readReceiptTooltip: 'chat-composite-message-tooltip',
-  fileTypeIcon: 'filetype-icon',
+  attachmentTypeIcon: 'attachmenttype-icon',
   deviceButton: 'calling-composite-devices-button',
   resumeCallButton: 'hold-page-resume-call-button',
   holdButton: 'hold-button',
