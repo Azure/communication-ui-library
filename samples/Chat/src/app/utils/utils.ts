@@ -49,3 +49,18 @@ export const getBackgroundColor = (avatar: string): { backgroundColor: string } 
       };
   }
 };
+
+/**
+ * Init React Render Tracker whenever it detects the query param 'rrt' is set to true.
+ */
+export const initReactRenderTracker = (): void => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const isEnabled = urlParams.get('rrt');
+  if (isEnabled !== 'true') {
+    return;
+  }
+
+  const script = document.createElement('script');
+  script.src = 'https://cdn.jsdelivr.net/npm/react-render-tracker';
+  document.head.appendChild(script);
+};
