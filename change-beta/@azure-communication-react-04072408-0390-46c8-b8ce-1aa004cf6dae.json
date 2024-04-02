@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "area": "improvement",
-  "workstream": "InlineImages",
-  "comment": "Making sourceUrl optional",
-  "packageName": "@azure/communication-react",
-  "email": "9044372+JoshuaLai@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
