@@ -40,10 +40,6 @@ export interface _AttachmentCardProps {
    */
   attachment: AttachmentMetadata;
   /**
-   * Optional property to indicate progress of attachment upload.
-   */
-  progress?: number;
-  /**
    * An array of menu actions to be displayed in the attachment card.
    */
   menuActions: AttachmentMenuAction[];
@@ -64,9 +60,11 @@ export interface _AttachmentCardProps {
  * `_AttachmentCard` internally uses the `Card` component from `@fluentui/react-components`. You can checkout the details about these components [here](https://react.fluentui.dev/?path=/docs/components-card).
  */
 export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
-  const { attachment, progress, menuActions, onActionHandlerFailed } = props;
+  const { attachment, menuActions, onActionHandlerFailed } = props;
   const attachmentCardStyles = useAttachmentCardStyles();
-
+  const progress = useMemo(() => {
+    return attachment.progress;
+  }, [attachment.progress]);
   const isUploadComplete = useMemo(() => {
     return progress !== undefined && progress > 0 && progress < 1;
   }, [progress]);

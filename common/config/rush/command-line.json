@@ -35,6 +35,14 @@
     },
     {
       "commandKind": "global",
+      "name": "sb",
+      "summary": "SHORTNAME: switch-flavor:beta",
+      "description": "SHORTNAME: switch-flavor:beta",
+      "shellCommand": "rush switch-flavor:beta",
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "global",
       "name": "switch-flavor:beta-release",
       "summary": "Switch flavor to beta release mode (strip out in-progress features)",
       "description": "Every build and test command will run based on beta version.",
@@ -44,11 +52,27 @@
     },
     {
       "commandKind": "global",
+      "name": "sbr",
+      "summary": "SHORTNAME: switch-flavor:beta-release",
+      "description": "SHORTNAME: switch-flavor:beta-release",
+      "shellCommand": "rush switch-flavor:beta-release",
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "global",
       "name": "switch-flavor:stable",
       "summary": "Switch flavor to stable",
       "description": "Every build and test command will run based on stable version.",
       "autoinstallerName": "rush-cpy",
       "shellCommand": "rush install --variant stable && cpy --flat common/config/env/stable.env common/config/env --rename .env && node common/scripts/invalidate-build.js",
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "global",
+      "name": "ss",
+      "summary": "SHORTNAME: switch-flavor:stable",
+      "description": "SHORTNAME: switch-flavor:stable",
+      "shellCommand": "rush switch-flavor:stable",
       "safeForSimultaneousRushProcesses": true
     },
     {
@@ -69,6 +93,22 @@
     },
     {
       "commandKind": "global",
+      "name": "u",
+      "summary": "SHORTNAME: update",
+      "description": "SHORTNAME: update",
+      "shellCommand": "rush update",
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "global",
+      "name": "us",
+      "summary": "SHORTNAME: update:stable",
+      "description": "SHORTNAME: update:stable",
+      "shellCommand": "rush update:stable",
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "global",
       "name": "build:all-flavors",
       "summary": "Build all packages for all flavors in one command",
       "description": "Build all packages for all flavors in one command. This command will switch current flavor to beta.",
@@ -77,10 +117,26 @@
     },
     {
       "commandKind": "global",
+      "name": "baf",
+      "summary": "SHORTNAME: build:all-flavors",
+      "description": "SHORTNAME: build:all-flavors",
+      "shellCommand": "rush build:all-flavors",
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "global",
       "name": "build-api:all-flavors",
       "summary": "Build all packages in all flavors, excluding samples and storybook, to update api files",
       "description": "Build all packages in all flavors in one command, excluding samples and storybook, to update api files. This command will switch current flavor to beta.",
       "shellCommand": "(rush switch-flavor:stable && rush rebuild -t @azure/communication-react) || rush switch-flavor:beta && rush rebuild -t @azure/communication-react",
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "global",
+      "name": "bapi",
+      "summary": "SHORTNAME: build-api:all-flavors",
+      "description": "SHORTNAME: build-api:all-flavors",
+      "shellCommand": "rush build-api:all-flavors",
       "safeForSimultaneousRushProcesses": true
     },
     {
@@ -109,6 +165,14 @@
       "ignoreDependencyOrder": false,
       "ignoreMissingScript": false,
       "allowWarningsInSuccessfulBuild": true
+    },
+    {
+      "commandKind": "global",
+      "name": "b",
+      "summary": "SHORTNAME: build",
+      "description": "SHORTNAME: build",
+      "shellCommand": "rush build",
+      "safeForSimultaneousRushProcesses": true
     },
     {
       "commandKind": "bulk",
