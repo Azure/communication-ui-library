@@ -3,7 +3,6 @@
 
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useState } from 'react';
-import { ChatMessageComponentAsEditBox } from '../ChatMessageComponentAsEditBox';
 import { MessageThreadStrings } from '../../MessageThread';
 import { ChatMessage, ComponentSlotStyle, OnRenderAvatarCallback } from '../../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -14,6 +13,7 @@ import { AttachmentMenuAction, AttachmentMetadata } from '../../../types/Attachm
 import { MentionOptions } from '../../MentionPopover';
 import { InlineImageOptions } from '../ChatMessageContent';
 import { ChatMyMessageComponentAsMessageBubble } from './ChatMyMessageComponentAsMessageBubble';
+import { ChatMessageComponentAsEditBoxSelector } from './ChatMessageComponentAsEditBoxSelector';
 
 type ChatMyMessageComponentProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
@@ -128,7 +128,7 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
 
   if (isEditing && message.messageType === 'chat') {
     return (
-      <ChatMessageComponentAsEditBox
+      <ChatMessageComponentAsEditBoxSelector
         message={message}
         strings={props.strings}
         onSubmit={async (text, metadata, options) => {
@@ -143,6 +143,7 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
         }}
         /* @conditional-compile-remove(mention) */
         mentionLookupOptions={props.mentionOptions?.lookupOptions}
+        enableRichTextEditor={props.enableRichTextEditor ?? false}
       />
     );
   } else {
