@@ -75,7 +75,7 @@ test.describe('Teams Closed Captions Banner tests', async () => {
     }
     await loadCallPage(page, serverUrl, initialState);
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page)).toMatchSnapshot('hide-teams-captions-banner.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('teams-captions-closed.png');
   });
 
   test('Captions settings triggered by caption banner correctly on desktop', async ({ page, serverUrl }, testInfo) => {

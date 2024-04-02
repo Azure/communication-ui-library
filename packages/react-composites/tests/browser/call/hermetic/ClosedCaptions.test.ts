@@ -69,7 +69,7 @@ test.describe('Closed Captions Banner tests', async () => {
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page)).toMatchSnapshot('hide-captions-banner.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('captions-closed.png');
   });
 
   test('Captions settings triggered by caption banner correctly on desktop', async ({ page, serverUrl }, testInfo) => {
@@ -89,10 +89,13 @@ test.describe('Closed Captions Banner tests', async () => {
 
 /* @conditional-compile-remove(acs-close-captions) */
 test.describe('Captions buttons in call control', () => {
-  test('Captions buttons shows when it is acs call and connected', async ({ page, serverUrl }) => {
+  test('Captions buttons shows when it is acs call and connected', async ({ page, serverUrl }, testInfo) => {
     const initialState = defaultMockCallAdapterState();
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
     await pageClick(page, dataUiId('common-call-composite-more-button'));
+    if (isTestProfileMobile(testInfo)) {
+      page.keyboard.press('PageDown');
+    }
     expect(await stableScreenshot(page)).toMatchSnapshot(`caption-button-call.png`);
   });
 

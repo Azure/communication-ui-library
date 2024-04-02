@@ -74,7 +74,7 @@ test.describe('Teams Closed Captions Banner tests', async () => {
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page)).toMatchSnapshot('hide-teams-captions-banner.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('teams-captions-closed.png');
   });
 
   test('Captions settings triggered by caption banner correctly on desktop', async ({ page, serverUrl }, testInfo) => {
@@ -95,13 +95,16 @@ test.describe('Teams Closed Captions Banner tests', async () => {
 
 /* @conditional-compile-remove(close-captions) */
 test.describe('Captions buttons in call control', () => {
-  test('Captions buttons shows when it is teams call and connected', async ({ page, serverUrl }) => {
+  test('Captions buttons shows when it is teams call and connected', async ({ page, serverUrl }, testInfo) => {
     const initialState = defaultMockCallAdapterState();
     if (initialState?.call) {
       initialState.isTeamsCall = true;
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
     await pageClick(page, dataUiId('common-call-composite-more-button'));
+    if (isTestProfileMobile(testInfo)) {
+      page.keyboard.press('PageDown');
+    }
     expect(await stableScreenshot(page)).toMatchSnapshot(`caption-button-teams-call.png`);
   });
 
