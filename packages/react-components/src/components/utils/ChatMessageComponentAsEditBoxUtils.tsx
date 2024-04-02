@@ -57,6 +57,6 @@ export function getMessageState(
  * @private
  * @TODO: Remove when file-sharing feature becomes stable.
  */
-export function getMessageAttachedFilesMetadata(message: ChatMessage): AttachmentMetadata[] | undefined {
-  return message.files;
+export function getMessageWithAttachmentMetadata(message: ChatMessage): AttachmentMetadata[] | undefined {
+  return message.attachments;
 }

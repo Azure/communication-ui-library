@@ -74,7 +74,7 @@ export const AttachmentUploadButton = (props: AttachmentUploadButtonProps): JSX.
           inputRef.current?.click();
         }}
       >
-        <IconButton className={iconButtonClassName} ariaLabel={uploadFileButtonStringTrampoline()}>
+        <IconButton className={iconButtonClassName} ariaLabel={uploadAttachmentButtonStringTrampoline()}>
           <SendBoxAttachFileIconTrampoline />
         </IconButton>
       </Stack>
@@ -123,9 +123,9 @@ export const AttachmentUploadButtonWrapper = (
   );
 };
 
-const uploadFileButtonStringTrampoline = (): string => {
+const uploadAttachmentButtonStringTrampoline = (): string => {
   //@conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload)
   //eslint-disable-next-line react-hooks/rules-of-hooks
-  return useLocale().strings.chat.uploadFile;
+  return useLocale().strings.chat.uploadAttachment;
   return '';
 };
