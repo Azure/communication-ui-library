@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "area": "fix",
+  "workstream": "CI",
+  "comment": "Fixes issue where version bump on stable releases was only bumping the patch version",
+  "packageName": "@azure/communication-react",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "none"
+}
