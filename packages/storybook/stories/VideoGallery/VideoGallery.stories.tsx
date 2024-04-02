@@ -22,7 +22,6 @@ import { MobileWrapper } from './snippets/MobileWrapper';
 import { OVC3x3VideoGalleryExample } from './snippets/OVC3x3.snippet';
 import { PinnedParticipantsDisabledExample } from './snippets/PinnedParticipantsDisabled.snippet';
 import { PinnedParticipantsMobileExample } from './snippets/PinnedParticipantsMobile.snippet';
-import { PPTLiveSharingFromViewerExample } from './snippets/PPTLiveSharingFromViewer.snippet';
 import { ScreenSharingFromPresenterExample } from './snippets/ScreenSharingFromPresenter.snippet';
 import { ScreenSharingFromViewerExample } from './snippets/ScreenSharingFromViewer.snippet';
 import { SpeakerLayoutExample } from './snippets/SpeakerLayout.snippet';
@@ -42,8 +41,6 @@ const PinnedParticipantsDisabledExampleText =
   require('!!raw-loader!./snippets/PinnedParticipantsDisabled.snippet.tsx').default;
 const PinnedParticipantsMobileExampleText =
   require('!!raw-loader!./snippets/PinnedParticipantsMobile.snippet.tsx').default;
-const PPTLiveSharingFromViewerExampleText =
-  require('!!raw-loader!./snippets/PPTLiveSharingFromViewer.snippet.tsx').default;
 const ScreenSharingFromPresenterExampleText =
   require('!!raw-loader!./snippets/ScreenSharingFromPresenter.snippet.tsx').default;
 const ScreenSharingFromViewerExampleText =
@@ -249,21 +246,12 @@ const getDocs: () => JSX.Element = () => {
       </Canvas>
       <Subheading>From a viewer point of view</Subheading>
       <Description>
-        Note that in this example, we substitute the screenshare video stream with an image just for mocking experience.
+        We have the capability to configure the `screenShareStream` to utilize any `HTMLElement as the renderElement,
+        enabling functionalities like screen sharing and PowerPoint Live. It's important to note that, in this specific
+        example, we're replacing the screenshare video stream with an image merely to simulate the experience.
       </Description>
       <Canvas mdxSource={ScreenSharingFromViewerExampleText}>
         <ScreenSharingFromViewerExample />
-      </Canvas>
-      <Heading>PowerPoint Live (PPTLive) Experience</Heading>
-      <Description>
-        The shared PPTLive is the only element placed in the [Grid
-        Layout](./?path=/docs/ui-components-gridlayout--grid-layout) and all remote participants are placed in the
-        horizontal gallery in the lower section. To be able to view this shared PPTLive, the sharing participant should
-        have their `isScreenSharingOn` prop set to true as well as a defined `screenShareStream` prop (see
-        `remoteParticipants` props).
-      </Description>
-      <Canvas mdxSource={PPTLiveSharingFromViewerExampleText}>
-        <PPTLiveSharingFromViewerExample />
       </Canvas>
       <Heading>Custom Avatar</Heading>
       <Description>

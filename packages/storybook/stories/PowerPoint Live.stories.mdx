@@ -1,0 +1,64 @@
+import { Meta, Source } from '@storybook/addon-docs';
+
+<Meta
+  id="ppt-live"
+  title="Concepts/PowerPoint Live"
+  parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }}
+/>
+
+# PowerPoint Live Integration with Azure Communication Services
+
+Azure Communication Services (ACS) integrate PowerPoint Live into Teams meetings, enhancing the presentation experience. This feature allows real-time engagement with presentations, making it an invaluable tool for various scenarios.
+
+## Roles in a PowerPoint Live Session
+
+Within a PowerPoint Live session, participants are categorized into roles, each with specific capabilities:
+
+- **Presenter**: Leads the session, controlling the presentation flow.
+- **Attendee**: Views the presentation, with interaction capabilities defined by the Presenter. This is the default role.
+
+The distinct capabilities for each role are detailed in the [PowerPoint Live documentation](https://support.microsoft.com/en-us/office/present-from-powerpoint-live-in-microsoft-teams-28b20e74-7165-499c-9bd4-0ad975d448ad).
+
+PowerPoint Live is ideally suited for:
+
+- Corporate presentations
+- Educational lectures
+- Remote training sessions
+- Webinars
+
+## Implementing the Stateful Client API for PowerPoint Live
+
+The Stateful Client API from ACS UI Library simplifies managing the state and lifecycle of your communication features within an application. Follow the steps outlined in the [Stateful Client Quickstart](https://azure.github.io/communication-ui-library/?path=/docs/quickstarts-statefulcallclient--page) to initialize the Stateful Call Client.
+
+## Implementing the VideoGallery Component for PowerPoint Live
+
+To display the PowerPoint Live session, utilize the VideoGallery component, which can also serve for showing video streams or screen shares, including PowerPoint presentations shared by a presenter.
+
+### VideoGallery Setup
+
+Integrate the VideoGallery component by following the guide in the [VideoGallery Documentation](https://azure.github.io/communication-ui-library/?path=/docs/ui-components-videogallery--video-gallery). This component allows you to render video streams or shared content within your application seamlessly.
+
+```typescript
+// Import the necessary dependencies
+import { VideoGallery } from '@azure/communication-react';
+
+// Use the VideoGallery component to display the presentation
+function PPTLiveComponent() {
+  // Setup screenShareStream under remoteParticipants
+  return <VideoGallery localParticipant={localParticipant} remoteParticipants={remoteParticipants} />;
+}
+```
+
+## FAQs
+
+### Can I use UI library to share PowerPoint Live?
+
+No, we do view-only for PowerPoint Live right now.
+
+### Can I use PowerPoint Live in group call?
+
+No, we only support Teams meeting, Webinars, Rooms for now.
+
+### If I have found any issues with the rooms in the CallComposite where can I go?
+
+Please log a [Github issue](https://github.com/Azure/communication-ui-library/issues), and someone from our team can work with you.
