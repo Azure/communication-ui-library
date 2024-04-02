@@ -14,7 +14,7 @@ import { MockCallAdapterState } from 'common';
 
 /* @conditional-compile-remove(reaction) */
 test.describe('Reactions button tests', async () => {
-  test.only('Reactions button sub menu appears when button is clicked', async ({ page, serverUrl }, testInfo) => {
+  test('Reactions button sub menu appears when button is clicked', async ({ page, serverUrl }, testInfo) => {
     const Paul = defaultMockRemoteParticipant('Paul Blurt');
     const Adam = defaultMockRemoteParticipant('Adam Sandler');
     const Loki = defaultMockRemoteParticipant('Loki Odinson');
