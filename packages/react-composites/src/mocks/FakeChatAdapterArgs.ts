@@ -53,7 +53,7 @@ export type _FakeChatAdapterArgs = {
    */
   failFileDownload?: boolean;
   /**
-   * Determines if the first remote participant will send a fixed message with a shared file. Property
+   * Determines if the first remote participant will send a fixed message with a shared attachment. Property
    * `fileSharingEnabled` needs to be enabled.
    */
   sendRemoteFileSharingMessage?: boolean;
