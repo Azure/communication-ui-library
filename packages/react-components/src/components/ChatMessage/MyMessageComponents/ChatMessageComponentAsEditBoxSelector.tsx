@@ -6,8 +6,14 @@ import React, { Suspense } from 'react';
 import { AttachmentMetadata, ChatMessage } from '../../../types';
 import { MessageThreadStrings } from '../../MessageThread';
 import { ChatMessageComponentAsEditBox } from '../ChatMessageComponentAsEditBox';
-import { ChatMessageComponentAsRichTextEditBox } from '../ChatMessageComponentAsRichTextEditBox';
 import { MentionLookupOptions } from '../../MentionPopover';
+
+/* @conditional-compile-remove(rich-text-editor) */
+const ChatMessageComponentAsRichTextEditBox = React.lazy(() =>
+  import('../ChatMessageComponentAsRichTextEditBox').then((module) => ({
+    default: module.ChatMessageComponentAsRichTextEditBox
+  }))
+);
 
 /**
  * @private
@@ -37,13 +43,14 @@ export const ChatMessageComponentAsEditBoxSelector = (
 ): JSX.Element => {
   const { enableRichTextEditor } = props;
 
+  // /* @conditional-compile-remove(rich-text-editor) */
   if (enableRichTextEditor) {
     return (
       <Suspense>
         <ChatMessageComponentAsRichTextEditBox {...props} />
       </Suspense>
     );
-  } else {
-    return <ChatMessageComponentAsEditBox {...props} />;
   }
+
+  return <ChatMessageComponentAsEditBox {...props} />;
 };
