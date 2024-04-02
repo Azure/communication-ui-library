@@ -10,7 +10,7 @@ import { ChatAdapterProvider } from './adapter/ChatAdapterProvider';
 import { chatScreenContainerStyle } from './styles/Chat.styles';
 import { ChatScreen } from './ChatScreen';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { FileSharingOptions } from './ChatScreen';
+import { AttachmentOptions } from '@internal/react-components';
 
 /**
  * Props for {@link ChatComposite}.
@@ -83,7 +83,7 @@ export type ChatCompositeOptions = {
    * If undefined, file sharing feature will be disabled.
    * @beta
    */
-  fileSharing?: FileSharingOptions;
+  attachmentOptions?: AttachmentOptions;
 };
 
 /**
@@ -119,7 +119,7 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
             onRenderMessage={onRenderMessage}
             onFetchParticipantMenuItems={onFetchParticipantMenuItems}
             /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-            fileSharing={options?.fileSharing}
+            attachmentOptions={options?.attachmentOptions}
           />
         </ChatAdapterProvider>
       </BaseProvider>
