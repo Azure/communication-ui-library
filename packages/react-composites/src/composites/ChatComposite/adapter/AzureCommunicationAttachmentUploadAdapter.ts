@@ -209,11 +209,11 @@ export const convertAttachmentUploadsUiStateToMessageMetadata = (
   attachmentUploads?: AttachmentUploadsUiState
 ): FileSharingMetadata | undefined => {
   if (attachmentUploads) {
-    const fileMetadata: AttachmentMetadata[] = [];
+    const attachmentMetadata: AttachmentMetadata[] = [];
     Object.keys(attachmentUploads).forEach((key) => {
       const attachment = attachmentUploads[key];
       if (attachment && !attachment.uploadError) {
-        fileMetadata.push({
+        attachmentMetadata.push({
           id: attachment.id,
           name: attachment.name,
           extension: attachment.extension,
@@ -222,8 +222,8 @@ export const convertAttachmentUploadsUiStateToMessageMetadata = (
         });
       }
     });
-    if (fileMetadata.length > 0) {
-      return { fileSharingMetadata: JSON.stringify(fileMetadata) };
+    if (attachmentMetadata.length > 0) {
+      return { fileSharingMetadata: JSON.stringify(attachmentMetadata) };
     }
   }
   return undefined;

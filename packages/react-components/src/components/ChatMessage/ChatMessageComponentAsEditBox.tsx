@@ -28,7 +28,7 @@ import { MentionLookupOptions } from '../MentionPopover';
 import { MAXIMUM_LENGTH_OF_MESSAGE } from '../utils/SendBoxUtils';
 import { getMessageState, onRenderCancelIcon, onRenderSubmitIcon } from '../utils/ChatMessageComponentAsEditBoxUtils';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { getMessageAttachedFilesMetadata } from '../utils/ChatMessageComponentAsEditBoxUtils';
+import { getMessageWithAttachmentMetadata } from '../utils/ChatMessageComponentAsEditBoxUtils';
 
 /** @private */
 export type ChatMessageComponentAsEditBoxProps = {
@@ -57,7 +57,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
 
   const [textValue, setTextValue] = useState<string>(message.content || '');
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  const [attachmentMetadata, setAttachedFilesMetadata] = React.useState(getMessageAttachedFilesMetadata(message));
+  const [attachmentMetadata, setAttachmentMetadata] = React.useState(getMessageWithAttachmentMetadata(message));
   const editTextFieldRef = React.useRef<ITextField>(null);
   const theme = useTheme();
   const messageState = getMessageState(
@@ -117,8 +117,8 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
         <div style={{ margin: '0.25rem' }}>
           <_AttachmentUploadCards
             activeAttachmentUploads={attachmentMetadata}
-            onCancelAttachmentUpload={(fileId) => {
-              setAttachedFilesMetadata(attachmentMetadata?.filter((file) => file.id !== fileId));
+            onCancelAttachmentUpload={(attachmentId) => {
+              setAttachmentMetadata(attachmentMetadata?.filter((attachment) => attachment.id !== attachmentId));
             }}
           />
         </div>

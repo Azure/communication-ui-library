@@ -50,7 +50,7 @@ const actionIconStyle = { height: '1rem' };
 export const _AttachmentUploadCards = (props: AttachmentUploadCardsProps): JSX.Element => {
   const attachments = props.activeAttachmentUploads;
   const localeStrings = useLocaleAttachmentCardStringsTrampoline();
-  const removeFileButtonString = useMemo(
+  const removeAttachmentButtonString = useMemo(
     () => () => {
       return props.strings?.removeAttachment ?? localeStrings.removeAttachment;
     },
@@ -74,7 +74,7 @@ export const _AttachmentUploadCards = (props: AttachmentUploadCardsProps): JSX.E
                 {
                   name: props.strings?.removeAttachment ?? 'Remove',
                   icon: (
-                    <div aria-label={removeFileButtonString()}>
+                    <div aria-label={removeAttachmentButtonString()}>
                       <Icon iconName="CancelAttachmentUpload" className={mergeStyles(actionIconStyle)} />
                     </div>
                   ),
