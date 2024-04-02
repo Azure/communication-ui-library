@@ -95,6 +95,8 @@ test.describe('Captions buttons in call control', () => {
     await pageClick(page, dataUiId('common-call-composite-more-button'));
     if (isTestProfileMobile(testInfo)) {
       page.keyboard.press('PageDown');
+      page.keyboard.press('PageDown');
+      page.keyboard.press('PageDown');
     }
     expect(await stableScreenshot(page)).toMatchSnapshot(`caption-button-call.png`);
   });
