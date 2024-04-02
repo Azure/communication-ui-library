@@ -411,7 +411,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                   autoFocus={options?.autoFocus}
                   styles={sendBoxStyles}
                   /* @conditional-compile-remove(attachment-upload) */
-                  activeAttachmentUploads={useSelector(attachmentUploadsSelector).files}
+                  activeAttachmentUploads={useSelector(attachmentUploadsSelector).attachments}
                   /* @conditional-compile-remove(attachment-upload) */
                   onCancelAttachmentUpload={adapter.cancelUpload}
                 />
