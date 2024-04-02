@@ -203,7 +203,7 @@ export const reactionRenderingStyle = (args: {
 }): string => {
   const imageUrl = `url(${args.spriteImageUrl})`;
   const steps = args.frameCount ?? 0;
-  const frameHeightPx = 128; // TODO: for more developer flexibility, we have this passed in as part of the sprite resource interface
+  const frameHeightPx = 128; // TODO: for more developer flexibility, we should have frame size passed in as part of the sprite resource interface
   return mergeStyles({
     height: `${frameHeightPx}px`,
     width: `${frameHeightPx}px`,
