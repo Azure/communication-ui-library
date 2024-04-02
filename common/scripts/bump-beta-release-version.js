@@ -8,7 +8,7 @@ const bumpType = process.argv[2];
 const main = () => {
   const packagePaths = findAllPackageJSON(PACKAGES_DIR);
   const depNames = getAllNames(packagePaths);
-  if (!['major', 'minor', 'patch', 'beta'].includes(bumpType)) {
+  if (!['major', 'minor', 'patch', 'beta', 'stable'].includes(bumpType)) {
     throw '\nplease add either major/minor/patch/beta as a parameter!\n\n  Syntax:\n  node bump-beta-release-version.js minor\n'
   }
   updateAllVersions(bumpBetaVersion);
@@ -26,11 +26,17 @@ const bumpBetaVersion = (currentVersion) => {
     // if bumpType is beta, no need to update major, minor or patch version
     if (betaVersion === undefined) {
       // set beta version to 0 to fix beachball issue with prerelease type
-      const newMinor = Number.parseInt(minor) + 1;
-      return `${major}.${newMinor}.${0}-beta.0`
+      const newPatch = Number.parseInt(patch) + 1;
+      return `${major}.${minor}.${newPatch}-beta.0`
     }
     const newBeta = Number.parseInt(betaVersion) + 1;
     return `${major}.${minor}.${patch}-beta.${newBeta}`
+  } else if (bumpType === 'stable') {
+    // if bumpType is stable we want to reset the beta version
+    const newMinor = Number.parseInt(minor) + 1;
+    // patch version goes to 0 since we are bumping the next beta version's minor and we want to
+    // reset the patch version to 0
+    return `${major}.${newMinor}.${0}-beta.0`;
   } else {
     const newMajor = bumpType === 'major' ? Number.parseInt(major) + 1 : major;
     const newMinor = bumpType === 'major' ?
