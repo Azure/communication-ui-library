@@ -36,9 +36,10 @@ export async function generateChangelogs() {
   ensureDirectory(CHANGE_DIR);
 }
 
-/** Delete all change files with the type none as they are not included in the changelog. */
+/**
+ * Delete all change files with the type none as they are not included in the changelog.
+ */
 function deleteAllNoneChangeFiles() {
-  // read in json file and delete if property type none
   const files = fs.readdirSync(CHANGE_DIR);
   for (const file of files) {
     const json = JSON.parse(fs.readFileSync(`${CHANGE_DIR}/${file}`, 'utf8'));
