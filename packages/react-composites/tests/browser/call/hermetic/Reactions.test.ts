@@ -42,7 +42,7 @@ test.describe('Reactions button tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('reaction-sub-menu-in-ongoing-call.png');
   });
 
-  test.only('Reactions button should not appear when capability is false', async ({ page, serverUrl }, testInfo) => {
+  test('Reactions button should not appear when capability is false', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
     const Paul = defaultMockRemoteParticipant('Paul Blurt');
     const Adam = defaultMockRemoteParticipant('Adam Sandler');
