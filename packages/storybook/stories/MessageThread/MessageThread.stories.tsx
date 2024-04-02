@@ -334,21 +334,20 @@ const Docs: () => JSX.Element = () => {
       </div>
 
       <div ref={refDisplayAttachments}>
-        <Heading>Display Messages with Inline Attachments</Heading>
+        <Heading>Display Messages with Attachments</Heading>
         <DetailedBetaBanner />
         <Description>
-          MessageThread component supports message attachments rendering with mutiple ways to customize it. Developers
-          can opt to use the default attachment rendering by not providing `attachemntOptions` prop. In the following
-          example, we left out the `attachmentOptions` prop to use the default attachment rendering. Moreover, for first
-          chat message, we have provided an attachment named "RouterConfig.xlsx". By default, a new tab would be opened
-          when the action button is clicked.
+          The MessageThread component supports rendering of message attachments, including multiple ways to customize
+          it. Developers can opt to use the default attachment rendering by not providing `attachmentOptions`. In the
+          following example, the default attachment rendering is shown with an attachment on the first chat message. By
+          default, the browser `window.open` method will be called with the target URL.
         </Description>
         <Canvas mdxSource={MessageWithAttachmentText}>
           <MessageWithAttachment />
         </Canvas>
         <Description>
-          Moreover, the `attachmentOptions` allows the attachmentCard to be customized in multiple ways. For example,
-          developers can have a custom icon, label for the button and custom `onClick` callback like the following:
+          The `attachmentOptions` allows the attachmentCard to be customized in multiple ways. For example, developers
+          can have a custom icon, label for the button and custom `onClick` callback.
         </Description>
         <Canvas mdxSource={MessageWithCustomAttachmentText}>
           <MessageWithCustomAttachment />

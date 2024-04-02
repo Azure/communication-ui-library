@@ -20,7 +20,7 @@ adapter={chatAdapter}
 options={{
   attachmentOptions: {
     uploadOptions: {
-      supportedMediaTypes: ['image/png', 'image/jpeg', 'text/plain', '.docx'],
+      supportedMediaTypes: ['image/png', 'image/jpeg'],
       disableMultipleUploads: false,
       handler: attachmentUploadHandler
     },
