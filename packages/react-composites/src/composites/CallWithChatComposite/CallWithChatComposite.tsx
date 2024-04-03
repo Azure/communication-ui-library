@@ -220,7 +220,6 @@ export type CallWithChatCompositeOptions = {
       improvementSuggestions: CallSurveyImprovementSuggestions
     ) => Promise<void>;
   };
-  /* @conditional-compile-remove(custom-branding) */
   /**
    * Options for setting additional customizations related to personalized branding.
    */
@@ -247,7 +246,6 @@ export type CallWithChatCompositeOptions = {
        */
       shape?: 'unset' | 'circle';
     };
-    /* @conditional-compile-remove(custom-branding) */
     /**
      * Background image displayed on the configuration page.
      */
@@ -339,13 +337,11 @@ type CallWithChatScreenProps = {
       improvementSuggestions: CallSurveyImprovementSuggestions
     ) => Promise<void>;
   };
-  /* @conditional-compile-remove(custom-branding) */
   logo?: {
     url: string;
     alt?: string;
     shape?: 'unset' | 'circle';
   };
-  /* @conditional-compile-remove(custom-branding) */
   backgroundImage?: {
     url: string;
   };
@@ -528,7 +524,6 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       localVideoTile: props.localVideoTile,
       /* @conditional-compile-remove(end-of-call-survey) */
       surveyOptions: surveyOptions,
-      /* @conditional-compile-remove(custom-branding) */
       branding: {
         logo: props.logo,
         backgroundImage: props.backgroundImage
@@ -556,9 +551,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       props.remoteVideoTileMenuOptions,
       /* @conditional-compile-remove(end-of-call-survey) */
       surveyOptions,
-      /* @conditional-compile-remove(custom-branding) */
       props.logo,
-      /* @conditional-compile-remove(custom-branding) */
       props.backgroundImage,
       /* @conditional-compile-remove(spotlight) */
       props.spotlight
@@ -688,9 +681,7 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         attachmentOptions={options?.attachmentOptions}
         localVideoTile={options?.localVideoTile}
         galleryOptions={options?.galleryOptions}
-        /* @conditional-compile-remove(custom-branding) */
         logo={options?.branding?.logo}
-        /* @conditional-compile-remove(custom-branding) */
         backgroundImage={options?.branding?.backgroundImage}
         /* @conditional-compile-remove(end-of-call-survey) */
         surveyOptions={options?.surveyOptions}

@@ -63,8 +63,6 @@ module.exports = {
     "signaling-beta",
     // feature for hiding attendee name in the teams meeting
     "hide-attendee-name",
-    // custom branding for the composites
-    "custom-branding",
     // Feature for end of call survey
     'end-of-call-survey',
     // Feature for the DTMF dialer for Teams voice apps
@@ -134,8 +132,6 @@ module.exports = {
     "dtmf-dialer",
     // Feature for call transfer
     "call-transfer",
-    // custom branding for the composites
-    "custom-branding",
     // Support Calling SDK isReceiving flag, shows a loading spinner on the video tile when isAvailable is true but isReceiving is false
     "video-stream-is-receiving-flag",
   ]
