@@ -64,7 +64,7 @@ export type ChatMessageComponentWrapperProps = _ChatMessageProps & {
    */
   actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
   /* @conditional-compile-remove(rich-text-editor) */
-  enableRichTextEditor?: boolean;
+  richTextEditor?: boolean;
 };
 
 /**

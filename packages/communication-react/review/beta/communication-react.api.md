@@ -3371,7 +3371,7 @@ export type MessageThreadProps = {
     onDisplayDateTimeString?: (messageDate: Date) => string;
     mentionOptions?: MentionOptions;
     inlineImageOptions?: InlineImageOptions;
-    enableRichTextEditor?: boolean;
+    richTextEditor?: boolean;
 };
 
 // @public

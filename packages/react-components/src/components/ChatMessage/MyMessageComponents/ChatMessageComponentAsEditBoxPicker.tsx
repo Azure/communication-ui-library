@@ -36,7 +36,7 @@ export type ChatMessageComponentAsEditBoxPickerProps = {
   strings: MessageThreadStrings;
   /* @conditional-compile-remove(mention) */
   mentionLookupOptions?: MentionLookupOptions;
-  enableRichTextEditor?: boolean;
+  richTextEditor?: boolean;
 };
 
 /**
@@ -44,10 +44,10 @@ export type ChatMessageComponentAsEditBoxPickerProps = {
  */
 export const ChatMessageComponentAsEditBoxPicker = (props: ChatMessageComponentAsEditBoxPickerProps): JSX.Element => {
   // /* @conditional-compile-remove(rich-text-editor) */
-  const { enableRichTextEditor } = props;
+  const { richTextEditor } = props;
 
   // /* @conditional-compile-remove(rich-text-editor) */
-  if (enableRichTextEditor) {
+  if (richTextEditor) {
     return (
       <Suspense>
         <ChatMessageComponentAsRichTextEditBox {...props} />

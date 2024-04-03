@@ -98,7 +98,7 @@ type ChatMyMessageComponentProps = {
    * Optional flag to enable rich text editor.
    * @beta
    */
-  enableRichTextEditor?: boolean;
+  richTextEditor?: boolean;
 };
 
 /**
@@ -144,7 +144,7 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
         /* @conditional-compile-remove(mention) */
         mentionLookupOptions={props.mentionOptions?.lookupOptions}
         /* @conditional-compile-remove(rich-text-editor) */
-        enableRichTextEditor={props.enableRichTextEditor}
+        richTextEditor={props.richTextEditor}
       />
     );
   } else {

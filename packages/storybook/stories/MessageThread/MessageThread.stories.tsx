@@ -557,7 +557,7 @@ const MessageThreadStory = (args): JSX.Element => {
             />
           );
         }}
-        enableRichTextEditor={args.enableRichTextEditor}
+        richTextEditor={args.richTextEditor}
       />
       {
         <ImageOverlay

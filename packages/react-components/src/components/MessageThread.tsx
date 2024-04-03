@@ -544,7 +544,7 @@ export type MessageThreadProps = {
    *
    * @defaultValue `false`
    */
-  enableRichTextEditor?: boolean;
+  richTextEditor?: boolean;
 };
 
 /**
@@ -681,7 +681,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     onRenderAttachmentDownloads,
     /* @conditional-compile-remove(rich-text-editor) */
-    enableRichTextEditor
+    richTextEditor
   } = props;
   // We need this state to wait for one tick and scroll to bottom after messages have been initialized.
   // Otherwise chatScrollDivRef.current.clientHeight is wrong if we scroll to bottom before messages are initialized.
@@ -1138,7 +1138,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
                   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
                   onRenderAttachmentDownloads={onRenderAttachmentDownloads}
                   /* @conditional-compile-remove(rich-text-editor) */
-                  enableRichTextEditor={enableRichTextEditor}
+                  richTextEditor={richTextEditor}
                 />
               );
             })}
