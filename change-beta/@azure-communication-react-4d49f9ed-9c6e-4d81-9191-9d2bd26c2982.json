@@ -1,9 +1,0 @@
-{
-  "type": "minor",
-  "area": "improvement",
-  "workstream": "InlineImage",
-  "comment": "In the chat composite, if the message contains image that's not an ACS image, we will render the image but it will not be clickable to view and download in the ImageOverlay",
-  "packageName": "@azure/communication-react",
-  "email": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
