@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { PluginEvent, EditorPlugin } from 'roosterjs-editor-types';
+import type { PluginEvent, EditorPlugin } from 'roosterjs-editor-types';
 import { CompatiblePluginEventType, CompatiblePasteType } from 'roosterjs-editor-types-compatible';
 
 /**
