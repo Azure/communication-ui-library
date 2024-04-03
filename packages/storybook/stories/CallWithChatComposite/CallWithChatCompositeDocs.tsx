@@ -18,14 +18,32 @@ const addFileSharingSnippet = `
 <CallWithChatComposite
 adapter={chatAdapter}
 options={{
-  fileSharing: {
-    uploadHandler: attachmentUploadHandler,
-    /* If fileDownloadHandler is not provided. The file URL is opened in a new tab.
-    You can find examples of fileDownloadHandler and attachmentUploadHandler in this tutorial
+  attachmentOptions: {
+    uploadOptions: {
+      supportedMediaTypes: ['image/png', 'image/jpeg'],
+      disableMultipleUploads: false,
+      handler: attachmentUploadHandler
+    },
+    /* If downloadOptions is not provided. The file URL is opened in a new tab.
+    You can find examples of downloadOptions and uploadOptions in this tutorial
     https://docs.microsoft.com/en-us/azure/communication-services/tutorials/file-sharing-tutorial */
-    downloadHandler: fileDownloadHandler,
-    accept: 'image/png, image/jpeg, text/plain, .docx',
-    multiple: true
+    downloadOptions: {
+      actionsForAttachment: (attachment: AttachmentMetadata, message?: ChatMessage): AttachmentMenuAction[] => {
+        return [
+          defaultAttachmentMenuAction,
+          {
+            name: 'Open',
+            icon: <WindowNew24Regular />,
+            onClick: () => {
+              return new Promise((resolve) => {
+                window.alert('open button clicked');
+                resolve();
+              });
+            }
+          }
+        ];
+      }
+    }
   }
 }} />
 `;
