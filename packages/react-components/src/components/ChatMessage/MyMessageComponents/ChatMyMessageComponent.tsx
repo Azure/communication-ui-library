@@ -13,7 +13,7 @@ import { AttachmentMenuAction, AttachmentMetadata } from '../../../types/Attachm
 import { MentionOptions } from '../../MentionPopover';
 import { InlineImageOptions } from '../ChatMessageContent';
 import { ChatMyMessageComponentAsMessageBubble } from './ChatMyMessageComponentAsMessageBubble';
-import { ChatMessageComponentAsEditBoxSelector } from './ChatMessageComponentAsEditBoxSelector';
+import { ChatMessageComponentAsEditBoxPicker } from './ChatMessageComponentAsEditBoxPicker';
 
 type ChatMyMessageComponentProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
@@ -128,7 +128,7 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
 
   if (isEditing && message.messageType === 'chat') {
     return (
-      <ChatMessageComponentAsEditBoxSelector
+      <ChatMessageComponentAsEditBoxPickers
         message={message}
         strings={props.strings}
         onSubmit={async (text, metadata, options) => {

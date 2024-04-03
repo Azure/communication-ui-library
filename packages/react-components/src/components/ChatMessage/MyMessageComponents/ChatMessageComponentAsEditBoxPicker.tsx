@@ -22,7 +22,7 @@ const ChatMessageComponentAsRichTextEditBox = React.lazy(() =>
 /**
  * @private
  */
-export type ChatMessageComponentAsEditBoxSelectorProps = {
+export type ChatMessageComponentAsEditBoxPickerProps = {
   onCancel?: (messageId: string) => void;
   onSubmit: (
     text: string,
@@ -42,9 +42,7 @@ export type ChatMessageComponentAsEditBoxSelectorProps = {
 /**
  * @private
  */
-export const ChatMessageComponentAsEditBoxSelector = (
-  props: ChatMessageComponentAsEditBoxSelectorProps
-): JSX.Element => {
+export const ChatMessageComponentAsEditBoxPicker = (props: ChatMessageComponentAsEditBoxPickerProps): JSX.Element => {
   // /* @conditional-compile-remove(rich-text-editor) */
   const { enableRichTextEditor } = props;
 
