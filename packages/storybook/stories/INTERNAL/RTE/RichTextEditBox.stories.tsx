@@ -8,7 +8,7 @@ import { COMPONENT_FOLDER_PREFIX } from '../../constants';
 import { hiddenControl } from '../../controlsUtils';
 import { Title, Description, Heading, Canvas, Props } from '@storybook/addon-docs';
 import { DetailedBetaBanner } from '../../BetaBanners/DetailedBetaBanner';
-import { RichTextSendBoxAttachmentUploadsExample } from './snippets/RichTextSendBoxAttachmentUploads.snippet';
+import { RichTextEditBoxAttachmentUploadsExample } from './snippets/RichTextEditBoxAttachmentUploads.snippet';
 
 const RichTextEditBoxAttachmentUploadsExampleText =
   require('!!raw-loader!./snippets/RichTextEditBoxAttachmentUploads.snippet.tsx').default;
@@ -27,7 +27,7 @@ const getDocs: () => JSX.Element = () => {
         own attachment upload logic and utilize the UI provided by RichTextEditBox.
       </Description>
       <Canvas mdxSource={RichTextEditBoxAttachmentUploadsExampleText}>
-        <RichTextSendBoxAttachmentUploadsExample />
+        <RichTextEditBoxAttachmentUploadsExample />
       </Canvas>
 
       <Heading>Props</Heading>
@@ -72,5 +72,10 @@ export default {
   argTypes: {
     message: { control: 'text', defaultValue: 'Hi! How are you?' },
     strings: hiddenControl
+  },
+  parameters: {
+    docs: {
+      page: () => getDocs()
+    }
   }
 } as Meta;
