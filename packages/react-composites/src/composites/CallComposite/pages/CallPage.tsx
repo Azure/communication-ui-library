@@ -162,7 +162,6 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
           options: callControlOptions,
           increaseFlyoutItemSize: mobileView
         }}
-        /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
         onFetchAvatarPersonaData={onFetchAvatarPersonaData}
         mobileView={mobileView}
         modalLayerHostId={props.modalLayerHostId}
