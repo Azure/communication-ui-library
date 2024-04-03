@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "area": "improvement",
-  "workstream": "removing unwanted dependency",
-  "comment": "Reaction mobile button PR feedback",
-  "packageName": "@azure/communication-react",
-  "email": "mbellah@microsoft.com",
-  "dependentChangeType": "patch"
-}

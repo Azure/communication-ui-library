@@ -192,9 +192,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         return;
       }
 
-      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+      /* @conditional-compile-remove(attachment-upload) */
       const attachmentUploads = adapter.registerActiveUploads(Array.from(files));
-      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+      /* @conditional-compile-remove(attachment-upload) */
       attachmentOptions?.uploadOptions?.handler(attachmentUploads);
     },
     [adapter, attachmentOptions]
@@ -400,7 +400,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                 <SendBox
                   options={options}
                   styles={styles?.sendBox}
-                  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+                  /* @conditional-compile-remove(attachment-upload) */
                   adapter={adapter}
                 />
               </Stack>
