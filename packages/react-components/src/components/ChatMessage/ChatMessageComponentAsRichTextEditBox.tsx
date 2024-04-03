@@ -25,6 +25,7 @@ import { RichTextInputBoxComponent } from '../RichTextEditor/RichTextInputBoxCom
 import { editBoxRichTextEditorStyle, richTextActionButtonsStyle } from '../styles/RichTextEditor.styles';
 import { RichTextSendBoxErrors } from '../RichTextEditor/RichTextSendBoxErrors';
 import { useLocale } from '../../localization';
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { FluentV9ThemeProvider } from '../../theming/FluentV9ThemeProvider';
 /* @conditional-compile-remove(attachment-upload) */
 import { attachmentUploadCardsStyles } from '../styles/SendBox.styles';
