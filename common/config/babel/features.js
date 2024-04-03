@@ -67,8 +67,6 @@ module.exports = {
     "custom-branding",
     // Feature for end of call survey
     'end-of-call-survey',
-    // Feature for the DTMF dialer for Teams voice apps
-    'dtmf-dialer',
     // Feature for PPT Live for teams meeting
     'ppt-live',
     // Feature for meeting reactions
@@ -130,8 +128,6 @@ module.exports = {
     "capabilities",
     // Closed captions
     "close-captions",
-    // Feature for the DTMF dialer for Teams voice apps
-    "dtmf-dialer",
     // Feature for call transfer
     "call-transfer",
     // custom branding for the composites
