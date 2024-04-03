@@ -281,7 +281,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   LowerHandContextualMenuItem: <HandRightOff20Regular />,
   /* @conditional-compile-remove(reaction) */
   ReactionButtonIcon: <Emoji20Regular />,
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-upload) */
   CancelAttachmentUpload: <Dismiss16Regular />,
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   DownloadAttachment: <ArrowDownload20Regular />,
