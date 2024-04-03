@@ -289,19 +289,19 @@ export const getEmojiFrameCount = (reactionName: string, reactionResources: Reac
 /**
  * @private
  */
-export const getEmojiFrameSize = (reactionName: string, reactionResources: ReactionResources): number => {
+export const getEmojiFrameSize = (reactionName: string, reactionResources: ReactionResources): number | undefined => {
   switch (reactionName) {
     case 'like':
-      return reactionResources.likeReaction?.size ?? 128;
+      return reactionResources.likeReaction?.size;
     case 'heart':
-      return reactionResources.heartReaction?.size ?? 128;
+      return reactionResources.heartReaction?.size;
     case 'laugh':
-      return reactionResources.laughReaction?.size ?? 128;
+      return reactionResources.laughReaction?.size;
     case 'applause':
-      return reactionResources.applauseReaction?.size ?? 128;
+      return reactionResources.applauseReaction?.size;
     case 'surprised':
-      return reactionResources.surprisedReaction?.size ?? 128;
+      return reactionResources.surprisedReaction?.size;
     default:
-      return 128;
+      return undefined;
   }
 };
