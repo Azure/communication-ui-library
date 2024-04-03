@@ -10,7 +10,8 @@ import {
   Stack,
   Text,
   Theme,
-  mergeStyles
+  mergeStyles,
+  IModalStyles
 } from '@fluentui/react';
 import { useTheme } from '@internal/react-components';
 import React from 'react';
@@ -27,6 +28,7 @@ export interface PromptProps {
   cancelButtonLabel?: string;
   onConfirm?: () => void;
   onCancel?: () => void;
+  styles?: Partial<IModalStyles>;
 }
 
 /**
@@ -34,9 +36,10 @@ export interface PromptProps {
  */
 export const Prompt = (props: PromptProps): JSX.Element => {
   const theme = useTheme();
+  const styles = props.styles ?? modalStyles;
 
   return (
-    <Modal styles={modalStyles} isOpen={props.isOpen} onDismiss={props.onDismiss} isBlocking={false}>
+    <Modal styles={styles} isOpen={props.isOpen} onDismiss={props.onDismiss} isBlocking={false}>
       <Stack className={mergeStyles({ position: 'relative' })}>
         <Text className={mergeStyles({ fontWeight: 600, fontSize: '1.25rem' })}>{props.heading}</Text>
         <IconButton styles={iconButtonStyles(theme)} iconProps={{ iconName: 'Cancel' }} onClick={props.onCancel} />

@@ -28,7 +28,30 @@ export const EndCall = (props: {
   const localeStrings = useLocale().strings;
 
   /* @conditional-compile-remove(end-call-options) */
-  const { onHangUp, enableEndCallMenu } = hangUpButtonProps;
+  const endCallDiaglogLabels = useMemo(
+    () => ({
+      confirmButtonLabel: localeStrings.call.endCallConfirmButtonLabel,
+      heading: localeStrings.call.leaveConfirmDialogTitle,
+      text: localeStrings.call.leaveConfirmDialogTitle
+    }),
+    [localeStrings.call.endCallConfirmButtonLabel, localeStrings.call.leaveConfirmDialogTitle]
+  );
+
+  /* @conditional-compile-remove(end-call-options) */
+  const leaveDiaglogLabels = useMemo(
+    () => ({
+      confirmButtonLabel: localeStrings.call.leaveConfirmButtonLabel,
+      heading: localeStrings.call.leaveConfirmDialogTitle,
+      text: localeStrings.call.leaveConfirmDialogTitle
+    }),
+    [localeStrings.call.leaveConfirmButtonLabel, localeStrings.call.leaveConfirmDialogTitle]
+  );
+
+  /* @conditional-compile-remove(end-call-options) */
+  const [dialogLabels, setDialogLabels] = useState(leaveDiaglogLabels);
+
+  /* @conditional-compile-remove(end-call-options) */
+  const { onHangUp } = hangUpButtonProps;
 
   /* @conditional-compile-remove(end-call-options) */
   const [showHangUpConfirm, setShowHangUpConfirm] = React.useState(false);
@@ -57,29 +80,11 @@ export const EndCall = (props: {
         onHangUp();
         return;
       }
-      forEveryone
-        ? setPromptHeading(localeStrings.call.endCallConfirmDialogTitle)
-        : setPromptHeading(localeStrings.call.leaveConfirmDialogTitle);
-      forEveryone
-        ? setPromptText(localeStrings.call.endCallConfirmDialogContent)
-        : setPromptText(localeStrings.call.leaveConfirmDialogContent);
+      setDialogLabels(forEveryone ? endCallDiaglogLabels : leaveDiaglogLabels);
       toggleConfirm();
     },
-    [
-      localeStrings.call.endCallConfirmDialogContent,
-      localeStrings.call.endCallConfirmDialogTitle,
-      localeStrings.call.leaveConfirmDialogContent,
-      localeStrings.call.leaveConfirmDialogTitle,
-      onHangUp,
-      props.mobileView,
-      toggleConfirm
-    ]
+    [endCallDiaglogLabels, leaveDiaglogLabels, onHangUp, props.mobileView, toggleConfirm]
   );
-
-  /* @conditional-compile-remove(end-call-options) */
-  const [promptHeading, setPromptHeading] = useState<string>();
-  /* @conditional-compile-remove(end-call-options) */
-  const [promptText, setPromptText] = useState<string>();
 
   const styles = useMemo(
     () =>
@@ -94,11 +99,10 @@ export const EndCall = (props: {
       {
         /* @conditional-compile-remove(end-call-options) */
         <Prompt
-          heading={promptHeading}
-          text={promptText}
-          confirmButtonLabel={localeStrings.call.hangUpConfirmButtonLabel}
+          {...dialogLabels}
+          styles={{ main: { minWidth: '22.5rem', padding: '1.5rem' } }}
           cancelButtonLabel={localeStrings.call.hangUpCancelButtonLabel}
-          onConfirm={() => onHangUpConfirm(enableEndCallMenu)} // if enableEndCallMenu is true, that means the dialog is triggered by hangUpForEveryone button
+          onConfirm={() => onHangUpConfirm(props.enableEndCallMenu)} // if enableEndCallMenu is true, that means the dialog is triggered by hangUpForEveryone button
           isOpen={showHangUpConfirm}
           onCancel={toggleConfirm}
         />
