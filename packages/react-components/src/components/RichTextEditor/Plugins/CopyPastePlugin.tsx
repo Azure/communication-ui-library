@@ -20,7 +20,9 @@ export default class CopyPastePlugin implements EditorPlugin {
     // We don't support the pasting options such as paste as image yet.
     if (event.eventType === CompatiblePluginEventType.BeforePaste && event.pasteType === CompatiblePasteType.Normal) {
       event.fragment.querySelectorAll('img').forEach((image) => {
-        image.parentElement?.remove();
+        if (image.parentElement?.childNodes.length === 1) {
+          image.parentElement?.remove();
+        }
         image.remove();
       });
     }
