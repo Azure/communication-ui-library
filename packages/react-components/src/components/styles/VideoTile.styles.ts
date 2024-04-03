@@ -197,18 +197,19 @@ export const playFrames = memoizeFunction((frameHightPx: number, frameCount: num
  * @private
  */
 export const reactionRenderingStyle = (args: {
-  spriteImageUrl?: string;
+  spriteImageUrl: string;
   emojiSize: number;
-  frameCount?: number;
+  rawFrameSize: number;
+  frameCount: number;
 }): string => {
   const imageUrl = `url(${args.spriteImageUrl})`;
   const steps = args.frameCount ?? 0;
-  const frameHeightPx = 128; // TODO: for more developer flexibility, we should have frame size passed in as part of the sprite resource interface
+  const frameSizePx = args.rawFrameSize;
   return mergeStyles({
-    height: `${frameHeightPx}px`,
-    width: `${frameHeightPx}px`,
+    height: `${frameSizePx}px`,
+    width: `${frameSizePx}px`,
     overflow: 'hidden',
-    animationName: playFrames(frameHeightPx, steps),
+    animationName: playFrames(frameSizePx, steps),
     backgroundImage: imageUrl,
     animationDuration: `${REACTION_SCREEN_SHARE_ANIMATION_TIME_MS / 1000}s`,
     animationTimingFunction: `steps(${steps})`,
@@ -216,7 +217,7 @@ export const reactionRenderingStyle = (args: {
     animationIterationCount: 'infinite',
 
     // Scale the emoji to fit the parent container
-    transform: `scale(${args.emojiSize / frameHeightPx})`,
+    transform: `scale(${args.emojiSize / frameSizePx})`,
     transformOrigin: 'top left'
   });
 };
