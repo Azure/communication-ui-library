@@ -1,7 +1,6 @@
 import {
   AttachmentMenuAction,
   AttachmentMetadata,
-  ChatMessage,
   FluentThemeProvider,
   MessageStatus,
   MessageThread,
