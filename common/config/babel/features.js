@@ -51,8 +51,6 @@ module.exports = {
     "in-progress-beta-feature-demo",
     // Feature for call transfer
     "call-transfer",
-    // Feature for capabilities
-    "capabilities",
     // Feature for large Gallery layout
     "large-gallery",
     // feature for positioning the overflowGallery at the top of the screen in the composite

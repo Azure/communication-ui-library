@@ -57,7 +57,7 @@ import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
 import { useIsParticularSidePaneOpen } from '../components/SidePane/SidePaneProvider';
 
 import { localVideoSelector } from '../../CallComposite/selectors/localVideoStreamSelector';
-/* @conditional-compile-remove(capabilities) */
+
 import { CapabilitiesChangeNotificationBarProps } from '../components/CapabilitiesChangedNotificationBar';
 import { SvgWithWordWrapping } from '../components/SvgWithWordWrapping';
 import { EnvironmentInfo } from '@azure/communication-calling';
@@ -81,7 +81,7 @@ export interface ConfigurationPageProps {
   }) => void;
   /* @conditional-compile-remove(call-readiness) */
   onNetworkingTroubleShootingClick?: () => void;
-  /* @conditional-compile-remove(capabilities) */
+
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
   /* @conditional-compile-remove(custom-branding) */
   logo?: {
