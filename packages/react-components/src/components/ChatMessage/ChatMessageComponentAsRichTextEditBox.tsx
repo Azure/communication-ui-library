@@ -13,12 +13,12 @@ import { MessageThreadStrings } from '../MessageThread';
 import { useChatMyMessageStyles } from '../styles/MessageThread.styles';
 import { ChatMessage } from '../../types';
 import { _AttachmentUploadCards } from '../AttachmentUploadCards';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-upload) */
 import { AttachmentMetadata } from '../../types/Attachment';
 import { useChatMessageRichTextEditContainerStyles } from '../styles/ChatMessageComponent.styles';
 import { MAXIMUM_LENGTH_OF_MESSAGE } from '../utils/SendBoxUtils';
 import { getMessageState, onRenderCancelIcon, onRenderSubmitIcon } from '../utils/ChatMessageComponentAsEditBoxUtils';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-upload) */
 import { getMessageWithAttachmentMetadata } from '../utils/ChatMessageComponentAsEditBoxUtils';
 import { RichTextEditorComponentRef } from '../RichTextEditor/RichTextEditor';
 import { RichTextInputBoxComponent } from '../RichTextEditor/RichTextInputBoxComponent';
@@ -33,7 +33,7 @@ export type ChatMessageComponentAsRichTextEditBoxProps = {
     text: string,
     metadata?: Record<string, string>,
     options?: {
-      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+      /* @conditional-compile-remove(attachment-upload) */
       attachmentMetadata?: AttachmentMetadata[];
     }
   ) => void;
@@ -56,8 +56,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
   const theme = useTheme();
   const messageState = getMessageState(
     textValue,
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ attachmentMetadata ??
-      []
+    /* @conditional-compile-remove(attachment-upload) */ attachmentMetadata ?? []
   );
   const submitEnabled = messageState === 'OK';
 
@@ -125,7 +124,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
               onSubmit(
                 textValue,
                 message.metadata,
-                /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ {
+                /* @conditional-compile-remove(attachment-upload) */ {
                   attachmentMetadata
                 }
               );
@@ -136,7 +135,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
       </Stack>
     );
   }, [
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ attachmentMetadata,
+    /* @conditional-compile-remove(attachment-upload) */ attachmentMetadata,
     message.messageId,
     message.metadata,
     onCancel,

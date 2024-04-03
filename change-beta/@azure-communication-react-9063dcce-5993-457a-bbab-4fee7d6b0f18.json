@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "area": "improvement",
-  "workstream": "DTMF-dialer",
-  "comment": "Remove conditional compile statements from codebase for DTMF dialer",
-  "packageName": "@azure/communication-react",
-  "email": "dmceachern@microsoft.com",
-  "dependentChangeType": "none"
-}
