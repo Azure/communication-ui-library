@@ -25,6 +25,9 @@ import { RichTextInputBoxComponent } from '../RichTextEditor/RichTextInputBoxCom
 import { editBoxRichTextEditorStyle, richTextActionButtonsStyle } from '../styles/RichTextEditor.styles';
 import { RichTextSendBoxErrors } from '../RichTextEditor/RichTextSendBoxErrors';
 import { useLocale } from '../../localization';
+import { FluentV9ThemeProvider } from '../../theming/FluentV9ThemeProvider';
+/* @conditional-compile-remove(attachment-upload) */
+import { attachmentUploadCardsStyles } from '../styles/SendBox.styles';
 
 /** @beta */
 export type ChatMessageComponentAsRichTextEditBoxProps = {
@@ -156,14 +159,16 @@ export const ChatMessageComponentAsRichTextEditBox = (
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   const onRenderAttachmentUploads = useCallback(() => {
     return (
-      <div style={{ margin: '0.25rem' }}>
-        <_AttachmentUploadCards
-          activeAttachmentUploads={attachmentMetadata}
-          onCancelAttachmentUpload={(attachmentId) => {
-            setAttachmentMetadata(attachmentMetadata?.filter((attachment) => attachment.id !== attachmentId));
-          }}
-        />
-      </div>
+      <Stack className={attachmentUploadCardsStyles}>
+        <FluentV9ThemeProvider v8Theme={theme}>
+          <_AttachmentUploadCards
+            activeAttachmentUploads={attachmentMetadata}
+            onCancelAttachmentUpload={(attachmentId) => {
+              setAttachmentMetadata(attachmentMetadata?.filter((attachment) => attachment.id !== attachmentId));
+            }}
+          />
+        </FluentV9ThemeProvider>
+      </Stack>
     );
   }, [attachmentMetadata]);
 
