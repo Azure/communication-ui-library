@@ -4,6 +4,7 @@
 import { IButtonStyles, IStyle, mergeStyles, Theme, ITheme } from '@fluentui/react';
 /* @conditional-compile-remove(reaction) */
 import { keyframes, memoizeFunction } from '@fluentui/react';
+/* @conditional-compile-remove(reaction) */
 import { REACTION_SCREEN_SHARE_ANIMATION_TIME_MS } from '../VideoGallery/utils/reactionUtils';
 
 /**
