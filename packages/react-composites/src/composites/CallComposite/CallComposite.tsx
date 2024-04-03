@@ -269,7 +269,6 @@ export type CallCompositeOptions = {
       improvementSuggestions: CallSurveyImprovementSuggestions
     ) => Promise<void>;
   };
-  /* @conditional-compile-remove(custom-branding) */
   /**
    * Options for setting additional customizations related to personalized branding.
    */
@@ -296,7 +295,6 @@ export type CallCompositeOptions = {
        */
       shape?: 'unset' | 'circle';
     };
-    /* @conditional-compile-remove(custom-branding) */
     /**
      * Background image displayed on the configuration page.
      */
@@ -462,9 +460,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           /* @conditional-compile-remove(call-readiness) */
           onNetworkingTroubleShootingClick={props.options?.onNetworkingTroubleShootingClick}
           capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
-          /* @conditional-compile-remove(custom-branding) */
           logo={props.options?.branding?.logo}
-          /* @conditional-compile-remove(custom-branding) */
           backgroundImage={props.options?.branding?.backgroundImage}
         />
       );
