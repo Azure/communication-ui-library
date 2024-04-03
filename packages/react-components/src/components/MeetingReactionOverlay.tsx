@@ -52,7 +52,7 @@ export interface MeetingReactionOverlayProps {
  * Emoji max size
  * @internal
  */
-const DEFAULT_EMOJI_MAX_SIZE_PX = 100;
+const DEFAULT_EMOJI_MAX_SIZE_PX = 70;
 /* @conditional-compile-remove(reaction) */
 /**
  * Emoji min size
