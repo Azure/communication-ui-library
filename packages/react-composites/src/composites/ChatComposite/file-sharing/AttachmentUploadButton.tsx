@@ -4,7 +4,7 @@
 import { IconButton, mergeStyles, Stack, useTheme } from '@fluentui/react';
 import React from 'react';
 import { ChatCompositeIcon } from '../../common/icons';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-upload) */
 import { useLocale } from '../../localization';
 
 /**
@@ -97,7 +97,7 @@ export const AttachmentUploadButton = (props: AttachmentUploadButtonProps): JSX.
 };
 
 const SendBoxAttachFileIconTrampoline = (): JSX.Element => {
-  // @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload)
+  // @conditional-compile-remove(attachment-upload)
   return <ChatCompositeIcon iconName="SendBoxAttachFile" />;
   // Return _some_ available icon, as the real icon is beta-only.
   return <ChatCompositeIcon iconName="EditBoxCancel" />;
@@ -116,7 +116,7 @@ export const AttachmentUploadButtonWrapper = (
   return (
     <>
       {
-        /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+        /* @conditional-compile-remove(attachment-upload) */
         <AttachmentUploadButton {...props} />
       }
     </>
@@ -124,7 +124,7 @@ export const AttachmentUploadButtonWrapper = (
 };
 
 const uploadAttachmentButtonStringTrampoline = (): string => {
-  //@conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload)
+  //@conditional-compile-remove(attachment-upload)
   //eslint-disable-next-line react-hooks/rules-of-hooks
   return useLocale().strings.chat.uploadAttachment;
   return '';
