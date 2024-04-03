@@ -1795,7 +1795,6 @@ export type ChatCompositeOptions = {
     topic?: boolean;
     autoFocus?: 'sendBoxTextField';
     attachmentOptions?: AttachmentOptions;
-    richTextEditor?: boolean | RichTextEditorOptions;
 };
 
 // @public
@@ -3372,6 +3371,7 @@ export type MessageThreadProps = {
     onDisplayDateTimeString?: (messageDate: Date) => string;
     mentionOptions?: MentionOptions;
     inlineImageOptions?: InlineImageOptions;
+    richTextEditor?: boolean;
 };
 
 // @public
@@ -3884,10 +3884,6 @@ export type ResourceFetchResult = {
     sourceUrl?: string;
     error?: Error;
 };
-
-// @beta
-export interface RichTextEditorOptions {
-}
 
 // @beta
 export const RichTextSendBox: (props: RichTextSendBoxProps) => JSX.Element;

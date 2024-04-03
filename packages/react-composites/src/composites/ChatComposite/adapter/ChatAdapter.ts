@@ -5,9 +5,9 @@ import type { ChatMessage, ChatParticipant, SendMessageOptions } from '@azure/co
 import type { CommunicationIdentifierKind, CommunicationUserKind } from '@azure/communication-common';
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import type { AdapterError, AdapterErrors, AdapterState, Disposable } from '../../common/adapters';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-upload) */
 import { AttachmentUploadAdapter, AttachmentUploadsUiState } from './AzureCommunicationAttachmentUploadAdapter';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-upload) */
 import { AttachmentMetadata } from '@internal/react-components';
 
 /**
@@ -19,7 +19,7 @@ export type ChatAdapterUiState = {
   // FIXME(Delete?)
   // Self-contained state for composite
   error?: Error;
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-upload) */
   /**
    * Attachments being uploaded by a user in the current thread.
    * Should be set to null once the upload is complete.
@@ -90,7 +90,7 @@ export interface ChatAdapterThreadManagement {
     messageId: string,
     content: string,
     metadata?: Record<string, string>,
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+    /* @conditional-compile-remove(attachment-upload) */
     options?: {
       attachmentMetadata?: AttachmentMetadata[];
     }
@@ -217,7 +217,7 @@ export type ChatAdapter = ChatAdapterThreadManagement &
   AdapterState<ChatAdapterState> &
   Disposable &
   ChatAdapterSubscribers &
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-upload) */
   AttachmentUploadAdapter;
 
 /**
