@@ -24,39 +24,41 @@ const __dirname = dirname(__filename);
 async function modifyFeatureDefinitionsFile() {
   const { feature, option } = parseArgs(process.argv);
 
-  const adjustedFeatureDefinitions = { ...featureDefinitions };
-  switch (option) {
-    case 'alphaToBeta':
-      // delete from array:
-      adjustedFeatureDefinitions.inProgressFeatures = adjustedFeatureDefinitions.inProgressFeatures.filter(
-        (f) => f !== feature
-      );
-      break;
-    case 'betaToAlpha':
-      // add to array:
-      adjustedFeatureDefinitions.inProgressFeatures.push(feature);
-      break;
-    case 'betaToStable':
-      // delete from array:
-      adjustedFeatureDefinitions.features = adjustedFeatureDefinitions.features.filter((f) => f !== feature);
-      // add to array:
-      adjustedFeatureDefinitions.stabilizedFeatures.push(feature);
-      break;
-    case 'stableToBeta':
-      // delete from array:
-      adjustedFeatureDefinitions.stabilizedFeatures = adjustedFeatureDefinitions.stabilizedFeatures.filter(
-        (f) => f !== feature
-      );
-      // add to array:
-      adjustedFeatureDefinitions.features.push(feature);
-      break;
-    default:
-      console.error(`ERROR: Invalid option "${option}" provided to modifyFeatureDefinitionsFile()`);
-      exit(-1);
+  if (option === 'alphaToBeta' && !featureDefinitions.alpha.includes(feature)) {
+    console.error(`ERROR: Feature "${feature}" is not in the alpha category.`);
+    exit(-1);
+  }
+  if ((option === 'betaToAlpha' || option === 'betaToStable') && !featureDefinitions.beta.includes(feature)) {
+    console.error(`ERROR: Feature "${feature}" is not in the beta category.`);
+    exit(-1);
+  }
+  if (option === 'stableToBeta' && !featureDefinitions.stable.includes(feature)) {
+    console.error(`ERROR: Feature "${feature}" is not in the stable category.`);
+    exit(-1);
   }
 
+  const newFeatureDefinitions =
+    option === 'alphaToBeta' ? adjustFeatureDefinition(featureDefinitions, feature, 'alpha', 'beta') :
+      option === 'betaToAlpha' ? adjustFeatureDefinition(featureDefinitions, feature, 'beta', 'alpha') :
+        option === 'betaToStable' ? adjustFeatureDefinition(featureDefinitions, feature, 'beta', 'stable') :
+          option === 'stableToBeta' ? adjustFeatureDefinition(featureDefinitions, feature, 'stable', 'beta') :
+            (() => { throw new Error('Unhandled option') })();
+
   const featureDefinitionsFile = path.join(__dirname, '../config/babel/features.js');
-  fs.writeFileSync(featureDefinitionsFile, `module.exports = ${JSON.stringify(adjustedFeatureDefinitions, null, 2)};`);
+  fs.writeFileSync(featureDefinitionsFile, `module.exports = ${JSON.stringify(newFeatureDefinitions, null, 2)};`);
+}
+/**
+ * Adjust the feature definition based on the feature, removeFrom, and addTo parameters.
+ * @param {object} feaureDefinition The feature definition object
+ * @param {string} feature The feature to adjust
+ * @param {string} removeFrom The category in the feature file to have the feature removed from
+ * @param {string} addTo The category in the feature file to have the feature added to
+*/
+function adjustFeatureDefinition(feaureDefinition, feature, removeFrom, addTo) {
+  const mutatedFeatureDefinitions = { ...feaureDefinition };
+  mutatedFeatureDefinitions[removeFrom] = mutatedFeatureDefinitions[removeFrom].filter((f) => f !== feature);
+  mutatedFeatureDefinitions[addTo].push(feature);
+  return mutatedFeatureDefinitions;
 }
 
 function parseArgs(argv) {
@@ -82,6 +84,11 @@ function parseArgs(argv) {
 
   if (!args.feature) {
     console.error('ERROR: Could not find feature name. Please provide a feature name using the `feature` argument.');
+    exit(-1);
+  }
+
+  if (args.option !== 'alphaToBeta' && args.option !== 'betaToAlpha' && args.option !== 'betaToStable' && args.option !== 'stableToBeta') {
+    console.error(`ERROR: Invalid option "${args.option}" provided to stage-feature.mjs`);
     exit(-1);
   }
 
