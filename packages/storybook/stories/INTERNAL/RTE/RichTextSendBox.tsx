@@ -8,9 +8,10 @@ import React from 'react';
 import { DetailedBetaBanner } from '../../BetaBanners/DetailedBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../../constants';
 import { hiddenControl } from '../../controlsUtils';
-import { RTEAttachmentUploadsExample } from './snippets/RTEAttachmentUploads.snippet';
+import { RichTextSendBoxAttachmentUploadsExample } from './snippets/RichTextSendBoxAttachmentUploads.snippet';
 
-const RTEAttachmentUploadsExampleText = require('!!raw-loader!./snippets/RTEAttachmentUploads.snippet.tsx').default;
+const RichTextSendBoxAttachmentUploadsExampleText =
+  require('!!raw-loader!./snippets/RichTextSendBoxAttachmentUploads.snippet.tsx').default;
 
 const getDocs: () => JSX.Element = () => {
   return (
@@ -28,8 +29,8 @@ const getDocs: () => JSX.Element = () => {
         allows developers to implement a file sharing feature using the pure UI component with minimal effort.
         Developers can write their own attachment upload logic and utilize the UI provided by RichTextSendBox.
       </Description>
-      <Canvas mdxSource={RTEAttachmentUploadsExampleText}>
-        <RTEAttachmentUploadsExample />
+      <Canvas mdxSource={RichTextSendBoxAttachmentUploadsExampleText}>
+        <RichTextSendBoxAttachmentUploadsExample />
       </Canvas>
 
       <Heading>Props</Heading>
