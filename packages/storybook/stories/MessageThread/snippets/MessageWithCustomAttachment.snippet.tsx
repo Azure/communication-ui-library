@@ -1,7 +1,6 @@
 import {
   AttachmentMenuAction,
   AttachmentMetadata,
-  ChatMessage,
   FluentThemeProvider,
   MessageStatus,
   MessageThread,
@@ -21,7 +20,7 @@ export const MessageWithCustomAttachment: () => JSX.Element = () => {
         showMessageDate={true}
         attachmentOptions={{
           downloadOptions: {
-            actionsForAttachment: (attachment: AttachmentMetadata, message?: ChatMessage): AttachmentMenuAction[] => {
+            actionsForAttachment: (attachment: AttachmentMetadata): AttachmentMenuAction[] => {
               // allows the menu actions to be dynamically generated based on the attachment content
               // (i.e. name, extension, etc.), or the message content (i.e. senderID, etc.)
               // in this example, we are constructing a dynamic menu based on the attachment extension
@@ -32,7 +31,7 @@ export const MessageWithCustomAttachment: () => JSX.Element = () => {
                     icon: <ShareIos24Regular />,
                     onClick: () => {
                       return new Promise((resolve) => {
-                        window.open(attachment.url, '_blank');
+                        window.alert('share button clicked');
                         resolve();
                       });
                     }
@@ -40,13 +39,21 @@ export const MessageWithCustomAttachment: () => JSX.Element = () => {
                 ];
               } else {
                 return [
-                  defaultAttachmentMenuAction,
+                  {
+                    ...defaultAttachmentMenuAction,
+                    onClick: () => {
+                      return new Promise((resolve) => {
+                        window.alert('download button clicked');
+                        resolve();
+                      });
+                    }
+                  },
                   {
                     name: 'Open',
                     icon: <WindowNew24Regular />,
                     onClick: () => {
                       return new Promise((resolve) => {
-                        window.alert('open button clicked for messageID: ' + message?.messageId);
+                        window.alert('open button clicked');
                         resolve();
                       });
                     }
@@ -73,7 +80,7 @@ export const MessageWithCustomAttachment: () => JSX.Element = () => {
                 id: 'SomeUniqueId1',
                 name: 'Report.docx',
                 extension: 'docx',
-                url: 'https://www.example.com/files/report.docx'
+                url: 'https://<file_url>/report.docx'
               }
             ]
           },
@@ -92,7 +99,7 @@ export const MessageWithCustomAttachment: () => JSX.Element = () => {
                 id: 'SomeUniqueId2',
                 name: 'Manual.pdf',
                 extension: 'pdf',
-                url: 'https://www.example.com/files/business-report.xlsx'
+                url: 'https://<file_url>/manual.pdf'
               }
             ]
           }
