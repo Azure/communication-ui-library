@@ -200,7 +200,7 @@ export type {
 } from './PictureInPictureInPicture/PictureInPictureInPictureTile';
 
 export * from './Drawer';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-upload) */
 export type { SendBoxErrorBarError } from './SendBoxErrorBar';
 export * from './AttachmentCard';
 export * from './AttachmentCardGroup';
