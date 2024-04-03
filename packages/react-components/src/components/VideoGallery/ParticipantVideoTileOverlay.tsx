@@ -13,6 +13,8 @@ import { Stack, mergeStyles } from '@fluentui/react';
 import { reactionRenderingStyle, videoContainerStyles } from '../styles/VideoTile.styles';
 /* @conditional-compile-remove(reaction) */
 import {
+  REACTION_DEFAULT_RESOURCE_FRAME_SIZE_PX,
+  REACTION_NUMBER_OF_ANIMATION_FRAMES,
   REACTION_SCREEN_SHARE_ANIMATION_TIME_MS,
   REACTION_START_DISPLAY_SIZE,
   getReceivedUnixTime
@@ -73,8 +75,8 @@ export const ParticipantVideoTileOverlay = React.memo(
         reactionRenderingStyle({
           spriteImageUrl: spriteImageUrl ?? '',
           emojiSize: emojiSize,
-          frameCount: frameCount ?? 51,
-          rawFrameSize: frameSize ?? 128
+          frameCount: frameCount ?? REACTION_NUMBER_OF_ANIMATION_FRAMES,
+          rawFrameSize: frameSize ?? REACTION_DEFAULT_RESOURCE_FRAME_SIZE_PX
         }),
       [spriteImageUrl, emojiSize, frameCount, frameSize]
     );
