@@ -187,6 +187,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
           actionComponents={actionButtons}
           richTextEditorStyleProps={editBoxRichTextEditorStyle}
           isHorizontalLayoutDisabled={true}
+          /* @conditional-compile-remove(attachment-upload) */
           onRenderAttachmentUploads={onRenderAttachmentUploads}
         />
       </Stack>
