@@ -328,7 +328,7 @@
   },
   "chat": {
     "chatListHeader": "채팅 참가자",
-    "uploadFile": "파일 업로드"
+    "uploadAttachment": "파일 업로드"
   },
   "callWithChat": {
     "chatButtonLabel": "채팅",

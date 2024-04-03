@@ -328,7 +328,7 @@
   },
   "chat": {
     "chatListHeader": "Neste chat",
-    "uploadFile": "Carregar Arquivo"
+    "uploadAttachment": "Carregar Arquivo"
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",

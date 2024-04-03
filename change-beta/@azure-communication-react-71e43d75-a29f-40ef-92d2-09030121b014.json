@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "feature",
-  "workstream": "InlineImages",
-  "comment": "Introduce new ability in the queue to cancel inflight request",
-  "packageName": "@azure/communication-react",
-  "email": "9044372+JoshuaLai@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

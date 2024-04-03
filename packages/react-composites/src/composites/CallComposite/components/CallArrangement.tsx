@@ -158,7 +158,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       updateSidePaneRenderer,
       setDrawerMenuItems,
       inviteLink: props.callControlProps.callInvitationURL,
-      /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
       onFetchAvatarPersonaData: props.onFetchAvatarPersonaData,
       onFetchParticipantMenuItems: props.callControlProps?.onFetchParticipantMenuItems,
       mobileView: props.mobileView,
@@ -168,7 +167,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       updateSidePaneRenderer,
       props.callControlProps.callInvitationURL,
       props.callControlProps?.onFetchParticipantMenuItems,
-      /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
       props.onFetchAvatarPersonaData,
       props.mobileView,
       peopleButtonRef

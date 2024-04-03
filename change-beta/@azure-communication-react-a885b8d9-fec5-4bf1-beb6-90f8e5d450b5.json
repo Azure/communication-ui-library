@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "area": "improvement",
-  "workstream": "noImplicitAny",
-  "comment": "Update react-composite and communication-react to flag noImplicitAny",
-  "packageName": "@azure/communication-react",
-  "email": "edwardlee@microsoft.com",
-  "dependentChangeType": "none"
-}

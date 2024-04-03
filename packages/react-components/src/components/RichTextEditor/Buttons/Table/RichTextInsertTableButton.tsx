@@ -54,8 +54,7 @@ export const insertTableButton = (
       menuIconProps: {
         hidden: true
       },
-      onRenderIcon: (item) => {
-        console.log('onRenderIcon', item);
+      onRenderIcon: () => {
         return <TableIcon />;
       },
       buttonStyles: ribbonTableButtonStyle(theme),

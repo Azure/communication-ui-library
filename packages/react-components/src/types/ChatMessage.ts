@@ -74,10 +74,10 @@ export interface ChatMessage extends MessageCommon {
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /**
    * @beta
-   * A list of file attachments for the message.
+   * A list of attachments in the message.
    * {@link AttachmentMetadata}
    */
-  files?: AttachmentMetadata[];
+  attachments?: AttachmentMetadata[];
 }
 
 /**

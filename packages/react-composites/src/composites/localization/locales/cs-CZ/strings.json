@@ -328,7 +328,7 @@
   },
   "chat": {
     "chatListHeader": "V tomto chatu",
-    "uploadFile": "Nahrát soubor"
+    "uploadAttachment": "Nahrát soubor"
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",
