@@ -27,28 +27,28 @@ async function modifyFeatureDefinitionsFile() {
   const adjustedFeatureDefinitions = { ...featureDefinitions };
   switch (option) {
     case 'alphaToBeta':
-      // delete from array:
-      adjustedFeatureDefinitions.inProgressFeatures = adjustedFeatureDefinitions.inProgressFeatures.filter(
-        (f) => f !== feature
-      );
+      // delete from alpha:
+      adjustedFeatureDefinitions.alpha = adjustedFeatureDefinitions.alpha.filter((f) => f !== feature);
+      // add to beta
+      adjustedFeatureDefinitions.beta.push(feature);
       break;
     case 'betaToAlpha':
+      // delete from beta:
+      adjustedFeatureDefinitions.beta = adjustedFeatureDefinitions.beta.filter((f) => f !== feature);
       // add to array:
-      adjustedFeatureDefinitions.inProgressFeatures.push(feature);
+      adjustedFeatureDefinitions.alpha.push(feature);
       break;
     case 'betaToStable':
-      // delete from array:
-      adjustedFeatureDefinitions.features = adjustedFeatureDefinitions.features.filter((f) => f !== feature);
-      // add to array:
-      adjustedFeatureDefinitions.stabilizedFeatures.push(feature);
+      // delete from beta:
+      adjustedFeatureDefinitions.beta = adjustedFeatureDefinitions.beta.filter((f) => f !== feature);
+      // add to stable:
+      adjustedFeatureDefinitions.stable.push(feature);
       break;
     case 'stableToBeta':
-      // delete from array:
-      adjustedFeatureDefinitions.stabilizedFeatures = adjustedFeatureDefinitions.stabilizedFeatures.filter(
-        (f) => f !== feature
-      );
-      // add to array:
-      adjustedFeatureDefinitions.features.push(feature);
+      // delete from stable:
+      adjustedFeatureDefinitions.stable = adjustedFeatureDefinitions.stable.filter((f) => f !== feature);
+      // add to beta:
+      adjustedFeatureDefinitions.beta.push(feature);
       break;
     default:
       console.error(`ERROR: Invalid option "${option}" provided to modifyFeatureDefinitionsFile()`);
