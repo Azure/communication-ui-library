@@ -1045,12 +1045,12 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   }
 
   /* @conditional-compile-remove(spotlight) */
-  public async startSpotlight(userIds: string[]): Promise<void> {
+  public async startSpotlight(userIds?: string[]): Promise<void> {
     this.handlers.onStartSpotlight(userIds);
   }
 
   /* @conditional-compile-remove(spotlight) */
-  public async stopSpotlight(userIds: string[]): Promise<void> {
+  public async stopSpotlight(userIds?: string[]): Promise<void> {
     this.handlers.onStopSpotlight(userIds);
   }
 
