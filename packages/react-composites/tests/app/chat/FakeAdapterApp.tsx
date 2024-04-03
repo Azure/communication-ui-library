@@ -13,7 +13,7 @@ import {
   COMPOSITE_LOCALE_FR_FR,
   _FakeChatAdapterArgs,
   _useFakeChatAdapters,
-  _MockFileUpload
+  _MockAttachmentUpload
 } from '../../../src';
 // eslint-disable-next-line no-restricted-imports
 import { IDS } from '../../browser/common/constants';
@@ -48,8 +48,8 @@ export const FakeAdapterApp = (): JSX.Element => {
         return;
       }
 
-      if (fakeChatAdapterArgs.fileUploads) {
-        handleFileUploads(fakeAdapters.local, fakeChatAdapterArgs.fileUploads);
+      if (fakeChatAdapterArgs.attachmentUploads) {
+        handleAttachmentUploads(fakeAdapters.local, fakeChatAdapterArgs.attachmentUploads);
       }
 
       if (fakeChatAdapterArgs.sendRemoteFileSharingMessage && fakeChatAdapterArgs.remoteParticipants.length > 0) {
@@ -79,7 +79,7 @@ export const FakeAdapterApp = (): JSX.Element => {
         {
           ...defaultAttachmentMenuAction,
           onClick: () => {
-            throw Error('You don’t have permission to download this file.');
+            throw Error('You don’t have permission to download this attachment.');
           }
         }
       ];
@@ -104,13 +104,16 @@ export const FakeAdapterApp = (): JSX.Element => {
             onRenderMessage={fakeChatAdapterArgs.customDataModelEnabled ? customOnRenderMessage : undefined}
             options={{
               participantPane: fakeChatAdapterArgs.showParticipantPane ?? false,
-              fileSharing: fakeChatAdapterArgs.fileSharingEnabled
+              attachmentOptions: fakeChatAdapterArgs.fileSharingEnabled
                 ? {
-                    actionsForAttachment: actionsForAttachment,
-                    uploadHandler: () => {
-                      //noop
+                    downloadOptions: {
+                      actionsForAttachment: actionsForAttachment
                     },
-                    multiple: true
+                    uploadOptions: {
+                      handler: () => {
+                        // noop
+                      }
+                    }
                   }
                 : undefined
             }}
@@ -126,25 +129,25 @@ export const FakeAdapterApp = (): JSX.Element => {
   );
 };
 
-const handleFileUploads = (adapter: ChatAdapter, fileUploads: _MockFileUpload[]): void => {
-  fileUploads.forEach((file) => {
-    if (file.uploadComplete) {
-      const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
-      fileUploads[0].notifyUploadCompleted({
-        name: file.name,
-        extension: file.extension,
-        url: file.url,
-        /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-        id: file.id
+const handleAttachmentUploads = (adapter: ChatAdapter, attachmentUploads: _MockAttachmentUpload[]): void => {
+  attachmentUploads.forEach((attachment) => {
+    if (attachment.uploadComplete) {
+      const attachmentUploads = adapter.registerActiveUploads([new File([], attachment.name)]);
+      attachmentUploads[0].notifyCompleted({
+        name: attachment.name,
+        extension: attachment.extension,
+        url: attachment.url,
+        progress: 1,
+        id: attachment.id
       });
-    } else if (file.error) {
-      const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
-      fileUploads[0].notifyUploadFailed(file.error);
-    } else if (file.progress) {
-      const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
-      fileUploads[0].notifyUploadProgressChanged(file.progress);
+    } else if (attachment.error) {
+      const attachmentUploads = adapter.registerActiveUploads([new File([], attachment.name)]);
+      attachmentUploads[0].notifyFailed(attachment.error);
+    } else if (attachment.progress) {
+      const attachmentUploads = adapter.registerActiveUploads([new File([], attachment.name)]);
+      attachmentUploads[0].notifyProgressChanged(attachment.progress);
     } else {
-      adapter.registerCompletedFileUploads([file]);
+      adapter.registerCompletedUploads([attachment]);
     }
   });
 };

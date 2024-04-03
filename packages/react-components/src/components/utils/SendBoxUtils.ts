@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { ActiveFileUpload } from '../AttachmentUploadCards';
+import { AttachmentMetadata } from '../../types/Attachment';
 
 /**
  * @private
@@ -14,12 +14,12 @@ const EMPTY_MESSAGE_REGEX = /^\s*$/;
 /**
  * @private
  */
-export const hasIncompleteFileUploads = (activeFileUploads: ActiveFileUpload[] | undefined): boolean => {
+export const hasIncompleteAttachmentUploads = (activeAttachmentUploads: AttachmentMetadata[] | undefined): boolean => {
   return !!(
-    activeFileUploads?.length &&
-    !activeFileUploads
-      .filter((attachmentUpload) => !attachmentUpload.error)
-      .every((attachmentUpload) => attachmentUpload.uploadComplete)
+    activeAttachmentUploads?.length &&
+    !activeAttachmentUploads
+      .filter((attachmentUpload) => !attachmentUpload.uploadError)
+      .every((attachmentUpload) => attachmentUpload.progress === 1 && attachmentUpload.progress !== undefined)
   );
 };
 
@@ -27,8 +27,8 @@ export const hasIncompleteFileUploads = (activeFileUploads: ActiveFileUpload[] |
 /**
  * @private
  */
-export const hasCompletedFileUploads = (activeFileUploads: ActiveFileUpload[] | undefined): boolean => {
-  return !!activeFileUploads?.find((file) => !file.error);
+export const hasCompletedAttachmentUploads = (activeAttachmentUploads: AttachmentMetadata[] | undefined): boolean => {
+  return !!activeAttachmentUploads?.find((attachment) => !attachment.uploadError);
 };
 
 /**

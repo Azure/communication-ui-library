@@ -35,15 +35,18 @@ import {
 import { ResourceDetails } from './ChatAdapter';
 import { AdapterError } from '../../common/adapters';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { FileUploadAdapter, convertFileUploadsUiStateToMessageMetadata } from './AzureCommunicationFileUploadAdapter';
+import {
+  AttachmentUploadAdapter,
+  convertAttachmentUploadsUiStateToMessageMetadata
+} from './AzureCommunicationAttachmentUploadAdapter';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { AzureCommunicationFileUploadAdapter } from './AzureCommunicationFileUploadAdapter';
+import { AzureCommunicationAttachmentUploadAdapter } from './AzureCommunicationAttachmentUploadAdapter';
 import { useEffect, useRef, useState } from 'react';
 import { _isValidIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { AttachmentMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { FileUploadManager } from '@internal/react-components';
+import { AttachmentUploadManager } from '@internal/react-components';
 
 /**
  * Context of Chat, which is a centralized context for all state updates
@@ -103,7 +106,7 @@ export class ChatContext {
     };
 
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    updatedState = { ...updatedState, fileUploads: this.state.fileUploads };
+    updatedState = { ...updatedState, attachmentUploads: this.state.attachmentUploads };
 
     this.setState(updatedState);
   }
@@ -117,7 +120,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   private chatThreadClient: ChatThreadClient;
   private context: ChatContext;
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  private fileUploadAdapter: FileUploadAdapter;
+  private attachmentUploadAdapter: AttachmentUploadAdapter;
   private handlers: ChatHandlers;
   private emitter: EventEmitter = new EventEmitter();
 
@@ -127,7 +130,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.chatThreadClient = chatThreadClient;
     this.context = new ChatContext(chatClient.getState(), chatThreadClient.threadId);
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    this.fileUploadAdapter = new AzureCommunicationFileUploadAdapter(this.context);
+    this.attachmentUploadAdapter = new AzureCommunicationAttachmentUploadAdapter(this.context);
 
     const onStateChange = (clientState: ChatClientState): void => {
       // unsubscribe when the instance gets disposed
@@ -161,19 +164,19 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.on = this.on.bind(this);
     this.off = this.off.bind(this);
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    this.registerActiveFileUploads = this.registerActiveFileUploads.bind(this);
+    this.registerActiveUploads = this.registerActiveUploads.bind(this);
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    this.registerCompletedFileUploads = this.registerCompletedFileUploads.bind(this);
+    this.registerCompletedUploads = this.registerCompletedUploads.bind(this);
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    this.clearFileUploads = this.clearFileUploads.bind(this);
+    this.clearUploads = this.clearUploads.bind(this);
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    this.cancelFileUpload = this.cancelFileUpload.bind(this);
+    this.cancelUpload = this.cancelUpload.bind(this);
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    this.updateFileUploadProgress = this.updateFileUploadProgress.bind(this);
+    this.updateUploadProgress = this.updateUploadProgress.bind(this);
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    this.updateFileUploadErrorMessage = this.updateFileUploadErrorMessage.bind(this);
+    this.updateUploadStatusMessage = this.updateUploadStatusMessage.bind(this);
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    this.updateFileUploadMetadata = this.updateFileUploadMetadata.bind(this);
+    this.updateUploadMetadata = this.updateUploadMetadata.bind(this);
     this.downloadResourceToCache = this.downloadResourceToCache.bind(this);
     this.removeResourceFromCache = this.removeResourceFromCache.bind(this);
   }
@@ -213,18 +216,18 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
       /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
       options.metadata = {
         ...options.metadata,
-        ...convertFileUploadsUiStateToMessageMetadata(this.context.getState().fileUploads)
+        ...convertAttachmentUploadsUiStateToMessageMetadata(this.context.getState().attachmentUploads)
       };
 
       /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
       /**
        * All the current uploads need to be clear from the state before a message has been sent.
        * This ensures the following behavior:
-       * 1. File Upload cards are removed from sendbox at the same time text in sendbox is removed.
-       * 2. any component rendering these file uploads doesn't continue to do so.
-       * 3. Cleans the state for new file uploads with a fresh message.
+       * 1. Attachment Upload cards are removed from sendbox at the same time text in sendbox is removed.
+       * 2. any component rendering these attachment uploads doesn't continue to do so.
+       * 3. Cleans the state for new attachment uploads with a fresh message.
        */
-      this.fileUploadAdapter.clearFileUploads();
+      this.attachmentUploadAdapter.clearUploads();
 
       await this.handlers.onSendMessage(content, options);
     });
@@ -285,38 +288,38 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  registerActiveFileUploads(files: File[]): FileUploadManager[] {
-    return this.fileUploadAdapter.registerActiveFileUploads(files);
+  registerActiveUploads(files: File[]): AttachmentUploadManager[] {
+    return this.attachmentUploadAdapter.registerActiveUploads(files);
   }
 
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  registerCompletedFileUploads(metadata: AttachmentMetadata[]): FileUploadManager[] {
-    return this.fileUploadAdapter.registerCompletedFileUploads(metadata);
+  registerCompletedUploads(metadata: AttachmentMetadata[]): AttachmentUploadManager[] {
+    return this.attachmentUploadAdapter.registerCompletedUploads(metadata);
   }
 
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  clearFileUploads(): void {
-    this.fileUploadAdapter.clearFileUploads();
+  clearUploads(): void {
+    this.attachmentUploadAdapter.clearUploads();
   }
 
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  cancelFileUpload(id: string): void {
-    this.fileUploadAdapter.cancelFileUpload(id);
+  cancelUpload(id: string): void {
+    this.attachmentUploadAdapter.cancelUpload(id);
   }
 
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  updateFileUploadProgress(id: string, progress: number): void {
-    this.fileUploadAdapter.updateFileUploadProgress(id, progress);
+  updateUploadProgress(id: string, progress: number): void {
+    this.attachmentUploadAdapter.updateUploadProgress(id, progress);
   }
 
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  updateFileUploadErrorMessage(id: string, errorMessage: string): void {
-    this.fileUploadAdapter.updateFileUploadErrorMessage(id, errorMessage);
+  updateUploadStatusMessage(id: string, errorMessage: string): void {
+    this.attachmentUploadAdapter.updateUploadStatusMessage(id, errorMessage);
   }
 
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  updateFileUploadMetadata(id: string, metadata: AttachmentMetadata): void {
-    this.fileUploadAdapter.updateFileUploadMetadata(id, metadata);
+  updateUploadMetadata(id: string, metadata: AttachmentMetadata): void {
+    this.attachmentUploadAdapter.updateUploadMetadata(id, metadata);
   }
 
   async downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void> {

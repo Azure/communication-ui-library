@@ -10,7 +10,7 @@ import { Suspense } from 'react';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { ChatAdapter } from '../ChatComposite';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { fileUploadsSelector } from '../ChatComposite/selectors/fileUploadsSelector';
+import { attachmentUploadsSelector } from '../ChatComposite/selectors/attachmentUploadsSelector';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { useSelector } from '../ChatComposite/hooks/useSelector';
 
@@ -43,7 +43,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   const sendBoxProps = usePropsFor(SimpleSendBox);
 
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  const activeFileUploads = useSelector(fileUploadsSelector).files;
+  const activeAttachmentUploads = useSelector(attachmentUploadsSelector).attachments;
 
   const sendBoxStyles = useMemo(() => {
     return Object.assign({}, styles);
@@ -56,16 +56,16 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
         autoFocus={options?.autoFocus}
         styles={sendBoxStyles}
         /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-        activeFileUploads={activeFileUploads}
+        activeAttachmentUploads={activeAttachmentUploads}
         /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-        onCancelFileUpload={adapter.cancelFileUpload}
+        onCancelAttachmentUpload={adapter.cancelUpload}
       />
     ),
     [
       sendBoxProps,
       options,
       sendBoxStyles,
-      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ activeFileUploads,
+      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ activeAttachmentUploads,
       /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ adapter
     ]
   );
