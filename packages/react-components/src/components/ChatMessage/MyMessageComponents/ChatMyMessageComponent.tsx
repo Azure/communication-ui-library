@@ -3,7 +3,7 @@
 
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useState } from 'react';
-import { MessageThreadStrings } from '../../MessageThread';
+import { MessageThreadStrings, UpdateMessageCallback } from '../../MessageThread';
 import { ChatMessage, ComponentSlotStyle, OnRenderAvatarCallback } from '../../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../../types';
@@ -21,15 +21,7 @@ type ChatMyMessageComponentProps = {
   messageContainerStyle?: ComponentSlotStyle;
   showDate?: boolean;
   disableEditing?: boolean;
-  onUpdateMessage?: (
-    messageId: string,
-    content: string,
-    metadata?: Record<string, string>,
-    options?: {
-      /* @conditional-compile-remove(attachment-upload) */
-      attachmentMetadata?: AttachmentMetadata[];
-    }
-  ) => Promise<void>;
+  onUpdateMessage?: UpdateMessageCallback;
   onCancelEditMessage?: (messageId: string) => void;
   /**
    * Callback to delete a message. Also called before resending a message that failed to send.
@@ -134,7 +126,15 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
         onSubmit={async (text, metadata, options) => {
           props.onUpdateMessage &&
             message.messageId &&
-            (await props.onUpdateMessage(message.messageId, text, metadata, options));
+            (await props.onUpdateMessage(
+              message.messageId,
+              text,
+              /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+              {
+                metadata: metadata,
+                attachmentMetadata: options?.attachmentMetadata
+              }
+            ));
           setIsEditing(false);
         }}
         onCancel={(messageId) => {
