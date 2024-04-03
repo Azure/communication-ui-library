@@ -3,7 +3,6 @@
 
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useState } from 'react';
-import { ChatMessageComponentAsEditBox } from '../ChatMessageComponentAsEditBox';
 import { MessageThreadStrings, UpdateMessageCallback } from '../../MessageThread';
 import { ChatMessage, ComponentSlotStyle, OnRenderAvatarCallback } from '../../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -14,6 +13,7 @@ import { AttachmentMenuAction, AttachmentMetadata } from '../../../types/Attachm
 import { MentionOptions } from '../../MentionPopover';
 import { InlineImageOptions } from '../ChatMessageContent';
 import { ChatMyMessageComponentAsMessageBubble } from './ChatMyMessageComponentAsMessageBubble';
+import { ChatMessageComponentAsEditBoxPicker } from './ChatMessageComponentAsEditBoxPicker';
 
 type ChatMyMessageComponentProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
@@ -85,6 +85,12 @@ type ChatMyMessageComponentProps = {
    * Optional callback to define custom actions for attachments.
    */
   actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
+  /* @conditional-compile-remove(rich-text-editor) */
+  /**
+   * Optional flag to enable rich text editor.
+   * @beta
+   */
+  richTextEditor?: boolean;
 };
 
 /**
@@ -114,7 +120,7 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
 
   if (isEditing && message.messageType === 'chat') {
     return (
-      <ChatMessageComponentAsEditBox
+      <ChatMessageComponentAsEditBoxPicker
         message={message}
         strings={props.strings}
         onSubmit={async (text, metadata, options) => {
@@ -137,6 +143,8 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
         }}
         /* @conditional-compile-remove(mention) */
         mentionLookupOptions={props.mentionOptions?.lookupOptions}
+        /* @conditional-compile-remove(rich-text-editor) */
+        richTextEditor={props.richTextEditor}
       />
     );
   } else {

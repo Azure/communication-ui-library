@@ -84,24 +84,7 @@ export type ChatCompositeOptions = {
    * @beta
    */
   attachmentOptions?: AttachmentOptions;
-
-  /* @conditional-compile-remove(rich-text-editor) */
-  /**
-   * Properties for configuring the richTextEditor feature.
-   * @defaultValue false
-   *
-   * @beta
-   */
-  richTextEditor?: boolean | RichTextEditorOptions;
 };
-
-/* @conditional-compile-remove(rich-text-editor) */
-/**
- * Options for configuring the rich text editor.
- *
- * @beta
- */
-export interface RichTextEditorOptions {}
 
 /**
  * A customizable UI composite for the chat experience.
