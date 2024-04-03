@@ -1,11 +1,40 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { ChatMessageComponentAsRichTextEditBox } from '@internal/react-components';
+import { ChatMessageComponentAsRichTextEditBox as RichTextEditBoxComponent } from '@internal/react-components';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { COMPONENT_FOLDER_PREFIX } from '../../constants';
 import { hiddenControl } from '../../controlsUtils';
+import { Title, Description, Heading, Canvas, Props } from '@storybook/addon-docs';
+import { DetailedBetaBanner } from '../../BetaBanners/DetailedBetaBanner';
+import { RichTextSendBoxAttachmentUploadsExample } from './snippets/RichTextSendBoxAttachmentUploads.snippet';
+
+const RichTextEditBoxAttachmentUploadsExampleText =
+  require('!!raw-loader!./snippets/RichTextEditBoxAttachmentUploads.snippet.tsx').default;
+
+const getDocs: () => JSX.Element = () => {
+  return (
+    <>
+      <Title>RichTextEditBox</Title>
+      <Description>Component for editing messages.</Description>
+
+      <Heading>Display File Attachments</Heading>
+      <DetailedBetaBanner />
+      <Description>
+        RichTextEditBox component provides UI for displaying attachments in the RichTextEditBox. This allows developers
+        to implement a file sharing feature using the pure UI component with minimal effort. Developers can write their
+        own attachment upload logic and utilize the UI provided by RichTextEditBox.
+      </Description>
+      <Canvas mdxSource={RichTextEditBoxAttachmentUploadsExampleText}>
+        <RichTextSendBoxAttachmentUploadsExample />
+      </Canvas>
+
+      <Heading>Props</Heading>
+      <Props of={RichTextEditBoxComponent} />
+    </>
+  );
+};
 
 const RichTextEditBoxStory = (args): JSX.Element => {
   const timeoutRef = React.useRef<NodeJS.Timeout>();
@@ -13,7 +42,7 @@ const RichTextEditBoxStory = (args): JSX.Element => {
 
   return (
     <div style={{ width: '31.25rem', maxWidth: '90%' }}>
-      <ChatMessageComponentAsRichTextEditBox
+      <RichTextEditBoxComponent
         onSubmit={async (message) => {
           timeoutRef.current = setTimeout(() => {
             alert(`sent message: ${message} `);
