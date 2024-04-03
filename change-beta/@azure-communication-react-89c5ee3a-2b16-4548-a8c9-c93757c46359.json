@@ -1,9 +1,0 @@
-{
-  "type": "minor",
-  "area": "improvement",
-  "workstream": "Change screenShareParicipant to be optional",
-  "comment": "Change screenShareParicipant to be optional",
-  "packageName": "@azure/communication-react",
-  "email": "93549644+ShaunaSong@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -328,7 +328,7 @@
   },
   "chat": {
     "chatListHeader": "בצ'אט זה",
-    "uploadFile": "העלה קובץ"
+    "uploadAttachment": "העלה קובץ"
   },
   "callWithChat": {
     "chatButtonLabel": "צ'אט",

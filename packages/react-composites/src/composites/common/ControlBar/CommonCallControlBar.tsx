@@ -278,7 +278,8 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   const showExitSpotlightButton = options?.exitSpotlightButton !== false;
 
   const showCaptionsButton =
-    props.isCaptionsSupported && /* @conditional-compile-remove(acs-close-captions) */ isEnabled(options.captions);
+    props.isCaptionsSupported &&
+    /* @conditional-compile-remove(acs-close-captions) */ isEnabled(options.captionsButton);
 
   const showDesktopMoreButton =
     /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */ isEnabled(

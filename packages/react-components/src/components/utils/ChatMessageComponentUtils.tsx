@@ -93,11 +93,11 @@ const defaultOnRenderAttachmentDownloads = (
   actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[]
 ): JSX.Element | undefined => {
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  return (
+  return ((message as ChatMessage).attachments?.length ?? 0) > 0 ? (
     <_AttachmentDownloadCards
       message={message as ChatMessage}
       /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-      attachments={(message as ChatMessage).files || []}
+      attachments={(message as ChatMessage).attachments}
       /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
       actionsForAttachment={actionsForAttachment}
       /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
@@ -107,6 +107,8 @@ const defaultOnRenderAttachmentDownloads = (
         attachmentCardGroupMessage: strings.attachmentCardGroupMessage
       }}
     />
+  ) : (
+    <></>
   );
   return undefined;
 };

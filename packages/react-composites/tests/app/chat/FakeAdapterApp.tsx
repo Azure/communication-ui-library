@@ -79,7 +79,7 @@ export const FakeAdapterApp = (): JSX.Element => {
         {
           ...defaultAttachmentMenuAction,
           onClick: () => {
-            throw Error('You don’t have permission to download this file.');
+            throw Error('You don’t have permission to download this attachment.');
           }
         }
       ];
@@ -130,25 +130,24 @@ export const FakeAdapterApp = (): JSX.Element => {
 };
 
 const handleAttachmentUploads = (adapter: ChatAdapter, attachmentUploads: _MockAttachmentUpload[]): void => {
-  attachmentUploads.forEach((file) => {
-    if (file.uploadComplete) {
-      const attachmentUploads = adapter.registerActiveUploads([new File([], file.name)]);
+  attachmentUploads.forEach((attachment) => {
+    if (attachment.uploadComplete) {
+      const attachmentUploads = adapter.registerActiveUploads([new File([], attachment.name)]);
       attachmentUploads[0].notifyCompleted({
-        name: file.name,
-        extension: file.extension,
+        name: attachment.name,
+        extension: attachment.extension,
+        url: attachment.url,
         progress: 1,
-        url: file.url,
-        /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-        id: file.id
+        id: attachment.id
       });
-    } else if (file.error) {
-      const attachmentUploads = adapter.registerActiveUploads([new File([], file.name)]);
-      attachmentUploads[0].notifyFailed(file.error);
-    } else if (file.progress) {
-      const attachmentUploads = adapter.registerActiveUploads([new File([], file.name)]);
-      attachmentUploads[0].notifyProgressChanged(file.progress);
+    } else if (attachment.error) {
+      const attachmentUploads = adapter.registerActiveUploads([new File([], attachment.name)]);
+      attachmentUploads[0].notifyFailed(attachment.error);
+    } else if (attachment.progress) {
+      const attachmentUploads = adapter.registerActiveUploads([new File([], attachment.name)]);
+      attachmentUploads[0].notifyProgressChanged(attachment.progress);
     } else {
-      adapter.registerCompletedUploads([file]);
+      adapter.registerCompletedUploads([attachment]);
     }
   });
 };

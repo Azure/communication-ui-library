@@ -48,7 +48,9 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     actionsForAttachment,
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    onRenderAttachmentDownloads
+    onRenderAttachmentDownloads,
+    /* @conditional-compile-remove(rich-text-editor) */
+    richTextEditor
   } = props;
   const chatMessageRenderStyles = useChatMessageRenderStyles();
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
@@ -90,6 +92,8 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
             mentionOptions={mentionOptions}
             /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
             actionsForAttachment={actionsForAttachment}
+            /* @conditional-compile-remove(rich-text-editor) */
+            richTextEditor={richTextEditor}
           />
         );
       }
@@ -112,7 +116,9 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
       /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
       actionsForAttachment,
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      new Date().toDateString()
+      new Date().toDateString(),
+      /* @conditional-compile-remove(rich-text-editor) */
+      richTextEditor
     ]
   );
 

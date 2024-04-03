@@ -328,7 +328,7 @@
   },
   "chat": {
     "chatListHeader": "I denne chatten",
-    "uploadFile": "Last opp fil"
+    "uploadAttachment": "Last opp fil"
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",

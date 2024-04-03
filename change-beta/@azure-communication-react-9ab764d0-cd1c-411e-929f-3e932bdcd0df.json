@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "improvement",
-  "workstream": "Adding localized strings",
-  "comment": "TDBuild - updating localized resource files.",
-  "packageName": "@azure/communication-react",
-  "email": "alkwa@microsoft.com",
-  "dependentChangeType": "patch"
-}

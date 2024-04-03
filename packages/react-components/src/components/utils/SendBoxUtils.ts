@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-upload) */
 import { AttachmentMetadata } from '../../types/Attachment';
 
 /**
@@ -10,7 +10,7 @@ import { AttachmentMetadata } from '../../types/Attachment';
 export const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
 const EMPTY_MESSAGE_REGEX = /^\s*$/;
 
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-upload) */
 /**
  * @private
  */
@@ -23,12 +23,12 @@ export const hasIncompleteAttachmentUploads = (activeAttachmentUploads: Attachme
   );
 };
 
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-upload) */
 /**
  * @private
  */
 export const hasCompletedAttachmentUploads = (activeAttachmentUploads: AttachmentMetadata[] | undefined): boolean => {
-  return !!activeAttachmentUploads?.find((file) => !file.uploadError);
+  return !!activeAttachmentUploads?.find((attachment) => !attachment.uploadError);
 };
 
 /**
