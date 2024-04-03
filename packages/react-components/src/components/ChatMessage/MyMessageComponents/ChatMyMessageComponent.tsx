@@ -3,8 +3,7 @@
 
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useState } from 'react';
-import { ChatMessageComponentAsEditBox } from '../ChatMessageComponentAsEditBox';
-import { MessageThreadStrings } from '../../MessageThread';
+import { MessageThreadStrings, UpdateMessageCallback } from '../../MessageThread';
 import { ChatMessage, ComponentSlotStyle, OnRenderAvatarCallback } from '../../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../../types';
@@ -14,6 +13,7 @@ import { AttachmentMenuAction, AttachmentMetadata } from '../../../types/Attachm
 import { MentionOptions } from '../../MentionPopover';
 import { InlineImageOptions } from '../ChatMessageContent';
 import { ChatMyMessageComponentAsMessageBubble } from './ChatMyMessageComponentAsMessageBubble';
+import { ChatMessageComponentAsEditBoxPicker } from './ChatMessageComponentAsEditBoxPicker';
 
 type ChatMyMessageComponentProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
@@ -21,15 +21,7 @@ type ChatMyMessageComponentProps = {
   messageContainerStyle?: ComponentSlotStyle;
   showDate?: boolean;
   disableEditing?: boolean;
-  onUpdateMessage?: (
-    messageId: string,
-    content: string,
-    metadata?: Record<string, string>,
-    options?: {
-      /* @conditional-compile-remove(attachment-upload) */
-      attachmentMetadata?: AttachmentMetadata[];
-    }
-  ) => Promise<void>;
+  onUpdateMessage?: UpdateMessageCallback;
   onCancelEditMessage?: (messageId: string) => void;
   /**
    * Callback to delete a message. Also called before resending a message that failed to send.
@@ -93,6 +85,12 @@ type ChatMyMessageComponentProps = {
    * Optional callback to define custom actions for attachments.
    */
   actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
+  /* @conditional-compile-remove(rich-text-editor) */
+  /**
+   * Optional flag to enable rich text editor.
+   * @beta
+   */
+  richTextEditor?: boolean;
 };
 
 /**
@@ -122,13 +120,21 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
 
   if (isEditing && message.messageType === 'chat') {
     return (
-      <ChatMessageComponentAsEditBox
+      <ChatMessageComponentAsEditBoxPicker
         message={message}
         strings={props.strings}
         onSubmit={async (text, metadata, options) => {
           props.onUpdateMessage &&
             message.messageId &&
-            (await props.onUpdateMessage(message.messageId, text, metadata, options));
+            (await props.onUpdateMessage(
+              message.messageId,
+              text,
+              /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+              {
+                metadata: metadata,
+                attachmentMetadata: options?.attachmentMetadata
+              }
+            ));
           setIsEditing(false);
         }}
         onCancel={(messageId) => {
@@ -137,6 +143,8 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
         }}
         /* @conditional-compile-remove(mention) */
         mentionLookupOptions={props.mentionOptions?.lookupOptions}
+        /* @conditional-compile-remove(rich-text-editor) */
+        richTextEditor={props.richTextEditor}
       />
     );
   } else {

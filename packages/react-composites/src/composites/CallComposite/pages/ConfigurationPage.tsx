@@ -83,13 +83,11 @@ export interface ConfigurationPageProps {
   onNetworkingTroubleShootingClick?: () => void;
   /* @conditional-compile-remove(capabilities) */
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
-  /* @conditional-compile-remove(custom-branding) */
   logo?: {
     url: string;
     alt?: string;
     shape?: 'unset' | 'circle';
   };
-  /* @conditional-compile-remove(custom-branding) */
   backgroundImage?: {
     url: string;
   };
@@ -259,13 +257,8 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   );
 
   const containerStyles = useMemo(
-    () =>
-      configurationContainerStyle(
-        !mobileView,
-        /* @conditional-compile-remove(custom-branding) */
-        props.backgroundImage?.url
-      ),
-    [mobileView, /* @conditional-compile-remove(custom-branding) */ props.backgroundImage?.url]
+    () => configurationContainerStyle(!mobileView, props.backgroundImage?.url),
+    [mobileView, props.backgroundImage?.url]
   );
 
   return (
@@ -325,20 +318,13 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
 
       <Stack verticalFill grow horizontal className={fillWidth}>
         <Stack
-          className={configurationCenteredContent(
-            mobileWithPreview,
-            /* @conditional-compile-remove(custom-branding) */
-            !!props.logo
-          )}
+          className={configurationCenteredContent(mobileWithPreview, !!props.logo)}
           verticalAlign="center"
           verticalFill={mobileWithPreview}
           tokens={mobileWithPreview ? configurationStackTokensMobile : configurationStackTokensDesktop}
         >
           <Stack.Item styles={callDetailsContainerStyles}>
-            <Logo
-              /* @conditional-compile-remove(custom-branding) */
-              logo={props.logo}
-            />
+            <Logo logo={props.logo} />
             {title}
             {callDescription}
           </Stack.Item>
