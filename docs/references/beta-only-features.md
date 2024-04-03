@@ -110,7 +110,7 @@ rush update:stable
 
 # Conditionally adding a feature
 
-You must first define your new feature by adding it to the `features` and `inProgressFeatures` (not ready for release) list in [this config file](../../common/config/babel/features.js).
+You must first define your new feature by adding it to the [features file](../../common/config/babel/features.js). Add to `alpha` until your feature is ready for public preview consumptions.
 
 You will need to make your feature [independently removable](#independently-removable-feature) when you are adding them, otherwise you might see some CI failures when raising your PR.
 
@@ -118,16 +118,17 @@ This repository contains a [live document](../../packages/acs-ui-common/src/cond
 feature.
 
 ## When the feature is ready for beta release
-When your feature are ready for beta release, remove it from inProgressFeatures, but keep it in features list, in [this config file](../../common/config/babel/features.js).
+When your feature is ready for beta release, move it in the [features file](../../common/config/babel/features.js) from alpha to beta.
 
 ## Stabilizing a feature
 
 Careful scoping of defined features will allow you to easily stabilize the feature. When you are ready to add your feature to the stable build:
 
-- One-step stabilization: Include all associated conditionally compiled code in the stable flavored build by moving your feature to `stabilizedFeatures` in the [defined features config file](../../common/config/babel/features.js).
+- Move your feature to `stable` in the [features file](../../common/config/babel/features.js).
+  - Do not remove conditional compilation directives yet. These are only removed after the feature is shipped in a stable release. This allows for quick rollbacks.
   - Switch to stable flavor and build, test and run samples to try out your stabilized feature.
   - You will also get the updated API files for the stable build from this step. You can use this for API review.
-- Clean up: Once your feature is shipped in a stable release, remove all references to conditional compilation directive for your feature, and remove your feature from `stabilizedFeatures` list.
+- Clean up: Once your feature is shipped in a stable release, remove all references to conditional compilation directive for your feature, and remove your feature from the [features file](../../common/config/babel/features.js).
   - Note: If some code has other conditional compilation directives along with your (now stable) feature, remove all directives (not only yours), so that the code is included in the stable flavor build unconditionally.
 
 This [example PR](https://github.com/Azure/communication-ui-library/pull/1547) for stabilizing a feature includes the [generated API diff](https://github.com/Azure/communication-ui-library/pull/1547/files#diff-e76b64bd635283f256ec46065d2e58b277d9fad73ff4e4a774e4509c0290acfe) for this feature.
