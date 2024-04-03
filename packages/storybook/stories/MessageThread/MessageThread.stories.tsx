@@ -623,7 +623,8 @@ export default {
     onRenderMessage: hiddenControl,
     onUpdateMessage: hiddenControl,
     onDeleteMessage: hiddenControl,
-    disableEditing: hiddenControl
+    disableEditing: hiddenControl,
+    richTextEditor: hiddenControl
   },
   parameters: {
     docs: {
