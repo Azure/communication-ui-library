@@ -284,3 +284,24 @@ export const getEmojiFrameCount = (reactionName: string, reactionResources: Reac
       return 0;
   }
 };
+
+/* @conditional-compile-remove(reaction) */
+/**
+ * @private
+ */
+export const getEmojiFrameSize = (reactionName: string, reactionResources: ReactionResources): number | undefined => {
+  switch (reactionName) {
+    case 'like':
+      return reactionResources.likeReaction?.size;
+    case 'heart':
+      return reactionResources.heartReaction?.size;
+    case 'laugh':
+      return reactionResources.laughReaction?.size;
+    case 'applause':
+      return reactionResources.applauseReaction?.size;
+    case 'surprised':
+      return reactionResources.surprisedReaction?.size;
+    default:
+      return undefined;
+  }
+};
