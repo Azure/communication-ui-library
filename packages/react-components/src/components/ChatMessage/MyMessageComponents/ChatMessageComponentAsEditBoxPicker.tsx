@@ -43,10 +43,10 @@ export type ChatMessageComponentAsEditBoxPickerProps = {
  * @private
  */
 export const ChatMessageComponentAsEditBoxPicker = (props: ChatMessageComponentAsEditBoxPickerProps): JSX.Element => {
-  // /* @conditional-compile-remove(rich-text-editor) */
+  /* @conditional-compile-remove(rich-text-editor) */
   const { richTextEditor } = props;
 
-  // /* @conditional-compile-remove(rich-text-editor) */
+  /* @conditional-compile-remove(rich-text-editor) */
   if (richTextEditor) {
     return (
       <Suspense>
