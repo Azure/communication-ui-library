@@ -41,6 +41,8 @@ import { Reaction } from './buttons/Reaction';
 import { useSelector } from '../hooks/useSelector';
 /* @conditional-compile-remove(reaction) */
 import { capabilitySelector } from '../../CallComposite/selectors/capabilitySelector';
+/* @conditional-compile-remove(reaction) */
+import { callStatusSelector } from '../../CallComposite/selectors/callStatusSelector';
 
 /**
  * @private
@@ -119,8 +121,12 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   /* @conditional-compile-remove(reaction) */
   const capabilitiesSelector = useSelector(capabilitySelector);
   /* @conditional-compile-remove(reaction) */
+  const callState = useSelector(callStatusSelector);
+  /* @conditional-compile-remove(reaction) */
   const isReactionAllowed =
-    !capabilitiesSelector?.capabilities || capabilitiesSelector.capabilities.useReactions.isPresent;
+    callState.callStatus !== 'Connected' ||
+    !capabilitiesSelector?.capabilities ||
+    capabilitiesSelector.capabilities.useReactions.isPresent;
 
   const devicesButtonProps = usePropsFor(DevicesButton);
 
