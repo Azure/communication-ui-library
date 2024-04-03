@@ -51,7 +51,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
 
   const [textValue, setTextValue] = useState<string>(message.content || '');
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  const [attachmentMetadata, _] = React.useState(getMessageWithAttachmentMetadata(message));
+  const [attachmentMetadata, setAttachmentMetadata] = React.useState(getMessageWithAttachmentMetadata(message));
   const editTextFieldRef = React.useRef<RichTextEditorComponentRef>(null);
   const theme = useTheme();
   const messageState = getMessageState(
@@ -154,6 +154,20 @@ export const ChatMessageComponentAsRichTextEditBox = (
     return locale.sendBox;
   }, [/* @conditional-compile-remove(rich-text-editor) */ locale.richTextSendBox, locale.sendBox]);
 
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  const onRenderAttachmentUploads = useCallback(() => {
+    return (
+      <div style={{ margin: '0.25rem' }}>
+        <_AttachmentUploadCards
+          activeAttachmentUploads={attachmentMetadata}
+          onCancelAttachmentUpload={(attachmentId) => {
+            setAttachmentMetadata(attachmentMetadata?.filter((attachment) => attachment.id !== attachmentId));
+          }}
+        />
+      </div>
+    );
+  }, [attachmentMetadata]);
+
   const getContent = (): JSX.Element => {
     return (
       <Stack className={mergeStyles(editBoxWidthStyles)}>
@@ -168,6 +182,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
           actionComponents={actionButtons}
           richTextEditorStyleProps={editBoxRichTextEditorStyle}
           isHorizontalLayoutDisabled={true}
+          onRenderAttachmentUploads={onRenderAttachmentUploads}
         />
       </Stack>
     );
