@@ -151,7 +151,7 @@ export function defaultMockCallAdapterState(
     latestErrors: {},
     targetCallees: undefined,
     /* @conditional-compile-remove(reaction) */
-    reactions: {}
+    reactions: undefined
   };
 }
 
