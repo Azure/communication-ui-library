@@ -128,7 +128,7 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
 
   if (isEditing && message.messageType === 'chat') {
     return (
-      <ChatMessageComponentAsEditBoxPickers
+      <ChatMessageComponentAsEditBoxPicker
         message={message}
         strings={props.strings}
         onSubmit={async (text, metadata, options) => {
