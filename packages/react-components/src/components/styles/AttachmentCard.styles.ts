@@ -11,7 +11,13 @@ import { _pxToRem } from '@internal/acs-ui-common';
 export const useAttachmentCardStyles = makeStyles({
   root: {
     width: '12rem',
-    minWidth: '75%'
+    minWidth: '75%',
+    '& div[role=toolbar]': {
+      paddingTop: '0rem',
+      paddingBottom: '0rem',
+      paddingLeft: '0rem',
+      paddingRight: '0rem'
+    }
   }
 });
 

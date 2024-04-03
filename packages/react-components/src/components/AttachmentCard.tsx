@@ -27,7 +27,6 @@ import { useEffect, useState, useMemo } from 'react';
 import { _AttachmentUploadCardsStrings } from './AttachmentUploadCards';
 import { useLocaleAttachmentCardStringsTrampoline } from './utils/common';
 import { AttachmentMetadata, AttachmentMenuAction } from '../types/Attachment';
-import { MoreHorizontal24Filled } from '@fluentui/react-icons';
 import { useAttachmentCardStyles, attachmentNameContainerClassName } from './styles/AttachmentCard.styles';
 
 /**
@@ -89,7 +88,13 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
   return (
     <div data-is-focusable={true}>
       <Announcer announcementString={announcerString} ariaLive={'polite'} />
-      <Card className={attachmentCardStyles.root} size="small" role="listitem">
+      <Card
+        className={attachmentCardStyles.root}
+        size="small"
+        role="listitem"
+        appearance="filled-alternative"
+        aria-label={attachment.name}
+      >
         <CardHeader
           image={
             <Icon
@@ -148,7 +153,7 @@ const getMenuItems = (
     <Toolbar>
       <Menu>
         <MenuTrigger>
-          <ToolbarButton aria-label="More" icon={<MoreHorizontal24Filled />} />
+          <ToolbarButton aria-label="More" icon={<Icon iconName="AttachmentMoreMenu" aria-label="More" />} />
         </MenuTrigger>
         <MenuPopover>
           <MenuList>
