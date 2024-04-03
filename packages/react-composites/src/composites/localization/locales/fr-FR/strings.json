@@ -328,7 +328,7 @@
   },
   "chat": {
     "chatListHeader": "Dans cette conversation",
-    "uploadFile": "Charger un fichier"
+    "uploadAttachment": "Charger un fichier"
   },
   "callWithChat": {
     "chatButtonLabel": "Clavardage",

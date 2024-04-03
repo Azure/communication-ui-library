@@ -61,13 +61,13 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
 );
 
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-const extractAttachedFilesMetadata = (metadata: Record<string, string>): AttachmentMetadata[] => {
-  const fileMetadata = metadata.fileSharingMetadata;
-  if (!fileMetadata) {
+const extractAttachmentMetadata = (metadata: Record<string, string>): AttachmentMetadata[] => {
+  const attachmentMetadata = metadata.fileSharingMetadata;
+  if (!attachmentMetadata) {
     return [];
   }
   try {
-    return JSON.parse(fileMetadata);
+    return JSON.parse(attachmentMetadata);
   } catch (e) {
     console.error(e);
     return [];
@@ -75,26 +75,25 @@ const extractAttachedFilesMetadata = (metadata: Record<string, string>): Attachm
 };
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 const extractTeamsAttachmentsMetadata = (
-  attachments: ChatAttachment[]
+  rawAttachments: ChatAttachment[]
 ): {
-  files: AttachmentMetadata[];
+  attachments: AttachmentMetadata[];
 } => {
-  const files: AttachmentMetadata[] = [];
-  attachments.forEach((attachment) => {
-    const attachmentType = attachment.attachmentType as ChatAttachmentType;
-    const contentType = extractAttachmentContentTypeFromName(attachment.name);
+  const attachments: AttachmentMetadata[] = [];
+  rawAttachments.forEach((rawAttachment) => {
+    const attachmentType = rawAttachment.attachmentType as ChatAttachmentType;
+    const contentType = extractAttachmentContentTypeFromName(rawAttachment.name);
     if (attachmentType === 'file') {
-      files.push({
-        id: attachment.id,
-        name: attachment.name ?? '',
+      attachments.push({
+        id: rawAttachment.id,
+        name: rawAttachment.name ?? '',
         extension: contentType ?? '',
-        url: extractAttachmentUrl(attachment),
-        payload: { teamsFileAttachment: 'true' }
+        url: extractAttachmentUrl(rawAttachment)
       });
     }
   });
   return {
-    files
+    attachments
   };
 };
 
@@ -199,16 +198,16 @@ const extractAttachmentContentTypeFromName = (name?: string): string => {
 };
 
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-const extractAttachmentsMetadata = (message: ChatMessageWithStatus): { files?: AttachmentMetadata[] } => {
-  let files: AttachmentMetadata[] = [];
+const extractAttachmentsMetadata = (message: ChatMessageWithStatus): { attachments?: AttachmentMetadata[] } => {
+  let attachments: AttachmentMetadata[] = [];
   if (message.metadata) {
-    files = files.concat(extractAttachedFilesMetadata(message.metadata));
+    attachments = attachments.concat(extractAttachmentMetadata(message.metadata));
   }
   if (message.content?.attachments) {
     const teamsAttachments = extractTeamsAttachmentsMetadata(message.content?.attachments);
-    files = files.concat(teamsAttachments.files);
+    attachments = attachments.concat(teamsAttachments.attachments);
   }
-  return { files: files.length > 0 ? files : undefined };
+  return { attachments: attachments.length > 0 ? attachments : undefined };
 };
 const convertToUiChatMessage = (
   message: ChatMessageWithStatus,
@@ -218,7 +217,7 @@ const convertToUiChatMessage = (
 ): ChatMessage => {
   const messageSenderId = message.sender !== undefined ? toFlatCommunicationIdentifier(message.sender) : userId;
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  const { files } = extractAttachmentsMetadata(message);
+  const { attachments } = extractAttachmentsMetadata(message);
   return {
     messageType: 'chat',
     createdOn: message.createdOn,
@@ -234,7 +233,7 @@ const convertToUiChatMessage = (
     mine: messageSenderId === userId,
     metadata: message.metadata,
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    files
+    attachments
   };
 };
 const convertToUiSystemMessage = (message: ChatMessageWithStatus): SystemMessage => {

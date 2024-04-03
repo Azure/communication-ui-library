@@ -231,6 +231,12 @@ const getJoinParams = (locator: CallAdapterLocator): string => {
   if ('meetingLink' in locator) {
     return '?teamsLink=' + encodeURIComponent(locator.meetingLink);
   }
+  /* @conditional-compile-remove(meeting-id) */
+  if ('meetingId' in locator) {
+    return (
+      '?meetingId=' + encodeURIComponent(locator.meetingId) + (locator.passcode ? '&passcode=' + locator.passcode : '')
+    );
+  }
   if ('roomId' in locator) {
     return '?roomId=' + encodeURIComponent(locator.roomId);
   }

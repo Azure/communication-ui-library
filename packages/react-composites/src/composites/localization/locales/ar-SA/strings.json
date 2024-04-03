@@ -328,7 +328,7 @@
   },
   "chat": {
     "chatListHeader": "في هذه الدردشة",
-    "uploadFile": "تحميل ملف"
+    "uploadAttachment": "تحميل ملف"
   },
   "callWithChat": {
     "chatButtonLabel": "دردشة",

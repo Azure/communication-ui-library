@@ -3,8 +3,15 @@
 import React, { useCallback, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
 import { ContentEdit, Watermark } from 'roosterjs-editor-plugins';
 import { Editor } from 'roosterjs-editor-core';
-import type { EditorOptions, IEditor } from 'roosterjs-editor-types-compatible';
-import { Rooster, createUpdateContentPlugin, UpdateMode, createRibbonPlugin, Ribbon } from 'roosterjs-react';
+import type { DefaultFormat, EditorOptions, IEditor } from 'roosterjs-editor-types-compatible';
+import {
+  Rooster,
+  createUpdateContentPlugin,
+  UpdateMode,
+  createRibbonPlugin,
+  Ribbon,
+  createContextMenuPlugin
+} from 'roosterjs-react';
 import {
   ribbonButtonStyle,
   ribbonOverflowButtonStyle,
@@ -13,9 +20,11 @@ import {
   richTextEditorStyle
 } from '../styles/RichTextEditor.styles';
 import { useTheme } from '../../theming';
-import { ribbonButtons, ribbonButtonsStrings } from './RichTextRibbonButtons';
+import { ribbonButtons } from './Buttons/RichTextRibbonButtons';
 import { RichTextSendBoxStrings } from './RichTextSendBox';
 import { isDarkThemed } from '../../theming/themeUtils';
+import { ribbonButtonsStrings } from '../utils/RichTextEditorStringsUtils';
+import { createTableEditMenuProvider } from './Buttons/Table/RichTextTableContextMenu';
 
 /**
  * Props for {@link RichTextEditor}.
@@ -84,16 +93,16 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     return createRibbonPlugin();
   }, []);
 
-  const editorCreator = useCallback((div: HTMLDivElement, options: EditorOptions) => {
-    editor.current = new Editor(div, options);
-    // Remove default values for background color and color
-    // setBackgroundColor and setTextColor can't be used here as they cause the editor to be focused
-    // color will be set in richTextEditorWrapperStyle instead of inline styles
-    div.style.backgroundColor = '';
-    div.style.color = '';
-
-    return editor.current;
-  }, []);
+  const editorCreator = useCallback(
+    (div: HTMLDivElement, options: EditorOptions) => {
+      editor.current = new Editor(div, options);
+      return editor.current;
+    },
+    // trigger force editor reset when strings are changed to update context menu strings
+    // see RosterJS documentation for 'editorCreator' for more details
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [strings]
+  );
 
   const placeholderPlugin = React.useMemo(() => {
     return new Watermark('');
@@ -106,6 +115,9 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   }, [placeholderPlugin, placeholderText]);
 
   const plugins = useMemo(() => {
+    // contextPlugin and tableEditMenuProvider allow to show insert/delete menu for the table
+    const contextPlugin = createContextMenuPlugin();
+    const tableEditMenuProvider = createTableEditMenuProvider(strings);
     const contentEdit = new ContentEdit();
     const updateContentPlugin = createUpdateContentPlugin(
       UpdateMode.OnContentChangedEvent | UpdateMode.OnUserInput,
@@ -113,8 +125,8 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
         onChange && onChange(content);
       }
     );
-    return [contentEdit, placeholderPlugin, updateContentPlugin, ribbonPlugin];
-  }, [onChange, placeholderPlugin, ribbonPlugin]);
+    return [contentEdit, placeholderPlugin, updateContentPlugin, ribbonPlugin, contextPlugin, tableEditMenuProvider];
+  }, [onChange, placeholderPlugin, ribbonPlugin, strings]);
 
   const ribbon = useMemo(() => {
     const buttons = ribbonButtons(theme);
@@ -138,11 +150,21 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     );
   }, [strings, ribbonPlugin, theme]);
 
+  const defaultFormat: DefaultFormat = useMemo(() => {
+    // without setting any styles, text input is not handled properly for tables (when insert or paste one in the editor)
+    // because of https://github.com/microsoft/roosterjs/blob/14dbb947e3ae94580109cbd05e48ceb05327c4dc/packages/roosterjs-editor-core/lib/corePlugins/TypeInContainerPlugin.ts#L75
+    // this issue is fixed for content model package
+    return {
+      backgroundColor: 'transparent'
+    };
+  }, []);
+
   return (
     <div data-testid={'rich-text-editor-wrapper'}>
       {showRichTextEditorFormatting && ribbon}
       <div className={richTextEditorWrapperStyle(theme, !showRichTextEditorFormatting)}>
         <Rooster
+          defaultFormat={defaultFormat}
           initialContent={initialContent}
           inDarkMode={isDarkThemed(theme)}
           plugins={plugins}

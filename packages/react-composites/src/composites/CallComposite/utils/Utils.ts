@@ -23,6 +23,8 @@ const ACCESS_DENIED_TEAMS_MEETING_SUB_CODE = 5854;
 const REMOTE_PSTN_USER_HUNG_UP = 560000;
 const REMOVED_FROM_CALL_SUB_CODES = [5000, 5300, REMOTE_PSTN_USER_HUNG_UP];
 const CALL_REJECTED_CODE = 603;
+/* @conditional-compile-remove(meeting-id) */
+const INVALID_MEETING_IDENTIFIER = 5751;
 /** @private */
 export const ROOM_NOT_FOUND_SUB_CODE = 5732;
 /** @private */
@@ -223,6 +225,16 @@ export const getEndedCallPageProps = (
       if (locale.strings.call.participantIdIsMalformedTitle) {
         title = locale.strings.call.participantIdIsMalformedTitle;
         moreDetails = locale.strings.call.participantIdIsMalformedMoreDetails;
+        disableStartCallButton = true;
+      }
+      break;
+  }
+  /* @conditional-compile-remove(meeting-id) */
+  switch (endedCall?.callEndReason?.subCode) {
+    case INVALID_MEETING_IDENTIFIER:
+      if (locale.strings.call.callRejectedTitle) {
+        title = locale.strings.call.callRejectedTitle;
+        moreDetails = locale.strings.call.invalidMeetingIdentifier;
         disableStartCallButton = true;
       }
       break;

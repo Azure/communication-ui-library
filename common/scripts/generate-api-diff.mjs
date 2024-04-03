@@ -100,19 +100,20 @@ async function cleanup() {
  */
 async function generateApiJsons() {
   const { feature } = parseArgs(process.argv);
-  const { features, inProgressFeatures, stabilizedFeatures } = featureDefinitions;
+  const { alpha, beta, stable } = featureDefinitions;
 
-  if (stabilizedFeatures.includes(feature)) {
+  if (stable.includes(feature)) {
     console.error(`ERROR: Feature ${feature} is already stabilized. Please use a beta feature.`);
     exit(-1);
   }
 
-  if (!features.includes(feature)) {
-    console.error(`ERROR: Could not find beta feature "${feature}" in features.js file.`);
+  const allFeatures = [...alpha, ...beta, ...stable];
+  if (!allFeatures.includes(feature)) {
+    console.error(`ERROR: Could not find feature "${feature}" in features.js file.`);
     exit(-1);
   }
 
-  const isAlphaFeature = inProgressFeatures.includes(feature);
+  const isAlphaFeature = alpha.includes(feature);
 
   if (isAlphaFeature) {
     await exec('rush switch-flavor:beta-release');
