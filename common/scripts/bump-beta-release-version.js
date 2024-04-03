@@ -8,7 +8,7 @@ const bumpType = process.argv[2];
 const main = () => {
   const packagePaths = findAllPackageJSON(PACKAGES_DIR);
   const depNames = getAllNames(packagePaths);
-  if (!['major', 'minor', 'patch', 'beta', 'stable'].includes(bumpType)) {
+  if (!['major', 'minor', 'patch', 'beta', 'beta-next'].includes(bumpType)) {
     throw '\nplease add either major/minor/patch/beta as a parameter!\n\n  Syntax:\n  node bump-beta-release-version.js minor\n'
   }
   updateAllVersions(bumpBetaVersion);
@@ -31,7 +31,7 @@ const bumpBetaVersion = (currentVersion) => {
     }
     const newBeta = Number.parseInt(betaVersion) + 1;
     return `${major}.${minor}.${patch}-beta.${newBeta}`
-  } else if (bumpType === 'stable') {
+  } else if (bumpType === 'beta-next') {
     // if bumpType is stable we want to reset the beta version
     const newMinor = Number.parseInt(minor) + 1;
     // patch version goes to 0 since we are bumping the next beta version's minor and we want to
