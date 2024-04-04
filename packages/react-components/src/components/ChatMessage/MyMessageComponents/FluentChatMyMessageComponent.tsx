@@ -42,22 +42,24 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
     inlineImageOptions,
     /* @conditional-compile-remove(mention) */
     mentionOptions,
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    fileDownloadHandler,
     userId,
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    onRenderFileDownloads,
     defaultStatusRenderer,
-    statusToRender
+    statusToRender,
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+    actionsForAttachment,
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+    onRenderAttachmentDownloads,
+    /* @conditional-compile-remove(rich-text-editor) */
+    richTextEditor
   } = props;
   const chatMessageRenderStyles = useChatMessageRenderStyles();
-
-  const onRenderFileDownloadsMemo = useMemo(() => {
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  const onRenderAttachmentDownloadsMemo = useMemo(() => {
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    return onRenderFileDownloads;
+    return onRenderAttachmentDownloads;
     return undefined;
   }, [
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ onRenderFileDownloads
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ onRenderAttachmentDownloads
   ]);
 
   // To rerender the defaultChatMessageRenderer if app running across days(every new day chat time stamp
@@ -72,7 +74,7 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
           <ChatMyMessageComponent
             {...messageProps}
             /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-            onRenderFileDownloads={onRenderFileDownloadsMemo}
+            onRenderAttachmentDownloads={onRenderAttachmentDownloadsMemo}
             /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
             strings={messageProps.strings}
             message={messageProps.message}
@@ -89,7 +91,9 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
             /* @conditional-compile-remove(mention) */
             mentionOptions={mentionOptions}
             /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-            fileDownloadHandler={fileDownloadHandler}
+            actionsForAttachment={actionsForAttachment}
+            /* @conditional-compile-remove(rich-text-editor) */
+            richTextEditor={richTextEditor}
           />
         );
       }
@@ -98,7 +102,6 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
     [
       onActionButtonClick,
       onRenderAvatar,
-      onRenderFileDownloadsMemo,
       participantCount,
       shouldOverlapAvatarAndMessage,
       showMessageStatus,
@@ -109,9 +112,13 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
       /* @conditional-compile-remove(mention) */
       mentionOptions,
       /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-      fileDownloadHandler,
+      onRenderAttachmentDownloadsMemo,
+      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+      actionsForAttachment,
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      new Date().toDateString()
+      new Date().toDateString(),
+      /* @conditional-compile-remove(rich-text-editor) */
+      richTextEditor
     ]
   );
 

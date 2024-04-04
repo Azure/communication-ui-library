@@ -14,7 +14,7 @@ import { MessageThreadStrings } from '../MessageThread';
 import { MentionDisplayOptions } from '../MentionPopover';
 import { _AttachmentDownloadCards } from '../AttachmentDownloadCards';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { FileDownloadHandler } from '../../types/Attachment';
+import { AttachmentMenuAction, AttachmentMetadata } from '../../types/Attachment';
 import { formatTimeForChatMessage, formatTimestampForChatMessage } from './Datetime';
 import { ComponentLocale } from '../../localization/LocalizationProvider';
 import { chatMessageEditedTagStyle } from '../styles/ChatMessageComponent.styles';
@@ -39,12 +39,18 @@ export function getMessageBubbleContent(
   strings: MessageThreadStrings,
   userId: string,
   inlineImageOptions: InlineImageOptions | undefined,
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element,
   /* @conditional-compile-remove(mention) */
   mentionDisplayOptions?: MentionDisplayOptions,
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  fileDownloadHandler?: FileDownloadHandler
+  /**
+   * Optional callback to render message attachments in the message component.
+   */
+  onRenderAttachmentDownloads?: (userId: string, message: ChatMessage) => JSX.Element,
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /**
+   * Optional callback to define custom actions for attachments.
+   */
+  actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[]
 ): JSX.Element {
   /* @conditional-compile-remove(data-loss-prevention) */
   if (message.messageType === 'blocked') {
@@ -64,13 +70,13 @@ export function getMessageBubbleContent(
         inlineImageOptions={inlineImageOptions}
       />
       {
-        /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ onRenderFileDownloads
-          ? onRenderFileDownloads(userId, message)
-          : defaultOnRenderFileDownloads(
-              userId,
+        /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ onRenderAttachmentDownloads
+          ? onRenderAttachmentDownloads(userId, message)
+          : defaultOnRenderAttachmentDownloads(
               message,
               strings,
-              /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ fileDownloadHandler
+              /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+              actionsForAttachment
             )
       }
     </div>
@@ -78,30 +84,31 @@ export function getMessageBubbleContent(
 }
 
 /**
- * Default component for rendering file downloads.
+ * Default component for rendering attachment downloads.
  */
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-const defaultOnRenderFileDownloads = (
-  userId: string,
+const defaultOnRenderAttachmentDownloads = (
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage,
   strings: MessageThreadStrings,
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  fileDownloadHandler?: FileDownloadHandler
+  actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[]
 ): JSX.Element | undefined => {
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  return (
+  return ((message as ChatMessage).attachments?.length ?? 0) > 0 ? (
     <_AttachmentDownloadCards
-      userId={userId}
+      message={message as ChatMessage}
       /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-      fileMetadata={(message as ChatMessage).files || []}
+      attachments={(message as ChatMessage).attachments}
       /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-      downloadHandler={fileDownloadHandler}
+      actionsForAttachment={actionsForAttachment}
       /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
       strings={{
         downloadAttachment: strings.downloadAttachment,
+        openAttachment: strings.openAttachment,
         attachmentCardGroupMessage: strings.attachmentCardGroupMessage
       }}
     />
+  ) : (
+    <></>
   );
   return undefined;
 };

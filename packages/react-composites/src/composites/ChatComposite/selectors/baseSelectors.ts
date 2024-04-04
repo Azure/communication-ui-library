@@ -3,7 +3,7 @@
 
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { ChatAdapterState } from '../adapter/ChatAdapter';
-import { FileUploadsUiState } from '../adapter/AzureCommunicationFileUploadAdapter';
+import { AttachmentUploadsUiState } from '../adapter/AzureCommunicationAttachmentUploadAdapter';
 
 /**
  * @private
@@ -13,8 +13,8 @@ export const getUserId = (state: ChatAdapterState): CommunicationIdentifierKind 
 /**
  * @private
  */
-export const getFileUploads = (state: ChatAdapterState): FileUploadsUiState | undefined => {
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  return state?.fileUploads;
+export const getAttachmentUploads = (state: ChatAdapterState): AttachmentUploadsUiState | undefined => {
+  /* @conditional-compile-remove(attachment-upload) */
+  return state?.attachmentUploads;
   return undefined;
 };

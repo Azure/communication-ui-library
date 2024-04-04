@@ -43,7 +43,7 @@ import { CaptionsSettingsModal } from '../CaptionsSettingsModal';
 import { RaiseHand } from '../../CallComposite/components/buttons/RaiseHand';
 /* @conditional-compile-remove(reaction) */
 import { Reaction } from '../../CallComposite/components/buttons/Reaction';
-/* @conditional-compile-remove(reaction) */
+/* @conditional-compile-remove(reaction) */ /* @conditional-compile-remove(end-call-options) */
 import { useSelector } from '../../CallComposite/hooks/useSelector';
 /* @conditional-compile-remove(reaction) */
 import { capabilitySelector } from '../../CallComposite/selectors/capabilitySelector';
@@ -52,6 +52,13 @@ import { DtmfDialpadButton } from './DtmfDialerButton';
 import { ExitSpotlightButton } from '../ExitSpotlightButton';
 /* @conditional-compile-remove(spotlight) */
 import { useLocale } from '../../localization';
+/* @conditional-compile-remove(end-call-options) */
+import { isBoolean } from '../utils';
+/* @conditional-compile-remove(end-call-options) */
+import { getIsTeamsCall } from '../../CallComposite/selectors/baseSelectors';
+/* @conditional-compile-remove(reaction) */
+import { callStatusSelector } from '../../CallComposite/selectors/callStatusSelector';
+
 /**
  * @private
  */
@@ -130,6 +137,13 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
 
   /* @conditional-compile-remove(close-captions) */
   const [showCaptionsSettingsModal, setShowCaptionsSettingsModal] = useState(false);
+
+  /* @conditional-compile-remove(end-call-options) */
+  // If the hangup capability is not present, we default to true
+  const isHangUpForEveryoneAllowed =
+    useSelector((state) => state.call?.capabilitiesFeature?.capabilities.hangUpForEveryOne.isPresent) ?? true;
+  /* @conditional-compile-remove(end-call-options) */
+  const isTeams = useSelector(getIsTeamsCall);
 
   const handleResize = useCallback((): void => {
     setControlBarButtonsWidth(controlBarContainerRef.current ? controlBarContainerRef.current.offsetWidth : 0);
@@ -245,8 +259,12 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   /* @conditional-compile-remove(reaction) */
   const capabilitiesSelector = useSelector(capabilitySelector);
   /* @conditional-compile-remove(reaction) */
+  const callState = useSelector(callStatusSelector);
+  /* @conditional-compile-remove(reaction) */
   const isReactionAllowed =
-    !capabilitiesSelector?.capabilities || capabilitiesSelector.capabilities.useReactions.isPresent;
+    callState.callStatus !== 'Connected' ||
+    !capabilitiesSelector?.capabilities ||
+    capabilitiesSelector.capabilities.useReactions.isPresent;
 
   // when options is false then we want to hide the whole control bar.
   if (options === false) {
@@ -266,7 +284,8 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   const showExitSpotlightButton = options?.exitSpotlightButton !== false;
 
   const showCaptionsButton =
-    props.isCaptionsSupported && /* @conditional-compile-remove(acs-close-captions) */ isEnabled(options.captions);
+    props.isCaptionsSupported &&
+    /* @conditional-compile-remove(acs-close-captions) */ isEnabled(options.captionsButton);
 
   const showDesktopMoreButton =
     /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */ isEnabled(
@@ -446,7 +465,20 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         onSetDialpadPage={props.onSetDialpadPage}
                       />
                     )}
-                    <EndCall displayType="compact" styles={endCallButtonStyles} />
+                    <EndCall
+                      displayType="compact"
+                      mobileView={props.mobileView}
+                      styles={endCallButtonStyles}
+                      /* @conditional-compile-remove(end-call-options) */
+                      enableEndCallMenu={
+                        !isBoolean(props.callControls) &&
+                        !isBoolean(props.callControls?.endCallButton) &&
+                        !props.mobileView &&
+                        isHangUpForEveryoneAllowed &&
+                        !isTeams && // Temporary disable it for Teams call, since capability does not give the right value
+                        props.callControls?.endCallButton?.hangUpForEveryone === 'endCallOptions'
+                      }
+                    />
                   </ControlBar>
                 </div>
               </Stack.Item>

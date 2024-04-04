@@ -9,8 +9,6 @@ export {
 export type { AzureCommunicationChatAdapterArgs } from './adapter/AzureCommunicationChatAdapter';
 export { ChatComposite } from './ChatComposite';
 export type { ChatCompositeProps, ChatCompositeOptions } from './ChatComposite';
-/* @conditional-compile-remove(rich-text-editor) */
-export type { RichTextEditorOptions } from './ChatComposite';
 
 export type {
   ChatAdapter,
@@ -34,8 +32,16 @@ export type { ResourceDetails } from './adapter/ChatAdapter';
 export * from './Strings';
 
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-export type { FileUploadHandler, FileUploadManager, FileUploadState, FileUploadError } from './file-sharing';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-export type { FileSharingOptions } from './ChatScreen';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-export type { FileUploadsUiState, FileUploadAdapter } from './adapter/AzureCommunicationFileUploadAdapter';
+export type { AttachmentOptions, AttachmentMetadata, AttachmentDownloadOptions } from './file-sharing';
+/* @conditional-compile-remove(attachment-upload) */
+export type {
+  AttachmentUploadStatus,
+  AttachmentUploadOptions,
+  AttachmentUploadHandler,
+  AttachmentUploadManager
+} from './file-sharing';
+/* @conditional-compile-remove(attachment-upload) */
+export type {
+  AttachmentUploadsUiState,
+  AttachmentUploadAdapter
+} from './adapter/AzureCommunicationAttachmentUploadAdapter';

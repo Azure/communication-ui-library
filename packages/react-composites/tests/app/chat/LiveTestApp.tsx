@@ -4,12 +4,13 @@
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { Stack } from '@fluentui/react';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { _IdentifierProvider, FileDownloadError, FileDownloadHandler, MessageProps } from '@internal/react-components';
+import { _IdentifierProvider, defaultAttachmentMenuAction, MessageProps } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { ChatComposite, COMPOSITE_LOCALE_FR_FR, useAzureCommunicationChatAdapter } from '../../../src';
 // eslint-disable-next-line no-restricted-imports
 import { IDS } from '../../browser/common/constants';
 import { verifyParamExists } from '../lib/utils';
+import { AttachmentMenuAction } from '@internal/react-components';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const params = Object.fromEntries(urlSearchParams.entries());
@@ -29,8 +30,11 @@ export const LiveTestApp = (): JSX.Element => {
   const useFrLocale = Boolean(params.useFrLocale);
   const customDataModel = params.customDataModel;
   const useFileSharing = Boolean(params.useFileSharing);
-  const failFileDownload = Boolean(params.failDownload);
-  const uploadedFiles = React.useMemo(() => (params.uploadedFiles ? JSON.parse(params.uploadedFiles) : []), []);
+  const failAttachmentDownload = Boolean(params.failDownload);
+  const uploadAttachments = React.useMemo(
+    () => (params.uploadAttachments ? JSON.parse(params.uploadAttachments) : []),
+    []
+  );
   const showParticipantPane = params.showParticipantPane === 'true' ? true : false;
 
   const args = useMemo(
@@ -55,38 +59,43 @@ export const LiveTestApp = (): JSX.Element => {
   });
 
   React.useEffect(() => {
-    if (adapter && uploadedFiles.length) {
+    if (adapter && uploadAttachments.length) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      uploadedFiles.forEach((file: any) => {
-        if (file.uploadComplete) {
-          const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
-          fileUploads[0].notifyUploadCompleted({
-            name: file.name,
-            extension: file.extension,
-            url: file.url,
+      uploadAttachments.forEach((attachment: any) => {
+        if (attachment.uploadComplete) {
+          const attachmentUploads = adapter.registerActiveUploads([new File([], attachment.name)]);
+          attachmentUploads[0].notifyCompleted({
+            name: attachment.name,
+            extension: attachment.extension,
+            url: attachment.url,
+            progress: 1,
             id: ''
           });
-        } else if (file.error) {
-          const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
-          fileUploads[0].notifyUploadFailed(file.error);
-        } else if (file.progress) {
-          const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
-          fileUploads[0].notifyUploadProgressChanged(file.progress);
+        } else if (attachment.error) {
+          const attachmentUploads = adapter.registerActiveUploads([new File([], attachment.name)]);
+          attachmentUploads[0].notifyFailed(attachment.error);
+        } else if (attachment.progress) {
+          const attachmentUploads = adapter.registerActiveUploads([new File([], attachment.name)]);
+          attachmentUploads[0].notifyProgressChanged(attachment.progress);
         } else {
-          adapter.registerCompletedFileUploads([file]);
+          adapter.registerCompletedUploads([attachment]);
         }
       });
     }
-  }, [adapter, uploadedFiles]);
+  }, [adapter, uploadAttachments]);
 
-  const fileDownloadHandler: FileDownloadHandler = (userId, fileData): Promise<URL | FileDownloadError> => {
-    return new Promise((resolve) => {
-      if (failFileDownload) {
-        resolve({ errorMessage: 'You don’t have permission to download this file.' });
-      } else {
-        resolve(new URL(fileData.url));
-      }
-    });
+  const actionsForAttachment = (): AttachmentMenuAction[] => {
+    if (failAttachmentDownload) {
+      return [
+        {
+          ...defaultAttachmentMenuAction,
+          onClick: () => {
+            throw Error('You don’t have permission to download this attachment.');
+          }
+        }
+      ];
+    }
+    return [defaultAttachmentMenuAction];
   };
 
   return (
@@ -135,13 +144,16 @@ export const LiveTestApp = (): JSX.Element => {
             locale={useFrLocale ? COMPOSITE_LOCALE_FR_FR : undefined}
             options={{
               participantPane: showParticipantPane,
-              fileSharing: useFileSharing
+              attachmentOptions: useFileSharing
                 ? {
-                    downloadHandler: fileDownloadHandler,
-                    uploadHandler: () => {
-                      //noop
+                    downloadOptions: {
+                      actionsForAttachment: actionsForAttachment
                     },
-                    multiple: true
+                    uploadOptions: {
+                      handler: () => {
+                        // noop
+                      }
+                    }
                   }
                 : undefined
             }}

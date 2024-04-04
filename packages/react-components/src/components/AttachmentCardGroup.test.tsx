@@ -6,6 +6,7 @@ import { _AttachmentCard, _AttachmentCardProps } from './AttachmentCard';
 import { _AttachmentCardGroup, _AttachmentCardGroupProps } from './AttachmentCardGroup';
 import { render, screen } from '@testing-library/react';
 import { registerIcons } from '@fluentui/react';
+import { defaultAttachmentMenuAction } from './AttachmentDownloadCards';
 
 describe('AttachmentCardGroup should be rendered properly', () => {
   beforeEach(() => {
@@ -38,8 +39,14 @@ describe('AttachmentCardGroup should be rendered properly', () => {
     const props = {
       children: (
         <>
-          <_AttachmentCard attachmentName={'MockAttachmentCard'} attachmentExtension={'docx'} />
-          <_AttachmentCard attachmentName={'MockSecondAttachmentCard'} attachmentExtension={'docx'} />
+          <_AttachmentCard
+            attachment={{ id: '1', name: 'MockAttachmentCard', extension: 'docx' }}
+            menuActions={[defaultAttachmentMenuAction]}
+          />
+          <_AttachmentCard
+            attachment={{ id: '2', name: 'MockSecondAttachmentCard', extension: 'docx' }}
+            menuActions={[defaultAttachmentMenuAction]}
+          />
         </>
       ),
       ariaLabel: 'MockAttachmentCardGroup'
