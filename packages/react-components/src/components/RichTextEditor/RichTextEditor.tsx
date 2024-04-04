@@ -42,7 +42,10 @@ export interface RichTextEditorStyleProps {
  * @private
  */
 export interface RichTextEditorProps {
+  // the initial content of editor that is set when editor is created (e.g. when editing a message)
   initialContent?: string;
+  // the current content of the editor
+  content?: string;
   onChange: (newValue?: string) => void;
   onKeyDown?: (ev: React.KeyboardEvent<HTMLElement>) => void;
   placeholderText?: string;
@@ -67,8 +70,9 @@ export interface RichTextEditorComponentRef {
  * @beta
  */
 export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichTextEditorProps>((props, ref) => {
-  const { initialContent, onChange, placeholderText, strings, showRichTextEditorFormatting } = props;
+  const { initialContent, onChange, placeholderText, strings, showRichTextEditorFormatting, content } = props;
   const editor = useRef<IEditor | null>(null);
+  const contentValue = useRef<string | undefined>(content);
   const theme = useTheme();
   useImperativeHandle(
     ref,
@@ -95,8 +99,21 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
 
   const editorCreator = useCallback(
     (div: HTMLDivElement, options: EditorOptions) => {
-      editor.current = new Editor(div, options);
-      return editor.current;
+      const editorValue = new Editor(div, options);
+      // changing layout in rich text send box cause the editor to be recreated
+      // to keep the content, we need to set messageContent to the current content
+      // also, in case if initialContent is not empty, RoosterJS doesn't set caret position to the end.
+      // this is to fix this issue. Content model package has a correct behavior and this fix can be deleted
+      // the editorCreator callback shouldn't be updated when the initialContent is changed
+      const isEmptyInitialContent = isEmpty(initialContent);
+      if (!isEmpty(contentValue.current) || !isEmptyInitialContent) {
+        // focus the editor to set correct selection position
+        editorValue.focus();
+        // set initial content
+        editorValue.setContent(isEmptyInitialContent ? contentValue.current : initialContent);
+      }
+      editor.current = editorValue;
+      return editorValue;
     },
     // trigger force editor reset when strings are changed to update context menu strings
     // see RosterJS documentation for 'editorCreator' for more details
@@ -165,7 +182,6 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
       <div className={richTextEditorWrapperStyle(theme, !showRichTextEditorFormatting)}>
         <Rooster
           defaultFormat={defaultFormat}
-          initialContent={initialContent}
           inDarkMode={isDarkThemed(theme)}
           plugins={plugins}
           className={richTextEditorStyle(props.styles)}
@@ -182,3 +198,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     </div>
   );
 });
+
+const isEmpty = (value?: string): boolean => {
+  return value === undefined || value.length === 0;
+};

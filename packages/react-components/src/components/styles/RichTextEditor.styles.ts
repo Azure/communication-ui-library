@@ -35,8 +35,7 @@ export const richTextEditorWrapperStyle = (theme: Theme, addTopOffset: boolean):
       borderCollapse: 'collapse',
       width: '100%',
       borderSpacing: '0',
-      // don't shrink/expand cells during the input to the table
-      tableLayout: 'fixed',
+      tableLayout: 'auto',
 
       '& tr': {
         background: 'transparent',
