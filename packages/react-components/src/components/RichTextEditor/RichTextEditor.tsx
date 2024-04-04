@@ -100,23 +100,22 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   const editorCreator = useCallback(
     (div: HTMLDivElement, options: EditorOptions) => {
       const editorValue = new Editor(div, options);
-      // changing layout in rich text send box cause the editor to be recreated
-      // to keep the content, we need to set messageContent to the current content
-      // also, in case if initialContent is not empty, RoosterJS doesn't set caret position to the end.
-      // this is to fix this issue. Content model package has a correct behavior and this fix can be deleted
-      // the editorCreator callback shouldn't be updated when the initialContent is changed
-      const isInitialContentEmpty = isEmpty(initialContent);
-      if (!isEmpty(contentValue.current) || !isInitialContentEmpty) {
-        // focus the editor to set correct selection position
-        editorValue.focus();
-        // set initial content
-        editorValue.setContent(isInitialContentEmpty ? contentValue.current : initialContent);
+      // this is to fix issue when editor is created or re-rendered and has existing text
+      // Content model package has a correct behavior and this fix can be deleted
+      if (contentValue.current !== undefined && contentValue.current.length > 0) {
+        // in case if initialContent is not empty, RoosterJS doesn't set caret position to the end.
+        focusAndUpdateContent(editorValue, contentValue.current);
+      } else if (initialContent !== undefined && initialContent.length > 0) {
+        // changing layout in rich text send box cause the editor to be recreated
+        // to keep the content, we need to set messageContent to the current content
+        focusAndUpdateContent(editorValue, initialContent);
       }
       editor.current = editorValue;
       return editorValue;
     },
     // trigger force editor reset when strings are changed to update context menu strings
     // see RosterJS documentation for 'editorCreator' for more details
+    // the editorCreator callback shouldn't be updated when the initialContent is changed
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [strings]
   );
@@ -199,6 +198,9 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   );
 });
 
-const isEmpty = (value?: string): boolean => {
-  return value === undefined || value.length === 0;
+const focusAndUpdateContent = (editor: Editor, content: string): void => {
+  // focus the editor to set correct selection position
+  editor.focus();
+  // set initial content
+  editor.setContent(content);
 };
