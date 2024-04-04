@@ -22,9 +22,10 @@ function createFeatureSet(features, inProgressFeatures) {
 
 
 exports.default = babelHelper.declare((_api, opts) => {
-  const { features, stabilizedFeatures, betaReleaseMode, inProgressFeatures } = opts;
-  const featureSet = createFeatureSet(features, betaReleaseMode ? inProgressFeatures : undefined);
-  const stabilizedFeatureSet = createFeatureSet(stabilizedFeatures);
+  const { betaReleaseMode, stable, beta, alpha } = opts;
+  const features = [...alpha, ...beta, ...stable];
+  const featureSet = createFeatureSet(features, betaReleaseMode ? alpha : undefined);
+  const stabilizedFeatureSet = createFeatureSet(stable);
 
   return {
     name: 'babel-conditional-preprocess',

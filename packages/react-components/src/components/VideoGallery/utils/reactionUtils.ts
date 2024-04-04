@@ -10,6 +10,9 @@ export const REACTION_NUMBER_OF_ANIMATION_FRAMES = 51;
 /* @conditional-compile-remove(reaction) */
 /** @private */
 export const REACTION_SCREEN_SHARE_ANIMATION_TIME_MS = 4133;
+/* @conditional-compile-remove(reaction) */
+/** @private */
+export const REACTION_DEFAULT_RESOURCE_FRAME_SIZE_PX = 128;
 
 /* @conditional-compile-remove(reaction) */
 /** @private */

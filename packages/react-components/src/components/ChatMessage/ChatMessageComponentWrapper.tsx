@@ -63,6 +63,8 @@ export type ChatMessageComponentWrapperProps = _ChatMessageProps & {
    * Optional callback to define custom actions for attachments.
    */
   actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
+  /* @conditional-compile-remove(rich-text-editor) */
+  richTextEditor?: boolean;
 };
 
 /**

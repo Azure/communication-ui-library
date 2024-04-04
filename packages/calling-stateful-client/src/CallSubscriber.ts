@@ -28,7 +28,7 @@ import { TranscriptionSubscriber } from './TranscriptionSubscriber';
 import { UserFacingDiagnosticsSubscriber } from './UserFacingDiagnosticsSubscriber';
 import { RaiseHandSubscriber } from './RaiseHandSubscriber';
 import { OptimalVideoCountSubscriber } from './OptimalVideoCountSubscriber';
-/* @conditional-compile-remove(capabilities) */
+
 import { CapabilitiesSubscriber } from './CapabilitiesSubscriber';
 /* @conditional-compile-remove(reaction) */
 import { ReactionSubscriber } from './ReactionSubscriber';
@@ -68,7 +68,7 @@ export class CallSubscriber {
   private _reactionSubscriber?: ReactionSubscriber;
 
   private _localVideoStreamVideoEffectsSubscribers: Map<string, LocalVideoStreamVideoEffectsSubscriber>;
-  /* @conditional-compile-remove(capabilities) */
+
   private _capabilitiesSubscriber: CapabilitiesSubscriber;
   /* @conditional-compile-remove(spotlight) */
   private _spotlightSubscriber: SpotlightSubscriber;
@@ -116,7 +116,6 @@ export class CallSubscriber {
 
     this._localVideoStreamVideoEffectsSubscribers = new Map();
 
-    /* @conditional-compile-remove(capabilities) */
     this._capabilitiesSubscriber = new CapabilitiesSubscriber(
       this._callIdRef,
       this._context,
@@ -219,7 +218,7 @@ export class CallSubscriber {
     /* @conditional-compile-remove(acs-close-captions) */
     this._CaptionsSubscriber?.unsubscribe();
     this._raiseHandSubscriber?.unsubscribe();
-    /* @conditional-compile-remove(capabilities) */
+
     this._capabilitiesSubscriber.unsubscribe();
     /* @conditional-compile-remove(reaction) */
     this._reactionSubscriber?.unsubscribe();

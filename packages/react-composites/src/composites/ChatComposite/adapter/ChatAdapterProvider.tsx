@@ -39,7 +39,7 @@ export const useAdapter = (): ChatAdapter => {
  * @private
  */
 export const useAttachmentUploadAdapter = (): AttachmentUploadAdapter => {
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-upload) */
   return useAdapter();
   // A stub that short-circuits all logic because none of the fields are available.
   return {

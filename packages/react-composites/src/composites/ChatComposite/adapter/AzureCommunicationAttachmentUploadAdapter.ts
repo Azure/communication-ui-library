@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 import { AttachmentUploadManager, AttachmentMetadata } from '@internal/react-components';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-upload) */
 import { produce } from 'immer';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-upload) */
 import { FileSharingMetadata, AttachmentUpload } from '../file-sharing';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-upload) */
 import { ChatContext } from './AzureCommunicationChatAdapter';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-upload) */
 import { ChatAdapterState } from './ChatAdapter';
 
 /**
@@ -30,7 +30,7 @@ export interface AttachmentUploadAdapter {
   updateUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
 }
 
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-upload) */
 /**
  * @internal
  */
@@ -98,7 +98,7 @@ class AttachmentUploadContext {
   }
 }
 
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-upload) */
 /**
  * @internal
  */
@@ -200,7 +200,7 @@ export class AzureCommunicationAttachmentUploadAdapter implements AttachmentUplo
   }
 }
 
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-upload) */
 /**
  * @param attachmentUploadUiState {@link AttachmentUploadsUiState}
  * @private
@@ -229,7 +229,7 @@ export const convertAttachmentUploadsUiStateToMessageMetadata = (
   return undefined;
 };
 
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-upload) */
 /**
  * @private
  */

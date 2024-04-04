@@ -22,7 +22,7 @@ import {
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(spotlight) */
 import { MoreHorizontal20Filled, VideoPersonStarOff20Filled } from '@fluentui/react-icons';
-/* @conditional-compile-remove(capabilities) */
+
 import { MicProhibited20Filled, VideoProhibited20Filled } from '@fluentui/react-icons';
 import { Grid20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -32,7 +32,7 @@ import { DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
 import React from 'react';
 // eslint-disable-next-line no-restricted-imports
 import { FontIcon, IIconProps, Spinner, SpinnerSize } from '@fluentui/react';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-upload) */
 import { Attach20Regular } from '@fluentui/react-icons';
 
 import { VideoBackgroundEffect20Regular, VideoPerson20Filled } from '@fluentui/react-icons';
@@ -64,9 +64,9 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   LocalCameraSwitch: <CameraSwitch24Regular />,
   ControlBarChatButtonActive: <Chat20Filled />,
   ControlBarChatButtonInactive: <Chat20Regular />,
-  /* @conditional-compile-remove(capabilities) */
+
   ControlButtonCameraProhibited: <VideoProhibited20Filled />,
-  /* @conditional-compile-remove(capabilities) */
+
   ControlButtonMicProhibited: <MicProhibited20Filled />,
   /* @conditional-compile-remove(spotlight) */
   ControlButtonExitSpotlight: <VideoPersonStarOff20Filled />,
@@ -87,7 +87,7 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   NoticePageRoomNotValid: <Info20Filled />,
   NoticePageCallRejected: <Info20Filled />,
   NoticePageCallTimeout: <Info20Filled />,
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-upload) */
   SendBoxAttachFile: <Attach20Regular />,
   /* @conditional-compile-remove(PSTN-calls) */
   PeoplePaneAddPerson: <PersonAdd20Regular />,
@@ -146,7 +146,7 @@ export type ChatCompositeIcons = {
   ParticipantItemOptionsHovered?: JSX.Element;
   SendBoxSend?: JSX.Element;
   SendBoxSendHovered?: JSX.Element;
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-upload) */
   SendBoxAttachFile?: JSX.Element;
 };
 
@@ -177,9 +177,9 @@ export type CallCompositeIcons = {
   ControlButtonParticipants?: JSX.Element;
   ControlButtonScreenShareStart?: JSX.Element;
   ControlButtonScreenShareStop?: JSX.Element;
-  /* @conditional-compile-remove(capabilities) */
+
   ControlButtonCameraProhibited?: JSX.Element;
-  /* @conditional-compile-remove(capabilities) */
+
   ControlButtonMicProhibited?: JSX.Element;
   ControlButtonRaiseHand?: JSX.Element;
   ControlButtonLowerHand?: JSX.Element;
@@ -295,9 +295,9 @@ export type CallWithChatCompositeIcons = {
   ControlButtonOptions?: JSX.Element;
   ControlButtonScreenShareStart?: JSX.Element;
   ControlButtonScreenShareStop?: JSX.Element;
-  /* @conditional-compile-remove(capabilities) */
+
   ControlButtonCameraProhibited?: JSX.Element;
-  /* @conditional-compile-remove(capabilities) */
+
   ControlButtonMicProhibited?: JSX.Element;
   ErrorBarCallCameraAccessDenied?: JSX.Element;
   ErrorBarCallCameraAlreadyInUse?: JSX.Element;
