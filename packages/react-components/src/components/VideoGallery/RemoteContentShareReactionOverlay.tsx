@@ -181,11 +181,11 @@ export const RemoteContentShareReactionOverlay = React.memo(
       return canRender;
     };
 
-    const containerHeight = hostDivHeight ?? 0;
-    const containerWidth = hostDivWidth ?? 0;
-
     const styleBucket = (): IReactionStyleBucket => getReactionStyleBucket();
     const displaySizePx = (): number => REACTION_START_DISPLAY_SIZE * styleBucket().sizeScale;
+
+    const containerHeight = hostDivHeight ?? 0;
+    const containerWidth = (hostDivWidth ?? 0) - displaySizePx();
 
     const leftPosition = (position: number): number => generateStartPositionWave(position, containerWidth / 2, true);
     const reactionMovementStyle = (position: number): React.CSSProperties =>
