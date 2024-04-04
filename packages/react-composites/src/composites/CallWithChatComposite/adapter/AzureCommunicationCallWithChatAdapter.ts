@@ -949,17 +949,17 @@ export class TeamsMeetingIdProvider implements ChatThreadProvider {
           this.callAdapter.then((adapter) => {
             adapter.offStateChange(stateChangeListener);
           });
-
           resolve(state.call.info?.threadId);
         }
       };
+
       this.callAdapter.then((adapter) => {
         const callState = adapter.getState().call?.state;
         const threadId = adapter.getState().call?.info?.threadId;
         if (callState === 'Connected' && threadId) {
           resolve(threadId);
         } else {
-          adapter.offStateChange(stateChangeListener);
+          adapter.onStateChange(stateChangeListener);
         }
       });
     });
