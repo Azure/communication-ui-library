@@ -90,16 +90,12 @@ module.exports = {
     // Demo feature. Used in live-documentation of conditional compilation.
     // Do not use in production code.
     "stabilizedDemo",
-    // Feature for capabilities
-    "capabilities",
     // Closed captions
     "close-captions",
     // Feature for the DTMF dialer for Teams voice apps
     "dtmf-dialer",
     // Feature for call transfer
     "call-transfer",
-    // custom branding for the composites
-    "custom-branding",
     // Support Calling SDK isReceiving flag, shows a loading spinner on the video tile when isAvailable is true but isReceiving is false
     "video-stream-is-receiving-flag",
   ]
