@@ -97,7 +97,7 @@ import {
   IsCaptionLanguageChangedListener,
   IsSpokenLanguageChangedListener
 } from '../../CallComposite/adapter/CallAdapter';
-/* @conditional-compile-remove(capabilities) */
+
 import { CapabilitiesChangedListener } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(spotlight) */
 import { SpotlightChangedListener } from '../../CallComposite/adapter/CallAdapter';
@@ -634,7 +634,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
   /* @conditional-compile-remove(close-captions) */
   on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
-  /* @conditional-compile-remove(capabilities) */
+
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   /* @conditional-compile-remove(spotlight) */
   on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
@@ -764,7 +764,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
   /* @conditional-compile-remove(close-captions) */
   off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
-  /* @conditional-compile-remove(capabilities) */
+
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   /* @conditional-compile-remove(spotlight) */
   off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;

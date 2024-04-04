@@ -4,6 +4,7 @@ import { editTable } from 'roosterjs-editor-api';
 import { CompatibleTableOperation, EditorPlugin, IEditor } from 'roosterjs-editor-types-compatible';
 import { ContextMenuItem, createContextMenuProvider, LocalizedStrings } from 'roosterjs-react';
 import { tableContextMenuStrings } from '../../../utils/RichTextEditorStringsUtils';
+import { tableContextMenuIconStyles } from '../../../styles/RichTextEditor.styles';
 
 const onClick = (key: string, editor: IEditor): void => {
   editor.focus();
@@ -32,7 +33,11 @@ const tableEditInsertMenuItem: ContextMenuItem<string> = {
     menuNameTableInsertLeft: 'Insert left123 ',
     menuNameTableInsertRight: 'Insert right'
   },
-  onClick
+  onClick,
+  iconProps: {
+    iconName: 'RichTextTableInsertMenuIcon',
+    styles: { root: tableContextMenuIconStyles }
+  }
 };
 
 const tableEditDeleteMenuItem: ContextMenuItem<string> = {
@@ -43,7 +48,11 @@ const tableEditDeleteMenuItem: ContextMenuItem<string> = {
     menuNameTableDeleteRow: 'Delete row',
     menuNameTableDeleteTable: 'Delete table'
   },
-  onClick
+  onClick,
+  iconProps: {
+    iconName: 'RichTextTableDeleteMenuIcon',
+    styles: { root: tableContextMenuIconStyles }
+  }
 };
 
 const tableActions: ContextMenuItem<string>[] = [tableEditInsertMenuItem, tableEditDeleteMenuItem];

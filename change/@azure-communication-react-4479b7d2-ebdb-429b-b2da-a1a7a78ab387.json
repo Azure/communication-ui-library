@@ -1,0 +1,9 @@
+{
+  "type": "minor",
+  "area": "improvement",
+  "workstream": "Update Calling SDK stable version",
+  "comment": "Update stable version",
+  "packageName": "@azure/communication-react",
+  "email": "93549644+ShaunaSong@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
