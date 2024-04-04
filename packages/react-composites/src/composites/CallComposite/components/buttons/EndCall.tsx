@@ -31,10 +31,10 @@ export const EndCall = (props: {
   const endCallDiaglogLabels = useMemo(
     () => ({
       confirmButtonLabel: localeStrings.call.endCallConfirmButtonLabel,
-      heading: localeStrings.call.leaveConfirmDialogTitle,
-      text: localeStrings.call.leaveConfirmDialogTitle
+      heading: localeStrings.call.endCallConfirmDialogTitle,
+      text: localeStrings.call.endCallConfirmDialogTitle
     }),
-    [localeStrings.call.endCallConfirmButtonLabel, localeStrings.call.leaveConfirmDialogTitle]
+    [localeStrings.call.endCallConfirmButtonLabel, localeStrings.call.endCallConfirmDialogTitle]
   );
 
   /* @conditional-compile-remove(end-call-options) */
