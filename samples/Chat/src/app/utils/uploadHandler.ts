@@ -9,7 +9,7 @@ import FormData from 'form-data';
 // max file size is 50MB
 const MAX_FILE_SIZE_MB = 50 * 1024 * 1024; // 50MB
 const UNSUPPORTED_FILES = ['exe', 'bat', 'dat'];
-const CONTAINER_NAME = 'acs-file-sharing-test';
+const CONTAINER_NAME = '<CONTAINER_NAME>>';
 
 const attachmentUploadHandler: AttachmentUploadHandler = async (
   rawFileLists: AttachmentUploadManager[]
