@@ -25,6 +25,7 @@ import { RichTextSendBoxStrings } from './RichTextSendBox';
 import { isDarkThemed } from '../../theming/themeUtils';
 import { ribbonButtonsStrings } from '../utils/RichTextEditorStringsUtils';
 import { createTableEditMenuProvider } from './Buttons/Table/RichTextTableContextMenu';
+import CopyPastePlugin from './Plugins/CopyPastePlugin';
 
 /**
  * Props for {@link RichTextEditor}.
@@ -141,7 +142,16 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
         onChange && onChange(content);
       }
     );
-    return [contentEdit, placeholderPlugin, updateContentPlugin, ribbonPlugin, contextPlugin, tableEditMenuProvider];
+    const copyPastePlugin = new CopyPastePlugin();
+    return [
+      contentEdit,
+      placeholderPlugin,
+      updateContentPlugin,
+      ribbonPlugin,
+      contextPlugin,
+      tableEditMenuProvider,
+      copyPastePlugin
+    ];
   }, [onChange, placeholderPlugin, ribbonPlugin, strings]);
 
   const ribbon = useMemo(() => {
