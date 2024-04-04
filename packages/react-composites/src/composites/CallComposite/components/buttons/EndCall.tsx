@@ -32,9 +32,13 @@ export const EndCall = (props: {
     () => ({
       confirmButtonLabel: localeStrings.call.endCallConfirmButtonLabel,
       heading: localeStrings.call.endCallConfirmDialogTitle,
-      text: localeStrings.call.endCallConfirmDialogTitle
+      text: localeStrings.call.leaveConfirmDialogContent
     }),
-    [localeStrings.call.endCallConfirmButtonLabel, localeStrings.call.endCallConfirmDialogTitle]
+    [
+      localeStrings.call.endCallConfirmButtonLabel,
+      localeStrings.call.endCallConfirmDialogTitle,
+      localeStrings.call.leaveConfirmDialogContent
+    ]
   );
 
   /* @conditional-compile-remove(end-call-options) */
@@ -42,9 +46,13 @@ export const EndCall = (props: {
     () => ({
       confirmButtonLabel: localeStrings.call.leaveConfirmButtonLabel,
       heading: localeStrings.call.leaveConfirmDialogTitle,
-      text: localeStrings.call.leaveConfirmDialogTitle
+      text: localeStrings.call.leaveConfirmDialogContent
     }),
-    [localeStrings.call.leaveConfirmButtonLabel, localeStrings.call.leaveConfirmDialogTitle]
+    [
+      localeStrings.call.leaveConfirmButtonLabel,
+      localeStrings.call.leaveConfirmDialogContent,
+      localeStrings.call.leaveConfirmDialogTitle
+    ]
   );
 
   /* @conditional-compile-remove(end-call-options) */
