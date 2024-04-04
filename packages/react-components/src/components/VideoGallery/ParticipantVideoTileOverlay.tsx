@@ -87,7 +87,8 @@ export const ParticipantVideoTileOverlay = React.memo(
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          backgroundColor: canRenderReaction ? 'rgba(0, 0, 0, 0.5)' : 'transparent'
+          backgroundColor: canRenderReaction ? 'rgba(0, 0, 0, 0.5)' : 'transparent',
+          borderRadius: '0.25rem'
         })}
       >
         <div style={{ height: '33.33%' }}></div>
