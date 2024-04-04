@@ -16,7 +16,7 @@ import { RaisedHandState } from '@internal/calling-stateful-client';
 import { ReactionState } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(reaction) */
 import { Reaction } from '@internal/react-components';
-/* @conditional-compile-remove(reaction) */
+/* @conditional-compile-remove(reaction) */ /* @conditional-compile-remove(spotlight) */
 import memoizeOne from 'memoize-one';
 
 const convertRemoteParticipantToParticipantListParticipant = (
@@ -117,7 +117,7 @@ export const memoizedConvertAllremoteParticipantsBetaSpotlight = memoizeFnAll(
     isSpeaking: boolean,
     raisedHand: RaisedHandState | undefined,
     localUserCanRemoveOthers: boolean,
-    reaction: Reaction | undefined,
+    reaction: undefined | /* @conditional-compile-remove(reaction) */ Reaction,
     isSpotlighted: Spotlight | undefined
   ): CallParticipantListParticipant => {
     return convertRemoteParticipantToParticipantListParticipantBetaSpotlight(
@@ -224,7 +224,7 @@ const convertRemoteParticipantToParticipantListParticipantBetaSpotlight = (
   isSpeaking: boolean,
   raisedHand: RaisedHandState | undefined,
   localUserCanRemoveOthers: boolean,
-  reaction: Reaction | undefined,
+  reaction: undefined | /* @conditional-compile-remove(reaction) */ Reaction,
   spotlight: Spotlight | undefined
 ): CallParticipantListParticipant => {
   return {
@@ -238,7 +238,7 @@ const convertRemoteParticipantToParticipantListParticipantBetaSpotlight = (
       raisedHand,
       localUserCanRemoveOthers
     ),
-    reaction,
+    /* @conditional-compile-remove(reaction) */ reaction,
     spotlight
   };
 };

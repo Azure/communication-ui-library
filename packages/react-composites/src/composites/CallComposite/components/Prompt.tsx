@@ -71,7 +71,7 @@ const buttonTextStyles: IButtonStyles = { label: { fontSize: '0.875rem' } };
 /* @conditional-compile-remove(spotlight) */
 /**
  * Strings used in prompt related to spotlight
- * @beta
+ * @public
  */
 export interface SpotlightPromptStrings {
   /**

@@ -185,10 +185,8 @@ export const participantListSelector: ParticipantListSelector = createSelector(
       ? convertRemoteParticipantsToParticipantListParticipants(
           updateUserDisplayNamesTrampoline(Object.values(remoteParticipants)),
           localUserCanRemoveOthers,
-          /* @conditional-compile-remove(hide-attendee-name) */
-          isHideAttendeeNamesEnabled,
-          /* @conditional-compile-remove(hide-attendee-name) */
-          role,
+          undefined || /* @conditional-compile-remove(hide-attendee-name) */ isHideAttendeeNamesEnabled,
+          undefined || /* @conditional-compile-remove(hide-attendee-name) */ role,
           /* @conditional-compile-remove(spotlight) */
           spotlightCallFeature?.spotlightedParticipants
         )
