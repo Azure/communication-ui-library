@@ -49,6 +49,7 @@
     "roosterjs-editor-dom": "^8.62.0",
     "roosterjs-editor-plugins": "^8.62.0",
     "roosterjs-editor-types-compatible": "^8.62.0",
+    "roosterjs-editor-types": "^8.62.0",
     "roosterjs-react": "^8.56.0",
     "textarea-caret-ts": "^4.1.1",
     "use-debounce": "^10.0.0",
