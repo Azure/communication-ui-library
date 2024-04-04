@@ -71,7 +71,6 @@ export type {
 /* @conditional-compile-remove(call-transfer) */
 export type { TransferAcceptedListener } from './CallAdapter';
 
-/* @conditional-compile-remove(capabilities) */
 export type { CapabilitiesChangedListener } from './CallAdapter';
 
 /* @conditional-compile-remove(spotlight) */
