@@ -21,6 +21,9 @@ import { fetchEmojiForUser } from './utils/emojiCache';
 import { getBackgroundColor } from './utils/utils';
 import { useSwitchableFluentTheme } from './theming/SwitchableFluentThemeProvider';
 
+import attachmentUploadOptions from './utils/uploadHandler';
+import attachmentDownloadOptions from './utils/downloadHandler';
+
 // These props are passed in when this component is referenced in JSX and not found in context
 interface ChatScreenProps {
   token: string;
@@ -104,7 +107,11 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             options={{
               autoFocus: 'sendBoxTextField',
               /* @conditional-compile-remove(chat-composite-participant-pane) */
-              participantPane: !hideParticipants
+              participantPane: !hideParticipants,
+              attachmentOptions: {
+                uploadOptions: attachmentUploadOptions,
+                downloadOptions: attachmentDownloadOptions
+              }
             }}
             onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           />

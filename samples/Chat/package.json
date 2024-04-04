@@ -51,7 +51,9 @@
     "react-dom": "18.2.0",
     "react-linkify": "^1.0.0-alpha",
     "reselect": "^4.0.0",
-    "shake.js": "1.2.2"
+    "shake.js": "1.2.2",
+    "axios": "^1.6.7",
+    "form-data": "^4.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.24.3",
