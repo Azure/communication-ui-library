@@ -5,10 +5,11 @@ import React from 'react';
 import { Icon, Stack } from '@fluentui/react';
 import { insertTable as insertTableAction } from './insertTableAction';
 import type { RibbonButton } from 'roosterjs-react';
-import type { Theme } from '@fluentui/react';
+import type { IContextualMenuItem, Theme } from '@fluentui/react';
 import { insertTableMenuTablePane, ribbonTableButtonStyle } from '../../../styles/RichTextEditor.styles';
 import { RichTextInsertTablePane } from './RichTextInsertTablePane';
 import { ColumnRowReplaceString, parseKey } from '../../../utils/RichTextTableUtils';
+import type { IEditor } from 'roosterjs-editor-types-compatible';
 
 // This file uses RoosterJS React package implementation with updates to UI components and styles.
 
@@ -25,7 +26,7 @@ export const insertTableButton = (
     unlocalizedText: 'Insert table',
     // Icon will be set in onRenderIcon callback
     iconName: '',
-    onClick: (editor, key) => {
+    onClick: (editor: IEditor, key: string) => {
       const { row, column } = parseKey(key);
       insertTableAction(editor, column, row);
     },
@@ -34,7 +35,10 @@ export const insertTableButton = (
         // the key of the item is also used as a key for localization
         insertTablePane: `Insert ${ColumnRowReplaceString} table`
       },
-      itemRender: (item, onClick) => {
+      itemRender: (
+        item: IContextualMenuItem,
+        onClick: (e: React.MouseEvent<Element> | React.KeyboardEvent<Element>, item: IContextualMenuItem) => void
+      ) => {
         return (
           <RichTextInsertTablePane
             item={item}
