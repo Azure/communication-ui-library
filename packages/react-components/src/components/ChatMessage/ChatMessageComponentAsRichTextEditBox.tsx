@@ -6,7 +6,7 @@ import { ChatMyMessage } from '@fluentui-contrib/react-chat';
 import { mergeClasses } from '@fluentui/react-components';
 import { _formatString } from '@internal/acs-ui-common';
 import { useTheme } from '../../theming/FluentThemeProvider';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { editBoxWidthStyles, richTextEditBoxActionButtonIcon } from '../styles/EditBox.styles';
 import { InputBoxButton } from '../InputBoxButton';
 import { MessageThreadStrings } from '../MessageThread';
