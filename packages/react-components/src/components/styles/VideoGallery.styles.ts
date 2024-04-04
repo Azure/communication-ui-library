@@ -3,6 +3,7 @@
 
 import { IButtonStyles, IStackStyles, mergeStyles, Theme } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
+import { CSSProperties } from 'react';
 
 /**
  * @private
@@ -59,3 +60,24 @@ export const localVideoCameraCycleButtonStyles = (theme: Theme, size?: 'small' |
 export const localVideoTileContainerStyles: IStackStyles = {
   root: { width: '100%', height: '100%' }
 };
+
+/**
+ * @private
+ */
+//TODO remove after pptlive local navigation is available
+export const pptLiveOverlayStyles: CSSProperties = {
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  backgroundColor: 'transparent',
+  pointerEvents: 'none',
+  zIndex: 1
+};
+
+/**
+ * @private
+ */
+//TODO remove after pptlive local navigation is available
+export const pptLiveStreamStyles: CSSProperties = { top: 0, left: 0, width: '100%', height: '100%' };
