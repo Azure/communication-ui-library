@@ -22,7 +22,6 @@ export const ScreenShare = (props: {
   const isRoomsCall = adapter.getState().isRoomsCall;
 
   const screenShareButtonDisabled = (): boolean => {
-    /* @conditional-compile-remove(capabilities) */ /* @conditional-compile-remove(PSTN-calls) */
     return screenShareButtonProps?.disabled ?? isDisabled(props.option);
     return isDisabled(props.option);
   };
