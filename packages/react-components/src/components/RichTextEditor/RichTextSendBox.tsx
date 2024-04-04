@@ -13,17 +13,17 @@ import { isMessageTooLong, sanitizeText } from '../utils/SendBoxUtils';
 import { RichTextEditorComponentRef } from './RichTextEditor';
 import { useTheme } from '../../theming';
 import { richTextActionButtonsStyle, sendBoxRichTextEditorStyle } from '../styles/RichTextEditor.styles';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-upload) */
 import { _AttachmentUploadCards } from '../AttachmentUploadCards';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-upload) */
 import { AttachmentMetadata } from '../../types/Attachment';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-upload) */
 import { hasCompletedAttachmentUploads, hasIncompleteAttachmentUploads } from '../utils/SendBoxUtils';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-upload) */
 import { SendBoxErrorBarError } from '../SendBoxErrorBar';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-upload) */
 import { attachmentUploadCardsStyles } from '../styles/SendBox.styles';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-upload) */
 import { FluentV9ThemeProvider } from '../../theming/FluentV9ThemeProvider';
 
 /**
@@ -129,20 +129,20 @@ export interface RichTextSendBoxProps {
    * Optional text for system message above the text box
    */
   systemMessage?: string;
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-upload) */
   /**
    * Optional array of active attachment uploads where each object has attributes
    * of a attachment upload like name, progress, errorMessage etc.
    * @beta
    */
   activeAttachmentUploads?: AttachmentMetadata[];
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-upload) */
   /**
    * Optional callback to remove the attachment upload before sending by clicking on
    * cancel icon.
    * @beta
    */
-  onCancelAttachmentUpload?: (fileId: string) => void;
+  onCancelAttachmentUpload?: (attachmentId: string) => void;
   /**
    * Callback function used when the send button is clicked.
    */
@@ -159,9 +159,9 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     disabled = false,
     systemMessage,
     onSendMessage,
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+    /* @conditional-compile-remove(attachment-upload) */
     activeAttachmentUploads,
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+    /* @conditional-compile-remove(attachment-upload) */
     onCancelAttachmentUpload
   } = props;
 
@@ -180,7 +180,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
 
   const [contentValue, setContentValue] = useState('');
   const [contentValueOverflow, setContentValueOverflow] = useState(false);
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-upload) */
   const [attachmentUploadsPendingError, setAttachmentUploadsPendingError] = useState<SendBoxErrorBarError | undefined>(
     undefined
   );
@@ -204,11 +204,11 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     if (disabled || contentValueOverflow) {
       return;
     }
-    // Don't send message until all files have been uploaded successfully
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+    // Don't send message until all attachments have been uploaded successfully
+    /* @conditional-compile-remove(attachment-upload) */
     setAttachmentUploadsPendingError(undefined);
 
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+    /* @conditional-compile-remove(attachment-upload) */
     if (hasIncompleteAttachmentUploads(activeAttachmentUploads)) {
       setAttachmentUploadsPendingError({ message: strings.attachmentUploadsPendingError, timestamp: Date.now() });
       return;
@@ -219,9 +219,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     // Message can be empty if there is a valid attachment upload
     if (
       sanitizeText(message).length > 0 ||
-      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ hasCompletedAttachmentUploads(
-        activeAttachmentUploads
-      )
+      /* @conditional-compile-remove(attachment-upload) */ hasCompletedAttachmentUploads(activeAttachmentUploads)
     ) {
       onSendMessage(message);
       setContentValue('');
@@ -233,24 +231,24 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     contentValueOverflow,
     disabled,
     onSendMessage,
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ activeAttachmentUploads,
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ strings.attachmentUploadsPendingError
+    /* @conditional-compile-remove(attachment-upload) */ activeAttachmentUploads,
+    /* @conditional-compile-remove(attachment-upload) */ strings.attachmentUploadsPendingError
   ]);
 
   const hasErrorMessage = useMemo(() => {
     return (
       !!systemMessage ||
       !!contentTooLongMessage ||
-      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+      /* @conditional-compile-remove(attachment-upload) */
       !!attachmentUploadsPendingError ||
-      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+      /* @conditional-compile-remove(attachment-upload) */
       !!activeAttachmentUploads?.filter((attachmentUpload) => attachmentUpload.uploadError).pop()?.uploadError
     );
   }, [
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+    /* @conditional-compile-remove(attachment-upload) */
     activeAttachmentUploads,
     contentTooLongMessage,
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+    /* @conditional-compile-remove(attachment-upload) */
     attachmentUploadsPendingError,
     systemMessage
   ]);
@@ -262,8 +260,8 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         className={sendIconStyle({
           theme,
           hasText: !!contentValue,
-          /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-          hasFile: false,
+          /* @conditional-compile-remove(attachment-upload) */
+          hasAttachment: false,
           hasErrorMessage: hasErrorMessage,
           defaultTextColor: theme.palette.neutralSecondary,
           disabled: disabled
@@ -275,24 +273,24 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
 
   const sendBoxErrorsProps: RichTextSendBoxErrorsProps = useMemo(() => {
     return {
-      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+      /* @conditional-compile-remove(attachment-upload) */
       attachmentUploadsPendingError: attachmentUploadsPendingError,
-      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+      /* @conditional-compile-remove(attachment-upload) */
       attachmentUploadError: activeAttachmentUploads?.filter((attachmentUpload) => attachmentUpload.uploadError).pop()
         ?.uploadError,
       systemMessage: systemMessage,
       textTooLongMessage: contentTooLongMessage
     };
   }, [
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+    /* @conditional-compile-remove(attachment-upload) */
     activeAttachmentUploads,
     contentTooLongMessage,
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+    /* @conditional-compile-remove(attachment-upload) */
     attachmentUploadsPendingError,
     systemMessage
   ]);
 
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-upload) */
   const onRenderAttachmentUploads = useCallback(() => {
     return (
       <Stack className={attachmentUploadCardsStyles}>
@@ -333,7 +331,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     );
   }, [localeStrings.sendButtonAriaLabel, onRenderSendIcon, sendMessageOnClick]);
 
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-upload) */
   const hasAttachmentUploads = useMemo(() => {
     return (
       hasCompletedAttachmentUploads(activeAttachmentUploads) || hasIncompleteAttachmentUploads(activeAttachmentUploads)
@@ -352,10 +350,10 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         disabled={disabled}
         actionComponents={sendButton}
         richTextEditorStyleProps={sendBoxRichTextEditorStyle}
-        /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+        /* @conditional-compile-remove(attachment-upload) */
         onRenderAttachmentUploads={onRenderAttachmentUploads}
-        /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-        hasFiles={hasAttachmentUploads}
+        /* @conditional-compile-remove(attachment-upload) */
+        hasAttachments={hasAttachmentUploads}
       />
     </Stack>
   );

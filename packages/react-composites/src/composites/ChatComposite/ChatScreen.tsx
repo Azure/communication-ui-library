@@ -46,9 +46,13 @@ import { AttachmentDownloadErrorBar } from './AttachmentDownloadErrorBar';
 import { _AttachmentDownloadCards } from '@internal/react-components';
 import { ImageOverlay } from '@internal/react-components';
 import { InlineImage } from '@internal/react-components';
-import { SendBox } from '../common/SendBox';
 import { ResourceFetchResult } from '@internal/chat-stateful-client';
 import { AttachmentOptions } from '@internal/react-components';
+import { SendBox } from '@internal/react-components';
+/* @conditional-compile-remove(attachment-upload) */
+import { useSelector } from './hooks/useSelector';
+/* @conditional-compile-remove(attachment-upload) */
+import { attachmentUploadsSelector } from './selectors/attachmentUploadsSelector';
 
 /**
  * @private
@@ -120,6 +124,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   }, [adapter]);
 
   const messageThreadProps = usePropsFor(MessageThread);
+  const sendBoxProps = usePropsFor(SendBox);
   const typingIndicatorProps = usePropsFor(TypingIndicator);
   const headerProps = useAdaptedSelector(getHeaderProps);
   const errorBarProps = usePropsFor(ErrorBar);
@@ -184,6 +189,10 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     return Object.assign({}, styles?.typingIndicator);
   }, [styles?.typingIndicator]);
 
+  const sendBoxStyles = useMemo(() => {
+    return Object.assign({}, styles?.sendBox);
+  }, [styles?.sendBox]);
+
   const userId = toFlatCommunicationIdentifier(adapter.getState().userId);
 
   const attachmentUploadButtonOnChange = useCallback(
@@ -192,9 +201,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         return;
       }
 
-      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+      /* @conditional-compile-remove(attachment-upload) */
       const attachmentUploads = adapter.registerActiveUploads(Array.from(files));
-      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+      /* @conditional-compile-remove(attachment-upload) */
       attachmentOptions?.uploadOptions?.handler(attachmentUploads);
     },
     [adapter, attachmentOptions]
@@ -202,16 +211,19 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   const onRenderAttachmentDownloads = useCallback(
-    (userId: string, message: ChatMessage) => (
-      <_AttachmentDownloadCards
-        attachments={message.files}
-        message={message}
-        actionsForAttachment={attachmentOptions?.downloadOptions?.actionsForAttachment}
-        onActionHandlerFailed={(errorMessage: string) => {
-          setDownloadErrorMessage(errorMessage);
-        }}
-      />
-    ),
+    (userId: string, message: ChatMessage) =>
+      message?.attachments?.length ?? 0 > 0 ? (
+        <_AttachmentDownloadCards
+          attachments={message.attachments}
+          message={message}
+          actionsForAttachment={attachmentOptions?.downloadOptions?.actionsForAttachment}
+          onActionHandlerFailed={(errorMessage: string) => {
+            setDownloadErrorMessage(errorMessage);
+          }}
+        />
+      ) : (
+        <></>
+      ),
     [attachmentOptions?.downloadOptions?.actionsForAttachment]
   );
 
@@ -336,7 +348,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [overlayImageItem?.attachmentId]
   );
 
-  const AttachFileButton = useCallback(() => {
+  const AttachmentButton = useCallback(() => {
     if (!attachmentOptions?.uploadOptions?.handler) {
       return null;
     }
@@ -353,6 +365,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     attachmentOptions?.uploadOptions?.disableMultipleUploads,
     attachmentUploadButtonOnChange
   ]);
+
+  /* @conditional-compile-remove(attachment-upload) */
+  const activeAttachmentUploads = useSelector(attachmentUploadsSelector).attachments;
 
   return (
     <Stack className={chatContainer} grow>
@@ -390,18 +405,21 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             <Stack horizontal={formFactor === 'mobile'}>
               {formFactor === 'mobile' && (
                 <Stack verticalAlign="center">
-                  <AttachFileButton />
+                  <AttachmentButton />
                 </Stack>
               )}
               <Stack grow>
                 <SendBox
-                  options={options}
-                  styles={styles?.sendBox}
-                  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-                  adapter={adapter}
+                  {...sendBoxProps}
+                  autoFocus={options?.autoFocus}
+                  styles={sendBoxStyles}
+                  /* @conditional-compile-remove(attachment-upload) */
+                  activeAttachmentUploads={activeAttachmentUploads}
+                  /* @conditional-compile-remove(attachment-upload) */
+                  onCancelAttachmentUpload={adapter.cancelUpload}
                 />
               </Stack>
-              {formFactor !== 'mobile' && <AttachFileButton />}
+              {formFactor !== 'mobile' && <AttachmentButton />}
             </Stack>
           </Stack>
         </Stack>

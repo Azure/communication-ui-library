@@ -117,5 +117,5 @@ export type CommonCallControlOptions = {
    * Show, Hide or Disable captions during a call.
    * @defaultValue true
    */
-  captions?: boolean;
+  captionsButton?: boolean;
 };

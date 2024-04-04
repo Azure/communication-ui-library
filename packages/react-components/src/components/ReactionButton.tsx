@@ -15,7 +15,7 @@ import {
   useTheme
 } from '@fluentui/react';
 /* @conditional-compile-remove(reaction) */
-import React, { useState } from 'react';
+import React from 'react';
 /* @conditional-compile-remove(reaction) */
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
 /* @conditional-compile-remove(reaction) */
@@ -96,7 +96,6 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
     <_HighContrastAwareIcon disabled={props.disabled} iconName="ReactionButtonIcon" />
   );
 
-  const [isHoveredMap, setIsHoveredMap] = useState(new Map());
   const emojis = ['like', 'heart', 'applause', 'laugh', 'surprised'];
   const emojiButtonTooltip: Map<string, string | undefined> = new Map([
     ['like', strings.likeReactionTooltipContent],
@@ -121,12 +120,15 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
     backgroundColor: isDarkThemed(theme) ? theme.palette.neutralLighter : ''
   };
 
+  const classname = mergeStyles(reactionEmojiMenuStyles());
+
   const renderEmoji = (item: IContextualMenuItem, dismissMenu: () => void): React.JSX.Element => (
-    <div style={reactionEmojiMenuStyles()}>
+    <div data-ui-id="reaction-sub-menu" className={classname}>
       {emojis.map((emoji, index) => {
         const resourceUrl = emojiResource.get(emoji);
         const frameCount: number =
           props.reactionResources !== undefined ? getEmojiFrameCount(emoji, props.reactionResources) : 0;
+        const classname = mergeStyles(emojiStyles(resourceUrl ? resourceUrl : '', frameCount));
         return (
           <TooltipHost
             key={index}
@@ -140,26 +142,9 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
               key={index}
               onClick={() => {
                 props.onReactionClick(emoji);
-                setIsHoveredMap((prevMap) => {
-                  return new Map(prevMap).set(emoji, false);
-                });
                 dismissMenu();
               }}
-              style={emojiStyles(
-                resourceUrl ? resourceUrl : '',
-                isHoveredMap.get(emoji) ? 'running' : 'paused',
-                frameCount
-              )}
-              onMouseEnter={() =>
-                setIsHoveredMap((prevMap) => {
-                  return new Map(prevMap).set(emoji, true);
-                })
-              }
-              onMouseLeave={() =>
-                setIsHoveredMap((prevMap) => {
-                  return new Map(prevMap).set(emoji, false);
-                })
-              }
+              className={classname}
             />
           </TooltipHost>
         );

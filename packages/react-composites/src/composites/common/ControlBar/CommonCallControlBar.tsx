@@ -56,6 +56,8 @@ import { useLocale } from '../../localization';
 import { isBoolean } from '../utils';
 /* @conditional-compile-remove(end-call-options) */
 import { getIsTeamsCall } from '../../CallComposite/selectors/baseSelectors';
+/* @conditional-compile-remove(reaction) */
+import { callStatusSelector } from '../../CallComposite/selectors/callStatusSelector';
 
 /**
  * @private
@@ -257,8 +259,12 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   /* @conditional-compile-remove(reaction) */
   const capabilitiesSelector = useSelector(capabilitySelector);
   /* @conditional-compile-remove(reaction) */
+  const callState = useSelector(callStatusSelector);
+  /* @conditional-compile-remove(reaction) */
   const isReactionAllowed =
-    !capabilitiesSelector?.capabilities || capabilitiesSelector.capabilities.useReactions.isPresent;
+    callState.callStatus !== 'Connected' ||
+    !capabilitiesSelector?.capabilities ||
+    capabilitiesSelector.capabilities.useReactions.isPresent;
 
   // when options is false then we want to hide the whole control bar.
   if (options === false) {
@@ -278,7 +284,8 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   const showExitSpotlightButton = options?.exitSpotlightButton !== false;
 
   const showCaptionsButton =
-    props.isCaptionsSupported && /* @conditional-compile-remove(acs-close-captions) */ isEnabled(options.captions);
+    props.isCaptionsSupported &&
+    /* @conditional-compile-remove(acs-close-captions) */ isEnabled(options.captionsButton);
 
   const showDesktopMoreButton =
     /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */ isEnabled(
