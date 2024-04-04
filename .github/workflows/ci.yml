@@ -260,6 +260,7 @@ jobs:
       - name: Install rush
         run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Install dependencies
+        if: ${{ matrix.flavor == 'beta-release'}}
         run: rush install --max-install-attempts 3
       # Switch flavor if necessary
       - name: Switch flavor for beta-release build
@@ -269,6 +270,7 @@ jobs:
           rush switch-flavor:beta-release
       # Perform lint check
       - name: Run linter
+        if: ${{ matrix.flavor == 'beta-release'}}
         run: rush lint
       # Builds
       - name: Build Packages
@@ -621,6 +623,7 @@ jobs:
       - name: Install rush
         run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Install dependencies
+        if: ${{ matrix.flavor == 'beta-release'}}
         run: rush install --max-install-attempts 3
       - name: Build
         if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
