@@ -161,6 +161,12 @@ export const ChatMessageComponentAsRichTextEditBox = (
     return locale.sendBox;
   }, [/* @conditional-compile-remove(rich-text-editor) */ locale.richTextSendBox, locale.sendBox]);
 
+  const onCancelAttachmentUpload = useCallback(
+    (attachmentId: string) => {
+      setAttachmentMetadata(attachmentMetadata?.filter((attachment) => attachment.id !== attachmentId));
+    },
+    [attachmentMetadata]
+  );
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   const onRenderAttachmentUploads = useCallback(() => {
     return (
@@ -168,14 +174,12 @@ export const ChatMessageComponentAsRichTextEditBox = (
         <FluentV9ThemeProvider v8Theme={theme}>
           <_AttachmentUploadCards
             activeAttachmentUploads={attachmentMetadata}
-            onCancelAttachmentUpload={(attachmentId) => {
-              setAttachmentMetadata(attachmentMetadata?.filter((attachment) => attachment.id !== attachmentId));
-            }}
+            onCancelAttachmentUpload={onCancelAttachmentUpload}
           />
         </FluentV9ThemeProvider>
       </Stack>
     );
-  }, [attachmentMetadata, theme]);
+  }, [attachmentMetadata, onCancelAttachmentUpload, theme]);
 
   const getContent = (): JSX.Element => {
     return (
