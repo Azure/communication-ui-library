@@ -22,27 +22,25 @@ export const RichTextEditBoxAttachmentUploadsExample: () => JSX.Element = () => 
     }
   ];
 
-  const props: ChatMessageComponentAsRichTextEditBoxProps = {
-    onSubmit: async (message) => {
-      timeoutRef.current = setTimeout(() => {
-        alert(`sent message: ${message} `);
-      }, delayForSendButton);
-    },
-    message: {
-      messageType: 'chat',
-      content: 'Hi! How are you?',
-      contentType: 'richtext/html',
-      messageId: '1',
-      createdOn: new Date(),
-      attachments: attachmentMetadata
-    },
-    strings: {}
-  };
-
   return (
     <FluentThemeProvider>
       <div style={{ width: '31.25rem' }}>
-        <ChatMessageComponentAsRichTextEditBox {...props} />
+        <ChatMessageComponentAsRichTextEditBox
+          onSubmit={async (message) => {
+            timeoutRef.current = setTimeout(() => {
+              alert(`sent message: ${message} `);
+            }, delayForSendButton);
+          }}
+          message={{
+            messageType: 'chat',
+            content: 'Hi, how are you?',
+            contentType: 'richtext/html',
+            messageId: '1',
+            createdOn: new Date(),
+            attachments: attachmentMetadata
+          }}
+          strings={{}}
+        />
       </div>
     </FluentThemeProvider>
   );
