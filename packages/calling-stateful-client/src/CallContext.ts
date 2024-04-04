@@ -11,7 +11,7 @@ import {
   VideoDeviceInfo
 } from '@azure/communication-calling';
 import { RaisedHand } from '@azure/communication-calling';
-/* @conditional-compile-remove(capabilities) */
+
 import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
@@ -525,7 +525,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(capabilities) */
   public setCapabilities(
     callId: string,
     capabilities: ParticipantCapabilities,

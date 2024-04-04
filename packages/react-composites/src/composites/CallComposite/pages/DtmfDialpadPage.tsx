@@ -28,7 +28,7 @@ export interface DialpadPageProps {
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
   latestErrors: ActiveErrorMessage[];
   onDismissError: (error: ActiveErrorMessage) => void;
-  /* @conditional-compile-remove(capabilities) */
+
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
   onSetDialpadPage: () => void;
   dtmfDialerPresent: boolean;

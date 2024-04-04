@@ -60,8 +60,8 @@ Ask feature owners to create a PR to add a pre-release changelog and remove the 
 
 For all the features that are going into this release, ask the feature owners to:
 
-- Remove the feature from the inProgressFeatures array or the feature array in the [feature list](../../common/config/babel/features.js)
-- Create a change log summarizing the feature and set the change as 'prerelease'
+- Move feature to beta or stable as appropriate in the [feature list](../../common/config/babel/features.js)
+- Create a change log summarizing the feature and set the change type as 'prerelease' if the feature is going into beta, or 'minor' if the feature is going into stable.
   
 [Shiproom Dashboard](https://skype.visualstudio.com/SPOOL/_dashboards/dashboard/c38163f7-e172-4afa-a4c2-76e888b5cddc)
 

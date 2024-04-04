@@ -19,7 +19,7 @@ import {
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(meeting-id) */
 import { CallInfo, TeamsCallInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(capabilities) */
+
 import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsResultType } from '@azure/communication-calling';
@@ -142,7 +142,6 @@ export interface TranscriptionCallFeatureState {
   isTranscriptionActive: boolean;
 }
 
-/* @conditional-compile-remove(capabilities) */
 /**
  * State only version of {@link @azure/communication-calling#CapabilitiesFeature}
  *
@@ -625,7 +624,7 @@ export interface CallState {
    * Transfer state of call
    */
   transfer: TransferFeatureState;
-  /* @conditional-compile-remove(capabilities) */
+
   /**
    * Proxy of {@link @azure/communication-calling#CapabilitiesFeature}.
    */
