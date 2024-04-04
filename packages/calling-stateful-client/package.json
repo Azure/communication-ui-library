@@ -42,9 +42,9 @@
     "@azure/communication-calling": "1.23.1-beta.2 || ^1.23.1",
     "@azure/core-auth": "^1.4.0",
     "@babel/cli": "^7.23.9",
-    "@babel/core": "^7.23.9",
+    "@babel/core": "^7.24.3",
     "@types/jest": "^29.5.11",
-    "@types/react": "18.2.64",
+    "@types/react": "18.2.74",
     "@typescript-eslint/eslint-plugin": "^6.19.1",
     "@typescript-eslint/parser": "^6.19.1",
     "copyfiles": "^2.4.1",
@@ -63,6 +63,6 @@
     "rimraf": "^2.6.2",
     "rollup": "^4.12.1",
     "ts-jest": "^29.1.2",
-    "typescript": "5.4.2"
+    "typescript": "5.4.3"
   }
 }
