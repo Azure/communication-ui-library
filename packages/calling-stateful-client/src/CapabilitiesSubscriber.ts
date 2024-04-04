@@ -1,14 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(capabilities) */
 import { CapabilitiesChangeInfo, CapabilitiesFeature } from '@azure/communication-calling';
-/* @conditional-compile-remove(capabilities) */
+
 import { CallContext } from './CallContext';
-/* @conditional-compile-remove(capabilities) */
+
 import { CallIdRef } from './CallIdRef';
 
-/* @conditional-compile-remove(capabilities) */
 /**
  * @private
  */
