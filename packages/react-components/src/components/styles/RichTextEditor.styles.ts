@@ -313,5 +313,5 @@ export const insertTableMenuTitleStyles = mergeStyles({
  * @private
  */
 export const tableContextMenuIconStyles = mergeStyles({
-  marginTop: '6px'
+  marginTop: '0.375rem'
 });
