@@ -11,7 +11,8 @@ import {
   Text,
   Theme,
   mergeStyles,
-  IModalStyles
+  IModalStyles,
+  concatStyleSets
 } from '@fluentui/react';
 import { useTheme } from '@internal/react-components';
 import React from 'react';
@@ -36,7 +37,7 @@ export interface PromptProps {
  */
 export const Prompt = (props: PromptProps): JSX.Element => {
   const theme = useTheme();
-  const styles = props.styles ?? modalStyles;
+  const styles = concatStyleSets(modalStyles, props.styles ?? {});
 
   return (
     <Modal styles={styles} isOpen={props.isOpen} onDismiss={props.onDismiss} isBlocking={false}>

@@ -60,6 +60,7 @@ export interface EndCallButtonProps extends ControlBarButtonProps {
   strings?: EndCallButtonStrings;
 }
 
+/* @conditional-compile-remove(end-call-options) */
 const spacerClass = mergeStyles({
   width: 4
 });
@@ -67,7 +68,7 @@ const spacerClass = mergeStyles({
 const onRenderEndCallIcon = (): JSX.Element => (
   <>
     <Icon iconName="ControlButtonEndCall" />
-    <span className={spacerClass} />
+    {/* @conditional-compile-remove(end-call-options) */ <span className={spacerClass} />}
   </>
 );
 
@@ -88,7 +89,7 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
   const isDarkTheme = isDarkThemed(theme);
   const componentStyles = concatStyleSets(
     isDarkTheme ? darkThemeCallButtonStyles : lightThemeCallButtonStyles,
-    enableEndCallMenu ? menupButtonPadding : {},
+    /* @conditional-compile-remove(end-call-options) */ enableEndCallMenu ? menupButtonPadding : {},
     styles ?? {}
   );
 
@@ -219,6 +220,7 @@ const lightThemeCallButtonStyles = {
   }
 };
 
+/* @conditional-compile-remove(end-call-options) */
 const menupButtonPadding = {
-  root: { padding: '0 12px' }
+  root: { padding: '0 0.75rem' }
 };
