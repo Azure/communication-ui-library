@@ -105,12 +105,12 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
       // also, in case if initialContent is not empty, RoosterJS doesn't set caret position to the end.
       // this is to fix this issue. Content model package has a correct behavior and this fix can be deleted
       // the editorCreator callback shouldn't be updated when the initialContent is changed
-      const isEmptyInitialContent = isEmpty(initialContent);
-      if (!isEmpty(contentValue.current) || !isEmptyInitialContent) {
+      const isInitialContentEmpty = isEmpty(initialContent);
+      if (!isEmpty(contentValue.current) || !isInitialContentEmpty) {
         // focus the editor to set correct selection position
         editorValue.focus();
         // set initial content
-        editorValue.setContent(isEmptyInitialContent ? contentValue.current : initialContent);
+        editorValue.setContent(isInitialContentEmpty ? contentValue.current : initialContent);
       }
       editor.current = editorValue;
       return editorValue;
