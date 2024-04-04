@@ -16,12 +16,8 @@ import { isHideAttendeeNamesEnabled } from './baseSelectors';
 import { CallParticipantListParticipant } from '@internal/react-components';
 import { _isRingingPSTNParticipant, _updateUserDisplayNames } from './utils/callUtils';
 import { memoizedConvertAllremoteParticipants } from './utils/participantListSelectorUtils';
-/* @conditional-compile-remove(spotlight) */
-import { memoizedConvertAllremoteParticipantsBetaSpotlight } from './utils/participantListSelectorUtils';
 /* @conditional-compile-remove(reaction) */
 import { memoizedConvertToVideoTileReaction } from './utils/participantListSelectorUtils';
-/* @conditional-compile-remove(reaction) */
-import { memoizedConvertAllremoteParticipantsBeta } from './utils/participantListSelectorUtils';
 /* @conditional-compile-remove(spotlight) */
 import { memoizedSpotlight } from './utils/participantListSelectorUtils';
 import { getLocalParticipantRaisedHand } from './baseSelectors';
@@ -81,13 +77,12 @@ const convertRemoteParticipantsToParticipantListParticipants = (
             participant.role,
             isHideAttendeeNamesEnabled
           );
+          let remoteParticipantReaction = undefined;
           /* @conditional-compile-remove(reaction) */
-          const remoteParticipantReaction = memoizedConvertToVideoTileReaction(participant.reactionState);
+          remoteParticipantReaction = memoizedConvertToVideoTileReaction(participant.reactionState);
+          let spotlight = undefined;
           /* @conditional-compile-remove(spotlight) */
-          const spotlight = memoizedSpotlight(
-            spotlightedParticipants,
-            toFlatCommunicationIdentifier(participant.identifier)
-          );
+          spotlight = memoizedSpotlight(spotlightedParticipants, toFlatCommunicationIdentifier(participant.identifier));
           return memoizeFn(
             toFlatCommunicationIdentifier(participant.identifier),
             displayName,
@@ -97,9 +92,7 @@ const convertRemoteParticipantsToParticipantListParticipants = (
             participant.isSpeaking,
             participant.raisedHand,
             localUserCanRemoveOthers,
-            /* @conditional-compile-remove(reaction) */
             remoteParticipantReaction,
-            /* @conditional-compile-remove(spotlight) */
             spotlight
           );
         })
@@ -116,10 +109,6 @@ const convertRemoteParticipantsToParticipantListParticipants = (
         })
     );
   };
-  /* @conditional-compile-remove(spotlight) */
-  return memoizedConvertAllremoteParticipantsBetaSpotlight(conversionCallback);
-  /* @conditional-compile-remove(reaction) */
-  return memoizedConvertAllremoteParticipantsBeta(conversionCallback);
   return memoizedConvertAllremoteParticipants(conversionCallback);
 };
 
