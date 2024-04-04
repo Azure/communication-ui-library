@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(spotlight) */
 import {
   DefaultButton,
   IButtonStyles,
@@ -13,12 +12,9 @@ import {
   Theme,
   mergeStyles
 } from '@fluentui/react';
-/* @conditional-compile-remove(spotlight) */
 import { useTheme } from '@internal/react-components';
-/* @conditional-compile-remove(spotlight) */
 import React from 'react';
 
-/* @conditional-compile-remove(spotlight) */
 /**
  * @private
  */
@@ -33,7 +29,6 @@ export interface PromptProps {
   onCancel?: () => void;
 }
 
-/* @conditional-compile-remove(spotlight) */
 /**
  * @private
  */
@@ -57,7 +52,6 @@ export const Prompt = (props: PromptProps): JSX.Element => {
   );
 };
 
-/* @conditional-compile-remove(spotlight) */
 const iconButtonStyles = (theme: Theme): IButtonStyles => ({
   root: {
     position: 'absolute',
@@ -70,10 +64,8 @@ const iconButtonStyles = (theme: Theme): IButtonStyles => ({
   }
 });
 
-/* @conditional-compile-remove(spotlight) */
 const modalStyles = { main: { padding: '1.5rem ', maxWidth: '30rem' } };
 
-/* @conditional-compile-remove(spotlight) */
 const buttonTextStyles: IButtonStyles = { label: { fontSize: '0.875rem' } };
 
 /* @conditional-compile-remove(spotlight) */

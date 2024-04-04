@@ -28,7 +28,7 @@ import { _AttachmentUploadCardsStrings } from './AttachmentUploadCards';
 import { useLocaleAttachmentCardStringsTrampoline } from './utils/common';
 import { AttachmentMetadata, AttachmentMenuAction } from '../types/Attachment';
 import { MoreHorizontal24Filled } from '@fluentui/react-icons';
-import { useAttachmentCardStyles, fileNameContainerClassName } from './styles/AttachmentCard.styles';
+import { useAttachmentCardStyles, attachmentNameContainerClassName } from './styles/AttachmentCard.styles';
 
 /**
  * @internal
@@ -40,15 +40,11 @@ export interface _AttachmentCardProps {
    */
   attachment: AttachmentMetadata;
   /**
-   * Optional property to indicate progress of file upload.
-   */
-  progress?: number;
-  /**
    * An array of menu actions to be displayed in the attachment card.
    */
   menuActions: AttachmentMenuAction[];
   /**
-   * Optional arialabel strings for file cards
+   * Optional aria label strings for attachment upload cards
    */
   strings?: _AttachmentUploadCardsStrings;
   /**
@@ -64,9 +60,11 @@ export interface _AttachmentCardProps {
  * `_AttachmentCard` internally uses the `Card` component from `@fluentui/react-components`. You can checkout the details about these components [here](https://react.fluentui.dev/?path=/docs/components-card).
  */
 export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
-  const { attachment, progress, menuActions, onActionHandlerFailed } = props;
+  const { attachment, menuActions, onActionHandlerFailed } = props;
   const attachmentCardStyles = useAttachmentCardStyles();
-
+  const progress = useMemo(() => {
+    return attachment.progress;
+  }, [attachment.progress]);
   const isUploadComplete = useMemo(() => {
     return progress !== undefined && progress > 0 && progress < 1;
   }, [progress]);
@@ -95,7 +93,7 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
         <CardHeader
           image={
             <Icon
-              data-ui-id={'filetype-icon'}
+              data-ui-id={'attachmenttype-icon'}
               iconName={
                 getFileTypeIconProps({
                   extension: useMemo((): string => {
@@ -108,7 +106,7 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
             />
           }
           header={
-            <div className={fileNameContainerClassName}>
+            <div className={attachmentNameContainerClassName}>
               <Text title={attachment.name}>{attachment.name}</Text>
             </div>
           }

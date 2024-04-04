@@ -221,14 +221,20 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   const showCaptionsButton =
     props.isCaptionsSupported &&
     /* @conditional-compile-remove(acs-close-captions) */ drawerSelectionOptions !== false &&
-    /* @conditional-compile-remove(acs-close-captions) */ isEnabled(drawerSelectionOptions.captions);
+    /* @conditional-compile-remove(acs-close-captions) */ isEnabled(drawerSelectionOptions.captionsButton);
 
   /* @conditional-compile-remove(reaction) */
   if (props.reactionResources !== undefined) {
     drawerMenuItems.push({
       itemKey: 'reactions',
       onRendererContent: () => (
-        <_ReactionDrawerMenuItem onReactionClick={props.onReactionClick} reactionResources={props.reactionResources} />
+        <_ReactionDrawerMenuItem
+          onReactionClick={async (reaction) => {
+            props.onReactionClick?.(reaction);
+            onLightDismiss();
+          }}
+          reactionResources={props.reactionResources}
+        />
       )
     });
   }

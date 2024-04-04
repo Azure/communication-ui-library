@@ -133,7 +133,7 @@ export const RemoteContentShareReactionOverlay = React.memo(
             reaction: reaction,
             id: combinedKey,
             reactionMovementIndex: reactionMovementIndex,
-            styleBucket: getReactionStyleBucket(reactionMovementIndex)
+            styleBucket: getReactionStyleBucket()
           }
         ]);
         return;
@@ -181,12 +181,11 @@ export const RemoteContentShareReactionOverlay = React.memo(
       return canRender;
     };
 
-    const containerHeight = hostDivHeight ?? 0;
-    const containerWidth = hostDivWidth ?? 0;
+    const styleBucket = (): IReactionStyleBucket => getReactionStyleBucket();
+    const displaySizePx = (): number => REACTION_START_DISPLAY_SIZE * styleBucket().sizeScale;
 
-    const styleBucket = (activeSprites: number): IReactionStyleBucket => getReactionStyleBucket(activeSprites);
-    const displaySizePx = (activeSprites: number): number =>
-      REACTION_START_DISPLAY_SIZE * styleBucket(activeSprites).sizeScale;
+    const containerHeight = hostDivHeight ?? 0;
+    const containerWidth = (hostDivWidth ?? 0) - displaySizePx();
 
     const leftPosition = (position: number): number => generateStartPositionWave(position, containerWidth / 2, true);
     const reactionMovementStyle = (position: number): React.CSSProperties =>
@@ -230,7 +229,7 @@ export const RemoteContentShareReactionOverlay = React.memo(
                       <div
                         style={spriteAnimationStyles(
                           REACTION_NUMBER_OF_ANIMATION_FRAMES,
-                          displaySizePx(visibleReactions.length),
+                          displaySizePx(),
                           getEmojiResource(reaction?.reaction.reactionType, reactionResources) ?? ''
                         )}
                       />

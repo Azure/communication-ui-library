@@ -72,7 +72,7 @@ export function getMessageBubbleContent(
       {
         /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ onRenderAttachmentDownloads
           ? onRenderAttachmentDownloads(userId, message)
-          : defaultOnRenderFileDownloads(
+          : defaultOnRenderAttachmentDownloads(
               message,
               strings,
               /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
@@ -84,20 +84,20 @@ export function getMessageBubbleContent(
 }
 
 /**
- * Default component for rendering file downloads.
+ * Default component for rendering attachment downloads.
  */
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-const defaultOnRenderFileDownloads = (
+const defaultOnRenderAttachmentDownloads = (
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage,
   strings: MessageThreadStrings,
   actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[]
 ): JSX.Element | undefined => {
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  return (
+  return ((message as ChatMessage).attachments?.length ?? 0) > 0 ? (
     <_AttachmentDownloadCards
       message={message as ChatMessage}
       /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-      attachments={(message as ChatMessage).files || []}
+      attachments={(message as ChatMessage).attachments}
       /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
       actionsForAttachment={actionsForAttachment}
       /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
@@ -107,6 +107,8 @@ const defaultOnRenderFileDownloads = (
         attachmentCardGroupMessage: strings.attachmentCardGroupMessage
       }}
     />
+  ) : (
+    <></>
   );
   return undefined;
 };

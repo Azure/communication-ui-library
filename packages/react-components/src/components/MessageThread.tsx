@@ -223,7 +223,7 @@ export interface MessageThreadStrings {
   /** String for policy violation message removal details link */
   blockedWarningLinkText: string;
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  /** String for aria text in file attachment group*/
+  /** String for aria text in attachment card group*/
   attachmentCardGroupMessage: string;
 }
 
@@ -348,9 +348,9 @@ const getLastChatMessageForCurrentUser = (messages: Message[]): ChatMessage | un
 export type UpdateMessageCallback = (
   messageId: string,
   content: string,
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-upload) */
   options?: {
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+    /* @conditional-compile-remove(attachment-upload) */
     metadata?: Record<string, string>;
     attachmentMetadata?: AttachmentMetadata[];
   }
@@ -537,6 +537,14 @@ export type MessageThreadProps = {
    * @beta
    */
   inlineImageOptions?: InlineImageOptions;
+
+  /* @conditional-compile-remove(rich-text-editor) */
+  /**
+   * enables rich text editor for the edit box
+   *
+   * @defaultValue `false`
+   */
+  richTextEditor?: boolean;
 };
 
 /**
@@ -671,7 +679,9 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     attachmentOptions,
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    onRenderAttachmentDownloads
+    onRenderAttachmentDownloads,
+    /* @conditional-compile-remove(rich-text-editor) */
+    richTextEditor = false
   } = props;
   // We need this state to wait for one tick and scroll to bottom after messages have been initialized.
   // Otherwise chatScrollDivRef.current.clientHeight is wrong if we scroll to bottom before messages are initialized.
@@ -1127,6 +1137,8 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
                   mentionOptions={mentionOptions}
                   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
                   onRenderAttachmentDownloads={onRenderAttachmentDownloads}
+                  /* @conditional-compile-remove(rich-text-editor) */
+                  richTextEditor={richTextEditor}
                 />
               );
             })}

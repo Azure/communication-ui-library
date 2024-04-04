@@ -20,7 +20,7 @@ export interface AttachmentMetadata {
    */
   id: string;
   /**
-   * File name to be displayed.
+   * Attachment name to be displayed.
    */
   name: string;
   /**
@@ -34,7 +34,7 @@ export interface AttachmentMetadata {
   /**
    * A object contains status message would be shown to the user.
    */
-  uploadStatus?: AttachmentUploadStatus;
+  uploadError?: AttachmentUploadStatus;
 }
 
 /**
@@ -64,7 +64,7 @@ export interface AttachmentOptions {
  */
 export interface AttachmentDownloadOptions {
   // A callback function that defines what action user can perform on an attachment.
-  // by default, the UI library would have default actions that opens file URL in a new tab
+  // by default, the UI library would have default actions that opens attachment URL in a new tab
   // provide this callback function to override the default actions or add new actions.
   actionsForAttachment: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
 }
@@ -86,146 +86,65 @@ export interface AttachmentMenuAction {
  */
 export interface AttachmentUploadOptions {
   /**
-   * A string containing the comma separated list of accepted file types.
-   * Similar to the `accept` attribute of the `<input type="file" />` element.
-   * Accepts any type of file if not specified.
+   * A list of strings containing the comma separated list of supported media (aka. mime) types.
+   * i.e. ['image/*', 'video/*', 'audio/*']
+   * Default value is `['*']`, meaning all media types are supported.
+   * Similar to the `accept` attribute of the `<input type="attachment" />` element.
    * @beta
    */
   supportedMediaTypes?: string[];
   /**
-   * Allows multiple files to be selected if set to `true`.
-   * Similar to the `multiple` attribute of the `<input type="file" />` element.
-   * @defaultValue false
+   * Disable multiple attachments to be selected if set to `true`.
+   * Default value is `false`, meaning multiple attachments can be selected.
+   * Similar to the `multiple` attribute of the `<input type="attachment" />` element.
    * @beta
    */
   disableMultipleUploads?: boolean;
   /**
-   * A function of type {@link AttachmentUploadHandler} for handling file uploads.
+   * A function of type {@link AttachmentUploadHandler} for handling attachment uploads.
    * @beta
    */
   handler: AttachmentUploadHandler;
 }
 
 /**
- * A wrapper object for a file that is being uploaded.
- * Allows managing file uploads by providing common functions for updating the
+ * A wrapper object for a attachment that is being uploaded.
+ * Allows managing attachment uploads by providing common functions for updating the
  * upload progress, canceling an upload, completing an upload etc.
  * @beta
  */
 export interface AttachmentUploadManager {
   /**
-   * Unique identifier for the file upload.
+   * Unique identifier for the attachment upload.
    */
   id: string;
   /**
-   * HTML {@link File} object for the uploaded file.
+   * HTML {@link File} object for the uploaded attachment.
    */
   file?: File;
   /**
-   * Update the progress of the upload.
+   * Update the progress of the upload changed.
+   * A upload is considered complete when the progress reaches 1.
    * @param value - number between 0 and 1
    */
-  notifyUploadProgressChanged: (value: number) => void;
+  notifyProgressChanged: (value: number) => void;
   /**
    * Mark the upload as complete.
-   * Requires the `metadata` param containing uploaded file information.
+   * Requires the `metadata` param containing uploaded attachment information.
    * @param metadata - {@link AttachmentMetadata}
    */
-  notifyUploadCompleted: (metadata: AttachmentMetadata) => void;
+  notifyCompleted: (metadata: AttachmentMetadata) => void;
   /**
    * Mark the upload as failed.
    * @param message - An error message that can be displayed to the user.
    */
-  notifyUploadFailed: (message: string) => void;
+  notifyFailed: (message: string) => void;
 }
 
 /**
  * @beta
- * A callback function for handling file uploads.
+ * A callback function for handling attachment uploads.
  *
- * @param AttachmentUploads - The list of uploaded files. Each file is represented by an {@link AttachmentUpload} object.
+ * @param AttachmentUploads - The list of uploaded attachments. Each attachment is represented by an {@link AttachmentUpload} object.
  */
 export type AttachmentUploadHandler = (attachmentUploads: AttachmentUploadManager[]) => void;
-
-/**
- * Contains the state attributes of a file upload like name, progress etc.
- * @beta
- */
-export interface FileUploadState {
-  /**
-   * Unique identifier for the file upload.
-   */
-  id: string;
-
-  /**
-   * Filename extracted from the {@link File} object.
-   * This attribute is used to render the filename if `metadata.name` is not available.
-   */
-  filename: string;
-
-  /**
-   * A number between 0 and 1 indicating the progress of the upload.
-   */
-  progress: number;
-
-  /**
-   * Metadata {@link AttachmentMetadata} containing information about the uploaded file.
-   */
-  metadata?: AttachmentMetadata;
-
-  /**
-   * Error message to be displayed to the user if the upload fails.
-   */
-  error?: FileUploadError;
-}
-
-/**
- * @beta
- * Error message to be displayed to the user if the upload fails.
- */
-export type FileUploadError = {
-  message: string;
-  timestamp: number;
-};
-
-/**
- * A wrapper object for a file that is being uploaded.
- * Allows managing file uploads by providing common functions for updating the
- * upload progress, canceling an upload, completing an upload etc.
- * @beta
- */
-export interface FileUploadManager {
-  /**
-   * Unique identifier for the file upload.
-   */
-  id: string;
-  /**
-   * HTML {@link File} object for the uploaded file.
-   */
-  file?: File;
-  /**
-   * Update the progress of the upload.
-   * @param value - number between 0 and 1
-   */
-  notifyUploadProgressChanged: (value: number) => void;
-  /**
-   * Mark the upload as complete.
-   * Requires the `metadata` param containing uploaded file information.
-   * @param metadata - {@link AttachmentMetadata}
-   */
-  notifyUploadCompleted: (metadata: AttachmentMetadata) => void;
-  /**
-   * Mark the upload as failed.
-   * @param message - An error message that can be displayed to the user.
-   */
-  notifyUploadFailed: (message: string) => void;
-}
-
-/**
- * @beta
- * A callback function for handling file uploads.
- *
- * @param userId - The user ID of the user uploading the file.
- * @param fileUploads - The list of uploaded files. Each file is represented by an {@link FileUpload} object.
- */
-export type FileUploadHandler = (userId: string, fileUploads: FileUploadManager[]) => void;

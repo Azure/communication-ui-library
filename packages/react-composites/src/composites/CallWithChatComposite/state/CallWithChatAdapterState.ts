@@ -10,8 +10,8 @@ import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite
 
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 import { ChatAdapterState } from '../../ChatComposite';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { FileUploadsUiState } from '../../ChatComposite';
+/* @conditional-compile-remove(attachment-upload) */
+import { AttachmentUploadsUiState } from '../../ChatComposite';
 import { AdapterErrors } from '../../common/adapters';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
@@ -36,15 +36,15 @@ export interface CallWithChatAdapterUiState {
    * @public
    */
   page: CallCompositePage;
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-upload) */
   /**
    * Files being uploaded by a user in the current thread.
    * Should be set to null once the upload is complete.
-   * Array of type {@link FileUploadsUiState}
+   * Array of type {@link AttachmentUploadsUiState}
    *
    * @beta
    */
-  fileUploads?: FileUploadsUiState;
+  attachmentUploads?: AttachmentUploadsUiState;
   /* @conditional-compile-remove(unsupported-browser) */
   /**
    * State to track whether the end user has opted in to using a
@@ -129,8 +129,8 @@ export function callWithChatAdapterStateFromBackingStates(callAdapter: CallAdapt
     isTeamsCall: callAdapterState.isTeamsCall,
     latestCallErrors: callAdapterState.latestErrors,
     latestChatErrors: {},
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    fileUploads: {},
+    /* @conditional-compile-remove(attachment-upload) */
+    attachmentUploads: {},
     /* @conditional-compile-remove(PSTN-calls) */
     alternateCallerId: callAdapterState.alternateCallerId,
     /* @conditional-compile-remove(unsupported-browser) */
@@ -157,8 +157,8 @@ export function mergeChatAdapterStateIntoCallWithChatAdapterState(
     ...existingCallWithChatAdapterState,
     chat: chatAdapterState.thread,
     latestChatErrors: chatAdapterState.latestErrors,
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    fileUploads: chatAdapterState.fileUploads
+    /* @conditional-compile-remove(attachment-upload) */
+    attachmentUploads: chatAdapterState.attachmentUploads
   };
 }
 

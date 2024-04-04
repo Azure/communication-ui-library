@@ -84,7 +84,7 @@ export const GenerateMockNewChatMessageWithInlineImage = (): ChatMessage => {
   };
 };
 
-export const GenerateMockNewChatMessageWithFileAttachment = (): ChatMessage => {
+export const GenerateMockNewChatMessageWithAttachment = (): ChatMessage => {
   return {
     messageType: 'chat',
     ...UserThree,
@@ -94,7 +94,7 @@ export const GenerateMockNewChatMessageWithFileAttachment = (): ChatMessage => {
     mine: true,
     attached: false,
     contentType: 'text',
-    files: [
+    attachments: [
       {
         id: 'SomeUniqueId1',
         name: 'Annual Report.xlsx',

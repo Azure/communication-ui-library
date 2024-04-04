@@ -328,7 +328,7 @@
   },
   "chat": {
     "chatListHeader": "Bu sohbette",
-    "uploadFile": "Dosyayı Karşıya Yükle"
+    "uploadAttachment": "Dosyayı Karşıya Yükle"
   },
   "callWithChat": {
     "chatButtonLabel": "Sohbet",

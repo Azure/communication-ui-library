@@ -83,9 +83,8 @@ export type {
 /* @conditional-compile-remove(call-transfer) */
 export type { TransferAcceptedListener } from './adapter';
 
-/* @conditional-compile-remove(capabilities) */
 export type { CapabilitiesChangedListener } from './adapter';
-/* @conditional-compile-remove(capabilities) */
+
 export type { CapabilityChangedNotificationStrings } from './components/CapabilitiesChangedNotificationBar';
 
 /* @conditional-compile-remove(spotlight) */

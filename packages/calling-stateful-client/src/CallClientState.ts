@@ -19,7 +19,7 @@ import {
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(meeting-id) */
 import { CallInfo, TeamsCallInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(capabilities) */
+
 import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsResultType } from '@azure/communication-calling';
@@ -136,7 +136,6 @@ export interface TranscriptionCallFeatureState {
   isTranscriptionActive: boolean;
 }
 
-/* @conditional-compile-remove(capabilities) */
 /**
  * State only version of {@link @azure/communication-calling#CapabilitiesFeature}
  *
@@ -256,7 +255,7 @@ export interface RaiseHandCallFeatureState {
  * State only version of {@link @azure/communication-calling#PPTLiveCallFeature}. {@link StatefulCallClient} will
  * automatically listen for pptLive on the call and update the state exposed by {@link StatefulCallClient} accordingly.
  *
- * @public
+ * @beta
  */
 export interface PPTLiveCallFeatureState {
   /**
@@ -446,7 +445,7 @@ export interface RemoteParticipantState {
   /**
    * Proxy of {@link @azure/communication-calling#Call.PPTLive.target}.
    *
-   * @public
+   * @beta
    */
   contentSharingStream?: HTMLElement;
   /* @conditional-compile-remove(reaction) */
@@ -552,7 +551,7 @@ export interface CallState {
   /**
    * Proxy of {@link @azure/communication-calling#PPTLiveCallFeature}.
    *
-   *@public
+   *@beta
    */
   pptLive: PPTLiveCallFeatureState;
   /**
@@ -586,7 +585,7 @@ export interface CallState {
    *
    * This property is added by the stateful layer and is not a proxy of SDK state
    *
-   *@public
+   *@beta
    */
   contentSharingRemoteParticipant?: string;
   /**
@@ -619,7 +618,7 @@ export interface CallState {
    * Transfer state of call
    */
   transfer: TransferFeatureState;
-  /* @conditional-compile-remove(capabilities) */
+
   /**
    * Proxy of {@link @azure/communication-calling#CapabilitiesFeature}.
    */

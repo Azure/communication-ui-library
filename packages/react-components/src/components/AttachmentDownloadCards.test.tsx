@@ -7,18 +7,18 @@ import { _AttachmentDownloadCards } from './AttachmentDownloadCards';
 import { render, screen } from '@testing-library/react';
 import { registerIcons } from '@fluentui/react';
 
-describe('FileDownloadCards should be rendered properly', () => {
+describe('AttachmentDownloadCards should be rendered properly', () => {
   beforeEach(() => {
     registerIcons({
       icons: {
-        downloadfile: <></>,
+        downloadattachment: <></>,
         docx24_svg: <></>,
         editboxcancel: <></>
       }
     });
   });
 
-  it('should render if it is FileSharingMetadata', async () => {
+  it('should render if it is AttachmentSharingMetadata', async () => {
     const attachment: AttachmentMetadata = {
       name: 'MockAttachmentCard',
       extension: 'docx',
@@ -30,13 +30,13 @@ describe('FileDownloadCards should be rendered properly', () => {
       userId: 'MockUserId',
       attachments: [attachment]
     };
-    renderFileDownloadCardsWithDefaults(props);
+    renderAttachmentDownloadCardsWithDefaults(props);
     const card = await screen.findByText('MockAttachmentCard');
     expect(card).toBeDefined();
   });
 });
 
-const renderFileDownloadCardsWithDefaults = (props: MockDownloadCardProps): void => {
+const renderAttachmentDownloadCardsWithDefaults = (props: MockDownloadCardProps): void => {
   render(<_AttachmentDownloadCards {...props} />);
 };
 

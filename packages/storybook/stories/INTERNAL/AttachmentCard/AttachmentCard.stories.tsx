@@ -3,7 +3,7 @@
 
 import { useTheme } from '@fluentui/react';
 import { ArrowDownload24Filled, Open24Filled, Pin24Regular, Share24Regular } from '@fluentui/react-icons';
-import { AttachmentMetadata, _AttachmentCard as FileCardComponent } from '@internal/react-components';
+import { AttachmentMetadata, _AttachmentCard as AttachmentCardComponent } from '@internal/react-components';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { FluentV9ThemeProvider } from '../../../../react-components/src/theming/FluentV9ThemeProvider';
@@ -14,7 +14,7 @@ const AttachmentCardStory = (args): JSX.Element => {
   return (
     <FluentV9ThemeProvider v8Theme={theme}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
-        <FileCardComponent attachment={args.attachment} progress={args.progress} menuActions={args.menuActions} />
+        <AttachmentCardComponent attachment={args.attachment} progress={args.progress} menuActions={args.menuActions} />
       </div>
     </FluentV9ThemeProvider>
   );
@@ -24,20 +24,20 @@ const AttachmentCardStory = (args): JSX.Element => {
 // This ensures that storybook hoists the story instead of creating a folder with a single entry.
 export const AttachmentCard = AttachmentCardStory.bind({});
 
-const file: AttachmentMetadata = {
+const attachment: AttachmentMetadata = {
   extension: 'pdf',
   id: '42839hdwe-dfr2-323fcfwe',
-  name: 'SampleFileName.pdf',
+  name: 'SampleAttachmentName.pdf',
   url: 'https://www.bing.com'
 };
 
 export default {
   id: `${COMPONENT_FOLDER_PREFIX}-internal-attachmentcard`,
   title: `${COMPONENT_FOLDER_PREFIX}/Internal/Attachment Card`,
-  component: FileCardComponent,
+  component: AttachmentCardComponent,
   argTypes: {
     isDownload: { control: 'boolean', defaultValue: true },
-    attachment: { control: 'object', defaultValue: file },
+    attachment: { control: 'object', defaultValue: attachment },
     progress: { control: 'number', defaultValue: 0.5 },
     // Hiding auto-generated controls
     menuActions: {
@@ -47,28 +47,28 @@ export default {
           name: 'Open',
           icon: <Open24Filled />,
           onClick: () => {
-            window.open(file.url);
+            window.open(attachment.url);
           }
         },
         {
           name: 'Download',
           icon: <ArrowDownload24Filled />,
           onClick: () => {
-            window.alert(`Downloading ${file.name}`);
+            window.alert(`Downloading ${attachment.name}`);
           }
         },
         {
           name: 'Share',
           icon: <Share24Regular />,
           onClick: () => {
-            window.alert(`sharing ${file.name}`);
+            window.alert(`sharing ${attachment.name}`);
           }
         },
         {
           name: 'Pin',
           icon: <Pin24Regular />,
           onClick: () => {
-            window.alert(`pinning ${file.name}`);
+            window.alert(`pinning ${attachment.name}`);
           }
         }
       ]

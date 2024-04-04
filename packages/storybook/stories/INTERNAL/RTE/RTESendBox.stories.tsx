@@ -8,9 +8,9 @@ import React from 'react';
 import { DetailedBetaBanner } from '../../BetaBanners/DetailedBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../../constants';
 import { hiddenControl } from '../../controlsUtils';
-import { RTEFileUploadsExample } from './snippets/RTEFileUploads.snippet';
+import { RTEAttachmentUploadsExample } from './snippets/RTEAttachmentUploads.snippet';
 
-const RTEFileUploadsExampleText = require('!!raw-loader!./snippets/RTEFileUploads.snippet.tsx').default;
+const RTEAttachmentUploadsExampleText = require('!!raw-loader!./snippets/RTEAttachmentUploads.snippet.tsx').default;
 
 const getDocs: () => JSX.Element = () => {
   return (
@@ -24,12 +24,12 @@ const getDocs: () => JSX.Element = () => {
       <Heading>Display File Uploads</Heading>
       <DetailedBetaBanner />
       <Description>
-        RichTextSendBox component provides UI for displaying active file uploads in the RichTextSendBox. This allows
-        developers to implement a file sharing feature using the pure UI component with minimal effort. Developers can
-        write their own file upload logic and utilize the UI provided by RichTextSendBox.
+        RichTextSendBox component provides UI for displaying active attachment uploads in the RichTextSendBox. This
+        allows developers to implement a file sharing feature using the pure UI component with minimal effort.
+        Developers can write their own attachment upload logic and utilize the UI provided by RichTextSendBox.
       </Description>
-      <Canvas mdxSource={RTEFileUploadsExampleText}>
-        <RTEFileUploadsExample />
+      <Canvas mdxSource={RTEAttachmentUploadsExampleText}>
+        <RTEAttachmentUploadsExample />
       </Canvas>
 
       <Heading>Props</Heading>
@@ -70,12 +70,9 @@ export default {
     systemMessage: { control: 'text', defaultValue: undefined },
     isSendBoxWithWarning: { control: 'boolean', defaultValue: false, name: 'Has warning/information message' },
     strings: hiddenControl,
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    onRenderFileUploads: hiddenControl,
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    activeFileUploads: hiddenControl,
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    onCancelFileUpload: hiddenControl,
+    onRenderAttachmentUploads: hiddenControl,
+    activeAttachmentUploads: hiddenControl,
+    onCancelAttachmentUpload: hiddenControl,
     onSendMessage: hiddenControl
   },
   parameters: {
