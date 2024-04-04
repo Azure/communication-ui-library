@@ -1,19 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(capabilities) */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-/* @conditional-compile-remove(capabilities) */
+
 import { CapabilitiesChangeInfo, ParticipantCapabilityName, ParticipantRole } from '@azure/communication-calling';
-/* @conditional-compile-remove(capabilities) */
+
 import {
   CapabalityChangedNotification,
   CapabilitiesChangeNotificationBarProps
 } from '../components/CapabilitiesChangedNotificationBar';
-/* @conditional-compile-remove(capabilities) */
+
 import { TrackedCapabilityChangedNotifications } from '../types/CapabilityChangedNotificationTracking';
 
-/* @conditional-compile-remove(capabilities) */
 /**
  * Create a record for when the notification was most recently dismissed for tracking dismissed notifications.
  *
@@ -66,7 +64,6 @@ export const useTrackedCapabilityChangedNotifications = (
   };
 };
 
-/* @conditional-compile-remove(capabilities) */
 /**
  * Take the set of active notifications, and filter to only those that are newer than previously dismissed notifications or have never been dismissed.
  *
@@ -87,7 +84,6 @@ export const filterLatestCapabilityChangedNotifications = (
   return filteredNotifications;
 };
 
-/* @conditional-compile-remove(capabilities) */
 /**
  * Maintain a record of the most recently active notification for each capability name.
  *
@@ -112,7 +108,6 @@ export const updateTrackedCapabilityChangedNotificationsWithActiveNotifications 
   return trackedNotifications;
 };
 
-/* @conditional-compile-remove(capabilities) */
 /**
  * Create a record for when the notification was most recently dismissed for tracking dismissed notifications.
  *
@@ -134,18 +129,15 @@ export const trackCapabilityChangedNotificationAsDismissed = (
   };
 };
 
-/* @conditional-compile-remove(capabilities) */
 interface CapabilitiesChangedInfoAndRole {
   capabilitiesChangeInfo?: CapabilitiesChangeInfo;
   participantRole?: ParticipantRole;
 }
 
-/* @conditional-compile-remove(capabilities) */
 type LatestCapabilityChangedNotificationRecord = Partial<
   Record<ParticipantCapabilityName, CapabalityChangedNotification>
 >;
 
-/* @conditional-compile-remove(capabilities) */
 const updateLatestCapabilityChangedNotificationMap = (
   capabilitiesChangedInfoAndRole: CapabilitiesChangedInfoAndRole,
   activeNotifications: LatestCapabilityChangedNotificationRecord
