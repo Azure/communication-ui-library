@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 import { DominantSpeakersInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(capabilities) */
+
 import { ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
@@ -56,7 +56,6 @@ export const isHideAttendeeNamesEnabled = (state: CallClientState, props: Callin
   return false;
 };
 
-/* @conditional-compile-remove(capabilities) */
 /**
  * @private
  */

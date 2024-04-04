@@ -350,7 +350,6 @@ export const controlsToAdd = {
   },
   showChatParticipants: { control: 'boolean', defaultValue: true, name: 'Show Participants Pane' },
   showChatTopic: { control: 'boolean', defaultValue: true, name: 'Show Topic' },
-  showRichTextEditor: { control: 'boolean', defaultValue: false, name: 'Show Rich Text Editor' },
   showErrorBar: { control: 'boolean', defaultValue: true, name: 'Show ErrorBar' },
   showLabel: { control: 'boolean', defaultValue: false, name: 'Show label' },
   showVideoTileLabel: { control: 'boolean', defaultValue: true, name: 'Show label' },
