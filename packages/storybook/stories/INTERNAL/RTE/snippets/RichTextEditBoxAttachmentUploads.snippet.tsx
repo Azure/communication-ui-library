@@ -1,8 +1,5 @@
 import { FluentThemeProvider } from '@azure/communication-react';
-import {
-  ChatMessageComponentAsRichTextEditBox,
-  ChatMessageComponentAsRichTextEditBoxProps
-} from '@internal/react-components';
+import { ChatMessageComponentAsRichTextEditBox } from '@internal/react-components';
 import React from 'react';
 
 export const RichTextEditBoxAttachmentUploadsExample: () => JSX.Element = () => {
