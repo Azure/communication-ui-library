@@ -29,17 +29,14 @@ export const removeImageElement = (event: PluginEvent): void => {
   // We don't support the pasting options such as paste as image yet.
   if (event.eventType === CompatiblePluginEventType.BeforePaste && event.pasteType === CompatiblePasteType.Normal) {
     event.fragment.querySelectorAll('img').forEach((image) => {
-      // If the image is the only child of its parent, remove all the parents of this img element before removing the image element.
-      let parentNode = image.parentElement;
-      const parentsToRemove: Array<HTMLElement | null> = [];
+      // If the image is the only child of its parent, remove all the parents of this img element.
+      let parentNode: HTMLElement | null = image.parentElement;
+      let currentNode: HTMLElement = image;
       while (parentNode?.childNodes.length === 1) {
-        parentsToRemove.push(parentNode);
+        currentNode = parentNode;
         parentNode = parentNode.parentElement;
       }
-      parentsToRemove.forEach((parent) => {
-        parent?.remove();
-      });
-      image.remove();
+      currentNode?.remove();
     });
   }
 };
