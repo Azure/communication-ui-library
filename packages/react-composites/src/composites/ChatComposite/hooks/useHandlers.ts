@@ -40,9 +40,13 @@ const createCompositeHandlers = memoizeOne(
         attachmentMetadata?: AttachmentMetadata[];
       }
     ) => {
-      const metadata = options?.metadata;
+      let metadata = undefined;
       /* @conditional-compile-remove(attachment-upload) */
-      const updatedOptions = options?.attachmentMetadata ? { ...options.attachmentMetadata } : {};
+      metadata = options?.metadata;
+      /* @conditional-compile-remove(attachment-upload) */
+      const updatedOptions = {
+        attachmentMetadata: options?.attachmentMetadata
+      };
       return adapter.updateMessage(
         messageId,
         content,

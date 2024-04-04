@@ -53,7 +53,7 @@ import { TransferEventArgs } from '@azure/communication-calling';
 import { StartCaptionsOptions, TeamsCaptionsInfo } from '@azure/communication-calling';
 
 import type { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
-/* @conditional-compile-remove(capabilities) */
+
 import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support)) */
 import { TeamsCallAgent } from '@azure/communication-calling';
@@ -83,7 +83,7 @@ import {
 import { ReactionResources } from '@internal/react-components';
 /* @conditional-compile-remove(call-transfer) */
 import { TransferAcceptedListener } from './CallAdapter';
-/* @conditional-compile-remove(capabilities) */
+
 import { CapabilitiesChangedListener } from './CallAdapter';
 /* @conditional-compile-remove(spotlight) */
 import { SpotlightChangedListener } from './CallAdapter';
@@ -1093,9 +1093,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
   /* @conditional-compile-remove(call-transfer) */
   on(event: 'transferAccepted', listener: TransferAcceptedListener): void;
-  /* @conditional-compile-remove(capabilities) */
+
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
-  /* @conditional-compile-remove(capabilities) */
+
   on(event: 'roleChanged', listener: PropertyChangedEvent): void;
   /* @conditional-compile-remove(spotlight) */
   on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
@@ -1167,7 +1167,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.call?.on('roleChanged', this.roleChanged.bind(this));
     /* @conditional-compile-remove(call-transfer) */
     this.call?.feature(Features.Transfer).on('transferAccepted', this.transferAccepted.bind(this));
-    /* @conditional-compile-remove(capabilities) */
+
     this.call?.feature(Features.Capabilities).on('capabilitiesChanged', this.capabilitiesChanged.bind(this));
     /* @conditional-compile-remove(spotlight) */
     this.call?.feature(Features.Spotlight).on('spotlightChanged', this.spotlightChanged.bind(this));
@@ -1273,7 +1273,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.emitter.emit('transferAccepted', args);
   }
 
-  /* @conditional-compile-remove(capabilities) */
   private capabilitiesChanged(data: CapabilitiesChangeInfo): void {
     if (data.newValue.turnVideoOn?.isPresent === false) {
       // Only stop camera when the call state is not on hold. The Calling SDK does not allow us to stop camera when
@@ -1339,7 +1338,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
   /* @conditional-compile-remove(call-transfer) */
   off(event: 'transferAccepted', listener: TransferAcceptedListener): void;
-  /* @conditional-compile-remove(capabilities) */
+
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   off(event: 'roleChanged', listener: PropertyChangedEvent): void;
   /* @conditional-compile-remove(spotlight) */
