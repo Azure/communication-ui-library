@@ -1,9 +1,9 @@
 import { FluentThemeProvider } from '@azure/communication-react';
-import React from 'react';
 import {
   ChatMessageComponentAsRichTextEditBox,
   ChatMessageComponentAsRichTextEditBoxProps
 } from '@internal/react-components';
+import React from 'react';
 
 export const RichTextEditBoxAttachmentUploadsExample: () => JSX.Element = () => {
   const timeoutRef = React.useRef<NodeJS.Timeout>();
@@ -23,7 +23,7 @@ export const RichTextEditBoxAttachmentUploadsExample: () => JSX.Element = () => 
   ];
 
   const props: ChatMessageComponentAsRichTextEditBoxProps = {
-    onSubmit: async (message, metadata, options) => {
+    onSubmit: async (message) => {
       timeoutRef.current = setTimeout(() => {
         alert(`sent message: ${message} `);
       }, delayForSendButton);

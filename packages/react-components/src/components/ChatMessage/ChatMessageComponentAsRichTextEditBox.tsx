@@ -171,7 +171,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
         </FluentV9ThemeProvider>
       </Stack>
     );
-  }, [attachmentMetadata]);
+  }, [attachmentMetadata, theme]);
 
   const getContent = (): JSX.Element => {
     return (

@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 import { ChatMessageComponentAsRichTextEditBox as RichTextEditBoxComponent } from '@internal/react-components';
+import { Title, Description, Heading, Canvas, Props } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
+import { DetailedBetaBanner } from '../../BetaBanners/DetailedBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../../constants';
 import { hiddenControl } from '../../controlsUtils';
-import { Title, Description, Heading, Canvas, Props } from '@storybook/addon-docs';
-import { DetailedBetaBanner } from '../../BetaBanners/DetailedBetaBanner';
 import { RichTextEditBoxAttachmentUploadsExample } from './snippets/RichTextEditBoxAttachmentUploads.snippet';
 
 const RichTextEditBoxAttachmentUploadsExampleText =
