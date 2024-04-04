@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "Reaction",
+  "comment": "Solving reaction out of screen viewport issue",
+  "packageName": "@azure/communication-react",
+  "email": "mbellah@microsoft.com",
+  "dependentChangeType": "patch"
+}

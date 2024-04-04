@@ -14,9 +14,9 @@ import type {
 } from '../../../common';
 /* @conditional-compile-remove(teams-identity-support) */
 import type { CallKind, DominantSpeakersInfo, ParticipantRole } from '@azure/communication-calling';
-/* @conditional-compile-remove(capabilities) */
+
 import type { ParticipantCapabilities } from '@azure/communication-calling';
-/* @conditional-compile-remove(capabilities) */
+
 import { CallState, CapabilitiesFeatureState } from '@internal/calling-stateful-client';
 
 const SERVER_URL = 'http://localhost';
@@ -116,7 +116,7 @@ export function defaultMockCallAdapterState(
       optimalVideoCount: {
         maxRemoteVideoStreams: 4
       },
-      /* @conditional-compile-remove(capabilities) */
+
       capabilitiesFeature: getCapabilitiesFromRole(role, isReactionCapability)
     },
     endedCall: callEndReasonSubCode
@@ -314,7 +314,6 @@ export const stubLocalCameraName = async (page: Page): Promise<void> => {
   });
 };
 
-/* @conditional-compile-remove(capabilities) */
 const getCapabilitiesFromRole = (
   role?: ParticipantRole,
   isReactionCapability?: boolean
@@ -348,7 +347,6 @@ const getCapabilitiesFromRole = (
   }
 };
 
-/* @conditional-compile-remove(capabilities) */
 const consumerCapabilitiesInRoomsCall: ParticipantCapabilities = {
   addCommunicationUser: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   addPhoneNumber: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
@@ -376,7 +374,6 @@ const consumerCapabilitiesInRoomsCall: ParticipantCapabilities = {
   }
 };
 
-/* @conditional-compile-remove(capabilities) */
 const attendeeCapabilitiesInRoomsCall: ParticipantCapabilities = {
   addCommunicationUser: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   addPhoneNumber: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
@@ -404,7 +401,6 @@ const attendeeCapabilitiesInRoomsCall: ParticipantCapabilities = {
   }
 };
 
-/* @conditional-compile-remove(capabilities) */
 const presenterCapabilitiesInRoomsCall: ParticipantCapabilities = {
   addCommunicationUser: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   addPhoneNumber: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
