@@ -471,14 +471,14 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     });
   }
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  public registerActiveUploads = (files: File[]): FileUploadManager[] => {
+  public registerActiveUploads = (files: File[]): AttachmentUploadManager[] => {
     if (!this.chatAdapter) {
       throw new Error('ChatAdapter is not initialized');
     }
     return this.chatAdapter.registerActiveUploads(files);
   };
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  public registerCompletedUploads = (metadata: AttachmentMetadata[]): FileUploadManager[] => {
+  public registerCompletedUploads = (metadata: AttachmentMetadata[]): AttachmentUploadManager[] => {
     if (!this.chatAdapter) {
       throw new Error('ChatAdapter is not initialized');
     }
