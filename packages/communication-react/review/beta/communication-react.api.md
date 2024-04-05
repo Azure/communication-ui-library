@@ -2498,6 +2498,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     CancelAttachmentUpload: React_2.JSX.Element;
     DownloadAttachment: React_2.JSX.Element;
     OpenAttachment: React_2.JSX.Element;
+    AttachmentMoreMenu: React_2.JSX.Element;
     DataLossPreventionProhibited: React_2.JSX.Element;
     EditBoxCancel: React_2.JSX.Element;
     EditBoxSubmit: React_2.JSX.Element;
@@ -2692,6 +2693,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     CancelAttachmentUpload: React_2.JSX.Element;
     DownloadAttachment: React_2.JSX.Element;
     OpenAttachment: React_2.JSX.Element;
+    AttachmentMoreMenu: React_2.JSX.Element;
     DataLossPreventionProhibited: React_2.JSX.Element;
     ErrorBarCallVideoRecoveredBySystem: React_2.JSX.Element;
     ErrorBarCallVideoStoppedBySystem: React_2.JSX.Element;
@@ -3988,6 +3990,7 @@ export type SendBoxSelector = (state: ChatClientState, props: ChatBaseSelectorPr
 
 // @public
 export interface SendBoxStrings {
+    attachmentMoreMenu: string;
     attachmentUploadsPendingError: string;
     placeholderText: string;
     removeAttachment: string;

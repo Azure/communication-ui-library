@@ -301,7 +301,8 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
             strings={{
               removeAttachment: strings.removeAttachment,
               uploading: strings.uploading,
-              uploadCompleted: strings.uploadCompleted
+              uploadCompleted: strings.uploadCompleted,
+              attachmentMoreMenu: strings.attachmentMoreMenu
             }}
           />
         </FluentV9ThemeProvider>
@@ -313,6 +314,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     strings.removeAttachment,
     strings.uploadCompleted,
     strings.uploading,
+    strings.attachmentMoreMenu,
     theme
   ]);
 
