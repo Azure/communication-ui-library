@@ -81,7 +81,7 @@
     "label": "Leave",
     "tooltipContent": "Leave call",
     "leaveOption": "Leave",
-    "endCallOption": "End call"
+    "endCallOption": "End call for everyone"
   },
   "cameraButton": {
     "onLabel": "Camera",
