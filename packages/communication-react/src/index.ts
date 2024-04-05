@@ -320,12 +320,9 @@ export type {
   LongPressTrigger
 } from '../../react-components/src';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-export type {
-  AttachmentMetadata,
-  SendBoxErrorBarError,
-  AttachmentMenuAction,
-  AttachmentOptions
-} from '../../react-components/src';
+export type { AttachmentMetadata, AttachmentMenuAction, AttachmentOptions } from '../../react-components/src';
+/* @conditional-compile-remove(attachment-upload) */
+export type { SendBoxErrorBarError } from '../../react-components/src';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 export { defaultAttachmentMenuAction } from '../../react-components/src';
 export type { ChatAttachmentType } from '../../react-components/src';

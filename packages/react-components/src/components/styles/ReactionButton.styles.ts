@@ -49,7 +49,10 @@ export const emojiStyles = (backgroundImage: string, frameCount: number): IStyle
       animationDuration: '8.12s',
       animationTimingFunction: `steps(${steps})`,
       animationIterationCount: 'infinite',
-      backgroundColor: 'unset'
+      backgroundColor: 'transparent'
+    },
+    ':active': {
+      backgroundColor: 'transparent'
     }
   };
 };

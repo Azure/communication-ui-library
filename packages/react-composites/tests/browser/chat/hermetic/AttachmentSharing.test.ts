@@ -6,7 +6,7 @@ import { sendMessage, waitForMessageDelivered } from '../../common/chatTestHelpe
 import { dataUiId, stableScreenshot, waitForSelector } from '../../common/utils';
 import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, test, TEST_PARTICIPANTS } from './fixture';
 
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-upload) */
 test.describe('Filesharing Attach file icon', async () => {
   test('is not visible if filesharing options are undefined', async ({ serverUrl, page }) => {
     await page.goto(buildUrlForChatAppUsingFakeAdapter(serverUrl, DEFAULT_FAKE_CHAT_ADAPTER_ARGS));
@@ -25,7 +25,7 @@ test.describe('Filesharing Attach file icon', async () => {
   });
 });
 
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-upload) */
 test.describe('Filesharing SendBox', async () => {
   test('shows file cards for uploaded files', async ({ serverUrl, page }) => {
     await page.goto(
@@ -62,7 +62,7 @@ test.describe('Filesharing SendBox', async () => {
   });
 });
 
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-upload) */
 test.describe('Filesharing ProgressBar', async () => {
   test('is visible if progress is between 0 and 1', async ({ serverUrl, page }) => {
     await page.goto(
@@ -167,7 +167,7 @@ test.describe('Filesharing ProgressBar', async () => {
   });
 });
 
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-upload) */
 test.describe('Filesharing SendBox Errorbar', async () => {
   test('shows attachment upload error', async ({ serverUrl, page }) => {
     await page.goto(
@@ -311,7 +311,7 @@ test.describe('Filesharing Message Thread', async () => {
   });
 });
 
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-upload) */
 test.describe('Filesharing Edit Message', async () => {
   test.beforeEach(async ({ serverUrl, page }) => {
     await page.goto(

@@ -56,6 +56,8 @@ import { useLocale } from '../../localization';
 import { isBoolean } from '../utils';
 /* @conditional-compile-remove(end-call-options) */
 import { getIsTeamsCall } from '../../CallComposite/selectors/baseSelectors';
+/* @conditional-compile-remove(reaction) */
+import { callStatusSelector } from '../../CallComposite/selectors/callStatusSelector';
 
 /**
  * @private
@@ -257,8 +259,12 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   /* @conditional-compile-remove(reaction) */
   const capabilitiesSelector = useSelector(capabilitySelector);
   /* @conditional-compile-remove(reaction) */
+  const callState = useSelector(callStatusSelector);
+  /* @conditional-compile-remove(reaction) */
   const isReactionAllowed =
-    !capabilitiesSelector?.capabilities || capabilitiesSelector.capabilities.useReactions.isPresent;
+    callState.callStatus !== 'Connected' ||
+    !capabilitiesSelector?.capabilities ||
+    capabilitiesSelector.capabilities.useReactions.isPresent;
 
   // when options is false then we want to hide the whole control bar.
   if (options === false) {

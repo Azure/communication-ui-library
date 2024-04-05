@@ -8,7 +8,7 @@ import { CaptionsInfo } from '@internal/calling-stateful-client';
 import type { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
 /* @conditional-compile-remove(reaction) */
 import { Reaction } from '@azure/communication-calling';
-/* @conditional-compile-remove(capabilities) */
+
 import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(spotlight) */
 import type { SpotlightedParticipant } from '@azure/communication-calling';
@@ -404,7 +404,6 @@ export type IsSpokenLanguageChangedListener = (event: { activeSpokenLanguage: st
  */
 export type TransferAcceptedListener = (event: TransferEventArgs) => void;
 
-/* @conditional-compile-remove(capabilities) */
 /**
  * Callback for {@link CallAdapterSubscribers} 'capabilitiesChanged' event.
  *
@@ -708,12 +707,14 @@ export interface CallAdapterCallOperations {
   submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
   /* @conditional-compile-remove(spotlight) */
   /**
-   * Start spotlight
+   * Start spotlight for local and remote participants by their user ids.
+   * If no array of user ids is passed then action is performed on local participant.
    */
   startSpotlight(userIds?: string[]): Promise<void>;
   /* @conditional-compile-remove(spotlight) */
   /**
-   * Stop spotlight
+   * Stop spotlight for local and remote participants by their user ids.
+   * If no array of user ids is passed then action is performed on local participant.
    */
   stopSpotlight(userIds?: string[]): Promise<void>;
   /* @conditional-compile-remove(spotlight) */
@@ -894,7 +895,7 @@ export interface CallAdapterSubscribers {
    * Subscribe function for 'transferRequested' event.
    */
   on(event: 'transferAccepted', listener: TransferAcceptedListener): void;
-  /* @conditional-compile-remove(capabilities) */
+
   /**
    * Subscribe function for 'capabilitiesChanged' event.
    */
@@ -982,7 +983,7 @@ export interface CallAdapterSubscribers {
    * Unsubscribe function for 'transferRequested' event.
    */
   off(event: 'transferAccepted', listener: TransferAcceptedListener): void;
-  /* @conditional-compile-remove(capabilities) */
+
   /**
    * Unsubscribe function for 'capabilitiesChanged' event.
    */
