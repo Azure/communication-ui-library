@@ -34,7 +34,7 @@ import { FluentV9ThemeProvider } from '../../../theming/FluentV9ThemeProvider';
 /* @conditional-compile-remove(attachment-upload) */
 import { attachmentUploadCardsStyles } from '../../styles/SendBox.styles';
 
-/** @beta */
+/** @private */
 export type ChatMessageComponentAsRichTextEditBoxProps = {
   onCancel?: (messageId: string) => void;
   onSubmit: (
@@ -50,7 +50,7 @@ export type ChatMessageComponentAsRichTextEditBoxProps = {
 };
 
 /**
- * @beta
+ * @private
  */
 export const ChatMessageComponentAsRichTextEditBox = (
   props: ChatMessageComponentAsRichTextEditBoxProps
@@ -59,7 +59,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
 
   const [textValue, setTextValue] = useState<string>(message.content || '');
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  const [attachmentMetadata, setAttachmentMetadata] = React.useState(getMessageWithAttachmentMetadata(message));
+  const [attachmentMetadata, setAttachmentMetadata] = useState(getMessageWithAttachmentMetadata(message));
   const editTextFieldRef = React.useRef<RichTextEditorComponentRef>(null);
   const theme = useTheme();
   const messageState = getMessageState(
