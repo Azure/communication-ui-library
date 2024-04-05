@@ -94,8 +94,6 @@ module.exports = {
     "stabilizedDemo",
     // Closed captions
     "close-captions",
-    // Feature for the DTMF dialer for Teams voice apps
-    "dtmf-dialer",
     // Feature for call transfer
     "call-transfer",
     // custom branding for the composites
