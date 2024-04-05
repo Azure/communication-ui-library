@@ -93,6 +93,13 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
     []
   );
 
+  const downloadAttachmentButtonString = useMemo(
+    () => () => {
+      return props.strings?.downloadAttachment ?? localeStrings.downloadAttachment;
+    },
+    [props.strings?.downloadAttachment, localeStrings.downloadAttachment]
+  );
+
   const attachmentCardGroupDescription = useMemo(
     () => () => {
       const attachmentGroupLocaleString =
@@ -117,7 +124,7 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
       <_AttachmentCardGroup ariaLabel={attachmentCardGroupDescription()}>
         {attachments &&
           attachments.map((attachment) => (
-            <TooltipHost content={attachment.name} key={attachment.name}>
+            <TooltipHost content={downloadAttachmentButtonString()} key={attachment.name}>
               <_AttachmentCard
                 attachment={attachment}
                 key={attachment.id}
