@@ -13,8 +13,6 @@ import { loadingStyle } from './styles/RemoteScreenShare.styles';
 import { _formatString } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(reaction) */
 import { MeetingReactionOverlay } from '../MeetingReactionOverlay';
-import { pptLiveOverlayStyles, pptLiveStreamStyles } from '../styles/VideoGallery.styles';
-
 /**
  * A memoized version of VideoTile for rendering the remote screen share stream. React.memo is used for a performance
  * boost by memoizing the same rendered component to avoid rerendering this when the parent component rerenders.
@@ -96,13 +94,10 @@ export const RemoteScreenShare = React.memo(
             // Add the layer on top of the pptlive stream to diable keyboard event
             // TODO need to remove after we have navigation feature ready
             renderElement ? (
-              <div style={pptLiveStreamStyles}>
-                <StreamMedia
-                  videoStreamElement={renderElement}
-                  loadingState={isReceiving === false ? 'loading' : 'none'}
-                />
-                <div style={pptLiveOverlayStyles}></div>
-              </div>
+              <StreamMedia
+                videoStreamElement={renderElement}
+                loadingState={isReceiving === false ? 'loading' : 'none'}
+              />
             ) : undefined
           }
           onRenderPlaceholder={() => <LoadingSpinner loadingMessage={loadingMessage} />}
