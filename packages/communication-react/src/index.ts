@@ -335,7 +335,7 @@ export type {
 export type { AttachmentMenuAction, AttachmentDownloadOptions } from '../../react-components/src';
 /* @conditional-compile-remove(attachment-download) */
 export { defaultAttachmentMenuAction } from '../../react-components/src';
-
+/* @conditional-compile-remove(attachment-upload) */
 export type { SendBoxErrorBarError } from '../../react-components/src';
 export type { ChatAttachmentType } from '../../react-components/src';
 export type { InlineImageOptions, InlineImage } from '../../react-components/src';

@@ -1,12 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+/* @conditional-compile-remove(attachment-download) */
 import { AttachmentMetadata, defaultAttachmentMenuAction } from '@azure/communication-react';
 
 // uncomment below line to use custom icons
 // import { WindowNew24Regular } from '@fluentui/react-icons';
 // import React from 'react';
 
+/* @conditional-compile-remove(attachment-download) */
 const attachmentDownloadOptions = {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   actionsForAttachment: (attachment: AttachmentMetadata) => {
@@ -64,4 +66,5 @@ const attachmentDownloadOptions = {
   }
 };
 
+/* @conditional-compile-remove(attachment-download) */
 export default attachmentDownloadOptions;

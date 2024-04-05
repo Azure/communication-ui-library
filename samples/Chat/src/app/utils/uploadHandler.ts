@@ -1,16 +1,22 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+/* @conditional-compile-remove(attachment-upload) */
 import { AttachmentUploadHandler, AttachmentUploadOptions, AttachmentUploadManager } from '@azure/communication-react';
-
+/* @conditional-compile-remove(attachment-download) */
 import axios, { AxiosProgressEvent } from 'axios';
+/* @conditional-compile-remove(attachment-download) */
 import FormData from 'form-data';
 
+/* @conditional-compile-remove(attachment-download) */
 // max file size is 50MB
 const MAX_FILE_SIZE_MB = 50 * 1024 * 1024; // 50MB
+/* @conditional-compile-remove(attachment-download) */
 const UNSUPPORTED_FILES = ['exe', 'bat', 'dat'];
+/* @conditional-compile-remove(attachment-download) */
 const CONTAINER_NAME = '<CONTAINER_NAME>>';
 
+/* @conditional-compile-remove(attachment-upload) */
 const attachmentUploadHandler: AttachmentUploadHandler = async (
   rawFileLists: AttachmentUploadManager[]
 ): Promise<void> => {
@@ -61,9 +67,9 @@ const attachmentUploadHandler: AttachmentUploadHandler = async (
     }
   }
 };
-
+/* @conditional-compile-remove(attachment-upload) */
 const attachmentUploadOptions: AttachmentUploadOptions = {
   handler: attachmentUploadHandler
 };
-
+/* @conditional-compile-remove(attachment-upload) */
 export default attachmentUploadOptions;
