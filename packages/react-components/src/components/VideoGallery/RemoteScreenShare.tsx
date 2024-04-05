@@ -13,6 +13,7 @@ import { loadingStyle } from './styles/RemoteScreenShare.styles';
 import { _formatString } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(reaction) */
 import { MeetingReactionOverlay } from '../MeetingReactionOverlay';
+
 /**
  * A memoized version of VideoTile for rendering the remote screen share stream. React.memo is used for a performance
  * boost by memoizing the same rendered component to avoid rerendering this when the parent component rerenders.
@@ -91,8 +92,6 @@ export const RemoteScreenShare = React.memo(
       return (
         <VideoTile
           renderElement={
-            // Add the layer on top of the pptlive stream to diable keyboard event
-            // TODO need to remove after we have navigation feature ready
             renderElement ? (
               <StreamMedia
                 videoStreamElement={renderElement}
