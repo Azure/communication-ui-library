@@ -5,14 +5,14 @@ import { mergeStyles, Stack } from '@fluentui/react';
 import { ChatMyMessage } from '@fluentui-contrib/react-chat';
 import { mergeClasses } from '@fluentui/react-components';
 import { _formatString } from '@internal/acs-ui-common';
-import { useTheme } from '../../../theming/FluentThemeProvider';
+import { useTheme } from '../../theming/FluentThemeProvider';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { editBoxWidthStyles, richTextEditBoxActionButtonIcon } from '../../styles/EditBox.styles';
-import { InputBoxButton } from '../../InputBoxButton';
-import { MessageThreadStrings } from '../../MessageThread';
-import { useChatMyMessageStyles } from '../../styles/MessageThread.styles';
-import { ChatMessage } from '../../../types';
-import { _AttachmentUploadCards } from '../../AttachmentUploadCards';
+import { editBoxWidthStyles, richTextEditBoxActionButtonIcon } from '../styles/EditBox.styles';
+import { InputBoxButton } from '../InputBoxButton';
+import { MessageThreadStrings } from '../MessageThread';
+import { useChatMyMessageStyles } from '../styles/MessageThread.styles';
+import { ChatMessage } from '../../types';
+import { _AttachmentUploadCards } from '../AttachmentUploadCards';
 /* @conditional-compile-remove(attachment-upload) */
 import { AttachmentMetadata } from '../../../types/Attachment';
 import { useChatMessageRichTextEditContainerStyles } from '../../styles/ChatMessageComponent.styles';
@@ -71,12 +71,6 @@ export const ChatMessageComponentAsRichTextEditBox = (
   const editContainerStyles = useChatMessageRichTextEditContainerStyles();
   const chatMyMessageStyles = useChatMyMessageStyles();
   const locale = useLocale().strings;
-
-  // TODO: Check if the focus is needed, if so use `focusOnInit` prop
-  // for Rooster component instead as this sets focus too early
-  useEffect(() => {
-    editTextFieldRef.current?.focus();
-  }, []);
 
   const setText = (newValue?: string): void => {
     setTextValue(newValue ?? '');
@@ -192,6 +186,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
           onChange={setText}
           editorComponentRef={editTextFieldRef}
           initialContent={message.content}
+          content={textValue}
           strings={richTextLocaleStrings}
           disabled={false}
           actionComponents={actionButtons}
