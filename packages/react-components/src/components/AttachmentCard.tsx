@@ -30,6 +30,16 @@ import { AttachmentMetadata, AttachmentMenuAction } from '../types/Attachment';
 import { useAttachmentCardStyles, attachmentNameContainerClassName } from './styles/AttachmentCard.styles';
 
 /**
+ * Strings of _AttachmentUploadCards that can be overridden.
+ *
+ * @internal
+ */
+export interface AttachmentCardStrings {
+  /** Aria label to notify user more attachment action menu. */
+  attachmentMoreMenu: string;
+}
+
+/**
  * @internal
  * AttachmentCard Component Props.
  */
@@ -45,7 +55,7 @@ export interface _AttachmentCardProps {
   /**
    * Optional aria label strings for attachment upload cards
    */
-  strings?: _AttachmentUploadCardsStrings;
+  strings?: _AttachmentUploadCardsStrings & AttachmentCardStrings;
   /**
    * Optional callback that runs if menu bar action onclick throws.
    */
@@ -115,7 +125,7 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
               <Text title={attachment.name}>{attachment.name}</Text>
             </div>
           }
-          action={getMenuItems(menuActions, attachment, onActionHandlerFailed)}
+          action={GetMenuItems(menuActions, attachment, onActionHandlerFailed)}
         />
       </Card>
       {isUploadComplete ? (
@@ -129,11 +139,13 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
   );
 };
 
-const getMenuItems = (
+const GetMenuItems = (
   menuActions: AttachmentMenuAction[],
   attachment: AttachmentMetadata,
   handleOnClickError?: (errMsg: string) => void
 ): JSX.Element => {
+  const localeStrings = useLocaleAttachmentCardStringsTrampoline();
+
   if (menuActions.length === 0) {
     return <></>;
   }
@@ -153,7 +165,7 @@ const getMenuItems = (
     <Toolbar>
       <Menu>
         <MenuTrigger>
-          <ToolbarButton aria-label="More" icon={<Icon iconName="AttachmentMoreMenu" aria-label="More" />} />
+          <ToolbarButton icon={<Icon iconName="AttachmentMoreMenu" aria-label={localeStrings.attachmentMoreMenu} />} />
         </MenuTrigger>
         <MenuPopover>
           <MenuList>

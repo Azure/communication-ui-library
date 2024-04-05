@@ -6,7 +6,7 @@ import React, { useMemo } from 'react';
 import { _AttachmentCard } from './AttachmentCard';
 import { _AttachmentCardGroup } from './AttachmentCardGroup';
 import { AttachmentMetadata } from '../types/Attachment';
-import { useLocaleAttachmentCardStringsTrampoline } from './utils/common';
+import { useLocaleAttachmentUploadCardStringsTrampoline } from './utils/common';
 
 /**
  * Strings of _AttachmentUploadCards that can be overridden.
@@ -49,7 +49,7 @@ const actionIconStyle = { height: '1rem' };
  */
 export const _AttachmentUploadCards = (props: AttachmentUploadCardsProps): JSX.Element => {
   const attachments = props.activeAttachmentUploads;
-  const localeStrings = useLocaleAttachmentCardStringsTrampoline();
+  const localeStrings = useLocaleAttachmentUploadCardStringsTrampoline();
   const removeAttachmentButtonString = useMemo(
     () => () => {
       return props.strings?.removeAttachment ?? localeStrings.removeAttachment;

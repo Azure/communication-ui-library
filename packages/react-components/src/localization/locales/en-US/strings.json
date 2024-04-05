@@ -20,6 +20,9 @@
     "multipleUsersAbbreviateMany": "{users} and {numOthers} others are typing ...",
     "delimiter": ", "
   },
+  "attachmentCard": {
+    "attachmentMoreMenu": "More Options"
+  },
   "sendBox": {
     "placeholderText": "Enter a message",
     "textTooLong": "Your message length is over the maximum limit.",
