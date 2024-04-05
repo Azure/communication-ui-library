@@ -17,29 +17,30 @@ const storyControls = {
   token: controlsToAdd.token,
   endpointUrl: controlsToAdd.endpointUrl,
   displayName: controlsToAdd.requiredDisplayName,
-  teamsMeetingLink: controlsToAdd.teamsMeetingLink,
+  teamsMeetingId: controlsToAdd.teamsMeetingId,
+  teamsMeetingPasscode: controlsToAdd.teamsMeetingPasscode,
   formFactor: controlsToAdd.formFactor
 };
 
-const JoinTeamsMeetingStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Element => {
+const JoinWithMeetingIdStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Element => {
   const [meetingProps, setMeetingProps] = useState<CallWithChatExampleProps>();
 
   useEffect(() => {
     const fetchToken = async (): Promise<void> => {
-      if (!!args.token && !!args.userId && !!args.endpointUrl && !!args.displayName && !!args.teamsMeetingLink) {
+      if (!!args.token && !!args.userId && !!args.endpointUrl && !!args.displayName && !!args.teamsMeetingId) {
         setMeetingProps({
           userId: { communicationUserId: args.userId },
           token: args.token,
           displayName: args.displayName,
           endpointUrl: args.endpointUrl,
-          locator: { meetingLink: args.teamsMeetingLink }
+          locator: { meetingId: args.teamsMeetingId, passcode: args.teamsMeetingPasscode }
         });
       } else {
         setMeetingProps(undefined);
       }
     };
     fetchToken();
-  }, [args.token, args.userId, args.endpointUrl, args.displayName, args.teamsMeetingLink]);
+  }, [args.token, args.userId, args.endpointUrl, args.displayName, args.teamsMeetingId, args.teamsMeetingPasscode]);
 
   return (
     <>
@@ -58,11 +59,11 @@ const JoinTeamsMeetingStory = (args: ArgsFrom<typeof storyControls>, context): J
   );
 };
 
-export const JoinTeamsMeeting = JoinTeamsMeetingStory.bind({});
+export const JoinWithMeetingId = JoinWithMeetingIdStory.bind({});
 
 export default {
-  id: `${COMPOSITE_FOLDER_PREFIX}-call-with-chat-jointeamsmeeting`,
-  title: `${COMPOSITE_FOLDER_PREFIX}/CallWithChatComposite/Join Teams Meeting`,
+  id: `${COMPOSITE_FOLDER_PREFIX}-call-with-chat-join-with-meeting-id`,
+  title: `${COMPOSITE_FOLDER_PREFIX}/CallWithChatComposite/Join With Meeting Id`,
   component: CallWithChatComposite,
   argTypes: {
     ...storyControls,

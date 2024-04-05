@@ -15,16 +15,17 @@ import { ConfigJoinCallHintBanner } from './snippets/Utils';
 const storyControls = {
   userId: controlsToAdd.userId,
   token: controlsToAdd.token,
-  callLocator: controlsToAdd.teamsMeetingLink,
+  teamsMeetingId: controlsToAdd.teamsMeetingId,
+  teamsMeetingPasscode: controlsToAdd.teamsMeetingPasscode,
   compositeFormFactor: controlsToAdd.formFactor,
   callInvitationURL: controlsToAdd.callInvitationURL
 };
 
-const JoinExistingCallAsTeamsUserStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Element => {
+const JoinWithMeetingIdAsTeamsUserStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Element => {
   const {
     globals: { locale }
   } = context;
-  const areAllKnobsSet = !!args.callLocator && !!args.userId && !!args.token;
+  const areAllKnobsSet = args.teamsMeetingId && !!args.userId && !!args.token;
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
@@ -32,8 +33,8 @@ const JoinExistingCallAsTeamsUserStory = (args: ArgsFrom<typeof storyControls>, 
         <ContosoCTECallContainer
           fluentTheme={context.theme}
           rtl={context.globals.rtl === 'rtl'}
-          locator={args.callLocator}
-          meetingLink={args.callLocator}
+          meetingId={args.teamsMeetingId}
+          meetingPasscode={args.teamsMeetingPasscode}
           userId={{ microsoftTeamsUserId: args.userId }}
           token={args.token}
           callInvitationURL={args.callInvitationURL}
@@ -47,11 +48,11 @@ const JoinExistingCallAsTeamsUserStory = (args: ArgsFrom<typeof storyControls>, 
   );
 };
 
-export const JoinExistingCallAsTeamsUser = JoinExistingCallAsTeamsUserStory.bind({});
+export const JoinCallWithMeetingIdAsTeamsUser = JoinWithMeetingIdAsTeamsUserStory.bind({});
 
 export default {
-  id: `${COMPOSITE_FOLDER_PREFIX}-call-joinexistingcall-asteamsuser`,
-  title: `${COMPOSITE_FOLDER_PREFIX}/CallComposite/Join Existing Call As Teams User`,
+  id: `${COMPOSITE_FOLDER_PREFIX}-call-join-with-meetingid-asteamsuser`,
+  title: `${COMPOSITE_FOLDER_PREFIX}/CallComposite/Join Call With Meeting Id As Teams User`,
   component: CallComposite,
   argTypes: {
     ...storyControls,

@@ -3,7 +3,7 @@
 
 import { CallComposite } from '@azure/communication-react';
 import { MessageBar, Stack, Text } from '@fluentui/react';
-import { Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
+import { Description, Heading, Props, Source, Title, Subheading } from '@storybook/addon-docs';
 import React, { useEffect, useRef } from 'react';
 import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { overviewPageImagesStackStyle } from '../constants';
@@ -49,6 +49,13 @@ const customBrandingSnippet = `
     }
   }
 }} />
+`;
+
+const createTeamsMeetingResponse = `
+  // partial response from creating a Teams meeting
+  'joinWebUrl': 'https://teams.microsoft.com/l/meetup',
+  'joinMeetingId': '1234567890',
+  'passcode': 'abc'
 `;
 
 export const Docs: () => JSX.Element = () => {
@@ -365,8 +372,49 @@ export const Docs: () => JSX.Element = () => {
           playground to join an existing Azure Communication Services group call or an existing Teams meeting. This is
           useful if you want to explore the composite with multiple users. There are two ways to join an existing call:
         </Description>
-        <Description>- Use Teams meeting link</Description>
-        <Description>- Use Teams MeetingId and passcode</Description>
+        <Subheading>Use Teams meeting link</Subheading>
+        <Description>Where to find the Teams MeetingId and passcode:</Description>
+        <Description>- Outlook. Open the meeting you want to join. Find "Join meeting" link.</Description>
+        <Description>
+          - Teams. Open the meeting you want to join. Go to partipants tab and click on button share invite and copy
+          meeting link.
+        </Description>
+        <Stack horizontalAlign="center">
+          <img
+            style={{ width: '100%', maxWidth: '25rem' }}
+            src="images/teams-get-meeting-link.png"
+            alt="Get Teams MeetingId and passcode from Teams"
+          />
+        </Stack>
+        <Subheading>Use Teams MeetingId and passcode</Subheading>
+        <Description>
+          - Outlook. Open the meeting you want to join. At the bottom of the meeting invitation under Or join by
+          entering a meeting ID, you'll find the ID and passcode.
+        </Description>
+        <Description>
+          - Teams. Open the meeting you want to join. Click on the three dots at the top right of the meeting window and
+          select meeting info.
+        </Description>
+        <Stack horizontalAlign="center">
+          <img
+            style={{ width: '100%', maxWidth: '25rem' }}
+            src="images/teams-get-meetingid-and-passcode.png"
+            alt="Get Teams MeetingId and passcode from Teams"
+          />
+        </Stack>
+        <Subheading>Use Graph API to get or create meeting</Subheading>
+        <Description>
+          You can use the Microsoft Graph API to get all information about Teams meeting. You can find more information
+          on how to do this in this
+          [acticle](https://learn.microsoft.com/en-us/graph/api/onlinemeeting-get?view=graph-rest-1.0&tabs=http).
+        </Description>
+        <Description>
+          It is possible to create a Teams meeting using the Microsoft Graph API. You can find more information on how
+          to do this in this
+          [acticle](https://learn.microsoft.com/en-us/graph/api/application-post-onlinemeetings?view=graph-rest-1.0&tabs=http).
+        </Description>
+        <Description>Response will contain both the mettinglink and the meetingId and passcode.</Description>
+        <Source code={createTeamsMeetingResponse} />
       </div>
       <Heading>PSTN and 1:N Calling</Heading>
       <SingleLineBetaBanner version={'1.3.2-beta.1'} />
