@@ -5,11 +5,11 @@ import { ChatMessageComponentAsRichTextEditBox as RichTextEditBoxComponent } fro
 import { Title, Description, Heading, Canvas, Props } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
+import { useLocale } from '../../../../react-components/src/localization';
 import { DetailedBetaBanner } from '../../BetaBanners/DetailedBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../../constants';
 import { hiddenControl } from '../../controlsUtils';
 import { RichTextEditBoxAttachmentUploadsExample } from './snippets/RichTextEditBoxAttachmentUploads.snippet';
-import { useLocale } from '../../../../react-components/src/localization';
 
 const RichTextEditBoxAttachmentUploadsExampleText =
   require('!!raw-loader!./snippets/RichTextEditBoxAttachmentUploads.snippet.tsx').default;
@@ -37,8 +37,6 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-const strings = useLocale().strings.messageThread;
-
 const RichTextEditBoxStory = (args): JSX.Element => {
   const timeoutRef = React.useRef<NodeJS.Timeout>();
   const delayForSendButton = 300;
@@ -58,7 +56,7 @@ const RichTextEditBoxStory = (args): JSX.Element => {
           messageId: '1',
           createdOn: new Date()
         }}
-        strings={strings}
+        strings={useLocale().strings.messageThread}
       />
     </div>
   );
