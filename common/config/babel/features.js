@@ -92,8 +92,6 @@ module.exports = {
     "stabilizedDemo",
     // Closed captions
     "close-captions",
-    // Feature for call transfer
-    "call-transfer",
     // Support Calling SDK isReceiving flag, shows a loading spinner on the video tile when isAvailable is true but isReceiving is false
     "video-stream-is-receiving-flag",
   ]

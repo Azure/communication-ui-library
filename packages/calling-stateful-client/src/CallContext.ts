@@ -45,7 +45,6 @@ import {
 import { CaptionsInfo } from './CallClientState';
 /* @conditional-compile-remove(reaction) */
 import { ReactionState } from './CallClientState';
-/* @conditional-compile-remove(call-transfer) */
 import { AcceptedTransfer } from './CallClientState';
 import { callingStatefulLogger } from './Logger';
 import { CallIdHistory } from './CallIdHistory';
@@ -1093,7 +1092,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(call-transfer) */
   setAcceptedTransfer(callId: string, acceptedTransfer: AcceptedTransfer): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];

@@ -154,7 +154,6 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
       isCaptionsFeatureActive: false,
       startCaptionsInProgress: false
     },
-    /* @conditional-compile-remove(call-transfer) */
     transfer: {
       acceptedTransfers: {}
     },

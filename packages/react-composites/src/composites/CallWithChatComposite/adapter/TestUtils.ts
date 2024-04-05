@@ -257,7 +257,6 @@ function createMockCall(mockCallId: string): CallState {
       isCaptionsFeatureActive: false,
       startCaptionsInProgress: false
     },
-    /* @conditional-compile-remove(call-transfer) */
     transfer: {
       acceptedTransfers: {}
     },

@@ -96,7 +96,6 @@ export const getRole = (state: CallAdapterState): ParticipantRole | undefined =>
  */
 export const getPage = (state: CallAdapterState): CallCompositePage => state.page;
 
-/* @conditional-compile-remove(call-transfer) */
 /**
  * @private
  */

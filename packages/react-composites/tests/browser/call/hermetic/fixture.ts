@@ -109,7 +109,6 @@ export function defaultMockCallAdapterState(
         isCaptionsFeatureActive: false,
         startCaptionsInProgress: false
       },
-      /* @conditional-compile-remove(call-transfer) */
       transfer: {
         acceptedTransfers: {}
       },
@@ -487,7 +486,6 @@ const defaultEndedCallState: CallState = {
     isCaptionsFeatureActive: false,
     startCaptionsInProgress: false
   },
-  /* @conditional-compile-remove(call-transfer) */
   transfer: {
     acceptedTransfers: {}
   },

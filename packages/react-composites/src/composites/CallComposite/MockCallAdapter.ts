@@ -257,7 +257,6 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
         isCaptionsFeatureActive: false,
         startCaptionsInProgress: false
       },
-      /* @conditional-compile-remove(call-transfer) */
       transfer: {
         acceptedTransfers: {}
       },
