@@ -115,7 +115,7 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
               <Text title={attachment.name}>{attachment.name}</Text>
             </div>
           }
-          action={GetMenuItems(menuActions, attachment, onActionHandlerFailed)}
+          action={MappedMenuItems(menuActions, attachment, onActionHandlerFailed)}
         />
       </Card>
       {isUploadComplete ? (
@@ -129,7 +129,7 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
   );
 };
 
-const GetMenuItems = (
+const MappedMenuItems = (
   menuActions: AttachmentMenuAction[],
   attachment: AttachmentMetadata,
   handleOnClickError?: (errMsg: string) => void
