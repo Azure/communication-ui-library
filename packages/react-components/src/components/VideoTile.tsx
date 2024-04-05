@@ -41,6 +41,7 @@ import { moreButtonStyles } from './styles/VideoTile.styles';
 import { raiseHandContainerStyles } from './styles/VideoTile.styles';
 /* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '../types/ReactionTypes';
+/* @conditional-compile-remove(ppt-live) */
 import { pptLiveOverlayStyles } from './styles/VideoGallery.styles';
 
 /**
@@ -407,6 +408,8 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
         }
         {
           /* @conditional-compile-remove(ppt-live) */
+          //TODO remove when pptlive local navigation feature is ready
+          //ADO FEATURE 3667703
           <Stack className={mergeStyles(videoContainerStyles, pptLiveOverlayStyles)}></Stack>
         }
         {(canShowLabel || participantStateString) && (
