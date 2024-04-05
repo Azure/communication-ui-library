@@ -342,6 +342,9 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     <Stack>
       <RichTextSendBoxErrors {...sendBoxErrorsProps} />
       <RichTextInputBoxComponent
+        // in case when format bar is shown, the editor is re-rendered that causes the content to be lost
+        // setting the content will ensure that the latest content is used when editor is re-rendered
+        content={contentValue}
         placeholderText={strings.placeholderText}
         onChange={setContent}
         onEnterKeyDown={sendMessageOnClick}
