@@ -42,13 +42,12 @@ __webpack_require__.r(__webpack_exports__);
  */
 // create a global _combinedNpmrc for cache purpose
 const _combinedNpmrcMap = new Map();
-function _trimNpmrcFile(sourceNpmrcPath, extraLines = []) {
+function _trimNpmrcFile(sourceNpmrcPath) {
     const combinedNpmrcFromCache = _combinedNpmrcMap.get(sourceNpmrcPath);
     if (combinedNpmrcFromCache !== undefined) {
         return combinedNpmrcFromCache;
     }
     let npmrcFileLines = fs__WEBPACK_IMPORTED_MODULE_0__.readFileSync(sourceNpmrcPath).toString().split('\n');
-    npmrcFileLines.push(...extraLines);
     npmrcFileLines = npmrcFileLines.map((line) => (line || '').trim());
     const resultLines = [];
     // This finds environment variable tokens that look like "${VAR_NAME}"
@@ -107,10 +106,10 @@ function _trimNpmrcFile(sourceNpmrcPath, extraLines = []) {
  * @returns
  * The text of the the .npmrc with lines containing undefined variables commented out.
  */
-function _copyAndTrimNpmrcFile(logger, sourceNpmrcPath, targetNpmrcPath, extraLines) {
+function _copyAndTrimNpmrcFile(logger, sourceNpmrcPath, targetNpmrcPath) {
     logger.info(`Transforming ${sourceNpmrcPath}`); // Verbose
     logger.info(`  --> "${targetNpmrcPath}"`);
-    const combinedNpmrc = _trimNpmrcFile(sourceNpmrcPath, extraLines);
+    const combinedNpmrc = _trimNpmrcFile(sourceNpmrcPath);
     fs__WEBPACK_IMPORTED_MODULE_0__.writeFileSync(targetNpmrcPath, combinedNpmrc);
     return combinedNpmrc;
 }
@@ -128,16 +127,12 @@ function syncNpmrc(sourceNpmrcFolder, targetNpmrcFolder, useNpmrcPublish, logger
     info: console.log,
     // eslint-disable-next-line no-console
     error: console.error
-}, extraLines) {
+}) {
     const sourceNpmrcPath = path__WEBPACK_IMPORTED_MODULE_1__.join(sourceNpmrcFolder, !useNpmrcPublish ? '.npmrc' : '.npmrc-publish');
     const targetNpmrcPath = path__WEBPACK_IMPORTED_MODULE_1__.join(targetNpmrcFolder, '.npmrc');
     try {
         if (fs__WEBPACK_IMPORTED_MODULE_0__.existsSync(sourceNpmrcPath)) {
-            // Ensure the target folder exists
-            if (!fs__WEBPACK_IMPORTED_MODULE_0__.existsSync(targetNpmrcFolder)) {
-                fs__WEBPACK_IMPORTED_MODULE_0__.mkdirSync(targetNpmrcFolder, { recursive: true });
-            }
-            return _copyAndTrimNpmrcFile(logger, sourceNpmrcPath, targetNpmrcPath, extraLines);
+            return _copyAndTrimNpmrcFile(logger, sourceNpmrcPath, targetNpmrcPath);
         }
         else if (fs__WEBPACK_IMPORTED_MODULE_0__.existsSync(targetNpmrcPath)) {
             // If the source .npmrc doesn't exist and there is one in the target, delete the one in the target
