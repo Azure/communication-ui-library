@@ -6,7 +6,7 @@ import { ChatMyMessage } from '@fluentui-contrib/react-chat';
 import { mergeClasses } from '@fluentui/react-components';
 import { _formatString } from '@internal/acs-ui-common';
 import { useTheme } from '../../theming/FluentThemeProvider';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { editBoxWidthStyles, richTextEditBoxActionButtonIcon } from '../styles/EditBox.styles';
 import { InputBoxButton } from '../InputBoxButton';
 import { MessageThreadStrings } from '../MessageThread';
@@ -63,12 +63,6 @@ export const ChatMessageComponentAsRichTextEditBox = (
   const editContainerStyles = useChatMessageRichTextEditContainerStyles();
   const chatMyMessageStyles = useChatMyMessageStyles();
   const locale = useLocale().strings;
-
-  // TODO: Check if the focus is needed, if so use `focusOnInit` prop
-  // for Rooster component instead as this sets focus too early
-  useEffect(() => {
-    editTextFieldRef.current?.focus();
-  }, []);
 
   const setText = (newValue?: string): void => {
     setTextValue(newValue ?? '');
@@ -162,6 +156,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
           onChange={setText}
           editorComponentRef={editTextFieldRef}
           initialContent={message.content}
+          content={textValue}
           strings={richTextLocaleStrings}
           disabled={false}
           actionComponents={actionButtons}

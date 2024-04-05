@@ -145,7 +145,9 @@ export const useChatMessageRenderStyles = makeStyles({
  */
 export const useChatMyMessageStyles = makeStyles({
   root: {
-    gridTemplateColumns: 'auto auto',
+    // The first column's width should be set to  1fr
+    // because otherwise rich text editor's width will grow indefinitely
+    gridTemplateColumns: '1fr auto',
     gridTemplateAreas: `
         ". actions"
         "body body"
