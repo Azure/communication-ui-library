@@ -27,7 +27,6 @@ import { useEffect, useState, useMemo } from 'react';
 import { _AttachmentUploadCardsStrings } from './AttachmentUploadCards';
 import { useLocaleAttachmentCardStringsTrampoline } from './utils/common';
 import { AttachmentMetadata, AttachmentMenuAction } from '../types/Attachment';
-import { MoreHorizontal24Filled } from '@fluentui/react-icons';
 import { useAttachmentCardStyles, attachmentNameContainerClassName } from './styles/AttachmentCard.styles';
 
 /**
@@ -89,7 +88,13 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
   return (
     <div data-is-focusable={true}>
       <Announcer announcementString={announcerString} ariaLive={'polite'} />
-      <Card className={attachmentCardStyles.root} size="small" role="listitem">
+      <Card
+        className={attachmentCardStyles.root}
+        size="small"
+        role="listitem"
+        appearance="filled-alternative"
+        aria-label={attachment.name}
+      >
         <CardHeader
           image={
             <Icon
@@ -110,7 +115,7 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
               <Text title={attachment.name}>{attachment.name}</Text>
             </div>
           }
-          action={getMenuItems(menuActions, attachment, onActionHandlerFailed)}
+          action={MappedMenuItems(menuActions, attachment, onActionHandlerFailed)}
         />
       </Card>
       {isUploadComplete ? (
@@ -124,11 +129,13 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
   );
 };
 
-const getMenuItems = (
+const MappedMenuItems = (
   menuActions: AttachmentMenuAction[],
   attachment: AttachmentMetadata,
   handleOnClickError?: (errMsg: string) => void
 ): JSX.Element => {
+  const localeStrings = useLocaleAttachmentCardStringsTrampoline();
+
   if (menuActions.length === 0) {
     return <></>;
   }
@@ -148,7 +155,7 @@ const getMenuItems = (
     <Toolbar>
       <Menu>
         <MenuTrigger>
-          <ToolbarButton aria-label="More" icon={<MoreHorizontal24Filled />} />
+          <ToolbarButton icon={<Icon iconName="AttachmentMoreMenu" aria-label={localeStrings.attachmentMoreMenu} />} />
         </MenuTrigger>
         <MenuPopover>
           <MenuList>

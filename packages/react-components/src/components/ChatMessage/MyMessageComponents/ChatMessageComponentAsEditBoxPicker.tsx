@@ -8,13 +8,13 @@ import { ChatMessage } from '../../../types';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { AttachmentMetadata } from '../../../types';
 import { MessageThreadStrings } from '../../MessageThread';
-import { ChatMessageComponentAsEditBox } from '../ChatMessageComponentAsEditBox';
+import { ChatMessageComponentAsEditBox } from './ChatMessageComponentAsEditBox';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from '../../MentionPopover';
 
 /* @conditional-compile-remove(rich-text-editor) */
 const ChatMessageComponentAsRichTextEditBox = React.lazy(() =>
-  import('../ChatMessageComponentAsRichTextEditBox').then((module) => ({
+  import('./ChatMessageComponentAsRichTextEditBox').then((module) => ({
     default: module.ChatMessageComponentAsRichTextEditBox
   }))
 );
