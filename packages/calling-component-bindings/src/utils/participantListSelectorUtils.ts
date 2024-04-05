@@ -37,6 +37,7 @@ const convertRemoteParticipantToParticipantListParticipant = (
     isMuted,
     isScreenSharing,
     isSpeaking,
+    raisedHand,
     // ACS users can not remove Teams users.
     // Removing unknown types of users is undefined.
     isRemovable:
