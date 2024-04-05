@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { mergeStyles } from '@fluentui/react';
-import { makeStyles } from '@fluentui/react-components';
+import { makeStyles, shorthands } from '@fluentui/react-components';
 import { _pxToRem } from '@internal/acs-ui-common';
 
 /**
@@ -13,10 +13,7 @@ export const useAttachmentCardStyles = makeStyles({
     width: '12rem',
     minWidth: '75%',
     '& div[role=toolbar]': {
-      paddingTop: '0rem',
-      paddingBottom: '0rem',
-      paddingLeft: '0rem',
-      paddingRight: '0rem'
+      ...shorthands.padding(0)
     }
   }
 });
