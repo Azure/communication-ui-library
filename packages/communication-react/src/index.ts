@@ -325,6 +325,7 @@ export type { AttachmentMetadata, AttachmentOptions } from '../../react-componen
 
 /* @conditional-compile-remove(attachment-upload) */
 export type {
+  AttachmentUploadStatus,
   AttachmentUploadHandler,
   AttachmentUploadOptions,
   AttachmentUploadManager
@@ -335,8 +336,6 @@ export type { AttachmentMenuAction, AttachmentDownloadOptions } from '../../reac
 /* @conditional-compile-remove(attachment-download) */
 export { defaultAttachmentMenuAction } from '../../react-components/src';
 
-/* @conditional-compile-remove(attachment-upload) */
-export type { SendBoxErrorBarError } from '../../react-components/src';
 export type { ChatAttachmentType } from '../../react-components/src';
 export type { InlineImageOptions, InlineImage } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
