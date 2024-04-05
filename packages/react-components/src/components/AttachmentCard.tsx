@@ -30,16 +30,6 @@ import { AttachmentMetadata, AttachmentMenuAction } from '../types/Attachment';
 import { useAttachmentCardStyles, attachmentNameContainerClassName } from './styles/AttachmentCard.styles';
 
 /**
- * Strings of _AttachmentUploadCards that can be overridden.
- *
- * @internal
- */
-export interface AttachmentCardStrings {
-  /** Aria label to notify user more attachment action menu. */
-  attachmentMoreMenu: string;
-}
-
-/**
  * @internal
  * AttachmentCard Component Props.
  */
@@ -55,7 +45,7 @@ export interface _AttachmentCardProps {
   /**
    * Optional aria label strings for attachment upload cards
    */
-  strings?: _AttachmentUploadCardsStrings & AttachmentCardStrings;
+  strings?: _AttachmentUploadCardsStrings;
   /**
    * Optional callback that runs if menu bar action onclick throws.
    */

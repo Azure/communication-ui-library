@@ -6,7 +6,7 @@ import React, { useMemo } from 'react';
 import { _AttachmentCard } from './AttachmentCard';
 import { _AttachmentCardGroup } from './AttachmentCardGroup';
 import { AttachmentMetadata } from '../types/Attachment';
-import { useLocaleAttachmentUploadCardStringsTrampoline } from './utils/common';
+import { useLocaleAttachmentCardStringsTrampoline } from './utils/common';
 
 /**
  * Strings of _AttachmentUploadCards that can be overridden.
@@ -20,6 +20,8 @@ export interface _AttachmentUploadCardsStrings {
   uploading: string;
   /** Aria label to notify user attachment is uploaded. */
   uploadCompleted: string;
+  /** Aria label to notify user more attachment action menu. */
+  attachmentMoreMenu: string;
 }
 
 /**
@@ -49,7 +51,7 @@ const actionIconStyle = { height: '1rem' };
  */
 export const _AttachmentUploadCards = (props: AttachmentUploadCardsProps): JSX.Element => {
   const attachments = props.activeAttachmentUploads;
-  const localeStrings = useLocaleAttachmentUploadCardStringsTrampoline();
+  const localeStrings = useLocaleAttachmentCardStringsTrampoline();
   const removeAttachmentButtonString = useMemo(
     () => () => {
       return props.strings?.removeAttachment ?? localeStrings.removeAttachment;

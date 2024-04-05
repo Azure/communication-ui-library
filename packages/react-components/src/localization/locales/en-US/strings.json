@@ -20,9 +20,6 @@
     "multipleUsersAbbreviateMany": "{users} and {numOthers} others are typing ...",
     "delimiter": ", "
   },
-  "attachmentCard": {
-    "attachmentMoreMenu": "More Options"
-  },
   "sendBox": {
     "placeholderText": "Enter a message",
     "textTooLong": "Your message length is over the maximum limit.",
@@ -30,7 +27,8 @@
     "attachmentUploadsPendingError": "Uploading... Please wait.",
     "removeAttachment": "Remove file",
     "uploading": "Uploading",
-    "uploadCompleted": "Upload completed"
+    "uploadCompleted": "Upload completed",
+    "attachmentMoreMenu": "More Options"
   },
   "richTextSendBox": {
     "placeholderText": "Enter a message",

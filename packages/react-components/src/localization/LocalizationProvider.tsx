@@ -48,8 +48,6 @@ import { ImageOverlayStrings } from '../components/ImageOverlay';
 import { ReactionButtonStrings } from '../components';
 /* @conditional-compile-remove(rich-text-editor) */
 import { RichTextSendBoxStrings } from '../components/RichTextEditor/RichTextSendBox';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { AttachmentCardStrings } from '../components/AttachmentCard';
 
 /**
  * Locale information for all components exported from this library.
@@ -101,9 +99,6 @@ export interface ComponentStrings {
   typingIndicator: TypingIndicatorStrings;
   /** Strings for SendBox */
   sendBox: SendBoxStrings;
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  /** Strings for AttachmentCard */
-  attachmentCard: AttachmentCardStrings;
   /* @conditional-compile-remove(rich-text-editor) */
   /** Strings for RichTextSendBox */
   richTextSendBox: RichTextSendBoxStrings;

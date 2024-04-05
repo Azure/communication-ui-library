@@ -84,6 +84,11 @@ export interface SendBoxStrings {
    * Aria label to notify user attachment is uploaded.
    */
   uploadCompleted: string;
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /**
+   * Aria label to notify user more attachment action menu.
+   */
+  attachmentMoreMenu: string;
 }
 
 /**
@@ -321,7 +326,8 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
             strings={{
               removeAttachment: props.strings?.removeAttachment ?? localeStrings.removeAttachment,
               uploading: props.strings?.uploading ?? localeStrings.uploading,
-              uploadCompleted: props.strings?.uploadCompleted ?? localeStrings.uploadCompleted
+              uploadCompleted: props.strings?.uploadCompleted ?? localeStrings.uploadCompleted,
+              attachmentMoreMenu: props.strings?.attachmentMoreMenu ?? localeStrings.attachmentMoreMenu
             }}
           />
         </FluentV9ThemeProvider>
