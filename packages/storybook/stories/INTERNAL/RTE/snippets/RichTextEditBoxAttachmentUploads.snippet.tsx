@@ -1,10 +1,12 @@
 import { FluentThemeProvider } from '@azure/communication-react';
 import { ChatMessageComponentAsRichTextEditBox } from '@internal/react-components';
 import React from 'react';
+import { useLocale } from '../../../../../react-components/src/localization';
 
 export const RichTextEditBoxAttachmentUploadsExample: () => JSX.Element = () => {
   const timeoutRef = React.useRef<NodeJS.Timeout>();
   const delayForSendButton = 300;
+  const strings = useLocale().strings.messageThread;
 
   const attachmentMetadata = [
     {
@@ -36,7 +38,7 @@ export const RichTextEditBoxAttachmentUploadsExample: () => JSX.Element = () => 
             createdOn: new Date(),
             attachments: attachmentMetadata
           }}
-          strings={{}}
+          strings={strings}
         />
       </div>
     </FluentThemeProvider>
