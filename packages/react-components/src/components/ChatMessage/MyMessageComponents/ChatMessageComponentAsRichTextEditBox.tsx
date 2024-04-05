@@ -161,12 +161,14 @@ export const ChatMessageComponentAsRichTextEditBox = (
     return locale.sendBox;
   }, [/* @conditional-compile-remove(rich-text-editor) */ locale.richTextSendBox, locale.sendBox]);
 
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   const onCancelAttachmentUpload = useCallback(
     (attachmentId: string) => {
       setAttachmentMetadata(attachmentMetadata?.filter((attachment) => attachment.id !== attachmentId));
     },
     [attachmentMetadata]
   );
+
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   const onRenderAttachmentUploads = useCallback(() => {
     return (
