@@ -339,7 +339,8 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     theme,
     localeStrings.removeAttachment,
     localeStrings.uploading,
-    localeStrings.uploadCompleted
+    localeStrings.uploadCompleted,
+    localeStrings.attachmentMoreMenu
   ]);
 
   return (

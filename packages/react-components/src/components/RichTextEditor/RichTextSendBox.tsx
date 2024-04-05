@@ -314,6 +314,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     strings.removeAttachment,
     strings.uploadCompleted,
     strings.uploading,
+    strings.attachmentMoreMenu,
     theme
   ]);
 
