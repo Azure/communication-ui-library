@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "area": "feature",
+  "workstream": "Survey",
+  "comment": "  Azure Communication Services UI Library is adding support for End of Call Survey. With this new feature, call participants will be able to share feedback on the quality and reliability of Audio and Video calls. Participants will be able to submit feedback based on four categories: Overall Call,Audio,Video,Screen Share.They can rate their call experience on a star based numerical survey and provide additional detail as to the specifics of each category if they wish. The feedback feature will enable developers to collect subjective customer feedback on call quality and reliability and enable the creation of more definite metrics.",
+  "packageName": "@azure/communication-react",
+  "email": "96077406+carocao-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

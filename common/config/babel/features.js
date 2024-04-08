@@ -69,8 +69,6 @@ module.exports = {
     "calling-environment-info",
     // conditional-compile for new signaling beta
     "signaling-beta",
-    // Feature for end of call survey
-    'end-of-call-survey',
     // Feature for tracking beta start call identifier
     'start-call-beta',
     // Image overlay theme
@@ -92,6 +90,8 @@ module.exports = {
     "video-stream-is-receiving-flag",
     // Feature for spotlight
     'spotlight',
+     // Feature for end of call survey
+    'end-of-call-survey',
     // Feature for PPT Live for teams meeting
     'ppt-live',
     // Feature for meeting reactions
