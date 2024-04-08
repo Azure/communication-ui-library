@@ -831,9 +831,14 @@ export interface CallCompositeStrings {
   exitSpotlightButtonTooltip: string;
   /* @conditional-compile-remove(end-call-options) */
   /**
-   * Label for confirm button in hang up confirm dialog
+   * Label for confirm button of hang up for everyone dialog
    */
-  hangUpConfirmButtonLabel?: string;
+  leaveConfirmButtonLabel?: string;
+  /* @conditional-compile-remove(end-call-options) */
+  /**
+   * Label for confirm button of leave confim dialog
+   */
+  endCallConfirmButtonLabel?: string;
   /* @conditional-compile-remove(end-call-options) */
   /**
    * Label for cancel button in hang up confirm dialog

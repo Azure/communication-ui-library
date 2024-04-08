@@ -35,7 +35,7 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
 /**
  * Spotlight state with order
  *
- * @beta
+ * @public
  */
 export type Spotlight = {
   /**
