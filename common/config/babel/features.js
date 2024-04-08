@@ -23,8 +23,6 @@ module.exports = {
     'ppt-live',
     // Feature for Rich Text Editor (RTE) support
     'rich-text-editor',
-    // Feature for spotlight
-    'spotlight',
     // Join meeting with meetingId and passcode
     'meeting-id',
     // Close captions feature for ACS calls
@@ -96,5 +94,7 @@ module.exports = {
     "call-transfer",
     // Support Calling SDK isReceiving flag, shows a loading spinner on the video tile when isAvailable is true but isReceiving is false
     "video-stream-is-receiving-flag",
+    // Feature for spotlight
+    'spotlight'
   ]
 }
