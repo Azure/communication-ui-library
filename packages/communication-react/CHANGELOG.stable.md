@@ -4,7 +4,7 @@ This log was last generated on Mon, 08 Apr 2024 20:34:39 GMT and should not be m
 
 <!-- Start content -->
 
-## [1.15.0](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.15.0)
+## [1.15.0](https://github.com/azure/communication-ui-library/tree/1.15.0)
 
 Mon, 08 Apr 2024 20:34:39 GMT 
 [Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.15.0-beta.1...@azure/communication-react_v1.15.0)
@@ -44,7 +44,7 @@ The UI Library now supports End of Call Survey, with the feature added to the Ca
 - Fix Message status announcement sometimes takes priority over "Message is deleted" one ([PR #4334](https://github.com/azure/communication-ui-library/pull/4334) by 3941071+emlynmac@users.noreply.github.com)
 - Update various visual issues with the configuration screen ([PR #4355](https://github.com/azure/communication-ui-library/pull/4355) by dmceachern@microsoft.com)
 - Pass down onFetchAvatarPersonaData to peoplepane to display custom data model ([PR #4391](https://github.com/azure/communication-ui-library/pull/4391) by edwardlee@microsoft.com)
-- Fix issue where dtmf sounds would break when hiding the dialpad on mobile inside the composite. ([PR #4337](https://github.com/azure/communication-ui-library/pull/4337) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Fix issue where dtmf sounds would break when hiding the dialpad on mobile inside the composite ([PR #4337](https://github.com/azure/communication-ui-library/pull/4337) by 94866715+dmceachernmsft@users.noreply.github.com)
 
 
 ## [1.14.0](https://github.com/azure/communication-ui-library/tree/1.14.0)
