@@ -3803,7 +3803,6 @@ export interface ReactionResources {
 export type ReactionSprite = {
     url: string;
     frameCount: number;
-    size?: number;
 };
 
 // @public
