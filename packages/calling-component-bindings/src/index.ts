@@ -56,7 +56,7 @@ export { useSelector as useCallingSelector } from './hooks/useSelector';
 export { useHandlers as useCallingHandlers } from './hooks/useHandlers';
 
 export { _isInCall, _isPreviewOn, _isInLobbyOrConnecting } from './utils/callUtils';
-/* @conditional-compile-remove(PSTN-calls) */
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(spotlight) */
 export { _updateUserDisplayNames } from './utils/callUtils';
 /* @conditional-compile-remove(unsupported-browser) */
 export { _getEnvironmentInfo } from './utils/callUtils';
