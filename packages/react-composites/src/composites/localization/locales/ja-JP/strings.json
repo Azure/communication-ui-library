@@ -335,7 +335,7 @@
   },
   "chat": {
     "chatListHeader": "このチャット内",
-    "uploadAttachment": "Upload Attachment"
+    "uploadAttachment": "添付ファイルのアップロード"
   },
   "callWithChat": {
     "chatButtonLabel": "チャット",

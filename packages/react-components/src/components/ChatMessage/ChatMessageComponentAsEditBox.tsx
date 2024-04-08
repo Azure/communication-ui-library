@@ -14,7 +14,7 @@ import { MessageThreadStrings } from '../MessageThread';
 import { useChatMyMessageStyles } from '../styles/MessageThread.styles';
 import { ChatMessage } from '../../types';
 import { _AttachmentUploadCards } from '../AttachmentUploadCards';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-upload) */
 import { AttachmentMetadata } from '../../types/Attachment';
 import {
   chatMessageFailedTagStyle,
@@ -27,7 +27,7 @@ import {
 import { MentionLookupOptions } from '../MentionPopover';
 import { MAXIMUM_LENGTH_OF_MESSAGE } from '../utils/SendBoxUtils';
 import { getMessageState, onRenderCancelIcon, onRenderSubmitIcon } from '../utils/ChatMessageComponentAsEditBoxUtils';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-upload) */
 import { getMessageWithAttachmentMetadata } from '../utils/ChatMessageComponentAsEditBoxUtils';
 
 /** @private */
@@ -37,7 +37,7 @@ export type ChatMessageComponentAsEditBoxProps = {
     text: string,
     metadata?: Record<string, string>,
     options?: {
-      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+      /* @conditional-compile-remove(attachment-upload) */
       attachmentMetadata?: AttachmentMetadata[];
     }
   ) => void;
@@ -56,14 +56,13 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
   const { mentionLookupOptions } = props;
 
   const [textValue, setTextValue] = useState<string>(message.content || '');
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-upload) */
   const [attachmentMetadata, setAttachmentMetadata] = React.useState(getMessageWithAttachmentMetadata(message));
   const editTextFieldRef = React.useRef<ITextField>(null);
   const theme = useTheme();
   const messageState = getMessageState(
     textValue,
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ attachmentMetadata ??
-      []
+    /* @conditional-compile-remove(attachment-upload) */ attachmentMetadata ?? []
   );
   const submitEnabled = messageState === 'OK';
 
@@ -109,7 +108,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
     return concatStyleSets(editBoxStyleSet, { textField: { borderColor: theme.palette.themePrimary } });
   }, [theme.palette.themePrimary]);
 
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-upload) */
   const onRenderAttachmentUploads = useCallback(() => {
     return (
       !!attachmentMetadata &&
@@ -146,7 +145,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
               onSubmit(
                 textValue,
                 message.metadata,
-                /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ {
+                /* @conditional-compile-remove(attachment-upload) */ {
                   attachmentMetadata
                 }
               );
@@ -194,7 +193,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
                   onSubmit(
                     textValue,
                     message.metadata,
-                    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ {
+                    /* @conditional-compile-remove(attachment-upload) */ {
                       attachmentMetadata
                     }
                   );
@@ -204,9 +203,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
             />
           </Stack.Item>
         </Stack>
-        {
-          /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ onRenderAttachmentUploads()
-        }
+        {/* @conditional-compile-remove(attachment-upload) */ onRenderAttachmentUploads()}
       </>
     );
   };

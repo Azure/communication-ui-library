@@ -6,19 +6,19 @@ import { ChatMyMessage } from '@fluentui-contrib/react-chat';
 import { mergeClasses } from '@fluentui/react-components';
 import { _formatString } from '@internal/acs-ui-common';
 import { useTheme } from '../../theming/FluentThemeProvider';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { editBoxWidthStyles, richTextEditBoxActionButtonIcon } from '../styles/EditBox.styles';
 import { InputBoxButton } from '../InputBoxButton';
 import { MessageThreadStrings } from '../MessageThread';
 import { useChatMyMessageStyles } from '../styles/MessageThread.styles';
 import { ChatMessage } from '../../types';
 import { _AttachmentUploadCards } from '../AttachmentUploadCards';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-upload) */
 import { AttachmentMetadata } from '../../types/Attachment';
 import { useChatMessageRichTextEditContainerStyles } from '../styles/ChatMessageComponent.styles';
 import { MAXIMUM_LENGTH_OF_MESSAGE } from '../utils/SendBoxUtils';
 import { getMessageState, onRenderCancelIcon, onRenderSubmitIcon } from '../utils/ChatMessageComponentAsEditBoxUtils';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-upload) */
 import { getMessageWithAttachmentMetadata } from '../utils/ChatMessageComponentAsEditBoxUtils';
 import { RichTextEditorComponentRef } from '../RichTextEditor/RichTextEditor';
 import { RichTextInputBoxComponent } from '../RichTextEditor/RichTextInputBoxComponent';
@@ -33,7 +33,7 @@ export type ChatMessageComponentAsRichTextEditBoxProps = {
     text: string,
     metadata?: Record<string, string>,
     options?: {
-      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+      /* @conditional-compile-remove(attachment-upload) */
       attachmentMetadata?: AttachmentMetadata[];
     }
   ) => void;
@@ -50,26 +50,19 @@ export const ChatMessageComponentAsRichTextEditBox = (
   const { onCancel, onSubmit, strings, message } = props;
 
   const [textValue, setTextValue] = useState<string>(message.content || '');
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-upload) */
   const [attachmentMetadata, _] = React.useState(getMessageWithAttachmentMetadata(message));
   const editTextFieldRef = React.useRef<RichTextEditorComponentRef>(null);
   const theme = useTheme();
   const messageState = getMessageState(
     textValue,
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ attachmentMetadata ??
-      []
+    /* @conditional-compile-remove(attachment-upload) */ attachmentMetadata ?? []
   );
   const submitEnabled = messageState === 'OK';
 
   const editContainerStyles = useChatMessageRichTextEditContainerStyles();
   const chatMyMessageStyles = useChatMyMessageStyles();
   const locale = useLocale().strings;
-
-  // TODO: Check if the focus is needed, if so use `focusOnInit` prop
-  // for Rooster component instead as this sets focus too early
-  useEffect(() => {
-    editTextFieldRef.current?.focus();
-  }, []);
 
   const setText = (newValue?: string): void => {
     setTextValue(newValue ?? '');
@@ -125,7 +118,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
               onSubmit(
                 textValue,
                 message.metadata,
-                /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ {
+                /* @conditional-compile-remove(attachment-upload) */ {
                   attachmentMetadata
                 }
               );
@@ -136,7 +129,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
       </Stack>
     );
   }, [
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ attachmentMetadata,
+    /* @conditional-compile-remove(attachment-upload) */ attachmentMetadata,
     message.messageId,
     message.metadata,
     onCancel,
@@ -163,6 +156,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
           onChange={setText}
           editorComponentRef={editTextFieldRef}
           initialContent={message.content}
+          content={textValue}
           strings={richTextLocaleStrings}
           disabled={false}
           actionComponents={actionButtons}

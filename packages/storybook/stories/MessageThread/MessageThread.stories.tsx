@@ -54,6 +54,7 @@ import { MessageThreadWithCustomTimestampExample } from './snippets/CustomTimest
 import { DefaultMessageThreadExample } from './snippets/Default.snippet';
 import { MessageThreadWithMessageStatusIndicatorExample } from './snippets/MessageStatusIndicator.snippet';
 import { MessageWithAttachment } from './snippets/MessageWithAttachment.snippet';
+import { MessageWithCustomAttachment } from './snippets/MessageWithCustomAttachment.snippet';
 import { MessageWithCustomMentionRenderer } from './snippets/MessageWithCustomMentionRenderer.snippet';
 import { MessageThreadWithSystemMessagesExample } from './snippets/SystemMessages.snippet';
 import { MessageThreadWithInlineImageExample } from './snippets/WithInlineImageMessage.snippet';
@@ -78,6 +79,8 @@ const DefaultMessageThreadExampleText = require('!!raw-loader!./snippets/Default
 const MessageThreadWithMessageStatusIndicatorExampleText =
   require('!!raw-loader!./snippets/MessageStatusIndicator.snippet.tsx').default;
 const MessageWithAttachmentText = require('!!raw-loader!./snippets/MessageWithAttachment.snippet.tsx').default;
+const MessageWithCustomAttachmentText =
+  require('!!raw-loader!./snippets/MessageWithCustomAttachment.snippet.tsx').default;
 const MessageWithCustomMentionRendererText =
   require('!!raw-loader!./snippets/MessageWithCustomMentionRenderer.snippet.tsx').default;
 const ExampleConstantsText = require('!!raw-loader!./snippets/placeholdermessages.ts').default;
@@ -331,18 +334,23 @@ const Docs: () => JSX.Element = () => {
       </div>
 
       <div ref={refDisplayAttachments}>
-        <Heading>Display Attachments with Messages</Heading>
+        <Heading>Display Messages with Attachments</Heading>
         <DetailedBetaBanner />
         <Description>
-          MessageThread component provides UI for displaying attachments in a message. This allows developers to
-          implement a attachments sharing feature using the pure UI component with minimal effort. Developers can write
-          their own attachment download logic and utilize the UI provided by MessageThread. Clicking on the attachment
-          opens it in a new browser tab. Developers can override this behavior as well using MessageThread props. [The
-          attachment types icons](./?path=/docs/icons--page) should be initialized before rendering MessageThread
-          component.
+          The MessageThread component supports rendering of message attachments, including multiple ways to customize
+          it. Developers can opt to use the default attachment rendering by not providing `attachmentOptions`. In the
+          following example, the default attachment rendering is shown with an attachment on the first chat message. By
+          default, the browser `window.open` method will be called with the target URL.
         </Description>
         <Canvas mdxSource={MessageWithAttachmentText}>
           <MessageWithAttachment />
+        </Canvas>
+        <Description>
+          The `attachmentOptions` allows the attachmentCard to be customized in multiple ways. For example, developers
+          can have a custom icon, label for the button and custom `onClick` callback.
+        </Description>
+        <Canvas mdxSource={MessageWithCustomAttachmentText}>
+          <MessageWithCustomAttachment />
         </Canvas>
       </div>
 
@@ -615,7 +623,8 @@ export default {
     onRenderMessage: hiddenControl,
     onUpdateMessage: hiddenControl,
     onDeleteMessage: hiddenControl,
-    disableEditing: hiddenControl
+    disableEditing: hiddenControl,
+    richTextEditor: hiddenControl
   },
   parameters: {
     docs: {
