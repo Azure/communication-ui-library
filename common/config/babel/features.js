@@ -19,8 +19,6 @@ module.exports = {
     "hide-attendee-name",
     // Feature for meeting reactions
     'reaction',
-    // Feature for PPT Live for teams meeting
-    'ppt-live',
     // Feature for Rich Text Editor (RTE) support
     'rich-text-editor',
     // Join meeting with meetingId and passcode
@@ -95,6 +93,8 @@ module.exports = {
     // Support Calling SDK isReceiving flag, shows a loading spinner on the video tile when isAvailable is true but isReceiving is false
     "video-stream-is-receiving-flag",
     // Feature for spotlight
-    'spotlight'
+    'spotlight',
+    // Feature for PPT Live for teams meeting
+    'ppt-live'
   ]
 }
