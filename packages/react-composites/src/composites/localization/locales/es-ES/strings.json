@@ -324,11 +324,18 @@
       "stopSpotlightCancelButtonLabel": "Cancelar"
     },
     "exitSpotlightButtonLabel": "Salir del primer plano",
-    "exitSpotlightButtonTooltip": "Salir del primer plano"
+    "exitSpotlightButtonTooltip": "Salir del primer plano",
+    "hangUpConfirmButtonLabel": "Confirmar",
+    "hangUpCancelButtonLabel": "Cancelar",
+    "leaveConfirmDialogTitle": "¿Abandonar la llamada?",
+    "leaveConfirmDialogContent": "¿Está seguro de que desea abandonar la llamada?",
+    "endCallConfirmDialogTitle": "¿Finalizar la llamada?",
+    "endCallConfirmDialogContent": "Finalizará la llamada para todos los usuarios.",
+    "invalidMeetingIdentifier": "Id. de reunión o código de acceso no válidos"
   },
   "chat": {
     "chatListHeader": "En este chat",
-    "uploadAttachment": "Subir archivo"
+    "uploadAttachment": "Cargar datos adjuntos"
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",

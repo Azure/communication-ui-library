@@ -324,11 +324,18 @@
       "stopSpotlightCancelButtonLabel": "Abbrechen"
     },
     "exitSpotlightButtonLabel": "Spotlight beenden",
-    "exitSpotlightButtonTooltip": "Spotlight beenden"
+    "exitSpotlightButtonTooltip": "Spotlight beenden",
+    "hangUpConfirmButtonLabel": "Bestätigen",
+    "hangUpCancelButtonLabel": "Abbrechen",
+    "leaveConfirmDialogTitle": "Gespräch beenden?",
+    "leaveConfirmDialogContent": "Möchten Sie den Anruf wirklich verlassen?",
+    "endCallConfirmDialogTitle": "Gespräch beenden?",
+    "endCallConfirmDialogContent": "Sie beenden das Gespräch für alle.",
+    "invalidMeetingIdentifier": "Ungültige Besprechungs-ID oder -Kennung"
   },
   "chat": {
     "chatListHeader": "In diesem Chat",
-    "uploadAttachment": "Datei hochladen"
+    "uploadAttachment": "Anlage hochladen"
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",
