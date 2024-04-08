@@ -144,8 +144,8 @@ jobs:
           git checkout -b groom-changelog-${{github.event.inputs.bumptype}}/${{ steps.version.outputs.version }}
           echo "groombranch=groom-changelog-${{github.event.inputs.bumptype}}/${{ steps.version.outputs.version }}" >> $GITHUB_OUTPUT
 
-      - name: Add trivial changefile so CI does not complain about the CHANGELOG grooming PR
-        run: node common/scripts/changelog/change.mjs -m 'Bumped versions for release' --type none
+      # - name: Add trivial changefile so CI does not complain about the CHANGELOG grooming PR
+      #   run: node common/scripts/changelog/change.mjs -m 'Bumped versions for release' --type none
 
       # Push groom changes
       - name: Create groom file and push changes
