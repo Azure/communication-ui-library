@@ -10,12 +10,13 @@ import { FileSharingMetadata, AttachmentUpload } from '../file-sharing';
 import { ChatContext } from './AzureCommunicationChatAdapter';
 /* @conditional-compile-remove(attachment-upload) */
 import { ChatAdapterState } from './ChatAdapter';
+import { PendingAttachmentUploadMetadata } from '@internal/react-components/dist/dist-esm/types';
 
 /**
  * A record containing {@link AttachmentMetadata} mapped to unique ids.
  * @beta
  */
-export type AttachmentUploadsUiState = Record<string, AttachmentMetadata>;
+export type AttachmentUploadsUiState = Record<string, PendingAttachmentUploadMetadata>;
 
 /**
  * @beta
@@ -27,7 +28,7 @@ export interface AttachmentUploadAdapter {
   cancelUpload: (id: string) => void;
   updateUploadProgress: (id: string, progress: number) => void;
   updateUploadStatusMessage: (id: string, errorMessage: string) => void;
-  updateUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
+  updateUploadMetadata: (id: string, metadata: PendingAttachmentUploadMetadata | AttachmentMetadata) => void;
 }
 
 /* @conditional-compile-remove(attachment-upload) */
@@ -65,7 +66,9 @@ class AttachmentUploadContext {
 
   public updateAttachmentUpload(
     id: string,
-    data: Partial<Pick<AttachmentMetadata, 'progress' | 'id' | 'name' | 'extension' | 'uploadError' | 'url'>>
+    data: Partial<
+      Pick<PendingAttachmentUploadMetadata, 'progress' | 'id' | 'name' | 'extension' | 'uploadError' | 'url'>
+    >
   ): void {
     this.chatContext.setState(
       produce(this.chatContext.getState(), (draft: ChatAdapterState) => {
@@ -122,8 +125,8 @@ export class AzureCommunicationAttachmentUploadAdapter implements AttachmentUplo
   private deleteErroneousAttachmentUploads(): void {
     const attachmentUploads = this.context.getAttachmentUploads() || {};
     const ids = Object.values(attachmentUploads)
-      .filter((item: AttachmentMetadata) => item.uploadError)
-      .map((item: AttachmentMetadata) => item.id);
+      .filter((item: PendingAttachmentUploadMetadata) => item.uploadError)
+      .map((item: PendingAttachmentUploadMetadata) => item.id);
 
     ids.forEach((id) => {
       const attachmentUpload = this.findAttachmentUpload(id);
@@ -209,7 +212,7 @@ export const convertAttachmentUploadsUiStateToMessageMetadata = (
   attachmentUploads?: AttachmentUploadsUiState
 ): FileSharingMetadata | undefined => {
   if (attachmentUploads) {
-    const attachmentMetadata: AttachmentMetadata[] = [];
+    const attachmentMetadata: PendingAttachmentUploadMetadata[] = [];
     Object.keys(attachmentUploads).forEach((key) => {
       const attachment = attachmentUploads[key];
       if (attachment && !attachment.uploadError) {

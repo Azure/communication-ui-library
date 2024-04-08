@@ -72,6 +72,7 @@ import type { NetworkDiagnosticChangedEventArgs } from '@azure/communication-cal
 import { PartialTheme } from '@fluentui/react';
 import { ParticipantCapabilities } from '@azure/communication-calling';
 import { ParticipantRole } from '@azure/communication-calling';
+import { PendingAttachmentUploadMetadata as PendingAttachmentUploadMetadata_2 } from '@internal/react-components/dist/dist-esm/types';
 import { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaInitialsColor } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
@@ -165,8 +166,6 @@ export interface AttachmentMetadata {
     extension?: string;
     id: string;
     name: string;
-    progress?: number;
-    uploadError?: AttachmentUploadStatus;
     url?: string;
 }
 
@@ -189,7 +188,7 @@ export interface AttachmentUploadAdapter {
     // (undocumented)
     registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadManager[];
     // (undocumented)
-    updateUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
+    updateUploadMetadata: (id: string, metadata: PendingAttachmentUploadMetadata_2 | AttachmentMetadata) => void;
     // (undocumented)
     updateUploadProgress: (id: string, progress: number) => void;
     // (undocumented)
@@ -224,7 +223,7 @@ export interface AttachmentUploadStatus {
 }
 
 // @beta
-export type AttachmentUploadsUiState = Record<string, AttachmentMetadata>;
+export type AttachmentUploadsUiState = Record<string, PendingAttachmentUploadMetadata_2>;
 
 // @public
 export type AvatarPersonaData = {
@@ -3725,6 +3724,12 @@ export type ParticipantsRemovedListener = (event: {
 export type ParticipantState = 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
 
 // @beta
+export interface PendingAttachmentUploadMetadata extends AttachmentMetadata {
+    progress?: number;
+    uploadError?: AttachmentUploadStatus;
+}
+
+// @beta
 export interface PPTLiveCallFeatureState {
     isActive: boolean;
 }
@@ -3893,7 +3898,7 @@ export const RichTextSendBox: (props: RichTextSendBoxProps) => JSX.Element;
 
 // @beta
 export interface RichTextSendBoxProps {
-    activeAttachmentUploads?: AttachmentMetadata[];
+    activeAttachmentUploads?: PendingAttachmentUploadMetadata[];
     disabled?: boolean;
     onCancelAttachmentUpload?: (attachmentId: string) => void;
     onSendMessage: (content: string) => Promise<void>;
@@ -3963,7 +3968,7 @@ export interface SendBoxErrorBarError {
 // @public
 export interface SendBoxProps {
     // @beta
-    activeAttachmentUploads?: AttachmentMetadata[];
+    activeAttachmentUploads?: PendingAttachmentUploadMetadata[];
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
     // @beta

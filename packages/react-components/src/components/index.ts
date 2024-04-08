@@ -214,7 +214,8 @@ export type {
   AttachmentMetadata,
   AttachmentUploadStatus,
   AttachmentUploadHandler,
-  AttachmentUploadManager
+  AttachmentUploadManager,
+  PendingAttachmentUploadMetadata
 } from '../types/Attachment';
 
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */

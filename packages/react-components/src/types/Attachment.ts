@@ -4,7 +4,7 @@
 import { ChatMessage } from './ChatMessage';
 
 /**
- * Metadata containing basic information about the uploaded attachment.
+ * Metadata containing basic information about attachment.
  *
  * @beta
  */
@@ -27,6 +27,14 @@ export interface AttachmentMetadata {
    * Download URL for the attachment.
    */
   url?: string;
+}
+
+/**
+ * Metadata containing basic information about the uploaded attachment.
+ *
+ * @beta
+ */
+export interface PendingAttachmentUploadMetadata extends AttachmentMetadata {
   /**
    * A number between 0 and 1 indicating the progress of the upload.
    */

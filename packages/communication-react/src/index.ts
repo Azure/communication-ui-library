@@ -320,7 +320,12 @@ export type {
   LongPressTrigger
 } from '../../react-components/src';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-export type { AttachmentMetadata, AttachmentMenuAction, AttachmentOptions } from '../../react-components/src';
+export type {
+  AttachmentMetadata,
+  AttachmentMenuAction,
+  AttachmentOptions,
+  PendingAttachmentUploadMetadata
+} from '../../react-components/src';
 /* @conditional-compile-remove(attachment-upload) */
 export type { SendBoxErrorBarError } from '../../react-components/src';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */

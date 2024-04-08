@@ -5,7 +5,7 @@ import { Icon, mergeStyles } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import { _AttachmentCard } from './AttachmentCard';
 import { _AttachmentCardGroup } from './AttachmentCardGroup';
-import { AttachmentMetadata } from '../types/Attachment';
+import { PendingAttachmentUploadMetadata } from '../types/Attachment';
 import { useLocaleAttachmentCardStringsTrampoline } from './utils/common';
 
 /**
@@ -32,7 +32,7 @@ export interface AttachmentUploadCardsProps {
    * Optional array of active attachment uploads where each object has attibutes
    * of a attachment upload like name, progress, errormessage etc.
    */
-  activeAttachmentUploads?: AttachmentMetadata[];
+  activeAttachmentUploads?: PendingAttachmentUploadMetadata[];
   /**
    * Optional callback to remove the attachment upload before sending by clicking on
    * cancel icon.

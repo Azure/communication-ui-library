@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata } from '../../types/Attachment';
+import { PendingAttachmentUploadMetadata } from '../../types/Attachment';
 
 /**
  * @private
@@ -14,7 +14,9 @@ const EMPTY_MESSAGE_REGEX = /^\s*$/;
 /**
  * @private
  */
-export const hasIncompleteAttachmentUploads = (activeAttachmentUploads: AttachmentMetadata[] | undefined): boolean => {
+export const hasIncompleteAttachmentUploads = (
+  activeAttachmentUploads: PendingAttachmentUploadMetadata[] | undefined
+): boolean => {
   return !!(
     activeAttachmentUploads?.length &&
     !activeAttachmentUploads
@@ -27,7 +29,9 @@ export const hasIncompleteAttachmentUploads = (activeAttachmentUploads: Attachme
 /**
  * @private
  */
-export const hasCompletedAttachmentUploads = (activeAttachmentUploads: AttachmentMetadata[] | undefined): boolean => {
+export const hasCompletedAttachmentUploads = (
+  activeAttachmentUploads: PendingAttachmentUploadMetadata[] | undefined
+): boolean => {
   return !!activeAttachmentUploads?.find((attachment) => !attachment.uploadError);
 };
 

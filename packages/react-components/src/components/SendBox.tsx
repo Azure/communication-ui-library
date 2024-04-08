@@ -15,7 +15,7 @@ import { SendBoxErrors } from './SendBoxErrors';
 /* @conditional-compile-remove(attachment-upload) */
 import { _AttachmentUploadCards } from './AttachmentUploadCards';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata } from '../types/Attachment';
+import { PendingAttachmentUploadMetadata } from '../types/Attachment';
 /* @conditional-compile-remove(attachment-upload) */
 import { attachmentUploadCardsStyles } from './styles/SendBox.styles';
 /* @conditional-compile-remove(attachment-upload) */
@@ -167,7 +167,7 @@ export interface SendBoxProps {
    * of a attachment upload like name, progress, errorMessage etc.
    * @beta
    */
-  activeAttachmentUploads?: AttachmentMetadata[];
+  activeAttachmentUploads?: PendingAttachmentUploadMetadata[];
   /* @conditional-compile-remove(attachment-upload) */
   /**
    * Optional callback to remove the attachment upload before sending by clicking on
