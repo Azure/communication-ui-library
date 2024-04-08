@@ -164,7 +164,7 @@ export interface MoreDrawerProps extends MoreDrawerDevicesMenuProps {
   strings: MoreDrawerStrings;
   disableButtonsForHoldScreen?: boolean;
   /* @conditional-compile-remove(close-captions) */
-  isTeamsCall?: boolean;
+  useTeamsCaptions?: boolean;
   /* @conditional-compile-remove(reaction) */
   reactionResources?: ReactionResources;
   /* @conditional-compile-remove(reaction) */
@@ -540,7 +540,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       }
     });
 
-    if (props.isTeamsCall) {
+    if (props.useTeamsCaptions) {
       const captionLanguageString = supportedCaptionLanguageStrings
         ? supportedCaptionLanguageStrings[currentCaptionLanguage]
         : currentCaptionLanguage;
