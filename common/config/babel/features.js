@@ -73,8 +73,6 @@ module.exports = {
     "calling-environment-info",
     // conditional-compile for new signaling beta
     "signaling-beta",
-    // Feature for end of call survey
-    'end-of-call-survey',
     // Feature for tracking beta start call identifier
     'start-call-beta',
     // Image overlay theme
@@ -95,6 +93,8 @@ module.exports = {
     // Support Calling SDK isReceiving flag, shows a loading spinner on the video tile when isAvailable is true but isReceiving is false
     "video-stream-is-receiving-flag",
     // Feature for spotlight
-    'spotlight'
+    'spotlight',
+     // Feature for end of call survey
+     'end-of-call-survey',
   ]
 }
