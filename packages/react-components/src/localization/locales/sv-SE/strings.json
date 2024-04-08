@@ -44,7 +44,18 @@
     "numberListTooltip": "Numrerad lista",
     "increaseIndentTooltip": "Öka indrag",
     "decreaseIndentTooltip": "Minska indrag",
-    "richTextFormatButtonTooltip": "Format"
+    "insertTableTooltip": "Infoga tabell",
+    "richTextFormatButtonTooltip": "Format",
+    "insertRowOrColumnMenu": "Infoga",
+    "insertTableMenuTitle": "Infoga tabell på {column} x {row}",
+    "insertRowAboveMenu": "Infoga ovan",
+    "insertRowBelowMenu": "Infoga nedanför",
+    "insertColumnLeftMenu": "Infoga till vänster",
+    "insertColumnRightMenu": "Infoga till höger",
+    "deleteRowOrColumnMenu": "Ta bort",
+    "deleteColumnMenu": "Ta bort kolumn",
+    "deleteRowMenu": "Ta bort rad",
+    "deleteTableMenu": "Ta bort tabell"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Förslag"
@@ -66,7 +77,9 @@
   },
   "endCallButton": {
     "label": "Lämna",
-    "tooltipContent": "Lämna samtal"
+    "tooltipContent": "Lämna samtal",
+    "leaveOption": "Lämna",
+    "endCallOption": "Avsluta samtal"
   },
   "cameraButton": {
     "onLabel": "Kamera",
@@ -180,6 +193,7 @@
     "messageReadCount": "Läst av {messageReadByCount} av {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Fler alternativ",
     "downloadAttachment": "Ladda ner fil",
+    "openAttachment": "Öppna fil",
     "blockedWarningText": "Det här meddelandet har tagits bort på grund av en organisationsprincip.",
     "blockedWarningLinkText": "Information",
     "attachmentCardGroupMessage": "Meddelandet har {attachmentCount} bifogade filer.",
