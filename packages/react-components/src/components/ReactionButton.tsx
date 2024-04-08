@@ -35,7 +35,7 @@ import { getEmojiFrameCount } from './VideoGallery/utils/videoGalleryLayoutUtils
 /**
  * Props for {@link ReactionButton}.
  *
- * @beta
+ * @public
  */
 export interface ReactionButtonProps extends ControlBarButtonProps {
   /**
@@ -85,7 +85,7 @@ export interface ReactionButtonStrings {
  *
  * Can be used with {@link ControlBar}.
  *
- * @beta
+ * @public
  */
 export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
   const localeStrings = useLocale().strings.reactionButton;
