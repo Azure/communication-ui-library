@@ -19,7 +19,7 @@ import {
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(meeting-id) */
 import { CallInfo, TeamsCallInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(capabilities) */
+
 import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsResultType } from '@azure/communication-calling';
@@ -136,7 +136,6 @@ export interface TranscriptionCallFeatureState {
   isTranscriptionActive: boolean;
 }
 
-/* @conditional-compile-remove(capabilities) */
 /**
  * State only version of {@link @azure/communication-calling#CapabilitiesFeature}
  *
@@ -157,7 +156,7 @@ export interface CapabilitiesFeatureState {
 /**
  * State only version of {@link @azure/communication-calling#SpotlightCallFeature}
  *
- * @beta
+ * @public
  */
 export interface SpotlightCallFeatureState {
   /**
@@ -178,7 +177,7 @@ export interface SpotlightCallFeatureState {
 /**
  * Spotlight state with order
  *
- * @beta
+ * @public
  */
 export interface SpotlightState {
   /**
@@ -256,7 +255,7 @@ export interface RaiseHandCallFeatureState {
  * State only version of {@link @azure/communication-calling#PPTLiveCallFeature}. {@link StatefulCallClient} will
  * automatically listen for pptLive on the call and update the state exposed by {@link StatefulCallClient} accordingly.
  *
- * @beta
+ * @public
  */
 export interface PPTLiveCallFeatureState {
   /**
@@ -446,7 +445,7 @@ export interface RemoteParticipantState {
   /**
    * Proxy of {@link @azure/communication-calling#Call.PPTLive.target}.
    *
-   * @beta
+   * @public
    */
   contentSharingStream?: HTMLElement;
   /* @conditional-compile-remove(reaction) */
@@ -552,7 +551,7 @@ export interface CallState {
   /**
    * Proxy of {@link @azure/communication-calling#PPTLiveCallFeature}.
    *
-   *@beta
+   *@public
    */
   pptLive: PPTLiveCallFeatureState;
   /**
@@ -586,7 +585,7 @@ export interface CallState {
    *
    * This property is added by the stateful layer and is not a proxy of SDK state
    *
-   *@beta
+   *@public
    */
   contentSharingRemoteParticipant?: string;
   /**
@@ -619,7 +618,7 @@ export interface CallState {
    * Transfer state of call
    */
   transfer: TransferFeatureState;
-  /* @conditional-compile-remove(capabilities) */
+
   /**
    * Proxy of {@link @azure/communication-calling#CapabilitiesFeature}.
    */

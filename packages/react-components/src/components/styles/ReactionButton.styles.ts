@@ -49,7 +49,10 @@ export const emojiStyles = (backgroundImage: string, frameCount: number): IStyle
       animationDuration: '8.12s',
       animationTimingFunction: `steps(${steps})`,
       animationIterationCount: 'infinite',
-      backgroundColor: 'unset'
+      backgroundColor: 'transparent'
+    },
+    ':active': {
+      backgroundColor: 'transparent'
     }
   };
 };
@@ -59,14 +62,19 @@ export const emojiStyles = (backgroundImage: string, frameCount: number): IStyle
  *
  * @private
  */
-export const reactionEmojiMenuStyles = (): React.CSSProperties => {
+export const reactionEmojiMenuStyles = (): IStyle => {
   return {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
     width: '13.75rem',
-    height: '2.625rem'
+    height: '2.625rem',
+
+    // Ensure that when one emoji is hovered, the other emojis are partially faded out
+    ':hover > :not(:hover)': {
+      opacity: '0.5'
+    }
   };
 };
 

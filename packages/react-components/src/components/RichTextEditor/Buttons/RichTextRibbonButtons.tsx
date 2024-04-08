@@ -90,8 +90,8 @@ export const ribbonButtons = (theme: Theme): RibbonButton<string>[] => {
     dividerRibbonButton(theme, 'RichTextRibbonTextFormatDivider'),
     bulletListButton(theme),
     numberListButton(theme),
-    indentIncreaseButton(theme),
     indentDecreaseButton(theme),
+    indentIncreaseButton(theme),
     dividerRibbonButton(theme, 'RichTextRibbonTableDivider'),
     insertTableButton(theme, MaxRowsNumber, MaxColumnsNumber)
   ].forEach((item) => {

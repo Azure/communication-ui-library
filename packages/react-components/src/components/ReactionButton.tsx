@@ -120,8 +120,10 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
     backgroundColor: isDarkThemed(theme) ? theme.palette.neutralLighter : ''
   };
 
+  const classname = mergeStyles(reactionEmojiMenuStyles());
+
   const renderEmoji = (item: IContextualMenuItem, dismissMenu: () => void): React.JSX.Element => (
-    <div style={reactionEmojiMenuStyles()}>
+    <div data-ui-id="reaction-sub-menu" className={classname}>
       {emojis.map((emoji, index) => {
         const resourceUrl = emojiResource.get(emoji);
         const frameCount: number =

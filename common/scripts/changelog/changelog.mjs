@@ -18,6 +18,7 @@ import { CHANGE_DIR } from './constants.mjs';
 import fs from 'fs';
 
 export async function generateChangelogs() {
+  deleteAllNoneChangeFiles();
   const options = getOptions([]);
   const packageInfos = getPackageInfos(options.path);
   // Preserve(deep clone) the current packageInfo before bump, we don't change version number using beachball
@@ -33,6 +34,19 @@ export async function generateChangelogs() {
   // Beachball deletes the change file directory which causes confusion for scripts
   // that manipulate working directory paths.
   ensureDirectory(CHANGE_DIR);
+}
+
+/**
+ * Delete all change files with the type none as they are not included in the changelog.
+ */
+function deleteAllNoneChangeFiles() {
+  const files = fs.readdirSync(CHANGE_DIR);
+  for (const file of files) {
+    const json = JSON.parse(fs.readFileSync(`${CHANGE_DIR}/${file}`, 'utf8'));
+    if (json.type === 'none') {
+      fs.unlinkSync(`${CHANGE_DIR}/${file}`);
+    }
+  }
 }
 
 function clone(obj) {

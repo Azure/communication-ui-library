@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "area": "improvement",
+  "workstream": "Feature flag",
+  "comment": "Remove attachment-download cc flag from upload attachment",
+  "packageName": "@azure/communication-react",
+  "email": "77021369+jimchou-dev@users.noreply.github.com",
+  "dependentChangeType": "none"
+}
