@@ -92,7 +92,6 @@ export interface ComponentStrings {
   /* @conditional-compile-remove(reaction) */
   /**
    * Strings for ReactionButton
-   * @beta
    * */
   reactionButton: ReactionButtonStrings;
   /** Strings for TypingIndicator */

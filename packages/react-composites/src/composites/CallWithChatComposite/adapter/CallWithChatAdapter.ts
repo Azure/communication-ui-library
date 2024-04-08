@@ -204,7 +204,7 @@ export interface CallWithChatAdapterManagement {
    * Send Reaction to ongoing meeting.
    * @param reaction - A value of type {@link @azure/communication-calling#Reaction}
    *
-   * @beta
+   * @public
    */
   onReactionClick(reaction: Reaction): Promise<void>;
   /**
@@ -490,7 +490,7 @@ export interface CallWithChatAdapterManagement {
   /**
    * Send the end of call survey result
    *
-   * @beta
+   * @public
    */
   submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
   /* @conditional-compile-remove(spotlight) */
