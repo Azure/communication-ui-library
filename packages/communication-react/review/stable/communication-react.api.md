@@ -3131,7 +3131,7 @@ export type Reaction = {
     receivedOn: Date;
 };
 
-// @beta
+// @public
 export interface ReactionButtonProps extends ControlBarButtonProps {
     onReactionClick: (reaction: string) => Promise<void>;
     reactionResources: ReactionResources;
