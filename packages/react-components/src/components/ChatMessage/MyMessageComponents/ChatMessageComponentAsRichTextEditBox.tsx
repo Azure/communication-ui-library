@@ -5,28 +5,36 @@ import { mergeStyles, Stack } from '@fluentui/react';
 import { ChatMyMessage } from '@fluentui-contrib/react-chat';
 import { mergeClasses } from '@fluentui/react-components';
 import { _formatString } from '@internal/acs-ui-common';
-import { useTheme } from '../../theming/FluentThemeProvider';
+import { useTheme } from '../../../theming';
 import React, { useCallback, useMemo, useState } from 'react';
-import { editBoxWidthStyles, richTextEditBoxActionButtonIcon } from '../styles/EditBox.styles';
-import { InputBoxButton } from '../InputBoxButton';
-import { MessageThreadStrings } from '../MessageThread';
-import { useChatMyMessageStyles } from '../styles/MessageThread.styles';
-import { ChatMessage } from '../../types';
-import { _AttachmentUploadCards } from '../AttachmentUploadCards';
+import { editBoxWidthStyles, richTextEditBoxActionButtonIcon } from '../../styles/EditBox.styles';
+import { InputBoxButton } from '../../InputBoxButton';
+import { MessageThreadStrings } from '../../MessageThread';
+import { useChatMyMessageStyles } from '../../styles/MessageThread.styles';
+import { ChatMessage } from '../../../types';
+import { _AttachmentUploadCards } from '../../AttachmentUploadCards';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata } from '../../types/Attachment';
-import { useChatMessageRichTextEditContainerStyles } from '../styles/ChatMessageComponent.styles';
-import { MAXIMUM_LENGTH_OF_MESSAGE } from '../utils/SendBoxUtils';
-import { getMessageState, onRenderCancelIcon, onRenderSubmitIcon } from '../utils/ChatMessageComponentAsEditBoxUtils';
+import { AttachmentMetadata } from '../../../types/Attachment';
+import { useChatMessageRichTextEditContainerStyles } from '../../styles/ChatMessageComponent.styles';
+import { MAXIMUM_LENGTH_OF_MESSAGE } from '../../utils/SendBoxUtils';
+import {
+  getMessageState,
+  onRenderCancelIcon,
+  onRenderSubmitIcon
+} from '../../utils/ChatMessageComponentAsEditBoxUtils';
 /* @conditional-compile-remove(attachment-upload) */
-import { getMessageWithAttachmentMetadata } from '../utils/ChatMessageComponentAsEditBoxUtils';
-import { RichTextEditorComponentRef } from '../RichTextEditor/RichTextEditor';
-import { RichTextInputBoxComponent } from '../RichTextEditor/RichTextInputBoxComponent';
-import { editBoxRichTextEditorStyle, richTextActionButtonsStyle } from '../styles/RichTextEditor.styles';
-import { RichTextSendBoxErrors } from '../RichTextEditor/RichTextSendBoxErrors';
-import { useLocale } from '../../localization';
+import { getMessageWithAttachmentMetadata } from '../../utils/ChatMessageComponentAsEditBoxUtils';
+import { RichTextEditorComponentRef } from '../../RichTextEditor/RichTextEditor';
+import { RichTextInputBoxComponent } from '../../RichTextEditor/RichTextInputBoxComponent';
+import { editBoxRichTextEditorStyle, richTextActionButtonsStyle } from '../../styles/RichTextEditor.styles';
+import { RichTextSendBoxErrors } from '../../RichTextEditor/RichTextSendBoxErrors';
+import { useLocale } from '../../../localization';
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+import { FluentV9ThemeProvider } from '../../../theming/FluentV9ThemeProvider';
+/* @conditional-compile-remove(attachment-upload) */
+import { attachmentUploadCardsStyles } from '../../styles/SendBox.styles';
 
-/** @beta */
+/** @private */
 export type ChatMessageComponentAsRichTextEditBoxProps = {
   onCancel?: (messageId: string) => void;
   onSubmit: (
@@ -42,7 +50,7 @@ export type ChatMessageComponentAsRichTextEditBoxProps = {
 };
 
 /**
- * @beta
+ * @private
  */
 export const ChatMessageComponentAsRichTextEditBox = (
   props: ChatMessageComponentAsRichTextEditBoxProps
@@ -50,8 +58,8 @@ export const ChatMessageComponentAsRichTextEditBox = (
   const { onCancel, onSubmit, strings, message } = props;
 
   const [textValue, setTextValue] = useState<string>(message.content || '');
-  /* @conditional-compile-remove(attachment-upload) */
-  const [attachmentMetadata, _] = React.useState(getMessageWithAttachmentMetadata(message));
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  const [attachmentMetadata, setAttachmentMetadata] = useState(getMessageWithAttachmentMetadata(message));
   const editTextFieldRef = React.useRef<RichTextEditorComponentRef>(null);
   const theme = useTheme();
   const messageState = getMessageState(
@@ -147,6 +155,28 @@ export const ChatMessageComponentAsRichTextEditBox = (
     return locale.sendBox;
   }, [/* @conditional-compile-remove(rich-text-editor) */ locale.richTextSendBox, locale.sendBox]);
 
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  const onCancelAttachmentUpload = useCallback(
+    (attachmentId: string) => {
+      setAttachmentMetadata(attachmentMetadata?.filter((attachment) => attachment.id !== attachmentId));
+    },
+    [attachmentMetadata]
+  );
+
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  const onRenderAttachmentUploads = useCallback(() => {
+    return (
+      <Stack className={attachmentUploadCardsStyles}>
+        <FluentV9ThemeProvider v8Theme={theme}>
+          <_AttachmentUploadCards
+            activeAttachmentUploads={attachmentMetadata}
+            onCancelAttachmentUpload={onCancelAttachmentUpload}
+          />
+        </FluentV9ThemeProvider>
+      </Stack>
+    );
+  }, [attachmentMetadata, onCancelAttachmentUpload, theme]);
+
   const getContent = (): JSX.Element => {
     return (
       <Stack className={mergeStyles(editBoxWidthStyles)}>
@@ -162,6 +192,8 @@ export const ChatMessageComponentAsRichTextEditBox = (
           actionComponents={actionButtons}
           richTextEditorStyleProps={editBoxRichTextEditorStyle}
           isHorizontalLayoutDisabled={true}
+          /* @conditional-compile-remove(attachment-upload) */
+          onRenderAttachmentUploads={onRenderAttachmentUploads}
         />
       </Stack>
     );
