@@ -6,7 +6,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 /* @conditional-compile-remove(reaction) */
 import { Reaction, ReactionResources } from '../../types';
 /* @conditional-compile-remove(reaction) */
-import { getEmojiFrameCount, getEmojiFrameSize, getEmojiResource } from './utils/videoGalleryLayoutUtils';
+import { getEmojiFrameCount, getEmojiResource } from './utils/videoGalleryLayoutUtils';
 /* @conditional-compile-remove(reaction) */
 import { Stack, mergeStyles } from '@fluentui/react';
 /* @conditional-compile-remove(reaction) */
@@ -43,11 +43,6 @@ export const ParticipantVideoTileOverlay = React.memo(
         ? getEmojiFrameCount(reaction?.reactionType, reactionResources)
         : undefined;
 
-    const frameSize =
-      reaction !== undefined && reactionResources !== undefined
-        ? getEmojiFrameSize(reaction?.reactionType, reactionResources)
-        : undefined;
-
     const currentUnixTimeStamp = Date.now();
     const receivedUnixTimestamp = reaction ? getReceivedUnixTime(reaction.receivedOn) : undefined;
     const canRenderReaction =
@@ -76,9 +71,9 @@ export const ParticipantVideoTileOverlay = React.memo(
           spriteImageUrl: spriteImageUrl ?? '',
           emojiSize: emojiSize,
           frameCount: frameCount ?? REACTION_NUMBER_OF_ANIMATION_FRAMES,
-          rawFrameSize: frameSize ?? REACTION_DEFAULT_RESOURCE_FRAME_SIZE_PX
+          rawFrameSize: REACTION_DEFAULT_RESOURCE_FRAME_SIZE_PX
         }),
-      [spriteImageUrl, emojiSize, frameCount, frameSize]
+      [spriteImageUrl, emojiSize, frameCount]
     );
 
     return (
