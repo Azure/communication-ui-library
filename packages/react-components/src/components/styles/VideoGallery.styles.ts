@@ -63,8 +63,7 @@ export const localVideoTileContainerStyles: IStackStyles = {
 /**
  * @private
  */
-//TODO remove when pptlive local navigation feature is ready
-//ADO FEATURE 3667703
+//TODO Can be removed once the overlay mitigation has been implemented at the SDK layer
 export const pptLiveOverlayStyles: IStackStyles = {
   root: {
     position: 'absolute',

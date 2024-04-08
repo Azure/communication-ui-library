@@ -408,8 +408,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
         }
         {
           /* @conditional-compile-remove(ppt-live) */
-          //TODO remove when pptlive local navigation feature is ready
-          //ADO FEATURE 3667703
+          // TODO Can be removed once the overlay mitigation has been implemented at the SDK layer
           <Stack className={mergeStyles(videoContainerStyles, pptLiveOverlayStyles)}></Stack>
         }
         {(canShowLabel || participantStateString) && (
