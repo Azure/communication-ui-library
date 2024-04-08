@@ -19,8 +19,6 @@ module.exports = {
     "hide-attendee-name",
     // Feature for meeting reactions
     'reaction',
-    // Feature for PPT Live for teams meeting
-    'ppt-live',
     // Feature for Rich Text Editor (RTE) support
     'rich-text-editor',
     // Join meeting with meetingId and passcode
@@ -95,6 +93,8 @@ module.exports = {
     // Feature for spotlight
     'spotlight',
      // Feature for end of call survey
-     'end-of-call-survey',
+    'end-of-call-survey',
+    // Feature for PPT Live for teams meeting
+    'ppt-live'
   ]
 }
