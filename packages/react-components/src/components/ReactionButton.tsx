@@ -56,7 +56,7 @@ export interface ReactionButtonProps extends ControlBarButtonProps {
 /**
  * Strings of {@link ReactionButton} that can be overridden.
  *
- * @beta
+ * @public
  */
 export interface ReactionButtonStrings {
   /** Label of the button. */

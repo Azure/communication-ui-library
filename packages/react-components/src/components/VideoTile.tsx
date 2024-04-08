@@ -88,7 +88,6 @@ export interface VideoTileProps {
   /* @conditional-compile-remove(reaction) */
   /**
    * Overlay component responsible for rendering reaction
-   * @beta
    */
   overlay?: JSX.Element | null;
   /** Determines if the video is mirrored or not. */
@@ -173,7 +172,6 @@ export interface VideoTileProps {
   /* @conditional-compile-remove(reaction) */
   /**
    * Reactions resources' url and metadata.
-   * @beta
    */
   reactionResources?: ReactionResources;
 }

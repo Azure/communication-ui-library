@@ -103,7 +103,6 @@ export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
   /**
    * Whether local participant has reacted
    *
-   * @beta
    * */
   reaction?: Reaction;
 }
@@ -131,7 +130,7 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
   /**
    * Whether participant has reacted
    *
-   * @beta
+   * @public
    * */
   reaction?: Reaction;
 }
