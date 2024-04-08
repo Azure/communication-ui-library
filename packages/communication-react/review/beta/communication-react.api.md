@@ -1037,7 +1037,6 @@ export interface CallState {
     isMuted: boolean;
     isScreenSharingOn: boolean;
     kind: CallKind;
-    // @beta
     localParticipantReaction?: ReactionState;
     localRecording: LocalRecordingCallFeatureState;
     localVideoStreams: LocalVideoStreamState[];
@@ -2020,7 +2019,7 @@ export interface CommonCallingHandlers {
     onLowerHand: () => Promise<void>;
     // (undocumented)
     onRaiseHand: () => Promise<void>;
-    // @beta (undocumented)
+    // (undocumented)
     onReactionClick: (reaction: Reaction_2) => Promise<void>;
     // (undocumented)
     onRemoveParticipant(userId: string): Promise<void>;
@@ -3772,20 +3771,20 @@ export interface RaiseHandCallFeature {
     raisedHands: RaisedHandState[];
 }
 
-// @beta
+// @public
 export type Reaction = {
     reactionType: string;
     receivedOn: Date;
 };
 
-// @beta
+// @public
 export interface ReactionButtonProps extends ControlBarButtonProps {
     onReactionClick: (reaction: string) => Promise<void>;
     reactionResources: ReactionResources;
     strings?: Partial<ReactionButtonStrings>;
 }
 
-// @beta
+// @public
 export interface ReactionButtonStrings {
     applauseReactionTooltipContent?: string;
     ariaLabel: string;
@@ -3798,7 +3797,7 @@ export interface ReactionButtonStrings {
     tooltipDisabledContent?: string;
 }
 
-// @beta
+// @public
 export interface ReactionResources {
     applauseReaction?: ReactionSprite;
     heartReaction?: ReactionSprite;
@@ -3807,14 +3806,14 @@ export interface ReactionResources {
     surprisedReaction?: ReactionSprite;
 }
 
-// @beta
+// @public
 export type ReactionSprite = {
     url: string;
     frameCount: number;
     size?: number;
 };
 
-// @beta
+// @public
 export type ReactionState = {
     reactionMessage: ReactionMessage;
     receivedOn: Date;
@@ -3844,7 +3843,6 @@ export interface RemoteParticipantState {
     isMuted: boolean;
     isSpeaking: boolean;
     raisedHand?: RaisedHandState;
-    // @beta
     reactionState?: ReactionState;
     role?: ParticipantRole;
     spotlight?: SpotlightState;
@@ -4538,7 +4536,6 @@ export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | 'speaker' | 
 // @public
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
     raisedHand?: RaisedHand;
-    // @beta
     reaction?: Reaction;
 }
 
@@ -4580,7 +4577,6 @@ export interface VideoGalleryProps {
     onUnpinParticipant?: (userId: string) => void;
     overflowGalleryPosition?: OverflowGalleryPosition;
     pinnedParticipants?: string[];
-    // @beta
     reactionResources?: ReactionResources;
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoTileMenu?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
@@ -4596,7 +4592,6 @@ export interface VideoGalleryProps {
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     isSpeaking?: boolean;
     raisedHand?: RaisedHand;
-    // @beta
     reaction?: Reaction;
     screenShareStream?: VideoGalleryStream;
     // @beta
@@ -4702,13 +4697,11 @@ export interface VideoTileProps {
     noVideoAvailableAriaLabel?: string;
     onLongTouch?: () => void;
     onRenderPlaceholder?: OnRenderAvatarCallback;
-    // @beta
     overlay?: JSX.Element | null;
     participantState?: ParticipantState;
     personaMaxSize?: number;
     personaMinSize?: number;
     raisedHand?: RaisedHand;
-    // @beta
     reactionResources?: ReactionResources;
     renderElement?: JSX.Element | null;
     showLabel?: boolean;
