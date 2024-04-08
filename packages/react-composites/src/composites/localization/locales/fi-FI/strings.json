@@ -335,7 +335,7 @@
   },
   "chat": {
     "chatListHeader": "Tässä keskustelussa",
-    "uploadAttachment": "Upload Attachment"
+    "uploadAttachment": "Lataa liite"
   },
   "callWithChat": {
     "chatButtonLabel": "Keskustelu",
