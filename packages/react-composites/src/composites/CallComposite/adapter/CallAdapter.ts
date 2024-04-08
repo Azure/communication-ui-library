@@ -179,7 +179,7 @@ export type CallAdapterClientState = {
   /* @conditional-compile-remove(reaction) */
   /**
    * State to track the reactions to be used.
-   * @beta
+   * @public
    */
   reactions?: ReactionResources;
 };
@@ -533,7 +533,7 @@ export interface CallAdapterCallOperations {
   /**
    * Send reaction emoji
    *
-   * @beta
+   * @public
    */
   onReactionClick(reaction: Reaction): Promise<void>;
   /**
@@ -699,7 +699,7 @@ export interface CallAdapterCallOperations {
   /**
    * Send the end of call survey result
    *
-   * @beta
+   * @public
    */
   submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
   /* @conditional-compile-remove(spotlight) */

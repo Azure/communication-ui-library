@@ -35,7 +35,7 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
 /**
  * Spotlight state with order
  *
- * @beta
+ * @public
  */
 export type Spotlight = {
   /**
@@ -57,7 +57,7 @@ export type RaisedHand = {
 /**
  * Reaction state with reaction type to render
  *
- * @beta
+ * @public
  */
 export type Reaction = {
   /**

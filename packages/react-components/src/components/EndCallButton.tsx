@@ -3,8 +3,8 @@
 
 import { concatStyleSets, Icon, IStyle, PartialTheme } from '@fluentui/react';
 /* @conditional-compile-remove(end-call-options) */
-import { IContextualMenuProps } from '@fluentui/react';
-import React from 'react';
+import { IContextualMenuProps, mergeStyles } from '@fluentui/react';
+import React, { useCallback } from 'react';
 import { useLocale } from '../localization';
 import { useTheme } from '../theming';
 import { CallingTheme, darkTheme, lightTheme } from '../theming/themes';
@@ -60,7 +60,10 @@ export interface EndCallButtonProps extends ControlBarButtonProps {
   strings?: EndCallButtonStrings;
 }
 
-const onRenderEndCallIcon = (): JSX.Element => <Icon iconName="ControlButtonEndCall" />;
+/* @conditional-compile-remove(end-call-options) */
+const spacerClass = mergeStyles({
+  width: 4
+});
 
 /**
  * A button to end an ongoing call.
@@ -79,7 +82,18 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
   const isDarkTheme = isDarkThemed(theme);
   const componentStyles = concatStyleSets(
     isDarkTheme ? darkThemeCallButtonStyles : lightThemeCallButtonStyles,
+    /* @conditional-compile-remove(end-call-options) */ enableEndCallMenu ? menupButtonPadding : {},
     styles ?? {}
+  );
+
+  const onRenderEndCallIcon = useCallback(
+    (): JSX.Element => (
+      <>
+        <Icon iconName="ControlButtonEndCall" />
+        {/* @conditional-compile-remove(end-call-options) */ enableEndCallMenu && <span className={spacerClass} />}
+      </>
+    ),
+    [/* @conditional-compile-remove(end-call-options) */ enableEndCallMenu]
   );
 
   /* @conditional-compile-remove(end-call-options) */
@@ -207,4 +221,9 @@ const lightThemeCallButtonStyles = {
   label: {
     color: lightTheme.callingPalette.iconWhite
   }
+};
+
+/* @conditional-compile-remove(end-call-options) */
+const menupButtonPadding = {
+  root: { padding: '0 0.75rem' }
 };

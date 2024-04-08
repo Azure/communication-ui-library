@@ -16,7 +16,7 @@ import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communic
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(acs-close-captions) */
-import { CaptionsInfo as AcsCaptionsInfo } from '@azure/communication-calling';
+import { CaptionsKind, CaptionsInfo as AcsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { AzureLogger, createClientLogger, getLogLevel } from '@azure/logger';
@@ -1022,6 +1022,16 @@ export class CallContext {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         this.processNewCaption(call.captionsFeature.captions, convertFromSDKToCaptionInfoState(caption));
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(acs-close-captions) */
+  public setCaptionsKind(callId: string, kind: CaptionsKind): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.captionsFeature.captionsKind = kind;
       }
     });
   }
