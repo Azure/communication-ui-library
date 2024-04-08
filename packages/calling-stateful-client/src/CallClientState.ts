@@ -283,7 +283,7 @@ export type RaisedHandState = {
  * State only version of {@link @azure/communication-calling#Call.ReactionMessage} with UI helper props receivedOn.
  * Reaction state with a timestamp which helps UI to decide to render the reaction accordingly.
  *
- * @beta
+ * @public
  */
 export type ReactionState = {
   /**
@@ -459,7 +459,7 @@ export interface RemoteParticipantState {
    * Proxy of {@link @azure/communication-calling#Call.ReactionMessage} with
    * UI helper props receivedOn which indicates the timestamp when the message was received.
    *
-   * @beta
+   * @public
    */
   reactionState?: ReactionState;
   /* @conditional-compile-remove(spotlight) */
@@ -569,7 +569,7 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#Call.ReactionMessage} with
    * UI helper props receivedOn which indicates the timestamp when the message was received.
    *
-   * @beta
+   * @public
    */
   localParticipantReaction?: ReactionState;
   /**

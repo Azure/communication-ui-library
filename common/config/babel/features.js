@@ -17,8 +17,6 @@ module.exports = {
     "gallery-layout-composite",
     // feature for hiding attendee name in the teams meeting
     "hide-attendee-name",
-    // Feature for meeting reactions
-    'reaction',
     // Feature for Rich Text Editor (RTE) support
     'rich-text-editor',
     // Join meeting with meetingId and passcode
@@ -95,6 +93,8 @@ module.exports = {
      // Feature for end of call survey
     'end-of-call-survey',
     // Feature for PPT Live for teams meeting
-    'ppt-live'
+    'ppt-live',
+    // Feature for meeting reactions
+    'reaction',
   ]
 }
