@@ -438,7 +438,6 @@ export interface CallAdapterCallOperations {
     stopScreenShare(): Promise<void>;
     stopSpotlight(userIds?: string[]): Promise<void>;
     stopVideoBackgroundEffects(): Promise<void>;
-    // @beta
     submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
     unmute(): Promise<void>;
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
@@ -785,6 +784,7 @@ export interface CallCompositeStrings {
     dtmfDialerMoreButtonLabelOff?: string;
     dtmfDialerMoreButtonLabelOn?: string;
     dtmfDialpadPlaceholderText: string;
+    endCallConfirmButtonLabel?: string;
     endCallConfirmDialogContent?: string;
     endCallConfirmDialogTitle?: string;
     endOfSurveyText: string;
@@ -795,12 +795,12 @@ export interface CallCompositeStrings {
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
     failedToJoinTeamsMeetingReasonAccessDeniedTitle: string;
     hangUpCancelButtonLabel?: string;
-    hangUpConfirmButtonLabel?: string;
     holdScreenLabel: string;
     invalidMeetingIdentifier: string;
     inviteToRoomRemovedDetails?: string;
     inviteToRoomRemovedTitle: string;
     learnMore: string;
+    leaveConfirmButtonLabel?: string;
     leaveConfirmDialogContent?: string;
     leaveConfirmDialogTitle?: string;
     leavingCallTitle?: string;
@@ -891,9 +891,8 @@ export interface CallCompositeStrings {
     stopSpotlightOnSelfMenuLabel: string;
     surveyConfirmButtonLabel: string;
     surveyIssues: SurveyIssues;
-    SurveyIssuesHeadingStrings: SurveyIssuesHeadingStrings;
+    surveyIssuesHeadingStrings: SurveyIssuesHeadingStrings;
     surveySkipButtonLabel: string;
-    surveyTextboxDefaultText: string;
     surveyTitle: string;
     tagsSurveyHelperText: string;
     tagsSurveyQuestion: string;
@@ -1026,7 +1025,6 @@ export interface CallState {
     callerInfo: CallerInfo;
     capabilitiesFeature?: CapabilitiesFeatureState;
     captionsFeature: CaptionsCallFeatureState;
-    // @beta
     contentSharingRemoteParticipant?: string;
     diagnostics: DiagnosticsCallFeatureState;
     direction: CallDirection;
@@ -1043,7 +1041,6 @@ export interface CallState {
     localRecording: LocalRecordingCallFeatureState;
     localVideoStreams: LocalVideoStreamState[];
     optimalVideoCount: OptimalVideoCountFeatureState;
-    // @beta
     pptLive: PPTLiveCallFeatureState;
     raiseHand: RaiseHandCallFeature;
     recording: RecordingCallFeature;
@@ -1063,7 +1060,7 @@ export interface CallState {
     transfer: TransferFeature;
 }
 
-// @beta
+// @public
 export interface CallSurveyImprovementSuggestions {
     audioRating?: string;
     overallRating?: string;
@@ -1144,7 +1141,6 @@ export interface CallWithChatAdapterManagement {
     stopScreenShare(): Promise<void>;
     stopSpotlight(userIds?: string[]): Promise<void>;
     stopVideoBackgroundEffects(): Promise<void>;
-    // @beta
     submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
     unmute(): Promise<void>;
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
@@ -1472,7 +1468,7 @@ export interface CallWithChatControlOptions extends CommonCallControlOptions {
 }
 
 // @public
-export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | /* @conditional-compile-remove(close-captions) */ 'isCaptionsActiveChanged' | /* @conditional-compile-remove(close-captions) */ 'captionsReceived' | /* @conditional-compile-remove(close-captions) */ 'isCaptionLanguageChanged' | /* @conditional-compile-remove(close-captions) */ 'isSpokenLanguageChanged' |  'capabilitiesChanged' | /* @conditional-compile-remove(spotlight) */ 'spotlightChanged' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
+export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | /* @conditional-compile-remove(close-captions) */ 'isCaptionsActiveChanged' | /* @conditional-compile-remove(close-captions) */ 'captionsReceived' | /* @conditional-compile-remove(close-captions) */ 'isCaptionLanguageChanged' | /* @conditional-compile-remove(close-captions) */ 'isSpokenLanguageChanged' | 'capabilitiesChanged' | /* @conditional-compile-remove(spotlight) */ 'spotlightChanged' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
 
 // @beta
 export const CameraAndMicrophoneSitePermissions: (props: CameraAndMicrophoneSitePermissionsProps) => JSX.Element;
@@ -2499,6 +2495,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     CancelAttachmentUpload: React_2.JSX.Element;
     DownloadAttachment: React_2.JSX.Element;
     OpenAttachment: React_2.JSX.Element;
+    AttachmentMoreMenu: React_2.JSX.Element;
     DataLossPreventionProhibited: React_2.JSX.Element;
     EditBoxCancel: React_2.JSX.Element;
     EditBoxSubmit: React_2.JSX.Element;
@@ -2693,6 +2690,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     CancelAttachmentUpload: React_2.JSX.Element;
     DownloadAttachment: React_2.JSX.Element;
     OpenAttachment: React_2.JSX.Element;
+    AttachmentMoreMenu: React_2.JSX.Element;
     DataLossPreventionProhibited: React_2.JSX.Element;
     ErrorBarCallVideoRecoveredBySystem: React_2.JSX.Element;
     ErrorBarCallVideoStoppedBySystem: React_2.JSX.Element;
@@ -3723,7 +3721,7 @@ export type ParticipantsRemovedListener = (event: {
 // @public
 export type ParticipantState = 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
 
-// @beta
+// @public
 export interface PPTLiveCallFeatureState {
     isActive: boolean;
 }
@@ -3839,7 +3837,6 @@ export interface RecordingCallFeature {
 // @public
 export interface RemoteParticipantState {
     callEndReason?: CallEndReason;
-    // @beta
     contentSharingStream?: HTMLElement;
     displayName?: string;
     identifier: CommunicationIdentifierKind;
@@ -3989,6 +3986,7 @@ export type SendBoxSelector = (state: ChatClientState, props: ChatBaseSelectorPr
 
 // @public
 export interface SendBoxStrings {
+    attachmentMoreMenu: string;
     attachmentUploadsPendingError: string;
     placeholderText: string;
     removeAttachment: string;
@@ -4113,12 +4111,12 @@ export interface SpokenLanguageStrings {
     'zh-tw': string;
 }
 
-// @beta
+// @public
 export type Spotlight = {
     spotlightedOrderPosition?: number;
 };
 
-// @beta
+// @public
 export interface SpotlightCallFeatureState {
     localParticipantSpotlight?: SpotlightState;
     maxParticipantsToSpotlight: number;
@@ -4131,7 +4129,7 @@ export type SpotlightChangedListener = (args: {
     removed: SpotlightedParticipant[];
 }) => void;
 
-// @beta
+// @public
 export interface SpotlightPromptStrings {
     startSpotlightCancelButtonLabel: string;
     startSpotlightConfirmButtonLabel: string;
@@ -4149,7 +4147,7 @@ export interface SpotlightPromptStrings {
     stopSpotlightText: string;
 }
 
-// @beta
+// @public
 export interface SpotlightState {
     spotlightedOrderPosition?: number;
 }
@@ -4220,7 +4218,7 @@ export interface StreamMediaProps {
     videoStreamElement: HTMLElement | null;
 }
 
-// @beta
+// @public
 export interface SurveyIssues {
     // (undocumented)
     audioRating: {
@@ -4266,7 +4264,7 @@ export interface SurveyIssues {
     };
 }
 
-// @beta
+// @public
 export interface SurveyIssuesHeadingStrings {
     // (undocumented)
     audioRating: string;

@@ -748,11 +748,6 @@ export interface CallCompositeStrings {
   surveySkipButtonLabel: string;
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
-   * Default text for free form text box
-   */
-  surveyTextboxDefaultText: string;
-  /* @conditional-compile-remove(end-of-call-survey) */
-  /**
    * Thank you text appeared on screen after survey is submitted
    */
   endOfSurveyText: string;
@@ -765,7 +760,7 @@ export interface CallCompositeStrings {
   /**
    * Corresponding texts to each call category
    */
-  SurveyIssuesHeadingStrings: SurveyIssuesHeadingStrings;
+  surveyIssuesHeadingStrings: SurveyIssuesHeadingStrings;
   /**
    * String for the dismiss control on the local and remote PIP on mobile
    */
@@ -831,9 +826,14 @@ export interface CallCompositeStrings {
   exitSpotlightButtonTooltip: string;
   /* @conditional-compile-remove(end-call-options) */
   /**
-   * Label for confirm button in hang up confirm dialog
+   * Label for confirm button of hang up for everyone dialog
    */
-  hangUpConfirmButtonLabel?: string;
+  leaveConfirmButtonLabel?: string;
+  /* @conditional-compile-remove(end-call-options) */
+  /**
+   * Label for confirm button of leave confim dialog
+   */
+  endCallConfirmButtonLabel?: string;
   /* @conditional-compile-remove(end-call-options) */
   /**
    * Label for cancel button in hang up confirm dialog
