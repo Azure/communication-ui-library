@@ -22,6 +22,10 @@ export const insertTable = (editor: IEditor, columns: number, rows: number): voi
       const td = document.createElement('td') as HTMLTableCellElement;
       tr.appendChild(td);
       td.appendChild(document.createElement('br'));
+
+      // set the width as otherwise insets doesn't work well in table
+      // review if it's needed when content model packages are used
+      td.style.width = getTableCellWidth(columns);
     }
   }
 
@@ -40,3 +44,13 @@ export const insertTable = (editor: IEditor, columns: number, rows: number): voi
     }
   );
 };
+
+function getTableCellWidth(columns: number): string {
+  if (columns <= 4) {
+    return '120px';
+  } else if (columns <= 6) {
+    return '100px';
+  } else {
+    return '70px';
+  }
+}

@@ -490,7 +490,7 @@ export interface CallWithChatAdapterManagement {
   /**
    * Send the end of call survey result
    *
-   * @beta
+   * @public
    */
   submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
   /* @conditional-compile-remove(spotlight) */
