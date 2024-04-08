@@ -53,6 +53,7 @@ export interface RichTextEditorProps {
   strings: Partial<RichTextSendBoxStrings>;
   showRichTextEditorFormatting: boolean;
   styles: RichTextEditorStyleProps;
+  autoFocus?: 'sendBoxTextField';
 }
 
 /**
@@ -71,7 +72,8 @@ export interface RichTextEditorComponentRef {
  * @beta
  */
 export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichTextEditorProps>((props, ref) => {
-  const { initialContent, onChange, placeholderText, strings, showRichTextEditorFormatting, content } = props;
+  const { initialContent, onChange, placeholderText, strings, showRichTextEditorFormatting, content, autoFocus } =
+    props;
   const editor = useRef<IEditor | null>(null);
   const contentValue = useRef<string | undefined>(content);
   const theme = useTheme();
@@ -202,6 +204,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
           data-testid={'rooster-rich-text-editor'}
           // if we don't use 'allowKeyboardEventPropagation' only the enter key is caught
           onKeyDown={props.onKeyDown}
+          focusOnInit={autoFocus === 'sendBoxTextField'}
         />
       </div>
     </div>
