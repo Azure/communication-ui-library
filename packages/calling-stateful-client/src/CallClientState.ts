@@ -156,7 +156,7 @@ export interface CapabilitiesFeatureState {
 /**
  * State only version of {@link @azure/communication-calling#SpotlightCallFeature}
  *
- * @beta
+ * @public
  */
 export interface SpotlightCallFeatureState {
   /**
@@ -177,7 +177,7 @@ export interface SpotlightCallFeatureState {
 /**
  * Spotlight state with order
  *
- * @beta
+ * @public
  */
 export interface SpotlightState {
   /**
