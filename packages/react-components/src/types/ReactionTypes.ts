@@ -4,7 +4,7 @@
 /* @conditional-compile-remove(reaction) */
 /**
  * Type for animation sprite image and related metadata
- * @beta
+ * @public
  */
 export type ReactionSprite = {
   /**
@@ -24,7 +24,7 @@ export type ReactionSprite = {
 /* @conditional-compile-remove(reaction) */
 /**
  * Interface for animation sprite image and related metadata
- * @beta
+ * @public
  */
 export interface ReactionResources {
   /**
