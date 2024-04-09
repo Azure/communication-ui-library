@@ -20,6 +20,9 @@ import LiveMessage from '../Announcer/LiveMessage';
 /* @conditional-compile-remove(mention) */
 import { defaultOnMentionRender } from './MentionRenderer';
 import DOMPurify from 'dompurify';
+import { _AttachmentDownloadCardsStrings } from '../AttachmentDownloadCards';
+/* @conditional-compile-remove(attachment-download) */
+import { AttachmentMetadata } from '../../types';
 
 type ChatMessageContentProps = {
   message: ChatMessage;
@@ -187,7 +190,7 @@ const extractContentForAllyMessage = (props: ChatMessageContentProps): string =>
     if (attachments) {
       let attachmentList = '';
       /* @conditional-compile-remove(attachment-download) */
-      attachmentList = attachments.map((attachment) => attachment.name).join(', ');
+      attachmentList = attachmentCardGroupDescription(props);
       const attachmentTextNode = document.createElement('div');
       attachmentTextNode.innerHTML = ` ${attachmentList} `;
       parsedContent.appendChild(attachmentTextNode);
@@ -218,6 +221,33 @@ const messageContentAriaText = (props: ChatMessageContentProps): string | undefi
         author: `${props.message.senderDisplayName}`,
         message: message
       });
+};
+
+/* @conditional-compile-remove(attachment-download) */
+const attachmentCardGroupDescription = (props: ChatMessageContentProps): string => {
+  /* @conditional-compile-remove(attachment-download) */
+  const attachments = props.message.attachments;
+  /* @conditional-compile-remove(attachment-download) */
+  return getAttachmentCountLiveMessage(attachments ?? [], props.strings.attachmentCardGroupMessage);
+  return '';
+};
+
+/* @conditional-compile-remove(attachment-download) */
+/**
+ * @private
+ */
+export const getAttachmentCountLiveMessage = (
+  attachments: AttachmentMetadata[],
+  attachmentCardGroupMessage: string
+): string => {
+  if (attachments.length === 0) {
+    return '';
+  }
+  /* @conditional-compile-remove(attachment-download) */
+  return _formatString(attachmentCardGroupMessage, {
+    attachmentCount: `${attachments.length}`
+  });
+  return '';
 };
 
 const defaultOnRenderInlineImage = (inlineImage: InlineImage): JSX.Element => {

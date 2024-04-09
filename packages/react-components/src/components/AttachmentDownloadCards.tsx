@@ -8,6 +8,8 @@ import { useMemo } from 'react';
 import { useLocale } from '../localization';
 import { _AttachmentCard } from './AttachmentCard';
 import { _AttachmentCardGroup } from './AttachmentCardGroup';
+/* @conditional-compile-remove(attachment-download) */
+import { getAttachmentCountLiveMessage } from './ChatMessage/ChatMessageContent';
 import { _formatString } from '@internal/acs-ui-common';
 import { AttachmentMenuAction, AttachmentMetadata } from '../types/Attachment';
 import { ChatMessage } from '../types';
@@ -102,15 +104,12 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
 
   const attachmentCardGroupDescription = useMemo(
     () => () => {
-      const attachmentGroupLocaleString =
-        props.strings?.attachmentCardGroupMessage ?? localeStrings.attachmentCardGroupMessage;
-      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-      return _formatString(attachmentGroupLocaleString, {
-        attachmentCount: `${attachments?.length ?? 0}`
-      });
-      return _formatString(attachmentGroupLocaleString, {
-        attachmentCount: `${attachments?.length ?? 0}`
-      });
+      /* @conditional-compile-remove(attachment-download) */
+      return getAttachmentCountLiveMessage(
+        attachments ?? [],
+        props.strings?.attachmentCardGroupMessage ?? localeStrings.attachmentCardGroupMessage
+      );
+      return '';
     },
     [props.strings?.attachmentCardGroupMessage, localeStrings.attachmentCardGroupMessage, attachments]
   );
