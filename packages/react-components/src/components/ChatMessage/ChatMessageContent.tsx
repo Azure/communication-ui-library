@@ -225,11 +225,8 @@ const messageContentAriaText = (props: ChatMessageContentProps): string | undefi
 
 /* @conditional-compile-remove(attachment-download) */
 const attachmentCardGroupDescription = (props: ChatMessageContentProps): string => {
-  /* @conditional-compile-remove(attachment-download) */
   const attachments = props.message.attachments;
-  /* @conditional-compile-remove(attachment-download) */
   return getAttachmentCountLiveMessage(attachments ?? [], props.strings.attachmentCardGroupMessage);
-  return '';
 };
 
 /* @conditional-compile-remove(attachment-download) */
@@ -243,7 +240,6 @@ export const getAttachmentCountLiveMessage = (
   if (attachments.length === 0) {
     return '';
   }
-  /* @conditional-compile-remove(attachment-download) */
   return _formatString(attachmentCardGroupMessage, {
     attachmentCount: `${attachments.length}`
   });
