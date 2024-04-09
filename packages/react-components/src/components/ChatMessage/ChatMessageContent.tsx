@@ -182,9 +182,9 @@ const extractContentForAllyMessage = (props: ChatMessageContentProps): string =>
 
     // Inject attachment names for aria.
     if (props.message.attachments) {
-      const attachmentLists = props.message.attachments.map((attachment) => attachment.name).join(', ');
+      const attachmentList = props.message.attachments.map((attachment) => attachment.name).join(', ');
       const attachmentTextNode = document.createElement('div');
-      attachmentTextNode.innerHTML = ` ${attachmentLists} `;
+      attachmentTextNode.innerHTML = ` ${attachmentList} `;
       parsedContent.appendChild(attachmentTextNode);
     }
 
