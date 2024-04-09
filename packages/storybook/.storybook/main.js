@@ -3,9 +3,34 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const { execSync } = require('child_process');
 
 const DEVELOPMENT_BUILD = process.env.NODE_ENV === 'development';
 console.log(`Creating storybook with internal-only stories: ${DEVELOPMENT_BUILD}`);
+
+/**
+ * Fetch feature states at the time of the last stable release and the last beta release.
+ */
+const fetchFeatureDefinitions = async () => {
+  const lastStableVersion = execSync('npm show @azure/communication-react version').toString().trim();
+  const lastBetaVersion = execSync('npm show @azure/communication-react@beta version').toString().trim();
+
+  const stableFeaturesInLastReleaseUrl = `https://github.com/Azure/communication-ui-library/blob/${lastStableVersion}/common/config/babel/features.js`;
+  const betaFeaturesInLastReleaseUrl = `https://github.com/Azure/communication-ui-library/blob/${lastBetaVersion}/common/config/babel/features.js`;
+
+  const stableReleaseFeatureDefinitions = await (await fetch(stableFeaturesInLastReleaseUrl)).json();
+  const betaReleaseFeatureDefinitions = await (await fetch(betaFeaturesInLastReleaseUrl)).json();
+
+  // Beta and stable release happen at any time, so we need to compare the features of the last stable release and the last beta release.
+  // A feature is stable if it is stable in the last stable release.
+  // A feature is beta if it is in beta in the last beta release and not stable in the last stable release.
+  // A feature is in alpa if it is in alpha in the last beta release and not stable in the last stable release.
+  return {
+    stableFeatures: stableReleaseFeatureDefinitions.stable,
+    betaFeatures: betaReleaseFeatureDefinitions.beta.filter((feature) => !stableReleaseFeatureDefinitions.stable.includes(feature)),
+    alphaFeatures: betaReleaseFeatureDefinitions.alpha.filter((feature) => !stableReleaseFeatureDefinitions.stable.includes(feature)),
+  }
+}
 
 // Include all stories that have .ts, .tsx or .mdx extensions in development builds.
 const storybookDevGlobPaths = ['../stories/**/*.stories.@(ts|tsx|mdx)'];
@@ -42,6 +67,21 @@ module.exports = {
     postcss: false,
   },
   webpackFinal: async (config, { configType }) => {
+    const FEATURE_DEFINITIONS = await fetchFeatureDefinitions();
+
+    // Go through stories files and exclude any that are in alpha, tbd: is there a better way than going through each file's contents?
+    for (const file of STORIES) {
+      const fileContent = fs.readFileSync(file, 'utf8');
+      const conditionalCompileMatch = fileContent.match(/\/\/\s*conditional-compile\s*:\s*([a-zA-Z0-9_]+)\s*/);
+      if (conditionalCompileMatch) {
+        const featureName = conditionalCompileMatch[1];
+        if (FEATURE_DEFINITIONS.alpha.includes(featureName)) {
+          console.log(`Excluding story ${file} because feature ${featureName} is in alpha.`);
+          // tbd: remove the story from the glob path...
+        }
+      }
+    }
+
     // Remove entrypoint size warning (rush build sees warnings as errors). Ideally we should use code splitting to reduce the entry point instead.
     // For more information on how this might be possible see: https://github.com/storybookjs/storybook/issues/6885
     config.performance.hints = false;
@@ -82,6 +122,7 @@ module.exports = {
     config.plugins.push(
       new webpack.DefinePlugin({
         __NPM_PACKAGE_VERSION__: JSON.stringify(require(path.resolve(__dirname, '../../communication-react/package.json')).version),
+        __FEATURES__: FEATURE_DEFINITIONS
       })
     );
 

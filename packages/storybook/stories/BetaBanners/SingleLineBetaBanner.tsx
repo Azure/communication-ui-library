@@ -7,6 +7,8 @@ import { MICROSOFT_AZURE_PREVIEWS_URL } from '../constants';
 import { blueBannerPalette } from './BannerPalettes';
 import { StorybookBanner, StorybookBannerProps } from './StorybookBanner';
 
+declare let __FEATURES__: { stable: string[]; beta: string[]; alpha: string[] };
+
 /**
  * @private
  */
@@ -14,7 +16,13 @@ export const SingleLineBetaBanner = (props: {
   version?: string;
   topOfPage?: boolean;
   content?: string;
+  feature?: string;
 }): JSX.Element => {
+  // Do not show banner if the feature was stabilized
+  if (props.feature && !__FEATURES__.beta.includes(props.feature)) {
+    return <></>;
+  }
+
   const palette = blueBannerPalette;
   return (
     <Stack styles={props.topOfPage ? { root: { paddingTop: '1rem' } } : {}}>
