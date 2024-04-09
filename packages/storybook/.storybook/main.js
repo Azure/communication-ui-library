@@ -12,23 +12,29 @@ console.log(`Creating storybook with internal-only stories: ${DEVELOPMENT_BUILD}
  * Fetch feature states at the time of the last stable release and the last beta release.
  */
 const fetchFeatureDefinitions = async () => {
+  // Get the last stable and beta versions of the communication-react package from npm.
   const lastStableVersion = execSync('npm show @azure/communication-react version').toString().trim();
-  const lastBetaVersion = execSync('npm show @azure/communication-react@beta version').toString().trim();
+  const lastBetaVersion = execSync('npm show @azure/communication-react@next version').toString().trim();
 
-  const stableFeaturesInLastReleaseUrl = `https://github.com/Azure/communication-ui-library/blob/${lastStableVersion}/common/config/babel/features.js`;
-  const betaFeaturesInLastReleaseUrl = `https://github.com/Azure/communication-ui-library/blob/${lastBetaVersion}/common/config/babel/features.js`;
+  // Fetch the feature definitions of the last stable and beta releases.
+  const stableFeaturesInLastReleaseUrl = `https://raw.githubusercontent.com/Azure/communication-ui-library/${lastStableVersion}/common/config/babel/features.js`;
+  const betaFeaturesInLastReleaseUrl = `https://raw.githubusercontent.com/Azure/communication-ui-library/${lastBetaVersion}/common/config/babel/features.js`;
 
-  const stableReleaseFeatureDefinitions = await (await fetch(stableFeaturesInLastReleaseUrl)).json();
-  const betaReleaseFeatureDefinitions = await (await fetch(betaFeaturesInLastReleaseUrl)).json();
+  // Store the feature definitions into variable.
+  eval(await (await fetch(stableFeaturesInLastReleaseUrl)).text()); // tbd: replace eval with .json() and assign directly to variable
+  const stableReleaseFeatureDefinitions = module.exports;
+  eval(await (await fetch(betaFeaturesInLastReleaseUrl)).text()); // tbd: replace eval with .json() and assign directly to variable
+  const betaReleaseFeatureDefinitions = module.exports;
 
-  // Beta and stable release happen at any time, so we need to compare the features of the last stable release and the last beta release.
-  // A feature is stable if it is stable in the last stable release.
-  // A feature is beta if it is in beta in the last beta release and not stable in the last stable release.
-  // A feature is in alpa if it is in alpha in the last beta release and not stable in the last stable release.
+  // Sort the features into stable, beta, and alpha.
+  //  - Beta and stable release happen at any time, so we need to compare the features of the last stable release and the last beta release.
+  //  - A feature is stable if it is stable in the last stable release.
+  //  - A feature is beta if it is in beta in the last beta release and not stable in the last stable release.
+  //  - A feature is in alpa if it is in alpha in the last beta release and not stable in the last stable release.
   return {
-    stableFeatures: stableReleaseFeatureDefinitions.stable,
-    betaFeatures: betaReleaseFeatureDefinitions.beta.filter((feature) => !stableReleaseFeatureDefinitions.stable.includes(feature)),
-    alphaFeatures: betaReleaseFeatureDefinitions.alpha.filter((feature) => !stableReleaseFeatureDefinitions.stable.includes(feature)),
+    stable: stableReleaseFeatureDefinitions.stabilizedFeatures,
+    beta: betaReleaseFeatureDefinitions.features.filter((feature) => !stableReleaseFeatureDefinitions.stabilizedFeatures.includes(feature)),
+    alpha: betaReleaseFeatureDefinitions.inProgressFeatures.filter((feature) => !stableReleaseFeatureDefinitions.stabilizedFeatures.includes(feature)),
   }
 }
 
@@ -69,8 +75,8 @@ module.exports = {
   webpackFinal: async (config, { configType }) => {
     const FEATURE_DEFINITIONS = await fetchFeatureDefinitions();
 
-    // Go through stories files and exclude any that are in alpha, tbd: is there a better way than going through each file's contents?
-    for (const file of STORIES) {
+    // Go through stories files and exclude any that are in alpha, tbd: do a better way than going through each file's contents
+    for (const file of []/*STORIES*/) {
       const fileContent = fs.readFileSync(file, 'utf8');
       const conditionalCompileMatch = fileContent.match(/\/\/\s*conditional-compile\s*:\s*([a-zA-Z0-9_]+)\s*/);
       if (conditionalCompileMatch) {
@@ -103,6 +109,12 @@ module.exports = {
       '@internal/fake-backends': path.resolve(__dirname, '../../fake-backends/src')
     };
 
+    config.plugins.push(
+      new webpack.DefinePlugin({
+        __FEATURES__: JSON.stringify(await fetchFeatureDefinitions())
+      })
+    );
+
     return config;
   },
   managerWebpack: async (config, options) => {
@@ -122,7 +134,7 @@ module.exports = {
     config.plugins.push(
       new webpack.DefinePlugin({
         __NPM_PACKAGE_VERSION__: JSON.stringify(require(path.resolve(__dirname, '../../communication-react/package.json')).version),
-        __FEATURES__: FEATURE_DEFINITIONS
+        __FEATURES__: JSON.stringify(await fetchFeatureDefinitions())
       })
     );
 

@@ -76,7 +76,10 @@ const getDocs: () => JSX.Element = () => {
   /* eslint-disable react/no-unescaped-entities */
   return (
     <Stack>
-      <SingleLineBetaBanner />
+      {/* beta feature test*/}
+      <SingleLineBetaBanner feature={'call-readiness'} />
+      {/* stable feature test */}
+      <SingleLineBetaBanner feature={'close-captions'} />
 
       <Title>Site Permissions</Title>
       <Description>

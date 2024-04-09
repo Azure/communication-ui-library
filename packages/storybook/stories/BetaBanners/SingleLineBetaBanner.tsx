@@ -7,7 +7,7 @@ import { MICROSOFT_AZURE_PREVIEWS_URL } from '../constants';
 import { blueBannerPalette } from './BannerPalettes';
 import { StorybookBanner, StorybookBannerProps } from './StorybookBanner';
 
-declare let __FEATURES__: { stable: string[]; beta: string[]; alpha: string[] };
+declare let __FEATURES__: { stableFeatures: string[]; beta: string[]; alpha: string[] };
 
 /**
  * @private
