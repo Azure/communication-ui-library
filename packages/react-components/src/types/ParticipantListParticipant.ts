@@ -57,7 +57,7 @@ export type RaisedHand = {
 /**
  * Reaction state with reaction type to render
  *
- * @beta
+ * @public
  */
 export type Reaction = {
   /**

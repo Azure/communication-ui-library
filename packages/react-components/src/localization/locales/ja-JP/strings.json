@@ -44,7 +44,18 @@
     "numberListTooltip": "番号付きリスト",
     "increaseIndentTooltip": "インデントを増やす",
     "decreaseIndentTooltip": "インデントを減らす",
-    "richTextFormatButtonTooltip": "形式"
+    "insertTableTooltip": "表の挿入",
+    "richTextFormatButtonTooltip": "形式",
+    "insertRowOrColumnMenu": "挿入",
+    "insertTableMenuTitle": "{column} x {row} の表を挿入する",
+    "insertRowAboveMenu": "上に挿入",
+    "insertRowBelowMenu": "下に挿入",
+    "insertColumnLeftMenu": "左に挿入",
+    "insertColumnRightMenu": "右に挿入",
+    "deleteRowOrColumnMenu": "削除",
+    "deleteColumnMenu": "列の削除",
+    "deleteRowMenu": "行の削除",
+    "deleteTableMenu": "表の削除"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "候補"
@@ -66,7 +77,9 @@
   },
   "endCallButton": {
     "label": "退出",
-    "tooltipContent": "通話を終了"
+    "tooltipContent": "通話を終了",
+    "leaveOption": "退出",
+    "endCallOption": "通話の終了"
   },
   "cameraButton": {
     "onLabel": "カメラ",
@@ -180,6 +193,7 @@
     "messageReadCount": "{remoteParticipantsCount} の {messageReadByCount} による読み取り",
     "actionMenuMoreOptions": "その他のオプション",
     "downloadAttachment": "ファイルをダウンロード",
+    "openAttachment": "ファイルを開く",
     "blockedWarningText": "組織のポリシーにより、このメッセージは削除されました。",
     "blockedWarningLinkText": "詳細",
     "attachmentCardGroupMessage": "メッセージに添付ファイルが {attachmentCount} 個あります",

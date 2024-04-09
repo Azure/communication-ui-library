@@ -41,6 +41,8 @@ import { moreButtonStyles } from './styles/VideoTile.styles';
 import { raiseHandContainerStyles } from './styles/VideoTile.styles';
 /* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '../types/ReactionTypes';
+/* @conditional-compile-remove(ppt-live) */
+import { pptLiveOverlayStyles } from './styles/VideoGallery.styles';
 
 /**
  * Strings of {@link VideoTile} that can be overridden.
@@ -88,7 +90,6 @@ export interface VideoTileProps {
   /* @conditional-compile-remove(reaction) */
   /**
    * Overlay component responsible for rendering reaction
-   * @beta
    */
   overlay?: JSX.Element | null;
   /** Determines if the video is mirrored or not. */
@@ -173,7 +174,6 @@ export interface VideoTileProps {
   /* @conditional-compile-remove(reaction) */
   /**
    * Reactions resources' url and metadata.
-   * @beta
    */
   reactionResources?: ReactionResources;
 }
@@ -403,6 +403,11 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
         {
           /* @conditional-compile-remove(reaction) */
           reactionOverlay
+        }
+        {
+          /* @conditional-compile-remove(ppt-live) */
+          // TODO Can be removed once the overlay mitigation has been implemented at the SDK layer
+          <Stack className={mergeStyles(videoContainerStyles, pptLiveOverlayStyles)}></Stack>
         }
         {(canShowLabel || participantStateString) && (
           <Stack horizontal className={tileInfoContainerStyle} tokens={tileInfoContainerTokens}>

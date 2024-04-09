@@ -324,11 +324,18 @@
       "stopSpotlightCancelButtonLabel": "Annuleren"
     },
     "exitSpotlightButtonLabel": "Spotlight afsluiten",
-    "exitSpotlightButtonTooltip": "Spotlight afsluiten"
+    "exitSpotlightButtonTooltip": "Spotlight afsluiten",
+    "hangUpConfirmButtonLabel": "Bevestigen",
+    "hangUpCancelButtonLabel": "Annuleren",
+    "leaveConfirmDialogTitle": "Het gesprek verlaten?",
+    "leaveConfirmDialogContent": "Weet u zeker dat u het gesprek wilt verlaten?",
+    "endCallConfirmDialogTitle": "Het gesprek beëindigen?",
+    "endCallConfirmDialogContent": "U beëindigt het gesprek voor iedereen.",
+    "invalidMeetingIdentifier": "Ongeldige vergaderings-id of wachtwoordcode"
   },
   "chat": {
     "chatListHeader": "In deze chat",
-    "uploadAttachment": "Bestand uploaden"
+    "uploadAttachment": "Bijlage uploaden"
   },
   "callWithChat": {
     "chatButtonLabel": "Chatten",

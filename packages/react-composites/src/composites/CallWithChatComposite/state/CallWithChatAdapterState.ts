@@ -99,7 +99,6 @@ export interface CallWithChatClientState {
   /* @conditional-compile-remove(reaction) */
   /**
    * Reaction resources to render in meetings
-   * @beta
    * */
   reactions?: ReactionResources;
 }
