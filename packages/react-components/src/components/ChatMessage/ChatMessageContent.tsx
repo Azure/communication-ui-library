@@ -164,7 +164,10 @@ export const BlockedMessageContent = (props: BlockedMessageContentProps): JSX.El
 };
 
 const extractContentForAllyMessage = (props: ChatMessageContentProps): string => {
-  if (props.message.content || props.message.attachments) {
+  let attachments = undefined;
+  /* @conditional-compile-remove(attachment-download) */
+  attachments = props.message.attachments;
+  if (props.message.content || attachments) {
     // Replace all <img> tags with 'image' for aria.
     const parsedContent = DOMPurify.sanitize(props.message.content ?? '', {
       ALLOWED_TAGS: ['img'],
@@ -181,8 +184,10 @@ const extractContentForAllyMessage = (props: ChatMessageContentProps): string =>
     });
 
     // Inject attachment names for aria.
-    if (props.message.attachments) {
-      const attachmentList = props.message.attachments.map((attachment) => attachment.name).join(', ');
+    if (attachments) {
+      let attachmentList = '';
+      /* @conditional-compile-remove(attachment-download) */
+      attachmentList = attachments.map((attachment) => attachment.name).join(', ');
       const attachmentTextNode = document.createElement('div');
       attachmentTextNode.innerHTML = ` ${attachmentList} `;
       parsedContent.appendChild(attachmentTextNode);
