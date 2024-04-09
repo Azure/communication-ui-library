@@ -246,7 +246,7 @@ const getDocs: () => JSX.Element = () => {
       </Canvas>
       <Subheading>From a viewer point of view</Subheading>
       <Description>
-        We have the capability to configure the `screenShareStream` to utilize any `HTMLElement as the renderElement,
+        We have the capability to configure the `screenShareStream` to utilize any `HTMLElement` as the renderElement,
         enabling functionalities like screen sharing and PowerPoint Live. It's important to note that, in this specific
         example, we're replacing the screenshare video stream with an image merely to simulate the experience.
       </Description>
