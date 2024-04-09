@@ -3,6 +3,14 @@
 This log was last generated on Tue, 26 Mar 2024 17:38:26 GMT and should not be manually modified.
 
 <!-- Start content -->
+## [1.15.0-beta.2](https://github.com/azure/communication-ui-library/tree/1.15.0-beta.2)
+
+Tue, 9 Apr 2024 20:08:26 GMT
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.15.0-beta.1...1.15.0-beta.2)
+
+### Bug Fixes
+
+- Bump @azure/communication-chat to version 1.5.0-beta.2 in order to support Teams anonymous visitor ID
 
 ## [1.15.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.15.0-beta.1)
 
