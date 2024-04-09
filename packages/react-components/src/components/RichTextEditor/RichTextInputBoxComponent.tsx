@@ -51,6 +51,7 @@ export interface RichTextInputBoxComponentProps {
   richTextEditorStyleProps: (isExpanded: boolean) => RichTextEditorStyleProps;
   isHorizontalLayoutDisabled?: boolean;
   autoFocus?: 'sendBoxTextField';
+  onTyping?: () => Promise<void>;
 }
 
 /**
@@ -73,7 +74,8 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
     richTextEditorStyleProps,
     isHorizontalLayoutDisabled = false,
     content,
-    autoFocus
+    autoFocus,
+    onTyping
   } = props;
   const theme = useTheme();
   const [showRichTextEditorFormatting, setShowRichTextEditorFormatting] = useState(false);
@@ -132,6 +134,8 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
       if (ev.key === 'Enter' && ev.shiftKey === false && !showRichTextEditorFormatting) {
         ev.preventDefault();
         onEnterKeyDown && onEnterKeyDown();
+      } else {
+        onTyping?.();
       }
     },
     [onEnterKeyDown, showRichTextEditorFormatting]
