@@ -138,7 +138,7 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
         onTyping?.();
       }
     },
-    [onEnterKeyDown, showRichTextEditorFormatting]
+    [onEnterKeyDown, showRichTextEditorFormatting, onTyping]
   );
 
   const useHorizontalLayout = useMemo(() => {
