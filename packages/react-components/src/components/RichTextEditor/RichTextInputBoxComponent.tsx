@@ -50,6 +50,7 @@ export interface RichTextInputBoxComponentProps {
   // otherwise the editor will grow to fit the content
   richTextEditorStyleProps: (isExpanded: boolean) => RichTextEditorStyleProps;
   isHorizontalLayoutDisabled?: boolean;
+  autoFocus?: 'sendBoxTextField';
 }
 
 /**
@@ -71,7 +72,8 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
     hasAttachments,
     richTextEditorStyleProps,
     isHorizontalLayoutDisabled = false,
-    content
+    content,
+    autoFocus
   } = props;
   const theme = useTheme();
   const [showRichTextEditorFormatting, setShowRichTextEditorFormatting] = useState(false);
@@ -175,6 +177,7 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
               strings={strings}
               showRichTextEditorFormatting={showRichTextEditorFormatting}
               styles={richTextEditorStyle}
+              autoFocus={autoFocus}
             />
           </Stack.Item>
           {

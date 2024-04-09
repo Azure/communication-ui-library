@@ -136,6 +136,11 @@ export interface RichTextSendBoxProps {
    * @beta
    */
   activeAttachmentUploads?: AttachmentMetadata[];
+  /**
+   * enumerable to determine if the input box has focus on render or not.
+   * When undefined nothing has focus on render
+   */
+  autoFocus?: 'sendBoxTextField';
   /* @conditional-compile-remove(attachment-upload) */
   /**
    * Optional callback to remove the attachment upload before sending by clicking on
@@ -158,6 +163,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   const {
     disabled = false,
     systemMessage,
+    autoFocus,
     onSendMessage,
     /* @conditional-compile-remove(attachment-upload) */
     activeAttachmentUploads,
@@ -348,6 +354,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         // setting the content will ensure that the latest content is used when editor is re-rendered
         content={contentValue}
         placeholderText={strings.placeholderText}
+        autoFocus={autoFocus}
         onChange={setContent}
         onEnterKeyDown={sendMessageOnClick}
         editorComponentRef={editorComponentRef}
