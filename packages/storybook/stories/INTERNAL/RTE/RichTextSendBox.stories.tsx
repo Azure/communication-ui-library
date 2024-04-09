@@ -7,7 +7,7 @@ import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { DetailedBetaBanner } from '../../BetaBanners/DetailedBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../../constants';
-import { hiddenControl } from '../../controlsUtils';
+import { hiddenControl, controlsToAdd } from '../../controlsUtils';
 import { RichTextSendBoxExample } from './snippets/RichTextSendBox.snippet';
 import { RichTextSendBoxAttachmentUploadsExample } from './snippets/RichTextSendBoxAttachmentUploads.snippet';
 import { RichTextSendBoxWithSystemMessageExample } from './snippets/RichTextSendBoxWithSystemMessage.snippet';
@@ -85,9 +85,9 @@ export default {
   title: `${COMPONENT_FOLDER_PREFIX}/Internal/RichTextSendBox`,
   component: RichTextSendBoxComponent,
   argTypes: {
-    disabled: { control: 'boolean', defaultValue: false },
-    systemMessage: { control: 'text', defaultValue: undefined },
-    isSendBoxWithWarning: { control: 'boolean', defaultValue: false, name: 'Has warning/information message' },
+    disabled: controlsToAdd.disabled,
+    hasWarning: controlsToAdd.isSendBoxWithWarning,
+    warningMessage: controlsToAdd.sendBoxWarningMessage,
     strings: hiddenControl,
     onRenderAttachmentUploads: hiddenControl,
     activeAttachmentUploads: hiddenControl,
