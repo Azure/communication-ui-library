@@ -6,18 +6,15 @@ import { Meta, Source } from '@storybook/addon-docs';
   parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }}
 />
 
-# PowerPoint Live Integration with Azure Communication Services
+# PowerPoint Live
 
 Azure Communication Services (ACS) integrate PowerPoint Live into Teams meetings, enhancing the presentation experience. This feature allows real-time engagement with presentations, making it an invaluable tool for various scenarios.
 
-## Roles in a PowerPoint Live Session
+## Overview
 
-Within a PowerPoint Live session, participants are categorized into roles, each with specific capabilities:
+In the ACS UI library, users participate as attendees to view PowerPoint Live sessions. The interaction capabilities for attendees are set and controlled by the lead presenter of the session.
 
-- **Presenter**: Leads the session, controlling the presentation flow.
-- **Attendee**: Views the presentation, with interaction capabilities defined by the Presenter. This is the default role.
-
-The distinct capabilities for each role are detailed in the [PowerPoint Live documentation](https://support.microsoft.com/en-us/office/present-from-powerpoint-live-in-microsoft-teams-28b20e74-7165-499c-9bd4-0ad975d448ad).
+For a detailed breakdown of the capabilities available to each role during a PowerPoint Live session, please refer to the [PowerPoint Live documentation](https://support.microsoft.com/en-us/office/present-from-powerpoint-live-in-microsoft-teams-28b20e74-7165-499c-9bd4-0ad975d448ad). For more technical details on how to implement these features using the web calling SDK, consult the [Calling SDK documentation](https://learn.microsoft.com/en-us/azure/communication-services/concepts/voice-video-calling/calling-sdk-features).
 
 PowerPoint Live is ideally suited for:
 
@@ -26,17 +23,11 @@ PowerPoint Live is ideally suited for:
 - Remote training sessions
 - Webinars
 
-## Implementing the Stateful Client API for PowerPoint Live
+<img src="images/pptlive-example.png" alt="pptlive example" />
 
-The Stateful Client API from ACS UI Library simplifies managing the state and lifecycle of your communication features within an application. Follow the steps outlined in the [Stateful Client Quickstart](https://azure.github.io/communication-ui-library/?path=/docs/quickstarts-statefulcallclient--page) to initialize the Stateful Call Client.
+## Implementing with the VideoGallery Component
 
-## Implementing the VideoGallery Component for PowerPoint Live
-
-To display the PowerPoint Live session, utilize the VideoGallery component, which can also serve for showing video streams or screen shares, including PowerPoint presentations shared by a presenter.
-
-### VideoGallery Setup
-
-Integrate the VideoGallery component by following the guide in the [VideoGallery Documentation](https://azure.github.io/communication-ui-library/?path=/docs/ui-components-videogallery--video-gallery). This component allows you to render video streams or shared content within your application seamlessly.
+The VideoGallery component is used to display PowerPoint Live sessions. This multi-functional component also supports video streams and screen sharing. Here’s a brief guide to integrating it:
 
 ```typescript
 // Import the necessary dependencies
@@ -44,10 +35,28 @@ import { VideoGallery } from '@azure/communication-react';
 
 // Use the VideoGallery component to display the presentation
 function PPTLiveComponent() {
-  // Setup screenShareStream under remoteParticipants
+  // Definition of a mock object simulating a PowerPoint live stream.
+  const mockPptLiveStream = {
+    id: 1,
+    isAvailable: true,
+    renderElement: mockPptLiveElement as HTMLElement
+  };
+  // An array of mock remote participants in a video call.
+  // Set mockPptLiveStream under screenShareStream.
+  const remoteParticipants = [
+    {
+      userId: 'user1',
+      displayName: 'Peter Parker',
+      isScreenSharingOn: true,
+      screenShareStream: mockPptLiveStream
+    }
+  ];
+  // Functional component demonstrating the integration of PowerPoint live sharing in a video call interface.
   return <VideoGallery localParticipant={localParticipant} remoteParticipants={remoteParticipants} />;
 }
 ```
+
+For more detailed setup instructions, see the [VideoGallery Documentation](https://azure.github.io/communication-ui-library/?path=/docs/ui-components-videogallery--video-gallery). This component allows you to render video streams or shared content within your application seamlessly.
 
 ## FAQs
 
@@ -59,6 +68,6 @@ No, we do view-only for PowerPoint Live right now.
 
 No, we only support Teams meeting, Webinars, Rooms for now.
 
-### If I have found any issues with the rooms in the CallComposite where can I go?
+### If I have found any issues or anything missing with the PowerPoint live in the CallComposite where can I go?
 
 Please log a [Github issue](https://github.com/Azure/communication-ui-library/issues), and someone from our team can work with you.
