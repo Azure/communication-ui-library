@@ -197,6 +197,11 @@ const Docs: () => JSX.Element = () => {
         checkout the details about these components
         [here](https://microsoft.github.io/fluentui-contrib/react-chat/?path=/story/chat--default).
       </Description>
+      <Description>
+        The MessageThread component supports lazy loading for the rich text editor used for editing messages. This means
+        that the rich text editor and its dependencies can be excluded from the bundle if they're not required,
+        utilizing tree-shaking techniques such as the `sideEffects` option in webpack.
+      </Description>
 
       <Heading>Importing</Heading>
       <Source code={importStatement} />
@@ -378,7 +383,7 @@ const Docs: () => JSX.Element = () => {
         <DetailedBetaBanner />
         <Description>
           The following example shows how to enable rich text editor for message editing by providing the
-          `richTextEditor`` property
+          `richTextEditor`` property.
         </Description>
         <Canvas mdxSource={MessageThreadWithRichTextEditorText}>
           <MessageThreadWithRichTextEditorExample />
