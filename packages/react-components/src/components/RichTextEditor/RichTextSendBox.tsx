@@ -152,6 +152,10 @@ export interface RichTextSendBoxProps {
    * Callback function used when the send button is clicked.
    */
   onSendMessage: (content: string) => Promise<void>;
+  /**
+   * Optional callback called when user is typing
+   */
+  onTyping?: () => Promise<void>;
 }
 
 /**
@@ -165,6 +169,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     systemMessage,
     autoFocus,
     onSendMessage,
+    onTyping,
     /* @conditional-compile-remove(attachment-upload) */
     activeAttachmentUploads,
     /* @conditional-compile-remove(attachment-upload) */
@@ -357,6 +362,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         autoFocus={autoFocus}
         onChange={setContent}
         onEnterKeyDown={sendMessageOnClick}
+        onTyping={onTyping}
         editorComponentRef={editorComponentRef}
         strings={strings}
         disabled={disabled}

@@ -259,7 +259,6 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
         /* @conditional-compile-remove(acs-close-captions) */
         captionsKind: 'Captions'
       },
-      /* @conditional-compile-remove(call-transfer) */
       transfer: {
         acceptedTransfers: {}
       },
