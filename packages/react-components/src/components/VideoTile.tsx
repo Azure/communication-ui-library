@@ -12,7 +12,7 @@ import {
   Stack,
   Text
 } from '@fluentui/react';
-import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { ComponentLocale, useLocale } from '../localization';
 import { useTheme } from '../theming';
@@ -41,8 +41,6 @@ import { moreButtonStyles } from './styles/VideoTile.styles';
 import { raiseHandContainerStyles } from './styles/VideoTile.styles';
 /* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '../types/ReactionTypes';
-/* @conditional-compile-remove(ppt-live) */
-import { pptLiveOverlayStyles } from './styles/VideoGallery.styles';
 
 /**
  * Strings of {@link VideoTile} that can be overridden.
@@ -298,6 +296,36 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     return () => currentObserver.disconnect();
   }, [videoTileRef]);
 
+  /* @conditional-compile-remove(ppt-live) */
+  // TODO: Remove after calling sdk fix the keybaord focus
+  useEffect(() => {
+    // PPTLive display name is undefined, return as it is not screen share
+    if (displayName !== undefined) {
+      return;
+    }
+    let observer: MutationObserver | undefined;
+    if (videoTileRef.current) {
+      observer = new MutationObserver((mutationsList) => {
+        for (const mutation of mutationsList) {
+          if (mutation.type === 'childList') {
+            const iframe = document.querySelector('iframe');
+            if (iframe) {
+              if (!iframe.getAttribute('tabIndex')) {
+                iframe.setAttribute('tabIndex', '-1');
+              }
+            }
+          }
+        }
+      });
+
+      observer.observe(videoTileRef.current, { childList: true, subtree: true });
+    }
+
+    return () => {
+      observer?.disconnect();
+    };
+  }, [displayName, renderElement]);
+
   const useLongPressProps = useMemo(() => {
     return {
       onLongPress: () => {
@@ -403,11 +431,6 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
         {
           /* @conditional-compile-remove(reaction) */
           reactionOverlay
-        }
-        {
-          /* @conditional-compile-remove(ppt-live) */
-          // TODO Can be removed once the overlay mitigation has been implemented at the SDK layer
-          <Stack className={mergeStyles(videoContainerStyles, pptLiveOverlayStyles)}></Stack>
         }
         {(canShowLabel || participantStateString) && (
           <Stack horizontal className={tileInfoContainerStyle} tokens={tileInfoContainerTokens}>
