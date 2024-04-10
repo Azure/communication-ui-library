@@ -108,7 +108,6 @@ function createMockCall(mockCallId: string): CallState {
       /* @conditional-compile-remove(acs-close-captions) */
       captionsKind: 'Captions'
     },
-    /* @conditional-compile-remove(call-transfer) */
     transfer: {
       acceptedTransfers: {}
     },
