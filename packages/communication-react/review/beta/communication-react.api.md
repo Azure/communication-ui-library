@@ -3883,9 +3883,11 @@ export const RichTextSendBox: (props: RichTextSendBoxProps) => JSX.Element;
 // @beta
 export interface RichTextSendBoxProps {
     activeAttachmentUploads?: AttachmentMetadata[];
+    autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
     onCancelAttachmentUpload?: (attachmentId: string) => void;
     onSendMessage: (content: string) => Promise<void>;
+    onTyping?: () => Promise<void>;
     strings?: Partial<RichTextSendBoxStrings>;
     systemMessage?: string;
 }

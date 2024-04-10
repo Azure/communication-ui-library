@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "area": "improvement",
+  "workstream": "Rush tooling",
+  "comment": "Deprecate rush update:full",
+  "packageName": "@azure/communication-react",
+  "email": "3941071+emlynmac@users.noreply.github.com",
+  "dependentChangeType": "none"
+}
