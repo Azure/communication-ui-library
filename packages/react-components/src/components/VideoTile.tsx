@@ -298,7 +298,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
   // TODO: Remove after calling sdk fix the keybaord focus
   useEffect(() => {
-    // PPTLive display name is undefined, return if it is screen share
+    // PPTLive display name is undefined, return as it is not screen share
     if (displayName !== undefined) {
       return;
     }
