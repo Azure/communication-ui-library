@@ -114,3 +114,8 @@ apis/
 
 # To avoid accidental checkin of connection string secrets
 samples/Server/appsettings.json
+
+samples/Server/sample-dist/
+samples/Calling/sample-dist/
+samples/CallWithChat/sample-dist/
+samples/Chat/sample-dist/
