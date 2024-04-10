@@ -252,7 +252,7 @@ type GetCallCompositePageFunction = ((
   ((
     call: CallState | undefined,
     previousCall: CallState | undefined,
-    /* @conditional-compile-remove(call-transfer) */ transferCall?: CallState,
+    transferCall?: CallState,
     /* @conditional-compile-remove(unsupported-browser) */ unsupportedBrowserInfo?: {
       environmentInfo?: EnvironmentInfo;
       unsupportedBrowserVersionOptedIn?: boolean;
@@ -291,7 +291,6 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
     return 'unsupportedEnvironment';
   }
 
-  /* @conditional-compile-remove(call-transfer) */
   if (transferCall !== undefined) {
     return 'transferring';
   }
