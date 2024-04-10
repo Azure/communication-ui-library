@@ -74,7 +74,8 @@ export default {
     onRenderAttachmentUploads: hiddenControl,
     activeAttachmentUploads: hiddenControl,
     onCancelAttachmentUpload: hiddenControl,
-    onSendMessage: hiddenControl
+    onSendMessage: hiddenControl,
+    onTyping: hiddenControl
   },
   parameters: {
     docs: {
