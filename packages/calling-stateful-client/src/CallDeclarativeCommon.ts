@@ -3,13 +3,11 @@
 
 import { CallContext } from './CallContext';
 import { CallCommon } from './BetaToStableTypes';
-/* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(call-transfer) */
 import { Features } from '@azure/communication-calling';
 /* @conditional-compile-remove(acs-close-captions) */
 import { Captions } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptions } from '@azure/communication-calling';
-/* @conditional-compile-remove(call-transfer) */
 import { TransferCallFeature, TransferAcceptedEvent, TransferEventArgs } from '@azure/communication-calling';
 /* @conditional-compile-remove(spotlight) */
 import { SpotlightCallFeature } from '@azure/communication-calling';
@@ -94,7 +92,6 @@ export abstract class ProxyCallCommon implements ProxyHandler<CallCommon> {
             proxyFeature = new ProxyTeamsCaptions(this._context, target);
             return { captions: new Proxy(captionsFeature, proxyFeature) };
           }
-          /* @conditional-compile-remove(call-transfer) */
           if (args[0] === Features.Transfer) {
             const transferFeature = target.feature(Features.Transfer);
             const proxyFeature = new ProxyTransferCallFeature(this._context, target);
@@ -252,7 +249,6 @@ class ProxySpotlightCallFeature implements ProxyHandler<SpotlightCallFeature> {
   }
 }
 
-/* @conditional-compile-remove(call-transfer) */
 /**
  * @private
  */

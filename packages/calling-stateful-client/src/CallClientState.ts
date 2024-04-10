@@ -619,7 +619,6 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#Call.totalParticipantCount}.
    */
   totalParticipantCount?: number;
-  /* @conditional-compile-remove(call-transfer) */
   /**
    * Transfer state of call
    */
@@ -646,7 +645,6 @@ export interface CallState {
   info?: CallInfo | TeamsCallInfo;
 }
 
-/* @conditional-compile-remove(call-transfer) */
 /**
  * Transfer feature state
  *
@@ -659,7 +657,6 @@ export interface TransferFeatureState {
   acceptedTransfers: { [key: string]: AcceptedTransfer };
 }
 
-/* @conditional-compile-remove(call-transfer) */
 /**
  * Transfer feature state
  *
