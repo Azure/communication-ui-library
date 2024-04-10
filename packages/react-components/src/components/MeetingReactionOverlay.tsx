@@ -112,7 +112,7 @@ export const MeetingReactionOverlay = (props: MeetingReactionOverlayProps): JSX.
 
   if (overlayMode === 'grid-tiles') {
     return (
-      <div ref={videoTileRef} style={{ width: '100%', height: '100%' }}>
+      <div ref={videoTileRef} style={{ width: '100%', height: '100%', pointerEvents: 'none' }}>
         <ParticipantVideoTileOverlay
           emojiSize={emojiSizePx}
           reaction={reaction}
@@ -122,7 +122,7 @@ export const MeetingReactionOverlay = (props: MeetingReactionOverlayProps): JSX.
     );
   } else if (props.overlayMode === 'screen-share' || props.overlayMode === 'content-share') {
     return (
-      <div ref={videoTileRef} style={{ width: '100%', height: '100%' }}>
+      <div ref={videoTileRef} style={{ width: '100%', height: '100%', pointerEvents: 'none' }}>
         <RemoteContentShareReactionOverlay
           hostDivHeight={divHeight}
           hostDivWidth={divWidth}
