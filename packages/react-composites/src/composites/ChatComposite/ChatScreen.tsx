@@ -279,11 +279,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [adapter, onRenderAvatarCallback, userId]
   );
 
-  const inlineImageOptions = {
-    onRenderInlineImage: (
-      inlineImage: InlineImage,
-      defaultOnRender: (inlineImage: InlineImage) => JSX.Element
-    ): JSX.Element => {
+  const onRenderInlineImage = useCallback(
+    (inlineImage: InlineImage, defaultOnRender: (inlineImage: InlineImage) => JSX.Element): JSX.Element => {
       const message = adapter.getState().thread.chatMessages[inlineImage.messageId];
       const attachment = message?.content?.attachments?.find(
         (attachment) => attachment.id === inlineImage.imageAttributes.id
@@ -320,8 +317,13 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           {defaultOnRender(inlineImage)}
         </span>
       );
-    }
-  };
+    },
+    [adapter, onInlineImageClicked]
+  );
+
+  const inlineImageOptions = useMemo(() => {
+    return { onRenderInlineImage: onRenderInlineImage };
+  }, [onRenderInlineImage]);
 
   const onDownloadButtonClicked = useCallback(
     (imageSrc: string): void => {
