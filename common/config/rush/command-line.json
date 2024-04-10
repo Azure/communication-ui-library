@@ -88,7 +88,7 @@
       "name": "update:all-flavors",
       "summary": "Update dependencies for all flavors",
       "description": "Update dependencies for all flavors.",
-      "shellCommand": "rush update && rush update --variant stable",
+      "shellCommand": "rush update && rush update:stable",
       "safeForSimultaneousRushProcesses": true
     },
     {
