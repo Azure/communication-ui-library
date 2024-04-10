@@ -1,7 +1,7 @@
 import { FluentThemeProvider, RichTextSendBox } from '@azure/communication-react';
 import React from 'react';
 
-export const RTEAttachmentUploadsExample: () => JSX.Element = () => (
+export const RichTextSendBoxAttachmentUploadsExample: () => JSX.Element = () => (
   <FluentThemeProvider>
     <div style={{ width: '31.25rem' }}>
       <RichTextSendBox

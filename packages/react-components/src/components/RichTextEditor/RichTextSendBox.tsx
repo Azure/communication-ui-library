@@ -136,6 +136,11 @@ export interface RichTextSendBoxProps {
    * @beta
    */
   activeAttachmentUploads?: AttachmentMetadata[];
+  /**
+   * enumerable to determine if the input box has focus on render or not.
+   * When undefined nothing has focus on render
+   */
+  autoFocus?: 'sendBoxTextField';
   /* @conditional-compile-remove(attachment-upload) */
   /**
    * Optional callback to remove the attachment upload before sending by clicking on
@@ -158,6 +163,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   const {
     disabled = false,
     systemMessage,
+    autoFocus,
     onSendMessage,
     /* @conditional-compile-remove(attachment-upload) */
     activeAttachmentUploads,
@@ -301,7 +307,8 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
             strings={{
               removeAttachment: strings.removeAttachment,
               uploading: strings.uploading,
-              uploadCompleted: strings.uploadCompleted
+              uploadCompleted: strings.uploadCompleted,
+              attachmentMoreMenu: strings.attachmentMoreMenu
             }}
           />
         </FluentV9ThemeProvider>
@@ -313,6 +320,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     strings.removeAttachment,
     strings.uploadCompleted,
     strings.uploading,
+    strings.attachmentMoreMenu,
     theme
   ]);
 
@@ -342,7 +350,11 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     <Stack>
       <RichTextSendBoxErrors {...sendBoxErrorsProps} />
       <RichTextInputBoxComponent
+        // in case when format bar is shown, the editor is re-rendered that causes the content to be lost
+        // setting the content will ensure that the latest content is used when editor is re-rendered
+        content={contentValue}
         placeholderText={strings.placeholderText}
+        autoFocus={autoFocus}
         onChange={setContent}
         onEnterKeyDown={sendMessageOnClick}
         editorComponentRef={editorComponentRef}

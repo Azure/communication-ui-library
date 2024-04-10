@@ -2,16 +2,12 @@
 // Licensed under the MIT License.
 
 import { Features, LocalVideoStream, RemoteParticipant } from '@azure/communication-calling';
-/* @conditional-compile-remove(acs-close-captions) */
-import { Captions } from '@azure/communication-calling';
-/* @conditional-compile-remove(close-captions) */
-import { TeamsCaptions } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CallCommon } from './BetaToStableTypes';
 import { CallContext } from './CallContext';
 import { CallIdRef } from './CallIdRef';
 /* @conditional-compile-remove(close-captions) */
-import { TeamsCaptionsSubscriber } from './CaptionsSubscriber';
+import { CaptionsFeatureSubscriber } from './CaptionsSubscriber';
 import {
   convertSdkLocalStreamToDeclarativeLocalStream,
   convertSdkParticipantToDeclarativeParticipant
@@ -34,8 +30,6 @@ import { CapabilitiesSubscriber } from './CapabilitiesSubscriber';
 import { ReactionSubscriber } from './ReactionSubscriber';
 /* @conditional-compile-remove(spotlight) */
 import { SpotlightSubscriber } from './SpotlightSubscriber';
-/* @conditional-compile-remove(acs-close-captions) */
-import { CaptionsSubscriber } from './CaptionsSubscriber';
 /* @conditional-compile-remove(local-recording-notification) */
 import { LocalRecordingSubscriber } from './LocalRecordingSubscriber';
 
@@ -59,10 +53,7 @@ export class CallSubscriber {
   /* @conditional-compile-remove(ppt-live) */
   private _pptLiveSubscriber: PPTLiveSubscriber;
   private _optimalVideoCountSubscriber: OptimalVideoCountSubscriber;
-  /* @conditional-compile-remove(close-captions) */
-  private _TeamsCaptionsSubscriber?: TeamsCaptionsSubscriber;
-  /* @conditional-compile-remove(acs-close-captions) */
-  private _CaptionsSubscriber?: CaptionsSubscriber;
+  private _CaptionsFeatureSubscriber?: CaptionsFeatureSubscriber;
   private _raiseHandSubscriber?: RaiseHandSubscriber;
   /* @conditional-compile-remove(reaction) */
   private _reactionSubscriber?: ReactionSubscriber;
@@ -213,10 +204,7 @@ export class CallSubscriber {
     this._optimalVideoCountSubscriber.unsubscribe();
     /* @conditional-compile-remove(ppt-live) */
     this._pptLiveSubscriber.unsubscribe();
-    /* @conditional-compile-remove(close-captions) */
-    this._TeamsCaptionsSubscriber?.unsubscribe();
-    /* @conditional-compile-remove(acs-close-captions) */
-    this._CaptionsSubscriber?.unsubscribe();
+    this._CaptionsFeatureSubscriber?.unsubscribe();
     this._raiseHandSubscriber?.unsubscribe();
 
     this._capabilitiesSubscriber.unsubscribe();
@@ -251,25 +239,12 @@ export class CallSubscriber {
   /* @conditional-compile-remove(close-captions) */
   private initCaptionSubscriber = (): void => {
     // subscribe to captions here so that we don't call captions when call is not initialized
-    if (
-      this._call.state === 'Connected' &&
-      !this._TeamsCaptionsSubscriber &&
-      /* @conditional-compile-remove(acs-close-captions) */ !this._CaptionsSubscriber
-    ) {
-      if (this._call.feature(Features.Captions).captions.kind === 'TeamsCaptions') {
-        this._TeamsCaptionsSubscriber = new TeamsCaptionsSubscriber(
-          this._callIdRef,
-          this._context,
-          this._call.feature(Features.Captions).captions as TeamsCaptions
-        );
-      } else {
-        /* @conditional-compile-remove(acs-close-captions) */
-        this._CaptionsSubscriber = new CaptionsSubscriber(
-          this._callIdRef,
-          this._context,
-          this._call.feature(Features.Captions).captions as Captions
-        );
-      }
+    if (this._call.state === 'Connected' && !this._CaptionsFeatureSubscriber) {
+      this._CaptionsFeatureSubscriber = new CaptionsFeatureSubscriber(
+        this._callIdRef,
+        this._context,
+        this._call.feature(Features.Captions)
+      );
       this._call.off('stateChanged', this.initCaptionSubscriber);
     }
   };

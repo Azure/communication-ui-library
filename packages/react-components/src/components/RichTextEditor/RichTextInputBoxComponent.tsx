@@ -32,7 +32,10 @@ export interface RichTextInputBoxComponentStylesProps extends BaseCustomStyles {
  */
 export interface RichTextInputBoxComponentProps {
   placeholderText?: string;
+  // the initial content of editor that is set when editor is created (e.g. when editing a message)
   initialContent?: string;
+  // the current content of the editor
+  content?: string;
   onChange: (newValue?: string) => void;
   onEnterKeyDown?: () => void;
   editorComponentRef: React.RefObject<RichTextEditorComponentRef>;
@@ -47,6 +50,7 @@ export interface RichTextInputBoxComponentProps {
   // otherwise the editor will grow to fit the content
   richTextEditorStyleProps: (isExpanded: boolean) => RichTextEditorStyleProps;
   isHorizontalLayoutDisabled?: boolean;
+  autoFocus?: 'sendBoxTextField';
 }
 
 /**
@@ -67,7 +71,9 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
     /* @conditional-compile-remove(attachment-upload) */
     hasAttachments,
     richTextEditorStyleProps,
-    isHorizontalLayoutDisabled = false
+    isHorizontalLayoutDisabled = false,
+    content,
+    autoFocus
   } = props;
   const theme = useTheme();
   const [showRichTextEditorFormatting, setShowRichTextEditorFormatting] = useState(false);
@@ -162,6 +168,7 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
         <Stack grow className={inputBoxRichTextStackStyle}>
           <Stack.Item className={inputBoxRichTextStackItemStyle}>
             <RichTextEditor
+              content={content}
               initialContent={initialContent}
               placeholderText={placeholderText}
               onChange={onChange}
@@ -170,6 +177,7 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
               strings={strings}
               showRichTextEditorFormatting={showRichTextEditorFormatting}
               styles={richTextEditorStyle}
+              autoFocus={autoFocus}
             />
           </Stack.Item>
           {

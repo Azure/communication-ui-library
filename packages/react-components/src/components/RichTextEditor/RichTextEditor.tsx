@@ -25,6 +25,7 @@ import { RichTextSendBoxStrings } from './RichTextSendBox';
 import { isDarkThemed } from '../../theming/themeUtils';
 import { ribbonButtonsStrings } from '../utils/RichTextEditorStringsUtils';
 import { createTableEditMenuProvider } from './Buttons/Table/RichTextTableContextMenu';
+import CopyPastePlugin from './Plugins/CopyPastePlugin';
 
 /**
  * Props for {@link RichTextEditor}.
@@ -42,13 +43,17 @@ export interface RichTextEditorStyleProps {
  * @private
  */
 export interface RichTextEditorProps {
+  // the initial content of editor that is set when editor is created (e.g. when editing a message)
   initialContent?: string;
+  // the current content of the editor
+  content?: string;
   onChange: (newValue?: string) => void;
   onKeyDown?: (ev: React.KeyboardEvent<HTMLElement>) => void;
   placeholderText?: string;
   strings: Partial<RichTextSendBoxStrings>;
   showRichTextEditorFormatting: boolean;
   styles: RichTextEditorStyleProps;
+  autoFocus?: 'sendBoxTextField';
 }
 
 /**
@@ -67,8 +72,10 @@ export interface RichTextEditorComponentRef {
  * @beta
  */
 export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichTextEditorProps>((props, ref) => {
-  const { initialContent, onChange, placeholderText, strings, showRichTextEditorFormatting } = props;
+  const { initialContent, onChange, placeholderText, strings, showRichTextEditorFormatting, content, autoFocus } =
+    props;
   const editor = useRef<IEditor | null>(null);
+  const contentValue = useRef<string | undefined>(content);
   const theme = useTheme();
   useImperativeHandle(
     ref,
@@ -95,11 +102,23 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
 
   const editorCreator = useCallback(
     (div: HTMLDivElement, options: EditorOptions) => {
-      editor.current = new Editor(div, options);
-      return editor.current;
+      const editorValue = new Editor(div, options);
+      // this is to fix issue when editor is created or re-rendered and has existing text
+      // Content model package has a correct behavior and this fix can be deleted
+      if (contentValue.current !== undefined && contentValue.current.length > 0) {
+        // in case if initialContent is not empty, RoosterJS doesn't set caret position to the end.
+        focusAndUpdateContent(editorValue, contentValue.current);
+      } else if (initialContent !== undefined && initialContent.length > 0) {
+        // changing layout in rich text send box cause the editor to be recreated
+        // to keep the content, we need to set messageContent to the current content
+        focusAndUpdateContent(editorValue, initialContent);
+      }
+      editor.current = editorValue;
+      return editorValue;
     },
     // trigger force editor reset when strings are changed to update context menu strings
     // see RosterJS documentation for 'editorCreator' for more details
+    // the editorCreator callback shouldn't be updated when the initialContent is changed
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [strings]
   );
@@ -125,7 +144,16 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
         onChange && onChange(content);
       }
     );
-    return [contentEdit, placeholderPlugin, updateContentPlugin, ribbonPlugin, contextPlugin, tableEditMenuProvider];
+    const copyPastePlugin = new CopyPastePlugin();
+    return [
+      contentEdit,
+      placeholderPlugin,
+      updateContentPlugin,
+      ribbonPlugin,
+      contextPlugin,
+      tableEditMenuProvider,
+      copyPastePlugin
+    ];
   }, [onChange, placeholderPlugin, ribbonPlugin, strings]);
 
   const ribbon = useMemo(() => {
@@ -165,7 +193,6 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
       <div className={richTextEditorWrapperStyle(theme, !showRichTextEditorFormatting)}>
         <Rooster
           defaultFormat={defaultFormat}
-          initialContent={initialContent}
           inDarkMode={isDarkThemed(theme)}
           plugins={plugins}
           className={richTextEditorStyle(props.styles)}
@@ -177,8 +204,16 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
           data-testid={'rooster-rich-text-editor'}
           // if we don't use 'allowKeyboardEventPropagation' only the enter key is caught
           onKeyDown={props.onKeyDown}
+          focusOnInit={autoFocus === 'sendBoxTextField'}
         />
       </div>
     </div>
   );
 });
+
+const focusAndUpdateContent = (editor: Editor, content: string): void => {
+  // focus the editor to set correct selection position
+  editor.focus();
+  // set initial content
+  editor.setContent(content);
+};
