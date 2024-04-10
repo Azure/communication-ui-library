@@ -21707,7 +21707,7 @@ packages:
     dev: false
 
   file:projects/server.tgz:
-    resolution: {integrity: sha512-S6LcJ2u0cGjvFcttUXXPwei7IigDXNwDqMgXVurA2g8NNQMo3cZDtFnqXdX0dCHf63SEo93i11ieHwp0KI2EOA==, tarball: file:projects/server.tgz}
+    resolution: {integrity: sha512-UMKkTeDz1pMd05E21VZob66rTDoXOpVBglLnsIsMHDHGH8HFaZWPBmrCXczXB40rgcaBO2YngPaLjTNvR6xNiQ==, tarball: file:projects/server.tgz}
     name: '@rush-temp/server'
     version: 0.0.0
     dependencies:
@@ -21731,6 +21731,7 @@ packages:
       cookie-parser: 1.4.6
       copy-webpack-plugin: 11.0.0(webpack@5.89.0)
       cors: 2.8.5
+      cpx: 1.5.0
       debug: 2.6.9
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0(eslint@7.32.0)
