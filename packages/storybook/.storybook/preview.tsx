@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { FluentThemeProvider, LocalizationProvider } from '@azure/communication-react';
-import { Anchor, DocsContainer } from '@storybook/addon-docs/blocks';
+import { Anchor, DocsContainer } from '@storybook/addon-docs';
 import React from 'react';
 import {
   COMPONENT_FOLDER_PREFIX,
@@ -13,22 +13,19 @@ import {
 } from '../stories/constants';
 import { THEMES } from '../stories/themes';
 import { LOCALES } from '../stories/locales'
-import { TOC } from './TOC';
 
 export const parameters = {
   layout: 'fullscreen',
   docs: {
     container: props => (
-      <TOC>
-        <DocsContainer context={props.context}>
-          <Anchor storyId={props.context.id} />
-          {props.children}
-        </DocsContainer>
-      </TOC>
+      <DocsContainer context={props.context}>
+        <Anchor storyId={props.context.id} />
+        {props.children}
+      </DocsContainer>
     ),
   },
   options: {
-    storySort: {
+    // storySort: {
       order: [
         'Overview',
         'Use Cases',
@@ -102,7 +99,7 @@ export const parameters = {
           ],
         ],
       ]
-    }
+    // }
   },
   viewMode: 'docs',
   previewTabs: {

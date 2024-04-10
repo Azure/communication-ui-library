@@ -11,10 +11,7 @@ async function main() {
       'Can not start storybook in stable flavor environment. Please run `rush switch-flavor:beta` first.'
     );
   }
-  await exec(
-    quote(['npx', 'start-storybook', '-p', '6006', '--no-manager-cache', '--quiet', '--loglevel', 'warn']),
-    await getExtraEnv()
-  );
+  await exec(quote(['npx', 'storybook', 'dev', '-p', '6006', '--quiet', '--loglevel', 'warn']), await getExtraEnv());
 }
 
 await main();

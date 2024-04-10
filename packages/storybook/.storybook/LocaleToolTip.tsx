@@ -1,7 +1,7 @@
 import React from 'react';
 import { Icons, IconButton, WithTooltip, TooltipLinkList } from '@storybook/components';
-import { useGlobals } from '@storybook/api';
-import addons from '@storybook/addons';
+import { addons, useGlobals } from '@storybook/manager-api';
+
 import { LOCALES } from '../stories/locales'
 import { FORCE_RE_RENDER } from '@storybook/core-events';
 

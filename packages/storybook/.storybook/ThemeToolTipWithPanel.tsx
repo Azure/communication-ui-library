@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Icons, IconButton, WithTooltip, TooltipLinkList } from '@storybook/components';
 import { Link } from '@storybook/components/dist/cjs/tooltip/TooltipLinkList';
-import { useGlobals } from '@storybook/api';
-import addons from '@storybook/addons';
+import { addons, useGlobals } from '@storybook/manager-api';
 import { FORCE_RE_RENDER } from '@storybook/core-events';
 import { TextField, DefaultButton, Stack, Panel} from '@fluentui/react';
 import { THEMES } from '../stories/themes';

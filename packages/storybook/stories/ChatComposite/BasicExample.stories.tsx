@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { ChatComposite } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState, useEffect } from 'react';
-import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
+import { compositeExperienceContainerStyle } from '../constants';
 import { defaultChatCompositeHiddenControls, controlsToAdd, ArgsFrom } from '../controlsUtils';
 import { compositeLocale } from '../localizationUtils';
 import { Docs } from './ChatCompositeDocs';
@@ -87,9 +86,10 @@ const BasicStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Element 
 export const BasicExample = BasicStory.bind({});
 
 export default {
-  id: `${COMPOSITE_FOLDER_PREFIX}-chat-basicexample`,
-  title: `${COMPOSITE_FOLDER_PREFIX}/ChatComposite/Basic Example`,
-  component: ChatComposite,
+  // id: `${COMPOSITE_FOLDER_PREFIX}-chat-basicexample`,
+  // title: `/ChatComposite/Basic Example`,
+  name: 'ChatComposite',
+  component: BasicStory,
   argTypes: {
     ...storyControls,
     // Hiding auto-generated controls
