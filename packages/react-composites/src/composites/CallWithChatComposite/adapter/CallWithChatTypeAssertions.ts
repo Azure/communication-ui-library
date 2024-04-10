@@ -89,7 +89,7 @@ type CallWithChatClientStateInternal = Omit<
   | /* @conditional-compile-remove(unsupported-browser) */ 'features'
   | 'videoBackgroundImages'
   | 'selectedVideoBackgroundEffect'
-  | /* @conditional-compile-remove(call-transfer) */ 'acceptedTransferCallState'
+  | 'acceptedTransferCallState'
   | 'cameraStatus'
   | 'sounds'
   | 'isRoomsCall'

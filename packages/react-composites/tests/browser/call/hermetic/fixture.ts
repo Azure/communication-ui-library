@@ -111,7 +111,6 @@ export function defaultMockCallAdapterState(
         /* @conditional-compile-remove(acs-close-captions) */
         captionsKind: 'Captions'
       },
-      /* @conditional-compile-remove(call-transfer) */
       transfer: {
         acceptedTransfers: {}
       },
@@ -491,7 +490,6 @@ const defaultEndedCallState: CallState = {
     /* @conditional-compile-remove(acs-close-captions) */
     captionsKind: 'Captions'
   },
-  /* @conditional-compile-remove(call-transfer) */
   transfer: {
     acceptedTransfers: {}
   },
