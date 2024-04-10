@@ -71,7 +71,7 @@ import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
 import { CommonCallControlOptions } from '../../common/types/CommonCallControlOptions';
 
 import { localVideoSelector } from '../../CallComposite/selectors/localVideoStreamSelector';
-/* @conditional-compile-remove(capabilities) */
+
 import {
   CapabilitiesChangedNotificationBar,
   CapabilitiesChangeNotificationBarProps
@@ -87,6 +87,8 @@ import {
   useRemoteSpotlightCallbacksWithPrompt,
   useStopAllSpotlightCallbackWithPrompt
 } from '../utils/spotlightUtils';
+/* @conditional-compile-remove(acs-close-captions) */
+import { getCaptionsKind } from '../selectors/baseSelectors';
 
 /**
  * @private
@@ -110,7 +112,7 @@ export interface CallArrangementProps {
   onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'horizontalTop') => void;
   onUserSetGalleryLayoutChange?: (layout: VideoGalleryLayout) => void;
   userSetGalleryLayout?: VideoGalleryLayout;
-  /* @conditional-compile-remove(capabilities) */
+
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
   onCloseChatPane?: () => void;
   onSetDialpadPage?: () => void;
@@ -337,8 +339,11 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     filteredLatestErrors = filteredLatestErrors.filter((e) => e.type !== 'unableToStartVideoEffect');
   }
 
+  /* @conditional-compile-remove(acs-close-captions) */
+  const isTeamsCaptions = useSelector(getCaptionsKind) === 'TeamsCaptions';
   /* @conditional-compile-remove(close-captions) */
-  const isTeamsCall = useSelector(getIsTeamsCall);
+  const useTeamsCaptions =
+    useSelector(getIsTeamsCall) || /* @conditional-compile-remove(acs-close-captions) */ isTeamsCaptions;
   /* @conditional-compile-remove(close-captions) */
   const hasJoinedCall = useSelector(getCallStatus) === 'Connected';
   /* @conditional-compile-remove(close-captions) */
@@ -349,7 +354,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const verticalControlBar =
     props.mobileView && containerWidth && containerHeight && containerWidth / containerHeight > 1 ? true : false;
 
-  /* @conditional-compile-remove(capabilities) */
   // Filter out shareScreen capability notifications if on mobile
   const filteredCapabilitesChangedNotifications = props.mobileView
     ? props.capabilitiesChangedNotificationBarProps?.capabilitiesChangedNotifications.filter(
@@ -400,11 +404,11 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   onMoreButtonClicked={onMoreButtonClicked}
                   /* @conditional-compile-remove(close-captions) */
                   isCaptionsSupported={
-                    (isTeamsCall && hasJoinedCall) ||
+                    (useTeamsCaptions && hasJoinedCall) ||
                     /* @conditional-compile-remove(acs-close-captions) */ hasJoinedCall
                   }
                   /* @conditional-compile-remove(close-captions) */
-                  isTeamsCall={isTeamsCall}
+                  useTeamsCaptions={useTeamsCaptions}
                   /* @conditional-compile-remove(close-captions) */
                   isCaptionsOn={isCaptionsOn}
                   onClickVideoEffects={onResolveVideoEffectDependency ? openVideoEffectsPane : undefined}
@@ -434,10 +438,11 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 disableButtonsForHoldScreen={isInLocalHold}
                 /* @conditional-compile-remove(close-captions) */
                 isCaptionsSupported={
-                  (isTeamsCall && hasJoinedCall) || /* @conditional-compile-remove(acs-close-captions) */ hasJoinedCall
+                  (useTeamsCaptions && hasJoinedCall) ||
+                  /* @conditional-compile-remove(acs-close-captions) */ hasJoinedCall
                 }
                 /* @conditional-compile-remove(close-captions) */
-                isTeamsCall={isTeamsCall}
+                useTeamsCaptions={useTeamsCaptions}
                 onUserSetGalleryLayout={props.onUserSetGalleryLayoutChange}
                 userSetGalleryLayout={props.userSetGalleryLayout}
                 onSetDialpadPage={props.onSetDialpadPage}
@@ -464,18 +469,15 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                         />
                       </Stack>
                     )}
-                    {
-                      /* @conditional-compile-remove(capabilities) */
-                      props.capabilitiesChangedNotificationBarProps &&
-                        props.capabilitiesChangedNotificationBarProps.capabilitiesChangedNotifications.length > 0 && (
-                          <Stack styles={bannerNotificationStyles}>
-                            <CapabilitiesChangedNotificationBar
-                              {...props.capabilitiesChangedNotificationBarProps}
-                              capabilitiesChangedNotifications={filteredCapabilitesChangedNotifications ?? []}
-                            />
-                          </Stack>
-                        )
-                    }
+                    {props.capabilitiesChangedNotificationBarProps &&
+                      props.capabilitiesChangedNotificationBarProps.capabilitiesChangedNotifications.length > 0 && (
+                        <Stack styles={bannerNotificationStyles}>
+                          <CapabilitiesChangedNotificationBar
+                            {...props.capabilitiesChangedNotificationBarProps}
+                            capabilitiesChangedNotifications={filteredCapabilitesChangedNotifications ?? []}
+                          />
+                        </Stack>
+                      )}
                     {canUnmute && !!props.mutedNotificationProps && (
                       <MutedNotification {...props.mutedNotificationProps} />
                     )}
@@ -489,7 +491,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                           isMobile={props.mobileView}
                           onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
                           /* @conditional-compile-remove(close-captions) */
-                          isTeamsCall={isTeamsCall}
+                          useTeamsCaptions={useTeamsCaptions}
                         />
                       )
                   }

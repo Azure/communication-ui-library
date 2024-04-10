@@ -38,16 +38,16 @@
     "memoize-one": "^5.2.1"
   },
   "peerDependencies": {
-    "@azure/communication-chat": "1.5.0-beta.1 || >=1.4.0",
+    "@azure/communication-chat": "1.5.0-beta.2 || >=1.4.0",
     "@types/react": ">=16.8.0 <19.0.0",
     "react": ">=16.8.0 <19.0.0"
   },
   "devDependencies": {
-    "@azure/communication-chat": "1.5.0-beta.1 || ^1.4.0",
+    "@azure/communication-chat": "1.5.0-beta.2 || ^1.4.0",
     "@babel/cli": "^7.23.9",
-    "@babel/core": "^7.23.9",
+    "@babel/core": "^7.24.3",
     "@types/jest": "^29.5.11",
-    "@types/react": "18.2.64",
+    "@types/react": "18.2.74",
     "copyfiles": "^2.4.1",
     "cpx": "^1.5.0",
     "cross-env": "^7.0.3",
@@ -64,6 +64,6 @@
     "react": "18.2.0",
     "rimraf": "^2.6.2",
     "rollup": "^4.12.1",
-    "typescript": "5.4.2"
+    "typescript": "5.4.3"
   }
 }

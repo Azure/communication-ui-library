@@ -78,7 +78,7 @@ As noted above, the challenges in creating a hotfix are unique to each attempt. 
       For hotfixing a beta release version:
 
       ```bash
-      node common/scripts/bump-beta-release-version.js patch
+      node common/scripts/bump-beta-release-version.js beta
       ```
 
       After this all `package.json` files should have the correct version. You can do a findAll for the old version and make sure it does not exist.
@@ -101,7 +101,7 @@ As noted above, the challenges in creating a hotfix are unique to each attempt. 
       If you are hotfixing a beta release, run the following command:
 
       ```bash
-      node ./common/scripts/force-build-flavor.mjs beta
+      node ./common/scripts/force-build-flavor.mjs beta-stable
       rush update
       ```
 

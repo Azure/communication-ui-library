@@ -281,12 +281,14 @@ export const DEFAULT_COMPONENT_ICONS = {
   LowerHandContextualMenuItem: <HandRightOff20Regular />,
   /* @conditional-compile-remove(reaction) */
   ReactionButtonIcon: <Emoji20Regular />,
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-upload) */
   CancelAttachmentUpload: <Dismiss16Regular />,
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   DownloadAttachment: <ArrowDownload20Regular />,
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   OpenAttachment: <Open20Regular />,
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  AttachmentMoreMenu: <MoreHorizontal20Filled />,
   /* @conditional-compile-remove(data-loss-prevention) */
   DataLossPreventionProhibited: <DataLossPreventionProhibited16Regular />,
   EditBoxCancel: <Dismiss20Regular />,

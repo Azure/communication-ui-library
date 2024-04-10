@@ -14,7 +14,13 @@ export const richTextEditorStyle = (props: { minHeight: string; maxHeight: strin
     outline: 'none',
     minHeight: props.minHeight,
     maxHeight: props.maxHeight,
-    maxWidth: '100%'
+    maxWidth: '100%',
+    // this is needed to fix an issue when text has some indentation, indentation uses blockquote tag and
+    // it gets both horizontal margins because of the user agent stylesheet
+    // remove this code when RoosterJS content model packages are used as they use different approach for indentation
+    '& blockquote': {
+      marginInlineEnd: '0'
+    }
   });
 };
 
@@ -35,8 +41,7 @@ export const richTextEditorWrapperStyle = (theme: Theme, addTopOffset: boolean):
       borderCollapse: 'collapse',
       width: '100%',
       borderSpacing: '0',
-      // don't shrink/expand cells during the input to the table
-      tableLayout: 'fixed',
+      tableLayout: 'auto',
 
       '& tr': {
         background: 'transparent',
@@ -307,4 +312,11 @@ export const insertTableMenuTitleStyles = mergeStyles({
   height: '1rem',
   fontSize: '0.75rem',
   marginBottom: '0.5rem'
+});
+
+/**
+ * @private
+ */
+export const tableContextMenuIconStyles = mergeStyles({
+  marginTop: '0.375rem'
 });

@@ -35,7 +35,7 @@ import { getEmojiFrameCount } from './VideoGallery/utils/videoGalleryLayoutUtils
 /**
  * Props for {@link ReactionButton}.
  *
- * @beta
+ * @public
  */
 export interface ReactionButtonProps extends ControlBarButtonProps {
   /**
@@ -56,7 +56,7 @@ export interface ReactionButtonProps extends ControlBarButtonProps {
 /**
  * Strings of {@link ReactionButton} that can be overridden.
  *
- * @beta
+ * @public
  */
 export interface ReactionButtonStrings {
   /** Label of the button. */
@@ -85,7 +85,7 @@ export interface ReactionButtonStrings {
  *
  * Can be used with {@link ControlBar}.
  *
- * @beta
+ * @public
  */
 export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
   const localeStrings = useLocale().strings.reactionButton;
@@ -123,7 +123,7 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
   const classname = mergeStyles(reactionEmojiMenuStyles());
 
   const renderEmoji = (item: IContextualMenuItem, dismissMenu: () => void): React.JSX.Element => (
-    <div className={classname}>
+    <div data-ui-id="reaction-sub-menu" className={classname}>
       {emojis.map((emoji, index) => {
         const resourceUrl = emojiResource.get(emoji);
         const frameCount: number =

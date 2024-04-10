@@ -26,7 +26,7 @@ import { networkReconnectTileSelector } from '../selectors/networkReconnectTileS
 import { reduceCallControlsForMobile } from '../utils';
 import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
 import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
-/* @conditional-compile-remove(capabilities) */
+
 import { CapabilitiesChangeNotificationBarProps } from '../components/CapabilitiesChangedNotificationBar';
 import { DtmfDialpadPage } from './DtmfDialpadPage';
 import { showDtmfDialer } from '../utils/MediaGalleryUtils';
@@ -49,7 +49,7 @@ export interface CallPageProps {
   latestErrors: ActiveErrorMessage[];
   onDismissError: (error: ActiveErrorMessage) => void;
   galleryLayout: VideoGalleryLayout;
-  /* @conditional-compile-remove(capabilities) */
+
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
   onUserSetGalleryLayoutChange?: (layout: VideoGalleryLayout) => void;
   userSetOverflowGalleryPosition?: 'Responsive' | 'horizontalTop';
@@ -117,7 +117,6 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
           mobileChatTabHeader={props.mobileChatTabHeader}
           latestErrors={props.latestErrors}
           onDismissError={props.onDismissError}
-          /* @conditional-compile-remove(capabilities) */
           capabilitiesChangedNotificationBarProps={props.capabilitiesChangedNotificationBarProps}
           onSetDialpadPage={() => setDtmfDialerPresent(!dtmfDialerPresent)}
           dtmfDialerPresent={dtmfDialerPresent}
@@ -185,7 +184,6 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         onUserSetOverflowGalleryPositionChange={onSetUserSetOverflowGalleryPosition}
         onUserSetGalleryLayoutChange={onUserSetGalleryLayoutChange}
         userSetGalleryLayout={galleryLayout}
-        /* @conditional-compile-remove(capabilities) */
         capabilitiesChangedNotificationBarProps={props.capabilitiesChangedNotificationBarProps}
         onSetDialpadPage={() => setDtmfDialerPresent(!dtmfDialerPresent)}
         dtmfDialerPresent={dtmfDialerPresent}
