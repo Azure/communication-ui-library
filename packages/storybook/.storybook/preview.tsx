@@ -71,6 +71,7 @@ export const parameters = {
           'Identity',
           'Rooms',
           'Communication as Teams user',
+          'Teams Interop',
           'Adhoc calling',
           'Transfer',
           'Video Effects'
