@@ -59,20 +59,3 @@ export const localVideoCameraCycleButtonStyles = (theme: Theme, size?: 'small' |
 export const localVideoTileContainerStyles: IStackStyles = {
   root: { width: '100%', height: '100%' }
 };
-
-/**
- * @private
- */
-//TODO Can be removed once the overlay mitigation has been implemented at the SDK layer
-export const pptLiveOverlayStyles: IStackStyles = {
-  root: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'transparent',
-    pointerEvents: 'none',
-    zIndex: 0
-  }
-};
