@@ -3,7 +3,7 @@
 
 import path from 'path';
 import { resetIds, Stylesheet } from '@fluentui/react';
-import initStoryshots, { multiSnapshotWithOptions } from '@storybook/addon-storyshots';
+
 import ReactDom from 'react-dom';
 
 jest.mock('@azure/communication-calling', () => {
@@ -46,23 +46,22 @@ afterAll(() => {
 });
 
 describe.skip('storybook snapshot tests', () => {
-  const initTestStoryshots = (): void => {
-    initStoryshots({
-      test: (story) => {
-        const fileName = path.resolve(__dirname, '..', story.context.fileName);
-        return multiSnapshotWithOptions()({
-          ...story,
-          // Workaround for multiSnapshotWithOptions placing snapshots in a directory
-          // one level too high. See more info and workaround snippet: https://github.com/storybookjs/storybook/issues/16692
-          context: { ...story.context, fileName }
-        });
-      }
-    });
-  };
+  // const initTestStoryshots = (): void => {
+  //   initStoryshots({
+  //     test: (story) => {
+  //       const fileName = path.resolve(__dirname, '..', story.context.fileName);
+  //       return multiSnapshotWithOptions()({
+  //         ...story,
+  //         // Workaround for multiSnapshotWithOptions placing snapshots in a directory
+  //         // one level too high. See more info and workaround snippet: https://github.com/storybookjs/storybook/issues/16692
+  //         context: { ...story.context, fileName }
+  //       });
+  //     }
+  //   });
+  // };
   // The test below is required to avoid an intermittent error when generating new storybook pages
   // Particularly, npx jest outputs error "Your test suite must contain at least one test."
   test('fake test to prevent "no tests found error"', () => {
-    initTestStoryshots();
     expect(true).toBeTruthy();
   });
 });

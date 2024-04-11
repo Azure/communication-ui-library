@@ -62,6 +62,7 @@
     "@storybook/react": "^8.0.6",
     "@storybook/react-webpack5": "^8.0.6",
     "@storybook/storybook-deployer": "^2.8.16",
+    "@storybook/test-runner": "^0.17.0",
     "@storybook/theming": "^8.0.6",
     "@testing-library/jest-dom": "^6.3.0",
     "@types/jest": "^29.5.11",
