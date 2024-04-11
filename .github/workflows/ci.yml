@@ -34,7 +34,6 @@ jobs:
   get_matrix:
     name: Load CI Matrix Details
     runs-on: ubuntu-latest
-    needs: get_changes
     outputs:
       matrix: ${{ steps.get-matrix.outputs.matrix }}
     steps:
@@ -648,7 +647,7 @@ jobs:
         working-directory: packages/storybook
 
   build_storybook8:
-    if: changelist.storybook8 == 'true'
+    if: ${{ needs.get_changes.outputs.changelist.storybook8 == 'true' }}
     needs: [get_matrix, get_changes]
     name: Build Storybook v8
     strategy:
