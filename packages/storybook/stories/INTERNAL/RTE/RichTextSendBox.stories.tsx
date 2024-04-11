@@ -18,7 +18,7 @@ const RichTextSendBoxAttachmentUploadsExampleText =
 const RichTextSendBoxWithSystemMessageExampleText =
   require('!!raw-loader!./snippets/RichTextSendBoxWithSystemMessage.snippet.tsx').default;
 
-const importStatement = `import { SendBox } from '@azure/communication-react';`;
+const importStatement = `import { RichTextSendBox } from '@azure/communication-react';`;
 
 const getDocs: () => JSX.Element = () => {
   return (
