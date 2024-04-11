@@ -15,7 +15,6 @@ import {
   _isACSCall,
   _isTeamsCall
 } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(call-transfer) */
 import { AcceptedTransfer } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(teams-identity-support) */
 import { _isTeamsCallAgent } from '@internal/calling-stateful-client';
@@ -47,7 +46,6 @@ import { Reaction } from '@azure/communication-calling';
 import { TeamsCaptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(acs-close-captions) */
 import { Captions, CaptionsInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(call-transfer) */
 import { TransferEventArgs } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { StartCaptionsOptions, TeamsCaptionsInfo } from '@azure/communication-calling';
@@ -81,7 +79,6 @@ import {
 } from './CallAdapter';
 /* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '@internal/react-components';
-/* @conditional-compile-remove(call-transfer) */
 import { TransferAcceptedListener } from './CallAdapter';
 
 import { CapabilitiesChangedListener } from './CallAdapter';
@@ -247,17 +244,15 @@ class CallContext {
       unsupportedBrowserVersionOptedIn: this.state.unsupportedBrowserVersionsAllowed
     };
 
-    /* @conditional-compile-remove(call-transfer) */
     const latestAcceptedTransfer = call?.transfer.acceptedTransfers
       ? findLatestAcceptedTransfer(call.transfer.acceptedTransfers)
       : undefined;
-    /* @conditional-compile-remove(call-transfer) */
     const transferCall = latestAcceptedTransfer ? clientState.calls[latestAcceptedTransfer.callId] : undefined;
 
     const newPage = getCallCompositePage(
       call,
       latestEndedCall,
-      /* @conditional-compile-remove(call-transfer) */ transferCall,
+      transferCall,
       /* @conditional-compile-remove(unsupported-browser) */ environmentInfo
     );
     if (!IsCallEndedPage(oldPage) && IsCallEndedPage(newPage)) {
@@ -283,7 +278,7 @@ class CallContext {
           clientState.deviceManager.unparentedViews.find((s) => s.mediaStreamType === 'Video')
             ? 'On'
             : 'Off',
-        /* @conditional-compile-remove(call-transfer) */ acceptedTransferCallState: transferCall
+        acceptedTransferCallState: transferCall
       });
     }
   }
@@ -301,7 +296,6 @@ class CallContext {
     this.setState({ ...this.state, selectedVideoBackgroundEffect });
   }
 
-  /* @conditional-compile-remove(call-transfer) */
   public setAcceptedTransferCall(call?: CallState): void {
     this.setState({ ...this.state, acceptedTransferCallState: call });
   }
@@ -321,7 +315,6 @@ const findLatestEndedCall = (calls: { [key: string]: CallState }): CallState | u
   return latestCall;
 };
 
-/* @conditional-compile-remove(call-transfer) */
 const findLatestAcceptedTransfer = (acceptedTransfers: {
   [key: string]: AcceptedTransfer;
 }): AcceptedTransfer | undefined => {
@@ -457,7 +450,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.subscribeDeviceManagerEvents();
 
     this.callClient.onStateChange(onStateChange);
-    /* @conditional-compile-remove(call-transfer) */
+
     if (this.callAgent.kind === 'CallAgent') {
       const onCallsUpdated = (args: { added: Call[]; removed: Call[] }): void => {
         if (this.call?.id) {
@@ -1091,11 +1084,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
   /* @conditional-compile-remove(close-captions) */
   on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
-  /* @conditional-compile-remove(call-transfer) */
   on(event: 'transferAccepted', listener: TransferAcceptedListener): void;
-
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
-
   on(event: 'roleChanged', listener: PropertyChangedEvent): void;
   /* @conditional-compile-remove(spotlight) */
   on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
@@ -1165,9 +1155,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     /* @conditional-compile-remove(close-captions) */
     this.call?.on('stateChanged', this.subscribeToCaptionEvents.bind(this));
     this.call?.on('roleChanged', this.roleChanged.bind(this));
-    /* @conditional-compile-remove(call-transfer) */
-    this.call?.feature(Features.Transfer).on('transferAccepted', this.transferAccepted.bind(this));
 
+    this.call?.feature(Features.Transfer).on('transferAccepted', this.transferAccepted.bind(this));
     this.call?.feature(Features.Capabilities).on('capabilitiesChanged', this.capabilitiesChanged.bind(this));
     /* @conditional-compile-remove(spotlight) */
     this.call?.feature(Features.Spotlight).on('spotlightChanged', this.spotlightChanged.bind(this));
@@ -1268,7 +1257,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     });
   }
 
-  /* @conditional-compile-remove(call-transfer) */
   private transferAccepted(args: TransferEventArgs): void {
     this.emitter.emit('transferAccepted', args);
   }
@@ -1336,9 +1324,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
   /* @conditional-compile-remove(close-captions) */
   off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
-  /* @conditional-compile-remove(call-transfer) */
   off(event: 'transferAccepted', listener: TransferAcceptedListener): void;
-
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   off(event: 'roleChanged', listener: PropertyChangedEvent): void;
   /* @conditional-compile-remove(spotlight) */

@@ -68,7 +68,6 @@ export type {
   IsSpokenLanguageChangedListener
 } from './CallAdapter';
 
-/* @conditional-compile-remove(call-transfer) */
 export type { TransferAcceptedListener } from './CallAdapter';
 
 export type { CapabilitiesChangedListener } from './CallAdapter';
