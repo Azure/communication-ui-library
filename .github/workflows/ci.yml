@@ -17,19 +17,6 @@ concurrency:
 permissions: read-all
 
 jobs:
-  get_changes:
-    name: Determine change paths
-    runs-on: ubuntu-latest
-    outputs:
-      changelist: ${{ steps.changes.outputs }}
-    steps:
-      - uses: dorny/paths-filter@v3
-        id: changes
-        with:
-          filters: |
-            storybook8:
-              - 'packages/storybook8/**'
-
   # get matrix for ci-jobs
   get_matrix:
     name: Load CI Matrix Details
@@ -647,35 +634,45 @@ jobs:
         working-directory: packages/storybook
 
   build_storybook8:
-    if: ${{ needs.get_changes.outputs.changelist.storybook8 == 'true' }}
-    needs: [get_matrix, get_changes]
+    needs: get_matrix
     name: Build Storybook v8
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     runs-on: ubuntu-latest
     steps:
+      - uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            storybook8:
+              - 'packages/storybook8/**'
+
       - uses: actions/checkout@v4
+        if: steps.changes.storybook8.src == 'true'
         with:
           fetch-depth: 1
       - name: Use Node.js
+        if: steps.changes.storybook8.src == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
       - name: Restore node_modules from cache
+        if: steps.changes.storybook8.src == 'true'
         uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
+        if: steps.changes.storybook8.src == 'true'
         run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Install dependencies
-        if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release'}}
+        if: steps.changes.storybook8.src == 'true' && ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release'}}
         run: rush install --max-install-attempts 3
       - name: Build
-        if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
+        if: steps.changes.storybook8.src == 'true' && ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
         run: rush build -o storybook8
       - name: Tests
-        if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
+        if: steps.changes.storybook8.src == 'true' && ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
         run: rushx test
         working-directory: packages/storybook
 
