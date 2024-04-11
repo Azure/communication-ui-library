@@ -17,10 +17,24 @@ concurrency:
 permissions: read-all
 
 jobs:
+  get_changes:
+    name: Determine change paths
+    runs-on: ubuntu-latest
+    outputs:
+      changelist: ${{ steps.changes.outputs }}
+    steps:
+      - uses: dorny/path-filter@v3
+        id: changes
+        with:
+          filters: |
+            storybook8:
+              - 'packages/storybook8/**'
+
   # get matrix for ci-jobs
   get_matrix:
     name: Load CI Matrix Details
     runs-on: ubuntu-latest
+    needs: get_changes
     outputs:
       matrix: ${{ steps.get-matrix.outputs.matrix }}
     steps:
@@ -628,6 +642,39 @@ jobs:
       - name: Build
         if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
         run: rush build -o storybook
+      - name: Tests
+        if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
+        run: rushx test
+        working-directory: packages/storybook
+
+  build_storybook8:
+    if: changelist.storybook8 == 'true'
+    needs: [get_matrix, get_changes]
+    name: Build Storybook v8
+    strategy:
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+      - name: Restore node_modules from cache
+        uses: actions/cache@v3
+        with:
+          path: common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+      - name: Install rush
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
+      - name: Install dependencies
+        if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release'}}
+        run: rush install --max-install-attempts 3
+      - name: Build
+        if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
+        run: rush build -o storybook8
       - name: Tests
         if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
         run: rushx test
