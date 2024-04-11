@@ -654,7 +654,7 @@ jobs:
 
   build_storybook8:
     needs: [get_matrix, files_changed]
-    if: needs.files_changed.outputs.storybook8 == 'true'
+    if: needs.files_changed.outputs.storybook8_changes == 'true'
     name: Build Storybook v8
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
