@@ -200,7 +200,8 @@ const Docs: () => JSX.Element = () => {
       <Description>
         The MessageThread component supports lazy loading for the rich text editor used for editing messages. This means
         that the rich text editor and its dependencies can be excluded from the bundle if they're not required,
-        utilizing tree-shaking techniques such as the `sideEffects` option in webpack.
+        utilizing tree-shaking techniques such as [the sideEffects
+        option](https://webpack.js.org/guides/tree-shaking/#mark-the-file-as-side-effect-free) in webpack.
       </Description>
 
       <Heading>Importing</Heading>
