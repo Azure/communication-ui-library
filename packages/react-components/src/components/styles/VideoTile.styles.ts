@@ -160,7 +160,8 @@ export const raiseHandContainerStyles = (theme: ITheme, limitedSpace: boolean): 
       borderRadius: '1rem',
       margin: '0.5rem',
       width: 'fit-content',
-      position: 'absolute'
+      position: 'absolute',
+      top: 0
     },
     limitedSpace && raiseHandLimitedSpaceStyles
   );
