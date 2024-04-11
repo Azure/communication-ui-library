@@ -362,7 +362,7 @@ export const controlsToAdd = {
   token: { control: 'text', defaultValue: '', name: 'Valid token for user', type: { name: 'string', required: true } },
   typingUsers: { control: 'object', defaultValue: defaultTypingUsers, name: 'Typing users' },
   isCaptionsFeatureActive: { control: 'boolean', defaultValue: true, name: 'Is captions on' },
-  richTextEditor: { control: 'boolean', defaultValue: true, name: 'Enable rich tex editor' },
+  richTextEditor: { control: 'boolean', defaultValue: true, name: 'Enable rich text editor' },
   userId: {
     control: 'text',
     defaultValue: '',
