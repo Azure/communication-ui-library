@@ -23,7 +23,7 @@ jobs:
     outputs:
       changelist: ${{ steps.changes.outputs }}
     steps:
-      - uses: dorny/path-filter@v3
+      - uses: dorny/paths-filter@v3
         id: changes
         with:
           filters: |
