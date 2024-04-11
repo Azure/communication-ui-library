@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { ChatComposite } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react';
 import React from 'react';
-import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
+import { compositeExperienceContainerStyle } from '../constants';
 import { defaultChatCompositeHiddenControls, controlsToAdd, ArgsFrom } from '../controlsUtils';
 import { compositeLocale } from '../localizationUtils';
 import { Docs } from './ChatCompositeDocs';
@@ -54,11 +53,11 @@ const meta: Meta<typeof JoinExistingChatThreadStory> = {
   // title: `${COMPOSITE_FOLDER_PREFIX}/ChatComposite/Join Existing Chat Thread`,
   // name: 'Join Existing Chat Thread',
   component: JoinExistingChatThreadStory,
-  // argTypes: {
-  //   ...storyControls,
-  //   // Hiding auto-generated controls
-  //   ...defaultChatCompositeHiddenControls
-  // },
+  argTypes: {
+    ...storyControls,
+    // Hiding auto-generated controls
+    ...defaultChatCompositeHiddenControls
+  },
   parameters: {
     useMaxHeightParent: true,
     useMaxWidthParent: true,

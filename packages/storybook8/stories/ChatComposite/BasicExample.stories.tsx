@@ -87,14 +87,14 @@ export const BasicExample = BasicStory.bind({});
 
 const meta: Meta<typeof BasicStory> = {
   // id: `${COMPOSITE_FOLDER_PREFIX}-chat-basicexample`,
-  // title: `/ChatComposite/Basic Example`,
+  // title: `${COMPOSITE_FOLDER_PREFIX}/ChatComposite/Basic Example`,
   // name: 'Chat Composite Basic Example',
   component: BasicStory,
-  // argTypes: {
-  //   ...storyControls,
-  //   // Hiding auto-generated controls
-  //   ...defaultChatCompositeHiddenControls
-  // },
+  argTypes: {
+    ...storyControls,
+    // Hiding auto-generated controls
+    ...defaultChatCompositeHiddenControls
+  },
   parameters: {
     useMaxHeightParent: true,
     useMaxWidthParent: true,
