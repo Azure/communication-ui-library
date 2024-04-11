@@ -38,7 +38,6 @@ jobs:
   # get matrix for ci-jobs
   get_matrix:
     name: Load CI Matrix Details
-    needs: files_changed
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.get-matrix.outputs.matrix }}
