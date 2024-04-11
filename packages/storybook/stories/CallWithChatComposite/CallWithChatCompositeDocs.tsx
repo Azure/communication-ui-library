@@ -45,13 +45,6 @@ const customBrandingSnippet = `
 }} />
 `;
 
-const createTeamsMeetingResponse = `
-  // partial response from creating a Teams meeting
-  'joinWebUrl': 'https://teams.microsoft.com/l/meetup',
-  'joinMeetingId': '1234567890',
-  'passcode': 'abc'
-`;
-
 export const Docs: () => JSX.Element = () => {
   const refTeamsMeeting = useRef(null);
   const refFileSharing = useRef(null);

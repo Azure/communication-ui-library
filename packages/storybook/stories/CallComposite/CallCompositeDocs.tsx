@@ -3,7 +3,7 @@
 
 import { CallComposite } from '@azure/communication-react';
 import { MessageBar, Stack, Text } from '@fluentui/react';
-import { Description, Heading, Props, Source, Title, Subheading } from '@storybook/addon-docs';
+import { Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import React, { useEffect, useRef } from 'react';
 import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { overviewPageImagesStackStyle } from '../constants';
