@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { Stack } from '@fluentui/react';
-import { Meta } from '@storybook/react/types-6-0';
+import { Meta } from '@storybook/react';
 import React, { useState, useEffect } from 'react';
 import { compositeExperienceContainerStyle } from '../constants';
 import { defaultChatCompositeHiddenControls, controlsToAdd, ArgsFrom } from '../controlsUtils';
@@ -85,16 +85,16 @@ const BasicStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Element 
 
 export const BasicExample = BasicStory.bind({});
 
-export default {
+const meta: Meta<typeof BasicStory> = {
   // id: `${COMPOSITE_FOLDER_PREFIX}-chat-basicexample`,
   // title: `/ChatComposite/Basic Example`,
-  name: 'ChatComposite',
+  // name: 'Chat Composite Basic Example',
   component: BasicStory,
-  argTypes: {
-    ...storyControls,
-    // Hiding auto-generated controls
-    ...defaultChatCompositeHiddenControls
-  },
+  // argTypes: {
+  //   ...storyControls,
+  //   // Hiding auto-generated controls
+  //   ...defaultChatCompositeHiddenControls
+  // },
   parameters: {
     useMaxHeightParent: true,
     useMaxWidthParent: true,
@@ -104,4 +104,6 @@ export default {
       page: () => Docs()
     }
   }
-} as Meta;
+};
+
+export default meta;
