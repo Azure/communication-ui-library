@@ -9,7 +9,10 @@
 
 import { execSync } from 'child_process';
 import fs from 'fs';
-import path from 'path';
+import { resolve, dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 async function main(args) {
   const flavor = args[2];
@@ -19,7 +22,7 @@ async function main(args) {
 
   // Install rush based on the version in rush.json.
   // If we do not install that specific version, the first rush command has to reinstall rush.
-  const rushVersion = JSON.parse(fs.readFileSync('../../rush.json')).rushVersion;
+  const rushVersion = JSON.parse(fs.readFileSync(resolve(__dirname, '../../rush.json'))).rushVersion;
   execSync(`npm install -g @microsoft/rush@${rushVersion}`);
 
   // Force build flavor. This is necessary in CI to catch downstream dependency issues.
