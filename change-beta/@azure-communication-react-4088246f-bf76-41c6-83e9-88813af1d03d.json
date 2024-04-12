@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "improvement",
+  "workstream": "RTE",
+  "comment": "Increase RTE EditBox max-height",
+  "packageName": "@azure/communication-react",
+  "email": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
