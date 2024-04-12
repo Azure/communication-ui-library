@@ -47,6 +47,7 @@ import {
 import { InlineImageOptions } from './ChatMessage/ChatMessageContent';
 import { MessageStatusIndicatorInternal } from './MessageStatusIndicatorInternal';
 import { Announcer } from './Announcer';
+import { loadChatMessageComponentAsRichTextEditBox } from './ChatMessage/MyMessageComponents/ChatMessageComponentAsEditBoxPicker';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (
@@ -713,6 +714,15 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   const previousMessagesRef = useRef<Message[]>([]);
   // an aria label for Narrator to notify when a message is deleted
   const [deletedMessageAriaLabel, setDeletedMessageAriaLabel] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    if (richTextEditor !== undefined && richTextEditor) {
+      // if rich text editor is enabled, the rich text editor component should be loaded early for good UX
+      // this line is needed to load the Rooster JS dependencies early in the lifecycle
+      // when the rich text editor is enabled
+      loadChatMessageComponentAsRichTextEditBox();
+    }
+  }, [richTextEditor]);
 
   const onDeleteMessageCallback = useCallback(
     async (messageId: string): Promise<void> => {
