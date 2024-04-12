@@ -5,7 +5,9 @@
 import { AttachmentMetadata, defaultAttachmentMenuAction } from '@azure/communication-react';
 
 // uncomment below line to use custom icons
+/* @conditional-compile-remove(attachment-download) */
 import { WindowNew24Regular } from '@fluentui/react-icons';
+/* @conditional-compile-remove(attachment-download) */
 import React from 'react';
 
 /* @conditional-compile-remove(attachment-download) */
