@@ -9,6 +9,7 @@
 
 import { execSync } from 'child_process';
 import fs from 'fs';
+import { fileURLToPath } from 'url';
 import { resolve, dirname } from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
