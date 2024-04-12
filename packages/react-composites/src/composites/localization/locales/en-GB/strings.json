@@ -61,11 +61,11 @@
     "removedFromCallMoreDetails": "Another participant removed you from the call.",
     "removedFromCallTitle": "You were removed",
     "removeMenuLabel": "Remove",
-    "startSpotlightParticipantListMenuLabel": "Spotlight for everyone",
-    "addSpotlightParticipantListMenuLabel": "Add spotlight",
-    "stopSpotlightParticipantListMenuLabel": "Stop spotlighting",
-    "stopSpotlightOnSelfParticipantListMenuLabel": "Exit spotlight",
-    "spotlightLimitReachedParticipantListMenuTitle": "Spotlight limit reached",
+    "startSpotlightMenuLabel": "Spotlight for everyone",
+    "addSpotlightMenuLabel": "Add spotlight",
+    "stopSpotlightMenuLabel": "Stop spotlighting",
+    "stopSpotlightOnSelfMenuLabel": "Exit spotlight",
+    "spotlightLimitReachedMenuTitle": "Spotlight limit reached",
     "stopAllSpotlightMenuLabel": "Stop all spotlights",
     "returnToCallButtonAriaDescription": "Return to Call",
     "returnToCallButtonAriaLabel": "Back",
@@ -315,18 +315,27 @@
       "startSpotlightCancelButtonLabel": "Cancel",
       "stopSpotlightHeading": "Stop spotlighting this video?",
       "stopSpotlightOnSelfHeading": "Exit spotlight?",
+      "stopAllSpotlightHeading": "Stop spotlighting all videos?",
       "stopSpotlightText": "This video will no longer be highlighted for everyone in the meeting.",
       "stopSpotlightOnSelfText": "Your video will no longer be highlighted for everyone in the meeting.",
+      "stopAllSpotlightText": "The videos will no longer be highlighted for everyone in the meeting.",
       "stopSpotlightConfirmButtonLabel": "Stop spotlighting",
       "stopSpotlightOnSelfConfirmButtonLabel": "Exit spotlight",
       "stopSpotlightCancelButtonLabel": "Cancel"
     },
     "exitSpotlightButtonLabel": "Exit spotlight",
-    "exitSpotlightButtonTooltip": "Exit spotlight"
+    "exitSpotlightButtonTooltip": "Exit spotlight",
+    "hangUpConfirmButtonLabel": "Confirm",
+    "hangUpCancelButtonLabel": "Cancel",
+    "leaveConfirmDialogTitle": "Leave the call?",
+    "leaveConfirmDialogContent": "Are you sure you want to leave the call?",
+    "endCallConfirmDialogTitle": "End the call?",
+    "endCallConfirmDialogContent": "You'll end the call for everyone.",
+    "invalidMeetingIdentifier": "Invalid meeting ID or passcode"
   },
   "chat": {
     "chatListHeader": "In this chat",
-    "uploadFile": "Upload File"
+    "uploadAttachment": "Upload Attachment"
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",

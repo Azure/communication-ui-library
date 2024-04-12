@@ -24,8 +24,8 @@
     "placeholderText": "הזן הודעה",
     "textTooLong": "אורך ההודעה שלך חורג מהמגבלה המרבית.",
     "sendButtonAriaLabel": "שלח הודעה",
-    "fileUploadsPendingError": "מעלה... אנא המתן.",
-    "removeFile": "הסר קובץ",
+    "attachmentUploadsPendingError": "מעלה... אנא המתן.",
+    "removeAttachment": "הסרת קובץ",
     "uploading": "מעלה",
     "uploadCompleted": "ההעלאה הושלמה"
   },
@@ -33,8 +33,8 @@
     "placeholderText": "הזן הודעה",
     "textTooLong": "אורך ההודעה שלך חורג מהמגבלה המרבית.",
     "sendButtonAriaLabel": "שלח הודעה",
-    "fileUploadsPendingError": "מעלה... המתן.",
-    "removeFile": "הסרת קובץ",
+    "attachmentUploadsPendingError": "מעלה... המתן.",
+    "removeAttachment": "הסר קובץ",
     "uploading": "מעלה",
     "uploadCompleted": "ההעלאה הושלמה",
     "boldTooltip": "מודגש",
@@ -44,7 +44,18 @@
     "numberListTooltip": "רשימה ממוספרת",
     "increaseIndentTooltip": "הגדל כניסה",
     "decreaseIndentTooltip": "הקטן כניסה",
-    "richTextFormatButtonTooltip": "תבנית"
+    "insertTableTooltip": "הוסף טבלה",
+    "richTextFormatButtonTooltip": "תבנית",
+    "insertRowOrColumnMenu": "הוסף",
+    "insertTableMenuTitle": "הוסף טבלה {column} x‏ {row}",
+    "insertRowAboveMenu": "הוסף מעל",
+    "insertRowBelowMenu": "הוסף מתחת",
+    "insertColumnLeftMenu": "הוסף משמאל",
+    "insertColumnRightMenu": "הוסף מימין",
+    "deleteRowOrColumnMenu": "מחק",
+    "deleteColumnMenu": "מחק עמודה",
+    "deleteRowMenu": "מחק שורה",
+    "deleteTableMenu": "מחק טבלה"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "הצעות"
@@ -66,7 +77,9 @@
   },
   "endCallButton": {
     "label": "עזוב",
-    "tooltipContent": "עזוב את השיחה"
+    "tooltipContent": "עזוב את השיחה",
+    "leaveOption": "צא",
+    "endCallOption": "סיים שיחה"
   },
   "cameraButton": {
     "onLabel": "מצלמה",
@@ -179,10 +192,11 @@
     "editBoxSubmitButton": "בוצע",
     "messageReadCount": "נקרא על-ידי {messageReadByCount} מתוך {remoteParticipantsCount}",
     "actionMenuMoreOptions": "אפשרויות נוספות",
-    "downloadFile": "הורד קובץ",
+    "downloadAttachment": "הורד קובץ",
+    "openAttachment": "פתח קובץ",
     "blockedWarningText": "הודעה זו נמחקה עקב מדיניות ארגונית.",
     "blockedWarningLinkText": "פרטים",
-    "fileCardGroupMessage": "ההודעה כוללת קובץ מצורף {fileCount}",
+    "attachmentCardGroupMessage": "ההודעה כוללת {attachmentCount} קבצים מצורפים.",
     "messageDeletedAnnouncementAriaLabel": "ההודעה נמחקת"
   },
   "errorBar": {

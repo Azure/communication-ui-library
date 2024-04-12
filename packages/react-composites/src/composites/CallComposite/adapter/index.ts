@@ -25,9 +25,9 @@ export type {
   CallAdapterLocator,
   AzureCommunicationOutboundCallAdapterArgs
 } from './AzureCommunicationCallAdapter';
-/* @conditional-compile-remove(video-background-effects) */
+
 export type { AzureCommunicationCallAdapterOptions } from './AzureCommunicationCallAdapter';
-/* @conditional-compile-remove(video-background-effects) */
+
 export type { CommonCallAdapterOptions } from './AzureCommunicationCallAdapter';
 
 /* @conditional-compile-remove(teams-adhoc-call) */
@@ -68,10 +68,8 @@ export type {
   IsSpokenLanguageChangedListener
 } from './CallAdapter';
 
-/* @conditional-compile-remove(call-transfer) */
 export type { TransferAcceptedListener } from './CallAdapter';
 
-/* @conditional-compile-remove(capabilities) */
 export type { CapabilitiesChangedListener } from './CallAdapter';
 
 /* @conditional-compile-remove(spotlight) */

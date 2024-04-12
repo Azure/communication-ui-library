@@ -215,6 +215,26 @@ describe('declarative call agent', () => {
     expect(Object.keys(context.getState().calls).length).toBe(1);
   });
 
+  test('should update state with new call when join to meeting is invoked', () => {
+    const mockCallAgent = new MockCallAgent();
+    const context = new CallContext({ kind: 'communicationUser', communicationUserId: '' });
+    const internalContext = new InternalCallContext();
+    expect(Object.keys(context.getState().calls).length).toBe(0);
+    const declarativeCallAgent = callAgentDeclaratify(mockCallAgent, context, internalContext);
+    declarativeCallAgent.join({ meetingId: '123', passcode: 'qwe' });
+    expect(Object.keys(context.getState().calls).length).toBe(1);
+  });
+
+  test('should update state with new call when join to meeting and without passcode is invoked', () => {
+    const mockCallAgent = new MockCallAgent();
+    const context = new CallContext({ kind: 'communicationUser', communicationUserId: '' });
+    const internalContext = new InternalCallContext();
+    expect(Object.keys(context.getState().calls).length).toBe(0);
+    const declarativeCallAgent = callAgentDeclaratify(mockCallAgent, context, internalContext);
+    declarativeCallAgent.join({ meetingId: '123' });
+    expect(Object.keys(context.getState().calls).length).toBe(1);
+  });
+
   test('should move call to callEnded when call is removed and add endTime', async () => {
     const mockCallAgent = new MockCallAgent();
     const context = new CallContext({ kind: 'communicationUser', communicationUserId: '' });

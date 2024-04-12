@@ -5,7 +5,6 @@ export { CallComposite } from './CallComposite';
 export type { CallCompositeOptions, CallCompositeProps, RemoteVideoTileMenuOptions } from './CallComposite';
 /* @conditional-compile-remove(call-readiness) */
 export type { DeviceCheckOptions } from './CallComposite';
-/* @conditional-compile-remove(click-to-call) */
 export type { LocalVideoTileOptions } from './CallComposite';
 export type { CallControlOptions } from './types/CallControlOptions';
 
@@ -33,16 +32,13 @@ export type {
   AzureCommunicationOutboundCallAdapterArgs
 } from './adapter';
 
-/* @conditional-compile-remove(video-background-effects) */
 export type { AzureCommunicationCallAdapterOptions } from './adapter';
 
-/* @conditional-compile-remove(video-background-effects) */
 export type { CommonCallAdapterOptions } from './adapter';
 
 /* @conditional-compile-remove(teams-adhoc-call) */
 export type { CallParticipantsLocator } from './adapter';
 
-/* @conditional-compile-remove(video-background-effects) */
 export type {
   VideoBackgroundImage,
   VideoBackgroundEffect,
@@ -84,18 +80,15 @@ export type {
   IsSpokenLanguageChangedListener
 } from './adapter';
 
-/* @conditional-compile-remove(call-transfer) */
 export type { TransferAcceptedListener } from './adapter';
 
-/* @conditional-compile-remove(capabilities) */
 export type { CapabilitiesChangedListener } from './adapter';
-/* @conditional-compile-remove(capabilities) */
+
 export type { CapabilityChangedNotificationStrings } from './components/CapabilitiesChangedNotificationBar';
 
 /* @conditional-compile-remove(spotlight) */
 export type { SpotlightChangedListener } from './adapter';
 
-/* @conditional-compile-remove(calling-sounds) */
 export type { CallingSounds, SoundEffect } from './adapter';
 
 /* @conditional-compile-remove(spotlight) */

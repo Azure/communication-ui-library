@@ -4,7 +4,7 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { SidePaneRenderer, useIsParticularSidePaneOpen } from './SidePaneProvider';
 import { SidePaneHeader } from '../../../common/SidePaneHeader';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { useLocale } from '../../../localization';
 import { VideoEffectsPaneContent } from '../../../common/VideoEffectsPane';
 import { ActiveErrorMessage } from '@internal/react-components';
@@ -34,16 +34,13 @@ export const useVideoEffectsPane = (
     cameraButtonRef?.current?.focus();
   }, [cameraButtonRef, updateSidePaneRenderer]);
 
-  /* @conditional-compile-remove(video-background-effects) */
   const locale = useLocale();
 
   const onRenderHeader = useCallback(() => {
     return (
       <SidePaneHeader
         onClose={closePane}
-        /* @conditional-compile-remove(video-background-effects) */
         headingText={locale.strings.call.videoEffectsPaneTitle}
-        /* @conditional-compile-remove(video-background-effects) */
         dismissSidePaneButtonAriaLabel={
           locale.strings.call.dismissSidePaneButtonLabel ??
           locale.strings.callWithChat.dismissSidePaneButtonLabel ??
@@ -52,29 +49,23 @@ export const useVideoEffectsPane = (
         mobileView={mobileView}
       />
     );
-  }, [closePane, /* @conditional-compile-remove(video-background-effects) */ locale.strings, mobileView]);
+  }, [closePane, locale.strings, mobileView]);
 
-  /* @conditional-compile-remove(video-background-effects) */
   const latestVideoEffectError = latestErrors.find((error) => error.type === 'unableToStartVideoEffect');
 
   const onRenderContent = useCallback((): JSX.Element => {
     return (
       <VideoEffectsPaneContent
         onDismissError={onDismissError}
-        /* @conditional-compile-remove(video-background-effects) */
         activeVideoEffectError={latestVideoEffectError}
         activeVideoEffectChange={() => {
           // Clear any existing video effects error when the user clicks on a new video effect
-          /* @conditional-compile-remove(video-background-effects) */
+
           latestVideoEffectError && onDismissError?.(latestVideoEffectError);
         }}
       />
     );
-  }, [
-    /* @conditional-compile-remove(video-background-effects) */
-    latestVideoEffectError,
-    onDismissError
-  ]);
+  }, [latestVideoEffectError, onDismissError]);
 
   const sidePaneRenderer: SidePaneRenderer = useMemo(
     () => ({

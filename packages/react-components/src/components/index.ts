@@ -14,9 +14,7 @@ export { SendBox } from './SendBox';
 /* @conditional-compile-remove(mention) */
 export { _MentionPopover } from './MentionPopover';
 
-/* @conditional-compile-remove(image-overlay) */
 export { ImageOverlay } from './ImageOverlay';
-/* @conditional-compile-remove(image-overlay) */
 export type { ImageOverlayStrings } from './ImageOverlay';
 export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox';
 
@@ -24,10 +22,10 @@ export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox
 export { RichTextSendBox } from './RichTextEditor/RichTextSendBox';
 // TODO: This component is exported only for testing purposes. Remove this when this component is added to composites
 /* @conditional-compile-remove(rich-text-editor) */
-export { ChatMessageComponentAsRichTextEditBox } from './ChatMessage/ChatMessageComponentAsRichTextEditBox';
+export { ChatMessageComponentAsRichTextEditBox } from './ChatMessage/MyMessageComponents/ChatMessageComponentAsRichTextEditBox';
 // TODO: This component is exported only for testing purposes. Remove this when this component is added to composites
 /* @conditional-compile-remove(rich-text-editor) */
-export type { ChatMessageComponentAsRichTextEditBoxProps } from './ChatMessage/ChatMessageComponentAsRichTextEditBox';
+export type { ChatMessageComponentAsRichTextEditBoxProps } from './ChatMessage/MyMessageComponents/ChatMessageComponentAsRichTextEditBox';
 /* @conditional-compile-remove(rich-text-editor) */
 export type { RichTextSendBoxProps, RichTextSendBoxStrings } from './RichTextEditor/RichTextSendBox';
 
@@ -41,14 +39,9 @@ export type {
   MentionPopoverStrings
 } from './MentionPopover';
 
-/* @conditional-compile-remove(image-overlay) */
 export type { ImageOverlayProps } from './ImageOverlay';
 
-/* @conditional-compile-remove(image-overlay) */
 export type { InlineImageOptions, InlineImage } from './ChatMessage/ChatMessageContent';
-
-/* @conditional-compile-remove(file-sharing) */
-export type { ActiveFileUpload } from './FileUploadCards';
 
 export { MessageStatusIndicator } from './MessageStatusIndicator';
 export type { MessageStatusIndicatorProps, MessageStatusIndicatorStrings } from './MessageStatusIndicator';
@@ -95,9 +88,7 @@ export type {
   VideoTileContextualMenuProps,
   VideoTileDrawerMenuProps
 } from './VideoGallery';
-/* @conditional-compile-remove(vertical-gallery) */
 export type { OverflowGalleryPosition } from './VideoGallery';
-/* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
 export type { LocalVideoTileSize } from './VideoGallery';
 export type { HorizontalGalleryStyles } from './HorizontalGallery';
 
@@ -186,9 +177,8 @@ export type {
 export { ScreenShareButton } from './ScreenShareButton';
 export type { ScreenShareButtonProps, ScreenShareButtonStrings } from './ScreenShareButton';
 
-/* @conditional-compile-remove(raise-hand) */
 export { RaiseHandButton } from './RaiseHandButton';
-/* @conditional-compile-remove(raise-hand) */
+
 export type { RaiseHandButtonProps, RaiseHandButtonStrings } from './RaiseHandButton';
 /* @conditional-compile-remove(reaction) */
 export { ReactionButton } from './ReactionButton';
@@ -210,13 +200,25 @@ export type {
 } from './PictureInPictureInPicture/PictureInPictureInPictureTile';
 
 export * from './Drawer';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-upload) */
 export type { SendBoxErrorBarError } from './SendBoxErrorBar';
-export * from './FileCard';
-export * from './FileCardGroup';
+export * from './AttachmentCard';
+export * from './AttachmentCardGroup';
 export * from './ModalClone/ModalClone';
-export * from './FileDownloadCards';
-export type { _FileUploadCardsStrings } from './FileUploadCards';
+export * from './AttachmentDownloadCards';
+export type { _AttachmentUploadCardsStrings } from './AttachmentUploadCards';
+
+export type {
+  AttachmentOptions,
+  AttachmentUploadOptions,
+  AttachmentMetadata,
+  AttachmentUploadStatus,
+  AttachmentUploadHandler,
+  AttachmentUploadManager
+} from '../types/Attachment';
+
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+export type { AttachmentMenuAction, AttachmentDownloadOptions } from '../types/Attachment';
 
 export { _useContainerHeight, _useContainerWidth } from './utils/responsive';
 

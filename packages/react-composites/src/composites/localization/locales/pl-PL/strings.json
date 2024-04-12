@@ -61,11 +61,11 @@
     "removedFromCallMoreDetails": "Inny uczestnik usunął Cię z rozmowy.",
     "removedFromCallTitle": "Usunięto Cię",
     "removeMenuLabel": "Usuń",
-    "startSpotlightParticipantListMenuLabel": "Wyróżnij dla wszystkich",
-    "addSpotlightParticipantListMenuLabel": "Dodaj wyróżnienie",
-    "stopSpotlightParticipantListMenuLabel": "Zatrzymaj wyróżnianie",
-    "stopSpotlightOnSelfParticipantListMenuLabel": "Zakończ wyróżnienie",
-    "spotlightLimitReachedParticipantListMenuTitle": "Osiągnięto limit wyróżnienia",
+    "startSpotlightMenuLabel": "Wyróżnij dla wszystkich",
+    "addSpotlightMenuLabel": "Dodaj wyróżnienie",
+    "stopSpotlightMenuLabel": "Zatrzymaj wyróżnianie",
+    "stopSpotlightOnSelfMenuLabel": "Zakończ wyróżnienie",
+    "spotlightLimitReachedMenuTitle": "Osiągnięto limit wyróżnienia",
     "stopAllSpotlightMenuLabel": "Zatrzymaj wszystkie wyróżnienia",
     "returnToCallButtonAriaDescription": "Wróć do rozmowy",
     "returnToCallButtonAriaLabel": "Wstecz",
@@ -315,18 +315,27 @@
       "startSpotlightCancelButtonLabel": "Anuluj",
       "stopSpotlightHeading": "Zatrzymać wyróżnianie tego klipu wideo?",
       "stopSpotlightOnSelfHeading": "Zakończyć wyróżnianie?",
+      "stopAllSpotlightHeading": "Zatrzymać wyróżnianie wszystkich klipów wideo?",
       "stopSpotlightText": "Klip wideo nie będzie już wyróżniany dla wszystkich osób na spotkaniu.",
       "stopSpotlightOnSelfText": "Twój klip wideo nie będzie już wyróżniany dla wszystkich osób na spotkaniu.",
+      "stopAllSpotlightText": "Klipy wideo nie będą już wyróżniane dla wszystkich osób na spotkaniu.",
       "stopSpotlightConfirmButtonLabel": "Zatrzymaj wyróżnianie",
       "stopSpotlightOnSelfConfirmButtonLabel": "Zakończ wyróżnienie",
       "stopSpotlightCancelButtonLabel": "Anuluj"
     },
     "exitSpotlightButtonLabel": "Wyjdź z ważnych informacji",
-    "exitSpotlightButtonTooltip": "Wyjdź z ważnych informacji"
+    "exitSpotlightButtonTooltip": "Wyjdź z ważnych informacji",
+    "hangUpConfirmButtonLabel": "Potwierdź",
+    "hangUpCancelButtonLabel": "Anuluj",
+    "leaveConfirmDialogTitle": "Opuścić połączenie?",
+    "leaveConfirmDialogContent": "Czy na pewno chcesz opuścić rozmowę?",
+    "endCallConfirmDialogTitle": "Zakończyć połączenie?",
+    "endCallConfirmDialogContent": "Zakończysz połączenie dla wszystkich.",
+    "invalidMeetingIdentifier": "Nieprawidłowy identyfikator spotkania lub kod dostępu"
   },
   "chat": {
     "chatListHeader": "W tym czacie",
-    "uploadFile": "Przekazywanie pliku"
+    "uploadAttachment": "Przekaż załącznik"
   },
   "callWithChat": {
     "chatButtonLabel": "Czat",

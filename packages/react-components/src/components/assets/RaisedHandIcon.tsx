@@ -1,10 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(raise-hand) */
 import React from 'react';
 
-/* @conditional-compile-remove(raise-hand) */
 /**
  * Raised hand icon for ParticipantList and VideoTitle.
  *

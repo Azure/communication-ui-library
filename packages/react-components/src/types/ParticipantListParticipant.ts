@@ -17,7 +17,6 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
   isMuted?: boolean;
   /** Whether calling participant is speaking */
   isSpeaking?: boolean;
-  /* @conditional-compile-remove(raise-hand) */
   /** Whether calling participant is raised hand */
   raisedHand?: RaisedHand;
   /* @conditional-compile-remove(reaction) */
@@ -36,7 +35,7 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
 /**
  * Spotlight state with order
  *
- * @beta
+ * @public
  */
 export type Spotlight = {
   /**
@@ -45,7 +44,6 @@ export type Spotlight = {
   spotlightedOrderPosition?: number;
 };
 
-/* @conditional-compile-remove(raise-hand) */
 /**
  * Raised hand state with order
  *
@@ -59,7 +57,7 @@ export type RaisedHand = {
 /**
  * Reaction state with reaction type to render
  *
- * @beta
+ * @public
  */
 export type Reaction = {
   /**

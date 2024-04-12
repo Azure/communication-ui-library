@@ -54,5 +54,5 @@ export const FluentV9ThemeProvider = (props: FluentV9ThemeProviderProps): JSX.El
 const FluentProviderWithStylesOverrides: React.FC<FluentProviderProps> = (props) => {
   const classes = useFluentV9Wrapper();
 
-  return <FluentProvider {...props} className={classes.body} />;
+  return <FluentProvider {...props} className={classes.body} applyStylesToPortals={false} />;
 };

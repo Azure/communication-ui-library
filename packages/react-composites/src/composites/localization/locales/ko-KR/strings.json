@@ -61,11 +61,11 @@
     "removedFromCallMoreDetails": "다른 참가자가 귀하를 통화에서 제거했습니다.",
     "removedFromCallTitle": "통화에서 제거됐습니다.",
     "removeMenuLabel": "제거",
-    "startSpotlightParticipantListMenuLabel": "모두를 위한 스포트라이트",
-    "addSpotlightParticipantListMenuLabel": "스포트라이트 추가",
-    "stopSpotlightParticipantListMenuLabel": "스포트라이트 중지",
-    "stopSpotlightOnSelfParticipantListMenuLabel": "스포트라이트 종료",
-    "spotlightLimitReachedParticipantListMenuTitle": "스포트라이트 한도 도달",
+    "startSpotlightMenuLabel": "모두를 위한 스포트라이트",
+    "addSpotlightMenuLabel": "스포트라이트 추가",
+    "stopSpotlightMenuLabel": "스포트라이트 중지",
+    "stopSpotlightOnSelfMenuLabel": "스포트라이트 종료",
+    "spotlightLimitReachedMenuTitle": "스포트라이트 한도 도달",
     "stopAllSpotlightMenuLabel": "모든 스포트라이트 중지",
     "returnToCallButtonAriaDescription": "통화로 돌아가기",
     "returnToCallButtonAriaLabel": "뒤로",
@@ -315,18 +315,27 @@
       "startSpotlightCancelButtonLabel": "취소",
       "stopSpotlightHeading": "이 비디오 스포트라이트를 중지할까요?",
       "stopSpotlightOnSelfHeading": "스포트라이트를 종료하시겠습니까?",
+      "stopAllSpotlightHeading": "모든 비디오 스포트라이트를 중지할까요?",
       "stopSpotlightText": "모임에 참석한 모든 사용자에게 이 비디오가 더 이상 강조되지 않습니다.",
       "stopSpotlightOnSelfText": "모임에 참석한 모든 사용자에 대해 비디오가 더 이상 강조되지 않습니다.",
+      "stopAllSpotlightText": "해당 비디오는 모임에 참석한 모든 사용자에 대해 더 이상 강조되지 않습니다.",
       "stopSpotlightConfirmButtonLabel": "스포트라이트 중지",
       "stopSpotlightOnSelfConfirmButtonLabel": "스포트라이트 종료",
       "stopSpotlightCancelButtonLabel": "취소"
     },
     "exitSpotlightButtonLabel": "스포트라이트 종료",
-    "exitSpotlightButtonTooltip": "스포트라이트 종료"
+    "exitSpotlightButtonTooltip": "스포트라이트 종료",
+    "hangUpConfirmButtonLabel": "확인",
+    "hangUpCancelButtonLabel": "취소",
+    "leaveConfirmDialogTitle": "통화에서 나가시겠습니까?",
+    "leaveConfirmDialogContent": "통화에서 나가시겠습니까?",
+    "endCallConfirmDialogTitle": "통화를 종료하시겠습니까?",
+    "endCallConfirmDialogContent": "모든 사용자의 통화가 종료됩니다.",
+    "invalidMeetingIdentifier": "유효하지 않은 모임 ID 또는 암호"
   },
   "chat": {
     "chatListHeader": "채팅 참가자",
-    "uploadFile": "파일 업로드"
+    "uploadAttachment": "첨부 파일 업로드"
   },
   "callWithChat": {
     "chatButtonLabel": "채팅",

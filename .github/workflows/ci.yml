@@ -1,5 +1,3 @@
-name: CI
-
 on:
   # Postsubmit CI on main.
   push:
@@ -49,7 +47,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 2 # this job requires depth of 2 for access to diff the SHA for change file check
       # Ensure node version is great enough
       - name: Use Node.js
         uses: actions/setup-node@v4
@@ -63,7 +61,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       # Install dependencies
       - name: Install rush
-        run: npm install -g @microsoft/rush
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       # Force build flavor if necessary
       - name: Force build flavor
         if: ${{ matrix.flavor != 'beta' }}
@@ -72,8 +70,10 @@ jobs:
         run: rush switch-flavor:${{ matrix.flavor }}
       - name: Check the necessary change file has been submitted
         if: ${{ github.event_name == 'pull_request' }}
-        # GitHub provides remote branch names as refs.
-        run: node common/scripts/changelog/check.mjs origin/${{ github.base_ref }} origin/${{ github.head_ref }}
+        run: |
+          git fetch origin main:main --depth=2
+          node common/scripts/changelog/check.mjs ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }}
+
       # Perform lint check
       - name: Run linter
         run: rush lint
@@ -128,7 +128,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       # Ensure node version is great enough
       - name: Use Node.js
         uses: actions/setup-node@v4
@@ -142,7 +142,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       # Install dependencies
       - name: Install rush
-        run: npm install -g @microsoft/rush
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Force build flavor
         if: ${{ matrix.flavor != 'beta' }}
         run: node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
@@ -219,13 +219,16 @@ jobs:
           file_path: temp/jest/current/merge/summary/coverage-summary.json
 
   in-progress-feature-validation:
+    needs: get_matrix
     name: Check if in progress feature can be removed separately
+    strategy:
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     runs-on: ubuntu-latest
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       # Ensure node version is great enough
       - name: Use Node.js
         uses: actions/setup-node@v4
@@ -239,16 +242,21 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       # Install dependencies
       - name: Install rush
-        run: npm install -g @microsoft/rush
+        if: ${{ matrix.flavor == 'beta-release'}}
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Force build flavor
+        if: ${{ matrix.flavor == 'beta-release'}}
         run: node ./common/scripts/force-build-flavor.mjs beta-release
       - name: Install beta-release dependencies
+        if: ${{ matrix.flavor == 'beta-release'}}
         run: rush switch-flavor:beta-release
       # Perform lint check
       - name: Run linter
+        if: ${{ matrix.flavor == 'beta-release'}}
         run: rush lint
       # Builds
       - name: Build Packages
+        if: ${{ matrix.flavor == 'beta-release'}}
         run: rush build -t @azure/communication-react
       # # Type check test folder
       # # - must be run after building all packlets because it depends on compiled packlet dependencies
@@ -258,9 +266,11 @@ jobs:
       #   run: cd packages/react-composites && rushx tsc:e2e
       # Tests
       - name: Test Packages
+        if: ${{ matrix.flavor == 'beta-release'}}
         run: rush test -t @azure/communication-react
       # Upload azure-communication api.md files for easy access
       - name: Upload communication-react api files
+        if: ${{ matrix.flavor == 'beta-release'}}
         uses: actions/upload-artifact@v3
         with:
           name: communication-react.beta-release.api.json
@@ -278,7 +288,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -289,7 +299,7 @@ jobs:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Force build flavor
         if: ${{ matrix.flavor != 'beta' }}
         run: node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
@@ -352,7 +362,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -363,7 +373,7 @@ jobs:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Force build flavor
         if: ${{ matrix.flavor != 'beta' }}
         run: node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
@@ -426,7 +436,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -437,9 +447,7 @@ jobs:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush
-      - name: Install rush
-        run: npm install -g @microsoft/rush
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Force build flavor
         if: ${{ matrix.flavor != 'beta' }}
         run: node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
@@ -499,7 +507,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -510,7 +518,7 @@ jobs:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Force build flavor
         if: ${{ matrix.flavor != 'beta' }}
         run: node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
@@ -536,8 +544,8 @@ jobs:
         if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
         uses: actions/upload-artifact@v3
         with:
-          name: snapshots
-          path: packages/react-components/tests/
+          name: Components-snapshots
+          path: packages/react-components/tests/temp
       - name: Comment on PR
         if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
         uses: actions/github-script@v3
@@ -552,12 +560,15 @@ jobs:
             })
 
   build_storybook:
+    needs: get_matrix
     name: Build Storybook
+    strategy:
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -568,12 +579,15 @@ jobs:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Install dependencies
+        if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release'}}
         run: rush install --max-install-attempts 3
       - name: Build
+        if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
         run: rush build -o storybook
       - name: Tests
+        if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
         run: rushx test
         working-directory: packages/storybook
 
@@ -586,7 +600,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -597,7 +611,7 @@ jobs:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Force build flavor
         if: ${{ matrix.flavor != 'beta' }}
         run: node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
@@ -606,7 +620,7 @@ jobs:
       - name: Build dependencies
         run: rush build -t @azure/communication-react
       - name: Build
-        run: rush build -o calling
+        run: rush build:minify -o calling
       - name: Tests
         run: rush test -o calling
       # upload bundle stats.json which will be consumed later
@@ -625,7 +639,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -636,7 +650,7 @@ jobs:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Force build flavor
         if: ${{ matrix.flavor != 'beta' }}
         run: node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
@@ -645,7 +659,7 @@ jobs:
       - name: Build dependencies
         run: rush build -t @azure/communication-react
       - name: Build
-        run: rush build -o chat
+        run: rush build:minify -o chat
       - name: Tests
         run: rush test -o chat
       # upload bundle stats.json which will be consumed later
@@ -664,7 +678,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -675,7 +689,7 @@ jobs:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Force build flavor
         if: ${{ matrix.flavor != 'beta' }}
         run: node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
@@ -684,7 +698,7 @@ jobs:
       - name: Build dependencies
         run: rush build -t @azure/communication-react
       - name: Build
-        run: rush build -o callwithchat
+        run: rush build:minify -o callwithchat
       - name: Tests
         run: rush test -o callwithchat
       # upload bundle stats.json which will be consumed later
@@ -705,13 +719,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
       - name: Install rush
-        run: npm install -g @microsoft/rush
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Force build flavor
         if: ${{ matrix.flavor != 'beta' }}
         run: node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
@@ -762,13 +776,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
       - name: Install rush
-        run: npm install -g @microsoft/rush
+        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Force build flavor
         if: ${{ matrix.flavor != 'beta' }}
         run: node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}

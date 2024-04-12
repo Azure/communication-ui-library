@@ -24,8 +24,8 @@
     "placeholderText": "Escribir un mensaje",
     "textTooLong": "La longitud del mensaje supera el límite máximo.",
     "sendButtonAriaLabel": "Enviar mensaje",
-    "fileUploadsPendingError": "Cargando... Espere.",
-    "removeFile": "Quitar archivo",
+    "attachmentUploadsPendingError": "Cargando... Espere.",
+    "removeAttachment": "Quitar archivo",
     "uploading": "Cargando",
     "uploadCompleted": "Carga completada"
   },
@@ -33,8 +33,8 @@
     "placeholderText": "Escribir un mensaje",
     "textTooLong": "La longitud del mensaje supera el límite máximo.",
     "sendButtonAriaLabel": "Enviar mensaje",
-    "fileUploadsPendingError": "Cargando... Espere.",
-    "removeFile": "Quitar archivo",
+    "attachmentUploadsPendingError": "Cargando... Espere.",
+    "removeAttachment": "Quitar archivo",
     "uploading": "Cargando",
     "uploadCompleted": "Carga completada",
     "boldTooltip": "Negrita",
@@ -44,7 +44,18 @@
     "numberListTooltip": "Lista numerada",
     "increaseIndentTooltip": "Aumentar sangría",
     "decreaseIndentTooltip": "Reducir sangría",
-    "richTextFormatButtonTooltip": "Formato"
+    "insertTableTooltip": "Insertar tabla",
+    "richTextFormatButtonTooltip": "Formato",
+    "insertRowOrColumnMenu": "Insertar",
+    "insertTableMenuTitle": "Insertar {column} x {row} tabla",
+    "insertRowAboveMenu": "Insertar arriba",
+    "insertRowBelowMenu": "Insertar debajo",
+    "insertColumnLeftMenu": "Insertar a la izquierda",
+    "insertColumnRightMenu": "Insertar a la derecha",
+    "deleteRowOrColumnMenu": "Eliminar",
+    "deleteColumnMenu": "Eliminar columna",
+    "deleteRowMenu": "Eliminar fila",
+    "deleteTableMenu": "Eliminar tabla"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Sugerencias"
@@ -66,7 +77,9 @@
   },
   "endCallButton": {
     "label": "Baja",
-    "tooltipContent": "Abandonar llamada"
+    "tooltipContent": "Abandonar llamada",
+    "leaveOption": "Salir",
+    "endCallOption": "Finalizar llamada"
   },
   "cameraButton": {
     "onLabel": "Cámara",
@@ -179,10 +192,11 @@
     "editBoxSubmitButton": "Listo",
     "messageReadCount": "Leído por {messageReadByCount} de {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Más opciones",
-    "downloadFile": "Descargar archivo",
+    "downloadAttachment": "Descargar archivo",
+    "openAttachment": "Abrir archivo",
     "blockedWarningText": "Este mensaje se eliminó debido a la directiva de la organización.",
     "blockedWarningLinkText": "Detalles",
-    "fileCardGroupMessage": "El mensaje tiene {fileCount} datos adjuntos",
+    "attachmentCardGroupMessage": "El mensaje tiene {attachmentCount} archivo adjunto",
     "messageDeletedAnnouncementAriaLabel": "El mensaje se ha eliminado"
   },
   "errorBar": {

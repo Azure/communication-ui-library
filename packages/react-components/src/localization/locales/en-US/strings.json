@@ -24,17 +24,18 @@
     "placeholderText": "Enter a message",
     "textTooLong": "Your message length is over the maximum limit.",
     "sendButtonAriaLabel": "Send message",
-    "fileUploadsPendingError": "Uploading... Please wait.",
-    "removeFile": "Remove file",
+    "attachmentUploadsPendingError": "Uploading... Please wait.",
+    "removeAttachment": "Remove file",
     "uploading": "Uploading",
-    "uploadCompleted": "Upload completed"
+    "uploadCompleted": "Upload completed",
+    "attachmentMoreMenu": "More Options"
   },
   "richTextSendBox": {
     "placeholderText": "Enter a message",
     "textTooLong": "Your message length is over the maximum limit.",
     "sendButtonAriaLabel": "Send message",
-    "fileUploadsPendingError": "Uploading... Please wait.",
-    "removeFile": "Remove file",
+    "attachmentUploadsPendingError": "Uploading... Please wait.",
+    "removeAttachment": "Remove file",
     "uploading": "Uploading",
     "uploadCompleted": "Upload completed",
     "boldTooltip": "Bold",
@@ -44,7 +45,19 @@
     "numberListTooltip": "Numbered list",
     "increaseIndentTooltip": "Increase indent",
     "decreaseIndentTooltip": "Decrease indent",
-    "richTextFormatButtonTooltip": "Format"
+    "insertTableTooltip": "Insert table",
+    "richTextFormatButtonTooltip": "Format",
+    "insertRowOrColumnMenu": "Insert",
+    "insertTableMenuTitle": "Insert {column} x {row} table",
+    "insertRowAboveMenu": "Insert above",
+    "insertRowBelowMenu": "Insert below",
+    "insertColumnLeftMenu": "Insert left",
+    "insertColumnRightMenu": "Insert right",
+    "deleteRowOrColumnMenu": "Delete",
+    "deleteColumnMenu": "Delete column",
+    "deleteRowMenu": "Delete row",
+    "deleteTableMenu": "Delete table",
+    "attachmentMoreMenu": "More Options"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggestions"
@@ -66,7 +79,9 @@
   },
   "endCallButton": {
     "label": "Leave",
-    "tooltipContent": "Leave call"
+    "tooltipContent": "Leave call",
+    "leaveOption": "Leave",
+    "endCallOption": "End call for everyone"
   },
   "cameraButton": {
     "onLabel": "Camera",
@@ -179,10 +194,11 @@
     "editBoxSubmitButton": "Done",
     "messageReadCount": "Read by {messageReadByCount} of {remoteParticipantsCount}",
     "actionMenuMoreOptions": "More Options",
-    "downloadFile": "Download file",
+    "downloadAttachment": "Download file",
+    "openAttachment": "Open file",
     "blockedWarningText": "This message was deleted due to organizational policy.",
     "blockedWarningLinkText": "Details",
-    "fileCardGroupMessage": "The message has {fileCount} attachment",
+    "attachmentCardGroupMessage": "The message has {attachmentCount} attachment",
     "messageDeletedAnnouncementAriaLabel": "The message is deleted"
   },
   "errorBar": {

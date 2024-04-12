@@ -61,11 +61,11 @@
     "removedFromCallMoreDetails": "Un altro partecipante ti ha rimosso dalla chiamata.",
     "removedFromCallTitle": "Sei stato rimosso",
     "removeMenuLabel": "Rimuovi",
-    "startSpotlightParticipantListMenuLabel": "Metti in evidenza per tutti",
-    "addSpotlightParticipantListMenuLabel": "Metti in evidenza",
-    "stopSpotlightParticipantListMenuLabel": "Interrompi la posizione in evidenza",
-    "stopSpotlightOnSelfParticipantListMenuLabel": "Chiudi visualizzazione in evidenza",
-    "spotlightLimitReachedParticipantListMenuTitle": "È stato raggiunto il limite di contenuti in evidenza",
+    "startSpotlightMenuLabel": "Metti in evidenza per tutti",
+    "addSpotlightMenuLabel": "Metti in evidenza",
+    "stopSpotlightMenuLabel": "Interrompi la posizione in evidenza",
+    "stopSpotlightOnSelfMenuLabel": "Chiudi visualizzazione in evidenza",
+    "spotlightLimitReachedMenuTitle": "È stato raggiunto il limite di contenuti in evidenza",
     "stopAllSpotlightMenuLabel": "Smetti di mostrare in evidenza",
     "returnToCallButtonAriaDescription": "Torna alla chiamata",
     "returnToCallButtonAriaLabel": "Indietro",
@@ -315,18 +315,27 @@
       "startSpotlightCancelButtonLabel": "Annulla",
       "stopSpotlightHeading": "Smettere di mostrare in evidenza questo video?",
       "stopSpotlightOnSelfHeading": "Uscire dalla messa in evidenza?",
+      "stopAllSpotlightHeading": "Vuoi smettere di mostrare in evidenza tutti i video?",
       "stopSpotlightText": "Questo video non sarà più in evidenza per tutti i partecipanti alla riunione.",
       "stopSpotlightOnSelfText": "Il tuo video non sarà più in evidenza per tutti i partecipanti alla riunione.",
+      "stopAllSpotlightText": "I video non saranno più in evidenza per tutti i partecipanti della riunione.",
       "stopSpotlightConfirmButtonLabel": "Smetti di mettere in evidenza",
       "stopSpotlightOnSelfConfirmButtonLabel": "Esci da visualizzazione in evidenza",
       "stopSpotlightCancelButtonLabel": "Annulla"
     },
     "exitSpotlightButtonLabel": "Esci da visualizzazione in evidenza",
-    "exitSpotlightButtonTooltip": "Esci da visualizzazione in evidenza"
+    "exitSpotlightButtonTooltip": "Esci da visualizzazione in evidenza",
+    "hangUpConfirmButtonLabel": "Conferma",
+    "hangUpCancelButtonLabel": "Annulla",
+    "leaveConfirmDialogTitle": "Vuoi abbandonare la chiamata?",
+    "leaveConfirmDialogContent": "Vuoi abbandonare la chiamata?",
+    "endCallConfirmDialogTitle": "Vuoi terminare la chiamata?",
+    "endCallConfirmDialogContent": "La chiamata terminerà per tutti gli utenti.",
+    "invalidMeetingIdentifier": "ID riunione o passcode non valido"
   },
   "chat": {
     "chatListHeader": "In questa chat",
-    "uploadFile": "Carica file"
+    "uploadAttachment": "Carica allegato"
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",

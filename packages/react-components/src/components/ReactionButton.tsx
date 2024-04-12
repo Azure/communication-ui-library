@@ -15,7 +15,7 @@ import {
   useTheme
 } from '@fluentui/react';
 /* @conditional-compile-remove(reaction) */
-import React, { useState } from 'react';
+import React from 'react';
 /* @conditional-compile-remove(reaction) */
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
 /* @conditional-compile-remove(reaction) */
@@ -28,12 +28,14 @@ import { emojiStyles, reactionEmojiMenuStyles, reactionToolTipHostStyle } from '
 import { isDarkThemed } from '../theming/themeUtils';
 /* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '..';
+/* @conditional-compile-remove(reaction) */
+import { getEmojiFrameCount } from './VideoGallery/utils/videoGalleryLayoutUtils';
 
 /* @conditional-compile-remove(reaction) */
 /**
  * Props for {@link ReactionButton}.
  *
- * @beta
+ * @public
  */
 export interface ReactionButtonProps extends ControlBarButtonProps {
   /**
@@ -54,7 +56,7 @@ export interface ReactionButtonProps extends ControlBarButtonProps {
 /**
  * Strings of {@link ReactionButton} that can be overridden.
  *
- * @beta
+ * @public
  */
 export interface ReactionButtonStrings {
   /** Label of the button. */
@@ -69,10 +71,10 @@ export interface ReactionButtonStrings {
   likeReactionTooltipContent?: string;
   /** Tooltip content of heart reaction button. */
   heartReactionTooltipContent?: string;
-  /** Tooltip content of laugh reaction button. */
-  laughReactionTooltipContent?: string;
   /** Tooltip content of clap reaction button. */
   applauseReactionTooltipContent?: string;
+  /** Tooltip content of laugh reaction button. */
+  laughReactionTooltipContent?: string;
   /** Tooltip content of surprised reaction button. */
   surprisedReactionTooltipContent?: string;
 }
@@ -83,7 +85,7 @@ export interface ReactionButtonStrings {
  *
  * Can be used with {@link ControlBar}.
  *
- * @beta
+ * @public
  */
 export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
   const localeStrings = useLocale().strings.reactionButton;
@@ -94,20 +96,19 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
     <_HighContrastAwareIcon disabled={props.disabled} iconName="ReactionButtonIcon" />
   );
 
-  const [isHoveredMap, setIsHoveredMap] = useState(new Map());
-  const emojis = ['like', 'heart', 'laugh', 'applause', 'surprised'];
+  const emojis = ['like', 'heart', 'applause', 'laugh', 'surprised'];
   const emojiButtonTooltip: Map<string, string | undefined> = new Map([
     ['like', strings.likeReactionTooltipContent],
     ['heart', strings.heartReactionTooltipContent],
-    ['laugh', strings.laughReactionTooltipContent],
     ['applause', strings.applauseReactionTooltipContent],
+    ['laugh', strings.laughReactionTooltipContent],
     ['surprised', strings.surprisedReactionTooltipContent]
   ]);
   const emojiResource: Map<string, string | undefined> = new Map([
     ['like', props.reactionResources.likeReaction?.url],
     ['heart', props.reactionResources.heartReaction?.url],
-    ['laugh', props.reactionResources.laughReaction?.url],
     ['applause', props.reactionResources.applauseReaction?.url],
+    ['laugh', props.reactionResources.laughReaction?.url],
     ['surprised', props.reactionResources.surprisedReaction?.url]
   ]);
 
@@ -119,10 +120,15 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
     backgroundColor: isDarkThemed(theme) ? theme.palette.neutralLighter : ''
   };
 
+  const classname = mergeStyles(reactionEmojiMenuStyles());
+
   const renderEmoji = (item: IContextualMenuItem, dismissMenu: () => void): React.JSX.Element => (
-    <div style={reactionEmojiMenuStyles()}>
+    <div data-ui-id="reaction-sub-menu" className={classname}>
       {emojis.map((emoji, index) => {
         const resourceUrl = emojiResource.get(emoji);
+        const frameCount: number =
+          props.reactionResources !== undefined ? getEmojiFrameCount(emoji, props.reactionResources) : 0;
+        const classname = mergeStyles(emojiStyles(resourceUrl ? resourceUrl : '', frameCount));
         return (
           <TooltipHost
             key={index}
@@ -136,22 +142,9 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
               key={index}
               onClick={() => {
                 props.onReactionClick(emoji);
-                setIsHoveredMap((prevMap) => {
-                  return new Map(prevMap).set(emoji, false);
-                });
                 dismissMenu();
               }}
-              style={emojiStyles(resourceUrl ? resourceUrl : '', isHoveredMap.get(emoji) ? 'running' : 'paused')}
-              onMouseEnter={() =>
-                setIsHoveredMap((prevMap) => {
-                  return new Map(prevMap).set(emoji, true);
-                })
-              }
-              onMouseLeave={() =>
-                setIsHoveredMap((prevMap) => {
-                  return new Map(prevMap).set(emoji, false);
-                })
-              }
+              className={classname}
             />
           </TooltipHost>
         );

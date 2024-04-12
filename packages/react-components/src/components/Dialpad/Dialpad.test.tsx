@@ -3,7 +3,6 @@
 
 import React from 'react';
 import { Dialpad, DialpadStrings, DtmfTone } from './Dialpad';
-/* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { createTestLocale, renderWithLocalization } from '../utils/testUtils';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { registerIcons } from '@fluentui/react';
@@ -30,13 +29,6 @@ describe('Dialpad tests', () => {
   beforeEach(() => {
     mockSendDTMF.mockClear();
   });
-  /*
-   * Localization depends on public API for `LocalizationProvider` that does not
-   * have the strings for the beta-only `Dialpad` component.
-   * skip this test for stable build.
-   *
-   * @conditional-compile-remove(dialpad)
-   */
   test('Should localize default text ', async () => {
     const dialpadStrings: DialpadStrings = {
       placeholderText: Math.random().toString(),

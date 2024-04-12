@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "area": "improvement",
+  "workstream": "Conditional Compile flag",
+  "comment": "Rename file-sharing cc flag to attachment",
+  "packageName": "@azure/communication-react",
+  "email": "77021369+jimchou-dev@users.noreply.github.com",
+  "dependentChangeType": "none"
+}

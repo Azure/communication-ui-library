@@ -22,7 +22,6 @@ Consider the following scenario:
 
 *Scenario 2*: We discover a bug in version `1.1.1` and determine that the bug is critical enough that we must release a fix. Because `1.1.1` is the latest release, it is possible to release the fix as `1.1.2` via the usual release process off of `main`. But that would necessarily include changes in `main` in the last month. If the fix is needed urgently, it might still make sense to release a hotfix off of the `1.1.1` release including only the required bugfix.
 
-
 ## Overview
 
 Conceptually, there is only a little difference between a normal and hotfix relesae.
@@ -34,6 +33,7 @@ For a hotfix release:
 - Fix the bug in the release branch.
   - *Unlike a normal release* the fix need not be merged and cherry-picked from `main`. `main` may not have the bug at all, or the sources might have evolved a lot so that the bug fix looks very different on `main`.
 - Release off of the hotfix release branch, create a git tag for the new release and delete the release branch.
+- If the hotfix is on top of the latest release, you must update the changelog and package versions in main branch. This does not apply if the hotfix is on top of an older release.
 
 ### Here be dragons
 
@@ -43,42 +43,93 @@ This skew increases with the age of the base ref -- the older the version being 
 
 ## Playbook
 
-As noted above, the challenges in creating a hotfix are unique to each attempt. This section describes the steps that were needed to create the [hotfix release `1.3.1`](https://github.com/Azure/communication-ui-library/blob/7d276116ce0b5aab82b1adc3e24b32709b0db47c/packages/communication-react/CHANGELOG.md). This section can serve as a reference for future hotfixes.
+As noted above, the challenges in creating a hotfix are unique to each attempt. This section can serve as a reference for future hotfixes. There is no GitHub action for creating a hotfix and must be done manually. You will want to reference the steps in our [github action that creates a release branch](../../.github/workflows/create-release-branch.yml) and ensure those steps are performed manually:
 
-### Creating the release branch
+1. Checkout the version you wish to fix
 
-- Like a normal release, I first kicked off the prerelease branch creation, [but off of the tag to hotfix: `1.3.0`](https://github.com/Azure/communication-ui-library/actions/runs/2834847602).
-  ![image](https://user-images.githubusercontent.com/82062616/183989231-85067723-984a-44ca-b51a-0bc369860d24.png)
-- I double checked that there was [trivial diff](https://github.com/Azure/communication-ui-library/compare/1.3.0...prerelease-stable-patch/1.3.1) between the newly created prerelease branch and the base tag `1.3.0`.
-  - `rush changelog` was [a little confused](https://github.com/Azure/communication-ui-library/commit/3f3c98c216720abb8ed27e69de0f428cf85fc778#diff-d23d8aa2ae11085c982faf3dfa010b91f317285f1ff1a3e163aea9ee00e1f6a0) and the generated `CHANGELOG.md` did not fully correspond to the trivial diff in the hotfix.
-- Like a normal release, I [groomed the changelog](https://github.com/Azure/communication-ui-library/pull/2190), fixing the `CHANGELOG.md` and noting that this is a hotfix.
-- I kicked off the release branch creation [off of the prerelease branch](https://github.com/Azure/communication-ui-library/actions/runs/2835034894).
-  - Failure: The workflow can't find some required scripts.
-    ![image](https://user-images.githubusercontent.com/82062616/184000212-7561d93e-0d87-4f32-8d86-714796aa59f2.png)
-  - This is the classic case of evergreen workflow automation missing branch-pinned tooling support.
-  - I [backported required tooling](https://github.com/Azure/communication-ui-library/pull/2192).
-    - I got lucky that the backport in this case was very clean.
-- Retry: I kicked off release branch creation [again](https://github.com/Azure/communication-ui-library/runs/7774172170)
-  - Failure: The workflow can't find some workflow config.
-    ![image](https://user-images.githubusercontent.com/82062616/184002131-5936eba2-16dd-4fb6-aa5d-a482e24c799b.png)
-  - I [backported the config](https://github.com/Azure/communication-ui-library/pull/2193) as well.
-- Retry: I kicked off release branch creation [again](https://github.com/Azure/communication-ui-library/runs/7774287156)
-  - 3rd time is lucky! It succeeded.
+    ```bash
+    git checkout <version-tag> # Ex: git checkout v1.2.3
+    ```
 
+1. Create a release branch from this
 
-### Fixing the bug
+    ```bash
+    git checkout -b release/<new-version>
+    # The new version will be a patch on top of the version you checked out
+    # Ex: 1.2.3 becomes 1.2.4 or 1.2.3-beta.1 becomes 1.2.4-beta.1
+    ```
 
-The [bugfix pull request](https://github.com/Azure/communication-ui-library/pull/2207) into the release branch was very targeted. It deployed a point solution to the observed bug. A larger, more complete fix will be merged in `main` later and released via the usual release process.
+1. Setup the release branch
 
-In this case, the bugfix pull request was a cherry-pick of a [pull request from `main`](https://github.com/Azure/communication-ui-library/pull/2191) because the base ref was the most recent release on NPM and skew from `main` was small.
+   1. Create a branch so the following work can be put up as a PR into the release branch so it is reviewed by members of the team
 
-### Releasing the package
+      ```bash
+      git checkout -b <alias>/1.2.4-branch-setup
+      ```
 
-- The release branch created above was identical in all respects to a usual release branch. Thus, [the NPM release workflow](./creating-a-release.md#step-3-publish-to-npm) worked as expected.
-  - We were extra careful in going through the [release checklist](./release-checklist.md) because of the manual steps in the release branch creation.
+   1. Bump the versions in the package.json files to the new version.
 
-### Cleaning up
+      For a hotfixing a stable release version:
 
-- The pull request created for merging prerelease branch back into `main` by the automation was [wrong](https://github.com/Azure/communication-ui-library/pull/2194).
-  - I created a [manual merge back pull request](https://github.com/Azure/communication-ui-library/pull/2203). This pull request was required so that the package version on `main` was bumped from `1.3.1` to `1.3.2-beta.0`, in preparation for the next potential release from `main`.
-  - If the base ref had been from an older release (say `1.0.0`), we would not have merged the prerelease branch back into `main` at all.
+      ```bash
+      node common/scripts/bump-stable-version.js patch
+      ```
+
+      For hotfixing a beta release version:
+
+      ```bash
+      node common/scripts/bump-beta-release-version.js beta
+      ```
+
+      After this all `package.json` files should have the correct version. You can do a findAll for the old version and make sure it does not exist.
+
+   1. Update the telemetry version to match the new version
+
+       ```bash
+       node common/scripts/sync-telemetry-package-version
+       ```
+
+       To verify this worked, make sure the [telemetryVersion.js](../../packages/acs-ui-common/src/telemetryVersion.js) file has the correct version.
+
+   1. Update the package files to use stable or beta dependencies. If you are hotfixing a stable release, run the following command:
+
+      ```bash
+      node ./common/scripts/force-build-flavor.mjs stable
+      rush update
+      ```
+
+      If you are hotfixing a beta release, run the following command:
+
+      ```bash
+      node ./common/scripts/force-build-flavor.mjs beta-stable
+      rush update
+      ```
+
+      To verify this worked, look at the peer dependencies of the [communication-react/package.json](../../packages/communication-react/package.json) file and make sure they are all referencing the correct SDK versions.
+
+   1. Create a PR for the changes made in the release branch.
+
+        ```bash
+        rush changelog
+        # Then put up a PR into the release branch
+        ```
+
+1. Create a development branch from your release branch that will have the bug fix
+
+    ```bash
+    git checkout -b <alias>/hotfix-<bug-name> # Ex: git checkout -b jaburnsi/fix-security-flaw-in-fetch-function
+    ```
+
+1. Make and test your changes as normal, commit your changes and put up a PR into the release branch you made. *Include the change to the changelog in this PR as well.*
+
+1. The release branch created above was identical in all respects to a usual release branch. Thus, [the NPM release workflow](./creating-a-release.md#step-3-publish-to-npm) should work as expected.
+
+   - Be extra careful in going through the [release checklist](./release-checklist.md) because of the manual steps in the release branch creation.
+
+1. Post-release steps
+
+   1. Delete the release branch.
+
+   1. Update the changelog in the `main` branch to include the changes made in the hotfix release.
+
+   1. If the hotfix was off of the latest release, update the package versions in the `main` branch.

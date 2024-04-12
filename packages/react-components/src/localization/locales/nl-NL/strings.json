@@ -24,8 +24,8 @@
     "placeholderText": "Een bericht invoeren",
     "textTooLong": "De lengte van uw bericht overschrijdt de maximumlimiet.",
     "sendButtonAriaLabel": "Bericht verzenden",
-    "fileUploadsPendingError": "Uploaden.... Een ogenblik geduld.",
-    "removeFile": "Bestand verwijderen",
+    "attachmentUploadsPendingError": "Uploaden.... Een ogenblik geduld.",
+    "removeAttachment": "Bestand verwijderen",
     "uploading": "Uploaden",
     "uploadCompleted": "Upload voltooid"
   },
@@ -33,8 +33,8 @@
     "placeholderText": "Een bericht invoeren",
     "textTooLong": "De lengte van uw bericht overschrijdt de maximumlimiet.",
     "sendButtonAriaLabel": "Bericht verzenden",
-    "fileUploadsPendingError": "Uploaden... Een ogenblik geduld.",
-    "removeFile": "Bestand verwijderen",
+    "attachmentUploadsPendingError": "Uploaden... Een ogenblik geduld.",
+    "removeAttachment": "Bestand verwijderen",
     "uploading": "Uploaden",
     "uploadCompleted": "Upload voltooid",
     "boldTooltip": "Vet",
@@ -44,7 +44,18 @@
     "numberListTooltip": "Genummerde lijst",
     "increaseIndentTooltip": "Inspringing vergroten",
     "decreaseIndentTooltip": "Inspringing verkleinen",
-    "richTextFormatButtonTooltip": "Indeling"
+    "insertTableTooltip": "Tabel invoegen",
+    "richTextFormatButtonTooltip": "Indeling",
+    "insertRowOrColumnMenu": "Invoegen",
+    "insertTableMenuTitle": "{column} x {row} tabel invoegen",
+    "insertRowAboveMenu": "Hierboven invoegen",
+    "insertRowBelowMenu": "Hieronder invoegen",
+    "insertColumnLeftMenu": "Links invoegen",
+    "insertColumnRightMenu": "Rechts invoegen",
+    "deleteRowOrColumnMenu": "Verwijderen",
+    "deleteColumnMenu": "Kolom verwijderen",
+    "deleteRowMenu": "Rij verwijderen",
+    "deleteTableMenu": "Tabel verwijderen"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggesties"
@@ -66,7 +77,9 @@
   },
   "endCallButton": {
     "label": "Verlaten",
-    "tooltipContent": "Gesprek verlaten"
+    "tooltipContent": "Gesprek verlaten",
+    "leaveOption": "Verlaten",
+    "endCallOption": "Gesprek beëindigen"
   },
   "cameraButton": {
     "onLabel": "Camera",
@@ -179,10 +192,11 @@
     "editBoxSubmitButton": "Gereed",
     "messageReadCount": "Gelezen door {messageReadByCount} van {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Meer opties",
-    "downloadFile": "Bestand downloaden",
+    "downloadAttachment": "Bestand downloaden",
+    "openAttachment": "Bestand openen",
     "blockedWarningText": "Dit bericht is verwijderd vanwege organisatiebeleid.",
     "blockedWarningLinkText": "Details",
-    "fileCardGroupMessage": "Het bericht heeft {fileCount} bijlage",
+    "attachmentCardGroupMessage": "Het bericht heeft {attachmentCount} bijlage",
     "messageDeletedAnnouncementAriaLabel": "Het bericht is verwijderd"
   },
   "errorBar": {

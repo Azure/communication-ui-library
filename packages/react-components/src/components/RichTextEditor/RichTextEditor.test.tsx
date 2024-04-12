@@ -107,7 +107,7 @@ describe('RichTextEditor should be shown correctly', () => {
       // Type into the input field
       await userEvent.keyboard('Test');
     });
-    const result = '<div>Test<br></div>';
+    const result = '<div style="background-color: transparent;">Test<br></div>';
     expect(value).toEqual(result);
   });
 });

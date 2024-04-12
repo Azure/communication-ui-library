@@ -45,10 +45,8 @@ export interface _Identifiers {
   overflowGalleryRightNavButton: string;
   /** `data-ui-id` value for the video tiles in the horizontal gallery */
   horizontalGalleryVideoTile: string;
-  /* @conditional-compile-remove(vertical-gallery) */
   /** `data-ui-id` value for `VerticalGallery` Component's children video tiles */
   verticalGalleryVideoTile: string;
-  /* @conditional-compile-remove(vertical-gallery) */
   /** `data-ui-id` value for `VerticalGallery` Component's page counter */
   verticalGalleryPageCounter: string;
   /* @conditional-compile-remove(mention) */
@@ -73,10 +71,8 @@ const defaultIdentifiers: _Identifiers = {
   videoTile: 'video-tile',
   overflowGalleryLeftNavButton: 'overflow-gallery-left-nav-button',
   overflowGalleryRightNavButton: 'overflow-gallery-right-nav-button',
-  /* @conditional-compile-remove(vertical-gallery) */
   verticalGalleryVideoTile: 'vertical-gallery-video-tile',
   horizontalGalleryVideoTile: 'horizontal-gallery-video-tile',
-  /* @conditional-compile-remove(vertical-gallery) */
   verticalGalleryPageCounter: 'vertical-gallery-page-counter',
   /* @conditional-compile-remove(mention) */
   mentionSuggestionList: 'mention-suggestion-list',

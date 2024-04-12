@@ -60,8 +60,8 @@ Ask feature owners to create a PR to add a pre-release changelog and remove the 
 
 For all the features that are going into this release, ask the feature owners to:
 
-- Remove the feature from the inProgressFeatures array or the feature array in the [feature list](../../common/config/babel/features.js)
-- Create a change log summarizing the feature and set the change as 'prerelease'
+- Move feature to beta or stable as appropriate in the [feature list](../../common/config/babel/features.js)
+- Create a change log summarizing the feature and set the change type as 'prerelease' if the feature is going into beta, or 'minor' if the feature is going into stable.
   
 [Shiproom Dashboard](https://skype.visualstudio.com/SPOOL/_dashboards/dashboard/c38163f7-e172-4afa-a4c2-76e888b5cddc)
 
@@ -237,40 +237,13 @@ Samples should be updated within a week of the package release.
 
 ### Releasing a hotfix for an older release
 
-There is currently no GitHub action for creating a hotfix and must be done manually.
-
-1. Checkout the version you wish to fix
-
-    ```bash
-     git checkout <version-tag> # version tag will be something like v.1.2.3
-    ```
-
-1. Create a release branch from this
-
-    ```bash
-    git checkout -b hotfix/fix-security-flaw
-    ```
-
-1. Create a development branch from your release branch
-
-    ```bash
-    git checkout -b jaburnsi/chat-thread-security-patch
-    ```
-
-1. Make your changes as normal, commit your changes and put up a PR _into the release branch you made_. Ensure you specify `patch` when generating running `rush changelog`.
-
-1. Once the PR is complete, hop onto the release branch in your terminal again (be sure to pull the latest changes that were merged into it)
-
-    ```bash
-    git checkout -b hotfix/fix-security-flaw
-    git pull
-    ```
-
-1. Publish the package. _documentation to follow on publishing packages._
+There is a separate process for releasing a hotfix. See [documentation on creating hotfixes](./hotfix-release.md).
 
 ### Creating alpha releases
 
 Alpha releases are created nightly using the [.github/workflows/nightly-ci.yml](https://github.com/Azure/communication-ui-library/blob/main/.github/workflows/nightly-ci.yml) GitHub action.
+
+Alpha releases can also be created manually by running [.github/workflows/alpha-release.yml](https://github.com/Azure/communication-ui-library/blob/main/.github/workflows/alpha-release.yml) GitHub action.
 
 They use Beachball's `canary` CLI command to temporarily set all package versions to \<version\>-alpha-yyyymmddHHMM, then package up the npm packages and upload the packages to the azure release pipeline.
 
@@ -280,4 +253,4 @@ To ensure our packages are part of the `@azure` organization our packages are pu
 
 This requires us to first upload the tarball of the package we wish to publish to their blob storage, then trigger their release pipeline. This can be done manually or by GitHub actions.
 
-Currently, alpha package releases are entirely done through GitHub actions (see [.github/workflows/nightly-ci.yml](https://github.com/Azure/communication-ui-library/blob/main/.github/workflows/nightly-ci.yml)). This requires the use of internal keys and tokens. For more information on these, or how to update them, see: [Updating npm publishing credentials](../references/updating-npm-publishing-credentials.md).
+Currently, alpha package releases are entirely done through GitHub actions (see [Nightly](https://github.com/Azure/communication-ui-library/blob/main/.github/workflows/nightly-ci.yml) and [Manual](https://github.com/Azure/communication-ui-library/blob/main/.github/workflows/alpha-release.yml) GitHub workflow for more details). This requires the use of internal keys and tokens. For more information on these, or how to update them, see: [Updating npm publishing credentials](../references/updating-npm-publishing-credentials.md).

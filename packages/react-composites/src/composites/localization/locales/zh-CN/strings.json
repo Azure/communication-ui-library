@@ -61,11 +61,11 @@
     "removedFromCallMoreDetails": "另一名参与者已将你从通话中删除。",
     "removedFromCallTitle": "你已被删除",
     "removeMenuLabel": "删除",
-    "startSpotlightParticipantListMenuLabel": "对所有人聚焦",
-    "addSpotlightParticipantListMenuLabel": "添加聚焦",
-    "stopSpotlightParticipantListMenuLabel": "停止聚焦",
-    "stopSpotlightOnSelfParticipantListMenuLabel": "退出聚焦",
-    "spotlightLimitReachedParticipantListMenuTitle": "已达到聚焦限制",
+    "startSpotlightMenuLabel": "对所有人聚焦",
+    "addSpotlightMenuLabel": "添加聚焦",
+    "stopSpotlightMenuLabel": "停止聚焦",
+    "stopSpotlightOnSelfMenuLabel": "退出聚焦",
+    "spotlightLimitReachedMenuTitle": "已达到聚焦限制",
     "stopAllSpotlightMenuLabel": "停止所有聚焦",
     "returnToCallButtonAriaDescription": "返回通话",
     "returnToCallButtonAriaLabel": "返回",
@@ -315,18 +315,27 @@
       "startSpotlightCancelButtonLabel": "取消",
       "stopSpotlightHeading": "停止聚焦此视频?",
       "stopSpotlightOnSelfHeading": "退出聚焦?",
+      "stopAllSpotlightHeading": "是否停止聚焦所有视频?",
       "stopSpotlightText": "将不再为会议中的每个人突出显示此视频。",
       "stopSpotlightOnSelfText": "将不再对会议中的每个人突出显示你的视频。",
+      "stopAllSpotlightText": "将不再对会议中的每个人突出显示该视频。",
       "stopSpotlightConfirmButtonLabel": "停止聚焦",
       "stopSpotlightOnSelfConfirmButtonLabel": "退出聚焦",
       "stopSpotlightCancelButtonLabel": "取消"
     },
     "exitSpotlightButtonLabel": "退出聚焦",
-    "exitSpotlightButtonTooltip": "退出聚焦"
+    "exitSpotlightButtonTooltip": "退出聚焦",
+    "hangUpConfirmButtonLabel": "确认",
+    "hangUpCancelButtonLabel": "取消",
+    "leaveConfirmDialogTitle": "离开聊天?",
+    "leaveConfirmDialogContent": "是否确实要离开此聊天?",
+    "endCallConfirmDialogTitle": "结束通话?",
+    "endCallConfirmDialogContent": "你将结束所有人的通话。",
+    "invalidMeetingIdentifier": "会议 ID 或密码无效"
   },
   "chat": {
     "chatListHeader": "在此聊天中",
-    "uploadFile": "上传文件"
+    "uploadAttachment": "上传附件"
   },
   "callWithChat": {
     "chatButtonLabel": "聊天",

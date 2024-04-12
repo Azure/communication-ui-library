@@ -61,11 +61,11 @@
     "removedFromCallMoreDetails": "別の参加者があなたを通話から削除しました。",
     "removedFromCallTitle": "削除されました",
     "removeMenuLabel": "削除",
-    "startSpotlightParticipantListMenuLabel": "全員にスポットライトを設定",
-    "addSpotlightParticipantListMenuLabel": "スポットライトを追加",
-    "stopSpotlightParticipantListMenuLabel": "スポットライトの設定を解除",
-    "stopSpotlightOnSelfParticipantListMenuLabel": "スポットライトを終了",
-    "spotlightLimitReachedParticipantListMenuTitle": "スポットライトの上限に達しました",
+    "startSpotlightMenuLabel": "全員にスポットライトを設定",
+    "addSpotlightMenuLabel": "スポットライトを追加",
+    "stopSpotlightMenuLabel": "スポットライトの設定を解除",
+    "stopSpotlightOnSelfMenuLabel": "スポットライトを終了",
+    "spotlightLimitReachedMenuTitle": "スポットライトの上限に達しました",
     "stopAllSpotlightMenuLabel": "すべてのスポットライトを停止",
     "returnToCallButtonAriaDescription": "通話に戻る",
     "returnToCallButtonAriaLabel": "戻る",
@@ -315,18 +315,27 @@
       "startSpotlightCancelButtonLabel": "キャンセル",
       "stopSpotlightHeading": "このビデオへのスポットライトの設定を解除しますか?",
       "stopSpotlightOnSelfHeading": "スポットライトを終了しますか?",
+      "stopAllSpotlightHeading": "すべてのビデオへのスポットライトの設定を解除しますか?",
       "stopSpotlightText": "このビデオは、会議の全員に対して強調表示されなくなります。",
       "stopSpotlightOnSelfText": "ビデオは、会議の全員に対して強調表示されなくなります。",
+      "stopAllSpotlightText": "ビデオは、会議の全員に対して強調表示されなくなります。",
       "stopSpotlightConfirmButtonLabel": "スポットライトの設定を解除",
       "stopSpotlightOnSelfConfirmButtonLabel": "スポットライトを終了",
       "stopSpotlightCancelButtonLabel": "キャンセル"
     },
     "exitSpotlightButtonLabel": "スポットライトを終了",
-    "exitSpotlightButtonTooltip": "スポットライトを終了"
+    "exitSpotlightButtonTooltip": "スポットライトを終了",
+    "hangUpConfirmButtonLabel": "確認",
+    "hangUpCancelButtonLabel": "キャンセル",
+    "leaveConfirmDialogTitle": "通話から退出しますか?",
+    "leaveConfirmDialogContent": "通話から退出してよろしいですか?",
+    "endCallConfirmDialogTitle": "通話を終了しますか?",
+    "endCallConfirmDialogContent": "全員に対する通話が終了されます。",
+    "invalidMeetingIdentifier": "無効なミーティング ID またはパスコード"
   },
   "chat": {
     "chatListHeader": "このチャット内",
-    "uploadFile": "ファイルのアップロード"
+    "uploadAttachment": "添付ファイルのアップロード"
   },
   "callWithChat": {
     "chatButtonLabel": "チャット",

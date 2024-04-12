@@ -1,10 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(image-overlay) */
 import { isIOS } from '@fluentui/react';
 import { mergeStyles, Stack } from '@fluentui/react';
-/* @conditional-compile-remove(image-overlay) */
 import { PersonaSize } from '@fluentui/react';
 import {
   CommunicationParticipant,
@@ -19,17 +17,15 @@ import {
   TypingIndicatorStylesProps,
   useTheme
 } from '@internal/react-components';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { ChatMessage } from '@internal/react-components';
 import React, { useCallback, useEffect, useMemo } from 'react';
-/* @conditional-compile-remove(image-overlay) */
 import { useState } from 'react';
 import { AvatarPersona, AvatarPersonaDataCallback, AvatarPersonaProps } from '../common/AvatarPersona';
 import { useAdapter } from './adapter/ChatAdapterProvider';
 import { ChatCompositeOptions } from './ChatComposite';
 import { ChatHeader, getHeaderProps } from './ChatHeader';
-import { FileDownloadHandler } from '@internal/react-components';
-import { FileUploadButtonWrapper as FileUploadButton, FileUploadHandler } from './file-sharing';
+import { AttachmentUploadButtonWrapper as AttachmentUploadButton } from './file-sharing';
 import { useAdaptedSelector } from './hooks/useAdaptedSelector';
 import { usePropsFor } from './hooks/usePropsFor';
 
@@ -45,16 +41,18 @@ import { participantListContainerPadding } from '../common/styles/ParticipantCon
 /* @conditional-compile-remove(chat-composite-participant-pane) */
 import { ChatScreenPeoplePane } from './ChatScreenPeoplePane';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(file-sharing) */
-import { FileDownloadErrorBar } from './FileDownloadErrorBar';
-/* @conditional-compile-remove(file-sharing) */
-import { _FileDownloadCards } from '@internal/react-components';
-/* @conditional-compile-remove(image-overlay) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+import { AttachmentDownloadErrorBar } from './AttachmentDownloadErrorBar';
+import { _AttachmentDownloadCards } from '@internal/react-components';
 import { ImageOverlay } from '@internal/react-components';
-/* @conditional-compile-remove(image-overlay) */
 import { InlineImage } from '@internal/react-components';
-import { SendBox } from '../common/SendBox';
 import { ResourceFetchResult } from '@internal/chat-stateful-client';
+import { AttachmentOptions } from '@internal/react-components';
+import { SendBox } from '@internal/react-components';
+/* @conditional-compile-remove(attachment-upload) */
+import { useSelector } from './hooks/useSelector';
+/* @conditional-compile-remove(attachment-upload) */
+import { attachmentUploadsSelector } from './selectors/attachmentUploadsSelector';
 
 /**
  * @private
@@ -66,7 +64,7 @@ export type ChatScreenProps = {
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   styles?: ChatScreenStyles;
-  fileSharing?: FileSharingOptions;
+  attachmentOptions?: AttachmentOptions;
   formFactor?: 'desktop' | 'mobile';
 };
 
@@ -80,41 +78,8 @@ export type ChatScreenStyles = {
 };
 
 /**
- * Properties for configuring the File Sharing feature.
- * @beta
- */
-export interface FileSharingOptions {
-  /**
-   * A string containing the comma separated list of accepted file types.
-   * Similar to the `accept` attribute of the `<input type="file" />` element.
-   * Accepts any type of file if not specified.
-   * @beta
-   */
-  accept?: string;
-  /**
-   * Allows multiple files to be selected if set to `true`.
-   * Similar to the `multiple` attribute of the `<input type="file" />` element.
-   * @defaultValue false
-   * @beta
-   */
-  multiple?: boolean;
-  /**
-   * A function of type {@link FileUploadHandler} for handling file uploads.
-   * @beta
-   */
-  uploadHandler: FileUploadHandler;
-  /**
-   * A function of type {@link FileDownloadHandler} for handling file downloads.
-   * If the function is not specified, the file's `url` will be opened in a new tab to
-   * initiate the download.
-   */
-  downloadHandler?: FileDownloadHandler;
-}
-
-/**
  * @private
  */
-/* @conditional-compile-remove(image-overlay) */
 interface OverlayImageItem {
   imageSrc: string;
   title: string;
@@ -134,16 +99,14 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     onRenderTypingIndicator,
     options,
     styles,
-    fileSharing,
+    attachmentOptions,
     formFactor
   } = props;
 
   const defaultNumberOfChatMessagesToReload = 5;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   const [downloadErrorMessage, setDownloadErrorMessage] = React.useState('');
-  /* @conditional-compile-remove(image-overlay) */
   const [overlayImageItem, setOverlayImageItem] = useState<OverlayImageItem>();
-  /* @conditional-compile-remove(image-overlay) */
   const [isImageOverlayOpen, setIsImageOverlayOpen] = useState<boolean>(false);
 
   const adapter = useAdapter();
@@ -161,11 +124,11 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   }, [adapter]);
 
   const messageThreadProps = usePropsFor(MessageThread);
+  const sendBoxProps = usePropsFor(SendBox);
   const typingIndicatorProps = usePropsFor(TypingIndicator);
   const headerProps = useAdaptedSelector(getHeaderProps);
   const errorBarProps = usePropsFor(ErrorBar);
 
-  /* @conditional-compile-remove(image-overlay) */
   useEffect(() => {
     if (overlayImageItem === undefined) {
       return;
@@ -191,7 +154,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   const getResourceSourceUrl = (result: ResourceFetchResult): string => {
     let src = '';
-    if (result.error) {
+    if (result.error || !result.sourceUrl) {
       src = 'blob://';
     } else {
       src = result.sourceUrl;
@@ -226,38 +189,44 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     return Object.assign({}, styles?.typingIndicator);
   }, [styles?.typingIndicator]);
 
+  const sendBoxStyles = useMemo(() => {
+    return Object.assign({}, styles?.sendBox);
+  }, [styles?.sendBox]);
+
   const userId = toFlatCommunicationIdentifier(adapter.getState().userId);
 
-  const fileUploadButtonOnChange = useCallback(
+  const attachmentUploadButtonOnChange = useCallback(
     (files: FileList | null): void => {
       if (!files) {
         return;
       }
 
-      /* @conditional-compile-remove(file-sharing) */
-      const fileUploads = adapter.registerActiveFileUploads(Array.from(files));
-      /* @conditional-compile-remove(file-sharing) */
-      fileSharing?.uploadHandler(userId, fileUploads);
+      /* @conditional-compile-remove(attachment-upload) */
+      const attachmentUploads = adapter.registerActiveUploads(Array.from(files));
+      /* @conditional-compile-remove(attachment-upload) */
+      attachmentOptions?.uploadOptions?.handler(attachmentUploads);
     },
-    [adapter, fileSharing, userId]
+    [adapter, attachmentOptions]
   );
 
-  /* @conditional-compile-remove(file-sharing) */
-  const onRenderFileDownloads = useCallback(
-    (userId: string, message: ChatMessage) => (
-      <_FileDownloadCards
-        userId={userId}
-        fileMetadata={message.files || []}
-        downloadHandler={fileSharing?.downloadHandler}
-        onDownloadErrorMessage={(errorMessage: string) => {
-          setDownloadErrorMessage(errorMessage);
-        }}
-      />
-    ),
-    [fileSharing?.downloadHandler]
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  const onRenderAttachmentDownloads = useCallback(
+    (userId: string, message: ChatMessage) =>
+      message?.attachments?.length ?? 0 > 0 ? (
+        <_AttachmentDownloadCards
+          attachments={message.attachments}
+          message={message}
+          actionsForAttachment={attachmentOptions?.downloadOptions?.actionsForAttachment}
+          onActionHandlerFailed={(errorMessage: string) => {
+            setDownloadErrorMessage(errorMessage);
+          }}
+        />
+      ) : (
+        <></>
+      ),
+    [attachmentOptions?.downloadOptions?.actionsForAttachment]
   );
 
-  /* @conditional-compile-remove(image-overlay) */
   const onInlineImageClicked = useCallback(
     (attachmentId: string, messageId: string) => {
       const message = adapter.getState().thread.chatMessages[messageId];
@@ -310,12 +279,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [adapter, onRenderAvatarCallback, userId]
   );
 
-  /* @conditional-compile-remove(image-overlay) */
-  const inlineImageOptions = {
-    onRenderInlineImage: (
-      inlineImage: InlineImage,
-      defaultOnRender: (inlineImage: InlineImage) => JSX.Element
-    ): JSX.Element => {
+  const onRenderInlineImage = useCallback(
+    (inlineImage: InlineImage, defaultOnRender: (inlineImage: InlineImage) => JSX.Element): JSX.Element => {
       const message = adapter.getState().thread.chatMessages[inlineImage.messageId];
       const attachment = message?.content?.attachments?.find(
         (attachment) => attachment.id === inlineImage.imageAttributes.id
@@ -352,10 +317,14 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           {defaultOnRender(inlineImage)}
         </span>
       );
-    }
-  };
+    },
+    [adapter, onInlineImageClicked]
+  );
 
-  /* @conditional-compile-remove(image-overlay) */
+  const inlineImageOptions = useMemo(() => {
+    return { onRenderInlineImage: onRenderInlineImage };
+  }, [onRenderInlineImage]);
+
   const onDownloadButtonClicked = useCallback(
     (imageSrc: string): void => {
       if (imageSrc === '') {
@@ -381,18 +350,26 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [overlayImageItem?.attachmentId]
   );
 
-  const AttachFileButton = useCallback(() => {
-    if (!fileSharing?.uploadHandler) {
+  const AttachmentButton = useCallback(() => {
+    if (!attachmentOptions?.uploadOptions?.handler) {
       return null;
     }
     return (
-      <FileUploadButton
-        accept={fileSharing?.accept}
-        multiple={fileSharing?.multiple}
-        onChange={fileUploadButtonOnChange}
+      <AttachmentUploadButton
+        supportedMediaTypes={attachmentOptions?.uploadOptions?.supportedMediaTypes}
+        disableMultipleUploads={attachmentOptions?.uploadOptions?.disableMultipleUploads}
+        onChange={attachmentUploadButtonOnChange}
       />
     );
-  }, [fileSharing?.accept, fileSharing?.multiple, fileSharing?.uploadHandler, fileUploadButtonOnChange]);
+  }, [
+    attachmentOptions?.uploadOptions?.handler,
+    attachmentOptions?.uploadOptions?.supportedMediaTypes,
+    attachmentOptions?.uploadOptions?.disableMultipleUploads,
+    attachmentUploadButtonOnChange
+  ]);
+
+  /* @conditional-compile-remove(attachment-upload) */
+  const activeAttachmentUploads = useSelector(attachmentUploadsSelector).attachments;
 
   return (
     <Stack className={chatContainer} grow>
@@ -401,21 +378,20 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         <Stack className={chatWrapper} grow>
           {options?.errorBar !== false && <ErrorBar {...errorBarProps} />}
           {
-            /* @conditional-compile-remove(file-sharing) */
-            <FileDownloadErrorBar
+            /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+            <AttachmentDownloadErrorBar
               onDismissDownloadErrorMessage={useCallback(() => {
                 setDownloadErrorMessage('');
               }, [])}
-              fileDownloadErrorMessage={downloadErrorMessage || ''}
+              attachmentDownloadErrorMessage={downloadErrorMessage || ''}
             />
           }
           <MessageThread
             {...messageThreadProps}
             onRenderAvatar={onRenderAvatarCallback}
             onRenderMessage={onRenderMessage}
-            /* @conditional-compile-remove(file-sharing) */
-            onRenderFileDownloads={onRenderFileDownloads}
-            /* @conditional-compile-remove(image-overlay) */
+            /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+            onRenderAttachmentDownloads={onRenderAttachmentDownloads}
             inlineImageOptions={inlineImageOptions}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
@@ -431,18 +407,21 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             <Stack horizontal={formFactor === 'mobile'}>
               {formFactor === 'mobile' && (
                 <Stack verticalAlign="center">
-                  <AttachFileButton />
+                  <AttachmentButton />
                 </Stack>
               )}
               <Stack grow>
                 <SendBox
-                  options={options}
-                  styles={styles?.sendBox}
-                  /* @conditional-compile-remove(file-sharing) */
-                  adapter={adapter}
+                  {...sendBoxProps}
+                  autoFocus={options?.autoFocus}
+                  styles={sendBoxStyles}
+                  /* @conditional-compile-remove(attachment-upload) */
+                  activeAttachmentUploads={activeAttachmentUploads}
+                  /* @conditional-compile-remove(attachment-upload) */
+                  onCancelAttachmentUpload={adapter.cancelUpload}
                 />
               </Stack>
-              {formFactor !== 'mobile' && <AttachFileButton />}
+              {formFactor !== 'mobile' && <AttachmentButton />}
             </Stack>
           </Stack>
         </Stack>
@@ -457,25 +436,22 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           )
         }
       </Stack>
-      {
-        /* @conditional-compile-remove(image-overlay) */
-        overlayImageItem && (
-          <ImageOverlay
-            {...overlayImageItem}
-            isOpen={isImageOverlayOpen}
-            onDismiss={() => {
-              setOverlayImageItem(undefined);
-              setIsImageOverlayOpen(false);
-              adapter.removeResourceFromCache({
-                threadId: adapter.getState().thread.threadId,
-                messageId: overlayImageItem.messageId,
-                resourceUrl: overlayImageItem.imageUrl
-              });
-            }}
-            onDownloadButtonClicked={onDownloadButtonClicked}
-          />
-        )
-      }
+      {overlayImageItem && (
+        <ImageOverlay
+          {...overlayImageItem}
+          isOpen={isImageOverlayOpen}
+          onDismiss={() => {
+            setOverlayImageItem(undefined);
+            setIsImageOverlayOpen(false);
+            adapter.removeResourceFromCache({
+              threadId: adapter.getState().thread.threadId,
+              messageId: overlayImageItem.messageId,
+              resourceUrl: overlayImageItem.imageUrl
+            });
+          }}
+          onDownloadButtonClicked={onDownloadButtonClicked}
+        />
+      )}
     </Stack>
   );
 };

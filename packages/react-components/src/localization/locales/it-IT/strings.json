@@ -24,8 +24,8 @@
     "placeholderText": "Immetti un messaggio",
     "textTooLong": "La lunghezza del messaggio supera il limite massimo.",
     "sendButtonAriaLabel": "Invio messaggio",
-    "fileUploadsPendingError": "Caricamento in corso... Attendere.",
-    "removeFile": "Rimuovi file",
+    "attachmentUploadsPendingError": "Caricamento in corso... Attendere.",
+    "removeAttachment": "Rimuovi file",
     "uploading": "Caricamento in corso",
     "uploadCompleted": "Caricamento completato"
   },
@@ -33,8 +33,8 @@
     "placeholderText": "Immetti un messaggio",
     "textTooLong": "La lunghezza del messaggio supera il limite massimo.",
     "sendButtonAriaLabel": "Invia messaggio",
-    "fileUploadsPendingError": "Caricamento... Attendi.",
-    "removeFile": "Rimuovi file",
+    "attachmentUploadsPendingError": "Caricamento... Attendi.",
+    "removeAttachment": "Rimuovi file",
     "uploading": "Caricamento",
     "uploadCompleted": "Caricamento completato",
     "boldTooltip": "Grassetto",
@@ -44,7 +44,18 @@
     "numberListTooltip": "Elenco numerato",
     "increaseIndentTooltip": "Aumenta rientro",
     "decreaseIndentTooltip": "Riduci rientro",
-    "richTextFormatButtonTooltip": "Formato"
+    "insertTableTooltip": "Inserisci tabella",
+    "richTextFormatButtonTooltip": "Formato",
+    "insertRowOrColumnMenu": "Inserisci",
+    "insertTableMenuTitle": "Inserisci tabella {column} x {row}",
+    "insertRowAboveMenu": "Inserisci sopra",
+    "insertRowBelowMenu": "Inserisci sotto",
+    "insertColumnLeftMenu": "Inserisci a sinistra",
+    "insertColumnRightMenu": "Inserisci a destra",
+    "deleteRowOrColumnMenu": "Elimina",
+    "deleteColumnMenu": "Elimina colonna",
+    "deleteRowMenu": "Elimina riga",
+    "deleteTableMenu": "Elimina tabella"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggerimenti"
@@ -66,7 +77,9 @@
   },
   "endCallButton": {
     "label": "Permesso",
-    "tooltipContent": "Abbandona chiamata"
+    "tooltipContent": "Abbandona chiamata",
+    "leaveOption": "Abbandona",
+    "endCallOption": "Termina chiamata"
   },
   "cameraButton": {
     "onLabel": "Fotocamera",
@@ -179,10 +192,11 @@
     "editBoxSubmitButton": "Fatto",
     "messageReadCount": "Letto da {messageReadByCount} di {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Altre opzioni",
-    "downloadFile": "Scarica file",
+    "downloadAttachment": "Scarica file",
+    "openAttachment": "Apri file",
     "blockedWarningText": "Questo messaggio è stato eliminato a causa dei criteri dell'organizzazione.",
     "blockedWarningLinkText": "Dettagli",
-    "fileCardGroupMessage": "Il messaggio contiene {fileCount} allegato",
+    "attachmentCardGroupMessage": "Il messaggio ha allegati: {attachmentCount}.",
     "messageDeletedAnnouncementAriaLabel": "Il messaggio è stato eliminato"
   },
   "errorBar": {

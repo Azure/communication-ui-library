@@ -24,8 +24,8 @@
     "placeholderText": "Inserir uma mensagem",
     "textTooLong": "O comprimento da mensagem está acima do limite máximo.",
     "sendButtonAriaLabel": "Enviar mensagem",
-    "fileUploadsPendingError": "Carregando... Aguarde.",
-    "removeFile": "Remover arquivo",
+    "attachmentUploadsPendingError": "Carregando... Aguarde.",
+    "removeAttachment": "Remover arquivo",
     "uploading": "Carregando",
     "uploadCompleted": "Carregamento concluído"
   },
@@ -33,8 +33,8 @@
     "placeholderText": "Inserir uma mensagem",
     "textTooLong": "O comprimento da mensagem está acima do limite máximo.",
     "sendButtonAriaLabel": "Enviar mensagem",
-    "fileUploadsPendingError": "Carregando... Aguarde.",
-    "removeFile": "Remover arquivo",
+    "attachmentUploadsPendingError": "Carregando... Aguarde.",
+    "removeAttachment": "Remover arquivo",
     "uploading": "Carregando",
     "uploadCompleted": "Carregamento concluído",
     "boldTooltip": "Negrito",
@@ -44,7 +44,18 @@
     "numberListTooltip": "Lista numerada",
     "increaseIndentTooltip": "Aumentar recuo",
     "decreaseIndentTooltip": "Diminuir recuo",
-    "richTextFormatButtonTooltip": "Formato"
+    "insertTableTooltip": "Inserir tabela",
+    "richTextFormatButtonTooltip": "Formato",
+    "insertRowOrColumnMenu": "Inserir",
+    "insertTableMenuTitle": "Inserir tabela {column} x {row}",
+    "insertRowAboveMenu": "Inserir acima",
+    "insertRowBelowMenu": "Inserir abaixo",
+    "insertColumnLeftMenu": "Inserir à esquerda",
+    "insertColumnRightMenu": "Inserir à direita",
+    "deleteRowOrColumnMenu": "Excluir",
+    "deleteColumnMenu": "Excluir coluna",
+    "deleteRowMenu": "Excluir linha",
+    "deleteTableMenu": "Excluir tabela"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Sugestões"
@@ -66,7 +77,9 @@
   },
   "endCallButton": {
     "label": "Sair",
-    "tooltipContent": "Sair da chamada"
+    "tooltipContent": "Sair da chamada",
+    "leaveOption": "Sair",
+    "endCallOption": "Encerrar chamada"
   },
   "cameraButton": {
     "onLabel": "Câmera",
@@ -179,10 +192,11 @@
     "editBoxSubmitButton": "Concluído",
     "messageReadCount": "Lido por {messageReadByCount} de {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Mais opções",
-    "downloadFile": "Baixar arquivo",
+    "downloadAttachment": "Baixar arquivo",
+    "openAttachment": "Abrir arquivo",
     "blockedWarningText": "Esta mensagem foi excluída devido à política organizacional.",
     "blockedWarningLinkText": "Detalhes",
-    "fileCardGroupMessage": "A mensagem tem {fileCount} anexo",
+    "attachmentCardGroupMessage": "A mensagem tem {attachmentCount} anexo",
     "messageDeletedAnnouncementAriaLabel": "A mensagem foi excluída"
   },
   "errorBar": {

@@ -24,8 +24,8 @@
     "placeholderText": "Nachricht eingeben",
     "textTooLong": "Ihre Nachrichtenlänge überschreitet den maximalen Grenzwert.",
     "sendButtonAriaLabel": "Nachricht senden",
-    "fileUploadsPendingError": "Wird hochgeladen... Bitte warten.",
-    "removeFile": "Datei entfernen",
+    "attachmentUploadsPendingError": "Wird hochgeladen... Bitte warten.",
+    "removeAttachment": "Datei entfernen",
     "uploading": "Hochladen",
     "uploadCompleted": "Upload abgeschlossen"
   },
@@ -33,8 +33,8 @@
     "placeholderText": "Nachricht eingeben",
     "textTooLong": "Ihre Nachrichtenlänge überschreitet den maximalen Grenzwert.",
     "sendButtonAriaLabel": "Nachricht senden",
-    "fileUploadsPendingError": "Wird hochgeladen... Bitte warten.",
-    "removeFile": "Datei entfernen",
+    "attachmentUploadsPendingError": "Wird hochgeladen... Bitte warten.",
+    "removeAttachment": "Datei entfernen",
     "uploading": "Wird hochgeladen",
     "uploadCompleted": "Upload abgeschlossen",
     "boldTooltip": "Fett",
@@ -44,7 +44,18 @@
     "numberListTooltip": "Nummerierte Liste",
     "increaseIndentTooltip": "Einzug vergrößern",
     "decreaseIndentTooltip": "Einzug verringern",
-    "richTextFormatButtonTooltip": "Formatieren"
+    "insertTableTooltip": "Tabelle einfügen",
+    "richTextFormatButtonTooltip": "Formatieren",
+    "insertRowOrColumnMenu": "Einfügen",
+    "insertTableMenuTitle": "{column} x {row} Tabelle einfügen",
+    "insertRowAboveMenu": "Oben einfügen",
+    "insertRowBelowMenu": "Darunter einfügen",
+    "insertColumnLeftMenu": "Links einfügen",
+    "insertColumnRightMenu": "Rechts einfügen",
+    "deleteRowOrColumnMenu": "Löschen",
+    "deleteColumnMenu": "Spalte löschen",
+    "deleteRowMenu": "Zeile löschen",
+    "deleteTableMenu": "Tabelle löschen"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Vorschläge"
@@ -66,7 +77,9 @@
   },
   "endCallButton": {
     "label": "Verlassen",
-    "tooltipContent": "Anruf verlassen"
+    "tooltipContent": "Anruf verlassen",
+    "leaveOption": "Beenden",
+    "endCallOption": "Gespräch beenden"
   },
   "cameraButton": {
     "onLabel": "Kamera",
@@ -179,10 +192,11 @@
     "editBoxSubmitButton": "Fertig",
     "messageReadCount": "Gelesen von {messageReadByCount} von {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Weitere Optionen",
-    "downloadFile": "Datei herunterladen",
+    "downloadAttachment": "Datei herunterladen",
+    "openAttachment": "Datei öffnen",
     "blockedWarningText": "Diese Nachricht wurde aufgrund einer Organisationsrichtlinie gelöscht.",
     "blockedWarningLinkText": "Details",
-    "fileCardGroupMessage": "Die Nachricht weist eine {fileCount}-Anlage auf",
+    "attachmentCardGroupMessage": "Die Nachricht enthält {attachmentCount} Anlage.",
     "messageDeletedAnnouncementAriaLabel": "Die Nachricht wurde gelöscht"
   },
   "errorBar": {

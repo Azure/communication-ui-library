@@ -51,10 +51,10 @@ const PLAYWRIGHT_PROJECT = {
 };
 
 async function main(argv) {
-  if (notBetaBuild()) {
+  if (needPreprocess()) {
     await preprocessTests();
   }
-  const testRoot = notBetaBuild() ? PREPROCESSED_TEST_ROOT : TEST_ROOT;
+  const testRoot = needPreprocess() ? PREPROCESSED_TEST_ROOT : TEST_ROOT;
 
   const args = parseArgs(argv);
   setup();
@@ -124,7 +124,7 @@ async function runOne(testRoot, args, composite, hermeticity) {
     TEST_DIR: testRoot,
     // Snapshots are always stored with the original test sources, even when the test root
     // is different due to preprocessed test files.
-    SNAPSHOT_DIR: path.join(SNAPSHOT_ROOT, notBetaBuild() ? 'stable' : 'beta'),
+    SNAPSHOT_DIR: path.join(SNAPSHOT_ROOT, isStable() ? 'stable' : 'beta'),
     PLAYWRIGHT_OUTPUT_DIR: path.join(BASE_OUTPUT_DIR, Date.now().toString())
   };
 
@@ -282,9 +282,14 @@ function parseArgs(argv) {
   return args;
 }
 
-function notBetaBuild() {
+function needPreprocess() {
   const flavor = getBuildFlavor();
-  return flavor !== 'beta' && flavor !== 'beta-release';
+  return flavor !== 'beta';
+}
+
+function isStable() {
+  const flavor = getBuildFlavor();
+  return flavor === 'stable';
 }
 
 await main(process.argv);

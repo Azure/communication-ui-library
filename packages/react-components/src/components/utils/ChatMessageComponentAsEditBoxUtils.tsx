@@ -3,10 +3,10 @@
 
 import React from 'react';
 import { Icon } from '@fluentui/react';
-/* @conditional-compile-remove(file-sharing) */
-import { AttachmentMetadata } from '../FileDownloadCards';
+/* @conditional-compile-remove(attachment-upload) */
+import { AttachmentMetadata } from '../../types/Attachment';
 import { isMessageTooLong } from './SendBoxUtils';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-upload) */
 import { ChatMessage } from '../../types';
 
 /**
@@ -27,10 +27,10 @@ type MessageState = 'OK' | 'too short' | 'too long';
 
 function isMessageEmpty(
   messageText: string,
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-upload) */
   attachmentMetadata?: AttachmentMetadata[]
 ): boolean {
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-upload) */
   return messageText.trim().length === 0 && attachmentMetadata?.length === 0;
   return messageText.trim().length === 0;
 }
@@ -40,20 +40,20 @@ function isMessageEmpty(
  */
 export function getMessageState(
   messageText: string,
-  /* @conditional-compile-remove(file-sharing) */ attachmentMetadata: AttachmentMetadata[]
+  /* @conditional-compile-remove(attachment-upload) */ attachmentMetadata: AttachmentMetadata[]
 ): MessageState {
-  return isMessageEmpty(messageText, /* @conditional-compile-remove(file-sharing) */ attachmentMetadata)
+  return isMessageEmpty(messageText, /* @conditional-compile-remove(attachment-upload) */ attachmentMetadata)
     ? 'too short'
     : isMessageTooLong(messageText.length)
     ? 'too long'
     : 'OK';
 }
 
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-upload) */
 /**
  * @private
  * @TODO: Remove when file-sharing feature becomes stable.
  */
-export function getMessageAttachedFilesMetadata(message: ChatMessage): AttachmentMetadata[] | undefined {
-  return message.files;
+export function getMessageWithAttachmentMetadata(message: ChatMessage): AttachmentMetadata[] | undefined {
+  return message.attachments;
 }

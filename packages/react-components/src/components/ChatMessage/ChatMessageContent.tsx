@@ -4,7 +4,6 @@
 import React from 'react';
 import { _formatString } from '@internal/acs-ui-common';
 import parse, { HTMLReactParserOptions, Element as DOMElement } from 'html-react-parser';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { attributesToProps } from 'html-react-parser';
 import Linkify from 'react-linkify';
 import { ChatMessage } from '../../types/ChatMessage';
@@ -21,13 +20,15 @@ import LiveMessage from '../Announcer/LiveMessage';
 /* @conditional-compile-remove(mention) */
 import { defaultOnMentionRender } from './MentionRenderer';
 import DOMPurify from 'dompurify';
+import { _AttachmentDownloadCardsStrings } from '../AttachmentDownloadCards';
+/* @conditional-compile-remove(attachment-download) */
+import { AttachmentMetadata } from '../../types';
 
 type ChatMessageContentProps = {
   message: ChatMessage;
   strings: MessageThreadStrings;
   /* @conditional-compile-remove(mention) */
   mentionDisplayOptions?: MentionDisplayOptions;
-  /* @conditional-compile-remove(image-overlay) */
   inlineImageOptions?: InlineImageOptions;
 };
 
@@ -44,7 +45,6 @@ type MessageContentWithLiveAriaProps = {
   content: JSX.Element;
 };
 
-/* @conditional-compile-remove(image-overlay) */
 /**
  * InlineImage's state, as reflected in the UI.
  *
@@ -57,7 +57,6 @@ export interface InlineImage {
   imageAttributes: React.ImgHTMLAttributes<HTMLImageElement>;
 }
 
-/* @conditional-compile-remove(image-overlay) */
 /**
  * Options to display inline image in the inline image scenario.
  *
@@ -168,9 +167,12 @@ export const BlockedMessageContent = (props: BlockedMessageContentProps): JSX.El
 };
 
 const extractContentForAllyMessage = (props: ChatMessageContentProps): string => {
-  if (props.message.content) {
+  let attachments = undefined;
+  /* @conditional-compile-remove(attachment-download) */
+  attachments = props.message.attachments;
+  if (props.message.content || attachments) {
     // Replace all <img> tags with 'image' for aria.
-    const parsedContent = DOMPurify.sanitize(props.message.content, {
+    const parsedContent = DOMPurify.sanitize(props.message.content ?? '', {
       ALLOWED_TAGS: ['img'],
       RETURN_DOM_FRAGMENT: true
     });
@@ -183,6 +185,16 @@ const extractContentForAllyMessage = (props: ChatMessageContentProps): string =>
       imageTextNode.innerHTML = 'image ';
       parsedContent.replaceChild(imageTextNode, child);
     });
+
+    // Inject attachment names for aria.
+    if (attachments) {
+      let attachmentList = '';
+      /* @conditional-compile-remove(attachment-download) */
+      attachmentList = attachmentCardGroupDescription(props);
+      const attachmentTextNode = document.createElement('div');
+      attachmentTextNode.innerHTML = ` ${attachmentList} `;
+      parsedContent.appendChild(attachmentTextNode);
+    }
 
     // Strip all html tags from the content for aria.
     const message = DOMPurify.sanitize(parsedContent, { ALLOWED_TAGS: [] });
@@ -211,7 +223,29 @@ const messageContentAriaText = (props: ChatMessageContentProps): string | undefi
       });
 };
 
-/* @conditional-compile-remove(image-overlay) */
+/* @conditional-compile-remove(attachment-download) */
+const attachmentCardGroupDescription = (props: ChatMessageContentProps): string => {
+  const attachments = props.message.attachments;
+  return getAttachmentCountLiveMessage(attachments ?? [], props.strings.attachmentCardGroupMessage);
+};
+
+/* @conditional-compile-remove(attachment-download) */
+/**
+ * @private
+ */
+export const getAttachmentCountLiveMessage = (
+  attachments: AttachmentMetadata[],
+  attachmentCardGroupMessage: string
+): string => {
+  if (attachments.length === 0) {
+    return '';
+  }
+  return _formatString(attachmentCardGroupMessage, {
+    attachmentCount: `${attachments.length}`
+  });
+  return '';
+};
+
 const defaultOnRenderInlineImage = (inlineImage: InlineImage): JSX.Element => {
   return (
     <img
@@ -242,14 +276,11 @@ const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
         }
 
         // Transform inline images
-        /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
         if (domNode.name && domNode.name === 'img' && domNode.attribs && domNode.attribs.id) {
           domNode.attribs['aria-label'] = domNode.attribs.name;
           const imgProps = attributesToProps(domNode.attribs);
-          /* @conditional-compile-remove(image-overlay) */
           const inlineImageProps: InlineImage = { messageId: props.message.messageId, imageAttributes: imgProps };
 
-          /* @conditional-compile-remove(image-overlay) */
           return props.inlineImageOptions?.onRenderInlineImage
             ? props.inlineImageOptions.onRenderInlineImage(inlineImageProps, defaultOnRenderInlineImage)
             : defaultOnRenderInlineImage(inlineImageProps);

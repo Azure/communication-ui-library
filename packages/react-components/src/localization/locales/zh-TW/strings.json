@@ -24,8 +24,8 @@
     "placeholderText": "輸入訊息",
     "textTooLong": "您的訊息長度超過上限。",
     "sendButtonAriaLabel": "傳送訊息",
-    "fileUploadsPendingError": "正在上傳... 請稍候。",
-    "removeFile": "移除檔案",
+    "attachmentUploadsPendingError": "正在上傳... 請稍候。",
+    "removeAttachment": "移除檔案",
     "uploading": "正在上傳",
     "uploadCompleted": "上傳完成"
   },
@@ -33,8 +33,8 @@
     "placeholderText": "輸入訊息",
     "textTooLong": "您的訊息長度超過上限。",
     "sendButtonAriaLabel": "傳送訊息",
-    "fileUploadsPendingError": "正在上傳...請稍候。",
-    "removeFile": "移除檔案",
+    "attachmentUploadsPendingError": "正在上傳...請稍候。",
+    "removeAttachment": "移除檔案",
     "uploading": "正在上傳",
     "uploadCompleted": "上傳完成",
     "boldTooltip": "粗體",
@@ -44,7 +44,18 @@
     "numberListTooltip": "編號清單",
     "increaseIndentTooltip": "增加縮排",
     "decreaseIndentTooltip": "減少縮排",
-    "richTextFormatButtonTooltip": "格式"
+    "insertTableTooltip": "插入表格",
+    "richTextFormatButtonTooltip": "格式",
+    "insertRowOrColumnMenu": "插入",
+    "insertTableMenuTitle": "插入 {column} x {row} 表格",
+    "insertRowAboveMenu": "在上方插入",
+    "insertRowBelowMenu": "在下方插入",
+    "insertColumnLeftMenu": "於左方插入",
+    "insertColumnRightMenu": "於右方插入",
+    "deleteRowOrColumnMenu": "刪除",
+    "deleteColumnMenu": "刪除欄",
+    "deleteRowMenu": "刪除列",
+    "deleteTableMenu": "刪除表格"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "建議"
@@ -66,7 +77,9 @@
   },
   "endCallButton": {
     "label": "離開",
-    "tooltipContent": "離開通話"
+    "tooltipContent": "離開通話",
+    "leaveOption": "離開",
+    "endCallOption": "結束通話"
   },
   "cameraButton": {
     "onLabel": "相機",
@@ -179,10 +192,11 @@
     "editBoxSubmitButton": "完成",
     "messageReadCount": "讀取者為 {messageReadByCount} / {remoteParticipantsCount}",
     "actionMenuMoreOptions": "更多選項",
-    "downloadFile": "下載檔案",
+    "downloadAttachment": "下載檔案",
+    "openAttachment": "開啟檔案",
     "blockedWarningText": "由於組織原則，已刪除此訊息。",
     "blockedWarningLinkText": "詳細資料",
-    "fileCardGroupMessage": "郵件有 {fileCount} 個附件",
+    "attachmentCardGroupMessage": "這則訊息有 {attachmentCount} 個附件",
     "messageDeletedAnnouncementAriaLabel": "訊息已刪除"
   },
   "errorBar": {

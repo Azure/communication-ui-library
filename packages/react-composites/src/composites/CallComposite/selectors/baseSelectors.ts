@@ -4,11 +4,11 @@
 import { CallState as SDKCallStatus, DominantSpeakersInfo } from '@azure/communication-calling';
 import { ParticipantCapabilities } from '@azure/communication-calling';
 import { VideoDeviceInfo, AudioDeviceInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(capabilities) */
+
 import { CapabilitiesChangeInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(capabilities) */
+
 import { ParticipantRole } from '@azure/communication-calling';
 import {
   CallState,
@@ -19,14 +19,17 @@ import {
 } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(spotlight) */
+import { SpotlightedParticipant } from '@azure/communication-calling';
 import { CallAdapterState, CallCompositePage } from '../adapter/CallAdapter';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { VideoBackgroundEffect } from '../adapter/CallAdapter';
 import { _isInCall, _isPreviewOn, _dominantSpeakersWithFlatId } from '@internal/calling-component-bindings';
 import { AdapterErrors } from '../../common/adapters';
-/* @conditional-compile-remove(raise-hand) */
 import { RaisedHandState } from '@internal/calling-stateful-client';
 import { CommunicationIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(acs-close-captions) */
+import { CaptionsKind } from '@azure/communication-calling';
 
 /**
  * @private
@@ -58,7 +61,6 @@ export const getDeviceManager = (state: CallAdapterState): DeviceManagerState =>
  */
 export const getIsScreenShareOn = (state: CallAdapterState): boolean => state.call?.isScreenSharingOn ?? false;
 
-/* @conditional-compile-remove(raise-hand) */
 /**
  * @private
  */
@@ -86,7 +88,6 @@ export const getMicrophones = (state: CallAdapterState): AudioDeviceInfo[] => st
  */
 export const getCameras = (state: CallAdapterState): VideoDeviceInfo[] => state.devices.cameras;
 
-/* @conditional-compile-remove(capabilities) */
 /**
  * @private
  */
@@ -97,7 +98,6 @@ export const getRole = (state: CallAdapterState): ParticipantRole | undefined =>
  */
 export const getPage = (state: CallAdapterState): CallCompositePage => state.page;
 
-/* @conditional-compile-remove(call-transfer) */
 /**
  * @private
  */
@@ -154,12 +154,17 @@ export const getRemoteParticipants = (
  */
 export const getEnvironmentInfo = (state: CallAdapterState): EnvironmentInfo | undefined => state.environmentInfo;
 
-/* @conditional-compile-remove(video-background-effects) */
 /**
  * @private
  */
 export const getSelectedVideoEffect = (state: CallAdapterState): VideoBackgroundEffect | undefined =>
   state.selectedVideoBackgroundEffect;
+
+/* @conditional-compile-remove(acs-close-captions) */
+/** @private */
+export const getCaptionsKind = (state: CallAdapterState): CaptionsKind | undefined => {
+  return state.call?.captionsFeature.captionsKind;
+};
 
 /* @conditional-compile-remove(close-captions) */
 /** @private */
@@ -208,7 +213,6 @@ export const getIsTeamsCall = (state: CallAdapterState): boolean => state.isTeam
  */
 export const getLatestErrors = (state: CallAdapterState): AdapterErrors => state.latestErrors;
 
-/* @conditional-compile-remove(capabilities) */
 /**
  * @private
  */
@@ -225,3 +229,10 @@ export const getTargetCallees = (state: CallAdapterState): CommunicationIdentifi
  * @private
  */
 export const getStartTime = (state: CallAdapterState): Date | undefined => state.call?.startTime;
+
+/* @conditional-compile-remove(spotlight) */
+/**
+ * @private
+ */
+export const getSpotlightedParticipants = (state: CallAdapterState): SpotlightedParticipant[] | undefined =>
+  state.call?.spotlight?.spotlightedParticipants;

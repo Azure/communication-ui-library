@@ -30,9 +30,9 @@ export const usePeoplePane = (props: {
   /* @conditional-compile-remove(spotlight) */
   onStopLocalSpotlight?: () => Promise<void>;
   /* @conditional-compile-remove(spotlight) */
-  onStartRemoteSpotlight?: (userIds?: string[]) => Promise<void>;
+  onStartRemoteSpotlight?: (userIds: string[]) => Promise<void>;
   /* @conditional-compile-remove(spotlight) */
-  onStopRemoteSpotlight?: (userIds?: string[]) => Promise<void>;
+  onStopRemoteSpotlight?: (userIds: string[]) => Promise<void>;
   /* @conditional-compile-remove(spotlight) */
   onStopAllSpotlight?: () => Promise<void>;
   /* @conditional-compile-remove(spotlight) */
@@ -99,13 +99,9 @@ export const usePeoplePane = (props: {
         headingText={localeStrings.peoplePaneTitle}
         dismissSidePaneButtonAriaLabel={localeStrings.dismissSidePaneButtonLabel}
         mobileView={mobileView ?? false}
-        /* @conditional-compile-remove(spotlight) */
-        moreSidePaneButtonAriaLabel={localeStrings.peoplePaneMoreButtonAriaLabel}
-        /* @conditional-compile-remove(spotlight) */
-        menuProps={sidePaneHeaderMenuProps}
       />
     ),
-    [mobileView, closePane, localeStrings, /* @conditional-compile-remove(spotlight) */ sidePaneHeaderMenuProps]
+    [mobileView, closePane, localeStrings]
   );
 
   /* @conditional-compile-remove(spotlight) */
@@ -116,8 +112,8 @@ export const usePeoplePane = (props: {
       const isMe = myUserId === participantId;
       if (isSpotlighted) {
         const stopSpotlightMenuText = isMe
-          ? localeStrings.stopSpotlightOnSelfParticipantListMenuLabel
-          : localeStrings.stopSpotlightParticipantListMenuLabel;
+          ? localeStrings.stopSpotlightOnSelfMenuLabel
+          : localeStrings.stopSpotlightMenuLabel;
         const onStopSpotlight = isMe
           ? onStopLocalSpotlight
           : onStopRemoteSpotlight
@@ -140,8 +136,8 @@ export const usePeoplePane = (props: {
       } else {
         const startSpotlightMenuText =
           spotlightedParticipantUserIds && spotlightedParticipantUserIds.length > 0
-            ? localeStrings.addSpotlightParticipantListMenuLabel
-            : localeStrings.startSpotlightParticipantListMenuLabel;
+            ? localeStrings.addSpotlightMenuLabel
+            : localeStrings.startSpotlightMenuLabel;
         const maxSpotlightedParticipantsReached = maxParticipantsToSpotlight
           ? spotlightedParticipantUserIds
             ? spotlightedParticipantUserIds.length >= maxParticipantsToSpotlight
@@ -165,9 +161,7 @@ export const usePeoplePane = (props: {
             },
             ariaLabel: startSpotlightMenuText,
             disabled: maxSpotlightedParticipantsReached,
-            title: maxSpotlightedParticipantsReached
-              ? localeStrings.spotlightLimitReachedParticipantListMenuTitle
-              : undefined
+            title: maxSpotlightedParticipantsReached ? localeStrings.spotlightLimitReachedMenuTitle : undefined
           });
         }
       }
@@ -182,11 +176,11 @@ export const usePeoplePane = (props: {
       onStartRemoteSpotlight,
       onStopRemoteSpotlight,
       onFetchParticipantMenuItems,
-      localeStrings.stopSpotlightParticipantListMenuLabel,
-      localeStrings.stopSpotlightOnSelfParticipantListMenuLabel,
-      localeStrings.addSpotlightParticipantListMenuLabel,
-      localeStrings.startSpotlightParticipantListMenuLabel,
-      localeStrings.spotlightLimitReachedParticipantListMenuTitle,
+      localeStrings.stopSpotlightMenuLabel,
+      localeStrings.stopSpotlightOnSelfMenuLabel,
+      localeStrings.addSpotlightMenuLabel,
+      localeStrings.startSpotlightMenuLabel,
+      localeStrings.spotlightLimitReachedMenuTitle,
       maxParticipantsToSpotlight
     ]
   );
@@ -203,9 +197,18 @@ export const usePeoplePane = (props: {
         onFetchParticipantMenuItems={_onFetchParticipantMenuItems}
         setDrawerMenuItems={setDrawerMenuItems}
         mobileView={mobileView}
+        /* @conditional-compile-remove(spotlight) */
+        participantListHeadingMoreButtonProps={sidePaneHeaderMenuProps}
       />
     );
-  }, [inviteLink, mobileView, onFetchAvatarPersonaData, _onFetchParticipantMenuItems, setDrawerMenuItems]);
+  }, [
+    inviteLink,
+    mobileView,
+    onFetchAvatarPersonaData,
+    _onFetchParticipantMenuItems,
+    setDrawerMenuItems,
+    /* @conditional-compile-remove(spotlight) */ sidePaneHeaderMenuProps
+  ]);
 
   const sidePaneRenderer: SidePaneRenderer = useMemo(
     () => ({

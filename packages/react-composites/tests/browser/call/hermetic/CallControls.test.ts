@@ -33,7 +33,6 @@ test.describe('CallControls tests', async () => {
   });
 });
 
-/* @conditional-compile-remove(control-bar-button-injection) */
 test.describe('Call composite custom button injection tests', () => {
   test('injected buttons appear', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
@@ -91,7 +90,6 @@ test.describe('New call control bar renders correctly', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`new-call-control-experience.png`);
   });
 
-  /* @conditional-compile-remove(control-bar-button-injection) */
   test('injected buttons appear', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
     await page.goto(

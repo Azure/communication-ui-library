@@ -14,7 +14,6 @@ import {
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
-/* @conditional-compile-remove(dialpad) */
 import { DtmfTone } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
@@ -32,7 +31,6 @@ import { disposeAllLocalPreviewViews, _isInCall, _isInLobbyOrConnecting, _isPrev
 /* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(video-background-effects) */ /* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(raise-hand) */ /* @conditional-compile-remove(end-of-call-survey) */
 import { Features } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptions } from '@azure/communication-calling';
@@ -60,16 +58,10 @@ export interface CommonCallingHandlers {
   onStopScreenShare: () => Promise<void>;
   onToggleScreenShare: () => Promise<void>;
   onHangUp: (forEveryone?: boolean) => Promise<void>;
-  /* @conditional-compile-remove(raise-hand) */
   onRaiseHand: () => Promise<void>;
-  /* @conditional-compile-remove(raise-hand) */
   onLowerHand: () => Promise<void>;
-  /* @conditional-compile-remove(raise-hand) */
   onToggleRaiseHand: () => Promise<void>;
   /* @conditional-compile-remove(reaction) */
-  /**
-   * @beta
-   */
   onReactionClick: (reaction: Reaction) => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   onToggleHold: () => Promise<void>;
@@ -89,7 +81,6 @@ export interface CommonCallingHandlers {
   onDisposeLocalStreamView: () => Promise<void>;
   onDisposeRemoteVideoStreamView: (userId: string) => Promise<void>;
   onDisposeRemoteScreenShareStreamView: (userId: string) => Promise<void>;
-  /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
   onSendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
   onRemoveParticipant(userId: string): Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
@@ -97,11 +88,11 @@ export interface CommonCallingHandlers {
   /* @conditional-compile-remove(call-readiness) */
   askDevicePermission: (constrain: PermissionConstraints) => Promise<void>;
   onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => void;
-  /* @conditional-compile-remove(video-background-effects) */
+
   onRemoveVideoBackgroundEffects: () => Promise<void>;
-  /* @conditional-compile-remove(video-background-effects) */
+
   onBlurVideoBackground: (backgroundBlurConfig?: BackgroundBlurConfig) => Promise<void>;
-  /* @conditional-compile-remove(video-background-effects) */
+
   onReplaceVideoBackground: (backgroundReplacementConfig: BackgroundReplacementConfig) => Promise<void>;
   /* @conditional-compile-remove(close-captions) */
   onStartCaptions: (options?: CaptionsOptions) => Promise<void>;
@@ -310,13 +301,10 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
     };
 
-    /* @conditional-compile-remove(raise-hand) */
     const onRaiseHand = async (): Promise<void> => await call?.feature(Features.RaiseHand)?.raiseHand();
 
-    /* @conditional-compile-remove(raise-hand) */
     const onLowerHand = async (): Promise<void> => await call?.feature(Features.RaiseHand)?.lowerHand();
 
-    /* @conditional-compile-remove(raise-hand) */
     const onToggleRaiseHand = async (): Promise<void> => {
       const raiseHandFeature = call?.feature(Features.RaiseHand);
       const localUserId = callClient.getState().userId;
@@ -411,14 +399,22 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         return;
       }
 
+      /**
+       * There is a bug from the calling sdk where if a user leaves and rejoins immediately
+       * it adds 2 more potential streams this remote participant can use. The old 2 streams
+       * still show as available and that is how we got a frozen stream in this case. The stopgap
+       * until streams accurately reflect their availability is to always prioritize the latest streams of a certain type
+       * e.g findLast instead of find
+       */
       // Find the first available stream, if there is none, then get the first stream
       const remoteVideoStream =
-        Object.values(participant.videoStreams).find((i) => i.mediaStreamType === 'Video' && i.isAvailable) ||
-        Object.values(participant.videoStreams).find((i) => i.mediaStreamType === 'Video');
+        Object.values(participant.videoStreams).findLast((i) => i.mediaStreamType === 'Video' && i.isAvailable) ||
+        Object.values(participant.videoStreams).findLast((i) => i.mediaStreamType === 'Video');
 
       const screenShareStream =
-        Object.values(participant.videoStreams).find((i) => i.mediaStreamType === 'ScreenSharing' && i.isAvailable) ||
-        Object.values(participant.videoStreams).find((i) => i.mediaStreamType === 'ScreenSharing');
+        Object.values(participant.videoStreams).findLast(
+          (i) => i.mediaStreamType === 'ScreenSharing' && i.isAvailable
+        ) || Object.values(participant.videoStreams).findLast((i) => i.mediaStreamType === 'ScreenSharing');
 
       let createViewResult: CreateViewResult | undefined = undefined;
       if (remoteVideoStream && remoteVideoStream.isAvailable && !remoteVideoStream.view) {
@@ -530,7 +526,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       await disposeAllLocalPreviewViews(callClient);
     };
 
-    /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
     const onSendDtmfTone = async (dtmfTone: DtmfTone): Promise<void> => await call?.sendDtmf(dtmfTone);
 
     const notImplemented = (): any => {
@@ -544,7 +539,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
     };
 
-    /* @conditional-compile-remove(video-background-effects) */
     const onRemoveVideoBackgroundEffects = async (): Promise<void> => {
       const stream =
         call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video') ||
@@ -558,7 +552,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
     };
 
-    /* @conditional-compile-remove(video-background-effects) */
     const onBlurVideoBackground = async (backgroundBlurConfig?: BackgroundBlurConfig): Promise<void> => {
       const stream =
         call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video') ||
@@ -574,7 +567,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
     };
 
-    /* @conditional-compile-remove(video-background-effects) */
     const onReplaceVideoBackground = async (
       backgroundReplacementConfig: BackgroundReplacementConfig
     ): Promise<void> => {
@@ -632,9 +624,11 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       await call?.feature(Features.Spotlight).stopAllSpotlight();
     };
     /* @conditional-compile-remove(spotlight) */
-    const canSpotlight = call?.feature(Features.Capabilities).capabilities.spotlightParticipant.isPresent;
+    const canStartSpotlight = call?.feature(Features.Capabilities).capabilities.spotlightParticipant.isPresent;
     /* @conditional-compile-remove(spotlight) */
-    const onStartLocalSpotlight = canSpotlight
+    const canRemoveSpotlight = call?.feature(Features.Capabilities).capabilities.removeParticipantsSpotlight.isPresent;
+    /* @conditional-compile-remove(spotlight) */
+    const onStartLocalSpotlight = canStartSpotlight
       ? async (): Promise<void> => {
           await call?.feature(Features.Spotlight).startSpotlight();
         }
@@ -644,14 +638,14 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       await call?.feature(Features.Spotlight).stopSpotlight();
     };
     /* @conditional-compile-remove(spotlight) */
-    const onStartRemoteSpotlight = canSpotlight
+    const onStartRemoteSpotlight = canStartSpotlight
       ? async (userIds?: string[]): Promise<void> => {
           const participants = userIds?.map((userId) => _toCommunicationIdentifier(userId));
           await call?.feature(Features.Spotlight).startSpotlight(participants);
         }
       : undefined;
     /* @conditional-compile-remove(spotlight) */
-    const onStopRemoteSpotlight = canSpotlight
+    const onStopRemoteSpotlight = canRemoveSpotlight
       ? async (userIds?: string[]): Promise<void> => {
           const participants = userIds?.map((userId) => _toCommunicationIdentifier(userId));
           await call?.feature(Features.Spotlight).stopSpotlight(participants);
@@ -677,11 +671,8 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onDisposeLocalStreamView,
       onDisposeRemoteScreenShareStreamView,
       onDisposeRemoteVideoStreamView,
-      /* @conditional-compile-remove(raise-hand) */
       onRaiseHand,
-      /* @conditional-compile-remove(raise-hand) */
       onLowerHand,
-      /* @conditional-compile-remove(raise-hand) */
       onToggleRaiseHand,
       /* @conditional-compile-remove(reaction) */
       onReactionClick: onReactionClick,
@@ -689,14 +680,14 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onAddParticipant: notImplemented,
       onRemoveParticipant: notImplemented,
       onStartCall: notImplemented,
-      /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */ onSendDtmfTone,
+      onSendDtmfTone,
       /* @conditional-compile-remove(call-readiness) */
       askDevicePermission,
-      /* @conditional-compile-remove(video-background-effects) */
+
       onRemoveVideoBackgroundEffects,
-      /* @conditional-compile-remove(video-background-effects) */
+
       onBlurVideoBackground,
-      /* @conditional-compile-remove(video-background-effects) */
+
       onReplaceVideoBackground,
       /* @conditional-compile-remove(close-captions) */
       onStartCaptions,

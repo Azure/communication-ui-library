@@ -10,6 +10,10 @@ import { CallWithChatComposite } from './CallWithChatComposite';
 import { CallWithChatAdapterState } from './state/CallWithChatAdapterState';
 import { registerIcons } from '@fluentui/react';
 
+window.AudioContext = jest.fn().mockImplementation(() => {
+  return {};
+});
+
 function createMockCallWithChatAdapter(): CallWithChatAdapter {
   const callWithChatAdapter = {} as CallWithChatAdapter;
   callWithChatAdapter.onStateChange = jest.fn();

@@ -24,8 +24,8 @@
     "placeholderText": "أدخل رسالة",
     "textTooLong": "تجاوز طول الرسالة الحد الأقصى.",
     "sendButtonAriaLabel": "إرسال رسالة",
-    "fileUploadsPendingError": "جارِ التحميل... يرجى الانتظار.",
-    "removeFile": "إزالة الملف",
+    "attachmentUploadsPendingError": "جارِ التحميل... يرجى الانتظار.",
+    "removeAttachment": "إزالة الملف",
     "uploading": "جارٍ التحميل",
     "uploadCompleted": "اكتمل التحميل"
   },
@@ -33,8 +33,8 @@
     "placeholderText": "أدخل رسالة",
     "textTooLong": "تجاوز طول الرسالة الحد الأقصى.",
     "sendButtonAriaLabel": "إرسال رسالة",
-    "fileUploadsPendingError": "جارٍ التحميل... الرجاء الانتظار.",
-    "removeFile": "إزالة الملف",
+    "attachmentUploadsPendingError": "جارٍ التحميل... الرجاء الانتظار.",
+    "removeAttachment": "إزالة الملف",
     "uploading": "يتم الآن التحميل",
     "uploadCompleted": "اكتمل التحميل",
     "boldTooltip": "غامق",
@@ -44,7 +44,18 @@
     "numberListTooltip": "قائمة مرقّمة",
     "increaseIndentTooltip": "زيادة المسافة البادئة",
     "decreaseIndentTooltip": "إنقاص المسافة البادئة",
-    "richTextFormatButtonTooltip": "تنسيق"
+    "insertTableTooltip": "إدراج جدول",
+    "richTextFormatButtonTooltip": "تنسيق",
+    "insertRowOrColumnMenu": "إدراج",
+    "insertTableMenuTitle": "إدراج جدول بـ {column} x {row}",
+    "insertRowAboveMenu": "إدراج أعلاه",
+    "insertRowBelowMenu": "إدراج أدناه",
+    "insertColumnLeftMenu": "إدراج يساراً",
+    "insertColumnRightMenu": "إدراج يميناً",
+    "deleteRowOrColumnMenu": "حذف",
+    "deleteColumnMenu": "حذف العمود",
+    "deleteRowMenu": "حذف الصف",
+    "deleteTableMenu": "حذف الجدول"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "الاقتراحات"
@@ -66,7 +77,9 @@
   },
   "endCallButton": {
     "label": "مغادرة",
-    "tooltipContent": "مغادرة المكالمة"
+    "tooltipContent": "مغادرة المكالمة",
+    "leaveOption": "مغادرة",
+    "endCallOption": "إنهاء المكالمة"
   },
   "cameraButton": {
     "onLabel": "الكاميرا",
@@ -179,10 +192,11 @@
     "editBoxSubmitButton": "تم",
     "messageReadCount": "تمت القراءة بواسطة {messageReadByCount} من {remoteParticipantsCount}",
     "actionMenuMoreOptions": "المزيد من الخيارات",
-    "downloadFile": "تنزيل ملف",
+    "downloadAttachment": "تنزيل ملف",
+    "openAttachment": "فتح ملف",
     "blockedWarningText": "تم حذف هذه الرسالة بسبب نهج تنظيمي.",
     "blockedWarningLinkText": "تفاصيل",
-    "fileCardGroupMessage": "تحتوي الرسالة على مرفق {fileCount}",
+    "attachmentCardGroupMessage": "تحتوي الرسالة على مرفق {attachmentCount}",
     "messageDeletedAnnouncementAriaLabel": "تم حذف الرسالة"
   },
   "errorBar": {

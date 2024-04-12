@@ -1,15 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(raise-hand) */
 import { RaiseHandCallFeature, RaisedHandChangedEvent } from '@azure/communication-calling';
-/* @conditional-compile-remove(raise-hand) */
 import { CallContext } from './CallContext';
-/* @conditional-compile-remove(raise-hand) */
 import { CallIdRef } from './CallIdRef';
-/* @conditional-compile-remove(raise-hand) */
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(raise-hand) */
 /**
  * @private
  */

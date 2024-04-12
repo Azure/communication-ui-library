@@ -255,6 +255,7 @@ test.describe('VideoGallery tests', async () => {
     await pageClick(page, dataUiId(IDS.moreButton));
     await page.locator('span:has-text("View")');
     await page.locator('span:has-text("View")').click();
+    await page.locator('div[role=menuitem]').first().focus();
     expect(await stableScreenshot(page)).toMatchSnapshot('gallery-options-mobile.png');
   });
 });

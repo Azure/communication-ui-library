@@ -4,7 +4,7 @@
 /* @conditional-compile-remove(reaction) */
 /**
  * Type for animation sprite image and related metadata
- * @beta
+ * @public
  */
 export type ReactionSprite = {
   /**
@@ -15,16 +15,12 @@ export type ReactionSprite = {
    * The frame count of the resource reaction in the sprite image
    */
   frameCount: number;
-  /**
-   * The square size of one frame in the animation resource..
-   */
-  size?: number;
 };
 
 /* @conditional-compile-remove(reaction) */
 /**
  * Interface for animation sprite image and related metadata
- * @beta
+ * @public
  */
 export interface ReactionResources {
   /**
@@ -48,3 +44,10 @@ export interface ReactionResources {
    */
   surprisedReaction?: ReactionSprite;
 }
+
+//* @conditional-compile-remove(reaction) */
+/**
+ * Options for overlay mode for reaction rendering
+ * @internal
+ */
+export type OverlayModeTypes = 'grid-tiles' | 'screen-share' | 'content-share';

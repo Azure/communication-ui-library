@@ -24,8 +24,8 @@
     "placeholderText": "Kirjoita viesti",
     "textTooLong": "Viestin pituus ylittää enimmäispituuden.",
     "sendButtonAriaLabel": "Lähetä viesti",
-    "fileUploadsPendingError": "Ladataan palvelimeen... Odota hetki.",
-    "removeFile": "Poista tiedosto",
+    "attachmentUploadsPendingError": "Ladataan palvelimeen... Odota hetki.",
+    "removeAttachment": "Poista tiedosto",
     "uploading": "Ladataan palvelimeen",
     "uploadCompleted": "Ladattu palvelimeen"
   },
@@ -33,8 +33,8 @@
     "placeholderText": "Kirjoita viesti",
     "textTooLong": "Viestin pituus ylittää enimmäispituuden.",
     "sendButtonAriaLabel": "Lähetä viesti",
-    "fileUploadsPendingError": "Ladataan... Odota.",
-    "removeFile": "Poista tiedosto",
+    "attachmentUploadsPendingError": "Ladataan... Odota.",
+    "removeAttachment": "Poista tiedosto",
     "uploading": "Ladataan",
     "uploadCompleted": "Lataus valmis",
     "boldTooltip": "Lihavoi",
@@ -44,7 +44,18 @@
     "numberListTooltip": "Numeroitu luettelo",
     "increaseIndentTooltip": "Suurenna sisennystä",
     "decreaseIndentTooltip": "Pienennä sisennystä",
-    "richTextFormatButtonTooltip": "Muoto"
+    "insertTableTooltip": "Lisää taulukko",
+    "richTextFormatButtonTooltip": "Muoto",
+    "insertRowOrColumnMenu": "Lisää",
+    "insertTableMenuTitle": "Lisää {row}x{column}-kokoinen taulukko",
+    "insertRowAboveMenu": "Lisää yläpuolelle",
+    "insertRowBelowMenu": "Lisää alapuolelle",
+    "insertColumnLeftMenu": "Lisää vasemmalle",
+    "insertColumnRightMenu": "Lisää oikealle",
+    "deleteRowOrColumnMenu": "Poista",
+    "deleteColumnMenu": "Poista sarake",
+    "deleteRowMenu": "Poista rivi",
+    "deleteTableMenu": "Poista taulukko"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Ehdotuksia"
@@ -66,7 +77,9 @@
   },
   "endCallButton": {
     "label": "Poistu",
-    "tooltipContent": "Poistu puhelusta"
+    "tooltipContent": "Poistu puhelusta",
+    "leaveOption": "Poistu",
+    "endCallOption": "Lopeta puhelu"
   },
   "cameraButton": {
     "onLabel": "Kamera",
@@ -179,10 +192,11 @@
     "editBoxSubmitButton": "Valmis",
     "messageReadCount": "{messageReadByCount}/{remoteParticipantsCount} osallistujaa on lukenut viestin",
     "actionMenuMoreOptions": "Lisää vaihtoehtoja",
-    "downloadFile": "Lataa tiedosto",
+    "downloadAttachment": "Lataa tiedosto",
+    "openAttachment": "Avaa tiedosto",
     "blockedWarningText": "Tämä viesti poistettiin organisaation käytännön vuoksi.",
     "blockedWarningLinkText": "Lisätiedot",
-    "fileCardGroupMessage": "Viestissä on {fileCount} liite",
+    "attachmentCardGroupMessage": "Viestissä on {attachmentCount} liitettä",
     "messageDeletedAnnouncementAriaLabel": "Viesti on poistettu"
   },
   "errorBar": {

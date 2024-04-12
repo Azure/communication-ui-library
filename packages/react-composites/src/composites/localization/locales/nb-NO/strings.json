@@ -61,11 +61,11 @@
     "removedFromCallMoreDetails": "En annen deltaker fjernet deg fra samtalen.",
     "removedFromCallTitle": "Du ble fjernet",
     "removeMenuLabel": "Fjern",
-    "startSpotlightParticipantListMenuLabel": "Sett i rampelyset for alle",
-    "addSpotlightParticipantListMenuLabel": "Legg til rampelys",
-    "stopSpotlightParticipantListMenuLabel": "Fjern fra rampelyset",
-    "stopSpotlightOnSelfParticipantListMenuLabel": "Rampelys av",
-    "spotlightLimitReachedParticipantListMenuTitle": "Rampelys-grensen er nådd",
+    "startSpotlightMenuLabel": "Sett i rampelyset for alle",
+    "addSpotlightMenuLabel": "Legg til rampelys",
+    "stopSpotlightMenuLabel": "Fjern fra rampelyset",
+    "stopSpotlightOnSelfMenuLabel": "Rampelys av",
+    "spotlightLimitReachedMenuTitle": "Rampelys-grensen er nådd",
     "stopAllSpotlightMenuLabel": "Stopp rampelyset for alle",
     "returnToCallButtonAriaDescription": "Gå tilbake til samtale",
     "returnToCallButtonAriaLabel": "Tilbake",
@@ -315,18 +315,27 @@
       "startSpotlightCancelButtonLabel": "Avbryt",
       "stopSpotlightHeading": "Slutte å sette denne videoen i rampelyset?",
       "stopSpotlightOnSelfHeading": "Fjern rampelyset?",
+      "stopAllSpotlightHeading": "Vil du stoppe rampelyset for alle videoer?",
       "stopSpotlightText": "Denne videoen vil ikke lenger være uthevet for alle i møtet.",
       "stopSpotlightOnSelfText": "Videoen vil ikke lenger være uthevet for alle i møtet.",
+      "stopAllSpotlightText": "Videoene vil ikke lenger være uthevet for alle i møtet.",
       "stopSpotlightConfirmButtonLabel": "Fjern fra rampelyset",
       "stopSpotlightOnSelfConfirmButtonLabel": "Rampelys av",
       "stopSpotlightCancelButtonLabel": "Avbryt"
     },
     "exitSpotlightButtonLabel": "Rampelys av",
-    "exitSpotlightButtonTooltip": "Rampelys av"
+    "exitSpotlightButtonTooltip": "Rampelys av",
+    "hangUpConfirmButtonLabel": "Bekreft",
+    "hangUpCancelButtonLabel": "Avbryt",
+    "leaveConfirmDialogTitle": "Forlat chatten",
+    "leaveConfirmDialogContent": "Er du sikker på at du vil forlate samtalen?",
+    "endCallConfirmDialogTitle": "Avslutt samtalen?",
+    "endCallConfirmDialogContent": "Du avslutter møtet for alle.",
+    "invalidMeetingIdentifier": "Ugyldig møte-ID eller passord"
   },
   "chat": {
     "chatListHeader": "I denne chatten",
-    "uploadFile": "Last opp fil"
+    "uploadAttachment": "Last opp vedlegg"
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",

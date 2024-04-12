@@ -5,7 +5,6 @@
 /* @conditional-compile-remove(PSTN-calls) */
 import { ParticipantState } from './ParticipantListParticipant';
 
-/* @conditional-compile-remove(raise-hand) */
 import { RaisedHand } from './ParticipantListParticipant';
 /* @conditional-compile-remove(reaction) */
 import { Reaction } from './ParticipantListParticipant';
@@ -98,14 +97,12 @@ export interface CreateVideoStreamViewResult {
  * @public
  */
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
-  /* @conditional-compile-remove(raise-hand) */
   /** Whether local participant is raised a hand */
   raisedHand?: RaisedHand;
   /* @conditional-compile-remove(reaction) */
   /**
    * Whether local participant has reacted
    *
-   * @beta
    * */
   reaction?: Reaction;
 }
@@ -127,14 +124,13 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
    * The connection state of the participant. For example, 'Hold', 'Connecting' etc.
    */
   state?: ParticipantState;
-  /* @conditional-compile-remove(raise-hand) */
   /** Whether participant is raised a hand */
   raisedHand?: RaisedHand;
   /* @conditional-compile-remove(reaction) */
   /**
    * Whether participant has reacted
    *
-   * @beta
+   * @public
    * */
   reaction?: Reaction;
 }

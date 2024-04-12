@@ -3,7 +3,6 @@
 
 import { IPersonaProps, Persona, PersonaInitialsColor } from '@fluentui/react';
 import React, { useEffect, useState } from 'react';
-/* @conditional-compile-remove(raise-hand) */
 import { mergeStyles } from '@fluentui/react';
 
 /**
@@ -65,7 +64,7 @@ export interface AvatarPersonaProps extends IPersonaProps {
   /**
    * Allow to show colored border around persona coin, but isActive is what shows it.
    */
-  /* @conditional-compile-remove(raise-hand) */
+
   allowActiveBorder?: boolean;
 }
 
@@ -93,9 +92,8 @@ export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
     })();
   }, [data, dataProvider, userId]);
 
-  /* @conditional-compile-remove(raise-hand) */
   let activePersona = '';
-  /* @conditional-compile-remove(raise-hand) */
+
   if (props.allowActiveBorder) {
     // Display a border for raised handed participants in participant list
     activePersona = mergeStyles({
@@ -113,7 +111,6 @@ export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
   return (
     <Persona
       {...props}
-      /* @conditional-compile-remove(raise-hand) */
       className={activePersona}
       text={data?.text ?? text}
       imageUrl={data?.imageUrl ?? imageUrl}

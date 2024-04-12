@@ -4,17 +4,16 @@
 import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(video-background-effects) */
+
 import type { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
 /* @conditional-compile-remove(reaction) */
 import { Reaction } from '@azure/communication-calling';
-/* @conditional-compile-remove(capabilities) */
+
 import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(spotlight) */
 import type { SpotlightedParticipant } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCall } from '@azure/communication-calling';
-/* @conditional-compile-remove(call-transfer) */
 import { TransferEventArgs } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { StartCaptionsOptions } from '@azure/communication-calling';
@@ -46,7 +45,7 @@ import { CommunicationIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import type { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
-/* @conditional-compile-remove(video-background-effects) */
+
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
@@ -69,7 +68,7 @@ export type CallCompositePage =
   | 'lobby'
   | 'removedFromCall'
   | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment'
-  | /* @conditional-compile-remove(call-transfer) */ 'transferring';
+  | 'transferring';
 
 /**
  * Subset of CallCompositePages that represent an end call state.
@@ -118,7 +117,6 @@ export type CallAdapterClientState = {
   userId: CommunicationIdentifierKind;
   displayName?: string;
   call?: CallState;
-  /* @conditional-compile-remove(calling-sounds) */
   /**
    * State to track who the original call went out to. will be undefined the call is not a outbound
    * modality. This includes, groupCalls, Rooms calls, and Teams InteropMeetings.
@@ -127,7 +125,6 @@ export type CallAdapterClientState = {
   devices: DeviceManagerState;
   endedCall?: CallState;
   isTeamsCall: boolean;
-  /* @conditional-compile-remove(rooms) */
   /**
    * State to track whether the call is a rooms call.
    */
@@ -151,22 +148,21 @@ export type CallAdapterClientState = {
    * control bar with the CallComposite.
    */
   cameraStatus?: 'On' | 'Off';
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Default set of background images for background replacement effect.
    */
   videoBackgroundImages?: VideoBackgroundImage[];
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Dependency to be injected for video background effect.
    */
   onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * State to track the selected video background effect.
    */
   selectedVideoBackgroundEffect?: VideoBackgroundEffect;
-  /* @conditional-compile-remove(call-transfer) */
   /**
    * Call from transfer request accepted by local user
    */
@@ -176,7 +172,6 @@ export type CallAdapterClientState = {
    * Hide attendee names in teams meeting
    */
   hideAttendeeNames?: boolean;
-  /* @conditional-compile-remove(calling-sounds) */
   /**
    * State to track the sounds to be used in the call.
    */
@@ -184,7 +179,7 @@ export type CallAdapterClientState = {
   /* @conditional-compile-remove(reaction) */
   /**
    * State to track the reactions to be used.
-   * @beta
+   * @public
    */
   reactions?: ReactionResources;
 };
@@ -292,7 +287,6 @@ export type DiagnosticChangedEventListner = (
   event: MediaDiagnosticChangedEvent | NetworkDiagnosticChangedEvent
 ) => void;
 
-/* @conditional-compile-remove(video-background-effects) */
 /**
  * Contains the attibutes of a background image like url, name etc.
  *
@@ -400,7 +394,6 @@ export type IsCaptionLanguageChangedListener = (event: { activeCaptionLanguage: 
  */
 export type IsSpokenLanguageChangedListener = (event: { activeSpokenLanguage: string }) => void;
 
-/* @conditional-compile-remove(call-transfer) */
 /**
  * Callback for {@link CallAdapterSubscribers} 'transferRequested' event.
  *
@@ -408,7 +401,6 @@ export type IsSpokenLanguageChangedListener = (event: { activeSpokenLanguage: st
  */
 export type TransferAcceptedListener = (event: TransferEventArgs) => void;
 
-/* @conditional-compile-remove(capabilities) */
 /**
  * Callback for {@link CallAdapterSubscribers} 'capabilitiesChanged' event.
  *
@@ -427,7 +419,6 @@ export type SpotlightChangedListener = (args: {
   removed: SpotlightedParticipant[];
 }) => void;
 
-/* @conditional-compile-remove(video-background-effects) */
 /**
  * Contains the attibutes of a selected video background effect
  *
@@ -450,7 +441,6 @@ export interface VideoBackgroundNoEffect {
   effectName: 'none';
 }
 
-/* @conditional-compile-remove(video-background-effects) */
 /**
  * Contains the attibutes of the blur video background effect
  *
@@ -463,7 +453,6 @@ export interface VideoBackgroundBlurEffect extends BackgroundBlurConfig {
   effectName: 'blur';
 }
 
-/* @conditional-compile-remove(video-background-effects) */
 /**
  * Contains the attibutes of a selected replacement video background effect
  *
@@ -528,14 +517,12 @@ export interface CallAdapterCallOperations {
    * @public
    */
   startScreenShare(): Promise<void>;
-  /* @conditional-compile-remove(raise-hand) */
   /**
    * Raise hand for current user
    *
    * @public
    */
   raiseHand(): Promise<void>;
-  /* @conditional-compile-remove(raise-hand) */
   /**
    * lower hand for current user
    *
@@ -546,7 +533,7 @@ export interface CallAdapterCallOperations {
   /**
    * Send reaction emoji
    *
-   * @beta
+   * @public
    */
   onReactionClick(reaction: Reaction): Promise<void>;
   /**
@@ -678,21 +665,21 @@ export interface CallAdapterCallOperations {
    * Funtion to stop captions
    */
   stopCaptions(): Promise<void>;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Start the video background effect.
    *
    * @public
    */
   startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Stop the video background effect.
    *
    * @public
    */
   stopVideoBackgroundEffects(): Promise<void>;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Override the background picker images for background replacement effect.
    *
@@ -701,7 +688,7 @@ export interface CallAdapterCallOperations {
    * @public
    */
   updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
-  /* @conditional-compile-remove(video-background-effects) */
+
   /**
    * Update the selected video background effect.
    *
@@ -712,17 +699,19 @@ export interface CallAdapterCallOperations {
   /**
    * Send the end of call survey result
    *
-   * @beta
+   * @public
    */
   submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
   /* @conditional-compile-remove(spotlight) */
   /**
-   * Start spotlight
+   * Start spotlight for local and remote participants by their user ids.
+   * If no array of user ids is passed then action is performed on local participant.
    */
   startSpotlight(userIds?: string[]): Promise<void>;
   /* @conditional-compile-remove(spotlight) */
   /**
-   * Stop spotlight
+   * Stop spotlight for local and remote participants by their user ids.
+   * If no array of user ids is passed then action is performed on local participant.
    */
   stopSpotlight(userIds?: string[]): Promise<void>;
   /* @conditional-compile-remove(spotlight) */
@@ -898,17 +887,15 @@ export interface CallAdapterSubscribers {
    */
   on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
 
-  /* @conditional-compile-remove(call-transfer) */
   /**
    * Subscribe function for 'transferRequested' event.
    */
   on(event: 'transferAccepted', listener: TransferAcceptedListener): void;
-  /* @conditional-compile-remove(capabilities) */
+
   /**
    * Subscribe function for 'capabilitiesChanged' event.
    */
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
-  /* @conditional-compile-remove(rooms) */
   /**
    * Subscribe function for 'roleChanged' event.
    */
@@ -987,17 +974,15 @@ export interface CallAdapterSubscribers {
    * Unsubscribe function for 'isSpokenLanguageChanged' event.
    */
   off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
-  /* @conditional-compile-remove(call-transfer) */
   /**
    * Unsubscribe function for 'transferRequested' event.
    */
   off(event: 'transferAccepted', listener: TransferAcceptedListener): void;
-  /* @conditional-compile-remove(capabilities) */
+
   /**
    * Unsubscribe function for 'capabilitiesChanged' event.
    */
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
-  /* @conditional-compile-remove(rooms) */
   /**
    * Unsubscribe function for 'roleChanged' event.
    */

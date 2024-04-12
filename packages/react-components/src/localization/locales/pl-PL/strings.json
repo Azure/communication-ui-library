@@ -24,8 +24,8 @@
     "placeholderText": "Wprowadź wiadomość",
     "textTooLong": "Długość wiadomości przekracza maksymalny limit.",
     "sendButtonAriaLabel": "Wyślij wiadomość",
-    "fileUploadsPendingError": "Trwa przekazywanie... Czekaj.",
-    "removeFile": "Usuwanie pliku",
+    "attachmentUploadsPendingError": "Trwa przekazywanie... Czekaj.",
+    "removeAttachment": "Usuń plik",
     "uploading": "Przekazywanie",
     "uploadCompleted": "Zakończono przekazywanie"
   },
@@ -33,8 +33,8 @@
     "placeholderText": "Wprowadź wiadomość",
     "textTooLong": "Długość wiadomości przekracza maksymalny limit.",
     "sendButtonAriaLabel": "Wyślij wiadomość",
-    "fileUploadsPendingError": "Trwa przekazywanie... Czekaj.",
-    "removeFile": "Usuń plik",
+    "attachmentUploadsPendingError": "Trwa przekazywanie... Czekaj.",
+    "removeAttachment": "Usuwanie pliku",
     "uploading": "Przekazywanie",
     "uploadCompleted": "Zakończono przekazywanie",
     "boldTooltip": "Pogrubienie",
@@ -44,7 +44,18 @@
     "numberListTooltip": "Lista numerowana",
     "increaseIndentTooltip": "Zwiększ wcięcie",
     "decreaseIndentTooltip": "Zmniejsz wcięcie",
-    "richTextFormatButtonTooltip": "Formatowanie"
+    "insertTableTooltip": "Wstaw tabelę",
+    "richTextFormatButtonTooltip": "Formatowanie",
+    "insertRowOrColumnMenu": "Wstaw",
+    "insertTableMenuTitle": "Wstaw tabelę {column} x {row}",
+    "insertRowAboveMenu": "Wstaw powyżej",
+    "insertRowBelowMenu": "Wstaw poniżej",
+    "insertColumnLeftMenu": "Wstaw z lewej",
+    "insertColumnRightMenu": "Wstaw z prawej",
+    "deleteRowOrColumnMenu": "Usuń",
+    "deleteColumnMenu": "Usuń kolumnę",
+    "deleteRowMenu": "Usuń wiersz",
+    "deleteTableMenu": "Usuń tabelę"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Sugestie"
@@ -66,7 +77,9 @@
   },
   "endCallButton": {
     "label": "Wyjdź",
-    "tooltipContent": "Opuść rozmowę"
+    "tooltipContent": "Opuść rozmowę",
+    "leaveOption": "Opuść",
+    "endCallOption": "Zakończ połączenie"
   },
   "cameraButton": {
     "onLabel": "Kamera",
@@ -179,10 +192,11 @@
     "editBoxSubmitButton": "Gotowe",
     "messageReadCount": "Przeczytane przez {messageReadByCount} z {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Więcej opcji",
-    "downloadFile": "Pobierz plik",
+    "downloadAttachment": "Pobierz plik",
+    "openAttachment": "Otwórz plik",
     "blockedWarningText": "Ta wiadomość została usunięta ze względu na zasady organizacyjne.",
     "blockedWarningLinkText": "Szczegóły",
-    "fileCardGroupMessage": "Wiadomość ma następującą liczbę załączników: {fileCount}",
+    "attachmentCardGroupMessage": "Wiadomość ma {attachmentCount} załącznik",
     "messageDeletedAnnouncementAriaLabel": "Wiadomość została usunięta"
   },
   "errorBar": {

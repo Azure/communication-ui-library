@@ -24,8 +24,8 @@
     "placeholderText": "Введите сообщение",
     "textTooLong": "Длина сообщения превышает максимально допустимую.",
     "sendButtonAriaLabel": "Отправить сообщение",
-    "fileUploadsPendingError": "Выполняется загрузка. Подождите...",
-    "removeFile": "Удалить файл",
+    "attachmentUploadsPendingError": "Выполняется загрузка. Подождите...",
+    "removeAttachment": "Удалить файл",
     "uploading": "Отправка",
     "uploadCompleted": "Отправка завершена"
   },
@@ -33,8 +33,8 @@
     "placeholderText": "Введите сообщение",
     "textTooLong": "Длина сообщения превышает максимально допустимую.",
     "sendButtonAriaLabel": "Отправить сообщение",
-    "fileUploadsPendingError": "Производится отправка... Подождите.",
-    "removeFile": "Удалить файл",
+    "attachmentUploadsPendingError": "Производится отправка... Подождите.",
+    "removeAttachment": "Удалить файл",
     "uploading": "Отправка",
     "uploadCompleted": "Отправка завершена",
     "boldTooltip": "Полужирный",
@@ -44,7 +44,18 @@
     "numberListTooltip": "Нумерованный список",
     "increaseIndentTooltip": "Увеличить отступ",
     "decreaseIndentTooltip": "Уменьшить отступ",
-    "richTextFormatButtonTooltip": "Формат"
+    "insertTableTooltip": "Вставить таблицу",
+    "richTextFormatButtonTooltip": "Формат",
+    "insertRowOrColumnMenu": "Вставить",
+    "insertTableMenuTitle": "Вставить таблицу {column} x {row}",
+    "insertRowAboveMenu": "Вставить сверху",
+    "insertRowBelowMenu": "Вставить снизу",
+    "insertColumnLeftMenu": "Вставить слева",
+    "insertColumnRightMenu": "Вставить справа",
+    "deleteRowOrColumnMenu": "Удалить",
+    "deleteColumnMenu": "Удалить столбец",
+    "deleteRowMenu": "Удалить строку",
+    "deleteTableMenu": "Удалить таблицу"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Рекомендации"
@@ -66,7 +77,9 @@
   },
   "endCallButton": {
     "label": "Выйти",
-    "tooltipContent": "Покинуть вызов"
+    "tooltipContent": "Покинуть вызов",
+    "leaveOption": "Выйти",
+    "endCallOption": "Завершить звонок"
   },
   "cameraButton": {
     "onLabel": "Камера",
@@ -179,10 +192,11 @@
     "editBoxSubmitButton": "Готово",
     "messageReadCount": "Прочитали: {messageReadByCount} из {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Дополнительные параметры",
-    "downloadFile": "Скачать файл",
+    "downloadAttachment": "Скачать файл",
+    "openAttachment": "Открыть файл",
     "blockedWarningText": "Это сообщение было удалено политикой организации.",
     "blockedWarningLinkText": "Сведения",
-    "fileCardGroupMessage": "Сообщение содержит {fileCount} вложение",
+    "attachmentCardGroupMessage": "Сообщение содержит {attachmentCount} вложение",
     "messageDeletedAnnouncementAriaLabel": "Сообщение удалено"
   },
   "errorBar": {

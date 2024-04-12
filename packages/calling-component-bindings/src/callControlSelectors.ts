@@ -14,12 +14,10 @@ import {
 } from './baseSelectors';
 /* @conditional-compile-remove(reaction) */
 import { getLocalParticipantReactionState } from './baseSelectors';
-/* @conditional-compile-remove(capabilities) */
+
 import { getCapabilities, getRole } from './baseSelectors';
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(raise-hand) */
 import { getCallState } from './baseSelectors';
 import { _isPreviewOn } from './utils/callUtils';
-/* @conditional-compile-remove(raise-hand) */
 import { getLocalParticipantRaisedHand } from './baseSelectors';
 /**
  * Selector type for {@link MicrophoneButton} component.
@@ -44,27 +42,15 @@ export type MicrophoneButtonSelector = (
  * @public
  */
 export const microphoneButtonSelector: MicrophoneButtonSelector = reselect.createSelector(
-  [
-    getCallExists,
-    getIsMuted,
-    getDeviceManager,
-    /* @conditional-compile-remove(capabilities) */ getCapabilities,
-    /* @conditional-compile-remove(capabilities) */ getRole
-  ],
-  (
-    callExists,
-    isMuted,
-    deviceManager,
-    /* @conditional-compile-remove(capabilities) */ capabilities,
-    /* @conditional-compile-remove(capabilities) */ role
-  ) => {
+  [getCallExists, getIsMuted, getDeviceManager, getCapabilities, getRole],
+  (callExists, isMuted, deviceManager, capabilities, role) => {
     const permission = deviceManager.deviceAccess ? deviceManager.deviceAccess.audio : true;
-    /* @conditional-compile-remove(capabilities) */
+
     const incapable =
       (capabilities?.unmuteMic.isPresent === false && capabilities?.unmuteMic.reason !== 'NotInitialized') ||
       role === 'Consumer';
     return {
-      disabled: !callExists || !permission || /* @conditional-compile-remove(capabilities) */ incapable,
+      disabled: !callExists || !permission || incapable,
       checked: callExists ? !isMuted : false,
       microphones: deviceManager.microphones,
       speakers: deviceManager.speakers,
@@ -95,31 +81,17 @@ export type CameraButtonSelector = (
  * @public
  */
 export const cameraButtonSelector: CameraButtonSelector = reselect.createSelector(
-  [
-    getLocalVideoStreams,
-    getDeviceManager,
-    /* @conditional-compile-remove(capabilities) */ getCapabilities,
-    /* @conditional-compile-remove(capabilities) */ getRole
-  ],
-  (
-    localVideoStreams,
-    deviceManager,
-    /* @conditional-compile-remove(capabilities) */ capabilities,
-    /* @conditional-compile-remove(capabilities) */ role
-  ) => {
+  [getLocalVideoStreams, getDeviceManager, getCapabilities, getRole],
+  (localVideoStreams, deviceManager, capabilities, role) => {
     const previewOn = _isPreviewOn(deviceManager);
     const localVideoFromCall = localVideoStreams?.find((stream) => stream.mediaStreamType === 'Video');
     const permission = deviceManager.deviceAccess ? deviceManager.deviceAccess.video : true;
-    /* @conditional-compile-remove(capabilities) */
+
     const incapable =
       (capabilities?.turnVideoOn.isPresent === false && capabilities?.turnVideoOn.reason !== 'NotInitialized') ||
       role === 'Consumer';
     return {
-      disabled:
-        !deviceManager.selectedCamera ||
-        !permission ||
-        !deviceManager.cameras.length ||
-        /* @conditional-compile-remove(capabilities) */ incapable,
+      disabled: !deviceManager.selectedCamera || !permission || !deviceManager.cameras.length || incapable,
       checked: localVideoStreams !== undefined && localVideoStreams.length > 0 ? !!localVideoFromCall : previewOn,
       cameras: deviceManager.cameras,
       selectedCamera: deviceManager.selectedCamera
@@ -137,10 +109,9 @@ export type ScreenShareButtonSelector = (
   props: CallingBaseSelectorProps
 ) => {
   checked?: boolean;
-  /* @conditional-compile-remove(capabilities) */ /* @conditional-compile-remove(PSTN-calls) */ disabled?: boolean;
+  disabled?: boolean;
 };
 
-/* @conditional-compile-remove(raise-hand) */
 /**
  * Selector type for {@link RaiseHandButton} component.
  *
@@ -154,7 +125,6 @@ export type RaiseHandButtonSelector = (
   disabled?: boolean;
 };
 
-/* @conditional-compile-remove(raise-hand) */
 /**
  * Selector for {@link RaiseHandButton} component.
  *
@@ -174,7 +144,7 @@ export const raiseHandButtonSelector: RaiseHandButtonSelector = reselect.createS
 /**
  * Selector type for {@link ReactionButton} component.
  *
- * @beta
+ * @public
  */
 export type ReactionButtonSelector = (
   state: CallClientState,
@@ -188,7 +158,7 @@ export type ReactionButtonSelector = (
 /**
  * Selector for {@link ReactionButton} component.
  *
- * @beta
+ * @public
  */
 export const reactionButtonSelector: ReactionButtonSelector = reselect.createSelector(
   [getLocalParticipantReactionState, getCallState],
@@ -206,20 +176,10 @@ export const reactionButtonSelector: ReactionButtonSelector = reselect.createSel
  * @public
  */
 export const screenShareButtonSelector: ScreenShareButtonSelector = reselect.createSelector(
-  [
-    getIsScreenSharingOn,
-    /* @conditional-compile-remove(PSTN-calls) */ getCallState,
-    /* @conditional-compile-remove(capabilities) */ getCapabilities,
-    /* @conditional-compile-remove(capabilities) */ getRole
-  ],
-  (
-    isScreenSharingOn,
-    /* @conditional-compile-remove(PSTN-calls) */ callState,
-    /* @conditional-compile-remove(capabilities) */ capabilities,
-    /* @conditional-compile-remove(capabilities) */ role
-  ) => {
+  [getIsScreenSharingOn, /* @conditional-compile-remove(PSTN-calls) */ getCallState, getCapabilities, getRole],
+  (isScreenSharingOn, /* @conditional-compile-remove(PSTN-calls) */ callState, capabilities, role) => {
     let disabled: boolean | undefined = undefined;
-    /* @conditional-compile-remove(capabilities) */
+
     disabled =
       disabled ||
       (capabilities?.shareScreen.isPresent === false && capabilities?.shareScreen.reason !== 'NotInitialized') ||

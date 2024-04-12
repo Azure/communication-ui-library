@@ -24,8 +24,8 @@
     "placeholderText": "Saisir un message",
     "textTooLong": "La longueur de votre message dépasse la limite maximale.",
     "sendButtonAriaLabel": "Envoyer un message",
-    "fileUploadsPendingError": "Chargement en cours... Veuillez patienter.",
-    "removeFile": "Supprimer un fichier",
+    "attachmentUploadsPendingError": "Chargement en cours... Veuillez patienter.",
+    "removeAttachment": "Supprimer le fichier",
     "uploading": "Chargement",
     "uploadCompleted": "Téléchargement terminé"
   },
@@ -33,8 +33,8 @@
     "placeholderText": "Saisir un message",
     "textTooLong": "La longueur de votre message dépasse la limite maximale.",
     "sendButtonAriaLabel": "Envoyer un message",
-    "fileUploadsPendingError": "Chargement en cours... Veuillez patienter.",
-    "removeFile": "Supprimer le fichier",
+    "attachmentUploadsPendingError": "Chargement en cours... Veuillez patienter.",
+    "removeAttachment": "Supprimer un fichier",
     "uploading": "Téléchargement",
     "uploadCompleted": "Chargement terminé",
     "boldTooltip": "Gras",
@@ -44,7 +44,18 @@
     "numberListTooltip": "Liste numérotée",
     "increaseIndentTooltip": "Augmenter le retrait",
     "decreaseIndentTooltip": "Réduire le retrait",
-    "richTextFormatButtonTooltip": "Format"
+    "insertTableTooltip": "Insérer un tableau",
+    "richTextFormatButtonTooltip": "Format",
+    "insertRowOrColumnMenu": "Insérer",
+    "insertTableMenuTitle": "Insérer une table {column} x {row}",
+    "insertRowAboveMenu": "Insérer au-dessus",
+    "insertRowBelowMenu": "Insérer l’élément ci-dessous",
+    "insertColumnLeftMenu": "Insérer à gauche",
+    "insertColumnRightMenu": "Insérer à droite",
+    "deleteRowOrColumnMenu": "Supprimer",
+    "deleteColumnMenu": "Supprimer la colonne",
+    "deleteRowMenu": "Supprimer une ligne",
+    "deleteTableMenu": "Supprimer le tableau"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggestions"
@@ -66,7 +77,9 @@
   },
   "endCallButton": {
     "label": "Quitter",
-    "tooltipContent": "Quitter l'appel"
+    "tooltipContent": "Quitter l'appel",
+    "leaveOption": "Partir",
+    "endCallOption": "Fin d'appel"
   },
   "cameraButton": {
     "onLabel": "Caméra",
@@ -179,10 +192,11 @@
     "editBoxSubmitButton": "Terminé",
     "messageReadCount": "Lu par {messageReadByCount} participants sur {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Plus d’options",
-    "downloadFile": "Télécharger un fichier",
+    "downloadAttachment": "Télécharger un fichier",
+    "openAttachment": "Ouvrir le fichier",
     "blockedWarningText": "Ce message a été supprimé en raison d’une stratégie de l’organisation.",
     "blockedWarningLinkText": "Détails",
-    "fileCardGroupMessage": "Le message a {fileCount} pièce jointe",
+    "attachmentCardGroupMessage": "Le message a {attachmentCount} pièce jointe",
     "messageDeletedAnnouncementAriaLabel": "Le message est supprimé"
   },
   "errorBar": {

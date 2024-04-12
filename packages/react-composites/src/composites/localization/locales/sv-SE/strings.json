@@ -61,11 +61,11 @@
     "removedFromCallMoreDetails": "En annan deltagare tog bort dig från samtalet.",
     "removedFromCallTitle": "Du har tagits bort",
     "removeMenuLabel": "Ta bort",
-    "startSpotlightParticipantListMenuLabel": "Uppmärksamma för alla",
-    "addSpotlightParticipantListMenuLabel": "Lägg till uppmärksammande",
-    "stopSpotlightParticipantListMenuLabel": "Sluta uppmärksamma",
-    "stopSpotlightOnSelfParticipantListMenuLabel": "Spotlight",
-    "spotlightLimitReachedParticipantListMenuTitle": "Spotlight-gränsen har nåtts",
+    "startSpotlightMenuLabel": "Uppmärksamma för alla",
+    "addSpotlightMenuLabel": "Lägg till uppmärksammande",
+    "stopSpotlightMenuLabel": "Sluta uppmärksamma",
+    "stopSpotlightOnSelfMenuLabel": "Spotlight",
+    "spotlightLimitReachedMenuTitle": "Spotlight-gränsen har nåtts",
     "stopAllSpotlightMenuLabel": "Avsluta alla uppmärksammanden",
     "returnToCallButtonAriaDescription": "Återgå till samtal",
     "returnToCallButtonAriaLabel": "Tillbaka",
@@ -315,18 +315,27 @@
       "startSpotlightCancelButtonLabel": "Avbryt",
       "stopSpotlightHeading": "Sluta att uppmärksamma den här videon?",
       "stopSpotlightOnSelfHeading": "Avsluta uppmärksammande?",
+      "stopAllSpotlightHeading": "Vill du sluta uppmärksamma alla videor?",
       "stopSpotlightText": "Den här videon markeras inte längre för alla i mötet.",
       "stopSpotlightOnSelfText": "Din video kommer inte längre vara markerad för alla i mötet.",
+      "stopAllSpotlightText": "Videorna kommer inte längre att markeras för alla i mötet.",
       "stopSpotlightConfirmButtonLabel": "Sluta uppmärksamma",
       "stopSpotlightOnSelfConfirmButtonLabel": "Spotlight",
       "stopSpotlightCancelButtonLabel": "Avbryt"
     },
     "exitSpotlightButtonLabel": "Spotlight",
-    "exitSpotlightButtonTooltip": "Spotlight"
+    "exitSpotlightButtonTooltip": "Spotlight",
+    "hangUpConfirmButtonLabel": "Bekräfta",
+    "hangUpCancelButtonLabel": "Avbryt",
+    "leaveConfirmDialogTitle": "Vill du lämna samtalet?",
+    "leaveConfirmDialogContent": "Vill du lämna samtalet?",
+    "endCallConfirmDialogTitle": "Vill du avsluta samtalet?",
+    "endCallConfirmDialogContent": "Du avslutar samtalet för alla.",
+    "invalidMeetingIdentifier": "Ogiltigt mötes-ID eller lösenord"
   },
   "chat": {
     "chatListHeader": "I den här chatten",
-    "uploadFile": "Ladda upp fil"
+    "uploadAttachment": "Ladda upp bifogad fil"
   },
   "callWithChat": {
     "chatButtonLabel": "Chatt",

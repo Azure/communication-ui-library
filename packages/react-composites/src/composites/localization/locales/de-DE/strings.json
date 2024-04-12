@@ -61,11 +61,11 @@
     "removedFromCallMoreDetails": "Ein anderer Teilnehmer hat Sie aus dem Anruf entfernt.",
     "removedFromCallTitle": "Sie wurden entfernt",
     "removeMenuLabel": "Entfernen",
-    "startSpotlightParticipantListMenuLabel": "Spotlight für alle",
-    "addSpotlightParticipantListMenuLabel": "Spotlight hinzufügen",
-    "stopSpotlightParticipantListMenuLabel": "Spotlight beenden",
-    "stopSpotlightOnSelfParticipantListMenuLabel": "Spotlight beenden",
-    "spotlightLimitReachedParticipantListMenuTitle": "Spotlight-Limit erreicht",
+    "startSpotlightMenuLabel": "Spotlight für alle",
+    "addSpotlightMenuLabel": "Spotlight hinzufügen",
+    "stopSpotlightMenuLabel": "Spotlight beenden",
+    "stopSpotlightOnSelfMenuLabel": "Spotlight beenden",
+    "spotlightLimitReachedMenuTitle": "Spotlight-Limit erreicht",
     "stopAllSpotlightMenuLabel": "Alle Spotlights beenden",
     "returnToCallButtonAriaDescription": "Zurück zum Anruf",
     "returnToCallButtonAriaLabel": "Zurück",
@@ -315,18 +315,27 @@
       "startSpotlightCancelButtonLabel": "Abbrechen",
       "stopSpotlightHeading": "Dieses Video aus dem Spotlight nehmen?",
       "stopSpotlightOnSelfHeading": "Spotlight verlassen?",
+      "stopAllSpotlightHeading": "Spotlighting aller Videos beenden?",
       "stopSpotlightText": "Dieses Video wird nicht mehr für alle Teilnehmer der Besprechung hervorgehoben.",
       "stopSpotlightOnSelfText": "Ihr Video wird nicht mehr für alle Teilnehmer der Besprechung hervor gehoben.",
+      "stopAllSpotlightText": "Die Videos werden nicht mehr für alle Teilnehmer der Besprechung hervorgehoben.",
       "stopSpotlightConfirmButtonLabel": "Spotlight beenden",
       "stopSpotlightOnSelfConfirmButtonLabel": "Spotlight beenden",
       "stopSpotlightCancelButtonLabel": "Abbrechen"
     },
     "exitSpotlightButtonLabel": "Spotlight beenden",
-    "exitSpotlightButtonTooltip": "Spotlight beenden"
+    "exitSpotlightButtonTooltip": "Spotlight beenden",
+    "hangUpConfirmButtonLabel": "Bestätigen",
+    "hangUpCancelButtonLabel": "Abbrechen",
+    "leaveConfirmDialogTitle": "Gespräch beenden?",
+    "leaveConfirmDialogContent": "Möchten Sie den Anruf wirklich verlassen?",
+    "endCallConfirmDialogTitle": "Gespräch beenden?",
+    "endCallConfirmDialogContent": "Sie beenden das Gespräch für alle.",
+    "invalidMeetingIdentifier": "Ungültige Besprechungs-ID oder -Kennung"
   },
   "chat": {
     "chatListHeader": "In diesem Chat",
-    "uploadFile": "Datei hochladen"
+    "uploadAttachment": "Anlage hochladen"
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",

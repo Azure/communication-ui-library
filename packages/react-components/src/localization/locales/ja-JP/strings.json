@@ -24,8 +24,8 @@
     "placeholderText": "メッセージを入力",
     "textTooLong": "メッセージの長さが上限を超えています。",
     "sendButtonAriaLabel": "メッセージの送信",
-    "fileUploadsPendingError": "アップロード中です... お待ちください。",
-    "removeFile": "ファイルを削除します",
+    "attachmentUploadsPendingError": "アップロード中です... お待ちください。",
+    "removeAttachment": "ファイルの削除",
     "uploading": "アップロード中",
     "uploadCompleted": "アップロードが完了しました"
   },
@@ -33,8 +33,8 @@
     "placeholderText": "メッセージを入力してください",
     "textTooLong": "メッセージの長さが上限を超えています。",
     "sendButtonAriaLabel": "メッセージの送信",
-    "fileUploadsPendingError": "アップロード中...お待ちください。",
-    "removeFile": "ファイルの削除",
+    "attachmentUploadsPendingError": "アップロード中...お待ちください。",
+    "removeAttachment": "ファイルを削除します",
     "uploading": "アップロード中",
     "uploadCompleted": "アップロード完了",
     "boldTooltip": "太字",
@@ -44,7 +44,18 @@
     "numberListTooltip": "番号付きリスト",
     "increaseIndentTooltip": "インデントを増やす",
     "decreaseIndentTooltip": "インデントを減らす",
-    "richTextFormatButtonTooltip": "形式"
+    "insertTableTooltip": "表の挿入",
+    "richTextFormatButtonTooltip": "形式",
+    "insertRowOrColumnMenu": "挿入",
+    "insertTableMenuTitle": "{column} x {row} の表を挿入する",
+    "insertRowAboveMenu": "上に挿入",
+    "insertRowBelowMenu": "下に挿入",
+    "insertColumnLeftMenu": "左に挿入",
+    "insertColumnRightMenu": "右に挿入",
+    "deleteRowOrColumnMenu": "削除",
+    "deleteColumnMenu": "列の削除",
+    "deleteRowMenu": "行の削除",
+    "deleteTableMenu": "表の削除"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "候補"
@@ -66,7 +77,9 @@
   },
   "endCallButton": {
     "label": "退出",
-    "tooltipContent": "通話を終了"
+    "tooltipContent": "通話を終了",
+    "leaveOption": "退出",
+    "endCallOption": "通話の終了"
   },
   "cameraButton": {
     "onLabel": "カメラ",
@@ -179,10 +192,11 @@
     "editBoxSubmitButton": "完了",
     "messageReadCount": "{remoteParticipantsCount} の {messageReadByCount} による読み取り",
     "actionMenuMoreOptions": "その他のオプション",
-    "downloadFile": "ファイルをダウンロード",
+    "downloadAttachment": "ファイルをダウンロード",
+    "openAttachment": "ファイルを開く",
     "blockedWarningText": "組織のポリシーにより、このメッセージは削除されました。",
     "blockedWarningLinkText": "詳細",
-    "fileCardGroupMessage": "メッセージには {fileCount} 個の添付ファイルがあります",
+    "attachmentCardGroupMessage": "メッセージに添付ファイルが {attachmentCount} 個あります",
     "messageDeletedAnnouncementAriaLabel": "メッセージが削除されます"
   },
   "errorBar": {

@@ -24,8 +24,8 @@
     "placeholderText": "Zadejte zprávu",
     "textTooLong": "Délka vaší zprávy překračuje maximální limit.",
     "sendButtonAriaLabel": "Poslat zprávu",
-    "fileUploadsPendingError": "Probíhá nahrávání... Počkejte prosím.",
-    "removeFile": "Odebrat soubor",
+    "attachmentUploadsPendingError": "Probíhá nahrávání... Počkejte prosím.",
+    "removeAttachment": "Odebrat soubor",
     "uploading": "Nahrávání",
     "uploadCompleted": "Nahrávání se dokončilo"
   },
@@ -33,8 +33,8 @@
     "placeholderText": "Zadejte zprávu",
     "textTooLong": "Délka vaší zprávy překračuje maximální limit.",
     "sendButtonAriaLabel": "Poslat zprávu",
-    "fileUploadsPendingError": "Nahrávání… Počkejte prosím.",
-    "removeFile": "Odebrat soubor",
+    "attachmentUploadsPendingError": "Nahrávání… Počkejte prosím.",
+    "removeAttachment": "Odebrat soubor",
     "uploading": "Nahrávání",
     "uploadCompleted": "Nahrávání se dokončilo",
     "boldTooltip": "Tučné",
@@ -44,7 +44,18 @@
     "numberListTooltip": "Číslovaný seznam",
     "increaseIndentTooltip": "Zvětšit odsazení",
     "decreaseIndentTooltip": "Zmenšit odsazení",
-    "richTextFormatButtonTooltip": "Formát"
+    "insertTableTooltip": "Vložit tabulku",
+    "richTextFormatButtonTooltip": "Formát",
+    "insertRowOrColumnMenu": "Vložit",
+    "insertTableMenuTitle": "Vložit {column} x {row} tabulka",
+    "insertRowAboveMenu": "Vložit nad",
+    "insertRowBelowMenu": "Vložit pod",
+    "insertColumnLeftMenu": "Vložit vlevo",
+    "insertColumnRightMenu": "Vložit vpravo",
+    "deleteRowOrColumnMenu": "Odstranit",
+    "deleteColumnMenu": "Odstranit sloupec",
+    "deleteRowMenu": "Odstranit řádek",
+    "deleteTableMenu": "Odstranit tabulku"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Návrhy"
@@ -66,7 +77,9 @@
   },
   "endCallButton": {
     "label": "Opustit",
-    "tooltipContent": "Opustit hovor"
+    "tooltipContent": "Opustit hovor",
+    "leaveOption": "Odejít",
+    "endCallOption": "Ukončit hovor"
   },
   "cameraButton": {
     "onLabel": "Kamera",
@@ -179,10 +192,11 @@
     "editBoxSubmitButton": "Hotovo",
     "messageReadCount": "Přečetl(a) {messageReadByCount} z {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Další možnosti",
-    "downloadFile": "Stáhnout soubor",
+    "downloadAttachment": "Stáhnout soubor",
+    "openAttachment": "Otevřít soubor",
     "blockedWarningText": "Tato zpráva se odstranila kvůli zásadám organizace.",
     "blockedWarningLinkText": "Podrobnosti",
-    "fileCardGroupMessage": "Zpráva obsahuje počet příloh: {fileCount}",
+    "attachmentCardGroupMessage": "Zpráva obsahuje {attachmentCount} přílohu",
     "messageDeletedAnnouncementAriaLabel": "Zpráva se odstranila."
   },
   "errorBar": {

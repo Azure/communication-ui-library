@@ -1,14 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(image-overlay) */
 import { TEST_PARTICIPANTS, buildUrlForChatAppUsingFakeAdapter, test } from './fixture';
-/* @conditional-compile-remove(image-overlay) */
 import { expect } from '@playwright/test';
-/* @conditional-compile-remove(image-overlay) */
 import { dataUiId, stableScreenshot } from '../../common/utils';
 
-/* @conditional-compile-remove(image-overlay) */
 test.describe('ImageOverlay tests', () => {
   test('ImageOverlay loads correctly when an inline image is clicked', async ({ page, serverUrl }) => {
     await page.goto(
