@@ -5,30 +5,34 @@ import { concatStyleSets, ITextField, mergeStyles, Stack } from '@fluentui/react
 import { ChatMyMessage } from '@fluentui-contrib/react-chat';
 import { mergeClasses } from '@fluentui/react-components';
 import { _formatString } from '@internal/acs-ui-common';
-import { useTheme } from '../../theming/FluentThemeProvider';
+import { useTheme } from '../../../theming/FluentThemeProvider';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { editBoxStyle, editingButtonStyle, editBoxStyleSet, inputBoxIcon } from '../styles/EditBox.styles';
-import { InputBoxComponent } from '../InputBoxComponent';
-import { InputBoxButton } from '../InputBoxButton';
-import { MessageThreadStrings } from '../MessageThread';
-import { useChatMyMessageStyles } from '../styles/MessageThread.styles';
-import { ChatMessage } from '../../types';
-import { _AttachmentUploadCards } from '../AttachmentUploadCards';
+import { editBoxStyle, editingButtonStyle, editBoxStyleSet, inputBoxIcon } from '../../styles/EditBox.styles';
+import { InputBoxComponent } from '../../InputBoxComponent';
+import { InputBoxButton } from '../../InputBoxButton';
+import { MessageThreadStrings } from '../../MessageThread';
+import { useChatMyMessageStyles } from '../../styles/MessageThread.styles';
+import { ChatMessage } from '../../../types';
+import { _AttachmentUploadCards } from '../../AttachmentUploadCards';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata } from '../../types/Attachment';
+import { AttachmentMetadata } from '../../../types/Attachment';
 import {
   chatMessageFailedTagStyle,
   editChatMessageFailedTagStyle,
   chatMessageFailedTagStackItemStyle,
   editChatMessageButtonsStackStyle,
   useChatMessageEditContainerStyles
-} from '../styles/ChatMessageComponent.styles';
+} from '../../styles/ChatMessageComponent.styles';
 /* @conditional-compile-remove(mention) */
-import { MentionLookupOptions } from '../MentionPopover';
-import { MAXIMUM_LENGTH_OF_MESSAGE } from '../utils/SendBoxUtils';
-import { getMessageState, onRenderCancelIcon, onRenderSubmitIcon } from '../utils/ChatMessageComponentAsEditBoxUtils';
+import { MentionLookupOptions } from '../../MentionPopover';
+import { MAXIMUM_LENGTH_OF_MESSAGE } from '../../utils/SendBoxUtils';
+import {
+  getMessageState,
+  onRenderCancelIcon,
+  onRenderSubmitIcon
+} from '../../utils/ChatMessageComponentAsEditBoxUtils';
 /* @conditional-compile-remove(attachment-upload) */
-import { getMessageWithAttachmentMetadata } from '../utils/ChatMessageComponentAsEditBoxUtils';
+import { getMessageWithAttachmentMetadata } from '../../utils/ChatMessageComponentAsEditBoxUtils';
 
 /** @private */
 export type ChatMessageComponentAsEditBoxProps = {

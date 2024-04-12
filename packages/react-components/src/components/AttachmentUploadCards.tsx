@@ -20,6 +20,8 @@ export interface _AttachmentUploadCardsStrings {
   uploading: string;
   /** Aria label to notify user attachment is uploaded. */
   uploadCompleted: string;
+  /** Aria label to notify user more attachment action menu. */
+  attachmentMoreMenu: string;
 }
 
 /**

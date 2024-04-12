@@ -12,7 +12,7 @@ import {
   Stack,
   Text
 } from '@fluentui/react';
-import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { ComponentLocale, useLocale } from '../localization';
 import { useTheme } from '../theming';
@@ -88,7 +88,6 @@ export interface VideoTileProps {
   /* @conditional-compile-remove(reaction) */
   /**
    * Overlay component responsible for rendering reaction
-   * @beta
    */
   overlay?: JSX.Element | null;
   /** Determines if the video is mirrored or not. */
@@ -173,7 +172,6 @@ export interface VideoTileProps {
   /* @conditional-compile-remove(reaction) */
   /**
    * Reactions resources' url and metadata.
-   * @beta
    */
   reactionResources?: ReactionResources;
 }
@@ -297,6 +295,36 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     const currentObserver = observer.current;
     return () => currentObserver.disconnect();
   }, [videoTileRef]);
+
+  /* @conditional-compile-remove(ppt-live) */
+  // TODO: Remove after calling sdk fix the keybaord focus
+  useEffect(() => {
+    // PPTLive display name is undefined, return as it is not screen share
+    if (displayName !== undefined) {
+      return;
+    }
+    let observer: MutationObserver | undefined;
+    if (videoTileRef.current) {
+      observer = new MutationObserver((mutationsList) => {
+        for (const mutation of mutationsList) {
+          if (mutation.type === 'childList') {
+            const iframe = document.querySelector('iframe');
+            if (iframe) {
+              if (!iframe.getAttribute('tabIndex')) {
+                iframe.setAttribute('tabIndex', '-1');
+              }
+            }
+          }
+        }
+      });
+
+      observer.observe(videoTileRef.current, { childList: true, subtree: true });
+    }
+
+    return () => {
+      observer?.disconnect();
+    };
+  }, [displayName, renderElement]);
 
   const useLongPressProps = useMemo(() => {
     return {

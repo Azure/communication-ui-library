@@ -586,8 +586,8 @@ jobs:
         if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
         uses: actions/upload-artifact@v3
         with:
-          name: snapshots
-          path: packages/react-components/tests/
+          name: Components-snapshots
+          path: packages/react-components/tests/temp
       - name: Comment on PR
         if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
         uses: actions/github-script@v3
