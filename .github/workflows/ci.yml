@@ -59,14 +59,8 @@ jobs:
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      # Install dependencies
-      - name: Install rush
-        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
-      # Force build flavor if necessary
-      - name: Force build flavor
-        run: node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
-      - name: Install dependencies
-        run: rush switch-flavor:${{ matrix.flavor }}
+      - name: Install Dependencies
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
       - name: Check the necessary change file has been submitted
         if: ${{ github.event_name == 'pull_request' }}
         run: |
@@ -140,12 +134,8 @@ jobs:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       # Install dependencies
-      - name: Install rush
-        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
-      - name: Force build flavor
-        run: node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
-      - name: Install dependencies
-        run: rush switch-flavor:${{ matrix.flavor }}
+      - name: Install Dependencies
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
       # Build and test
       - name: Build Packages
         run: rush build -t @azure/communication-react
@@ -239,15 +229,9 @@ jobs:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       # Install dependencies
-      - name: Install rush
+      - name: Install Dependencies
         if: ${{ matrix.flavor == 'beta-release'}}
-        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
-      - name: Force build flavor
-        if: ${{ matrix.flavor == 'beta-release'}}
-        run: node ./common/scripts/force-build-flavor.mjs beta-release
-      - name: Install beta-release dependencies
-        if: ${{ matrix.flavor == 'beta-release'}}
-        run: rush switch-flavor:beta-release
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
       # Perform lint check
       - name: Run linter
         if: ${{ matrix.flavor == 'beta-release'}}
@@ -296,12 +280,8 @@ jobs:
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      - name: Install rush
-        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
-      - name: Force build flavor
-        run: node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
-      - name: Install dependencies
-        run: rush switch-flavor:${{ matrix.flavor }}
+      - name: Install Dependencies
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
       - uses: browser-actions/setup-chrome@v1
         id: setup-chrome
         with:
@@ -369,12 +349,8 @@ jobs:
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      - name: Install rush
-        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
-      - name: Force build flavor
-        run: node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
-      - name: Install dependencies
-        run: rush switch-flavor:${{ matrix.flavor }}
+      - name: Install Dependencies
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
       - uses: browser-actions/setup-chrome@v1
         id: setup-chrome
         with:
@@ -442,12 +418,8 @@ jobs:
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      - name: Install rush
-        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
-      - name: Force build flavor
-        run: node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
-      - name: Install dependencies
-        run: rush switch-flavor:${{ matrix.flavor }}
+      - name: Install Dependencies
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
       - uses: browser-actions/setup-chrome@v1
         id: setup-chrome
         with:
@@ -512,12 +484,8 @@ jobs:
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      - name: Install rush
-        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
-      - name: Force build flavor
-        run: node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
-      - name: Install dependencies
-        run: rush switch-flavor:${{ matrix.flavor }}
+      - name: Install Dependencies
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
       - uses: browser-actions/setup-chrome@v1
         id: setup-chrome
         with:
@@ -572,11 +540,9 @@ jobs:
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      - name: Install rush
-        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
-      - name: Install dependencies
+      - name: Install Dependencies
         if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release'}}
-        run: rush install --max-install-attempts 3
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
       - name: Build
         if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
         run: rush build -o storybook
@@ -604,12 +570,8 @@ jobs:
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      - name: Install rush
-        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
-      - name: Force build flavor
-        run: node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
-      - name: Install dependencies
-        run: rush switch-flavor:${{ matrix.flavor }}
+      - name: Install Dependencies
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
       - name: Build dependencies
         run: rush build -t @azure/communication-react
       - name: Build
@@ -642,12 +604,8 @@ jobs:
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      - name: Install rush
-        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
-      - name: Force build flavor
-        run: node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
-      - name: Install dependencies
-        run: rush switch-flavor:${{ matrix.flavor }}
+      - name: Install Dependencies
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
       - name: Build dependencies
         run: rush build -t @azure/communication-react
       - name: Build
@@ -680,12 +638,8 @@ jobs:
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      - name: Install rush
-        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
-      - name: Force build flavor
-        run: node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
-      - name: Install dependencies
-        run: rush switch-flavor:${{ matrix.flavor }}
+      - name: Install Dependencies
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
       - name: Build dependencies
         run: rush build -t @azure/communication-react
       - name: Build
@@ -715,12 +669,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
-      - name: Install rush
-        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
-      - name: Force build flavor
-        run: node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
-      - name: Install dependencies
-        run: rush switch-flavor:${{ matrix.flavor }}
+      - name: Install Dependencies
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
       - uses: browser-actions/setup-chrome@v1
         id: setup-chrome
         with:
@@ -771,12 +721,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
-      - name: Install rush
-        run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
-      - name: Force build flavor
-        run: node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
-      - name: Install dependencies
-        run: rush switch-flavor:${{ matrix.flavor }}
+      - name: Install Dependencies
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
       - uses: browser-actions/setup-chrome@v1
         id: setup-chrome
         with:
