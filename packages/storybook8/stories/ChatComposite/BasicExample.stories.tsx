@@ -86,8 +86,7 @@ const BasicStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Element 
 export const BasicExample = BasicStory.bind({});
 
 const meta: Meta<typeof BasicStory> = {
-  // id: `${COMPOSITE_FOLDER_PREFIX}-chat-basicexample`,
-  // title: `${COMPOSITE_FOLDER_PREFIX}/ChatComposite/Basic Example`,
+  title: 'Composites/ChatComposite/Basic Example',
   // name: 'Chat Composite Basic Example',
   component: BasicStory,
   argTypes: {

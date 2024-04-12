@@ -49,8 +49,7 @@ const JoinExistingChatThreadStory = (args: ArgsFrom<typeof storyControls>, conte
 export const JoinExistingChatThread = JoinExistingChatThreadStory.bind({});
 
 const meta: Meta<typeof JoinExistingChatThreadStory> = {
-  // id: `${COMPOSITE_FOLDER_PREFIX}-chat-joinexistingchatthread`,
-  // title: `${COMPOSITE_FOLDER_PREFIX}/ChatComposite/Join Existing Chat Thread`,
+  title: 'Composites/ChatComposite/Join Existing Chat Thread',
   // name: 'Join Existing Chat Thread',
   component: JoinExistingChatThreadStory,
   argTypes: {
