@@ -47,6 +47,7 @@ import {
 import { InlineImageOptions } from './ChatMessage/ChatMessageContent';
 import { MessageStatusIndicatorInternal } from './MessageStatusIndicatorInternal';
 import { Announcer } from './Announcer';
+/* @conditional-compile-remove(rich-text-editor) */
 import { loadChatMessageComponentAsRichTextEditBox } from './ChatMessage/MyMessageComponents/ChatMessageComponentAsEditBoxPicker';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
@@ -714,7 +715,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   const previousMessagesRef = useRef<Message[]>([]);
   // an aria label for Narrator to notify when a message is deleted
   const [deletedMessageAriaLabel, setDeletedMessageAriaLabel] = useState<string | undefined>(undefined);
-
+  /* @conditional-compile-remove(rich-text-editor) */
   useEffect(() => {
     // if rich text editor is enabled, the rich text editor component should be loaded early for good UX
     if (richTextEditor !== undefined && richTextEditor) {

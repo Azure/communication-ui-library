@@ -11,7 +11,10 @@ import { MessageThreadStrings } from '../../MessageThread';
 import { ChatMessageComponentAsEditBox } from './ChatMessageComponentAsEditBox';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from '../../MentionPopover';
+/* @conditional-compile-remove(rich-text-editor) */
 import type { ChatMessageComponentAsRichTextEditBoxProps } from './ChatMessageComponentAsRichTextEditBox';
+/* @conditional-compile-remove(rich-text-editor) */
+import { ErrorBoundary } from '../../ErrorBoundary';
 
 /* @conditional-compile-remove(rich-text-editor) */
 const ChatMessageComponentAsRichTextEditBox = React.lazy(() => import('./ChatMessageComponentAsRichTextEditBox'));
@@ -20,6 +23,8 @@ const ChatMessageComponentAsRichTextEditBox = React.lazy(() => import('./ChatMes
  * @private
  * Use this function to load RoosterJS dependencies early in the lifecycle.
  * It should be the same import as used for lazy loading.
+ *
+ * @conditional-compile-remove(rich-text-editor)
  */
 export const loadChatMessageComponentAsRichTextEditBox = (): Promise<{
   default: React.ComponentType<ChatMessageComponentAsRichTextEditBoxProps>;
@@ -59,9 +64,11 @@ export const ChatMessageComponentAsEditBoxPicker = (props: ChatMessageComponentA
   /* @conditional-compile-remove(rich-text-editor) */
   if (richTextEditor) {
     return (
-      <Suspense fallback={simpleEditBox}>
-        <ChatMessageComponentAsRichTextEditBox {...props} />
-      </Suspense>
+      <ErrorBoundary fallback={simpleEditBox}>
+        <Suspense fallback={simpleEditBox}>
+          <ChatMessageComponentAsRichTextEditBox {...props} />
+        </Suspense>
+      </ErrorBoundary>
     );
   }
 
