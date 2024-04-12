@@ -64,7 +64,6 @@ jobs:
         run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       # Force build flavor if necessary
       - name: Force build flavor
-        if: ${{ matrix.flavor != 'beta' }}
         run: node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
       - name: Install dependencies
         run: rush switch-flavor:${{ matrix.flavor }}
@@ -144,7 +143,6 @@ jobs:
       - name: Install rush
         run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Force build flavor
-        if: ${{ matrix.flavor != 'beta' }}
         run: node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
       - name: Install dependencies
         run: rush switch-flavor:${{ matrix.flavor }}
@@ -301,7 +299,6 @@ jobs:
       - name: Install rush
         run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Force build flavor
-        if: ${{ matrix.flavor != 'beta' }}
         run: node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
       - name: Install dependencies
         run: rush switch-flavor:${{ matrix.flavor }}
@@ -375,7 +372,6 @@ jobs:
       - name: Install rush
         run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Force build flavor
-        if: ${{ matrix.flavor != 'beta' }}
         run: node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
       - name: Install dependencies
         run: rush switch-flavor:${{ matrix.flavor }}
@@ -449,7 +445,6 @@ jobs:
       - name: Install rush
         run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Force build flavor
-        if: ${{ matrix.flavor != 'beta' }}
         run: node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
       - name: Install dependencies
         run: rush switch-flavor:${{ matrix.flavor }}
@@ -520,7 +515,6 @@ jobs:
       - name: Install rush
         run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Force build flavor
-        if: ${{ matrix.flavor != 'beta' }}
         run: node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
       - name: Install dependencies
         run: rush switch-flavor:${{ matrix.flavor }}
@@ -613,7 +607,6 @@ jobs:
       - name: Install rush
         run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Force build flavor
-        if: ${{ matrix.flavor != 'beta' }}
         run: node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
       - name: Install dependencies
         run: rush switch-flavor:${{ matrix.flavor }}
@@ -652,7 +645,6 @@ jobs:
       - name: Install rush
         run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Force build flavor
-        if: ${{ matrix.flavor != 'beta' }}
         run: node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
       - name: Install dependencies
         run: rush switch-flavor:${{ matrix.flavor }}
@@ -691,7 +683,6 @@ jobs:
       - name: Install rush
         run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Force build flavor
-        if: ${{ matrix.flavor != 'beta' }}
         run: node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
       - name: Install dependencies
         run: rush switch-flavor:${{ matrix.flavor }}
@@ -727,7 +718,6 @@ jobs:
       - name: Install rush
         run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Force build flavor
-        if: ${{ matrix.flavor != 'beta' }}
         run: node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
       - name: Install dependencies
         run: rush switch-flavor:${{ matrix.flavor }}
@@ -784,7 +774,6 @@ jobs:
       - name: Install rush
         run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Force build flavor
-        if: ${{ matrix.flavor != 'beta' }}
         run: node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
       - name: Install dependencies
         run: rush switch-flavor:${{ matrix.flavor }}
