@@ -41,9 +41,8 @@ import { VideoGallery } from '@azure/communication-react';
 function PPTLiveComponent() {
   // Definition of a mock object simulating a PowerPoint live stream.
   const mockPptLiveStream = {
-    id: 1,
     isAvailable: true,
-    renderElement: mockPptLiveElement as HTMLElement
+    renderElement: call.features(pptLive).targetElement as HTMLElement
   };
   // An array of mock remote participants in a video call.
   // Set mockPptLiveStream under screenShareStream.

@@ -232,14 +232,32 @@ const getDocs: () => JSX.Element = () => {
           <Description>✅ Wide screen share appearence vertical gallery</Description>
         </Stack>
       </Stack>
-      <Heading>Screen Sharing Experience</Heading>
+      <Heading>Content Sharing Experience</Heading>
       <Description>
-        The screen shared is the only element placed in the [Grid
-        Layout](./?path=/docs/ui-components-gridlayout--grid-layout) and all remote participants are placed in the
-        horizontal gallery in the lower section. To be able to view this screen share, the sharing participant should
-        have their `isScreenSharingOn` prop set to true as well as a defined `screenShareStream` prop (see
-        `localParticipant` and `remoteParticipants` props).
+        Our VideoGallery component is designed for optimal content sharing, incorporating both screen sharing and
+        PowerPoint Live functionalities. The screen shared is the sole element placed in the [Grid
+        Layout](./?path=/docs/ui-components-gridlayout--grid-layout), with all remote participants positioned in the
+        horizontal gallery at the lower section. For effective screen sharing or PowerPoint Live, ensure the sharing
+        participant has their `isScreenSharingOn` prop set to true, along with a defined `screenShareStream` prop (refer
+        to `localParticipant` and `remoteParticipants` props).
       </Description>
+      <Subheading>Supported Features</Subheading>
+      <Description>
+        Currently, the VideoGallery component supports two primary features to enhance collaboration and presentation
+        quality: screen sharing and PowerPoint Live. The `screenShareStream` is highly flexible, supporting any
+        `HTMLElement` as the render target, allowing for dynamic presentation setups.
+      </Description>
+      <ul className={'sbdocs sbdocs-p'}>
+        <li>
+          <strong>Screen Sharing:</strong> Share your local screen with participants in real-time or view remote screen
+          shares. For more details, see the sections below.
+        </li>
+        <li>
+          <strong>PowerPoint Live:</strong> Exclusively view remote PowerPoint presentations.{' '}
+          <a href="?path=/docs/ppt-live--page">Learn more about PowerPoint Live</a>.
+        </li>
+      </ul>
+
       <Subheading>From a presenter point of view</Subheading>
       <Canvas mdxSource={ScreenSharingFromPresenterExampleText}>
         <ScreenSharingFromPresenterExample />
