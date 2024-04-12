@@ -23,7 +23,7 @@ async function main(args) {
   execSync(`npm install -g @microsoft/rush@${rushVersion}`);
 
   // Force build flavor. This is necessary in CI to catch downstream dependency issues.
-  // For example, we had an issue where our stable falvor was not catching that the
+  // For example, we had an issue where our stable flavor was not catching that the
   // `@azure/communication-calling-effects` package should've only be installed in beta flavor
   // and was failing to error out in stable flavor.
   execSync(`node ./common/scripts/force-build-flavor.mjs ${flavor}`);
