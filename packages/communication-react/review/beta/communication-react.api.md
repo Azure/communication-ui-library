@@ -2201,6 +2201,8 @@ export interface ComponentStrings {
     participantsButton: ParticipantsButtonStrings;
     raiseHandButton: RaiseHandButtonStrings;
     reactionButton: ReactionButtonStrings;
+    // (undocumented)
+    richText: RichTextStrings;
     richTextSendBox: RichTextSendBoxStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
@@ -3377,7 +3379,7 @@ export type MessageThreadSelector = (state: ChatClientState, props: ChatBaseSele
 };
 
 // @public
-export interface MessageThreadStrings {
+export interface MessageThreadStrings extends RichTextStrings {
     actionMenuMoreOptions?: string;
     attachmentCardGroupMessage: string;
     blockedWarningLinkText: string;
@@ -3893,7 +3895,13 @@ export interface RichTextSendBoxProps {
 }
 
 // @beta
-export interface RichTextSendBoxStrings extends SendBoxStrings {
+export interface RichTextSendBoxStrings extends RichTextStrings, SendBoxStrings {
+}
+
+// Warning: (ae-internal-missing-underscore) The name "RichTextStrings" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export interface RichTextStrings {
     boldTooltip: string;
     bulletListTooltip: string;
     decreaseIndentTooltip: string;

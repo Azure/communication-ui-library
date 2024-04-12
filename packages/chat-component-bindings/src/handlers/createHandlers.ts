@@ -57,7 +57,7 @@ export const createDefaultChatHandlers = memoizeOne(
           content,
           senderDisplayName: chatClient.getState().displayName
         };
-        await chatThreadClient.sendMessage(sendMessageRequest, options);
+        await chatThreadClient.sendMessage(sendMessageRequest, { ...options, type: 'html' });
       },
       onUpdateMessage: async (
         messageId: string,

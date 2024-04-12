@@ -31,7 +31,13 @@ import { FluentV9ThemeProvider } from '../../theming/FluentV9ThemeProvider';
  *
  * @beta
  */
-export interface RichTextSendBoxStrings extends SendBoxStrings {
+export interface RichTextSendBoxStrings extends RichTextStrings, SendBoxStrings {}
+
+/**
+ *
+ * @internal
+ */
+export interface RichTextStrings {
   /**
    * Tooltip text for the bold button.
    */

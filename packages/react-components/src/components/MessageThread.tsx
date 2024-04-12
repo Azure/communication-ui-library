@@ -47,6 +47,7 @@ import {
 import { InlineImageOptions } from './ChatMessage/ChatMessageContent';
 import { MessageStatusIndicatorInternal } from './MessageStatusIndicatorInternal';
 import { Announcer } from './Announcer';
+import { RichTextStrings } from './RichTextEditor/RichTextSendBox';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (
@@ -155,7 +156,7 @@ export interface MessageThreadStyles extends BaseCustomStyles {
  *
  * @public
  */
-export interface MessageThreadStrings {
+export interface MessageThreadStrings extends RichTextStrings {
   /** String for Sunday */
   sunday: string;
   /** String for Monday */
@@ -681,7 +682,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
     onRenderAttachmentDownloads,
     /* @conditional-compile-remove(rich-text-editor) */
-    richTextEditor = false
+    richTextEditor = true
   } = props;
   // We need this state to wait for one tick and scroll to bottom after messages have been initialized.
   // Otherwise chatScrollDivRef.current.clientHeight is wrong if we scroll to bottom before messages are initialized.

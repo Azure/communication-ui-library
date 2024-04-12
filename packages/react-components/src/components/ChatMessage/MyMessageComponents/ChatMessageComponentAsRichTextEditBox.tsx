@@ -151,7 +151,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
   ]);
   const richTextLocaleStrings = useMemo(() => {
     /* @conditional-compile-remove(rich-text-editor) */
-    return locale.richTextSendBox;
+    return strings || locale.richTextSendBox;
     return locale.sendBox;
   }, [/* @conditional-compile-remove(rich-text-editor) */ locale.richTextSendBox, locale.sendBox]);
 
