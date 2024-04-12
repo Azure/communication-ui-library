@@ -24,7 +24,7 @@ import { useSwitchableFluentTheme } from './theming/SwitchableFluentThemeProvide
 /* @conditional-compile-remove(attachment-upload) */
 import attachmentUploadOptions from './utils/uploadHandler';
 /* @conditional-compile-remove(attachment-download) */
-import attachmentDownloadOptions from './utils/downloadHandler';
+import customDownloadOptions from './utils/downloadHandler';
 
 // These props are passed in when this component is referenced in JSX and not found in context
 interface ChatScreenProps {
@@ -115,7 +115,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                 /* @conditional-compile-remove(attachment-upload) */
                 uploadOptions: attachmentUploadOptions,
                 /* @conditional-compile-remove(attachment-download) */
-                downloadOptions: attachmentDownloadOptions
+                downloadOptions: customDownloadOptions.attachmentDownloadOptions
               }
             }}
             onFetchAvatarPersonaData={onFetchAvatarPersonaData}
