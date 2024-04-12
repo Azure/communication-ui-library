@@ -1,3 +1,5 @@
+name: CI
+
 on:
   # Postsubmit CI on main.
   push:
