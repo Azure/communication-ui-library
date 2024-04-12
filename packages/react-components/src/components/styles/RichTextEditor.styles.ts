@@ -247,7 +247,7 @@ export const richTextFormatButtonIconStyle = (theme: Theme, isSelected: boolean)
 export const editBoxRichTextEditorStyle = (): RichTextEditorStyleProps => {
   return {
     minHeight: '2.25rem',
-    maxHeight: '2.25rem'
+    maxHeight: '8rem'
   };
 };
 
