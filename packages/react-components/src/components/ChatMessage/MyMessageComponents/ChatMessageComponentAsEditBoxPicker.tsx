@@ -19,6 +19,7 @@ const ChatMessageComponentAsRichTextEditBox = React.lazy(() => import('./ChatMes
 /**
  * @private
  * Use this function to load RoosterJS dependencies early in the lifecycle.
+ * It should be the same import as used for lazy loading.
  */
 export const loadChatMessageComponentAsRichTextEditBox = (): Promise<{
   default: React.ComponentType<ChatMessageComponentAsRichTextEditBoxProps>;
