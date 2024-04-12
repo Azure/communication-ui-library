@@ -2,24 +2,43 @@
 // Licensed under the MIT License.
 
 import { RichTextSendBox as RichTextSendBoxComponent } from '@internal/react-components';
-import { Title, Description, Props, Heading, Canvas } from '@storybook/addon-docs';
+import { Title, Description, Props, Heading, Canvas, Source } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { DetailedBetaBanner } from '../../BetaBanners/DetailedBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../../constants';
 import { hiddenControl } from '../../controlsUtils';
-import { RTEAttachmentUploadsExample } from './snippets/RTEAttachmentUploads.snippet';
+import { RichTextSendBoxExample } from './snippets/RichTextSendBox.snippet';
+import { RichTextSendBoxAttachmentUploadsExample } from './snippets/RichTextSendBoxAttachmentUploads.snippet';
+import { RichTextSendBoxWithSystemMessageExample } from './snippets/RichTextSendBoxWithSystemMessage.snippet';
 
-const RTEAttachmentUploadsExampleText = require('!!raw-loader!./snippets/RTEAttachmentUploads.snippet.tsx').default;
+const RichTextSendBoxExampleText = require('!!raw-loader!./snippets/RichTextSendBox.snippet.tsx').default;
+const RichTextSendBoxAttachmentUploadsExampleText =
+  require('!!raw-loader!./snippets/RichTextSendBoxAttachmentUploads.snippet.tsx').default;
+const RichTextSendBoxWithSystemMessageExampleText =
+  require('!!raw-loader!./snippets/RichTextSendBoxWithSystemMessage.snippet.tsx').default;
+
+const importStatement = `import { RichTextSendBox } from '@azure/communication-react';`;
 
 const getDocs: () => JSX.Element = () => {
   return (
     <>
       <Title>RichTextSendBox</Title>
-      <Description>
-        Component for typing and sending messages. RichTextSendBox has a callback for sending typing notification when
-        user starts entering text. It also supports an optional message below the text input field.
-      </Description>
+      <Description>Component for composing messages with rich text formatting.</Description>
+
+      <Heading>Importing</Heading>
+      <Source code={importStatement} />
+
+      <Heading>Example</Heading>
+      <Canvas mdxSource={RichTextSendBoxExampleText}>
+        <RichTextSendBoxExample />
+      </Canvas>
+
+      <Heading>Add a system message</Heading>
+      <Description>To add a system message, use the systemMessage property like in the example below.</Description>
+      <Canvas mdxSource={RichTextSendBoxWithSystemMessageExampleText}>
+        <RichTextSendBoxWithSystemMessageExample />
+      </Canvas>
 
       <Heading>Display File Uploads</Heading>
       <DetailedBetaBanner />
@@ -28,8 +47,8 @@ const getDocs: () => JSX.Element = () => {
         allows developers to implement a file sharing feature using the pure UI component with minimal effort.
         Developers can write their own attachment upload logic and utilize the UI provided by RichTextSendBox.
       </Description>
-      <Canvas mdxSource={RTEAttachmentUploadsExampleText}>
-        <RTEAttachmentUploadsExample />
+      <Canvas mdxSource={RichTextSendBoxAttachmentUploadsExampleText}>
+        <RichTextSendBoxAttachmentUploadsExample />
       </Canvas>
 
       <Heading>Props</Heading>
@@ -73,7 +92,8 @@ export default {
     onRenderAttachmentUploads: hiddenControl,
     activeAttachmentUploads: hiddenControl,
     onCancelAttachmentUpload: hiddenControl,
-    onSendMessage: hiddenControl
+    onSendMessage: hiddenControl,
+    onTyping: hiddenControl
   },
   parameters: {
     docs: {

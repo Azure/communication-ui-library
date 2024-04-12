@@ -21,6 +21,8 @@ import { SpotlightCallFeatureState } from '@internal/calling-stateful-client';
 import { ReactionState } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(acs-close-captions) */
+import { CaptionsKind } from '@azure/communication-calling';
 import { RaisedHandState } from '@internal/calling-stateful-client';
 import { _SupportedCaptionLanguage, _SupportedSpokenLanguage } from '@internal/react-components';
 
@@ -201,6 +203,12 @@ export const getParticipantCount = (state: CallClientState, props: CallingBaseSe
   /* @conditional-compile-remove(total-participant-count) */
   return state.calls[props.callId]?.totalParticipantCount;
   return undefined;
+};
+
+/* @conditional-compile-remove(acs-close-captions) */
+/** @private */
+export const getCaptionsKind = (state: CallClientState, props: CallingBaseSelectorProps): CaptionsKind => {
+  return state.calls[props.callId]?.captionsFeature.captionsKind;
 };
 
 /* @conditional-compile-remove(close-captions) */

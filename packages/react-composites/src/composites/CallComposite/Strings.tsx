@@ -583,27 +583,22 @@ export interface CallCompositeStrings {
    * captions banner loading spinner label
    */
   captionsBannerSpinnerText?: string;
-  /* @conditional-compile-remove(call-transfer) */
   /**
    * transfer page text when showing the transferor who initiated the transfer
    */
   transferPageTransferorText: string;
-  /* @conditional-compile-remove(call-transfer) */
   /**
    * transfer page text when showing the transfer target
    */
   transferPageTransferTargetText: string;
-  /* @conditional-compile-remove(call-transfer) */
   /**
    * transfer page display name for unknown participant
    */
   transferPageUnknownTransferorDisplayName: string;
-  /* @conditional-compile-remove(call-transfer) */
   /**
    * transfer page display name for unknown participant
    */
   transferPageUnknownTransferTargetDisplayName: string;
-  /* @conditional-compile-remove(call-transfer) */
   /**
    * notice to be announced by narrator the transfer page is showing
    */
@@ -748,11 +743,6 @@ export interface CallCompositeStrings {
   surveySkipButtonLabel: string;
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
-   * Default text for free form text box
-   */
-  surveyTextboxDefaultText: string;
-  /* @conditional-compile-remove(end-of-call-survey) */
-  /**
    * Thank you text appeared on screen after survey is submitted
    */
   endOfSurveyText: string;
@@ -765,7 +755,7 @@ export interface CallCompositeStrings {
   /**
    * Corresponding texts to each call category
    */
-  SurveyIssuesHeadingStrings: SurveyIssuesHeadingStrings;
+  surveyIssuesHeadingStrings: SurveyIssuesHeadingStrings;
   /**
    * String for the dismiss control on the local and remote PIP on mobile
    */
@@ -831,9 +821,14 @@ export interface CallCompositeStrings {
   exitSpotlightButtonTooltip: string;
   /* @conditional-compile-remove(end-call-options) */
   /**
-   * Label for confirm button in hang up confirm dialog
+   * Label for confirm button of hang up for everyone dialog
    */
-  hangUpConfirmButtonLabel?: string;
+  leaveConfirmButtonLabel?: string;
+  /* @conditional-compile-remove(end-call-options) */
+  /**
+   * Label for confirm button of leave confim dialog
+   */
+  endCallConfirmButtonLabel?: string;
   /* @conditional-compile-remove(end-call-options) */
   /**
    * Label for cancel button in hang up confirm dialog
