@@ -44,10 +44,8 @@ import { DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { SendMessageOptions } from '@azure/communication-chat';
 import { JoinCallOptions } from '../../CallComposite/adapter/CallAdapter';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata } from '@internal/react-components';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { FileUploadManager } from '@internal/react-components';
+/* @conditional-compile-remove(attachment-upload) */
+import { AttachmentMetadata, AttachmentUploadManager } from '@internal/react-components';
 /* @conditional-compile-remove(PSTN-calls) */
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { UnknownIdentifier, MicrosoftTeamsAppIdentifier } from '@azure/communication-common';
@@ -64,7 +62,7 @@ import {
   IsCaptionLanguageChangedListener,
   IsSpokenLanguageChangedListener
 } from '../../CallComposite/adapter/CallAdapter';
-/* @conditional-compile-remove(capabilities) */
+
 import { CapabilitiesChangedListener } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(spotlight) */
 import { SpotlightChangedListener } from '../../CallComposite/adapter/CallAdapter';
@@ -206,7 +204,7 @@ export interface CallWithChatAdapterManagement {
    * Send Reaction to ongoing meeting.
    * @param reaction - A value of type {@link @azure/communication-calling#Reaction}
    *
-   * @beta
+   * @public
    */
   onReactionClick(reaction: Reaction): Promise<void>;
   /**
@@ -376,27 +374,27 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-upload) */
   /** @beta */
-  registerActiveFileUploads: (files: File[]) => FileUploadManager[];
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  registerActiveUploads: (files: File[]) => AttachmentUploadManager[];
+  /* @conditional-compile-remove(attachment-upload) */
   /** @beta */
-  registerCompletedFileUploads: (metadata: AttachmentMetadata[]) => FileUploadManager[];
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadManager[];
+  /* @conditional-compile-remove(attachment-upload) */
   /** @beta */
-  clearFileUploads: () => void;
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  clearUploads: () => void;
+  /* @conditional-compile-remove(attachment-upload) */
   /** @beta */
-  cancelFileUpload: (id: string) => void;
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  cancelUpload: (id: string) => void;
+  /* @conditional-compile-remove(attachment-upload) */
   /** @beta */
-  updateFileUploadProgress: (id: string, progress: number) => void;
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  updateUploadProgress: (id: string, progress: number) => void;
+  /* @conditional-compile-remove(attachment-upload) */
   /** @beta */
-  updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  updateUploadStatusMessage: (id: string, errorMessage: string) => void;
+  /* @conditional-compile-remove(attachment-upload) */
   /** @beta */
-  updateFileUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
+  updateUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
   /** @public */
   downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
   /** @public */
@@ -492,7 +490,7 @@ export interface CallWithChatAdapterManagement {
   /**
    * Send the end of call survey result
    *
-   * @beta
+   * @public
    */
   submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
   /* @conditional-compile-remove(spotlight) */
@@ -537,7 +535,7 @@ export interface CallWithChatAdapterSubscriptions {
   on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
   /* @conditional-compile-remove(close-captions) */
   on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
-  /* @conditional-compile-remove(capabilities) */
+
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   /* @conditional-compile-remove(spotlight) */
   on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
@@ -561,7 +559,7 @@ export interface CallWithChatAdapterSubscriptions {
   off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
   /* @conditional-compile-remove(close-captions) */
   off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
-  /* @conditional-compile-remove(capabilities) */
+
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   /* @conditional-compile-remove(spotlight) */
   off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
@@ -619,7 +617,7 @@ export type CallWithChatEvent =
   | /* @conditional-compile-remove(close-captions) */ 'captionsReceived'
   | /* @conditional-compile-remove(close-captions) */ 'isCaptionLanguageChanged'
   | /* @conditional-compile-remove(close-captions) */ 'isSpokenLanguageChanged'
-  | /* @conditional-compile-remove(capabilities) */ 'capabilitiesChanged'
+  | 'capabilitiesChanged'
   | /* @conditional-compile-remove(spotlight) */ 'spotlightChanged'
   | 'messageReceived'
   | 'messageEdited'

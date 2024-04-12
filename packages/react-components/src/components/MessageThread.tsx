@@ -33,7 +33,7 @@ import { useLocale } from '../localization/LocalizationProvider';
 import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
 import getParticipantsWhoHaveReadMessage from './utils/getParticipantsWhoHaveReadMessage';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata, FileDownloadHandler } from '../types/Attachment';
+import { AttachmentMetadata, AttachmentOptions } from '../types/Attachment';
 import { useTheme } from '../theming';
 import { FluentV9ThemeProvider } from './../theming/FluentV9ThemeProvider';
 import LiveAnnouncer from './Announcer/LiveAnnouncer';
@@ -211,8 +211,11 @@ export interface MessageThreadStrings {
   /** Aria label to announce when a message is deleted */
   messageDeletedAnnouncementAriaLabel: string;
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  /** String for download file button in attachment card */
+  /** String for download attachment button in attachment card */
   downloadAttachment: string;
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /** String for open attachment button in attachment card */
+  openAttachment: string;
   /* @conditional-compile-remove(data-loss-prevention) */
   /** String for policy violation message removal */
   blockedWarningText: string;
@@ -220,7 +223,7 @@ export interface MessageThreadStrings {
   /** String for policy violation message removal details link */
   blockedWarningLinkText: string;
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  /** String for aria text in file attachment group*/
+  /** String for aria text in attachment card group*/
   attachmentCardGroupMessage: string;
 }
 
@@ -345,9 +348,9 @@ const getLastChatMessageForCurrentUser = (messages: Message[]): ChatMessage | un
 export type UpdateMessageCallback = (
   messageId: string,
   content: string,
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-upload) */
   options?: {
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+    /* @conditional-compile-remove(attachment-upload) */
     metadata?: Record<string, string>;
     attachmentMetadata?: AttachmentMetadata[];
   }
@@ -459,10 +462,10 @@ export type MessageThreadProps = {
   onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /**
-   * Optional callback to render attached files in the message component.
+   * Optional callback to render attachments in the message component.
    * @beta
    */
-  onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+  onRenderAttachmentDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
   /**
    * Optional callback to edit a message.
    *
@@ -512,11 +515,10 @@ export type MessageThreadProps = {
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /**
    * @beta
-   * Optional function called when someone clicks on the file download icon.
-   * If file attachments are defined in the `message.metadata` property using the `fileSharingMetadata` key,
-   * this function will be called with the data inside `fileSharingMetadata` key.
+   * Optional attachment options, which defines behvaiour for uploading and downloading attachments.
+   * As this moment, the uploadOptions would be ignored and this option is intended for download only.
    */
-  fileDownloadHandler?: FileDownloadHandler;
+  attachmentOptions?: AttachmentOptions;
 
   /* @conditional-compile-remove(date-time-customization) */
   /**
@@ -535,6 +537,14 @@ export type MessageThreadProps = {
    * @beta
    */
   inlineImageOptions?: InlineImageOptions;
+
+  /* @conditional-compile-remove(rich-text-editor) */
+  /**
+   * enables rich text editor for the edit box
+   *
+   * @defaultValue `false`
+   */
+  richTextEditor?: boolean;
 };
 
 /**
@@ -667,7 +677,11 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     mentionOptions,
     inlineImageOptions,
     /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    onRenderFileDownloads
+    attachmentOptions,
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+    onRenderAttachmentDownloads,
+    /* @conditional-compile-remove(rich-text-editor) */
+    richTextEditor = false
   } = props;
   // We need this state to wait for one tick and scroll to bottom after messages have been initialized.
   // Otherwise chatScrollDivRef.current.clientHeight is wrong if we scroll to bottom before messages are initialized.
@@ -1115,14 +1129,16 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
                   readCount={readCountForHoveredIndicator}
                   participantCount={participantCount}
                   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-                  fileDownloadHandler={props.fileDownloadHandler}
+                  actionsForAttachment={attachmentOptions?.downloadOptions?.actionsForAttachment}
                   inlineImageOptions={inlineImageOptions}
                   /* @conditional-compile-remove(date-time-customization) */
                   onDisplayDateTimeString={onDisplayDateTimeString}
                   /* @conditional-compile-remove(mention) */
                   mentionOptions={mentionOptions}
                   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-                  onRenderFileDownloads={onRenderFileDownloads}
+                  onRenderAttachmentDownloads={onRenderAttachmentDownloads}
+                  /* @conditional-compile-remove(rich-text-editor) */
+                  richTextEditor={richTextEditor}
                 />
               );
             })}

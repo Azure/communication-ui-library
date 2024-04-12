@@ -23,7 +23,7 @@ export const IDS = {
   overflowGalleryLeftNavButton: 'overflow-gallery-left-nav-button',
   overflowGalleryRightNavButton: 'overflow-gallery-right-nav-button',
   readReceiptTooltip: 'chat-composite-message-tooltip',
-  fileTypeIcon: 'filetype-icon',
+  attachmentTypeIcon: 'attachmenttype-icon',
   deviceButton: 'calling-composite-devices-button',
   resumeCallButton: 'hold-page-resume-call-button',
   holdButton: 'hold-button',
@@ -39,7 +39,10 @@ export const IDS = {
   verticalGalleryVideoTile: 'vertical-gallery-video-tile',
   horizontalGalleryVideoTile: 'horizontal-gallery-video-tile',
   mentionSuggestionList: 'mention-suggestion-list',
-  mentionSuggestionItem: 'mention-suggestion-item'
+  mentionSuggestionItem: 'mention-suggestion-item',
+  reactionButton: 'call-composite-reaction-button',
+  reactionButtonSubMenu: 'reaction-sub-menu',
+  reactionMobileDrawerMenuItem: 'reaction-mobile-drawer-menu-item'
 };
 
 export const spokenLanguageStrings = [
@@ -157,7 +160,9 @@ export const captionsFeatureState = {
   currentCaptionLanguage: 'en',
   currentSpokenLanguage: 'en-us',
   isCaptionsFeatureActive: true,
-  startCaptionsInProgress: true
+  startCaptionsInProgress: true,
+  /* @conditional-compile-remove(acs-close-captions) */
+  captionsKind: 'Captions' as const
 };
 
 export const captionsFeatureStateArabic = {
@@ -198,5 +203,7 @@ export const captionsFeatureStateArabic = {
   currentCaptionLanguage: 'ar',
   currentSpokenLanguage: 'ar-ae',
   isCaptionsFeatureActive: true,
-  startCaptionsInProgress: true
+  startCaptionsInProgress: true,
+  /* @conditional-compile-remove(acs-close-captions) */
+  captionsKind: 'Captions' as const
 };

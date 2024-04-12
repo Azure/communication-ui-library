@@ -11,12 +11,12 @@ import {
   VideoDeviceInfo
 } from '@azure/communication-calling';
 import { RaisedHand } from '@azure/communication-calling';
-/* @conditional-compile-remove(capabilities) */
+
 import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(acs-close-captions) */
-import { CaptionsInfo as AcsCaptionsInfo } from '@azure/communication-calling';
+import { CaptionsKind, CaptionsInfo as AcsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { AzureLogger, createClientLogger, getLogLevel } from '@azure/logger';
@@ -45,11 +45,9 @@ import {
 import { CaptionsInfo } from './CallClientState';
 /* @conditional-compile-remove(reaction) */
 import { ReactionState } from './CallClientState';
-/* @conditional-compile-remove(call-transfer) */
 import { AcceptedTransfer } from './CallClientState';
 import { callingStatefulLogger } from './Logger';
 import { CallIdHistory } from './CallIdHistory';
-
 import { LocalVideoStreamVideoEffectsState } from './CallClientState';
 /* @conditional-compile-remove(close-captions) */
 import { convertFromTeamsSDKToCaptionInfoState } from './Converter';
@@ -74,6 +72,11 @@ enablePatches();
  * @private
  */
 export const MAX_CALL_HISTORY_LENGTH = 10;
+/* @conditional-compile-remove(reaction) */
+/**
+ * @private
+ */
+export const REACTION_ANIMATION_TIME_MS = 4133;
 
 /**
  * @private
@@ -507,7 +510,7 @@ export class CallContext {
       if (reactionMessage) {
         this._timeOutId[participantKey] = setTimeout(() => {
           clearParticipantReactionState(this, callId, participantKey);
-        }, 5120);
+        }, REACTION_ANIMATION_TIME_MS);
       }
     });
   }
@@ -521,7 +524,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(capabilities) */
   public setCapabilities(
     callId: string,
     capabilities: ParticipantCapabilities,
@@ -1024,6 +1026,16 @@ export class CallContext {
     });
   }
 
+  /* @conditional-compile-remove(acs-close-captions) */
+  public setCaptionsKind(callId: string, kind: CaptionsKind): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.captionsFeature.captionsKind = kind;
+      }
+    });
+  }
+
   /* @conditional-compile-remove(close-captions) */
   public clearCaptions(callId: string): void {
     this.modifyState((draft: CallClientState) => {
@@ -1090,7 +1102,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(call-transfer) */
   setAcceptedTransfer(callId: string, acceptedTransfer: AcceptedTransfer): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];

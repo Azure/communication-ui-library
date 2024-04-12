@@ -92,7 +92,6 @@ export interface ComponentStrings {
   /* @conditional-compile-remove(reaction) */
   /**
    * Strings for ReactionButton
-   * @beta
    * */
   reactionButton: ReactionButtonStrings;
   /** Strings for TypingIndicator */
@@ -181,7 +180,6 @@ export interface ComponentStrings {
   /* @conditional-compile-remove(total-participant-count) */
   /** Strings for the participant list component */
   ParticipantList: ParticipantListStrings;
-  /* @conditional-compile-remove(hide-attendee-name) */
 }
 
 /**

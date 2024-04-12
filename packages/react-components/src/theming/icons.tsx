@@ -93,7 +93,7 @@ import { Backspace20Regular } from '@fluentui/react-icons';
 import { Sparkle20Filled, VideoProhibited20Filled, MicProhibited20Filled } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { ArrowDownload16Regular } from '@fluentui/react-icons';
+import { ArrowDownload20Regular, Open20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CallPause20Regular, CallPause20Filled, Play20Regular } from '@fluentui/react-icons';
 import { People20Regular } from '@fluentui/react-icons';
@@ -281,10 +281,14 @@ export const DEFAULT_COMPONENT_ICONS = {
   LowerHandContextualMenuItem: <HandRightOff20Regular />,
   /* @conditional-compile-remove(reaction) */
   ReactionButtonIcon: <Emoji20Regular />,
+  /* @conditional-compile-remove(attachment-upload) */
+  CancelAttachmentUpload: <Dismiss16Regular />,
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  CancelFileUpload: <Dismiss16Regular />,
+  DownloadAttachment: <ArrowDownload20Regular />,
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  DownloadFile: <ArrowDownload16Regular />,
+  OpenAttachment: <Open20Regular />,
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  AttachmentMoreMenu: <MoreHorizontal20Filled />,
   /* @conditional-compile-remove(data-loss-prevention) */
   DataLossPreventionProhibited: <DataLossPreventionProhibited16Regular />,
   EditBoxCancel: <Dismiss20Regular />,

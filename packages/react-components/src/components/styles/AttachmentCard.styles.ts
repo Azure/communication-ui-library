@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { mergeStyles } from '@fluentui/react';
-import { makeStyles } from '@fluentui/react-components';
+import { makeStyles, shorthands } from '@fluentui/react-components';
 import { _pxToRem } from '@internal/acs-ui-common';
 
 /**
@@ -11,14 +11,17 @@ import { _pxToRem } from '@internal/acs-ui-common';
 export const useAttachmentCardStyles = makeStyles({
   root: {
     width: '12rem',
-    minWidth: '75%'
+    minWidth: '75%',
+    '& div[role=toolbar]': {
+      ...shorthands.padding(0)
+    }
   }
 });
 
 /**
  * @private
  */
-export const fileNameContainerClassName = mergeStyles({
+export const attachmentNameContainerClassName = mergeStyles({
   marginTop: _pxToRem(5),
   width: '5.75rem',
   overflow: 'hidden',

@@ -22,10 +22,10 @@ export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox
 export { RichTextSendBox } from './RichTextEditor/RichTextSendBox';
 // TODO: This component is exported only for testing purposes. Remove this when this component is added to composites
 /* @conditional-compile-remove(rich-text-editor) */
-export { ChatMessageComponentAsRichTextEditBox } from './ChatMessage/ChatMessageComponentAsRichTextEditBox';
+export { ChatMessageComponentAsRichTextEditBox } from './ChatMessage/MyMessageComponents/ChatMessageComponentAsRichTextEditBox';
 // TODO: This component is exported only for testing purposes. Remove this when this component is added to composites
 /* @conditional-compile-remove(rich-text-editor) */
-export type { ChatMessageComponentAsRichTextEditBoxProps } from './ChatMessage/ChatMessageComponentAsRichTextEditBox';
+export type { ChatMessageComponentAsRichTextEditBoxProps } from './ChatMessage/MyMessageComponents/ChatMessageComponentAsRichTextEditBox';
 /* @conditional-compile-remove(rich-text-editor) */
 export type { RichTextSendBoxProps, RichTextSendBoxStrings } from './RichTextEditor/RichTextSendBox';
 
@@ -42,9 +42,6 @@ export type {
 export type { ImageOverlayProps } from './ImageOverlay';
 
 export type { InlineImageOptions, InlineImage } from './ChatMessage/ChatMessageContent';
-
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-export type { ActiveFileUpload } from './AttachmentUploadCards';
 
 export { MessageStatusIndicator } from './MessageStatusIndicator';
 export type { MessageStatusIndicatorProps, MessageStatusIndicatorStrings } from './MessageStatusIndicator';
@@ -203,7 +200,7 @@ export type {
 } from './PictureInPictureInPicture/PictureInPictureInPictureTile';
 
 export * from './Drawer';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(attachment-upload) */
 export type { SendBoxErrorBarError } from './SendBoxErrorBar';
 export * from './AttachmentCard';
 export * from './AttachmentCardGroup';
@@ -212,15 +209,16 @@ export * from './AttachmentDownloadCards';
 export type { _AttachmentUploadCardsStrings } from './AttachmentUploadCards';
 
 export type {
+  AttachmentOptions,
+  AttachmentUploadOptions,
   AttachmentMetadata,
-  FileUploadHandler,
-  FileUploadManager,
-  FileUploadState,
-  FileUploadError
+  AttachmentUploadStatus,
+  AttachmentUploadHandler,
+  AttachmentUploadManager
 } from '../types/Attachment';
 
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-export type { FileDownloadHandler, FileDownloadError } from '../types/Attachment';
+export type { AttachmentMenuAction, AttachmentDownloadOptions } from '../types/Attachment';
 
 export { _useContainerHeight, _useContainerWidth } from './utils/responsive';
 

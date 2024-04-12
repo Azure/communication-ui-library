@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 import React, { createContext, useContext } from 'react';
-import { FileUploadManager } from '@internal/react-components';
-import { FileUploadAdapter } from './AzureCommunicationFileUploadAdapter';
+import { AttachmentUploadManager } from '@internal/react-components';
+import { AttachmentUploadAdapter } from './AzureCommunicationAttachmentUploadAdapter';
 import { ChatAdapter } from './ChatAdapter';
 
 /**
@@ -38,30 +38,30 @@ export const useAdapter = (): ChatAdapter => {
 /**
  * @private
  */
-export const useFileUploadAdapter = (): FileUploadAdapter => {
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+export const useAttachmentUploadAdapter = (): AttachmentUploadAdapter => {
+  /* @conditional-compile-remove(attachment-upload) */
   return useAdapter();
   // A stub that short-circuits all logic because none of the fields are available.
   return {
-    registerActiveFileUploads() {
-      return [] as FileUploadManager[];
+    registerActiveUploads() {
+      return [] as AttachmentUploadManager[];
     },
-    registerCompletedFileUploads() {
-      return [] as FileUploadManager[];
+    registerCompletedUploads() {
+      return [] as AttachmentUploadManager[];
     },
-    cancelFileUpload() {
+    cancelUpload() {
       // noop
     },
-    clearFileUploads() {
+    clearUploads() {
       // noop
     },
-    updateFileUploadErrorMessage() {
+    updateUploadStatusMessage() {
       // noop
     },
-    updateFileUploadProgress() {
+    updateUploadProgress() {
       // noop
     },
-    updateFileUploadMetadata() {
+    updateUploadMetadata() {
       // noop
     }
   };

@@ -8,7 +8,7 @@ import { ParticipantState } from '../../types';
 
 /**
  * Conditionally modify locale strings passed to the attachment card
- * @returns file upload card strings
+ * @returns attachment card strings
  */
 export const useLocaleAttachmentCardStringsTrampoline = (): _AttachmentUploadCardsStrings => {
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
@@ -16,7 +16,8 @@ export const useLocaleAttachmentCardStringsTrampoline = (): _AttachmentUploadCar
   return {
     removeAttachment: '',
     uploadCompleted: '',
-    uploading: ''
+    uploading: '',
+    attachmentMoreMenu: ''
   };
 };
 

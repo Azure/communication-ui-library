@@ -5,7 +5,7 @@
 import { SpokenLanguageStrings, CaptionLanguageStrings } from '@internal/react-components';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { SurveyIssues, SurveyIssuesHeadingStrings } from '@internal/react-components';
-/* @conditional-compile-remove(capabilities) */
+
 import { CapabilityChangedNotificationStrings } from './components/CapabilitiesChangedNotificationBar';
 /* @conditional-compile-remove(spotlight) */
 import { SpotlightPromptStrings } from './components/Prompt';
@@ -583,27 +583,22 @@ export interface CallCompositeStrings {
    * captions banner loading spinner label
    */
   captionsBannerSpinnerText?: string;
-  /* @conditional-compile-remove(call-transfer) */
   /**
    * transfer page text when showing the transferor who initiated the transfer
    */
   transferPageTransferorText: string;
-  /* @conditional-compile-remove(call-transfer) */
   /**
    * transfer page text when showing the transfer target
    */
   transferPageTransferTargetText: string;
-  /* @conditional-compile-remove(call-transfer) */
   /**
    * transfer page display name for unknown participant
    */
   transferPageUnknownTransferorDisplayName: string;
-  /* @conditional-compile-remove(call-transfer) */
   /**
    * transfer page display name for unknown participant
    */
   transferPageUnknownTransferTargetDisplayName: string;
-  /* @conditional-compile-remove(call-transfer) */
   /**
    * notice to be announced by narrator the transfer page is showing
    */
@@ -676,7 +671,7 @@ export interface CallCompositeStrings {
    * Label for the selection of the focusedContentLayout (Focused content) layout
    */
   moreButtonGalleryFocusedContentLayoutLabel?: string;
-  /* @conditional-compile-remove(capabilities) */
+
   /**
    * All strings for capability changed notification
    */
@@ -748,11 +743,6 @@ export interface CallCompositeStrings {
   surveySkipButtonLabel: string;
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
-   * Default text for free form text box
-   */
-  surveyTextboxDefaultText: string;
-  /* @conditional-compile-remove(end-of-call-survey) */
-  /**
    * Thank you text appeared on screen after survey is submitted
    */
   endOfSurveyText: string;
@@ -765,7 +755,7 @@ export interface CallCompositeStrings {
   /**
    * Corresponding texts to each call category
    */
-  SurveyIssuesHeadingStrings: SurveyIssuesHeadingStrings;
+  surveyIssuesHeadingStrings: SurveyIssuesHeadingStrings;
   /**
    * String for the dismiss control on the local and remote PIP on mobile
    */
@@ -829,6 +819,41 @@ export interface CallCompositeStrings {
    * Tooltip for button to exit spotlight
    */
   exitSpotlightButtonTooltip: string;
+  /* @conditional-compile-remove(end-call-options) */
+  /**
+   * Label for confirm button of hang up for everyone dialog
+   */
+  leaveConfirmButtonLabel?: string;
+  /* @conditional-compile-remove(end-call-options) */
+  /**
+   * Label for confirm button of leave confim dialog
+   */
+  endCallConfirmButtonLabel?: string;
+  /* @conditional-compile-remove(end-call-options) */
+  /**
+   * Label for cancel button in hang up confirm dialog
+   */
+  hangUpCancelButtonLabel?: string;
+  /* @conditional-compile-remove(end-call-options) */
+  /**
+   * Title of confirm dialog when leaving
+   */
+  leaveConfirmDialogTitle?: string;
+  /* @conditional-compile-remove(end-call-options) */
+  /**
+   * Content of confirm dialog when leaving
+   */
+  leaveConfirmDialogContent?: string;
+  /* @conditional-compile-remove(end-call-options) */
+  /**
+   * Title of confirm dialog when leaving
+   */
+  endCallConfirmDialogTitle?: string;
+  /* @conditional-compile-remove(end-call-options) */
+  /**
+   * Content of confirm dialog when leaving
+   */
+  endCallConfirmDialogContent?: string;
   /* @conditional-compile-remove(meeting-id) */
   /**
    * Error message when the meeting identifier or passcode is invalid

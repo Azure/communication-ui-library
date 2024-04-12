@@ -324,11 +324,18 @@
       "stopSpotlightCancelButtonLabel": "取消"
     },
     "exitSpotlightButtonLabel": "結束精選",
-    "exitSpotlightButtonTooltip": "結束精選"
+    "exitSpotlightButtonTooltip": "結束精選",
+    "hangUpConfirmButtonLabel": "確認",
+    "hangUpCancelButtonLabel": "取消",
+    "leaveConfirmDialogTitle": "離開通話?",
+    "leaveConfirmDialogContent": "確定要離開此通話?",
+    "endCallConfirmDialogTitle": "結束通話?",
+    "endCallConfirmDialogContent": "您將結束所有人的通話。",
+    "invalidMeetingIdentifier": "會議標識碼或密碼無效"
   },
   "chat": {
     "chatListHeader": "在此聊天中",
-    "uploadFile": "上傳檔案"
+    "uploadAttachment": "上傳附件"
   },
   "callWithChat": {
     "chatButtonLabel": "聊天",

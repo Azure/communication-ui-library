@@ -25,8 +25,8 @@ import { StartCaptionsOptions } from '@azure/communication-calling';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata, FileUploadManager } from '@internal/react-components';
+/* @conditional-compile-remove(attachment-upload) */
+import { AttachmentMetadata, AttachmentUploadManager } from '@internal/react-components';
 import {
   ParticipantsJoinedListener,
   ParticipantsLeftListener,
@@ -97,7 +97,7 @@ import {
   IsCaptionLanguageChangedListener,
   IsSpokenLanguageChangedListener
 } from '../../CallComposite/adapter/CallAdapter';
-/* @conditional-compile-remove(capabilities) */
+
 import { CapabilitiesChangedListener } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(spotlight) */
 import { SpotlightChangedListener } from '../../CallComposite/adapter/CallAdapter';
@@ -224,20 +224,20 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.deleteMessage.bind(this);
     this.on.bind(this);
     this.off.bind(this);
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    this.registerActiveFileUploads = this.registerActiveFileUploads.bind(this);
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    this.registerCompletedFileUploads = this.registerCompletedFileUploads.bind(this);
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    this.clearFileUploads = this.clearFileUploads.bind(this);
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    this.cancelFileUpload = this.cancelFileUpload.bind(this);
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    this.updateFileUploadProgress = this.updateFileUploadProgress.bind(this);
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    this.updateFileUploadErrorMessage = this.updateFileUploadErrorMessage.bind(this);
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    this.updateFileUploadMetadata = this.updateFileUploadMetadata.bind(this);
+    /* @conditional-compile-remove(attachment-upload) */
+    this.registerActiveUploads = this.registerActiveUploads.bind(this);
+    /* @conditional-compile-remove(attachment-upload) */
+    this.registerCompletedUploads = this.registerCompletedUploads.bind(this);
+    /* @conditional-compile-remove(attachment-upload) */
+    this.clearUploads = this.clearUploads.bind(this);
+    /* @conditional-compile-remove(attachment-upload) */
+    this.cancelUpload = this.cancelUpload.bind(this);
+    /* @conditional-compile-remove(attachment-upload) */
+    this.updateUploadProgress = this.updateUploadProgress.bind(this);
+    /* @conditional-compile-remove(attachment-upload) */
+    this.updateUploadStatusMessage = this.updateUploadStatusMessage.bind(this);
+    /* @conditional-compile-remove(attachment-upload) */
+    this.updateUploadMetadata = this.updateUploadMetadata.bind(this);
     this.downloadResourceToCache = this.downloadResourceToCache.bind(this);
     this.removeResourceFromCache = this.removeResourceFromCache.bind(this);
     /* @conditional-compile-remove(PSTN-calls) */
@@ -452,7 +452,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     content: string,
     metadata?: Record<string, string>,
     options?: {
-      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+      /* @conditional-compile-remove(attachment-upload) */
       attachmentMetadata?: AttachmentMetadata[];
     }
   ): Promise<void> {
@@ -461,7 +461,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         messageId,
         content,
         metadata,
-        /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ options
+        /* @conditional-compile-remove(attachment-upload) */ options
       );
     });
   }
@@ -471,42 +471,42 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
       return adapter.deleteMessage(messageId);
     });
   }
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  public registerActiveFileUploads = (files: File[]): FileUploadManager[] => {
-    return this.chatAdapter?.registerActiveFileUploads(files) ?? [];
+  /* @conditional-compile-remove(attachment-upload) */
+  public registerActiveUploads = (files: File[]): AttachmentUploadManager[] => {
+    return this.chatAdapter?.registerActiveUploads(files) ?? [];
   };
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  public registerCompletedFileUploads = (metadata: AttachmentMetadata[]): FileUploadManager[] => {
-    return this.chatAdapter?.registerCompletedFileUploads(metadata) ?? [];
+  /* @conditional-compile-remove(attachment-upload) */
+  public registerCompletedUploads = (metadata: AttachmentMetadata[]): AttachmentUploadManager[] => {
+    return this.chatAdapter?.registerCompletedUploads(metadata) ?? [];
   };
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  public clearFileUploads = (): void => {
+  /* @conditional-compile-remove(attachment-upload) */
+  public clearUploads = (): void => {
     this.chatAdapterPromise.then((adapter) => {
-      adapter.clearFileUploads();
+      adapter.clearUploads();
     });
   };
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  public cancelFileUpload = (id: string): void => {
+  /* @conditional-compile-remove(attachment-upload) */
+  public cancelUpload = (id: string): void => {
     this.chatAdapterPromise.then((adapter) => {
-      adapter.cancelFileUpload(id);
+      adapter.cancelUpload(id);
     });
   };
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  public updateFileUploadProgress = (id: string, progress: number): void => {
+  /* @conditional-compile-remove(attachment-upload) */
+  public updateUploadProgress = (id: string, progress: number): void => {
     this.chatAdapterPromise.then((adapter) => {
-      adapter.updateFileUploadProgress(id, progress);
+      adapter.updateUploadProgress(id, progress);
     });
   };
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  public updateFileUploadErrorMessage = (id: string, errorMessage: string): void => {
+  /* @conditional-compile-remove(attachment-upload) */
+  public updateUploadStatusMessage = (id: string, errorMessage: string): void => {
     this.chatAdapterPromise.then((adapter) => {
-      adapter.updateFileUploadErrorMessage(id, errorMessage);
+      adapter.updateUploadStatusMessage(id, errorMessage);
     });
   };
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  public updateFileUploadMetadata = (id: string, metadata: AttachmentMetadata): void => {
+  /* @conditional-compile-remove(attachment-upload) */
+  public updateUploadMetadata = (id: string, metadata: AttachmentMetadata): void => {
     this.chatAdapterPromise.then((adapter) => {
-      adapter.updateFileUploadMetadata(id, metadata);
+      adapter.updateUploadMetadata(id, metadata);
     });
   };
   public async downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void> {
@@ -634,7 +634,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
   /* @conditional-compile-remove(close-captions) */
   on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
-  /* @conditional-compile-remove(capabilities) */
+
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   /* @conditional-compile-remove(spotlight) */
   on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
@@ -764,7 +764,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
   /* @conditional-compile-remove(close-captions) */
   off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
-  /* @conditional-compile-remove(capabilities) */
+
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   /* @conditional-compile-remove(spotlight) */
   off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
@@ -1188,7 +1188,6 @@ export const createAzureCommunicationCallWithChatAdapterFromClients = async ({
   callLocator,
   chatClient,
   chatThreadClient,
-
   callAdapterOptions
 }: AzureCommunicationCallWithChatAdapterFromClientArgs): Promise<CallWithChatAdapter> => {
   const callAdapter = await createAzureCommunicationCallAdapterFromClient(

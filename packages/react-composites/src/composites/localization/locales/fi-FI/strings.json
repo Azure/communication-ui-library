@@ -324,11 +324,18 @@
       "stopSpotlightCancelButtonLabel": "Peruuta"
     },
     "exitSpotlightButtonLabel": "Poistu valokeilasta",
-    "exitSpotlightButtonTooltip": "Poistu valokeilasta"
+    "exitSpotlightButtonTooltip": "Poistu valokeilasta",
+    "hangUpConfirmButtonLabel": "Vahvista",
+    "hangUpCancelButtonLabel": "Peruuta",
+    "leaveConfirmDialogTitle": "Poistutaanko puhelusta?",
+    "leaveConfirmDialogContent": "Haluatko varmasti poistua puhelusta?",
+    "endCallConfirmDialogTitle": "Lopetetaanko puhelu?",
+    "endCallConfirmDialogContent": "Puhelu lopetetaan kaikkien osallistujien osalta.",
+    "invalidMeetingIdentifier": "Virheellinen kokoustunnus tai tunnuskoodi"
   },
   "chat": {
     "chatListHeader": "Tässä keskustelussa",
-    "uploadFile": "Lataa tiedosto palvelimeen"
+    "uploadAttachment": "Lataa liite"
   },
   "callWithChat": {
     "chatButtonLabel": "Keskustelu",

@@ -324,11 +324,18 @@
       "stopSpotlightCancelButtonLabel": "Anuluj"
     },
     "exitSpotlightButtonLabel": "Wyjdź z ważnych informacji",
-    "exitSpotlightButtonTooltip": "Wyjdź z ważnych informacji"
+    "exitSpotlightButtonTooltip": "Wyjdź z ważnych informacji",
+    "hangUpConfirmButtonLabel": "Potwierdź",
+    "hangUpCancelButtonLabel": "Anuluj",
+    "leaveConfirmDialogTitle": "Opuścić połączenie?",
+    "leaveConfirmDialogContent": "Czy na pewno chcesz opuścić rozmowę?",
+    "endCallConfirmDialogTitle": "Zakończyć połączenie?",
+    "endCallConfirmDialogContent": "Zakończysz połączenie dla wszystkich.",
+    "invalidMeetingIdentifier": "Nieprawidłowy identyfikator spotkania lub kod dostępu"
   },
   "chat": {
     "chatListHeader": "W tym czacie",
-    "uploadFile": "Przekazywanie pliku"
+    "uploadAttachment": "Przekaż załącznik"
   },
   "callWithChat": {
     "chatButtonLabel": "Czat",

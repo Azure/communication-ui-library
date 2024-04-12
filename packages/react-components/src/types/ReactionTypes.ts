@@ -4,7 +4,7 @@
 /* @conditional-compile-remove(reaction) */
 /**
  * Type for animation sprite image and related metadata
- * @beta
+ * @public
  */
 export type ReactionSprite = {
   /**
@@ -15,16 +15,12 @@ export type ReactionSprite = {
    * The frame count of the resource reaction in the sprite image
    */
   frameCount: number;
-  /**
-   * The square size of one frame in the animation resource..
-   */
-  size?: number;
 };
 
 /* @conditional-compile-remove(reaction) */
 /**
  * Interface for animation sprite image and related metadata
- * @beta
+ * @public
  */
 export interface ReactionResources {
   /**

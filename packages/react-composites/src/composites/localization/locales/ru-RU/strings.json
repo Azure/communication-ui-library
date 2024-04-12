@@ -315,7 +315,7 @@
       "startSpotlightCancelButtonLabel": "Отмена",
       "stopSpotlightHeading": "Больше не рекомендовать это видео?",
       "stopSpotlightOnSelfHeading": "Выйти из работы с важным?",
-      "stopAllSpotlightHeading": "Отменить все рекомендации видео?",
+      "stopAllSpotlightHeading": "Отменить закрепление всех видео?",
       "stopSpotlightText": "Ваше видео больше не будет помечено как важное для всех участников собрания.",
       "stopSpotlightOnSelfText": "Ваше видео больше не будет выделено для всех участников собрания.",
       "stopAllSpotlightText": "Видео больше не будут выделены для всех участников собрания.",
@@ -324,11 +324,18 @@
       "stopSpotlightCancelButtonLabel": "Отмена"
     },
     "exitSpotlightButtonLabel": "Выйти из важного",
-    "exitSpotlightButtonTooltip": "Выйти из важного"
+    "exitSpotlightButtonTooltip": "Выйти из важного",
+    "hangUpConfirmButtonLabel": "Подтвердить",
+    "hangUpCancelButtonLabel": "Отмена",
+    "leaveConfirmDialogTitle": "Покинуть звонок?",
+    "leaveConfirmDialogContent": "Вы действительно хотите покинуть звонок?",
+    "endCallConfirmDialogTitle": "Завершить звонок?",
+    "endCallConfirmDialogContent": "Вы завершите звонок для всех пользователей.",
+    "invalidMeetingIdentifier": "Недопустимый идентификатор собрания или секретный код"
   },
   "chat": {
     "chatListHeader": "В этом чате",
-    "uploadFile": "Отправить файл"
+    "uploadAttachment": "Отправить вложение"
   },
   "callWithChat": {
     "chatButtonLabel": "Чат",

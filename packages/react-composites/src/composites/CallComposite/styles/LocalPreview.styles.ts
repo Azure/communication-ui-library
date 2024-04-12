@@ -1,12 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { IStyle, ITheme, mergeStyles } from '@fluentui/react';
+import { IButtonStyles, IStyle, ITheme, mergeStyles } from '@fluentui/react';
 import {
   CONFIGURATION_PAGE_SECTION_HEIGHT_REM,
   CONFIGURATION_PAGE_SECTION_MAX_WIDTH_REM,
   CONFIGURATION_PAGE_SECTION_MIN_WIDTH_REM
 } from './CallConfiguration.styles';
+import { _pxToRem } from '@internal/acs-ui-common';
 
 const localPreviewContainerStyle = (theme: ITheme): IStyle => ({
   borderRadius: theme.effects.roundedCorner6,
@@ -59,16 +60,19 @@ export const localPreviewTileStyle = {
 /**
  * @private
  */
-export const localPreviewButtonStyle = {
-  root: {
-    '@media (forced-colors: active)': {
-      ':focus': {
-        border: '1px solid !important' // we need bang important to override fluents colours
-      },
-      ':focus::after': {
-        border: 'unset !important', // we need bang important to override fluents colours
-        outline: 'unset !important'
+export const localPreviewButtonStyle = (isMobile: boolean): IButtonStyles => {
+  return {
+    root: {
+      minWidth: !isMobile ? _pxToRem(75) : 'unset', // we only want to enforce this for desktop views
+      '@media (forced-colors: active)': {
+        ':focus': {
+          border: '1px solid !important' // we need bang important to override fluents colours
+        },
+        ':focus::after': {
+          border: 'unset !important', // we need bang important to override fluents colours
+          outline: 'unset !important'
+        }
       }
     }
-  }
+  };
 };

@@ -32,21 +32,26 @@ export interface RichTextInputBoxComponentStylesProps extends BaseCustomStyles {
  */
 export interface RichTextInputBoxComponentProps {
   placeholderText?: string;
+  // the initial content of editor that is set when editor is created (e.g. when editing a message)
   initialContent?: string;
+  // the current content of the editor
+  content?: string;
   onChange: (newValue?: string) => void;
   onEnterKeyDown?: () => void;
   editorComponentRef: React.RefObject<RichTextEditorComponentRef>;
   strings: Partial<RichTextSendBoxStrings>;
   disabled: boolean;
   actionComponents: ReactNode;
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  onRenderFileUploads?: () => JSX.Element;
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  hasFiles?: boolean;
+  /* @conditional-compile-remove(attachment-upload) */
+  onRenderAttachmentUploads?: () => JSX.Element;
+  /* @conditional-compile-remove(attachment-upload) */
+  hasAttachments?: boolean;
   // props for min and max height for the rich text editor
   // otherwise the editor will grow to fit the content
   richTextEditorStyleProps: (isExpanded: boolean) => RichTextEditorStyleProps;
   isHorizontalLayoutDisabled?: boolean;
+  autoFocus?: 'sendBoxTextField';
+  onTyping?: () => Promise<void>;
 }
 
 /**
@@ -62,12 +67,15 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
     disabled,
     strings,
     actionComponents,
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    onRenderFileUploads,
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-    hasFiles,
+    /* @conditional-compile-remove(attachment-upload) */
+    onRenderAttachmentUploads,
+    /* @conditional-compile-remove(attachment-upload) */
+    hasAttachments,
     richTextEditorStyleProps,
-    isHorizontalLayoutDisabled = false
+    isHorizontalLayoutDisabled = false,
+    content,
+    autoFocus,
+    onTyping
   } = props;
   const theme = useTheme();
   const [showRichTextEditorFormatting, setShowRichTextEditorFormatting] = useState(false);
@@ -126,21 +134,23 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
       if (ev.key === 'Enter' && ev.shiftKey === false && !showRichTextEditorFormatting) {
         ev.preventDefault();
         onEnterKeyDown && onEnterKeyDown();
+      } else {
+        onTyping?.();
       }
     },
-    [onEnterKeyDown, showRichTextEditorFormatting]
+    [onEnterKeyDown, showRichTextEditorFormatting, onTyping]
   );
 
   const useHorizontalLayout = useMemo(() => {
     return (
       !isHorizontalLayoutDisabled &&
       !showRichTextEditorFormatting &&
-      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ !hasFiles
+      /* @conditional-compile-remove(attachment-upload) */ !hasAttachments
     );
   }, [
     isHorizontalLayoutDisabled,
     showRichTextEditorFormatting,
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ hasFiles
+    /* @conditional-compile-remove(attachment-upload) */ hasAttachments
   ]);
 
   return (
@@ -162,6 +172,7 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
         <Stack grow className={inputBoxRichTextStackStyle}>
           <Stack.Item className={inputBoxRichTextStackItemStyle}>
             <RichTextEditor
+              content={content}
               initialContent={initialContent}
               placeholderText={placeholderText}
               onChange={onChange}
@@ -170,11 +181,12 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
               strings={strings}
               showRichTextEditorFormatting={showRichTextEditorFormatting}
               styles={richTextEditorStyle}
+              autoFocus={autoFocus}
             />
           </Stack.Item>
           {
-            /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ onRenderFileUploads &&
-              onRenderFileUploads()
+            /* @conditional-compile-remove(attachment-upload) */ onRenderAttachmentUploads &&
+              onRenderAttachmentUploads()
           }
         </Stack>
         {actionButtons}

@@ -23,43 +23,33 @@ import { getFileTypeIconProps } from '@fluentui/react-file-type-icons';
 import React from 'react';
 import { _pxToRem } from '@internal/acs-ui-common';
 import { Announcer } from './Announcer';
-import { useEffect, useState, useMemo, useCallback } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { _AttachmentUploadCardsStrings } from './AttachmentUploadCards';
 import { useLocaleAttachmentCardStringsTrampoline } from './utils/common';
 import { AttachmentMetadata, AttachmentMenuAction } from '../types/Attachment';
-import { MoreHorizontal24Filled } from '@fluentui/react-icons';
-import { useAttachmentCardStyles, fileNameContainerClassName } from './styles/AttachmentCard.styles';
+import { useAttachmentCardStyles, attachmentNameContainerClassName } from './styles/AttachmentCard.styles';
 
 /**
  * @internal
- * _AttachmentCard Component Props.
+ * AttachmentCard Component Props.
  */
 export interface _AttachmentCardProps {
   /**
-   * Attachment name.
+   * Attachment details including name, extension, url, etc.
    */
-  attachmentName: string;
+  attachment: AttachmentMetadata;
   /**
-   * Extension of the attachment used for rendering the attachment icon.
+   * An array of menu actions to be displayed in the attachment card.
    */
-  attachmentExtension: string;
+  menuActions: AttachmentMenuAction[];
   /**
-   * Attachment upload progress percentage between 0 and 1.
-   * Attachment transfer progress indicator is only shown when the value is greater than 0 and less than 1.
-   */
-  progress?: number;
-  /**
-   * Icon to display for actions like download, upload, etc. along the attachment name.
-   */
-  actionIcon?: JSX.Element;
-  /**
-   * Function that runs when actionIcon is clicked
-   */
-  actionHandler?: () => void;
-  /**
-   * Optional arialabel strings for attachment cards
+   * Optional aria label strings for attachment upload cards
    */
   strings?: _AttachmentUploadCardsStrings;
+  /**
+   * Optional callback that runs if menu bar action onclick throws.
+   */
+  onActionHandlerFailed?: (errMsg: string) => void;
 }
 
 /**
@@ -69,40 +59,11 @@ export interface _AttachmentCardProps {
  * `_AttachmentCard` internally uses the `Card` component from `@fluentui/react-components`. You can checkout the details about these components [here](https://react.fluentui.dev/?path=/docs/components-card).
  */
 export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
-  const { attachmentName, attachmentExtension, progress, actionIcon, actionHandler } = props;
+  const { attachment, menuActions, onActionHandlerFailed } = props;
   const attachmentCardStyles = useAttachmentCardStyles();
-
-  // default/placeholder before actual code implemented
-  const menuActions = useMemo(() => {
-    return [
-      {
-        name: actionIcon && actionIcon?.props.ariaLabel,
-        icon: actionIcon ?? <></>,
-        onClick: (attachment: AttachmentMetadata) => {
-          if (attachment) {
-            actionHandler?.();
-          }
-        }
-      }
-    ];
-  }, [actionIcon, actionHandler]);
-
-  // placeholder before refactoring the props
-  const attachment = useMemo(() => {
-    return {
-      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-      id: 'attachmentId',
-      extension: attachmentExtension,
-      name: attachmentName,
-      url: 'https://localhost' // placeholder not used
-    };
-  }, [attachmentExtension, attachmentName]);
-
-  // placeholder before refactoring the props
-  const onDownloadErrorMessage = useCallback((errorMessage: string): void => {
-    console.log(errorMessage);
-  }, []);
-
+  const progress = useMemo(() => {
+    return attachment.progress;
+  }, [attachment.progress]);
   const isUploadComplete = useMemo(() => {
     return progress !== undefined && progress > 0 && progress < 1;
   }, [progress]);
@@ -116,25 +77,33 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
 
   useEffect(() => {
     if (showProgressIndicator) {
-      setAnnouncerString(`${uploadStartedString} ${attachmentName}`);
+      setAnnouncerString(`${uploadStartedString} ${attachment.name}`);
     } else if (progress === 1) {
-      setAnnouncerString(`${attachmentName} ${uploadCompletedString}`);
+      setAnnouncerString(`${attachment.name} ${uploadCompletedString}`);
     } else {
       setAnnouncerString(undefined);
     }
-  }, [progress, showProgressIndicator, attachmentName, uploadStartedString, uploadCompletedString]);
+  }, [progress, showProgressIndicator, attachment.name, uploadStartedString, uploadCompletedString]);
 
   return (
     <div data-is-focusable={true}>
       <Announcer announcementString={announcerString} ariaLive={'polite'} />
-      <Card className={attachmentCardStyles.root} size="small" role="listitem">
+      <Card
+        className={attachmentCardStyles.root}
+        size="small"
+        role="listitem"
+        appearance="filled-alternative"
+        aria-label={attachment.name}
+      >
         <CardHeader
           image={
             <Icon
-              data-ui-id={'filetype-icon'}
+              data-ui-id={'attachmenttype-icon'}
               iconName={
                 getFileTypeIconProps({
-                  extension: attachmentExtension,
+                  extension: useMemo((): string => {
+                    return attachment.extension ?? attachment.name.split('.').pop() ?? '';
+                  }, [attachment]),
                   size: 24,
                   imageFileType: 'svg'
                 }).iconName
@@ -142,11 +111,11 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
             />
           }
           header={
-            <div className={fileNameContainerClassName}>
-              <Text title={attachmentName}>{attachmentName}</Text>
+            <div className={attachmentNameContainerClassName}>
+              <Text title={attachment.name}>{attachment.name}</Text>
             </div>
           }
-          action={getMenuItems(menuActions, attachment, onDownloadErrorMessage)}
+          action={MappedMenuItems(menuActions, attachment, onActionHandlerFailed)}
         />
       </Card>
       {isUploadComplete ? (
@@ -160,11 +129,13 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
   );
 };
 
-const getMenuItems = (
+const MappedMenuItems = (
   menuActions: AttachmentMenuAction[],
   attachment: AttachmentMetadata,
   handleOnClickError?: (errMsg: string) => void
 ): JSX.Element => {
+  const localeStrings = useLocaleAttachmentCardStringsTrampoline();
+
   if (menuActions.length === 0) {
     return <></>;
   }
@@ -184,7 +155,7 @@ const getMenuItems = (
     <Toolbar>
       <Menu>
         <MenuTrigger>
-          <ToolbarButton aria-label="More" icon={<MoreHorizontal24Filled />} />
+          <ToolbarButton icon={<Icon iconName="AttachmentMoreMenu" aria-label={localeStrings.attachmentMoreMenu} />} />
         </MenuTrigger>
         <MenuPopover>
           <MenuList>
@@ -192,9 +163,9 @@ const getMenuItems = (
               <MenuItem
                 key={index}
                 icon={menuItem.icon}
-                onClick={() => {
+                onClick={async () => {
                   try {
-                    menuItem.onClick(attachment);
+                    await menuItem.onClick(attachment);
                   } catch (e) {
                     handleOnClickError?.((e as Error).message);
                   }

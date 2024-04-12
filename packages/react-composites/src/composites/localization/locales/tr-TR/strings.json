@@ -324,11 +324,18 @@
       "stopSpotlightCancelButtonLabel": "İptal"
     },
     "exitSpotlightButtonLabel": "Öne çıkarmadan çık",
-    "exitSpotlightButtonTooltip": "Öne çıkarmadan çık"
+    "exitSpotlightButtonTooltip": "Öne çıkarmadan çık",
+    "hangUpConfirmButtonLabel": "Onayla",
+    "hangUpCancelButtonLabel": "İptal",
+    "leaveConfirmDialogTitle": "Aramadan çıkılsın mı?",
+    "leaveConfirmDialogContent": "Aramadan ayrılmak istediğinizden emin misiniz?",
+    "endCallConfirmDialogTitle": "Arama sonlandırılsın mı?",
+    "endCallConfirmDialogContent": "Aramayı herkes için sonlandırıyorsunuz.",
+    "invalidMeetingIdentifier": "Geçersiz toplantı kimliği veya geçiş kodu"
   },
   "chat": {
     "chatListHeader": "Bu sohbette",
-    "uploadFile": "Dosyayı Karşıya Yükle"
+    "uploadAttachment": "Eki Karşıya Yükle"
   },
   "callWithChat": {
     "chatButtonLabel": "Sohbet",

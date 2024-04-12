@@ -259,7 +259,6 @@
     "tagsSurveyQuestion": "What could have been better?",
     "tagsSurveyTextFieldDefaultText": "Other, please specify",
     "tagsSurveyHelperText": "Check any issues you experienced",
-    "surveyTextboxDefaultText": "Other, please specify",
     "endOfSurveyText": "Thank you for your feedback!",
     "surveyIssues": {
       "overallRating": {
@@ -301,7 +300,7 @@
         "otherIssues": "I was having other screen share issues in this call"
       }
     },
-    "SurveyIssuesHeadingStrings": {
+    "surveyIssuesHeadingStrings": {
       "overallRating": "Overall",
       "audioRating": "Audio",
       "videoRating": "Video",
@@ -325,11 +324,18 @@
     },
     "exitSpotlightButtonLabel": "Exit spotlight",
     "exitSpotlightButtonTooltip": "Exit spotlight",
+    "leaveConfirmButtonLabel": "Leave",
+    "endCallConfirmButtonLabel": "End call",
+    "hangUpCancelButtonLabel": "Cancel",
+    "leaveConfirmDialogTitle": "Leave the call?",
+    "leaveConfirmDialogContent": "Are you sure you want to leave the call?",
+    "endCallConfirmDialogTitle": "End the call?",
+    "endCallConfirmDialogContent": "You'll end the call for everyone.",
     "invalidMeetingIdentifier": "Invalid meeting ID or passcode"
   },
   "chat": {
     "chatListHeader": "In this chat",
-    "uploadFile": "Upload File"
+    "uploadAttachment": "Upload Attachment"
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",

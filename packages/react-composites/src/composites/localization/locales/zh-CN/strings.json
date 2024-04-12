@@ -324,11 +324,18 @@
       "stopSpotlightCancelButtonLabel": "取消"
     },
     "exitSpotlightButtonLabel": "退出聚焦",
-    "exitSpotlightButtonTooltip": "退出聚焦"
+    "exitSpotlightButtonTooltip": "退出聚焦",
+    "hangUpConfirmButtonLabel": "确认",
+    "hangUpCancelButtonLabel": "取消",
+    "leaveConfirmDialogTitle": "离开聊天?",
+    "leaveConfirmDialogContent": "是否确实要离开此聊天?",
+    "endCallConfirmDialogTitle": "结束通话?",
+    "endCallConfirmDialogContent": "你将结束所有人的通话。",
+    "invalidMeetingIdentifier": "会议 ID 或密码无效"
   },
   "chat": {
     "chatListHeader": "在此聊天中",
-    "uploadFile": "上传文件"
+    "uploadAttachment": "上传附件"
   },
   "callWithChat": {
     "chatButtonLabel": "聊天",

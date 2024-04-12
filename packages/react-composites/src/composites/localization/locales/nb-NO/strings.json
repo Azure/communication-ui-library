@@ -324,11 +324,18 @@
       "stopSpotlightCancelButtonLabel": "Avbryt"
     },
     "exitSpotlightButtonLabel": "Rampelys av",
-    "exitSpotlightButtonTooltip": "Rampelys av"
+    "exitSpotlightButtonTooltip": "Rampelys av",
+    "hangUpConfirmButtonLabel": "Bekreft",
+    "hangUpCancelButtonLabel": "Avbryt",
+    "leaveConfirmDialogTitle": "Forlat chatten",
+    "leaveConfirmDialogContent": "Er du sikker på at du vil forlate samtalen?",
+    "endCallConfirmDialogTitle": "Avslutt samtalen?",
+    "endCallConfirmDialogContent": "Du avslutter møtet for alle.",
+    "invalidMeetingIdentifier": "Ugyldig møte-ID eller passord"
   },
   "chat": {
     "chatListHeader": "I denne chatten",
-    "uploadFile": "Last opp fil"
+    "uploadAttachment": "Last opp vedlegg"
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",
