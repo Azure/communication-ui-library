@@ -14,7 +14,8 @@ const MAX_FILE_SIZE_MB = 50 * 1024 * 1024; // 50MB
 /* @conditional-compile-remove(attachment-download) */
 const UNSUPPORTED_FILES = ['exe', 'bat', 'dat'];
 /* @conditional-compile-remove(attachment-download) */
-const CONTAINER_NAME = '<CONTAINER_NAME>>';
+// change this to your own container name
+const CONTAINER_NAME = 'acs-file-sharing-test';
 
 /* @conditional-compile-remove(attachment-upload) */
 const attachmentUploadHandler: AttachmentUploadHandler = async (
