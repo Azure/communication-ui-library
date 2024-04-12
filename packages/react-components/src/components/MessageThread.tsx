@@ -716,8 +716,8 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   const [deletedMessageAriaLabel, setDeletedMessageAriaLabel] = useState<string | undefined>(undefined);
 
   useEffect(() => {
+    // if rich text editor is enabled, the rich text editor component should be loaded early for good UX
     if (richTextEditor !== undefined && richTextEditor) {
-      // if rich text editor is enabled, the rich text editor component should be loaded early for good UX
       // this line is needed to load the Rooster JS dependencies early in the lifecycle
       // when the rich text editor is enabled
       loadChatMessageComponentAsRichTextEditBox();
