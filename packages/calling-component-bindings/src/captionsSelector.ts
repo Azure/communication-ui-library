@@ -122,6 +122,16 @@ export const _captionsBannerSelector: _CaptionsBannerSelector = reselect.createS
     // Following Teams app logic, no matter how many 'Partial' captions come,
     // we only pick first one according to start time, and all the other partial captions will be filtered out
     // This will give customers a stable captions experience when others talking over the dominant speaker
+    // First turn all partial captions that are older than 10 seconds to final
+    captions
+      ?.filter((captions) => captions.resultType === 'Partial')
+      .forEach((c) => {
+        // if c is created more than 15 seconds ago, make it final
+        if (c.timestamp.getTime() + 15000 < Date.now()) {
+          // make it final
+          c.resultType = 'Final';
+        }
+      });
     const captionsToRender = captions?.filter((captions) => captions.resultType === 'Final');
     const firstPartialCaptions = captions
       ?.filter((captions) => captions.resultType === 'Partial')
