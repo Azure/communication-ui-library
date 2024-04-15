@@ -256,7 +256,7 @@ export const editBoxRichTextEditorStyle = (): RichTextEditorStyleProps => {
  */
 export const sendBoxRichTextEditorStyle = (isExpanded: boolean): RichTextEditorStyleProps => {
   return {
-    minHeight: isExpanded ? '5rem' : '1.25rem',
+    minHeight: isExpanded ? '4rem' : '1.25rem',
     maxHeight: '8rem'
   };
 };
