@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "area": "fix",
+  "workstream": "Video streams",
+  "comment": "[Bugfix - Release blocker] android no stream fix (#4461)",
+  "packageName": "@azure/communication-react",
+  "email": "dmceachern@microsoft.com",
+  "dependentChangeType": "none"
+}
