@@ -1,0 +1,15 @@
+# Build dirs
+build/
+obj/
+node_modules/
+dist/
+Chat/lib
+storybook-static/
+SDK/scripts/
+SDK/cached-package.json
+
+# Output files
+*.tgz
+
+# Puppeteer
+automation/screenshots
