@@ -11,6 +11,7 @@ export interface VideoStreamLifecycleMaintainerExtendableProps {
   isMirrored?: boolean;
   scalingMode?: ViewScalingMode;
   isScreenSharingOn?: boolean;
+  streamId?: number;
 }
 
 interface VideoStreamLifecycleMaintainerProps extends VideoStreamLifecycleMaintainerExtendableProps {
@@ -46,7 +47,8 @@ const useVideoStreamLifecycleMaintainer = (
     onCreateStreamView,
     onDisposeStreamView,
     renderElementExists,
-    scalingMode
+    scalingMode,
+    streamId
   } = props;
 
   const [videoStreamViewResult, setVideoStreamViewResult] = useState<CreateVideoStreamViewResult | undefined>();
@@ -74,7 +76,13 @@ const useVideoStreamLifecycleMaintainer = (
     onCreateStreamView,
     onDisposeStreamView,
     renderElementExists,
-    scalingMode
+    scalingMode,
+    /**
+     * this is here in order to force a re-render when streamId changes
+     *  - this should not happen but to recover for the user we will make sure that we subscribe to the
+     * new stream by forcing a re-render.
+     */
+    streamId
   ]);
 
   // The execution order for above useEffect is onCreateRemoteStreamView =>(async time gap) RenderElement generated => element disposed => onDisposeRemoteStreamView
