@@ -5,7 +5,7 @@ import { Icon, mergeStyles } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import { _AttachmentCard } from './AttachmentCard';
 import { _AttachmentCardGroup } from './AttachmentCardGroup';
-import { PendingAttachmentUploadMetadata } from '../types/Attachment';
+import { AttachmentMetadataWithProgress } from '../types/Attachment';
 import { useLocaleAttachmentCardStringsTrampoline } from './utils/common';
 
 /**
@@ -29,10 +29,10 @@ export interface _AttachmentUploadCardsStrings {
  */
 export interface AttachmentUploadCardsProps {
   /**
-   * Optional array of active attachment uploads where each object has attibutes
+   * Optional array of AttachmentMetadataWithProgress where each object has attibutes
    * of a attachment upload like name, progress, errormessage etc.
    */
-  activeAttachmentUploads?: PendingAttachmentUploadMetadata[];
+  attachmentsWithProgress?: AttachmentMetadataWithProgress[];
   /**
    * Optional callback to remove the attachment upload before sending by clicking on
    * cancel icon.
@@ -50,7 +50,7 @@ const actionIconStyle = { height: '1rem' };
  * @internal
  */
 export const _AttachmentUploadCards = (props: AttachmentUploadCardsProps): JSX.Element => {
-  const attachments = props.activeAttachmentUploads;
+  const attachments = props.attachmentsWithProgress;
   const localeStrings = useLocaleAttachmentCardStringsTrampoline();
   const removeAttachmentButtonString = useMemo(
     () => () => {

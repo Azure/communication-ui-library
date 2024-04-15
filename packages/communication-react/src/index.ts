@@ -324,7 +324,7 @@ export type {
   AttachmentMetadata,
   AttachmentMenuAction,
   AttachmentOptions,
-  PendingAttachmentUploadMetadata
+  AttachmentMetadataWithProgress
 } from '../../react-components/src';
 /* @conditional-compile-remove(attachment-upload) */
 export type { SendBoxErrorBarError } from '../../react-components/src';

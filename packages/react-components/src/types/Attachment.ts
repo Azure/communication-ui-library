@@ -34,7 +34,7 @@ export interface AttachmentMetadata {
  *
  * @beta
  */
-export interface PendingAttachmentUploadMetadata extends AttachmentMetadata {
+export interface AttachmentMetadataWithProgress extends AttachmentMetadata {
   /**
    * A number between 0 and 1 indicating the progress of the upload.
    */

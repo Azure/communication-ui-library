@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(attachment-upload) */
-import { PendingAttachmentUploadMetadata } from '../../types/Attachment';
+import { AttachmentMetadataWithProgress } from '../../types/Attachment';
 
 /**
  * @private
@@ -15,11 +15,11 @@ const EMPTY_MESSAGE_REGEX = /^\s*$/;
  * @private
  */
 export const hasIncompleteAttachmentUploads = (
-  activeAttachmentUploads: PendingAttachmentUploadMetadata[] | undefined
+  attachmentsWithProgress: AttachmentMetadataWithProgress[] | undefined
 ): boolean => {
   return !!(
-    activeAttachmentUploads?.length &&
-    !activeAttachmentUploads
+    attachmentsWithProgress?.length &&
+    !attachmentsWithProgress
       .filter((attachmentUpload) => !attachmentUpload.uploadError)
       .every((attachmentUpload) => attachmentUpload.progress === 1 && attachmentUpload.progress !== undefined)
   );
@@ -30,9 +30,9 @@ export const hasIncompleteAttachmentUploads = (
  * @private
  */
 export const hasCompletedAttachmentUploads = (
-  activeAttachmentUploads: PendingAttachmentUploadMetadata[] | undefined
+  attachmentsWithProgress: AttachmentMetadataWithProgress[] | undefined
 ): boolean => {
-  return !!activeAttachmentUploads?.find((attachment) => !attachment.uploadError);
+  return !!attachmentsWithProgress?.find((attachment) => !attachment.uploadError);
 };
 
 /**

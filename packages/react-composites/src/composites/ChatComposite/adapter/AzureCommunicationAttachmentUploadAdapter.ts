@@ -1,7 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { AttachmentUploadManager, AttachmentMetadata } from '@internal/react-components';
+import {
+  AttachmentUploadManager,
+  AttachmentMetadata,
+  AttachmentMetadataWithProgress
+} from '@internal/react-components';
 /* @conditional-compile-remove(attachment-upload) */
 import { produce } from 'immer';
 /* @conditional-compile-remove(attachment-upload) */
@@ -10,13 +14,12 @@ import { FileSharingMetadata, AttachmentUpload } from '../file-sharing';
 import { ChatContext } from './AzureCommunicationChatAdapter';
 /* @conditional-compile-remove(attachment-upload) */
 import { ChatAdapterState } from './ChatAdapter';
-import { PendingAttachmentUploadMetadata } from '@internal/react-components/dist/dist-esm/types';
 
 /**
  * A record containing {@link AttachmentMetadata} mapped to unique ids.
  * @beta
  */
-export type AttachmentUploadsUiState = Record<string, PendingAttachmentUploadMetadata>;
+export type AttachmentUploadsUiState = Record<string, AttachmentMetadataWithProgress>;
 
 /**
  * @beta
@@ -28,7 +31,7 @@ export interface AttachmentUploadAdapter {
   cancelUpload: (id: string) => void;
   updateUploadProgress: (id: string, progress: number) => void;
   updateUploadStatusMessage: (id: string, errorMessage: string) => void;
-  updateUploadMetadata: (id: string, metadata: PendingAttachmentUploadMetadata | AttachmentMetadata) => void;
+  updateUploadMetadata: (id: string, metadata: AttachmentMetadataWithProgress | AttachmentMetadata) => void;
 }
 
 /* @conditional-compile-remove(attachment-upload) */
@@ -67,7 +70,7 @@ class AttachmentUploadContext {
   public updateAttachmentUpload(
     id: string,
     data: Partial<
-      Pick<PendingAttachmentUploadMetadata, 'progress' | 'id' | 'name' | 'extension' | 'uploadError' | 'url'>
+      Pick<AttachmentMetadataWithProgress, 'progress' | 'id' | 'name' | 'extension' | 'uploadError' | 'url'>
     >
   ): void {
     this.chatContext.setState(
@@ -125,8 +128,8 @@ export class AzureCommunicationAttachmentUploadAdapter implements AttachmentUplo
   private deleteErroneousAttachmentUploads(): void {
     const attachmentUploads = this.context.getAttachmentUploads() || {};
     const ids = Object.values(attachmentUploads)
-      .filter((item: PendingAttachmentUploadMetadata) => item.uploadError)
-      .map((item: PendingAttachmentUploadMetadata) => item.id);
+      .filter((item: AttachmentMetadataWithProgress) => item.uploadError)
+      .map((item: AttachmentMetadataWithProgress) => item.id);
 
     ids.forEach((id) => {
       const attachmentUpload = this.findAttachmentUpload(id);
@@ -212,7 +215,7 @@ export const convertAttachmentUploadsUiStateToMessageMetadata = (
   attachmentUploads?: AttachmentUploadsUiState
 ): FileSharingMetadata | undefined => {
   if (attachmentUploads) {
-    const attachmentMetadata: PendingAttachmentUploadMetadata[] = [];
+    const attachmentMetadata: AttachmentMetadataWithProgress[] = [];
     Object.keys(attachmentUploads).forEach((key) => {
       const attachment = attachmentUploads[key];
       if (attachment && !attachment.uploadError) {

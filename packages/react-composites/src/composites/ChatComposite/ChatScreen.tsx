@@ -367,7 +367,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   ]);
 
   /* @conditional-compile-remove(attachment-upload) */
-  const activeAttachmentUploads = useSelector(attachmentUploadsSelector).attachments;
+  const attachmentsWithProgress = useSelector(attachmentUploadsSelector).attachments;
 
   return (
     <Stack className={chatContainer} grow>
@@ -414,7 +414,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                   autoFocus={options?.autoFocus}
                   styles={sendBoxStyles}
                   /* @conditional-compile-remove(attachment-upload) */
-                  activeAttachmentUploads={activeAttachmentUploads}
+                  attachmentsWithProgress={attachmentsWithProgress}
                   /* @conditional-compile-remove(attachment-upload) */
                   onCancelAttachmentUpload={adapter.cancelUpload}
                 />

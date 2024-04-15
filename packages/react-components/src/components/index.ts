@@ -215,7 +215,7 @@ export type {
   AttachmentUploadStatus,
   AttachmentUploadHandler,
   AttachmentUploadManager,
-  PendingAttachmentUploadMetadata
+  AttachmentMetadataWithProgress
 } from '../types/Attachment';
 
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */

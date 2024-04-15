@@ -7,6 +7,7 @@
 /// <reference types="react" />
 
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import { AttachmentMetadataWithProgress as AttachmentMetadataWithProgress_2 } from '@internal/react-components/dist/dist-esm/types';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { BackgroundBlurConfig } from '@azure/communication-calling';
 import { BackgroundBlurEffect } from '@azure/communication-calling';
@@ -72,7 +73,6 @@ import type { NetworkDiagnosticChangedEventArgs } from '@azure/communication-cal
 import { PartialTheme } from '@fluentui/react';
 import { ParticipantCapabilities } from '@azure/communication-calling';
 import { ParticipantRole } from '@azure/communication-calling';
-import { PendingAttachmentUploadMetadata as PendingAttachmentUploadMetadata_2 } from '@internal/react-components/dist/dist-esm/types';
 import { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaInitialsColor } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
@@ -170,6 +170,12 @@ export interface AttachmentMetadata {
 }
 
 // @beta
+export interface AttachmentMetadataWithProgress extends AttachmentMetadata {
+    progress?: number;
+    uploadError?: AttachmentUploadStatus;
+}
+
+// @beta
 export interface AttachmentOptions {
     // (undocumented)
     downloadOptions?: AttachmentDownloadOptions;
@@ -188,7 +194,7 @@ export interface AttachmentUploadAdapter {
     // (undocumented)
     registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadManager[];
     // (undocumented)
-    updateUploadMetadata: (id: string, metadata: PendingAttachmentUploadMetadata_2 | AttachmentMetadata) => void;
+    updateUploadMetadata: (id: string, metadata: AttachmentMetadataWithProgress_2 | AttachmentMetadata) => void;
     // (undocumented)
     updateUploadProgress: (id: string, progress: number) => void;
     // (undocumented)
@@ -223,7 +229,7 @@ export interface AttachmentUploadStatus {
 }
 
 // @beta
-export type AttachmentUploadsUiState = Record<string, PendingAttachmentUploadMetadata_2>;
+export type AttachmentUploadsUiState = Record<string, AttachmentMetadataWithProgress_2>;
 
 // @public
 export type AvatarPersonaData = {
@@ -3724,12 +3730,6 @@ export type ParticipantsRemovedListener = (event: {
 export type ParticipantState = 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
 
 // @beta
-export interface PendingAttachmentUploadMetadata extends AttachmentMetadata {
-    progress?: number;
-    uploadError?: AttachmentUploadStatus;
-}
-
-// @beta
 export interface PPTLiveCallFeatureState {
     isActive: boolean;
 }
@@ -3898,7 +3898,7 @@ export const RichTextSendBox: (props: RichTextSendBoxProps) => JSX.Element;
 
 // @beta
 export interface RichTextSendBoxProps {
-    activeAttachmentUploads?: PendingAttachmentUploadMetadata[];
+    attachmentsWithProgress?: AttachmentMetadataWithProgress[];
     disabled?: boolean;
     onCancelAttachmentUpload?: (attachmentId: string) => void;
     onSendMessage: (content: string) => Promise<void>;
@@ -3968,7 +3968,7 @@ export interface SendBoxErrorBarError {
 // @public
 export interface SendBoxProps {
     // @beta
-    activeAttachmentUploads?: PendingAttachmentUploadMetadata[];
+    attachmentsWithProgress?: AttachmentMetadataWithProgress[];
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
     // @beta

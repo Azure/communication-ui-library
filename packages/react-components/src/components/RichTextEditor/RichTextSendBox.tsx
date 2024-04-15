@@ -16,7 +16,7 @@ import { richTextActionButtonsStyle, sendBoxRichTextEditorStyle } from '../style
 /* @conditional-compile-remove(attachment-upload) */
 import { _AttachmentUploadCards } from '../AttachmentUploadCards';
 /* @conditional-compile-remove(attachment-upload) */
-import { PendingAttachmentUploadMetadata } from '../../types/Attachment';
+import { AttachmentMetadataWithProgress } from '../../types/Attachment';
 /* @conditional-compile-remove(attachment-upload) */
 import { hasCompletedAttachmentUploads, hasIncompleteAttachmentUploads } from '../utils/SendBoxUtils';
 /* @conditional-compile-remove(attachment-upload) */
@@ -131,11 +131,11 @@ export interface RichTextSendBoxProps {
   systemMessage?: string;
   /* @conditional-compile-remove(attachment-upload) */
   /**
-   * Optional array of active attachment uploads where each object has attributes
+   * Optional array of AttachmentMetadataWithProgress where each object has attributes
    * of a attachment upload like name, progress, errorMessage etc.
    * @beta
    */
-  activeAttachmentUploads?: PendingAttachmentUploadMetadata[];
+  attachmentsWithProgress?: AttachmentMetadataWithProgress[];
   /* @conditional-compile-remove(attachment-upload) */
   /**
    * Optional callback to remove the attachment upload before sending by clicking on
@@ -160,7 +160,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     systemMessage,
     onSendMessage,
     /* @conditional-compile-remove(attachment-upload) */
-    activeAttachmentUploads,
+    attachmentsWithProgress,
     /* @conditional-compile-remove(attachment-upload) */
     onCancelAttachmentUpload
   } = props;
@@ -209,7 +209,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     setAttachmentUploadsPendingError(undefined);
 
     /* @conditional-compile-remove(attachment-upload) */
-    if (hasIncompleteAttachmentUploads(activeAttachmentUploads)) {
+    if (hasIncompleteAttachmentUploads(attachmentsWithProgress)) {
       setAttachmentUploadsPendingError({ message: strings.attachmentUploadsPendingError, timestamp: Date.now() });
       return;
     }
@@ -219,7 +219,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     // Message can be empty if there is a valid attachment upload
     if (
       sanitizeText(message).length > 0 ||
-      /* @conditional-compile-remove(attachment-upload) */ hasCompletedAttachmentUploads(activeAttachmentUploads)
+      /* @conditional-compile-remove(attachment-upload) */ hasCompletedAttachmentUploads(attachmentsWithProgress)
     ) {
       onSendMessage(message);
       setContentValue('');
@@ -231,7 +231,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     contentValueOverflow,
     disabled,
     onSendMessage,
-    /* @conditional-compile-remove(attachment-upload) */ activeAttachmentUploads,
+    /* @conditional-compile-remove(attachment-upload) */ attachmentsWithProgress,
     /* @conditional-compile-remove(attachment-upload) */ strings.attachmentUploadsPendingError
   ]);
 
@@ -242,11 +242,11 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       /* @conditional-compile-remove(attachment-upload) */
       !!attachmentUploadsPendingError ||
       /* @conditional-compile-remove(attachment-upload) */
-      !!activeAttachmentUploads?.filter((attachmentUpload) => attachmentUpload.uploadError).pop()?.uploadError
+      !!attachmentsWithProgress?.filter((attachmentUpload) => attachmentUpload.uploadError).pop()?.uploadError
     );
   }, [
     /* @conditional-compile-remove(attachment-upload) */
-    activeAttachmentUploads,
+    attachmentsWithProgress,
     contentTooLongMessage,
     /* @conditional-compile-remove(attachment-upload) */
     attachmentUploadsPendingError,
@@ -276,14 +276,14 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       /* @conditional-compile-remove(attachment-upload) */
       attachmentUploadsPendingError: attachmentUploadsPendingError,
       /* @conditional-compile-remove(attachment-upload) */
-      attachmentUploadError: activeAttachmentUploads?.filter((attachmentUpload) => attachmentUpload.uploadError).pop()
+      attachmentUploadError: attachmentsWithProgress?.filter((attachmentUpload) => attachmentUpload.uploadError).pop()
         ?.uploadError,
       systemMessage: systemMessage,
       textTooLongMessage: contentTooLongMessage
     };
   }, [
     /* @conditional-compile-remove(attachment-upload) */
-    activeAttachmentUploads,
+    attachmentsWithProgress,
     contentTooLongMessage,
     /* @conditional-compile-remove(attachment-upload) */
     attachmentUploadsPendingError,
@@ -296,7 +296,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       <Stack className={attachmentUploadCardsStyles}>
         <FluentV9ThemeProvider v8Theme={theme}>
           <_AttachmentUploadCards
-            activeAttachmentUploads={activeAttachmentUploads}
+            attachmentsWithProgress={attachmentsWithProgress}
             onCancelAttachmentUpload={onCancelAttachmentUpload}
             strings={{
               removeAttachment: strings.removeAttachment,
@@ -309,7 +309,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       </Stack>
     );
   }, [
-    activeAttachmentUploads,
+    attachmentsWithProgress,
     onCancelAttachmentUpload,
     strings.removeAttachment,
     strings.uploadCompleted,
@@ -336,9 +336,9 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   /* @conditional-compile-remove(attachment-upload) */
   const hasAttachmentUploads = useMemo(() => {
     return (
-      hasCompletedAttachmentUploads(activeAttachmentUploads) || hasIncompleteAttachmentUploads(activeAttachmentUploads)
+      hasCompletedAttachmentUploads(attachmentsWithProgress) || hasIncompleteAttachmentUploads(attachmentsWithProgress)
     );
-  }, [activeAttachmentUploads]);
+  }, [attachmentsWithProgress]);
 
   return (
     <Stack>
