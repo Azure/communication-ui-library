@@ -217,3 +217,5 @@ export const ChatMessageComponentAsRichTextEditBox = (
     </ChatMyMessage>
   );
 };
+
+export default ChatMessageComponentAsRichTextEditBox;

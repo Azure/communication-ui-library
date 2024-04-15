@@ -56,13 +56,15 @@ This section uses [an update to the chat hero sample](https://github.com/Azure-S
   - In this monorepository,
     ```
     cd samples/Chat
-    rushx preprocess:stable-flavor
+    rushx port-sample
     ```
-  - This will generate a `samples/Chat/preprocessed` directory which contains the sources from `samples/Chat/src`, but conditionally compiled for the `stable` build flavor and prettified.
+- This will generate a `samples/Chat/sample-dist` directory which contains the updates to src, Media, public directories in `samples/Chat/`, but conditionally compiled for the `stable` build flavor and prettified.
 
 - Replace the hero sample sources.
   - Create a new branch in the chat hero sample repo.
-  - Replace `Chat/src` with the generated `samples/Chat/preprocessed` from the last step.
+  - Replace `Chat/src` with the generated `samples/Chat/sample-dist/src` from the directory we generated in the previous step.
+  - Replace `Chat/Media` with the generated `samples/Chat/sample-dist/Media` from the directory we generated in the previous step.
+  - Replace `Chat/public` with the generated `samples/Chat/sample-dist/public` from the directory we generated in the previous step.
   - Create a draft Pull Request against `main`.
     - Link to the source git commit in upstream that you generated the sources from. [Example PR description](https://github.com/Azure-Samples/communication-services-web-chat-hero/pull/69).
 

@@ -32,7 +32,7 @@ const mobileViewBannerWidth = '90%';
 /** @private */
 export const CaptionsBanner = (props: {
   isMobile: boolean;
-  isTeamsCall?: boolean;
+  useTeamsCaptions?: boolean;
   /* @conditional-compile-remove(close-captions) */ onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
 }): JSX.Element => {
   /* @conditional-compile-remove(close-captions) */
@@ -98,7 +98,7 @@ export const CaptionsBanner = (props: {
           <CaptionsSettingsModal
             showCaptionsSettingsModal={isCaptionsSettingsOpen}
             onDismissCaptionsSettings={onDismissCaptionsSettings}
-            changeCaptionLanguage={props.isTeamsCall}
+            changeCaptionLanguage={props.useTeamsCaptions}
           />
         )
       }

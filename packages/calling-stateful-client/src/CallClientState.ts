@@ -23,7 +23,8 @@ import { CallInfo, TeamsCallInfo } from '@azure/communication-calling';
 import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsResultType } from '@azure/communication-calling';
-
+/* @conditional-compile-remove(acs-close-captions) */
+import { CaptionsKind } from '@azure/communication-calling';
 import { VideoEffectName } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { CallKind } from '@azure/communication-calling';
@@ -120,6 +121,11 @@ export interface CaptionsCallFeatureState {
    * current caption language
    */
   currentCaptionLanguage: string;
+  /* @conditional-compile-remove(acs-close-captions) */
+  /**
+   * current caption kind: teams or acs captions
+   */
+  captionsKind: CaptionsKind;
 }
 
 /**
@@ -613,7 +619,6 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#Call.totalParticipantCount}.
    */
   totalParticipantCount?: number;
-  /* @conditional-compile-remove(call-transfer) */
   /**
    * Transfer state of call
    */
@@ -640,7 +645,6 @@ export interface CallState {
   info?: CallInfo | TeamsCallInfo;
 }
 
-/* @conditional-compile-remove(call-transfer) */
 /**
  * Transfer feature state
  *
@@ -653,7 +657,6 @@ export interface TransferFeatureState {
   acceptedTransfers: { [key: string]: AcceptedTransfer };
 }
 
-/* @conditional-compile-remove(call-transfer) */
 /**
  * Transfer feature state
  *

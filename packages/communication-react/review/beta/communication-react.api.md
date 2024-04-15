@@ -25,6 +25,7 @@ import { CallState as CallState_2 } from '@azure/communication-calling';
 import { CallSurvey } from '@azure/communication-calling';
 import { CallSurveyResponse } from '@azure/communication-calling';
 import { CapabilitiesChangeInfo } from '@azure/communication-calling';
+import { CaptionsKind } from '@azure/communication-calling';
 import { CaptionsResultType } from '@azure/communication-calling';
 import { ChatClient } from '@azure/communication-chat';
 import { ChatClientOptions } from '@azure/communication-chat';
@@ -710,7 +711,7 @@ export type CallCompositeOptions = {
 };
 
 // @public
-export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | /* @conditional-compile-remove(PSTN-calls) */ 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'leaving' | 'lobby' | 'removedFromCall' | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment' | /* @conditional-compile-remove(call-transfer) */ 'transferring';
+export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | /* @conditional-compile-remove(PSTN-calls) */ 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'leaving' | 'lobby' | 'removedFromCall' | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment' | 'transferring';
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
@@ -1645,6 +1646,7 @@ export interface CaptionLanguageStrings {
 // @public (undocumented)
 export interface CaptionsCallFeatureState {
     captions: CaptionsInfo[];
+    captionsKind: CaptionsKind;
     currentCaptionLanguage: string;
     currentSpokenLanguage: string;
     isCaptionsFeatureActive: boolean;
@@ -3803,7 +3805,6 @@ export interface ReactionResources {
 export type ReactionSprite = {
     url: string;
     frameCount: number;
-    size?: number;
 };
 
 // @public
@@ -3882,9 +3883,11 @@ export const RichTextSendBox: (props: RichTextSendBoxProps) => JSX.Element;
 // @beta
 export interface RichTextSendBoxProps {
     activeAttachmentUploads?: AttachmentMetadata[];
+    autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
     onCancelAttachmentUpload?: (attachmentId: string) => void;
     onSendMessage: (content: string) => Promise<void>;
+    onTyping?: () => Promise<void>;
     strings?: Partial<RichTextSendBoxStrings>;
     systemMessage?: string;
 }

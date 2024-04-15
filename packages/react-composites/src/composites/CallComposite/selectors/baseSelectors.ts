@@ -28,6 +28,8 @@ import { _isInCall, _isPreviewOn, _dominantSpeakersWithFlatId } from '@internal/
 import { AdapterErrors } from '../../common/adapters';
 import { RaisedHandState } from '@internal/calling-stateful-client';
 import { CommunicationIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(acs-close-captions) */
+import { CaptionsKind } from '@azure/communication-calling';
 
 /**
  * @private
@@ -96,7 +98,6 @@ export const getRole = (state: CallAdapterState): ParticipantRole | undefined =>
  */
 export const getPage = (state: CallAdapterState): CallCompositePage => state.page;
 
-/* @conditional-compile-remove(call-transfer) */
 /**
  * @private
  */
@@ -158,6 +159,12 @@ export const getEnvironmentInfo = (state: CallAdapterState): EnvironmentInfo | u
  */
 export const getSelectedVideoEffect = (state: CallAdapterState): VideoBackgroundEffect | undefined =>
   state.selectedVideoBackgroundEffect;
+
+/* @conditional-compile-remove(acs-close-captions) */
+/** @private */
+export const getCaptionsKind = (state: CallAdapterState): CaptionsKind | undefined => {
+  return state.call?.captionsFeature.captionsKind;
+};
 
 /* @conditional-compile-remove(close-captions) */
 /** @private */
