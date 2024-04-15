@@ -214,7 +214,7 @@ export type {
   AttachmentMetadata,
   AttachmentUploadStatus,
   AttachmentUploadHandler,
-  AttachmentUploadManager,
+  AttachmentUploadSession,
   AttachmentMetadataWithProgress
 } from '../types/Attachment';
 

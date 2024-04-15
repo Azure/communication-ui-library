@@ -38,7 +38,7 @@ export type {
   AttachmentUploadStatus,
   AttachmentUploadOptions,
   AttachmentUploadHandler,
-  AttachmentUploadManager
+  AttachmentUploadSession
 } from './file-sharing';
 /* @conditional-compile-remove(attachment-upload) */
 export type {

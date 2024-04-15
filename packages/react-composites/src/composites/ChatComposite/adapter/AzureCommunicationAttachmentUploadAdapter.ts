@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import {
-  AttachmentUploadManager,
+  AttachmentUploadSession,
   AttachmentMetadata,
   AttachmentMetadataWithProgress
 } from '@internal/react-components';
@@ -16,7 +16,7 @@ import { ChatContext } from './AzureCommunicationChatAdapter';
 import { ChatAdapterState } from './ChatAdapter';
 
 /**
- * A record containing {@link AttachmentMetadata} mapped to unique ids.
+ * A record containing {@link AttachmentMetadata} mapped to unique attachment upload session ids.
  * @beta
  */
 export type AttachmentUploadsUiState = Record<string, AttachmentMetadataWithProgress>;
@@ -25,8 +25,8 @@ export type AttachmentUploadsUiState = Record<string, AttachmentMetadataWithProg
  * @beta
  */
 export interface AttachmentUploadAdapter {
-  registerActiveUploads: (files: File[]) => AttachmentUploadManager[];
-  registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadManager[];
+  registerActiveUploads: (files: File[]) => AttachmentUploadSession[];
+  registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadSession[];
   clearUploads: () => void;
   cancelUpload: (id: string) => void;
   updateUploadProgress: (id: string, progress: number) => void;
@@ -117,11 +117,13 @@ export class AzureCommunicationAttachmentUploadAdapter implements AttachmentUplo
   }
 
   private findAttachmentUpload(id: string): AttachmentUpload | undefined {
-    return this.attachmentUploads.find((attachmentUpload) => attachmentUpload.id === id);
+    return this.attachmentUploads.find((attachmentUpload) => attachmentUpload.sessionId === id);
   }
 
   private deleteAttachmentUploads(ids: string[]): void {
-    this.attachmentUploads = this.attachmentUploads.filter((attachmentUpload) => !ids.includes(attachmentUpload.id));
+    this.attachmentUploads = this.attachmentUploads.filter(
+      (attachmentUpload) => !ids.includes(attachmentUpload.sessionId)
+    );
     this.context.deleteAttachmentUploads(ids);
   }
 
@@ -139,7 +141,7 @@ export class AzureCommunicationAttachmentUploadAdapter implements AttachmentUplo
     this.deleteAttachmentUploads(ids);
   }
 
-  private registerAttachmentUploads(files: File[] | AttachmentMetadata[]): AttachmentUploadManager[] {
+  private registerAttachmentUploads(files: File[] | AttachmentMetadata[]): AttachmentUploadSession[] {
     this.deleteErroneousAttachmentUploads();
     const attachmentUploads: AttachmentUpload[] = [];
     files.forEach((file) => attachmentUploads.push(new AttachmentUpload(file)));
@@ -149,11 +151,11 @@ export class AzureCommunicationAttachmentUploadAdapter implements AttachmentUplo
     return attachmentUploads;
   }
 
-  registerActiveUploads(files: File[]): AttachmentUploadManager[] {
+  registerActiveUploads(files: File[]): AttachmentUploadSession[] {
     return this.registerAttachmentUploads(files);
   }
 
-  registerCompletedUploads(metadata: AttachmentMetadata[]): AttachmentUploadManager[] {
+  registerCompletedUploads(metadata: AttachmentMetadata[]): AttachmentUploadSession[] {
     return this.registerAttachmentUploads(metadata);
   }
 
@@ -193,15 +195,26 @@ export class AzureCommunicationAttachmentUploadAdapter implements AttachmentUplo
     });
   }
 
+  setAttachmentMetadata(sessionId: string, attachmentId: string, attachmentUrl: string): void {
+    const attachmentUpload = this.findAttachmentUpload(sessionId);
+    this.context.updateAttachmentUpload(sessionId, {
+      progress: 1,
+      id: attachmentId,
+      name: attachmentUpload?.name,
+      url: attachmentUrl,
+      extension: attachmentUpload?.name.split('.').pop() || ''
+    });
+  }
+
   private subscribeAllEvents(attachmentUpload: AttachmentUpload): void {
     attachmentUpload.on('uploadProgressChange', this.updateUploadProgress.bind(this));
-    attachmentUpload.on('uploadComplete', this.updateUploadMetadata.bind(this));
+    attachmentUpload.on('uploadComplete', this.setAttachmentMetadata.bind(this));
     attachmentUpload.on('uploadFail', this.updateUploadStatusMessage.bind(this));
   }
 
   private unsubscribeAllEvents(attachmentUpload?: AttachmentUpload): void {
     attachmentUpload?.off('uploadProgressChange', this.updateUploadProgress.bind(this));
-    attachmentUpload?.off('uploadComplete', this.updateUploadMetadata.bind(this));
+    attachmentUpload?.off('uploadComplete', this.setAttachmentMetadata.bind(this));
     attachmentUpload?.off('uploadFail', this.updateUploadStatusMessage.bind(this));
   }
 }
@@ -243,8 +256,8 @@ const convertObservableAttachmentUploadToAttachmentUploadsUiState = (
   attachmentUploads: AttachmentUpload[]
 ): AttachmentUploadsUiState => {
   return attachmentUploads.reduce((map: AttachmentUploadsUiState, attachmentUpload) => {
-    map[attachmentUpload.id] = {
-      id: attachmentUpload.id,
+    map[attachmentUpload.sessionId] = {
+      id: attachmentUpload.sessionId,
       name: attachmentUpload.name,
       progress: 0,
       extension: attachmentUpload.name.split('.').pop() || ''

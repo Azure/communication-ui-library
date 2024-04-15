@@ -190,9 +190,9 @@ export interface AttachmentUploadAdapter {
     // (undocumented)
     clearUploads: () => void;
     // (undocumented)
-    registerActiveUploads: (files: File[]) => AttachmentUploadManager[];
+    registerActiveUploads: (files: File[]) => AttachmentUploadSession[];
     // (undocumented)
-    registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadManager[];
+    registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadSession[];
     // (undocumented)
     updateUploadMetadata: (id: string, metadata: AttachmentMetadataWithProgress | AttachmentMetadata) => void;
     // (undocumented)
@@ -202,22 +202,22 @@ export interface AttachmentUploadAdapter {
 }
 
 // @beta
-export type AttachmentUploadHandler = (attachmentUploads: AttachmentUploadManager[]) => void;
-
-// @beta
-export interface AttachmentUploadManager {
-    file?: File;
-    id: string;
-    notifyCompleted: (metadata: AttachmentMetadata) => void;
-    notifyFailed: (message: string) => void;
-    notifyProgressChanged: (value: number) => void;
-}
+export type AttachmentUploadHandler = (attachmentUploads: AttachmentUploadSession[]) => void;
 
 // @beta (undocumented)
 export interface AttachmentUploadOptions {
     disableMultipleUploads?: boolean;
     handler: AttachmentUploadHandler;
     supportedMediaTypes?: string[];
+}
+
+// @beta
+export interface AttachmentUploadSession {
+    file?: File;
+    notifyUploadCompleted: (id: string, url: string) => void;
+    notifyUploadFailed: (message: string) => void;
+    notifyUploadProgressChanged: (value: number) => void;
+    sessionId: string;
 }
 
 // @beta
@@ -1110,9 +1110,9 @@ export interface CallWithChatAdapterManagement {
     querySpeakers(): Promise<AudioDeviceInfo[]>;
     raiseHand(): Promise<void>;
     // @beta (undocumented)
-    registerActiveUploads: (files: File[]) => AttachmentUploadManager[];
+    registerActiveUploads: (files: File[]) => AttachmentUploadSession[];
     // @beta (undocumented)
-    registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadManager[];
+    registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadSession[];
     removeParticipant(userId: string): Promise<void>;
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;

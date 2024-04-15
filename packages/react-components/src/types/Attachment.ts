@@ -116,16 +116,18 @@ export interface AttachmentUploadOptions {
 }
 
 /**
- * A wrapper object for a attachment that is being uploaded.
- * Allows managing attachment uploads by providing common functions for updating the
- * upload progress, canceling an upload, completing an upload etc.
+ * A upload session presents and manages an attachment that is being uploaded.
+ * When using the Composite, an attachment upload session is created for each file user is selected to upload.
+ * An attachment being uploaded has progress and uploadError properties.
+ * A upload session is complete when notifyUploadCompleted is called.
+ * A upload session is failed when notifyUploadFailed is called.
  * @beta
  */
-export interface AttachmentUploadManager {
+export interface AttachmentUploadSession {
   /**
    * Unique identifier for the attachment upload.
    */
-  id: string;
+  sessionId: string;
   /**
    * HTML {@link File} object for the uploaded attachment.
    */
@@ -135,18 +137,19 @@ export interface AttachmentUploadManager {
    * A upload is considered complete when the progress reaches 1.
    * @param value - number between 0 and 1
    */
-  notifyProgressChanged: (value: number) => void;
+  notifyUploadProgressChanged: (value: number) => void;
   /**
-   * Mark the upload as complete.
-   * Requires the `metadata` param containing uploaded attachment information.
-   * @param metadata - {@link AttachmentMetadata}
+   * Mark the upload session as complete.
+   * An attachment is considered completed uploading when ID and URL are provided.
+   * @param id - the unique identifier of the attachment.
+   * @param url - the download URL of the attachment.
    */
-  notifyCompleted: (metadata: AttachmentMetadata) => void;
+  notifyUploadCompleted: (id: string, url: string) => void;
   /**
    * Mark the upload as failed.
    * @param message - An error message that can be displayed to the user.
    */
-  notifyFailed: (message: string) => void;
+  notifyUploadFailed: (message: string) => void;
 }
 
 /**
@@ -155,4 +158,4 @@ export interface AttachmentUploadManager {
  *
  * @param AttachmentUploads - The list of uploaded attachments. Each attachment is represented by an {@link AttachmentUpload} object.
  */
-export type AttachmentUploadHandler = (attachmentUploads: AttachmentUploadManager[]) => void;
+export type AttachmentUploadHandler = (attachmentUploads: AttachmentUploadSession[]) => void;
