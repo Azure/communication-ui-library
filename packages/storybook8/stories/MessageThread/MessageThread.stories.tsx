@@ -373,7 +373,7 @@ const Docs: () => JSX.Element = () => {
 
       <div ref={refProps}>
         <Heading>Props</Heading>
-        <Props of={MessageThreadComponent} />
+        {/* <Props of={MessageThreadComponent} /> */}
       </div>
     </>
   );
