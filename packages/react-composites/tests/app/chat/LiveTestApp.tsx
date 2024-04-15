@@ -68,7 +68,6 @@ export const LiveTestApp = (): JSX.Element => {
             name: attachment.name,
             extension: attachment.extension,
             url: attachment.url,
-            progress: 1,
             id: ''
           });
         } else if (attachment.error) {

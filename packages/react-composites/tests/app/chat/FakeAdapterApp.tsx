@@ -137,7 +137,6 @@ const handleAttachmentUploads = (adapter: ChatAdapter, attachmentUploads: _MockA
         name: attachment.name,
         extension: attachment.extension,
         url: attachment.url,
-        progress: 1,
         id: attachment.id
       });
     } else if (attachment.error) {
