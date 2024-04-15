@@ -166,9 +166,13 @@ export interface AttachmentMetadata {
     extension?: string;
     id: string;
     name: string;
+    url?: string;
+}
+
+// @beta
+export interface AttachmentMetadataWithProgress extends AttachmentMetadata {
     progress?: number;
     uploadError?: AttachmentUploadStatus;
-    url?: string;
 }
 
 // @beta
@@ -190,7 +194,7 @@ export interface AttachmentUploadAdapter {
     // (undocumented)
     registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadManager[];
     // (undocumented)
-    updateUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
+    updateUploadMetadata: (id: string, metadata: AttachmentMetadataWithProgress | AttachmentMetadata) => void;
     // (undocumented)
     updateUploadProgress: (id: string, progress: number) => void;
     // (undocumented)
@@ -225,7 +229,7 @@ export interface AttachmentUploadStatus {
 }
 
 // @beta
-export type AttachmentUploadsUiState = Record<string, AttachmentMetadata>;
+export type AttachmentUploadsUiState = Record<string, AttachmentMetadataWithProgress>;
 
 // @public
 export type AvatarPersonaData = {
@@ -3882,7 +3886,7 @@ export const RichTextSendBox: (props: RichTextSendBoxProps) => JSX.Element;
 
 // @beta
 export interface RichTextSendBoxProps {
-    activeAttachmentUploads?: AttachmentMetadata[];
+    attachmentsWithProgress?: AttachmentMetadataWithProgress[];
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
     onCancelAttachmentUpload?: (attachmentId: string) => void;
@@ -3954,7 +3958,7 @@ export interface SendBoxErrorBarError {
 // @public
 export interface SendBoxProps {
     // @beta
-    activeAttachmentUploads?: AttachmentMetadata[];
+    attachmentsWithProgress?: AttachmentMetadataWithProgress[];
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
     // @beta
