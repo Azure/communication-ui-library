@@ -14,7 +14,6 @@ import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
 import type { SpotlightedParticipant } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCall } from '@azure/communication-calling';
-/* @conditional-compile-remove(call-transfer) */
 import { TransferEventArgs } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { StartCaptionsOptions } from '@azure/communication-calling';
@@ -69,7 +68,7 @@ export type CallCompositePage =
   | 'lobby'
   | 'removedFromCall'
   | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment'
-  | /* @conditional-compile-remove(call-transfer) */ 'transferring';
+  | 'transferring';
 
 /**
  * Subset of CallCompositePages that represent an end call state.
@@ -164,7 +163,6 @@ export type CallAdapterClientState = {
    * State to track the selected video background effect.
    */
   selectedVideoBackgroundEffect?: VideoBackgroundEffect;
-  /* @conditional-compile-remove(call-transfer) */
   /**
    * Call from transfer request accepted by local user
    */
@@ -181,7 +179,7 @@ export type CallAdapterClientState = {
   /* @conditional-compile-remove(reaction) */
   /**
    * State to track the reactions to be used.
-   * @beta
+   * @public
    */
   reactions?: ReactionResources;
 };
@@ -396,7 +394,6 @@ export type IsCaptionLanguageChangedListener = (event: { activeCaptionLanguage: 
  */
 export type IsSpokenLanguageChangedListener = (event: { activeSpokenLanguage: string }) => void;
 
-/* @conditional-compile-remove(call-transfer) */
 /**
  * Callback for {@link CallAdapterSubscribers} 'transferRequested' event.
  *
@@ -536,7 +533,7 @@ export interface CallAdapterCallOperations {
   /**
    * Send reaction emoji
    *
-   * @beta
+   * @public
    */
   onReactionClick(reaction: Reaction): Promise<void>;
   /**
@@ -702,7 +699,7 @@ export interface CallAdapterCallOperations {
   /**
    * Send the end of call survey result
    *
-   * @beta
+   * @public
    */
   submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
   /* @conditional-compile-remove(spotlight) */
@@ -890,7 +887,6 @@ export interface CallAdapterSubscribers {
    */
   on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
 
-  /* @conditional-compile-remove(call-transfer) */
   /**
    * Subscribe function for 'transferRequested' event.
    */
@@ -978,7 +974,6 @@ export interface CallAdapterSubscribers {
    * Unsubscribe function for 'isSpokenLanguageChanged' event.
    */
   off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
-  /* @conditional-compile-remove(call-transfer) */
   /**
    * Unsubscribe function for 'transferRequested' event.
    */

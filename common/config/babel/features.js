@@ -17,14 +17,8 @@ module.exports = {
     "gallery-layout-composite",
     // feature for hiding attendee name in the teams meeting
     "hide-attendee-name",
-    // Feature for meeting reactions
-    'reaction',
-    // Feature for PPT Live for teams meeting
-    'ppt-live',
     // Feature for Rich Text Editor (RTE) support
     'rich-text-editor',
-    // Feature for spotlight
-    'spotlight',
     // Join meeting with meetingId and passcode
     'meeting-id',
     // Close captions feature for ACS calls
@@ -75,8 +69,6 @@ module.exports = {
     "calling-environment-info",
     // conditional-compile for new signaling beta
     "signaling-beta",
-    // Feature for end of call survey
-    'end-of-call-survey',
     // Feature for tracking beta start call identifier
     'start-call-beta',
     // Image overlay theme
@@ -92,9 +84,15 @@ module.exports = {
     "stabilizedDemo",
     // Closed captions
     "close-captions",
-    // Feature for call transfer
-    "call-transfer",
     // Support Calling SDK isReceiving flag, shows a loading spinner on the video tile when isAvailable is true but isReceiving is false
     "video-stream-is-receiving-flag",
+    // Feature for spotlight
+    'spotlight',
+     // Feature for end of call survey
+    'end-of-call-survey',
+    // Feature for PPT Live for teams meeting
+    'ppt-live',
+    // Feature for meeting reactions
+    'reaction',
   ]
 }

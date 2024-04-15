@@ -87,6 +87,8 @@ import {
   useRemoteSpotlightCallbacksWithPrompt,
   useStopAllSpotlightCallbackWithPrompt
 } from '../utils/spotlightUtils';
+/* @conditional-compile-remove(acs-close-captions) */
+import { getCaptionsKind } from '../selectors/baseSelectors';
 
 /**
  * @private
@@ -337,8 +339,11 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     filteredLatestErrors = filteredLatestErrors.filter((e) => e.type !== 'unableToStartVideoEffect');
   }
 
+  /* @conditional-compile-remove(acs-close-captions) */
+  const isTeamsCaptions = useSelector(getCaptionsKind) === 'TeamsCaptions';
   /* @conditional-compile-remove(close-captions) */
-  const isTeamsCall = useSelector(getIsTeamsCall);
+  const useTeamsCaptions =
+    useSelector(getIsTeamsCall) || /* @conditional-compile-remove(acs-close-captions) */ isTeamsCaptions;
   /* @conditional-compile-remove(close-captions) */
   const hasJoinedCall = useSelector(getCallStatus) === 'Connected';
   /* @conditional-compile-remove(close-captions) */
@@ -399,11 +404,11 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   onMoreButtonClicked={onMoreButtonClicked}
                   /* @conditional-compile-remove(close-captions) */
                   isCaptionsSupported={
-                    (isTeamsCall && hasJoinedCall) ||
+                    (useTeamsCaptions && hasJoinedCall) ||
                     /* @conditional-compile-remove(acs-close-captions) */ hasJoinedCall
                   }
                   /* @conditional-compile-remove(close-captions) */
-                  isTeamsCall={isTeamsCall}
+                  useTeamsCaptions={useTeamsCaptions}
                   /* @conditional-compile-remove(close-captions) */
                   isCaptionsOn={isCaptionsOn}
                   onClickVideoEffects={onResolveVideoEffectDependency ? openVideoEffectsPane : undefined}
@@ -433,10 +438,11 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 disableButtonsForHoldScreen={isInLocalHold}
                 /* @conditional-compile-remove(close-captions) */
                 isCaptionsSupported={
-                  (isTeamsCall && hasJoinedCall) || /* @conditional-compile-remove(acs-close-captions) */ hasJoinedCall
+                  (useTeamsCaptions && hasJoinedCall) ||
+                  /* @conditional-compile-remove(acs-close-captions) */ hasJoinedCall
                 }
                 /* @conditional-compile-remove(close-captions) */
-                isTeamsCall={isTeamsCall}
+                useTeamsCaptions={useTeamsCaptions}
                 onUserSetGalleryLayout={props.onUserSetGalleryLayoutChange}
                 userSetGalleryLayout={props.userSetGalleryLayout}
                 onSetDialpadPage={props.onSetDialpadPage}
@@ -485,7 +491,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                           isMobile={props.mobileView}
                           onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
                           /* @conditional-compile-remove(close-captions) */
-                          isTeamsCall={isTeamsCall}
+                          useTeamsCaptions={useTeamsCaptions}
                         />
                       )
                   }

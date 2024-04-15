@@ -144,7 +144,7 @@ export const raiseHandButtonSelector: RaiseHandButtonSelector = reselect.createS
 /**
  * Selector type for {@link ReactionButton} component.
  *
- * @beta
+ * @public
  */
 export type ReactionButtonSelector = (
   state: CallClientState,
@@ -158,7 +158,7 @@ export type ReactionButtonSelector = (
 /**
  * Selector for {@link ReactionButton} component.
  *
- * @beta
+ * @public
  */
 export const reactionButtonSelector: ReactionButtonSelector = reselect.createSelector(
   [getLocalParticipantReactionState, getCallState],

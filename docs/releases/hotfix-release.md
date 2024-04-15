@@ -128,6 +128,8 @@ As noted above, the challenges in creating a hotfix are unique to each attempt. 
 
 1. Post-release steps
 
+   1. Delete the release branch.
+
    1. Update the changelog in the `main` branch to include the changes made in the hotfix release.
 
    1. If the hotfix was off of the latest release, update the package versions in the `main` branch.

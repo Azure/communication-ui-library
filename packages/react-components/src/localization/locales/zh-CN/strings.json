@@ -44,7 +44,18 @@
     "numberListTooltip": "编号列表",
     "increaseIndentTooltip": "增加缩进量",
     "decreaseIndentTooltip": "减少缩进量",
-    "richTextFormatButtonTooltip": "格式"
+    "insertTableTooltip": "插入表格",
+    "richTextFormatButtonTooltip": "格式",
+    "insertRowOrColumnMenu": "插入",
+    "insertTableMenuTitle": "插入 {column} x {row} 表",
+    "insertRowAboveMenu": "在上方插入",
+    "insertRowBelowMenu": "在下方插入",
+    "insertColumnLeftMenu": "在左侧插入",
+    "insertColumnRightMenu": "在右侧插入",
+    "deleteRowOrColumnMenu": "删除",
+    "deleteColumnMenu": "删除列",
+    "deleteRowMenu": "删除行",
+    "deleteTableMenu": "删除表格"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "建议"
@@ -66,7 +77,9 @@
   },
   "endCallButton": {
     "label": "退出",
-    "tooltipContent": "离开通话"
+    "tooltipContent": "离开通话",
+    "leaveOption": "退出",
+    "endCallOption": "结束通话"
   },
   "cameraButton": {
     "onLabel": "相机",
@@ -180,6 +193,7 @@
     "messageReadCount": "{messageReadByCount}/{remoteParticipantsCount} 人已读",
     "actionMenuMoreOptions": "更多选项",
     "downloadAttachment": "下载文件",
+    "openAttachment": "打开文件",
     "blockedWarningText": "由于组织策略，此消息已被删除。",
     "blockedWarningLinkText": "详细信息",
     "attachmentCardGroupMessage": "该邮件包含 {attachmentCount} 个附件",
