@@ -20,7 +20,6 @@ import { createAutoRefreshingCredential } from './utils/credential';
 import { fetchEmojiForUser } from './utils/emojiCache';
 import { getBackgroundColor } from './utils/utils';
 import { useSwitchableFluentTheme } from './theming/SwitchableFluentThemeProvider';
-
 /* @conditional-compile-remove(attachment-upload) */
 import { attachmentUploadOptions } from './utils/uploadHandler';
 /* @conditional-compile-remove(attachment-download) */
