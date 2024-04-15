@@ -124,6 +124,9 @@ graph LR
   prerelease -->|Create Branch| pr
 ```
 
+Once this workflow is done you will need to go to the new branch when making a PR and manually create a 
+change file stating that the versions of the packages have been bumped.
+
 ### Step 1.2: Groom changelog
 
 1. Previous step's workflow creates a `groom-changelog/<release-tag>` branch.
