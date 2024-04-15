@@ -1,10 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { ContextualMenuItemType, Theme } from '@fluentui/react';
+import { ContextualMenuItemType, Icon, Theme } from '@fluentui/react';
 import { KnownRibbonButtonKey, RibbonButton, getButtons } from 'roosterjs-react';
 import { ribbonButtonStyle, ribbonDividerStyle } from '../../styles/RichTextEditor.styles';
 import { insertTableButton } from './Table/RichTextInsertTableButton';
+import React from 'react';
 
 const MaxRowsNumber = 5;
 const MaxColumnsNumber = 5;
@@ -12,16 +13,19 @@ const MaxColumnsNumber = 5;
 const dividerRibbonButton = (theme: Theme, key: string): RibbonButton<string> => {
   return {
     key: key,
-    iconName: 'RichTextDividerIcon',
+    // the icon will be set in `onRender` callback
+    // this is needed to make the divider unavailable for keyboard navigation
+    iconName: '',
+    // no text is needed here
     unlocalizedText: '',
     onClick: () => {},
     isDisabled: () => true,
     commandBarProperties: {
       // show the item correctly for the overflow menu
       itemType: ContextualMenuItemType.Divider,
-      buttonStyles: ribbonDividerStyle(theme),
       // this is still needed to remove checkmark icon space even though it is a divider
-      canCheck: false
+      canCheck: false,
+      onRender: () => <Icon iconName="RichTextDividerIcon" className={ribbonDividerStyle(theme)} />
     }
   };
 };
