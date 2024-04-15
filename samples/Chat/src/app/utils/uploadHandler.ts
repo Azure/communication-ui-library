@@ -69,8 +69,6 @@ const attachmentUploadHandler: AttachmentUploadHandler = async (
   }
 };
 /* @conditional-compile-remove(attachment-upload) */
-const attachmentUploadOptions: AttachmentUploadOptions = {
+export const attachmentUploadOptions: AttachmentUploadOptions = {
   handler: attachmentUploadHandler
 };
-/* @conditional-compile-remove(attachment-upload) */
-export default attachmentUploadOptions;

@@ -4,14 +4,12 @@
 import * as express from 'express';
 import { getAzureBlobStorageConnectionString } from '../lib/envHelper';
 import { BlobSASPermissions, BlobServiceClient, ContainerSASPermissions, SASProtocol } from '@azure/storage-blob';
-// Alternatively, you can use `multer`, `connect-busboy`, or anything else with `express.JS` to handle file uploads.
-import bb from 'express-busboy';
+// Alternatively, you can use `connect-busboy`, `express-busboy`, or anything else with `express.JS` to handle file uploads.
+import multer from 'multer';
 
 const router = express.Router();
 
-bb.extend(router, {
-  upload: true
-});
+const upload = multer();
 
 /**
  * route: /uploadToAzureBlobStorage/log
@@ -85,17 +83,10 @@ router.post('/log', async function (req, res, next) {
  * @returns SAS URL for accessing blob. This URL is valid for 1 hour.
  *
  */
-router.post('/file/:filename/:containername', async function (req, res, next) {
+router.post('/file/:filename/:containername', upload.single('file'), async function (req, res, next) {
   const SAS_EXPIRY = 1 * 60 * 60; // 1 hour
 
-  interface RequestWithFiles extends Request {
-    files: {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      file: any;
-    };
-  }
-
-  const fileData = (req as unknown as RequestWithFiles).files.file;
+  const fileData = req.file;
 
   if (!fileData) {
     res.status(400).send('file not found in request');
@@ -113,7 +104,7 @@ router.post('/file/:filename/:containername', async function (req, res, next) {
   const fileName = req.params.filename;
   const containerName = req.params.containername;
 
-  const fileblob = new Blob([fileData], { type: fileData['mimetype'] });
+  const fileblob = new Blob([fileData as unknown as BlobPart], { type: fileData.mimetype });
   const fileContentBuffer = await new Response(fileblob).arrayBuffer();
   const size = fileContentBuffer.byteLength;
 

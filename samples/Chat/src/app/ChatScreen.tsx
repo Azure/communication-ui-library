@@ -22,9 +22,9 @@ import { getBackgroundColor } from './utils/utils';
 import { useSwitchableFluentTheme } from './theming/SwitchableFluentThemeProvider';
 
 /* @conditional-compile-remove(attachment-upload) */
-import attachmentUploadOptions from './utils/uploadHandler';
+import { attachmentUploadOptions } from './utils/uploadHandler';
 /* @conditional-compile-remove(attachment-download) */
-import customDownloadOptions from './utils/downloadHandler';
+import { attachmentDownloadOptions } from './utils/downloadHandler';
 
 // These props are passed in when this component is referenced in JSX and not found in context
 interface ChatScreenProps {
@@ -115,7 +115,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                 /* @conditional-compile-remove(attachment-upload) */
                 uploadOptions: attachmentUploadOptions,
                 /* @conditional-compile-remove(attachment-download) */
-                downloadOptions: customDownloadOptions.attachmentDownloadOptions
+                downloadOptions: attachmentDownloadOptions
               }
             }}
             onFetchAvatarPersonaData={onFetchAvatarPersonaData}
