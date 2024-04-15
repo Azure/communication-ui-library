@@ -1,8 +1,8 @@
 {
-  "type": "prerelease",
-  "area": "feature",
-  "workstream": "ACS Captions",
-  "comment": "Implement ACS Captions",
+  "type": "patch",
+  "area": "fix",
+  "workstream": "Captions",
+  "comment": "Fix bug where captions stuck at bottom",
   "packageName": "@azure/communication-react",
   "email": "96077406+carocao-msft@users.noreply.github.com",
   "dependentChangeType": "patch"

@@ -612,6 +612,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
       return (
         <_RemoteVideoTile
+          streamId={remoteVideoStream?.id}
           key={participant.userId}
           userId={participant.userId}
           remoteParticipant={participant}
