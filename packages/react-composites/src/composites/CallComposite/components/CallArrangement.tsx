@@ -47,6 +47,7 @@ import { useSelector } from '../hooks/useSelector';
 import { callStatusSelector } from '../selectors/callStatusSelector';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { PreparedMoreDrawer } from '../../common/Drawer/PreparedMoreDrawer';
+import { getRemoteParticipants } from '../selectors/baseSelectors';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { getPage } from '../selectors/baseSelectors';
 /* @conditional-compile-remove(close-captions) */
@@ -154,7 +155,16 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
   const adapter = useAdapter();
 
+  const [participantActioned, setParticipantActioned] = useState<string>();
+  const remoteParticipants = useSelector(getRemoteParticipants);
   const [drawerMenuItems, setDrawerMenuItems] = useState<_DrawerMenuItemProps[]>([]);
+  useEffect(() => {
+    const participantIsActionedButIsNotPresent =
+      participantActioned && remoteParticipants?.[participantActioned] === undefined;
+    if (participantIsActionedButIsNotPresent) {
+      setDrawerMenuItems([]);
+    }
+  }, [participantActioned, remoteParticipants]);
   const peoplePaneProps = useMemo(
     () => ({
       updateSidePaneRenderer,
@@ -163,7 +173,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       onFetchAvatarPersonaData: props.onFetchAvatarPersonaData,
       onFetchParticipantMenuItems: props.callControlProps?.onFetchParticipantMenuItems,
       mobileView: props.mobileView,
-      peopleButtonRef
+      peopleButtonRef,
+      setParticipantActioned
     }),
     [
       updateSidePaneRenderer,
@@ -171,7 +182,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       props.callControlProps?.onFetchParticipantMenuItems,
       props.onFetchAvatarPersonaData,
       props.mobileView,
-      peopleButtonRef
+      peopleButtonRef,
+      setParticipantActioned
     ]
   );
 
