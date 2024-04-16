@@ -59,8 +59,7 @@ const attachmentUploadHandler: AttachmentUploadHandler = async (
         id: uniqueFileName,
         name: rawFile.file?.name ?? '',
         extension: fileExtension,
-        url: response.data.url,
-        progress: 1
+        url: response.data.url
       });
     } catch (error) {
       console.error(error);
