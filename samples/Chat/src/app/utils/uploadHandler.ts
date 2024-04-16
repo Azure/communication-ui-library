@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentUploadHandler, AttachmentUploadOptions, AttachmentUploadManager } from '@azure/communication-react';
+import { AttachmentUploadHandler, AttachmentUploadOptions, AttachmentUploadSession } from '@azure/communication-react';
 /* @conditional-compile-remove(attachment-download) */
 import axios, { AxiosProgressEvent } from 'axios';
 /* @conditional-compile-remove(attachment-download) */
@@ -19,24 +19,24 @@ const CONTAINER_NAME = 'acs-file-sharing-test';
 
 /* @conditional-compile-remove(attachment-upload) */
 const attachmentUploadHandler: AttachmentUploadHandler = async (
-  rawFileLists: AttachmentUploadManager[]
+  activeUploadSessions: AttachmentUploadSession[]
 ): Promise<void> => {
-  for (const rawFile of rawFileLists) {
-    const fileExtension = rawFile.file?.name.split('.').pop() ?? '';
+  for (const session of activeUploadSessions) {
+    const fileExtension = session.file?.name.split('.').pop() ?? '';
 
-    if (rawFile.file && rawFile.file?.size > MAX_FILE_SIZE_MB) {
-      rawFile.notifyFailed(`"${rawFile.file?.name}" is too big. Select a file under 50MB.`);
+    if (session.file && session.file?.size > MAX_FILE_SIZE_MB) {
+      session.notifyUploadFailed(`"${session.file?.name}" is too big. Select a file under 50MB.`);
       continue;
     }
 
     if (UNSUPPORTED_FILES.includes(fileExtension)) {
-      rawFile.notifyFailed(`Uploading ".${fileExtension}" files is not allowed.`);
+      session.notifyUploadFailed(`Uploading ".${fileExtension}" files is not allowed.`);
       continue;
     }
 
-    const uniqueFileName = `${rawFile.file?.name}`;
+    const uniqueFileName = `${session.file?.name}`;
     const formData = new FormData();
-    formData.append('file', rawFile.file, rawFile.file?.name);
+    formData.append('file', session.file, session.file?.name);
 
     try {
       const response = await axios.request({
@@ -50,20 +50,15 @@ const attachmentUploadHandler: AttachmentUploadHandler = async (
         onUploadProgress: (progressEvent: AxiosProgressEvent) => {
           const { total, loaded } = progressEvent;
           if (total) {
-            rawFile.notifyProgressChanged(loaded / total);
+            session.notifyUploadProgressChanged(loaded / total);
           }
         }
       });
 
-      rawFile.notifyCompleted({
-        id: uniqueFileName,
-        name: rawFile.file?.name ?? '',
-        extension: fileExtension,
-        url: response.data.url
-      });
+      session.notifyUploadCompleted(uniqueFileName, response.data.url);
     } catch (error) {
       console.error(error);
-      rawFile.notifyFailed('Unable to upload file. Please try again later.');
+      session.notifyUploadFailed('Unable to upload file. Please try again later.');
     }
   }
 };
