@@ -67,7 +67,7 @@ const getDocs: () => JSX.Element = () => {
       </Description>
       <Stack tokens={{ childrenGap: '3rem' }} style={overviewPageImagesStackStyle}>
         <Stack.Item align="center">
-          <Description>Using the more menu to turn on captions.</Description>
+          <Subheading>Using the more menu to turn on captions.</Subheading>
           <img
             style={{ width: '100%' }}
             src="images/StartCaptions.png"
@@ -75,7 +75,7 @@ const getDocs: () => JSX.Element = () => {
           />
         </Stack.Item>
         <Stack.Item align="center">
-          <Description>Captions Setting modal to change spoken language.</Description>
+          <Subheading>Captions Setting modal to change spoken language.</Subheading>
           <img
             style={{ width: '100%' }}
             src="images/CaptionsSettings.png"
@@ -83,7 +83,7 @@ const getDocs: () => JSX.Element = () => {
           />
         </Stack.Item>
         <Stack.Item align="center">
-          <Description>Captions Setting modal to change spoken language and caption language.</Description>
+          <Subheading>Captions Setting modal to change spoken language and caption language.</Subheading>
           <img
             style={{ width: '100%' }}
             src="images/TeamsCaptionsSettings.png"
@@ -91,7 +91,7 @@ const getDocs: () => JSX.Element = () => {
           />
         </Stack.Item>
         <Stack.Item align="center">
-          <Description>Captions is started.</Description>
+          <Subheading>Captions is started.</Subheading>
           <img
             style={{ width: '100%' }}
             src="images/Captions.png"
