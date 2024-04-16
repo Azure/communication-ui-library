@@ -104,7 +104,7 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     displayName?: string,
     raisedHand?: RaisedHandState,
     contentSharingStream?: HTMLElement,
-    reaction?: unknown, // temp unknown type to build stable
+    reaction?: Reaction,
     spotlight?: unknown // temp unknown type to build stable
   ): VideoGalleryRemoteParticipant => {
     return convertRemoteParticipantToVideoGalleryRemoteParticipant(
