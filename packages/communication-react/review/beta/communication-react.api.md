@@ -1471,7 +1471,7 @@ export interface CallWithChatControlOptions extends CommonCallControlOptions {
 }
 
 // @public
-export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | /* @conditional-compile-remove(close-captions) */ 'isCaptionsActiveChanged' | /* @conditional-compile-remove(close-captions) */ 'captionsReceived' | /* @conditional-compile-remove(close-captions) */ 'isCaptionLanguageChanged' | /* @conditional-compile-remove(close-captions) */ 'isSpokenLanguageChanged' |  'capabilitiesChanged' | /* @conditional-compile-remove(spotlight) */ 'spotlightChanged' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
+export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | /* @conditional-compile-remove(close-captions) */ 'isCaptionsActiveChanged' | /* @conditional-compile-remove(close-captions) */ 'captionsReceived' | /* @conditional-compile-remove(close-captions) */ 'isCaptionLanguageChanged' | /* @conditional-compile-remove(close-captions) */ 'isSpokenLanguageChanged' | 'capabilitiesChanged' | /* @conditional-compile-remove(spotlight) */ 'spotlightChanged' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
 
 // @beta
 export const CameraAndMicrophoneSitePermissions: (props: CameraAndMicrophoneSitePermissionsProps) => JSX.Element;
@@ -2374,7 +2374,7 @@ export const createAzureCommunicationCallWithChatAdapterFromClients: ({ callClie
 export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
 
 // @public
-export function createAzureCommunicationChatAdapterFromClient(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient): Promise<ChatAdapter>;
+export function createAzureCommunicationChatAdapterFromClient(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient): ChatAdapter;
 
 // @public
 export type CreateDefaultCallingHandlers = (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, options?: CallingHandlersOptions) => CallingHandlers;
