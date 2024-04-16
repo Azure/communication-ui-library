@@ -144,7 +144,7 @@ export const LiveTestApp = (): JSX.Element => {
                       actionsForAttachment: actionsForAttachment
                     },
                     uploadOptions: {
-                      handler: () => {
+                      handleAttachmentSelection: () => {
                         // noop
                       }
                     }
