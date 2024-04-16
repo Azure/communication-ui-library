@@ -16,7 +16,7 @@ const dividerRibbonButton = (theme: Theme, key: string): RibbonButton<string> =>
     // the icon will be set in `onRender` callback
     // this is needed to make the divider unavailable for keyboard navigation
     iconName: '',
-    // no text is needed here
+    // no text is needed here as we don't want to show a tooltip for the divider
     unlocalizedText: '',
     onClick: () => {},
     isDisabled: () => true,
