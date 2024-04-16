@@ -187,14 +187,14 @@ const ribbonTableButtonRootStyles = (theme: Theme, isSelected: boolean): IStyle 
       '.ribbon-table-button-regular-icon': {
         width: '1.25rem',
         height: '1.25rem',
-        marginTop: '-0.25rem',
+        margin: '-0.25rem 0.25rem 0 0.25rem',
         color: theme.palette.neutralPrimary,
         display: isSelected ? 'none' : 'inline-block'
       },
       '.ribbon-table-button-filled-icon': {
         width: '1.25rem',
         height: '1.25rem',
-        marginTop: '-0.25rem',
+        margin: '-0.25rem 0.25rem 0 0.25rem',
         color: theme.palette.themePrimary,
         display: isSelected ? 'inline-block' : 'none'
       }
@@ -205,23 +205,12 @@ const ribbonTableButtonRootStyles = (theme: Theme, isSelected: boolean): IStyle 
 /**
  * @private
  */
-export const ribbonDividerStyle = (theme: Theme): Partial<IButtonStyles> => {
-  return {
-    icon: { color: theme.palette.neutralQuaternaryAlt, margin: '0 -0.5rem', height: 'auto' },
-    root: { margin: '0', padding: '0', minWidth: 'auto' },
-    rootHovered: {
-      backgroundColor: 'transparent',
-      selectors: {
-        // Icon's color doesn't work here because of the specificity
-        '.ms-Button-icon': {
-          color: theme.palette.neutralQuaternaryAlt
-        },
-        '.ms-Button-menuIcon': {
-          color: theme.palette.neutralQuaternaryAlt
-        }
-      }
-    }
-  };
+export const ribbonDividerStyle = (theme: Theme): string => {
+  return mergeStyles({
+    color: theme.palette.neutralQuaternaryAlt,
+    margin: '0 -0.5rem',
+    paddingTop: '0.5rem'
+  });
 };
 
 /**
