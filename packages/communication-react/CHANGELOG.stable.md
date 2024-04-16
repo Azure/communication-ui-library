@@ -1,8 +1,51 @@
 # Change Log - @azure/communication-react
 
-This log was last generated on Thu, 14 Mar 2024 03:50:48 GMT and should not be manually modified.
+This log was last generated on Mon, 08 Apr 2024 20:34:39 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.15.0](https://github.com/azure/communication-ui-library/tree/1.15.0)
+
+Mon, 08 Apr 2024 20:34:39 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.15.0-beta.1...@azure/communication-react_v1.15.0)
+
+### Features
+
+### PPTLive - General Availability
+
+We are excited to announce that the Azure Communication Services Web UI Library now can view PowerPoint Live sessions initiated by a Teams client. Users can follow along with the current slide the presenter is sharing and view presenter annotations. Developers can use this functionality today through our composites (e.g CallComposite, CallWithChatComposite) as well as through components (e.g VideoGallery)
+
+### Reactions - General Availability
+
+Microsoft Azure Communications Services has recently updated its UI library composites and components to include call reactions. The UI Library will support the following list of live call reactions: 👍 like reaction, ❤️ heart reaction, 👏 applause reaction, 😂 laughter reaction, 😮 surprise reaction. Call reactions are associated to the user sending it and are visible to all types of users (in-tenant, guest, federated, anonymous). Call reactions are supported in all types of calls such as Rooms, group and meetings (scheduled, private, channel) of all sizes (small, large, XL). The addition of this feature will assist with greater engagement within calls, as people can now react or respond in real time without having to speak or interrupt. 
+
+- The ability to have live call reactions added to CallComposite and CallwithChatComposite on web 
+
+- Call reactions added at the component level 
+
+### Spotlight - General Availability
+The UI Library now supports spotlight in Teams interop and adhoc calls. ACS users can now give more focus to one or more participants for everyone in the call by spotlighting them. The spotlight feature is now enabled by default in the CallComposite and CallWithChatComposite but can be disabled using composite options.
+
+### End of Call Survey - General Availability
+The UI Library now supports End of Call Survey, with the feature added to the CallComposite and CallwithChatComposite on web. The survey supports feedback for the categories of overall quality, audio, video, and screenshare. This survey appears at the end of composite experience. By default, users are taken to a “thank you for your feedback” page after survey is submitted, and taken to the end call screen if survey is skipped. We provide abilities to overwrite those default screens. The survey can be disabled or enabled. The data received is sent to Contoso’s local Azure monitoring where it can be validated for overall call quality. When free form text survey is enabled, the free form text data collected are not sent to local Azure monitoring and will need to be handled by Contoso.
+
+### Improvements
+- Update fluent and type-fest dependencies to latest ([PR #4347](https://github.com/azure/communication-ui-library/pull/4347) by 2684369+JamesBurnside@users.noreply.github.com)
+- Remove @azure/core-rest-pipeline from dependencies ([PR #4294](https://github.com/azure/communication-ui-library/pull/4294) by 2684369+JamesBurnside@users.noreply.github.com)
+- Upgrade Typescript to 5.4.2 ([PR #4284](https://github.com/azure/communication-ui-library/pull/4284) by 2684369+JamesBurnside@users.noreply.github.com)
+- Calling SDK Stable update stable version ([PR #4410](https://github.com/azure/communication-ui-library/pull/4410) by 93549644+ShaunaSong@users.noreply.github.com)
+### Bug Fixes
+- Ensure theme is memoized for calls to useTheme ([PR #4301](https://github.com/azure/communication-ui-library/pull/4301) by 2684369+JamesBurnside@users.noreply.github.com)
+- Retain pinning of participants after holding call in CallComposite and CallWithChatComposite ([PR #4319](https://github.com/azure/communication-ui-library/pull/4319) by 79475487+mgamis-msft@users.noreply.github.com)
+- Fix participantList not showing remote participant raised hands ([PR #4422](https://github.com/azure/communication-ui-library/pull/4422) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix ordering of dominant speakers in overflow gallery ([PR #4276](https://github.com/azure/communication-ui-library/pull/4276) by miguelgamis@microsoft.com)
+- Fix issue where video stream would not recover when re-connecting to the call from a network disconnect ([PR #4300](https://github.com/azure/communication-ui-library/pull/4300) by alkwa@microsoft.com)
+- Fix the absence of remove participant drawer menu item in group and interop calls on mobile ([PR #4359](https://github.com/azure/communication-ui-library/pull/4359) by 79475487+mgamis-msft@users.noreply.github.com)
+- Fix Message status announcement sometimes takes priority over "Message is deleted" one ([PR #4334](https://github.com/azure/communication-ui-library/pull/4334) by 3941071+emlynmac@users.noreply.github.com)
+- Update various visual issues with the configuration screen ([PR #4355](https://github.com/azure/communication-ui-library/pull/4355) by dmceachern@microsoft.com)
+- Pass down onFetchAvatarPersonaData to peoplepane to display custom data model ([PR #4391](https://github.com/azure/communication-ui-library/pull/4391) by edwardlee@microsoft.com)
+- Fix issue where dtmf sounds would break when hiding the dialpad on mobile inside the composite ([PR #4337](https://github.com/azure/communication-ui-library/pull/4337) by 94866715+dmceachernmsft@users.noreply.github.com)
+
 
 ## [1.14.0](https://github.com/azure/communication-ui-library/tree/1.14.0)
 

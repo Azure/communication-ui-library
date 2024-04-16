@@ -299,7 +299,7 @@ export const insertTableMenuTablePane = mergeStyles({
 export const insertTableMenuFocusZone = (theme: Theme): string => {
   return mergeStyles({
     lineHeight: '12px',
-    width: '5rem',
+    width: '5.125rem',
     border: `solid 0.0625rem ${theme.palette.neutralTertiaryAlt}`
   });
 };

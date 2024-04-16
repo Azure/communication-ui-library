@@ -47,6 +47,7 @@ export const _RemoteVideoTile = React.memo(
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
     isAvailable?: boolean;
     isReceiving?: boolean;
+    streamId?: number;
     isScreenSharingOn?: boolean; // TODO: Remove this once onDisposeRemoteStreamView no longer disposes of screen share stream
     renderElement?: HTMLElement;
     remoteVideoViewOptions?: VideoStreamOptions;
@@ -97,7 +98,8 @@ export const _RemoteVideoTile = React.memo(
       disablePinMenuItem,
       toggleAnnouncerString,
       strings,
-      /* @conditional-compile-remove(reaction) */ reactionResources
+      /* @conditional-compile-remove(reaction) */ reactionResources,
+      streamId
     } = props;
 
     const remoteVideoStreamProps: RemoteVideoStreamLifecycleMaintainerProps = useMemo(
@@ -110,7 +112,8 @@ export const _RemoteVideoTile = React.memo(
         onDisposeRemoteStreamView,
         remoteParticipantId: userId,
         renderElementExists: !!renderElement,
-        scalingMode: remoteVideoViewOptions?.scalingMode
+        scalingMode: remoteVideoViewOptions?.scalingMode,
+        streamId
       }),
       [
         isAvailable,
@@ -121,7 +124,8 @@ export const _RemoteVideoTile = React.memo(
         remoteVideoViewOptions?.isMirrored,
         remoteVideoViewOptions?.scalingMode,
         renderElement,
-        userId
+        userId,
+        streamId
       ]
     );
 
