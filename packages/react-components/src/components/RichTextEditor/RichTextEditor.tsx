@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useImperativeHandle, useMemo, useRef } f
 import { ContentEdit, Watermark } from 'roosterjs-editor-plugins';
 import { Editor } from 'roosterjs-editor-core';
 import type { DefaultFormat, EditorOptions, IEditor } from 'roosterjs-editor-types-compatible';
+import { CompatibleGetContentMode } from 'roosterjs-editor-types-compatible';
 import {
   Rooster,
   createUpdateContentPlugin,
@@ -61,9 +62,25 @@ export interface RichTextEditorProps {
  *
  * @beta
  */
+/**
+ * Represents a reference to the RichTextEditor component.
+ */
 export interface RichTextEditorComponentRef {
+  /**
+   * Sets focus on the RichTextEditor component.
+   */
   focus: () => void;
+
+  /**
+   * Sets the content of the RichTextEditor component to an empty string.
+   */
   setEmptyContent: () => void;
+
+  /**
+   * Retrieves the plain text content of the RichTextEditor component.
+   * @returns The plain text content of the RichTextEditor component, or undefined if the editor isn't available.
+   */
+  getPlainContent: () => string | undefined;
 }
 
 /**
@@ -90,6 +107,9 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
           if (editor.current) {
             editor.current.setContent('');
           }
+        },
+        getPlainContent() {
+          return editor?.current?.getContent(CompatibleGetContentMode.PlainTextFast);
         }
       };
     },
