@@ -30,7 +30,7 @@ const getDocs: () => JSX.Element = () => {
       <Description>
         Azure Communication Service Closed Captions are enabled by default and are automatically included within the
         CallComposite and CallWithChatComposite experiences for calling scenarios involving Azure Communication Service
-        users only. Captions can be enabled both in Mobile Web sessions and in Desktop Web sessions.
+        users only. Captions can be enabled in both Mobile Web sessions and in Desktop Web sessions.
       </Description>
       <Description>
         For Azure Communication Service captions, users can enable captions in the menu and select the spoken language
