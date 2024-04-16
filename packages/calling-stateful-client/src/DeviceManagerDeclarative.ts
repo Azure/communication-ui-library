@@ -166,7 +166,7 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
     try {
       const [cameraPermissions, micPermissions] = await Promise.all([
         navigator.permissions.query({ name: 'camera' as PermissionName }),
-        navigator.permissions.query({ name: 'camera' as PermissionName })
+        navigator.permissions.query({ name: 'microphone' as PermissionName })
       ]);
 
       hasCameraPermission = cameraPermissions.state === 'granted';
