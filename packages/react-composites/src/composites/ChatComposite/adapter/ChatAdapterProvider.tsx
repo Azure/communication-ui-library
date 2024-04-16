@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import React, { createContext, useContext } from 'react';
-import { AttachmentUploadSession } from '@internal/react-components';
+import { AttachmentUploadTask } from '@internal/react-components';
 import { AttachmentUploadAdapter } from './AzureCommunicationAttachmentUploadAdapter';
 import { ChatAdapter } from './ChatAdapter';
 
@@ -44,10 +44,10 @@ export const useAttachmentUploadAdapter = (): AttachmentUploadAdapter => {
   // A stub that short-circuits all logic because none of the fields are available.
   return {
     registerActiveUploads() {
-      return [] as AttachmentUploadSession[];
+      return [] as AttachmentUploadTask[];
     },
     registerCompletedUploads() {
-      return [] as AttachmentUploadSession[];
+      return [] as AttachmentUploadTask[];
     },
     cancelUpload() {
       // noop

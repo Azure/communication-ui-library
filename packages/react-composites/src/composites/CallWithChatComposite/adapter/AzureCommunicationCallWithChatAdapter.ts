@@ -26,7 +26,7 @@ import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata, AttachmentUploadSession } from '@internal/react-components';
+import { AttachmentMetadata, AttachmentUploadTask } from '@internal/react-components';
 import {
   ParticipantsJoinedListener,
   ParticipantsLeftListener,
@@ -472,11 +472,11 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     });
   }
   /* @conditional-compile-remove(attachment-upload) */
-  public registerActiveUploads = (files: File[]): AttachmentUploadSession[] => {
+  public registerActiveUploads = (files: File[]): AttachmentUploadTask[] => {
     return this.chatAdapter?.registerActiveUploads(files) ?? [];
   };
   /* @conditional-compile-remove(attachment-upload) */
-  public registerCompletedUploads = (metadata: AttachmentMetadata[]): AttachmentUploadSession[] => {
+  public registerCompletedUploads = (metadata: AttachmentMetadata[]): AttachmentUploadTask[] => {
     return this.chatAdapter?.registerCompletedUploads(metadata) ?? [];
   };
   /* @conditional-compile-remove(attachment-upload) */

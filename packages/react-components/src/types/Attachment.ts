@@ -116,18 +116,17 @@ export interface AttachmentUploadOptions {
 }
 
 /**
- * A upload session presents and manages an attachment that is being uploaded.
- * When using the Composite, an attachment upload session is created for each file user is selected to upload.
- * An attachment being uploaded has progress and uploadError properties.
- * A upload session is complete when notifyUploadCompleted is called.
- * A upload session is failed when notifyUploadFailed is called.
+ * A upload task represents and manages an attachment that is being uploaded.
+ * When using the Composite, an attachment upload task is created for each file user is selected to upload.
+ * A upload task is complete when notifyUploadCompleted is called.
+ * A upload task is failed when notifyUploadFailed is called.
  * @beta
  */
-export interface AttachmentUploadSession {
+export interface AttachmentUploadTask {
   /**
-   * Unique identifier for the attachment upload.
+   * Unique identifier for the attachment upload task.
    */
-  sessionId: string;
+  taskId: string;
   /**
    * HTML {@link File} object for the uploaded attachment.
    */
@@ -139,14 +138,14 @@ export interface AttachmentUploadSession {
    */
   notifyUploadProgressChanged: (value: number) => void;
   /**
-   * Mark the upload session as complete.
+   * Mark the upload task as complete.
    * An attachment is considered completed uploading when ID and URL are provided.
    * @param id - the unique identifier of the attachment.
    * @param url - the download URL of the attachment.
    */
   notifyUploadCompleted: (id: string, url: string) => void;
   /**
-   * Mark the upload as failed.
+   * Mark the upload task as failed.
    * @param message - An error message that can be displayed to the user.
    */
   notifyUploadFailed: (message: string) => void;
@@ -158,4 +157,4 @@ export interface AttachmentUploadSession {
  *
  * @param AttachmentUploads - The list of uploaded attachments. Each attachment is represented by an {@link AttachmentUpload} object.
  */
-export type AttachmentUploadHandler = (attachmentUploads: AttachmentUploadSession[]) => void;
+export type AttachmentUploadHandler = (attachmentUploads: AttachmentUploadTask[]) => void;

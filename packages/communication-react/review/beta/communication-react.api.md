@@ -190,9 +190,9 @@ export interface AttachmentUploadAdapter {
     // (undocumented)
     clearUploads: () => void;
     // (undocumented)
-    registerActiveUploads: (files: File[]) => AttachmentUploadSession[];
+    registerActiveUploads: (files: File[]) => AttachmentUploadTask[];
     // (undocumented)
-    registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadSession[];
+    registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadTask[];
     // (undocumented)
     updateUploadMetadata: (id: string, metadata: AttachmentMetadataWithProgress | AttachmentMetadata) => void;
     // (undocumented)
@@ -202,22 +202,13 @@ export interface AttachmentUploadAdapter {
 }
 
 // @beta
-export type AttachmentUploadHandler = (attachmentUploads: AttachmentUploadSession[]) => void;
+export type AttachmentUploadHandler = (attachmentUploads: AttachmentUploadTask[]) => void;
 
 // @beta (undocumented)
 export interface AttachmentUploadOptions {
     disableMultipleUploads?: boolean;
     handler: AttachmentUploadHandler;
     supportedMediaTypes?: string[];
-}
-
-// @beta
-export interface AttachmentUploadSession {
-    file?: File;
-    notifyUploadCompleted: (id: string, url: string) => void;
-    notifyUploadFailed: (message: string) => void;
-    notifyUploadProgressChanged: (value: number) => void;
-    sessionId: string;
 }
 
 // @beta
@@ -230,6 +221,15 @@ export interface AttachmentUploadStatus {
 
 // @beta
 export type AttachmentUploadsUiState = Record<string, AttachmentMetadataWithProgress>;
+
+// @beta
+export interface AttachmentUploadTask {
+    file?: File;
+    notifyUploadCompleted: (id: string, url: string) => void;
+    notifyUploadFailed: (message: string) => void;
+    notifyUploadProgressChanged: (value: number) => void;
+    taskId: string;
+}
 
 // @public
 export type AvatarPersonaData = {
@@ -1110,9 +1110,9 @@ export interface CallWithChatAdapterManagement {
     querySpeakers(): Promise<AudioDeviceInfo[]>;
     raiseHand(): Promise<void>;
     // @beta (undocumented)
-    registerActiveUploads: (files: File[]) => AttachmentUploadSession[];
+    registerActiveUploads: (files: File[]) => AttachmentUploadTask[];
     // @beta (undocumented)
-    registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadSession[];
+    registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadTask[];
     removeParticipant(userId: string): Promise<void>;
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;

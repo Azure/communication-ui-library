@@ -328,7 +328,7 @@ export type {
   AttachmentUploadStatus,
   AttachmentUploadHandler,
   AttachmentUploadOptions,
-  AttachmentUploadSession,
+  AttachmentUploadTask,
   AttachmentMetadataWithProgress
 } from '../../react-components/src';
 

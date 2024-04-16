@@ -9,7 +9,7 @@ export type {
   AttachmentUploadStatus,
   AttachmentUploadOptions,
   AttachmentUploadHandler,
-  AttachmentUploadSession
+  AttachmentUploadTask
 } from '@internal/react-components';
 
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */

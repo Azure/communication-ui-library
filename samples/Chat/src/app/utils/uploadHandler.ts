@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentUploadHandler, AttachmentUploadOptions, AttachmentUploadSession } from '@azure/communication-react';
+import { AttachmentUploadHandler, AttachmentUploadOptions, AttachmentUploadTask } from '@azure/communication-react';
 /* @conditional-compile-remove(attachment-download) */
 import axios, { AxiosProgressEvent } from 'axios';
 /* @conditional-compile-remove(attachment-download) */
@@ -18,25 +18,23 @@ const UNSUPPORTED_FILES = ['exe', 'bat', 'dat'];
 const CONTAINER_NAME = 'acs-file-sharing-test';
 
 /* @conditional-compile-remove(attachment-upload) */
-const attachmentUploadHandler: AttachmentUploadHandler = async (
-  activeUploadSessions: AttachmentUploadSession[]
-): Promise<void> => {
-  for (const session of activeUploadSessions) {
-    const fileExtension = session.file?.name.split('.').pop() ?? '';
+const attachmentUploadHandler: AttachmentUploadHandler = async (uploadTasks: AttachmentUploadTask[]): Promise<void> => {
+  for (const task of uploadTasks) {
+    const fileExtension = task.file?.name.split('.').pop() ?? '';
 
-    if (session.file && session.file?.size > MAX_FILE_SIZE_MB) {
-      session.notifyUploadFailed(`"${session.file?.name}" is too big. Select a file under 50MB.`);
+    if (task.file && task.file?.size > MAX_FILE_SIZE_MB) {
+      task.notifyUploadFailed(`"${task.file?.name}" is too big. Select a file under 50MB.`);
       continue;
     }
 
     if (UNSUPPORTED_FILES.includes(fileExtension)) {
-      session.notifyUploadFailed(`Uploading ".${fileExtension}" files is not allowed.`);
+      task.notifyUploadFailed(`Uploading ".${fileExtension}" files is not allowed.`);
       continue;
     }
 
-    const uniqueFileName = `${session.file?.name}`;
+    const uniqueFileName = `${task.file?.name}`;
     const formData = new FormData();
-    formData.append('file', session.file, session.file?.name);
+    formData.append('file', task.file, task.file?.name);
 
     try {
       const response = await axios.request({
@@ -50,15 +48,15 @@ const attachmentUploadHandler: AttachmentUploadHandler = async (
         onUploadProgress: (progressEvent: AxiosProgressEvent) => {
           const { total, loaded } = progressEvent;
           if (total) {
-            session.notifyUploadProgressChanged(loaded / total);
+            task.notifyUploadProgressChanged(loaded / total);
           }
         }
       });
 
-      session.notifyUploadCompleted(uniqueFileName, response.data.url);
+      task.notifyUploadCompleted(uniqueFileName, response.data.url);
     } catch (error) {
       console.error(error);
-      session.notifyUploadFailed('Unable to upload file. Please try again later.');
+      task.notifyUploadFailed('Unable to upload file. Please try again later.');
     }
   }
 };

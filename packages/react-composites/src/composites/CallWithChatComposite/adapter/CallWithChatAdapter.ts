@@ -45,7 +45,7 @@ import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react
 import { SendMessageOptions } from '@azure/communication-chat';
 import { JoinCallOptions } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata, AttachmentUploadSession } from '@internal/react-components';
+import { AttachmentMetadata, AttachmentUploadTask } from '@internal/react-components';
 /* @conditional-compile-remove(PSTN-calls) */
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { UnknownIdentifier, MicrosoftTeamsAppIdentifier } from '@azure/communication-common';
@@ -376,10 +376,10 @@ export interface CallWithChatAdapterManagement {
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
   /* @conditional-compile-remove(attachment-upload) */
   /** @beta */
-  registerActiveUploads: (files: File[]) => AttachmentUploadSession[];
+  registerActiveUploads: (files: File[]) => AttachmentUploadTask[];
   /* @conditional-compile-remove(attachment-upload) */
   /** @beta */
-  registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadSession[];
+  registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadTask[];
   /* @conditional-compile-remove(attachment-upload) */
   /** @beta */
   clearUploads: () => void;

@@ -1,11 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import {
-  AttachmentUploadSession,
-  AttachmentMetadata,
-  AttachmentMetadataWithProgress
-} from '@internal/react-components';
+import { AttachmentUploadTask, AttachmentMetadata, AttachmentMetadataWithProgress } from '@internal/react-components';
 /* @conditional-compile-remove(attachment-upload) */
 import { produce } from 'immer';
 /* @conditional-compile-remove(attachment-upload) */
@@ -16,7 +12,7 @@ import { ChatContext } from './AzureCommunicationChatAdapter';
 import { ChatAdapterState } from './ChatAdapter';
 
 /**
- * A record containing {@link AttachmentMetadata} mapped to unique attachment upload session ids.
+ * A record containing {@link AttachmentMetadata} mapped to unique attachment upload task ids.
  * @beta
  */
 export type AttachmentUploadsUiState = Record<string, AttachmentMetadataWithProgress>;
@@ -25,8 +21,8 @@ export type AttachmentUploadsUiState = Record<string, AttachmentMetadataWithProg
  * @beta
  */
 export interface AttachmentUploadAdapter {
-  registerActiveUploads: (files: File[]) => AttachmentUploadSession[];
-  registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadSession[];
+  registerActiveUploads: (files: File[]) => AttachmentUploadTask[];
+  registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadTask[];
   clearUploads: () => void;
   cancelUpload: (id: string) => void;
   updateUploadProgress: (id: string, progress: number) => void;
@@ -117,12 +113,12 @@ export class AzureCommunicationAttachmentUploadAdapter implements AttachmentUplo
   }
 
   private findAttachmentUpload(id: string): AttachmentUpload | undefined {
-    return this.attachmentUploads.find((attachmentUpload) => attachmentUpload.sessionId === id);
+    return this.attachmentUploads.find((attachmentUpload) => attachmentUpload.taskId === id);
   }
 
   private deleteAttachmentUploads(ids: string[]): void {
     this.attachmentUploads = this.attachmentUploads.filter(
-      (attachmentUpload) => !ids.includes(attachmentUpload.sessionId)
+      (attachmentUpload) => !ids.includes(attachmentUpload.taskId)
     );
     this.context.deleteAttachmentUploads(ids);
   }
@@ -141,7 +137,7 @@ export class AzureCommunicationAttachmentUploadAdapter implements AttachmentUplo
     this.deleteAttachmentUploads(ids);
   }
 
-  private registerAttachmentUploads(files: File[] | AttachmentMetadata[]): AttachmentUploadSession[] {
+  private registerAttachmentUploads(files: File[] | AttachmentMetadata[]): AttachmentUploadTask[] {
     this.deleteErroneousAttachmentUploads();
     const attachmentUploads: AttachmentUpload[] = [];
     files.forEach((file) => attachmentUploads.push(new AttachmentUpload(file)));
@@ -151,11 +147,11 @@ export class AzureCommunicationAttachmentUploadAdapter implements AttachmentUplo
     return attachmentUploads;
   }
 
-  registerActiveUploads(files: File[]): AttachmentUploadSession[] {
+  registerActiveUploads(files: File[]): AttachmentUploadTask[] {
     return this.registerAttachmentUploads(files);
   }
 
-  registerCompletedUploads(metadata: AttachmentMetadata[]): AttachmentUploadSession[] {
+  registerCompletedUploads(metadata: AttachmentMetadata[]): AttachmentUploadTask[] {
     return this.registerAttachmentUploads(metadata);
   }
 
@@ -195,9 +191,9 @@ export class AzureCommunicationAttachmentUploadAdapter implements AttachmentUplo
     });
   }
 
-  setAttachmentMetadata(sessionId: string, attachmentId: string, attachmentUrl: string): void {
-    const attachmentUpload = this.findAttachmentUpload(sessionId);
-    this.context.updateAttachmentUpload(sessionId, {
+  setAttachmentMetadata(taskId: string, attachmentId: string, attachmentUrl: string): void {
+    const attachmentUpload = this.findAttachmentUpload(taskId);
+    this.context.updateAttachmentUpload(taskId, {
       progress: 1,
       id: attachmentId,
       name: attachmentUpload?.name,
@@ -256,8 +252,8 @@ const convertObservableAttachmentUploadToAttachmentUploadsUiState = (
   attachmentUploads: AttachmentUpload[]
 ): AttachmentUploadsUiState => {
   return attachmentUploads.reduce((map: AttachmentUploadsUiState, attachmentUpload) => {
-    map[attachmentUpload.sessionId] = {
-      id: attachmentUpload.sessionId,
+    map[attachmentUpload.taskId] = {
+      id: attachmentUpload.taskId,
       name: attachmentUpload.name,
       progress: 0,
       extension: attachmentUpload.name.split('.').pop() || ''

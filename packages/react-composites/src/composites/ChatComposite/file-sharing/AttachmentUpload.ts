@@ -7,7 +7,7 @@ import { _MAX_EVENT_LISTENERS } from '@internal/acs-ui-common';
 import {
   AttachmentMetadata,
   AttachmentUploadHandler,
-  AttachmentUploadSession,
+  AttachmentUploadTask,
   AttachmentUploadStatus
 } from '@internal/react-components';
 
@@ -16,10 +16,10 @@ import {
  * Provides common functions for updating the upload progress, canceling an upload etc.
  * @private
  */
-export class AttachmentUpload implements AttachmentUploadSession, AttachmentUploadEventEmitter {
+export class AttachmentUpload implements AttachmentUploadTask, AttachmentUploadEventEmitter {
   private _emitter: EventEmitter;
-  // a nanoid to uniquely identify each upload session
-  public readonly sessionId: string;
+  // a nanoid to uniquely identify each upload task
+  public readonly taskId: string;
   // a file object that represents the attachment selected by the user via browser file picker
   public readonly file?: File;
   /**
@@ -34,7 +34,7 @@ export class AttachmentUpload implements AttachmentUploadSession, AttachmentUplo
   constructor(data: File | AttachmentMetadata) {
     this._emitter = new EventEmitter();
     this._emitter.setMaxListeners(_MAX_EVENT_LISTENERS);
-    this.sessionId = nanoid();
+    this.taskId = nanoid();
     if (data instanceof File) {
       this.file = data;
     } else {
@@ -45,15 +45,15 @@ export class AttachmentUpload implements AttachmentUploadSession, AttachmentUplo
   }
 
   notifyUploadProgressChanged(value: number): void {
-    this._emitter.emit('uploadProgressChange', this.sessionId, value);
+    this._emitter.emit('uploadProgressChange', this.taskId, value);
   }
 
   notifyUploadCompleted(id: string, url: string): void {
-    this._emitter.emit('uploadComplete', this.sessionId, id, url);
+    this._emitter.emit('uploadComplete', this.taskId, id, url);
   }
 
   notifyUploadFailed(message: string): void {
-    this._emitter.emit('uploadFail', this.sessionId, message);
+    this._emitter.emit('uploadFail', this.taskId, message);
   }
 
   on(event: 'uploadProgressChange', listener: UploadProgressListener): void;
@@ -81,7 +81,7 @@ export class AttachmentUpload implements AttachmentUploadSession, AttachmentUplo
   }
 }
 
-export type { AttachmentMetadata, AttachmentUploadHandler, AttachmentUploadSession, AttachmentUploadStatus };
+export type { AttachmentMetadata, AttachmentUploadHandler, AttachmentUploadTask, AttachmentUploadStatus };
 
 /**
  * Events emitted by the AttachmentUpload class.
@@ -99,17 +99,17 @@ type AttachmentUploadEventListener = UploadProgressListener | UploadCompleteList
  * Listener for `uploadProgressed` event.
  * @beta
  */
-type UploadProgressListener = (sessionId: string, value: number) => void;
+type UploadProgressListener = (taskId: string, value: number) => void;
 /**
  * Listener for `uploadComplete` event.
  * @beta
  */
-type UploadCompleteListener = (sessionId: string, attachmentId: string, attachmentUrl: string) => void;
+type UploadCompleteListener = (taskId: string, attachmentId: string, attachmentUrl: string) => void;
 /**
  * Listener for `uploadFailed` event.
  * @beta
  */
-type UploadFailedListener = (sessionId: string, message: string) => void;
+type UploadFailedListener = (taskId: string, message: string) => void;
 
 /**
  * @beta
