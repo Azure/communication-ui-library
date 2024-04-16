@@ -236,7 +236,7 @@ export const richTextFormatButtonIconStyle = (theme: Theme, isSelected: boolean)
 export const editBoxRichTextEditorStyle = (): RichTextEditorStyleProps => {
   return {
     minHeight: '2.25rem',
-    maxHeight: '2.25rem'
+    maxHeight: '8rem'
   };
 };
 
@@ -245,8 +245,8 @@ export const editBoxRichTextEditorStyle = (): RichTextEditorStyleProps => {
  */
 export const sendBoxRichTextEditorStyle = (isExpanded: boolean): RichTextEditorStyleProps => {
   return {
-    minHeight: isExpanded ? '5rem' : '1.25rem',
-    maxHeight: '5rem'
+    minHeight: isExpanded ? '4rem' : '1.25rem',
+    maxHeight: '8rem'
   };
 };
 
