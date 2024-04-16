@@ -21,14 +21,14 @@ const getDocs: () => JSX.Element = () => {
         or hard of hearing to follow along.
       </Description>
       <Description>
-        Closed Captions is enabled by default and are automatically included within the CallComposite and
+        Closed Captions is supported by default and are automatically included within the CallComposite and
         CallWithChatComposite experiences.
       </Description>
 
       <Heading>Azure Communication Service Based Captions</Heading>
       <SingleLineBetaBanner topOfPage={true} />
       <Description>
-        Azure Communication Service Closed Captions are enabled by default and are automatically included within the
+        Azure Communication Service Closed Captions are supported by default and are automatically included within the
         CallComposite and CallWithChatComposite experiences for calling scenarios involving Azure Communication Service
         users only. Captions can be enabled in both Mobile Web sessions and in Desktop Web sessions.
       </Description>
@@ -41,8 +41,8 @@ const getDocs: () => JSX.Element = () => {
 
       <Heading>Teams Interop Closed Captions</Heading>
       <Description>
-        Teams Interop Closed Captions is enabled by default and are automatically included within the CallComposite and
-        CallWithChatComposite experiences during a call including one or more teams users.
+        Teams Interop Closed Captions is supported by default and are automatically included within the CallComposite
+        and CallWithChatComposite experiences during a call including one or more teams users.
       </Description>
       <Description>
         The main difference between Azure Communication Service Closed Captions and Teams Interop Closed Captions is
@@ -67,7 +67,7 @@ const getDocs: () => JSX.Element = () => {
       </Description>
       <Stack tokens={{ childrenGap: '3rem' }} style={overviewPageImagesStackStyle}>
         <Stack.Item align="center">
-          <Subheading>Using the more menu to turn on captions.</Subheading>
+          <Subheading>Using the more menu to turn on captions</Subheading>
           <img
             style={{ width: '100%' }}
             src="images/StartCaptions.png"
@@ -75,7 +75,7 @@ const getDocs: () => JSX.Element = () => {
           />
         </Stack.Item>
         <Stack.Item align="center">
-          <Subheading>Captions Setting modal to change spoken language.</Subheading>
+          <Subheading>Captions Setting modal to change spoken language</Subheading>
           <img
             style={{ width: '100%' }}
             src="images/CaptionsSettings.png"
@@ -83,7 +83,7 @@ const getDocs: () => JSX.Element = () => {
           />
         </Stack.Item>
         <Stack.Item align="center">
-          <Subheading>Captions Setting modal to change spoken language and caption language.</Subheading>
+          <Subheading>Captions Setting modal to change spoken language and caption language</Subheading>
           <img
             style={{ width: '100%' }}
             src="images/TeamsCaptionsSettings.png"
@@ -91,7 +91,7 @@ const getDocs: () => JSX.Element = () => {
           />
         </Stack.Item>
         <Stack.Item align="center">
-          <Subheading>Captions is started.</Subheading>
+          <Subheading>Captions started</Subheading>
           <img
             style={{ width: '100%' }}
             src="images/Captions.png"
@@ -105,7 +105,7 @@ const getDocs: () => JSX.Element = () => {
         />
       </Stack>
 
-      <Subheading>Disable captions</Subheading>
+      <Heading>Disable captions</Heading>
       <Description>
         The UI Library enables users to hide captions UI when they do not wish to use the captions service.
       </Description>
