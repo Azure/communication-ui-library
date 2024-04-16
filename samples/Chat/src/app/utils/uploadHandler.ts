@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentUploadHandler, AttachmentUploadOptions, AttachmentUploadTask } from '@azure/communication-react';
+import { AttachmentSelectionHandler, AttachmentUploadOptions, AttachmentUploadTask } from '@azure/communication-react';
 /* @conditional-compile-remove(attachment-download) */
 import axios, { AxiosProgressEvent } from 'axios';
 /* @conditional-compile-remove(attachment-download) */
@@ -18,7 +18,9 @@ const UNSUPPORTED_FILES = ['exe', 'bat', 'dat'];
 const CONTAINER_NAME = 'acs-file-sharing-test';
 
 /* @conditional-compile-remove(attachment-upload) */
-const attachmentUploadHandler: AttachmentUploadHandler = async (uploadTasks: AttachmentUploadTask[]): Promise<void> => {
+const attachmentSelectionHandler: AttachmentSelectionHandler = async (
+  uploadTasks: AttachmentUploadTask[]
+): Promise<void> => {
   for (const task of uploadTasks) {
     const fileExtension = task.file?.name.split('.').pop() ?? '';
 
@@ -62,5 +64,5 @@ const attachmentUploadHandler: AttachmentUploadHandler = async (uploadTasks: Att
 };
 /* @conditional-compile-remove(attachment-upload) */
 export const attachmentUploadOptions: AttachmentUploadOptions = {
-  handler: attachmentUploadHandler
+  handleAttachmentSelection: attachmentSelectionHandler
 };

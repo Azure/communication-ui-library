@@ -6,7 +6,7 @@ import { nanoid } from 'nanoid';
 import { _MAX_EVENT_LISTENERS } from '@internal/acs-ui-common';
 import {
   AttachmentMetadata,
-  AttachmentUploadHandler,
+  AttachmentSelectionHandler,
   AttachmentUploadTask,
   AttachmentUploadStatus
 } from '@internal/react-components';
@@ -81,7 +81,7 @@ export class AttachmentUpload implements AttachmentUploadTask, AttachmentUploadE
   }
 }
 
-export type { AttachmentMetadata, AttachmentUploadHandler, AttachmentUploadTask, AttachmentUploadStatus };
+export type { AttachmentMetadata, AttachmentSelectionHandler, AttachmentUploadTask, AttachmentUploadStatus };
 
 /**
  * Events emitted by the AttachmentUpload class.
