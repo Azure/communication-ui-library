@@ -115,8 +115,8 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
   const cameraPermissionGranted = props.cameraPermissionGranted;
   const micPermissionGranted = props.microphonePermissionGranted;
 
-  const roleCanUseCamera = role === 'Consumer' ? false : true;
-  const roleCanUseMic = role === 'Consumer' ? false : true;
+  const roleCanUseCamera = role !== 'Consumer';
+  const roleCanUseMic = role !== 'Consumer';
 
   // TODO: speaker permission is tied to microphone permission (when you request 'audio' permission using the SDK) its
   // actually granting access to query both microphone and speaker. However the browser popup asks you explicity for
