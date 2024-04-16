@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "area": "fix",
-  "workstream": "Spotlight",
-  "comment": "Place spotlighted remote participants in grid layout is Large Gallery or Gallery view. But when screenshare is active, place first in overflow gallery after local participant",
-  "packageName": "@azure/communication-react",
-  "email": "79475487+mgamis-msft@users.noreply.github.com",
-  "dependentChangeType": "none"
-}
