@@ -235,15 +235,6 @@ export interface AttachmentUploadTask {
     taskId: string;
 }
 
-// @beta
-export interface AttachmentUploadTask {
-    file?: File;
-    notifyUploadCompleted: (id: string, url: string) => void;
-    notifyUploadFailed: (message: string) => void;
-    notifyUploadProgressChanged: (value: number) => void;
-    taskId: string;
-}
-
 // @public
 export type AvatarPersonaData = {
     text?: string;
