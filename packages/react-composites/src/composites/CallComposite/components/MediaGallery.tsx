@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { CSSProperties, useCallback, useMemo } from 'react';
+import React, { CSSProperties, useCallback, useEffect, useMemo, useState } from 'react';
 import { useRef } from 'react';
 import {
   VideoGallery,
@@ -74,7 +74,7 @@ export interface MediaGalleryProps {
   /* @conditional-compile-remove(spotlight) */
   hideSpotlightButtons?: boolean;
   /* @conditional-compile-remove(teams-bot-rename) */
-  onFetchMicrosoftBotName?: (botId: string | MicrosoftTeamsAppIdentifier) => string;
+  onFetchMicrosoftBotName?: (botId: string | MicrosoftTeamsAppIdentifier) => Promise<string>;
 }
 
 /* @conditional-compile-remove(teams-bot-rename) */
@@ -101,6 +101,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const adapter = useAdapter();
   const userRole = adapter.getState().call?.role;
   const isRoomsCall = adapter.getState().isRoomsCall;
+  const [renamedParticipants, setRenamedParticipants] = useState<VideoGalleryParticipant[]>([]);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const containerWidth = _useContainerWidth(containerRef);
@@ -133,6 +134,24 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     },
     [props.onFetchAvatarPersonaData]
   );
+
+  useEffect(() => {
+    const participants = videoGalleryProps.remoteParticipants;
+    /* @conditional-compile-remove(teams-bot-rename) */
+    participants.forEach(async (participant: VideoGalleryParticipant) => {
+      if (!participant.userId.startsWith(BOT_IT_PREFIX)) {
+        return;
+      }
+      if (onFetchMicrosoftBotName) {
+        const newName = await onFetchMicrosoftBotName(participant.userId);
+        participant.displayName = newName;
+      }
+    });
+    setRenamedParticipants(participants);
+  }, [
+    videoGalleryProps.remoteParticipants,
+    /* @conditional-compile-remove(teams-bot-rename) */ onFetchMicrosoftBotName
+  ]);
 
   const remoteVideoTileMenuOptions: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps = useMemo(() => {
     return props.remoteVideoTileMenuOptions?.isHidden
@@ -193,20 +212,6 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         }
       : undefined;
   }, [setPinnedParticipants, pinnedParticipants]);
-
-  const renamedParticipants = useMemo(() => {
-    const participants = videoGalleryProps.remoteParticipants;
-    /* @conditional-compile-remove(teams-bot-rename) */
-    participants.forEach((participant: VideoGalleryParticipant) => {
-      if (participant.userId.startsWith(BOT_IT_PREFIX) && onFetchMicrosoftBotName) {
-        participant.displayName = onFetchMicrosoftBotName(participant.userId);
-      }
-    });
-    return participants;
-  }, [
-    videoGalleryProps.remoteParticipants,
-    /* @conditional-compile-remove(teams-bot-rename) */ onFetchMicrosoftBotName
-  ]);
 
   const VideoGalleryMemoized = useMemo(() => {
     const layoutBasedOnUserSelection = (): VideoGalleryLayout => {

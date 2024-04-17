@@ -61,7 +61,7 @@ export interface CallPageProps {
   setPinnedParticipants?: (pinnedParticipants: string[]) => void;
   compositeAudioContext?: AudioContext;
   /* @conditional-compile-remove(teams-bot-rename) */
-  onFetchMicrosoftBotName?: (botId: string | MicrosoftTeamsAppIdentifier) => string;
+  onFetchMicrosoftBotName?: (botId: string | MicrosoftTeamsAppIdentifier) => Promise<string>;
 }
 
 /**

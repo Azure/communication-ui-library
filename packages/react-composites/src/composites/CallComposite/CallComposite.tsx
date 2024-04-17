@@ -334,7 +334,7 @@ type MainScreenProps = {
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
   onCloseChatPane?: () => void;
   /* @conditional-compile-remove(teams-bot-rename) */
-  onFetchMicrosoftBotName?: (botId: string | MicrosoftTeamsAppIdentifier) => string;
+  onFetchMicrosoftBotName?: (botId: string | MicrosoftTeamsAppIdentifier) => Promise<string>;
 };
 
 const isShowing = (overrideSidePane?: InjectedSidePaneProps): boolean => {

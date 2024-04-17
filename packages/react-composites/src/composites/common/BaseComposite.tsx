@@ -77,7 +77,7 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
    * not perform a lookup of the bot's name.
    *
    */
-  onFetchMicrosoftBotName?: (botId: string | MicrosoftTeamsAppIdentifier) => string;
+  onFetchMicrosoftBotName?: (botId: string | MicrosoftTeamsAppIdentifier) => Promise<string>;
 }
 
 /**
