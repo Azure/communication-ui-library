@@ -78,7 +78,7 @@ Ex.
 
 ### step 0.5: ARB Review of any public API changes (Required for Stable | Recommended for Beta)
 
-1. Create an APIView showing changes.
+1. [Create an APIView](https://skype.visualstudio.com/SPOOL/_wiki/wikis/SPOOL.wiki/48971/Creating-an-APIView) showing changes.
 1. Create a post in `Language - JavaScript - Reviews` channel with APIView link to request review.
     1. Use a previous review request as an example.
 
