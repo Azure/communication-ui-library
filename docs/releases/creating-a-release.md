@@ -49,10 +49,9 @@ _This document applies to normal releases, off of `main`. For hotfixing a prior 
 
 ## Step 0: Preparation
 
-### Step 0.1: Ensure Strings are updated on Main
+### Step 0.1: Create a Thread in the WebUI channel to Track Release Progress
 
-- String translation take up to 5 working days to complete. **Any PR changing strings needs to be complete 5 working days before release.**
-- [Update the strings on `main`](../references/string-translations.md)
+Create a release thread in the WebUI channel and keep it up to date so the whole team knows where we are at.
 
 ### Step 0.2: Pre-Release ChangeLog and Update Feature List
 
@@ -65,9 +64,11 @@ For all the features that are going into this release, ask the feature owners to
   
 [Shiproom Dashboard](https://skype.visualstudio.com/SPOOL/_dashboards/dashboard/c38163f7-e172-4afa-a4c2-76e888b5cddc)
 
-### Step 0.3: Create a Thread in the WebUI channel to Track Release Progress
+### step 0.3: ARB Review of any public API changes (Required for Stable | Recommended for Beta)
 
-Create a release thread in the WebUI channel and keep it up to date so the whole team knows where we are at.
+1. [Create an APIView](https://skype.visualstudio.com/SPOOL/_wiki/wikis/SPOOL.wiki/48971/Creating-an-APIView) showing changes.
+1. Create a post in `Language - JavaScript - Reviews` channel with APIView link to request review.
+    1. Use a previous review request as an example.
 
 ### Step 0.4: Create an Async Bug Bash Meeting
 
@@ -76,15 +77,14 @@ Ex.
 ![image](https://github.com/Azure/communication-ui-library/assets/73612854/79634dd3-d9bb-482c-a83a-a87159d06a20)
 ![image](https://github.com/Azure/communication-ui-library/assets/73612854/40516359-5d31-403a-a70a-a55eb40081cb)
 
-### step 0.5: ARB Review of any public API changes (Required for Stable | Recommended for Beta)
-
-1. [Create an APIView](https://skype.visualstudio.com/SPOOL/_wiki/wikis/SPOOL.wiki/48971/Creating-an-APIView) showing changes.
-1. Create a post in `Language - JavaScript - Reviews` channel with APIView link to request review.
-    1. Use a previous review request as an example.
-
-### step 0.6: Create a Change Log Grooming Meeting
+### step 0.5: Create a Change Log Grooming Meeting
 
 Setup a meeting with the feature owners for the following week to groom the changelog together.
+
+### Step 0.6: Ensure Strings are updated on Main
+
+- String translation take up to 5 working days to complete. **Any PR changing strings needs to be complete 5 working days before release.**
+- [Ensure any strings PRs are merged into `main`](../references/string-translations.md)
 
 ## Step 1: Creating a Release Branch
 
