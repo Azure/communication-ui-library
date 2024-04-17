@@ -97,7 +97,7 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-gallery-screen-with-10-unread-messages.png`);
   });
 
-  test.only('Chat Thread not available', async ({ page, serverUrl }) => {
+  test('Chat Thread not available', async ({ page, serverUrl }) => {
     const remoteParticipant = defaultMockRemoteParticipant('Paul Bridges');
     const callState = defaultMockCallAdapterState([remoteParticipant]);
     await loadCallPage(page, serverUrl, callState, {
