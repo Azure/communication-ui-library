@@ -64,7 +64,7 @@ For all the features that are going into this release, ask the feature owners to
   
 [Shiproom Dashboard](https://skype.visualstudio.com/SPOOL/_dashboards/dashboard/c38163f7-e172-4afa-a4c2-76e888b5cddc)
 
-### step 0.3: ARB Review of any public API changes (Required for Stable | Recommended for Beta)
+### Step 0.3: ARB Review of any public API changes (Required for Stable | Recommended for Beta)
 
 1. [Create an APIView](https://skype.visualstudio.com/SPOOL/_wiki/wikis/SPOOL.wiki/48971/Creating-an-APIView) showing changes.
 1. Create a post in `Language - JavaScript - Reviews` channel with APIView link to request review.
@@ -77,7 +77,7 @@ Ex.
 ![image](https://github.com/Azure/communication-ui-library/assets/73612854/79634dd3-d9bb-482c-a83a-a87159d06a20)
 ![image](https://github.com/Azure/communication-ui-library/assets/73612854/40516359-5d31-403a-a70a-a55eb40081cb)
 
-### step 0.5: Create a Change Log Grooming Meeting
+### Step 0.5: Create a Change Log Grooming Meeting
 
 Setup a meeting with the feature owners for the following week to groom the changelog together.
 
