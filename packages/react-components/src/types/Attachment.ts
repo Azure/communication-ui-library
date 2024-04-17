@@ -30,7 +30,7 @@ export interface AttachmentMetadata {
 }
 
 /**
- * Metadata containing basic information about the uploaded attachment.
+ * Metadata containing basic information about the uploading attachment.
  *
  * @beta
  */
