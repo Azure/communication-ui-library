@@ -50,7 +50,7 @@ import {
   MessageDeletedListener
 } from '../../ChatComposite';
 import { ResourceDetails } from '../../ChatComposite';
-import { CallWithChatAdapter, CallWithChatEvent } from './CallWithChatAdapter';
+import { CallWithChatAdapter, CallWithChatEvent, ChatInitializedListener } from './CallWithChatAdapter';
 import {
   callWithChatAdapterStateFromBackingStates,
   CallWithChatAdapterState,
@@ -156,6 +156,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   private callAdapter: CallAdapter;
   private chatAdapter: ChatAdapter | undefined;
   private context: CallWithChatContext;
+  private emitter: EventEmitter = new EventEmitter();
   private onChatStateChange: (newChatAdapterState: ChatAdapterState) => void;
   private onCallStateChange: (newChatAdapterState: CallAdapterState) => void;
 
@@ -173,6 +174,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
       this.chatAdapter = chatAdapter;
       this.chatAdapter.onStateChange(onChatStateChange);
       this.context.updateClientStateWithChatState(chatAdapter.getState());
+      this.emitter.emit('chatInitialized', this.chatAdapter);
     }
 
     const onCallStateChange = (newCallAdapterState: CallAdapterState): void => {
@@ -188,7 +190,12 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
       this.chatAdapter = adapter;
       this.chatAdapter.onStateChange(this.onChatStateChange);
       this.context.updateClientStateWithChatState(adapter.getState());
+      this.emitter.emit('chatInitialized', this.chatAdapter);
     });
+  }
+
+  public isChatAdapterInitialized(): boolean {
+    return !!this.chatAdapter;
   }
 
   private bindPublicMethods(): void {
@@ -649,6 +656,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   /* @conditional-compile-remove(spotlight) */
   on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
 
+  on(event: 'chatInitialized', listener: ChatInitializedListener): void;
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   on(event: CallWithChatEvent, listener: any): void {
     switch (event) {
@@ -741,7 +750,9 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
           adapter.on('error', listener);
         });
         break;
-
+      case 'chatInitialized':
+        this.emitter.on(event, listener);
+        break;
       default:
         throw `Unknown AzureCommunicationCallWithChatAdapter Event: ${event}`;
     }
@@ -778,6 +789,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   /* @conditional-compile-remove(spotlight) */
   off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
+
+  off(event: 'chatInitialized', listener: ChatInitializedListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   off(event: CallWithChatEvent, listener: any): void {
@@ -870,6 +883,9 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         this.executeWithResolvedChatAdapter((adapter) => {
           adapter.off('error', listener);
         });
+        break;
+      case 'chatInitialized':
+        this.emitter.off(event, listener);
         break;
       default:
         throw `Unknown AzureCommunicationCallWithChatAdapter Event: ${event}`;

@@ -452,7 +452,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     [chatButtonDisabled, mobileView, toggleChat, showChatButton]
   );
 
-  const unreadChatMessagesCount = useUnreadMessagesTracker(chatAdapter, isChatOpen);
+  const unreadChatMessagesCount = useUnreadMessagesTracker(callWithChatAdapter, isChatOpen);
 
   const customChatButton: CustomCallControlButtonCallback = useCallback(
     (args: CustomCallControlButtonCallbackArgs) => ({

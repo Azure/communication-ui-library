@@ -508,6 +508,12 @@ export interface CallWithChatAdapterManagement {
    * Stop all spotlights
    */
   stopAllSpotlight(): Promise<void>;
+
+  /* @conditional-compile-remove(meeting-id) */
+  /**
+   * Return flag for whether chat is connected.
+   */
+  isChatAdapterInitialized(): boolean;
 }
 
 /**
@@ -582,7 +588,18 @@ export interface CallWithChatAdapterSubscriptions {
   off(event: 'chatParticipantsAdded', listener: ParticipantsAddedListener): void;
   off(event: 'chatParticipantsRemoved', listener: ParticipantsRemovedListener): void;
   off(event: 'chatError', listener: (e: AdapterError) => void): void;
+
+  // CallWithChat subscriptions
+  on(event: 'chatInitialized', listener: ChatInitializedListener): void;
+  off(event: 'chatInitialized', listener: ChatInitializedListener): void;
 }
+
+/**
+ * Callback for {@link CallWithChatAdapterSubscribers} 'chatInitialized' event.
+ *
+ * @public
+ */
+export type ChatInitializedListener = (event: { adapter: CallWithChatAdapter }) => void;
 
 /**
  * {@link CallWithChatComposite} Adapter interface.
@@ -625,4 +642,5 @@ export type CallWithChatEvent =
   | 'messageSent'
   | 'messageRead'
   | 'chatParticipantsAdded'
-  | 'chatParticipantsRemoved';
+  | 'chatParticipantsRemoved'
+  | 'chatInitialized';
