@@ -16,7 +16,7 @@ In the ACS UI library, users participate as attendees to view PowerPoint Live se
 
 For a detailed breakdown of the capabilities available to each role during a PowerPoint Live session, please refer to the [PowerPoint Live documentation](https://support.microsoft.com/en-us/office/present-from-powerpoint-live-in-microsoft-teams-28b20e74-7165-499c-9bd4-0ad975d448ad). For more technical details on how to implement these features using the web calling SDK, consult the [Calling SDK documentation](https://learn.microsoft.com/en-us/azure/communication-services/concepts/voice-video-calling/calling-sdk-features).
 
-PowerPoint Live is ideally suited for:
+Some of the best use cases for PowerPoint Live are:
 
 - Corporate presentations
 - Educational lectures
@@ -29,37 +29,39 @@ PowerPoint Live is ideally suited for:
   <sup>Figure: PowerPoint Live interface comparison. Left: Teams app. Right: ACS UI library.</sup>
 </sub>
 
-## Implementing with the VideoGallery Components
+## Implementing with the VideoGallery
 
 The VideoGallery component is used to display PowerPoint Live sessions. This multi-functional component also supports video streams and screen sharing. Here’s a brief guide to integrating it:
 
 ```typescript
-// Import the necessary dependencies
-import { VideoGallery } from '@azure/communication-react';
 
-// Use the VideoGallery component to display the presentation
-function PPTLiveComponent() {
-  // Definition of a mock object simulating a PowerPoint live stream.
-  const mockPptLiveStream = {
-    isAvailable: true,
-    renderElement: call.features(pptLive).targetElement as HTMLElement
-  };
-  // An array of mock remote participants in a video call.
-  // Set mockPptLiveStream under screenShareStream.
-  const remoteParticipants = [
-    {
-      userId: 'user1',
-      displayName: 'Peter Parker',
-      isScreenSharingOn: true,
-      screenShareStream: mockPptLiveStream
-    }
-  ];
-  // Functional component demonstrating the integration of PowerPoint live sharing in a video call interface.
-  return <VideoGallery localParticipant={localParticipant} remoteParticipants={remoteParticipants} />;
-}
+import React from 'react';
+import { VideoGallery, usePropsFor } from '@azure/communication-react';
+
+export const CallScreen = () => {
+  // Use usePropsFor to get properties for VideoGallery
+  const videoGalleryProps = usePropsFor(VideoGallery);
+  
+  // Map remote participants to include PPTLive stream in the screenShareStream
+  const remoteParticipants = videoGalleryProps.remoteParticipants.map((participant) => {
+    // Log the screenShareStream to console for debugging
+    console.log('PPTLive Stream:', participant.screenShareStream);
+    
+    return {
+      ...participant,
+      // Setup the PPTLive stream in screenShareStream
+      screenShareStream: participant.screenShareStream,
+    };
+  });
+
+  // Display PPTLive in VideoGallery, using the properties and modified participants
+  return <VideoGallery {...videoGalleryProps} remoteParticipants={remoteParticipants} />;
+};
+
 ```
+This code snippet illustrates the utilization of the `usePropsFor` hook from the `@azure/communication-react` package, which dynamically manages the properties of the `VideoGallery`. This ensures that the component reacts appropriately to changes in state or properties.
 
-For more detailed setup instructions, see the [VideoGallery Documentation](https://azure.github.io/communication-ui-library/?path=/docs/ui-components-videogallery--video-gallery). This component allows you to render video streams or shared content within your application seamlessly.
+For comprehensive setup instructions, refer to the [VideoGallery](https://azure.github.io/communication-ui-library/?path=/docs/ui-components-videogallery--video-gallery). This component facilitates the seamless integration of video streams or shared content into your application.
 
 ## FAQs
 
@@ -69,7 +71,7 @@ No, we do view-only for PowerPoint Live right now.
 
 ### Can I use PowerPoint Live in a group call?
 
-No, we only support Teams meeting, Webinars, Rooms for now.
+No, our support is limited to Teams meetings where the presenter can share the PowerPoint directly through the Teams client. 
 
 ### If I have found any issues or anything missing with the PowerPoint live in the CallComposite where can I go?
 
