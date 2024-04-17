@@ -79,7 +79,7 @@ Ex.
 
 ### Step 0.5: Create a Change Log Grooming Meeting
 
-Setup a meeting with the feature owners for the following week to groom the changelog together.
+Setup a meeting with the feature owners to groom the changelog together.
 
 ### Step 0.6: Ensure Strings are updated on Main
 
