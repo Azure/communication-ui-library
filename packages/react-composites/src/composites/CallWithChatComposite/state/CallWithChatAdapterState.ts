@@ -11,7 +11,7 @@ import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 import { ChatAdapterState } from '../../ChatComposite';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentUploadsUiState } from '../../ChatComposite';
+import { _AttachmentUploadsUiState } from '../../ChatComposite';
 import { AdapterErrors } from '../../common/adapters';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
@@ -40,11 +40,11 @@ export interface CallWithChatAdapterUiState {
   /**
    * Files being uploaded by a user in the current thread.
    * Should be set to null once the upload is complete.
-   * Array of type {@link AttachmentUploadsUiState}
+   * Array of type {@link _AttachmentUploadsUiState}
    *
    * @beta
    */
-  attachmentUploads?: AttachmentUploadsUiState;
+  attachmentUploads?: _AttachmentUploadsUiState;
   /* @conditional-compile-remove(unsupported-browser) */
   /**
    * State to track whether the end user has opted in to using a

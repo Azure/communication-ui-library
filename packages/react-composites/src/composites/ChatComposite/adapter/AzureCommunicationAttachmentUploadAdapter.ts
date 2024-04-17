@@ -13,14 +13,14 @@ import { ChatAdapterState } from './ChatAdapter';
 
 /**
  * A record containing {@link AttachmentMetadata} mapped to unique attachment upload task ids.
- * @beta
+ * @internal
  */
-export type AttachmentUploadsUiState = Record<string, AttachmentMetadataWithProgress>;
+export type _AttachmentUploadsUiState = Record<string, AttachmentMetadataWithProgress>;
 
 /**
- * @beta
+ * @internal
  */
-export interface AttachmentUploadAdapter {
+export interface _AttachmentUploadAdapter {
   registerActiveUploads: (files: File[]) => AttachmentUploadTask[];
   registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadTask[];
   clearUploads: () => void;
@@ -41,7 +41,7 @@ class AttachmentUploadContext {
     this.chatContext = chatContext;
   }
 
-  public getAttachmentUploads(): AttachmentUploadsUiState | undefined {
+  public getAttachmentUploads(): _AttachmentUploadsUiState | undefined {
     return this.chatContext.getState().attachmentUploads;
   }
 
@@ -104,7 +104,7 @@ class AttachmentUploadContext {
 /**
  * @internal
  */
-export class AzureCommunicationAttachmentUploadAdapter implements AttachmentUploadAdapter {
+export class AzureCommunicationAttachmentUploadAdapter implements _AttachmentUploadAdapter {
   private context: AttachmentUploadContext;
   private attachmentUploads: AttachmentUpload[] = [];
 
@@ -217,11 +217,11 @@ export class AzureCommunicationAttachmentUploadAdapter implements AttachmentUplo
 
 /* @conditional-compile-remove(attachment-upload) */
 /**
- * @param attachmentUploadUiState {@link AttachmentUploadsUiState}
+ * @param attachmentUploadUiState {@link _AttachmentUploadsUiState}
  * @private
  */
 export const convertAttachmentUploadsUiStateToMessageMetadata = (
-  attachmentUploads?: AttachmentUploadsUiState
+  attachmentUploads?: _AttachmentUploadsUiState
 ): FileSharingMetadata | undefined => {
   if (attachmentUploads) {
     const attachmentMetadata: AttachmentMetadataWithProgress[] = [];
@@ -250,8 +250,8 @@ export const convertAttachmentUploadsUiStateToMessageMetadata = (
  */
 const convertObservableAttachmentUploadToAttachmentUploadsUiState = (
   attachmentUploads: AttachmentUpload[]
-): AttachmentUploadsUiState => {
-  return attachmentUploads.reduce((map: AttachmentUploadsUiState, attachmentUpload) => {
+): _AttachmentUploadsUiState => {
+  return attachmentUploads.reduce((map: _AttachmentUploadsUiState, attachmentUpload) => {
     map[attachmentUpload.taskId] = {
       id: attachmentUpload.taskId,
       name: attachmentUpload.name,

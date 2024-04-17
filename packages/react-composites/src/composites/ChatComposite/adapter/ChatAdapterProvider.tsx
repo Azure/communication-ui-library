@@ -3,7 +3,7 @@
 
 import React, { createContext, useContext } from 'react';
 import { AttachmentUploadTask } from '@internal/react-components';
-import { AttachmentUploadAdapter } from './AzureCommunicationAttachmentUploadAdapter';
+import { _AttachmentUploadAdapter } from './AzureCommunicationAttachmentUploadAdapter';
 import { ChatAdapter } from './ChatAdapter';
 
 /**
@@ -38,7 +38,7 @@ export const useAdapter = (): ChatAdapter => {
 /**
  * @private
  */
-export const useAttachmentUploadAdapter = (): AttachmentUploadAdapter => {
+export const useAttachmentUploadAdapter = (): _AttachmentUploadAdapter => {
   /* @conditional-compile-remove(attachment-upload) */
   return useAdapter();
   // A stub that short-circuits all logic because none of the fields are available.
