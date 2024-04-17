@@ -131,8 +131,8 @@ export interface RichTextSendBoxProps {
   systemMessage?: string;
   /* @conditional-compile-remove(attachment-upload) */
   /**
-   * Optional array of AttachmentMetadataWithProgress where each object has attributes
-   * of a attachment upload like name, progress, errorMessage etc.
+   * Optional array of type {@linkAttachmentMetadataWithProgress}
+   * to render attachments being uploaded in the SendBox.
    * @beta
    */
   attachmentsWithProgress?: AttachmentMetadataWithProgress[];
