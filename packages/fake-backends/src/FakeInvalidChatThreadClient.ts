@@ -18,9 +18,10 @@ import {
   SendMessageRequest,
   SendReadReceiptRequest,
   SendTypingNotificationOptions,
-  UpdateChatThreadPropertiesOptions,
   UpdateMessageOptions
 } from '@azure/communication-chat';
+/* @conditional-compile-remove(chat-beta-sdk) */
+import type { UpdateChatThreadPropertiesOptions } from '@azure/communication-chat';
 
 import { IChatThreadClient } from './types';
 import { CommunicationIdentifier } from '@azure/communication-common';
