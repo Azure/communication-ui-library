@@ -8,8 +8,9 @@ export type {
   AttachmentOptions,
   AttachmentUploadStatus,
   AttachmentUploadOptions,
-  AttachmentUploadHandler,
-  AttachmentUploadManager
+  AttachmentSelectionHandler,
+  AttachmentRemovalHandler,
+  AttachmentUploadTask
 } from '@internal/react-components';
 
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */

@@ -46,7 +46,7 @@ import { _isValidIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(attachment-upload) */
 import { AttachmentMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentUploadManager } from '@internal/react-components';
+import { AttachmentUploadTask } from '@internal/react-components';
 
 /**
  * Context of Chat, which is a centralized context for all state updates
@@ -288,12 +288,12 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   /* @conditional-compile-remove(attachment-upload) */
-  registerActiveUploads(files: File[]): AttachmentUploadManager[] {
+  registerActiveUploads(files: File[]): AttachmentUploadTask[] {
     return this.attachmentUploadAdapter.registerActiveUploads(files);
   }
 
   /* @conditional-compile-remove(attachment-upload) */
-  registerCompletedUploads(metadata: AttachmentMetadata[]): AttachmentUploadManager[] {
+  registerCompletedUploads(metadata: AttachmentMetadata[]): AttachmentUploadTask[] {
     return this.attachmentUploadAdapter.registerCompletedUploads(metadata);
   }
 

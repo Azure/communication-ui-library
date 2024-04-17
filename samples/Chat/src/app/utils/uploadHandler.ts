@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentUploadHandler, AttachmentUploadOptions, AttachmentUploadManager } from '@azure/communication-react';
+import { AttachmentSelectionHandler, AttachmentUploadOptions, AttachmentUploadTask } from '@azure/communication-react';
 /* @conditional-compile-remove(attachment-download) */
 import axios, { AxiosProgressEvent } from 'axios';
 /* @conditional-compile-remove(attachment-download) */
@@ -18,25 +18,25 @@ const UNSUPPORTED_FILES = ['exe', 'bat', 'dat'];
 const CONTAINER_NAME = 'acs-file-sharing-test';
 
 /* @conditional-compile-remove(attachment-upload) */
-const attachmentUploadHandler: AttachmentUploadHandler = async (
-  rawFileLists: AttachmentUploadManager[]
+const attachmentSelectionHandler: AttachmentSelectionHandler = async (
+  uploadTasks: AttachmentUploadTask[]
 ): Promise<void> => {
-  for (const rawFile of rawFileLists) {
-    const fileExtension = rawFile.file?.name.split('.').pop() ?? '';
+  for (const task of uploadTasks) {
+    const fileExtension = task.file?.name.split('.').pop() ?? '';
 
-    if (rawFile.file && rawFile.file?.size > MAX_FILE_SIZE_MB) {
-      rawFile.notifyFailed(`"${rawFile.file?.name}" is too big. Select a file under 50MB.`);
+    if (task.file && task.file?.size > MAX_FILE_SIZE_MB) {
+      task.notifyUploadFailed(`"${task.file?.name}" is too big. Select a file under 50MB.`);
       continue;
     }
 
     if (UNSUPPORTED_FILES.includes(fileExtension)) {
-      rawFile.notifyFailed(`Uploading ".${fileExtension}" files is not allowed.`);
+      task.notifyUploadFailed(`Uploading ".${fileExtension}" files is not allowed.`);
       continue;
     }
 
-    const uniqueFileName = `${rawFile.file?.name}`;
+    const uniqueFileName = `${task.file?.name}`;
     const formData = new FormData();
-    formData.append('file', rawFile.file, rawFile.file?.name);
+    formData.append('file', task.file, task.file?.name);
 
     try {
       const response = await axios.request({
@@ -50,24 +50,19 @@ const attachmentUploadHandler: AttachmentUploadHandler = async (
         onUploadProgress: (progressEvent: AxiosProgressEvent) => {
           const { total, loaded } = progressEvent;
           if (total) {
-            rawFile.notifyProgressChanged(loaded / total);
+            task.notifyUploadProgressChanged(loaded / total);
           }
         }
       });
 
-      rawFile.notifyCompleted({
-        id: uniqueFileName,
-        name: rawFile.file?.name ?? '',
-        extension: fileExtension,
-        url: response.data.url
-      });
+      task.notifyUploadCompleted(uniqueFileName, response.data.url);
     } catch (error) {
       console.error(error);
-      rawFile.notifyFailed('Unable to upload file. Please try again later.');
+      task.notifyUploadFailed('Unable to upload file. Please try again later.');
     }
   }
 };
 /* @conditional-compile-remove(attachment-upload) */
 export const attachmentUploadOptions: AttachmentUploadOptions = {
-  handler: attachmentUploadHandler
+  handleAttachmentSelection: attachmentSelectionHandler
 };

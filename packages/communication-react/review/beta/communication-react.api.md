@@ -183,6 +183,12 @@ export interface AttachmentOptions {
     uploadOptions?: AttachmentUploadOptions;
 }
 
+// @beta
+export type AttachmentRemovalHandler = (attachmentId: string) => void;
+
+// @beta
+export type AttachmentSelectionHandler = (attachmentUploads: AttachmentUploadTask[]) => void;
+
 // @beta (undocumented)
 export interface AttachmentUploadAdapter {
     // (undocumented)
@@ -190,9 +196,9 @@ export interface AttachmentUploadAdapter {
     // (undocumented)
     clearUploads: () => void;
     // (undocumented)
-    registerActiveUploads: (files: File[]) => AttachmentUploadManager[];
+    registerActiveUploads: (files: File[]) => AttachmentUploadTask[];
     // (undocumented)
-    registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadManager[];
+    registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadTask[];
     // (undocumented)
     updateUploadMetadata: (id: string, metadata: AttachmentMetadataWithProgress | AttachmentMetadata) => void;
     // (undocumented)
@@ -201,22 +207,11 @@ export interface AttachmentUploadAdapter {
     updateUploadStatusMessage: (id: string, errorMessage: string) => void;
 }
 
-// @beta
-export type AttachmentUploadHandler = (attachmentUploads: AttachmentUploadManager[]) => void;
-
-// @beta
-export interface AttachmentUploadManager {
-    file?: File;
-    id: string;
-    notifyCompleted: (metadata: AttachmentMetadata) => void;
-    notifyFailed: (message: string) => void;
-    notifyProgressChanged: (value: number) => void;
-}
-
 // @beta (undocumented)
 export interface AttachmentUploadOptions {
     disableMultipleUploads?: boolean;
-    handler: AttachmentUploadHandler;
+    handleAttachmentRemoval?: AttachmentRemovalHandler;
+    handleAttachmentSelection: AttachmentSelectionHandler;
     supportedMediaTypes?: string[];
 }
 
@@ -230,6 +225,15 @@ export interface AttachmentUploadStatus {
 
 // @beta
 export type AttachmentUploadsUiState = Record<string, AttachmentMetadataWithProgress>;
+
+// @beta
+export interface AttachmentUploadTask {
+    file?: File;
+    notifyUploadCompleted: (id: string, url: string) => void;
+    notifyUploadFailed: (message: string) => void;
+    notifyUploadProgressChanged: (value: number) => void;
+    taskId: string;
+}
 
 // @public
 export type AvatarPersonaData = {
@@ -1110,9 +1114,9 @@ export interface CallWithChatAdapterManagement {
     querySpeakers(): Promise<AudioDeviceInfo[]>;
     raiseHand(): Promise<void>;
     // @beta (undocumented)
-    registerActiveUploads: (files: File[]) => AttachmentUploadManager[];
+    registerActiveUploads: (files: File[]) => AttachmentUploadTask[];
     // @beta (undocumented)
-    registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadManager[];
+    registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadTask[];
     removeParticipant(userId: string): Promise<void>;
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;

@@ -109,23 +109,33 @@ export interface AttachmentUploadOptions {
    */
   disableMultipleUploads?: boolean;
   /**
-   * A function of type {@link AttachmentUploadHandler} for handling attachment uploads.
+   * A callback function of type {@link AttachmentSelectionHandler} that will be called
+   * when user finishes selecting files in browser's file picker. This function is required since
+   * this would be where upload logic is implemented to your own storage.
    * @beta
    */
-  handler: AttachmentUploadHandler;
+  handleAttachmentSelection: AttachmentSelectionHandler;
+  /**
+   * A optional callback function that will be called
+   * when user removing files before clicking send message button. This function will be
+   * where you can remove the file from your storage.
+   * @beta
+   */
+  handleAttachmentRemoval?: AttachmentRemovalHandler;
 }
 
 /**
- * A wrapper object for a attachment that is being uploaded.
- * Allows managing attachment uploads by providing common functions for updating the
- * upload progress, canceling an upload, completing an upload etc.
+ * A upload task represents and manages an attachment that is being uploaded.
+ * When using the Composite, an attachment upload task is created for each file user is selected to upload.
+ * A upload task is complete when notifyUploadCompleted is called.
+ * A upload task is failed when notifyUploadFailed is called.
  * @beta
  */
-export interface AttachmentUploadManager {
+export interface AttachmentUploadTask {
   /**
-   * Unique identifier for the attachment upload.
+   * Unique identifier for the attachment upload task.
    */
-  id: string;
+  taskId: string;
   /**
    * HTML {@link File} object for the uploaded attachment.
    */
@@ -135,24 +145,33 @@ export interface AttachmentUploadManager {
    * A upload is considered complete when the progress reaches 1.
    * @param value - number between 0 and 1
    */
-  notifyProgressChanged: (value: number) => void;
+  notifyUploadProgressChanged: (value: number) => void;
   /**
-   * Mark the upload as complete.
-   * Requires the `metadata` param containing uploaded attachment information.
-   * @param metadata - {@link AttachmentMetadata}
+   * Mark the upload task as complete.
+   * An attachment is considered completed uploading when ID and URL are provided.
+   * @param id - the unique identifier of the attachment.
+   * @param url - the download URL of the attachment.
    */
-  notifyCompleted: (metadata: AttachmentMetadata) => void;
+  notifyUploadCompleted: (id: string, url: string) => void;
   /**
-   * Mark the upload as failed.
+   * Mark the upload task as failed.
    * @param message - An error message that can be displayed to the user.
    */
-  notifyFailed: (message: string) => void;
+  notifyUploadFailed: (message: string) => void;
 }
 
 /**
  * @beta
- * A callback function for handling attachment uploads.
+ * A callback function for handling list of upload tasks that contains files selected by user to upload.
  *
  * @param AttachmentUploads - The list of uploaded attachments. Each attachment is represented by an {@link AttachmentUpload} object.
  */
-export type AttachmentUploadHandler = (attachmentUploads: AttachmentUploadManager[]) => void;
+export type AttachmentSelectionHandler = (attachmentUploads: AttachmentUploadTask[]) => void;
+
+/**
+ * @beta
+ * A callback function for handling attachment removed by the user in send box.
+ *
+ * @param attachmentId - The ID of uploaded attachments.
+ */
+export type AttachmentRemovalHandler = (attachmentId: string) => void;

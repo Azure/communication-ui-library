@@ -41,14 +41,14 @@ describe('registerAttachmentUploads()', () => {
     const attachmentUploads_1 = adapter.registerActiveUploads(generateFiles(1));
     chatContext.setState(
       produce(chatContext.getState(), (draft: ChatAdapterState) => {
-        if (draft.attachmentUploads?.[attachmentUploads_1[0].id]) {
-          draft.attachmentUploads[attachmentUploads_1[0].id].progress = 0.75;
+        if (draft.attachmentUploads?.[attachmentUploads_1[0].taskId]) {
+          draft.attachmentUploads[attachmentUploads_1[0].taskId].progress = 0.75;
         }
       })
     );
     adapter.registerActiveUploads(generateFiles(1));
     expect(Object.values(chatContext.getState().attachmentUploads || {}).length).toBe(2);
-    expect(chatContext.getState().attachmentUploads?.[attachmentUploads_1[0].id].progress).toBe(0.75);
+    expect(chatContext.getState().attachmentUploads?.[attachmentUploads_1[0].taskId].progress).toBe(0.75);
   });
 
   test('should remove erroneous attachment uploads from state', () => {
@@ -57,8 +57,8 @@ describe('registerAttachmentUploads()', () => {
     const attachmentUploads = adapter.registerActiveUploads(generateFiles(2));
     chatContext.setState(
       produce(chatContext.getState(), (draft: ChatAdapterState) => {
-        if (draft.attachmentUploads?.[attachmentUploads[0].id]) {
-          draft.attachmentUploads[attachmentUploads[0].id].uploadError = {
+        if (draft.attachmentUploads?.[attachmentUploads[0].taskId]) {
+          draft.attachmentUploads[attachmentUploads[0].taskId].uploadError = {
             message: 'Sample Error Message',
             timestamp: Date.now()
           };
@@ -87,9 +87,9 @@ describe('cancelUpload()', () => {
     const chatContext = createChatContext();
     const adapter = new AzureCommunicationAttachmentUploadAdapter(chatContext);
     const attachmentUploads = adapter.registerActiveUploads(generateFiles(5));
-    adapter.cancelUpload(attachmentUploads[0].id);
+    adapter.cancelUpload(attachmentUploads[0].taskId);
     expect(Object.values(chatContext.getState().attachmentUploads || {}).length).toBe(4);
-    adapter.cancelUpload(attachmentUploads[1].id);
+    adapter.cancelUpload(attachmentUploads[1].taskId);
     expect(Object.values(chatContext.getState().attachmentUploads || {}).length).toBe(3);
   });
 });

@@ -110,7 +110,7 @@ export const FakeAdapterApp = (): JSX.Element => {
                       actionsForAttachment: actionsForAttachment
                     },
                     uploadOptions: {
-                      handler: () => {
+                      handleAttachmentSelection: () => {
                         // noop
                       }
                     }
@@ -133,18 +133,13 @@ const handleAttachmentUploads = (adapter: ChatAdapter, attachmentUploads: _MockA
   attachmentUploads.forEach((attachment) => {
     if (attachment.uploadComplete) {
       const attachmentUploads = adapter.registerActiveUploads([new File([], attachment.name)]);
-      attachmentUploads[0].notifyCompleted({
-        name: attachment.name,
-        extension: attachment.extension,
-        url: attachment.url,
-        id: attachment.id
-      });
+      attachmentUploads[0].notifyUploadCompleted(attachment.id, attachment.url ?? '');
     } else if (attachment.error) {
       const attachmentUploads = adapter.registerActiveUploads([new File([], attachment.name)]);
-      attachmentUploads[0].notifyFailed(attachment.error);
+      attachmentUploads[0].notifyUploadFailed(attachment.error);
     } else if (attachment.progress) {
       const attachmentUploads = adapter.registerActiveUploads([new File([], attachment.name)]);
-      attachmentUploads[0].notifyProgressChanged(attachment.progress);
+      attachmentUploads[0].notifyUploadProgressChanged(attachment.progress);
     } else {
       adapter.registerCompletedUploads([attachment]);
     }
