@@ -25,6 +25,8 @@ module.exports = {
     "acs-close-captions",
     // Demo feature. Used in live-documentation of conditional compilation. Do not use in production code.
     "in-progress-beta-feature-demo",
+    // Feature for renaming bots in calls
+    "teams-bot-rename"
   ],
   beta: [
     "call-readiness",

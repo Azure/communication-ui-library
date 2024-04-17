@@ -62,6 +62,20 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
    * participant list.
    */
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
+
+  /* @conditional-compile-remove(teams-bot-rename) */
+  /**
+   * A callback function that can be used to rename the bots in the composite.
+   * Some examples of bots are:
+   * - Auto Attendant
+   * - Call Queue
+   * @params botId - The id of the bot.
+   * @remarks
+   * The Developer is in charge of naming the bots based on their ID. The composite will
+   * not perform a lookup of the bot's name.
+   *
+   */
+  onFetchMicrosoftBotName?: (botId: string) => string;
 }
 
 /**

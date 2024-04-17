@@ -331,6 +331,7 @@ type MainScreenProps = {
   onSidePaneIdChange?: (sidePaneId: string | undefined) => void;
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
   onCloseChatPane?: () => void;
+  onFetchMicrosoftBotName?: (botId: string) => string;
 };
 
 const isShowing = (overrideSidePane?: InjectedSidePaneProps): boolean => {
@@ -667,6 +668,7 @@ export const CallCompositeInner = (props: CallCompositeProps & InternalCallCompo
     callInvitationUrl,
     onFetchAvatarPersonaData,
     onFetchParticipantMenuItems,
+    onFetchMicrosoftBotName,
     options,
     formFactor = 'desktop'
   } = props;
@@ -686,6 +688,8 @@ export const CallCompositeInner = (props: CallCompositeProps & InternalCallCompo
             callInvitationUrl={callInvitationUrl}
             onFetchAvatarPersonaData={onFetchAvatarPersonaData}
             onFetchParticipantMenuItems={onFetchParticipantMenuItems}
+            /* @conditional-compile-remove(teams-bot-rename) */
+            onFetchMicrosoftBotName={onFetchMicrosoftBotName}
             mobileView={mobileView}
             modalLayerHostId={modalLayerHostId}
             options={options}
