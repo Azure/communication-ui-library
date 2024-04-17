@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "area": "feature",
+  "workstream": "Storybook 8",
+  "comment": "Remove storybook 8 from the regular build path",
+  "packageName": "@azure/communication-react",
+  "email": "3941071+emlynmac@users.noreply.github.com",
+  "dependentChangeType": "none"
+}
