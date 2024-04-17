@@ -243,9 +243,9 @@ describe('VideoGallery floating local video layout tests', () => {
     const allTiles = getTiles(container);
     const gridTiles = getGridTiles(container);
     expect(getHorizontalGallery(container)).toBeTruthy();
-    expect(allTiles.length).toBe(7);
-    expect(gridTiles.length).toBe(4);
-    expect(gridTiles.filter(tileIsAudio).length).toBe(4);
+    expect(allTiles.length).toBe(11);
+    expect(gridTiles.length).toBe(9);
+    expect(gridTiles.filter(tileIsAudio).length).toBe(9);
     expect(gridTiles.filter(tileIsVideo).length).toBe(0);
   });
 
