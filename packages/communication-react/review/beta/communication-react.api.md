@@ -183,6 +183,12 @@ export interface AttachmentOptions {
     uploadOptions?: AttachmentUploadOptions;
 }
 
+// @beta
+export type AttachmentRemovalHandler = (attachmentId: string) => void;
+
+// @beta
+export type AttachmentSelectionHandler = (attachmentUploads: AttachmentUploadTask[]) => void;
+
 // @beta (undocumented)
 export interface AttachmentUploadAdapter {
     // (undocumented)
@@ -201,13 +207,11 @@ export interface AttachmentUploadAdapter {
     updateUploadStatusMessage: (id: string, errorMessage: string) => void;
 }
 
-// @beta
-export type AttachmentUploadHandler = (attachmentUploads: AttachmentUploadTask[]) => void;
-
 // @beta (undocumented)
 export interface AttachmentUploadOptions {
     disableMultipleUploads?: boolean;
-    handler: AttachmentUploadHandler;
+    handleAttachmentRemoval?: AttachmentRemovalHandler;
+    handleAttachmentSelection: AttachmentSelectionHandler;
     supportedMediaTypes?: string[];
 }
 

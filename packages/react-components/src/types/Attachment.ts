@@ -109,10 +109,19 @@ export interface AttachmentUploadOptions {
    */
   disableMultipleUploads?: boolean;
   /**
-   * A function of type {@link AttachmentUploadHandler} for handling attachment uploads.
+   * A callback function of type {@link AttachmentSelectionHandler} that will be called
+   * when user finishes selecting files in browser's file picker. This function is required since
+   * this would be where upload logic is implemented to your own storage.
    * @beta
    */
-  handler: AttachmentUploadHandler;
+  handleAttachmentSelection: AttachmentSelectionHandler;
+  /**
+   * A optional callback function that will be called
+   * when user removing files before clicking send message button. This function will be
+   * where you can remove the file from your storage.
+   * @beta
+   */
+  handleAttachmentRemoval?: AttachmentRemovalHandler;
 }
 
 /**
@@ -153,8 +162,16 @@ export interface AttachmentUploadTask {
 
 /**
  * @beta
- * A callback function for handling attachment uploads.
+ * A callback function for handling list of upload tasks that contains files selected by user to upload.
  *
  * @param AttachmentUploads - The list of uploaded attachments. Each attachment is represented by an {@link AttachmentUpload} object.
  */
-export type AttachmentUploadHandler = (attachmentUploads: AttachmentUploadTask[]) => void;
+export type AttachmentSelectionHandler = (attachmentUploads: AttachmentUploadTask[]) => void;
+
+/**
+ * @beta
+ * A callback function for handling attachment removed by the user in send box.
+ *
+ * @param attachmentId - The ID of uploaded attachments.
+ */
+export type AttachmentRemovalHandler = (attachmentId: string) => void;

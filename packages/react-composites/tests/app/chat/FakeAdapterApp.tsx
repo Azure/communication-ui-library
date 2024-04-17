@@ -110,7 +110,7 @@ export const FakeAdapterApp = (): JSX.Element => {
                       actionsForAttachment: actionsForAttachment
                     },
                     uploadOptions: {
-                      handler: () => {
+                      handleAttachmentSelection: () => {
                         // noop
                       }
                     }

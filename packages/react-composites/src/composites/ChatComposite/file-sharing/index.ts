@@ -8,7 +8,8 @@ export type {
   AttachmentOptions,
   AttachmentUploadStatus,
   AttachmentUploadOptions,
-  AttachmentUploadHandler,
+  AttachmentSelectionHandler,
+  AttachmentRemovalHandler,
   AttachmentUploadTask
 } from '@internal/react-components';
 

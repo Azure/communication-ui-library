@@ -213,7 +213,8 @@ export type {
   AttachmentUploadOptions,
   AttachmentMetadata,
   AttachmentUploadStatus,
-  AttachmentUploadHandler,
+  AttachmentSelectionHandler,
+  AttachmentRemovalHandler,
   AttachmentUploadTask,
   AttachmentMetadataWithProgress
 } from '../types/Attachment';
