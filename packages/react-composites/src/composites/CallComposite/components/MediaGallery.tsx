@@ -11,7 +11,6 @@ import {
   VideoTileContextualMenuProps,
   VideoTileDrawerMenuProps
 } from '@internal/react-components';
-/* @conditional-compile-remove(teams-bot-rename) */
 import { VideoGalleryParticipant } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
 import { _useContainerWidth, _useContainerHeight } from '@internal/react-components';
