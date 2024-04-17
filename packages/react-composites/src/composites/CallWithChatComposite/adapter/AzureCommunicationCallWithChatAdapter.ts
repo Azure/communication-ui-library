@@ -70,6 +70,7 @@ import {
   isCommunicationUserIdentifier,
   PhoneNumberIdentifier
 } from '@azure/communication-common';
+import { getChatThreadFromTeamsLink } from './parseTeamsUrl';
 import { AdapterError } from '../../common/adapters';
 
 /* @conditional-compile-remove(teams-adhoc-call) */
@@ -104,7 +105,6 @@ import { SpotlightChangedListener } from '../../CallComposite/adapter/CallAdapte
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
-import { getChatThreadFromTeamsLink } from './parseTeamsUrl';
 
 type CallWithChatAdapterStateChangedHandler = (newState: CallWithChatAdapterState) => void;
 
