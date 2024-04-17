@@ -30,6 +30,10 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
 
   public fetchInitialData = async (): Promise<void> => await this.callWithChatAdapter.fetchInitialData();
   public sendMessage = async (content: string): Promise<void> => await this.callWithChatAdapter.sendMessage(content);
+  /* @conditional-compile-remove(attachment-upload) */
+  public sendMessageWithAttachments(content: string, attachments: AttachmentMetadata[]): Promise<void> {
+    return this.callWithChatAdapter.sendMessageWithAttachments(content, attachments);
+  }
   public sendReadReceipt = async (chatMessageId: string): Promise<void> =>
     await this.callWithChatAdapter.sendReadReceipt(chatMessageId);
   public sendTypingIndicator = async (): Promise<void> => await this.callWithChatAdapter.sendTypingIndicator();

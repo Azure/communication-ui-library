@@ -341,6 +341,13 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
+  /* @conditional-compile-remove(attachment-upload) */
+  /**
+   * Send a message with attachments in the chat thread.
+   *
+   * @beta
+   */
+  sendMessageWithAttachments(content: string, attachments: AttachmentMetadata[]): Promise<void>;
   /**
    * Send a read receipt for a message.
    *

@@ -105,6 +105,8 @@ import { SpotlightChangedListener } from '../../CallComposite/adapter/CallAdapte
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
+/* @conditional-compile-remove(attachment-upload) */
+import { FileSharingMetadata } from '../../ChatComposite/file-sharing';
 
 type CallWithChatAdapterStateChangedHandler = (newState: CallWithChatAdapterState) => void;
 
@@ -217,6 +219,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.disposeScreenShareStreamView.bind(this);
     this.fetchInitialData.bind(this);
     this.sendMessage.bind(this);
+    /* @conditional-compile-remove(attachment-upload) */
+    this.sendMessageWithAttachments.bind(this);
     this.sendReadReceipt.bind(this);
     this.sendTypingIndicator.bind(this);
     this.loadPreviousChatMessages.bind(this);
@@ -426,6 +430,18 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   public async sendMessage(content: string): Promise<void> {
     return await this.chatAdapterPromise.then((adapter) => {
       return adapter.sendMessage(content);
+    });
+  }
+  /* @conditional-compile-remove(attachment-upload) */
+  /** Send a chat message with attachments. */
+  public async sendMessageWithAttachments(content: string, attachments: AttachmentMetadata[]): Promise<void> {
+    return await this.chatAdapterPromise.then((adapter) => {
+      const fileSharingMetadata: FileSharingMetadata = {
+        fileSharingMetadata: JSON.stringify(attachments)
+      };
+      return adapter.sendMessage(content, {
+        metadata: fileSharingMetadata
+      });
     });
   }
   /** Send a chat read receipt. */

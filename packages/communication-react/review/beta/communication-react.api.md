@@ -189,8 +189,8 @@ export type AttachmentRemovalHandler = (attachmentId: string) => void;
 // @beta
 export type AttachmentSelectionHandler = (attachmentUploads: AttachmentUploadTask[]) => void;
 
-// @beta (undocumented)
-export interface AttachmentUploadAdapter {
+// @internal (undocumented)
+export interface _AttachmentUploadAdapter {
     // (undocumented)
     cancelUpload: (id: string) => void;
     // (undocumented)
@@ -223,8 +223,17 @@ export interface AttachmentUploadStatus {
     timestamp: number;
 }
 
+// @internal
+export type _AttachmentUploadsUiState = Record<string, AttachmentMetadataWithProgress>;
+
 // @beta
-export type AttachmentUploadsUiState = Record<string, AttachmentMetadataWithProgress>;
+export interface AttachmentUploadTask {
+    file?: File;
+    notifyUploadCompleted: (id: string, url: string) => void;
+    notifyUploadFailed: (message: string) => void;
+    notifyUploadProgressChanged: (value: number) => void;
+    taskId: string;
+}
 
 // @beta
 export interface AttachmentUploadTask {
@@ -1126,6 +1135,8 @@ export interface CallWithChatAdapterManagement {
     resumeCall: () => Promise<void>;
     sendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
+    // @beta
+    sendMessageWithAttachments(content: string, attachments: AttachmentMetadata[]): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
     setCamera(sourceInfo: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
@@ -1270,7 +1281,7 @@ export interface CallWithChatAdapterSubscriptions {
 // @public
 export interface CallWithChatAdapterUiState {
     // @beta
-    attachmentUploads?: AttachmentUploadsUiState;
+    attachmentUploads?: _AttachmentUploadsUiState;
     isLocalPreviewMicrophoneEnabled: boolean;
     page: CallCompositePage;
     // @beta
@@ -1685,7 +1696,7 @@ export type CaptionsReceivedListener = (event: {
 }) => void;
 
 // @public
-export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable_2 & ChatAdapterSubscribers & AttachmentUploadAdapter;
+export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable_2 & ChatAdapterSubscribers & _AttachmentUploadAdapter;
 
 // @public
 export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
@@ -1721,6 +1732,7 @@ export interface ChatAdapterThreadManagement {
     removeParticipant(userId: string): Promise<void>;
     removeResourceFromCache(resourceDetails: ResourceDetails): void;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
+    sendMessageWithAttachments(content: string, attachments: AttachmentMetadata[]): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
     setTopic(topicName: string): Promise<void>;
@@ -1732,7 +1744,7 @@ export interface ChatAdapterThreadManagement {
 // @public
 export type ChatAdapterUiState = {
     error?: Error;
-    attachmentUploads?: AttachmentUploadsUiState;
+    attachmentUploads?: _AttachmentUploadsUiState;
 };
 
 // @public

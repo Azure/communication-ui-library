@@ -6,7 +6,7 @@ import type { CommunicationIdentifierKind, CommunicationUserKind } from '@azure/
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import type { AdapterError, AdapterErrors, AdapterState, Disposable } from '../../common/adapters';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentUploadAdapter, AttachmentUploadsUiState } from './AzureCommunicationAttachmentUploadAdapter';
+import { _AttachmentUploadAdapter, _AttachmentUploadsUiState } from './AzureCommunicationAttachmentUploadAdapter';
 /* @conditional-compile-remove(attachment-upload) */
 import { AttachmentMetadata } from '@internal/react-components';
 
@@ -23,10 +23,10 @@ export type ChatAdapterUiState = {
   /**
    * Attachments being uploaded by a user in the current thread.
    * Should be set to null once the upload is complete.
-   * Array of type {@link AttachmentUploadsUiState}
+   * Array of type {@link _AttachmentUploadsUiState}
    * @beta
    */
-  attachmentUploads?: AttachmentUploadsUiState;
+  attachmentUploads?: _AttachmentUploadsUiState;
 };
 
 /**
@@ -67,6 +67,11 @@ export interface ChatAdapterThreadManagement {
    * Send a message in the thread.
    */
   sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
+  /* @conditional-compile-remove(attachment-upload) */
+  /**
+   * Send a message with attachments in the chat thread.
+   */
+  sendMessageWithAttachments(content: string, attachments: AttachmentMetadata[]): Promise<void>;
   /**
    * Send a read receipt for a message.
    */
@@ -218,7 +223,7 @@ export type ChatAdapter = ChatAdapterThreadManagement &
   Disposable &
   ChatAdapterSubscribers &
   /* @conditional-compile-remove(attachment-upload) */
-  AttachmentUploadAdapter;
+  _AttachmentUploadAdapter;
 
 /**
  * Callback for {@link ChatAdapterSubscribers} 'messageReceived' event.

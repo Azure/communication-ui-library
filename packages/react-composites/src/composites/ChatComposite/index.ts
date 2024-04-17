@@ -43,6 +43,6 @@ export type {
 } from './file-sharing';
 /* @conditional-compile-remove(attachment-upload) */
 export type {
-  AttachmentUploadsUiState,
-  AttachmentUploadAdapter
+  _AttachmentUploadsUiState,
+  _AttachmentUploadAdapter
 } from './adapter/AzureCommunicationAttachmentUploadAdapter';
