@@ -350,7 +350,20 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
         { overflow: 'visible' } // This is needed for the mention popup to be visible
       )}
     >
-      {/* @conditional-compile-remove(attachment-upload) */ <SendBoxErrors {...sendBoxErrorsProps} />}
+      {
+        /* @conditional-compile-remove(attachment-upload) */
+        <SendBoxErrors
+          attachmentUploadError={
+            sendBoxErrorsProps.attachmentUploadError
+              ? {
+                  message: sendBoxErrorsProps.attachmentUploadError.message,
+                  timestamp: Date.now()
+                }
+              : undefined
+          }
+          attachmentUploadsPendingError={sendBoxErrorsProps.attachmentUploadsPendingError}
+        />
+      }
       <Stack
         className={borderAndBoxShadowStyle({
           theme,

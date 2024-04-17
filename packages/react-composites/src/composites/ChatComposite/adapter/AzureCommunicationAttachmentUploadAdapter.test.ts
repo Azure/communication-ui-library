@@ -59,8 +59,7 @@ describe('registerAttachmentUploads()', () => {
       produce(chatContext.getState(), (draft: ChatAdapterState) => {
         if (draft.attachmentUploads?.[attachmentUploads[0].taskId]) {
           draft.attachmentUploads[attachmentUploads[0].taskId].uploadError = {
-            message: 'Sample Error Message',
-            timestamp: Date.now()
+            message: 'Sample Error Message'
           };
         }
       })

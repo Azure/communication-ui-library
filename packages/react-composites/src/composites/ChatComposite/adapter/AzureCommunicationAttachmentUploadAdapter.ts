@@ -175,8 +175,7 @@ export class AzureCommunicationAttachmentUploadAdapter implements _AttachmentUpl
   updateUploadStatusMessage(id: string, errorMessage: string): void {
     this.context.updateAttachmentUpload(id, {
       uploadError: {
-        message: errorMessage,
-        timestamp: Date.now()
+        message: errorMessage
       }
     });
   }

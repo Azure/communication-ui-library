@@ -172,7 +172,7 @@ export interface AttachmentMetadata {
 // @beta
 export interface AttachmentMetadataWithProgress extends AttachmentMetadata {
     progress?: number;
-    uploadError?: AttachmentUploadStatus;
+    uploadError?: AttachmentUploadError;
 }
 
 // @beta
@@ -207,20 +207,18 @@ export interface _AttachmentUploadAdapter {
     updateUploadStatusMessage: (id: string, errorMessage: string) => void;
 }
 
+// @beta
+export interface AttachmentUploadError {
+    // (undocumented)
+    message: string;
+}
+
 // @beta (undocumented)
 export interface AttachmentUploadOptions {
     disableMultipleUploads?: boolean;
     handleAttachmentRemoval?: AttachmentRemovalHandler;
     handleAttachmentSelection: AttachmentSelectionHandler;
     supportedMediaTypes?: string[];
-}
-
-// @beta
-export interface AttachmentUploadStatus {
-    // (undocumented)
-    message: string;
-    // (undocumented)
-    timestamp: number;
 }
 
 // @internal

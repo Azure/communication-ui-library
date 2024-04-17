@@ -35,7 +35,7 @@ export * from './Strings';
 export type { AttachmentOptions, AttachmentMetadata, AttachmentDownloadOptions } from './file-sharing';
 /* @conditional-compile-remove(attachment-upload) */
 export type {
-  AttachmentUploadStatus,
+  AttachmentUploadError,
   AttachmentUploadOptions,
   AttachmentSelectionHandler,
   AttachmentRemovalHandler,

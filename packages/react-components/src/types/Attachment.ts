@@ -42,17 +42,16 @@ export interface AttachmentMetadataWithProgress extends AttachmentMetadata {
   /**
    * A object contains status message would be shown to the user.
    */
-  uploadError?: AttachmentUploadStatus;
+  uploadError?: AttachmentUploadError;
 }
 
 /**
  * @beta
  * A attachment upload status object that contains message to be shown to
- * the user and a timestamp.
+ * the user when upload fails.
  */
-export interface AttachmentUploadStatus {
+export interface AttachmentUploadError {
   message: string;
-  timestamp: number;
 }
 
 /**

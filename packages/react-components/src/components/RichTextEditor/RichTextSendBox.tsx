@@ -302,12 +302,18 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   );
 
   const sendBoxErrorsProps: RichTextSendBoxErrorsProps = useMemo(() => {
+    const uploadErrorMessage = attachmentsWithProgress?.filter((attachmentUpload) => attachmentUpload.uploadError).pop()
+      ?.uploadError?.message;
     return {
       /* @conditional-compile-remove(attachment-upload) */
       attachmentUploadsPendingError: attachmentUploadsPendingError,
       /* @conditional-compile-remove(attachment-upload) */
-      attachmentUploadError: attachmentsWithProgress?.filter((attachmentUpload) => attachmentUpload.uploadError).pop()
-        ?.uploadError,
+      attachmentUploadError: uploadErrorMessage
+        ? {
+            message: uploadErrorMessage,
+            timestamp: Date.now()
+          }
+        : undefined,
       systemMessage: systemMessage,
       textTooLongMessage: contentTooLongMessage
     };
