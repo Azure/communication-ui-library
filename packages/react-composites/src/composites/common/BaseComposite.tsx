@@ -18,6 +18,7 @@ import { AvatarPersonaDataCallback } from './AvatarPersona';
 import { CallCompositeIcons, CallWithChatCompositeIcons, ChatCompositeIcons, DEFAULT_COMPOSITE_ICONS } from './icons';
 import { globalLayerHostStyle } from './styles/GlobalHostLayer.styles';
 import { useId } from '@fluentui/react-hooks';
+import { MicrosoftTeamsAppIdentifier } from '@azure/communication-common';
 /**
  * Properties common to all composites exported from this library.
  *
@@ -75,7 +76,7 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
    * not perform a lookup of the bot's name.
    *
    */
-  onFetchMicrosoftBotName?: (botId: string) => string;
+  onFetchMicrosoftBotName?: (botId: string | MicrosoftTeamsAppIdentifier) => string;
 }
 
 /**

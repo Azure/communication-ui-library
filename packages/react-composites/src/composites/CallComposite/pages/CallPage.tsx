@@ -33,6 +33,8 @@ import { showDtmfDialer } from '../utils/MediaGalleryUtils';
 import { getTargetCallees } from '../selectors/baseSelectors';
 /* @conditional-compile-remove(spotlight) */
 import { Prompt, PromptProps } from '../components/Prompt';
+/* @conditional-compile-remove(teams-bot-rename) */
+import { MicrosoftTeamsAppIdentifier } from '@azure/communication-common';
 
 /**
  * @private
@@ -58,6 +60,8 @@ export interface CallPageProps {
   pinnedParticipants?: string[];
   setPinnedParticipants?: (pinnedParticipants: string[]) => void;
   compositeAudioContext?: AudioContext;
+  /* @conditional-compile-remove(teams-bot-rename) */
+  onFetchMicrosoftBotName?: (botId: string | MicrosoftTeamsAppIdentifier) => string;
 }
 
 /**
@@ -143,6 +147,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
           setPromptProps={setPromptProps}
           /* @conditional-compile-remove(spotlight) */
           hideSpotlightButtons={options?.spotlight?.hideSpotlightButtons}
+          /* @conditional-compile-remove(teams-bot-rename) */
+          onFetchMicrosoftBotName={props.onFetchMicrosoftBotName}
         />
       );
     }

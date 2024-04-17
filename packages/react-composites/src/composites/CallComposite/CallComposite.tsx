@@ -55,6 +55,8 @@ import { useTrackedCapabilityChangedNotifications } from './utils/TrackCapabilit
 import { useEndedCallConsoleErrors } from './utils/useConsoleErrors';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { SurveyPage } from './pages/SurveyPage';
+/* @conditional-compile-remove(teams-bot-rename) */
+import { MicrosoftTeamsAppIdentifier } from '@azure/communication-common';
 
 /**
  * Props for {@link CallComposite}.
@@ -331,7 +333,8 @@ type MainScreenProps = {
   onSidePaneIdChange?: (sidePaneId: string | undefined) => void;
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
   onCloseChatPane?: () => void;
-  onFetchMicrosoftBotName?: (botId: string) => string;
+  /* @conditional-compile-remove(teams-bot-rename) */
+  onFetchMicrosoftBotName?: (botId: string | MicrosoftTeamsAppIdentifier) => string;
 };
 
 const isShowing = (overrideSidePane?: InjectedSidePaneProps): boolean => {
@@ -585,6 +588,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           pinnedParticipants={pinnedParticipants}
           setPinnedParticipants={setPinnedParticipants}
           compositeAudioContext={compositeAudioContext.current}
+          /* @conditional-compile-remove(teams-bot-rename) */
+          onFetchMicrosoftBotName={props.onFetchMicrosoftBotName}
         />
       );
       break;

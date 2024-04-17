@@ -29,6 +29,8 @@ import { useAdapter } from '../adapter/CallAdapterProvider';
 import { PromptProps } from './Prompt';
 /* @conditional-compile-remove(spotlight) */
 import { useLocalSpotlightCallbacksWithPrompt, useRemoteSpotlightCallbacksWithPrompt } from '../utils/spotlightUtils';
+/* @conditional-compile-remove(teams-bot-rename) */
+import { MicrosoftTeamsAppIdentifier } from '@azure/communication-common';
 
 const VideoGalleryStyles = {
   root: {
@@ -69,7 +71,11 @@ export interface MediaGalleryProps {
   setPromptProps: (props: PromptProps) => void;
   /* @conditional-compile-remove(spotlight) */
   hideSpotlightButtons?: boolean;
+  /* @conditional-compile-remove(teams-bot-rename) */
+  onFetchMicrosoftBotName?: (botId: string | MicrosoftTeamsAppIdentifier) => string;
 }
+
+const BOT_IT_PREFIX = '28';
 
 /**
  * @private
@@ -80,7 +86,8 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     setPinnedParticipants,
     /* @conditional-compile-remove(spotlight) */ setIsPromptOpen,
     /* @conditional-compile-remove(spotlight) */ setPromptProps,
-    /* @conditional-compile-remove(spotlight) */ hideSpotlightButtons
+    /* @conditional-compile-remove(spotlight) */ hideSpotlightButtons,
+    onFetchMicrosoftBotName
   } = props;
 
   const videoGalleryProps = usePropsFor(VideoGallery);
@@ -184,6 +191,17 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
       : undefined;
   }, [setPinnedParticipants, pinnedParticipants]);
 
+  const renamedParticipants = useMemo(() => {
+    const participants = videoGalleryProps.remoteParticipants;
+    /* @conditional-compile-remove(teams-bot-rename) */
+    participants.forEach((participant) => {
+      if (participant.userId.startsWith(BOT_IT_PREFIX) && onFetchMicrosoftBotName) {
+        participant.displayName = onFetchMicrosoftBotName(participant.userId);
+      }
+    });
+    return participants;
+  }, [videoGalleryProps.remoteParticipants, onFetchMicrosoftBotName]);
+
   const VideoGalleryMemoized = useMemo(() => {
     const layoutBasedOnUserSelection = (): VideoGalleryLayout => {
       return props.localVideoTileOptions ? layoutBasedOnTilePosition : props.userSetGalleryLayout;
@@ -195,6 +213,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         {...videoGalleryProps}
         localVideoViewOptions={localVideoViewOptions}
         remoteVideoViewOptions={remoteVideoViewOptions}
+        remoteParticipants={renamedParticipants}
         styles={VideoGalleryStyles}
         layout={layoutBasedOnUserSelection()}
         showCameraSwitcherInLocalPreview={props.isMobile}
@@ -252,7 +271,8 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(spotlight) */
     onStopRemoteSpotlightWithPrompt,
     /* @conditional-compile-remove(spotlight) */
-    hideSpotlightButtons
+    hideSpotlightButtons,
+    renamedParticipants
   ]);
 
   return (

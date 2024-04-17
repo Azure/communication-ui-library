@@ -299,6 +299,7 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
     icons?: TIcons;
     locale?: CompositeLocale;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+    onFetchMicrosoftBotName?: (botId: string | MicrosoftTeamsAppIdentifier) => string;
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
     rtl?: boolean;
 }
