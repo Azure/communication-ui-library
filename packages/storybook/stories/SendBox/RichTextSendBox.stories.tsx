@@ -88,7 +88,7 @@ const RichTextSendBoxStory = (args): JSX.Element => {
 export const RichTextSendBox = RichTextSendBoxStory.bind({});
 
 export default {
-  id: `${COMPONENT_FOLDER_PREFIX}-sendbox-richtextsendbox`,
+  id: `${COMPONENT_FOLDER_PREFIX}-richtextsendbox`,
   title: `${COMPONENT_FOLDER_PREFIX}/Send Box/Rich Text Send Box`,
   component: RichTextSendBoxComponent,
   argTypes: {

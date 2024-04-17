@@ -131,7 +131,7 @@ const SendBoxStory = (args): JSX.Element => {
 export const SendBox = SendBoxStory.bind({});
 
 export default {
-  id: `${COMPONENT_FOLDER_PREFIX}-sendbox-sendbox`,
+  id: `${COMPONENT_FOLDER_PREFIX}-sendbox`,
   title: `${COMPONENT_FOLDER_PREFIX}/Send Box/Send Box`,
   component: SendBoxComponent,
   argTypes: {
