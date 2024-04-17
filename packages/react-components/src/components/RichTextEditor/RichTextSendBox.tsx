@@ -302,6 +302,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   );
 
   const sendBoxErrorsProps: RichTextSendBoxErrorsProps = useMemo(() => {
+    /* @conditional-compile-remove(attachment-upload) */
     const uploadErrorMessage = attachmentsWithProgress?.filter((attachmentUpload) => attachmentUpload.uploadError).pop()
       ?.uploadError?.message;
     return {
