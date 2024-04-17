@@ -8,6 +8,7 @@ import { ResourceDetails } from '../../ChatComposite';
 import { AttachmentMetadata, AttachmentUploadManager } from '@internal/react-components';
 import { ErrorBarStrings } from '@internal/react-components';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -41,7 +42,7 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
 
   public onStateChange = (handler: (state: ChatAdapterState) => void): void => {
     const convertedHandler = (state: CallWithChatAdapterState): void => {
-      handler(chatAdapterStateFromCallWithChatAdapterState(state));
+      !!state.chat && handler(chatAdapterStateFromCallWithChatAdapterState(state));
     };
     this.callWithChatAdapter.onStateChange(convertedHandler);
     this.eventStore.set(handler, convertedHandler);
@@ -138,7 +139,26 @@ function chatAdapterStateFromCallWithChatAdapterState(
   callWithChatAdapterState: CallWithChatAdapterState
 ): ChatAdapterState {
   if (!callWithChatAdapterState.chat) {
-    throw new Error('Chat thread state id undefined.');
+    // Return some empty state if chat is not initialized yet
+    return {
+      userId: callWithChatAdapterState.userId,
+      displayName: callWithChatAdapterState.displayName || '',
+      thread: {
+        chatMessages: {},
+        participants: {
+          [toFlatCommunicationIdentifier(callWithChatAdapterState.userId)]: {
+            id: callWithChatAdapterState.userId
+          }
+        },
+        threadId: '',
+        readReceipts: [],
+        typingIndicators: [],
+        latestReadTime: new Date()
+      },
+      latestErrors: callWithChatAdapterState.latestChatErrors,
+      /* @conditional-compile-remove(attachment-upload) */
+      attachmentUploads: callWithChatAdapterState.attachmentUploads
+    };
   }
 
   return {

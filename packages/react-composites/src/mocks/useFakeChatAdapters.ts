@@ -31,12 +31,21 @@ export interface _FakeChatAdapters {
   };
 }
 
+/** @private */
+export interface _FakeChatAdaptersOptionalArgs {
+  forceInvalidChatThread?: boolean;
+}
+
 /**
  * Create chat adapters using an in-memory fake-backend for chat.
  * @internal
  */
-export function _useFakeChatAdapters(args: _FakeChatAdapterArgs): _FakeChatAdapters | undefined {
+export function _useFakeChatAdapters(
+  args: _FakeChatAdapterArgs,
+  options?: _FakeChatAdaptersOptionalArgs
+): _FakeChatAdapters | undefined {
   const [fakeAdapters, setFakeAdapters] = useState<_FakeChatAdapters>();
+  const { forceInvalidChatThread } = options ?? {};
   useEffect(() => {
     (async (): Promise<void> => {
       if (!args.localParticipant.displayName) {
@@ -52,18 +61,19 @@ export function _useFakeChatAdapters(args: _FakeChatAdapterArgs): _FakeChatAdapt
         args.localParticipantPosition
       );
       const chatClient = new FakeChatClient(chatClientModel, args.localParticipant.id);
-      const thread = await chatClient.createChatThread({ topic: args.topic ?? 'Cowabunga' }, { participants });
+      const thread = await chatClient.createChatThread(
+        { topic: args.topic ?? 'Cowabunga' },
+        { participants, fakeInvalidThread: !!forceInvalidChatThread }
+      );
       const threadId = thread?.chatThread?.id ?? '';
       const chatThreadClient = chatClient.getChatThreadClient(threadId);
-      const adapter = await initializeAdapter(
-        {
-          userId: args.localParticipant.id,
-          displayName: args.localParticipant.displayName,
-          chatClient: chatClient as IChatClient as ChatClient,
-          chatThreadClient: chatThreadClient
-        },
-        args.chatThreadClientMethodErrors
-      );
+      const adapterArgs = {
+        userId: args.localParticipant.id,
+        displayName: args.localParticipant.displayName,
+        chatClient: chatClient as IChatClient as ChatClient,
+        chatThreadClient: chatThreadClient
+      };
+      const adapter = await initializeAdapter(adapterArgs, args.chatThreadClientMethodErrors);
       const newFakeAdapters: _FakeChatAdapters = {
         local: adapter,
         remotes: [],
@@ -81,7 +91,7 @@ export function _useFakeChatAdapters(args: _FakeChatAdapterArgs): _FakeChatAdapt
       }
       setFakeAdapters(newFakeAdapters);
     })();
-  }, [args]);
+  }, [args, forceInvalidChatThread]);
 
   return fakeAdapters;
 }
@@ -123,9 +133,7 @@ const initializeAdapter = async (
     credential: fakeToken
   });
   statefulChatClient.startRealtimeNotifications();
-  const chatThreadClient: ChatThreadClient = await statefulChatClient.getChatThreadClient(
-    adapterInfo.chatThreadClient.threadId
-  );
+  const chatThreadClient: ChatThreadClient = await statefulChatClient.getChatThreadClient('INVALID_THREAD');
   registerChatThreadClientMethodErrors(chatThreadClient, chatThreadClientMethodErrors);
   return await createAzureCommunicationChatAdapterFromClient(statefulChatClient, chatThreadClient);
 };
