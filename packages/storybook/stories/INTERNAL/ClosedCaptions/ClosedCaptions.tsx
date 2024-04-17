@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 export const exampleDisableCaptions = `
-const options: CallWithChatCompositeOptions = {
+const options: CallCompositeOptions = {
     callControls: {
       captionsButton: false
     }
