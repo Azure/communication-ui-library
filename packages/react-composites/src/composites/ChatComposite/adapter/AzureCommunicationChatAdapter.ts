@@ -156,6 +156,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.dispose = this.dispose.bind(this);
     this.fetchInitialData = this.fetchInitialData.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
+    /* @conditional-compile-remove(attachment-upload) */
     this.sendMessageWithAttachments = this.sendMessageWithAttachments.bind(this);
     this.sendReadReceipt = this.sendReadReceipt.bind(this);
     this.sendTypingIndicator = this.sendTypingIndicator.bind(this);

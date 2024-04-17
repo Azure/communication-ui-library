@@ -152,8 +152,8 @@ The ChatAdapter and the ChatComposite are purpose-built to support single chat t
 | **`offStateChange`**             | Unsubscribes the handler to stateChanged events.                                                                  | `(handler: (state: `[`ChatAdapterState`](#chatadapterstate)`) => void) => void`  |
 | **`getState`**                   | Get the current State                                                                                             | `() => `[`ChatAdapterState`](#chatadapterstate)                                  |
 | **`dispose`**                    | Dispose of the Composite                                                                                          | `() => void`                                                                     |
-| **`sendMessage`**                | Send a message in the thread. 
-| **`sendMessageWithAttachments`** | Send a message with attachments in the chat thread.
+| **`sendMessage`**                | Send a message in the thread.                                                                                     |
+| **`sendMessageWithAttachments`** | Send a message with attachments in the chat thread.                                                               |
 | **`sendReadReceipt`**            | Send a read receipt for a message.                                                                                | `(chatMessageId: string) => Promise<void>`                                       |
 | **`sendTypingIndicator`**        | Send typing indicator in the thread.                                                                              | `() => Promise<void>`                                                            |
 | **`removeParticipant`**          | Remove a participant in the thread.                                                                               | `(userId: string) => Promise<void>`                                              |
