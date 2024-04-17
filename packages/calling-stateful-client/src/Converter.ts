@@ -110,6 +110,14 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     declarativeRemoteParticipants[toFlatCommunicationIdentifier(participant.identifier)] =
       convertSdkParticipantToDeclarativeParticipant(participant);
   });
+  let hideAttendeeNames = false;
+  if (call.feature(Features.Capabilities).capabilities.viewAttendeeNames) {
+    const viewAttendeeNames = call.feature(Features.Capabilities).capabilities.viewAttendeeNames;
+    if (!viewAttendeeNames.isPresent && viewAttendeeNames.reason === 'MeetingRestricted') {
+      hideAttendeeNames = true;
+    }
+  }
+
   return {
     id: call.id,
     /* @conditional-compile-remove(teams-identity-support) */
@@ -164,7 +172,7 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     },
     /* @conditional-compile-remove(hide-attendee-name) */
     // TODO: Replace this once the SDK supports hide attendee name
-    hideAttendeeNames: false,
+    hideAttendeeNames,
     /* @conditional-compile-remove(meeting-id) */
     info: _isACSCall(call) ? call.info : _isTeamsCall(call) ? call.info : undefined
   };
