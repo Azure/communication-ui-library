@@ -104,6 +104,7 @@ import { SpotlightChangedListener } from '../../CallComposite/adapter/CallAdapte
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
+import { getChatThreadFromTeamsLink } from './parseTeamsUrl';
 
 type CallWithChatAdapterStateChangedHandler = (newState: CallWithChatAdapterState) => void;
 
@@ -907,25 +908,31 @@ export class TeamsMeetingLinkProvider implements ChatThreadProvider {
   }
 
   public async getChatThread(): Promise<string> {
-    // Wait for the call to be connected and get the chat thread ID from `call.callInfo`.
-    const chatThreadPromise = new Promise<string>((resolve) => {
-      this.callAdapterPromise.then((callAdapter) => {
-        // Ensure function is idempotent by removing any existing subscription.
-        this.callAdapterSubscription && callAdapter.offStateChange(this.callAdapterSubscription);
+    /** @conditional-compile-remove(meeting-id) */
+    {
+      // Wait for the call to be connected and get the chat thread ID from `call.callInfo`.
+      const chatThreadPromise = new Promise<string>((resolve) => {
+        this.callAdapterPromise.then((callAdapter) => {
+          // Ensure function is idempotent by removing any existing subscription.
+          this.callAdapterSubscription && callAdapter.offStateChange(this.callAdapterSubscription);
 
-        this.callAdapterSubscription = (state: CallAdapterState): void => {
-          if (state.call?.state === 'Connected' && state.call.info?.threadId) {
-            this.callAdapterSubscription && callAdapter.offStateChange(this.callAdapterSubscription);
-            this.callAdapterSubscription = undefined;
+          this.callAdapterSubscription = (state: CallAdapterState): void => {
+            if (state.call?.state === 'Connected' && state.call.info?.threadId) {
+              this.callAdapterSubscription && callAdapter.offStateChange(this.callAdapterSubscription);
+              this.callAdapterSubscription = undefined;
 
-            resolve(state.call.info?.threadId);
-          }
-        };
-        callAdapter.onStateChange(this.callAdapterSubscription);
+              resolve(state.call.info?.threadId);
+            }
+          };
+          callAdapter.onStateChange(this.callAdapterSubscription);
+        });
       });
-    });
 
-    return chatThreadPromise;
+      return chatThreadPromise;
+    }
+
+    /** @conditional-compile-remove(meeting-id) */
+    return getChatThreadFromTeamsLink(this.locator.meetingLink);
   }
 }
 
