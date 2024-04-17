@@ -70,7 +70,6 @@ import {
   isCommunicationUserIdentifier,
   PhoneNumberIdentifier
 } from '@azure/communication-common';
-import { getChatThreadFromTeamsLink } from './parseTeamsUrl';
 import { AdapterError } from '../../common/adapters';
 
 /* @conditional-compile-remove(teams-adhoc-call) */
@@ -899,13 +898,34 @@ export class CallAndChatProvider implements ChatThreadProvider {
  */
 export class TeamsMeetingLinkProvider implements ChatThreadProvider {
   public locator: TeamsMeetingLinkLocator;
+  private callAdapterPromise: Promise<CallAdapter>;
+  private callAdapterSubscription?: (state: CallAdapterState) => void;
 
-  constructor(locator: TeamsMeetingLinkLocator) {
+  constructor(locator: TeamsMeetingLinkLocator, callAdapterPromise: Promise<CallAdapter>) {
     this.locator = locator;
+    this.callAdapterPromise = callAdapterPromise;
   }
 
   public async getChatThread(): Promise<string> {
-    return getChatThreadFromTeamsLink(this.locator.meetingLink);
+    // Wait for the call to be connected and get the chat thread ID from `call.callInfo`.
+    const chatThreadPromise = new Promise<string>((resolve) => {
+      this.callAdapterPromise.then((callAdapter) => {
+        // Ensure function is idempotent by removing any existing subscription.
+        this.callAdapterSubscription && callAdapter.offStateChange(this.callAdapterSubscription);
+
+        this.callAdapterSubscription = (state: CallAdapterState): void => {
+          if (state.call?.state === 'Connected' && state.call.info?.threadId) {
+            this.callAdapterSubscription && callAdapter.offStateChange(this.callAdapterSubscription);
+            this.callAdapterSubscription = undefined;
+
+            resolve(state.call.info?.threadId);
+          }
+        };
+        callAdapter.onStateChange(this.callAdapterSubscription);
+      });
+    });
+
+    return chatThreadPromise;
   }
 }
 
@@ -1231,7 +1251,7 @@ const _createChatThreadAdapterInner = (
   adapter: Promise<CallAdapter>
 ): ChatThreadProvider => {
   if ('meetingLink' in locator) {
-    return new TeamsMeetingLinkProvider(locator);
+    return new TeamsMeetingLinkProvider(locator, adapter);
   }
   /** @conditional-compile-remove(meeting-id) */
   if ('meetingId' in locator) {
