@@ -11,6 +11,8 @@ import {
   VideoTileContextualMenuProps,
   VideoTileDrawerMenuProps
 } from '@internal/react-components';
+/* @conditional-compile-remove(teams-bot-rename) */
+import { VideoGalleryParticipant } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
 import { _useContainerWidth, _useContainerHeight } from '@internal/react-components';
 import { usePropsFor } from '../hooks/usePropsFor';
@@ -75,6 +77,7 @@ export interface MediaGalleryProps {
   onFetchMicrosoftBotName?: (botId: string | MicrosoftTeamsAppIdentifier) => string;
 }
 
+/* @conditional-compile-remove(teams-bot-rename) */
 const BOT_IT_PREFIX = '28';
 
 /**
@@ -87,7 +90,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(spotlight) */ setIsPromptOpen,
     /* @conditional-compile-remove(spotlight) */ setPromptProps,
     /* @conditional-compile-remove(spotlight) */ hideSpotlightButtons,
-    onFetchMicrosoftBotName
+    /* @conditional-compile-remove(teams-bot-rename) */ onFetchMicrosoftBotName
   } = props;
 
   const videoGalleryProps = usePropsFor(VideoGallery);
@@ -194,13 +197,16 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const renamedParticipants = useMemo(() => {
     const participants = videoGalleryProps.remoteParticipants;
     /* @conditional-compile-remove(teams-bot-rename) */
-    participants.forEach((participant) => {
+    participants.forEach((participant: VideoGalleryParticipant) => {
       if (participant.userId.startsWith(BOT_IT_PREFIX) && onFetchMicrosoftBotName) {
         participant.displayName = onFetchMicrosoftBotName(participant.userId);
       }
     });
     return participants;
-  }, [videoGalleryProps.remoteParticipants, onFetchMicrosoftBotName]);
+  }, [
+    videoGalleryProps.remoteParticipants,
+    /* @conditional-compile-remove(teams-bot-rename) */ onFetchMicrosoftBotName
+  ]);
 
   const VideoGalleryMemoized = useMemo(() => {
     const layoutBasedOnUserSelection = (): VideoGalleryLayout => {

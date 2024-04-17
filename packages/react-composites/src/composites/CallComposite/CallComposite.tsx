@@ -673,6 +673,7 @@ export const CallCompositeInner = (props: CallCompositeProps & InternalCallCompo
     callInvitationUrl,
     onFetchAvatarPersonaData,
     onFetchParticipantMenuItems,
+    /* @conditional-compile-remove(teams-bot-rename) */
     onFetchMicrosoftBotName,
     options,
     formFactor = 'desktop'
