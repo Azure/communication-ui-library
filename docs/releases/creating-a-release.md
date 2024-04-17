@@ -82,6 +82,10 @@ Ex.
 1. Create a post in `Language - JavaScript - Reviews` channel with APIView link to request review.
     1. Use a previous review request as an example.
 
+### step 0.6: Create a Change Log Grooming Meeting
+
+Setup a meeting with the feature owners for the following week to groom the changelog together.
+
 ## Step 1: Creating a Release Branch
 
 Both beta and stable releases follow a two-step workflow, aided by GitHub actions.
