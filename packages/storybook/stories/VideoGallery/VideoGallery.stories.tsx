@@ -244,7 +244,7 @@ const getDocs: () => JSX.Element = () => {
       <Subheading>Supported Features</Subheading>
       <Description>
         Currently, the VideoGallery component supports two primary features to enhance collaboration and presentation
-        quality: screen sharing and PowerPoint Live. 
+        quality: screen sharing and PowerPoint Live.
       </Description>
       <ul className={'sbdocs sbdocs-p'}>
         <li>
