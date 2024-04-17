@@ -63,7 +63,7 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
   const attachmentCardStyles = useAttachmentCardStyles();
 
   const progress = useMemo(() => {
-    return (attachment as AttachmentMetadataWithProgress).progress;
+    return 'progress' in attachment ? attachment.progress : undefined;
   }, [attachment]);
 
   const isUploadComplete = useMemo(() => {
