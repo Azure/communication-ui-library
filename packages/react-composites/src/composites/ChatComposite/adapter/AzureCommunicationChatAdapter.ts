@@ -712,10 +712,10 @@ export const useAzureCommunicationChatAdapter = (
  *
  * @public
  */
-export function createAzureCommunicationChatAdapterFromClient(
+export async function createAzureCommunicationChatAdapterFromClient(
   chatClient: StatefulChatClient,
   chatThreadClient: ChatThreadClient
-): ChatAdapter {
+): Promise<ChatAdapter> {
   return new AzureCommunicationChatAdapter(chatClient, chatThreadClient);
 }
 

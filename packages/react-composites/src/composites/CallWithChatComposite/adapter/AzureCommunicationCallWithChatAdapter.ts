@@ -1272,8 +1272,8 @@ export const createAzureCommunicationCallWithChatAdapterFromClients = async ({
 
     callAdapterOptions
   );
-  const chatAdapterPromise = createAzureCommunicationChatAdapterFromClient(chatClient, chatThreadClient);
-  return new AzureCommunicationCallWithChatAdapter(callAdapter, chatAdapterPromise);
+  const chatAdapter = await createAzureCommunicationChatAdapterFromClient(chatClient, chatThreadClient);
+  return new AzureCommunicationCallWithChatAdapter(callAdapter, chatAdapter);
 };
 
 /**
