@@ -162,7 +162,6 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
         callRinging: { url: '/assets/sounds/callRinging.mp3' },
         callBusy: { url: '/assets/sounds/callBusy.mp3' }
       },
-      /* @conditional-compile-remove(reaction) */
       reactionResources: {
         likeReaction: { url: '/assets/reactions/likeEmoji.png', frameCount: 102 },
         heartReaction: { url: '/assets/reactions/heartEmoji.png', frameCount: 102 },
@@ -204,7 +203,6 @@ const AzureCommunicationOutboundCallScreen = (props: AzureCommunicationCallScree
         callRinging: { url: '/assets/sounds/callRinging.mp3' },
         callBusy: { url: '/assets/sounds/callBusy.mp3' }
       },
-      /* @conditional-compile-remove(reaction) */
       reactionResources: {
         likeReaction: { url: '/assets/reactions/likeEmoji.png', frameCount: 102 },
         heartReaction: { url: '/assets/reactions/heartEmoji.png', frameCount: 102 },
