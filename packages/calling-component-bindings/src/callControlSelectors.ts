@@ -12,7 +12,6 @@ import {
   getIsScreenSharingOn,
   getLocalVideoStreams
 } from './baseSelectors';
-/* @conditional-compile-remove(reaction) */
 import { getLocalParticipantReactionState } from './baseSelectors';
 
 import { getCapabilities, getRole } from './baseSelectors';
@@ -140,7 +139,6 @@ export const raiseHandButtonSelector: RaiseHandButtonSelector = reselect.createS
   }
 );
 
-/* @conditional-compile-remove(reaction) */
 /**
  * Selector type for {@link ReactionButton} component.
  *
@@ -154,7 +152,6 @@ export type ReactionButtonSelector = (
   disabled?: boolean;
 };
 
-/* @conditional-compile-remove(reaction) */
 /**
  * Selector for {@link ReactionButton} component.
  *

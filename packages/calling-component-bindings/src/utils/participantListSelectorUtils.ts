@@ -12,11 +12,8 @@ import { CallParticipantListParticipant } from '@internal/react-components';
 /* @conditional-compile-remove(spotlight) */
 import { Spotlight } from '@internal/react-components';
 import { RaisedHandState } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(reaction) */
 import { ReactionState } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(reaction) */
 import { Reaction } from '@internal/react-components';
-/* @conditional-compile-remove(reaction) */ /* @conditional-compile-remove(spotlight) */
 import memoizeOne from 'memoize-one';
 
 const convertRemoteParticipantToParticipantListParticipant = (
@@ -28,7 +25,7 @@ const convertRemoteParticipantToParticipantListParticipant = (
   isSpeaking: boolean,
   raisedHand: RaisedHandState | undefined,
   localUserCanRemoveOthers: boolean,
-  reaction: undefined | /* @conditional-compile-remove(reaction) */ Reaction,
+  reaction: undefined | Reaction,
   spotlight: undefined | /* @conditional-compile-remove(spotlight) */ Spotlight
 ): CallParticipantListParticipant => {
   const identifier = fromFlatCommunicationIdentifier(userId);
@@ -46,7 +43,7 @@ const convertRemoteParticipantToParticipantListParticipant = (
       (getIdentifierKind(identifier).kind === 'communicationUser' ||
         getIdentifierKind(identifier).kind === 'phoneNumber') &&
       localUserCanRemoveOthers,
-    /* @conditional-compile-remove(reaction) */ reaction,
+    reaction,
     /* @conditional-compile-remove(spotlight) */ spotlight
   };
 };
@@ -64,7 +61,7 @@ export const memoizedConvertAllremoteParticipants = memoizeFnAll(
     isSpeaking: boolean,
     raisedHand: RaisedHandState | undefined,
     localUserCanRemoveOthers: boolean,
-    reaction: undefined | /* @conditional-compile-remove(reaction) */ Reaction,
+    reaction: undefined | Reaction,
     spotlight: undefined | /* @conditional-compile-remove(spotlight) */ Spotlight
   ): CallParticipantListParticipant => {
     return convertRemoteParticipantToParticipantListParticipant(
@@ -82,7 +79,6 @@ export const memoizedConvertAllremoteParticipants = memoizeFnAll(
   }
 );
 
-/* @conditional-compile-remove(reaction) */
 /**
  * @private
  */
