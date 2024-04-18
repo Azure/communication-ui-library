@@ -64,11 +64,12 @@ For all the features that are going into this release, ask the feature owners to
   
 [Shiproom Dashboard](https://skype.visualstudio.com/SPOOL/_dashboards/dashboard/c38163f7-e172-4afa-a4c2-76e888b5cddc)
 
-### Step 0.3: ARB Review of any public API changes (Required for Stable | Recommended for Beta)
+### Step 0.3: ARB Review of any Changes to Public SDK API and/or Rest APi (Required for Stable | Recommended for Beta)
 
 1. [Create an APIView](https://skype.visualstudio.com/SPOOL/_wiki/wikis/SPOOL.wiki/48971/Creating-an-APIView) showing changes.
 1. Create a post in `Language - JavaScript - Reviews` channel with APIView link to request review.
     1. Use a previous review request as an example.
+1. See the [internal documentation](https://skype.visualstudio.com/SPOOL/_wiki/wikis/SPOOL.wiki/27654/Scheduling-an-Azure-Review-Board-%28ARB%29-Review) for how to reach out to the API stewardship board.
 
 ### Step 0.4: Create an Async Bug Bash Meeting
 
@@ -167,20 +168,16 @@ After you finish step 1.3, you can check recent latest commits on the release br
 
 Copy links to those snapshot commits and UI snapshot PR link, and post them in the release thread, ask feature owners to check if their features are correctly removed both in API and UI
 
-## Step 2: Prepare for release
+## Step 2: Prepare for Release
 
-### Step 2.1 (Stable Only): API approval from Azure REST API stewardship board
-
-For stable release, we must get any API changes approved by the Azure REST API Stewardship board. See the [internal documentation](https://skype.visualstudio.com/SPOOL/_wiki/wikis/SPOOL.wiki/27654/Scheduling-an-Azure-Review-Board-%28ARB%29-Review) for how to reach out to the API stewardship board.
-
-### Step 2.2: Bug Bash
+### Step 2.1: Bug Bash
 
 Once the release branch has been created, we must make sure that the package we eventually off of the release branch is high quality. Towards this:
 
 - Set up a bug bash with the team to shake out any issues. See [internal documentation](https://skype.visualstudio.com/SPOOL/_wiki/wikis/SPOOL.wiki/31350/WebUI-Setting-up-a-bug-bash) for setting up a bug bash.
   - Triage bugs found via bug bash and manage merging of fixes into the release branch, as described in the section below.
 
-#### Cherry-picking changes
+#### Cherry-picking Changes
 
 While the release branch is active, some changes might be merged into the branch (for bug fixes, or features deemed necessary for the release). PRs into the release branch should follow this process when possible:
 
@@ -194,7 +191,7 @@ This process has the following benefits:
 - The release branch never diverges off of `main`. In theory, it is possible to abandon the release branch at any point and create a new one off of `main` without losing work.
 - All PR reviews happen on `main`, and the cherry-pick PR simply requires a sign-off.
 
-### Step 2.3: Fetch translated strings
+### Step 2.2: Fetch/Merge Translated Strings
 
 [Fetch translated strings](https://github.com/Azure/communication-ui-library/blob/main/docs/references/string-translations.md) again for main to make sure any other string updates that have occurred since the start of the release process are included. If there are any strings updated, cherry-pick the changes to the release branch.
 
