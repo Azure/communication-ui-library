@@ -45,7 +45,7 @@ const KNOWN_TELEMETRY_ORIGIN = 'events.data.microsoft.com/OneCollector';
 export const bindConsoleErrorForwarding = (page: Page): Page =>
   page.on('console', (msg) => {
     if (msg.type() === 'error' && !shouldIgnoreConsoleError(msg)) {
-      console.log(`CONSOLE ERROR >> "${msg.text()}"`, msg.location());
+      console.log(`CONSOLE ERROR >> "${msg.text()}"`, msg.args(), msg.location());
     }
   });
 
