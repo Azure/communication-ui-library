@@ -21,7 +21,7 @@ _This document applies to normal releases, off of `main`. For hotfixing a prior 
 - [Step 0.2: Pre-Release ChangeLog and Update Feature List](#step-02-pre-release-changelog-and-update-feature-list)
 - [Step 0.3: ARB Review of any Changes to Public SDK API and/or Rest APi (Required for Stable | Recommended for Beta)](#step-03-arb-review-of-any-changes-to-public-sdk-api-andor-rest-api-required-for-stable--recommended-for-beta)
 - [Step 0.4: Create an Async Bug Bash Meeting](#step-04-create-an-async-bug-bash-meeting)
-- [Step 0.5: Create a Change Log Grooming Meeting]()
+- [Step 0.5: Create a Change Log Grooming Meeting](#step-05-create-a-change-log-grooming-meeting)
 - [Step 0.6: Ensure strings are Updated on Main](#step-06-ensure-strings-are-updated-on-main)
 
 ### Second week of sprint
