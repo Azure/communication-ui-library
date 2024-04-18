@@ -13,7 +13,6 @@ import { initializeIcons } from '@fluentui/react';
 initializeIcons();
 export const loadCallComposite = async function (args, htmlElement, props) {
   const { userId, token, displayName, targetCallees, options } = args;
-  console.log(options);
   const adapter = await createAzureCommunicationCallAdapter({
     userId,
     displayName: displayName ?? 'anonymous',
