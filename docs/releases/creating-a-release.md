@@ -17,11 +17,12 @@ _This document applies to normal releases, off of `main`. For hotfixing a prior 
 
 ### First week of sprint
 
-- [Step 0.1: Ensure strings are Updated on Main](#step-01-ensure-strings-are-updated-on-main)
+- [Step 0.1: Create a Thread in the WebUI channel to Track Release Progress](#step-01-create-a-thread-in-the-webui-channel-to-track-release-progress)
 - [Step 0.2: Pre-Release ChangeLog and Update Feature List](#step-02-pre-release-changelog-and-update-feature-list)
-- [Step 0.3: Create a Thread in the WebUI channel to Track Release Progress](#step-03-create-a-thread-in-the-webui-channel-to-track-release-progress)
+- [Step 0.3: ARB Review of any Changes to Public SDK API and/or Rest APi (Required for Stable | Recommended for Beta)](#step-03-arb-review-of-any-changes-to-public-sdk-api-andor-rest-api-required-for-stable--recommended-for-beta)
 - [Step 0.4: Create an Async Bug Bash Meeting](#step-04-create-an-async-bug-bash-meeting)
-- [Step 0.5: ARB Review of any public API changes (Required for Stable | Recommended for Beta)](#step-05-arb-review-of-any-public-api-changes-required-for-stable--recommended-for-beta)
+- [Step 0.5: Create a Change Log Grooming Meeting]()
+- [Step 0.6: Ensure strings are Updated on Main](#step-06-ensure-strings-are-updated-on-main)
 
 ### Second week of sprint
 
@@ -35,9 +36,8 @@ _This document applies to normal releases, off of `main`. For hotfixing a prior 
 
 #### Tuesday / Wednesday
 
-- [Step 2.1: (Stable Only): API approval from Azure REST API stewardship board](#step-21-stable-only-api-approval-from-azure-rest-api-stewardship-board)
-- [Step 2.2: Bug Bash](#step-22-bug-bash)
-- [Step 2.3: Fetch translated strings](#step-23-fetch-translated-strings)
+- [Step 2.1: Bug Bash](#step-21-bug-bash)
+- [Step 2.2: Fetch, Merge and Cherry-pick Translated Strings](#step-22-fetch-merge-and-cherry-pick-translated-strings)
 
 #### Thursday
 
