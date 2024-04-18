@@ -289,7 +289,8 @@ export const insertTableMenuFocusZone = (theme: Theme): string => {
   return mergeStyles({
     lineHeight: '12px',
     width: '5.125rem',
-    border: `solid 0.0625rem ${theme.palette.neutralTertiaryAlt}`
+    border: `solid 0.0625rem ${theme.palette.neutralTertiaryAlt}`,
+    boxSizing: 'border-box'
   });
 };
 
