@@ -80,6 +80,19 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
    * Button flyout menu.
    */
   callInvitationUrl?: string;
+  /* @conditional-compile-remove(teams-bot-rename) */
+  /**
+   * A callback function that can be used to rename the bots in the composite.
+   * Some examples of bots are:
+   * - Auto Attendant
+   * - Call Queue
+   * @params botId - The id of the bot.
+   * @remarks
+   * The Developer is in charge of naming the bots based on their ID. The composite will
+   * not perform a lookup of the bot's name.
+   *
+   */
+  onFetchMicrosoftBotName?: (botId: string | MicrosoftTeamsAppIdentifier) => Promise<string>;
   /**
    * Flags to enable/disable or customize UI elements of the {@link CallComposite}.
    */
