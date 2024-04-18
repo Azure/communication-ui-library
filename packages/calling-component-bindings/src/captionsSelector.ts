@@ -119,27 +119,7 @@ export type _CaptionsBannerSelector = (
 export const _captionsBannerSelector: _CaptionsBannerSelector = reselect.createSelector(
   [getCaptions, getCaptionsStatus, getStartCaptionsInProgress],
   (captions, isCaptionsFeatureActive, startCaptionsInProgress) => {
-    // Following Teams app logic, no matter how many 'Partial' captions come,
-    // we only pick first one according to start time, and all the other partial captions will be filtered out
-    // This will give customers a stable captions experience when others talking over the dominant speaker
-    // First turn all partial captions that are older than 5 seconds to final
-    captions
-      ?.filter((captions) => captions.resultType === 'Partial')
-      .forEach((c) => {
-        // if c is created more than 5 seconds ago, make it final
-        if (c.timestamp.getTime() + 5000 < Date.now()) {
-          // make it final
-          c.resultType = 'Final';
-        }
-      });
-    const captionsToRender = captions?.filter((captions) => captions.resultType === 'Final');
-    const firstPartialCaptions = captions
-      ?.filter((captions) => captions.resultType === 'Partial')
-      .sort(captionsComparator)[0];
-
-    firstPartialCaptions && captionsToRender?.push(firstPartialCaptions);
-
-    const captionsInfo = captionsToRender?.map((c) => {
+    const captionsInfo = captions?.map((c) => {
       const userId = getCaptionsSpeakerIdentifier(c);
       return {
         id: c.timestamp.getTime() + userId + c.speaker.displayName,
@@ -155,14 +135,6 @@ export const _captionsBannerSelector: _CaptionsBannerSelector = reselect.createS
     };
   }
 );
-
-/* @conditional-compile-remove(close-captions) */
-const captionsComparator = (captionsA: CaptionsInfo, captionsB: CaptionsInfo): number => {
-  return (
-    captionsA.timestamp.getTime() - captionsB.timestamp.getTime() ||
-    getCaptionsSpeakerIdentifier(captionsA).localeCompare(getCaptionsSpeakerIdentifier(captionsB))
-  );
-};
 
 /* @conditional-compile-remove(close-captions) */
 const getCaptionsSpeakerIdentifier = (captions: CaptionsInfo): string => {
