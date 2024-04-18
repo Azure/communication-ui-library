@@ -67,13 +67,15 @@ export function _useFakeChatAdapters(
       );
       const threadId = thread?.chatThread?.id ?? '';
       const chatThreadClient = chatClient.getChatThreadClient(threadId);
-      const adapterArgs = {
-        userId: args.localParticipant.id,
-        displayName: args.localParticipant.displayName,
-        chatClient: chatClient as IChatClient as ChatClient,
-        chatThreadClient: chatThreadClient
-      };
-      const adapter = await initializeAdapter(adapterArgs, args.chatThreadClientMethodErrors);
+      const adapter = await initializeAdapter(
+        {
+          userId: args.localParticipant.id,
+          displayName: args.localParticipant.displayName,
+          chatClient: chatClient as IChatClient as ChatClient,
+          chatThreadClient: chatThreadClient
+        },
+        args.chatThreadClientMethodErrors
+      );
       const newFakeAdapters: _FakeChatAdapters = {
         local: adapter,
         remotes: [],
@@ -133,7 +135,9 @@ const initializeAdapter = async (
     credential: fakeToken
   });
   statefulChatClient.startRealtimeNotifications();
-  const chatThreadClient: ChatThreadClient = await statefulChatClient.getChatThreadClient('INVALID_THREAD');
+  const chatThreadClient: ChatThreadClient = await statefulChatClient.getChatThreadClient(
+    adapterInfo.chatThreadClient.threadId
+  );
   registerChatThreadClientMethodErrors(chatThreadClient, chatThreadClientMethodErrors);
   return await createAzureCommunicationChatAdapterFromClient(statefulChatClient, chatThreadClient);
 };
