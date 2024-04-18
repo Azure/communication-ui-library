@@ -51,6 +51,7 @@ export const _LocalVideoTile = React.memo(
     localVideoViewOptions?: VideoStreamOptions;
     onRenderAvatar?: OnRenderAvatarCallback;
     showLabel: boolean;
+    alwaysShowLabelBackground?: boolean;
     showMuteIndicator?: boolean;
     showCameraSwitcherInLocalPreview?: boolean;
     localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
@@ -89,6 +90,7 @@ export const _LocalVideoTile = React.memo(
       renderElement,
       userId,
       showLabel,
+      alwaysShowLabelBackground,
       displayName,
       initialsName,
       onRenderAvatar,
@@ -249,6 +251,7 @@ export const _LocalVideoTile = React.memo(
           userId={userId}
           renderElement={renderVideoStreamElement}
           showLabel={showLabel}
+          alwaysShowLabelBackground={alwaysShowLabelBackground}
           displayName={displayName}
           initialsName={initialsName}
           styles={videoTileStyles}

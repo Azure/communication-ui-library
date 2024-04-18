@@ -30,17 +30,16 @@ import {
   overlayContainerStyles,
   rootStyles,
   videoContainerStyles,
-  videoHint,
   tileInfoContainerStyle,
   participantStateStringStyles
 } from './styles/VideoTile.styles';
-import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
 import { pinIconStyle } from './styles/VideoTile.styles';
 import useLongPress from './utils/useLongPress';
 import { moreButtonStyles } from './styles/VideoTile.styles';
 import { raiseHandContainerStyles } from './styles/VideoTile.styles';
 /* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '../types/ReactionTypes';
+import { isDarkThemed } from '../theming/themeUtils';
 
 /**
  * Strings of {@link VideoTile} that can be overridden.
@@ -99,6 +98,11 @@ export interface VideoTileProps {
    * @defaultValue true
    */
   showLabel?: boolean;
+  /**
+   * Show label background on the VideoTile
+   * @defaultValue false
+   */
+  alwaysShowLabelBackground?: boolean;
   /**
    * Whether to display a mute icon beside the user's display name.
    * @defaultValue true
@@ -355,13 +359,15 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     hidePersonaDetails: true
   };
 
-  const videoHintWithBorderRadius = mergeStyles(videoHint, { borderRadius: theme.effects.roundedCorner4 });
+  const videoHintWithBorderRadius = mergeStyles(disabledVideoHint, {
+    borderRadius: theme.effects.roundedCorner4,
+    backgroundColor: isDarkThemed(theme) ? 'rgba(37,36,35,0.8)' : 'rgba(255,255,255,0.8)'
+  });
 
   const tileInfoStyle = useMemo(
     () =>
       mergeStyles(
-        isVideoRendered ? videoHintWithBorderRadius : disabledVideoHint,
-        getVideoTileOverrideColor(isVideoRendered, theme, 'neutralPrimary'),
+        isVideoRendered || props.alwaysShowLabelBackground ? videoHintWithBorderRadius : disabledVideoHint,
         styles?.displayNameContainer
       ),
     [isVideoRendered, videoHintWithBorderRadius, theme, styles?.displayNameContainer]

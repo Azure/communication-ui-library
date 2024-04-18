@@ -29,6 +29,7 @@ import { useAdapter } from '../adapter/CallAdapterProvider';
 import { PromptProps } from './Prompt';
 /* @conditional-compile-remove(spotlight) */
 import { useLocalSpotlightCallbacksWithPrompt, useRemoteSpotlightCallbacksWithPrompt } from '../utils/spotlightUtils';
+import { VideoTilesOptions } from '@internal/react-components';
 
 const VideoGalleryStyles = {
   root: {
@@ -69,6 +70,7 @@ export interface MediaGalleryProps {
   setPromptProps: (props: PromptProps) => void;
   /* @conditional-compile-remove(spotlight) */
   hideSpotlightButtons?: boolean;
+  videoTilesOptions?: VideoTilesOptions;
 }
 
 /**
@@ -80,7 +82,8 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     setPinnedParticipants,
     /* @conditional-compile-remove(spotlight) */ setIsPromptOpen,
     /* @conditional-compile-remove(spotlight) */ setPromptProps,
-    /* @conditional-compile-remove(spotlight) */ hideSpotlightButtons
+    /* @conditional-compile-remove(spotlight) */ hideSpotlightButtons,
+    videoTilesOptions
   } = props;
 
   const videoGalleryProps = usePropsFor(VideoGallery);
@@ -193,6 +196,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     return (
       <VideoGallery
         {...videoGalleryProps}
+        videoTilesOptions={videoTilesOptions}
         localVideoViewOptions={localVideoViewOptions}
         remoteVideoViewOptions={remoteVideoViewOptions}
         styles={VideoGalleryStyles}

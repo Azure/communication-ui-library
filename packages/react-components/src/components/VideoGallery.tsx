@@ -309,7 +309,24 @@ export interface VideoGalleryProps {
    * Reaction resources for like, heart, laugh, applause and surprised.
    */
   reactionResources?: ReactionResources;
+  /**
+   * Additional Options for Video Tiles
+   */
+  videoTilesOptions?: VideoTilesOptions;
 }
+
+/**
+ * Options that apply to all Video Tiles in the {@link VideoGallery}
+ * 
+ * @public
+ */
+export interface VideoTilesOptions {
+  /**
+   * Whether to always show the label background for the video tile
+   */
+    alwaysShowLabelBackground?: boolean;
+}
+
 
 /**
  * Properties for showing contextual menu for remote {@link VideoTile} components in {@link VideoGallery}.
@@ -385,7 +402,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(spotlight) */
     maxParticipantsToSpotlight,
     /* @conditional-compile-remove(reaction) */
-    reactionResources
+    reactionResources,
+    videoTilesOptions
   } = props;
 
   const ids = useIdentifiers();
@@ -474,6 +492,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         role={'dialog'}
       >
         <_LocalVideoTile
+          alwaysShowLabelBackground={videoTilesOptions?.alwaysShowLabelBackground}
           userId={localParticipant.userId}
           onCreateLocalStreamView={onCreateLocalStreamView}
           onDisposeLocalStreamView={onDisposeLocalStreamView}
@@ -612,6 +631,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
       return (
         <_RemoteVideoTile
+          alwaysShowLabelBackground={videoTilesOptions?.alwaysShowLabelBackground}
           streamId={remoteVideoStream?.id}
           key={participant.userId}
           userId={participant.userId}
