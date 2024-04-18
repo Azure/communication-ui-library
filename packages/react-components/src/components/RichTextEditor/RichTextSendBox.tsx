@@ -262,7 +262,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       /* @conditional-compile-remove(attachment-upload) */
       !!attachmentUploadsPendingError ||
       /* @conditional-compile-remove(attachment-upload) */
-      !!attachmentsWithProgress?.filter((attachmentUpload) => attachmentUpload.uploadError).pop()?.uploadError
+      !!attachmentsWithProgress?.filter((attachmentUpload) => attachmentUpload.error).pop()?.error
     );
   }, [
     /* @conditional-compile-remove(attachment-upload) */
@@ -303,13 +303,13 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
 
   const sendBoxErrorsProps: RichTextSendBoxErrorsProps = useMemo(() => {
     /* @conditional-compile-remove(attachment-upload) */
-    const uploadErrorMessage = attachmentsWithProgress?.filter((attachmentUpload) => attachmentUpload.uploadError).pop()
-      ?.uploadError?.message;
+    const uploadErrorMessage = attachmentsWithProgress?.filter((attachmentUpload) => attachmentUpload.error).pop()
+      ?.error?.message;
     return {
       /* @conditional-compile-remove(attachment-upload) */
       attachmentUploadsPendingError: attachmentUploadsPendingError,
       /* @conditional-compile-remove(attachment-upload) */
-      attachmentUploadError: uploadErrorMessage
+      attachmentProgressError: uploadErrorMessage
         ? {
             message: uploadErrorMessage,
             timestamp: Date.now()

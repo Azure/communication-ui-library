@@ -6,7 +6,7 @@ export * from './AttachmentUploadButton';
 
 export type {
   AttachmentOptions,
-  AttachmentUploadError,
+  AttachmentProgressError,
   AttachmentUploadOptions,
   AttachmentSelectionHandler,
   AttachmentRemovalHandler,

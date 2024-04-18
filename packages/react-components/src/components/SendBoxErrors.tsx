@@ -9,23 +9,23 @@ import { SendBoxErrorBar, SendBoxErrorBarError } from './SendBoxErrorBar';
  */
 export interface SendBoxErrorsProps {
   attachmentUploadsPendingError?: SendBoxErrorBarError;
-  attachmentUploadError?: SendBoxErrorBarError;
+  attachmentProgressError?: SendBoxErrorBarError;
 }
 
 /**
  * @private
  */
 export const SendBoxErrors = (props: SendBoxErrorsProps): JSX.Element => {
-  const { attachmentUploadError, attachmentUploadsPendingError } = props;
+  const { attachmentProgressError, attachmentUploadsPendingError } = props;
 
   const errorToDisplay = React.useMemo(() => {
-    if (attachmentUploadError && attachmentUploadsPendingError) {
-      return attachmentUploadError.timestamp > attachmentUploadsPendingError.timestamp
-        ? attachmentUploadError
+    if (attachmentProgressError && attachmentUploadsPendingError) {
+      return attachmentProgressError.timestamp > attachmentUploadsPendingError.timestamp
+        ? attachmentProgressError
         : attachmentUploadsPendingError;
     }
-    return attachmentUploadError || attachmentUploadsPendingError;
-  }, [attachmentUploadError, attachmentUploadsPendingError]);
+    return attachmentProgressError || attachmentUploadsPendingError;
+  }, [attachmentProgressError, attachmentUploadsPendingError]);
 
   return <SendBoxErrorBar error={errorToDisplay} dismissAfterMs={10 * 1000} />;
 };

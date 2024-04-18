@@ -27,7 +27,7 @@ export interface _AttachmentUploadAdapter {
   cancelUpload: (id: string) => void;
   updateUploadProgress: (id: string, progress: number) => void;
   updateUploadStatusMessage: (id: string, errorMessage: string) => void;
-  updateUploadMetadata: (id: string, metadata: AttachmentMetadataWithProgress | AttachmentMetadata) => void;
+  updateUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
 }
 
 /* @conditional-compile-remove(attachment-upload) */
@@ -42,15 +42,15 @@ class AttachmentUploadContext {
   }
 
   public getAttachmentUploads(): _AttachmentUploadsUiState | undefined {
-    return this.chatContext.getState().attachmentUploads;
+    return this.chatContext.getState()._attachmentUploads;
   }
 
   public addAttachmentUploads(attachmentUploads: AttachmentUpload[]): void {
     const attachmentUploadsMap = convertObservableAttachmentUploadToAttachmentUploadsUiState(attachmentUploads);
     this.chatContext.setState(
       produce(this.chatContext.getState(), (draft) => {
-        draft.attachmentUploads = draft.attachmentUploads || {};
-        draft.attachmentUploads = { ...draft.attachmentUploads, ...attachmentUploadsMap };
+        draft._attachmentUploads = draft._attachmentUploads || {};
+        draft._attachmentUploads = { ...draft._attachmentUploads, ...attachmentUploadsMap };
       })
     );
   }
@@ -58,26 +58,24 @@ class AttachmentUploadContext {
   public clearUploads(): void {
     this.chatContext.setState(
       produce(this.chatContext.getState(), (draft: ChatAdapterState) => {
-        draft.attachmentUploads = {};
+        draft._attachmentUploads = {};
       })
     );
   }
 
   public updateAttachmentUpload(
     id: string,
-    data: Partial<
-      Pick<AttachmentMetadataWithProgress, 'progress' | 'id' | 'name' | 'extension' | 'uploadError' | 'url'>
-    >
+    data: Partial<Pick<AttachmentMetadataWithProgress, 'progress' | 'id' | 'name' | 'extension' | 'error' | 'url'>>
   ): void {
     this.chatContext.setState(
       produce(this.chatContext.getState(), (draft: ChatAdapterState) => {
-        if (draft.attachmentUploads?.[id]) {
-          draft.attachmentUploads[data.id ?? id] = {
-            ...draft.attachmentUploads?.[id],
+        if (draft._attachmentUploads?.[id]) {
+          draft._attachmentUploads[data.id ?? id] = {
+            ...draft._attachmentUploads?.[id],
             ...data
           };
           if (data.id) {
-            delete draft.attachmentUploads?.[id];
+            delete draft._attachmentUploads?.[id];
           }
         }
       })
@@ -88,11 +86,11 @@ class AttachmentUploadContext {
     this.chatContext.setState(
       produce(this.chatContext.getState(), (draft: ChatAdapterState) => {
         ids.forEach((id) => {
-          const keys = Object.keys(draft?.attachmentUploads ?? []).filter(
-            (rawID) => draft.attachmentUploads?.[rawID].id === id
+          const keys = Object.keys(draft?._attachmentUploads ?? []).filter(
+            (rawID) => draft._attachmentUploads?.[rawID].id === id
           );
           keys.forEach((key) => {
-            delete draft.attachmentUploads?.[key];
+            delete draft._attachmentUploads?.[key];
           });
         });
       })
@@ -126,7 +124,7 @@ export class AzureCommunicationAttachmentUploadAdapter implements _AttachmentUpl
   private deleteErroneousAttachmentUploads(): void {
     const attachmentUploads = this.context.getAttachmentUploads() || {};
     const ids = Object.values(attachmentUploads)
-      .filter((item: AttachmentMetadataWithProgress) => item.uploadError)
+      .filter((item: AttachmentMetadataWithProgress) => item.error)
       .map((item: AttachmentMetadataWithProgress) => item.id);
 
     ids.forEach((id) => {
@@ -174,7 +172,7 @@ export class AzureCommunicationAttachmentUploadAdapter implements _AttachmentUpl
 
   updateUploadStatusMessage(id: string, errorMessage: string): void {
     this.context.updateAttachmentUpload(id, {
-      uploadError: {
+      error: {
         message: errorMessage
       }
     });
@@ -226,7 +224,7 @@ export const convertAttachmentUploadsUiStateToMessageMetadata = (
     const attachmentMetadata: AttachmentMetadataWithProgress[] = [];
     Object.keys(attachmentUploads).forEach((key) => {
       const attachment = attachmentUploads[key];
-      if (attachment && !attachment.uploadError) {
+      if (attachment && !attachment.error) {
         attachmentMetadata.push({
           id: attachment.id,
           name: attachment.name,

@@ -29,8 +29,7 @@ export interface _AttachmentUploadCardsStrings {
  */
 export interface AttachmentUploadCardsProps {
   /**
-   * Optional array of AttachmentMetadataWithProgress where each object has attibutes
-   * of a attachment upload like name, progress, errormessage etc.
+   * Optional array of {@link AttachmentMetadataWithProgress}
    */
   attachmentsWithProgress?: AttachmentMetadataWithProgress[];
   /**
@@ -67,7 +66,7 @@ export const _AttachmentUploadCards = (props: AttachmentUploadCardsProps): JSX.E
     <_AttachmentCardGroup>
       {attachments &&
         attachments
-          .filter((attachment) => !attachment.uploadError)
+          .filter((attachment) => !attachment.error)
           .map((attachment) => (
             <_AttachmentCard
               attachment={attachment}

@@ -171,8 +171,8 @@ export interface AttachmentMetadata {
 
 // @beta
 export interface AttachmentMetadataWithProgress extends AttachmentMetadata {
+    error?: AttachmentProgressError;
     progress?: number;
-    uploadError?: AttachmentUploadError;
 }
 
 // @beta
@@ -181,6 +181,12 @@ export interface AttachmentOptions {
     downloadOptions?: AttachmentDownloadOptions;
     // (undocumented)
     uploadOptions?: AttachmentUploadOptions;
+}
+
+// @beta
+export interface AttachmentProgressError {
+    // (undocumented)
+    message: string;
 }
 
 // @beta
@@ -200,17 +206,11 @@ export interface _AttachmentUploadAdapter {
     // (undocumented)
     registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadTask[];
     // (undocumented)
-    updateUploadMetadata: (id: string, metadata: AttachmentMetadataWithProgress | AttachmentMetadata) => void;
+    updateUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
     // (undocumented)
     updateUploadProgress: (id: string, progress: number) => void;
     // (undocumented)
     updateUploadStatusMessage: (id: string, errorMessage: string) => void;
-}
-
-// @beta
-export interface AttachmentUploadError {
-    // (undocumented)
-    message: string;
 }
 
 // @beta (undocumented)
@@ -1084,9 +1084,9 @@ export interface CallWithChatAdapterManagement {
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
     allowUnsupportedBrowserVersion(): void;
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
-    // @beta (undocumented)
+    // @internal (undocumented)
     cancelUpload: (id: string) => void;
-    // @beta (undocumented)
+    // @internal (undocumented)
     clearUploads: () => void;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     deleteMessage(messageId: string): Promise<void>;
@@ -1111,9 +1111,9 @@ export interface CallWithChatAdapterManagement {
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
     querySpeakers(): Promise<AudioDeviceInfo[]>;
     raiseHand(): Promise<void>;
-    // @beta (undocumented)
+    // @internal (undocumented)
     registerActiveUploads: (files: File[]) => AttachmentUploadTask[];
-    // @beta (undocumented)
+    // @internal (undocumented)
     registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadTask[];
     removeParticipant(userId: string): Promise<void>;
     // @beta
@@ -1151,11 +1151,11 @@ export interface CallWithChatAdapterManagement {
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
     updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void>;
     updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
-    // @beta (undocumented)
+    // @internal (undocumented)
     updateUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
-    // @beta (undocumented)
+    // @internal (undocumented)
     updateUploadProgress: (id: string, progress: number) => void;
-    // @beta (undocumented)
+    // @internal (undocumented)
     updateUploadStatusMessage: (id: string, errorMessage: string) => void;
 }
 
@@ -1269,8 +1269,8 @@ export interface CallWithChatAdapterSubscriptions {
 
 // @public
 export interface CallWithChatAdapterUiState {
-    // @beta
-    attachmentUploads?: _AttachmentUploadsUiState;
+    // @internal
+    _attachmentUploads?: _AttachmentUploadsUiState;
     isLocalPreviewMicrophoneEnabled: boolean;
     page: CallCompositePage;
     // @beta
@@ -1733,7 +1733,7 @@ export interface ChatAdapterThreadManagement {
 // @public
 export type ChatAdapterUiState = {
     error?: Error;
-    attachmentUploads?: _AttachmentUploadsUiState;
+    _attachmentUploads?: _AttachmentUploadsUiState;
 };
 
 // @public

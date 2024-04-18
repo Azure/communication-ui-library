@@ -108,7 +108,7 @@ export class ChatContext {
     };
 
     /* @conditional-compile-remove(attachment-upload) */
-    updatedState = { ...updatedState, attachmentUploads: this.state.attachmentUploads };
+    updatedState = { ...updatedState, _attachmentUploads: this.state._attachmentUploads };
 
     this.setState(updatedState);
   }
@@ -220,7 +220,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
       /* @conditional-compile-remove(attachment-upload) */
       options.metadata = {
         ...options.metadata,
-        ...convertAttachmentUploadsUiStateToMessageMetadata(this.context.getState().attachmentUploads)
+        ...convertAttachmentUploadsUiStateToMessageMetadata(this.context.getState()._attachmentUploads)
       };
 
       /* @conditional-compile-remove(attachment-upload) */

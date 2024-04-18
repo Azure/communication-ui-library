@@ -42,9 +42,9 @@ export interface CallWithChatAdapterUiState {
    * Should be set to null once the upload is complete.
    * Array of type {@link _AttachmentUploadsUiState}
    *
-   * @beta
+   * @internal
    */
-  attachmentUploads?: _AttachmentUploadsUiState;
+  _attachmentUploads?: _AttachmentUploadsUiState;
   /* @conditional-compile-remove(unsupported-browser) */
   /**
    * State to track whether the end user has opted in to using a
@@ -129,7 +129,7 @@ export function callWithChatAdapterStateFromBackingStates(callAdapter: CallAdapt
     latestCallErrors: callAdapterState.latestErrors,
     latestChatErrors: {},
     /* @conditional-compile-remove(attachment-upload) */
-    attachmentUploads: {},
+    _attachmentUploads: {},
     /* @conditional-compile-remove(PSTN-calls) */
     alternateCallerId: callAdapterState.alternateCallerId,
     /* @conditional-compile-remove(unsupported-browser) */
@@ -157,7 +157,7 @@ export function mergeChatAdapterStateIntoCallWithChatAdapterState(
     chat: chatAdapterState.thread,
     latestChatErrors: chatAdapterState.latestErrors,
     /* @conditional-compile-remove(attachment-upload) */
-    attachmentUploads: chatAdapterState.attachmentUploads
+    _attachmentUploads: chatAdapterState._attachmentUploads
   };
 }
 

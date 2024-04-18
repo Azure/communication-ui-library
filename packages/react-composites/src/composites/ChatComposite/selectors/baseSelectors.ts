@@ -15,6 +15,6 @@ export const getUserId = (state: ChatAdapterState): CommunicationIdentifierKind 
  */
 export const getAttachmentUploads = (state: ChatAdapterState): _AttachmentUploadsUiState | undefined => {
   /* @conditional-compile-remove(attachment-upload) */
-  return state?.attachmentUploads;
+  return state?._attachmentUploads;
   return undefined;
 };

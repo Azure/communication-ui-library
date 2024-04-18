@@ -296,7 +296,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   // Ensure that errors are cleared when there are no attachments in sendBox
   /* @conditional-compile-remove(attachment-upload) */
   React.useEffect(() => {
-    if (!attachmentsWithProgress?.filter((upload) => !upload.uploadError).length) {
+    if (!attachmentsWithProgress?.filter((upload) => !upload.error).length) {
       setAttachmentUploadsPendingError(undefined);
     }
   }, [attachmentsWithProgress]);
@@ -305,14 +305,14 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   const sendBoxErrorsProps = useMemo(() => {
     return {
       attachmentUploadsPendingError: attachmentUploadsPendingError,
-      attachmentUploadError: attachmentsWithProgress?.filter((attachmentUpload) => attachmentUpload.uploadError).pop()
-        ?.uploadError
+      attachmentProgressError: attachmentsWithProgress?.filter((attachmentUpload) => attachmentUpload.error).pop()
+        ?.error
     };
   }, [attachmentsWithProgress, attachmentUploadsPendingError]);
 
   /* @conditional-compile-remove(attachment-upload) */
   const onRenderAttachmentUploads = useCallback(() => {
-    if (!attachmentsWithProgress?.filter((upload) => !upload.uploadError).length) {
+    if (!attachmentsWithProgress?.filter((upload) => !upload.error).length) {
       return null;
     }
     return props.onRenderAttachmentUploads ? (
@@ -353,10 +353,10 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       {
         /* @conditional-compile-remove(attachment-upload) */
         <SendBoxErrors
-          attachmentUploadError={
-            sendBoxErrorsProps.attachmentUploadError
+          attachmentProgressError={
+            sendBoxErrorsProps.attachmentProgressError
               ? {
-                  message: sendBoxErrorsProps.attachmentUploadError.message,
+                  message: sendBoxErrorsProps.attachmentProgressError.message,
                   timestamp: Date.now()
                 }
               : undefined

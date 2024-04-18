@@ -382,25 +382,25 @@ export interface CallWithChatAdapterManagement {
    */
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
   /* @conditional-compile-remove(attachment-upload) */
-  /** @beta */
+  /** @internal */
   registerActiveUploads: (files: File[]) => AttachmentUploadTask[];
   /* @conditional-compile-remove(attachment-upload) */
-  /** @beta */
+  /** @internal */
   registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadTask[];
   /* @conditional-compile-remove(attachment-upload) */
-  /** @beta */
+  /** @internal */
   clearUploads: () => void;
   /* @conditional-compile-remove(attachment-upload) */
-  /** @beta */
+  /** @internal */
   cancelUpload: (id: string) => void;
   /* @conditional-compile-remove(attachment-upload) */
-  /** @beta */
+  /** @internal */
   updateUploadProgress: (id: string, progress: number) => void;
   /* @conditional-compile-remove(attachment-upload) */
-  /** @beta */
+  /** @internal */
   updateUploadStatusMessage: (id: string, errorMessage: string) => void;
   /* @conditional-compile-remove(attachment-upload) */
-  /** @beta */
+  /** @internal */
   updateUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
   /** @public */
   downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;

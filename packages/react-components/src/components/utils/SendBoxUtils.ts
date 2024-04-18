@@ -20,7 +20,7 @@ export const hasIncompleteAttachmentUploads = (
   return !!(
     attachmentsWithProgress?.length &&
     !attachmentsWithProgress
-      .filter((attachmentUpload) => !attachmentUpload.uploadError)
+      .filter((attachmentUpload) => !attachmentUpload.error)
       .every((attachmentUpload) => attachmentUpload.progress === 1 && attachmentUpload.progress !== undefined)
   );
 };
@@ -32,7 +32,7 @@ export const hasIncompleteAttachmentUploads = (
 export const hasCompletedAttachmentUploads = (
   attachmentsWithProgress: AttachmentMetadataWithProgress[] | undefined
 ): boolean => {
-  return !!attachmentsWithProgress?.find((attachment) => !attachment.uploadError);
+  return !!attachmentsWithProgress?.find((attachment) => !attachment.error);
 };
 
 /**

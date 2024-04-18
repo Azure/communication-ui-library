@@ -8,7 +8,7 @@ import {
   AttachmentMetadata,
   AttachmentSelectionHandler,
   AttachmentUploadTask,
-  AttachmentUploadError
+  AttachmentProgressError
 } from '@internal/react-components';
 
 /**
@@ -81,7 +81,7 @@ export class AttachmentUpload implements AttachmentUploadTask, AttachmentUploadE
   }
 }
 
-export type { AttachmentMetadata, AttachmentSelectionHandler, AttachmentUploadTask, AttachmentUploadError };
+export type { AttachmentMetadata, AttachmentSelectionHandler, AttachmentUploadTask, AttachmentProgressError };
 
 /**
  * Events emitted by the AttachmentUpload class.
