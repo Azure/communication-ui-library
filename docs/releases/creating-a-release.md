@@ -191,7 +191,7 @@ This process has the following benefits:
 - The release branch never diverges off of `main`. In theory, it is possible to abandon the release branch at any point and create a new one off of `main` without losing work.
 - All PR reviews happen on `main`, and the cherry-pick PR simply requires a sign-off.
 
-### Step 2.2: Fetch/Merge Translated Strings
+### Step 2.2: Fetch, Merge and Cherry-pick Translated Strings
 
 [Fetch translated strings](https://github.com/Azure/communication-ui-library/blob/main/docs/references/string-translations.md) again for main to make sure any other string updates that have occurred since the start of the release process are included. If there are any strings updated, cherry-pick the changes to the release branch.
 
