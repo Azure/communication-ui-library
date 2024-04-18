@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(reaction) */
 /**
  * Type for animation sprite image and related metadata
  * @public
@@ -17,7 +16,6 @@ export type ReactionSprite = {
   frameCount: number;
 };
 
-/* @conditional-compile-remove(reaction) */
 /**
  * Interface for animation sprite image and related metadata
  * @public
@@ -45,7 +43,6 @@ export interface ReactionResources {
   surprisedReaction?: ReactionSprite;
 }
 
-//* @conditional-compile-remove(reaction) */
 /**
  * Options for overlay mode for reaction rendering
  * @internal
