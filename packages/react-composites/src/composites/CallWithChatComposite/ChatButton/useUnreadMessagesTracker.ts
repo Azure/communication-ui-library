@@ -2,17 +2,14 @@
 // Licensed under the MIT License.
 
 import { useEffect, useState } from 'react';
+import { ChatAdapter } from '../../ChatComposite/adapter/ChatAdapter';
 import { ChatMessage } from '@azure/communication-chat';
-import { CallWithChatAdapter } from '../adapter/CallWithChatAdapter';
 
 /**
  * Used by the CallWithChatComposite to track unread messages for showing as a badge on the Chat Button.
  * @private
  */
-export const useUnreadMessagesTracker = (
-  callWithChatAdapter: CallWithChatAdapter,
-  isChatPaneVisible: boolean
-): number => {
+export const useUnreadMessagesTracker = (chatAdapter: ChatAdapter, isChatPaneVisible: boolean): number => {
   // Store messageIds of unread messages
   const [unreadChatMessages, setUnreadChatMessages] = useState<Set<string>>(new Set());
 
@@ -45,24 +42,14 @@ export const useUnreadMessagesTracker = (
       }
     };
 
-    if (callWithChatAdapter.isChatAdapterInitialized()) {
-      console.log('ChatAdapter is already initialized');
-      callWithChatAdapter.on('messageReceived', incrementUnreadChatMessagesCount);
-      callWithChatAdapter.on('messageDeleted', decrementUnreadChatMessagesCount);
-    } else {
-      console.log('ChatAdapter is not initialized yet. Waiting for chatInitialized event.');
-      callWithChatAdapter.on('chatInitialized', (chatAdapter) => {
-        console.log('ChatAdapter is connected. Subscribing to messageReceived and messageDeleted events');
-        callWithChatAdapter.on('messageReceived', incrementUnreadChatMessagesCount);
-        callWithChatAdapter.on('messageDeleted', decrementUnreadChatMessagesCount);
-      });
-    }
+    chatAdapter.on('messageReceived', incrementUnreadChatMessagesCount);
+    chatAdapter.on('messageDeleted', decrementUnreadChatMessagesCount);
 
     return () => {
-      callWithChatAdapter.off('messageReceived', incrementUnreadChatMessagesCount);
-      callWithChatAdapter.off('messageDeleted', decrementUnreadChatMessagesCount);
+      chatAdapter.off('messageReceived', incrementUnreadChatMessagesCount);
+      chatAdapter.off('messageDeleted', decrementUnreadChatMessagesCount);
     };
-  }, [callWithChatAdapter, setUnreadChatMessages, isChatPaneVisible]);
+  }, [chatAdapter, setUnreadChatMessages, isChatPaneVisible]);
 
   return unreadChatMessages.size;
 };

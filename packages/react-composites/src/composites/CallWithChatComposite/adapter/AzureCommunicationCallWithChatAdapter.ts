@@ -171,10 +171,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
 
     this.onChatStateChange = onChatStateChange;
     if (chatAdapter) {
-      this.chatAdapter = chatAdapter;
-      this.chatAdapter.onStateChange(onChatStateChange);
-      this.context.updateClientStateWithChatState(chatAdapter.getState());
-      this.emitter.emit('chatInitialized', this.chatAdapter);
+      this.updateChatAdapter(chatAdapter);
     }
 
     const onCallStateChange = (newCallAdapterState: CallAdapterState): void => {
@@ -187,15 +184,15 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
 
   public setChatAdapterPromise(chatAdapter: Promise<ChatAdapter>): void {
     chatAdapter.then((adapter) => {
-      this.chatAdapter = adapter;
-      this.chatAdapter.onStateChange(this.onChatStateChange);
-      this.context.updateClientStateWithChatState(adapter.getState());
-      this.emitter.emit('chatInitialized', this.chatAdapter);
+      this.updateChatAdapter(adapter);
     });
   }
 
-  public isChatAdapterInitialized(): boolean {
-    return !!this.chatAdapter;
+  private updateChatAdapter(chatAdapter: ChatAdapter): void {
+    this.chatAdapter = chatAdapter;
+    this.chatAdapter.onStateChange(this.onChatStateChange);
+    this.context.updateClientStateWithChatState(chatAdapter.getState());
+    this.emitter.emit('chatInitialized', this.chatAdapter);
   }
 
   private bindPublicMethods(): void {
@@ -453,7 +450,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   /** Load previous Chat messages. */
   public async loadPreviousChatMessages(messagesToLoad: number): Promise<boolean> {
     if (!this.chatAdapter) {
-      throw new Error('ChatAdapter is not initialized');
+      throw new Error('Chat is not initialized');
     }
     return this.chatAdapter.loadPreviousChatMessages(messagesToLoad);
   }
@@ -485,14 +482,14 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   public registerActiveUploads = (files: File[]): AttachmentUploadManager[] => {
     if (!this.chatAdapter) {
-      throw new Error('ChatAdapter is not initialized');
+      throw new Error('Chat is not initialized');
     }
     return this.chatAdapter.registerActiveUploads(files);
   };
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   public registerCompletedUploads = (metadata: AttachmentMetadata[]): AttachmentUploadManager[] => {
     if (!this.chatAdapter) {
-      throw new Error('ChatAdapter is not initialized');
+      throw new Error('Chat is not initialized');
     }
     return this.chatAdapter?.registerCompletedUploads(metadata);
   };
@@ -894,7 +891,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
 
   private executeWithResolvedChatAdapter(callback: (adapter: ChatAdapter) => void): void {
     if (!this.chatAdapter) {
-      console.error('ChatAdapter is not initialized');
+      console.error('Chat is not initialized');
     } else {
       callback(this.chatAdapter);
     }
@@ -1075,7 +1072,7 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
 
   const chatThreadAdapter = _createChatThreadAdapterInner(locator, callAdapter);
   if (chatThreadAdapter.isCallInfoRequired()) {
-    const CCAdapter = new AzureCommunicationCallWithChatAdapter(await callAdapter);
+    const callWithChatAdapter = new AzureCommunicationCallWithChatAdapter(await callAdapter);
     const chatAdapterPromise = _createLazyAzureCommunicationChatAdapterInner(
       endpoint,
       userId,
@@ -1084,8 +1081,8 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
       chatThreadAdapter.getChatThreadPromise(),
       'CallWithChat' as _TelemetryImplementationHint
     );
-    CCAdapter.setChatAdapterPromise(chatAdapterPromise);
-    return CCAdapter;
+    callWithChatAdapter.setChatAdapterPromise(chatAdapterPromise);
+    return callWithChatAdapter;
   } else {
     const chatAdapter = _createAzureCommunicationChatAdapterInner(
       endpoint,

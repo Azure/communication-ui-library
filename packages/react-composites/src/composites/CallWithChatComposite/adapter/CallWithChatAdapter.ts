@@ -508,12 +508,6 @@ export interface CallWithChatAdapterManagement {
    * Stop all spotlights
    */
   stopAllSpotlight(): Promise<void>;
-
-  /* @conditional-compile-remove(meeting-id) */
-  /**
-   * Return flag for whether chat is connected.
-   */
-  isChatAdapterInitialized(): boolean;
 }
 
 /**
