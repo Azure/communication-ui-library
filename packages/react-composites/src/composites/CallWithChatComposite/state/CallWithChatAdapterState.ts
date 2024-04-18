@@ -15,7 +15,6 @@ import { AttachmentUploadsUiState } from '../../ChatComposite';
 import { AdapterErrors } from '../../common/adapters';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '@internal/react-components';
 
 /**
@@ -96,7 +95,6 @@ export interface CallWithChatClientState {
   /* @conditional-compile-remove(hide-attendee-name) */
   /** Hide attendee names in teams meeting */
   hideAttendeeNames?: boolean;
-  /* @conditional-compile-remove(reaction) */
   /**
    * Reaction resources to render in meetings
    * */
@@ -140,7 +138,6 @@ export function callWithChatAdapterStateFromBackingStates(callAdapter: CallAdapt
     /* @conditional-compile-remove(hide-attendee-name) */
     /** Hide attendee names in teams meeting */
     hideAttendeeNames: callAdapterState.hideAttendeeNames,
-    /* @conditional-compile-remove(reaction) */
     reactions: callAdapterState.reactions
   };
 }

@@ -9,7 +9,6 @@ import React, { useMemo } from 'react';
 /* @conditional-compile-remove(spotlight) */
 import { KeyboardEvent, useCallback } from 'react';
 import { OnRenderAvatarCallback, VideoStreamOptions, CreateVideoStreamViewResult } from '../types';
-/* @conditional-compile-remove(reaction) */
 import { Reaction } from '../types';
 import { LocalVideoCameraCycleButton, LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
 import { StreamMedia } from './StreamMedia';
@@ -21,9 +20,7 @@ import { VideoTile, VideoTileStylesProps } from './VideoTile';
 import { RaisedHand } from '../types';
 /* @conditional-compile-remove(spotlight) */
 import { useTheme } from '../theming';
-/* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '../types/ReactionTypes';
-/* @conditional-compile-remove(reaction) */
 import { MeetingReactionOverlay } from './MeetingReactionOverlay';
 /* @conditional-compile-remove(spotlight) */
 import { useVideoTileContextualMenuProps } from './VideoGallery/useVideoTileContextualMenuProps';
@@ -59,7 +56,6 @@ export const _LocalVideoTile = React.memo(
     styles?: VideoTileStylesProps;
     personaMinSize?: number;
     raisedHand?: RaisedHand;
-    /* @conditional-compile-remove(reaction) */
     reaction?: Reaction;
     /* @conditional-compile-remove(spotlight) */
     spotlightedParticipantUserIds?: string[];
@@ -77,7 +73,6 @@ export const _LocalVideoTile = React.memo(
     drawerMenuHostId?: string;
     /* @conditional-compile-remove(spotlight) */
     strings?: VideoGalleryStrings;
-    /* @conditional-compile-remove(reaction) */
     reactionResources?: ReactionResources;
   }) => {
     const {
@@ -99,7 +94,6 @@ export const _LocalVideoTile = React.memo(
       localVideoCameraSwitcherLabel,
       localVideoSelectedDescription,
       raisedHand,
-      /* @conditional-compile-remove(reaction) */
       reaction,
       /* @conditional-compile-remove(spotlight) */
       isSpotlighted,
@@ -115,7 +109,6 @@ export const _LocalVideoTile = React.memo(
       menuKind,
       /* @conditional-compile-remove(spotlight) */
       strings,
-      /* @conditional-compile-remove(reaction) */
       reactionResources
     } = props;
 
@@ -233,7 +226,6 @@ export const _LocalVideoTile = React.memo(
       showCameraSwitcherInLocalPreview
     ]);
 
-    /* @conditional-compile-remove(reaction) */
     const reactionOverlay =
       reactionResources !== undefined ? (
         <MeetingReactionOverlay overlayMode="grid-tiles" reaction={reaction} reactionResources={reactionResources} />
@@ -266,7 +258,6 @@ export const _LocalVideoTile = React.memo(
               convertContextualMenuItemsToDrawerMenuItemProps(contextualMenuProps, () => setDrawerMenuItemProps([]))
             )
           }
-          /* @conditional-compile-remove(reaction) */
           overlay={reactionOverlay}
         >
           {

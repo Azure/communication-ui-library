@@ -38,9 +38,7 @@ import { AreEqual } from '@internal/acs-ui-common';
 import { ParticipantsButton } from '@internal/react-components';
 import { ErrorBarSelector, errorBarSelector } from '../errorBarSelector';
 import { CommonCallingHandlers } from '../handlers/createCommonHandlers';
-/* @conditional-compile-remove(reaction) */
 import { reactionButtonSelector } from '../callControlSelectors';
-/* @conditional-compile-remove(reaction) */
 import { ReactionButton } from '@internal/react-components';
 /* @conditional-compile-remove(spotlight) */
 import { _ComponentCallingHandlers } from '../handlers/createHandlers';
