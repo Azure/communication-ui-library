@@ -376,9 +376,6 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     const updateCallWithChatPage = (newState: CallWithChatAdapterState): void => {
       setCurrentPage(newState.page);
       setCurrentCallState(newState.call?.state);
-      if (newState.chat) {
-        useUnreadMessagesTracker(chatAdapter, isChatOpen);
-      }
     };
     updateCallWithChatPage(callWithChatAdapter.getState());
     callWithChatAdapter.onStateChange(updateCallWithChatPage);
