@@ -757,7 +757,7 @@ export interface CallAdapterDeviceManagement {
    */
   queryMicrophones(): Promise<AudioDeviceInfo[]>;
   /**
-   * Query for available microphone devices.
+   * Query for available speaker devices.
    *
    * @remarks
    * This method should be called after askDevicePermission()

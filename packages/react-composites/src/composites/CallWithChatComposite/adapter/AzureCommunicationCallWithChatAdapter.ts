@@ -897,12 +897,44 @@ export class CallAndChatProvider implements ChatThreadProvider {
  */
 export class TeamsMeetingLinkProvider implements ChatThreadProvider {
   public locator: TeamsMeetingLinkLocator;
+  /** @conditional-compile-remove(meeting-id) */
+  private callAdapterPromise: Promise<CallAdapter>;
+  /** @conditional-compile-remove(meeting-id) */
+  private callAdapterSubscription?: (state: CallAdapterState) => void;
 
-  constructor(locator: TeamsMeetingLinkLocator) {
+  constructor(
+    locator: TeamsMeetingLinkLocator,
+    /** @conditional-compile-remove(meeting-id) */ callAdapterPromise: Promise<CallAdapter>
+  ) {
     this.locator = locator;
+    /** @conditional-compile-remove(meeting-id) */
+    this.callAdapterPromise = callAdapterPromise;
   }
 
   public async getChatThread(): Promise<string> {
+    /** @conditional-compile-remove(meeting-id) */
+    {
+      // Wait for the call to be connected and get the chat thread ID from `call.callInfo`.
+      const chatThreadPromise = new Promise<string>((resolve) => {
+        this.callAdapterPromise.then((callAdapter) => {
+          // Ensure function is idempotent by removing any existing subscription.
+          this.callAdapterSubscription && callAdapter.offStateChange(this.callAdapterSubscription);
+
+          this.callAdapterSubscription = (state: CallAdapterState): void => {
+            if (state.call?.state === 'Connected' && state.call.info?.threadId) {
+              this.callAdapterSubscription && callAdapter.offStateChange(this.callAdapterSubscription);
+              this.callAdapterSubscription = undefined;
+
+              resolve(state.call.info?.threadId);
+            }
+          };
+          callAdapter.onStateChange(this.callAdapterSubscription);
+        });
+      });
+
+      return chatThreadPromise;
+    }
+
     return getChatThreadFromTeamsLink(this.locator.meetingLink);
   }
 }
@@ -1229,7 +1261,7 @@ const _createChatThreadAdapterInner = (
   adapter: Promise<CallAdapter>
 ): ChatThreadProvider => {
   if ('meetingLink' in locator) {
-    return new TeamsMeetingLinkProvider(locator);
+    return new TeamsMeetingLinkProvider(locator, /** @conditional-compile-remove(meeting-id) */ adapter);
   }
   /** @conditional-compile-remove(meeting-id) */
   if ('meetingId' in locator) {

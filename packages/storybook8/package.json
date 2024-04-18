@@ -3,8 +3,10 @@
   "version": "1.16.0-beta.0",
   "description": "Azure Communication Services UI Library Storybook",
   "scripts": {
-    "build": "cross-env NODE_ENV=production node ./scripts/build.mjs",
-    "build:dev": "cross-env NODE_ENV=development node ./scripts/build.mjs",
+    "build": "echo Storybook 8 build via 'build-s8' target",
+    "build:dev": "echo Storybook 8 build via 'build:dev-s8' target",
+    "build-s8": "cross-env NODE_ENV=production node ./scripts/build.mjs",
+    "build:dev-s8": "cross-env NODE_ENV=development node ./scripts/build.mjs",
     "clean": "",
     "start": "cross-env NODE_ENV=development node ./scripts/start.mjs",
     "deploy-storybook": "node ./scripts/deploy.mjs",
