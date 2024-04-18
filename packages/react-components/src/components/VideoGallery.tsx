@@ -38,7 +38,6 @@ import { FocusedContentLayout } from './VideoGallery/FocusContentLayout';
 /* @conditional-compile-remove(large-gallery) */
 import { LargeGalleryLayout } from './VideoGallery/LargeGalleryLayout';
 import { LayoutProps } from './VideoGallery/Layout';
-/* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '../types/ReactionTypes';
 
 /**
@@ -304,7 +303,6 @@ export interface VideoGalleryProps {
    * @defaultValue 'followDeviceOrientation'
    */
   localVideoTileSize?: LocalVideoTileSize;
-  /* @conditional-compile-remove(reaction) */
   /**
    * Reaction resources for like, heart, laugh, applause and surprised.
    */
@@ -384,7 +382,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onStopRemoteSpotlight,
     /* @conditional-compile-remove(spotlight) */
     maxParticipantsToSpotlight,
-    /* @conditional-compile-remove(reaction) */
     reactionResources
   } = props;
 
@@ -492,7 +489,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           localVideoSelectedDescription={strings.localVideoSelectedDescription}
           styles={localVideoTileStyles}
           raisedHand={localParticipant.raisedHand}
-          /* @conditional-compile-remove(reaction) */
           reaction={localParticipant.reaction}
           /* @conditional-compile-remove(spotlight) */
           spotlightedParticipantUserIds={spotlightedParticipants}
@@ -510,7 +506,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           drawerMenuHostId={drawerMenuHostId}
           /* @conditional-compile-remove(spotlight) */
           strings={strings}
-          /* @conditional-compile-remove(reaction) */
           reactionResources={reactionResources}
         />
       </Stack>
@@ -546,7 +541,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     strings,
     /* @conditional-compile-remove(spotlight) */
     drawerMenuHostId,
-    /* @conditional-compile-remove(reaction) */
     reactionResources
   ]);
 
@@ -653,7 +647,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           onStopSpotlight={onStopRemoteSpotlight}
           /* @conditional-compile-remove(spotlight) */
           maxParticipantsToSpotlight={maxParticipantsToSpotlight}
-          /* @conditional-compile-remove(reaction) */
           reactionResources={reactionResources}
         />
       );
@@ -678,7 +671,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       /* @conditional-compile-remove(spotlight) */ onStartRemoteSpotlight,
       /* @conditional-compile-remove(spotlight) */ onStopRemoteSpotlight,
       /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight,
-      /* @conditional-compile-remove(reaction) */ reactionResources
+      reactionResources
     ]
   );
 
@@ -694,11 +687,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       onDisposeRemoteStreamView={onDisposeRemoteScreenShareStreamView}
       isReceiving={screenShareParticipant.screenShareStream?.isReceiving}
       participantVideoScalingMode={selectedScalingModeState[screenShareParticipant.userId]}
-      /* @conditional-compile-remove(reaction) */
       localParticipant={localParticipant}
-      /* @conditional-compile-remove(reaction) */
       remoteParticipants={remoteParticipants}
-      /* @conditional-compile-remove(reaction) */
       reactionResources={reactionResources}
       /* @conditional-compile-remove(ppt-live) */
       isPPTLive={!screenShareParticipant.screenShareStream?.id}
