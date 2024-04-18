@@ -994,7 +994,7 @@ export class CallContext {
       ) {
         captions[captions.length - 1] = newCaption;
       }
-      //if different speaker, ignore the interjector until the current speaker finishes
+      // if different speaker, ignore the interjector until the current speaker finishes
       // edge case: if we dont receive the final caption from the current speaker for 5 secs, we turn the current speaker caption to final and push in the new interjector
       else {
         if (new Date().getTime() - captions[captions.length - 1].timestamp.getTime() > 5000) {
