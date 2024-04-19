@@ -5,7 +5,7 @@ import { CallWithChatAdapter } from './CallWithChatAdapter';
 import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
 import { ResourceDetails } from '../../ChatComposite';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata, AttachmentUploadManager } from '@internal/react-components';
+import { AttachmentMetadata, AttachmentUploadTask } from '@internal/react-components';
 import { ErrorBarStrings } from '@internal/react-components';
 import { CallWithChatAdapterState } from '../state/CallWithChatAdapterState';
 
@@ -30,6 +30,10 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
 
   public fetchInitialData = async (): Promise<void> => await this.callWithChatAdapter.fetchInitialData();
   public sendMessage = async (content: string): Promise<void> => await this.callWithChatAdapter.sendMessage(content);
+  /* @conditional-compile-remove(attachment-upload) */
+  public sendMessageWithAttachments(content: string, attachments: AttachmentMetadata[]): Promise<void> {
+    return this.callWithChatAdapter.sendMessageWithAttachments(content, attachments);
+  }
   public sendReadReceipt = async (chatMessageId: string): Promise<void> =>
     await this.callWithChatAdapter.sendReadReceipt(chatMessageId);
   public sendTypingIndicator = async (): Promise<void> => await this.callWithChatAdapter.sendTypingIndicator();
@@ -92,12 +96,12 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
   };
 
   /* @conditional-compile-remove(attachment-upload) */
-  public registerActiveUploads = (files: File[]): AttachmentUploadManager[] => {
+  public registerActiveUploads = (files: File[]): AttachmentUploadTask[] => {
     return this.callWithChatAdapter.registerActiveUploads(files);
   };
 
   /* @conditional-compile-remove(attachment-upload) */
-  public registerCompletedUploads = (metadata: AttachmentMetadata[]): AttachmentUploadManager[] => {
+  public registerCompletedUploads = (metadata: AttachmentMetadata[]): AttachmentUploadTask[] => {
     return this.callWithChatAdapter.registerCompletedUploads(metadata);
   };
 
@@ -147,6 +151,6 @@ function chatAdapterStateFromCallWithChatAdapterState(
     thread: callWithChatAdapterState.chat,
     latestErrors: callWithChatAdapterState.latestChatErrors,
     /* @conditional-compile-remove(attachment-upload) */
-    attachmentUploads: callWithChatAdapterState.attachmentUploads
+    _attachmentUploads: callWithChatAdapterState._attachmentUploads
   };
 }

@@ -5,7 +5,7 @@ export const AttachmentUploadsExample: () => JSX.Element = () => (
   <FluentThemeProvider>
     <div style={{ width: '31.25rem' }}>
       <SendBox
-        activeAttachmentUploads={[
+        attachmentsWithProgress={[
           {
             id: '1',
             name: 'Sample.pdf',
