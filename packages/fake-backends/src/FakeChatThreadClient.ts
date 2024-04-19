@@ -16,7 +16,9 @@ import {
   SendMessageRequest,
   SendReadReceiptRequest,
   SendTypingNotificationOptions,
-  UpdateMessageOptions
+  UpdateMessageOptions,
+  UploadChatImageResult,
+  UploadImageOptions
 } from '@azure/communication-chat';
 /* @conditional-compile-remove(chat-beta-sdk) */
 import { UpdateChatThreadPropertiesOptions } from '@azure/communication-chat';
@@ -28,6 +30,7 @@ import { bumpMessageVersion, Model } from './Model';
 import { getThreadEventTargets, ThreadEventEmitter } from './ThreadEventEmitter';
 import { IChatThreadClient, Thread } from './types';
 import { chatToSignalingParticipant, pagedAsyncIterator } from './utils';
+import { nanoid } from 'nanoid';
 
 /**
  * A public interface compatible stub for ChatThreadClient.
@@ -359,6 +362,17 @@ export class FakeChatThreadClient implements IChatThreadClient {
       throw new Error(`options.skip not supported`);
     }
     return pagedAsyncIterator(this.checkedGetThread().readReceipts);
+  }
+
+  uploadImage(
+    image: ReadableStream<Uint8Array> | NodeJS.ReadableStream | ArrayBuffer | Blob,
+    imageFilename: string
+  ): Promise<UploadChatImageResult> {
+    return Promise.resolve({ id: nanoid(), name: imageFilename, attachmentType: 'image' });
+  }
+
+  deleteImage(): Promise<void> {
+    return Promise.resolve();
   }
 
   private checkedGetThread(): Thread {
