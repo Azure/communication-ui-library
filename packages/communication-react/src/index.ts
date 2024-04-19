@@ -290,7 +290,8 @@ export type {
   VideoTileStylesProps,
   ViewScalingMode,
   VideoTileContextualMenuProps,
-  VideoTileDrawerMenuProps
+  VideoTileDrawerMenuProps,
+  VideoTilesOptions
 } from '../../react-components/src';
 
 export type { RaiseHandButtonProps, RaiseHandButtonStrings, RaisedHand } from '../../react-components/src';
@@ -324,10 +325,12 @@ export type { AttachmentMetadata, AttachmentOptions } from '../../react-componen
 export type { SendBoxErrorBarError } from '../../react-components/src';
 /* @conditional-compile-remove(attachment-upload) */
 export type {
-  AttachmentUploadStatus,
-  AttachmentUploadHandler,
+  AttachmentProgressError,
+  AttachmentSelectionHandler,
+  AttachmentRemovalHandler,
   AttachmentUploadOptions,
-  AttachmentUploadManager
+  AttachmentUploadTask,
+  AttachmentMetadataWithProgress
 } from '../../react-components/src';
 
 /* @conditional-compile-remove(attachment-download) */

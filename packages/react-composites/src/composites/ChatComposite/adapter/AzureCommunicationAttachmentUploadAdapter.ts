@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { AttachmentUploadManager, AttachmentMetadata } from '@internal/react-components';
+import { AttachmentUploadTask, AttachmentMetadata, AttachmentMetadataWithProgress } from '@internal/react-components';
 /* @conditional-compile-remove(attachment-upload) */
 import { produce } from 'immer';
 /* @conditional-compile-remove(attachment-upload) */
@@ -12,17 +12,17 @@ import { ChatContext } from './AzureCommunicationChatAdapter';
 import { ChatAdapterState } from './ChatAdapter';
 
 /**
- * A record containing {@link AttachmentMetadata} mapped to unique ids.
- * @beta
+ * A record containing {@link AttachmentMetadata} mapped to unique attachment upload task ids.
+ * @internal
  */
-export type AttachmentUploadsUiState = Record<string, AttachmentMetadata>;
+export type _AttachmentUploadsUiState = Record<string, AttachmentMetadataWithProgress>;
 
 /**
- * @beta
+ * @internal
  */
-export interface AttachmentUploadAdapter {
-  registerActiveUploads: (files: File[]) => AttachmentUploadManager[];
-  registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadManager[];
+export interface _AttachmentUploadAdapter {
+  registerActiveUploads: (files: File[]) => AttachmentUploadTask[];
+  registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadTask[];
   clearUploads: () => void;
   cancelUpload: (id: string) => void;
   updateUploadProgress: (id: string, progress: number) => void;
@@ -41,16 +41,16 @@ class AttachmentUploadContext {
     this.chatContext = chatContext;
   }
 
-  public getAttachmentUploads(): AttachmentUploadsUiState | undefined {
-    return this.chatContext.getState().attachmentUploads;
+  public getAttachmentUploads(): _AttachmentUploadsUiState | undefined {
+    return this.chatContext.getState()._attachmentUploads;
   }
 
   public addAttachmentUploads(attachmentUploads: AttachmentUpload[]): void {
     const attachmentUploadsMap = convertObservableAttachmentUploadToAttachmentUploadsUiState(attachmentUploads);
     this.chatContext.setState(
       produce(this.chatContext.getState(), (draft) => {
-        draft.attachmentUploads = draft.attachmentUploads || {};
-        draft.attachmentUploads = { ...draft.attachmentUploads, ...attachmentUploadsMap };
+        draft._attachmentUploads = draft._attachmentUploads || {};
+        draft._attachmentUploads = { ...draft._attachmentUploads, ...attachmentUploadsMap };
       })
     );
   }
@@ -58,24 +58,24 @@ class AttachmentUploadContext {
   public clearUploads(): void {
     this.chatContext.setState(
       produce(this.chatContext.getState(), (draft: ChatAdapterState) => {
-        draft.attachmentUploads = {};
+        draft._attachmentUploads = {};
       })
     );
   }
 
   public updateAttachmentUpload(
     id: string,
-    data: Partial<Pick<AttachmentMetadata, 'progress' | 'id' | 'name' | 'extension' | 'uploadError' | 'url'>>
+    data: Partial<Pick<AttachmentMetadataWithProgress, 'progress' | 'id' | 'name' | 'extension' | 'error' | 'url'>>
   ): void {
     this.chatContext.setState(
       produce(this.chatContext.getState(), (draft: ChatAdapterState) => {
-        if (draft.attachmentUploads?.[id]) {
-          draft.attachmentUploads[data.id ?? id] = {
-            ...draft.attachmentUploads?.[id],
+        if (draft._attachmentUploads?.[id]) {
+          draft._attachmentUploads[data.id ?? id] = {
+            ...draft._attachmentUploads?.[id],
             ...data
           };
           if (data.id) {
-            delete draft.attachmentUploads?.[id];
+            delete draft._attachmentUploads?.[id];
           }
         }
       })
@@ -86,11 +86,11 @@ class AttachmentUploadContext {
     this.chatContext.setState(
       produce(this.chatContext.getState(), (draft: ChatAdapterState) => {
         ids.forEach((id) => {
-          const keys = Object.keys(draft?.attachmentUploads ?? []).filter(
-            (rawID) => draft.attachmentUploads?.[rawID].id === id
+          const keys = Object.keys(draft?._attachmentUploads ?? []).filter(
+            (rawID) => draft._attachmentUploads?.[rawID].id === id
           );
           keys.forEach((key) => {
-            delete draft.attachmentUploads?.[key];
+            delete draft._attachmentUploads?.[key];
           });
         });
       })
@@ -102,7 +102,7 @@ class AttachmentUploadContext {
 /**
  * @internal
  */
-export class AzureCommunicationAttachmentUploadAdapter implements AttachmentUploadAdapter {
+export class AzureCommunicationAttachmentUploadAdapter implements _AttachmentUploadAdapter {
   private context: AttachmentUploadContext;
   private attachmentUploads: AttachmentUpload[] = [];
 
@@ -111,19 +111,21 @@ export class AzureCommunicationAttachmentUploadAdapter implements AttachmentUplo
   }
 
   private findAttachmentUpload(id: string): AttachmentUpload | undefined {
-    return this.attachmentUploads.find((attachmentUpload) => attachmentUpload.id === id);
+    return this.attachmentUploads.find((attachmentUpload) => attachmentUpload.taskId === id);
   }
 
   private deleteAttachmentUploads(ids: string[]): void {
-    this.attachmentUploads = this.attachmentUploads.filter((attachmentUpload) => !ids.includes(attachmentUpload.id));
+    this.attachmentUploads = this.attachmentUploads.filter(
+      (attachmentUpload) => !ids.includes(attachmentUpload.taskId)
+    );
     this.context.deleteAttachmentUploads(ids);
   }
 
   private deleteErroneousAttachmentUploads(): void {
     const attachmentUploads = this.context.getAttachmentUploads() || {};
     const ids = Object.values(attachmentUploads)
-      .filter((item: AttachmentMetadata) => item.uploadError)
-      .map((item: AttachmentMetadata) => item.id);
+      .filter((item: AttachmentMetadataWithProgress) => item.error)
+      .map((item: AttachmentMetadataWithProgress) => item.id);
 
     ids.forEach((id) => {
       const attachmentUpload = this.findAttachmentUpload(id);
@@ -133,7 +135,7 @@ export class AzureCommunicationAttachmentUploadAdapter implements AttachmentUplo
     this.deleteAttachmentUploads(ids);
   }
 
-  private registerAttachmentUploads(files: File[] | AttachmentMetadata[]): AttachmentUploadManager[] {
+  private registerAttachmentUploads(files: File[] | AttachmentMetadata[]): AttachmentUploadTask[] {
     this.deleteErroneousAttachmentUploads();
     const attachmentUploads: AttachmentUpload[] = [];
     files.forEach((file) => attachmentUploads.push(new AttachmentUpload(file)));
@@ -143,11 +145,11 @@ export class AzureCommunicationAttachmentUploadAdapter implements AttachmentUplo
     return attachmentUploads;
   }
 
-  registerActiveUploads(files: File[]): AttachmentUploadManager[] {
+  registerActiveUploads(files: File[]): AttachmentUploadTask[] {
     return this.registerAttachmentUploads(files);
   }
 
-  registerCompletedUploads(metadata: AttachmentMetadata[]): AttachmentUploadManager[] {
+  registerCompletedUploads(metadata: AttachmentMetadata[]): AttachmentUploadTask[] {
     return this.registerAttachmentUploads(metadata);
   }
 
@@ -170,9 +172,8 @@ export class AzureCommunicationAttachmentUploadAdapter implements AttachmentUplo
 
   updateUploadStatusMessage(id: string, errorMessage: string): void {
     this.context.updateAttachmentUpload(id, {
-      uploadError: {
-        message: errorMessage,
-        timestamp: Date.now()
+      error: {
+        message: errorMessage
       }
     });
   }
@@ -187,32 +188,43 @@ export class AzureCommunicationAttachmentUploadAdapter implements AttachmentUplo
     });
   }
 
+  setAttachmentMetadata(taskId: string, attachmentId: string, attachmentUrl: string): void {
+    const attachmentUpload = this.findAttachmentUpload(taskId);
+    this.context.updateAttachmentUpload(taskId, {
+      progress: 1,
+      id: attachmentId,
+      name: attachmentUpload?.name,
+      url: attachmentUrl,
+      extension: attachmentUpload?.name.split('.').pop() || ''
+    });
+  }
+
   private subscribeAllEvents(attachmentUpload: AttachmentUpload): void {
     attachmentUpload.on('uploadProgressChange', this.updateUploadProgress.bind(this));
-    attachmentUpload.on('uploadComplete', this.updateUploadMetadata.bind(this));
+    attachmentUpload.on('uploadComplete', this.setAttachmentMetadata.bind(this));
     attachmentUpload.on('uploadFail', this.updateUploadStatusMessage.bind(this));
   }
 
   private unsubscribeAllEvents(attachmentUpload?: AttachmentUpload): void {
     attachmentUpload?.off('uploadProgressChange', this.updateUploadProgress.bind(this));
-    attachmentUpload?.off('uploadComplete', this.updateUploadMetadata.bind(this));
+    attachmentUpload?.off('uploadComplete', this.setAttachmentMetadata.bind(this));
     attachmentUpload?.off('uploadFail', this.updateUploadStatusMessage.bind(this));
   }
 }
 
 /* @conditional-compile-remove(attachment-upload) */
 /**
- * @param attachmentUploadUiState {@link AttachmentUploadsUiState}
+ * @param attachmentUploadUiState {@link _AttachmentUploadsUiState}
  * @private
  */
 export const convertAttachmentUploadsUiStateToMessageMetadata = (
-  attachmentUploads?: AttachmentUploadsUiState
+  attachmentUploads?: _AttachmentUploadsUiState
 ): FileSharingMetadata | undefined => {
   if (attachmentUploads) {
-    const attachmentMetadata: AttachmentMetadata[] = [];
+    const attachmentMetadata: AttachmentMetadataWithProgress[] = [];
     Object.keys(attachmentUploads).forEach((key) => {
       const attachment = attachmentUploads[key];
-      if (attachment && !attachment.uploadError) {
+      if (attachment && !attachment.error) {
         attachmentMetadata.push({
           id: attachment.id,
           name: attachment.name,
@@ -235,10 +247,10 @@ export const convertAttachmentUploadsUiStateToMessageMetadata = (
  */
 const convertObservableAttachmentUploadToAttachmentUploadsUiState = (
   attachmentUploads: AttachmentUpload[]
-): AttachmentUploadsUiState => {
-  return attachmentUploads.reduce((map: AttachmentUploadsUiState, attachmentUpload) => {
-    map[attachmentUpload.id] = {
-      id: attachmentUpload.id,
+): _AttachmentUploadsUiState => {
+  return attachmentUploads.reduce((map: _AttachmentUploadsUiState, attachmentUpload) => {
+    map[attachmentUpload.taskId] = {
+      id: attachmentUpload.taskId,
       name: attachmentUpload.name,
       progress: 0,
       extension: attachmentUpload.name.split('.').pop() || ''
