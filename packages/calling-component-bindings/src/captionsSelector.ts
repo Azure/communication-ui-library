@@ -107,30 +107,10 @@ export type _CaptionsBannerSelector = (
 export const _captionsBannerSelector: _CaptionsBannerSelector = reselect.createSelector(
   [getCaptions, getCaptionsStatus, getStartCaptionsInProgress],
   (captions, isCaptionsFeatureActive, startCaptionsInProgress) => {
-    // Following Teams app logic, no matter how many 'Partial' captions come,
-    // we only pick first one according to start time, and all the other partial captions will be filtered out
-    // This will give customers a stable captions experience when others talking over the dominant speaker
-    // First turn all partial captions that are older than 5 seconds to final
-    captions
-      ?.filter((captions) => captions.resultType === 'Partial')
-      .forEach((c) => {
-        // if c is created more than 5 seconds ago, make it final
-        if (c.timestamp.getTime() + 5000 < Date.now()) {
-          // make it final
-          c.resultType = 'Final';
-        }
-      });
-    const captionsToRender = captions?.filter((captions) => captions.resultType === 'Final');
-    const firstPartialCaptions = captions
-      ?.filter((captions) => captions.resultType === 'Partial')
-      .sort(captionsComparator)[0];
-
-    firstPartialCaptions && captionsToRender?.push(firstPartialCaptions);
-
-    const captionsInfo = captionsToRender?.map((c) => {
+    const captionsInfo = captions?.map((c, index) => {
       const userId = getCaptionsSpeakerIdentifier(c);
       return {
-        id: c.timestamp.getTime() + userId + c.speaker.displayName,
+        id: c.speaker.displayName ?? 'Unnamed Participant' + index,
         displayName: c.speaker.displayName ?? 'Unnamed Participant',
         captionText: c.captionText ?? '',
         userId
@@ -143,13 +123,6 @@ export const _captionsBannerSelector: _CaptionsBannerSelector = reselect.createS
     };
   }
 );
-
-const captionsComparator = (captionsA: CaptionsInfo, captionsB: CaptionsInfo): number => {
-  return (
-    captionsA.timestamp.getTime() - captionsB.timestamp.getTime() ||
-    getCaptionsSpeakerIdentifier(captionsA).localeCompare(getCaptionsSpeakerIdentifier(captionsB))
-  );
-};
 
 const getCaptionsSpeakerIdentifier = (captions: CaptionsInfo): string => {
   return captions.speaker.identifier ? toFlatCommunicationIdentifier(captions.speaker.identifier) : '';

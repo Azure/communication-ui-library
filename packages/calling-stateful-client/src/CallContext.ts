@@ -966,23 +966,34 @@ export class CallContext {
   }
 
   private processNewCaption(captions: CaptionsInfo[], newCaption: CaptionsInfo): void {
-    // going through current captions to find the last caption said by the same speaker, remove that caption if it's partial and replace with the new caption
-    for (let index = captions.length - 1; index >= 0; index--) {
-      const currentCaption = captions[index];
+    // time stamp when new caption comes in
+    newCaption.timestamp = new Date();
+    // if this is the first caption, push it in
+    if (captions.length === 0) {
+      captions.push(newCaption);
+    }
+    // if the last caption is final, then push the new one in
+    else if (captions[captions.length - 1].resultType === 'Final') {
+      captions.push(newCaption);
+    }
+    // if the last caption is Partial, then check if the speaker is the same as the new caption, if so, update the last caption
+    else {
       if (
-        currentCaption &&
-        currentCaption.resultType !== 'Final' &&
-        currentCaption.speaker.identifier &&
-        newCaption.speaker.identifier &&
-        toFlatCommunicationIdentifier(currentCaption.speaker.identifier) ===
-          toFlatCommunicationIdentifier(newCaption.speaker.identifier)
+        toFlatCommunicationIdentifier(
+          captions[captions.length - 1].speaker.identifier as CommunicationIdentifierKind
+        ) === toFlatCommunicationIdentifier(newCaption.speaker.identifier as CommunicationIdentifierKind)
       ) {
-        captions.splice(index, 1);
-        break;
+        captions[captions.length - 1] = newCaption;
+      }
+      // if different speaker, ignore the interjector until the current speaker finishes
+      // edge case: if we dont receive the final caption from the current speaker for 5 secs, we turn the current speaker caption to final and push in the new interjector
+      else {
+        if (Date.now() - captions[captions.length - 1].timestamp.getTime() > 5000) {
+          captions[captions.length - 1].resultType = 'Final';
+          captions.push(newCaption);
+        }
       }
     }
-
-    captions.push(newCaption);
 
     // If the array length exceeds 50, remove the oldest caption
     if (captions.length > 50) {
