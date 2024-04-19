@@ -366,7 +366,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
         isVideoRendered || props.alwaysShowLabelBackground ? videoHintWithBorderRadius : disabledVideoHint,
         styles?.displayNameContainer
       ),
-    [isVideoRendered, videoHintWithBorderRadius, theme, styles?.displayNameContainer]
+    [isVideoRendered, videoHintWithBorderRadius, styles?.displayNameContainer, props.alwaysShowLabelBackground]
   );
 
   const ids = useIdentifiers();
