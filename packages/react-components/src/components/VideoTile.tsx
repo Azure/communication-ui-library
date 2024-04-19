@@ -38,7 +38,6 @@ import useLongPress from './utils/useLongPress';
 import { moreButtonStyles } from './styles/VideoTile.styles';
 import { raiseHandContainerStyles } from './styles/VideoTile.styles';
 import { ReactionResources } from '../types/ReactionTypes';
-import { isDarkThemed } from '../theming/themeUtils';
 
 /**
  * Strings of {@link VideoTile} that can be overridden.
@@ -274,6 +273,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
   const locale = useLocale();
   const theme = useTheme();
+  const callingPalette = (theme as unknown as CallingTheme).callingPalette;
 
   const isVideoRendered = !!renderElement;
 
@@ -357,7 +357,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
   const videoHintWithBorderRadius = mergeStyles(disabledVideoHint, {
     borderRadius: theme.effects.roundedCorner4,
-    backgroundColor: isDarkThemed(theme) ? 'rgba(37,36,35,0.8)' : 'rgba(255,255,255,0.8)'
+    backgroundColor: callingPalette.videoTileLabelBackgroundLight
   });
 
   const tileInfoStyle = useMemo(
@@ -375,7 +375,6 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const participantStateString = participantStateStringTrampoline(props, locale);
   const canShowContextMenuButton = isHovered || isFocused;
   let raisedHandBackgroundColor = '';
-  const callingPalette = (theme as unknown as CallingTheme).callingPalette;
   raisedHandBackgroundColor = callingPalette.raiseHandGold;
 
   return (
