@@ -11,7 +11,7 @@ import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 import { ChatAdapterState } from '../../ChatComposite';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentUploadsUiState } from '../../ChatComposite';
+import { _AttachmentUploadsUiState } from '../../ChatComposite';
 import { AdapterErrors } from '../../common/adapters';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
@@ -39,11 +39,11 @@ export interface CallWithChatAdapterUiState {
   /**
    * Files being uploaded by a user in the current thread.
    * Should be set to null once the upload is complete.
-   * Array of type {@link AttachmentUploadsUiState}
+   * Array of type {@link _AttachmentUploadsUiState}
    *
-   * @beta
+   * @internal
    */
-  attachmentUploads?: AttachmentUploadsUiState;
+  _attachmentUploads?: _AttachmentUploadsUiState;
   /* @conditional-compile-remove(unsupported-browser) */
   /**
    * State to track whether the end user has opted in to using a
@@ -127,7 +127,7 @@ export function callWithChatAdapterStateFromBackingStates(callAdapter: CallAdapt
     latestCallErrors: callAdapterState.latestErrors,
     latestChatErrors: {},
     /* @conditional-compile-remove(attachment-upload) */
-    attachmentUploads: {},
+    _attachmentUploads: {},
     /* @conditional-compile-remove(PSTN-calls) */
     alternateCallerId: callAdapterState.alternateCallerId,
     /* @conditional-compile-remove(unsupported-browser) */
@@ -154,7 +154,7 @@ export function mergeChatAdapterStateIntoCallWithChatAdapterState(
     chat: chatAdapterState.thread,
     latestChatErrors: chatAdapterState.latestErrors,
     /* @conditional-compile-remove(attachment-upload) */
-    attachmentUploads: chatAdapterState.attachmentUploads
+    _attachmentUploads: chatAdapterState._attachmentUploads
   };
 }
 

@@ -24,7 +24,7 @@ describe('registerAttachmentUploads()', () => {
     const chatContext = createChatContext();
     const adapter = new AzureCommunicationAttachmentUploadAdapter(chatContext);
     adapter.registerActiveUploads(generateFiles(1));
-    expect(Object.values(chatContext.getState().attachmentUploads || {}).length).toBe(1);
+    expect(Object.values(chatContext.getState()._attachmentUploads || {}).length).toBe(1);
   });
 
   test('should append attachment uploads to state', () => {
@@ -32,7 +32,7 @@ describe('registerAttachmentUploads()', () => {
     const adapter = new AzureCommunicationAttachmentUploadAdapter(chatContext);
     adapter.registerActiveUploads(generateFiles(1));
     adapter.registerActiveUploads(generateFiles(1));
-    expect(Object.values(chatContext.getState().attachmentUploads || {}).length).toBe(2);
+    expect(Object.values(chatContext.getState()._attachmentUploads || {}).length).toBe(2);
   });
 
   test('should append attachment uploads to state without changing existing attachment uploads', () => {
@@ -41,14 +41,14 @@ describe('registerAttachmentUploads()', () => {
     const attachmentUploads_1 = adapter.registerActiveUploads(generateFiles(1));
     chatContext.setState(
       produce(chatContext.getState(), (draft: ChatAdapterState) => {
-        if (draft.attachmentUploads?.[attachmentUploads_1[0].id]) {
-          draft.attachmentUploads[attachmentUploads_1[0].id].progress = 0.75;
+        if (draft._attachmentUploads?.[attachmentUploads_1[0].taskId]) {
+          draft._attachmentUploads[attachmentUploads_1[0].taskId].progress = 0.75;
         }
       })
     );
     adapter.registerActiveUploads(generateFiles(1));
-    expect(Object.values(chatContext.getState().attachmentUploads || {}).length).toBe(2);
-    expect(chatContext.getState().attachmentUploads?.[attachmentUploads_1[0].id].progress).toBe(0.75);
+    expect(Object.values(chatContext.getState()._attachmentUploads || {}).length).toBe(2);
+    expect(chatContext.getState()._attachmentUploads?.[attachmentUploads_1[0].taskId].progress).toBe(0.75);
   });
 
   test('should remove erroneous attachment uploads from state', () => {
@@ -57,16 +57,15 @@ describe('registerAttachmentUploads()', () => {
     const attachmentUploads = adapter.registerActiveUploads(generateFiles(2));
     chatContext.setState(
       produce(chatContext.getState(), (draft: ChatAdapterState) => {
-        if (draft.attachmentUploads?.[attachmentUploads[0].id]) {
-          draft.attachmentUploads[attachmentUploads[0].id].uploadError = {
-            message: 'Sample Error Message',
-            timestamp: Date.now()
+        if (draft._attachmentUploads?.[attachmentUploads[0].taskId]) {
+          draft._attachmentUploads[attachmentUploads[0].taskId].error = {
+            message: 'Sample Error Message'
           };
         }
       })
     );
     adapter.registerActiveUploads(generateFiles(2));
-    expect(Object.values(chatContext.getState().attachmentUploads || {}).length).toBe(3);
+    expect(Object.values(chatContext.getState()._attachmentUploads || {}).length).toBe(3);
   });
 });
 
@@ -77,7 +76,7 @@ describe('clearUploads()', () => {
     const adapter = new AzureCommunicationAttachmentUploadAdapter(chatContext);
     adapter.registerActiveUploads(generateFiles(5));
     adapter.clearUploads();
-    expect(Object.values(chatContext.getState().attachmentUploads || {}).length).toBe(0);
+    expect(Object.values(chatContext.getState()._attachmentUploads || {}).length).toBe(0);
   });
 });
 
@@ -87,10 +86,10 @@ describe('cancelUpload()', () => {
     const chatContext = createChatContext();
     const adapter = new AzureCommunicationAttachmentUploadAdapter(chatContext);
     const attachmentUploads = adapter.registerActiveUploads(generateFiles(5));
-    adapter.cancelUpload(attachmentUploads[0].id);
-    expect(Object.values(chatContext.getState().attachmentUploads || {}).length).toBe(4);
-    adapter.cancelUpload(attachmentUploads[1].id);
-    expect(Object.values(chatContext.getState().attachmentUploads || {}).length).toBe(3);
+    adapter.cancelUpload(attachmentUploads[0].taskId);
+    expect(Object.values(chatContext.getState()._attachmentUploads || {}).length).toBe(4);
+    adapter.cancelUpload(attachmentUploads[1].taskId);
+    expect(Object.values(chatContext.getState()._attachmentUploads || {}).length).toBe(3);
   });
 });
 

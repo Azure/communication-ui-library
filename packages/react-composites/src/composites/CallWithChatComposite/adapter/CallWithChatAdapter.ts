@@ -43,7 +43,7 @@ import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react
 import { SendMessageOptions } from '@azure/communication-chat';
 import { JoinCallOptions } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata, AttachmentUploadManager } from '@internal/react-components';
+import { AttachmentMetadata, AttachmentUploadTask } from '@internal/react-components';
 /* @conditional-compile-remove(PSTN-calls) */
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { UnknownIdentifier, MicrosoftTeamsAppIdentifier } from '@azure/communication-common';
@@ -337,6 +337,13 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
+  /* @conditional-compile-remove(attachment-upload) */
+  /**
+   * Send a message with attachments in the chat thread.
+   *
+   * @beta
+   */
+  sendMessageWithAttachments(content: string, attachments: AttachmentMetadata[]): Promise<void>;
   /**
    * Send a read receipt for a message.
    *
@@ -371,25 +378,25 @@ export interface CallWithChatAdapterManagement {
    */
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
   /* @conditional-compile-remove(attachment-upload) */
-  /** @beta */
-  registerActiveUploads: (files: File[]) => AttachmentUploadManager[];
+  /** @internal */
+  registerActiveUploads: (files: File[]) => AttachmentUploadTask[];
   /* @conditional-compile-remove(attachment-upload) */
-  /** @beta */
-  registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadManager[];
+  /** @internal */
+  registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadTask[];
   /* @conditional-compile-remove(attachment-upload) */
-  /** @beta */
+  /** @internal */
   clearUploads: () => void;
   /* @conditional-compile-remove(attachment-upload) */
-  /** @beta */
+  /** @internal */
   cancelUpload: (id: string) => void;
   /* @conditional-compile-remove(attachment-upload) */
-  /** @beta */
+  /** @internal */
   updateUploadProgress: (id: string, progress: number) => void;
   /* @conditional-compile-remove(attachment-upload) */
-  /** @beta */
+  /** @internal */
   updateUploadStatusMessage: (id: string, errorMessage: string) => void;
   /* @conditional-compile-remove(attachment-upload) */
-  /** @beta */
+  /** @internal */
   updateUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
   /** @public */
   downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
