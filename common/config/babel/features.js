@@ -82,8 +82,6 @@ module.exports = {
     // Demo feature. Used in live-documentation of conditional compilation.
     // Do not use in production code.
     "stabilizedDemo",
-    // Closed captions
-    "close-captions",
     // Support Calling SDK isReceiving flag, shows a loading spinner on the video tile when isAvailable is true but isReceiving is false
     "video-stream-is-receiving-flag",
     // Feature for spotlight
@@ -92,7 +90,5 @@ module.exports = {
     'end-of-call-survey',
     // Feature for PPT Live for teams meeting
     'ppt-live',
-    // Feature for meeting reactions
-    'reaction',
   ]
 }

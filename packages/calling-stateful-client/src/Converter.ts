@@ -7,7 +7,6 @@ import {
   LocalVideoStream as SdkLocalVideoStream,
   VideoStreamRendererView
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(close-captions) */
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(acs-close-captions) */
 import { CaptionsInfo as AcsCaptionsInfo } from '@azure/communication-calling';
@@ -22,7 +21,6 @@ import {
   IncomingCallState as DeclarativeIncomingCall,
   VideoStreamRendererViewState as DeclarativeVideoStreamRendererView
 } from './CallClientState';
-/* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from './CallClientState';
 
 /* @conditional-compile-remove(teams-identity-support) */ /* @conditional-compile-remove(meeting-id) */
@@ -137,14 +135,12 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     /* @conditional-compile-remove(ppt-live) */
     pptLive: { isActive: false },
     raiseHand: { raisedHands: [] },
-    /* @conditional-compile-remove(reaction) */
     localParticipantReaction: undefined,
     transcription: { isTranscriptionActive: false },
     screenShareRemoteParticipant: undefined,
     startTime: new Date(),
     endTime: undefined,
     role: call.role,
-    /* @conditional-compile-remove(close-captions) */
     captionsFeature: {
       captions: [],
       supportedSpokenLanguages: [],
@@ -195,7 +191,6 @@ export function convertFromSDKToDeclarativeVideoStreamRendererView(
   };
 }
 
-/* @conditional-compile-remove(close-captions) */
 /**
  * @private
  */

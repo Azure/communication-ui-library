@@ -7,7 +7,6 @@ import { dataUiId, isTestProfileMobile, pageClick, stableScreenshot, waitForSele
 import { IDS, captionsFeatureState, captionsFeatureStateArabic } from '../../common/constants';
 import { defaultMockCallAdapterState, defaultMockRemoteParticipant } from '../../call/hermetic/fixture';
 
-/* @conditional-compile-remove(close-captions) */
 test.describe('Teams Closed Captions Banner tests', async () => {
   test('Show loading banner when start captions is clicked but captions is not started yet', async ({
     page,

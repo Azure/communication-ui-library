@@ -18,7 +18,7 @@ export {
 export type { TeamsAdapterOptions } from './AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(teams-identity-support) */
 export type { TeamsCallAdapterArgs } from './AzureCommunicationCallAdapter';
-/* @conditional-compile-remove(teams-identity-support) */
+
 export type { OnFetchProfileCallback, Profile } from './OnFetchProfileCallback';
 export type {
   AzureCommunicationCallAdapterArgs,
@@ -60,7 +60,6 @@ export type {
   StartCallIdentifier
 } from './CallAdapter';
 
-/* @conditional-compile-remove(close-captions) */
 export type {
   CaptionsReceivedListener,
   IsCaptionsActiveChangedListener,

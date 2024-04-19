@@ -15,7 +15,6 @@ import { isCameraOn } from '../utils';
 import { DtmfTone } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
-/* @conditional-compile-remove(reaction) */
 import { Reaction } from '@azure/communication-calling';
 
 import type {
@@ -102,7 +101,6 @@ const createCompositeHandlers = memoizeOne(
           ? await adapter.lowerHand()
           : await adapter.raiseHand();
       },
-      /* @conditional-compile-remove(reaction) */
       onReactionClick: async (reaction: Reaction) => {
         await adapter.onReactionClick(reaction);
       },
@@ -177,19 +175,15 @@ const createCompositeHandlers = memoizeOne(
         };
         return await adapter.startVideoBackgroundEffect(replacementConfig);
       },
-      /* @conditional-compile-remove(close-captions) */
       onStartCaptions: async (options) => {
         await adapter.startCaptions(options);
       },
-      /* @conditional-compile-remove(close-captions) */
       onStopCaptions: async () => {
         await adapter.stopCaptions();
       },
-      /* @conditional-compile-remove(close-captions) */
       onSetSpokenLanguage: async (language) => {
         await adapter.setSpokenLanguage(language);
       },
-      /* @conditional-compile-remove(close-captions) */
       onSetCaptionLanguage: async (language) => {
         await adapter.setCaptionLanguage(language);
       },

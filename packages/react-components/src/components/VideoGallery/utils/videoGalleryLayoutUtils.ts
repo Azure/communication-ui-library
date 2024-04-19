@@ -4,7 +4,6 @@
 import { useRef } from 'react';
 import { smartDominantSpeakerParticipants } from '../../../gallery';
 import { VideoGalleryParticipant, VideoGalleryRemoteParticipant } from '../../../types';
-/* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '../../..';
 import { VideoGalleryLayout } from '../../VideoGallery';
 
@@ -241,7 +240,6 @@ const putVideoParticipantsFirst = (
   return remoteParticipantSortedByVideo;
 };
 
-/* @conditional-compile-remove(reaction) */
 /**
  * @private
  */
@@ -261,7 +259,6 @@ export const getEmojiResource = (reactionName: string, reactionResources: Reacti
   return undefined;
 };
 
-/* @conditional-compile-remove(reaction) */
 /**
  * @private
  */

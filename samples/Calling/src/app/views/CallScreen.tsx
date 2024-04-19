@@ -19,7 +19,7 @@ import { useTeamsCallAdapter, TeamsCallAdapter } from '@azure/communication-reac
 
 import { onResolveVideoEffectDependencyLazy } from '@azure/communication-react';
 /* @conditional-compile-remove(teams-identity-support) */
-import type { TeamsAdapterOptions } from '@azure/communication-react';
+import type { Profile, TeamsAdapterOptions } from '@azure/communication-react';
 import type { StartCallIdentifier } from '@azure/communication-react';
 import React, { useCallback, useMemo, useRef } from 'react';
 import { createAutoRefreshingCredential } from '../utils/credential';
@@ -162,7 +162,6 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
         callRinging: { url: '/assets/sounds/callRinging.mp3' },
         callBusy: { url: '/assets/sounds/callBusy.mp3' }
       },
-      /* @conditional-compile-remove(reaction) */
       reactionResources: {
         likeReaction: { url: '/assets/reactions/likeEmoji.png', frameCount: 102 },
         heartReaction: { url: '/assets/reactions/heartEmoji.png', frameCount: 102 },
@@ -204,13 +203,19 @@ const AzureCommunicationOutboundCallScreen = (props: AzureCommunicationCallScree
         callRinging: { url: '/assets/sounds/callRinging.mp3' },
         callBusy: { url: '/assets/sounds/callBusy.mp3' }
       },
-      /* @conditional-compile-remove(reaction) */
       reactionResources: {
         likeReaction: { url: '/assets/reactions/likeEmoji.png', frameCount: 102 },
         heartReaction: { url: '/assets/reactions/heartEmoji.png', frameCount: 102 },
         laughReaction: { url: '/assets/reactions/laughEmoji.png', frameCount: 102 },
         applauseReaction: { url: '/assets/reactions/clapEmoji.png', frameCount: 102 },
         surprisedReaction: { url: '/assets/reactions/surprisedEmoji.png', frameCount: 102 }
+      },
+      /* @conditional-compile-remove(teams-identity-support) */
+      onFetchProfile: async (userId: string, defaultProfile?: Profile): Promise<Profile | undefined> => {
+        if (userId === '<28:orgid:Enter your teams app here>') {
+          return { displayName: 'Teams app display name' };
+        }
+        return defaultProfile;
       }
     };
   }, []);

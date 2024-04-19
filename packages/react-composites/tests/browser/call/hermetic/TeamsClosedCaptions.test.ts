@@ -6,7 +6,6 @@ import { expect } from '@playwright/test';
 import { dataUiId, isTestProfileMobile, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
 import { IDS, captionsFeatureState, captionsFeatureStateArabic } from '../../common/constants';
 
-/* @conditional-compile-remove(close-captions) */
 test.describe('Teams Closed Captions Banner tests', async () => {
   test('Show loading banner when start captions is clicked but captions is not started yet', async ({
     page,
@@ -105,7 +104,6 @@ test.describe('Teams Closed Captions Banner tests', async () => {
   });
 });
 
-/* @conditional-compile-remove(close-captions) */
 test.describe('Captions buttons in call control', () => {
   test('Captions buttons shows when it is teams call and connected', async ({ page, serverUrl }, testInfo) => {
     const initialState = defaultMockCallAdapterState();
