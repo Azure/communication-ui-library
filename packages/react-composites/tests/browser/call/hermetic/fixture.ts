@@ -151,7 +151,6 @@ export function defaultMockCallAdapterState(
     isRoomsCall: isRoomsCall ?? false,
     latestErrors: {},
     targetCallees: undefined,
-    /* @conditional-compile-remove(reaction) */
     reactions: undefined
   };
 }
@@ -319,7 +318,6 @@ const getCapabilitiesFromRole = (
   role?: ParticipantRole,
   isReactionCapability?: boolean
 ): CapabilitiesFeatureState | undefined => {
-  /* @conditional-compile-remove(reaction) */
   if (isReactionCapability) {
     return {
       capabilities: presenterCapabilitiesInTeamsCall,
@@ -372,6 +370,10 @@ const consumerCapabilitiesInRoomsCall: ParticipantCapabilities = {
   useReactions: {
     isPresent: true,
     reason: 'Capable'
+  },
+  viewAttendeeNames: {
+    isPresent: true,
+    reason: 'Capable'
   }
 };
 
@@ -397,6 +399,10 @@ const attendeeCapabilitiesInRoomsCall: ParticipantCapabilities = {
     reason: 'CapabilityNotApplicableForTheCallType'
   },
   useReactions: {
+    isPresent: true,
+    reason: 'Capable'
+  },
+  viewAttendeeNames: {
     isPresent: true,
     reason: 'Capable'
   }
@@ -426,10 +432,13 @@ const presenterCapabilitiesInRoomsCall: ParticipantCapabilities = {
   useReactions: {
     isPresent: true,
     reason: 'Capable'
+  },
+  viewAttendeeNames: {
+    isPresent: true,
+    reason: 'Capable'
   }
 };
 
-/* @conditional-compile-remove(reaction) */
 const presenterCapabilitiesInTeamsCall: ParticipantCapabilities = {
   addCommunicationUser: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   addPhoneNumber: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
@@ -454,6 +463,10 @@ const presenterCapabilitiesInTeamsCall: ParticipantCapabilities = {
   useReactions: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  viewAttendeeNames: {
+    isPresent: true,
+    reason: 'Capable'
   }
 };
 

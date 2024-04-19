@@ -7,16 +7,16 @@ import { AdapterStateModifier } from './AzureCommunicationCallAdapter';
 import { createParticipantModifier } from '../utils';
 
 /**
- * Callback function used to provide custom data to build profile for a user.
+ * Callback function used to provide custom data to build profile for a user or bot.
  *
- * @beta
+ * @public
  */
 export type OnFetchProfileCallback = (userId: string, defaultProfile?: Profile) => Promise<Profile | undefined>;
 
 /**
- * The profile of a user.
+ * The profile of a user or bot.
  *
- * @beta
+ * @public
  */
 export type Profile = {
   /**

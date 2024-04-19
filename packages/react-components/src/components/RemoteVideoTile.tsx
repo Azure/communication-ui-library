@@ -24,9 +24,7 @@ import { useVideoTileContextualMenuProps } from './VideoGallery/useVideoTileCont
 import { VideoTile } from './VideoTile';
 /* @conditional-compile-remove(hide-attendee-name) */
 import { _formatString } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '../types/ReactionTypes';
-/* @conditional-compile-remove(reaction) */
 import { MeetingReactionOverlay } from './MeetingReactionOverlay';
 
 /**
@@ -70,7 +68,7 @@ export const _RemoteVideoTile = React.memo(
     /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight?: number;
     disablePinMenuItem?: boolean;
     toggleAnnouncerString?: (announcerString: string) => void;
-    /* @conditional-compile-remove(reaction) */ reactionResources?: ReactionResources;
+    reactionResources?: ReactionResources;
   }) => {
     const {
       isAvailable,
@@ -98,7 +96,7 @@ export const _RemoteVideoTile = React.memo(
       disablePinMenuItem,
       toggleAnnouncerString,
       strings,
-      /* @conditional-compile-remove(reaction) */ reactionResources,
+      reactionResources,
       streamId
     } = props;
 
@@ -197,7 +195,6 @@ export const _RemoteVideoTile = React.memo(
       return displayName;
     };
 
-    /* @conditional-compile-remove(reaction) */
     const reactionOverlay = (
       <MeetingReactionOverlay
         overlayMode="grid-tiles"
@@ -239,7 +236,6 @@ export const _RemoteVideoTile = React.memo(
           }
           /* @conditional-compile-remove(spotlight) */
           isSpotlighted={isSpotlighted}
-          /* @conditional-compile-remove(reaction) */
           overlay={reactionOverlay}
         />
         {drawerMenuItemProps.length > 0 && (

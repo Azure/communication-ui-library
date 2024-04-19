@@ -6,7 +6,6 @@
 import { ParticipantState } from './ParticipantListParticipant';
 
 import { RaisedHand } from './ParticipantListParticipant';
-/* @conditional-compile-remove(reaction) */
 import { Reaction } from './ParticipantListParticipant';
 /* @conditional-compile-remove(spotlight) */
 import { Spotlight } from './ParticipantListParticipant';
@@ -99,7 +98,6 @@ export interface CreateVideoStreamViewResult {
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
   /** Whether local participant is raised a hand */
   raisedHand?: RaisedHand;
-  /* @conditional-compile-remove(reaction) */
   /**
    * Whether local participant has reacted
    *
@@ -126,7 +124,6 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
   state?: ParticipantState;
   /** Whether participant is raised a hand */
   raisedHand?: RaisedHand;
-  /* @conditional-compile-remove(reaction) */
   /**
    * Whether participant has reacted
    *

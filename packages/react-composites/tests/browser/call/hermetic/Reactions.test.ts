@@ -1,18 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(reaction) */
 import { buildUrlWithMockAdapter, defaultMockCallAdapterState, defaultMockRemoteParticipant, test } from './fixture';
-/* @conditional-compile-remove(reaction) */
 import { expect } from '@playwright/test';
-/* @conditional-compile-remove(reaction) */
 import { dataUiId, isTestProfileMobile, stableScreenshot, waitForSelector } from '../../common/utils';
-/* @conditional-compile-remove(reaction) */
 import { IDS } from '../../common/constants';
-/* @conditional-compile-remove(reaction) */
 import { MockCallAdapterState } from 'common';
 
-/* @conditional-compile-remove(reaction) */
 test.describe('Reactions button tests', async () => {
   test('Reactions button sub menu appears when button is clicked', async ({ page, serverUrl }, testInfo) => {
     const Paul = defaultMockRemoteParticipant('Paul Blurt');
