@@ -211,9 +211,11 @@ export type {
   AttachmentOptions,
   AttachmentUploadOptions,
   AttachmentMetadata,
-  AttachmentUploadStatus,
-  AttachmentUploadHandler,
-  AttachmentUploadManager
+  AttachmentProgressError,
+  AttachmentSelectionHandler,
+  AttachmentRemovalHandler,
+  AttachmentUploadTask,
+  AttachmentMetadataWithProgress
 } from '../types/Attachment';
 
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
