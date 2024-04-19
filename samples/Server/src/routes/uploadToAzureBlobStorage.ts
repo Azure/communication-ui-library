@@ -104,9 +104,8 @@ router.post('/file/:filename/:containername', upload.single('file'), async funct
   const fileName = req.params.filename;
   const containerName = req.params.containername;
 
-  const fileblob = new Blob([fileData as unknown as BlobPart], { type: fileData.mimetype });
-  const fileContentBuffer = await new Response(fileblob).arrayBuffer();
-  const size = fileContentBuffer.byteLength;
+  const fileContentBuffer = fileData.buffer;
+  const size = fileData.size;
 
   // create blob service client
   let connectionString: string;
