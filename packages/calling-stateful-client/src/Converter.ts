@@ -110,7 +110,9 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     declarativeRemoteParticipants[toFlatCommunicationIdentifier(participant.identifier)] =
       convertSdkParticipantToDeclarativeParticipant(participant);
   });
+  /* @conditional-compile-remove(hide-attendee-name) */
   let hideAttendeeNames = false;
+  /* @conditional-compile-remove(hide-attendee-name) */
   if (call.feature(Features.Capabilities).capabilities.viewAttendeeNames) {
     const viewAttendeeNames = call.feature(Features.Capabilities).capabilities.viewAttendeeNames;
     if (!viewAttendeeNames.isPresent && viewAttendeeNames.reason === 'MeetingRestricted') {

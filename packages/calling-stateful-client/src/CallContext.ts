@@ -532,6 +532,7 @@ export class CallContext {
     });
   }
 
+  /* @conditional-compile-remove(hide-attendee-name) */
   public setHideAttendeeNames(callId: string, capabilitiesChangeInfo: CapabilitiesChangeInfo): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
