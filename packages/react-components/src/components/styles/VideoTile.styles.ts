@@ -67,14 +67,6 @@ export const disabledVideoHint = mergeStyles({
 /**
  * @private
  */
-export const videoHint = mergeStyles(disabledVideoHint, {
-  // This will appear on top of the video stream, so no dependency on theme and explicitly use a translucent white
-  backgroundColor: 'rgba(255,255,255,0.8)'
-});
-
-/**
- * @private
- */
 export const displayNameStyle: IStyle = {
   padding: '0.1rem',
   fontSize: '0.75rem',
