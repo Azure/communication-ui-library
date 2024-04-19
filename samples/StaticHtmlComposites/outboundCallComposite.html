@@ -30,7 +30,14 @@
         userId: user,
         token: token,
         displayName: displayName,
-        targetCallees: [{ teamsAppId: '<Enter your teams app id>', cloud: 'public' }] // Provide the identifier you want to call, can be flat as a string.
+        targetCallees: [{ teamsAppId: '<Enter your teams app id here>', cloud: 'public' }], // Provide the identifier you want to call, can be flat as a string.
+        options: {
+          onFetchProfile: async (userId) => {
+            if (userId === '<28:orgid:Enter your teams bot name here>') {
+              return { displayName: 'displayName' };
+            }
+          }
+        }
       },
       document.getElementById('outbound-call-composite-container')
     );
