@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "area": "improvement",
+  "workstream": "Version Bump",
+  "comment": "Bump Chat SDK Versions",
+  "packageName": "@azure/communication-react",
+  "email": "109105353+jpeng-ms@users.noreply.github.com",
+  "dependentChangeType": "none"
+}
