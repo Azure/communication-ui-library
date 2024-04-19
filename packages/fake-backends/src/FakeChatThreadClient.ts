@@ -17,8 +17,7 @@ import {
   SendReadReceiptRequest,
   SendTypingNotificationOptions,
   UpdateMessageOptions,
-  UploadChatImageResult,
-  UploadImageOptions
+  UploadChatImageResult
 } from '@azure/communication-chat';
 /* @conditional-compile-remove(chat-beta-sdk) */
 import { UpdateChatThreadPropertiesOptions } from '@azure/communication-chat';
@@ -364,6 +363,7 @@ export class FakeChatThreadClient implements IChatThreadClient {
     return pagedAsyncIterator(this.checkedGetThread().readReceipts);
   }
 
+  /* @conditional-compile-remove(chat-beta-sdk) */
   uploadImage(
     image: ReadableStream<Uint8Array> | NodeJS.ReadableStream | ArrayBuffer | Blob,
     imageFilename: string
@@ -371,6 +371,7 @@ export class FakeChatThreadClient implements IChatThreadClient {
     return Promise.resolve({ id: nanoid(), name: imageFilename, attachmentType: 'image' });
   }
 
+  /* @conditional-compile-remove(chat-beta-sdk) */
   deleteImage(): Promise<void> {
     return Promise.resolve();
   }
