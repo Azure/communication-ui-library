@@ -3508,7 +3508,7 @@ export interface NetworkDiagnosticsState {
     latest: LatestNetworkDiagnostics;
 }
 
-// @beta
+// @public
 export type OnFetchProfileCallback = (userId: string, defaultProfile?: Profile) => Promise<Profile | undefined>;
 
 // @public
@@ -3721,7 +3721,7 @@ export interface PPTLiveCallFeatureState {
     isActive: boolean;
 }
 
-// @beta
+// @public
 export type Profile = {
     displayName?: string;
 };

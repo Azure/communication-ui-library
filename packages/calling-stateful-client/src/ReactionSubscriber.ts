@@ -1,13 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(reaction) */
 import { ReactionCallFeature } from '@azure/communication-calling';
-/* @conditional-compile-remove(reaction) */
 import { CallContext } from './CallContext';
-/* @conditional-compile-remove(reaction) */
 import { CallIdRef } from './CallIdRef';
-/* @conditional-compile-remove(reaction) */
+
 /**
  * @private
  */

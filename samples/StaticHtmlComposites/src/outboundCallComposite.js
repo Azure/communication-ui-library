@@ -12,7 +12,7 @@ import {
 import { initializeIcons } from '@fluentui/react';
 initializeIcons();
 export const loadCallComposite = async function (args, htmlElement, props) {
-  const { userId, token, displayName, targetCallees } = args;
+  const { userId, token, displayName, targetCallees, options } = args;
   const adapter = await createAzureCommunicationCallAdapter({
     userId,
     displayName: displayName ?? 'anonymous',
@@ -21,7 +21,8 @@ export const loadCallComposite = async function (args, htmlElement, props) {
       targetCallees.foreach((callee) => {
         return fromFlatCommunicationIdentifier(callee);
       })
-    ]
+    ],
+    options
   });
 
   if (!htmlElement) {

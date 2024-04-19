@@ -39,7 +39,6 @@ import { pinIconStyle } from './styles/VideoTile.styles';
 import useLongPress from './utils/useLongPress';
 import { moreButtonStyles } from './styles/VideoTile.styles';
 import { raiseHandContainerStyles } from './styles/VideoTile.styles';
-/* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '../types/ReactionTypes';
 
 /**
@@ -85,7 +84,6 @@ export interface VideoTileProps {
   userId?: string;
   /** Component with the video stream. */
   renderElement?: JSX.Element | null;
-  /* @conditional-compile-remove(reaction) */
   /**
    * Overlay component responsible for rendering reaction
    */
@@ -169,7 +167,6 @@ export interface VideoTileProps {
    * If true, the video tile will show the spotlighted icon.
    */
   isSpotlighted?: boolean;
-  /* @conditional-compile-remove(reaction) */
   /**
    * Reactions resources' url and metadata.
    */
@@ -251,7 +248,6 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     isPinned,
     onRenderPlaceholder,
     renderElement,
-    /* @conditional-compile-remove(reaction) */
     overlay: reactionOverlay,
     showLabel = true,
     showMuteIndicator = true,
@@ -428,10 +424,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
             )}
           </Stack>
         )}
-        {
-          /* @conditional-compile-remove(reaction) */
-          reactionOverlay
-        }
+        {reactionOverlay}
         {(canShowLabel || participantStateString) && (
           <Stack horizontal className={tileInfoContainerStyle} tokens={tileInfoContainerTokens}>
             <Stack horizontal className={tileInfoStyle}>
