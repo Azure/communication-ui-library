@@ -17,7 +17,6 @@ import {
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(meeting-id) */
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
-/* @conditional-compile-remove(reaction) */
 import { Reaction } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { StartCaptionsOptions } from '@azure/communication-calling';
@@ -209,7 +208,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.stopScreenShare.bind(this);
     this.raiseHand.bind(this);
     this.lowerHand.bind(this);
-    /* @conditional-compile-remove(reaction) */
     this.onReactionClick.bind(this);
     this.removeParticipant.bind(this);
     this.createStreamView.bind(this);
@@ -389,7 +387,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   public async lowerHand(): Promise<void> {
     await this.callAdapter.lowerHand();
   }
-  /* @conditional-compile-remove(reaction) */
+  /** Reaction clicked by the local user. */
   public async onReactionClick(reaction: Reaction): Promise<void> {
     await this.callAdapter.onReactionClick(reaction);
   }
@@ -899,12 +897,44 @@ export class CallAndChatProvider implements ChatThreadProvider {
  */
 export class TeamsMeetingLinkProvider implements ChatThreadProvider {
   public locator: TeamsMeetingLinkLocator;
+  /** @conditional-compile-remove(meeting-id) */
+  private callAdapterPromise: Promise<CallAdapter>;
+  /** @conditional-compile-remove(meeting-id) */
+  private callAdapterSubscription?: (state: CallAdapterState) => void;
 
-  constructor(locator: TeamsMeetingLinkLocator) {
+  constructor(
+    locator: TeamsMeetingLinkLocator,
+    /** @conditional-compile-remove(meeting-id) */ callAdapterPromise: Promise<CallAdapter>
+  ) {
     this.locator = locator;
+    /** @conditional-compile-remove(meeting-id) */
+    this.callAdapterPromise = callAdapterPromise;
   }
 
   public async getChatThread(): Promise<string> {
+    /** @conditional-compile-remove(meeting-id) */
+    {
+      // Wait for the call to be connected and get the chat thread ID from `call.callInfo`.
+      const chatThreadPromise = new Promise<string>((resolve) => {
+        this.callAdapterPromise.then((callAdapter) => {
+          // Ensure function is idempotent by removing any existing subscription.
+          this.callAdapterSubscription && callAdapter.offStateChange(this.callAdapterSubscription);
+
+          this.callAdapterSubscription = (state: CallAdapterState): void => {
+            if (state.call?.state === 'Connected' && state.call.info?.threadId) {
+              this.callAdapterSubscription && callAdapter.offStateChange(this.callAdapterSubscription);
+              this.callAdapterSubscription = undefined;
+
+              resolve(state.call.info?.threadId);
+            }
+          };
+          callAdapter.onStateChange(this.callAdapterSubscription);
+        });
+      });
+
+      return chatThreadPromise;
+    }
+
     return getChatThreadFromTeamsLink(this.locator.meetingLink);
   }
 }
@@ -1231,7 +1261,7 @@ const _createChatThreadAdapterInner = (
   adapter: Promise<CallAdapter>
 ): ChatThreadProvider => {
   if ('meetingLink' in locator) {
-    return new TeamsMeetingLinkProvider(locator);
+    return new TeamsMeetingLinkProvider(locator, /** @conditional-compile-remove(meeting-id) */ adapter);
   }
   /** @conditional-compile-remove(meeting-id) */
   if ('meetingId' in locator) {

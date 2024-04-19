@@ -284,24 +284,6 @@ export const useChatMessageStyles = makeStyles({
       ...shorthands.borderWidth('1px'),
       ...shorthands.borderColor(tokens.colorNeutralStroke1Selected),
       borderLeftWidth: '4px'
-    },
-    '& table': {
-      backgroundColor: tokens.colorBrandBackgroundInverted,
-      ...shorthands.borderColor(tokens.colorNeutralStroke1Selected),
-      borderCollapse: 'collapse',
-      tableLayout: 'auto',
-      width: '100%',
-
-      '& tr': {
-        ...shorthands.border('1px', 'solid', `${tokens.colorNeutralStroke1Selected}`),
-
-        '& td': {
-          ...shorthands.border('1px', 'solid', `${tokens.colorNeutralStroke1Selected}`),
-          wordBreak: 'normal',
-          paddingTop: '0px',
-          paddingRight: '5px'
-        }
-      }
     }
   },
   bodyWithPlaceholderImage: {
@@ -340,6 +322,26 @@ export const useChatMessageStyles = makeStyles({
  * @private
  */
 export const useChatMessageCommonStyles = makeStyles({
+  body: {
+    '& table': {
+      backgroundColor: tokens.colorBrandBackgroundInverted,
+      ...shorthands.borderColor(tokens.colorNeutralStroke1Selected),
+      borderCollapse: 'collapse',
+      tableLayout: 'auto',
+      width: '100%',
+
+      '& tr': {
+        ...shorthands.border('1px', 'solid', `${tokens.colorNeutralStroke1Selected}`),
+
+        '& td': {
+          ...shorthands.border('1px', 'solid', `${tokens.colorNeutralStroke1Selected}`),
+          wordBreak: 'normal',
+          paddingTop: '0px',
+          paddingRight: '5px'
+        }
+      }
+    }
+  },
   failed: {
     //TODO: can we reuse a theme color here?
     backgroundColor: 'rgba(168, 0, 0, 0.2)'

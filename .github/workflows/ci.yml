@@ -602,11 +602,12 @@ jobs:
         run: rush install --max-install-attempts 3
       - name: Build
         if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
-        run: rush build -o storybook8
+        run: rushx build-s8
+        working-directory: packages/storybook8
       - name: Tests
         if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
         run: rushx test
-        working-directory: packages/storybook
+        working-directory: packages/storybook8
 
   build_calling_sample:
     needs: get_matrix
