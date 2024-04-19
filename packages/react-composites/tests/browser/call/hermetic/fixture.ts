@@ -370,6 +370,10 @@ const consumerCapabilitiesInRoomsCall: ParticipantCapabilities = {
   useReactions: {
     isPresent: true,
     reason: 'Capable'
+  },
+  viewAttendeeNames: {
+    isPresent: true,
+    reason: 'Capable'
   }
 };
 
@@ -395,6 +399,10 @@ const attendeeCapabilitiesInRoomsCall: ParticipantCapabilities = {
     reason: 'CapabilityNotApplicableForTheCallType'
   },
   useReactions: {
+    isPresent: true,
+    reason: 'Capable'
+  },
+  viewAttendeeNames: {
     isPresent: true,
     reason: 'Capable'
   }
@@ -424,6 +432,10 @@ const presenterCapabilitiesInRoomsCall: ParticipantCapabilities = {
   useReactions: {
     isPresent: true,
     reason: 'Capable'
+  },
+  viewAttendeeNames: {
+    isPresent: true,
+    reason: 'Capable'
   }
 };
 
@@ -451,6 +463,10 @@ const presenterCapabilitiesInTeamsCall: ParticipantCapabilities = {
   useReactions: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  viewAttendeeNames: {
+    isPresent: true,
+    reason: 'Capable'
   }
 };
 
