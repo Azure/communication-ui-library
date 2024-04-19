@@ -984,8 +984,9 @@ export class CallContext {
     // if the last caption is Partial, then check if the speaker is the same as the new caption, if so, update the last caption
     else {
       if (
-        toFlatCommunicationIdentifier(captions[captions.length - 1].speaker.identifier) ===
-        toFlatCommunicationIdentifier(newCaption.speaker.identifier)
+        toFlatCommunicationIdentifier(
+          captions[captions.length - 1].speaker.identifier as CommunicationIdentifierKind
+        ) === toFlatCommunicationIdentifier(newCaption.speaker.identifier as CommunicationIdentifierKind)
       ) {
         captions[captions.length - 1] = newCaption;
       }
