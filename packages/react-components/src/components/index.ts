@@ -86,7 +86,8 @@ export type {
   VideoGalleryStyles,
   VideoGalleryLayout,
   VideoTileContextualMenuProps,
-  VideoTileDrawerMenuProps
+  VideoTileDrawerMenuProps,
+  VideoTilesOptions
 } from './VideoGallery';
 export type { OverflowGalleryPosition } from './VideoGallery';
 export type { LocalVideoTileSize } from './VideoGallery';

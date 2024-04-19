@@ -489,6 +489,7 @@ export type CallCompositeOptions = {
     callControls?: boolean | CallControlOptions;
     remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
     localVideoTile?: boolean | LocalVideoTileOptions;
+    videoTilesOptions?: VideoTilesOptions;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
     };
@@ -758,6 +759,7 @@ export interface CallingTheme {
         callRedDarker: string;
         iconWhite: string;
         raiseHandGold: string;
+        videoTileLabelBackgroundLight: string;
     };
 }
 
@@ -3832,6 +3834,7 @@ export interface VideoGalleryProps {
     spotlightedParticipants?: string[];
     strings?: Partial<VideoGalleryStrings>;
     styles?: VideoGalleryStyles;
+    videoTilesOptions?: VideoTilesOptions;
 }
 
 // @public
@@ -3928,6 +3931,7 @@ export interface VideoTileDrawerMenuProps {
 
 // @public
 export interface VideoTileProps {
+    alwaysShowLabelBackground?: boolean;
     children?: React_2.ReactNode;
     contextualMenu?: IContextualMenuProps;
     displayName?: string;
@@ -3950,6 +3954,11 @@ export interface VideoTileProps {
     showMuteIndicator?: boolean;
     styles?: VideoTileStylesProps;
     userId?: string;
+}
+
+// @public
+export interface VideoTilesOptions {
+    alwaysShowLabelBackground?: boolean;
 }
 
 // @public
