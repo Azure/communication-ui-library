@@ -119,10 +119,10 @@ export type _CaptionsBannerSelector = (
 export const _captionsBannerSelector: _CaptionsBannerSelector = reselect.createSelector(
   [getCaptions, getCaptionsStatus, getStartCaptionsInProgress],
   (captions, isCaptionsFeatureActive, startCaptionsInProgress) => {
-    const captionsInfo = captions?.map((c) => {
+    const captionsInfo = captions?.map((c, index) => {
       const userId = getCaptionsSpeakerIdentifier(c);
       return {
-        id: c.timestamp.getTime() + userId + c.speaker.displayName,
+        id: c.speaker.displayName + index,
         displayName: c.speaker.displayName ?? 'Unnamed Participant',
         captionText: c.captionText ?? '',
         userId
