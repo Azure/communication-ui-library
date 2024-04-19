@@ -237,7 +237,6 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     userRole,
     isRoomsCall,
     containerAspectRatio,
-
     props.userSetGalleryLayout,
     pinnedParticipants,
     onPinParticipant,
@@ -253,7 +252,8 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(spotlight) */
     onStopRemoteSpotlightWithPrompt,
     /* @conditional-compile-remove(spotlight) */
-    hideSpotlightButtons
+    hideSpotlightButtons,
+    videoTilesOptions
   ]);
 
   return (

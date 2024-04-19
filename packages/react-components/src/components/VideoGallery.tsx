@@ -315,16 +315,15 @@ export interface VideoGalleryProps {
 
 /**
  * Options that apply to all Video Tiles in the {@link VideoGallery}
- * 
+ *
  * @public
  */
 export interface VideoTilesOptions {
   /**
    * Whether to always show the label background for the video tile
    */
-    alwaysShowLabelBackground?: boolean;
+  alwaysShowLabelBackground?: boolean;
 }
-
 
 /**
  * Properties for showing contextual menu for remote {@link VideoTile} components in {@link VideoGallery}.
@@ -560,7 +559,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     strings,
     /* @conditional-compile-remove(spotlight) */
     drawerMenuHostId,
-    reactionResources
+    reactionResources,
+    videoTilesOptions
   ]);
 
   const onPinParticipant = useCallback(
@@ -691,7 +691,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       /* @conditional-compile-remove(spotlight) */ onStartRemoteSpotlight,
       /* @conditional-compile-remove(spotlight) */ onStopRemoteSpotlight,
       /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight,
-      reactionResources
+      reactionResources,
+      videoTilesOptions
     ]
   );
 

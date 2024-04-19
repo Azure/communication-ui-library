@@ -2,7 +2,13 @@
 // Licensed under the MIT License.
 
 import { _isInCall } from '@internal/calling-component-bindings';
-import { ActiveErrorMessage, ErrorBar, ParticipantMenuItemsCallback, useTheme, VideoTilesOptions } from '@internal/react-components';
+import {
+  ActiveErrorMessage,
+  ErrorBar,
+  ParticipantMenuItemsCallback,
+  useTheme,
+  VideoTilesOptions
+} from '@internal/react-components';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurveyImprovementSuggestions } from '@internal/react-components';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
