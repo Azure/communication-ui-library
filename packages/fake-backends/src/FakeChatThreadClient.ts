@@ -16,11 +16,10 @@ import {
   SendMessageRequest,
   SendReadReceiptRequest,
   SendTypingNotificationOptions,
-  UpdateMessageOptions,
-  UploadChatImageResult
+  UpdateMessageOptions
 } from '@azure/communication-chat';
 /* @conditional-compile-remove(chat-beta-sdk) */
-import { UpdateChatThreadPropertiesOptions } from '@azure/communication-chat';
+import { UpdateChatThreadPropertiesOptions, UploadChatImageResult } from '@azure/communication-chat';
 import { CommunicationIdentifier, getIdentifierKind } from '@azure/communication-common';
 import { BaseChatEvent, BaseChatMessageEvent, BaseChatThreadEvent } from '@azure/communication-signaling';
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
@@ -29,6 +28,7 @@ import { bumpMessageVersion, Model } from './Model';
 import { getThreadEventTargets, ThreadEventEmitter } from './ThreadEventEmitter';
 import { IChatThreadClient, Thread } from './types';
 import { chatToSignalingParticipant, pagedAsyncIterator } from './utils';
+/* @conditional-compile-remove(chat-beta-sdk) */
 import { nanoid } from 'nanoid';
 
 /**
