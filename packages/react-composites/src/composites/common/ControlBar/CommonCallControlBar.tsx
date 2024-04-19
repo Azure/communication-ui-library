@@ -41,11 +41,8 @@ import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsSettingsModal } from '../CaptionsSettingsModal';
 import { RaiseHand } from '../../CallComposite/components/buttons/RaiseHand';
-/* @conditional-compile-remove(reaction) */
 import { Reaction } from '../../CallComposite/components/buttons/Reaction';
-/* @conditional-compile-remove(reaction) */ /* @conditional-compile-remove(end-call-options) */
 import { useSelector } from '../../CallComposite/hooks/useSelector';
-/* @conditional-compile-remove(reaction) */
 import { capabilitySelector } from '../../CallComposite/selectors/capabilitySelector';
 import { DtmfDialpadButton } from './DtmfDialerButton';
 /* @conditional-compile-remove(spotlight) */
@@ -56,7 +53,6 @@ import { useLocale } from '../../localization';
 import { isBoolean } from '../utils';
 /* @conditional-compile-remove(end-call-options) */
 import { getIsTeamsCall } from '../../CallComposite/selectors/baseSelectors';
-/* @conditional-compile-remove(reaction) */
 import { callStatusSelector } from '../../CallComposite/selectors/callStatusSelector';
 
 /**
@@ -256,11 +252,8 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
     [options]
   );
 
-  /* @conditional-compile-remove(reaction) */
   const capabilitiesSelector = useSelector(capabilitySelector);
-  /* @conditional-compile-remove(reaction) */
   const callState = useSelector(callStatusSelector);
-  /* @conditional-compile-remove(reaction) */
   const isReactionAllowed =
     callState.callStatus !== 'Connected' ||
     !capabilitiesSelector?.capabilities ||
@@ -301,7 +294,6 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   const role = props.callAdapter.getState().call?.role;
   const hideRaiseHandButtonInRoomsCall =
     props.callAdapter.getState().isRoomsCall && role && ['Consumer', 'Unknown'].includes(role);
-  /*@conditional-compile-remove(reaction) */
   const reactionResources = props.callAdapter.getState().reactions;
 
   return (
@@ -368,20 +360,17 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         disableTooltip={props.mobileView}
                       />
                     )}
-                    {
-                      /* @conditional-compile-remove(reaction) */
-                      !props.mobileView &&
-                        isReactionAllowed &&
-                        isEnabled(options.reactionButton) &&
-                        reactionResources && (
-                          <Reaction
-                            displayType={options.displayType}
-                            styles={commonButtonStyles}
-                            disabled={props.disableButtonsForHoldScreen}
-                            reactionResource={reactionResources}
-                          />
-                        )
-                    }
+                    {!props.mobileView &&
+                      isReactionAllowed &&
+                      isEnabled(options.reactionButton) &&
+                      reactionResources && (
+                        <Reaction
+                          displayType={options.displayType}
+                          styles={commonButtonStyles}
+                          disabled={props.disableButtonsForHoldScreen}
+                          reactionResource={reactionResources}
+                        />
+                      )}
                     {!props.mobileView && isEnabled(options.raiseHandButton) && !hideRaiseHandButtonInRoomsCall && (
                       <RaiseHand
                         displayType={options.displayType}
