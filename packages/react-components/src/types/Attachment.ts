@@ -4,7 +4,7 @@
 import { ChatMessage } from './ChatMessage';
 
 /**
- * Metadata containing basic information about attachment.
+ * Metadata containing basic information about the attachment.
  *
  * @beta
  */
