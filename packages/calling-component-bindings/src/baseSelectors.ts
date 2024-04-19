@@ -19,7 +19,6 @@ import {
 import { SpotlightCallFeatureState } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(reaction) */
 import { ReactionState } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(acs-close-captions) */
 import { CaptionsKind } from '@azure/communication-calling';
@@ -211,19 +210,16 @@ export const getCaptionsKind = (state: CallClientState, props: CallingBaseSelect
   return state.calls[props.callId]?.captionsFeature.captionsKind;
 };
 
-/* @conditional-compile-remove(close-captions) */
 /** @private */
 export const getCaptions = (state: CallClientState, props: CallingBaseSelectorProps): CaptionsInfo[] | undefined => {
   return state.calls[props.callId]?.captionsFeature.captions;
 };
 
-/* @conditional-compile-remove(close-captions) */
 /** @private */
 export const getCaptionsStatus = (state: CallClientState, props: CallingBaseSelectorProps): boolean | undefined => {
   return state.calls[props.callId]?.captionsFeature.isCaptionsFeatureActive;
 };
 
-/* @conditional-compile-remove(close-captions) */
 /** @private */
 export const getStartCaptionsInProgress = (
   state: CallClientState,
@@ -232,7 +228,6 @@ export const getStartCaptionsInProgress = (
   return state.calls[props.callId]?.captionsFeature.startCaptionsInProgress;
 };
 
-/* @conditional-compile-remove(close-captions) */
 /** @private */
 export const getCurrentCaptionLanguage = (
   state: CallClientState,
@@ -241,7 +236,6 @@ export const getCurrentCaptionLanguage = (
   return state.calls[props.callId]?.captionsFeature.currentCaptionLanguage as _SupportedCaptionLanguage;
 };
 
-/* @conditional-compile-remove(close-captions) */
 /** @private */
 export const getCurrentSpokenLanguage = (
   state: CallClientState,
@@ -250,7 +244,6 @@ export const getCurrentSpokenLanguage = (
   return state.calls[props.callId]?.captionsFeature.currentSpokenLanguage as _SupportedSpokenLanguage;
 };
 
-/* @conditional-compile-remove(close-captions) */
 /** @private */
 export const getSupportedCaptionLanguages = (
   state: CallClientState,
@@ -259,7 +252,6 @@ export const getSupportedCaptionLanguages = (
   return state.calls[props.callId]?.captionsFeature.supportedCaptionLanguages as _SupportedCaptionLanguage[];
 };
 
-/* @conditional-compile-remove(close-captions) */
 /** @private */
 export const getSupportedSpokenLanguages = (
   state: CallClientState,

@@ -41,7 +41,6 @@ export type {
 
 export type { VideoBackgroundEffectsDependency, CallingHandlersOptions } from '../../calling-component-bindings/src';
 
-/* @conditional-compile-remove(close-captions) */
 export type { CaptionsOptions } from '../../calling-component-bindings/src';
 
 export type {
@@ -389,7 +388,7 @@ export type {
   VerticalGalleryStrings,
   VerticalGalleryControlBarStyles
 } from '../../react-components/src';
-/* @conditional-compile-remove(close-captions) */
+
 export type { SpokenLanguageStrings, CaptionLanguageStrings } from '../../react-components/src';
 /* @conditional-compile-remove(end-of-call-survey) */
 export type { SurveyIssues } from '../../react-components/src';

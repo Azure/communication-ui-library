@@ -21,7 +21,6 @@ import {
 import { CallInfo, TeamsCallInfo } from '@azure/communication-calling';
 
 import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
-/* @conditional-compile-remove(close-captions) */
 import { CaptionsResultType } from '@azure/communication-calling';
 /* @conditional-compile-remove(acs-close-captions) */
 import { CaptionsKind } from '@azure/communication-calling';
@@ -53,7 +52,6 @@ export interface CallAgentState {
   displayName?: string;
 }
 
-/* @conditional-compile-remove(close-captions) */
 /**
  * @public
  */
@@ -88,7 +86,6 @@ export interface CaptionsInfo {
   spokenText?: string;
 }
 
-/* @conditional-compile-remove(close-captions) */
 /**
  * @public
  */
@@ -535,7 +532,6 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#TranscriptionCallFeature}.
    */
   transcription: TranscriptionCallFeatureState;
-  /* @conditional-compile-remove(close-captions) */
   /**
    * Proxy of {@link @azure/communication-calling#TranscriptionCallFeature}.
    */

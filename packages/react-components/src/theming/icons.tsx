@@ -74,7 +74,6 @@ import {
   HandRight20Regular,
   HandRightOff20Regular
 } from '@fluentui/react-icons';
-/* @conditional-compile-remove(close-captions) */
 import {
   ClosedCaption20Regular,
   ClosedCaptionOff20Regular,
@@ -361,19 +360,12 @@ export const DEFAULT_COMPONENT_ICONS = {
   SplitButtonPrimaryActionMicMuted: <MicOff20Filled />,
   VerticalGalleryLeftButton: <GalleryLeftButton />,
   VerticalGalleryRightButton: <GalleryRightButton />,
-
   ControlButtonVideoEffectsOption: <VideoBackgroundEffect20Regular />,
-
   ConfigurationScreenVideoEffectsButton: <VideoBackgroundEffect20Filled />,
-  /* @conditional-compile-remove(close-captions) */
   CaptionsIcon: <ClosedCaption20Regular />,
-  /* @conditional-compile-remove(close-captions) */
   CaptionsOffIcon: <ClosedCaptionOff20Regular />,
-  /* @conditional-compile-remove(close-captions) */
   CaptionsSettingsIcon: <Settings20Regular />,
-  /* @conditional-compile-remove(close-captions) */
   ChangeSpokenLanguageIcon: <PersonVoice20Regular />,
-  /* @conditional-compile-remove(close-captions) */
   ChangeCaptionLanguageIcon: <Translate20Regular />,
   ContextMenuCameraIcon: <Video20Regular />,
   ContextMenuMicIcon: <Mic20Regular />,

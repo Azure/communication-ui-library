@@ -19,7 +19,6 @@ import {
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 /* @conditional-compile-remove(reaction) */
 import { Reaction } from '@azure/communication-calling';
-/* @conditional-compile-remove(close-captions) */
 import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
@@ -90,7 +89,6 @@ import { _toCommunicationIdentifier, _TelemetryImplementationHint } from '@inter
 import { JoinCallOptions, StartCallIdentifier } from '../../CallComposite/adapter/CallAdapter';
 
 import { AzureCommunicationCallAdapterOptions } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
-/* @conditional-compile-remove(close-captions) */
 import {
   IsCaptionsActiveChangedListener,
   CaptionsReceivedListener,
@@ -249,13 +247,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.sendDtmfTone.bind(this);
     /* @conditional-compile-remove(unsupported-browser) */
     this.allowUnsupportedBrowserVersion.bind(this);
-    /* @conditional-compile-remove(close-captions) */ {
-      this.startCaptions.bind(this);
-      this.stopCaptions.bind(this);
-      this.setSpokenLanguage.bind(this);
-      this.setCaptionLanguage.bind(this);
-    }
-
+    this.startCaptions.bind(this);
+    this.stopCaptions.bind(this);
+    this.setSpokenLanguage.bind(this);
+    this.setCaptionLanguage.bind(this);
     this.startVideoBackgroundEffect.bind(this);
 
     this.stopVideoBackgroundEffects.bind(this);
@@ -552,22 +547,18 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return this.callAdapter.allowUnsupportedBrowserVersion();
   }
 
-  /* @conditional-compile-remove(close-captions) */
   public async startCaptions(options?: StartCaptionsOptions): Promise<void> {
     await this.callAdapter.startCaptions(options);
   }
 
-  /* @conditional-compile-remove(close-captions) */
   public async stopCaptions(): Promise<void> {
     await this.callAdapter.stopCaptions();
   }
 
-  /* @conditional-compile-remove(close-captions) */
   public async setCaptionLanguage(language: string): Promise<void> {
     await this.callAdapter.setCaptionLanguage(language);
   }
 
-  /* @conditional-compile-remove(close-captions) */
   public async setSpokenLanguage(language: string): Promise<void> {
     await this.callAdapter.setSpokenLanguage(language);
   }
@@ -626,13 +617,9 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   on(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
   on(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   on(event: 'chatError', listener: (e: AdapterError) => void): void;
-  /* @conditional-compile-remove(close-captions) */
   on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
-  /* @conditional-compile-remove(close-captions) */
   on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
-  /* @conditional-compile-remove(close-captions) */
   on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
-  /* @conditional-compile-remove(close-captions) */
   on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
 
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
@@ -672,19 +659,15 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
       case 'selectedSpeakerChanged':
         this.callAdapter.on('selectedSpeakerChanged', listener);
         break;
-      /* @conditional-compile-remove(close-captions) */
       case 'captionsReceived':
         this.callAdapter.on('captionsReceived', listener);
         break;
-      /* @conditional-compile-remove(close-captions) */
       case 'isCaptionsActiveChanged':
         this.callAdapter.on('isCaptionsActiveChanged', listener);
         break;
-      /* @conditional-compile-remove(close-captions) */
       case 'isCaptionLanguageChanged':
         this.callAdapter.on('isCaptionLanguageChanged', listener);
         break;
-      /* @conditional-compile-remove(close-captions) */
       case 'isSpokenLanguageChanged':
         this.callAdapter.on('isSpokenLanguageChanged', listener);
         break;
@@ -756,13 +739,9 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   off(event: 'chatParticipantsAdded', listener: ParticipantsAddedListener): void;
   off(event: 'chatParticipantsRemoved', listener: ParticipantsRemovedListener): void;
   off(event: 'chatError', listener: (e: AdapterError) => void): void;
-  /* @conditional-compile-remove(close-captions) */
   off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
-  /* @conditional-compile-remove(close-captions) */
   off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
-  /* @conditional-compile-remove(close-captions) */
   off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
-  /* @conditional-compile-remove(close-captions) */
   off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
 
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
@@ -802,19 +781,15 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
       case 'selectedSpeakerChanged':
         this.callAdapter.off('selectedSpeakerChanged', listener);
         break;
-      /* @conditional-compile-remove(close-captions) */
       case 'captionsReceived':
         this.callAdapter.off('captionsReceived', listener);
         break;
-      /* @conditional-compile-remove(close-captions) */
       case 'isCaptionsActiveChanged':
         this.callAdapter.off('isCaptionsActiveChanged', listener);
         break;
-      /* @conditional-compile-remove(close-captions) */
       case 'isCaptionLanguageChanged':
         this.callAdapter.off('isCaptionLanguageChanged', listener);
         break;
-      /* @conditional-compile-remove(close-captions) */
       case 'isSpokenLanguageChanged':
         this.callAdapter.off('isSpokenLanguageChanged', listener);
         break;

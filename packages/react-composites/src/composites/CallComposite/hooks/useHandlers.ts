@@ -177,19 +177,15 @@ const createCompositeHandlers = memoizeOne(
         };
         return await adapter.startVideoBackgroundEffect(replacementConfig);
       },
-      /* @conditional-compile-remove(close-captions) */
       onStartCaptions: async (options) => {
         await adapter.startCaptions(options);
       },
-      /* @conditional-compile-remove(close-captions) */
       onStopCaptions: async () => {
         await adapter.stopCaptions();
       },
-      /* @conditional-compile-remove(close-captions) */
       onSetSpokenLanguage: async (language) => {
         await adapter.setSpokenLanguage(language);
       },
-      /* @conditional-compile-remove(close-captions) */
       onSetCaptionLanguage: async (language) => {
         await adapter.setCaptionLanguage(language);
       },

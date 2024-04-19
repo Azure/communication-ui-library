@@ -20,14 +20,12 @@ export interface PreparedMoreDrawerProps {
   callControls?: boolean | CommonCallControlOptions;
   /* @conditional-compile-remove(PSTN-calls) */
   onClickShowDialpad?: () => void;
-  /* @conditional-compile-remove(close-captions) */
   isCaptionsSupported?: boolean;
   disableButtonsForHoldScreen?: boolean;
   onUserSetGalleryLayout?: (layout: VideoGalleryLayout) => void;
   userSetGalleryLayout?: VideoGalleryLayout;
   onSetDialpadPage?: () => void;
   dtmfDialerPresent?: boolean;
-  /* @conditional-compile-remove(close-captions) */
   useTeamsCaptions?: boolean;
   /* @conditional-compile-remove(reaction) */
   reactionResources?: ReactionResources;
@@ -42,11 +40,8 @@ export const PreparedMoreDrawer = (props: PreparedMoreDrawerProps): JSX.Element 
       audioDeviceMenuTitle: strings.moreDrawerAudioDeviceMenuTitle,
       microphoneMenuTitle: strings.moreDrawerMicrophoneMenuTitle,
       speakerMenuTitle: strings.moreDrawerSpeakerMenuTitle,
-      /* @conditional-compile-remove(close-captions) */
       captionsMenuTitle: strings.moreDrawerCaptionsMenuTitle,
-      /* @conditional-compile-remove(close-captions) */
       spokenLanguageMenuTitle: strings.moreDrawerSpokenLanguageMenuTitle,
-      /* @conditional-compile-remove(close-captions) */
       captionLanguageMenuTitle: strings.moreDrawerCaptionLanguageMenuTitle,
 
       galleryOptionsMenuTitle: strings.moreDrawerGalleryOptionsMenuTitle

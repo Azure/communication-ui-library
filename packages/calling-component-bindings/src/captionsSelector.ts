@@ -1,11 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(close-captions) */
 import { CallClientState, CaptionsInfo } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(close-captions) */
 import { CallingBaseSelectorProps, getStartCaptionsInProgress, getSupportedCaptionLanguages } from './baseSelectors';
-/* @conditional-compile-remove(close-captions) */
 import {
   getCaptions,
   getCaptionsStatus,
@@ -13,14 +10,10 @@ import {
   getCurrentSpokenLanguage,
   getSupportedSpokenLanguages
 } from './baseSelectors';
-/* @conditional-compile-remove(close-captions) */
 import * as reselect from 'reselect';
-/* @conditional-compile-remove(close-captions) */
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(close-captions) */
 import { _CaptionsInfo, _SupportedCaptionLanguage, _SupportedSpokenLanguage } from '@internal/react-components';
 
-/* @conditional-compile-remove(close-captions) */
 /**
  * Selector type for the {@link StartCaptionsButton} component.
  * @internal
@@ -34,7 +27,6 @@ export type _StartCaptionsButtonSelector = (
   currentSpokenLanguage: string;
 };
 
-/* @conditional-compile-remove(close-captions) */
 /**
  * Selector for {@link StartCaptionsButton} component.
  *
@@ -51,7 +43,6 @@ export const _startCaptionsButtonSelector: _StartCaptionsButtonSelector = resele
   }
 );
 
-/* @conditional-compile-remove(close-captions) */
 /**
  * Selector type for components for Changing caption language and spoken language
  * @internal
@@ -67,7 +58,6 @@ export type _CaptionSettingsSelector = (
   isCaptionsFeatureActive: boolean;
 };
 
-/* @conditional-compile-remove(close-captions) */
 /**
  * Selector for Changing caption language and spoken language
  *
@@ -97,7 +87,6 @@ export const _captionSettingsSelector: _CaptionSettingsSelector = reselect.creat
     };
   }
 );
-/* @conditional-compile-remove(close-captions) */
 /**
  * Selector type for the {@link CaptionsBanner} component.
  * @internal
@@ -110,7 +99,6 @@ export type _CaptionsBannerSelector = (
   isCaptionsOn: boolean;
 };
 
-/* @conditional-compile-remove(close-captions) */
 /**
  * Selector for {@link CaptionsBanner} component.
  *
@@ -156,7 +144,6 @@ export const _captionsBannerSelector: _CaptionsBannerSelector = reselect.createS
   }
 );
 
-/* @conditional-compile-remove(close-captions) */
 const captionsComparator = (captionsA: CaptionsInfo, captionsB: CaptionsInfo): number => {
   return (
     captionsA.timestamp.getTime() - captionsB.timestamp.getTime() ||
@@ -164,7 +151,6 @@ const captionsComparator = (captionsA: CaptionsInfo, captionsB: CaptionsInfo): n
   );
 };
 
-/* @conditional-compile-remove(close-captions) */
 const getCaptionsSpeakerIdentifier = (captions: CaptionsInfo): string => {
   return captions.speaker.identifier ? toFlatCommunicationIdentifier(captions.speaker.identifier) : '';
 };

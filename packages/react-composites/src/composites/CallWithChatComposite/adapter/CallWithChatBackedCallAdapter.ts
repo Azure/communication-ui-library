@@ -15,7 +15,6 @@ import {
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(reaction) */
 import { Reaction } from '@azure/communication-calling';
-/* @conditional-compile-remove(close-captions) */
 import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
@@ -184,22 +183,18 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     await this.callWithChatAdapter.sendDtmfTone(dtmfTone);
   };
 
-  /* @conditional-compile-remove(close-captions) */
   public async startCaptions(options?: StartCaptionsOptions): Promise<void> {
     this.callWithChatAdapter.startCaptions(options);
   }
 
-  /* @conditional-compile-remove(close-captions) */
   public async stopCaptions(): Promise<void> {
     this.callWithChatAdapter.stopCaptions();
   }
 
-  /* @conditional-compile-remove(close-captions) */
   public async setCaptionLanguage(language: string): Promise<void> {
     this.callWithChatAdapter.setCaptionLanguage(language);
   }
 
-  /* @conditional-compile-remove(close-captions) */
   public async setSpokenLanguage(language: string): Promise<void> {
     this.callWithChatAdapter.setSpokenLanguage(language);
   }
