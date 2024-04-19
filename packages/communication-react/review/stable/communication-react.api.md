@@ -1606,6 +1606,7 @@ export type CommonCallAdapterOptions = {
         videoBackgroundImages?: VideoBackgroundImage[];
         onResolveDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     };
+    onFetchProfile?: OnFetchProfileCallback;
     callingSounds?: CallingSounds;
     reactionResources?: ReactionResources;
 };
@@ -2932,6 +2933,9 @@ export interface NetworkDiagnosticsState {
 }
 
 // @public
+export type OnFetchProfileCallback = (userId: string, defaultProfile?: Profile) => Promise<Profile | undefined>;
+
+// @public
 export type OnRenderAvatarCallback = (
 userId?: string, options?: CustomAvatarOptions,
 defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element) => JSX.Element;
@@ -3128,6 +3132,11 @@ export type ParticipantState = 'Idle' | 'Connecting' | 'Ringing' | 'Connected' |
 export interface PPTLiveCallFeatureState {
     isActive: boolean;
 }
+
+// @public
+export type Profile = {
+    displayName?: string;
+};
 
 // @public
 export type RaisedHand = {

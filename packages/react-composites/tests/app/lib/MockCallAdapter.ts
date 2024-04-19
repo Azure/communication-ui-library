@@ -29,7 +29,6 @@ export class MockCallAdapter implements CallAdapter {
     this._emitter = new EventEmitter();
   }
 
-  /* @conditional-compile-remove(reaction) */
   onReactionClick(emoji: string): Promise<void> {
     throw new Error(`Method could not send ${emoji}.`);
   }

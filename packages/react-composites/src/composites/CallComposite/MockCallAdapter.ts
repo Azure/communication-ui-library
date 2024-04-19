@@ -240,7 +240,6 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
       raiseHand: { raisedHands: [] },
       /* @conditional-compile-remove(ppt-live) */
       pptLive: { isActive: false },
-      /* @conditional-compile-remove(reaction) */
       localParticipantReaction: undefined,
       role,
       captionsFeature: {

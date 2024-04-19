@@ -13,7 +13,6 @@ import {
   PermissionConstraints,
   StartCallOptions
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(reaction) */
 import { Reaction } from '@azure/communication-calling';
 import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -123,7 +122,6 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public stopScreenShare = async (): Promise<void> => await this.callWithChatAdapter.stopScreenShare();
   public raiseHand = async (): Promise<void> => await this.callWithChatAdapter.raiseHand();
   public lowerHand = async (): Promise<void> => await this.callWithChatAdapter.lowerHand();
-  /* @conditional-compile-remove(reaction) */
   public onReactionClick = async (reaction: Reaction): Promise<void> =>
     await this.callWithChatAdapter.onReactionClick(reaction);
   public removeParticipant = async (
@@ -257,7 +255,6 @@ function callAdapterStateFromCallWithChatAdapterState(
     onResolveVideoEffectDependency: callWithChatAdapterState.onResolveVideoEffectDependency,
 
     selectedVideoBackgroundEffect: callWithChatAdapterState.selectedVideoBackgroundEffect,
-    /* @conditional-compile-remove(reaction) */
     reactions: callWithChatAdapterState.reactions
   };
 }

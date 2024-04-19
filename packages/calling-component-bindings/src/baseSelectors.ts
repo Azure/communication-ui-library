@@ -17,7 +17,6 @@ import {
 } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(spotlight) */
 import { SpotlightCallFeatureState } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(reaction) */
 import { ReactionState } from '@internal/calling-stateful-client';
 import { CaptionsInfo } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(acs-close-captions) */
@@ -112,7 +111,6 @@ export const getSpotlightCallFeature = (
   return state.calls[props.callId]?.spotlight;
 };
 
-/* @conditional-compile-remove(reaction) */
 /**
  * @private
  */

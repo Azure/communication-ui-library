@@ -90,7 +90,5 @@ module.exports = {
     'end-of-call-survey',
     // Feature for PPT Live for teams meeting
     'ppt-live',
-    // Feature for meeting reactions
-    'reaction',
   ]
 }

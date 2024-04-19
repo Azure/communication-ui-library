@@ -4,7 +4,6 @@
 import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
 import { CaptionsInfo } from '@internal/calling-stateful-client';
 import type { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
-/* @conditional-compile-remove(reaction) */
 import { Reaction } from '@azure/communication-calling';
 import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(spotlight) */
@@ -45,7 +44,6 @@ import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../.
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
-/* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '@internal/react-components';
 
 /**
@@ -172,7 +170,6 @@ export type CallAdapterClientState = {
    * State to track the sounds to be used in the call.
    */
   sounds?: CallingSounds;
-  /* @conditional-compile-remove(reaction) */
   /**
    * State to track the reactions to be used.
    * @public
@@ -521,7 +518,6 @@ export interface CallAdapterCallOperations {
    * @public
    */
   lowerHand(): Promise<void>;
-  /* @conditional-compile-remove(reaction) */
   /**
    * Send reaction emoji
    *

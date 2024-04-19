@@ -41,7 +41,6 @@ import {
   CallError
 } from './CallClientState';
 import { CaptionsInfo } from './CallClientState';
-/* @conditional-compile-remove(reaction) */
 import { ReactionState } from './CallClientState';
 import { AcceptedTransfer } from './CallClientState';
 import { callingStatefulLogger } from './Logger';
@@ -51,7 +50,6 @@ import { convertFromTeamsSDKToCaptionInfoState } from './Converter';
 /* @conditional-compile-remove(acs-close-captions) */
 import { convertFromSDKToCaptionInfoState } from './Converter';
 import { convertFromSDKToRaisedHandState } from './Converter';
-/* @conditional-compile-remove(reaction) */
 import { ReactionMessage } from '@azure/communication-calling';
 /* @conditional-compile-remove(spotlight) */
 import { SpotlightedParticipant } from '@azure/communication-calling';
@@ -69,7 +67,6 @@ enablePatches();
  * @private
  */
 export const MAX_CALL_HISTORY_LENGTH = 10;
-/* @conditional-compile-remove(reaction) */
 /**
  * @private
  */
@@ -84,7 +81,6 @@ export class CallContext {
   private _emitter: EventEmitter;
   private _atomicId: number;
   private _callIdHistory: CallIdHistory = new CallIdHistory();
-  /* @conditional-compile-remove(reaction) */
   private _timeOutId: { [key: string]: NodeJS.Timeout } = {};
 
   constructor(
@@ -476,7 +472,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(reaction) */
   public setReceivedReactionFromParticipant(
     callId: string,
     participantKey: string,
@@ -1196,7 +1191,6 @@ const findOldestCallEnded = (calls: { [key: string]: { endTime?: Date } }): stri
   return oldestCallId;
 };
 
-/* @conditional-compile-remove(reaction) */
 function clearParticipantReactionState(callContext: CallContext, callId: string, participantKey: string): void {
   callContext.setReceivedReactionFromParticipant(callId, participantKey, null);
 }

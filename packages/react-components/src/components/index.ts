@@ -180,9 +180,7 @@ export type { ScreenShareButtonProps, ScreenShareButtonStrings } from './ScreenS
 export { RaiseHandButton } from './RaiseHandButton';
 
 export type { RaiseHandButtonProps, RaiseHandButtonStrings } from './RaiseHandButton';
-/* @conditional-compile-remove(reaction) */
 export { ReactionButton } from './ReactionButton';
-/* @conditional-compile-remove(reaction) */
 export type { ReactionButtonProps, ReactionButtonStrings } from './ReactionButton';
 export { VideoTile } from './VideoTile';
 export type { VideoTileProps, VideoTileStylesProps } from './VideoTile';

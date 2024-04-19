@@ -15,7 +15,6 @@ import { isCameraOn } from '../utils';
 import { DtmfTone } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
-/* @conditional-compile-remove(reaction) */
 import { Reaction } from '@azure/communication-calling';
 
 import type {
@@ -102,7 +101,6 @@ const createCompositeHandlers = memoizeOne(
           ? await adapter.lowerHand()
           : await adapter.raiseHand();
       },
-      /* @conditional-compile-remove(reaction) */
       onReactionClick: async (reaction: Reaction) => {
         await adapter.onReactionClick(reaction);
       },

@@ -33,7 +33,6 @@ import { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/commu
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { Features } from '@azure/communication-calling';
 import { TeamsCaptions } from '@azure/communication-calling';
-/* @conditional-compile-remove(reaction) */
 import { Reaction } from '@azure/communication-calling';
 /* @conditional-compile-remove(spotlight) */
 import { _ComponentCallingHandlers } from './createHandlers';
@@ -60,7 +59,6 @@ export interface CommonCallingHandlers {
   onRaiseHand: () => Promise<void>;
   onLowerHand: () => Promise<void>;
   onToggleRaiseHand: () => Promise<void>;
-  /* @conditional-compile-remove(reaction) */
   onReactionClick: (reaction: Reaction) => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   onToggleHold: () => Promise<void>;
@@ -316,7 +314,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
     };
 
-    /* @conditional-compile-remove(reaction) */
     const onReactionClick = async (reaction: Reaction): Promise<void> => {
       if (
         reaction === 'like' ||
@@ -665,7 +662,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onRaiseHand,
       onLowerHand,
       onToggleRaiseHand,
-      /* @conditional-compile-remove(reaction) */
       onReactionClick: onReactionClick,
       /* @conditional-compile-remove(PSTN-calls) */
       onAddParticipant: notImplemented,

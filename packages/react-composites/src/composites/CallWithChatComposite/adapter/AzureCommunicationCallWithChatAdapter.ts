@@ -17,7 +17,6 @@ import {
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(meeting-id) */
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
-/* @conditional-compile-remove(reaction) */
 import { Reaction } from '@azure/communication-calling';
 import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -207,7 +206,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.stopScreenShare.bind(this);
     this.raiseHand.bind(this);
     this.lowerHand.bind(this);
-    /* @conditional-compile-remove(reaction) */
     this.onReactionClick.bind(this);
     this.removeParticipant.bind(this);
     this.createStreamView.bind(this);
@@ -384,7 +382,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   public async lowerHand(): Promise<void> {
     await this.callAdapter.lowerHand();
   }
-  /* @conditional-compile-remove(reaction) */
+  /** Reaction clicked by the local user. */
   public async onReactionClick(reaction: Reaction): Promise<void> {
     await this.callAdapter.onReactionClick(reaction);
   }

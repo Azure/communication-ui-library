@@ -40,7 +40,6 @@ import {
 import { SpotlightedParticipant } from '@azure/communication-calling';
 /* @conditional-compile-remove(meeting-id) */
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
-/* @conditional-compile-remove(reaction) */
 import { Reaction } from '@azure/communication-calling';
 import { TeamsCaptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(acs-close-captions) */
@@ -75,7 +74,6 @@ import {
   JoinCallOptions,
   StartCallIdentifier
 } from './CallAdapter';
-/* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '@internal/react-components';
 import { TransferAcceptedListener } from './CallAdapter';
 
@@ -152,7 +150,6 @@ class CallContext {
         onResolveDependency?: () => Promise<VideoBackgroundEffectsDependency>;
       };
       callingSounds?: CallingSounds;
-      /* @conditional-compile-remove(reaction) */
       reactionResources?: ReactionResources;
     },
     targetCallees?: StartCallIdentifier[]
@@ -177,7 +174,7 @@ class CallContext {
       selectedVideoBackgroundEffect: undefined,
       cameraStatus: undefined,
       sounds: options?.callingSounds,
-      /* @conditional-compile-remove(reaction) */ reactions: options?.reactionResources
+      reactions: options?.reactionResources
     };
     this.emitter.setMaxListeners(options?.maxListeners ?? 50);
     this.bindPublicMethods();
@@ -518,7 +515,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.startScreenShare.bind(this);
     this.stopScreenShare.bind(this);
     this.raiseHand.bind(this);
-    /* @conditional-compile-remove(reaction) */
     this.onReactionClick.bind(this);
     this.lowerHand.bind(this);
     this.removeParticipant.bind(this);
@@ -843,7 +839,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     });
   }
 
-  /* @conditional-compile-remove(reaction) */
   public async onReactionClick(reaction: Reaction): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
       await this.handlers.onReactionClick(reaction);
@@ -1376,7 +1371,6 @@ export type CommonCallAdapterOptions = {
     videoBackgroundImages?: VideoBackgroundImage[];
     onResolveDependency?: () => Promise<VideoBackgroundEffectsDependency>;
   };
-  /* @conditional-compile-remove(teams-identity-support) */
   /**
    * Use this to fetch profile information which will override data in {@link CallAdapterState} like display name
    * The onFetchProfile is fetch-and-forget one time action for each user, once a user profile is updated, the value will be cached
@@ -1387,7 +1381,6 @@ export type CommonCallAdapterOptions = {
    * Sounds to use for calling events
    */
   callingSounds?: CallingSounds;
-  /* @conditional-compile-remove(reaction) */
   /**
    * Reaction resource for reaction resources
    * @beta

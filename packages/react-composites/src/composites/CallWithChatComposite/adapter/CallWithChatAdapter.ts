@@ -34,7 +34,6 @@ import {
   StartCallOptions,
   VideoDeviceInfo
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(reaction) */
 import { Reaction } from '@azure/communication-calling';
 import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -197,7 +196,6 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   lowerHand(): Promise<void>;
-  /* @conditional-compile-remove(reaction) */
   /**
    * Send Reaction to ongoing meeting.
    * @param reaction - A value of type {@link @azure/communication-calling#Reaction}

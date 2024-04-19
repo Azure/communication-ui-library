@@ -435,7 +435,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 userSetGalleryLayout={props.userSetGalleryLayout}
                 onSetDialpadPage={props.onSetDialpadPage}
                 dtmfDialerPresent={props.dtmfDialerPresent}
-                /* @conditional-compile-remove(reaction) */
                 reactionResources={adapter.getState().reactions}
               />
             </Stack>

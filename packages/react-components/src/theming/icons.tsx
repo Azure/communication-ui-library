@@ -64,16 +64,10 @@ import {
   TableAdd20Regular,
   TableDismiss20Regular
 } from '@fluentui/react-icons';
-/* @conditional-compile-remove(reaction) */
 import { Emoji20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { Star28Regular, Star28Filled } from '@fluentui/react-icons';
-import {
-  HandRight20Filled,
-  HandRightOff20Filled,
-  HandRight20Regular,
-  HandRightOff20Regular
-} from '@fluentui/react-icons';
+import { HandRight20Regular, HandRightOff20Regular } from '@fluentui/react-icons';
 import {
   ClosedCaption20Regular,
   ClosedCaptionOff20Regular,
@@ -244,15 +238,11 @@ const GalleryRightButton = (): JSX.Element => {
 };
 
 const ControlButtonRaiseHandIcon = (): JSX.Element => {
-  /* @conditional-compile-remove(reaction) */
   return <HandRight20Regular />;
-  return <HandRight20Filled />;
 };
 
 const ControlButtonLowerHandIcon = (): JSX.Element => {
-  /* @conditional-compile-remove(reaction) */
   return <HandRightOff20Regular />;
-  return <HandRightOff20Filled />;
 };
 
 /**
@@ -278,7 +268,6 @@ export const DEFAULT_COMPONENT_ICONS = {
   ControlButtonLowerHand: <ControlButtonLowerHandIcon />,
   RaiseHandContextualMenuItem: <HandRight20Regular />,
   LowerHandContextualMenuItem: <HandRightOff20Regular />,
-  /* @conditional-compile-remove(reaction) */
   ReactionButtonIcon: <Emoji20Regular />,
   /* @conditional-compile-remove(attachment-upload) */
   CancelAttachmentUpload: <Dismiss16Regular />,

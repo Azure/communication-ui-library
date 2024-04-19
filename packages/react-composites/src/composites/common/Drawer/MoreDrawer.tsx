@@ -12,9 +12,7 @@ import {
   SpokenLanguageStrings,
   CaptionLanguageStrings
 } from '@internal/react-components';
-/* @conditional-compile-remove(reaction) */
 import { _ReactionDrawerMenuItem } from '@internal/react-components';
-/* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
 import { _StartCaptionsButton, _CaptionsSettingsModal } from '@internal/react-components';
@@ -150,9 +148,7 @@ export interface MoreDrawerProps extends MoreDrawerDevicesMenuProps {
   strings: MoreDrawerStrings;
   disableButtonsForHoldScreen?: boolean;
   useTeamsCaptions?: boolean;
-  /* @conditional-compile-remove(reaction) */
   reactionResources?: ReactionResources;
-  /* @conditional-compile-remove(reaction) */
   onReactionClick?: (reaction: string) => Promise<void>;
 }
 
@@ -207,7 +203,6 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     /* @conditional-compile-remove(acs-close-captions) */ drawerSelectionOptions !== false &&
     /* @conditional-compile-remove(acs-close-captions) */ isEnabled(drawerSelectionOptions.captionsButton);
 
-  /* @conditional-compile-remove(reaction) */
   if (props.reactionResources !== undefined) {
     drawerMenuItems.push({
       itemKey: 'reactions',
