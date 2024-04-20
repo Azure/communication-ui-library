@@ -6,7 +6,6 @@ import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CallCommon } from './BetaToStableTypes';
 import { CallContext } from './CallContext';
 import { CallIdRef } from './CallIdRef';
-/* @conditional-compile-remove(close-captions) */
 import { CaptionsFeatureSubscriber } from './CaptionsSubscriber';
 import {
   convertSdkLocalStreamToDeclarativeLocalStream,
@@ -122,7 +121,6 @@ export class CallSubscriber {
 
   private subscribe = (): void => {
     this._call.on('stateChanged', this.stateChanged);
-    /* @conditional-compile-remove(close-captions) */
     this._call.on('stateChanged', this.initCaptionSubscriber);
     /* @conditional-compile-remove(local-recording-notification) */
     this._call.on('stateChanged', this.initLocalRecordingNotificationSubscriber);
@@ -161,7 +159,6 @@ export class CallSubscriber {
 
   public unsubscribe = (): void => {
     this._call.off('stateChanged', this.stateChanged);
-    /* @conditional-compile-remove(close-captions) */
     this._call.off('stateChanged', this.initCaptionSubscriber);
     /* @conditional-compile-remove(local-recording-notification) */
     this._call.off('stateChanged', this.initLocalRecordingNotificationSubscriber);
@@ -232,7 +229,6 @@ export class CallSubscriber {
     this._context.setCallState(this._callIdRef.callId, this._call.state);
   };
 
-  /* @conditional-compile-remove(close-captions) */
   private initCaptionSubscriber = (): void => {
     // subscribe to captions here so that we don't call captions when call is not initialized
     if (this._call.state === 'Connected' && !this._CaptionsFeatureSubscriber) {

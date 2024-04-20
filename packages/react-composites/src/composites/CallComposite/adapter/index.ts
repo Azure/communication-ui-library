@@ -60,7 +60,6 @@ export type {
   StartCallIdentifier
 } from './CallAdapter';
 
-/* @conditional-compile-remove(close-captions) */
 export type {
   CaptionsReceivedListener,
   IsCaptionsActiveChangedListener,
