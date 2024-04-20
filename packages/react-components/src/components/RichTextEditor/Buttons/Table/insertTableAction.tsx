@@ -37,7 +37,7 @@ export const insertTable = (editor: IEditor, columns: number, rows: number): voi
       editor.insertNode(table);
       const nextElementAfterTable = table.nextElementSibling;
 
-      // insert br only if there is nothing after table
+      // insert br only if there is no next element after the table
       if (nextElementAfterTable === null) {
         // insert br after the table
         // so users can easily input content after table
