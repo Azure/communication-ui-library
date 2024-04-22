@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 import {
+  /* @conditional-compile-remove(attachment-upload) */
   hasIncompleteAttachmentUploads,
   /* @conditional-compile-remove(attachment-upload) */
   hasCompletedAttachmentUploads,
@@ -9,6 +10,7 @@ import {
   MAXIMUM_LENGTH_OF_MESSAGE
 } from './SendBoxUtils';
 
+/* @conditional-compile-remove(attachment-upload) */
 describe('SendBoxUtils hasIncompleteAttachmentUploads tests', () => {
   test('hasIncompleteAttachmentUploads should return false when progress property set to undefined', () => {
     const attachments = [
