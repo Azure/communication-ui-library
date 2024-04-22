@@ -1,0 +1,9 @@
+{
+  "type": "minor",
+  "area": "feature",
+  "workstream": "The Web UI RichTextSendBox and MessageThread components now support rich text formatting to generate HTML content for chat messages.This feature incl",
+  "comment": "udes support for:",
+  "packageName": "@azure/communication-react",
+  "email": "98852890+vhuseinova-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
