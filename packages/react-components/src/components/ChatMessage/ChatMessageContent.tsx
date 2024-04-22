@@ -186,7 +186,8 @@ const extractContentForAllyMessage = (props: ChatMessageContentProps): string =>
       parsedContent.replaceChild(imageTextNode, child);
     });
 
-    // Inject attachment names for aria.
+    // Inject message attachment count for aria.
+    // this is only applying to file attachments not for inline images.
     /* @conditional-compile-remove(attachment-download) */
     if (attachments && attachments.length > 0) {
       const attachmentCardDescription = attachmentCardGroupDescription(props);
