@@ -2,19 +2,15 @@
 // Licensed under the MIT License.
 
 import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from '@internal/calling-stateful-client';
-
 import type { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
-
 import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(spotlight) */
 import type { SpotlightedParticipant } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCall } from '@azure/communication-calling';
 import { TransferEventArgs } from '@azure/communication-calling';
-/* @conditional-compile-remove(close-captions) */
 import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
@@ -359,7 +355,6 @@ export interface JoinCallOptions {
   cameraOn?: boolean | 'keep';
 }
 
-/* @conditional-compile-remove(close-captions) */
 /**
  * Callback for {@link CallAdapterSubscribers} 'captionsReceived' event.
  *
@@ -367,7 +362,6 @@ export interface JoinCallOptions {
  */
 export type CaptionsReceivedListener = (event: { captionsInfo: CaptionsInfo }) => void;
 
-/* @conditional-compile-remove(close-captions) */
 /**
  * Callback for {@link CallAdapterSubscribers} 'isCaptionsActiveChanged' event.
  *
@@ -375,7 +369,6 @@ export type CaptionsReceivedListener = (event: { captionsInfo: CaptionsInfo }) =
  */
 export type IsCaptionsActiveChangedListener = (event: { isActive: boolean }) => void;
 
-/* @conditional-compile-remove(close-captions) */
 /**
  * Callback for {@link CallAdapterSubscribers} 'isCaptionLanguageChanged' event.
  *
@@ -383,7 +376,6 @@ export type IsCaptionsActiveChangedListener = (event: { isActive: boolean }) => 
  */
 export type IsCaptionLanguageChangedListener = (event: { activeCaptionLanguage: string }) => void;
 
-/* @conditional-compile-remove(close-captions) */
 /**
  * Callback for {@link CallAdapterSubscribers} 'isSpokenLanguageChanged' event.
  *
@@ -638,25 +630,21 @@ export interface CallAdapterCallOperations {
    * Continues into a call when the browser version is not supported.
    */
   allowUnsupportedBrowserVersion(): void;
-  /* @conditional-compile-remove(close-captions) */
   /**
    * Function to Start captions
    * @param options - options for start captions
    */
   startCaptions(options?: StartCaptionsOptions): Promise<void>;
-  /* @conditional-compile-remove(close-captions) */
   /**
    * Function to set caption language
    * @param language - language set for caption
    */
   setCaptionLanguage(language: string): Promise<void>;
-  /* @conditional-compile-remove(close-captions) */
   /**
    * Function to set spoken language
    * @param language - spoken language
    */
   setSpokenLanguage(language: string): Promise<void>;
-  /* @conditional-compile-remove(close-captions) */
   /**
    * Funtion to stop captions
    */
@@ -862,22 +850,20 @@ export interface CallAdapterSubscribers {
    * Subscribe function for 'error' event.
    */
   on(event: 'error', listener: (e: AdapterError) => void): void;
-  /* @conditional-compile-remove(close-captions) */
   /**
    * Subscribe function for 'captionsReceived' event.
    */
   on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
-  /* @conditional-compile-remove(close-captions) */
   /**
    * Subscribe function for 'isCaptionsActiveChanged' event.
    */
   on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
-  /* @conditional-compile-remove(close-captions) */
+
   /**
    * Subscribe function for 'isCaptionLanguageChanged' event.
    */
   on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
-  /* @conditional-compile-remove(close-captions) */
+
   /**
    * Subscribe function for 'isSpokenLanguageChanged' event.
    */
@@ -950,22 +936,18 @@ export interface CallAdapterSubscribers {
    * Unsubscribe function for 'error' event.
    */
   off(event: 'error', listener: (e: AdapterError) => void): void;
-  /* @conditional-compile-remove(close-captions) */
   /**
    * Unsubscribe function for 'captionsReceived' event.
    */
   off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
-  /* @conditional-compile-remove(close-captions) */
   /**
    * Unsubscribe function for 'isCaptionsActiveChanged' event.
    */
   off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
-  /* @conditional-compile-remove(close-captions) */
   /**
    * Unsubscribe function for 'isCaptionLanguageChanged' event.
    */
   off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
-  /* @conditional-compile-remove(close-captions) */
   /**
    * Unsubscribe function for 'isSpokenLanguageChanged' event.
    */

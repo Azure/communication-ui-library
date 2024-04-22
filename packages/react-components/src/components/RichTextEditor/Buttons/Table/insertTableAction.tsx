@@ -35,6 +35,16 @@ export const insertTable = (editor: IEditor, columns: number, rows: number): voi
       const vTable = new VTable(table);
       vTable.writeBack();
       editor.insertNode(table);
+      const nextElementAfterTable = table.nextElementSibling;
+
+      // insert br only if there is no next element after the table
+      if (nextElementAfterTable === null) {
+        // insert br after the table
+        // so users can easily input content after table
+        editor.select(new Position(table, CompatiblePositionType.After));
+        editor.insertNode(document.createElement('br'));
+      }
+
       editor.runAsync((editor) => editor.select(new Position(table, CompatiblePositionType.Begin).normalize()));
     },
     CompatibleChangeSource.Format,
