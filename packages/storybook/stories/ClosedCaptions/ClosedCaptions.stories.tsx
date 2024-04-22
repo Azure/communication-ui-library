@@ -5,8 +5,8 @@ import { PrimaryButton, Stack } from '@fluentui/react';
 import { Description, Heading, Source, Subheading, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
-import { COMPONENT_FOLDER_PREFIX, overviewPageImagesStackStyle } from '../../constants';
+import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
+import { EXAMPLES_FOLDER_PREFIX, overviewPageImagesStackStyle } from '../constants';
 import { exampleDisableCaptions } from './ClosedCaptions';
 
 const getDocs: () => JSX.Element = () => {
@@ -122,8 +122,8 @@ const ClosedCaptionsStory = (): JSX.Element => {
 export const ClosedCaptions = ClosedCaptionsStory.bind({});
 
 export default {
-  id: `${COMPONENT_FOLDER_PREFIX}-internal-ClosedCaptions`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Internal/ClosedCaptions`,
+  id: `${EXAMPLES_FOLDER_PREFIX}-ClosedCaptions`,
+  title: `${EXAMPLES_FOLDER_PREFIX}/ClosedCaptions`,
   parameters: {
     previewTabs: { canvas: { disable: true, hidden: true } },
     docs: {

@@ -19,8 +19,6 @@ module.exports = {
     "hide-attendee-name",
     // Join meeting with meetingId and passcode
     'meeting-id',
-    // Close captions feature for ACS calls
-    "acs-close-captions",
     // Demo feature. Used in live-documentation of conditional compilation. Do not use in production code.
     "in-progress-beta-feature-demo",
   ],
@@ -75,6 +73,8 @@ module.exports = {
     'local-recording-notification',
     // Feature for end call options 
     'end-call-options',
+    // Close captions feature for ACS calls
+    "acs-close-captions",,
     // Feature for Rich Text Editor (RTE) support
     'rich-text-editor'
   ],
