@@ -6,6 +6,7 @@ import { Title, Description, Props, Heading, Canvas, Source } from '@storybook/a
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
+import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { hiddenControl, controlsToAdd } from '../controlsUtils';
 import { RichTextSendBoxExample } from './snippets/RichTextSendBox.snippet';
@@ -23,6 +24,7 @@ const importStatement = `import { RichTextSendBox } from '@azure/communication-r
 const getDocs: () => JSX.Element = () => {
   return (
     <>
+      <SingleLineBetaBanner topOfPage={true} />
       <Title>RichTextSendBox</Title>
       <Description>
         Component for composing messages with rich text formatting. RichTextSendBox has a callback for sending typing
