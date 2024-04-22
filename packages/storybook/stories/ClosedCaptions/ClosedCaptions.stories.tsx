@@ -6,7 +6,7 @@ import { Description, Heading, Source, Subheading, Title } from '@storybook/addo
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
-import { CONCEPTS_FOLDER_PREFIX, EXAMPLES_FOLDER_PREFIX, overviewPageImagesStackStyle } from '../constants';
+import { CONCEPTS_FOLDER_PREFIX, overviewPageImagesStackStyle } from '../constants';
 import { exampleDisableCaptions } from './ClosedCaptions';
 
 const getDocs: () => JSX.Element = () => {
