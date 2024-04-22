@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { FluentThemeProvider, LocalizationProvider } from '@azure/communication-react';
-import { Anchor, DocsContainer } from '@storybook/addon-docs';
+import { DocsContainer } from '@storybook/addon-docs';
 import React from 'react';
 import {
   COMPONENT_FOLDER_PREFIX,
@@ -13,14 +13,26 @@ import {
 } from '../stories/constants';
 import { THEMES } from '../stories/themes';
 import { LOCALES } from '../stories/locales'
+import { Toc } from './Toc';
 
 export const parameters = {
   layout: 'fullscreen',
   docs: {
     container: props => (
       <DocsContainer context={props.context}>
-        <Anchor storyId={props.context.id} />
-        {props.children}
+        <div style={{ display: 'flex', flexDirection: 'row', rowGap: '16px' }}>
+          <div style={{ width: 'calc(100% - 200px)'}}>
+            {props.children}
+          </div>
+          {/* TODO: GET HEADINGS THROUGH STORY CONTEXT OR OTHERWISE */}
+          <Toc stories={[{
+            name: 'CallComposite',
+            id: '1'
+          }, {
+            name: 'Join Example',
+            id: '2'
+          }]} />
+        </div>
       </DocsContainer>
     ),
   },
