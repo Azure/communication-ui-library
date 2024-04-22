@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 import {
   hasIncompleteAttachmentUploads,
+  /* @conditional-compile-remove(attachment-upload) */
   hasCompletedAttachmentUploads,
   isMessageTooLong,
   sanitizeText,
@@ -78,6 +79,7 @@ describe('SendBoxUtils hasIncompleteAttachmentUploads tests', () => {
   });
 });
 
+/* @conditional-compile-remove(attachment-upload) */
 describe('SendBoxUtils hasCompletedAttachmentUploads tests', () => {
   test('hasCompletedAttachmentUploads should return true when all attachments are complete', () => {
     const attachments = [
