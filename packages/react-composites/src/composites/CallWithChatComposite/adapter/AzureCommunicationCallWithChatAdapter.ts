@@ -488,45 +488,45 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
       return adapter.deleteMessage(messageId);
     });
   }
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-upload) */
   public registerActiveUploads = (files: File[]): AttachmentUploadTask[] => {
     if (!this.chatAdapter) {
       throw new Error('Chat is not initialized');
     }
     return this.chatAdapter.registerActiveUploads(files);
   };
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-upload) */
   public registerCompletedUploads = (metadata: AttachmentMetadata[]): AttachmentUploadTask[] => {
     if (!this.chatAdapter) {
       throw new Error('Chat is not initialized');
     }
     return this.chatAdapter?.registerCompletedUploads(metadata);
   };
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-upload) */
   public clearUploads = (): void => {
     this.executeWithResolvedChatAdapter((adapter) => {
       adapter.clearUploads();
     });
   };
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-upload) */
   public cancelUpload = (id: string): void => {
     this.executeWithResolvedChatAdapter((adapter) => {
       adapter.cancelUpload(id);
     });
   };
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-upload) */
   public updateUploadProgress = (id: string, progress: number): void => {
     this.executeWithResolvedChatAdapter((adapter) => {
       adapter.updateUploadProgress(id, progress);
     });
   };
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-upload) */
   public updateUploadStatusMessage = (id: string, errorMessage: string): void => {
     this.executeWithResolvedChatAdapter((adapter) => {
       adapter.updateUploadStatusMessage(id, errorMessage);
     });
   };
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(attachment-upload) */
   public updateUploadMetadata = (id: string, metadata: AttachmentMetadata): void => {
     this.executeWithResolvedChatAdapter((adapter) => {
       adapter.updateUploadMetadata(id, metadata);
