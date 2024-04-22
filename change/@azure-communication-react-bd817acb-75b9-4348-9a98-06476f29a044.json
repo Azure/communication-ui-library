@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "area": "improvement",
-  "workstream": "File Sharing",
-  "comment": "Renaming `file` to `attachment` in documentation and internal functionality",
-  "packageName": "@azure/communication-react",
-  "email": "98852890+vhuseinova-msft@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

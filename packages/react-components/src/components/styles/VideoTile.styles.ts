@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 import { IButtonStyles, IStyle, mergeStyles, Theme, ITheme } from '@fluentui/react';
-/* @conditional-compile-remove(reaction) */
 import { keyframes, memoizeFunction } from '@fluentui/react';
-/* @conditional-compile-remove(reaction) */
 import { REACTION_SCREEN_SHARE_ANIMATION_TIME_MS } from '../VideoGallery/utils/reactionUtils';
 
 /**
@@ -64,14 +62,6 @@ export const disabledVideoHint = mergeStyles({
   alignItems: 'center',
   padding: '0.15rem',
   maxWidth: '100%'
-});
-
-/**
- * @private
- */
-export const videoHint = mergeStyles(disabledVideoHint, {
-  // This will appear on top of the video stream, so no dependency on theme and explicitly use a translucent white
-  backgroundColor: 'rgba(255,255,255,0.8)'
 });
 
 /**
@@ -160,7 +150,8 @@ export const raiseHandContainerStyles = (theme: ITheme, limitedSpace: boolean): 
       borderRadius: '1rem',
       margin: '0.5rem',
       width: 'fit-content',
-      position: 'absolute'
+      position: 'absolute',
+      top: 0
     },
     limitedSpace && raiseHandLimitedSpaceStyles
   );
@@ -178,7 +169,6 @@ export const raiseHandLimitedSpaceStyles: IStyle = {
   bottom: 0
 };
 
-/* @conditional-compile-remove(reaction) */
 /**
  * @private
  */
@@ -193,7 +183,6 @@ export const playFrames = memoizeFunction((frameHightPx: number, frameCount: num
   })
 );
 
-/* @conditional-compile-remove(reaction) */
 /**
  * @private
  */

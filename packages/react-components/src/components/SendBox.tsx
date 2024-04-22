@@ -15,7 +15,7 @@ import { SendBoxErrors } from './SendBoxErrors';
 /* @conditional-compile-remove(attachment-upload) */
 import { _AttachmentUploadCards } from './AttachmentUploadCards';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata } from '../types/Attachment';
+import { AttachmentMetadataWithProgress } from '../types/Attachment';
 /* @conditional-compile-remove(attachment-upload) */
 import { attachmentUploadCardsStyles } from './styles/SendBox.styles';
 /* @conditional-compile-remove(attachment-upload) */
@@ -84,6 +84,11 @@ export interface SendBoxStrings {
    * Aria label to notify user attachment is uploaded.
    */
   uploadCompleted: string;
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /**
+   * Aria label to notify user more attachment action menu.
+   */
+  attachmentMoreMenu: string;
 }
 
 /**
@@ -158,11 +163,11 @@ export interface SendBoxProps {
   onRenderAttachmentUploads?: () => JSX.Element;
   /* @conditional-compile-remove(attachment-upload) */
   /**
-   * Optional array of active attachment uploads where each object has attributes
-   * of a attachment upload like name, progress, errorMessage etc.
+   * Optional array of type {@link AttachmentMetadataWithProgress}
+   * to render attachments being uploaded in the SendBox.
    * @beta
    */
-  activeAttachmentUploads?: AttachmentMetadata[];
+  attachmentsWithProgress?: AttachmentMetadataWithProgress[];
   /* @conditional-compile-remove(attachment-upload) */
   /**
    * Optional callback to remove the attachment upload before sending by clicking on
@@ -194,7 +199,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     /* @conditional-compile-remove(mention) */
     mentionLookupOptions,
     /* @conditional-compile-remove(attachment-upload) */
-    activeAttachmentUploads
+    attachmentsWithProgress
   } = props;
   const theme = useTheme();
   const localeStrings = useLocale().strings.sendBox;
@@ -222,7 +227,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     setAttachmentUploadsPendingError(undefined);
 
     /* @conditional-compile-remove(attachment-upload) */
-    if (hasIncompleteAttachmentUploads(activeAttachmentUploads)) {
+    if (hasIncompleteAttachmentUploads(attachmentsWithProgress)) {
       setAttachmentUploadsPendingError({ message: strings.attachmentUploadsPendingError, timestamp: Date.now() });
       return;
     }
@@ -232,7 +237,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     // Message can be empty if there is a valid attachment upload
     if (
       sanitizeText(message).length > 0 ||
-      /* @conditional-compile-remove(attachment-upload) */ hasCompletedAttachmentUploads(activeAttachmentUploads)
+      /* @conditional-compile-remove(attachment-upload) */ hasCompletedAttachmentUploads(attachmentsWithProgress)
     ) {
       onSendMessage && onSendMessage(message);
       setTextValue('');
@@ -265,14 +270,14 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
         theme,
         hasText: !!textValue,
         /* @conditional-compile-remove(attachment-upload) */ hasAttachment:
-          hasCompletedAttachmentUploads(activeAttachmentUploads),
+          hasCompletedAttachmentUploads(attachmentsWithProgress),
         hasErrorMessage: !!errorMessage,
         customSendIconStyle: styles?.sendMessageIcon
       }),
     [
       theme,
       textValue,
-      /* @conditional-compile-remove(attachment-upload) */ activeAttachmentUploads,
+      /* @conditional-compile-remove(attachment-upload) */ attachmentsWithProgress,
       errorMessage,
       styles?.sendMessageIcon
     ]
@@ -291,23 +296,23 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   // Ensure that errors are cleared when there are no attachments in sendBox
   /* @conditional-compile-remove(attachment-upload) */
   React.useEffect(() => {
-    if (!activeAttachmentUploads?.filter((upload) => !upload.uploadError).length) {
+    if (!attachmentsWithProgress?.filter((upload) => !upload.error).length) {
       setAttachmentUploadsPendingError(undefined);
     }
-  }, [activeAttachmentUploads]);
+  }, [attachmentsWithProgress]);
 
   /* @conditional-compile-remove(attachment-upload) */
   const sendBoxErrorsProps = useMemo(() => {
     return {
       attachmentUploadsPendingError: attachmentUploadsPendingError,
-      attachmentUploadError: activeAttachmentUploads?.filter((attachmentUpload) => attachmentUpload.uploadError).pop()
-        ?.uploadError
+      attachmentProgressError: attachmentsWithProgress?.filter((attachmentUpload) => attachmentUpload.error).pop()
+        ?.error
     };
-  }, [activeAttachmentUploads, attachmentUploadsPendingError]);
+  }, [attachmentsWithProgress, attachmentUploadsPendingError]);
 
   /* @conditional-compile-remove(attachment-upload) */
   const onRenderAttachmentUploads = useCallback(() => {
-    if (!activeAttachmentUploads?.filter((upload) => !upload.uploadError).length) {
+    if (!attachmentsWithProgress?.filter((upload) => !upload.error).length) {
       return null;
     }
     return props.onRenderAttachmentUploads ? (
@@ -316,24 +321,26 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       <Stack className={attachmentUploadCardsStyles}>
         <FluentV9ThemeProvider v8Theme={theme}>
           <_AttachmentUploadCards
-            activeAttachmentUploads={activeAttachmentUploads}
+            attachmentsWithProgress={attachmentsWithProgress}
             onCancelAttachmentUpload={props.onCancelAttachmentUpload}
             strings={{
               removeAttachment: props.strings?.removeAttachment ?? localeStrings.removeAttachment,
               uploading: props.strings?.uploading ?? localeStrings.uploading,
-              uploadCompleted: props.strings?.uploadCompleted ?? localeStrings.uploadCompleted
+              uploadCompleted: props.strings?.uploadCompleted ?? localeStrings.uploadCompleted,
+              attachmentMoreMenu: props.strings?.attachmentMoreMenu ?? localeStrings.attachmentMoreMenu
             }}
           />
         </FluentV9ThemeProvider>
       </Stack>
     );
   }, [
-    activeAttachmentUploads,
+    attachmentsWithProgress,
     props,
     theme,
     localeStrings.removeAttachment,
     localeStrings.uploading,
-    localeStrings.uploadCompleted
+    localeStrings.uploadCompleted,
+    localeStrings.attachmentMoreMenu
   ]);
 
   return (
@@ -343,7 +350,20 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
         { overflow: 'visible' } // This is needed for the mention popup to be visible
       )}
     >
-      {/* @conditional-compile-remove(attachment-upload) */ <SendBoxErrors {...sendBoxErrorsProps} />}
+      {
+        /* @conditional-compile-remove(attachment-upload) */
+        <SendBoxErrors
+          attachmentProgressError={
+            sendBoxErrorsProps.attachmentProgressError
+              ? {
+                  message: sendBoxErrorsProps.attachmentProgressError.message,
+                  timestamp: Date.now()
+                }
+              : undefined
+          }
+          attachmentUploadsPendingError={sendBoxErrorsProps.attachmentUploadsPendingError}
+        />
+      }
       <Stack
         className={borderAndBoxShadowStyle({
           theme,

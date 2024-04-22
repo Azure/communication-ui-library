@@ -1,23 +1,34 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React from 'react';
+import React, { useMemo } from 'react';
 /* @conditional-compile-remove(rich-text-editor) */
 import { Suspense } from 'react';
 import { ChatMessage } from '../../../types';
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { AttachmentMetadata } from '../../../types';
 import { MessageThreadStrings } from '../../MessageThread';
-import { ChatMessageComponentAsEditBox } from '../ChatMessageComponentAsEditBox';
+import { ChatMessageComponentAsEditBox } from './ChatMessageComponentAsEditBox';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from '../../MentionPopover';
+/* @conditional-compile-remove(rich-text-editor) */
+import type { ChatMessageComponentAsRichTextEditBoxProps } from './ChatMessageComponentAsRichTextEditBox';
+/* @conditional-compile-remove(rich-text-editor) */
+import { ErrorBoundary } from '../../ErrorBoundary';
 
 /* @conditional-compile-remove(rich-text-editor) */
-const ChatMessageComponentAsRichTextEditBox = React.lazy(() =>
-  import('../ChatMessageComponentAsRichTextEditBox').then((module) => ({
-    default: module.ChatMessageComponentAsRichTextEditBox
-  }))
-);
+const ChatMessageComponentAsRichTextEditBox = React.lazy(() => import('./ChatMessageComponentAsRichTextEditBox'));
+
+/**
+ * @private
+ * Use this function to load RoosterJS dependencies early in the lifecycle.
+ * It should be the same import as used for lazy loading.
+ *
+ * @conditional-compile-remove(rich-text-editor)
+ */
+export const loadChatMessageComponentAsRichTextEditBox = (): Promise<{
+  default: React.ComponentType<ChatMessageComponentAsRichTextEditBoxProps>;
+}> => import('./ChatMessageComponentAsRichTextEditBox');
 
 /**
  * @private
@@ -46,14 +57,20 @@ export const ChatMessageComponentAsEditBoxPicker = (props: ChatMessageComponentA
   /* @conditional-compile-remove(rich-text-editor) */
   const { richTextEditor } = props;
 
+  const simpleEditBox = useMemo(() => {
+    return <ChatMessageComponentAsEditBox {...props} />;
+  }, [props]);
+
   /* @conditional-compile-remove(rich-text-editor) */
   if (richTextEditor) {
     return (
-      <Suspense>
-        <ChatMessageComponentAsRichTextEditBox {...props} />
-      </Suspense>
+      <ErrorBoundary fallback={simpleEditBox}>
+        <Suspense fallback={simpleEditBox}>
+          <ChatMessageComponentAsRichTextEditBox {...props} />
+        </Suspense>
+      </ErrorBoundary>
     );
   }
 
-  return <ChatMessageComponentAsEditBox {...props} />;
+  return simpleEditBox;
 };

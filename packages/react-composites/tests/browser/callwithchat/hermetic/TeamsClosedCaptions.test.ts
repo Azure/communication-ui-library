@@ -7,7 +7,6 @@ import { dataUiId, isTestProfileMobile, pageClick, stableScreenshot, waitForSele
 import { IDS, captionsFeatureState, captionsFeatureStateArabic } from '../../common/constants';
 import { defaultMockCallAdapterState, defaultMockRemoteParticipant } from '../../call/hermetic/fixture';
 
-/* @conditional-compile-remove(close-captions) */
 test.describe('Teams Closed Captions Banner tests', async () => {
   test('Show loading banner when start captions is clicked but captions is not started yet', async ({
     page,
@@ -21,6 +20,8 @@ test.describe('Teams Closed Captions Banner tests', async () => {
         isCaptionsFeatureActive: false,
         startCaptionsInProgress: true
       };
+      /* @conditional-compile-remove(acs-close-captions) */
+      initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
     }
     await loadCallPage(page, serverUrl, initialState);
     await waitForSelector(page, dataUiId(IDS.videoGallery));
@@ -32,6 +33,8 @@ test.describe('Teams Closed Captions Banner tests', async () => {
     if (initialState?.call) {
       initialState.isTeamsCall = true;
       initialState.call.captionsFeature = captionsFeatureState;
+      /* @conditional-compile-remove(acs-close-captions) */
+      initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
     }
     await loadCallPage(page, serverUrl, initialState);
     await waitForSelector(page, dataUiId(IDS.videoGallery));
@@ -43,6 +46,8 @@ test.describe('Teams Closed Captions Banner tests', async () => {
     if (initialState?.call) {
       initialState.isTeamsCall = true;
       initialState.call.captionsFeature = captionsFeatureStateArabic;
+      /* @conditional-compile-remove(acs-close-captions) */
+      initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
     }
     await loadCallPage(page, serverUrl, initialState);
     await waitForSelector(page, dataUiId(IDS.videoGallery));
@@ -57,6 +62,8 @@ test.describe('Teams Closed Captions Banner tests', async () => {
     if (initialState?.call) {
       initialState.isTeamsCall = true;
       initialState.call.captionsFeature = captionsFeatureState;
+      /* @conditional-compile-remove(acs-close-captions) */
+      initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
     }
     await loadCallPage(page, serverUrl, initialState);
     await pageClick(page, dataUiId('captions-banner-more-button'));
@@ -72,6 +79,8 @@ test.describe('Teams Closed Captions Banner tests', async () => {
         isCaptionsFeatureActive: false,
         startCaptionsInProgress: false
       };
+      /* @conditional-compile-remove(acs-close-captions) */
+      initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
     }
     await loadCallPage(page, serverUrl, initialState);
     await waitForSelector(page, dataUiId(IDS.videoGallery));
@@ -86,6 +95,8 @@ test.describe('Teams Closed Captions Banner tests', async () => {
     if (initialState?.call) {
       initialState.isTeamsCall = true;
       initialState.call.captionsFeature = captionsFeatureState;
+      /* @conditional-compile-remove(acs-close-captions) */
+      initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
     }
     await loadCallPage(page, serverUrl, initialState);
     await pageClick(page, dataUiId('captions-banner-more-button'));
@@ -101,6 +112,8 @@ test.describe('Teams Closed Captions Banner tests', async () => {
     if (initialState?.call) {
       initialState.isTeamsCall = true;
       initialState.call.captionsFeature = captionsFeatureState;
+      /* @conditional-compile-remove(acs-close-captions) */
+      initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
     }
 
     await loadCallPage(page, serverUrl, initialState);
@@ -118,6 +131,8 @@ test.describe('Teams Closed Captions Banner tests', async () => {
     if (initialState?.call) {
       initialState.isTeamsCall = true;
       initialState.call.captionsFeature = captionsFeatureState;
+      /* @conditional-compile-remove(acs-close-captions) */
+      initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
     }
 
     await loadCallPage(page, serverUrl, initialState);

@@ -90,7 +90,6 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
 
         onResolveDependency: onResolveVideoEffectDependencyLazy
       },
-      /* @conditional-compile-remove(reaction) */
       reactionResources: {
         likeReaction: { url: '/assets/reactions/likeEmoji.png', frameCount: 102 },
         heartReaction: { url: '/assets/reactions/heartEmoji.png', frameCount: 102 },

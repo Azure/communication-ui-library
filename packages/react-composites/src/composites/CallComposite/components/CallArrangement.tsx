@@ -21,9 +21,7 @@ import { VideoGallery } from '@internal/react-components';
 import React, { useMemo, useRef, useState } from 'react';
 import { useEffect } from 'react';
 import { useCallback } from 'react';
-/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(close-captions) */
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
-/* @conditional-compile-remove(close-captions) */
 import { CaptionsBanner } from '../../common/CaptionsBanner';
 import { containerDivStyles } from '../../common/ContainerRectProps';
 import { compositeMinWidthRem } from '../../common/styles/Composite.styles';
@@ -49,7 +47,6 @@ import { CallControlOptions } from '../types/CallControlOptions';
 import { PreparedMoreDrawer } from '../../common/Drawer/PreparedMoreDrawer';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { getPage } from '../selectors/baseSelectors';
-/* @conditional-compile-remove(close-captions) */
 import { getCallStatus, getIsTeamsCall, getCaptionsStatus } from '../selectors/baseSelectors';
 import { drawerContainerStyles } from '../styles/CallComposite.styles';
 import { SidePane } from './SidePane/SidePane';
@@ -87,6 +84,8 @@ import {
   useRemoteSpotlightCallbacksWithPrompt,
   useStopAllSpotlightCallbackWithPrompt
 } from '../utils/spotlightUtils';
+/* @conditional-compile-remove(acs-close-captions) */
+import { getCaptionsKind } from '../selectors/baseSelectors';
 
 /**
  * @private
@@ -101,7 +100,6 @@ export interface CallArrangementProps {
   dataUiId: string;
   mobileView: boolean;
   modalLayerHostId: string;
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(close-captions) */
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
@@ -337,11 +335,11 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     filteredLatestErrors = filteredLatestErrors.filter((e) => e.type !== 'unableToStartVideoEffect');
   }
 
-  /* @conditional-compile-remove(close-captions) */
-  const isTeamsCall = useSelector(getIsTeamsCall);
-  /* @conditional-compile-remove(close-captions) */
+  /* @conditional-compile-remove(acs-close-captions) */
+  const isTeamsCaptions = useSelector(getCaptionsKind) === 'TeamsCaptions';
+  const useTeamsCaptions =
+    useSelector(getIsTeamsCall) || /* @conditional-compile-remove(acs-close-captions) */ isTeamsCaptions;
   const hasJoinedCall = useSelector(getCallStatus) === 'Connected';
-  /* @conditional-compile-remove(close-captions) */
   const isCaptionsOn = useSelector(getCaptionsStatus);
   const minMaxDragPosition = useMinMaxDragPosition(props.modalLayerHostId);
   const pipStyles = useMemo(() => getPipStyles(theme), [theme]);
@@ -397,14 +395,11 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   peopleButtonChecked={isPeoplePaneOpen}
                   onPeopleButtonClicked={togglePeoplePane}
                   onMoreButtonClicked={onMoreButtonClicked}
-                  /* @conditional-compile-remove(close-captions) */
                   isCaptionsSupported={
-                    (isTeamsCall && hasJoinedCall) ||
+                    (useTeamsCaptions && hasJoinedCall) ||
                     /* @conditional-compile-remove(acs-close-captions) */ hasJoinedCall
                   }
-                  /* @conditional-compile-remove(close-captions) */
-                  isTeamsCall={isTeamsCall}
-                  /* @conditional-compile-remove(close-captions) */
+                  useTeamsCaptions={useTeamsCaptions}
                   isCaptionsOn={isCaptionsOn}
                   onClickVideoEffects={onResolveVideoEffectDependency ? openVideoEffectsPane : undefined}
                   displayVertical={verticalControlBar}
@@ -431,17 +426,15 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 onPeopleButtonClicked={onMoreDrawerPeopleClicked}
                 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
                 disableButtonsForHoldScreen={isInLocalHold}
-                /* @conditional-compile-remove(close-captions) */
                 isCaptionsSupported={
-                  (isTeamsCall && hasJoinedCall) || /* @conditional-compile-remove(acs-close-captions) */ hasJoinedCall
+                  (useTeamsCaptions && hasJoinedCall) ||
+                  /* @conditional-compile-remove(acs-close-captions) */ hasJoinedCall
                 }
-                /* @conditional-compile-remove(close-captions) */
-                isTeamsCall={isTeamsCall}
+                useTeamsCaptions={useTeamsCaptions}
                 onUserSetGalleryLayout={props.onUserSetGalleryLayoutChange}
                 userSetGalleryLayout={props.userSetGalleryLayout}
                 onSetDialpadPage={props.onSetDialpadPage}
                 dtmfDialerPresent={props.dtmfDialerPresent}
-                /* @conditional-compile-remove(reaction) */
                 reactionResources={adapter.getState().reactions}
               />
             </Stack>
@@ -477,18 +470,14 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                     )}
                   </Stack.Item>
                   {renderGallery && props.onRenderGalleryContent && props.onRenderGalleryContent()}
-                  {
-                    /* @conditional-compile-remove(close-captions) */
-                    true &&
-                      /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ !isInLocalHold && (
-                        <CaptionsBanner
-                          isMobile={props.mobileView}
-                          onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
-                          /* @conditional-compile-remove(close-captions) */
-                          isTeamsCall={isTeamsCall}
-                        />
-                      )
-                  }
+                  {true &&
+                    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ !isInLocalHold && (
+                      <CaptionsBanner
+                        isMobile={props.mobileView}
+                        onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
+                        useTeamsCaptions={useTeamsCaptions}
+                      />
+                    )}
                 </Stack>
               </Stack.Item>
             </Stack.Item>

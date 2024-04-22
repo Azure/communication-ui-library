@@ -1,17 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(reaction) */
 import React, { useCallback, useEffect, useState } from 'react';
-/* @conditional-compile-remove(reaction) */
 import { Reaction, ReactionResources } from '../../types';
-/* @conditional-compile-remove(reaction) */
-import { getEmojiFrameCount, getEmojiFrameSize, getEmojiResource } from './utils/videoGalleryLayoutUtils';
-/* @conditional-compile-remove(reaction) */
+import { getEmojiFrameCount, getEmojiResource } from './utils/videoGalleryLayoutUtils';
 import { Stack, mergeStyles } from '@fluentui/react';
-/* @conditional-compile-remove(reaction) */
 import { reactionRenderingStyle, videoContainerStyles } from '../styles/VideoTile.styles';
-/* @conditional-compile-remove(reaction) */
 import {
   REACTION_DEFAULT_RESOURCE_FRAME_SIZE_PX,
   REACTION_NUMBER_OF_ANIMATION_FRAMES,
@@ -20,7 +14,6 @@ import {
   getReceivedUnixTime
 } from './utils/reactionUtils';
 
-/* @conditional-compile-remove(reaction) */
 /**
  * Reaction overlay component for Grid
  *
@@ -41,11 +34,6 @@ export const ParticipantVideoTileOverlay = React.memo(
     const frameCount =
       reaction !== undefined && reactionResources !== undefined
         ? getEmojiFrameCount(reaction?.reactionType, reactionResources)
-        : undefined;
-
-    const frameSize =
-      reaction !== undefined && reactionResources !== undefined
-        ? getEmojiFrameSize(reaction?.reactionType, reactionResources)
         : undefined;
 
     const currentUnixTimeStamp = Date.now();
@@ -76,9 +64,9 @@ export const ParticipantVideoTileOverlay = React.memo(
           spriteImageUrl: spriteImageUrl ?? '',
           emojiSize: emojiSize,
           frameCount: frameCount ?? REACTION_NUMBER_OF_ANIMATION_FRAMES,
-          rawFrameSize: frameSize ?? REACTION_DEFAULT_RESOURCE_FRAME_SIZE_PX
+          rawFrameSize: REACTION_DEFAULT_RESOURCE_FRAME_SIZE_PX
         }),
-      [spriteImageUrl, emojiSize, frameCount, frameSize]
+      [spriteImageUrl, emojiSize, frameCount]
     );
 
     return (

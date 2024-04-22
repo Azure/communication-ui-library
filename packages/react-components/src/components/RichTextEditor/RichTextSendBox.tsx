@@ -16,7 +16,7 @@ import { richTextActionButtonsStyle, sendBoxRichTextEditorStyle } from '../style
 /* @conditional-compile-remove(attachment-upload) */
 import { _AttachmentUploadCards } from '../AttachmentUploadCards';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata } from '../../types/Attachment';
+import { AttachmentMetadataWithProgress } from '../../types/Attachment';
 /* @conditional-compile-remove(attachment-upload) */
 import { hasCompletedAttachmentUploads, hasIncompleteAttachmentUploads } from '../utils/SendBoxUtils';
 /* @conditional-compile-remove(attachment-upload) */
@@ -131,11 +131,16 @@ export interface RichTextSendBoxProps {
   systemMessage?: string;
   /* @conditional-compile-remove(attachment-upload) */
   /**
-   * Optional array of active attachment uploads where each object has attributes
-   * of a attachment upload like name, progress, errorMessage etc.
+   * Optional array of type {@link AttachmentMetadataWithProgress}
+   * to render attachments being uploaded in the SendBox.
    * @beta
    */
-  activeAttachmentUploads?: AttachmentMetadata[];
+  attachmentsWithProgress?: AttachmentMetadataWithProgress[];
+  /**
+   * enumerable to determine if the input box has focus on render or not.
+   * When undefined nothing has focus on render
+   */
+  autoFocus?: 'sendBoxTextField';
   /* @conditional-compile-remove(attachment-upload) */
   /**
    * Optional callback to remove the attachment upload before sending by clicking on
@@ -147,6 +152,10 @@ export interface RichTextSendBoxProps {
    * Callback function used when the send button is clicked.
    */
   onSendMessage: (content: string) => Promise<void>;
+  /**
+   * Optional callback called when user is typing
+   */
+  onTyping?: () => Promise<void>;
 }
 
 /**
@@ -158,9 +167,11 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   const {
     disabled = false,
     systemMessage,
+    autoFocus,
     onSendMessage,
+    onTyping,
     /* @conditional-compile-remove(attachment-upload) */
-    activeAttachmentUploads,
+    attachmentsWithProgress,
     /* @conditional-compile-remove(attachment-upload) */
     onCancelAttachmentUpload
   } = props;
@@ -209,17 +220,25 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     setAttachmentUploadsPendingError(undefined);
 
     /* @conditional-compile-remove(attachment-upload) */
-    if (hasIncompleteAttachmentUploads(activeAttachmentUploads)) {
+    if (hasIncompleteAttachmentUploads(attachmentsWithProgress)) {
       setAttachmentUploadsPendingError({ message: strings.attachmentUploadsPendingError, timestamp: Date.now() });
       return;
     }
 
     const message = contentValue;
+    // get plain text content from the editor to check if the message is empty
+    // as the content may contain tags even when the content is empty
+    const plainTextContent = editorComponentRef.current?.getPlainContent();
+    const hasContent = !isContentEmpty({
+      plainTextContent,
+      content: message,
+      placeholder: strings.placeholderText
+    });
     // we don't want to send empty messages including spaces, newlines, tabs
     // Message can be empty if there is a valid attachment upload
     if (
-      sanitizeText(message).length > 0 ||
-      /* @conditional-compile-remove(attachment-upload) */ hasCompletedAttachmentUploads(activeAttachmentUploads)
+      hasContent ||
+      /* @conditional-compile-remove(attachment-upload) */ hasCompletedAttachmentUploads(attachmentsWithProgress)
     ) {
       onSendMessage(message);
       setContentValue('');
@@ -231,7 +250,8 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     contentValueOverflow,
     disabled,
     onSendMessage,
-    /* @conditional-compile-remove(attachment-upload) */ activeAttachmentUploads,
+    strings.placeholderText,
+    /* @conditional-compile-remove(attachment-upload) */ attachmentsWithProgress,
     /* @conditional-compile-remove(attachment-upload) */ strings.attachmentUploadsPendingError
   ]);
 
@@ -242,11 +262,11 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       /* @conditional-compile-remove(attachment-upload) */
       !!attachmentUploadsPendingError ||
       /* @conditional-compile-remove(attachment-upload) */
-      !!activeAttachmentUploads?.filter((attachmentUpload) => attachmentUpload.uploadError).pop()?.uploadError
+      !!attachmentsWithProgress?.filter((attachmentUpload) => attachmentUpload.error).pop()?.error
     );
   }, [
     /* @conditional-compile-remove(attachment-upload) */
-    activeAttachmentUploads,
+    attachmentsWithProgress,
     contentTooLongMessage,
     /* @conditional-compile-remove(attachment-upload) */
     attachmentUploadsPendingError,
@@ -254,36 +274,53 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   ]);
 
   const onRenderSendIcon = useCallback(
-    (isHover: boolean) => (
-      <Icon
-        iconName={isHover && contentValue ? 'SendBoxSendHovered' : 'SendBoxSend'}
-        className={sendIconStyle({
-          theme,
-          hasText: !!contentValue,
-          /* @conditional-compile-remove(attachment-upload) */
-          hasAttachment: false,
-          hasErrorMessage: hasErrorMessage,
-          defaultTextColor: theme.palette.neutralSecondary,
-          disabled: disabled
-        })}
-      />
-    ),
-    [contentValue, disabled, hasErrorMessage, theme]
+    (isHover: boolean) => {
+      // get plain text content from the editor to check if the message is empty
+      // as the content may contain tags even when the content is empty
+      const plainTextContent = editorComponentRef.current?.getPlainContent();
+      const hasContent = !isContentEmpty({
+        plainTextContent: plainTextContent,
+        content: contentValue,
+        placeholder: strings.placeholderText
+      });
+      return (
+        <Icon
+          iconName={isHover && hasContent ? 'SendBoxSendHovered' : 'SendBoxSend'}
+          className={sendIconStyle({
+            theme,
+            hasText: hasContent,
+            /* @conditional-compile-remove(attachment-upload) */
+            hasAttachment: false,
+            hasErrorMessage: hasErrorMessage,
+            defaultTextColor: theme.palette.neutralSecondary,
+            disabled: disabled
+          })}
+        />
+      );
+    },
+    [contentValue, disabled, hasErrorMessage, strings.placeholderText, theme]
   );
 
   const sendBoxErrorsProps: RichTextSendBoxErrorsProps = useMemo(() => {
+    /* @conditional-compile-remove(attachment-upload) */
+    const uploadErrorMessage = attachmentsWithProgress?.filter((attachmentUpload) => attachmentUpload.error).pop()
+      ?.error?.message;
     return {
       /* @conditional-compile-remove(attachment-upload) */
       attachmentUploadsPendingError: attachmentUploadsPendingError,
       /* @conditional-compile-remove(attachment-upload) */
-      attachmentUploadError: activeAttachmentUploads?.filter((attachmentUpload) => attachmentUpload.uploadError).pop()
-        ?.uploadError,
+      attachmentProgressError: uploadErrorMessage
+        ? {
+            message: uploadErrorMessage,
+            timestamp: Date.now()
+          }
+        : undefined,
       systemMessage: systemMessage,
       textTooLongMessage: contentTooLongMessage
     };
   }, [
     /* @conditional-compile-remove(attachment-upload) */
-    activeAttachmentUploads,
+    attachmentsWithProgress,
     contentTooLongMessage,
     /* @conditional-compile-remove(attachment-upload) */
     attachmentUploadsPendingError,
@@ -296,23 +333,25 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       <Stack className={attachmentUploadCardsStyles}>
         <FluentV9ThemeProvider v8Theme={theme}>
           <_AttachmentUploadCards
-            activeAttachmentUploads={activeAttachmentUploads}
+            attachmentsWithProgress={attachmentsWithProgress}
             onCancelAttachmentUpload={onCancelAttachmentUpload}
             strings={{
               removeAttachment: strings.removeAttachment,
               uploading: strings.uploading,
-              uploadCompleted: strings.uploadCompleted
+              uploadCompleted: strings.uploadCompleted,
+              attachmentMoreMenu: strings.attachmentMoreMenu
             }}
           />
         </FluentV9ThemeProvider>
       </Stack>
     );
   }, [
-    activeAttachmentUploads,
+    attachmentsWithProgress,
     onCancelAttachmentUpload,
     strings.removeAttachment,
     strings.uploadCompleted,
     strings.uploading,
+    strings.attachmentMoreMenu,
     theme
   ]);
 
@@ -334,17 +373,22 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   /* @conditional-compile-remove(attachment-upload) */
   const hasAttachmentUploads = useMemo(() => {
     return (
-      hasCompletedAttachmentUploads(activeAttachmentUploads) || hasIncompleteAttachmentUploads(activeAttachmentUploads)
+      hasCompletedAttachmentUploads(attachmentsWithProgress) || hasIncompleteAttachmentUploads(attachmentsWithProgress)
     );
-  }, [activeAttachmentUploads]);
+  }, [attachmentsWithProgress]);
 
   return (
     <Stack>
       <RichTextSendBoxErrors {...sendBoxErrorsProps} />
       <RichTextInputBoxComponent
+        // in case when format bar is shown, the editor is re-rendered that causes the content to be lost
+        // setting the content will ensure that the latest content is used when editor is re-rendered
+        content={contentValue}
         placeholderText={strings.placeholderText}
+        autoFocus={autoFocus}
         onChange={setContent}
         onEnterKeyDown={sendMessageOnClick}
+        onTyping={onTyping}
         editorComponentRef={editorComponentRef}
         strings={strings}
         disabled={disabled}
@@ -357,4 +401,29 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       />
     </Stack>
   );
+};
+
+/**
+ * Checks if the content of the rich text editor is empty.
+ *
+ * @param {Object} params - The parameters for the function.
+ * @param {string | undefined} params.plainTextContent - The plain text content of the editor.
+ * @param {string} params.content - The HTML content of the editor.
+ * @param {string} params.placeholder - The placeholder text of the editor.
+ * @returns {boolean} - True if the content is empty, false otherwise.
+ */
+const isContentEmpty = ({
+  plainTextContent,
+  content,
+  placeholder
+}: {
+  plainTextContent: string | undefined;
+  content: string;
+  placeholder: string;
+}): boolean => {
+  // RoosterJS returns placeholder text as plain text when the editor is empty and in this case,
+  // plainTextContent contains only placeholder text but content doesn't include the placeholder text
+  // this needs to be reviewed after migration to the content model packages.
+  const plainTextContainsPlaceholderOnly = plainTextContent === placeholder && !content.includes(placeholder);
+  return plainTextContainsPlaceholderOnly || sanitizeText(plainTextContent ?? '').length === 0;
 };

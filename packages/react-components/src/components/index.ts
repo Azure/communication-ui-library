@@ -22,10 +22,10 @@ export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox
 export { RichTextSendBox } from './RichTextEditor/RichTextSendBox';
 // TODO: This component is exported only for testing purposes. Remove this when this component is added to composites
 /* @conditional-compile-remove(rich-text-editor) */
-export { ChatMessageComponentAsRichTextEditBox } from './ChatMessage/ChatMessageComponentAsRichTextEditBox';
+export { ChatMessageComponentAsRichTextEditBox } from './ChatMessage/MyMessageComponents/ChatMessageComponentAsRichTextEditBox';
 // TODO: This component is exported only for testing purposes. Remove this when this component is added to composites
 /* @conditional-compile-remove(rich-text-editor) */
-export type { ChatMessageComponentAsRichTextEditBoxProps } from './ChatMessage/ChatMessageComponentAsRichTextEditBox';
+export type { ChatMessageComponentAsRichTextEditBoxProps } from './ChatMessage/MyMessageComponents/ChatMessageComponentAsRichTextEditBox';
 /* @conditional-compile-remove(rich-text-editor) */
 export type { RichTextSendBoxProps, RichTextSendBoxStrings } from './RichTextEditor/RichTextSendBox';
 
@@ -86,7 +86,8 @@ export type {
   VideoGalleryStyles,
   VideoGalleryLayout,
   VideoTileContextualMenuProps,
-  VideoTileDrawerMenuProps
+  VideoTileDrawerMenuProps,
+  VideoTilesOptions
 } from './VideoGallery';
 export type { OverflowGalleryPosition } from './VideoGallery';
 export type { LocalVideoTileSize } from './VideoGallery';
@@ -180,9 +181,7 @@ export type { ScreenShareButtonProps, ScreenShareButtonStrings } from './ScreenS
 export { RaiseHandButton } from './RaiseHandButton';
 
 export type { RaiseHandButtonProps, RaiseHandButtonStrings } from './RaiseHandButton';
-/* @conditional-compile-remove(reaction) */
 export { ReactionButton } from './ReactionButton';
-/* @conditional-compile-remove(reaction) */
 export type { ReactionButtonProps, ReactionButtonStrings } from './ReactionButton';
 export { VideoTile } from './VideoTile';
 export type { VideoTileProps, VideoTileStylesProps } from './VideoTile';
@@ -212,9 +211,11 @@ export type {
   AttachmentOptions,
   AttachmentUploadOptions,
   AttachmentMetadata,
-  AttachmentUploadStatus,
-  AttachmentUploadHandler,
-  AttachmentUploadManager
+  AttachmentProgressError,
+  AttachmentSelectionHandler,
+  AttachmentRemovalHandler,
+  AttachmentUploadTask,
+  AttachmentMetadataWithProgress
 } from '../types/Attachment';
 
 /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
@@ -283,11 +284,11 @@ export type {
 } from './VideoEffects/VideoBackgroundEffectsPicker';
 
 export type { VerticalGalleryStyles, VerticalGalleryStrings, VerticalGalleryControlBarStyles } from './VerticalGallery';
-/* @conditional-compile-remove(close-captions) */
+
 export * from './CaptionsBanner';
-/* @conditional-compile-remove(close-captions) */
+
 export * from './Caption';
-/* @conditional-compile-remove(close-captions) */
+
 export * from './StartCaptionsButton';
-/* @conditional-compile-remove(close-captions) */
+
 export * from './CaptionsSettingsModal';

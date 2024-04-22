@@ -34,9 +34,7 @@ import {
   StartCallOptions,
   VideoDeviceInfo
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(reaction) */
 import { Reaction } from '@azure/communication-calling';
-/* @conditional-compile-remove(close-captions) */
 import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
@@ -45,7 +43,7 @@ import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react
 import { SendMessageOptions } from '@azure/communication-chat';
 import { JoinCallOptions } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentMetadata, AttachmentUploadManager } from '@internal/react-components';
+import { AttachmentMetadata, AttachmentUploadTask } from '@internal/react-components';
 /* @conditional-compile-remove(PSTN-calls) */
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { UnknownIdentifier, MicrosoftTeamsAppIdentifier } from '@azure/communication-common';
@@ -55,7 +53,6 @@ import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(close-captions) */
 import {
   CaptionsReceivedListener,
   IsCaptionsActiveChangedListener,
@@ -199,12 +196,11 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   lowerHand(): Promise<void>;
-  /* @conditional-compile-remove(reaction) */
   /**
    * Send Reaction to ongoing meeting.
    * @param reaction - A value of type {@link @azure/communication-calling#Reaction}
    *
-   * @beta
+   * @public
    */
   onReactionClick(reaction: Reaction): Promise<void>;
   /**
@@ -341,6 +337,13 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
+  /* @conditional-compile-remove(attachment-upload) */
+  /**
+   * Send a message with attachments in the chat thread.
+   *
+   * @beta
+   */
+  sendMessageWithAttachments(content: string, attachments: AttachmentMetadata[]): Promise<void>;
   /**
    * Send a read receipt for a message.
    *
@@ -375,25 +378,25 @@ export interface CallWithChatAdapterManagement {
    */
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
   /* @conditional-compile-remove(attachment-upload) */
-  /** @beta */
-  registerActiveUploads: (files: File[]) => AttachmentUploadManager[];
+  /** @internal */
+  registerActiveUploads: (files: File[]) => AttachmentUploadTask[];
   /* @conditional-compile-remove(attachment-upload) */
-  /** @beta */
-  registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadManager[];
+  /** @internal */
+  registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadTask[];
   /* @conditional-compile-remove(attachment-upload) */
-  /** @beta */
+  /** @internal */
   clearUploads: () => void;
   /* @conditional-compile-remove(attachment-upload) */
-  /** @beta */
+  /** @internal */
   cancelUpload: (id: string) => void;
   /* @conditional-compile-remove(attachment-upload) */
-  /** @beta */
+  /** @internal */
   updateUploadProgress: (id: string, progress: number) => void;
   /* @conditional-compile-remove(attachment-upload) */
-  /** @beta */
+  /** @internal */
   updateUploadStatusMessage: (id: string, errorMessage: string) => void;
   /* @conditional-compile-remove(attachment-upload) */
-  /** @beta */
+  /** @internal */
   updateUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
   /** @public */
   downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
@@ -433,25 +436,21 @@ export interface CallWithChatAdapterManagement {
    * Continues into a call when the browser version is not supported.
    */
   allowUnsupportedBrowserVersion(): void;
-  /* @conditional-compile-remove(close-captions) */
   /**
    * Function to Start captions
    * @param options - options for start captions
    */
   startCaptions(options?: StartCaptionsOptions): Promise<void>;
-  /* @conditional-compile-remove(close-captions) */
   /**
    * Function to set caption language
    * @param language - language set for caption
    */
   setCaptionLanguage(language: string): Promise<void>;
-  /* @conditional-compile-remove(close-captions) */
   /**
    * Function to set spoken language
    * @param language - spoken language
    */
   setSpokenLanguage(language: string): Promise<void>;
-  /* @conditional-compile-remove(close-captions) */
   /**
    * Funtion to stop captions
    */
@@ -490,7 +489,7 @@ export interface CallWithChatAdapterManagement {
   /**
    * Send the end of call survey result
    *
-   * @beta
+   * @public
    */
   submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
   /* @conditional-compile-remove(spotlight) */
@@ -527,19 +526,13 @@ export interface CallWithChatAdapterSubscriptions {
   on(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
   on(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   on(event: 'callError', listener: (e: AdapterError) => void): void;
-  /* @conditional-compile-remove(close-captions) */
   on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
-  /* @conditional-compile-remove(close-captions) */
   on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
-  /* @conditional-compile-remove(close-captions) */
   on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
-  /* @conditional-compile-remove(close-captions) */
   on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
-
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   /* @conditional-compile-remove(spotlight) */
   on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
-
   off(event: 'callEnded', listener: CallEndedListener): void;
   off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
   off(event: 'callIdChanged', listener: CallIdChangedListener): void;
@@ -551,15 +544,10 @@ export interface CallWithChatAdapterSubscriptions {
   off(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
   off(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   off(event: 'callError', listener: (e: AdapterError) => void): void;
-  /* @conditional-compile-remove(close-captions) */
   off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
-  /* @conditional-compile-remove(close-captions) */
   off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
-  /* @conditional-compile-remove(close-captions) */
   off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
-  /* @conditional-compile-remove(close-captions) */
   off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
-
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   /* @conditional-compile-remove(spotlight) */
   off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
@@ -624,10 +612,10 @@ export type CallWithChatEvent =
   | 'callParticipantsLeft'
   | 'selectedMicrophoneChanged'
   | 'selectedSpeakerChanged'
-  | /* @conditional-compile-remove(close-captions) */ 'isCaptionsActiveChanged'
-  | /* @conditional-compile-remove(close-captions) */ 'captionsReceived'
-  | /* @conditional-compile-remove(close-captions) */ 'isCaptionLanguageChanged'
-  | /* @conditional-compile-remove(close-captions) */ 'isSpokenLanguageChanged'
+  | 'isCaptionsActiveChanged'
+  | 'captionsReceived'
+  | 'isCaptionLanguageChanged'
+  | 'isSpokenLanguageChanged'
   | 'capabilitiesChanged'
   | /* @conditional-compile-remove(spotlight) */ 'spotlightChanged'
   | 'messageReceived'

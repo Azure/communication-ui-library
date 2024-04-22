@@ -8,12 +8,13 @@ import { CallComposite, createAzureCommunicationCallAdapter } from '@azure/commu
 import { initializeIcons } from '@fluentui/react';
 initializeIcons();
 export const loadCallComposite = async function (args, htmlElement, props) {
-  const { userId, token, groupId, displayName, locator } = args;
+  const { userId, token, groupId, displayName, locator, options } = args;
   const adapter = await createAzureCommunicationCallAdapter({
     userId,
     displayName: displayName ?? 'anonymous',
     credential: new AzureCommunicationTokenCredential(token),
-    locator: locator || { groupId }
+    locator: locator || { groupId },
+    options
   });
 
   if (!htmlElement) {

@@ -38,9 +38,7 @@ import { AreEqual } from '@internal/acs-ui-common';
 import { ParticipantsButton } from '@internal/react-components';
 import { ErrorBarSelector, errorBarSelector } from '../errorBarSelector';
 import { CommonCallingHandlers } from '../handlers/createCommonHandlers';
-/* @conditional-compile-remove(reaction) */
 import { reactionButtonSelector } from '../callControlSelectors';
-/* @conditional-compile-remove(reaction) */
 import { ReactionButton } from '@internal/react-components';
 /* @conditional-compile-remove(spotlight) */
 import { _ComponentCallingHandlers } from '../handlers/createHandlers';
@@ -140,10 +138,7 @@ export const getSelector = <Component extends (props: any) => JSX.Element | unde
   if (component === HoldButton) {
     return findConditionalCompiledSelector(component);
   }
-  /* @conditional-compile-remove(reaction) */
-  if (component === ReactionButton) {
-    return findConditionalCompiledSelector(component);
-  }
+
   return findSelector(component);
 };
 
@@ -174,6 +169,8 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
       return errorBarSelector;
     case RaiseHandButton:
       return raiseHandButtonSelector;
+    case ReactionButton:
+      return reactionButtonSelector;
   }
   return undefined;
 };
@@ -185,9 +182,5 @@ const findConditionalCompiledSelector = (component: (props: any) => JSX.Element 
     case HoldButton:
       /* @conditional-compile-remove(PSTN-calls) */
       return holdButtonSelector;
-    /* @conditional-compile-remove(reaction) */
-    case ReactionButton:
-      /* @conditional-compile-remove(reaction) */
-      return reactionButtonSelector;
   }
 };

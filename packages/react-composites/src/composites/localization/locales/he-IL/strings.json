@@ -324,11 +324,18 @@
       "stopSpotlightCancelButtonLabel": "ביטול"
     },
     "exitSpotlightButtonLabel": "צא מהזרקור",
-    "exitSpotlightButtonTooltip": "צא מהזרקור"
+    "exitSpotlightButtonTooltip": "צא מהזרקור",
+    "hangUpConfirmButtonLabel": "אשר",
+    "hangUpCancelButtonLabel": "ביטול",
+    "leaveConfirmDialogTitle": "לצאת מהשיחה?",
+    "leaveConfirmDialogContent": "האם אתה בטוח שברצונך לעזוב את השיחה?",
+    "endCallConfirmDialogTitle": "לסיים את השיחה?",
+    "endCallConfirmDialogContent": "פעולה זאת תסיים את השיחה עבור כל המשתתפים.",
+    "invalidMeetingIdentifier": "מזהה פגישה או קוד סיסמה לא חוקיים"
   },
   "chat": {
     "chatListHeader": "בצ'אט זה",
-    "uploadAttachment": "העלה קובץ"
+    "uploadAttachment": "העלה קובץ מצורף"
   },
   "callWithChat": {
     "chatButtonLabel": "צ'אט",

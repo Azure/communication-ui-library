@@ -136,6 +136,21 @@ test.describe('Participant list side pane tests', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-no-displayname.png`);
   });
 
+  test('participant list shows participant items such as raised hand', async ({ page, serverUrl }, testInfo) => {
+    test.skip(!participantListShownAsSidePane(testInfo));
+
+    const participantListState = participantListInitialState({
+      localRaisedHand: true,
+      remoteRaisedHand: true
+    });
+    participantListState.call?.remoteParticipants;
+
+    await page.goto(buildUrlWithMockAdapter(serverUrl, participantListState));
+    await pageClick(page, dataUiId('call-composite-participants-button'));
+    await waitForSelector(page, dataUiId('people-pane-content'));
+    expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-pane-icons.png`);
+  });
+
   test('participant list opens and displays ellipses if passing in custom icon', async ({
     page,
     serverUrl
@@ -255,12 +270,28 @@ test.describe('Participant list full screen pane with drawer tests', () => {
   });
 });
 
-const participantListInitialState = (): MockCallAdapterState => {
+const participantListInitialState = (options?: {
+  localRaisedHand?: boolean;
+  remoteRaisedHand?: boolean;
+}): MockCallAdapterState => {
   const paul = defaultMockRemoteParticipant('Paul Bridges');
   addVideoStream(paul, true);
   paul.isSpeaking = true;
+  if (options?.localRaisedHand) {
+    paul.raisedHand = {
+      raisedHandOrderPosition: 1
+    };
+  }
+
+  const remoteParticipant1 = defaultMockRemoteParticipant('Eryka Klein');
+  if (options?.remoteRaisedHand) {
+    remoteParticipant1.raisedHand = {
+      raisedHandOrderPosition: options.localRaisedHand ? 2 : 1
+    };
+  }
+
   const initialState = defaultMockCallAdapterState(
-    [paul, defaultMockRemoteParticipant('Eryka Klein'), defaultMockRemoteParticipant('Fiona Harper')],
+    [paul, remoteParticipant1, defaultMockRemoteParticipant('Fiona Harper')],
     'Unknown'
   );
   addDefaultMockLocalVideoStreamState(initialState);

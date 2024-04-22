@@ -2,7 +2,13 @@
 // Licensed under the MIT License.
 
 import { _isInCall } from '@internal/calling-component-bindings';
-import { ActiveErrorMessage, ErrorBar, ParticipantMenuItemsCallback, useTheme } from '@internal/react-components';
+import {
+  ActiveErrorMessage,
+  ErrorBar,
+  ParticipantMenuItemsCallback,
+  useTheme,
+  VideoTilesOptions
+} from '@internal/react-components';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurveyImprovementSuggestions } from '@internal/react-components';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -18,7 +24,6 @@ import { NoticePage } from './pages/NoticePage';
 import { useSelector } from './hooks/useSelector';
 import { getEndedCall, getPage, getTargetCallees } from './selectors/baseSelectors';
 import { LobbyPage } from './pages/LobbyPage';
-/* @conditional-compile-remove(call-transfer) */
 import { TransferPage } from './pages/TransferPage';
 import {
   leavingPageStyle,
@@ -222,6 +227,10 @@ export type CallCompositeOptions = {
    * @remarks if 'false' the local video tile will not be rendered.
    */
   localVideoTile?: boolean | LocalVideoTileOptions;
+  /**
+   * Options for controlling video tile.
+   */
+  videoTilesOptions?: VideoTilesOptions;
   /**
    * Options for controlling the starting layout of the composite's video gallery
    */
@@ -548,7 +557,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         />
       );
       break;
-    /* @conditional-compile-remove(call-transfer) */
     case 'transferring':
       pageElement = (
         <TransferPage

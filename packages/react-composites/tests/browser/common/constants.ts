@@ -160,7 +160,9 @@ export const captionsFeatureState = {
   currentCaptionLanguage: 'en',
   currentSpokenLanguage: 'en-us',
   isCaptionsFeatureActive: true,
-  startCaptionsInProgress: true
+  startCaptionsInProgress: true,
+  /* @conditional-compile-remove(acs-close-captions) */
+  captionsKind: 'Captions' as const
 };
 
 export const captionsFeatureStateArabic = {
@@ -201,5 +203,7 @@ export const captionsFeatureStateArabic = {
   currentCaptionLanguage: 'ar',
   currentSpokenLanguage: 'ar-ae',
   isCaptionsFeatureActive: true,
-  startCaptionsInProgress: true
+  startCaptionsInProgress: true,
+  /* @conditional-compile-remove(acs-close-captions) */
+  captionsKind: 'Captions' as const
 };

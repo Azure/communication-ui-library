@@ -124,6 +124,9 @@ graph LR
   prerelease -->|Create Branch| pr
 ```
 
+Once this workflow is done you will need to go to the new branch when making a PR and manually create a 
+change file stating that the versions of the packages have been bumped.
+
 ### Step 1.2: Groom changelog
 
 1. Previous step's workflow creates a `groom-changelog/<release-tag>` branch.
@@ -243,6 +246,8 @@ There is a separate process for releasing a hotfix. See [documentation on creati
 
 Alpha releases are created nightly using the [.github/workflows/nightly-ci.yml](https://github.com/Azure/communication-ui-library/blob/main/.github/workflows/nightly-ci.yml) GitHub action.
 
+Alpha releases can also be created manually by running [.github/workflows/alpha-release.yml](https://github.com/Azure/communication-ui-library/blob/main/.github/workflows/alpha-release.yml) GitHub action.
+
 They use Beachball's `canary` CLI command to temporarily set all package versions to \<version\>-alpha-yyyymmddHHMM, then package up the npm packages and upload the packages to the azure release pipeline.
 
 ### NPM publish pipeline
@@ -251,4 +256,4 @@ To ensure our packages are part of the `@azure` organization our packages are pu
 
 This requires us to first upload the tarball of the package we wish to publish to their blob storage, then trigger their release pipeline. This can be done manually or by GitHub actions.
 
-Currently, alpha package releases are entirely done through GitHub actions (see [.github/workflows/nightly-ci.yml](https://github.com/Azure/communication-ui-library/blob/main/.github/workflows/nightly-ci.yml)). This requires the use of internal keys and tokens. For more information on these, or how to update them, see: [Updating npm publishing credentials](../references/updating-npm-publishing-credentials.md).
+Currently, alpha package releases are entirely done through GitHub actions (see [Nightly](https://github.com/Azure/communication-ui-library/blob/main/.github/workflows/nightly-ci.yml) and [Manual](https://github.com/Azure/communication-ui-library/blob/main/.github/workflows/alpha-release.yml) GitHub workflow for more details). This requires the use of internal keys and tokens. For more information on these, or how to update them, see: [Updating npm publishing credentials](../references/updating-npm-publishing-credentials.md).

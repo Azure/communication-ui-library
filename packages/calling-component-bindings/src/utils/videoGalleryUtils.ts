@@ -19,9 +19,7 @@ import { maskDisplayNameWithRole } from './callUtils';
 import { checkIsSpeaking } from './SelectorUtils';
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
 import { RaisedHandState } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(reaction) */
 import { Reaction } from '@internal/react-components';
-/* @conditional-compile-remove(reaction) */
 import { memoizedConvertToVideoTileReaction } from './participantListSelectorUtils';
 /* @conditional-compile-remove(spotlight) */
 import { Spotlight } from '@internal/react-components';
@@ -73,8 +71,12 @@ export const _videoGalleryRemoteParticipantsMemo: _VideoGalleryRemoteParticipant
             participant.role,
             isHideAttendeeNamesEnabled
           );
-          /* @conditional-compile-remove(reaction) */
+          let contentSharingStream = undefined;
+          /* @conditional-compile-remove(ppt-live) */
+          contentSharingStream = participant.contentSharingStream;
           const remoteParticipantReaction = memoizedConvertToVideoTileReaction(participant.reactionState);
+          let spotlight = undefined;
+          /* @conditional-compile-remove(spotlight) */ spotlight = participant.spotlight;
           return memoizedFn(
             toFlatCommunicationIdentifier(participant.identifier),
             participant.isMuted,
@@ -83,12 +85,9 @@ export const _videoGalleryRemoteParticipantsMemo: _VideoGalleryRemoteParticipant
             state,
             displayName,
             participant.raisedHand,
-            /* @conditional-compile-remove(ppt-live) */
-            participant.contentSharingStream,
-            /* @conditional-compile-remove(reaction) */
+            contentSharingStream,
             remoteParticipantReaction,
-            /* @conditional-compile-remove(spotlight) */
-            participant.spotlight
+            spotlight
           );
         })
     );
@@ -103,12 +102,9 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     videoStreams: { [key: number]: RemoteVideoStreamState },
     state: RemoteParticipantConnectionState,
     displayName?: string,
-    raisedHand?: unknown, // temp unknown type to build stable
-    /* @conditional-compile-remove(ppt-live) */
+    raisedHand?: RaisedHandState,
     contentSharingStream?: HTMLElement,
-    /* @conditional-compile-remove(reaction) */
-    reaction?: unknown, // temp unknown type to build stable
-    /* @conditional-compile-remove(spotlight) */
+    reaction?: Reaction,
     spotlight?: unknown // temp unknown type to build stable
   ): VideoGalleryRemoteParticipant => {
     return convertRemoteParticipantToVideoGalleryRemoteParticipant(
@@ -118,13 +114,10 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
       videoStreams,
       state,
       displayName,
-      raisedHand as RaisedHandState,
-      /* @conditional-compile-remove(ppt-live) */
+      raisedHand,
       contentSharingStream,
-      /* @conditional-compile-remove(reaction) */
-      reaction as Reaction,
-      /* @conditional-compile-remove(spotlight) */
-      spotlight as Spotlight
+      reaction,
+      spotlight
     );
   }
 );
@@ -137,12 +130,9 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   videoStreams: { [key: number]: RemoteVideoStreamState },
   state: RemoteParticipantConnectionState,
   displayName?: string,
-  raisedHand?: unknown, // temp unknown type to build stable
-  /* @conditional-compile-remove(ppt-live) */
+  raisedHand?: RaisedHandState,
   contentSharingStream?: HTMLElement,
-  /* @conditional-compile-remove(reaction) */
-  reaction?: unknown, // temp unknown type to build stable
-  /* @conditional-compile-remove(spotlight) */
+  reaction?: Reaction,
   spotlight?: unknown // temp unknown type to build stable
 ): VideoGalleryRemoteParticipant => {
   const rawVideoStreamsArray = Object.values(videoStreams);
@@ -187,9 +177,8 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     /* @conditional-compile-remove(one-to-n-calling) */
     /* @conditional-compile-remove(PSTN-calls) */
     state,
-    raisedHand: raisedHand as RaisedHandState,
-    /* @conditional-compile-remove(reaction) */
-    reaction: reaction as Reaction,
+    raisedHand,
+    reaction,
     /* @conditional-compile-remove(spotlight) */
     spotlight: spotlight as Spotlight
   };
@@ -228,7 +217,7 @@ export const memoizeLocalParticipant = memoizeOne(
     localVideoStream,
     role,
     raisedHand,
-    /* @conditional-compile-remove(reaction) */ reaction,
+    reaction,
     /* @conditional-compile-remove(spotlight) */ localSpotlight,
     /* @conditional-compile-remove(spotlight) */ capabilities
   ) => ({
@@ -243,8 +232,7 @@ export const memoizeLocalParticipant = memoizeOne(
     },
     role,
     raisedHand: raisedHand,
-    /* @conditional-compile-remove(reaction) */
-    reaction: reaction,
+    reaction,
     /* @conditional-compile-remove(spotlight) */
     spotlight: localSpotlight,
     /* @conditional-compile-remove(spotlight) */

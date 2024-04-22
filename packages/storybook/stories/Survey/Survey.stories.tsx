@@ -5,7 +5,6 @@ import { mergeStyles, useTheme } from '@fluentui/react';
 import { Description, Heading, Source, Subheading, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { EXAMPLES_FOLDER_PREFIX } from '../constants';
 import { SurveyExample } from './components/SurveyExample';
 import { exampleDisableSurvey, exampleOnSurveyClosed, exampleOnSurveySubmitted } from './SurveyDocs';
@@ -14,7 +13,6 @@ const getDocs: () => JSX.Element = () => {
   /* eslint-disable react/no-unescaped-entities */
   return (
     <>
-      <SingleLineBetaBanner topOfPage={true} />
       <Title>Survey</Title>
       <Heading>End of call survey</Heading>
       <Description>

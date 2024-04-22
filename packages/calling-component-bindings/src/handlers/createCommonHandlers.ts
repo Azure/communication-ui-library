@@ -32,9 +32,7 @@ import { disposeAllLocalPreviewViews, _isInCall, _isInLobbyOrConnecting, _isPrev
 import { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { Features } from '@azure/communication-calling';
-/* @conditional-compile-remove(close-captions) */
 import { TeamsCaptions } from '@azure/communication-calling';
-/* @conditional-compile-remove(reaction) */
 import { Reaction } from '@azure/communication-calling';
 /* @conditional-compile-remove(spotlight) */
 import { _ComponentCallingHandlers } from './createHandlers';
@@ -61,10 +59,6 @@ export interface CommonCallingHandlers {
   onRaiseHand: () => Promise<void>;
   onLowerHand: () => Promise<void>;
   onToggleRaiseHand: () => Promise<void>;
-  /* @conditional-compile-remove(reaction) */
-  /**
-   * @beta
-   */
   onReactionClick: (reaction: Reaction) => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   onToggleHold: () => Promise<void>;
@@ -97,13 +91,9 @@ export interface CommonCallingHandlers {
   onBlurVideoBackground: (backgroundBlurConfig?: BackgroundBlurConfig) => Promise<void>;
 
   onReplaceVideoBackground: (backgroundReplacementConfig: BackgroundReplacementConfig) => Promise<void>;
-  /* @conditional-compile-remove(close-captions) */
   onStartCaptions: (options?: CaptionsOptions) => Promise<void>;
-  /* @conditional-compile-remove(close-captions) */
   onStopCaptions: () => Promise<void>;
-  /* @conditional-compile-remove(close-captions) */
   onSetSpokenLanguage: (language: string) => Promise<void>;
-  /* @conditional-compile-remove(close-captions) */
   onSetCaptionLanguage: (language: string) => Promise<void>;
   /* @conditional-compile-remove(end-of-call-survey) */
   onSubmitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
@@ -324,7 +314,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
     };
 
-    /* @conditional-compile-remove(reaction) */
     const onReactionClick = async (reaction: Reaction): Promise<void> => {
       if (
         reaction === 'like' ||
@@ -589,22 +578,18 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
     };
 
-    /* @conditional-compile-remove(close-captions) */
     const onStartCaptions = async (options?: CaptionsOptions): Promise<void> => {
       const captionsFeature = call?.feature(Features.Captions).captions;
       await captionsFeature?.startCaptions(options);
     };
-    /* @conditional-compile-remove(close-captions) */
     const onStopCaptions = async (): Promise<void> => {
       const captionsFeature = call?.feature(Features.Captions).captions;
       await captionsFeature?.stopCaptions();
     };
-    /* @conditional-compile-remove(close-captions) */
     const onSetSpokenLanguage = async (language: string): Promise<void> => {
       const captionsFeature = call?.feature(Features.Captions).captions;
       await captionsFeature?.setSpokenLanguage(language);
     };
-    /* @conditional-compile-remove(close-captions) */
     const onSetCaptionLanguage = async (language: string): Promise<void> => {
       const captionsFeature = call?.feature(Features.Captions).captions as TeamsCaptions;
       await captionsFeature.setCaptionLanguage(language);
@@ -677,7 +662,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onRaiseHand,
       onLowerHand,
       onToggleRaiseHand,
-      /* @conditional-compile-remove(reaction) */
       onReactionClick: onReactionClick,
       /* @conditional-compile-remove(PSTN-calls) */
       onAddParticipant: notImplemented,
@@ -692,13 +676,9 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onBlurVideoBackground,
 
       onReplaceVideoBackground,
-      /* @conditional-compile-remove(close-captions) */
       onStartCaptions,
-      /* @conditional-compile-remove(close-captions) */
       onStopCaptions,
-      /* @conditional-compile-remove(close-captions) */
       onSetCaptionLanguage,
-      /* @conditional-compile-remove(close-captions) */
       onSetSpokenLanguage,
       /* @conditional-compile-remove(end-of-call-survey) */
       onSubmitSurvey,

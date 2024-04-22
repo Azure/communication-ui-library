@@ -6,7 +6,6 @@ import { expect } from '@playwright/test';
 import { dataUiId, isTestProfileMobile, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
 import { IDS, captionsFeatureState, captionsFeatureStateArabic } from '../../common/constants';
 
-/* @conditional-compile-remove(close-captions) */
 test.describe('Teams Closed Captions Banner tests', async () => {
   test('Show loading banner when start captions is clicked but captions is not started yet', async ({
     page,
@@ -20,6 +19,8 @@ test.describe('Teams Closed Captions Banner tests', async () => {
         isCaptionsFeatureActive: false,
         startCaptionsInProgress: true
       };
+      /* @conditional-compile-remove(acs-close-captions) */
+      initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
@@ -31,6 +32,8 @@ test.describe('Teams Closed Captions Banner tests', async () => {
     if (initialState?.call) {
       initialState.isTeamsCall = true;
       initialState.call.captionsFeature = captionsFeatureState;
+      /* @conditional-compile-remove(acs-close-captions) */
+      initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
@@ -42,6 +45,8 @@ test.describe('Teams Closed Captions Banner tests', async () => {
     if (initialState?.call) {
       initialState.isTeamsCall = true;
       initialState.call.captionsFeature = captionsFeatureStateArabic;
+      /* @conditional-compile-remove(acs-close-captions) */
+      initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
@@ -56,6 +61,8 @@ test.describe('Teams Closed Captions Banner tests', async () => {
     if (initialState?.call) {
       initialState.isTeamsCall = true;
       initialState.call.captionsFeature = captionsFeatureState;
+      /* @conditional-compile-remove(acs-close-captions) */
+      initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
     await pageClick(page, dataUiId('captions-banner-more-button'));
@@ -71,6 +78,8 @@ test.describe('Teams Closed Captions Banner tests', async () => {
         isCaptionsFeatureActive: false,
         startCaptionsInProgress: false
       };
+      /* @conditional-compile-remove(acs-close-captions) */
+      initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
@@ -85,6 +94,8 @@ test.describe('Teams Closed Captions Banner tests', async () => {
     if (initialState?.call) {
       initialState.isTeamsCall = true;
       initialState.call.captionsFeature = captionsFeatureState;
+      /* @conditional-compile-remove(acs-close-captions) */
+      initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
     await pageClick(page, dataUiId('captions-banner-more-button'));
@@ -93,12 +104,13 @@ test.describe('Teams Closed Captions Banner tests', async () => {
   });
 });
 
-/* @conditional-compile-remove(close-captions) */
 test.describe('Captions buttons in call control', () => {
   test('Captions buttons shows when it is teams call and connected', async ({ page, serverUrl }, testInfo) => {
     const initialState = defaultMockCallAdapterState();
     if (initialState?.call) {
       initialState.isTeamsCall = true;
+      /* @conditional-compile-remove(acs-close-captions) */
+      initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
     await pageClick(page, dataUiId('common-call-composite-more-button'));
@@ -113,6 +125,8 @@ test.describe('Captions buttons in call control', () => {
     if (initialState?.call) {
       initialState.isTeamsCall = true;
       initialState.call.captionsFeature = captionsFeatureState;
+      /* @conditional-compile-remove(acs-close-captions) */
+      initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
     await pageClick(page, dataUiId('common-call-composite-more-button'));
@@ -128,6 +142,8 @@ test.describe('Captions buttons in call control', () => {
     if (initialState?.call) {
       initialState.isTeamsCall = true;
       initialState.call.captionsFeature = captionsFeatureState;
+      /* @conditional-compile-remove(acs-close-captions) */
+      initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
     await pageClick(page, dataUiId('common-call-composite-more-button'));
@@ -140,6 +156,8 @@ test.describe('Captions buttons in call control', () => {
     if (initialState?.call) {
       initialState.isTeamsCall = true;
       initialState.call.captionsFeature.isCaptionsFeatureActive = false;
+      /* @conditional-compile-remove(acs-close-captions) */
+      initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
     await pageClick(page, dataUiId('common-call-composite-more-button'));
