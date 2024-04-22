@@ -161,7 +161,7 @@ function chatAdapterStateFromCallWithChatAdapterState(
       },
       latestErrors: callWithChatAdapterState.latestChatErrors,
       /* @conditional-compile-remove(attachment-upload) */
-      attachmentUploads: callWithChatAdapterState.attachmentUploads
+      _attachmentUploads: callWithChatAdapterState._attachmentUploads
     };
   }
 
