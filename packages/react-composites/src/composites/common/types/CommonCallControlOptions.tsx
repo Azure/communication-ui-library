@@ -86,7 +86,6 @@ export type CommonCallControlOptions = {
    * @defaultValue true
    */
   raiseHandButton?: boolean | { disabled: boolean };
-  /* @conditional-compile-remove(reaction) */
   /**
    * Show, Hide or Disable the reaction button during a call.
    * @defaultValue true

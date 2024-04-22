@@ -21,8 +21,6 @@ module.exports = {
     'rich-text-editor',
     // Join meeting with meetingId and passcode
     'meeting-id',
-    // Close captions feature for ACS calls
-    "acs-close-captions",
     // Demo feature. Used in live-documentation of conditional compilation. Do not use in production code.
     "in-progress-beta-feature-demo",
   ],
@@ -76,14 +74,14 @@ module.exports = {
     // Feature for local recording notification for teams meetings
     'local-recording-notification',
     // Feature for end call options 
-    'end-call-options'
+    'end-call-options',
+    // Close captions feature for ACS calls
+    "acs-close-captions",
   ],
   stable: [
     // Demo feature. Used in live-documentation of conditional compilation.
     // Do not use in production code.
     "stabilizedDemo",
-    // Closed captions
-    "close-captions",
     // Support Calling SDK isReceiving flag, shows a loading spinner on the video tile when isAvailable is true but isReceiving is false
     "video-stream-is-receiving-flag",
     // Feature for spotlight
@@ -92,7 +90,5 @@ module.exports = {
     'end-of-call-survey',
     // Feature for PPT Live for teams meeting
     'ppt-live',
-    // Feature for meeting reactions
-    'reaction',
   ]
 }

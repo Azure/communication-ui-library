@@ -202,9 +202,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       }
 
       /* @conditional-compile-remove(attachment-upload) */
-      const attachmentUploads = adapter.registerActiveUploads(Array.from(files));
+      const uploadTasks = adapter.registerActiveUploads(Array.from(files));
       /* @conditional-compile-remove(attachment-upload) */
-      attachmentOptions?.uploadOptions?.handler(attachmentUploads);
+      attachmentOptions?.uploadOptions?.handleAttachmentSelection(uploadTasks);
     },
     [adapter, attachmentOptions]
   );
@@ -351,7 +351,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   );
 
   const AttachmentButton = useCallback(() => {
-    if (!attachmentOptions?.uploadOptions?.handler) {
+    if (!attachmentOptions?.uploadOptions?.handleAttachmentSelection) {
       return null;
     }
     return (
@@ -362,14 +362,14 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       />
     );
   }, [
-    attachmentOptions?.uploadOptions?.handler,
+    attachmentOptions?.uploadOptions?.handleAttachmentSelection,
     attachmentOptions?.uploadOptions?.supportedMediaTypes,
     attachmentOptions?.uploadOptions?.disableMultipleUploads,
     attachmentUploadButtonOnChange
   ]);
 
   /* @conditional-compile-remove(attachment-upload) */
-  const activeAttachmentUploads = useSelector(attachmentUploadsSelector).attachments;
+  const attachmentsWithProgress = useSelector(attachmentUploadsSelector).attachments;
 
   return (
     <Stack className={chatContainer} grow>
@@ -416,9 +416,12 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
                   autoFocus={options?.autoFocus}
                   styles={sendBoxStyles}
                   /* @conditional-compile-remove(attachment-upload) */
-                  activeAttachmentUploads={activeAttachmentUploads}
+                  attachmentsWithProgress={attachmentsWithProgress}
                   /* @conditional-compile-remove(attachment-upload) */
-                  onCancelAttachmentUpload={adapter.cancelUpload}
+                  onCancelAttachmentUpload={(id) => {
+                    adapter.cancelUpload?.(id);
+                    attachmentOptions?.uploadOptions?.handleAttachmentRemoval?.(id);
+                  }}
                 />
               </Stack>
               {formFactor !== 'mobile' && <AttachmentButton />}

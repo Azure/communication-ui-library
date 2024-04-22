@@ -489,6 +489,7 @@ export type CallCompositeOptions = {
     callControls?: boolean | CallControlOptions;
     remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
     localVideoTile?: boolean | LocalVideoTileOptions;
+    videoTilesOptions?: VideoTilesOptions;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
     };
@@ -758,6 +759,7 @@ export interface CallingTheme {
         callRedDarker: string;
         iconWhite: string;
         raiseHandGold: string;
+        videoTileLabelBackgroundLight: string;
     };
 }
 
@@ -1171,7 +1173,7 @@ export interface CallWithChatControlOptions extends CommonCallControlOptions {
 }
 
 // @public
-export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | /* @conditional-compile-remove(close-captions) */ 'isCaptionsActiveChanged' | /* @conditional-compile-remove(close-captions) */ 'captionsReceived' | /* @conditional-compile-remove(close-captions) */ 'isCaptionLanguageChanged' | /* @conditional-compile-remove(close-captions) */ 'isSpokenLanguageChanged' | 'capabilitiesChanged' | /* @conditional-compile-remove(spotlight) */ 'spotlightChanged' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
+export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | 'isCaptionsActiveChanged' | 'captionsReceived' | 'isCaptionLanguageChanged' | 'isSpokenLanguageChanged' | 'capabilitiesChanged' | /* @conditional-compile-remove(spotlight) */ 'spotlightChanged' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
 
 // @public
 export const CameraButton: (props: CameraButtonProps) => JSX.Element;
@@ -1606,6 +1608,7 @@ export type CommonCallAdapterOptions = {
         videoBackgroundImages?: VideoBackgroundImage[];
         onResolveDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     };
+    onFetchProfile?: OnFetchProfileCallback;
     callingSounds?: CallingSounds;
     reactionResources?: ReactionResources;
 };
@@ -2932,6 +2935,9 @@ export interface NetworkDiagnosticsState {
 }
 
 // @public
+export type OnFetchProfileCallback = (userId: string, defaultProfile?: Profile) => Promise<Profile | undefined>;
+
+// @public
 export type OnRenderAvatarCallback = (
 userId?: string, options?: CustomAvatarOptions,
 defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element) => JSX.Element;
@@ -3128,6 +3134,11 @@ export type ParticipantState = 'Idle' | 'Connecting' | 'Ringing' | 'Connected' |
 export interface PPTLiveCallFeatureState {
     isActive: boolean;
 }
+
+// @public
+export type Profile = {
+    displayName?: string;
+};
 
 // @public
 export type RaisedHand = {
@@ -3823,6 +3834,7 @@ export interface VideoGalleryProps {
     spotlightedParticipants?: string[];
     strings?: Partial<VideoGalleryStrings>;
     styles?: VideoGalleryStyles;
+    videoTilesOptions?: VideoTilesOptions;
 }
 
 // @public
@@ -3919,6 +3931,7 @@ export interface VideoTileDrawerMenuProps {
 
 // @public
 export interface VideoTileProps {
+    alwaysShowLabelBackground?: boolean;
     children?: React_2.ReactNode;
     contextualMenu?: IContextualMenuProps;
     displayName?: string;
@@ -3941,6 +3954,11 @@ export interface VideoTileProps {
     showMuteIndicator?: boolean;
     styles?: VideoTileStylesProps;
     userId?: string;
+}
+
+// @public
+export interface VideoTilesOptions {
+    alwaysShowLabelBackground?: boolean;
 }
 
 // @public
