@@ -74,7 +74,7 @@ module.exports = {
     // Feature for end call options 
     'end-call-options',
     // Close captions feature for ACS calls
-    "acs-close-captions",,
+    "acs-close-captions",
     // Feature for Rich Text Editor (RTE) support
     'rich-text-editor'
   ],
