@@ -6,7 +6,7 @@ import { Description, Heading, Source, Subheading, Title } from '@storybook/addo
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
-import { EXAMPLES_FOLDER_PREFIX, overviewPageImagesStackStyle } from '../constants';
+import { CONCEPTS_FOLDER_PREFIX, EXAMPLES_FOLDER_PREFIX, overviewPageImagesStackStyle } from '../constants';
 import { exampleDisableCaptions } from './ClosedCaptions';
 
 const getDocs: () => JSX.Element = () => {
@@ -122,8 +122,8 @@ const ClosedCaptionsStory = (): JSX.Element => {
 export const ClosedCaptions = ClosedCaptionsStory.bind({});
 
 export default {
-  id: `${EXAMPLES_FOLDER_PREFIX}-ClosedCaptions`,
-  title: `${EXAMPLES_FOLDER_PREFIX}/ClosedCaptions`,
+  id: `${CONCEPTS_FOLDER_PREFIX}-ClosedCaptions`,
+  title: `${CONCEPTS_FOLDER_PREFIX}/ClosedCaptions`,
   parameters: {
     previewTabs: { canvas: { disable: true, hidden: true } },
     docs: {
