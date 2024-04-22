@@ -17,8 +17,6 @@ module.exports = {
     "gallery-layout-composite",
     // feature for hiding attendee name in the teams meeting
     "hide-attendee-name",
-    // Feature for Rich Text Editor (RTE) support
-    'rich-text-editor',
     // Join meeting with meetingId and passcode
     'meeting-id',
     // Close captions feature for ACS calls
@@ -76,7 +74,9 @@ module.exports = {
     // Feature for local recording notification for teams meetings
     'local-recording-notification',
     // Feature for end call options 
-    'end-call-options'
+    'end-call-options',
+    // Feature for Rich Text Editor (RTE) support
+    'rich-text-editor'
   ],
   stable: [
     // Demo feature. Used in live-documentation of conditional compilation.
