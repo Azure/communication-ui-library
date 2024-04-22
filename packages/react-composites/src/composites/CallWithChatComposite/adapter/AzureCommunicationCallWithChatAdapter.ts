@@ -318,10 +318,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   }
   /** Dispose of the current CallWithChatAdapter. */
   public dispose(): void {
-    this.executeWithResolvedChatAdapter((adapter) => {
-      adapter.offStateChange(this.onChatStateChange);
-      adapter.dispose();
-    });
+    if (this.chatAdapter) {
+      this.chatAdapter.offStateChange(this.onChatStateChange);
+      this.chatAdapter.dispose();
+    }
 
     this.callAdapter.offStateChange(this.onCallStateChange);
     this.callAdapter.dispose();
