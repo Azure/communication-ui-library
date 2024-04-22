@@ -46,13 +46,15 @@ function HermeticAppImpl(props: { queryArgs: HermeticQueryArgs & CommonQueryArgs
     })();
   }, [args.mockCallAdapterState]);
 
-  const chatAdapters = _useFakeChatAdapters(args.fakeChatAdapterArgs);
+  const chatAdapters = _useFakeChatAdapters(args.fakeChatAdapterArgs, {
+    forceInvalidChatThread: args.forceInvalidChatThread
+  });
   const callWithChatAdapter = useMemo(
     () =>
       !!callAdapter && !!chatAdapters?.local
         ? _createAzureCommunicationCallWithChatAdapterFromAdapters(callAdapter, chatAdapters.local)
         : undefined,
-    [callAdapter, chatAdapters]
+    [callAdapter, chatAdapters?.local]
   );
 
   return (
