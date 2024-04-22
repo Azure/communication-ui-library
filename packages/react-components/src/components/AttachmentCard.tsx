@@ -26,7 +26,7 @@ import { Announcer } from './Announcer';
 import { useEffect, useState, useMemo } from 'react';
 import { _AttachmentUploadCardsStrings } from './AttachmentUploadCards';
 import { useLocaleAttachmentCardStringsTrampoline } from './utils/common';
-import { AttachmentMetadata, AttachmentMenuAction } from '../types/Attachment';
+import { AttachmentMetadata, AttachmentMenuAction, AttachmentMetadataWithProgress } from '../types/Attachment';
 import { useAttachmentCardStyles, attachmentNameContainerClassName } from './styles/AttachmentCard.styles';
 
 /**
@@ -37,7 +37,7 @@ export interface _AttachmentCardProps {
   /**
    * Attachment details including name, extension, url, etc.
    */
-  attachment: AttachmentMetadata;
+  attachment: AttachmentMetadata | AttachmentMetadataWithProgress;
   /**
    * An array of menu actions to be displayed in the attachment card.
    */
@@ -61,9 +61,11 @@ export interface _AttachmentCardProps {
 export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
   const { attachment, menuActions, onActionHandlerFailed } = props;
   const attachmentCardStyles = useAttachmentCardStyles();
+
   const progress = useMemo(() => {
-    return attachment.progress;
-  }, [attachment.progress]);
+    return 'progress' in attachment ? attachment.progress : undefined;
+  }, [attachment]);
+
   const isUploadComplete = useMemo(() => {
     return progress !== undefined && progress > 0 && progress < 1;
   }, [progress]);

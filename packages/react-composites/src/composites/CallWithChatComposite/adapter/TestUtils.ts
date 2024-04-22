@@ -246,7 +246,6 @@ function createMockCall(mockCallId: string): CallState {
     /* @conditional-compile-remove(ppt-live) */
     pptLive: { isActive: false },
     localParticipantReaction: undefined,
-    /* @conditional-compile-remove(close-captions) */
     captionsFeature: {
       captions: [],
       supportedSpokenLanguages: [],

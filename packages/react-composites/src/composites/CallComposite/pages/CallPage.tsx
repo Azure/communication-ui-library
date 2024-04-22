@@ -49,7 +49,6 @@ export interface CallPageProps {
   latestErrors: ActiveErrorMessage[];
   onDismissError: (error: ActiveErrorMessage) => void;
   galleryLayout: VideoGalleryLayout;
-
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
   onUserSetGalleryLayoutChange?: (layout: VideoGalleryLayout) => void;
   userSetOverflowGalleryPosition?: 'Responsive' | 'horizontalTop';
@@ -143,6 +142,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
           setPromptProps={setPromptProps}
           /* @conditional-compile-remove(spotlight) */
           hideSpotlightButtons={options?.spotlight?.hideSpotlightButtons}
+          videoTilesOptions={options?.videoTilesOptions}
         />
       );
     }
