@@ -435,7 +435,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   /* @conditional-compile-remove(attachment-upload) */
   /** Send a chat message with attachments. */
   public async sendMessageWithAttachments(content: string, attachments: AttachmentMetadata[]): Promise<void> {
-    return await this.chatAdapterPromise.then((adapter) => {
+    return await this.executeWithResolvedChatAdapter((adapter) => {
       const fileSharingMetadata: FileSharingMetadata = {
         fileSharingMetadata: JSON.stringify(attachments)
       };
@@ -489,14 +489,14 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     });
   }
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  public registerActiveUploads = (files: File[]): AttachmentUploadManager[] => {
+  public registerActiveUploads = (files: File[]): AttachmentUploadTask[] => {
     if (!this.chatAdapter) {
       throw new Error('Chat is not initialized');
     }
     return this.chatAdapter.registerActiveUploads(files);
   };
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
-  public registerCompletedUploads = (metadata: AttachmentMetadata[]): AttachmentUploadManager[] => {
+  public registerCompletedUploads = (metadata: AttachmentMetadata[]): AttachmentUploadTask[] => {
     if (!this.chatAdapter) {
       throw new Error('Chat is not initialized');
     }
@@ -940,10 +940,17 @@ export class TeamsMeetingLinkProvider implements ChatThreadProvider {
     /** @conditional-compile-remove(meeting-id) */
     this.callAdapterPromise = callAdapterPromise;
   }
+
   public isCallInfoRequired(): boolean {
-    return false;
+    return true;
   }
+
+  public getChatThread(): string {
+    return getChatThreadFromTeamsLink(this.locator.meetingLink);
+  }
+
   public async getChatThreadPromise(): Promise<string> {
+    /** @conditional-compile-remove(meeting-id) */
     {
       // Wait for the call to be connected and get the chat thread ID from `call.callInfo`.
       const chatThreadPromise = new Promise<string>((resolve) => {
@@ -965,9 +972,7 @@ export class TeamsMeetingLinkProvider implements ChatThreadProvider {
 
       return chatThreadPromise;
     }
-  }
 
-  public getChatThread(): string {
     return getChatThreadFromTeamsLink(this.locator.meetingLink);
   }
 }
