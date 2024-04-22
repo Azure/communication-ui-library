@@ -187,12 +187,12 @@ const extractContentForAllyMessage = (props: ChatMessageContentProps): string =>
     });
 
     // Inject attachment names for aria.
-    if (attachments) {
+    if (attachments && attachments.length > 0) {
       let attachmentList = '';
       /* @conditional-compile-remove(attachment-download) */
       attachmentList = attachmentCardGroupDescription(props);
       const attachmentTextNode = document.createElement('div');
-      attachmentTextNode.innerHTML = ` ${attachmentList} `;
+      attachmentTextNode.innerHTML = `${attachmentList}`;
       parsedContent.appendChild(attachmentTextNode);
     }
 
