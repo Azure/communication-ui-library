@@ -32,13 +32,11 @@ import {
   generateCustomCallControlBarButton,
   onFetchCustomButtonPropsTrampoline
 } from './CustomButton';
-/*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
 import { DesktopMoreButton } from './DesktopMoreButton';
 import { isDisabled } from '../../CallComposite/utils';
 import { HiddenFocusStartPoint } from '../HiddenFocusStartPoint';
 import { CallWithChatControlOptions } from '../../CallWithChatComposite';
 import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
-/* @conditional-compile-remove(close-captions) */
 import { CaptionsSettingsModal } from '../CaptionsSettingsModal';
 import { RaiseHand } from '../../CallComposite/components/buttons/RaiseHand';
 import { Reaction } from '../../CallComposite/components/buttons/Reaction';
@@ -69,11 +67,8 @@ export interface CommonCallControlBarProps {
   disableButtonsForHoldScreen?: boolean;
   /* @conditional-compile-remove(PSTN-calls) */
   onClickShowDialpad?: () => void;
-
   onClickVideoEffects?: (showVideoEffects: boolean) => void;
-  /* @conditional-compile-remove(close-captions) */
   isCaptionsSupported?: boolean;
-  /* @conditional-compile-remove(close-captions) */
   isCaptionsOn?: boolean;
   displayVertical?: boolean;
   onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'horizontalTop') => void;
@@ -81,13 +76,11 @@ export interface CommonCallControlBarProps {
   userSetGalleryLayout?: VideoGalleryLayout;
   peopleButtonRef?: React.RefObject<IButton>;
   cameraButtonRef?: React.RefObject<IButton>;
-
   videoBackgroundPickerRef?: React.RefObject<IButton>;
   onSetDialpadPage?: () => void;
   dtmfDialerPresent?: boolean;
   /* @conditional-compile-remove(spotlight) */
   onStopLocalSpotlight?: () => void;
-  /* @conditional-compile-remove(close-captions) */
   useTeamsCaptions?: boolean;
 }
 
@@ -131,7 +124,6 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   const callWithChatStrings = useCallWithChatCompositeStrings();
   const options = inferCommonCallControlOptions(props.mobileView, props.callControls);
 
-  /* @conditional-compile-remove(close-captions) */
   const [showCaptionsSettingsModal, setShowCaptionsSettingsModal] = useState(false);
 
   /* @conditional-compile-remove(end-call-options) */
@@ -174,11 +166,10 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
     setIsOutOfSpace(totalButtonsWidth > controlBarContainerWidth);
   }, [totalButtonsWidth, controlBarContainerWidth]);
 
-  /* @conditional-compile-remove(close-captions) */
   const openCaptionsSettingsModal = useCallback((): void => {
     setShowCaptionsSettingsModal(true);
   }, []);
-  /* @conditional-compile-remove(close-captions) */
+
   const onDismissCaptionsSettings = useCallback((): void => {
     setShowCaptionsSettingsModal(false);
   }, []);
@@ -281,14 +272,12 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
     /* @conditional-compile-remove(acs-close-captions) */ isEnabled(options.captionsButton);
 
   const showDesktopMoreButton =
-    /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */ isEnabled(
-      options?.moreButton
-    ) &&
+    isEnabled(options?.moreButton) &&
     (false ||
       /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ isEnabled(
         options?.holdButton
       ) ||
-      /* @conditional-compile-remove(close-captions) */ showCaptionsButton ||
+      showCaptionsButton ||
       props.onUserSetGalleryLayout);
 
   const role = props.callAdapter.getState().call?.role;
@@ -299,15 +288,13 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   return (
     <div ref={controlBarSizeRef}>
       <CallAdapterProvider adapter={props.callAdapter}>
-        {
-          /* @conditional-compile-remove(close-captions) */ showCaptionsSettingsModal && (
-            <CaptionsSettingsModal
-              showCaptionsSettingsModal={showCaptionsSettingsModal}
-              onDismissCaptionsSettings={onDismissCaptionsSettings}
-              changeCaptionLanguage={props.isCaptionsOn && props.useTeamsCaptions}
-            />
-          )
-        }
+        {showCaptionsSettingsModal && (
+          <CaptionsSettingsModal
+            showCaptionsSettingsModal={showCaptionsSettingsModal}
+            onDismissCaptionsSettings={onDismissCaptionsSettings}
+            changeCaptionLanguage={props.isCaptionsOn && props.useTeamsCaptions}
+          />
+        )}
       </CallAdapterProvider>
       <Stack
         horizontal
@@ -443,9 +430,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         /*@conditional-compile-remove(PSTN-calls) */
                         onClickShowDialpad={props.onClickShowDialpad}
                         callControls={props.callControls}
-                        /* @conditional-compile-remove(close-captions) */
                         isCaptionsSupported={showCaptionsButton}
-                        /* @conditional-compile-remove(close-captions) */
                         onCaptionsSettingsClick={openCaptionsSettingsModal}
                         onUserSetOverflowGalleryPositionChange={props.onUserSetOverflowGalleryPositionChange}
                         onUserSetGalleryLayout={props.onUserSetGalleryLayout}

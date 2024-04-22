@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(close-captions) */
 import {
   CaptionsCallFeature,
   PropertyChangedEvent,
@@ -11,12 +10,9 @@ import {
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(acs-close-captions) */
 import { Captions, CaptionsHandler, CaptionsInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(close-captions) */
 import { CallContext } from './CallContext';
-/* @conditional-compile-remove(close-captions) */
 import { CallIdRef } from './CallIdRef';
 
-/* @conditional-compile-remove(close-captions) */
 /**
  * @private
  */
@@ -176,6 +172,3 @@ export class CaptionsFeatureSubscriber {
     }
   };
 }
-
-// This is a placeholder to bypass CC of "close-captions", remove when move the feature to stable
-export {};
