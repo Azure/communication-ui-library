@@ -1,15 +1,19 @@
 import { Canvas, Meta } from '@storybook/blocks';
-import { BasicExample } from './BasicExample.stories';
-import { MockComposite } from './MockComposite.stories';
+import { LiveExample } from './LiveExample.stories';
+import { Preview } from './PreviewCallComposite.stories';
 
 <Meta title="Composites/CallComposite" />
 
 # CallComposite
 
-Some intro text about the CallComposite.
+The CallComposite provides a calling experience that allows users to start or join a call. Inside the experience
+users can configure their devices, participate in the call with video and see other participants, including
+those with video turned on.
 
-<Canvas of={MockComposite} />
+Below is an interactive example of the CallComposite in a simulated environment:
+
+<Canvas of={Preview} />
 
 ## Join Example
 
-<Canvas of={BasicExample} />
+<Canvas of={LiveExample} />

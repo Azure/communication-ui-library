@@ -12,6 +12,19 @@ import { compositeLocale } from '../localizationUtils';
 import { ContosoCallContainer } from './snippets/Container.snippet';
 import { ConfigHintBanner } from './snippets/Utils';
 
+const meta: Meta<typeof BasicStory> = {
+  // id: `${COMPOSITE_FOLDER_PREFIX}-call-basicexample`,
+  title: 'Composites/CallComposite/LiveExample'
+  // component: CallComposite,
+  // argTypes: {
+  //   ...storyControls,
+  //   // Hiding auto-generated controls
+  //   ...defaultCallCompositeHiddenControls
+  // }
+};
+
+export default meta;
+
 const storyControls = {
   userId: controlsToAdd.userId,
   token: controlsToAdd.token,
@@ -58,17 +71,4 @@ const BasicStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Element 
   );
 };
 
-export const BasicExample = BasicStory.bind({});
-
-const meta: Meta<typeof BasicStory> = {
-  // id: `${COMPOSITE_FOLDER_PREFIX}-call-basicexample`,
-  title: 'Composites/CallComposite/Basic-Example'
-  // component: CallComposite,
-  // argTypes: {
-  //   ...storyControls,
-  //   // Hiding auto-generated controls
-  //   ...defaultCallCompositeHiddenControls
-  // }
-};
-
-export default meta;
+export const LiveExample = BasicStory.bind({});
