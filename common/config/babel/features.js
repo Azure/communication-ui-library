@@ -21,8 +21,6 @@ module.exports = {
     'rich-text-editor',
     // Join meeting with meetingId and passcode
     'meeting-id',
-    // Close captions feature for ACS calls
-    "acs-close-captions",
     // Demo feature. Used in live-documentation of conditional compilation. Do not use in production code.
     "in-progress-beta-feature-demo",
   ],
@@ -76,7 +74,9 @@ module.exports = {
     // Feature for local recording notification for teams meetings
     'local-recording-notification',
     // Feature for end call options 
-    'end-call-options'
+    'end-call-options',
+    // Close captions feature for ACS calls
+    "acs-close-captions",
   ],
   stable: [
     // Demo feature. Used in live-documentation of conditional compilation.
