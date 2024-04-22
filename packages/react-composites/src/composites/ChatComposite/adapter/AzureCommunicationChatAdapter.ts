@@ -49,6 +49,7 @@ import { AttachmentMetadata } from '@internal/react-components';
 import { AttachmentUploadTask } from '@internal/react-components';
 /* @conditional-compile-remove(attachment-upload) */
 import { FileSharingMetadata } from '../../ChatComposite/file-sharing';
+import { TEAMS_LIMITATION_LEARN_MORE, UNSUPPORTED_CHAT_THREAD_TYPE } from '../../common/constants';
 
 /**
  * Context of Chat, which is a centralized context for all state updates
@@ -614,6 +615,12 @@ export const _createLazyAzureCommunicationChatAdapterInner = async (
     telemetryImplementationHint
   );
   return threadId.then(async (threadId) => {
+    if (UNSUPPORTED_CHAT_THREAD_TYPE.some((t) => threadId.includes(t))) {
+      console.error(
+        `Invalid Chat ThreadId: ${threadId}. Please note with Teams Channel Meetings, only Calling is supported and Chat is not currently supported. Read more: ${TEAMS_LIMITATION_LEARN_MORE}.`
+      );
+    }
+
     const chatThreadClient = await chatClient.getChatThreadClient(threadId);
     await chatClient.startRealtimeNotifications();
 
