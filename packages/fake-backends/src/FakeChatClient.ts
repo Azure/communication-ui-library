@@ -26,7 +26,7 @@ import { FakeInvalidChatThreadClient, INVALID_THREAD_ID } from './FakeInvalidCha
  */
 export class FakeChatClient implements IChatClient {
   private realtimeNotificationsEnabled = false;
-  private threadClients: FakeChatThreadClient[] = [];
+  private threadClients: IChatThreadClient[] = [];
   private model: Model;
   private userId: CommunicationIdentifier;
 
@@ -40,7 +40,7 @@ export class FakeChatClient implements IChatClient {
 
     const threadClient =
       threadId === INVALID_THREAD_ID
-        ? (new FakeInvalidChatThreadClient(threadId) as FakeChatThreadClient)
+        ? new FakeInvalidChatThreadClient(threadId)
         : new FakeChatThreadClient(this.model, this.userId, threadId);
 
     this.threadClients.push(threadClient);

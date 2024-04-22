@@ -21,7 +21,7 @@ import {
   UpdateMessageOptions
 } from '@azure/communication-chat';
 /* @conditional-compile-remove(chat-beta-sdk) */
-import type { UpdateChatThreadPropertiesOptions } from '@azure/communication-chat';
+import type { UpdateChatThreadPropertiesOptions, UploadChatImageResult } from '@azure/communication-chat';
 
 import { IChatThreadClient } from './types';
 import { CommunicationIdentifier } from '@azure/communication-common';
@@ -98,5 +98,15 @@ export class FakeInvalidChatThreadClient implements IChatThreadClient {
 
   listReadReceipts(options?: ListReadReceiptsOptions): PagedAsyncIterableIterator<ChatMessageReadReceipt> {
     throw new RestError('FakeInvalidChatThreadClient::listReadReceipts not implemented.', { statusCode: 403 });
+  }
+
+  /* @conditional-compile-remove(chat-beta-sdk) */
+  uploadImage(): Promise<UploadChatImageResult> {
+    throw new RestError('FakeInvalidChatThreadClient::UploadChatImageResult not implemented.', { statusCode: 403 });
+  }
+
+  /* @conditional-compile-remove(chat-beta-sdk) */
+  deleteImage(): Promise<void> {
+    throw new RestError('FakeInvalidChatThreadClient::deleteImage not implemented.', { statusCode: 403 });
   }
 }
