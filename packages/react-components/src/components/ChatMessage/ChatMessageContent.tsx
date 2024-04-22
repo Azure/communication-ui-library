@@ -187,6 +187,7 @@ const extractContentForAllyMessage = (props: ChatMessageContentProps): string =>
     });
 
     // Inject attachment names for aria.
+    /* @conditional-compile-remove(attachment-download) */
     if (attachments && attachments.length > 0) {
       let attachmentList = '';
       /* @conditional-compile-remove(attachment-download) */
