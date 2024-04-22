@@ -35,12 +35,10 @@ import {
   generateCustomCallDesktopOverflowButtons,
   onFetchCustomButtonPropsTrampoline
 } from '../../common/ControlBar/CustomButton';
-/* @conditional-compile-remove(reaction) */
 import { Reaction } from './buttons/Reaction';
-/* @conditional-compile-remove(reaction) */
 import { useSelector } from '../hooks/useSelector';
-/* @conditional-compile-remove(reaction) */
 import { capabilitySelector } from '../../CallComposite/selectors/capabilitySelector';
+import { callStatusSelector } from '../../CallComposite/selectors/callStatusSelector';
 
 /**
  * @private
@@ -116,11 +114,12 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
 
   const raiseHandButtonProps = usePropsFor(RaiseHandButton) as RaiseHandButtonProps;
 
-  /* @conditional-compile-remove(reaction) */
   const capabilitiesSelector = useSelector(capabilitySelector);
-  /* @conditional-compile-remove(reaction) */
+  const callState = useSelector(callStatusSelector);
   const isReactionAllowed =
-    !capabilitiesSelector?.capabilities || capabilitiesSelector.capabilities.useReactions.isPresent;
+    callState.callStatus !== 'Connected' ||
+    !capabilitiesSelector?.capabilities ||
+    capabilitiesSelector.capabilities.useReactions.isPresent;
 
   const devicesButtonProps = usePropsFor(DevicesButton);
 
@@ -153,9 +152,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     numberOfButtons++;
   }
 
-  /* @conditional-compile-remove(reaction) */
   const showReactionButtonInControlBar = isEnabled(options?.reactionButton) && isReactionAllowed && !props.isMobile;
-  /* @conditional-compile-remove(reaction) */
   if (showReactionButtonInControlBar) {
     numberOfButtons++;
   }
@@ -231,7 +228,6 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     showMoreButton = isEnabled(options?.moreButton);
   }
 
-  /* @conditional-compile-remove(reaction) */
   const reactionResources = adapter.getState().reactions;
   const raiseHandButtonIsEnabled = isEnabled(options?.raiseHandButton);
   let showRaiseHandButtonInControlBar = raiseHandButtonIsEnabled;
@@ -349,12 +345,9 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
           {cameraButtonIsEnabled && (
             <Camera displayType={options?.displayType} disabled={isDisabled(options?.cameraButton)} />
           )}
-          {
-            /* @conditional-compile-remove(reaction) */
-            showReactionButtonInControlBar && reactionResources && (
-              <Reaction displayType={options?.displayType} reactionResource={reactionResources} />
-            )
-          }
+          {showReactionButtonInControlBar && reactionResources && (
+            <Reaction displayType={options?.displayType} reactionResource={reactionResources} />
+          )}
           {showRaiseHandButtonInControlBar && !hideRaiseHandButtonInRoomsCall && (
             <RaiseHand displayType={options?.displayType} />
           )}

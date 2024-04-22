@@ -5,9 +5,9 @@ import type { ChatMessage, ChatParticipant, SendMessageOptions } from '@azure/co
 import type { CommunicationIdentifierKind, CommunicationUserKind } from '@azure/communication-common';
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import type { AdapterError, AdapterErrors, AdapterState, Disposable } from '../../common/adapters';
-/* @conditional-compile-remove(file-sharing) */
-import { FileUploadAdapter, FileUploadsUiState } from './AzureCommunicationFileUploadAdapter';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-upload) */
+import { _AttachmentUploadAdapter, _AttachmentUploadsUiState } from './AzureCommunicationAttachmentUploadAdapter';
+/* @conditional-compile-remove(attachment-upload) */
 import { AttachmentMetadata } from '@internal/react-components';
 
 /**
@@ -19,14 +19,15 @@ export type ChatAdapterUiState = {
   // FIXME(Delete?)
   // Self-contained state for composite
   error?: Error;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-upload) */
   /**
-   * Files being uploaded by a user in the current thread.
+   * Attachments being uploaded by a user in the current thread.
    * Should be set to null once the upload is complete.
-   * Array of type {@link FileUploadsUiState}
-   * @beta
+   * Array of type {@link _AttachmentUploadsUiState}
+   *
+   * @internal
    */
-  fileUploads?: FileUploadsUiState;
+  _attachmentUploads?: _AttachmentUploadsUiState;
 };
 
 /**
@@ -67,6 +68,11 @@ export interface ChatAdapterThreadManagement {
    * Send a message in the thread.
    */
   sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
+  /* @conditional-compile-remove(attachment-upload) */
+  /**
+   * Send a message with attachments in the chat thread.
+   */
+  sendMessageWithAttachments(content: string, attachments: AttachmentMetadata[]): Promise<void>;
   /**
    * Send a read receipt for a message.
    */
@@ -90,7 +96,7 @@ export interface ChatAdapterThreadManagement {
     messageId: string,
     content: string,
     metadata?: Record<string, string>,
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-upload) */
     options?: {
       attachmentMetadata?: AttachmentMetadata[];
     }
@@ -217,8 +223,8 @@ export type ChatAdapter = ChatAdapterThreadManagement &
   AdapterState<ChatAdapterState> &
   Disposable &
   ChatAdapterSubscribers &
-  /* @conditional-compile-remove(file-sharing) */
-  FileUploadAdapter;
+  /* @conditional-compile-remove(attachment-upload) */
+  _AttachmentUploadAdapter;
 
 /**
  * Callback for {@link ChatAdapterSubscribers} 'messageReceived' event.

@@ -1,20 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(reaction) */
 import { IRawStyle, IStyle, mergeStyles, Stack } from '@fluentui/react';
-/* @conditional-compile-remove(reaction) */
 import React from 'react';
-/* @conditional-compile-remove(reaction) */
 import { useTheme } from '../../theming/FluentThemeProvider';
-/* @conditional-compile-remove(reaction) */
 import { mobileViewEmojiStyles, mobileViewMenuItemStyle } from '../styles/ReactionButton.styles';
-/* @conditional-compile-remove(reaction) */
 import { IconButton } from '@fluentui/react';
-/* @conditional-compile-remove(reaction) */
 import { _DrawerMenuItemProps, ReactionResources } from '../..';
 
-/* @conditional-compile-remove(reaction) */
 /**
  * Props for the ReactionMenuItem
  *
@@ -36,7 +29,6 @@ export interface _ReactionMenuItemProps {
   disabled?: boolean;
 }
 
-/* @conditional-compile-remove(reaction) */
 /**
  * Maps the individual item in menuProps.items passed in the {@link DrawerMenu} into a UI component.
  *
@@ -65,6 +57,7 @@ export const _ReactionDrawerMenuItem = (props: _ReactionMenuItemProps): JSX.Elem
 
   return (
     <Stack
+      data-ui-id="reaction-mobile-drawer-menu-item"
       id="reaction"
       role="menuitem"
       horizontal
@@ -93,7 +86,6 @@ export const _ReactionDrawerMenuItem = (props: _ReactionMenuItemProps): JSX.Elem
   );
 };
 
-/* @conditional-compile-remove(reaction) */
 const drawerMenuItemRootStyles = (hoverBackground: string, fontSize: IRawStyle): IStyle => ({
   ...fontSize,
   height: '3rem',
@@ -105,7 +97,6 @@ const drawerMenuItemRootStyles = (hoverBackground: string, fontSize: IRawStyle):
   }
 });
 
-/* @conditional-compile-remove(reaction) */
 const disabledDrawerMenuItemRootStyles = (background: string): IStyle => ({
   pointerEvents: 'none',
   background: background,

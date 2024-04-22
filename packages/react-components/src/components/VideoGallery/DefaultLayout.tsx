@@ -9,7 +9,7 @@ import { isShortHeight } from '../utils/responsive';
 import { LayoutProps } from './Layout';
 import { rootLayoutStyle } from './styles/DefaultLayout.styles';
 import { videoGalleryLayoutGap } from './styles/Layout.styles';
-import { useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
+import { MAX_GRID_PARTICIPANTS_NOT_LARGE_GALLERY, useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
 import { OverflowGallery } from './OverflowGallery';
 
 /**
@@ -39,7 +39,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     parentHeight,
     pinnedParticipantUserIds = [],
     overflowGalleryPosition = 'horizontalBottom',
-    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds
+    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds = []
   } = props;
 
   const isNarrow = parentWidth ? isNarrowWidth(parentWidth) : false;
@@ -50,11 +50,12 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
   // This number will be used for the maxOverflowGalleryDominantSpeakers when organizing the remote participants.
   // We need to add the local participant to the pinned participant count so we are placing the speakers correctly.
   const childrenPerPage = useRef(4);
+  const remoteVideosOn = remoteParticipants.filter((p) => p.videoStream?.isAvailable).length > 0;
   const { gridParticipants, overflowGalleryParticipants } = useOrganizedParticipants({
     remoteParticipants,
     localParticipant,
     dominantSpeakers,
-    maxRemoteVideoStreams,
+    maxGridParticipants: remoteVideosOn ? maxRemoteVideoStreams : MAX_GRID_PARTICIPANTS_NOT_LARGE_GALLERY,
     isScreenShareActive: !!screenShareComponent,
     maxOverflowGalleryDominantSpeakers: screenShareComponent
       ? childrenPerPage.current - ((pinnedParticipantUserIds.length + 1) % childrenPerPage.current)
@@ -94,7 +95,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
   });
 
   if (localVideoComponent) {
-    if (screenShareComponent) {
+    if (screenShareComponent || /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds.length > 0) {
       overflowGalleryTiles = [localVideoComponent].concat(overflowGalleryTiles);
     } else {
       gridTiles = [localVideoComponent].concat(gridTiles);

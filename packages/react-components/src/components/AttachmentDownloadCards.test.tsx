@@ -7,41 +7,40 @@ import { _AttachmentDownloadCards } from './AttachmentDownloadCards';
 import { render, screen } from '@testing-library/react';
 import { registerIcons } from '@fluentui/react';
 
-describe('FileDownloadCards should be rendered properly', () => {
+describe('AttachmentDownloadCards should be rendered properly', () => {
   beforeEach(() => {
     registerIcons({
       icons: {
-        downloadfile: <></>,
+        downloadattachment: <></>,
         docx24_svg: <></>,
         editboxcancel: <></>
       }
     });
   });
 
-  it('should render if it is FileSharingMetadata', async () => {
-    const metadata: AttachmentMetadata = {
+  it('should render if it is AttachmentSharingMetadata', async () => {
+    const attachment: AttachmentMetadata = {
       name: 'MockAttachmentCard',
       extension: 'docx',
       url: 'mockUrl',
-      /* @conditional-compile-remove(file-sharing) */
       id: 'mockId'
     };
 
     const props = {
       userId: 'MockUserId',
-      fileMetadata: [metadata]
+      attachments: [attachment]
     };
-    renderFileDownloadCardsWithDefaults(props);
+    renderAttachmentDownloadCardsWithDefaults(props);
     const card = await screen.findByText('MockAttachmentCard');
     expect(card).toBeDefined();
   });
 });
 
-const renderFileDownloadCardsWithDefaults = (props: MockDownloadCardProps): void => {
-  render(<_AttachmentDownloadCards userId={props.userId} fileMetadata={props.fileMetadata} />);
+const renderAttachmentDownloadCardsWithDefaults = (props: MockDownloadCardProps): void => {
+  render(<_AttachmentDownloadCards {...props} />);
 };
 
 interface MockDownloadCardProps {
   userId: string;
-  fileMetadata: AttachmentMetadata[];
+  attachments: AttachmentMetadata[];
 }

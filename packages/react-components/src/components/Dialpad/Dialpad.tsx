@@ -138,6 +138,10 @@ export interface DialpadProps {
    * and can be edited to change the number being dialed.
    */
   dialpadMode?: DialpadMode;
+  /**
+   * Audio context for generating DTMF tones. If this if not provided the dialpad will create one iteslf.
+   */
+  dtmfAudioContext?: AudioContext;
 }
 
 type DialpadButtonContent = {
@@ -294,6 +298,7 @@ const DialpadContainer = (props: {
   styles?: DialpadStyles;
   disableDtmfPlayback?: boolean;
   dialpadMode?: DialpadMode;
+  dtmfAudioContext?: AudioContext;
 }): JSX.Element => {
   const theme = useTheme();
 
@@ -305,10 +310,11 @@ const DialpadContainer = (props: {
     showDeleteButton = true,
     longPressTrigger = 'mouseAndTouch',
     disableDtmfPlayback,
-    dialpadMode = 'dialer'
+    dialpadMode = 'dialer',
+    dtmfAudioContext
   } = props;
 
-  const dtmfToneAudioContext = useRef(new AudioContext());
+  const dtmfToneAudioContext = useRef(dtmfAudioContext ? dtmfAudioContext : new AudioContext());
 
   const [plainTextValue, setPlainTextValue] = useState(textFieldValue ?? '');
   const plainTextValuePreviousRenderValue = useRef(plainTextValue);

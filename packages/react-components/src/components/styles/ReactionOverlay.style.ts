@@ -1,10 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(reaction) */
 import { keyframes, memoizeFunction } from '@fluentui/react';
 
-/* @conditional-compile-remove(reaction) */
 /**
  * Generate random float between two numbers, including min and max
  * @private
@@ -13,7 +11,6 @@ export function getRandomFloat(minValue: number, maxValue: number): number {
   return minValue + Math.random() * (maxValue - minValue);
 }
 
-/* @conditional-compile-remove(reaction) */
 /**
  * Generate random int between two numbers, including min and max
  * @private
@@ -22,7 +19,6 @@ export function getRandomInt(minValue: number, maxValue: number): number {
   return Math.floor(getRandomFloat(minValue, maxValue + 1));
 }
 
-/* @conditional-compile-remove(reaction) */
 /**
  * Calculate the start position for a new reaction in the prescriptive wave pattern
  * @private
@@ -48,7 +44,6 @@ export function generateStartPositionWave(
   return midPointCoordinate + direction * adjustment * halfCanvasWidth;
 }
 
-/* @conditional-compile-remove(reaction) */
 /**
  * @private
  */
@@ -60,7 +55,6 @@ export const reactionOverlayStyle: React.CSSProperties = {
   width: '100%'
 };
 
-/* @conditional-compile-remove(reaction) */
 /**
  * @private
  */
@@ -71,7 +65,6 @@ export function getReactionMovementStyle(reactionXPoint: number): React.CSSPrope
   };
 }
 
-/* @conditional-compile-remove(reaction) */
 /**
  * Scale metric to determine the start position of a reaction in presentation mode to avoid overlap.
  * @private
@@ -119,29 +112,22 @@ function scaleStartPos(index: number): number {
   }
 }
 
-/* @conditional-compile-remove(reaction) */
 /**
+ * We have only one bucket item for presentation style of the reaction animation.
+ * We are choosing to keep the array so that, in future, with styles needed to get updated, one
+ * can add new styles and apply from here, rather than updating over the same style. Later we can remove
+ * the old ones.
+ * It is for the ease of testing and implementation.
  * @private
  */
 const ReactionStyleBuckets: Array<IReactionStyleBucket> = [
   {
-    sizeScale: 1,
-    heightMaxScale: 1 * 0.95,
-    opacityMax: 1
-  },
-  {
     sizeScale: 0.9,
     heightMaxScale: 0.7 * 0.95,
     opacityMax: 0.9
-  },
-  {
-    sizeScale: 0.8,
-    heightMaxScale: 0.4 * 0.95,
-    opacityMax: 0.8
   }
 ];
 
-/* @conditional-compile-remove(reaction) */
 /**
  * @private
  */
@@ -166,7 +152,6 @@ const ReactionBurstStyleBuckets: Array<IReactionStyleBucket> = [
   }
 ];
 
-/* @conditional-compile-remove(reaction) */
 /**
  * @private
  */
@@ -177,21 +162,22 @@ export interface IReactionStyleBucket {
   heightMinScale?: number;
 }
 
-/* @conditional-compile-remove(reaction) */
 /**
  * Return a style bucket based on the number of active sprites.
  * For example, the first three reactions should appear at maximum
  * height, width, and opacity.
  * @private
  */
-export function getReactionStyleBucket(activeSpritesCount: number): IReactionStyleBucket {
-  const index = activeSpritesCount < 3 ? 0 : activeSpritesCount < 5 ? getRandomInt(0, 1) : getRandomInt(0, 2);
+export function getReactionStyleBucket(): IReactionStyleBucket {
+  // Having dynamic emoji size on rendering animation impacts performance of the animation itself.
+  // So we are choosing to use a fixed size for all cases.
+  const index = 0;
   return ReactionStyleBuckets[index];
 }
 
-/* @conditional-compile-remove(reaction) */
 /**
  * Return a style bucket for burst scenario
+ * We can utilize this style when we allow more than 50 reactions at a time. Can be configured through ECS.
  * @private
  */
 export function getReactionBurstStyleBucket(): IReactionStyleBucket {
@@ -199,7 +185,6 @@ export function getReactionBurstStyleBucket(): IReactionStyleBucket {
   return ReactionBurstStyleBuckets[index];
 }
 
-/* @conditional-compile-remove(reaction) */
 /**
  * @private
  */
@@ -214,7 +199,6 @@ export const moveFrames = memoizeFunction((maxHeight, travelHeight) =>
   })
 );
 
-/* @conditional-compile-remove(reaction) */
 /**
  * @private
  */
@@ -227,7 +211,6 @@ export const moveAnimationStyles = (maxHeight: number, travelHeight: number): Re
   };
 };
 
-/* @conditional-compile-remove(reaction) */
 /**
  * @private
  */
@@ -250,7 +233,6 @@ export const opacityTransition = memoizeFunction((maxOpacity) =>
   })
 );
 
-/* @conditional-compile-remove(reaction) */
 /**
  * @private
  */
@@ -262,7 +244,6 @@ export const opacityAnimationStyles = (maxOpacity: number): React.CSSProperties 
   };
 };
 
-/* @conditional-compile-remove(reaction) */
 /**
  * @private
  */
@@ -277,7 +258,6 @@ export const spriteFrames = memoizeFunction((numOfFrames, displaySizePx) =>
   })
 );
 
-/* @conditional-compile-remove(reaction) */
 /**
  * @private
  */

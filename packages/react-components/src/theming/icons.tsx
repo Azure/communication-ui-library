@@ -58,19 +58,16 @@ import {
   TextIndentIncrease20Regular,
   DividerTall24Regular,
   TextEditStyle20Regular,
-  TextEditStyle20Filled
+  TextEditStyle20Filled,
+  Table20Regular,
+  Table20Filled,
+  TableAdd20Regular,
+  TableDismiss20Regular
 } from '@fluentui/react-icons';
-/* @conditional-compile-remove(reaction) */
 import { Emoji20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { Star28Regular, Star28Filled } from '@fluentui/react-icons';
-import {
-  HandRight20Filled,
-  HandRightOff20Filled,
-  HandRight20Regular,
-  HandRightOff20Regular
-} from '@fluentui/react-icons';
-/* @conditional-compile-remove(close-captions) */
+import { HandRight20Regular, HandRightOff20Regular } from '@fluentui/react-icons';
 import {
   ClosedCaption20Regular,
   ClosedCaptionOff20Regular,
@@ -88,8 +85,8 @@ import { Backspace20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(call-readiness) */
 import { Sparkle20Filled, VideoProhibited20Filled, MicProhibited20Filled } from '@fluentui/react-icons';
 
-/* @conditional-compile-remove(file-sharing) */
-import { ArrowDownload16Regular } from '@fluentui/react-icons';
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+import { ArrowDownload20Regular, Open20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CallPause20Regular, CallPause20Filled, Play20Regular } from '@fluentui/react-icons';
 import { People20Regular } from '@fluentui/react-icons';
@@ -241,15 +238,11 @@ const GalleryRightButton = (): JSX.Element => {
 };
 
 const ControlButtonRaiseHandIcon = (): JSX.Element => {
-  /* @conditional-compile-remove(reaction) */
   return <HandRight20Regular />;
-  return <HandRight20Filled />;
 };
 
 const ControlButtonLowerHandIcon = (): JSX.Element => {
-  /* @conditional-compile-remove(reaction) */
   return <HandRightOff20Regular />;
-  return <HandRightOff20Filled />;
 };
 
 /**
@@ -275,12 +268,15 @@ export const DEFAULT_COMPONENT_ICONS = {
   ControlButtonLowerHand: <ControlButtonLowerHandIcon />,
   RaiseHandContextualMenuItem: <HandRight20Regular />,
   LowerHandContextualMenuItem: <HandRightOff20Regular />,
-  /* @conditional-compile-remove(reaction) */
   ReactionButtonIcon: <Emoji20Regular />,
-  /* @conditional-compile-remove(file-sharing) */
-  CancelFileUpload: <Dismiss16Regular />,
-  /* @conditional-compile-remove(file-sharing) */
-  DownloadFile: <ArrowDownload16Regular />,
+  /* @conditional-compile-remove(attachment-upload) */
+  CancelAttachmentUpload: <Dismiss16Regular />,
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  DownloadAttachment: <ArrowDownload20Regular />,
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  OpenAttachment: <Open20Regular />,
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  AttachmentMoreMenu: <MoreHorizontal20Filled />,
   /* @conditional-compile-remove(data-loss-prevention) */
   DataLossPreventionProhibited: <DataLossPreventionProhibited16Regular />,
   EditBoxCancel: <Dismiss20Regular />,
@@ -353,19 +349,12 @@ export const DEFAULT_COMPONENT_ICONS = {
   SplitButtonPrimaryActionMicMuted: <MicOff20Filled />,
   VerticalGalleryLeftButton: <GalleryLeftButton />,
   VerticalGalleryRightButton: <GalleryRightButton />,
-
   ControlButtonVideoEffectsOption: <VideoBackgroundEffect20Regular />,
-
   ConfigurationScreenVideoEffectsButton: <VideoBackgroundEffect20Filled />,
-  /* @conditional-compile-remove(close-captions) */
   CaptionsIcon: <ClosedCaption20Regular />,
-  /* @conditional-compile-remove(close-captions) */
   CaptionsOffIcon: <ClosedCaptionOff20Regular />,
-  /* @conditional-compile-remove(close-captions) */
   CaptionsSettingsIcon: <Settings20Regular />,
-  /* @conditional-compile-remove(close-captions) */
   ChangeSpokenLanguageIcon: <PersonVoice20Regular />,
-  /* @conditional-compile-remove(close-captions) */
   ChangeCaptionLanguageIcon: <Translate20Regular />,
   ContextMenuCameraIcon: <Video20Regular />,
   ContextMenuMicIcon: <Mic20Regular />,
@@ -399,5 +388,13 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(rich-text-editor) */
   RichTextEditorButtonIcon: <TextEditStyle20Regular />,
   /* @conditional-compile-remove(rich-text-editor) */
-  RichTextEditorButtonIconFilled: <TextEditStyle20Filled />
+  RichTextEditorButtonIconFilled: <TextEditStyle20Filled />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RichTextInsertTableRegularIcon: <Table20Regular />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RichTextInsertTableFilledIcon: <Table20Filled />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RichTextTableInsertMenuIcon: <TableAdd20Regular />,
+  /* @conditional-compile-remove(rich-text-editor) */
+  RichTextTableDeleteMenuIcon: <TableDismiss20Regular />
 };

@@ -8,10 +8,10 @@ import { SendBoxErrorBar, SendBoxErrorBarError } from '../SendBoxErrorBar';
  * @private
  */
 export interface RichTextSendBoxErrorsProps {
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-upload) */
   attachmentUploadsPendingError?: SendBoxErrorBarError;
-  /* @conditional-compile-remove(file-sharing) */
-  attachmentUploadError?: SendBoxErrorBarError;
+  /* @conditional-compile-remove(attachment-upload) */
+  attachmentProgressError?: SendBoxErrorBarError;
   systemMessage?: string;
   textTooLongMessage?: string;
 }
@@ -21,9 +21,9 @@ export interface RichTextSendBoxErrorsProps {
  */
 export const RichTextSendBoxErrors = (props: RichTextSendBoxErrorsProps): JSX.Element => {
   const {
-    /* @conditional-compile-remove(file-sharing) */
-    attachmentUploadError,
-    /* @conditional-compile-remove(file-sharing) */
+    /* @conditional-compile-remove(attachment-upload) */
+    attachmentProgressError,
+    /* @conditional-compile-remove(attachment-upload) */
     attachmentUploadsPendingError,
     systemMessage,
     textTooLongMessage
@@ -57,13 +57,13 @@ export const RichTextSendBoxErrors = (props: RichTextSendBoxErrorsProps): JSX.El
       if (prev) {
         errors.push(prev);
       }
-      /* @conditional-compile-remove(file-sharing) */
+      /* @conditional-compile-remove(attachment-upload) */
       if (attachmentUploadsPendingError) {
         errors.push(attachmentUploadsPendingError);
       }
-      /* @conditional-compile-remove(file-sharing) */
-      if (attachmentUploadError) {
-        errors.push(attachmentUploadError);
+      /* @conditional-compile-remove(attachment-upload) */
+      if (attachmentProgressError) {
+        errors.push(attachmentProgressError);
       }
       if (errors.length === 0) {
         return undefined;
@@ -73,8 +73,8 @@ export const RichTextSendBoxErrors = (props: RichTextSendBoxErrorsProps): JSX.El
       return sortedErrors[0];
     });
   }, [
-    /* @conditional-compile-remove(file-sharing) */ attachmentUploadError,
-    /* @conditional-compile-remove(file-sharing) */ attachmentUploadsPendingError
+    /* @conditional-compile-remove(attachment-upload) */ attachmentProgressError,
+    /* @conditional-compile-remove(attachment-upload) */ attachmentUploadsPendingError
   ]);
 
   const onDismiss = useCallback(() => {

@@ -3,16 +3,17 @@
 
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useState } from 'react';
-import { ChatMessageComponentAsEditBox } from '../ChatMessageComponentAsEditBox';
-import { MessageThreadStrings } from '../../MessageThread';
+import { MessageThreadStrings, UpdateMessageCallback } from '../../MessageThread';
 import { ChatMessage, ComponentSlotStyle, OnRenderAvatarCallback } from '../../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../../types';
-import { FileDownloadHandler, AttachmentMetadata } from '../../../types/Attachment';
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+import { AttachmentMenuAction, AttachmentMetadata } from '../../../types/Attachment';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from '../../MentionPopover';
 import { InlineImageOptions } from '../ChatMessageContent';
 import { ChatMyMessageComponentAsMessageBubble } from './ChatMyMessageComponentAsMessageBubble';
+import { ChatMessageComponentAsEditBoxPicker } from './ChatMessageComponentAsEditBoxPicker';
 
 type ChatMyMessageComponentProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
@@ -20,14 +21,7 @@ type ChatMyMessageComponentProps = {
   messageContainerStyle?: ComponentSlotStyle;
   showDate?: boolean;
   disableEditing?: boolean;
-  onUpdateMessage?: (
-    messageId: string,
-    content: string,
-    metadata?: Record<string, string>,
-    options?: {
-      attachmentMetadata?: AttachmentMetadata[];
-    }
-  ) => Promise<void>;
+  onUpdateMessage?: UpdateMessageCallback;
   onCancelEditMessage?: (messageId: string) => void;
   /**
    * Callback to delete a message. Also called before resending a message that failed to send.
@@ -53,14 +47,6 @@ type ChatMyMessageComponentProps = {
    * Whether to overlap avatar and message when the view is width constrained.
    */
   shouldOverlapAvatarAndMessage: boolean;
-  /**
-   * Optional callback to render uploaded files in the message component.
-   */
-  onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
-  /**
-   * Optional function called when someone clicks on the file download icon.
-   */
-  fileDownloadHandler?: FileDownloadHandler;
   remoteParticipantsCount?: number;
   onActionButtonClick: (
     message: ChatMessage,
@@ -89,6 +75,22 @@ type ChatMyMessageComponentProps = {
    * @beta
    */
   inlineImageOptions?: InlineImageOptions;
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /**
+   * Optional callback to render message attachments in the message component.
+   */
+  onRenderAttachmentDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /**
+   * Optional callback to define custom actions for attachments.
+   */
+  actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
+  /* @conditional-compile-remove(rich-text-editor) */
+  /**
+   * Optional flag to enable rich text editor.
+   * @beta
+   */
+  richTextEditor?: boolean;
 };
 
 /**
@@ -118,13 +120,21 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
 
   if (isEditing && message.messageType === 'chat') {
     return (
-      <ChatMessageComponentAsEditBox
+      <ChatMessageComponentAsEditBoxPicker
         message={message}
         strings={props.strings}
         onSubmit={async (text, metadata, options) => {
           props.onUpdateMessage &&
             message.messageId &&
-            (await props.onUpdateMessage(message.messageId, text, metadata, options));
+            (await props.onUpdateMessage(
+              message.messageId,
+              text,
+              /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+              {
+                metadata: metadata,
+                attachmentMetadata: options?.attachmentMetadata
+              }
+            ));
           setIsEditing(false);
         }}
         onCancel={(messageId) => {
@@ -133,6 +143,8 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
         }}
         /* @conditional-compile-remove(mention) */
         mentionLookupOptions={props.mentionOptions?.lookupOptions}
+        /* @conditional-compile-remove(rich-text-editor) */
+        richTextEditor={props.richTextEditor}
       />
     );
   } else {

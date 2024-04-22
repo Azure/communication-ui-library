@@ -44,7 +44,18 @@
     "numberListTooltip": "Číslovaný seznam",
     "increaseIndentTooltip": "Zvětšit odsazení",
     "decreaseIndentTooltip": "Zmenšit odsazení",
-    "richTextFormatButtonTooltip": "Formát"
+    "insertTableTooltip": "Vložit tabulku",
+    "richTextFormatButtonTooltip": "Formát",
+    "insertRowOrColumnMenu": "Vložit",
+    "insertTableMenuTitle": "Vložit {column} x {row} tabulka",
+    "insertRowAboveMenu": "Vložit nad",
+    "insertRowBelowMenu": "Vložit pod",
+    "insertColumnLeftMenu": "Vložit vlevo",
+    "insertColumnRightMenu": "Vložit vpravo",
+    "deleteRowOrColumnMenu": "Odstranit",
+    "deleteColumnMenu": "Odstranit sloupec",
+    "deleteRowMenu": "Odstranit řádek",
+    "deleteTableMenu": "Odstranit tabulku"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Návrhy"
@@ -66,7 +77,9 @@
   },
   "endCallButton": {
     "label": "Opustit",
-    "tooltipContent": "Opustit hovor"
+    "tooltipContent": "Opustit hovor",
+    "leaveOption": "Odejít",
+    "endCallOption": "Ukončit hovor"
   },
   "cameraButton": {
     "onLabel": "Kamera",
@@ -180,9 +193,10 @@
     "messageReadCount": "Přečetl(a) {messageReadByCount} z {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Další možnosti",
     "downloadAttachment": "Stáhnout soubor",
+    "openAttachment": "Otevřít soubor",
     "blockedWarningText": "Tato zpráva se odstranila kvůli zásadám organizace.",
     "blockedWarningLinkText": "Podrobnosti",
-    "attachmentCardGroupMessage": "Zpráva obsahuje počet příloh: {attachmentCount}",
+    "attachmentCardGroupMessage": "Zpráva obsahuje {attachmentCount} přílohu",
     "messageDeletedAnnouncementAriaLabel": "Zpráva se odstranila."
   },
   "errorBar": {

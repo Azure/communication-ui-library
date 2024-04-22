@@ -14,8 +14,8 @@ import { ChatMessage } from '../../../types/ChatMessage';
 import { BlockedMessage } from '../../../types/ChatMessage';
 import { MessageThreadStrings } from '../../MessageThread';
 import { ComponentSlotStyle } from '../../../types';
-/* @conditional-compile-remove(file-sharing) */
-import { FileDownloadHandler } from '../../../types/Attachment';
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+import { AttachmentMenuAction, AttachmentMetadata } from '../../../types';
 import { _AttachmentDownloadCards } from '../../AttachmentDownloadCards';
 import { useLocale } from '../../../localization';
 /* @conditional-compile-remove(mention) */
@@ -40,16 +40,16 @@ type ChatMessageComponentAsMessageBubbleProps = {
    * Whether to overlap avatar and message when the view is width constrained.
    */
   shouldOverlapAvatarAndMessage: boolean;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /**
-   * Optional callback to render uploaded files in the message component.
+   * Optional callback to render message attachments in the message component.
    */
-  onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
-  /* @conditional-compile-remove(file-sharing) */
+  onRenderAttachmentDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   /**
-   * Optional function called when someone clicks on the file download icon.
+   * Optional callback to define custom actions for attachments.
    */
-  fileDownloadHandler?: FileDownloadHandler;
+  actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
   /**
    * Optional function to provide customized date format.
    * @beta
@@ -80,12 +80,12 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     showDate,
     messageContainerStyle,
     strings,
-    /* @conditional-compile-remove(file-sharing) */
-    fileDownloadHandler,
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+    onRenderAttachmentDownloads,
     inlineImageOptions,
     shouldOverlapAvatarAndMessage,
-    /* @conditional-compile-remove(file-sharing) */
-    onRenderFileDownloads,
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+    actionsForAttachment,
     /* @conditional-compile-remove(mention) */
     mentionDisplayOptions,
     onDisplayDateTimeString
@@ -113,19 +113,19 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
       strings,
       userId,
       inlineImageOptions,
-      /* @conditional-compile-remove(file-sharing) */
-      onRenderFileDownloads,
       /* @conditional-compile-remove(mention) */
       mentionDisplayOptions,
-      /* @conditional-compile-remove(file-sharing) */
-      fileDownloadHandler
+      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+      onRenderAttachmentDownloads,
+      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+      actionsForAttachment
     );
   }, [
-    /* @conditional-compile-remove(file-sharing) */ fileDownloadHandler,
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ actionsForAttachment,
     inlineImageOptions,
     /* @conditional-compile-remove(mention) */ mentionDisplayOptions,
     message,
-    /* @conditional-compile-remove(file-sharing) */ onRenderFileDownloads,
+    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ onRenderAttachmentDownloads,
     strings,
     userId
   ]);
@@ -136,7 +136,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
 
   const chatMessageStyles = useChatMessageStyles();
   const chatItemMessageContainerClassName = mergeClasses(
-    // messageContainerStyle used in className and style prop as style prop can't handle CSS selectors
+    chatMessageCommonStyles.body,
     chatMessageStyles.body,
     // disable placeholder functionality for GA releases as it might confuse users
     chatMessageStyles.bodyWithPlaceholderImage,
@@ -149,6 +149,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     message.attached === 'top' || message.attached === false
       ? chatMessageStyles.bodyWithAvatar
       : chatMessageStyles.bodyWithoutAvatar,
+    // messageContainerStyle used in className and style prop as style prop can't handle CSS selectors
     mergeStyles(messageContainerStyle)
   );
 

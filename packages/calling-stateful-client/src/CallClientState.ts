@@ -19,18 +19,17 @@ import {
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(meeting-id) */
 import { CallInfo, TeamsCallInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(capabilities) */
-import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
-/* @conditional-compile-remove(close-captions) */
-import { CaptionsResultType } from '@azure/communication-calling';
 
+import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
+import { CaptionsResultType } from '@azure/communication-calling';
+/* @conditional-compile-remove(acs-close-captions) */
+import { CaptionsKind } from '@azure/communication-calling';
 import { VideoEffectName } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { CallKind } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
-/* @conditional-compile-remove(reaction) */
 import { ReactionMessage } from '@azure/communication-calling';
 /* @conditional-compile-remove(spotlight) */
 import { SpotlightedParticipant } from '@azure/communication-calling';
@@ -52,7 +51,6 @@ export interface CallAgentState {
   displayName?: string;
 }
 
-/* @conditional-compile-remove(close-captions) */
 /**
  * @public
  */
@@ -87,7 +85,6 @@ export interface CaptionsInfo {
   spokenText?: string;
 }
 
-/* @conditional-compile-remove(close-captions) */
 /**
  * @public
  */
@@ -120,6 +117,11 @@ export interface CaptionsCallFeatureState {
    * current caption language
    */
   currentCaptionLanguage: string;
+  /* @conditional-compile-remove(acs-close-captions) */
+  /**
+   * current caption kind: teams or acs captions
+   */
+  captionsKind: CaptionsKind;
 }
 
 /**
@@ -136,7 +138,6 @@ export interface TranscriptionCallFeatureState {
   isTranscriptionActive: boolean;
 }
 
-/* @conditional-compile-remove(capabilities) */
 /**
  * State only version of {@link @azure/communication-calling#CapabilitiesFeature}
  *
@@ -157,7 +158,7 @@ export interface CapabilitiesFeatureState {
 /**
  * State only version of {@link @azure/communication-calling#SpotlightCallFeature}
  *
- * @beta
+ * @public
  */
 export interface SpotlightCallFeatureState {
   /**
@@ -178,7 +179,7 @@ export interface SpotlightCallFeatureState {
 /**
  * Spotlight state with order
  *
- * @beta
+ * @public
  */
 export interface SpotlightState {
   /**
@@ -273,12 +274,11 @@ export type RaisedHandState = {
   raisedHandOrderPosition: number;
 };
 
-/* @conditional-compile-remove(reaction) */
 /**
  * State only version of {@link @azure/communication-calling#Call.ReactionMessage} with UI helper props receivedOn.
  * Reaction state with a timestamp which helps UI to decide to render the reaction accordingly.
  *
- * @beta
+ * @public
  */
 export type ReactionState = {
   /**
@@ -449,12 +449,11 @@ export interface RemoteParticipantState {
    * @public
    */
   contentSharingStream?: HTMLElement;
-  /* @conditional-compile-remove(reaction) */
   /**
    * Proxy of {@link @azure/communication-calling#Call.ReactionMessage} with
    * UI helper props receivedOn which indicates the timestamp when the message was received.
    *
-   * @beta
+   * @public
    */
   reactionState?: ReactionState;
   /* @conditional-compile-remove(spotlight) */
@@ -530,7 +529,6 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#TranscriptionCallFeature}.
    */
   transcription: TranscriptionCallFeatureState;
-  /* @conditional-compile-remove(close-captions) */
   /**
    * Proxy of {@link @azure/communication-calling#TranscriptionCallFeature}.
    */
@@ -559,12 +557,11 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#RaiseHandCallFeature}.
    */
   raiseHand: RaiseHandCallFeatureState;
-  /* @conditional-compile-remove(reaction) */
   /**
    * Proxy of {@link @azure/communication-calling#Call.ReactionMessage} with
    * UI helper props receivedOn which indicates the timestamp when the message was received.
    *
-   * @beta
+   * @public
    */
   localParticipantReaction?: ReactionState;
   /**
@@ -614,12 +611,11 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#Call.totalParticipantCount}.
    */
   totalParticipantCount?: number;
-  /* @conditional-compile-remove(call-transfer) */
   /**
    * Transfer state of call
    */
   transfer: TransferFeatureState;
-  /* @conditional-compile-remove(capabilities) */
+
   /**
    * Proxy of {@link @azure/communication-calling#CapabilitiesFeature}.
    */
@@ -641,7 +637,6 @@ export interface CallState {
   info?: CallInfo | TeamsCallInfo;
 }
 
-/* @conditional-compile-remove(call-transfer) */
 /**
  * Transfer feature state
  *
@@ -654,7 +649,6 @@ export interface TransferFeatureState {
   acceptedTransfers: { [key: string]: AcceptedTransfer };
 }
 
-/* @conditional-compile-remove(call-transfer) */
 /**
  * Transfer feature state
  *

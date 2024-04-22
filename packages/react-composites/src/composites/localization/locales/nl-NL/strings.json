@@ -315,18 +315,27 @@
       "startSpotlightCancelButtonLabel": "Annuleren",
       "stopSpotlightHeading": "Wilt u deze video niet meer spotlighten?",
       "stopSpotlightOnSelfHeading": "Spotlight afsluiten?",
+      "stopAllSpotlightHeading": "Stoppen met het uitlichten van alle video's?",
       "stopSpotlightText": "Deze video wordt niet meer gemarkeerd voor iedereen in de vergadering.",
       "stopSpotlightOnSelfText": "Uw video wordt niet meer gemarkeerd voor iedereen in de vergadering.",
+      "stopAllSpotlightText": "De video's worden niet meer gemarkeerd voor iedereen in de vergadering.",
       "stopSpotlightConfirmButtonLabel": "Spotlighten stoppen",
       "stopSpotlightOnSelfConfirmButtonLabel": "Spotlight afsluiten",
       "stopSpotlightCancelButtonLabel": "Annuleren"
     },
     "exitSpotlightButtonLabel": "Spotlight afsluiten",
-    "exitSpotlightButtonTooltip": "Spotlight afsluiten"
+    "exitSpotlightButtonTooltip": "Spotlight afsluiten",
+    "hangUpConfirmButtonLabel": "Bevestigen",
+    "hangUpCancelButtonLabel": "Annuleren",
+    "leaveConfirmDialogTitle": "Het gesprek verlaten?",
+    "leaveConfirmDialogContent": "Weet u zeker dat u het gesprek wilt verlaten?",
+    "endCallConfirmDialogTitle": "Het gesprek beëindigen?",
+    "endCallConfirmDialogContent": "U beëindigt het gesprek voor iedereen.",
+    "invalidMeetingIdentifier": "Ongeldige vergaderings-id of wachtwoordcode"
   },
   "chat": {
     "chatListHeader": "In deze chat",
-    "uploadFile": "Bestand uploaden"
+    "uploadAttachment": "Bijlage uploaden"
   },
   "callWithChat": {
     "chatButtonLabel": "Chatten",

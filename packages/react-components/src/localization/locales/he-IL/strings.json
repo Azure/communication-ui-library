@@ -25,7 +25,7 @@
     "textTooLong": "אורך ההודעה שלך חורג מהמגבלה המרבית.",
     "sendButtonAriaLabel": "שלח הודעה",
     "attachmentUploadsPendingError": "מעלה... אנא המתן.",
-    "removeAttachment": "הסר קובץ",
+    "removeAttachment": "הסרת קובץ",
     "uploading": "מעלה",
     "uploadCompleted": "ההעלאה הושלמה"
   },
@@ -34,7 +34,7 @@
     "textTooLong": "אורך ההודעה שלך חורג מהמגבלה המרבית.",
     "sendButtonAriaLabel": "שלח הודעה",
     "attachmentUploadsPendingError": "מעלה... המתן.",
-    "removeAttachment": "הסרת קובץ",
+    "removeAttachment": "הסר קובץ",
     "uploading": "מעלה",
     "uploadCompleted": "ההעלאה הושלמה",
     "boldTooltip": "מודגש",
@@ -44,7 +44,18 @@
     "numberListTooltip": "רשימה ממוספרת",
     "increaseIndentTooltip": "הגדל כניסה",
     "decreaseIndentTooltip": "הקטן כניסה",
-    "richTextFormatButtonTooltip": "תבנית"
+    "insertTableTooltip": "הוסף טבלה",
+    "richTextFormatButtonTooltip": "תבנית",
+    "insertRowOrColumnMenu": "הוסף",
+    "insertTableMenuTitle": "הוסף טבלה {column} x‏ {row}",
+    "insertRowAboveMenu": "הוסף מעל",
+    "insertRowBelowMenu": "הוסף מתחת",
+    "insertColumnLeftMenu": "הוסף משמאל",
+    "insertColumnRightMenu": "הוסף מימין",
+    "deleteRowOrColumnMenu": "מחק",
+    "deleteColumnMenu": "מחק עמודה",
+    "deleteRowMenu": "מחק שורה",
+    "deleteTableMenu": "מחק טבלה"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "הצעות"
@@ -66,7 +77,9 @@
   },
   "endCallButton": {
     "label": "עזוב",
-    "tooltipContent": "עזוב את השיחה"
+    "tooltipContent": "עזוב את השיחה",
+    "leaveOption": "צא",
+    "endCallOption": "סיים שיחה"
   },
   "cameraButton": {
     "onLabel": "מצלמה",
@@ -180,9 +193,10 @@
     "messageReadCount": "נקרא על-ידי {messageReadByCount} מתוך {remoteParticipantsCount}",
     "actionMenuMoreOptions": "אפשרויות נוספות",
     "downloadAttachment": "הורד קובץ",
+    "openAttachment": "פתח קובץ",
     "blockedWarningText": "הודעה זו נמחקה עקב מדיניות ארגונית.",
     "blockedWarningLinkText": "פרטים",
-    "attachmentCardGroupMessage": "ההודעה כוללת קובץ מצורף {attachmentCount}",
+    "attachmentCardGroupMessage": "ההודעה כוללת {attachmentCount} קבצים מצורפים.",
     "messageDeletedAnnouncementAriaLabel": "ההודעה נמחקת"
   },
   "errorBar": {

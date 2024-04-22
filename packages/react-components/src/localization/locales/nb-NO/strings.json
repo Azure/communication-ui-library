@@ -44,7 +44,18 @@
     "numberListTooltip": "Nummerert liste",
     "increaseIndentTooltip": "Øk innrykk",
     "decreaseIndentTooltip": "Reduser innrykk",
-    "richTextFormatButtonTooltip": "Format"
+    "insertTableTooltip": "Sett inn tabell",
+    "richTextFormatButtonTooltip": "Format",
+    "insertRowOrColumnMenu": "Sett inn",
+    "insertTableMenuTitle": "Sett inn {column} x {row}-tabell",
+    "insertRowAboveMenu": "Sett inn ovenfor",
+    "insertRowBelowMenu": "Sett inn nedenfor",
+    "insertColumnLeftMenu": "Sett inn til venstre",
+    "insertColumnRightMenu": "Sett inn til høyre",
+    "deleteRowOrColumnMenu": "Slett",
+    "deleteColumnMenu": "Slett kolonne",
+    "deleteRowMenu": "Slett rad",
+    "deleteTableMenu": "Slett tabell"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Forslag"
@@ -66,7 +77,9 @@
   },
   "endCallButton": {
     "label": "Forlat",
-    "tooltipContent": "Forlat samtale"
+    "tooltipContent": "Forlat samtale",
+    "leaveOption": "Forlat",
+    "endCallOption": "Avslutt samtalen"
   },
   "cameraButton": {
     "onLabel": "Kamera",
@@ -180,9 +193,10 @@
     "messageReadCount": "Lest av {messageReadByCount} av {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Flere alternativer",
     "downloadAttachment": "Last ned fil",
+    "openAttachment": "Åpne fil",
     "blockedWarningText": "Denne meldingen ble slettet på grunn av en organisasjonspolicy.",
     "blockedWarningLinkText": "Detaljer",
-    "attachmentCardGroupMessage": "Meldingen har {attachmentCount} vedlegg",
+    "attachmentCardGroupMessage": "Meldingen har {attachmentCount} vedlegg",
     "messageDeletedAnnouncementAriaLabel": "Meldingen er slettet"
   },
   "errorBar": {

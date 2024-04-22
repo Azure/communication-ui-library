@@ -43,7 +43,8 @@ export const LargeGalleryLayout = (props: LargeGalleryProps): JSX.Element => {
     parentWidth,
     parentHeight,
     pinnedParticipantUserIds = [],
-    overflowGalleryPosition = 'horizontalBottom'
+    overflowGalleryPosition = 'horizontalBottom',
+    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds = []
   } = props;
 
   const isNarrow = parentWidth ? isNarrowWidth(parentWidth) : false;
@@ -53,7 +54,6 @@ export const LargeGalleryLayout = (props: LargeGalleryProps): JSX.Element => {
     return parentWidth && parentHeight
       ? calculateMaxTilesInLargeGrid(parentWidth, parentHeight)
       : maxRemoteVideoStreams;
-    return maxRemoteVideoStreams;
   };
 
   // This is for tracking the number of children in the first page of overflow gallery.
@@ -64,13 +64,14 @@ export const LargeGalleryLayout = (props: LargeGalleryProps): JSX.Element => {
     remoteParticipants,
     localParticipant,
     dominantSpeakers,
-    maxRemoteVideoStreams: maxStreamsTrampoline(),
+    maxGridParticipants: maxStreamsTrampoline(),
     isScreenShareActive: !!screenShareComponent,
     maxOverflowGalleryDominantSpeakers: screenShareComponent
       ? childrenPerPage.current - ((pinnedParticipantUserIds.length + 1) % childrenPerPage.current)
       : childrenPerPage.current,
     pinnedParticipantUserIds,
-    /* @conditional-compile-remove(large-gallery) */ layout: 'largeGallery'
+    /* @conditional-compile-remove(large-gallery) */ layout: 'largeGallery',
+    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds
   });
   let activeVideoStreams = 0;
 
@@ -102,7 +103,7 @@ export const LargeGalleryLayout = (props: LargeGalleryProps): JSX.Element => {
   });
 
   if (localVideoComponent) {
-    if (screenShareComponent) {
+    if (screenShareComponent || /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds.length > 0) {
       overflowGalleryTiles = [localVideoComponent].concat(overflowGalleryTiles);
     } else {
       gridTiles = [localVideoComponent].concat(gridTiles);

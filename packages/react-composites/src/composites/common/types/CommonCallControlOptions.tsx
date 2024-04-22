@@ -39,7 +39,15 @@ export type CommonCallControlOptions = {
    * Show or Hide EndCall button during a call.
    * @defaultValue true
    */
-  endCallButton?: boolean;
+  endCallButton?:
+    | boolean
+    | /* @conditional-compile-remove(end-call-options) */ {
+        /**
+         * whether to make end call button to trigger a menu, which will enable end call for everybody functionality.
+         * @defaultValue false
+         */
+        hangUpForEveryone?: false | 'endCallOptions';
+      };
   /**
    * Show or Hide Microphone button during a call.
    * @defaultValue true
@@ -78,7 +86,6 @@ export type CommonCallControlOptions = {
    * @defaultValue true
    */
   raiseHandButton?: boolean | { disabled: boolean };
-  /* @conditional-compile-remove(reaction) */
   /**
    * Show, Hide or Disable the reaction button during a call.
    * @defaultValue true
@@ -109,5 +116,5 @@ export type CommonCallControlOptions = {
    * Show, Hide or Disable captions during a call.
    * @defaultValue true
    */
-  captions?: boolean;
+  captionsButton?: boolean;
 };

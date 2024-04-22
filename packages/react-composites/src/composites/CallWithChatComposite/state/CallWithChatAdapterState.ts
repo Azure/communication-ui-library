@@ -10,12 +10,11 @@ import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite
 
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 import { ChatAdapterState } from '../../ChatComposite';
-/* @conditional-compile-remove(file-sharing) */
-import { FileUploadsUiState } from '../../ChatComposite';
+/* @conditional-compile-remove(attachment-upload) */
+import { _AttachmentUploadsUiState } from '../../ChatComposite';
 import { AdapterErrors } from '../../common/adapters';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '@internal/react-components';
 
 /**
@@ -36,15 +35,15 @@ export interface CallWithChatAdapterUiState {
    * @public
    */
   page: CallCompositePage;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-upload) */
   /**
    * Files being uploaded by a user in the current thread.
    * Should be set to null once the upload is complete.
-   * Array of type {@link FileUploadsUiState}
+   * Array of type {@link _AttachmentUploadsUiState}
    *
-   * @beta
+   * @internal
    */
-  fileUploads?: FileUploadsUiState;
+  _attachmentUploads?: _AttachmentUploadsUiState;
   /* @conditional-compile-remove(unsupported-browser) */
   /**
    * State to track whether the end user has opted in to using a
@@ -96,10 +95,8 @@ export interface CallWithChatClientState {
   /* @conditional-compile-remove(hide-attendee-name) */
   /** Hide attendee names in teams meeting */
   hideAttendeeNames?: boolean;
-  /* @conditional-compile-remove(reaction) */
   /**
    * Reaction resources to render in meetings
-   * @beta
    * */
   reactions?: ReactionResources;
 }
@@ -129,8 +126,8 @@ export function callWithChatAdapterStateFromBackingStates(callAdapter: CallAdapt
     isTeamsCall: callAdapterState.isTeamsCall,
     latestCallErrors: callAdapterState.latestErrors,
     latestChatErrors: {},
-    /* @conditional-compile-remove(file-sharing) */
-    fileUploads: {},
+    /* @conditional-compile-remove(attachment-upload) */
+    _attachmentUploads: {},
     /* @conditional-compile-remove(PSTN-calls) */
     alternateCallerId: callAdapterState.alternateCallerId,
     /* @conditional-compile-remove(unsupported-browser) */
@@ -141,7 +138,6 @@ export function callWithChatAdapterStateFromBackingStates(callAdapter: CallAdapt
     /* @conditional-compile-remove(hide-attendee-name) */
     /** Hide attendee names in teams meeting */
     hideAttendeeNames: callAdapterState.hideAttendeeNames,
-    /* @conditional-compile-remove(reaction) */
     reactions: callAdapterState.reactions
   };
 }
@@ -157,8 +153,8 @@ export function mergeChatAdapterStateIntoCallWithChatAdapterState(
     ...existingCallWithChatAdapterState,
     chat: chatAdapterState.thread,
     latestChatErrors: chatAdapterState.latestErrors,
-    /* @conditional-compile-remove(file-sharing) */
-    fileUploads: chatAdapterState.fileUploads
+    /* @conditional-compile-remove(attachment-upload) */
+    _attachmentUploads: chatAdapterState._attachmentUploads
   };
 }
 

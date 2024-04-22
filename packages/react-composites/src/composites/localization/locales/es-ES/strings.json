@@ -315,18 +315,27 @@
       "startSpotlightCancelButtonLabel": "Cancelar",
       "stopSpotlightHeading": "¿Dejar de poner este vídeo en primer plano?",
       "stopSpotlightOnSelfHeading": "¿Salir del primer plano?",
+      "stopAllSpotlightHeading": "¿Quieres dejar de poner en primer plano todos los vídeos?",
       "stopSpotlightText": "Este vídeo dejará de estar resaltado para todos los asistentes a la reunión.",
       "stopSpotlightOnSelfText": "Su vídeo ya no resaltará para todos en la reunión.",
+      "stopAllSpotlightText": "El vídeo ya no se pondrá en primer plano para todos los participantes de la reunión.",
       "stopSpotlightConfirmButtonLabel": "Dejar de poner en primer plano",
       "stopSpotlightOnSelfConfirmButtonLabel": "Salir del primer plano",
       "stopSpotlightCancelButtonLabel": "Cancelar"
     },
     "exitSpotlightButtonLabel": "Salir del primer plano",
-    "exitSpotlightButtonTooltip": "Salir del primer plano"
+    "exitSpotlightButtonTooltip": "Salir del primer plano",
+    "hangUpConfirmButtonLabel": "Confirmar",
+    "hangUpCancelButtonLabel": "Cancelar",
+    "leaveConfirmDialogTitle": "¿Abandonar la llamada?",
+    "leaveConfirmDialogContent": "¿Está seguro de que desea abandonar la llamada?",
+    "endCallConfirmDialogTitle": "¿Finalizar la llamada?",
+    "endCallConfirmDialogContent": "Finalizará la llamada para todos los usuarios.",
+    "invalidMeetingIdentifier": "Id. de reunión o código de acceso no válidos"
   },
   "chat": {
     "chatListHeader": "En este chat",
-    "uploadFile": "Subir archivo"
+    "uploadAttachment": "Cargar datos adjuntos"
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",

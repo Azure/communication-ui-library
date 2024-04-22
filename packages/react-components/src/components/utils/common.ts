@@ -2,21 +2,22 @@
 // Licensed under the MIT License.
 
 import { _AttachmentUploadCardsStrings } from '../AttachmentUploadCards';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
 import { useLocale } from '../../localization';
 import { ParticipantState } from '../../types';
 
 /**
  * Conditionally modify locale strings passed to the attachment card
- * @returns file upload card strings
+ * @returns attachment card strings
  */
 export const useLocaleAttachmentCardStringsTrampoline = (): _AttachmentUploadCardsStrings => {
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
   return useLocale().strings.sendBox;
   return {
     removeAttachment: '',
     uploadCompleted: '',
-    uploading: ''
+    uploading: '',
+    attachmentMoreMenu: ''
   };
 };
 

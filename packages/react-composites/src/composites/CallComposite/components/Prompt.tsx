@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(spotlight) */
 import {
   DefaultButton,
   IButtonStyles,
@@ -11,14 +10,13 @@ import {
   Stack,
   Text,
   Theme,
-  mergeStyles
+  mergeStyles,
+  IModalStyles,
+  concatStyleSets
 } from '@fluentui/react';
-/* @conditional-compile-remove(spotlight) */
 import { useTheme } from '@internal/react-components';
-/* @conditional-compile-remove(spotlight) */
 import React from 'react';
 
-/* @conditional-compile-remove(spotlight) */
 /**
  * @private
  */
@@ -31,17 +29,18 @@ export interface PromptProps {
   cancelButtonLabel?: string;
   onConfirm?: () => void;
   onCancel?: () => void;
+  styles?: Partial<IModalStyles>;
 }
 
-/* @conditional-compile-remove(spotlight) */
 /**
  * @private
  */
 export const Prompt = (props: PromptProps): JSX.Element => {
   const theme = useTheme();
+  const styles = concatStyleSets(modalStyles, props.styles ?? {});
 
   return (
-    <Modal styles={modalStyles} isOpen={props.isOpen} onDismiss={props.onDismiss} isBlocking={false}>
+    <Modal styles={styles} isOpen={props.isOpen} onDismiss={props.onDismiss} isBlocking={false}>
       <Stack className={mergeStyles({ position: 'relative' })}>
         <Text className={mergeStyles({ fontWeight: 600, fontSize: '1.25rem' })}>{props.heading}</Text>
         <IconButton styles={iconButtonStyles(theme)} iconProps={{ iconName: 'Cancel' }} onClick={props.onCancel} />
@@ -57,7 +56,6 @@ export const Prompt = (props: PromptProps): JSX.Element => {
   );
 };
 
-/* @conditional-compile-remove(spotlight) */
 const iconButtonStyles = (theme: Theme): IButtonStyles => ({
   root: {
     position: 'absolute',
@@ -70,16 +68,14 @@ const iconButtonStyles = (theme: Theme): IButtonStyles => ({
   }
 });
 
-/* @conditional-compile-remove(spotlight) */
 const modalStyles = { main: { padding: '1.5rem ', maxWidth: '30rem' } };
 
-/* @conditional-compile-remove(spotlight) */
 const buttonTextStyles: IButtonStyles = { label: { fontSize: '0.875rem' } };
 
 /* @conditional-compile-remove(spotlight) */
 /**
  * Strings used in prompt related to spotlight
- * @beta
+ * @public
  */
 export interface SpotlightPromptStrings {
   /**

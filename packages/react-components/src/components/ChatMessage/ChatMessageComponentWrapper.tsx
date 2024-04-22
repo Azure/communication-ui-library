@@ -7,8 +7,8 @@ import { MessageProps, MessageRenderer, MessageThreadStyles, _ChatMessageProps }
 import { ChatMessage, OnRenderAvatarCallback } from '../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types';
-/* @conditional-compile-remove(file-sharing) */
-import { FileDownloadHandler } from '../../types/Attachment';
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+import { AttachmentMenuAction, AttachmentMetadata } from '../../types/Attachment';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from '../MentionPopover';
 import { MessageStatusIndicatorProps } from '../MessageStatusIndicator';
@@ -42,8 +42,6 @@ export type ChatMessageComponentWrapperProps = _ChatMessageProps & {
   showMessageStatus?: boolean;
   participantCount?: number;
   readCount?: number;
-  /* @conditional-compile-remove(file-sharing) */
-  onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
   onActionButtonClick: (
     message: ChatMessage,
     setMessageReadBy: (
@@ -53,13 +51,20 @@ export type ChatMessageComponentWrapperProps = _ChatMessageProps & {
       }[]
     ) => void
   ) => void;
-  /* @conditional-compile-remove(file-sharing) */
-  fileDownloadHandler?: FileDownloadHandler;
   /* @conditional-compile-remove(date-time-customization) */
   onDisplayDateTimeString?: (messageDate: Date) => string;
   inlineImageOptions?: InlineImageOptions;
   /* @conditional-compile-remove(mention) */
   mentionOptions?: MentionOptions;
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  onRenderAttachmentDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /**
+   * Optional callback to define custom actions for attachments.
+   */
+  actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[];
+  /* @conditional-compile-remove(rich-text-editor) */
+  richTextEditor?: boolean;
 };
 
 /**

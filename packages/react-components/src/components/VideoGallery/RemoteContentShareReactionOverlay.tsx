@@ -1,17 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(reaction) */
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-/* @conditional-compile-remove(reaction) */
 import { Reaction, ReactionResources, VideoGalleryLocalParticipant, VideoGalleryRemoteParticipant } from '../../types';
-/* @conditional-compile-remove(reaction) */
 import { Stack, mergeStyles } from '@fluentui/react';
-/* @conditional-compile-remove(reaction) */
 import { videoContainerStyles } from '../styles/VideoTile.styles';
-/* @conditional-compile-remove(reaction) */
 import { getEmojiResource } from './utils/videoGalleryLayoutUtils';
-/* @conditional-compile-remove(reaction) */
 import {
   IReactionStyleBucket,
   generateStartPositionWave,
@@ -22,7 +16,6 @@ import {
   reactionOverlayStyle,
   spriteAnimationStyles
 } from '../styles/ReactionOverlay.style';
-/* @conditional-compile-remove(reaction) */
 import {
   REACTION_NUMBER_OF_ANIMATION_FRAMES,
   REACTION_SCREEN_SHARE_ANIMATION_TIME_MS,
@@ -31,7 +24,6 @@ import {
   getReceivedUnixTime
 } from './utils/reactionUtils';
 
-/* @conditional-compile-remove(reaction) */
 type VisibleReaction = {
   reaction: Reaction;
   id: string;
@@ -39,20 +31,15 @@ type VisibleReaction = {
   styleBucket: IReactionStyleBucket;
 };
 
-/* @conditional-compile-remove(reaction) */
 type ReceivedReaction = {
   id: string;
   status: 'animating' | 'completedAnimating' | 'ignored';
 };
 
-/* @conditional-compile-remove(reaction) */
 const MAX_NUMBER_OF_EMOJIS = 50;
-/* @conditional-compile-remove(reaction) */
 const NUMBER_OF_EMOJI_TYPES = 5;
-/* @conditional-compile-remove(reaction) */
 const REACTION_POSITION_ARRAY_SIZE = 55;
 
-/* @conditional-compile-remove(reaction) */
 /**
  * The overlay responsible for rendering multiple reactions all at once in presentation mode
  * @internal
@@ -133,7 +120,7 @@ export const RemoteContentShareReactionOverlay = React.memo(
             reaction: reaction,
             id: combinedKey,
             reactionMovementIndex: reactionMovementIndex,
-            styleBucket: getReactionStyleBucket(reactionMovementIndex)
+            styleBucket: getReactionStyleBucket()
           }
         ]);
         return;
@@ -181,12 +168,11 @@ export const RemoteContentShareReactionOverlay = React.memo(
       return canRender;
     };
 
-    const containerHeight = hostDivHeight ?? 0;
-    const containerWidth = hostDivWidth ?? 0;
+    const styleBucket = (): IReactionStyleBucket => getReactionStyleBucket();
+    const displaySizePx = (): number => REACTION_START_DISPLAY_SIZE * styleBucket().sizeScale;
 
-    const styleBucket = (activeSprites: number): IReactionStyleBucket => getReactionStyleBucket(activeSprites);
-    const displaySizePx = (activeSprites: number): number =>
-      REACTION_START_DISPLAY_SIZE * styleBucket(activeSprites).sizeScale;
+    const containerHeight = hostDivHeight ?? 0;
+    const containerWidth = (hostDivWidth ?? 0) - displaySizePx();
 
     const leftPosition = (position: number): number => generateStartPositionWave(position, containerWidth / 2, true);
     const reactionMovementStyle = (position: number): React.CSSProperties =>
@@ -230,7 +216,7 @@ export const RemoteContentShareReactionOverlay = React.memo(
                       <div
                         style={spriteAnimationStyles(
                           REACTION_NUMBER_OF_ANIMATION_FRAMES,
-                          displaySizePx(visibleReactions.length),
+                          displaySizePx(),
                           getEmojiResource(reaction?.reaction.reactionType, reactionResources) ?? ''
                         )}
                       />

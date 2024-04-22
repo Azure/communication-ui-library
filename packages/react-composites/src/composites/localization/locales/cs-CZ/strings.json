@@ -315,18 +315,27 @@
       "startSpotlightCancelButtonLabel": "Zrušit",
       "stopSpotlightHeading": "Chcete přestat zobrazovat toto video v hlavním výběru?",
       "stopSpotlightOnSelfHeading": "Ukončit hlavní výběr?",
+      "stopAllSpotlightHeading": "Zastavit zobrazování všech videí v hlavním výběru?",
       "stopSpotlightText": "Účastníkům se už toto video nebude zvýrazňovat.",
       "stopSpotlightOnSelfText": "Účastníkům se už vaše video nebude zvýrazňovat.",
+      "stopAllSpotlightText": "Účastníkům schůzky se už videa nebudou zvýrazňovat.",
       "stopSpotlightConfirmButtonLabel": "Zastavit přidávání do hlavního výběru",
       "stopSpotlightOnSelfConfirmButtonLabel": "Ukončit hlavní výběr",
       "stopSpotlightCancelButtonLabel": "Zrušit"
     },
     "exitSpotlightButtonLabel": "Ukončit hlavní výběr",
-    "exitSpotlightButtonTooltip": "Ukončit hlavní výběr"
+    "exitSpotlightButtonTooltip": "Ukončit hlavní výběr",
+    "hangUpConfirmButtonLabel": "Potvrdit",
+    "hangUpCancelButtonLabel": "Zrušit",
+    "leaveConfirmDialogTitle": "Chcete z hovoru odejít?",
+    "leaveConfirmDialogContent": "Opravdu chcete hovor opustit?",
+    "endCallConfirmDialogTitle": "Chcete hovor ukončit?",
+    "endCallConfirmDialogContent": "Hovor ukončíte pro všechny.",
+    "invalidMeetingIdentifier": "Neplatné ID schůzky nebo heslo"
   },
   "chat": {
     "chatListHeader": "V tomto chatu",
-    "uploadFile": "Nahrát soubor"
+    "uploadAttachment": "Odeslat přílohu"
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",

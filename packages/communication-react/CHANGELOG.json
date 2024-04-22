@@ -2,6 +2,962 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Mon, 08 Apr 2024 20:34:39 GMT",
+      "tag": "@azure/communication-react_v1.15.0",
+      "version": "1.15.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "mbellah@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "f6448f8b0a09baa16be9ac13e099afb883f7f3da",
+            "area": "fix",
+            "workstream": "Reaction",
+            "comment": "VideoTile MeetingReactionOverlay corner missing rounded style"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "aa041b6fb2573f80eb6b7839a571c190db178756",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Ensure theme is memoized for calls to useTheme"
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "95837624132b26866389af85f466f83f5a48c534",
+            "area": "fix",
+            "workstream": "Chat; GitHub issue 4320",
+            "comment": "Ensure fileSharingMetadata is only set if there are valid objects"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c1744c5b6dc6f7c287b9a31af2d3ceffdd093fc2",
+            "area": "fix",
+            "workstream": "Pinned participants",
+            "comment": "Retain pinned participants after holding call in CallComposite and CallWithChatComposite"
+          },
+          {
+            "author": "mbellah@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "e2f392e700acd55eb2fa0cb8b273d91e9cc1f002",
+            "area": "fix",
+            "workstream": "Reaction",
+            "comment": "Allowing capability changes only in connected screen"
+          },
+          {
+            "author": "mbellah@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "c244450d5113c97b1e9d460e82e8e6465fabc80d",
+            "area": "fix",
+            "workstream": "Reaction",
+            "comment": "Reaction button background color fixes on click"
+          },
+          {
+            "author": "109105353+jpeng-ms@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "278927f5700cbaad572aaf266f3b084a1f340f89",
+            "area": "improvement",
+            "workstream": "File Sharing Refactor",
+            "comment": "Renamed Files to Attachments"
+          },
+          {
+            "author": "109105353+jpeng-ms@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "f452051723865dd9d35571faaacd3f6622617816",
+            "area": "improvement",
+            "workstream": "File Sharing Refactor",
+            "comment": "Relocate File Sharing Data Models to Component level from Composite"
+          },
+          {
+            "author": "mbellah@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "f5412d524dba1d4923191ddbcc00beb9bb1a1339",
+            "area": "fix",
+            "workstream": "Reaction",
+            "comment": "Solving reaction out of screen viewport issue"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "7cb901614a96621cbf1c942d8fd6d84e925d5fb7",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix participantList not showing remote participant raised hands"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "696ce09748c2014b0466a4cff02dc8af821bdadb",
+            "area": "fix",
+            "workstream": "Dominant speakers",
+            "comment": "Fix order of dominant speakers in overflow gallery"
+          },
+          {
+            "author": "alkwa@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "a88822336a407410100c959a53f6335429a66d83",
+            "area": "fix",
+            "workstream": "Frozen streams when quickly rejoining the call with the same identity",
+            "comment": "prioritize the last stream of each type that is available"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "7fec234a708f8eef51cda18dc667cfdd66327682",
+            "area": "fix",
+            "workstream": "Remove participant",
+            "comment": "Fix the absence of remove participant drawer menu item in group and interop calls on mobile"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "624249bc837a0c84836c136169ad565843a6cd9f",
+            "area": "improvement",
+            "workstream": "",
+            "comment": "Update fluent and type-fest dependencies to latest"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "760ac0e680bb74e8d095e943445f9af6cd456b31",
+            "area": "improvement",
+            "workstream": "",
+            "comment": "Remove @azure/core-rest-pipeline from dependencies"
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "97c12c08a0c8f88472b9df9931226a7d8087e701",
+            "area": "fix",
+            "workstream": "A11y Fixes",
+            "comment": "Fix Message status announcement sometimes takes priority over \"Message is deleted\" one"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "7f6d2014d72b99730ff6d8c055b85c09ca38687e",
+            "area": "fix",
+            "workstream": "Configuration screen fixes",
+            "comment": "Update various visual issues with the configuration screen"
+          },
+          {
+            "author": "109105353+jpeng-ms@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "db0bbd75c97b0ea5e81b2b39233e977351f81e69",
+            "area": "fix",
+            "workstream": "File Sharing",
+            "comment": "Fixed the issue where file cannot be removed from edit box"
+          },
+          {
+            "author": "93549644+ShaunaSong@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "f06b904642b06d211a710883dea0ba8e85f9d32d",
+            "area": "fix",
+            "workstream": "Disbale the PPTLive keyboard navigation",
+            "comment": "Disable keyboard"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "bf09ec21b019603e029ae085c94e3b366e31a7c0",
+            "area": "fix",
+            "workstream": "Custom Data Model",
+            "comment": "Pass down onFetchAvatarPersonaData to peoplepane to display custom data model"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "cc21a608a6f8a8b44bf0ad992338ca3a453299a8",
+            "area": "fix",
+            "workstream": "Captions",
+            "comment": "ACS captions should not shown for stable/beta release"
+          },
+          {
+            "author": "mbellah@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "1a280e47dfb692fb7a25b55cb436e878ab396ad2",
+            "area": "fix",
+            "workstream": "Reaction",
+            "comment": "Reaction animation inconsistency for presentaiton mode burse case fixed."
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "41968120bb675e385590381d0dec41a30dbed00e",
+            "area": "improvement",
+            "workstream": "",
+            "comment": "Upgrade Typescript to 5.4.2"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "5c93e28ed784eb830909eb0639a12a74b24723ae",
+            "area": "fix",
+            "workstream": "localRecordingNotification",
+            "comment": "Subscribe to LocalRecordingNotification in Teams interop calls only"
+          },
+          {
+            "author": "mbellah@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "2b24cdf9cdfbea05dc2b25ffe45a56e79504cf85",
+            "area": "fix",
+            "workstream": "Reaction",
+            "comment": "Changing the order of the reaction animation appearance."
+          },
+          {
+            "author": "93549644+ShaunaSong@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "6081873af76ffe3acb8ae9f44fbb56fc97202997",
+            "area": "fix",
+            "workstream": "Remove PPTLive from Beta release",
+            "comment": "remove the pptlive"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c4cde42ba17f6bc151f6072761e6659836cdb80e",
+            "area": "fix",
+            "workstream": "Capabilities",
+            "comment": "Remove CC for Capabilities"
+          }
+        ],
+        "minor": [
+          {
+            "author": "109105353+jpeng-ms@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c5ac9f4351596e25494d15817a5f9b94ad1d1dbe",
+            "area": "improvement",
+            "workstream": "File Sharing Refactor",
+            "comment": "Refactor Download Flow for File Sharing"
+          },
+          {
+            "author": "77021369+jimchou-dev@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "8b5a8c35a8487ac7e745025c223c770a5ee26e05",
+            "area": "improvement",
+            "workstream": "Migrate to FluentUI Card for AttachmentCards",
+            "comment": "Migrate to FluentUI Card for AttachmentCards"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "67f21fde82ac3f8c0bbb5a0c87b66268002f4984",
+            "area": "fix",
+            "workstream": "DTMF dialer",
+            "comment": "Fix issue where dtmf sounds would break when hiding the dialpad on mobile inside the composite."
+          },
+          {
+            "author": "93549644+ShaunaSong@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "616c1ea95cf91fe10fc8e586ac4cff5d8f1e4934",
+            "area": "feature",
+            "workstream": "PowerPoint Live - Teams Interop",
+            "comment": "We are excited to announce that the Azure Communication Services Web UI Library now can view PowerPoint Live sessions initiated by a Teams client. Users can follow along with the current slide the presenter is sharing and view presenter annotations. Developers can use this functionality today through our composites (e.g CallComposite, CallWithChatComposite) as well as through components (e.g VideoGallery)."
+          },
+          {
+            "author": "93549644+ShaunaSong@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "43b60e63a5cf4778f250d8f668eba381aa8fa938",
+            "area": "improvement",
+            "workstream": "Update Calling SDK stable version",
+            "comment": "Update stable version"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "4a4c4aa387a07e1bb4cfa122284f62ede20ef23c",
+            "area": "feature",
+            "workstream": "Is receiving spinner",
+            "comment": "Stabilize feature "
+          },
+          {
+            "author": "109105353+jpeng-ms@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "638d93f825a688183ea34409b31f45073a4c9d9f",
+            "area": "improvement",
+            "workstream": "File Sharing Refactor",
+            "comment": "Renamed \"file\" to \"attachment\" for File Sharing Upload Flow"
+          },
+          {
+            "author": "109105353+jpeng-ms@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "7ef52de089c491bdaf299c122b4b135b5fd02497",
+            "area": "improvement",
+            "workstream": "File Sharing Refactor",
+            "comment": "Updated File Sharing API References in Storybook"
+          },
+          {
+            "author": "9044372+JoshuaLai@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c514bb09b9785e8757759791b42f8e0028d6c9da",
+            "area": "improvement",
+            "workstream": "InlineImages",
+            "comment": "Making sourceUrl optional"
+          },
+          {
+            "author": "77021369+jimchou-dev@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "30f0ca3998fbcb13ce34223928c6b0f041ecc45e",
+            "area": "improvement",
+            "workstream": "A11y accessibility",
+            "comment": "Add A11y for FluentUI attachment card"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "b95d04ae610fd85fff82a82b1b61b45ff7d96e0f",
+            "area": "feature",
+            "workstream": "LocalRecordingNotification",
+            "comment": "Add localRecordingNotification to calling-stateful-client"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "2b9d816f00eea1cfd3e4830400a4103a316ce423",
+            "area": "feature",
+            "workstream": "ACS Captions",
+            "comment": "Implement ACS Captions"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 26 Mar 2024 17:38:26 GMT",
+      "tag": "@azure/communication-react_v1.15.0-beta.1",
+      "version": "1.15.0-beta.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "9044372+JoshuaLai@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "not available",
+            "area": "improvement",
+            "workstream": "InlineImages",
+            "comment": "Making sourceUrl optional"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "not available",
+            "area": "feature",
+            "workstream": "Image Sharing - General Availability",
+            "comment": "We are excited to announce that the ACS Web UI Library now has the ability to receive Teams interop images inline. Additionally, we have enabled users to click on an individual image to view it in a new ImageOverlay component. This component displays the selected image in full screen and allows users to download the image."
+          },
+          {
+            "author": "mbellah@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "not available",
+            "area": "feature",
+            "workstream": "Reaction",
+            "comment": "[Calling] Reaction mobile view buttons (#4260)"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "b95d04ae610fd85fff82a82b1b61b45ff7d96e0f",
+            "area": "feature",
+            "workstream": "LocalRecordingNotification",
+            "comment": "Add localRecordingNotification to calling-stateful-client"
+          },
+          {
+            "author": "mbellah@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "not available",
+            "area": "improvement",
+            "workstream": "Componentize the mobile view reaction button",
+            "comment": "Componentizing the reaction button for mobile view"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "not available",
+            "area": "feature",
+            "workstream": "Captions",
+            "comment": "Add composite option to disable captions"
+          },
+          {
+            "author": "mbellah@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "not available",
+            "area": "improvement",
+            "workstream": "Add mobile view reactions for drawer menu",
+            "comment": "Reaction mobile view button animations"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "1626e9da9dbed29faae650ddebeb8a956d7d3838",
+            "area": "feature",
+            "workstream": "Spotlight",
+            "comment": "Add adapter function to stop all spotligh t. Add people pane menu button to stop all spotlight."
+          },
+          {
+            "author": "mbellah@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "not available",
+            "area": "feature",
+            "workstream": "Reaction",
+            "comment": "PresentationMode Overlay"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "not available",
+            "area": "feature",
+            "workstream": "Spotlight",
+            "comment": "Assign first spotlighted remote participant, if any, to PiPiP in mobile people pane"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "2b9d816f00eea1cfd3e4830400a4103a316ce423",
+            "area": "feature",
+            "workstream": "ACS Captions",
+            "comment": "Implement ACS Captions"
+          },
+          {
+            "author": "mbellah@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "not available",
+            "area": "improvement",
+            "workstream": "removing unwanted dependency",
+            "comment": "Reaction mobile button PR feedback"
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "38e599e554bf05e33b350d9a77e8efc0acebf2b8",
+            "area": "feature",
+            "workstream": "Release 1.14.0-beta.1 merge back of pre-release branch",
+            "comment": "Release 1.14.0-beta.1 merge back of pre-release branch"
+          },
+          {
+            "author": "mbellah@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "not available",
+            "area": "improvement",
+            "workstream": "Reactions",
+            "comment": "CC refactor and UI styles unit update"
+          },
+          {
+            "author": "mbellah@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "not available",
+            "area": "feature",
+            "workstream": "Reactions",
+            "comment": "Componentizing the reaction button for mobile view"
+          },
+          {
+            "author": "93549644+ShaunaSong@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "7c459e21ebfb4def9d16b8279926f750dad4d305",
+            "area": "Feature",
+            "workstream": "UI Library supports receiving a Powerpoint Live stream",
+            "comment": "stateful client"
+          },
+          {
+            "author": "93549644+ShaunaSong@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "not available",
+            "area": "feature",
+            "workstream": "PowerPoint Live - Teams Interop",
+            "comment": "We are excited to announce that the Azure Communication Services Web UI Library now can view PowerPoint Live sessions initiated by a Teams client. Users can follow along with the current slide the presenter is sharing and view presenter annotations. Developers can use this functionality today through our composites (e.g CallComposite, CallWithChatComposite) as well as through components (e.g VideoGallery)."
+          },
+          {
+            "author": "mbellah@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "not available",
+            "area": "improvement",
+            "workstream": "Knit pick",
+            "comment": "Reaction mobile view button animations"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "not available",
+            "area": "feature",
+            "workstream": "End of call survey",
+            "comment": "The UI Library now supports End of Call survey, with the feature added to the CallComposite and CallwithChatComposite on web. The survey supports feedback for the categories of overall quality, audio, video, and screenshare. This survey appears at the end of composite experience. By default, users are taken to a “thank you for your feedback” page after survey is submitted, and taken to the end call screen if survey is skipped. We provide abilities to overwrite those default screens. The survey can be disabled or enabled. The data received is sent to Contoso’s local Azure monitoring where it can be validated for overall call quality. When free form text survey is enabled, the free form text data collected are not sent to local Azure monitoring and will need to be handled by Contoso."
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "not available",
+            "area": "feature",
+            "workstream": "Click to Call bundle",
+            "comment": "Introduce new JS bundles for making outbound calls to teams voice applications"
+          }
+        ],
+        "minor": [
+          {
+            "author": "9044372+JoshuaLai@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "8969db81db54ff801e90f5d9bd6cb07627c52812",
+            "area": "feature",
+            "workstream": "InlineImages",
+            "comment": "Chat Stateful Client now returns and empty string in cases of errors"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "d6b5fdb9a28543f80948a70df1250b12081d7e9d",
+            "area": "improvement",
+            "workstream": "InlineImage",
+            "comment": "Rename imgAttrs to imageAttributes"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "3cbaf910f483b674f20f033b16e8d430d1734fb3",
+            "area": "improvement",
+            "workstream": "InlineImage",
+            "comment": "In Composite, use adapter state to get the full size cached image src"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "5190bdcb7d3ce50b3b48c42211cfc16077fc02b1",
+            "area": "improvement",
+            "workstream": "InlineImage",
+            "comment": "In the chat composite, if the message contains image that's not an ACS image, we will render the image but it will not be clickable to view and download in the ImageOverlay"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "7d0f0a59daa088ab67ab5fb2ab850af5995c92cf",
+            "area": "feature",
+            "workstream": "Custom Branding",
+            "comment": "Stabilize Custom Branding"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "4a4c4aa387a07e1bb4cfa122284f62ede20ef23c",
+            "area": "feature",
+            "workstream": "Is receiving spinner",
+            "comment": "Stabilize feature "
+          },
+          {
+            "author": "73612854+palatter@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c7c0c02a512383f2d2502fecf10197bb96b4741a",
+            "area": "improvement",
+            "workstream": "",
+            "comment": "Update mention api to include isActive argument"
+          },
+          {
+            "author": "93549644+ShaunaSong@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "e26982b7f9531024f969ed13f0de3428908b89bc",
+            "area": "feature",
+            "workstream": "PowerPoint Live - Teams Interop",
+            "comment": "We are excited to announce that the Azure Communication Services Web UI Library now can view PowerPoint Live sessions initiated by a Teams client. Users can follow along with the current slide the presenter is sharing and view presenter annotations. Developers can use this functionality today through our composites (e.g CallComposite, CallWithChatComposite) as well as through components (e.g VideoGallery)."
+          },
+          {
+            "author": "9044372+JoshuaLai@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "ad8a63e255c193e3d36aeb56a21dad0ad52ff4e3",
+            "area": "feature",
+            "workstream": "InlineImages",
+            "comment": "Introduce new concept of ResourceResult"
+          },
+          {
+            "author": "93549644+ShaunaSong@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "30db9b78f2c7c8ceede840a95906140c320706fa",
+            "area": "improvement",
+            "workstream": "Change screenShareParicipant to be optional",
+            "comment": "Change screenShareParicipant to be optional"
+          },
+          {
+            "author": "9044372+JoshuaLai@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c514bb09b9785e8757759791b42f8e0028d6c9da",
+            "area": "improvement",
+            "workstream": "InlineImages",
+            "comment": "Making sourceUrl optional"
+          },
+          {
+            "author": "9044372+JoshuaLai@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "bb66e7180a052cf3b50c506f6af3f26b19224ff4",
+            "area": "feature",
+            "workstream": "InlineImages",
+            "comment": "Remove the InlineImageMetadata type"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "82ed831a635ae71e799d57352f7f2b81924f58f4",
+            "area": "improvement",
+            "workstream": "InlineImage",
+            "comment": "Remove AttachmentMetadata"
+          }
+        ],
+        "patch": [
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "696ce09748c2014b0466a4cff02dc8af821bdadb",
+            "area": "fix",
+            "workstream": "Dominant speakers",
+            "comment": "Fix order of dominant speakers in overflow gallery"
+          },
+          {
+            "author": "alkwa@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "a88822336a407410100c959a53f6335429a66d83",
+            "area": "fix",
+            "workstream": "Frozen streams when quickly rejoining the call with the same identity",
+            "comment": "prioritize the last stream of each type that is available"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "3de3899c667e1ab5677ce4c97f2ebcf5eafac454",
+            "area": "fix",
+            "workstream": "Captions",
+            "comment": "Fixed error when spoken language and caption language show up empty on initiation "
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "d2802db4e0af339d20f473f80010ef938a1f050f",
+            "area": "fix",
+            "workstream": "Calling-sounds",
+            "comment": "Update Calling sounds to not play end call sound when transfer happens"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "760ac0e680bb74e8d095e943445f9af6cd456b31",
+            "area": "improvement",
+            "workstream": "",
+            "comment": "Remove @azure/core-rest-pipeline from dependencies"
+          },
+          {
+            "author": "9044372+JoshuaLai@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "839fab03a25a8e255db51534e5665e846f0c7ae9",
+            "area": "fix",
+            "workstream": "UpdateMessage",
+            "comment": "Bug Fix metadata was not being sent up to the handler"
+          },
+          {
+            "author": "109105353+jpeng-ms@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "99a3ae4268887fcb2496ab154dfc0facd430f953",
+            "area": "fix",
+            "workstream": "Inline Image",
+            "comment": "Fixed the issue where image placeholder being shown when fetching failed"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "a7b0e857ee42f5ddaf93e0da9a1edc427f33c3f8",
+            "area": "fix",
+            "workstream": "Mention",
+            "comment": "Add key to MsftMention tag"
+          },
+          {
+            "author": "9044372+JoshuaLai@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "f7ce592d8c0b883278a3544698b2c0e8bce1cc6d",
+            "area": "feature",
+            "workstream": "InlineImages",
+            "comment": "Introduce new ability in the queue to cancel inflight request"
+          },
+          {
+            "author": "93549644+ShaunaSong@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "32ca29fd0b7aa73252b7a2404dbb2b91fb181a29",
+            "area": "improvement",
+            "workstream": " Hide participant info for PPTlive",
+            "comment": "Hide participant information"
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "cd20dfb7703451965c786fb13e7caa493077b43d",
+            "area": "improvement",
+            "workstream": "String updates",
+            "comment": "Update localized strings"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "6948212c899f54744dca07a0389a93d1bdd4f845",
+            "area": "fix",
+            "workstream": "InlineImage",
+            "comment": "Disable clicking before inline image is loaded"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "41968120bb675e385590381d0dec41a30dbed00e",
+            "area": "improvement",
+            "workstream": "",
+            "comment": "Upgrade Typescript to 5.4.2"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "5c93e28ed784eb830909eb0639a12a74b24723ae",
+            "area": "fix",
+            "workstream": "localRecordingNotification",
+            "comment": "Subscribe to LocalRecordingNotification in Teams interop calls only"
+          },
+          {
+            "author": "93549644+ShaunaSong@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "dacfeceffe027ec155380858774993305da25802",
+            "area": "improvement",
+            "workstream": "Update SDK Version",
+            "comment": "update sdk version"
+          },
+          {
+            "author": "alkwa@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "6048c48d4313b5fafc9dbb065ae567b0e86bf5e2",
+            "area": "fix",
+            "workstream": "CallComposite improvements",
+            "comment": "use default microphone aria labels in composite"
+          },
+          {
+            "author": "alkwa@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "fdf5f2b75f65d3b80936a5761c6eff90bfa6f0ea",
+            "area": "improvement",
+            "workstream": "Adding localized strings",
+            "comment": "TDBuild - updating localized resource files."
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "09d1dd4fe0a00af8ebd599e7adfb32fadf22c757",
+            "area": "fix",
+            "workstream": "PSTN",
+            "comment": "fix missing alternate Caller id"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "aa041b6fb2573f80eb6b7839a571c190db178756",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Ensure theme is memoized for calls to useTheme"
+          },
+          {
+            "author": "mbellah@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "7741d4c94acfb8042f3b5084b21b278557bdff92",
+            "area": "fix",
+            "workstream": "Ally announcement bug on reaction button fix",
+            "comment": "Reaction button ally bug for announcement"
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "95837624132b26866389af85f466f83f5a48c534",
+            "area": "fix",
+            "workstream": "Chat; GitHub issue 4320",
+            "comment": "Ensure fileSharingMetadata is only set if there are valid objects"
+          },
+          {
+            "author": "9044372+JoshuaLai@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c1d7a439eaf4d791ef341b01a6e139325bf03f81",
+            "area": "improvement",
+            "workstream": "InlineImage",
+            "comment": "Validate that the src you are fetching from and endpoint match"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c1744c5b6dc6f7c287b9a31af2d3ceffdd093fc2",
+            "area": "fix",
+            "workstream": "Pinned participants",
+            "comment": "Retain pinned participants after holding call in CallComposite and CallWithChatComposite"
+          },
+          {
+            "author": "93549644+ShaunaSong@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "0bdd095aff2506e71271ffd68a20626aedfa2ee8",
+            "area": "fix",
+            "workstream": "Fix the local screen sharing and pptlive conflict",
+            "comment": "Fix the local screen share"
+          },
+          {
+            "author": "109105353+jpeng-ms@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "278927f5700cbaad572aaf266f3b084a1f340f89",
+            "area": "improvement",
+            "workstream": "File Sharing Refactor",
+            "comment": "Renamed Files to Attachments"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "ce04309bce389908f6eade98a78b48d52174c921",
+            "area": "fix",
+            "workstream": "InlineImage",
+            "comment": "Fix inline image live message content for accessibility"
+          },
+          {
+            "author": "109105353+jpeng-ms@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "f452051723865dd9d35571faaacd3f6622617816",
+            "area": "improvement",
+            "workstream": "File Sharing Refactor",
+            "comment": "Relocate File Sharing Data Models to Component level from Composite"
+          }
+        ],
+        "none": [
+          {
+            "author": "73612854+palatter@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "93947405766b008c34952526d6e2fb663e53742f",
+            "area": "feature",
+            "workstream": "RTE",
+            "comment": "Add basic API and Lazy Loading "
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "e4393b9b714833b2f115876c8857653abb9307e9",
+            "area": "improvement",
+            "workstream": "noImplicitAny",
+            "comment": "Storybook snippets noImplicitAny"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "60b611358a8c533f8df3b5e78f72e1ba3aa1c437",
+            "area": "improvement",
+            "workstream": "InlineImage",
+            "comment": "Add more CCs for inline image"
+          },
+          {
+            "author": "mbellah@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "88bf04d5e42881234e8e03b3da41bc828079fddd",
+            "area": "improvement",
+            "workstream": "Turning the reaction feature OFF since we do not have resources yet.",
+            "comment": "Turning off reaction feature usage in sample"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "3399815ecf70c6066b3cbbddee0825a341bf2c3e",
+            "area": "improvement",
+            "workstream": "RTE",
+            "comment": "Updates for the Rich Text Editor styling"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "a2e4e2e3671f0bf5e2716c5c464d504c2c13861c",
+            "area": "feature",
+            "workstream": "RTE",
+            "comment": "Add styling for send and message edit boxes"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "535c71f68cf21a053e1e0b41d81b4b59b5ecb4c9",
+            "area": "improvement",
+            "workstream": "noImplicitAny",
+            "comment": "Update samples with noImplicitAny"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "7ec255b82aa28a4679523640f06019a771e49b30",
+            "area": "improvement",
+            "workstream": "InlineImage",
+            "comment": "Move inline image and image overlay to stabilizedFeatures"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "a2d625e12f5135a2d2161d9faf286d79350a4e2a",
+            "area": "improvement",
+            "workstream": "DTMF-dialer",
+            "comment": "Remove conditional compile statements from codebase for DTMF dialer"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "db5cfd0a8484c875b57316e0afcebb6b4358aa5e",
+            "area": "improvement",
+            "workstream": "",
+            "comment": "groom changelog"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "8e91b9f425acdaa90832ffa088cad86065156a56",
+            "area": "improvement",
+            "workstream": "noImplicitAny",
+            "comment": "Update react-composite and communication-react to flag noImplicitAny"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "c90255fcda45a446af99c465adf665e19e23be8d",
+            "area": "improvement",
+            "workstream": "Conditional-compilation",
+            "comment": "Remove conditional-compilation flags for Gallery-layouts"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "61897b012e66003b221abc84959f15d98ddf03a1",
+            "area": "improvement",
+            "workstream": "",
+            "comment": "run CI on release branches"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "9382455026df0054dc1d9e3681c721511650dcea",
+            "area": "improvement",
+            "workstream": "InlineImage",
+            "comment": "Remove inline image CCs that's combined with other flags"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "3fbf840af7f55b7189b41f34af1bd012cb99f178",
+            "area": "improvement",
+            "workstream": "",
+            "comment": "Improve generate-api-diff output to more easily see errors"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "df8c364e7ee908bc577c699b6396410fd0a1c0f2",
+            "area": "fix",
+            "workstream": "InlineImage",
+            "comment": "Remove CC in Storybook"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "26a9747439025d68c06e7ba5522eb27e6127d01f",
+            "area": "improvement",
+            "workstream": "",
+            "comment": "Update hotfix instructions"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 14 Mar 2024 03:50:48 GMT",
       "tag": "@azure/communication-react_v1.14.0",
       "version": "1.14.0",

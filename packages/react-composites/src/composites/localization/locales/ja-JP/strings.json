@@ -315,18 +315,27 @@
       "startSpotlightCancelButtonLabel": "キャンセル",
       "stopSpotlightHeading": "このビデオへのスポットライトの設定を解除しますか?",
       "stopSpotlightOnSelfHeading": "スポットライトを終了しますか?",
+      "stopAllSpotlightHeading": "すべてのビデオへのスポットライトの設定を解除しますか?",
       "stopSpotlightText": "このビデオは、会議の全員に対して強調表示されなくなります。",
       "stopSpotlightOnSelfText": "ビデオは、会議の全員に対して強調表示されなくなります。",
+      "stopAllSpotlightText": "ビデオは、会議の全員に対して強調表示されなくなります。",
       "stopSpotlightConfirmButtonLabel": "スポットライトの設定を解除",
       "stopSpotlightOnSelfConfirmButtonLabel": "スポットライトを終了",
       "stopSpotlightCancelButtonLabel": "キャンセル"
     },
     "exitSpotlightButtonLabel": "スポットライトを終了",
-    "exitSpotlightButtonTooltip": "スポットライトを終了"
+    "exitSpotlightButtonTooltip": "スポットライトを終了",
+    "hangUpConfirmButtonLabel": "確認",
+    "hangUpCancelButtonLabel": "キャンセル",
+    "leaveConfirmDialogTitle": "通話から退出しますか?",
+    "leaveConfirmDialogContent": "通話から退出してよろしいですか?",
+    "endCallConfirmDialogTitle": "通話を終了しますか?",
+    "endCallConfirmDialogContent": "全員に対する通話が終了されます。",
+    "invalidMeetingIdentifier": "無効なミーティング ID またはパスコード"
   },
   "chat": {
     "chatListHeader": "このチャット内",
-    "uploadFile": "ファイルのアップロード"
+    "uploadAttachment": "添付ファイルのアップロード"
   },
   "callWithChat": {
     "chatButtonLabel": "チャット",

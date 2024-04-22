@@ -44,7 +44,18 @@
     "numberListTooltip": "번호 매기기 목록",
     "increaseIndentTooltip": "들여쓰기",
     "decreaseIndentTooltip": "내어쓰기",
-    "richTextFormatButtonTooltip": "형식"
+    "insertTableTooltip": "표 삽입",
+    "richTextFormatButtonTooltip": "형식",
+    "insertRowOrColumnMenu": "삽입",
+    "insertTableMenuTitle": "{column} x {row} 표 삽입",
+    "insertRowAboveMenu": "위에 삽입",
+    "insertRowBelowMenu": "아래에 삽입",
+    "insertColumnLeftMenu": "왼쪽에 삽입",
+    "insertColumnRightMenu": "오른쪽에 삽입",
+    "deleteRowOrColumnMenu": "삭제",
+    "deleteColumnMenu": "열 삭제",
+    "deleteRowMenu": "행 삭제",
+    "deleteTableMenu": "표 삭제"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "제안"
@@ -66,7 +77,9 @@
   },
   "endCallButton": {
     "label": "휴가",
-    "tooltipContent": "통화에서 나가기"
+    "tooltipContent": "통화에서 나가기",
+    "leaveOption": "나가기",
+    "endCallOption": "통화 종료"
   },
   "cameraButton": {
     "onLabel": "카메라",
@@ -180,9 +193,10 @@
     "messageReadCount": "{messageReadByCount}/{remoteParticipantsCount}명이 읽음",
     "actionMenuMoreOptions": "추가 옵션",
     "downloadAttachment": "파일 다운로드",
+    "openAttachment": "파일 열기",
     "blockedWarningText": "조직 정책으로 인해 이 메시지가 삭제되었습니다.",
     "blockedWarningLinkText": "세부 정보",
-    "attachmentCardGroupMessage": "메시지에 {attachmentCount}개의 첨부 파일이 있습니다",
+    "attachmentCardGroupMessage": "메시지에 {attachmentCount}개의 첨부 파일이 있습니다.",
     "messageDeletedAnnouncementAriaLabel": "메시지가 삭제되었습니다."
   },
   "errorBar": {

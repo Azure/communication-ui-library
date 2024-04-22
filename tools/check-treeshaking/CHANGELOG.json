@@ -2,6 +2,96 @@
   "name": "@internal/check-treeshaking",
   "entries": [
     {
+      "date": "Mon, 08 Apr 2024 20:34:42 GMT",
+      "tag": "@internal/check-treeshaking_v0.1.0",
+      "version": "0.1.0",
+      "comments": {
+        "undefined": [
+          {
+            "author": "beachball",
+            "package": "@internal/check-treeshaking",
+            "comment": "Bump @internal/acs-ui-common to v1.15.0",
+            "commit": "a5d118183ecd1e7ea767a85561ff170cf11f653b"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/check-treeshaking",
+            "comment": "Bump @internal/react-components to v1.15.0",
+            "commit": "a5d118183ecd1e7ea767a85561ff170cf11f653b"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/check-treeshaking",
+            "comment": "Bump @internal/chat-stateful-client to v1.15.0",
+            "commit": "a5d118183ecd1e7ea767a85561ff170cf11f653b"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/check-treeshaking",
+            "comment": "Bump @internal/calling-stateful-client to v1.15.0",
+            "commit": "a5d118183ecd1e7ea767a85561ff170cf11f653b"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/check-treeshaking",
+            "comment": "Bump @internal/chat-component-bindings to v1.15.0",
+            "commit": "a5d118183ecd1e7ea767a85561ff170cf11f653b"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/check-treeshaking",
+            "comment": "Bump @internal/calling-component-bindings to v1.15.0",
+            "commit": "a5d118183ecd1e7ea767a85561ff170cf11f653b"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 26 Mar 2024 17:38:32 GMT",
+      "tag": "@internal/check-treeshaking_v0.1.0",
+      "version": "0.1.0",
+      "comments": {
+        "undefined": [
+          {
+            "author": "beachball",
+            "package": "@internal/check-treeshaking",
+            "comment": "Bump @internal/acs-ui-common to v1.15.0-beta.1",
+            "commit": "0f6019132a8bd408e1f324bc8265313e26b7f3e1"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/check-treeshaking",
+            "comment": "Bump @internal/react-components to v1.15.0-beta.1",
+            "commit": "0f6019132a8bd408e1f324bc8265313e26b7f3e1"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/check-treeshaking",
+            "comment": "Bump @internal/chat-stateful-client to v1.15.0-beta.1",
+            "commit": "0f6019132a8bd408e1f324bc8265313e26b7f3e1"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/check-treeshaking",
+            "comment": "Bump @internal/calling-stateful-client to v1.15.0-beta.1",
+            "commit": "0f6019132a8bd408e1f324bc8265313e26b7f3e1"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/check-treeshaking",
+            "comment": "Bump @internal/chat-component-bindings to v1.15.0-beta.1",
+            "commit": "0f6019132a8bd408e1f324bc8265313e26b7f3e1"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/check-treeshaking",
+            "comment": "Bump @internal/calling-component-bindings to v1.15.0-beta.1",
+            "commit": "0f6019132a8bd408e1f324bc8265313e26b7f3e1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 14 Mar 2024 03:50:54 GMT",
       "tag": "@internal/check-treeshaking_v0.1.0",
       "version": "0.1.0",

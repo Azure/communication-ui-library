@@ -1,12 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(reaction) */
-import { ITooltipHostStyles, keyframes, memoizeFunction } from '@fluentui/react';
-/* @conditional-compile-remove(reaction) */
+import { ITooltipHostStyles, keyframes, memoizeFunction, IStyle } from '@fluentui/react';
 import React from 'react';
 
-/* @conditional-compile-remove(reaction) */
 /**
  * @private
  */
@@ -21,53 +18,61 @@ export const playFrames = memoizeFunction(() =>
   })
 );
 
-/* @conditional-compile-remove(reaction) */
 /**
  * @param backgroundImage - the uri for the reaction emoji resource
  * @param animationPlayState - the value is either 'running' or 'paused' based on the mouse hover event
  *
  * @private
  */
-export const emojiStyles = (backgroundImage: string, animationPlayState: string): React.CSSProperties => {
+export const emojiStyles = (backgroundImage: string, frameCount: number): IStyle => {
   const imageResourceUrl = `url(${backgroundImage})`;
+  const steps = frameCount ?? 51;
   return {
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
     width: '100%',
     backgroundImage: imageResourceUrl,
-    animationName: playFrames(),
-    animationDuration: '8.12s',
-    animationTimingFunction: `steps(102)`,
-    animationPlayState: animationPlayState,
-    animationIterationCount: 'infinite',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundPosition: 'center',
     backgroundSize: `2.75rem 133.875rem`,
     transition: 'opacity 2s',
     backgroundColor: 'transparent',
-    transform: `${animationPlayState === 'running' ? 'scale(0.8)' : 'scale(0.6)'}`
+    transform: 'scale(0.6)',
+    ':hover': {
+      transform: 'scale(0.8)',
+      animationName: playFrames(),
+      animationDuration: '8.12s',
+      animationTimingFunction: `steps(${steps})`,
+      animationIterationCount: 'infinite',
+      backgroundColor: 'transparent'
+    },
+    ':active': {
+      backgroundColor: 'transparent'
+    }
   };
 };
 
-/* @conditional-compile-remove(reaction) */
 /**
  *
  * @private
  */
-export const reactionEmojiMenuStyles = (): React.CSSProperties => {
+export const reactionEmojiMenuStyles = (): IStyle => {
   return {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
     width: '13.75rem',
-    height: '2.625rem'
+    height: '2.625rem',
+
+    // Ensure that when one emoji is hovered, the other emojis are partially faded out
+    ':hover > :not(:hover)': {
+      opacity: '0.5'
+    }
   };
 };
 
-/* @conditional-compile-remove(reaction) */
 /**
  *
  * @private
@@ -83,7 +88,6 @@ export const reactionToolTipHostStyle = (): ITooltipHostStyles => {
   };
 };
 
-/* @conditional-compile-remove(reaction) */
 /**
  *
  * @private
@@ -99,7 +103,6 @@ export const mobileViewMenuItemStyle = (): React.CSSProperties => {
   };
 };
 
-/* @conditional-compile-remove(reaction) */
 /**
  * @param backgroundImage - the uri for the reaction emoji resource
  * @param animationPlayState - the value is either 'running' or 'paused' based on the mouse hover event

@@ -3,13 +3,10 @@
 
 import { CallContext } from './CallContext';
 import { CallCommon } from './BetaToStableTypes';
-/* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(call-transfer) */
 import { Features } from '@azure/communication-calling';
 /* @conditional-compile-remove(acs-close-captions) */
 import { Captions } from '@azure/communication-calling';
-/* @conditional-compile-remove(close-captions) */
 import { TeamsCaptions } from '@azure/communication-calling';
-/* @conditional-compile-remove(call-transfer) */
 import { TransferCallFeature, TransferAcceptedEvent, TransferEventArgs } from '@azure/communication-calling';
 /* @conditional-compile-remove(spotlight) */
 import { SpotlightCallFeature } from '@azure/communication-calling';
@@ -82,7 +79,6 @@ export abstract class ProxyCallCommon implements ProxyHandler<CallCommon> {
       case 'feature': {
         // these are mini version of Proxy object - if it grows too big, a real Proxy object should be used.
         return this._context.withErrorTeedToState((...args: Parameters<CallCommon['feature']>) => {
-          /* @conditional-compile-remove(close-captions) */
           if (args[0] === Features.Captions) {
             const captionsFeature = target.feature(Features.Captions).captions;
             let proxyFeature;
@@ -94,7 +90,6 @@ export abstract class ProxyCallCommon implements ProxyHandler<CallCommon> {
             proxyFeature = new ProxyTeamsCaptions(this._context, target);
             return { captions: new Proxy(captionsFeature, proxyFeature) };
           }
-          /* @conditional-compile-remove(call-transfer) */
           if (args[0] === Features.Transfer) {
             const transferFeature = target.feature(Features.Transfer);
             const proxyFeature = new ProxyTransferCallFeature(this._context, target);
@@ -115,7 +110,6 @@ export abstract class ProxyCallCommon implements ProxyHandler<CallCommon> {
   }
 }
 
-/* @conditional-compile-remove(close-captions) */
 /**
  * @private
  */
@@ -252,7 +246,6 @@ class ProxySpotlightCallFeature implements ProxyHandler<SpotlightCallFeature> {
   }
 }
 
-/* @conditional-compile-remove(call-transfer) */
 /**
  * @private
  */

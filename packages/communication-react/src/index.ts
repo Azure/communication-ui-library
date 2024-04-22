@@ -41,7 +41,6 @@ export type {
 
 export type { VideoBackgroundEffectsDependency, CallingHandlersOptions } from '../../calling-component-bindings/src';
 
-/* @conditional-compile-remove(close-captions) */
 export type { CaptionsOptions } from '../../calling-component-bindings/src';
 
 export type {
@@ -290,11 +289,11 @@ export type {
   VideoTileStylesProps,
   ViewScalingMode,
   VideoTileContextualMenuProps,
-  VideoTileDrawerMenuProps
+  VideoTileDrawerMenuProps,
+  VideoTilesOptions
 } from '../../react-components/src';
 
 export type { RaiseHandButtonProps, RaiseHandButtonStrings, RaisedHand } from '../../react-components/src';
-/* @conditional-compile-remove(reaction) */
 export type {
   ReactionButtonStrings,
   Reaction,
@@ -319,15 +318,24 @@ export type {
   DtmfTone,
   LongPressTrigger
 } from '../../react-components/src';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+export type { AttachmentMetadata, AttachmentOptions } from '../../react-components/src';
+/* @conditional-compile-remove(attachment-upload) */
+export type { SendBoxErrorBarError } from '../../react-components/src';
+/* @conditional-compile-remove(attachment-upload) */
 export type {
-  ActiveFileUpload,
-  SendBoxErrorBarError,
-  FileDownloadHandler,
-  FileDownloadError
+  AttachmentProgressError,
+  AttachmentSelectionHandler,
+  AttachmentRemovalHandler,
+  AttachmentUploadOptions,
+  AttachmentUploadTask,
+  AttachmentMetadataWithProgress
 } from '../../react-components/src';
-/* @conditional-compile-remove(file-sharing) */
-export type { AttachmentMetadata } from '../../react-components/src';
+
+/* @conditional-compile-remove(attachment-download) */
+export type { AttachmentMenuAction, AttachmentDownloadOptions } from '../../react-components/src';
+/* @conditional-compile-remove(attachment-download) */
+export { defaultAttachmentMenuAction } from '../../react-components/src';
 export type { ChatAttachmentType } from '../../react-components/src';
 export type { InlineImageOptions, InlineImage } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -382,7 +390,7 @@ export type {
   VerticalGalleryStrings,
   VerticalGalleryControlBarStyles
 } from '../../react-components/src';
-/* @conditional-compile-remove(close-captions) */
+
 export type { SpokenLanguageStrings, CaptionLanguageStrings } from '../../react-components/src';
 /* @conditional-compile-remove(end-of-call-survey) */
 export type { SurveyIssues } from '../../react-components/src';

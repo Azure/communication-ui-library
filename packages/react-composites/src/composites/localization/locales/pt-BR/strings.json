@@ -315,18 +315,27 @@
       "startSpotlightCancelButtonLabel": "Cancelar",
       "stopSpotlightHeading": "Parar de dar destaque a este vídeo?",
       "stopSpotlightOnSelfHeading": "Sair do destaque?",
+      "stopAllSpotlightHeading": "Parar de destacar todos os vídeos?",
       "stopSpotlightText": "Esse vídeo não será mais realçado para todos os participantes da reunião.",
       "stopSpotlightOnSelfText": "Seu vídeo não será mais realçado para todos os participantes da reunião.",
+      "stopAllSpotlightText": "Os vídeos não serão mais destacados para todos na reunião.",
       "stopSpotlightConfirmButtonLabel": "Parar de destacar",
       "stopSpotlightOnSelfConfirmButtonLabel": "Sair do destaque",
       "stopSpotlightCancelButtonLabel": "Cancelar"
     },
     "exitSpotlightButtonLabel": "Sair do destaque",
-    "exitSpotlightButtonTooltip": "Sair do destaque"
+    "exitSpotlightButtonTooltip": "Sair do destaque",
+    "hangUpConfirmButtonLabel": "Confirmar",
+    "hangUpCancelButtonLabel": "Cancelar",
+    "leaveConfirmDialogTitle": "Sair da chamada?",
+    "leaveConfirmDialogContent": "Tem certeza de que deseja sair da chamada?",
+    "endCallConfirmDialogTitle": "Encerrar a chamada?",
+    "endCallConfirmDialogContent": "Você encerrará a chamada para todos.",
+    "invalidMeetingIdentifier": "ID ou senha de reunião inválida"
   },
   "chat": {
     "chatListHeader": "Neste chat",
-    "uploadFile": "Carregar Arquivo"
+    "uploadAttachment": "Upload do Anexo"
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",

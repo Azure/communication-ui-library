@@ -28,19 +28,19 @@ describe('RichTextSendBoxErrors should be shown correctly', () => {
     expect(sendBoxErrorComponent).not.toBeNull();
   });
 
-  /* @conditional-compile-remove(file-sharing) */
-  test('MessageBar should show file uploads pending error', async () => {
-    const text = 'Test file uploads pending error';
+  /* @conditional-compile-remove(attachment-upload) */
+  test('MessageBar should show attachment uploads pending error', async () => {
+    const text = 'Test attachment uploads pending error';
     render(<RichTextSendBoxErrors attachmentUploadsPendingError={{ message: text, timestamp: Date.now() }} />);
     const sendBoxErrorComponent = await screen.findByText(text);
 
     expect(sendBoxErrorComponent).not.toBeNull();
   });
 
-  /* @conditional-compile-remove(file-sharing) */
-  test('MessageBar should show file uploads error', async () => {
-    const text = 'Test file uploads error';
-    render(<RichTextSendBoxErrors attachmentUploadError={{ message: text, timestamp: Date.now() }} />);
+  /* @conditional-compile-remove(attachment-upload) */
+  test('MessageBar should show attachment uploads error', async () => {
+    const text = 'Test attachment uploads error';
+    render(<RichTextSendBoxErrors attachmentProgressError={{ message: text, timestamp: Date.now() }} />);
     const sendBoxErrorComponent = await screen.findByText(text);
 
     expect(sendBoxErrorComponent).not.toBeNull();

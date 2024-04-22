@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-import { _AttachmentUploadCards, FileUploadCardsProps } from './AttachmentUploadCards';
+import { _AttachmentUploadCards, AttachmentUploadCardsProps } from './AttachmentUploadCards';
 import { render, screen } from '@testing-library/react';
 import { registerIcons } from '@fluentui/react';
 
-describe('FileUploadCards should be rendered properly', () => {
+describe('AttachmentUploadCards should be rendered properly', () => {
   beforeEach(() => {
     registerIcons({
       icons: {
@@ -18,30 +18,30 @@ describe('FileUploadCards should be rendered properly', () => {
 
   it('should render the component', async () => {
     const props = {
-      activeFileUploads: [
+      attachmentsWithProgress: [
         {
           id: 'MockId',
-          filename: 'MockFileUpload',
+          name: 'MockAttachmentUpload',
           progress: 50
         }
       ]
-    } as FileUploadCardsProps;
-    renderFileUploadCardWithDefaults(props);
-    expect(await screen.findByText('MockFileUpload')).toBeDefined();
+    } as AttachmentUploadCardsProps;
+    renderAttachmentUploadCardWithDefaults(props);
+    expect(await screen.findByText('MockAttachmentUpload')).toBeDefined();
   });
 
-  it('should not render the component with no activeFileUploads', async () => {
+  it('should not render the component with no attachmentsWithProgress', async () => {
     const props = {
-      activeFileUploads: undefined
-    } as FileUploadCardsProps;
-    renderFileUploadCardWithDefaults(props);
-    expect(screen.queryByText('MockFileUpload')).toBeNull();
+      attachmentsWithProgress: undefined
+    } as AttachmentUploadCardsProps;
+    renderAttachmentUploadCardWithDefaults(props);
+    expect(screen.queryByText('MockAttachmentUpload')).toBeNull();
   });
 });
 
-const renderFileUploadCardWithDefaults = (props?: Partial<FileUploadCardsProps>): void => {
-  const mergedProps: FileUploadCardsProps = {
-    activeFileUploads: props?.activeFileUploads ?? [],
+const renderAttachmentUploadCardWithDefaults = (props?: Partial<AttachmentUploadCardsProps>): void => {
+  const mergedProps: AttachmentUploadCardsProps = {
+    attachmentsWithProgress: props?.attachmentsWithProgress ?? [],
     ...(props ?? {})
   };
 

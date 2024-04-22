@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(file-sharing) */
-import { ActiveFileUpload } from '../AttachmentUploadCards';
+/* @conditional-compile-remove(attachment-upload) */
+import { AttachmentMetadataWithProgress } from '../../types/Attachment';
 
 /**
  * @private
@@ -10,25 +10,29 @@ import { ActiveFileUpload } from '../AttachmentUploadCards';
 export const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
 const EMPTY_MESSAGE_REGEX = /^\s*$/;
 
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-upload) */
 /**
  * @private
  */
-export const hasIncompleteFileUploads = (activeFileUploads: ActiveFileUpload[] | undefined): boolean => {
+export const hasIncompleteAttachmentUploads = (
+  attachmentsWithProgress: AttachmentMetadataWithProgress[] | undefined
+): boolean => {
   return !!(
-    activeFileUploads?.length &&
-    !activeFileUploads
+    attachmentsWithProgress?.length &&
+    !attachmentsWithProgress
       .filter((attachmentUpload) => !attachmentUpload.error)
-      .every((attachmentUpload) => attachmentUpload.uploadComplete)
+      .every((attachmentUpload) => attachmentUpload.progress === 1 && attachmentUpload.progress !== undefined)
   );
 };
 
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(attachment-upload) */
 /**
  * @private
  */
-export const hasCompletedFileUploads = (activeFileUploads: ActiveFileUpload[] | undefined): boolean => {
-  return !!activeFileUploads?.find((file) => !file.error);
+export const hasCompletedAttachmentUploads = (
+  attachmentsWithProgress: AttachmentMetadataWithProgress[] | undefined
+): boolean => {
+  return !!attachmentsWithProgress?.find((attachment) => !attachment.error);
 };
 
 /**

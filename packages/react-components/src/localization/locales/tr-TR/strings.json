@@ -44,7 +44,18 @@
     "numberListTooltip": "Numaralandırılmış liste",
     "increaseIndentTooltip": "Girintiyi artır",
     "decreaseIndentTooltip": "Girintiyi azalt",
-    "richTextFormatButtonTooltip": "Biçim"
+    "insertTableTooltip": "Tablo ekle",
+    "richTextFormatButtonTooltip": "Biçim",
+    "insertRowOrColumnMenu": "Ekle",
+    "insertTableMenuTitle": "{column} x {row} tablosunu ekleme",
+    "insertRowAboveMenu": "Üste ekle",
+    "insertRowBelowMenu": "Aşağıya ekle",
+    "insertColumnLeftMenu": "Sola ekle",
+    "insertColumnRightMenu": "Sağa ekle",
+    "deleteRowOrColumnMenu": "Sil",
+    "deleteColumnMenu": "Sütunu sil",
+    "deleteRowMenu": "Satırı sil",
+    "deleteTableMenu": "Tabloyu sil"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Öneriler"
@@ -66,7 +77,9 @@
   },
   "endCallButton": {
     "label": "Ayrıl",
-    "tooltipContent": "Aramadan ayrıl"
+    "tooltipContent": "Aramadan ayrıl",
+    "leaveOption": "Ayrıl",
+    "endCallOption": "Aramayı sonlandır"
   },
   "cameraButton": {
     "onLabel": "Kamera",
@@ -180,9 +193,10 @@
     "messageReadCount": "{messageReadByCount} / {remoteParticipantsCount} katılımcı tarafından okundu",
     "actionMenuMoreOptions": "Diğer Seçenekler",
     "downloadAttachment": "Dosyayı indir",
+    "openAttachment": "Dosyayı aç",
     "blockedWarningText": "Bu ileti kuruluş ilkesi nedeniyle silindi.",
     "blockedWarningLinkText": "Ayrıntılar",
-    "attachmentCardGroupMessage": "İletide {attachmentCount} ek var",
+    "attachmentCardGroupMessage": "İletinin {attachmentCount} eki var",
     "messageDeletedAnnouncementAriaLabel": "İleti silindi"
   },
   "errorBar": {

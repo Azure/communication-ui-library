@@ -5,13 +5,13 @@ import { AudioDeviceInfo, VideoDeviceInfo } from '@azure/communication-calling';
 import { Dropdown, IDropdownOption, Label, mergeStyles, Stack } from '@fluentui/react';
 
 import { DefaultButton } from '@fluentui/react';
-/* @conditional-compile-remove(call-readiness) */
 import { useEffect } from 'react';
 import { useTheme, VideoStreamOptions, _DevicePermissionDropdown } from '@internal/react-components';
 import React from 'react';
 import { CallCompositeIcon } from '../../common/icons';
 import { useLocale } from '../../localization';
 import {
+  deviceSelectionContainerStyles,
   dropDownStyles,
   dropDownTitleIconStyles,
   mainStackTokens,
@@ -115,16 +115,12 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
   const cameraPermissionGranted = props.cameraPermissionGranted;
   const micPermissionGranted = props.microphonePermissionGranted;
 
-  let roleCanUseCamera = true;
-  let roleCanUseMic = true;
-
-  roleCanUseCamera = role === 'Consumer' ? false : true;
-  roleCanUseMic = role === 'Consumer' ? false : true;
+  const roleCanUseCamera = role !== 'Consumer';
+  const roleCanUseMic = role !== 'Consumer';
 
   // TODO: speaker permission is tied to microphone permission (when you request 'audio' permission using the SDK) its
   // actually granting access to query both microphone and speaker. However the browser popup asks you explicity for
   // 'microphone'. This needs investigation on how we want to handle this and maybe needs follow up with SDK team.
-  /* @conditional-compile-remove(call-readiness) */
   useEffect(() => {
     if (cameraPermissionGranted) {
       adapter.queryCameras();
@@ -236,7 +232,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
   };
 
   return (
-    <Stack data-ui-id="call-composite-device-settings" tokens={mainStackTokens}>
+    <Stack data-ui-id="call-composite-device-settings" tokens={mainStackTokens} styles={deviceSelectionContainerStyles}>
       {roleCanUseCamera && (
         <Stack>
           <Stack horizontal horizontalAlign="space-between" styles={cameraAndVideoEffectsContainerStyleDesktop}>
@@ -250,8 +246,9 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
             {onResolveVideoEffectDependency && (
               <DefaultButton
                 iconProps={{ iconName: 'ConfigurationScreenVideoEffectsButton' }}
-                styles={effectsButtonStyles(theme)}
+                styles={effectsButtonStyles(theme, !cameraPermissionGranted)}
                 onClick={props.onClickVideoEffects}
+                disabled={!cameraPermissionGranted}
                 data-ui-id={'call-config-video-effects-button'}
               >
                 {locale.strings.call.configurationPageVideoEffectsButtonLabel}

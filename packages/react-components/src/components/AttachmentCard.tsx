@@ -3,63 +3,73 @@
 
 import {
   // eslint-disable-next-line no-restricted-imports
-  Icon,
-  IProgressIndicatorStyleProps,
-  IProgressIndicatorStyles,
-  IStyleFunctionOrObject,
-  mergeStyles,
-  ProgressIndicator,
-  Stack,
-  Text,
-  useTheme
+  Icon
 } from '@fluentui/react';
+import {
+  Card,
+  CardHeader,
+  Text,
+  Menu,
+  MenuTrigger,
+  ToolbarButton,
+  MenuPopover,
+  MenuItem,
+  MenuList,
+  Toolbar,
+  CardFooter,
+  ProgressBar
+} from '@fluentui/react-components';
 import { getFileTypeIconProps } from '@fluentui/react-file-type-icons';
 import React from 'react';
 import { _pxToRem } from '@internal/acs-ui-common';
 import { Announcer } from './Announcer';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { _AttachmentUploadCardsStrings } from './AttachmentUploadCards';
 import { useLocaleAttachmentCardStringsTrampoline } from './utils/common';
+import { AttachmentMetadata, AttachmentMenuAction, AttachmentMetadataWithProgress } from '../types/Attachment';
+import { useAttachmentCardStyles, attachmentNameContainerClassName } from './styles/AttachmentCard.styles';
 
 /**
  * @internal
- * _AttachmentCard Component Props.
+ * AttachmentCard Component Props.
  */
 export interface _AttachmentCardProps {
   /**
-   * Attachment name.
+   * Attachment details including name, extension, url, etc.
    */
-  attachmentName: string;
+  attachment: AttachmentMetadata | AttachmentMetadataWithProgress;
   /**
-   * Extension of the attachment used for rendering the attachment icon.
+   * An array of menu actions to be displayed in the attachment card.
    */
-  attachmentExtension: string;
+  menuActions: AttachmentMenuAction[];
   /**
-   * Attachment upload progress percentage between 0 and 1.
-   * Attachment transfer progress indicator is only shown when the value is greater than 0 and less than 1.
-   */
-  progress?: number;
-  /**
-   * Icon to display for actions like download, upload, etc. along the attachment name.
-   */
-  actionIcon?: JSX.Element;
-  /**
-   * Function that runs when actionIcon is clicked
-   */
-  actionHandler?: () => void;
-  /**
-   * Optional arialabel strings for attachment cards
+   * Optional aria label strings for attachment upload cards
    */
   strings?: _AttachmentUploadCardsStrings;
+  /**
+   * Optional callback that runs if menu bar action onclick throws.
+   */
+  onActionHandlerFailed?: (errMsg: string) => void;
 }
 
 /**
  * @internal
- * A component for displaying a attachment card with attachment icon and progress bar.
+ * A component for displaying an attachment card with attachment icon and progress bar.
+ *
+ * `_AttachmentCard` internally uses the `Card` component from `@fluentui/react-components`. You can checkout the details about these components [here](https://react.fluentui.dev/?path=/docs/components-card).
  */
 export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
-  const { attachmentName, attachmentExtension, progress, actionIcon } = props;
-  const theme = useTheme();
+  const { attachment, menuActions, onActionHandlerFailed } = props;
+  const attachmentCardStyles = useAttachmentCardStyles();
+
+  const progress = useMemo(() => {
+    return 'progress' in attachment ? attachment.progress : undefined;
+  }, [attachment]);
+
+  const isUploadComplete = useMemo(() => {
+    return progress !== undefined && progress > 0 && progress < 1;
+  }, [progress]);
+
   const [announcerString, setAnnouncerString] = useState<string | undefined>(undefined);
   const localeStrings = useLocaleAttachmentCardStringsTrampoline();
   const uploadStartedString = props.strings?.uploading ?? localeStrings.uploading;
@@ -69,96 +79,106 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
 
   useEffect(() => {
     if (showProgressIndicator) {
-      setAnnouncerString(`${uploadStartedString} ${attachmentName}`);
+      setAnnouncerString(`${uploadStartedString} ${attachment.name}`);
     } else if (progress === 1) {
-      setAnnouncerString(`${attachmentName} ${uploadCompletedString}`);
+      setAnnouncerString(`${attachment.name} ${uploadCompletedString}`);
     } else {
       setAnnouncerString(undefined);
     }
-  }, [progress, showProgressIndicator, attachmentName, uploadStartedString, uploadCompletedString]);
-
-  const progressBarThicknessPx = 4;
-
-  const containerClassName = mergeStyles({
-    width: '12rem',
-    background: theme.palette.neutralLighter,
-    borderRadius: theme.effects.roundedCorner4,
-    border: `${_pxToRem(1)} solid ${theme.palette.neutralQuaternary}`,
-    cursor: 'pointer'
-  });
-
-  const attachmentInfoWrapperClassName = mergeStyles({
-    padding: _pxToRem(12),
-    // To make space for the progress indicator.
-    paddingBottom: showProgressIndicator ? _pxToRem(12 - progressBarThicknessPx * 2) : _pxToRem(12)
-  });
-
-  const attachmentNameContainerClassName = mergeStyles({
-    paddingLeft: _pxToRem(4),
-    minWidth: '75%',
-    maxWidth: '75%'
-  });
-
-  const attachmentNameTextClassName = mergeStyles({
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    lineHeight: 'normal',
-    whiteSpace: 'nowrap',
-    paddingRight: _pxToRem(4)
-  });
-
-  const actionIconClassName = mergeStyles({
-    cursor: 'pointer'
-  });
-
-  const progressIndicatorStyles: IStyleFunctionOrObject<IProgressIndicatorStyleProps, IProgressIndicatorStyles> = {
-    itemProgress: {
-      padding: `${_pxToRem(progressBarThicknessPx - 1)} 0`, // item progress height won't apply without an explicit padding
-      // To make the progress indicator border curve along the bottom of attachment card.
-      borderRadius: `0 0 ${theme.effects.roundedCorner4} ${theme.effects.roundedCorner4}`
-    },
-    progressBar: {
-      height: _pxToRem(progressBarThicknessPx)
-    }
-  };
+  }, [progress, showProgressIndicator, attachment.name, uploadStartedString, uploadCompletedString]);
 
   return (
     <div data-is-focusable={true}>
       <Announcer announcementString={announcerString} ariaLive={'polite'} />
-      <Stack
-        className={containerClassName}
-        onClick={() => {
-          props.actionHandler?.();
-        }}
+      <Card
+        className={attachmentCardStyles.root}
+        size="small"
+        role="listitem"
+        appearance="filled-alternative"
+        aria-label={attachment.name}
       >
-        <Stack
-          horizontal
-          horizontalAlign="space-between"
-          verticalAlign="center"
-          className={attachmentInfoWrapperClassName}
-        >
-          <Stack>
-            {/* We are not using <ChatCompositeIcon /> here as we currently do not support customizing these attachmenttype icons. */}
+        <CardHeader
+          image={
             <Icon
-              data-ui-id={'filetype-icon'}
+              data-ui-id={'attachmenttype-icon'}
               iconName={
                 getFileTypeIconProps({
-                  extension: attachmentExtension,
+                  extension: useMemo((): string => {
+                    return attachment.extension ?? attachment.name.split('.').pop() ?? '';
+                  }, [attachment]),
                   size: 24,
                   imageFileType: 'svg'
                 }).iconName
               }
             />
-          </Stack>
-          <Stack className={attachmentNameContainerClassName}>
-            <Text className={attachmentNameTextClassName}>{attachmentName}</Text>
-          </Stack>
-          <Stack verticalAlign="center" className={actionIconClassName}>
-            {actionIcon && actionIcon}
-          </Stack>
-        </Stack>
-        {showProgressIndicator && <ProgressIndicator percentComplete={progress} styles={progressIndicatorStyles} />}
-      </Stack>
+          }
+          header={
+            <div className={attachmentNameContainerClassName}>
+              <Text title={attachment.name}>{attachment.name}</Text>
+            </div>
+          }
+          action={MappedMenuItems(menuActions, attachment, onActionHandlerFailed)}
+        />
+      </Card>
+      {isUploadComplete ? (
+        <CardFooter>
+          <ProgressBar thickness="medium" value={progress} shape="rounded" />
+        </CardFooter>
+      ) : (
+        <> </>
+      )}
     </div>
+  );
+};
+
+const MappedMenuItems = (
+  menuActions: AttachmentMenuAction[],
+  attachment: AttachmentMetadata,
+  handleOnClickError?: (errMsg: string) => void
+): JSX.Element => {
+  const localeStrings = useLocaleAttachmentCardStringsTrampoline();
+
+  if (menuActions.length === 0) {
+    return <></>;
+  }
+  return menuActions.length === 1 ? (
+    <ToolbarButton
+      aria-label={menuActions[0].name}
+      icon={menuActions[0].icon}
+      onClick={() => {
+        try {
+          menuActions[0].onClick(attachment);
+        } catch (e) {
+          handleOnClickError?.((e as Error).message);
+        }
+      }}
+    />
+  ) : (
+    <Toolbar>
+      <Menu>
+        <MenuTrigger>
+          <ToolbarButton icon={<Icon iconName="AttachmentMoreMenu" aria-label={localeStrings.attachmentMoreMenu} />} />
+        </MenuTrigger>
+        <MenuPopover>
+          <MenuList>
+            {menuActions.map((menuItem, index) => (
+              <MenuItem
+                key={index}
+                icon={menuItem.icon}
+                onClick={async () => {
+                  try {
+                    await menuItem.onClick(attachment);
+                  } catch (e) {
+                    handleOnClickError?.((e as Error).message);
+                  }
+                }}
+              >
+                {menuItem.name}
+              </MenuItem>
+            ))}
+          </MenuList>
+        </MenuPopover>
+      </Menu>
+    </Toolbar>
   );
 };

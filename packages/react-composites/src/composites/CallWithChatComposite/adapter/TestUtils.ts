@@ -245,9 +245,7 @@ function createMockCall(mockCallId: string): CallState {
     raiseHand: { raisedHands: [] },
     /* @conditional-compile-remove(ppt-live) */
     pptLive: { isActive: false },
-    /* @conditional-compile-remove(reaction) */
     localParticipantReaction: undefined,
-    /* @conditional-compile-remove(close-captions) */
     captionsFeature: {
       captions: [],
       supportedSpokenLanguages: [],
@@ -255,9 +253,10 @@ function createMockCall(mockCallId: string): CallState {
       currentCaptionLanguage: '',
       currentSpokenLanguage: '',
       isCaptionsFeatureActive: false,
-      startCaptionsInProgress: false
+      startCaptionsInProgress: false,
+      /* @conditional-compile-remove(acs-close-captions) */
+      captionsKind: 'Captions'
     },
-    /* @conditional-compile-remove(call-transfer) */
     transfer: {
       acceptedTransfers: {}
     },

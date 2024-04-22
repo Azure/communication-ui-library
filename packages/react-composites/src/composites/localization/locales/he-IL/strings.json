@@ -315,18 +315,27 @@
       "startSpotlightCancelButtonLabel": "ביטול",
       "stopSpotlightHeading": "להפסיק להאיר בזרקור וידאו זה?",
       "stopSpotlightOnSelfHeading": "לצאת מזרקור?",
+      "stopAllSpotlightHeading": "להפסיק להציב זרקור על כל סרטוני הווידאו?",
       "stopSpotlightText": "וידאו זה לא יסומן עוד עבור כל האנשים בפגישה.",
       "stopSpotlightOnSelfText": "סרטון הווידאו שלך לא יסומן עוד עבור כל האנשים בפגישה.",
+      "stopAllSpotlightText": "סרטוני הווידאו לא יסומנו עוד עבור כל האנשים בפגישה.",
       "stopSpotlightConfirmButtonLabel": "הפסק להציב זרקור",
       "stopSpotlightOnSelfConfirmButtonLabel": "צא מזרקור",
       "stopSpotlightCancelButtonLabel": "ביטול"
     },
     "exitSpotlightButtonLabel": "צא מהזרקור",
-    "exitSpotlightButtonTooltip": "צא מהזרקור"
+    "exitSpotlightButtonTooltip": "צא מהזרקור",
+    "hangUpConfirmButtonLabel": "אשר",
+    "hangUpCancelButtonLabel": "ביטול",
+    "leaveConfirmDialogTitle": "לצאת מהשיחה?",
+    "leaveConfirmDialogContent": "האם אתה בטוח שברצונך לעזוב את השיחה?",
+    "endCallConfirmDialogTitle": "לסיים את השיחה?",
+    "endCallConfirmDialogContent": "פעולה זאת תסיים את השיחה עבור כל המשתתפים.",
+    "invalidMeetingIdentifier": "מזהה פגישה או קוד סיסמה לא חוקיים"
   },
   "chat": {
     "chatListHeader": "בצ'אט זה",
-    "uploadFile": "העלה קובץ"
+    "uploadAttachment": "העלה קובץ מצורף"
   },
   "callWithChat": {
     "chatButtonLabel": "צ'אט",

@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(reaction) */
 import {
   OverlayModeTypes,
   Reaction,
@@ -9,14 +8,10 @@ import {
   VideoGalleryLocalParticipant,
   VideoGalleryRemoteParticipant
 } from '../types';
-/* @conditional-compile-remove(reaction) */
 import React, { useLayoutEffect, useRef, useState } from 'react';
-/* @conditional-compile-remove(reaction) */
 import { ParticipantVideoTileOverlay } from './VideoGallery/ParticipantVideoTileOverlay';
-/* @conditional-compile-remove(reaction) */
 import { RemoteContentShareReactionOverlay } from './VideoGallery/RemoteContentShareReactionOverlay';
 
-/* @conditional-compile-remove(reaction) */
 /**
  * Reaction overlay component props
  *
@@ -47,26 +42,24 @@ export interface MeetingReactionOverlayProps {
   remoteParticipants?: VideoGalleryRemoteParticipant[];
 }
 
-/* @conditional-compile-remove(reaction) */
 /**
  * Emoji max size
  * @internal
  */
-const DEFAULT_EMOJI_MAX_SIZE_PX = 100;
-/* @conditional-compile-remove(reaction) */
+const DEFAULT_EMOJI_MAX_SIZE_PX = 70;
+
 /**
  * Emoji min size
  * @internal
  */
 const DEFAULT_EMOJI_MIN_SIZE_PX = 32;
-/* @conditional-compile-remove(reaction) */
+
 /**
  * Emoji resize scale constant
  * @internal
  */
 const REACTION_EMOJI_RESIZE_SCALE_CONSTANT = 3;
 
-/* @conditional-compile-remove(reaction) */
 /**
  * Reaction overlay component
  *
@@ -112,7 +105,7 @@ export const MeetingReactionOverlay = (props: MeetingReactionOverlayProps): JSX.
 
   if (overlayMode === 'grid-tiles') {
     return (
-      <div ref={videoTileRef} style={{ width: '100%', height: '100%' }}>
+      <div ref={videoTileRef} style={{ width: '100%', height: '100%', pointerEvents: 'none' }}>
         <ParticipantVideoTileOverlay
           emojiSize={emojiSizePx}
           reaction={reaction}
@@ -122,7 +115,7 @@ export const MeetingReactionOverlay = (props: MeetingReactionOverlayProps): JSX.
     );
   } else if (props.overlayMode === 'screen-share' || props.overlayMode === 'content-share') {
     return (
-      <div ref={videoTileRef} style={{ width: '100%', height: '100%' }}>
+      <div ref={videoTileRef} style={{ width: '100%', height: '100%', pointerEvents: 'none' }}>
         <RemoteContentShareReactionOverlay
           hostDivHeight={divHeight}
           hostDivWidth={divWidth}
