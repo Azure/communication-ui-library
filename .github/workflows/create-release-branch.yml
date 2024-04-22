@@ -128,7 +128,7 @@ jobs:
             echo "hasChanged=true" >> $GITHUB_OUTPUT
           fi
 
-      - name: Commit beta release snapshots
+      - name: Commit API File changes
         if: ${{ startsWith(github.event.inputs.branch, 'prerelease-beta' ) && steps.API-check.outputs.hasChanged == 'true'}}
         run: |
           git add packages/**/*.api.md
