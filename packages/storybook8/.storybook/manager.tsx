@@ -23,8 +23,8 @@ initializeFileTypeIcons();
 registerIcons({ icons: { ...storyIcons} });
 
 
-declare let __NPM_PACKAGE_VERSION__: string; // Injected by webpack
-console.log(`This Storybook was compiled for @azure/communication-react version ${__NPM_PACKAGE_VERSION__}`);
+// declare let __NPM_PACKAGE_VERSION__: string; // Injected by webpack
+// console.log(`This Storybook was compiled for @azure/communication-react version ${__NPM_PACKAGE_VERSION__}`);
 
 initTelemetry();
 
