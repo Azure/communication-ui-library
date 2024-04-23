@@ -240,7 +240,8 @@ const focusAndUpdateContent = (editor: Editor, content: string): void => {
   editor.setContent(content);
   // this is a recommended way (by RoosterJS team) to set focus at the end of the text
   // RoosterJS v9 has this issue fixed and this code can be removed
-  editor.insertContent('<span id="focus-position-span"></span>', { position: CompatibleContentPosition.DomEnd });
+  // CompatibleContentPosition.DomEnd shouldn't be used here as it set focus after the editor div
+  editor.insertContent('<span id="focus-position-span"></span>', { position: CompatibleContentPosition.End });
   const elements = editor.queryElements('#focus-position-span');
   if (elements.length > 0) {
     const placeholder = editor.queryElements('#focus-position-span')[0];
