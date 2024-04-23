@@ -4,10 +4,10 @@ This log was last generated on Tue, 23 Apr 2024 17:54:31 GMT and should not be m
 
 <!-- Start content -->
 
-## [1.16.0-beta.1](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.16.0-beta.1)
+## [1.16.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.16.0-beta.1)
 
 Tue, 23 Apr 2024 17:54:31 GMT 
-[Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.15.0...@azure/communication-react_v1.16.0-beta.1)
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.16.0...1.16.0-beta.1)
 
 ### Features
 - The Web UI RichTextSendBox and MessageThread components now support rich text formatting to generate HTML content for chat messages. This feature includes support for: Different text styles (bold, italic and underline)Bulleted and numbered listsChanging indentation for textAdding and updating tables ([PR #4505](https://github.com/azure/communication-ui-library/pull/4505) by 98852890+vhuseinova-msft@users.noreply.github.com)
