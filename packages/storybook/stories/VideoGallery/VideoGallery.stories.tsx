@@ -252,7 +252,7 @@ const getDocs: () => JSX.Element = () => {
           shares. For more details, see the sections below.
         </li>
         <li>
-          <strong>PowerPoint Live:</strong> Exclusively view remote PowerPoint presentations.{' '}
+          <strong>PowerPoint Live:</strong> Exclusively view remote PowerPoint presentations.
           <a href="?path=/docs/ppt-live--page">Learn more about PowerPoint Live</a>.
         </li>
       </ul>
