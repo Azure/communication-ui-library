@@ -6,7 +6,6 @@ import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/a
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';
 
-import { SingleLineBetaBanner } from '../../../BetaBanners/SingleLineBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
 import { controlsToAdd, defaultControlsCameras, hiddenControl } from '../../../controlsUtils';
 import { CustomCameraButtonExample } from './snippets/Custom.snippet';
