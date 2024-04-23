@@ -14,7 +14,6 @@ import {
 import { _DrawerMenu, _DrawerMenuItemProps, Announcer } from '@internal/react-components';
 import copy from 'copy-to-clipboard';
 import { useMemo, useState } from 'react';
-/* @conditional-compile-remove(PSTN-calls) */
 import { CallWithChatCompositeIcon } from './icons';
 import { iconStyles, themedCopyLinkButtonStyles, themedMenuStyle } from './AddPeopleDropdown.styles';
 import { CallingDialpad } from './CallingDialpad';
@@ -29,6 +28,7 @@ import { AddPhoneNumberOptions } from '@azure/communication-calling';
 /** @private */
 export interface AddPeopleDropdownStrings extends CallingDialpadStrings {
   copyInviteLinkButtonLabel: string;
+  copyInviteLinkButtonActionedLabel: string;
   openDialpadButtonLabel: string;
   peoplePaneAddPeopleButtonLabel: string;
   copyInviteLinkActionedAriaLabel: string;
@@ -41,13 +41,23 @@ export interface AddPeopleDropdownProps {
   strings: AddPeopleDropdownStrings;
   onAddParticipant: (participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions) => void;
   alternateCallerId?: string;
+  onCopyInviteLink?: () => void;
+  inviteLinkCopiedRecently?: boolean;
 }
 
 /** @private */
 export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element => {
   const theme = useTheme();
 
-  const { inviteLink, strings, mobileView, onAddParticipant, alternateCallerId } = props;
+  const {
+    inviteLink,
+    strings,
+    mobileView,
+    onAddParticipant,
+    alternateCallerId,
+    onCopyInviteLink,
+    inviteLinkCopiedRecently
+  } = props;
 
   const [showDialpad, setShowDialpad] = useState(false);
 
@@ -80,6 +90,7 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
         onClick: () => {
           setAnnouncerStrings(strings.copyInviteLinkActionedAriaLabel);
           copy(inviteLink);
+          onCopyInviteLink?.();
         }
       });
     }
@@ -104,7 +115,8 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
     strings.copyInviteLinkButtonLabel,
     strings.copyInviteLinkActionedAriaLabel,
     strings.openDialpadButtonLabel,
-    copyLinkButtonStylesThemed
+    copyLinkButtonStylesThemed,
+    onCopyInviteLink
   ]);
 
   const onDismissDialpad = (): void => {
@@ -131,8 +143,18 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
             <PrimaryButton
               onClick={setDrawerMenuItemsForAddPeople}
               styles={copyLinkButtonStylesThemed}
-              onRenderIcon={() => PeoplePaneAddPersonIconTrampoline()}
-              text={strings.peoplePaneAddPeopleButtonLabel}
+              onRenderIcon={() =>
+                inviteLinkCopiedRecently ? (
+                  <CallWithChatCompositeIcon iconName="Checkmark" />
+                ) : (
+                  PeoplePaneAddPersonIconTrampoline()
+                )
+              }
+              text={
+                inviteLinkCopiedRecently
+                  ? strings.copyInviteLinkButtonActionedLabel
+                  : strings.peoplePaneAddPeopleButtonLabel
+              }
               data-ui-id="call-add-people-button"
             />
           </Stack.Item>
@@ -180,8 +202,18 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
           {defaultMenuProps.items.length > 0 && (
             <Stack styles={copyLinkButtonStackStyles}>
               <DefaultButton
-                onRenderIcon={() => PeoplePaneAddPersonIconTrampoline()}
-                text={strings.peoplePaneAddPeopleButtonLabel}
+                onRenderIcon={() =>
+                  inviteLinkCopiedRecently ? (
+                    <CallWithChatCompositeIcon iconName="Checkmark" />
+                  ) : (
+                    PeoplePaneAddPersonIconTrampoline()
+                  )
+                }
+                text={
+                  inviteLinkCopiedRecently
+                    ? strings.copyInviteLinkButtonActionedLabel
+                    : strings.peoplePaneAddPeopleButtonLabel
+                }
                 menuProps={defaultMenuProps}
                 styles={copyLinkButtonStylesThemed}
                 data-ui-id="call-add-people-button"

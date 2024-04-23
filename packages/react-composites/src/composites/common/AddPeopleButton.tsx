@@ -3,7 +3,7 @@
 
 import { concatStyleSets, DefaultButton, IButtonStyles, PrimaryButton, Stack, useTheme } from '@fluentui/react';
 import copy from 'copy-to-clipboard';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { CallWithChatCompositeStrings } from '../../index-public';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { CallCompositeStrings } from '../../index-public';
@@ -63,6 +63,18 @@ export const AddPeopleButton = (props: AddPeopleButtonProps): JSX.Element => {
     }, 3000);
   }, [strings.copyInviteLinkActionedAriaLabel]);
 
+  const dateInviteLinkCopied = useRef<number | undefined>(undefined);
+  const [inviteLinkCopiedRecently, setInviteLinkCopiedRecently] = useState(false);
+  const onCopyInviteLink = useCallback(() => {
+    setInviteLinkCopiedRecently(true);
+    dateInviteLinkCopied.current = Date.now();
+    setTimeout(() => {
+      if (dateInviteLinkCopied.current && Date.now() - dateInviteLinkCopied.current >= 2000) {
+        setInviteLinkCopiedRecently(false);
+      }
+    }, 2000);
+  }, [setInviteLinkCopiedRecently, dateInviteLinkCopied]);
+
   /* @conditional-compile-remove(PSTN-calls) */
   if (mobileView) {
     return (
@@ -72,6 +84,8 @@ export const AddPeopleButton = (props: AddPeopleButtonProps): JSX.Element => {
         inviteLink={inviteLink}
         onAddParticipant={props.onAddParticipant}
         alternateCallerId={props.alternateCallerId}
+        onCopyInviteLink={onCopyInviteLink}
+        inviteLinkCopiedRecently={inviteLinkCopiedRecently}
       />
     );
   } else {
@@ -83,6 +97,8 @@ export const AddPeopleButton = (props: AddPeopleButtonProps): JSX.Element => {
           inviteLink={inviteLink}
           onAddParticipant={props.onAddParticipant}
           alternateCallerId={props.alternateCallerId}
+          onCopyInviteLink={onCopyInviteLink}
+          inviteLinkCopiedRecently={inviteLinkCopiedRecently}
         />
         <Stack.Item grow styles={{ root: { overflowY: 'hidden' } }}>
           {participantList}
@@ -101,10 +117,19 @@ export const AddPeopleButton = (props: AddPeopleButtonProps): JSX.Element => {
               onClick={() => {
                 copy(inviteLink ?? '');
                 toggleAnnouncerString();
+                onCopyInviteLink();
               }}
               styles={copyLinkButtonStylesThemed}
-              onRenderIcon={() => <CallWithChatCompositeIcon iconName="Link" style={linkIconStyles} />}
-              text={strings.copyInviteLinkButtonLabel}
+              onRenderIcon={() =>
+                inviteLinkCopiedRecently ? (
+                  <CallWithChatCompositeIcon iconName="Checkmark" />
+                ) : (
+                  <CallWithChatCompositeIcon iconName="Link" style={linkIconStyles} />
+                )
+              }
+              text={
+                inviteLinkCopiedRecently ? strings.copyInviteLinkButtonActionedLabel : strings.copyInviteLinkButtonLabel
+              }
             />
           </Stack.Item>
         )}
@@ -117,11 +142,20 @@ export const AddPeopleButton = (props: AddPeopleButtonProps): JSX.Element => {
           <Stack styles={copyLinkButtonStackStyles}>
             <Announcer announcementString={copyInviteLinkAnnouncerStrings} ariaLive={'polite'} />
             <DefaultButton
-              text={strings.copyInviteLinkButtonLabel}
-              onRenderIcon={() => <CallWithChatCompositeIcon iconName="Link" style={linkIconStyles} />}
+              text={
+                inviteLinkCopiedRecently ? strings.copyInviteLinkButtonActionedLabel : strings.copyInviteLinkButtonLabel
+              }
+              onRenderIcon={() =>
+                inviteLinkCopiedRecently ? (
+                  <CallWithChatCompositeIcon iconName="Checkmark" />
+                ) : (
+                  <CallWithChatCompositeIcon iconName="Link" style={linkIconStyles} />
+                )
+              }
               onClick={() => {
                 copy(inviteLink ?? '');
                 toggleAnnouncerString();
+                onCopyInviteLink();
               }}
               styles={copyLinkButtonStylesThemed}
             />
