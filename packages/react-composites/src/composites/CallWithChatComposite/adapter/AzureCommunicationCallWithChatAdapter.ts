@@ -158,6 +158,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   private emitter: EventEmitter = new EventEmitter();
   private onChatStateChange: (newChatAdapterState: ChatAdapterState) => void;
   private onCallStateChange: (newChatAdapterState: CallAdapterState) => void;
+  private isAdapterDisposed: boolean = false;
 
   constructor(callAdapter: CallAdapter, chatAdapter?: ChatAdapter) {
     this.bindPublicMethods();
@@ -183,7 +184,9 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
 
   public setChatAdapterPromise(chatAdapter: Promise<ChatAdapter>): void {
     chatAdapter.then((adapter) => {
-      this.updateChatAdapter(adapter);
+      if (!this.isAdapterDisposed) {
+        this.updateChatAdapter(adapter);
+      }
     });
   }
 
@@ -318,11 +321,11 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   }
   /** Dispose of the current CallWithChatAdapter. */
   public dispose(): void {
+    this.isAdapterDisposed = true;
     if (this.chatAdapter) {
       this.chatAdapter.offStateChange(this.onChatStateChange);
       this.chatAdapter.dispose();
     }
-
     this.callAdapter.offStateChange(this.onCallStateChange);
     this.callAdapter.dispose();
   }
@@ -458,10 +461,9 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   }
   /** Load previous Chat messages. */
   public async loadPreviousChatMessages(messagesToLoad: number): Promise<boolean> {
-    if (!this.chatAdapter) {
-      throw new Error('Chat is not initialized');
-    }
-    return this.chatAdapter.loadPreviousChatMessages(messagesToLoad);
+    return await this.executeWithResolvedChatAdapter((adapter) => {
+      return adapter.loadPreviousChatMessages(messagesToLoad);
+    });
   }
   /** Update an existing message. */
   public async updateMessage(
@@ -490,17 +492,15 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   }
   /* @conditional-compile-remove(attachment-upload) */
   public registerActiveUploads = (files: File[]): AttachmentUploadTask[] => {
-    if (!this.chatAdapter) {
-      throw new Error('Chat is not initialized');
-    }
-    return this.chatAdapter.registerActiveUploads(files);
+    return this.executeWithResolvedChatAdapter((adapter) => {
+      return adapter.registerActiveUploads(files);
+    });
   };
   /* @conditional-compile-remove(attachment-upload) */
   public registerCompletedUploads = (metadata: AttachmentMetadata[]): AttachmentUploadTask[] => {
-    if (!this.chatAdapter) {
-      throw new Error('Chat is not initialized');
-    }
-    return this.chatAdapter?.registerCompletedUploads(metadata);
+    return this.executeWithResolvedChatAdapter((adapter) => {
+      return adapter.registerCompletedUploads(metadata);
+    });
   };
   /* @conditional-compile-remove(attachment-upload) */
   public clearUploads = (): void => {
@@ -878,11 +878,11 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     }
   }
 
-  private executeWithResolvedChatAdapter(callback: (adapter: ChatAdapter) => void): void {
+  private executeWithResolvedChatAdapter(callback: (adapter: ChatAdapter) => any): any {
     if (!this.chatAdapter) {
       console.error('Chat is not initialized');
     } else {
-      callback(this.chatAdapter);
+      return callback(this.chatAdapter);
     }
   }
 }
@@ -946,6 +946,8 @@ export class TeamsMeetingLinkProvider implements ChatThreadProvider {
   }
 
   public getChatThread(): string {
+    /** @conditional-compile-remove(meeting-id) */
+    throw new Error('Chat thread ID should be retrieved from call.callInfo using method getChatThreadPromise');
     return getChatThreadFromTeamsLink(this.locator.meetingLink);
   }
 
