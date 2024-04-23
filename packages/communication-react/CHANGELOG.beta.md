@@ -54,7 +54,7 @@ We are excited to announce that Azure Communications Services has recently added
 - Allow capability changes only in connected screen ([PR #4409](https://github.com/azure/communication-ui-library/pull/4409) by mbellah@microsoft.com)
 - Fix Reaction button background color fixes on click ([PR #4407](https://github.com/azure/communication-ui-library/pull/4407) by mbellah@microsoft.com)
 - Add adapter options to JS bundles ([PR #4486](https://github.com/azure/communication-ui-library/pull/4486) by dmceachern@microsoft.com)
-- Removed PPTLive overlay ([PR #4446](https://github.com/azure/communication-ui-library/pull/4446) by 93549644+ShaunaSong@users.noreply.github.com)
+- Remove PPTLive overlay ([PR #4446](https://github.com/azure/communication-ui-library/pull/4446) by 93549644+ShaunaSong@users.noreply.github.com)
 - Add Chat Attachments in Live Messages ([PR #4438](https://github.com/azure/communication-ui-library/pull/4438) by 109105353+jpeng-ms@users.noreply.github.com)
 - Fix VideoGallery to not use optimal video count when there are no remote videos on ([PR #4364](https://github.com/azure/communication-ui-library/pull/4364) by 79475487+mgamis-msft@users.noreply.github.com)
 - Fix bugs of endcall button UX ([commit](https://github.com/azure/communication-ui-library/commit/not available) by jiangnanhello@live.com)
