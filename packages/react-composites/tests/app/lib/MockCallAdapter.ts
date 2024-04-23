@@ -29,7 +29,6 @@ export class MockCallAdapter implements CallAdapter {
     this._emitter = new EventEmitter();
   }
 
-  /* @conditional-compile-remove(reaction) */
   onReactionClick(emoji: string): Promise<void> {
     throw new Error(`Method could not send ${emoji}.`);
   }
@@ -126,19 +125,15 @@ export class MockCallAdapter implements CallAdapter {
   getEnvironmentInfo(): Promise<EnvironmentInfo> {
     throw Error('getEnvironmentInfo not implemented');
   }
-  /* @conditional-compile-remove(close-captions) */
   startCaptions(): Promise<void> {
     throw Error('startCaptions not implemented');
   }
-  /* @conditional-compile-remove(close-captions) */
   stopCaptions(): Promise<void> {
     throw Error('stopCaptions not implemented');
   }
-  /* @conditional-compile-remove(close-captions) */
   setCaptionLanguage(): Promise<void> {
     throw Error('setCaptionLanguage not implemented');
   }
-  /* @conditional-compile-remove(close-captions) */
   setSpokenLanguage(): Promise<void> {
     throw Error('setSpokenLanguage not implemented');
   }

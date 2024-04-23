@@ -136,7 +136,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
 
   const chatMessageStyles = useChatMessageStyles();
   const chatItemMessageContainerClassName = mergeClasses(
-    // messageContainerStyle used in className and style prop as style prop can't handle CSS selectors
+    chatMessageCommonStyles.body,
     chatMessageStyles.body,
     // disable placeholder functionality for GA releases as it might confuse users
     chatMessageStyles.bodyWithPlaceholderImage,
@@ -149,6 +149,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     message.attached === 'top' || message.attached === false
       ? chatMessageStyles.bodyWithAvatar
       : chatMessageStyles.bodyWithoutAvatar,
+    // messageContainerStyle used in className and style prop as style prop can't handle CSS selectors
     mergeStyles(messageContainerStyle)
   );
 

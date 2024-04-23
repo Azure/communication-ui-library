@@ -169,7 +169,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
       <Stack className={attachmentUploadCardsStyles}>
         <FluentV9ThemeProvider v8Theme={theme}>
           <_AttachmentUploadCards
-            activeAttachmentUploads={attachmentMetadata}
+            attachmentsWithProgress={attachmentMetadata}
             onCancelAttachmentUpload={onCancelAttachmentUpload}
           />
         </FluentV9ThemeProvider>
@@ -217,3 +217,5 @@ export const ChatMessageComponentAsRichTextEditBox = (
     </ChatMyMessage>
   );
 };
+
+export default ChatMessageComponentAsRichTextEditBox;

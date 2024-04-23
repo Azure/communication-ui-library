@@ -30,16 +30,13 @@ import {
   overlayContainerStyles,
   rootStyles,
   videoContainerStyles,
-  videoHint,
   tileInfoContainerStyle,
   participantStateStringStyles
 } from './styles/VideoTile.styles';
-import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
 import { pinIconStyle } from './styles/VideoTile.styles';
 import useLongPress from './utils/useLongPress';
 import { moreButtonStyles } from './styles/VideoTile.styles';
 import { raiseHandContainerStyles } from './styles/VideoTile.styles';
-/* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '../types/ReactionTypes';
 
 /**
@@ -85,7 +82,6 @@ export interface VideoTileProps {
   userId?: string;
   /** Component with the video stream. */
   renderElement?: JSX.Element | null;
-  /* @conditional-compile-remove(reaction) */
   /**
    * Overlay component responsible for rendering reaction
    */
@@ -99,6 +95,11 @@ export interface VideoTileProps {
    * @defaultValue true
    */
   showLabel?: boolean;
+  /**
+   * Show label background on the VideoTile
+   * @defaultValue false
+   */
+  alwaysShowLabelBackground?: boolean;
   /**
    * Whether to display a mute icon beside the user's display name.
    * @defaultValue true
@@ -169,7 +170,6 @@ export interface VideoTileProps {
    * If true, the video tile will show the spotlighted icon.
    */
   isSpotlighted?: boolean;
-  /* @conditional-compile-remove(reaction) */
   /**
    * Reactions resources' url and metadata.
    */
@@ -251,7 +251,6 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     isPinned,
     onRenderPlaceholder,
     renderElement,
-    /* @conditional-compile-remove(reaction) */
     overlay: reactionOverlay,
     showLabel = true,
     showMuteIndicator = true,
@@ -274,6 +273,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
   const locale = useLocale();
   const theme = useTheme();
+  const callingPalette = (theme as unknown as CallingTheme).callingPalette;
 
   const isVideoRendered = !!renderElement;
 
@@ -355,16 +355,18 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     hidePersonaDetails: true
   };
 
-  const videoHintWithBorderRadius = mergeStyles(videoHint, { borderRadius: theme.effects.roundedCorner4 });
+  const videoHintWithBorderRadius = mergeStyles(disabledVideoHint, {
+    borderRadius: theme.effects.roundedCorner4,
+    backgroundColor: callingPalette.videoTileLabelBackgroundLight
+  });
 
   const tileInfoStyle = useMemo(
     () =>
       mergeStyles(
-        isVideoRendered ? videoHintWithBorderRadius : disabledVideoHint,
-        getVideoTileOverrideColor(isVideoRendered, theme, 'neutralPrimary'),
+        isVideoRendered || props.alwaysShowLabelBackground ? videoHintWithBorderRadius : disabledVideoHint,
         styles?.displayNameContainer
       ),
-    [isVideoRendered, videoHintWithBorderRadius, theme, styles?.displayNameContainer]
+    [isVideoRendered, videoHintWithBorderRadius, styles?.displayNameContainer, props.alwaysShowLabelBackground]
   );
 
   const ids = useIdentifiers();
@@ -373,7 +375,6 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const participantStateString = participantStateStringTrampoline(props, locale);
   const canShowContextMenuButton = isHovered || isFocused;
   let raisedHandBackgroundColor = '';
-  const callingPalette = (theme as unknown as CallingTheme).callingPalette;
   raisedHandBackgroundColor = callingPalette.raiseHandGold;
 
   return (
@@ -428,10 +429,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
             )}
           </Stack>
         )}
-        {
-          /* @conditional-compile-remove(reaction) */
-          reactionOverlay
-        }
+        {reactionOverlay}
         {(canShowLabel || participantStateString) && (
           <Stack horizontal className={tileInfoContainerStyle} tokens={tileInfoContainerTokens}>
             <Stack horizontal className={tileInfoStyle}>

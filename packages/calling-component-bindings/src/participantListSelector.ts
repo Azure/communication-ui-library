@@ -16,12 +16,10 @@ import { isHideAttendeeNamesEnabled } from './baseSelectors';
 import { CallParticipantListParticipant } from '@internal/react-components';
 import { _isRingingPSTNParticipant, _updateUserDisplayNames } from './utils/callUtils';
 import { memoizedConvertAllremoteParticipants } from './utils/participantListSelectorUtils';
-/* @conditional-compile-remove(reaction) */
 import { memoizedConvertToVideoTileReaction } from './utils/participantListSelectorUtils';
 /* @conditional-compile-remove(spotlight) */
 import { memoizedSpotlight } from './utils/participantListSelectorUtils';
 import { getLocalParticipantRaisedHand } from './baseSelectors';
-/* @conditional-compile-remove(reaction) */
 import { getLocalParticipantReactionState } from './baseSelectors';
 /* @conditional-compile-remove(spotlight) */
 import { getSpotlightCallFeature } from './baseSelectors';
@@ -77,9 +75,7 @@ const convertRemoteParticipantsToParticipantListParticipants = (
             participant.role,
             isHideAttendeeNamesEnabled
           );
-          let remoteParticipantReaction = undefined;
-          /* @conditional-compile-remove(reaction) */
-          remoteParticipantReaction = memoizedConvertToVideoTileReaction(participant.reactionState);
+          const remoteParticipantReaction = memoizedConvertToVideoTileReaction(participant.reactionState);
           let spotlight = undefined;
           /* @conditional-compile-remove(spotlight) */
           spotlight = memoizedSpotlight(spotlightedParticipants, toFlatCommunicationIdentifier(participant.identifier));
@@ -144,7 +140,6 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     getParticipantCount,
     /* @conditional-compile-remove(hide-attendee-name) */
     isHideAttendeeNamesEnabled,
-    /* @conditional-compile-remove(reaction) */
     getLocalParticipantReactionState,
     /* @conditional-compile-remove(spotlight) */
     getSpotlightCallFeature
@@ -160,7 +155,6 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     partitipantCount,
     /* @conditional-compile-remove(hide-attendee-name) */
     isHideAttendeeNamesEnabled,
-    /* @conditional-compile-remove(reaction) */
     localParticipantReactionState,
     /* @conditional-compile-remove(spotlight) */
     spotlightCallFeature
@@ -180,8 +174,6 @@ export const participantListSelector: ParticipantListSelector = createSelector(
           spotlightCallFeature?.spotlightedParticipants
         )
       : [];
-    /* @conditional-compile-remove(reaction) */
-    const localParticipantReaction = memoizedConvertToVideoTileReaction(localParticipantReactionState);
     participants.push({
       userId: userId,
       displayName: displayName,
@@ -191,8 +183,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
       state: 'Connected',
       // Local participant can never remove themselves.
       isRemovable: false,
-      /* @conditional-compile-remove(reaction) */
-      reaction: localParticipantReaction,
+      reaction: memoizedConvertToVideoTileReaction(localParticipantReactionState),
       /* @conditional-compile-remove(spotlight) */
       spotlight: memoizedSpotlight(spotlightCallFeature?.spotlightedParticipants, userId)
     });

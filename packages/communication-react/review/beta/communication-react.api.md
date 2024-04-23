@@ -166,9 +166,13 @@ export interface AttachmentMetadata {
     extension?: string;
     id: string;
     name: string;
-    progress?: number;
-    uploadError?: AttachmentUploadStatus;
     url?: string;
+}
+
+// @beta
+export interface AttachmentMetadataWithProgress extends AttachmentMetadata {
+    error?: AttachmentProgressError;
+    progress?: number;
 }
 
 // @beta
@@ -179,16 +183,28 @@ export interface AttachmentOptions {
     uploadOptions?: AttachmentUploadOptions;
 }
 
-// @beta (undocumented)
-export interface AttachmentUploadAdapter {
+// @beta
+export interface AttachmentProgressError {
+    // (undocumented)
+    message: string;
+}
+
+// @beta
+export type AttachmentRemovalHandler = (attachmentId: string) => void;
+
+// @beta
+export type AttachmentSelectionHandler = (attachmentUploads: AttachmentUploadTask[]) => void;
+
+// @internal (undocumented)
+export interface _AttachmentUploadAdapter {
     // (undocumented)
     cancelUpload: (id: string) => void;
     // (undocumented)
     clearUploads: () => void;
     // (undocumented)
-    registerActiveUploads: (files: File[]) => AttachmentUploadManager[];
+    registerActiveUploads: (files: File[]) => AttachmentUploadTask[];
     // (undocumented)
-    registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadManager[];
+    registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadTask[];
     // (undocumented)
     updateUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
     // (undocumented)
@@ -197,35 +213,25 @@ export interface AttachmentUploadAdapter {
     updateUploadStatusMessage: (id: string, errorMessage: string) => void;
 }
 
-// @beta
-export type AttachmentUploadHandler = (attachmentUploads: AttachmentUploadManager[]) => void;
-
-// @beta
-export interface AttachmentUploadManager {
-    file?: File;
-    id: string;
-    notifyCompleted: (metadata: AttachmentMetadata) => void;
-    notifyFailed: (message: string) => void;
-    notifyProgressChanged: (value: number) => void;
-}
-
 // @beta (undocumented)
 export interface AttachmentUploadOptions {
     disableMultipleUploads?: boolean;
-    handler: AttachmentUploadHandler;
+    handleAttachmentRemoval?: AttachmentRemovalHandler;
+    handleAttachmentSelection: AttachmentSelectionHandler;
     supportedMediaTypes?: string[];
 }
 
-// @beta
-export interface AttachmentUploadStatus {
-    // (undocumented)
-    message: string;
-    // (undocumented)
-    timestamp: number;
-}
+// @internal
+export type _AttachmentUploadsUiState = Record<string, AttachmentMetadataWithProgress>;
 
 // @beta
-export type AttachmentUploadsUiState = Record<string, AttachmentMetadata>;
+export interface AttachmentUploadTask {
+    file?: File;
+    notifyUploadCompleted: (id: string, url: string) => void;
+    notifyUploadFailed: (message: string) => void;
+    notifyUploadProgressChanged: (value: number) => void;
+    taskId: string;
+}
 
 // @public
 export type AvatarPersonaData = {
@@ -685,6 +691,7 @@ export type CallCompositeOptions = {
     onEnvironmentInfoTroubleshootingClick?: () => void;
     remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
     localVideoTile?: boolean | LocalVideoTileOptions;
+    videoTilesOptions?: VideoTilesOptions;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
     };
@@ -988,6 +995,7 @@ export interface CallingTheme {
         callRedDarker: string;
         iconWhite: string;
         raiseHandGold: string;
+        videoTileLabelBackgroundLight: string;
     };
 }
 
@@ -1078,9 +1086,9 @@ export interface CallWithChatAdapterManagement {
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
     allowUnsupportedBrowserVersion(): void;
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
-    // @beta (undocumented)
+    // @internal (undocumented)
     cancelUpload: (id: string) => void;
-    // @beta (undocumented)
+    // @internal (undocumented)
     clearUploads: () => void;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     deleteMessage(messageId: string): Promise<void>;
@@ -1105,10 +1113,10 @@ export interface CallWithChatAdapterManagement {
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
     querySpeakers(): Promise<AudioDeviceInfo[]>;
     raiseHand(): Promise<void>;
-    // @beta (undocumented)
-    registerActiveUploads: (files: File[]) => AttachmentUploadManager[];
-    // @beta (undocumented)
-    registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadManager[];
+    // @internal (undocumented)
+    registerActiveUploads: (files: File[]) => AttachmentUploadTask[];
+    // @internal (undocumented)
+    registerCompletedUploads: (metadata: AttachmentMetadata[]) => AttachmentUploadTask[];
     removeParticipant(userId: string): Promise<void>;
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
@@ -1118,6 +1126,8 @@ export interface CallWithChatAdapterManagement {
     resumeCall: () => Promise<void>;
     sendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
+    // @beta
+    sendMessageWithAttachments(content: string, attachments: AttachmentMetadata[]): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
     setCamera(sourceInfo: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
@@ -1143,11 +1153,11 @@ export interface CallWithChatAdapterManagement {
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
     updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void>;
     updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
-    // @beta (undocumented)
+    // @internal (undocumented)
     updateUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
-    // @beta (undocumented)
+    // @internal (undocumented)
     updateUploadProgress: (id: string, progress: number) => void;
-    // @beta (undocumented)
+    // @internal (undocumented)
     updateUploadStatusMessage: (id: string, errorMessage: string) => void;
 }
 
@@ -1261,8 +1271,8 @@ export interface CallWithChatAdapterSubscriptions {
 
 // @public
 export interface CallWithChatAdapterUiState {
-    // @beta
-    attachmentUploads?: AttachmentUploadsUiState;
+    // @internal
+    _attachmentUploads?: _AttachmentUploadsUiState;
     isLocalPreviewMicrophoneEnabled: boolean;
     page: CallCompositePage;
     // @beta
@@ -1464,7 +1474,7 @@ export interface CallWithChatControlOptions extends CommonCallControlOptions {
 }
 
 // @public
-export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | /* @conditional-compile-remove(close-captions) */ 'isCaptionsActiveChanged' | /* @conditional-compile-remove(close-captions) */ 'captionsReceived' | /* @conditional-compile-remove(close-captions) */ 'isCaptionLanguageChanged' | /* @conditional-compile-remove(close-captions) */ 'isSpokenLanguageChanged' | 'capabilitiesChanged' | /* @conditional-compile-remove(spotlight) */ 'spotlightChanged' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
+export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | 'isCaptionsActiveChanged' | 'captionsReceived' | 'isCaptionLanguageChanged' | 'isSpokenLanguageChanged' | 'capabilitiesChanged' | /* @conditional-compile-remove(spotlight) */ 'spotlightChanged' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
 
 // @beta
 export const CameraAndMicrophoneSitePermissions: (props: CameraAndMicrophoneSitePermissionsProps) => JSX.Element;
@@ -1677,7 +1687,7 @@ export type CaptionsReceivedListener = (event: {
 }) => void;
 
 // @public
-export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable_2 & ChatAdapterSubscribers & AttachmentUploadAdapter;
+export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable_2 & ChatAdapterSubscribers & _AttachmentUploadAdapter;
 
 // @public
 export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
@@ -1713,6 +1723,7 @@ export interface ChatAdapterThreadManagement {
     removeParticipant(userId: string): Promise<void>;
     removeResourceFromCache(resourceDetails: ResourceDetails): void;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
+    sendMessageWithAttachments(content: string, attachments: AttachmentMetadata[]): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
     setTopic(topicName: string): Promise<void>;
@@ -1724,7 +1735,7 @@ export interface ChatAdapterThreadManagement {
 // @public
 export type ChatAdapterUiState = {
     error?: Error;
-    attachmentUploads?: AttachmentUploadsUiState;
+    _attachmentUploads?: _AttachmentUploadsUiState;
 };
 
 // @public
@@ -1825,7 +1836,7 @@ export type ChatErrors = {
 };
 
 // @public
-export type ChatErrorTarget = 'ChatClient.createChatThread' | 'ChatClient.deleteChatThread' | 'ChatClient.getChatThreadClient' | 'ChatClient.listChatThreads' | 'ChatClient.off' | 'ChatClient.on' | 'ChatClient.startRealtimeNotifications' | 'ChatClient.stopRealtimeNotifications' | 'ChatThreadClient.addParticipants' | 'ChatThreadClient.deleteMessage' | 'ChatThreadClient.getMessage' | 'ChatThreadClient.getProperties' | 'ChatThreadClient.listMessages' | 'ChatThreadClient.listParticipants' | 'ChatThreadClient.listReadReceipts' | 'ChatThreadClient.removeParticipant' | 'ChatThreadClient.sendMessage' | 'ChatThreadClient.sendReadReceipt' | 'ChatThreadClient.sendTypingNotification' | 'ChatThreadClient.updateMessage' | /* @conditional-compile-remove(chat-beta-sdk) */ 'ChatThreadClient.updateProperties' | 'ChatThreadClient.updateTopic';
+export type ChatErrorTarget = 'ChatClient.createChatThread' | 'ChatClient.deleteChatThread' | 'ChatClient.getChatThreadClient' | 'ChatClient.listChatThreads' | 'ChatClient.off' | 'ChatClient.on' | 'ChatClient.startRealtimeNotifications' | 'ChatClient.stopRealtimeNotifications' | 'ChatThreadClient.addParticipants' | 'ChatThreadClient.deleteMessage' | 'ChatThreadClient.getMessage' | 'ChatThreadClient.getProperties' | 'ChatThreadClient.listMessages' | 'ChatThreadClient.listParticipants' | 'ChatThreadClient.listReadReceipts' | 'ChatThreadClient.removeParticipant' | 'ChatThreadClient.sendMessage' | 'ChatThreadClient.sendReadReceipt' | 'ChatThreadClient.sendTypingNotification' | 'ChatThreadClient.updateMessage' | /* @conditional-compile-remove(chat-beta-sdk) */ 'ChatThreadClient.updateProperties' | 'ChatThreadClient.updateTopic' | /* @conditional-compile-remove(chat-beta-sdk) */ 'ChatThreadClient.uploadImage' | /* @conditional-compile-remove(chat-beta-sdk) */ 'ChatThreadClient.deleteImage';
 
 // @public
 export type ChatHandlers = {
@@ -3508,7 +3519,7 @@ export interface NetworkDiagnosticsState {
     latest: LatestNetworkDiagnostics;
 }
 
-// @beta
+// @public
 export type OnFetchProfileCallback = (userId: string, defaultProfile?: Profile) => Promise<Profile | undefined>;
 
 // @public
@@ -3721,7 +3732,7 @@ export interface PPTLiveCallFeatureState {
     isActive: boolean;
 }
 
-// @beta
+// @public
 export type Profile = {
     displayName?: string;
 };
@@ -3882,7 +3893,7 @@ export const RichTextSendBox: (props: RichTextSendBoxProps) => JSX.Element;
 
 // @beta
 export interface RichTextSendBoxProps {
-    activeAttachmentUploads?: AttachmentMetadata[];
+    attachmentsWithProgress?: AttachmentMetadataWithProgress[];
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
     onCancelAttachmentUpload?: (attachmentId: string) => void;
@@ -3954,7 +3965,7 @@ export interface SendBoxErrorBarError {
 // @public
 export interface SendBoxProps {
     // @beta
-    activeAttachmentUploads?: AttachmentMetadata[];
+    attachmentsWithProgress?: AttachmentMetadataWithProgress[];
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
     // @beta
@@ -4582,6 +4593,7 @@ export interface VideoGalleryProps {
     spotlightedParticipants?: string[];
     strings?: Partial<VideoGalleryStrings>;
     styles?: VideoGalleryStyles;
+    videoTilesOptions?: VideoTilesOptions;
 }
 
 // @public
@@ -4681,6 +4693,7 @@ export interface VideoTileDrawerMenuProps {
 
 // @public
 export interface VideoTileProps {
+    alwaysShowLabelBackground?: boolean;
     children?: React_2.ReactNode;
     contextualMenu?: IContextualMenuProps;
     displayName?: string;
@@ -4706,6 +4719,11 @@ export interface VideoTileProps {
     strings?: VideoTileStrings;
     styles?: VideoTileStylesProps;
     userId?: string;
+}
+
+// @public
+export interface VideoTilesOptions {
+    alwaysShowLabelBackground?: boolean;
 }
 
 // @beta

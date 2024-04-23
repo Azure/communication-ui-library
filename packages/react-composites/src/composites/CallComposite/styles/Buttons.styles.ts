@@ -103,7 +103,7 @@ export const devicesButtonWithIncreasedTouchTargets: DevicesButtonStyles = {
  */
 export const controlButtonBaseStyle: IButtonStyles = {
   label: {
-    minWidth: '2.25rem'
+    minWidth: '1.25rem'
   }
 };
 
