@@ -14,6 +14,8 @@ import {
   SendChatMessageResult
 } from '@azure/communication-chat';
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
+/* @conditional-compile-remove(chat-beta-sdk) */
+import { UploadChatImageResult } from '@azure/communication-chat';
 
 type PublicInterface<T> = { [K in keyof T]: T[K] };
 
@@ -110,6 +112,18 @@ export class StubChatThreadClient implements PublicInterface<ChatThreadClient> {
   }
   /* @conditional-compile-remove(chat-beta-sdk) */
   updateProperties(): Promise<void> {
+    return Promise.resolve();
+  }
+  /* @conditional-compile-remove(chat-beta-sdk) */
+  uploadImage(): Promise<UploadChatImageResult> {
+    return Promise.resolve({
+      id: '',
+      name: '',
+      attachmentType: 'image'
+    });
+  }
+  /* @conditional-compile-remove(chat-beta-sdk) */
+  deleteImage(): Promise<void> {
     return Promise.resolve();
   }
 }

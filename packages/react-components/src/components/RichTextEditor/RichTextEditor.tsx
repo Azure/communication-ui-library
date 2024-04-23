@@ -4,7 +4,11 @@ import React, { useCallback, useEffect, useImperativeHandle, useMemo, useRef } f
 import { ContentEdit, Watermark } from 'roosterjs-editor-plugins';
 import { Editor } from 'roosterjs-editor-core';
 import type { DefaultFormat, EditorOptions, IEditor } from 'roosterjs-editor-types-compatible';
-import { CompatibleGetContentMode } from 'roosterjs-editor-types-compatible';
+import {
+  CompatibleContentPosition,
+  CompatibleGetContentMode,
+  CompatiblePositionType
+} from 'roosterjs-editor-types-compatible';
 import {
   Rooster,
   createUpdateContentPlugin,
@@ -232,8 +236,16 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
 });
 
 const focusAndUpdateContent = (editor: Editor, content: string): void => {
-  // focus the editor to set correct selection position
-  editor.focus();
-  // set initial content
+  // setting focus before setting content, works for Chrome and Edge but not Safari
   editor.setContent(content);
+  // this is a recommended way (by RoosterJS team) to set focus at the end of the text
+  // RoosterJS v9 has this issue fixed and this code can be removed
+  // CompatibleContentPosition.DomEnd shouldn't be used here as it set focus after the editor div
+  editor.insertContent('<span id="focus-position-span"></span>', { position: CompatibleContentPosition.End });
+  const elements = editor.queryElements('#focus-position-span');
+  if (elements.length > 0) {
+    const placeholder = editor.queryElements('#focus-position-span')[0];
+    editor.select(placeholder, CompatiblePositionType.Before);
+    placeholder.remove();
+  }
 };

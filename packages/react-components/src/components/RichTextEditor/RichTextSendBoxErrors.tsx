@@ -11,7 +11,7 @@ export interface RichTextSendBoxErrorsProps {
   /* @conditional-compile-remove(attachment-upload) */
   attachmentUploadsPendingError?: SendBoxErrorBarError;
   /* @conditional-compile-remove(attachment-upload) */
-  attachmentUploadError?: SendBoxErrorBarError;
+  attachmentProgressError?: SendBoxErrorBarError;
   systemMessage?: string;
   textTooLongMessage?: string;
 }
@@ -22,7 +22,7 @@ export interface RichTextSendBoxErrorsProps {
 export const RichTextSendBoxErrors = (props: RichTextSendBoxErrorsProps): JSX.Element => {
   const {
     /* @conditional-compile-remove(attachment-upload) */
-    attachmentUploadError,
+    attachmentProgressError,
     /* @conditional-compile-remove(attachment-upload) */
     attachmentUploadsPendingError,
     systemMessage,
@@ -62,8 +62,8 @@ export const RichTextSendBoxErrors = (props: RichTextSendBoxErrorsProps): JSX.El
         errors.push(attachmentUploadsPendingError);
       }
       /* @conditional-compile-remove(attachment-upload) */
-      if (attachmentUploadError) {
-        errors.push(attachmentUploadError);
+      if (attachmentProgressError) {
+        errors.push(attachmentProgressError);
       }
       if (errors.length === 0) {
         return undefined;
@@ -73,7 +73,7 @@ export const RichTextSendBoxErrors = (props: RichTextSendBoxErrorsProps): JSX.El
       return sortedErrors[0];
     });
   }, [
-    /* @conditional-compile-remove(attachment-upload) */ attachmentUploadError,
+    /* @conditional-compile-remove(attachment-upload) */ attachmentProgressError,
     /* @conditional-compile-remove(attachment-upload) */ attachmentUploadsPendingError
   ]);
 
