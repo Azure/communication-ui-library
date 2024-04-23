@@ -42,7 +42,7 @@ export const CallScreen = () => {
   const videoGalleryProps = usePropsFor(VideoGallery);
 
   // Map remote participants to include PPTLive stream in the screenShareStream
-  const remoteParticipants = videoGalleryProps.remoteParticipants.map((participant) => {
+  const remoteParticipants = videoGalleryProps.remoteParticipants.forEach((participant) => {
     // Log the screenShareStream to console for debugging
     console.log('PPTLive Stream:', participant.screenShareStream);
 
