@@ -19,7 +19,6 @@ import { CallClientOptions } from '@azure/communication-calling';
 import { CallDirection } from '@azure/communication-calling';
 import { CallEndReason } from '@azure/communication-calling';
 import { CallerInfo } from '@azure/communication-calling';
-import { CallInfo } from '@azure/communication-calling';
 import { CallKind } from '@azure/communication-calling';
 import { CallState as CallState_2 } from '@azure/communication-calling';
 import { CallSurvey } from '@azure/communication-calling';
@@ -93,8 +92,6 @@ import { StartCallOptions } from '@azure/communication-calling';
 import { StartCaptionsOptions } from '@azure/communication-calling';
 import { TeamsCall } from '@azure/communication-calling';
 import { TeamsCallAgent } from '@azure/communication-calling';
-import { TeamsCallInfo } from '@azure/communication-calling';
-import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
 import { TransferEventArgs } from '@azure/communication-calling';
@@ -265,7 +262,7 @@ export type AzureCommunicationCallWithChatAdapterArgs = {
     userId: CommunicationUserIdentifier;
     displayName: string;
     credential: CommunicationTokenCredential;
-    locator: CallAndChatLocator | TeamsMeetingLinkLocator | /** @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
+    locator: CallAndChatLocator | TeamsMeetingLinkLocator;
     alternateCallerId?: string;
     callAdapterOptions?: AzureCommunicationCallAdapterOptions;
 };
@@ -467,7 +464,6 @@ export type CallAdapterClientState = {
     onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
     acceptedTransferCallState?: CallState;
-    hideAttendeeNames?: boolean;
     sounds?: CallingSounds;
     reactions?: ReactionResources;
 };
@@ -484,7 +480,7 @@ export interface CallAdapterDeviceManagement {
 }
 
 // @public
-export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | RoomCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
+export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | RoomCallLocator | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator;
 
 // @public
 export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
@@ -802,7 +798,6 @@ export interface CallCompositeStrings {
     failedToJoinTeamsMeetingReasonAccessDeniedTitle: string;
     hangUpCancelButtonLabel?: string;
     holdScreenLabel: string;
-    invalidMeetingIdentifier: string;
     inviteToRoomRemovedDetails?: string;
     inviteToRoomRemovedTitle: string;
     learnMore: string;
@@ -924,12 +919,12 @@ export interface CallCompositeStrings {
 export type CallControlDisplayType = 'default' | 'compact';
 
 // @public
-export type CallControlOptions = CommonCallControlOptions & {
+export type CallControlOptions = (CommonCallControlOptions & {
     participantsButton?: boolean | {
         disabled: boolean;
     };
     legacyControlBarExperience?: boolean;
-};
+});
 
 // @public
 export type CallEndedListener = (event: CallAdapterCallEndedEvent) => void;
@@ -1037,9 +1032,7 @@ export interface CallState {
     direction: CallDirection;
     dominantSpeakers?: DominantSpeakersInfo;
     endTime: Date | undefined;
-    hideAttendeeNames?: boolean;
     id: string;
-    info?: CallInfo | TeamsCallInfo;
     isMuted: boolean;
     isScreenSharingOn: boolean;
     kind: CallKind;
@@ -1287,7 +1280,6 @@ export interface CallWithChatClientState {
     devices: DeviceManagerState;
     displayName: string | undefined;
     environmentInfo?: EnvironmentInfo;
-    hideAttendeeNames?: boolean;
     isTeamsCall: boolean;
     latestCallErrors: AdapterErrors;
     latestChatErrors: AdapterErrors;
@@ -1687,7 +1679,7 @@ export type CaptionsReceivedListener = (event: {
 }) => void;
 
 // @public
-export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable_2 & ChatAdapterSubscribers & _AttachmentUploadAdapter;
+export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable_2 & ChatAdapterSubscribers & /* @conditional-compile-remove(attachment-upload) */ _AttachmentUploadAdapter;
 
 // @public
 export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
@@ -1727,7 +1719,7 @@ export interface ChatAdapterThreadManagement {
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
     setTopic(topicName: string): Promise<void>;
-    updateMessage(messageId: string, content: string, metadata?: Record<string, string>, options?: {
+    updateMessage(messageId: string, content: string, metadata?: Record<string, string>, /* @conditional-compile-remove(attachment-upload) */ options?: {
         attachmentMetadata?: AttachmentMetadata[];
     }): Promise<void>;
 }
@@ -1846,7 +1838,7 @@ export type ChatHandlers = {
     onRemoveParticipant: (userId: string) => Promise<void>;
     updateThreadTopicName: (topicName: string) => Promise<void>;
     onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
-    onUpdateMessage: (messageId: string, content: string, options?: {
+    onUpdateMessage: (messageId: string, content: string, /* @conditional-compile-remove(attachment-upload) */ options?: {
         metadata?: Record<string, string>;
         attachmentMetadata?: AttachmentMetadata[];
     }) => Promise<void>;
@@ -2475,7 +2467,7 @@ export interface CustomMessage extends MessageCommon {
 export const darkTheme: PartialTheme & CallingTheme;
 
 // @beta
-export type DeclarativeCallAgent = CallAgent & IncomingCallManagement;
+export type DeclarativeCallAgent = CallAgent & /* @conditional-compile-remove(one-to-n-calling) */ IncomingCallManagement;
 
 // @beta
 export type DeclarativeIncomingCall = IncomingCall;
@@ -3577,7 +3569,6 @@ export interface ParticipantItemProps {
 
 // @public
 export interface ParticipantItemStrings {
-    attendeeRole: string;
     displayNamePlaceholder?: string;
     isMeText: string;
     menuTitle: string;
@@ -4433,7 +4424,7 @@ export interface UnsupportedOperatingSystemStrings {
 }
 
 // @public
-export type UpdateMessageCallback = (messageId: string, content: string, options?: {
+export type UpdateMessageCallback = (messageId: string, content: string, /* @conditional-compile-remove(attachment-upload) */ options?: {
     metadata?: Record<string, string>;
     attachmentMetadata?: AttachmentMetadata[];
 }) => Promise<void>;
@@ -4538,7 +4529,7 @@ export interface VideoBackgroundReplacementEffect extends BackgroundReplacementC
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
 // @public (undocumented)
-export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | 'speaker' | /* @conditional-compile-remove(large-gallery) */ 'largeGallery' | 'focusedContent';
+export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | 'speaker' | 'focusedContent';
 
 // @public
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
@@ -4634,7 +4625,6 @@ export interface VideoGalleryStream {
 // @public
 export interface VideoGalleryStrings {
     addSpotlightVideoTileMenuLabel: string;
-    attendeeRole: string;
     displayNamePlaceholder: string;
     fillRemoteParticipantFrame: string;
     fitRemoteParticipantToFrame: string;
