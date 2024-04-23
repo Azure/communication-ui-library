@@ -111,6 +111,7 @@
     "scheduler": "^0.23.0",
     "shell-quote": "1.8.1",
     "source-map-explorer": "^2.5.0",
+    "storybook": "^8.0.6",
     "styled-components": "^5.2.1",
     "tsconfig-paths-webpack-plugin": "^4.1.0",
     "ts-jest": "^29.1.2",
