@@ -1,14 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-import {
-  /* @conditional-compile-remove(attachment-upload) */
-  hasIncompleteAttachmentUploads,
-  /* @conditional-compile-remove(attachment-upload) */
-  hasCompletedAttachmentUploads,
-  isMessageTooLong,
-  sanitizeText,
-  MAXIMUM_LENGTH_OF_MESSAGE
-} from './SendBoxUtils';
+import { isMessageTooLong, sanitizeText, MAXIMUM_LENGTH_OF_MESSAGE } from './SendBoxUtils';
+/* @conditional-compile-remove(attachment-upload) */
+import { hasIncompleteAttachmentUploads, hasCompletedAttachmentUploads } from './SendBoxUtils';
 
 /* @conditional-compile-remove(attachment-upload) */
 describe('SendBoxUtils hasIncompleteAttachmentUploads tests', () => {
