@@ -38,6 +38,7 @@ export const PeoplePaneContent = (props: {
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   setDrawerMenuItems: (drawerMenuItems: _DrawerMenuItemProps[]) => void;
+  setParticipantActioned?: (userId: string) => void;
   mobileView?: boolean;
   /* @conditional-compile-remove(spotlight) */
   participantListHeadingMoreButtonProps?: IContextualMenuProps;
@@ -46,6 +47,7 @@ export const PeoplePaneContent = (props: {
     inviteLink,
     onFetchParticipantMenuItems,
     setDrawerMenuItems,
+    setParticipantActioned,
     /* @conditional-compile-remove(spotlight) */ participantListHeadingMoreButtonProps
   } = props;
   const adapter = useAdapter();
@@ -83,6 +85,7 @@ export const PeoplePaneContent = (props: {
   const setDrawerMenuItemsForParticipant: (participant?: ParticipantListParticipant) => void = useMemo(() => {
     return (participant?: ParticipantListParticipant) => {
       if (participant) {
+        setParticipantActioned?.(participant.userId);
         let contextualMenuItems: IContextualMenuItem[] = createDefaultContextualMenuItems(
           participant,
           strings,
@@ -108,7 +111,8 @@ export const PeoplePaneContent = (props: {
     participantListDefaultProps.myUserId,
     removeButtonAllowed,
     onFetchParticipantMenuItems,
-    setDrawerMenuItems
+    setDrawerMenuItems,
+    setParticipantActioned
   ]);
 
   /* @conditional-compile-remove(spotlight) */
