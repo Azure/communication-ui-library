@@ -6,39 +6,30 @@ This log was last generated on Tue, 23 Apr 2024 17:54:31 GMT and should not be m
 
 ## [1.16.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.16.0-beta.1)
 
-Tue, 23 Apr 2024 17:54:31 GMT 
+Tue, 23 Apr 2024 17:54:31 GMT
 [Compare changes](https://github.com/azure/communication-ui-library/compare/1.16.0...1.16.0-beta.1)
 
 ### Features
-- The Web UI RichTextSendBox and MessageThread components now support rich text formatting to generate HTML content for chat messages. This feature includes support for: Different text styles (bold, italic and underline)Bulleted and numbered listsChanging indentation for textAdding and updating tables ([PR #4505](https://github.com/azure/communication-ui-library/pull/4505) by 98852890+vhuseinova-msft@users.noreply.github.com)
-- We are excited to announce that the Azure Communication Services Web UI Library now can view PowerPoint Live sessions initiated by a Teams client. Users can follow along with the current slide the presenter is sharing and view presenter annotations. Developers can use this functionality today through our composites (e.g CallComposite, CallWithChatComposite) as well as through components (e.g VideoGallery). ([PR #4427](https://github.com/azure/communication-ui-library/pull/4427) by 93549644+ShaunaSong@users.noreply.github.com)
-- Promote spotlight feature to GA ([commit](https://github.com/azure/communication-ui-library/commit/not available) by 79475487+mgamis-msft@users.noreply.github.com)
-- Add storybook page for captions and change API name for disabling captions ([commit](https://github.com/azure/communication-ui-library/commit/not available) by 96077406+carocao-msft@users.noreply.github.com)
-- Only run reaction button animations on hover ([commit](https://github.com/azure/communication-ui-library/commit/not available) by 2684369+JamesBurnside@users.noreply.github.com)
--   Azure Communication Services UI Library is adding support for End of Call Survey. With this new feature, call participants will be able to share feedback on the quality and reliability of Audio and Video calls. Participants will be able to submit feedback based on four categories: Overall Call,Audio,Video,Screen Share.They can rate their call experience on a star based numerical survey and provide additional detail as to the specifics of each category if they wish. The feedback feature will enable developers to collect subjective customer feedback on call quality and reliability and enable the creation of more definite metrics. ([commit](https://github.com/azure/communication-ui-library/commit/not available) by 96077406+carocao-msft@users.noreply.github.com)
-- E2E reaction button snapshot test ([commit](https://github.com/azure/communication-ui-library/commit/not available) by mbellah@microsoft.com)
-- Microsoft Azure Communications Services has recently updated its UI library composites and components to include call reactions. The UI Library will support the following list of live call reactions: Like 3D emoji like reaction, Love 3D Emoji heart reaction, Applause 3D emoji applause reaction, Laugh  3D emoji laughter reaction, Surprise 3D emoji surprise reaction. Call reactions are associated to the user sending it and are visible to all types of users (in-tenant, guest, federated, anonymous). Call reactions are supported in all types of calls (1:1, group) and meetings (scheduled, meet now, private, channel) of all sizes (small, large, XL). The addition of this feature will assist with greater engagement within calls, as people can now react or respond in real time without having to speak or interrupt. ([commit](https://github.com/azure/communication-ui-library/commit/not available) by dmceachern@microsoft.com)
-- Fade other emojis when one emoji is hovered ([commit](https://github.com/azure/communication-ui-library/commit/not available) by 2684369+JamesBurnside@users.noreply.github.com)
-- We are excited to announce that Azure Communications Services has recently added the Closed Captions feature. With closed captions, developers can provide a textual representation of the audio content in their videos, making it easier for users who are deaf or hard of hearing to follow along. Developers can enable this functionality today through our composites (e.g CallComposite, CallWithChatComposite). Azure Communications Services Closed Captions supports: Enable and disable closed captions in the call, Change spoken language, Being able to use captions outside of teams scenario ([commit](https://github.com/azure/communication-ui-library/commit/not available) by 96077406+carocao-msft@users.noreply.github.com)
-- Add UI test for ACS captions  ([commit](https://github.com/azure/communication-ui-library/commit/not available) by 96077406+carocao-msft@users.noreply.github.com)
-- Move survey and captions to concept page ([commit](https://github.com/azure/communication-ui-library/commit/not available) by 96077406+carocao-msft@users.noreply.github.com)
-- Reaction animation enforcing of the frame API ([commit](https://github.com/azure/communication-ui-library/commit/not available) by mbellah@microsoft.com)
-- Add endCallButton option ([commit](https://github.com/azure/communication-ui-library/commit/not available) by jiangnanhello@live.com)
-- Captions Kind Changed event and store captions Kind inside context ([commit](https://github.com/azure/communication-ui-library/commit/not available) by 96077406+carocao-msft@users.noreply.github.com)
-- Improved closed captions storybook based on feedback ([commit](https://github.com/azure/communication-ui-library/commit/not available) by 96077406+carocao-msft@users.noreply.github.com)
-- Dismiss drawer on reaction click on mobile ([commit](https://github.com/azure/communication-ui-library/commit/not available) by 2684369+JamesBurnside@users.noreply.github.com)
+
+### Rich Text Editor - Public Preview
+
+The Web UI RichTextSendBox and MessageThread components now support rich text formatting to generate HTML content for chat messages. This feature includes support for: Different text styles (bold, italic and underline)Bulleted and numbered listsChanging indentation for textAdding and updating tables
+
+### Closed Captions - Public Preview
+
+We are excited to announce that Azure Communications Services has recently added the Closed Captions feature. With closed captions, developers can provide a textual representation of the audio content in their videos, making it easier for users who are deaf or hard of hearing to follow along. Developers can enable this functionality today through our composites (e.g CallComposite, CallWithChatComposite). Azure Communications Services Closed Captions supports: Enable and disable closed captions in the call, Change spoken language, Being able to use captions outside of teams scenario
+
 ### Improvements
+
 - Renamed "file" to "attachment" for File Sharing Upload Flow ([PR #4369](https://github.com/azure/communication-ui-library/pull/4369) by 109105353+jpeng-ms@users.noreply.github.com)
 - Updated File Sharing Public APIs ([PR #4464](https://github.com/azure/communication-ui-library/pull/4464) by 109105353+jpeng-ms@users.noreply.github.com)
 - Updated File Sharing API References in Storybook ([PR #4382](https://github.com/azure/communication-ui-library/pull/4382) by 109105353+jpeng-ms@users.noreply.github.com)
 - Add A11y for FluentUI attachment card ([PR #4406](https://github.com/azure/communication-ui-library/pull/4406) by 77021369+jimchou-dev@users.noreply.github.com)
 - Allow always showing background color for display name containers in VideoTiles ([PR #4489](https://github.com/azure/communication-ui-library/pull/4489) by edwardlee@microsoft.com)
-- Refactor Download Flow for File Sharing ([PR #4346](https://github.com/azure/communication-ui-library/pull/4346) by 109105353+jpeng-ms@users.noreply.github.com)
-- Add storybook 8 packlet to repository ([PR #4454](https://github.com/azure/communication-ui-library/pull/4454) by 3941071+emlynmac@users.noreply.github.com)
 - Migrate to FluentUI Card for AttachmentCards ([PR #4313](https://github.com/azure/communication-ui-library/pull/4313) by 77021369+jimchou-dev@users.noreply.github.com)
-- Added File Sharing to Chat Sample ([PR #4416](https://github.com/azure/communication-ui-library/pull/4416) by 109105353+jpeng-ms@users.noreply.github.com)
-- Lay groundwork for supporting the new Teams' short meeting URLs ([PR #4481](https://github.com/azure/communication-ui-library/pull/4481) by 2684369+JamesBurnside@users.noreply.github.com)
+
 ### Bug Fixes
+
 - Fixed the issue where file cannot be removed from edit box ([PR #4385](https://github.com/azure/communication-ui-library/pull/4385) by 109105353+jpeng-ms@users.noreply.github.com)
 - Disable keyboard ([PR #4349](https://github.com/azure/communication-ui-library/pull/4349) by 93549644+ShaunaSong@users.noreply.github.com)
 - Fix an issue where all messages were re-rendered when a new message was sent ([PR #4451](https://github.com/azure/communication-ui-library/pull/4451) by 98852890+vhuseinova-msft@users.noreply.github.com)
