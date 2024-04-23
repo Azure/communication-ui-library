@@ -17,7 +17,10 @@ The Web UI RichTextSendBox and MessageThread components now support rich text fo
 
 ### Closed Captions - Public Preview
 
-We are excited to announce that Azure Communications Services has recently added the Closed Captions feature. With closed captions, developers can provide a textual representation of the audio content in their videos, making it easier for users who are deaf or hard of hearing to follow along. Developers can enable this functionality today through our composites (e.g CallComposite, CallWithChatComposite). Azure Communications Services Closed Captions supports: Enable and disable closed captions in the call, Change spoken language, Being able to use captions outside of teams scenario
+We are excited to announce that Azure Communications Services has recently added the Closed Captions feature. With closed captions, developers can provide a textual representation of the audio content in their videos, making it easier for users who are deaf or hard of hearing to follow along. Developers can enable this functionality today through our composites (e.g CallComposite, CallWithChatComposite). This feature includes support for:
+- Enable and disable closed captions in the call
+- Change spoken language
+- Being able to use captions outside of teams scenario
 
 ### Improvements
 
@@ -27,9 +30,13 @@ We are excited to announce that Azure Communications Services has recently added
 - Added A11y for FluentUI attachment card ([PR #4406](https://github.com/azure/communication-ui-library/pull/4406) by 77021369+jimchou-dev@users.noreply.github.com)
 - Allowed always showing background color for display name containers in VideoTiles ([PR #4489](https://github.com/azure/communication-ui-library/pull/4489) by edwardlee@microsoft.com)
 - Migrated to FluentUI Card for AttachmentCards ([PR #4313](https://github.com/azure/communication-ui-library/pull/4313) by 77021369+jimchou-dev@users.noreply.github.com)
+- Update communication-chat to 1.5.0-beta.2 ([PR #4445](https://github.com/azure/communication-ui-library/pull/4445) by 3941071+emlynmac@users.noreply.github.com)
 
 ### Bug Fixes
 
+- Solving reaction out of screen viewport issue ([PR #4412](https://github.com/azure/communication-ui-library/pull/4412) by mbellah@microsoft.com)
+- Changing the order of the reaction animation appearance. ([PR #4368](https://github.com/azure/communication-ui-library/pull/4368) by mbellah@microsoft.com)
+- Reaction animation inconsistency for presentaiton mode burse case fixed. ([PR #4370](https://github.com/azure/communication-ui-library/pull/4370) by mbellah@microsoft.com)
 - Fixed the issue where file cannot be removed from edit box ([PR #4385](https://github.com/azure/communication-ui-library/pull/4385) by 109105353+jpeng-ms@users.noreply.github.com)
 - Fixd an issue where all messages were re-rendered when a new message was sent ([PR #4451](https://github.com/azure/communication-ui-library/pull/4451) by 98852890+vhuseinova-msft@users.noreply.github.com)
 - Improved detecting if camera permission is available by using Permissions API in the StatefulCallClient ([PR #4472](https://github.com/azure/communication-ui-library/pull/4472) by 2684369+JamesBurnside@users.noreply.github.com)
@@ -45,11 +52,11 @@ We are excited to announce that Azure Communications Services has recently added
 - Added adapter options to JS bundles ([PR #4486](https://github.com/azure/communication-ui-library/pull/4486) by dmceachern@microsoft.com)
 - Removed PPTLive overlay ([PR #4446](https://github.com/azure/communication-ui-library/pull/4446) by 93549644+ShaunaSong@users.noreply.github.com)
 - Added Chat Attachments in Live Messages ([PR #4438](https://github.com/azure/communication-ui-library/pull/4438) by 109105353+jpeng-ms@users.noreply.github.com)
-- Added Missing File Sharing Exports ([PR #4419](https://github.com/azure/communication-ui-library/pull/4419) by 109105353+jpeng-ms@users.noreply.github.com)
 - Fixed VideoGallery to not use optimal video count when there are no remote videos on ([PR #4364](https://github.com/azure/communication-ui-library/pull/4364) by 79475487+mgamis-msft@users.noreply.github.com)
 - Fixed bugs of endcall button UX ([commit](https://github.com/azure/communication-ui-library/commit/not available) by jiangnanhello@live.com)
 - Fixed bugs for end call UX ([commit](https://github.com/azure/communication-ui-library/commit/not available) by jiangnanhello@live.com)
-
+- Fix default constant maxWidth value for fluent chat components ([PR #4510](https://github.com/azure/communication-ui-library/pull/4510) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Fix exception thrown when joining an Teams Interop meeting that has an unsupported chat thread ([PR #4482](https://github.com/azure/communication-ui-library/pull/4482) by 2684369+JamesBurnside@users.noreply.github.com)
 
 ## [1.15.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.15.0-beta.1)
 
