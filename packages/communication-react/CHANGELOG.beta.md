@@ -13,7 +13,11 @@ Tue, 23 Apr 2024 17:54:31 GMT
 
 ### Rich Text Editor - Public Preview
 
-The Web UI RichTextSendBox and MessageThread components now support rich text formatting to generate HTML content for chat messages. This feature includes support for: Different text styles (bold, italic and underline)Bulleted and numbered listsChanging indentation for textAdding and updating tables
+The Web UI RichTextSendBox and MessageThread components now support rich text formatting to generate HTML content for chat messages. This feature includes support for: 
+- Different text styles (bold, italic and underline)
+- Bulleted and numbered lists
+- Changing indentation for text
+- Adding and updating tables
 
 ### Closed Captions - Public Preview
 
