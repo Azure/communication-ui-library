@@ -186,13 +186,13 @@ const extractContentForAllyMessage = (props: ChatMessageContentProps): string =>
       parsedContent.replaceChild(imageTextNode, child);
     });
 
-    // Inject attachment names for aria.
-    if (attachments) {
-      let attachmentList = '';
-      /* @conditional-compile-remove(attachment-download) */
-      attachmentList = attachmentCardGroupDescription(props);
+    // Inject message attachment count for aria.
+    // this is only applying to file attachments not for inline images.
+    /* @conditional-compile-remove(attachment-download) */
+    if (attachments && attachments.length > 0) {
+      const attachmentCardDescription = attachmentCardGroupDescription(props);
       const attachmentTextNode = document.createElement('div');
-      attachmentTextNode.innerHTML = ` ${attachmentList} `;
+      attachmentTextNode.innerHTML = `${attachmentCardDescription}`;
       parsedContent.appendChild(attachmentTextNode);
     }
 
