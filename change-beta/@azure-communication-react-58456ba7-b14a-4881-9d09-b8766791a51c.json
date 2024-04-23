@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "improvement",
+  "workstream": "Copy invite link",
+  "comment": "Change text and icon of Copy Invite Link button when clicked recently in stable. Change text and icon of Add People when Copy Invite Link menu button is clicked recently in beta.",
+  "packageName": "@azure/communication-react",
+  "email": "79475487+mgamis-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
