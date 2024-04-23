@@ -1,10 +1,12 @@
-import { Meta } from '@storybook/addon-docs';
+import { Meta, Source } from '@storybook/addon-docs';
 
 <Meta
   id="ppt-live"
   title="Concepts/PowerPoint Live"
   parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }}
 />
+
+import PPTLiveSnippetText from '!!raw-loader!./snippets/PPTLive.snippet.tsx';
 
 # PowerPoint Live
 
@@ -33,30 +35,7 @@ Some of the best use cases for PowerPoint Live are:
 
 The VideoGallery component is used to display PowerPoint Live sessions. This multi-functional component also supports video streams and screen sharing. Here’s a brief guide to integrating it:
 
-```typescript
-import React from 'react';
-import { VideoGallery, usePropsFor } from '@azure/communication-react';
-
-export const CallScreen = () => {
-  // Use usePropsFor to get properties for VideoGallery
-  const videoGalleryProps = usePropsFor(VideoGallery);
-
-  // Map remote participants to include PPTLive stream in the screenShareStream
-  const remoteParticipants = videoGalleryProps.remoteParticipants.forEach((participant) => {
-    // Log the screenShareStream to console for debugging
-    console.log('PPTLive Stream:', participant.screenShareStream);
-
-    return {
-      ...participant,
-      // Setup the PPTLive stream in screenShareStream
-      screenShareStream: participant.screenShareStream
-    };
-  });
-
-  // Display PPTLive in VideoGallery, using the properties and modified participants
-  return <VideoGallery {...videoGalleryProps} remoteParticipants={remoteParticipants} />;
-};
-```
+<Source code={PPTLiveSnippetText} />
 
 This code snippet illustrates the utilization of the `usePropsFor` hook from the `@azure/communication-react` package, which dynamically manages the properties of the `VideoGallery`. This ensures that the component reacts appropriately to changes in state or properties.
 
