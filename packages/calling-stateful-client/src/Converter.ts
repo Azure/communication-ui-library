@@ -25,7 +25,7 @@ import { CaptionsInfo } from './CallClientState';
 
 /* @conditional-compile-remove(teams-identity-support) */ /* @conditional-compile-remove(meeting-id) */
 import { _isACSCall } from './TypeGuards';
-/* @conditional-compile-remove(meeting-id) */
+/* @conditional-compile-remove(meeting-id) */ /* @conditional-compile-remove(acs-close-captions) */
 import { _isTeamsCall } from './TypeGuards';
 import { CallCommon, IncomingCallCommon } from './BetaToStableTypes';
 
