@@ -1,13 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { RichTextSendBox as RichTextSendBoxComponent } from '@internal/react-components';
+import { RichTextSendBox as RichTextSendBoxComponent } from '@azure/communication-react';
 import { Title, Description, Props, Heading, Canvas, Source } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { DetailedBetaBanner } from '../../BetaBanners/DetailedBetaBanner';
-import { COMPONENT_FOLDER_PREFIX } from '../../constants';
-import { hiddenControl } from '../../controlsUtils';
+import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
+import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
+import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { hiddenControl, controlsToAdd } from '../controlsUtils';
 import { RichTextSendBoxExample } from './snippets/RichTextSendBox.snippet';
 import { RichTextSendBoxAttachmentUploadsExample } from './snippets/RichTextSendBoxAttachmentUploads.snippet';
 import { RichTextSendBoxWithSystemMessageExample } from './snippets/RichTextSendBoxWithSystemMessage.snippet';
@@ -23,8 +24,12 @@ const importStatement = `import { RichTextSendBox } from '@azure/communication-r
 const getDocs: () => JSX.Element = () => {
   return (
     <>
+      <SingleLineBetaBanner topOfPage={true} />
       <Title>RichTextSendBox</Title>
-      <Description>Component for composing messages with rich text formatting.</Description>
+      <Description>
+        Component for composing messages with rich text formatting. RichTextSendBox has a callback for sending typing
+        notification when user starts entering text. It also supports an optional message above the rich text editor.
+      </Description>
 
       <Heading>Importing</Heading>
       <Source code={importStatement} />
@@ -65,11 +70,15 @@ const RichTextSendBoxStory = (args): JSX.Element => {
     <div style={{ width: '31.25rem', maxWidth: '90%' }}>
       <RichTextSendBoxComponent
         disabled={args.disabled}
-        systemMessage={args.isSendBoxWithWarning ? args.systemMessage : undefined}
+        systemMessage={args.hasWarning ? args.warningMessage : undefined}
         onSendMessage={async (message) => {
           timeoutRef.current = setTimeout(() => {
             alert(`sent message: ${message} `);
           }, delayForSendButton);
+        }}
+        onTyping={(): Promise<void> => {
+          console.log(`sending typing notifications`);
+          return Promise.resolve();
         }}
       />
     </div>
@@ -81,13 +90,13 @@ const RichTextSendBoxStory = (args): JSX.Element => {
 export const RichTextSendBox = RichTextSendBoxStory.bind({});
 
 export default {
-  id: `${COMPONENT_FOLDER_PREFIX}-internal-richtextsendbox`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Internal/RichTextSendBox`,
+  id: `${COMPONENT_FOLDER_PREFIX}-richtextsendbox`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Send Box/Rich Text Send Box`,
   component: RichTextSendBoxComponent,
   argTypes: {
-    disabled: { control: 'boolean', defaultValue: false },
-    systemMessage: { control: 'text', defaultValue: undefined },
-    isSendBoxWithWarning: { control: 'boolean', defaultValue: false, name: 'Has warning/information message' },
+    disabled: controlsToAdd.disabled,
+    hasWarning: controlsToAdd.isSendBoxWithWarning,
+    warningMessage: controlsToAdd.sendBoxWarningMessage,
     strings: hiddenControl,
     onRenderAttachmentUploads: hiddenControl,
     attachmentsWithProgress: hiddenControl,
