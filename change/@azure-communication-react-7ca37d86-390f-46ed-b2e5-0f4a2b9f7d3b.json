@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "area": "improvement",
-  "workstream": "RTE",
-  "comment": "Add onTyping callback to RichTextSendBox",
-  "packageName": "@azure/communication-react",
-  "email": "73612854+palatter@users.noreply.github.com",
-  "dependentChangeType": "none"
-}
