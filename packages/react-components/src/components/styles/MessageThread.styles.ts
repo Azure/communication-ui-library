@@ -61,6 +61,8 @@ export const noMessageStatusStyle = mergeStyles({
  */
 export const useChatStyles = makeStyles({
   root: {
+    // chat components sets max width value to 1056px, override it to 100%
+    maxWidth: '100%',
     paddingTop: '0.8rem',
     paddingBottom: '0.5rem',
     paddingRight: '0.6rem',

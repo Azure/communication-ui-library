@@ -57,6 +57,15 @@ export const GetHistoryChatMessages = (): ChatMessage[] => {
   ];
 };
 
+export const GetHistoryHTMLChatMessages = (): ChatMessage[] => {
+  return GetHistoryChatMessages().map((message) => {
+    return {
+      ...message,
+      contentType: 'html'
+    };
+  });
+};
+
 export const GetHistoryWithSystemMessages = (): (SystemMessage | ChatMessage)[] => {
   return [
     ...GetHistoryChatMessages(),
