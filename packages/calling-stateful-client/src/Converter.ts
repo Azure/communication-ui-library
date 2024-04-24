@@ -169,7 +169,6 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
       maxRemoteVideoStreams: call.feature(Features.OptimalVideoCount).optimalVideoCount
     },
     /* @conditional-compile-remove(hide-attendee-name) */
-    // TODO: Replace this once the SDK supports hide attendee name
     hideAttendeeNames,
     /* @conditional-compile-remove(meeting-id) */
     info: _isACSCall(call) ? call.info : _isTeamsCall(call) ? call.info : undefined
