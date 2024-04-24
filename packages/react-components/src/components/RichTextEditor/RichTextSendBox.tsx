@@ -9,7 +9,7 @@ import { SendBoxStrings } from '../SendBox';
 import { sendIconStyle } from '../styles/SendBox.styles';
 import { InputBoxButton } from '../InputBoxButton';
 import { RichTextSendBoxErrors, RichTextSendBoxErrorsProps } from './RichTextSendBoxErrors';
-import { isMessageTooLong, sanitizeText } from '../utils/SendBoxUtils';
+import { isMessageTooLong, isSendBoxButtonAriaDisabled, sanitizeText } from '../utils/SendBoxUtils';
 import { RichTextEditorComponentRef } from './RichTextEditor';
 import { useTheme } from '../../theming';
 import { richTextActionButtonsStyle, sendBoxRichTextEditorStyle } from '../styles/RichTextEditor.styles';
@@ -243,8 +243,8 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       onSendMessage(message);
       setContentValue('');
       editorComponentRef.current?.setEmptyContent();
+      editorComponentRef.current?.focus();
     }
-    editorComponentRef.current?.focus();
   }, [
     contentValue,
     contentValueOverflow,
@@ -273,16 +273,19 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     systemMessage
   ]);
 
+  const hasContent = useMemo(() => {
+    // get plain text content from the editor to check if the message is empty
+    // as the content may contain tags even when the content is empty
+    const plainTextContent = editorComponentRef.current?.getPlainContent();
+    return !isContentEmpty({
+      plainTextContent: plainTextContent,
+      content: contentValue,
+      placeholder: strings.placeholderText
+    });
+  }, [contentValue, strings.placeholderText]);
+
   const onRenderSendIcon = useCallback(
     (isHover: boolean) => {
-      // get plain text content from the editor to check if the message is empty
-      // as the content may contain tags even when the content is empty
-      const plainTextContent = editorComponentRef.current?.getPlainContent();
-      const hasContent = !isContentEmpty({
-        plainTextContent: plainTextContent,
-        content: contentValue,
-        placeholder: strings.placeholderText
-      });
       return (
         <Icon
           iconName={isHover && hasContent ? 'SendBoxSendHovered' : 'SendBoxSend'}
@@ -298,7 +301,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         />
       );
     },
-    [contentValue, disabled, hasErrorMessage, strings.placeholderText, theme]
+    [disabled, hasContent, hasErrorMessage, theme]
   );
 
   const sendBoxErrorsProps: RichTextSendBoxErrorsProps = useMemo(() => {
@@ -355,6 +358,16 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     theme
   ]);
 
+  const isSendBoxButtonAriaDisabledValue = useMemo(() => {
+    return isSendBoxButtonAriaDisabled({
+      hasContent,
+      /* @conditional-compile-remove(attachment-upload) */ hasCompletedAttachmentUploads:
+        hasCompletedAttachmentUploads(attachmentsWithProgress),
+      hasError: hasErrorMessage,
+      disabled
+    });
+  }, [attachmentsWithProgress, disabled, hasContent, hasErrorMessage]);
+
   const sendButton = useMemo(() => {
     return (
       <InputBoxButton
@@ -366,9 +379,10 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
         className={richTextActionButtonsStyle}
         ariaLabel={localeStrings.sendButtonAriaLabel}
         tooltipContent={localeStrings.sendButtonAriaLabel}
+        ariaDisabled={isSendBoxButtonAriaDisabledValue}
       />
     );
-  }, [localeStrings.sendButtonAriaLabel, onRenderSendIcon, sendMessageOnClick]);
+  }, [isSendBoxButtonAriaDisabledValue, localeStrings.sendButtonAriaLabel, onRenderSendIcon, sendMessageOnClick]);
 
   /* @conditional-compile-remove(attachment-upload) */
   const hasAttachmentUploads = useMemo(() => {
