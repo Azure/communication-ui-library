@@ -81,6 +81,7 @@ describe('RichTextEditor should be shown correctly', () => {
     expect(numberListButton).not.toBeNull();
     expect(indentDecreaseButton).not.toBeNull();
     expect(indentIncreaseButton).not.toBeNull();
+    //2 dividers in the format toolbar
     expect(divider.length).toBe(2);
     expect(insertTableButton).not.toBeNull();
   });
