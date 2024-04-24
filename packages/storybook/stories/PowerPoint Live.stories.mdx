@@ -1,0 +1,56 @@
+import { Meta, Source } from '@storybook/addon-docs';
+
+<Meta
+  id="ppt-live"
+  title="Concepts/PowerPoint Live"
+  parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }}
+/>
+
+import PPTLiveSnippetText from '!!raw-loader!./snippets/PPTLive.snippet.tsx';
+
+# PowerPoint Live
+
+Azure Communication Services (ACS) integrate PowerPoint Live into Teams meetings, enhancing the presentation experience. This feature allows real-time engagement with presentations, making it an invaluable tool for various scenarios.
+
+## Overview
+
+In the ACS UI library, users participate as attendees to view PowerPoint Live sessions. The interaction capabilities for attendees are set and controlled by the lead presenter of the session.
+
+For a detailed breakdown of the capabilities available to each role during a PowerPoint Live session, please refer to the [PowerPoint Live documentation](https://support.microsoft.com/en-us/office/present-from-powerpoint-live-in-microsoft-teams-28b20e74-7165-499c-9bd4-0ad975d448ad). For more technical details on how to implement these features using the web calling SDK, consult the [Calling SDK documentation](https://learn.microsoft.com/en-us/azure/communication-services/concepts/voice-video-calling/calling-sdk-features).
+
+Some of the best use cases for PowerPoint Live are:
+
+- Corporate presentations
+- Educational lectures
+- Remote training sessions
+- Webinars
+
+![pptlive example](images/pptlive-example.png 'Left: Teams app, Right: ACS UI library')
+
+<sub>
+  <sup>Figure: PowerPoint Live interface comparison. Left: Teams app. Right: ACS UI library.</sup>
+</sub>
+
+## Implementing with the VideoGallery
+
+The VideoGallery component is used to display PowerPoint Live sessions. This multi-functional component also supports video streams and screen sharing. Here’s a brief guide to integrating it:
+
+<Source code={PPTLiveSnippetText} />
+
+This code snippet illustrates the utilization of the `usePropsFor` hook from the `@azure/communication-react` package, which dynamically manages the properties of the `VideoGallery`. This ensures that the component reacts appropriately to changes in state or properties.
+
+For comprehensive setup instructions, refer to the [VideoGallery](https://azure.github.io/communication-ui-library/?path=/docs/ui-components-videogallery--video-gallery). This component facilitates the seamless integration of video streams or shared content into your application.
+
+## FAQs
+
+### Can I use UI library to share PowerPoint Live?
+
+No, we do view-only for PowerPoint Live right now.
+
+### Can I use PowerPoint Live in a group call?
+
+No, our support is limited to Teams meetings where the presenter can share the PowerPoint directly through the Teams client.
+
+### If I have found any issues or anything missing with the PowerPoint live in the CallComposite where can I go?
+
+Please log a [Github issue](https://github.com/Azure/communication-ui-library/issues), and someone from our team can work with you.
