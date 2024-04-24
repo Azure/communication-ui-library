@@ -39,11 +39,11 @@
     "@azure/communication-chat": "1.6.0-beta.1 || ^1.5.0",
     "@azure/communication-react": "1.16.0-beta.0",
     "@azure/communication-common": "^2.3.1",
-    "@azure/logger": "^1.0.4",
+    "@azure/logger": "^1.1.2",
     "@babel/preset-react": "^7.12.7",
-    "@fluentui/react": "^8.117.1",
+    "@fluentui/react": "^8.117.7",
     "@fluentui/react-file-type-icons": "8.11.9",
-    "@fluentui/react-icons": "^2.0.233",
+    "@fluentui/react-icons": "^2.0.237",
     "@internal/acs-ui-common": "1.16.0-beta.0",
     "@internal/calling-component-bindings": "1.16.0-beta.0",
     "@internal/calling-stateful-client": "1.16.0-beta.0",
@@ -63,7 +63,7 @@
     "@babel/eslint-parser": "^7.22.15",
     "@babel/preset-env": "7.23.9",
     "@types/jest": "^29.5.11",
-    "@types/node": "^20.11.25",
+    "@types/node": "^20.12.7",
     "@types/react": "18.2.79",
     "@types/react-dom": "18.2.25",
     "@types/uuid": "^9.0.8",
@@ -105,6 +105,6 @@
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "4.15.1",
     "webpack-bundle-analyzer": "^4.5.0",
-    "@babel/cli": "^7.23.9"
+    "@babel/cli": "^7.24.1"
   }
 }

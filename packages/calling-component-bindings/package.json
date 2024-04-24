@@ -46,7 +46,7 @@
   "devDependencies": {
     "@azure/communication-calling": "1.24.1-beta.2 || ^1.23.1",
     "@azure/communication-calling-effects": "1.0.1",
-    "@babel/cli": "^7.23.9",
+    "@babel/cli": "^7.24.1",
     "@babel/core": "^7.24.3",
     "@types/jest": "^29.5.11",
     "@types/react": "18.2.79",
@@ -67,7 +67,7 @@
     "prettier": "2.3.1",
     "react": "18.2.0",
     "rimraf": "^2.6.2",
-    "rollup": "^4.12.1",
+    "rollup": "^4.16.4",
     "ts-jest": "^29.1.2",
     "typescript": "5.4.5"
   }
