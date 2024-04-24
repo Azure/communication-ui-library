@@ -878,6 +878,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private executeWithResolvedChatAdapter(callback: (adapter: ChatAdapter) => any): any {
     if (!this.chatAdapter) {
       console.error('Chat is not initialized');
