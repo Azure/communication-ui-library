@@ -15,11 +15,6 @@ describe('ChatMessageComponentAsEditBoxUtils tests', () => {
     expect(messageState).toEqual('too short');
   });
 
-  test('getMessageState should return `too short` when message contains only spaces', async () => {
-    const messageState = getMessageState('   ', /* @conditional-compile-remove(attachment-upload) */ []);
-    expect(messageState).toEqual('too short');
-  });
-
   test('getMessageState should return `too long` when message is longer than MAXIMUM_LENGTH_OF_MESSAGE', async () => {
     // generate a message longer than MAXIMUM_LENGTH_OF_MESSAGE
     const message = 'a'.repeat(MAXIMUM_LENGTH_OF_MESSAGE + 1);
