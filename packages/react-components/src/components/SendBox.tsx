@@ -298,7 +298,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       hasError: !!errorMessage,
       disabled: !!disabled
     });
-  }, [attachmentsWithProgress, disabled, errorMessage, textValue]);
+  }, [/* @conditional-compile-remove(attachment-upload) */ attachmentsWithProgress, disabled, errorMessage, textValue]);
 
   const onRenderSendIcon = useCallback(
     (isHover: boolean) =>

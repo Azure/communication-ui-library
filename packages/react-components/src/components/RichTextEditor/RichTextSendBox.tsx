@@ -366,7 +366,12 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       hasError: hasErrorMessage,
       disabled
     });
-  }, [attachmentsWithProgress, disabled, hasContent, hasErrorMessage]);
+  }, [
+    /* @conditional-compile-remove(attachment-upload) */ attachmentsWithProgress,
+    disabled,
+    hasContent,
+    hasErrorMessage
+  ]);
 
   const sendButton = useMemo(() => {
     return (
