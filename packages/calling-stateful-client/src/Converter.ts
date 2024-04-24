@@ -111,7 +111,10 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
   /* @conditional-compile-remove(hide-attendee-name) */
   let hideAttendeeNames = false;
   /* @conditional-compile-remove(hide-attendee-name) */
-  if (call.feature(Features.Capabilities).capabilities.viewAttendeeNames) {
+  if (
+    call.feature(Features.Capabilities).capabilities &&
+    call.feature(Features.Capabilities).capabilities.viewAttendeeNames
+  ) {
     const viewAttendeeNames = call.feature(Features.Capabilities).capabilities.viewAttendeeNames;
     if (!viewAttendeeNames.isPresent && viewAttendeeNames.reason === 'MeetingRestricted') {
       hideAttendeeNames = true;
