@@ -34,6 +34,7 @@ type InferredCallErrorTargets =
    * TODO: Remove this hack once 'CallAgent.feature' becomes part of stable @azure/communication-calling.
    */
   | 'CallAgent.feature'
+  | 'CallAgent.handlePushNotification'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.getEnvironmentInfo'
   | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant'
   | 'CallClient.feature'

@@ -155,7 +155,7 @@ export type ChatErrorTarget =
   | 'ChatThreadClient.sendReadReceipt'
   | 'ChatThreadClient.sendTypingNotification'
   | 'ChatThreadClient.updateMessage'
-  | /* @conditional-compile-remove(chat-beta-sdk) */ 'ChatThreadClient.updateProperties'
+  | 'ChatThreadClient.updateProperties'
   | 'ChatThreadClient.updateTopic'
-  | /* @conditional-compile-remove(chat-beta-sdk) */ 'ChatThreadClient.uploadImage'
-  | /* @conditional-compile-remove(chat-beta-sdk) */ 'ChatThreadClient.deleteImage';
+  | 'ChatThreadClient.uploadImage'
+  | 'ChatThreadClient.deleteImage';

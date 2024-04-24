@@ -917,11 +917,11 @@ export type CallErrorTarget =
   | 'IncomingCall.reject'
   | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant'
   | 'VideoEffectsFeature.startEffects'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallAgent.handlePushNotification'
+  | 'CallAgent.handlePushNotification'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admit'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.rejectParticipant'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteAllRemoteParticipants'
+  | 'Call.muteAllRemoteParticipants'
   | 'Call.setConstraints';
 
 /**

@@ -35,13 +35,11 @@ const mockParticipants: SignalingChatParticipant[] = [
   {
     id: { kind: 'communicationUser', communicationUserId: 'user1' },
     displayName: 'user1',
-    /* @conditional-compile-remove(signaling-beta) */
     metadata: {}
   },
   {
     id: { kind: 'communicationUser', communicationUserId: 'user2' },
     displayName: 'user1',
-    /* @conditional-compile-remove(signaling-beta) */
     metadata: {}
   }
 ];
@@ -132,13 +130,12 @@ describe('declarative chatClient subscribe to event properly after startRealtime
       version: '',
       properties: {
         topic,
-        /* @conditional-compile-remove(chat-beta-sdk) */ metadata: {}
+        metadata: {}
       },
       createdOn: new Date('01-01-2020'),
       createdBy: {
         id: { kind: 'communicationUser', communicationUserId: 'user1' },
         displayName: '',
-        // /* @conditional-compile-remove(chat-beta-sdk) */
         metadata: {}
       },
       participants: mockParticipants
@@ -156,12 +153,11 @@ describe('declarative chatClient subscribe to event properly after startRealtime
       ...event,
       properties: {
         topic: editedTopic,
-        /* @conditional-compile-remove(chat-beta-sdk) */ metadata: {}
+        metadata: {}
       },
       updatedBy: {
         displayName: '',
         id: { kind: 'communicationUser', communicationUserId: 'user1' },
-        // /* @conditional-compile-remove(chat-beta-sdk) */
         metadata: {}
       },
       updatedOn: new Date('01-01-2020')
@@ -176,7 +172,6 @@ describe('declarative chatClient subscribe to event properly after startRealtime
       deletedBy: {
         displayName: '',
         id: { kind: 'communicationUser', communicationUserId: 'user1' },
-        // /* @conditional-compile-remove(chat-beta-sdk) */
         metadata: {}
       },
       deletedOn: new Date('01-01-2020')
@@ -235,7 +230,6 @@ describe('declarative chatClient subscribe to event properly after startRealtime
       addedBy: {
         id: { kind: 'communicationUser', communicationUserId: 'user1' },
         displayName: '',
-        // /* @conditional-compile-remove(chat-beta-sdk) */
         metadata: {}
       },
       addedOn: new Date('01-01-2020'),
@@ -254,7 +248,6 @@ describe('declarative chatClient subscribe to event properly after startRealtime
       removedBy: {
         id: { kind: 'communicationUser', communicationUserId: 'user1' },
         displayName: '',
-        // /* @conditional-compile-remove(chat-beta-sdk) */
         metadata: {}
       },
       removedOn: new Date('01-01-2020')
