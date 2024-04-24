@@ -47,7 +47,7 @@
     "@babel/cli": "^7.23.9",
     "@babel/core": "^7.24.3",
     "@types/jest": "^29.5.11",
-    "@types/react": "18.2.74",
+    "@types/react": "18.2.79",
     "copyfiles": "^2.4.1",
     "cpx": "^1.5.0",
     "cross-env": "^7.0.3",
@@ -64,6 +64,6 @@
     "react": "18.2.0",
     "rimraf": "^2.6.2",
     "rollup": "^4.12.1",
-    "typescript": "5.4.3"
+    "typescript": "5.4.5"
   }
 }
