@@ -44,7 +44,6 @@ async function main() {
 
 /**
  * Decide if the change file needs to be duplicated, or moved to the change-beta directory.
- * If the change file is of type "none", it is not duplicated as it is not relevant for changelogs.
  * If the change file is of type "prerelease", it is only relevant for beta changelogs, so it is moved to the change-beta directory.
  * If the change file is of type "patch", "minor" or "major", it is duplicated to the change-beta directory as it is relevant for both stable and beta changelogs.
  */
@@ -60,13 +59,9 @@ async function adjustAndCommitChangeFile() {
     const changeFilename = newChangeFilesFilenames[0];
     const filepath = path.join(CHANGE_DIR, changeFilename);
     const changeFile = JSON.parse(fs.readFileSync(filepath, 'utf-8'));
-
-    // if type is none, we don't need to duplicate the change file.
-    if (changeFile.type !== "none") {
-        console.log(`Duplicating ${filepath} change files into ${CHANGE_DIR_BETA}`);
-        fs.copyFileSync(filepath, path.join(CHANGE_DIR_BETA, changeFilename));
-        await exec(`git add ${CHANGE_DIR_BETA}`);
-    }
+    console.log(`Duplicating ${filepath} change files into ${CHANGE_DIR_BETA}`);
+    fs.copyFileSync(filepath, path.join(CHANGE_DIR_BETA, changeFilename));
+    await exec(`git add ${CHANGE_DIR_BETA}`);
 
     // if the type is prerelease, we can delete the stable changefile that was created.
     if (changeFile.type === "prerelease") {
