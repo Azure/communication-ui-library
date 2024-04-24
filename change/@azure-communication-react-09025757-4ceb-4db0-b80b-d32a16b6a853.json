@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "area": "feature",
-  "workstream": "Reactions",
-  "comment": "remove size from reaction interface - this will be readded later with adjustments",
-  "packageName": "@azure/communication-react",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "none"
-}
