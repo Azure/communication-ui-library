@@ -97,7 +97,7 @@ export const ribbonButtons = (theme: Theme): RibbonButton<string>[] => {
     indentDecreaseButton(theme),
     indentIncreaseButton(theme),
     dividerRibbonButton(theme, 'RichTextRibbonTableDivider'),
-    insertTableButton(MaxRowsNumber, MaxColumnsNumber)
+    insertTableButton(theme, MaxRowsNumber, MaxColumnsNumber)
   ].forEach((item) => {
     if (item !== undefined) {
       buttons.push(item);

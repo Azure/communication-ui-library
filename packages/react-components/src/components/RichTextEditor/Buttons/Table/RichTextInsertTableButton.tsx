@@ -16,7 +16,11 @@ import type { IEditor } from 'roosterjs-editor-types-compatible';
 /**
  * "Insert table" button for the RoosterJS ribbon
  */
-export const insertTableButton = (maxRowsNumber: number, maxColumnsNumber: number): RibbonButton<string> => {
+export const insertTableButton = (
+  theme: Theme,
+  maxRowsNumber: number,
+  maxColumnsNumber: number
+): RibbonButton<string> => {
   return {
     key: 'buttonNameInsertTable',
     unlocalizedText: 'Insert table',
