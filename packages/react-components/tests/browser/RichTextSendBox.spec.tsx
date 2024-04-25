@@ -64,8 +64,8 @@ betaTest.describe('RichTextSendBox tests', () => {
           return;
         }}
         attachmentsWithProgress={[
-          { progress: 0.65, id: 'id1', name: 'test1' },
-          { progress: 1, id: 'id2', name: 'test2' },
+          { progress: 0.65, id: 'id1', name: 'test1.pdf', extension: 'pdf' },
+          { progress: 1, id: 'id2', name: 'test2.docx', extension: 'docx' },
           { progress: 0, id: 'id3', name: 'test3' }
         ]}
       />
