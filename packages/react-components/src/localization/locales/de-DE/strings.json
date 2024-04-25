@@ -27,7 +27,8 @@
     "attachmentUploadsPendingError": "Wird hochgeladen... Bitte warten.",
     "removeAttachment": "Datei entfernen",
     "uploading": "Hochladen",
-    "uploadCompleted": "Upload abgeschlossen"
+    "uploadCompleted": "Upload abgeschlossen",
+    "attachmentMoreMenu": "Mehr Optionen"
   },
   "richTextSendBox": {
     "placeholderText": "Nachricht eingeben",
@@ -55,7 +56,8 @@
     "deleteRowOrColumnMenu": "Löschen",
     "deleteColumnMenu": "Spalte löschen",
     "deleteRowMenu": "Zeile löschen",
-    "deleteTableMenu": "Tabelle löschen"
+    "deleteTableMenu": "Tabelle löschen",
+    "attachmentMoreMenu": "Mehr Optionen"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Vorschläge"
@@ -79,7 +81,7 @@
     "label": "Verlassen",
     "tooltipContent": "Anruf verlassen",
     "leaveOption": "Beenden",
-    "endCallOption": "Gespräch beenden"
+    "endCallOption": "Anruf für alle beenden"
   },
   "cameraButton": {
     "onLabel": "Kamera",
