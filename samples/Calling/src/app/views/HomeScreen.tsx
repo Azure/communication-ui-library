@@ -120,6 +120,8 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const [callLocator, setCallLocator] = useState<
     TeamsMeetingLinkLocator | RoomLocator | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator
   >();
+  const [meetingId, setMeetingId] = useState<string>();
+  const [passcode, setPasscode] = useState<string>();
   const [chosenRoomsRoleOption, setRoomsRoleOption] = useState<IChoiceGroupOption>(roomRoleOptions[1]);
   /* @conditional-compile-remove(PSTN-calls) */
   const [alternateCallerId, setAlternateCallerId] = useState<string>();
@@ -231,7 +233,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                   required
                   placeholder={'Enter a meeting id'}
                   onChange={(_, newValue) => {
-                    const passcode = callLocator && 'passcode' in callLocator ? callLocator.passcode : undefined;
+                    setMeetingId(newValue);
                     newValue ? setCallLocator({ meetingId: newValue, passcode: passcode }) : setCallLocator(undefined);
                   }}
                 />
@@ -245,10 +247,11 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                   label={'Passcode'}
                   placeholder={'Enter a meeting passcode'}
                   onChange={(_, newValue) => {
-                    const meetingId = callLocator && 'meetingId' in callLocator ? callLocator.meetingId : '';
+                    const localMeetingId = meetingId ? meetingId : '';
                     // meeting id is required, but passcode is not
-                    meetingId
-                      ? setCallLocator({ meetingId: meetingId, passcode: newValue })
+                    setPasscode(newValue);
+                    localMeetingId
+                      ? setCallLocator({ meetingId: localMeetingId, passcode: newValue })
                       : setCallLocator(undefined);
                   }}
                 />

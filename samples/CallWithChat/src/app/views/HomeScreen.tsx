@@ -76,6 +76,8 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const [meetingLocator, setMeetingLocator] = useState<
     TeamsMeetingLinkLocator | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator
   >();
+  const [meetingId, setMeetingId] = useState<string>();
+  const [passcode, setPasscode] = useState<string>();
 
   /* @conditional-compile-remove(PSTN-calls) */
   const [alternateCallerId, setAlternateCallerId] = useState<string>();
@@ -140,7 +142,10 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 required
                 placeholder={'Enter a Teams meeting link'}
                 onChange={(_, newValue) => {
-                  newValue ? setMeetingLocator({ meetingLink: newValue }) : setMeetingLocator(undefined);
+                  setMeetingId(newValue);
+                  newValue
+                    ? setMeetingLocator({ meetingId: newValue, passcode: passcode })
+                    : setMeetingLocator(undefined);
                 }}
               />
             )}
@@ -160,8 +165,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                   required
                   placeholder={'Enter a meeting id'}
                   onChange={(_, newValue) => {
-                    const passcode =
-                      meetingLocator && 'passcode' in meetingLocator ? meetingLocator.passcode : undefined;
+                    setMeetingId(newValue);
                     newValue
                       ? setMeetingLocator({ meetingId: newValue, passcode: passcode })
                       : setMeetingLocator(undefined);
@@ -177,10 +181,11 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                   label={'Passcode'}
                   placeholder={'Enter a meeting passcode'}
                   onChange={(_, newValue) => {
-                    const meetingId = meetingLocator && 'meetingId' in meetingLocator ? meetingLocator.meetingId : '';
+                    const localMeetingId = meetingId ? meetingId : '';
                     // meeting id is required, but passcode is not
-                    meetingId
-                      ? setMeetingLocator({ meetingId: meetingId, passcode: newValue })
+                    setPasscode(newValue);
+                    localMeetingId
+                      ? setMeetingLocator({ meetingId: localMeetingId, passcode: newValue })
                       : setMeetingLocator(undefined);
                   }}
                 />
