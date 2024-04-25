@@ -259,7 +259,6 @@
     "tagsSurveyQuestion": "Cosa avrebbe potuto essere migliore?",
     "tagsSurveyTextFieldDefaultText": "Altro, specifica",
     "tagsSurveyHelperText": "Controlla eventuali problemi riscontrati",
-    "surveyTextboxDefaultText": "Altro, specifica",
     "endOfSurveyText": "Grazie per il feedback!",
     "surveyIssues": {
       "overallRating": {
@@ -301,7 +300,7 @@
         "otherIssues": "Ho avuto altri problemi di condivisione dello schermo in questa chiamata"
       }
     },
-    "SurveyIssuesHeadingStrings": {
+    "surveyIssuesHeadingStrings": {
       "overallRating": "Generale",
       "audioRating": "Audio",
       "videoRating": "Video",
@@ -325,7 +324,8 @@
     },
     "exitSpotlightButtonLabel": "Esci da visualizzazione in evidenza",
     "exitSpotlightButtonTooltip": "Esci da visualizzazione in evidenza",
-    "hangUpConfirmButtonLabel": "Conferma",
+    "leaveConfirmButtonLabel": "Abbandona",
+    "endCallConfirmButtonLabel": "Termina chiamata",
     "hangUpCancelButtonLabel": "Annulla",
     "leaveConfirmDialogTitle": "Vuoi abbandonare la chiamata?",
     "leaveConfirmDialogContent": "Vuoi abbandonare la chiamata?",
