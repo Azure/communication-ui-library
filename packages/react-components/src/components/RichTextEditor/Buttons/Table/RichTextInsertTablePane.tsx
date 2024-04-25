@@ -89,7 +89,8 @@ export const RichTextInsertTablePane = (props: RichTextInsertTablePaneProps): JS
             data-row={i}
             data-is-focusable={true}
             onMouseEnter={onMouseEnter}
-            aria-label={formatText(item.text ?? '', i, j)}
+            aria-label={formatText(item.text ?? '', formatRowColumnText(i), formatRowColumnText(j))}
+            data-testid={key}
           />
         );
       }
