@@ -527,6 +527,26 @@ export class CallContext {
     });
   }
 
+  /* @conditional-compile-remove(hide-attendee-name) */
+  public setHideAttendeeNames(callId: string, capabilitiesChangeInfo: CapabilitiesChangeInfo): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (capabilitiesChangeInfo.oldValue.viewAttendeeNames !== capabilitiesChangeInfo.newValue.viewAttendeeNames) {
+        const viewAttendeeNames = capabilitiesChangeInfo.newValue.viewAttendeeNames;
+        if (
+          call &&
+          viewAttendeeNames &&
+          !viewAttendeeNames.isPresent &&
+          viewAttendeeNames.reason === 'MeetingRestricted'
+        ) {
+          call.hideAttendeeNames = true;
+        } else {
+          call.hideAttendeeNames = false;
+        }
+      }
+    });
+  }
+
   /* @conditional-compile-remove(spotlight) */
   public setSpotlight(
     callId: string,
