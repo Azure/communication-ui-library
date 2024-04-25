@@ -4296,14 +4296,13 @@ export interface SystemMessageCommon extends MessageCommon {
 // @public
 export type TeamsAdapterOptions = CommonCallAdapterOptions;
 
-// @beta
+// @public
 export interface TeamsCallAdapter extends CommonCallAdapter {
     // @deprecated
     joinCall(microphoneOn?: boolean): TeamsCall | undefined;
-    // @public
     joinCall(options?: JoinCallOptions): TeamsCall | undefined;
     startCall(participants: string[], options?: StartCallOptions): TeamsCall | undefined;
-    startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): TeamsCall | undefined;
+    startCall(participants: StartCallIdentifier[], options?: StartCallOptions): TeamsCall | undefined;
 }
 
 // @beta

@@ -55,8 +55,8 @@ module.exports = {
     "PSTN-calls",
     // Adhoc calls to a Teams user.
     "teams-adhoc-call",
-    // Joining calls using teams token
-    "teams-identity-support",
+    // Beta feature for joining calls using teams token
+    "teams-identity-support-beta",
     // Block joining calls if the user is on an unsupported browser
     "unsupported-browser",
     // Feature to show the total number of participants in a call (currently in beta in calling SDK, hence this must be conditionally compiled)
@@ -90,7 +90,7 @@ module.exports = {
     'end-of-call-survey',
     // Feature for PPT Live for teams meeting
     'ppt-live',
-    // feature for hiding attendee name in the teams meeting
-    "hide-attendee-name",
+    // Joining calls using teams token
+    "teams-identity-support",
   ]
 }

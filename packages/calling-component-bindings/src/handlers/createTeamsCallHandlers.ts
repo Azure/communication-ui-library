@@ -1,8 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { StartCallOptions } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-identity-support) */
+import { StartCallOptions, TeamsCallAgentOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
@@ -12,7 +11,7 @@ import {
   isCommunicationUserIdentifier,
   isMicrosoftTeamsAppIdentifier
 } from '@azure/communication-common';
-/* @conditional-compile-remove(teams-identity-support) */
+/* @conditional-compile-remove(PSTN-calls) */
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
 import { Common, _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
@@ -60,18 +59,21 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
     return {
       ...createDefaultCommonCallingHandlers(callClient, deviceManager, call, options),
       onStartCall: (participants, options) => {
-        /* @conditional-compile-remove(teams-identity-support) */
+        /* @conditional-compile-remove(teams-identity-support-beta) */
         const threadId = options?.threadId;
         if (!isTeamsCallParticipants(participants)) {
           throw new Error('CommunicationIdentifier in Teams call is not supported!');
         }
-        /* @conditional-compile-remove(teams-identity-support) */
         if (callAgent) {
-          return callAgent.startCall(participants, threadId ? { threadId } : undefined);
+          /* @conditional-compile-remove(teams-identity-support-beta) */
+          return callAgent.startCall(participants, threadId ? { threadId, ...options } : undefined);
+          /* @conditional-compile-remove(teams-identity-support) */
+          // Remove when teams identity in stable support multiple participants
+          return teamsSingleParticipantTrampoline(callAgent as TeamsCallAgent, participants, options);
         }
+
         return undefined;
       },
-      /* @conditional-compile-remove(teams-identity-support) */
       /* @conditional-compile-remove(PSTN-calls) */
       onAddParticipant: async (
         userId: string | CommunicationIdentifier,
@@ -134,4 +136,17 @@ export const createTeamsCallingHandlersForComponent = <Props>(
   _Component: (props: Props) => ReactElement | null
 ): Common<TeamsCallingHandlers, Props> => {
   return createDefaultTeamsCallingHandlers(callClient, callAgent, deviceManager, call);
+};
+
+/* @conditional-compile-remove(teams-identity-support) */
+const teamsSingleParticipantTrampoline = (
+  callAgent: TeamsCallAgent,
+  participants: CommunicationIdentifier[],
+  options?: TeamsCallAgentOptions
+) => {
+  if (participants.length !== 1) {
+    throw new Error('Only one participant is supported in Teams call!');
+  } else {
+    return callAgent.startCall(participants[0] as any, options);
+  }
 };
