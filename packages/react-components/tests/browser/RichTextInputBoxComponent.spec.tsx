@@ -10,21 +10,21 @@ import { test as betaTest } from './FlavoredBaseTest';
 const formatButtonId = 'rich-text-input-box-format-button';
 const editorId = 'rooster-rich-text-editor';
 
-betaTest.describe.only('RichTextInputBoxComponent tests', () => {
+betaTest.describe('RichTextInputBoxComponent tests', () => {
   betaTest.skip(({ isBetaBuild }) => !isBetaBuild, 'The tests should be run for beta flavor only');
   betaTest('RichTextInputBoxComponent should be shown correctly', async ({ mount }) => {
     const component = await mount(<TestRichTextInputBoxComponent disabled={false} minHeight="1rem" maxHeight="2rem" />);
     await component.evaluate(() => document.fonts.ready);
-    await expect(component).toHaveScreenshot('richtextinputboxcomponent-without-format-toolbar.png');
+    await expect(component).toHaveScreenshot('rich-text-input-box-component-without-format-toolbar.png');
     const formatButton = component.getByTestId(formatButtonId);
 
     await formatButton.hover();
-    await expect(component).toHaveScreenshot('richtextinputboxcomponent-hover.png');
+    await expect(component).toHaveScreenshot('rich-text-input-box-component-hover.png');
 
     await formatButton.click();
     //move mouse to the format button so the screenshots are consistent
     await formatButton.hover();
-    await expect(component).toHaveScreenshot('richtextinputboxcomponent-with-format-toolbar.png');
+    await expect(component).toHaveScreenshot('rich-text-input-box-component-with-format-toolbar.png');
   });
 
   betaTest('Text should be formatted correctly when only 1 text style selected', async ({ mount }) => {
@@ -48,7 +48,9 @@ betaTest.describe.only('RichTextInputBoxComponent tests', () => {
     await underlineButton.click();
     await editor.pressSequentially('Underline ');
 
-    await expect(component).toHaveScreenshot('richtextinputboxcomponent-text-formatted-1-text-format-at-a-time.png');
+    await expect(component).toHaveScreenshot(
+      'rich-text-input-box-component-text-formatted-1-text-format-at-a-time.png'
+    );
   });
 
   betaTest('Text should be formatted correctly when only all text styles selected', async ({ mount }) => {
@@ -64,7 +66,7 @@ betaTest.describe.only('RichTextInputBoxComponent tests', () => {
     // fill can't be used here as it doesn't trigger needed events
     await editor.pressSequentially('Hello World!');
 
-    await expect(component).toHaveScreenshot('richtextinputboxcomponent-text-formatted-all-text-formats.png');
+    await expect(component).toHaveScreenshot('rich-text-input-box-component-text-formatted-all-text-formats.png');
   });
 
   betaTest('Text should be formatted for bulleted list', async ({ mount }) => {
@@ -74,7 +76,7 @@ betaTest.describe.only('RichTextInputBoxComponent tests', () => {
     await component.evaluate(() => document.fonts.ready);
     addList('Bulleted list', component);
 
-    await expect(component).toHaveScreenshot('richtextinputboxcomponent-text-formatted-bulleted-list.png');
+    await expect(component).toHaveScreenshot('rich-text-input-box-component-text-formatted-bulleted-list.png');
   });
 
   betaTest('Text should be formatted for numbered list', async ({ mount }) => {
@@ -85,10 +87,10 @@ betaTest.describe.only('RichTextInputBoxComponent tests', () => {
 
     addList('Numbered list', component);
 
-    await expect(component).toHaveScreenshot('richtextinputboxcomponent-text-formatted-numbered-list.png');
+    await expect(component).toHaveScreenshot('rich-text-input-box-component-text-formatted-numbered-list.png');
   });
 
-  betaTest.only('Tables can be added and modified', async ({ mount, page }) => {
+  betaTest('Tables can be added and modified', async ({ mount, page }) => {
     const component = await mount(
       <TestRichTextInputBoxComponent disabled={false} minHeight="10rem" maxHeight="10rem" />
     );
@@ -97,10 +99,10 @@ betaTest.describe.only('RichTextInputBoxComponent tests', () => {
     await component.getByTestId(formatButtonId).click();
 
     await component.getByLabel('Insert table').click();
-    await expect(component).toHaveScreenshot('richtextinputboxcomponent-insert-table-panel.png');
+    await expect(component).toHaveScreenshot('rich-text-input-box-component-insert-table-panel.png');
     const insertTableOfSelectedSizeButton = page.getByTestId('cell_0_0');
     await insertTableOfSelectedSizeButton.hover();
-    await expect(component).toHaveScreenshot('richtextinputboxcomponent-insert-table-panel-selected-size.png');
+    await expect(component).toHaveScreenshot('rich-text-input-box-component-insert-table-panel-selected-size.png');
 
     // add table 1*1 to have only one sell for the next step
     await insertTableOfSelectedSizeButton.click();
@@ -115,7 +117,7 @@ betaTest.describe.only('RichTextInputBoxComponent tests', () => {
       text: 'Test 2',
       cellName: 'Test 1'
     });
-    await expect(component).toHaveScreenshot('richtextinputboxcomponent-table-insert-additional-row-above.png');
+    await expect(component).toHaveScreenshot('rich-text-input-box-component-table-insert-additional-row-above.png');
 
     await selectTableContextMenu({
       component,
@@ -125,7 +127,7 @@ betaTest.describe.only('RichTextInputBoxComponent tests', () => {
       text: 'Test 3',
       cellName: 'Test 1'
     });
-    await expect(component).toHaveScreenshot('richtextinputboxcomponent-table-insert-additional-row-below.png');
+    await expect(component).toHaveScreenshot('rich-text-input-box-component-table-insert-additional-row-below.png');
 
     await selectTableContextMenu({
       component,
@@ -135,7 +137,7 @@ betaTest.describe.only('RichTextInputBoxComponent tests', () => {
       text: 'Test 4',
       cellName: 'Test 1'
     });
-    await expect(component).toHaveScreenshot('richtextinputboxcomponent-table-insert-additional-column-right.png');
+    await expect(component).toHaveScreenshot('rich-text-input-box-component-table-insert-additional-column-right.png');
 
     await selectTableContextMenu({
       component,
@@ -145,7 +147,7 @@ betaTest.describe.only('RichTextInputBoxComponent tests', () => {
       text: 'Test 5',
       cellName: 'Test 1'
     });
-    await expect(component).toHaveScreenshot('richtextinputboxcomponent-table-insert-additional-column-left.png');
+    await expect(component).toHaveScreenshot('rich-text-input-box-component-table-insert-additional-column-left.png');
 
     await selectTableContextMenu({
       component,
@@ -154,7 +156,7 @@ betaTest.describe.only('RichTextInputBoxComponent tests', () => {
       subMenuTitle: 'Delete row',
       cellName: 'Test 1'
     });
-    await expect(component).toHaveScreenshot('richtextinputboxcomponent-table-delete-row.png');
+    await expect(component).toHaveScreenshot('rich-text-input-box-component-table-delete-row.png');
 
     await selectTableContextMenu({
       component,
@@ -163,7 +165,7 @@ betaTest.describe.only('RichTextInputBoxComponent tests', () => {
       subMenuTitle: 'Delete column',
       cellName: 'Test 2'
     });
-    await expect(component).toHaveScreenshot('richtextinputboxcomponent-table-delete-column.png');
+    await expect(component).toHaveScreenshot('rich-text-input-box-component-table-delete-column.png');
 
     await selectTableContextMenu({
       component,
@@ -172,7 +174,7 @@ betaTest.describe.only('RichTextInputBoxComponent tests', () => {
       subMenuTitle: 'Delete table',
       cellName: 'Test 4'
     });
-    await expect(component).toHaveScreenshot('richtextinputboxcomponent-table-delete-table.png');
+    await expect(component).toHaveScreenshot('rich-text-input-box-component-table-delete-table.png');
   });
 });
 
