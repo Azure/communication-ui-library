@@ -19,16 +19,16 @@ betaTest.describe('RichTextSendBox tests', () => {
       />
     );
     await component.evaluate(() => document.fonts.ready);
-    await expect(component).toHaveScreenshot('richTextSendBox-without-format-toolbar.png');
+    await expect(component).toHaveScreenshot('rich-text-send-box-without-format-toolbar.png');
     const formatButton = component.getByTestId(formatButtonId);
 
     await formatButton.hover();
-    await expect(component).toHaveScreenshot('richTextSendBox-hover.png');
+    await expect(component).toHaveScreenshot('rich-text-send-box-hover.png');
 
     await formatButton.click();
     //move mouse to the format button so the screenshots are consistent
     await formatButton.hover();
-    await expect(component).toHaveScreenshot('richTextSendBox-with-format-toolbar.png');
+    await expect(component).toHaveScreenshot('rich-text-send-box-with-format-toolbar.png');
   });
 
   betaTest('RichTextSendBox should be shown correctly when disabled', async ({ mount }) => {
@@ -41,7 +41,7 @@ betaTest.describe('RichTextSendBox tests', () => {
       />
     );
     await component.evaluate(() => document.fonts.ready);
-    await expect(component).toHaveScreenshot('richTextSendBox-disabled-without-format-toolbar.png');
+    await expect(component).toHaveScreenshot('rich-text-send-box-disabled-without-format-toolbar.png');
   });
 
   betaTest('RichTextSendBox should be shown system message correctly', async ({ mount }) => {
@@ -54,7 +54,7 @@ betaTest.describe('RichTextSendBox tests', () => {
       />
     );
     await component.evaluate(() => document.fonts.ready);
-    await expect(component).toHaveScreenshot('richTextSendBox-with-system-message.png');
+    await expect(component).toHaveScreenshot('rich-text-send-box-with-system-message.png');
   });
 
   betaTest('RichTextSendBox should show attachmentsWithProgress correctly', async ({ mount }) => {
@@ -71,7 +71,7 @@ betaTest.describe('RichTextSendBox tests', () => {
       />
     );
     await component.evaluate(() => document.fonts.ready);
-    await expect(component).toHaveScreenshot('richTextSendBox-with-attachments-with-progress.png');
+    await expect(component).toHaveScreenshot('rich-text-send-box-with-attachments-with-progress.png');
   });
 
   betaTest('RichTextSendBox should apply autoFocus correctly', async ({ mount }) => {
@@ -84,6 +84,6 @@ betaTest.describe('RichTextSendBox tests', () => {
       />
     );
     await component.evaluate(() => document.fonts.ready);
-    await expect(component).toHaveScreenshot('richTextSendBox-with-auto-focus.png');
+    await expect(component).toHaveScreenshot('rich-text-send-box-with-auto-focus.png');
   });
 });
