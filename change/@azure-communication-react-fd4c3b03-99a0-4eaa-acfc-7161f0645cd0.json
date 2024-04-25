@@ -1,8 +1,8 @@
 {
   "type": "none",
-  "area": "fix",
+  "area": "improvement",
   "workstream": "RTE",
-  "comment": "Disable keyboard navigation for rich text toolbar dividers",
+  "comment": "Add tests for the rich text edit box component",
   "packageName": "@azure/communication-react",
   "email": "98852890+vhuseinova-msft@users.noreply.github.com",
   "dependentChangeType": "none"

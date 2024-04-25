@@ -1,8 +1,8 @@
 {
   "type": "none",
-  "area": "fix",
+  "area": "improvement",
   "workstream": "RTE",
-  "comment": "Fix an issue when rich text editor wasn't scrolled to the end of the pasted content",
+  "comment": "Add unit test for rich text editor utils files",
   "packageName": "@azure/communication-react",
   "email": "98852890+vhuseinova-msft@users.noreply.github.com",
   "dependentChangeType": "none"
