@@ -197,7 +197,9 @@ const extractContentForAllyMessage = (props: ChatMessageContentProps): string =>
     }
 
     // Strip all html tags from the content for aria.
-    const message = DOMPurify.sanitize(parsedContent, { ALLOWED_TAGS: [] });
+    let message = DOMPurify.sanitize(parsedContent, { ALLOWED_TAGS: [] });
+    // decode HTML entities so that screen reader can read the content properly.
+    message = decodeEntities(message);
     return message;
   }
   return '';
@@ -293,4 +295,23 @@ const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
     }
   };
   return <>{parse(props.message.content ?? '', options)}</>;
+};
+
+const decodeEntities = (encodedString: string): string => {
+  const translate_re = /&(nbsp|amp|quot|lt|gt);/g;
+  const translate: Record<string, string> = {
+    nbsp: ' ',
+    amp: '&',
+    quot: '"',
+    lt: '<',
+    gt: '>'
+  };
+  return encodedString
+    .replace(translate_re, function (match, entity) {
+      return translate[entity];
+    })
+    .replace(/&#(\d+);/gi, function (match, numStr) {
+      const num = parseInt(numStr, 10);
+      return String.fromCharCode(num);
+    });
 };
