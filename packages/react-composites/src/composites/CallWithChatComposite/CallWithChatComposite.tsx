@@ -367,6 +367,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   );
 
   const [currentCallState, setCurrentCallState] = useState<CallState>();
+  const [isChatInitialized, setIsChatInitialized] = useState(false);
   const [currentPage, setCurrentPage] = useState<CallCompositePage>();
   const [isChatOpen, setIsChatOpen] = useState(false);
 
@@ -376,6 +377,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     const updateCallWithChatPage = (newState: CallWithChatAdapterState): void => {
       setCurrentPage(newState.page);
       setCurrentCallState(newState.call?.state);
+      setIsChatInitialized(newState.chat ? true : false);
     };
     updateCallWithChatPage(callWithChatAdapter.getState());
     callWithChatAdapter.onStateChange(updateCallWithChatPage);
@@ -452,7 +454,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     [chatButtonDisabled, mobileView, toggleChat, showChatButton]
   );
 
-  const unreadChatMessagesCount = useUnreadMessagesTracker(chatAdapter, isChatOpen);
+  const unreadChatMessagesCount = useUnreadMessagesTracker(chatAdapter, isChatOpen, isChatInitialized);
 
   const customChatButton: CustomCallControlButtonCallback = useCallback(
     (args: CustomCallControlButtonCallbackArgs) => ({
