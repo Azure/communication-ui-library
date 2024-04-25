@@ -62,6 +62,10 @@ We are excited to announce that Azure Communications Services has recently added
 - Fix default constant maxWidth value for fluent chat components ([PR #4510](https://github.com/azure/communication-ui-library/pull/4510) by 98852890+vhuseinova-msft@users.noreply.github.com)
 - Fix exception thrown when joining an Teams Interop meeting that has an unsupported chat thread ([PR #4482](https://github.com/azure/communication-ui-library/pull/4482) by 2684369+JamesBurnside@users.noreply.github.com)
 
+### Known Issues
+
+- When joining on Google Pixel devices there is a known issue where there can be no Audio for the remote participants. This can be mitigated by joining the Call with the microphone live.
+
 ## [1.15.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.15.0-beta.1)
 
 Tue, 26 Mar 2024 17:38:26 GMT
