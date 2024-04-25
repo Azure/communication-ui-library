@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "area": "improvement",
-  "workstream": "RTE",
-  "comment": "Add unit test for rich text editor utils files",
-  "packageName": "@azure/communication-react",
-  "email": "98852890+vhuseinova-msft@users.noreply.github.com",
-  "dependentChangeType": "none"
-}
