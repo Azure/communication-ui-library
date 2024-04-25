@@ -22,7 +22,12 @@ import { attachmentUploadCardsStyles } from './styles/SendBox.styles';
 import { SendBoxErrorBarError } from './SendBoxErrorBar';
 /* @conditional-compile-remove(attachment-upload) */
 import { hasCompletedAttachmentUploads, hasIncompleteAttachmentUploads } from './utils/SendBoxUtils';
-import { MAXIMUM_LENGTH_OF_MESSAGE, isMessageTooLong, sanitizeText } from './utils/SendBoxUtils';
+import {
+  MAXIMUM_LENGTH_OF_MESSAGE,
+  isMessageTooLong,
+  sanitizeText,
+  isSendBoxButtonAriaDisabled
+} from './utils/SendBoxUtils';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from './MentionPopover';
 /* @conditional-compile-remove(attachment-upload) */
@@ -241,8 +246,8 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     ) {
       onSendMessage && onSendMessage(message);
       setTextValue('');
+      sendTextFieldRef.current?.focus();
     }
-    sendTextFieldRef.current?.focus();
   };
 
   const setText = (newValue?: string | undefined): void => {
@@ -268,20 +273,32 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     () =>
       sendIconStyle({
         theme,
-        hasText: !!textValue,
+        hasText: sanitizeText(textValue).length > 0,
         /* @conditional-compile-remove(attachment-upload) */ hasAttachment:
           hasCompletedAttachmentUploads(attachmentsWithProgress),
         hasErrorMessage: !!errorMessage,
-        customSendIconStyle: styles?.sendMessageIcon
+        customSendIconStyle: styles?.sendMessageIcon,
+        disabled: !!disabled
       }),
     [
       theme,
       textValue,
       /* @conditional-compile-remove(attachment-upload) */ attachmentsWithProgress,
       errorMessage,
-      styles?.sendMessageIcon
+      styles?.sendMessageIcon,
+      disabled
     ]
   );
+
+  const isSendBoxButtonAriaDisabledValue = useMemo(() => {
+    return isSendBoxButtonAriaDisabled({
+      hasContent: sanitizeText(textValue).length > 0,
+      /* @conditional-compile-remove(attachment-upload) */ hasCompletedAttachmentUploads:
+        hasCompletedAttachmentUploads(attachmentsWithProgress),
+      hasError: !!errorMessage,
+      disabled: !!disabled
+    });
+  }, [/* @conditional-compile-remove(attachment-upload) */ attachmentsWithProgress, disabled, errorMessage, textValue]);
 
   const onRenderSendIcon = useCallback(
     (isHover: boolean) =>
@@ -408,6 +425,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
             className={mergedSendButtonStyle}
             ariaLabel={localeStrings.sendButtonAriaLabel}
             tooltipContent={localeStrings.sendButtonAriaLabel}
+            ariaDisabled={isSendBoxButtonAriaDisabledValue}
           />
         </InputBoxComponent>
         {
