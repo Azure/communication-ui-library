@@ -8,7 +8,7 @@ import { RichTextSendBox } from '../../src/components/RichTextEditor/RichTextSen
 
 const formatButtonId = 'rich-text-input-box-format-button';
 
-betaTest.describe.only('RichTextSendBox tests', () => {
+betaTest.describe('RichTextSendBox tests', () => {
   betaTest.skip(({ isBetaBuild }) => !isBetaBuild, 'The tests should be run for beta flavor only');
   betaTest('RichTextSendBox should be shown correctly', async ({ mount }) => {
     const component = await mount(
