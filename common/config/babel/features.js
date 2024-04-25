@@ -90,5 +90,7 @@ module.exports = {
     'end-of-call-survey',
     // Feature for PPT Live for teams meeting
     'ppt-live',
+    // feature for hiding attendee name in the teams meeting
+    "hide-attendee-name",
   ]
 }

@@ -115,6 +115,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
             onCancel && onCancel(message.messageId);
           }}
           id={'dismissIconWrapper'}
+          data-testId={strings.editBoxCancelButton}
         />
         <InputBoxButton
           className={richTextActionButtonsStyle}
@@ -133,6 +134,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
             e.stopPropagation();
           }}
           id={'submitIconWrapper'}
+          data-testId={strings.editBoxSubmitButton}
         />
       </Stack>
     );
