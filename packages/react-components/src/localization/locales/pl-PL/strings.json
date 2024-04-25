@@ -27,7 +27,8 @@
     "attachmentUploadsPendingError": "Trwa przekazywanie... Czekaj.",
     "removeAttachment": "Usuń plik",
     "uploading": "Przekazywanie",
-    "uploadCompleted": "Zakończono przekazywanie"
+    "uploadCompleted": "Zakończono przekazywanie",
+    "attachmentMoreMenu": "Więcej opcji"
   },
   "richTextSendBox": {
     "placeholderText": "Wprowadź wiadomość",
@@ -55,7 +56,8 @@
     "deleteRowOrColumnMenu": "Usuń",
     "deleteColumnMenu": "Usuń kolumnę",
     "deleteRowMenu": "Usuń wiersz",
-    "deleteTableMenu": "Usuń tabelę"
+    "deleteTableMenu": "Usuń tabelę",
+    "attachmentMoreMenu": "Więcej opcji"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Sugestie"
@@ -79,7 +81,7 @@
     "label": "Wyjdź",
     "tooltipContent": "Opuść rozmowę",
     "leaveOption": "Opuść",
-    "endCallOption": "Zakończ połączenie"
+    "endCallOption": "Zakończ rozmowę dla wszystkich użytkowników"
   },
   "cameraButton": {
     "onLabel": "Kamera",

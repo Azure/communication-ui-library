@@ -27,7 +27,8 @@
     "attachmentUploadsPendingError": "Ladataan palvelimeen... Odota hetki.",
     "removeAttachment": "Poista tiedosto",
     "uploading": "Ladataan palvelimeen",
-    "uploadCompleted": "Ladattu palvelimeen"
+    "uploadCompleted": "Ladattu palvelimeen",
+    "attachmentMoreMenu": "Lisää asetuksia"
   },
   "richTextSendBox": {
     "placeholderText": "Kirjoita viesti",
@@ -55,7 +56,8 @@
     "deleteRowOrColumnMenu": "Poista",
     "deleteColumnMenu": "Poista sarake",
     "deleteRowMenu": "Poista rivi",
-    "deleteTableMenu": "Poista taulukko"
+    "deleteTableMenu": "Poista taulukko",
+    "attachmentMoreMenu": "Lisää asetuksia"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Ehdotuksia"
@@ -79,7 +81,7 @@
     "label": "Poistu",
     "tooltipContent": "Poistu puhelusta",
     "leaveOption": "Poistu",
-    "endCallOption": "Lopeta puhelu"
+    "endCallOption": "Lopeta kaikkien puhelu"
   },
   "cameraButton": {
     "onLabel": "Kamera",
