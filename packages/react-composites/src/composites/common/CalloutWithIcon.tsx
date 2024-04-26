@@ -11,6 +11,7 @@ export interface CalloutWithIconProps {
   targetId: string;
   text: string;
   iconName: keyof CallWithChatCompositeIcons;
+  doNotLayer?: boolean;
 }
 
 /** @private */
@@ -22,6 +23,7 @@ export const CalloutWithIcon = (props: CalloutWithIconProps): JSX.Element => {
       directionalHint={DirectionalHint.topCenter}
       beakWidth={8}
       gapSpace={2}
+      doNotLayer={props.doNotLayer}
     >
       <Stack horizontal styles={calloutRootStackStyle} tokens={{ childrenGap: '0.375rem' }}>
         <CallWithChatCompositeIcon iconName={props.iconName} className={iconClass} />

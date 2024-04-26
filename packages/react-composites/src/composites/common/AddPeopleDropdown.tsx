@@ -158,6 +158,7 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
                 targetId={calloutButtonId}
                 text={strings.copyInviteLinkButtonActionedLabel}
                 iconName="Checkmark"
+                doNotLayer={true}
               />
             )}
           </Stack.Item>

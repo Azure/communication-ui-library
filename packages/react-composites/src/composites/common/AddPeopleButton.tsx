@@ -133,6 +133,7 @@ export const AddPeopleButton = (props: AddPeopleButtonProps): JSX.Element => {
                 targetId={calloutButtonId}
                 text={strings.copyInviteLinkButtonActionedLabel}
                 iconName="Checkmark"
+                doNotLayer={true}
               />
             )}
           </Stack.Item>
