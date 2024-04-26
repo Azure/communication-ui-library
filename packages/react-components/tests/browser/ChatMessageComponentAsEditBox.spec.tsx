@@ -9,7 +9,7 @@ import { MessageStatus } from '@internal/acs-ui-common';
 
 const formatButtonId = 'rich-text-input-box-format-button';
 
-betaTest.describe.only('ChatMessageComponentAsRichTextEditBox tests', () => {
+betaTest.describe('ChatMessageComponentAsRichTextEditBox tests', () => {
   betaTest.skip(({ isBetaBuild }) => !isBetaBuild, 'The tests should be run for beta flavor only');
   const messages: Message = {
     messageType: 'chat',
