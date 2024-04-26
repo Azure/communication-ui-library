@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "fix",
-  "workstream": "",
-  "comment": "Fix exception thrown when joining an Teams Interop meeting that has an unsupported chat thread",
-  "packageName": "@azure/communication-react",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

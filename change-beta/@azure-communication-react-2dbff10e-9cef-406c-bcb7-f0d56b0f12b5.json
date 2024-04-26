@@ -1,9 +1,0 @@
-{
-  "type": "minor",
-  "area": "fix",
-  "workstream": "DTMF dialer",
-  "comment": "Fix issue where dtmf sounds would break when hiding the dialpad on mobile inside the composite.",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
