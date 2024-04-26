@@ -1,15 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Meta } from '@storybook/react/types-6-0';
-import { CONCEPTS_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
-import { controlsToAdd, ArgsFrom, defaultCallWithChatCompositeHiddenControls } from '../controlsUtils';
 import { Stack } from '@fluentui/react';
+import { Meta } from '@storybook/react/types-6-0';
 import React, { useState, useEffect } from 'react';
-import { getMeetingJoinWithLinkDocs } from './TeamsInteropDocs';
 import { CallWithChatExampleProps } from '../CallWithChatComposite/snippets/CallWithChat.snippet';
 import { CallWithChatExperienceWithErrorChecks } from '../CallWithChatComposite/snippets/CallWithChatWithErrorChecks.snippet';
 import { ConfigJoinMeetingHintBanner } from '../CallWithChatComposite/Utils';
+import { CONCEPTS_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
+import { controlsToAdd, ArgsFrom, defaultCallWithChatCompositeHiddenControls } from '../controlsUtils';
+import { getMeetingJoinWithLinkDocs } from './TeamsInteropDocs';
 
 const storyControls = {
   userId: controlsToAdd.userId,
