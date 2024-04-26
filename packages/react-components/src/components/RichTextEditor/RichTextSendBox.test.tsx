@@ -28,36 +28,87 @@ const icons: {
   chevrondown: <></>
 };
 
-// Test if onSendMessage is called when send button is clicked
-// describe('RichTextSendBox should call onSendMessage when send button is clicked', () => {
-//   beforeAll(() => {
-//     registerIcons({
-//       icons: icons
-//     });
-//   });
-//   test('onSendMessage should be called when send button is clicked', async () => {
-//     let called = false;
-//     render(
-//       <RichTextSendBox
-//         onSendMessage={async (): Promise<void> => {
-//           called = true;
-//           return Promise.resolve();
-//         }}
-//       />
-//     );
-//     // Find and click the send button
-//     const sendButton = await screen.findByRole('button', {
-//       name: 'Send message'
-//     });
-//     fireEvent.click(sendButton);
-//     // Check if onSendMessage was called
-//     expect(called).toEqual(true);
-//   });
-// });
-
-// Test disabled when contentOverflow
-
-// Test errorMessage shows in different scenarios
+describe('RichTextSendBox should only call onSendMessage when there is content and it is not disabled', () => {
+  beforeAll(() => {
+    registerIcons({
+      icons: icons
+    });
+  });
+  test('onSendMessage should not be called when message is empty', async () => {
+    let called = false;
+    render(
+      <RichTextSendBox
+        onSendMessage={async (): Promise<void> => {
+          called = true;
+          return Promise.resolve();
+        }}
+      />
+    );
+    // Find and click the send button
+    const sendButton = await screen.findByRole('button', {
+      name: 'Send message'
+    });
+    fireEvent.click(sendButton);
+    // Check that onSendMessage was not called
+    expect(called).toBeFalsy();
+  });
+  test('onSendMessage should be called when message is not empty', async () => {
+    let called = false;
+    render(
+      <RichTextSendBox
+        onSendMessage={async (): Promise<void> => {
+          called = true;
+          return Promise.resolve();
+        }}
+      />
+    );
+    // Find the input field
+    const editorDiv = screen.queryByTestId('rooster-rich-text-editor');
+    // fix for an issue when contentEditable is not set to RoosterJS for tests
+    editorDiv?.setAttribute('contentEditable', 'true');
+    if (editorDiv === null) {
+      fail('Editor div not found');
+    }
+    await userEvent.click(editorDiv);
+    await waitFor(async () => {
+      // Type into the input field
+      await userEvent.keyboard('Test');
+    });
+    // Find and click the send button
+    const sendButton = await screen.findByRole('button', {
+      name: 'Send message'
+    });
+    fireEvent.click(sendButton);
+    // Check that onSendMessage was called
+    expect(called).toBeTruthy();
+  });
+  test('onSendMessage should not be called when disabled', async () => {
+    let called = false;
+    render(
+      <RichTextSendBox
+        disabled={true}
+        onSendMessage={async (): Promise<void> => {
+          called = true;
+          return Promise.resolve();
+        }}
+      />
+    );
+    // Find the input field
+    const editorDiv = screen.queryByTestId('rooster-rich-text-editor');
+    // fix for an issue when contentEditable is not set to RoosterJS for tests
+    editorDiv?.setAttribute('contentEditable', 'true');
+    if (editorDiv === null) {
+      fail('Editor div not found');
+    }
+    // Find and click the send button
+    const sendButton = await screen.findByRole('button', {
+      name: 'Send message'
+    });
+    fireEvent.click(sendButton);
+    // Check that onSendMessage was not called
+    expect(called).toBeFalsy();
+  });
+});
 
 describe('RichTextSendBox should return text correctly', () => {
   beforeAll(() => {

@@ -1,12 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React from 'react';
-
+import React, { useRef } from 'react';
 /* @conditional-compile-remove(rich-text-editor) */
 import { RichTextInputBoxComponent } from './RichTextInputBoxComponent';
-import { render, waitFor } from '@testing-library/react';
-import { screen } from '@testing-library/react';
+import { render, waitFor, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { registerIcons } from '@fluentui/react';
 
@@ -28,7 +26,6 @@ const icons: {
   chevrondown: <></>
 };
 
-// Test richTextInputBoxComponent if onTyping is called when typing
 describe('RichTextInputBoxComponent should call onTyping when typing', () => {
   beforeAll(() => {
     registerIcons({
@@ -41,7 +38,7 @@ describe('RichTextInputBoxComponent should call onTyping when typing', () => {
       <RichTextInputBoxComponent
         onChange={(): void => {}}
         strings={{}}
-        editorComponentRef={React.createRef()}
+        editorComponentRef={useRef(null)}
         disabled={false}
         actionComponents={<></>}
         richTextEditorStyleProps={(): { minHeight: string; maxHeight: string } => ({
@@ -54,10 +51,18 @@ describe('RichTextInputBoxComponent should call onTyping when typing', () => {
         }}
       />
     );
-    // Find and type in the editor
-    const editor = await screen.findByRole('textbox');
-    userEvent.type(editor, 'a');
-    // Check if onTyping was called
-    await waitFor(() => expect(called).toEqual(true));
+    // Find the input field
+    const editorDiv = screen.queryByTestId('rooster-rich-text-editor');
+    // fix for an issue when contentEditable is not set to RoosterJS for tests
+    editorDiv?.setAttribute('contentEditable', 'true');
+    if (editorDiv === null) {
+      fail('Editor div not found');
+    }
+    await userEvent.click(editorDiv);
+    await waitFor(async () => {
+      // Type into the input field
+      await userEvent.keyboard('Test');
+    });
+    expect(called).toEqual(true);
   });
 });
