@@ -76,7 +76,9 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const [meetingLocator, setMeetingLocator] = useState<
     TeamsMeetingLinkLocator | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator
   >();
+  /* @conditional-compile-remove(meeting-id) */
   const [meetingId, setMeetingId] = useState<string>();
+  /* @conditional-compile-remove(meeting-id) */
   const [passcode, setPasscode] = useState<string>();
 
   /* @conditional-compile-remove(PSTN-calls) */
@@ -142,10 +144,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 required
                 placeholder={'Enter a Teams meeting link'}
                 onChange={(_, newValue) => {
-                  setMeetingId(newValue);
-                  newValue
-                    ? setMeetingLocator({ meetingId: newValue, passcode: passcode })
-                    : setMeetingLocator(undefined);
+                  newValue ? setMeetingLocator({ meetingLink: newValue }) : setMeetingLocator(undefined);
                 }}
               />
             )}
