@@ -103,6 +103,10 @@ export const ChatMessageComponentAsRichTextEditBox = (
     [iconClassName]
   );
 
+  const hasMultipleAttachments = useMemo(() => {
+    return (message as ChatMessage).attachments?.length ?? 0 > 1;
+  }, [message]);
+
   const actionButtons = useMemo(() => {
     return (
       <Stack horizontal>
@@ -204,7 +208,10 @@ export const ChatMessageComponentAsRichTextEditBox = (
     <ChatMyMessage
       attached={attached}
       root={{
-        className: chatMyMessageStyles.root
+        className: mergeStyles(
+          chatMyMessageStyles.root,
+          hasMultipleAttachments ? chatMyMessageStyles.multipleAttachments : undefined
+        )
       }}
       body={{
         className: mergeClasses(

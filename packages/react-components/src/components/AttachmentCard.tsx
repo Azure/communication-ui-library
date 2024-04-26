@@ -17,7 +17,8 @@ import {
   MenuList,
   Toolbar,
   CardFooter,
-  ProgressBar
+  ProgressBar,
+  mergeClasses
 } from '@fluentui/react-components';
 import { getFileTypeIconProps } from '@fluentui/react-file-type-icons';
 import React from 'react';
@@ -50,6 +51,10 @@ export interface _AttachmentCardProps {
    * Optional callback that runs if menu bar action onclick throws.
    */
   onActionHandlerFailed?: (errMsg: string) => void;
+  /**
+   * Optional flag to enable self resizing of the attachment card.
+   */
+  selfResizing?: boolean;
 }
 
 /**
@@ -59,7 +64,7 @@ export interface _AttachmentCardProps {
  * `_AttachmentCard` internally uses the `Card` component from `@fluentui/react-components`. You can checkout the details about these components [here](https://react.fluentui.dev/?path=/docs/components-card).
  */
 export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
-  const { attachment, menuActions, onActionHandlerFailed } = props;
+  const { attachment, menuActions, onActionHandlerFailed, selfResizing } = props;
   const attachmentCardStyles = useAttachmentCardStyles();
 
   const progress = useMemo(() => {
@@ -91,7 +96,10 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
     <div data-is-focusable={true}>
       <Announcer announcementString={announcerString} ariaLive={'polite'} />
       <Card
-        className={attachmentCardStyles.root}
+        className={mergeClasses(
+          attachmentCardStyles.root,
+          selfResizing ? attachmentCardStyles.dynamicWidth : attachmentCardStyles.staticWidth
+        )}
         size="small"
         role="listitem"
         appearance="filled-alternative"
