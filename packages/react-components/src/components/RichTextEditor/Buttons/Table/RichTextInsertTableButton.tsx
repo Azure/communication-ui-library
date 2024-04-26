@@ -43,7 +43,6 @@ export const insertTableButton = (
           <RichTextInsertTablePane
             item={item}
             onClick={onClick}
-            theme={theme}
             maxColumnsNumber={maxColumnsNumber}
             maxRowsNumber={maxRowsNumber}
           />
