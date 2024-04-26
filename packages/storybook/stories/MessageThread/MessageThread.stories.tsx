@@ -389,7 +389,7 @@ const Docs: () => JSX.Element = () => {
         <DetailedBetaBanner />
         <Description>
           The following example shows how to enable rich text editor for message editing by providing the
-          `richTextEditor` property. Rich text editor does not support mentioning users at the moment. By set
+          `richTextEditor` property. Rich text editor does not support mentioning users at the moment. By setting
           `richTextEditor` property to true, the `lookupOptions` under the `mentionOptions` property will be ignored.
         </Description>
         <Canvas mdxSource={MessageThreadWithRichTextEditorText}>
