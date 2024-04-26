@@ -27,7 +27,7 @@ betaTest.describe('RichTextInputBoxComponent table tests', () => {
     await insertTableOfSelectedSizeButton.hover();
     await expect(component).toHaveScreenshot('rich-text-input-box-component-insert-table-panel-selected-size.png');
 
-    // add table 1*1 to have only one sell for the next step
+    // add table 1*1 to have only one cell for the next step
     await insertTableOfSelectedSizeButton.click();
 
     // there is only 1 cell, so try to find the cell by role
