@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "area": "feature",
-  "workstream": "Reactions",
-  "comment": "Microsoft Azure Communications Services has recently updated its UI library composites and components to include call reactions. The UI Library will support the following list of live call reactions: Like 3D emoji like reaction, Love 3D Emoji heart reaction, Applause 3D emoji applause reaction, Laugh  3D emoji laughter reaction, Surprise 3D emoji surprise reaction. Call reactions are associated to the user sending it and are visible to all types of users (in-tenant, guest, federated, anonymous). Call reactions are supported in all types of calls (1:1, group) and meetings (scheduled, meet now, private, channel) of all sizes (small, large, XL). The addition of this feature will assist with greater engagement within calls, as people can now react or respond in real time without having to speak or interrupt.",
-  "packageName": "@azure/communication-react",
-  "email": "dmceachern@microsoft.com",
-  "dependentChangeType": "patch"
-}
