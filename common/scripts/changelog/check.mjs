@@ -25,7 +25,7 @@ async function main() {
   const newChangeFilesCount = (newStableChangeFiles?.length ?? 0) + (newBetaChangeFiles?.length ?? 0);
 
   if (newChangeFilesCount === 0) {
-    console.error('No changefile detected! Please run `rush changelog` to document your change.');
+    console.error('No changefile detected! Please run `rush changelog` to document your change. Or if your changes do not affect the published packages in any way, please add `do not need changelog` label to the PR.');
     process.exit(1);
   }
   console.log(`Found ${newChangeFilesCount} changefiles. All is good!`)
