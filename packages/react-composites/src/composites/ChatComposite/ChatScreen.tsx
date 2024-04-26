@@ -5,6 +5,8 @@ import { isIOS } from '@fluentui/react';
 import { mergeStyles, Stack } from '@fluentui/react';
 import { PersonaSize } from '@fluentui/react';
 import {
+  AttachmentMetadata,
+  AttachmentUploadTask,
   CommunicationParticipant,
   ErrorBar,
   MessageProps,
@@ -53,6 +55,7 @@ import { SendBox } from '@internal/react-components';
 import { useSelector } from './hooks/useSelector';
 /* @conditional-compile-remove(attachment-upload) */
 import { attachmentUploadsSelector } from './selectors/attachmentUploadsSelector';
+import { nanoid } from 'nanoid';
 
 /**
  * @private
@@ -88,6 +91,10 @@ interface OverlayImageItem {
   messageId: string;
   imageUrl: string;
 }
+interface AttachmentUpload extends AttachmentUploadTask {
+  progress: number;
+  metadata?: AttachmentMetadata;
+}
 
 /**
  * @private
@@ -108,6 +115,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const [downloadErrorMessage, setDownloadErrorMessage] = React.useState('');
   const [overlayImageItem, setOverlayImageItem] = useState<OverlayImageItem>();
   const [isImageOverlayOpen, setIsImageOverlayOpen] = useState<boolean>(false);
+  const [uploadTasks, setUploadTasks] = useState<AttachmentUpload[]>([]);
 
   const adapter = useAdapter();
   const theme = useTheme();
@@ -195,18 +203,55 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   const userId = toFlatCommunicationIdentifier(adapter.getState().userId);
 
+  const handleUploadProgress = useCallback(
+    (taskId: string, progress: number): void => {
+      // Iterate through the tasks and update the value
+      const newValues = uploadTasks.map((v) => (v.taskId === taskId ? { ...v, progress } : v));
+      setUploadTasks(newValues);
+    },
+    [uploadTasks]
+  );
+
+  const handleUploadCompleted = (taskId: string, id: string, url: string): void => {
+    // Iterate through the tasks and update the value
+  };
+
+  const handleUploadFailed = (taskId: string, message: string): void => {
+    // Iterate through the tasks and update the value
+  };
+
   const attachmentUploadButtonOnChange = useCallback(
     (files: FileList | null): void => {
       if (!files) {
         return;
       }
 
+      // Get files, change to tasks, store locally and pass back to Contoso
+      const attachmentUploads = Array.from(files).map((file): AttachmentUpload => {
+        const taskId = nanoid();
+        return {
+          file,
+          taskId,
+          progress: 0,
+          notifyUploadProgressChanged: (value: number) => {
+            handleUploadProgress(taskId, value);
+          },
+          notifyUploadCompleted: (id: string, url: string) => {
+            handleUploadCompleted(taskId, id, url);
+          },
+          notifyUploadFailed: (message: string) => {
+            handleUploadFailed(taskId, message);
+          }
+        };
+      });
+
       /* @conditional-compile-remove(attachment-upload) */
-      const uploadTasks = adapter.registerActiveUploads(Array.from(files));
+      // const uploadTasks = adapter.registerActiveUploads(Array.from(files));
       /* @conditional-compile-remove(attachment-upload) */
-      attachmentOptions?.uploadOptions?.handleAttachmentSelection(uploadTasks);
+      attachmentOptions?.uploadOptions?.handleAttachmentSelection(attachmentUploads);
+      setUploadTasks(attachmentUploads);
     },
-    [adapter, attachmentOptions]
+    [attachmentOptions?.uploadOptions, handleUploadProgress]
   );
 
   /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
