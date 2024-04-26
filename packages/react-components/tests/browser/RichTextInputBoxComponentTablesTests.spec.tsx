@@ -54,7 +54,7 @@ betaTest.describe('RichTextInputBoxComponent table tests', () => {
 
     await component.getByLabel('Insert table').click();
 
-    // add table 1*1 to have only one sell for the next step
+    // add table 1*1 to have only one cell for the next step
     await page.getByTestId('cell_0_0').click();
 
     // there is only 1 cell, so try to find the cell by role
