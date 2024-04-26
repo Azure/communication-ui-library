@@ -71,8 +71,6 @@ module.exports = {
     'image-overlay-theme',
     // Feature for local recording notification for teams meetings
     'local-recording-notification',
-    // Feature for end call options 
-    'end-call-options',
     // Close captions feature for ACS calls
     "acs-close-captions",
     // Feature for Rich Text Editor (RTE) support
@@ -86,11 +84,13 @@ module.exports = {
     "video-stream-is-receiving-flag",
     // Feature for spotlight
     'spotlight',
-     // Feature for end of call survey
+    // Feature for end of call survey
     'end-of-call-survey',
     // Feature for PPT Live for teams meeting
     'ppt-live',
     // feature for hiding attendee name in the teams meeting
     "hide-attendee-name",
+    // Feature for end call options 
+    'end-call-options',
   ]
 }
