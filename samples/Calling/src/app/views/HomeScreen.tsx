@@ -120,7 +120,9 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const [callLocator, setCallLocator] = useState<
     TeamsMeetingLinkLocator | RoomLocator | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator
   >();
+  /* @conditional-compile-remove(meeting-id) */
   const [meetingId, setMeetingId] = useState<string>();
+  /* @conditional-compile-remove(meeting-id) */
   const [passcode, setPasscode] = useState<string>();
   const [chosenRoomsRoleOption, setRoomsRoleOption] = useState<IChoiceGroupOption>(roomRoleOptions[1]);
   /* @conditional-compile-remove(PSTN-calls) */
