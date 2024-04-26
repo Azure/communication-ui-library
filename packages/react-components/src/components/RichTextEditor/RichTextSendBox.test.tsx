@@ -28,6 +28,37 @@ const icons: {
   chevrondown: <></>
 };
 
+// Test if onSendMessage is called when send button is clicked
+// describe('RichTextSendBox should call onSendMessage when send button is clicked', () => {
+//   beforeAll(() => {
+//     registerIcons({
+//       icons: icons
+//     });
+//   });
+//   test('onSendMessage should be called when send button is clicked', async () => {
+//     let called = false;
+//     render(
+//       <RichTextSendBox
+//         onSendMessage={async (): Promise<void> => {
+//           called = true;
+//           return Promise.resolve();
+//         }}
+//       />
+//     );
+//     // Find and click the send button
+//     const sendButton = await screen.findByRole('button', {
+//       name: 'Send message'
+//     });
+//     fireEvent.click(sendButton);
+//     // Check if onSendMessage was called
+//     expect(called).toEqual(true);
+//   });
+// });
+
+// Test disabled when contentOverflow
+
+// Test errorMessage shows in different scenarios
+
 describe('RichTextSendBox should return text correctly', () => {
   beforeAll(() => {
     registerIcons({
