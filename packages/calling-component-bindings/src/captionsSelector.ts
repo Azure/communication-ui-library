@@ -110,7 +110,7 @@ export const _captionsBannerSelector: _CaptionsBannerSelector = reselect.createS
     const captionsInfo = captions?.map((c, index) => {
       const userId = getCaptionsSpeakerIdentifier(c);
       return {
-        id: c.speaker.displayName ?? 'Unnamed Participant' + index,
+        id: (c.speaker.displayName ?? 'Unnamed Participant') + index,
         displayName: c.speaker.displayName ?? 'Unnamed Participant',
         captionText: c.captionText ?? '',
         userId
