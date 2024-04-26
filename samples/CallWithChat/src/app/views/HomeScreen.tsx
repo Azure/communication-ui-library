@@ -180,11 +180,10 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                   label={'Passcode'}
                   placeholder={'Enter a meeting passcode'}
                   onChange={(_, newValue) => {
-                    const localMeetingId = meetingId ? meetingId : '';
                     // meeting id is required, but passcode is not
                     setPasscode(newValue);
-                    localMeetingId
-                      ? setMeetingLocator({ meetingId: localMeetingId, passcode: newValue })
+                    meetingId
+                      ? setMeetingLocator({ meetingId: meetingId, passcode: newValue })
                       : setMeetingLocator(undefined);
                   }}
                 />

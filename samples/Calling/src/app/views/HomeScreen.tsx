@@ -249,11 +249,10 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                   label={'Passcode'}
                   placeholder={'Enter a meeting passcode'}
                   onChange={(_, newValue) => {
-                    const localMeetingId = meetingId ? meetingId : '';
                     // meeting id is required, but passcode is not
                     setPasscode(newValue);
-                    localMeetingId
-                      ? setCallLocator({ meetingId: localMeetingId, passcode: newValue })
+                    meetingId
+                      ? setCallLocator({ meetingId: meetingId, passcode: newValue })
                       : setCallLocator(undefined);
                   }}
                 />
