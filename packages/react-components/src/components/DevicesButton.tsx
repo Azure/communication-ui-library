@@ -9,12 +9,18 @@ import {
   IContextualMenuStyles,
   merge
 } from '@fluentui/react';
+import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-ui-common';
 import React from 'react';
 import { useLocale } from '../localization';
+import { VideoStreamOptions } from '../types';
 import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles } from './ControlBarButton';
 import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 import { buttonFlyoutItemStyles } from './styles/ControlBar.styles';
-import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-ui-common';
+
+const defaultLocalVideoViewOptions = {
+  scalingMode: 'Crop',
+  isMirrored: true
+} as VideoStreamOptions;
 
 /**
  * Styles for the {@link DevicesButton} menu.
@@ -161,7 +167,7 @@ export interface DeviceMenuProps {
   selectedMicrophone?: OptionsDevice;
   selectedSpeaker?: OptionsDevice;
   selectedCamera?: OptionsDevice;
-  onSelectCamera?: (device: OptionsDevice) => Promise<void>;
+  onSelectCamera?: (device: OptionsDevice, options?: VideoStreamOptions) => Promise<void>;
   onSelectMicrophone?: (device: OptionsDevice) => Promise<void>;
   onSelectSpeaker?: (device: OptionsDevice) => Promise<void>;
   styles?: Partial<DeviceMenuStyles>;
@@ -296,7 +302,7 @@ export const generateDefaultDeviceMenuProps = (
                 isChecked: camera.id === selectedCamera?.id,
                 onClick: () => {
                   if (camera.id !== selectedCamera?.id) {
-                    onSelectCamera(camera);
+                    onSelectCamera(camera, defaultLocalVideoViewOptions);
                   }
                 }
               }))
