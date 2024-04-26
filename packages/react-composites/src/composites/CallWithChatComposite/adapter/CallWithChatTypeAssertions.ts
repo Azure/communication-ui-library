@@ -13,7 +13,7 @@ import { CallWithChatControlOptions } from '../CallWithChatComposite';
 import { CallWithChatAdapterUiState, CallWithChatClientState } from '../state/CallWithChatAdapterState';
 import { CallWithChatAdapterManagement } from './CallWithChatAdapter';
 /* @conditional-compile-remove(attachment-upload) */
-import { AttachmentUploadAdapter } from '../../ChatComposite';
+import { _AttachmentUploadAdapter } from '../../ChatComposite';
 
 /// IMPORTANT
 ///
@@ -31,7 +31,7 @@ type CallWithChatAdapterManagementInternal = Omit<CallAdapterCallManagement, 're
   CallAdapterDeviceManagement &
   Omit<ChatAdapterThreadManagement, 'removeParticipant' | 'setTopic'> &
   /* @conditional-compile-remove(attachment-upload) */
-  AttachmentUploadAdapter;
+  _AttachmentUploadAdapter;
 
 const CallWithChatAdapterManagementTypeAssertion = (
   value: CallWithChatAdapterManagement
@@ -89,7 +89,7 @@ type CallWithChatClientStateInternal = Omit<
   | /* @conditional-compile-remove(unsupported-browser) */ 'features'
   | 'videoBackgroundImages'
   | 'selectedVideoBackgroundEffect'
-  | /* @conditional-compile-remove(call-transfer) */ 'acceptedTransferCallState'
+  | 'acceptedTransferCallState'
   | 'cameraStatus'
   | 'sounds'
   | 'isRoomsCall'

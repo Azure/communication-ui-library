@@ -324,11 +324,18 @@
       "stopSpotlightCancelButtonLabel": "Zrušit"
     },
     "exitSpotlightButtonLabel": "Ukončit hlavní výběr",
-    "exitSpotlightButtonTooltip": "Ukončit hlavní výběr"
+    "exitSpotlightButtonTooltip": "Ukončit hlavní výběr",
+    "hangUpConfirmButtonLabel": "Potvrdit",
+    "hangUpCancelButtonLabel": "Zrušit",
+    "leaveConfirmDialogTitle": "Chcete z hovoru odejít?",
+    "leaveConfirmDialogContent": "Opravdu chcete hovor opustit?",
+    "endCallConfirmDialogTitle": "Chcete hovor ukončit?",
+    "endCallConfirmDialogContent": "Hovor ukončíte pro všechny.",
+    "invalidMeetingIdentifier": "Neplatné ID schůzky nebo heslo"
   },
   "chat": {
     "chatListHeader": "V tomto chatu",
-    "uploadAttachment": "Nahrát soubor"
+    "uploadAttachment": "Odeslat přílohu"
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",

@@ -1,12 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(reaction) */
 import { ITooltipHostStyles, keyframes, memoizeFunction, IStyle } from '@fluentui/react';
-/* @conditional-compile-remove(reaction) */
 import React from 'react';
 
-/* @conditional-compile-remove(reaction) */
 /**
  * @private
  */
@@ -21,7 +18,6 @@ export const playFrames = memoizeFunction(() =>
   })
 );
 
-/* @conditional-compile-remove(reaction) */
 /**
  * @param backgroundImage - the uri for the reaction emoji resource
  * @param animationPlayState - the value is either 'running' or 'paused' based on the mouse hover event
@@ -49,12 +45,14 @@ export const emojiStyles = (backgroundImage: string, frameCount: number): IStyle
       animationDuration: '8.12s',
       animationTimingFunction: `steps(${steps})`,
       animationIterationCount: 'infinite',
-      backgroundColor: 'unset'
+      backgroundColor: 'transparent'
+    },
+    ':active': {
+      backgroundColor: 'transparent'
     }
   };
 };
 
-/* @conditional-compile-remove(reaction) */
 /**
  *
  * @private
@@ -75,7 +73,6 @@ export const reactionEmojiMenuStyles = (): IStyle => {
   };
 };
 
-/* @conditional-compile-remove(reaction) */
 /**
  *
  * @private
@@ -91,7 +88,6 @@ export const reactionToolTipHostStyle = (): ITooltipHostStyles => {
   };
 };
 
-/* @conditional-compile-remove(reaction) */
 /**
  *
  * @private
@@ -107,7 +103,6 @@ export const mobileViewMenuItemStyle = (): React.CSSProperties => {
   };
 };
 
-/* @conditional-compile-remove(reaction) */
 /**
  * @param backgroundImage - the uri for the reaction emoji resource
  * @param animationPlayState - the value is either 'running' or 'paused' based on the mouse hover event

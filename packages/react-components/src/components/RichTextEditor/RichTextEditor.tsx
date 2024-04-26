@@ -5,6 +5,11 @@ import { ContentEdit, Watermark } from 'roosterjs-editor-plugins';
 import { Editor } from 'roosterjs-editor-core';
 import type { DefaultFormat, EditorOptions, IEditor } from 'roosterjs-editor-types-compatible';
 import {
+  CompatibleContentPosition,
+  CompatibleGetContentMode,
+  CompatiblePositionType
+} from 'roosterjs-editor-types-compatible';
+import {
   Rooster,
   createUpdateContentPlugin,
   UpdateMode,
@@ -25,6 +30,7 @@ import { RichTextSendBoxStrings } from './RichTextSendBox';
 import { isDarkThemed } from '../../theming/themeUtils';
 import { ribbonButtonsStrings } from '../utils/RichTextEditorStringsUtils';
 import { createTableEditMenuProvider } from './Buttons/Table/RichTextTableContextMenu';
+import CopyPastePlugin from './Plugins/CopyPastePlugin';
 
 /**
  * Props for {@link RichTextEditor}.
@@ -42,13 +48,17 @@ export interface RichTextEditorStyleProps {
  * @private
  */
 export interface RichTextEditorProps {
+  // the initial content of editor that is set when editor is created (e.g. when editing a message)
   initialContent?: string;
+  // the current content of the editor
+  content?: string;
   onChange: (newValue?: string) => void;
   onKeyDown?: (ev: React.KeyboardEvent<HTMLElement>) => void;
   placeholderText?: string;
   strings: Partial<RichTextSendBoxStrings>;
   showRichTextEditorFormatting: boolean;
   styles: RichTextEditorStyleProps;
+  autoFocus?: 'sendBoxTextField';
 }
 
 /**
@@ -56,9 +66,25 @@ export interface RichTextEditorProps {
  *
  * @beta
  */
+/**
+ * Represents a reference to the RichTextEditor component.
+ */
 export interface RichTextEditorComponentRef {
+  /**
+   * Sets focus on the RichTextEditor component.
+   */
   focus: () => void;
+
+  /**
+   * Sets the content of the RichTextEditor component to an empty string.
+   */
   setEmptyContent: () => void;
+
+  /**
+   * Retrieves the plain text content of the RichTextEditor component.
+   * @returns The plain text content of the RichTextEditor component, or undefined if the editor isn't available.
+   */
+  getPlainContent: () => string | undefined;
 }
 
 /**
@@ -67,8 +93,10 @@ export interface RichTextEditorComponentRef {
  * @beta
  */
 export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichTextEditorProps>((props, ref) => {
-  const { initialContent, onChange, placeholderText, strings, showRichTextEditorFormatting } = props;
+  const { initialContent, onChange, placeholderText, strings, showRichTextEditorFormatting, content, autoFocus } =
+    props;
   const editor = useRef<IEditor | null>(null);
+  const contentValue = useRef<string | undefined>(content);
   const theme = useTheme();
   useImperativeHandle(
     ref,
@@ -83,6 +111,9 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
           if (editor.current) {
             editor.current.setContent('');
           }
+        },
+        getPlainContent() {
+          return editor?.current?.getContent(CompatibleGetContentMode.PlainTextFast);
         }
       };
     },
@@ -95,11 +126,23 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
 
   const editorCreator = useCallback(
     (div: HTMLDivElement, options: EditorOptions) => {
-      editor.current = new Editor(div, options);
-      return editor.current;
+      const editorValue = new Editor(div, options);
+      // this is to fix issue when editor is created or re-rendered and has existing text
+      // Content model package has a correct behavior and this fix can be deleted
+      if (contentValue.current !== undefined && contentValue.current.length > 0) {
+        // in case if initialContent is not empty, RoosterJS doesn't set caret position to the end.
+        focusAndUpdateContent(editorValue, contentValue.current);
+      } else if (initialContent !== undefined && initialContent.length > 0) {
+        // changing layout in rich text send box cause the editor to be recreated
+        // to keep the content, we need to set messageContent to the current content
+        focusAndUpdateContent(editorValue, initialContent);
+      }
+      editor.current = editorValue;
+      return editorValue;
     },
     // trigger force editor reset when strings are changed to update context menu strings
     // see RosterJS documentation for 'editorCreator' for more details
+    // the editorCreator callback shouldn't be updated when the initialContent is changed
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [strings]
   );
@@ -125,7 +168,16 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
         onChange && onChange(content);
       }
     );
-    return [contentEdit, placeholderPlugin, updateContentPlugin, ribbonPlugin, contextPlugin, tableEditMenuProvider];
+    const copyPastePlugin = new CopyPastePlugin();
+    return [
+      contentEdit,
+      placeholderPlugin,
+      updateContentPlugin,
+      ribbonPlugin,
+      contextPlugin,
+      tableEditMenuProvider,
+      copyPastePlugin
+    ];
   }, [onChange, placeholderPlugin, ribbonPlugin, strings]);
 
   const ribbon = useMemo(() => {
@@ -165,7 +217,6 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
       <div className={richTextEditorWrapperStyle(theme, !showRichTextEditorFormatting)}>
         <Rooster
           defaultFormat={defaultFormat}
-          initialContent={initialContent}
           inDarkMode={isDarkThemed(theme)}
           plugins={plugins}
           className={richTextEditorStyle(props.styles)}
@@ -177,8 +228,24 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
           data-testid={'rooster-rich-text-editor'}
           // if we don't use 'allowKeyboardEventPropagation' only the enter key is caught
           onKeyDown={props.onKeyDown}
+          focusOnInit={autoFocus === 'sendBoxTextField'}
         />
       </div>
     </div>
   );
 });
+
+const focusAndUpdateContent = (editor: Editor, content: string): void => {
+  // setting focus before setting content, works for Chrome and Edge but not Safari
+  editor.setContent(content);
+  // this is a recommended way (by RoosterJS team) to set focus at the end of the text
+  // RoosterJS v9 has this issue fixed and this code can be removed
+  // CompatibleContentPosition.DomEnd shouldn't be used here as it set focus after the editor div
+  editor.insertContent('<span id="focus-position-span"></span>', { position: CompatibleContentPosition.End });
+  const elements = editor.queryElements('#focus-position-span');
+  if (elements.length > 0) {
+    const placeholder = editor.queryElements('#focus-position-span')[0];
+    editor.select(placeholder, CompatiblePositionType.Before);
+    placeholder.remove();
+  }
+};

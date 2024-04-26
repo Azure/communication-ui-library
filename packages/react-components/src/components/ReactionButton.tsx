@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(reaction) */
 import {
   ContextualMenuItemType,
   DefaultPalette,
@@ -14,28 +13,19 @@ import {
   TooltipHost,
   useTheme
 } from '@fluentui/react';
-/* @conditional-compile-remove(reaction) */
 import React from 'react';
-/* @conditional-compile-remove(reaction) */
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
-/* @conditional-compile-remove(reaction) */
 import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
-/* @conditional-compile-remove(reaction) */
 import { useLocale } from '../localization';
-/* @conditional-compile-remove(reaction) */
 import { emojiStyles, reactionEmojiMenuStyles, reactionToolTipHostStyle } from './styles/ReactionButton.styles';
-/* @conditional-compile-remove(reaction) */
 import { isDarkThemed } from '../theming/themeUtils';
-/* @conditional-compile-remove(reaction) */
 import { ReactionResources } from '..';
-/* @conditional-compile-remove(reaction) */
 import { getEmojiFrameCount } from './VideoGallery/utils/videoGalleryLayoutUtils';
 
-/* @conditional-compile-remove(reaction) */
 /**
  * Props for {@link ReactionButton}.
  *
- * @beta
+ * @public
  */
 export interface ReactionButtonProps extends ControlBarButtonProps {
   /**
@@ -52,11 +42,10 @@ export interface ReactionButtonProps extends ControlBarButtonProps {
   reactionResources: ReactionResources;
 }
 
-/* @conditional-compile-remove(reaction) */
 /**
  * Strings of {@link ReactionButton} that can be overridden.
  *
- * @beta
+ * @public
  */
 export interface ReactionButtonStrings {
   /** Label of the button. */
@@ -79,13 +68,12 @@ export interface ReactionButtonStrings {
   surprisedReactionTooltipContent?: string;
 }
 
-/* @conditional-compile-remove(reaction) */
 /**
  * A button to send reactions.
  *
  * Can be used with {@link ControlBar}.
  *
- * @beta
+ * @public
  */
 export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
   const localeStrings = useLocale().strings.reactionButton;
@@ -174,7 +162,6 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
   );
 };
 
-/* @conditional-compile-remove(reaction) */
 const reactionButtonStyles = (theme: Theme): IButtonStyles => ({
   rootChecked: {
     background: theme.palette.themePrimary,

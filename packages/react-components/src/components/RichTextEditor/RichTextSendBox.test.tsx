@@ -24,7 +24,8 @@ const icons: {
   richtextdividericon: <></>,
   richtexteditorbuttonicon: <></>,
   richtextinserttableregularicon: <></>,
-  richtextinserttablefilledicon: <></>
+  richtextinserttablefilledicon: <></>,
+  chevrondown: <></>
 };
 
 describe('RichTextSendBox should return text correctly', () => {

@@ -5,7 +5,7 @@ import { Icon, mergeStyles } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import { _AttachmentCard } from './AttachmentCard';
 import { _AttachmentCardGroup } from './AttachmentCardGroup';
-import { AttachmentMetadata } from '../types/Attachment';
+import { AttachmentMetadataWithProgress } from '../types/Attachment';
 import { useLocaleAttachmentCardStringsTrampoline } from './utils/common';
 
 /**
@@ -20,6 +20,8 @@ export interface _AttachmentUploadCardsStrings {
   uploading: string;
   /** Aria label to notify user attachment is uploaded. */
   uploadCompleted: string;
+  /** Aria label to notify user more attachment action menu. */
+  attachmentMoreMenu: string;
 }
 
 /**
@@ -27,10 +29,9 @@ export interface _AttachmentUploadCardsStrings {
  */
 export interface AttachmentUploadCardsProps {
   /**
-   * Optional array of active attachment uploads where each object has attibutes
-   * of a attachment upload like name, progress, errormessage etc.
+   * Optional array of {@link AttachmentMetadataWithProgress}
    */
-  activeAttachmentUploads?: AttachmentMetadata[];
+  attachmentsWithProgress?: AttachmentMetadataWithProgress[];
   /**
    * Optional callback to remove the attachment upload before sending by clicking on
    * cancel icon.
@@ -48,7 +49,7 @@ const actionIconStyle = { height: '1rem' };
  * @internal
  */
 export const _AttachmentUploadCards = (props: AttachmentUploadCardsProps): JSX.Element => {
-  const attachments = props.activeAttachmentUploads;
+  const attachments = props.attachmentsWithProgress;
   const localeStrings = useLocaleAttachmentCardStringsTrampoline();
   const removeAttachmentButtonString = useMemo(
     () => () => {
@@ -65,7 +66,7 @@ export const _AttachmentUploadCards = (props: AttachmentUploadCardsProps): JSX.E
     <_AttachmentCardGroup>
       {attachments &&
         attachments
-          .filter((attachment) => !attachment.uploadError)
+          .filter((attachment) => !attachment.error)
           .map((attachment) => (
             <_AttachmentCard
               attachment={attachment}

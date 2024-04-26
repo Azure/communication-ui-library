@@ -22,7 +22,8 @@ export { createTeamsCallAdapter, createTeamsCallAdapterFromClient, useTeamsCallA
 export type { TeamsAdapterOptions } from './adapter';
 
 /* @conditional-compile-remove(teams-identity-support) */
-export type { TeamsCallAdapter, TeamsCallAdapterArgs, Profile, OnFetchProfileCallback } from './adapter';
+export type { TeamsCallAdapter, TeamsCallAdapterArgs } from './adapter';
+export type { Profile, OnFetchProfileCallback } from './adapter';
 
 export type {
   AzureCommunicationCallAdapterArgs,
@@ -72,7 +73,6 @@ export type {
   StartCallIdentifier
 } from './adapter';
 
-/* @conditional-compile-remove(close-captions) */
 export type {
   CaptionsReceivedListener,
   IsCaptionsActiveChangedListener,
@@ -80,12 +80,10 @@ export type {
   IsSpokenLanguageChangedListener
 } from './adapter';
 
-/* @conditional-compile-remove(call-transfer) */
 export type { TransferAcceptedListener } from './adapter';
 
-/* @conditional-compile-remove(capabilities) */
 export type { CapabilitiesChangedListener } from './adapter';
-/* @conditional-compile-remove(capabilities) */
+
 export type { CapabilityChangedNotificationStrings } from './components/CapabilitiesChangedNotificationBar';
 
 /* @conditional-compile-remove(spotlight) */

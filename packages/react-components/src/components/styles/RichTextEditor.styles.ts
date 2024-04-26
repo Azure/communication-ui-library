@@ -14,7 +14,13 @@ export const richTextEditorStyle = (props: { minHeight: string; maxHeight: strin
     outline: 'none',
     minHeight: props.minHeight,
     maxHeight: props.maxHeight,
-    maxWidth: '100%'
+    maxWidth: '100%',
+    // this is needed to fix an issue when text has some indentation, indentation uses blockquote tag and
+    // it gets both horizontal margins because of the user agent stylesheet
+    // remove this code when RoosterJS content model packages are used as they use different approach for indentation
+    '& blockquote': {
+      marginInlineEnd: '0'
+    }
   });
 };
 
@@ -35,8 +41,7 @@ export const richTextEditorWrapperStyle = (theme: Theme, addTopOffset: boolean):
       borderCollapse: 'collapse',
       width: '100%',
       borderSpacing: '0',
-      // don't shrink/expand cells during the input to the table
-      tableLayout: 'fixed',
+      tableLayout: 'auto',
 
       '& tr': {
         background: 'transparent',
@@ -182,14 +187,14 @@ const ribbonTableButtonRootStyles = (theme: Theme, isSelected: boolean): IStyle 
       '.ribbon-table-button-regular-icon': {
         width: '1.25rem',
         height: '1.25rem',
-        marginTop: '-0.25rem',
+        margin: '-0.25rem 0.25rem 0 0.25rem',
         color: theme.palette.neutralPrimary,
         display: isSelected ? 'none' : 'inline-block'
       },
       '.ribbon-table-button-filled-icon': {
         width: '1.25rem',
         height: '1.25rem',
-        marginTop: '-0.25rem',
+        margin: '-0.25rem 0.25rem 0 0.25rem',
         color: theme.palette.themePrimary,
         display: isSelected ? 'inline-block' : 'none'
       }
@@ -200,23 +205,12 @@ const ribbonTableButtonRootStyles = (theme: Theme, isSelected: boolean): IStyle 
 /**
  * @private
  */
-export const ribbonDividerStyle = (theme: Theme): Partial<IButtonStyles> => {
-  return {
-    icon: { color: theme.palette.neutralQuaternaryAlt, margin: '0 -0.5rem', height: 'auto' },
-    root: { margin: '0', padding: '0', minWidth: 'auto' },
-    rootHovered: {
-      backgroundColor: 'transparent',
-      selectors: {
-        // Icon's color doesn't work here because of the specificity
-        '.ms-Button-icon': {
-          color: theme.palette.neutralQuaternaryAlt
-        },
-        '.ms-Button-menuIcon': {
-          color: theme.palette.neutralQuaternaryAlt
-        }
-      }
-    }
-  };
+export const ribbonDividerStyle = (theme: Theme): string => {
+  return mergeStyles({
+    color: theme.palette.neutralQuaternaryAlt,
+    margin: '0 -0.5rem',
+    paddingTop: '0.5rem'
+  });
 };
 
 /**
@@ -242,7 +236,7 @@ export const richTextFormatButtonIconStyle = (theme: Theme, isSelected: boolean)
 export const editBoxRichTextEditorStyle = (): RichTextEditorStyleProps => {
   return {
     minHeight: '2.25rem',
-    maxHeight: '2.25rem'
+    maxHeight: '8rem'
   };
 };
 
@@ -251,8 +245,8 @@ export const editBoxRichTextEditorStyle = (): RichTextEditorStyleProps => {
  */
 export const sendBoxRichTextEditorStyle = (isExpanded: boolean): RichTextEditorStyleProps => {
   return {
-    minHeight: isExpanded ? '5rem' : '1.25rem',
-    maxHeight: '5rem'
+    minHeight: isExpanded ? '4rem' : '1.25rem',
+    maxHeight: '8rem'
   };
 };
 
@@ -266,7 +260,9 @@ export const insertTableMenuCellButtonStyles = (theme: Theme): IStyle => {
     border: `solid 0.0625rem ${theme.palette.neutralTertiaryAlt}`,
     display: 'inline-block',
     cursor: 'pointer',
-    background: 'transparent'
+    background: 'transparent',
+    // include border into width value as the parent element has fixed width
+    boxSizing: 'border-box'
   };
 };
 
@@ -294,8 +290,11 @@ export const insertTableMenuTablePane = mergeStyles({
 export const insertTableMenuFocusZone = (theme: Theme): string => {
   return mergeStyles({
     lineHeight: '12px',
+    // fixed width is required to show columns in a grid correctly
     width: '5rem',
-    border: `solid 0.0625rem ${theme.palette.neutralTertiaryAlt}`
+    border: `solid 0.0625rem ${theme.palette.neutralTertiaryAlt}`,
+    // don't include border into width value as otherwise it may be broken when zoom value is changed
+    boxSizing: 'content-box'
   });
 };
 
@@ -307,4 +306,11 @@ export const insertTableMenuTitleStyles = mergeStyles({
   height: '1rem',
   fontSize: '0.75rem',
   marginBottom: '0.5rem'
+});
+
+/**
+ * @private
+ */
+export const tableContextMenuIconStyles = mergeStyles({
+  marginTop: '0.375rem'
 });

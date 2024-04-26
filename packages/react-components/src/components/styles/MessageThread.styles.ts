@@ -61,6 +61,8 @@ export const noMessageStatusStyle = mergeStyles({
  */
 export const useChatStyles = makeStyles({
   root: {
+    // chat components sets max width value to 1056px, override it to 100%
+    maxWidth: '100%',
     paddingTop: '0.8rem',
     paddingBottom: '0.5rem',
     paddingRight: '0.6rem',
@@ -145,7 +147,9 @@ export const useChatMessageRenderStyles = makeStyles({
  */
 export const useChatMyMessageStyles = makeStyles({
   root: {
-    gridTemplateColumns: 'auto auto',
+    // The first column's width should be set to  1fr
+    // because otherwise rich text editor's width will grow indefinitely
+    gridTemplateColumns: '1fr auto',
     gridTemplateAreas: `
         ". actions"
         "body body"
@@ -282,24 +286,6 @@ export const useChatMessageStyles = makeStyles({
       ...shorthands.borderWidth('1px'),
       ...shorthands.borderColor(tokens.colorNeutralStroke1Selected),
       borderLeftWidth: '4px'
-    },
-    '& table': {
-      backgroundColor: tokens.colorBrandBackgroundInverted,
-      ...shorthands.borderColor(tokens.colorNeutralStroke1Selected),
-      borderCollapse: 'collapse',
-      tableLayout: 'auto',
-      width: '100%',
-
-      '& tr': {
-        ...shorthands.border('1px', 'solid', `${tokens.colorNeutralStroke1Selected}`),
-
-        '& td': {
-          ...shorthands.border('1px', 'solid', `${tokens.colorNeutralStroke1Selected}`),
-          wordBreak: 'normal',
-          paddingTop: '0px',
-          paddingRight: '5px'
-        }
-      }
     }
   },
   bodyWithPlaceholderImage: {
@@ -338,6 +324,26 @@ export const useChatMessageStyles = makeStyles({
  * @private
  */
 export const useChatMessageCommonStyles = makeStyles({
+  body: {
+    '& table': {
+      backgroundColor: tokens.colorBrandBackgroundInverted,
+      ...shorthands.borderColor(tokens.colorNeutralStroke1Selected),
+      borderCollapse: 'collapse',
+      tableLayout: 'auto',
+      width: '100%',
+
+      '& tr': {
+        ...shorthands.border('1px', 'solid', `${tokens.colorNeutralStroke1Selected}`),
+
+        '& td': {
+          ...shorthands.border('1px', 'solid', `${tokens.colorNeutralStroke1Selected}`),
+          wordBreak: 'normal',
+          paddingTop: '0px',
+          paddingRight: '5px'
+        }
+      }
+    }
+  },
   failed: {
     //TODO: can we reuse a theme color here?
     backgroundColor: 'rgba(168, 0, 0, 0.2)'

@@ -44,7 +44,6 @@ import { ParticipantListStrings } from '../components/ParticipantList';
 /* @conditional-compile-remove(mention) */
 import { MentionPopoverStrings } from '../components/MentionPopover';
 import { ImageOverlayStrings } from '../components/ImageOverlay';
-/* @conditional-compile-remove(reaction) */
 import { ReactionButtonStrings } from '../components';
 /* @conditional-compile-remove(rich-text-editor) */
 import { RichTextSendBoxStrings } from '../components/RichTextEditor/RichTextSendBox';
@@ -89,10 +88,8 @@ export interface ComponentStrings {
   screenShareButton: ScreenShareButtonStrings;
   /** Strings for RaiseHandButton */
   raiseHandButton: RaiseHandButtonStrings;
-  /* @conditional-compile-remove(reaction) */
   /**
    * Strings for ReactionButton
-   * @beta
    * */
   reactionButton: ReactionButtonStrings;
   /** Strings for TypingIndicator */

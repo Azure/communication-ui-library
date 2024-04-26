@@ -26,8 +26,7 @@ import { Announcer } from './Announcer';
 import { useEffect, useState, useMemo } from 'react';
 import { _AttachmentUploadCardsStrings } from './AttachmentUploadCards';
 import { useLocaleAttachmentCardStringsTrampoline } from './utils/common';
-import { AttachmentMetadata, AttachmentMenuAction } from '../types/Attachment';
-import { MoreHorizontal24Filled } from '@fluentui/react-icons';
+import { AttachmentMetadata, AttachmentMenuAction, AttachmentMetadataWithProgress } from '../types/Attachment';
 import { useAttachmentCardStyles, attachmentNameContainerClassName } from './styles/AttachmentCard.styles';
 
 /**
@@ -38,7 +37,7 @@ export interface _AttachmentCardProps {
   /**
    * Attachment details including name, extension, url, etc.
    */
-  attachment: AttachmentMetadata;
+  attachment: AttachmentMetadata | AttachmentMetadataWithProgress;
   /**
    * An array of menu actions to be displayed in the attachment card.
    */
@@ -62,9 +61,11 @@ export interface _AttachmentCardProps {
 export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
   const { attachment, menuActions, onActionHandlerFailed } = props;
   const attachmentCardStyles = useAttachmentCardStyles();
+
   const progress = useMemo(() => {
-    return attachment.progress;
-  }, [attachment.progress]);
+    return 'progress' in attachment ? attachment.progress : undefined;
+  }, [attachment]);
+
   const isUploadComplete = useMemo(() => {
     return progress !== undefined && progress > 0 && progress < 1;
   }, [progress]);
@@ -89,7 +90,13 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
   return (
     <div data-is-focusable={true}>
       <Announcer announcementString={announcerString} ariaLive={'polite'} />
-      <Card className={attachmentCardStyles.root} size="small" role="listitem">
+      <Card
+        className={attachmentCardStyles.root}
+        size="small"
+        role="listitem"
+        appearance="filled-alternative"
+        aria-label={attachment.name}
+      >
         <CardHeader
           image={
             <Icon
@@ -110,7 +117,7 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
               <Text title={attachment.name}>{attachment.name}</Text>
             </div>
           }
-          action={getMenuItems(menuActions, attachment, onActionHandlerFailed)}
+          action={MappedMenuItems(menuActions, attachment, onActionHandlerFailed)}
         />
       </Card>
       {isUploadComplete ? (
@@ -124,11 +131,13 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
   );
 };
 
-const getMenuItems = (
+const MappedMenuItems = (
   menuActions: AttachmentMenuAction[],
   attachment: AttachmentMetadata,
   handleOnClickError?: (errMsg: string) => void
 ): JSX.Element => {
+  const localeStrings = useLocaleAttachmentCardStringsTrampoline();
+
   if (menuActions.length === 0) {
     return <></>;
   }
@@ -148,7 +157,7 @@ const getMenuItems = (
     <Toolbar>
       <Menu>
         <MenuTrigger>
-          <ToolbarButton aria-label="More" icon={<MoreHorizontal24Filled />} />
+          <ToolbarButton icon={<Icon iconName="AttachmentMoreMenu" aria-label={localeStrings.attachmentMoreMenu} />} />
         </MenuTrigger>
         <MenuPopover>
           <MenuList>

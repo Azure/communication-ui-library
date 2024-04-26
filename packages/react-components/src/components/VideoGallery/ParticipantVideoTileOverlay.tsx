@@ -1,24 +1,19 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(reaction) */
 import React, { useCallback, useEffect, useState } from 'react';
-/* @conditional-compile-remove(reaction) */
 import { Reaction, ReactionResources } from '../../types';
-/* @conditional-compile-remove(reaction) */
 import { getEmojiFrameCount, getEmojiResource } from './utils/videoGalleryLayoutUtils';
-/* @conditional-compile-remove(reaction) */
 import { Stack, mergeStyles } from '@fluentui/react';
-/* @conditional-compile-remove(reaction) */
 import { reactionRenderingStyle, videoContainerStyles } from '../styles/VideoTile.styles';
-/* @conditional-compile-remove(reaction) */
 import {
+  REACTION_DEFAULT_RESOURCE_FRAME_SIZE_PX,
+  REACTION_NUMBER_OF_ANIMATION_FRAMES,
   REACTION_SCREEN_SHARE_ANIMATION_TIME_MS,
   REACTION_START_DISPLAY_SIZE,
   getReceivedUnixTime
 } from './utils/reactionUtils';
 
-/* @conditional-compile-remove(reaction) */
 /**
  * Reaction overlay component for Grid
  *
@@ -66,9 +61,10 @@ export const ParticipantVideoTileOverlay = React.memo(
     const reactionContainerStyles = useCallback(
       () =>
         reactionRenderingStyle({
-          spriteImageUrl,
+          spriteImageUrl: spriteImageUrl ?? '',
           emojiSize: emojiSize,
-          frameCount
+          frameCount: frameCount ?? REACTION_NUMBER_OF_ANIMATION_FRAMES,
+          rawFrameSize: REACTION_DEFAULT_RESOURCE_FRAME_SIZE_PX
         }),
       [spriteImageUrl, emojiSize, frameCount]
     );
@@ -79,12 +75,19 @@ export const ParticipantVideoTileOverlay = React.memo(
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          backgroundColor: canRenderReaction ? 'rgba(0, 0, 0, 0.5)' : 'transparent'
+          backgroundColor: canRenderReaction ? 'rgba(0, 0, 0, 0.5)' : 'transparent',
+          borderRadius: '0.25rem'
         })}
       >
         <div style={{ height: '33.33%' }}></div>
         {canRenderReaction && isValidImageSource && (
-          <div style={{ minHeight: '84px', height: '84px', width: '84px' }}>
+          <div
+            style={{
+              minHeight: `${emojiSize}px`,
+              height: `${emojiSize}px`,
+              width: `${emojiSize}px`
+            }}
+          >
             <div className={reactionContainerStyles()} />
           </div>
         )}

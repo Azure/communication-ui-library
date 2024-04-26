@@ -66,17 +66,14 @@ export type { RaisedHand } from './types';
 /* @conditional-compile-remove(spotlight) */
 export type { Spotlight } from './types';
 
-/* @conditional-compile-remove(reaction) */
 export type { Reaction, ReactionResources, ReactionSprite } from './types';
 
-/* @conditional-compile-remove(close-captions) */
 export type {
   SpokenLanguageStrings,
   CaptionLanguageStrings,
   _SupportedSpokenLanguage,
   _SupportedCaptionLanguage
 } from './types';
-/* @conditional-compile-remove(close-captions) */
 export { _spokenLanguageToCaptionLanguage } from './types';
 
 /* @conditional-compile-remove(data-loss-prevention) */

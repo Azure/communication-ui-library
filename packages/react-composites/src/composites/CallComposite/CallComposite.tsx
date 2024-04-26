@@ -2,7 +2,13 @@
 // Licensed under the MIT License.
 
 import { _isInCall } from '@internal/calling-component-bindings';
-import { ActiveErrorMessage, ErrorBar, ParticipantMenuItemsCallback, useTheme } from '@internal/react-components';
+import {
+  ActiveErrorMessage,
+  ErrorBar,
+  ParticipantMenuItemsCallback,
+  useTheme,
+  VideoTilesOptions
+} from '@internal/react-components';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurveyImprovementSuggestions } from '@internal/react-components';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -18,7 +24,6 @@ import { NoticePage } from './pages/NoticePage';
 import { useSelector } from './hooks/useSelector';
 import { getEndedCall, getPage, getTargetCallees } from './selectors/baseSelectors';
 import { LobbyPage } from './pages/LobbyPage';
-/* @conditional-compile-remove(call-transfer) */
 import { TransferPage } from './pages/TransferPage';
 import {
   leavingPageStyle,
@@ -49,13 +54,14 @@ import { TrackedErrors } from './types/ErrorTracking';
 import { usePropsFor } from './hooks/usePropsFor';
 import { deviceCountSelector } from './selectors/deviceCountSelector';
 import { VideoGalleryLayout } from '@internal/react-components';
-/* @conditional-compile-remove(capabilities) */
+
 import { capabilitiesChangedInfoAndRoleSelector } from './selectors/capabilitiesChangedInfoAndRoleSelector';
-/* @conditional-compile-remove(capabilities) */
+
 import { useTrackedCapabilityChangedNotifications } from './utils/TrackCapabilityChangedNotifications';
 import { useEndedCallConsoleErrors } from './utils/useConsoleErrors';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { SurveyPage } from './pages/SurveyPage';
+import { useAudio } from '../common/AudioProvider';
 
 /**
  * Props for {@link CallComposite}.
@@ -223,6 +229,10 @@ export type CallCompositeOptions = {
    */
   localVideoTile?: boolean | LocalVideoTileOptions;
   /**
+   * Options for controlling video tile.
+   */
+  videoTilesOptions?: VideoTilesOptions;
+  /**
    * Options for controlling the starting layout of the composite's video gallery
    */
   galleryOptions?: {
@@ -269,7 +279,6 @@ export type CallCompositeOptions = {
       improvementSuggestions: CallSurveyImprovementSuggestions
     ) => Promise<void>;
   };
-  /* @conditional-compile-remove(custom-branding) */
   /**
    * Options for setting additional customizations related to personalized branding.
    */
@@ -296,7 +305,6 @@ export type CallCompositeOptions = {
        */
       shape?: 'unset' | 'circle';
     };
-    /* @conditional-compile-remove(custom-branding) */
     /**
      * Background image displayed on the configuration page.
      */
@@ -404,12 +412,10 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     };
   }, [adapter]);
 
-  const compositeAudioContext = useRef<AudioContext>(new AudioContext());
+  const compositeAudioContext = useAudio();
 
-  /* @conditional-compile-remove(capabilities) */
   const capabilitiesChangedInfoAndRole = useSelector(capabilitiesChangedInfoAndRoleSelector);
 
-  /* @conditional-compile-remove(capabilities) */
   const capabilitiesChangedNotificationBarProps =
     useTrackedCapabilityChangedNotifications(capabilitiesChangedInfoAndRole);
 
@@ -463,11 +469,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           onPermissionsTroubleshootingClick={props.options?.onPermissionsTroubleshootingClick}
           /* @conditional-compile-remove(call-readiness) */
           onNetworkingTroubleShootingClick={props.options?.onNetworkingTroubleShootingClick}
-          /* @conditional-compile-remove(capabilities) */
           capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
-          /* @conditional-compile-remove(custom-branding) */
           logo={props.options?.branding?.logo}
-          /* @conditional-compile-remove(custom-branding) */
           backgroundImage={props.options?.branding?.backgroundImage}
         />
       );
@@ -551,12 +554,10 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           mobileChatTabHeader={props.mobileChatTabHeader}
           latestErrors={latestErrors}
           onDismissError={onDismissError}
-          /* @conditional-compile-remove(capabilities) */
           capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
         />
       );
       break;
-    /* @conditional-compile-remove(call-transfer) */
     case 'transferring':
       pageElement = (
         <TransferPage
@@ -568,7 +569,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           latestErrors={latestErrors}
           onDismissError={onDismissError}
-          /* @conditional-compile-remove(capabilities) */
           capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
         />
       );
@@ -591,11 +591,10 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           onUserSetGalleryLayoutChange={setUserSetGalleryLayout}
           onSetUserSetOverflowGalleryPosition={setUserSetOverflowGalleryPosition}
           userSetOverflowGalleryPosition={userSetOverflowGalleryPosition}
-          /* @conditional-compile-remove(capabilities) */
           capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
           pinnedParticipants={pinnedParticipants}
           setPinnedParticipants={setPinnedParticipants}
-          compositeAudioContext={compositeAudioContext.current}
+          compositeAudioContext={compositeAudioContext}
         />
       );
       break;
@@ -612,7 +611,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
               mobileChatTabHeader={props.mobileChatTabHeader}
               latestErrors={latestErrors}
               onDismissError={onDismissError}
-              /* @conditional-compile-remove(capabilities) */
               capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
             />
           }

@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { CameraButton, ControlBarButtonStyles } from '@internal/react-components';
-/* @conditional-compile-remove(capabilities) */
+
 import { _HighContrastAwareIcon } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { CallControlDisplayType } from '../../../common/types/CommonCallControlOptions';
@@ -29,7 +29,6 @@ export const Camera = (props: {
   const adapter = useAdapter();
   const isRoomsCall = adapter.getState().isRoomsCall;
 
-  /* @conditional-compile-remove(capabilities) */
   const turnVideoOnCapability = adapter.getState().call?.capabilitiesFeature?.capabilities.turnVideoOn;
 
   return (
@@ -43,7 +42,6 @@ export const Camera = (props: {
       disabled={
         cameraButtonProps.disabled || props.disabled || (isRoomsCall && adapter.getState().call?.role === 'Unknown')
       }
-      /* @conditional-compile-remove(capabilities) */
       onRenderOffIcon={
         turnVideoOnCapability && !turnVideoOnCapability.isPresent
           ? () => <_HighContrastAwareIcon disabled={true} iconName={'ControlButtonCameraProhibited'} />

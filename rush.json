@@ -101,6 +101,11 @@
       "reviewCategory": "tools"
     },
     {
+      "packageName": "@internal/storybook8",
+      "projectFolder": "packages/storybook8",
+      "reviewCategory": "tools"
+    },
+    {
       "packageName": "@internal/config",
       "projectFolder": "common/config",
       "reviewCategory": "tools"
