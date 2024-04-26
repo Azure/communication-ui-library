@@ -197,7 +197,9 @@ const extractContentForAllyMessage = (props: ChatMessageContentProps): string =>
     }
 
     // Strip all html tags from the content for aria.
-    const message = DOMPurify.sanitize(parsedContent, { ALLOWED_TAGS: [] });
+    let message = DOMPurify.sanitize(parsedContent, { ALLOWED_TAGS: [] });
+    // decode HTML entities so that screen reader can read the content properly.
+    message = decodeEntities(message);
     return message;
   }
   return '';
@@ -293,4 +295,33 @@ const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
     }
   };
   return <>{parse(props.message.content ?? '', options)}</>;
+};
+
+const decodeEntities = (encodedString: string): string => {
+  // This regular expression matches HTML entities.
+  const translate_re = /&(nbsp|amp|quot|lt|gt);/g;
+  // This object maps HTML entities to their respective characters.
+  const translate: Record<string, string> = {
+    nbsp: ' ',
+    amp: '&',
+    quot: '"',
+    lt: '<',
+    gt: '>'
+  };
+
+  return (
+    encodedString
+      // Find all matches of HTML entities defined in translate_re and
+      // replace them with the corresponding character from the translate object.
+      .replace(translate_re, function (match, entity) {
+        return translate[entity];
+      })
+      // Find numeric entities (e.g., &#65;)
+      // and replace them with the equivalent character using the String.fromCharCode method,
+      // which converts Unicode values into characters.
+      .replace(/&#(\d+);/gi, function (match, numStr) {
+        const num = parseInt(numStr, 10);
+        return String.fromCharCode(num);
+      })
+  );
 };
