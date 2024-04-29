@@ -1,0 +1,25 @@
+import { Label, Stack } from '@fluentui/react';
+import { Meta } from '@storybook/addon-docs';
+import { overviewPageImagesStackStyle } from './constants';
+
+<Meta
+  id="hideAttendeeNames"
+  title="Concepts/Hide Attendee Names"
+  parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }}
+/>
+
+## Hide Attendee Names
+
+Microsoft Teams meeting has introduced a Teams Premium meeting option called “Hide attendee names” which would mask the identity of attendees for other attendees in the meeting.
+This feature is launching in Webinars and Meetings.
+As a follow up, Microsoft Azure Communications Services has updated its UI library composites to include support for “hide attendee names”.
+This feature will enable more optimized experience for large meetings and presentations and greater interoperability with Teams meetings.
+
+**Incorporating Hide Attendee Names to your Meeting Experiences**
+The UI Library enables users to enhance their video conferencing experiences by providing the hide attendee names feature by default within the CallComposite and CallWithChat experiences.
+
+**Attendee View**
+Attendees cannot see names and details of other attendees, but they will be able to see names and details of organizers co-organizers, and presenters.
+
+**Organizer and presenter view**
+Organizers, co-organizers, and presenters will see each attendee’s name next to their Attendee label.

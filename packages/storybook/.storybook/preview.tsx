@@ -73,7 +73,8 @@ export const parameters = {
           'Communication as Teams user',
           'Ad-hoc calling',
           'Transfer',
-          'Video Effects'
+          'Video Effects',
+          'Hide Attendee Names'
         ],
         EXAMPLES_FOLDER_PREFIX,
         [
