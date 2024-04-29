@@ -2,12 +2,10 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-/* @conditional-compile-remove(rich-text-editor) */
 import { RichTextSendBox } from './RichTextSendBox';
 /* @conditional-compile-remove(rich-text-editor) */
 import { renderWithLocalization, createTestLocale } from '../utils/testUtils';
-import { render, waitFor, fireEvent } from '@testing-library/react';
-import { screen } from '@testing-library/react';
+import { render, waitFor, fireEvent, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { registerIcons } from '@fluentui/react';
 
@@ -29,7 +27,6 @@ const icons: {
   chevrondown: <></>
 };
 
-/* @conditional-compile-remove(rich-text-editor) */
 describe('RichTextSendBox should only call onSendMessage when there is content and it is not disabled', () => {
   beforeAll(() => {
     registerIcons({
@@ -82,7 +79,6 @@ describe('RichTextSendBox should only call onSendMessage when there is content a
   });
 });
 
-/* @conditional-compile-remove(rich-text-editor) */
 describe('RichTextSendBox should return text correctly', () => {
   beforeAll(() => {
     registerIcons({
