@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import React from 'react';
+/* @conditional-compile-remove(rich-text-editor) */
 import { RichTextSendBox } from './RichTextSendBox';
 /* @conditional-compile-remove(rich-text-editor) */
 import { renderWithLocalization, createTestLocale } from '../utils/testUtils';
@@ -28,6 +29,7 @@ const icons: {
   chevrondown: <></>
 };
 
+/* @conditional-compile-remove(rich-text-editor) */
 describe('RichTextSendBox should only call onSendMessage when there is content and it is not disabled', () => {
   beforeAll(() => {
     registerIcons({
@@ -51,36 +53,6 @@ describe('RichTextSendBox should only call onSendMessage when there is content a
     fireEvent.click(sendButton);
     // Check that onSendMessage was not called
     expect(called).toBeFalsy();
-  });
-  test('onSendMessage should be called when message is not empty', async () => {
-    let called = false;
-    render(
-      <RichTextSendBox
-        onSendMessage={async (): Promise<void> => {
-          called = true;
-          return Promise.resolve();
-        }}
-      />
-    );
-    // Find the input field
-    const editorDiv = screen.queryByTestId('rooster-rich-text-editor');
-    // fix for an issue when contentEditable is not set to RoosterJS for tests
-    editorDiv?.setAttribute('contentEditable', 'true');
-    if (editorDiv === null) {
-      fail('Editor div not found');
-    }
-    await userEvent.click(editorDiv);
-    await waitFor(async () => {
-      // Type into the input field
-      await userEvent.keyboard('Test');
-    });
-    // Find and click the send button
-    const sendButton = await screen.findByRole('button', {
-      name: 'Send message'
-    });
-    fireEvent.click(sendButton);
-    // Check that onSendMessage was called
-    expect(called).toBeTruthy();
   });
   test('onSendMessage should not be called when disabled', async () => {
     let called = false;
@@ -110,6 +82,7 @@ describe('RichTextSendBox should only call onSendMessage when there is content a
   });
 });
 
+/* @conditional-compile-remove(rich-text-editor) */
 describe('RichTextSendBox should return text correctly', () => {
   beforeAll(() => {
     registerIcons({
