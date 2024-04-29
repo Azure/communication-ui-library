@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "area": "feature",
+  "workstream": "Teams Interop",
+  "comment": "Add ability to join Teams meeting using meeting ID and passcode",
+  "packageName": "@azure/communication-react",
+  "email": "ruslanzdor@microsoft.com",
+  "dependentChangeType": "patch"
+}
